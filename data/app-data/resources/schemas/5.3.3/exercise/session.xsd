@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:complexType name="T_LogSettings">
+    <xs:attribute name="loglevel" use="optional" default="2">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">The minimum gravity of logged messages,
+          0 for error, 1 for informative, 2 for debug.</xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+        <xs:restriction base="xs:integer">
+          <xs:enumeration value="0"/>
+          <xs:enumeration value="1"/>
+          <xs:enumeration value="2"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="logfiles" type="xs:nonNegativeInteger" use="optional"
+        default="1">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Set the number of rotating log files.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="logsize" type="xs:nonNegativeInteger" use="optional"
+        default="0">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Set log files maximum size, in lines
+            or bytes depending on the sizeunit attribute.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="sizeunit" use="optional">
+      <xs:annotation>
+          <xs:documentation xml:lang="en">The log file size unit. If not set,
+            the maximum log size is measured in lines.</xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="bytes"/>
+          <xs:enumeration value="kbytes"/>
+          <xs:enumeration value="mbytes"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:element name="session">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="meta"/>
+        <xs:element name="config">
+          <xs:complexType>
+            <xs:all>
+              <xs:element ref="dispatcher"/>
+              <xs:element ref="gaming"/>
+              <xs:element ref="simulation"/>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="meta">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="comment" type="xs:string">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">User specified comment associated to session.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="date" type="T_ShortIsoDate">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Date and time of session start.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="name" type="xs:string">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Display name of the session.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="T_NetworkAddress">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Network address type, matches "host:port" where host is a string and port and integer of 1 to 5 digits.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[_a-zA-Z][_a-zA-Z0-9]+:[0-9]{1,5}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="T_NetworkPort">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Network port type, from 1 to 65535.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="65535"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="T_SimulationTime">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Simulation specific time duration format (i.e. 3600s = 60m = 1h).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]+[smh]"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="T_ShortIsoDate">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">ISO 8601 date time short format (YYYYMMDDTHHmmSS).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d{8}T\d{6}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="dispatcher">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines session-specific configuration used by dispatcher application and its plugins.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="network">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines dispatcher network configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="client" type="T_NetworkAddress" use="required">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines network address and port of simulation for the dispatcher to connect to as a client application.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="server" type="T_NetworkPort" use="required">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines network port on which dispatcher is to accept client connections.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="timeout" type="xs:nonNegativeInteger">
+              <xs:annotation>
+                <xs:documentation>Defines network software timeout in milliseconds (default value is hardcoded to 10000)</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="log" minOccurs="0" type="T_LogSettings">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Dispatcher log file configuration</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="messages" minOccurs="0" type="T_LogSettings">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Messages log file configuration</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="debug" minOccurs="0" type="T_LogSettings">
+          <xs:annotation>
+              <xs:documentation xml:lang="en">Protobuf log file configuration</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="plugins">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Additional dispatcher plugins configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="recorder" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">Activates session recorder for later use of data in after action review.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="fragmentfreq" type="xs:string" use="optional"/>
+                  <xs:attribute name="keyframesfreq" type="xs:string" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+              <!-- $$$TODO: Add more plugins -->
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="gaming">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines session-specific configuration used by gaming application.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="network">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines gaming default network configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="server" type="T_NetworkAddress" use="required">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines network address of dispatcher to connect to.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="timeout" type="xs:nonNegativeInteger">
+              <xs:annotation>
+                <xs:documentation>Defines network software timeout in milliseconds (default value is hardcoded to 10000)</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="simulation">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines session-specific configuration used by simulation application.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="GarbageCollector" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines lua garbage collection parameters used by the brains.</xs:documentation>
+            <xs:documentation xml:lang="fr">Définit les paramètres du garbage collector lua utilisé par le décisionel.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="setpause" type="xs:nonNegativeInteger" use="required"/>
+            <xs:attribute name="setstepmul" type="xs:nonNegativeInteger" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="checkpoint">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines checkpoint configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="frequency" type="T_SimulationTime" use="required">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines the time between two simulation checkpoints.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="keep" type="xs:nonNegativeInteger" use="required">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines the number of checkpoints to keep. Older checkpoints are deleted after saving the newest one.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="usecrc" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">DEPRECATED - Enabled cyclic redundancy checks (CRC) files saving along with the checkpoints.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="debug">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines debug configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="decisional" type="xs:boolean" use="required">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Enables decisional model information logging.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="diadebugger" type="xs:boolean" use="required">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Enables DirectIA debugger output.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="diadebuggerport" type="T_NetworkPort" use="required">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">When DirectIA debugger is enabled, defines the network port on which to accept incoming debugging client connections.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="networklogger" type="xs:boolean" use="required">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Enables remote logger (accessible through telnet).</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="networkloggerport" type="T_NetworkPort" use="required">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">When network logger is enabled, defines the network port on which to accept incoming client connections.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="pathfind" type="xs:boolean" use="required">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Enables pathfind information logging.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="decisional">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines decisional configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="useonlybinaries" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Enables using only compiled version of decisional models. When disabled the simulation will check file timestamps to determine whether scripts needs to be recompiled or not.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dispatcher">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines dispatcher configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="embedded" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Enables embedded dispatcher. If disabled, the dispatcher must be launched as a standalone application apart from the simulation.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="network">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines the network configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="port" type="T_NetworkPort">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines the network port on which to accept incoming connections.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="timeout" type="xs:nonNegativeInteger">
+              <xs:annotation>
+                <xs:documentation>Defines network software timeout in milliseconds (default value is hardcoded to 10000)</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="orbat">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines the ORBAT related features configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="subset" maxOccurs="1" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="parties" type="xs:string" use="optional"/>
+                  <xs:attribute name="no-party" type="xs:boolean" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="checkcomposition" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Enables additional checks on ORBAT loading (number of humans of each ranks...)</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="pathfinder">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines pathfinder configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="threads" type="xs:nonNegativeInteger">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines the number of network threads to use.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="profiling">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines profiling configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="enabled" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Enables simulation performance profiling.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="random" minOccurs="0">
+          <xs:complexType>
+            <xs:attribute name="seed" type="xs:nonNegativeInteger"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="random0" minOccurs="0">
+          <xs:complexType>
+            <xs:attribute name="deviation" type="xs:float"/>
+            <xs:attribute name="distribution" type="xs:boolean"/>
+            <xs:attribute name="mean" type="xs:float"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="random1" minOccurs="0">
+          <xs:complexType>
+            <xs:attribute name="deviation" type="xs:float"/>
+            <xs:attribute name="distribution" type="xs:boolean"/>
+            <xs:attribute name="mean" type="xs:float"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="random2" minOccurs="0">
+          <xs:complexType>
+            <xs:attribute name="deviation" type="xs:float"/>
+            <xs:attribute name="distribution" type="xs:boolean"/>
+            <xs:attribute name="mean" type="xs:float"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="random3" minOccurs="0">
+          <xs:complexType>
+            <xs:attribute name="deviation" type="xs:float"/>
+            <xs:attribute name="distribution" type="xs:boolean"/>
+            <xs:attribute name="mean" type="xs:float"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="time">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines simulation time management configuration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="factor" type="xs:nonNegativeInteger">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines the initial acceleration factor of the simulation.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="step" type="xs:nonNegativeInteger">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines the time between two simulation ticks in second.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="end-tick" type="xs:nonNegativeInteger">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines the tick at which the simulation must stop.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="paused" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines whether the simulation starts paused or not.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="latency" type="xs:nonNegativeInteger" use="optional"
+              default="1">
+              <xs:annotation>
+                  <xs:documentation xml:lang="en">The maximum number of ticks
+                      the simulation can be ahead of the dispatcher before pausing
+                      and waiting for the latter to catch up.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

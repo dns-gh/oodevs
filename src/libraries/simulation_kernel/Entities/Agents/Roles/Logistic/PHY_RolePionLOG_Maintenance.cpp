@@ -14,6 +14,7 @@
 #include "protocol/ClientSenders.h"
 #include "PHY_MaintenanceConsign_ABC.h"
 #include "PHY_MaintenanceRepairConsign.h"
+#include "PHY_MaintenanceDiagnosisConsign.h"
 #include "PHY_MaintenanceTransportConsign.h"
 #include "PHY_MaintenanceComposanteState.h"
 #include "PHY_MaintenanceResourcesAlarms.h"
@@ -239,6 +240,31 @@ bool PHY_RolePionLOG_Maintenance::HasUsableHauler( const PHY_ComposanteTypePion&
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::GetNbrAvailableDiagnosersAllowedToWork
+// Created: SLI 2014-02-12
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableDiagnosersAllowedToWork() const
+{
+    PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
+    PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
+    GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+    owner_.Execute( *componentComputer );
+    GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
+    owner_.Execute( *lendedComputer );
+    unsigned int nNbrAvailableAllowedToWork = 0;
+    assert( pWorkRate_ );
+    for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    {
+        const unsigned int nNbrAllowedToWork = pWorkRate_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ );
+        if( nNbrAllowedToWork > it->second.nNbrUsed_ )
+            nNbrAvailableAllowedToWork += ( nNbrAllowedToWork - it->second.nNbrUsed_ );
+    }
+    return nNbrAvailableAllowedToWork;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------
@@ -267,7 +293,7 @@ PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableDiagnoser( const PH
 {
     ComponentFunctor functor( [&]( const PHY_ComposantePion& component )
     {
-        return component.CanRepair() && (!type || component.GetType() == *type);
+        return component.CanRepair() && ( !type || component.GetType() == *type );
     } );
     std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *computer );
@@ -298,6 +324,19 @@ PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableRepairer( const PHY
 bool PHY_RolePionLOG_Maintenance::HasUsableRepairer( const PHY_Breakdown& breakdown ) const
 {
     PHY_ComposanteTypePredicate1< PHY_Breakdown > predicate( &PHY_ComposanteTypePion::CanRepair, breakdown );
+    HasUsableComponentFunctor functor( predicate );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_.Execute( *computer );
+    return functor.result_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::HasUsableDiagnoser
+// Created: SLI 2014-02-12
+// -----------------------------------------------------------------------------
+bool PHY_RolePionLOG_Maintenance::HasUsableDiagnoser() const
+{
+    PHY_ComposanteTypePredicate predicate( &PHY_ComposanteTypePion::CanRepair );
     HasUsableComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *computer );
@@ -482,9 +521,9 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( PHY_MaintenanceC
 // Name: PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport
 // Created: NLD 2006-03-29
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) const
+int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante, const PHY_ComposanteTypePion* type ) const
 {
-    if( !bSystemEnabled_ || ( composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) ) )
+    if( !bSystemEnabled_ || ( composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) ) || !GetAvailableHauler( composante.GetType(), type ) ) 
         return std::numeric_limits< int >::min();
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposantePion::CanHaul1, &PHY_ComposanteTypePion::CanHaul1, composante.GetType() );
@@ -515,12 +554,35 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForRepair( PHY_MaintenanceComp
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::HandleComposanteForDiagnosis
+// Created: SLI 2014-02-12
+// -----------------------------------------------------------------------------
+bool PHY_RolePionLOG_Maintenance::HandleComposanteForDiagnosis( PHY_MaintenanceComposanteState& composanteState )
+{
+    if( !bSystemEnabled_ || !HasUsableDiagnoser() )
+        return false;
+    InsertConsign( boost::make_shared< PHY_MaintenanceDiagnosisConsign >( boost::ref( owner_ ), boost::ref( composanteState ) ) );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForDiagnosis
+// Created: SLI 2014-02-12
+// -----------------------------------------------------------------------------
+int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForDiagnosis( const PHY_ComposanteTypePion* type /*= 0*/ ) const
+{
+    if( !bSystemEnabled_ || !GetAvailableDiagnoser( type ) )
+        return std::numeric_limits< int >::min();
+    return GetNbrAvailableDiagnosersAllowedToWork();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState ) const
+int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type /*= 0*/ ) const
 {
-    if( !bSystemEnabled_ || !HasUsableRepairer( composanteState.GetComposanteBreakdown() ) )
+    if( !bSystemEnabled_ || !GetAvailableRepairer( composanteState.GetComposanteBreakdown(), type ) )
         return std::numeric_limits< int >::min();
     // Parts score
     double rRatioPartsAvailable = 0.;

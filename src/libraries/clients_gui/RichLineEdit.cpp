@@ -312,3 +312,14 @@ void RichLineEdit::clear()
         setPaletteForegroundColor( Qt::black );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: RichLineEdit::SetText
+// Created: ABR 2014-02-14
+// -----------------------------------------------------------------------------
+void RichLineEdit::SetText( const QString& text )
+{
+    const int pos = cursorPosition();
+    setText( text );
+    setCursorPosition( pos );
+}

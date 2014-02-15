@@ -22,6 +22,7 @@ namespace kernel
     class ComponentType;
     class BreakdownType;
     class DisplayExtractor_ABC;
+    class EntityResolver_ABC;
 }
 
 namespace sword
@@ -45,7 +46,7 @@ public:
     //! @name Constructor / Destructor
     //@{
              LogMaintenanceConsign( kernel::Controller& controller, const sword::LogMaintenanceHandlingCreation& message,
-                                    const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::ComponentType >& componentResolver,
+                                    const kernel::EntityResolver_ABC& resolver, const tools::Resolver_ABC< kernel::ComponentType >& componentResolver,
                                     const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver, const Simulation& simulation,
                                     kernel::Agent_ABC& consumer );
     virtual ~LogMaintenanceConsign();
@@ -80,9 +81,9 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const kernel::EntityResolver_ABC& resolver_;
     kernel::Agent_ABC& consumer_;
-    kernel::Entity_ABC* pPionLogHandling_;
+    kernel::Entity_ABC* provider_;
     const kernel::ComponentType* equipmentType_;
     const kernel::BreakdownType* breakdownType_;
     bool diagnosed_;

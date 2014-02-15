@@ -108,13 +108,9 @@ namespace logistic_helpers
     {
         if( !entity )
             return 0;
-        if( auto superior = entity->Get< kernel::TacticalHierarchies >().GetSuperior() )
-        {
-            if( auto base = superior->Retrieve< gui::LogisticBase >() )
-                if( base->IsBase() )
-                    return superior;
-            return GetLogisticBase( superior );
-        }
-        return 0;
+        if( auto base = entity->Retrieve< gui::LogisticBase >() )
+            if( base->IsBase() )
+                return entity;
+        return GetLogisticBase( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
     }
 }

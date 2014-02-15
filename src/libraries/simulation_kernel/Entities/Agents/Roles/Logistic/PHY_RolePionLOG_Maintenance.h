@@ -68,10 +68,13 @@ public:
 
     virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
     virtual bool HandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState );
-    virtual int GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) const;
+    virtual int GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante, const PHY_ComposanteTypePion* type = 0 ) const;
+
+    virtual bool HandleComposanteForDiagnosis( PHY_MaintenanceComposanteState& composanteState );
+    virtual int GetAvailabilityScoreForDiagnosis( const PHY_ComposanteTypePion* type = 0 ) const;
 
     virtual bool HandleComposanteForRepair( PHY_MaintenanceComposanteState& composanteState );
-    virtual int GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState ) const;
+    virtual int GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type = 0 ) const;
 
     virtual void NotifyComponentHasChanged();
 
@@ -86,6 +89,7 @@ public:
     virtual PHY_ComposantePion* GetAvailableDiagnoser( const PHY_ComposanteTypePion* type = 0 ) const;
     virtual PHY_ComposantePion* GetAvailableRepairer( const PHY_Breakdown& breakdown, const PHY_ComposanteTypePion* type = 0 ) const;
     virtual bool HasUsableRepairer( const PHY_Breakdown& breakdown ) const;
+    virtual bool HasUsableDiagnoser() const;
     virtual bool ConsumePartsForBreakdown( const PHY_Breakdown& breakdown );
 
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante );
@@ -121,6 +125,7 @@ private:
 
     bool HasUsableHauler( const PHY_ComposanteTypePion& composanteType ) const;
     unsigned int GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const;
+    unsigned int GetNbrAvailableDiagnosersAllowedToWork() const;
     double GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate = 0 ) const;
     //@}
 

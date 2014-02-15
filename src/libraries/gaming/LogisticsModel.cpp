@@ -19,6 +19,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <boost/foreach.hpp>
 
@@ -28,15 +29,11 @@ using namespace kernel;
 // Name: LogisticsModel constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-LogisticsModel::LogisticsModel( LogisticConsignFactory_ABC& factory, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver,
-                                const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
-                                const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
+LogisticsModel::LogisticsModel( LogisticConsignFactory_ABC& factory, const kernel::EntityResolver_ABC& resolver,
                                 const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
                                 kernel::Controller& controller )
     : factory_          ( factory )
     , resolver_         ( resolver )
-    , automatResolver_  ( automatResolver )
-    , formationResolver_( formationResolver )
     , dotationResolver_ ( dotationResolver )
     , controller_       ( controller )
 {
@@ -82,7 +79,7 @@ void LogisticsModel::Delete( unsigned long id )
 template< typename M, typename C, typename E >
 void LogisticsModel::CreateConsign( const M& message, const std::function< C*( const M&, kernel::Agent_ABC& )>& create )
 {
-    if( kernel::Agent_ABC* consumer = resolver_.Find( message.unit().id() ) )
+    if( kernel::Agent_ABC* consumer = resolver_.FindAgent( message.unit().id() ) )
     {
         C* consign = create( message, *consumer );
         if( consign )
@@ -114,7 +111,7 @@ void LogisticsModel::DeleteConsign( unsigned long id )
 namespace
 {
     template< typename U, typename E, typename C >
-    void UpdateLogisticPion( U* unit, U* newUnit, C& consign )
+    void UpdateLogistic( U* unit, U* newUnit, C& consign )
     {
         if( unit )
             unit->Get< E >().TerminateConsign( consign );
@@ -135,8 +132,8 @@ void LogisticsModel::UpdateConsign( const M& message )
         kernel::Entity_ABC* handler = consign->GetHandler();
         if( message.has_provider() && ( !handler || message.provider().id() != handler->GetId() ) )
         {
-            kernel::Entity_ABC* entity = resolver_.Find( message.provider().id() );
-            UpdateLogisticPion< kernel::Entity_ABC, E, C >( handler, entity, *consign );
+            kernel::Entity_ABC* entity = resolver_.FindEntity( message.provider().id() );
+            UpdateLogistic< kernel::Entity_ABC, E, C >( handler, entity, *consign );
             handler = entity;
         }
         consign->Update( message, handler );
@@ -226,8 +223,8 @@ void LogisticsModel::UpdateSupplyConsign( const sword::LogSupplyHandlingUpdate& 
         kernel::Agent_ABC* pPionLogConvoying = consign->GetConvoy();
         if( message.has_convoyer() && ( !pPionLogConvoying || message.convoyer().id() != pPionLogConvoying->GetId() ) )
         {
-            kernel::Agent_ABC* entity = resolver_.Find( message.convoyer().id() );
-            UpdateLogisticPion< kernel::Agent_ABC, LogSupplyConsigns, LogSupplyConsign >(
+            kernel::Agent_ABC* entity = resolver_.FindAgent( message.convoyer().id() );
+            UpdateLogistic< kernel::Agent_ABC, LogSupplyConsigns, LogSupplyConsign >(
                 pPionLogConvoying, entity, *consign );
             pPionLogConvoying = entity;
         }
@@ -287,7 +284,7 @@ void LogisticsModel::UpdateFuneralConsign( const sword::LogFuneralHandlingUpdate
         if( message.has_handling_unit() )
         {
             kernel::Entity_ABC* entity = FindLogEntity( message.handling_unit() );
-            UpdateLogisticPion< kernel::Entity_ABC, LogFuneralConsigns, LogFuneralConsign >(
+            UpdateLogistic< kernel::Entity_ABC, LogFuneralConsigns, LogFuneralConsign >(
                 handler, entity, *consign );
             handler = entity;
         }
@@ -295,8 +292,8 @@ void LogisticsModel::UpdateFuneralConsign( const sword::LogFuneralHandlingUpdate
         kernel::Agent_ABC* convoy = consign->GetConvoy();
         if( message.has_convoying_unit() )
         {
-            kernel::Agent_ABC* entity = resolver_.Find( message.convoying_unit().id() );
-            UpdateLogisticPion< kernel::Agent_ABC, LogFuneralConsigns, LogFuneralConsign >(
+            kernel::Agent_ABC* entity = resolver_.FindAgent( message.convoying_unit().id() );
+            UpdateLogistic< kernel::Agent_ABC, LogFuneralConsigns, LogFuneralConsign >(
                 convoy, entity, *consign );
             convoy = entity;
         }
@@ -371,9 +368,9 @@ kernel::Entity_ABC* LogisticsModel::FindLogEntity( const sword::ParentEntity& ms
 {
     kernel::Entity_ABC* retval = 0;
     if( msg.has_automat() )
-        retval = automatResolver_.Find( msg.automat().id() );
+        retval = resolver_.FindAutomat( msg.automat().id() );
     else if( msg.has_formation() )
-        retval = formationResolver_.Find( msg.formation().id() );
+        retval = resolver_.FindFormation( msg.formation().id() );
     return retval;
 }
 

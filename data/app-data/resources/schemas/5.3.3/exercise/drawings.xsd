@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="4.8.2">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="shapes">
+		<xs:complexType>
+			<xs:sequence minOccurs="0">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="formation">
+						<xs:complexType>
+							<xs:sequence minOccurs="0" maxOccurs="unbounded">
+								<xs:element name="shape" type="T_ShapeType"/>
+							</xs:sequence>
+							<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="automat">
+						<xs:complexType>
+							<xs:sequence minOccurs="0" maxOccurs="unbounded">
+								<xs:element name="shape" type="T_ShapeType"/>
+							</xs:sequence>
+							<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="shape" type="T_ShapeType"/>
+				</xs:sequence>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="T_ShapeType">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="point">
+				<xs:complexType>
+					<xs:attribute name="latitude" type="xs:double" use="required"/>
+					<xs:attribute name="longitude" type="xs:double" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="color" type="xs:string"/>
+		<xs:attribute name="category" type="xs:string"/>
+		<xs:attribute name="template" type="xs:string"/>
+		<xs:attribute name="type" type="xs:string"/>
+		<xs:attribute name="parent" type="xs:nonNegativeInteger"/>
+		<xs:attribute name="style" type="xs:string" use="optional"/>
+	</xs:complexType>
+</xs:schema>

@@ -196,5 +196,6 @@
     <upgrade schema="schemas/5.3.1/physical/Equipments.xsd" apply="schemas/5.3.2/xsl/equipments_5.3.1-5.3.2.xsl"/>
     <upgrade schema="schemas/5.3.1/exercise/profiles.xsd" apply="schemas/5.3.2/xsl/profiles_5.3.1-5.3.2.xsl"/>
   </migration>
-  <migration from="5.3.2" to="5.4.0"/>
+  <migration from="5.3.2" to="5.3.3"/>
+  <migration from="5.3.3" to="5.4.0"/>
 </migrations>

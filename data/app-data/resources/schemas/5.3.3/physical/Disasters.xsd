@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+    <xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="disasters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="disaster" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="contamination">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="threshold" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="color" type="T_ColorRGB" use="required"/>
+												<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+												<xs:attribute name="display" type="xs:boolean" use="optional"/>
+												<xs:attribute name="name" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="attrition">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="threshold" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+												<xs:attribute name="name" type="xs:string" use="optional"/>
+												<xs:attribute name="u1" type="T_ZeroToOneDouble" use="required"/>
+												<xs:attribute name="u2" type="T_ZeroToOneDouble" use="required"/>
+												<xs:attribute name="u3" type="T_ZeroToOneDouble" use="required"/>
+												<xs:attribute name="ue" type="T_ZeroToOneDouble" use="required"/>
+												<xs:attribute name="dead" type="T_ZeroToOneDouble" use="required"/>
+												<xs:attribute name="contamination" type="xs:boolean" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+							    </xs:complexType>
+							</xs:element>
+							<xs:element name="protections">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="protection" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="type" type="T_NbcSuit" use="required"/>
+												<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+							    </xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="toxicity-exponent" type="T_NonNegativeDouble" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,97 @@
+<?xml version="1.0"	encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include	schemaLocation="tools.xsd"/>
+	<xs:simpleType name="SupplyConvoyType">
+		<xs:restriction	base="xs:string">
+			<xs:enumeration	value="real"/>
+			<xs:enumeration	value="virtual"/>
+		</xs:restriction>
+	</xs:simpleType>	
+	<xs:element	name="supply">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element	name="convoys" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element	name="type">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element	name="dotation-supply">
+											<xs:complexType>
+												<xs:attribute name="type" type="SupplyConvoyType" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element	name="stock-supply">
+											<xs:complexType>
+												<xs:attribute name="type" type="SupplyConvoyType" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element	name="constitution-times" type="T_ConstitutionTimes"/>
+							<xs:element	name="loading-times" type="T_LoadingTimes"/>
+							<xs:element	name="unloading-times" type="T_UnloadingTimes"/>
+							<xs:element	name="speed-modifiers">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element	name="speed-modifier" minOccurs="0"	maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="truck-count" type="xs:nonNegativeInteger" use="required"/>
+												<xs:attribute name="value" type="xs:nonNegativeInteger"	use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="unit-type" type="xs:string"	use="required"/>
+						<xs:attribute name="mission" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element	name="resource-availability-alerts">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element	name="resource-availability-alert">
+								<xs:complexType>
+									<xs:attribute name="availability-threshold"	type="xs:nonNegativeInteger"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>			
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType	name="T_ConstitutionTimes">
+		<xs:sequence>
+			<xs:element	name="unit-time" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="truck-count" type="xs:nonNegativeInteger" use="required"/>
+					<xs:attribute name="time" type="T_Time"	use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType	name="T_LoadingTimes">
+		<xs:sequence>
+			<xs:element	name="unit-time" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="truck-count" type="xs:nonNegativeInteger" use="required"/>
+					<xs:attribute name="time" type="T_Time"	use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType	name="T_UnloadingTimes">
+		<xs:sequence>
+			<xs:element	name="unit-time" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="truck-count" type="xs:nonNegativeInteger" use="required"/>
+					<xs:attribute name="time" type="T_Time"	use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

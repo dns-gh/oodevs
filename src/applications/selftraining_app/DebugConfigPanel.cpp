@@ -148,11 +148,12 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
     // development features
-    const auto savedFeatures = tools::SplitFeatures( registry::ReadFeatures().toStdString() );
+    const auto& availableFeatures = tools::GetAvailableFeatures();
+    const auto savedFeatures = tools::SplitFeatures(
+            registry::ReadFeatures().toStdString() );
     featuresBox_ = new QGroupBox();
     featuresBox_->setTitle( "Features" );
     QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
-    const auto& availableFeatures = tools::GetAvailableFeatures();
     for( auto it = availableFeatures.begin(); it != availableFeatures.end(); ++it )
     {
         QCheckBox* checkbox = new QCheckBox( QString::fromStdString( *it ) );

@@ -35,6 +35,7 @@ namespace kernel
     class Formation_ABC;
     class DotationType;
     class Controller;
+    class EntityResolver_ABC;
 }
 
 namespace google
@@ -65,9 +66,7 @@ class LogisticsModel : public tools::Resolver< LogMaintenanceConsign >
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticsModel( LogisticConsignFactory_ABC& factory, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver,
-                             const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
-                             const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
+             LogisticsModel( LogisticConsignFactory_ABC& factory, const kernel::EntityResolver_ABC& resolver,
                              const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
                              kernel::Controller& controller );
     virtual ~LogisticsModel();
@@ -128,9 +127,7 @@ protected:
     //! @name Member data
     //@{
     LogisticConsignFactory_ABC& factory_;
-    const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
-    const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
-    const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
+    const kernel::EntityResolver_ABC& resolver_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     //@}
 

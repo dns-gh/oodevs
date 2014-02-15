@@ -67,7 +67,7 @@ public:
     //! @name Consign
     //@{
     void SetConsign( PHY_MaintenanceConsign_ABC* pConsign );
-    const PHY_MaintenanceConsign_ABC* GetConsign() const;
+    PHY_MaintenanceConsign_ABC* GetConsign() const;
 
     void SelectNewState();
     void TransferToLogisticSuperior();

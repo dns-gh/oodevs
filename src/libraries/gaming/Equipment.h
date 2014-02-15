@@ -65,7 +65,6 @@ private:
     {
         int type_;
         bool diagnosed_;
-        bool inMaintenance_;
     };
     //@}
 

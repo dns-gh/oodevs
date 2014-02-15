@@ -71,7 +71,8 @@ public:
     virtual void SelectRepairTeam( const PHY_ComposanteTypePion& type ) = 0;
 
     void ClearConsign();
-    //@}
+    void SetState( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nNewState, int timer );
+   //@}
 
     //! @name Network
     //@{
@@ -84,7 +85,6 @@ protected:
     //@{
     void EnterStateFinished();
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus GetState() const;
-    void SetState      ( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nNewState, int timer );
     bool DecrementTimer();
     bool IsManualMode() const;
 

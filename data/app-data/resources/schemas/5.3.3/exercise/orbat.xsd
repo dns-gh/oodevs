@@ -1,0 +1,1426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+  <xs:include schemaLocation="../physical/tools.xsd"/>
+  <xs:element name="orbat">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Root element, describes the order of battle.</xs:documentation>
+      <xs:documentation xml:lang="fr">Element racine, décrit l'ordre de bataille.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="parties">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines the list of parties.</xs:documentation>
+            <xs:documentation xml:lang="fr">Définit la liste des camps.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="party" minOccurs="0" maxOccurs="unbounded"/>
+              <xs:element name="no-party" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Defines elements without party</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="objects">
+                      <xs:annotation>
+                        <xs:documentation xml:lang="en">Defines objects belonging to party.</xs:documentation>
+                        <xs:documentation xml:lang="fr">Définit les objets appartenant au camp.</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="object" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="color" type="T_ColorRGB" use="optional">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
+                      <xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+          <!-- Constraints -->
+          <xs:unique name="knowledgeGroupIdUnicity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Checks unicity of knowledge group identifiers over whole ORBAT.</xs:documentation>
+              <xs:documentation xml:lang="fr">Vérifie l'unicité de l'identifiant du groupe de connaissance au sein de l'ordre de bataille.</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath=".//communication/knowledge-group"/>
+            <xs:field xpath="@id"/>
+          </xs:unique>
+          <xs:unique name="objectIdUnicity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Checks unicity of object identifiers over whole ORBAT.</xs:documentation>
+              <xs:documentation xml:lang="fr"> Vérifie l'unicité de l'identifiant d'objet au sein de l'ordre de bataille.</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath=".//objects/object"/>
+            <xs:field xpath="@id"/>
+          </xs:unique>
+          <xs:unique name="populationIdUnicity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Checks unicity of population identifiers over whole ORBAT.</xs:documentation>
+              <xs:documentation xml:lang="fr"> Vérifie l'unicité de l'identifiant de population au sein de l'ordre de bataille.</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath=".//populations/population"/>
+            <xs:field xpath="@id"/>
+          </xs:unique>
+          <xs:unique name="automatIdUnicity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Checks unicity of automat identifiers over whole ORBAT.</xs:documentation>
+              <xs:documentation xml:lang="fr"> Vérifie l'unicité de l'identifiant d'automate au sein de l'ordre de bataille.</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath=".//formation/automat|.//automat/automat"/>
+            <xs:field xpath="@id"/>
+          </xs:unique>
+          <xs:unique name="unitIdUnicity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Checks unicity of unit identifiers over whole ORBAT.</xs:documentation>
+              <xs:documentation xml:lang="fr"> Vérifie l'unicité de l'identifiant d'unité au sein de l'ordre de bataille.</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath=".//automat/unit"/>
+            <xs:field xpath="@id"/>
+          </xs:unique>
+          <xs:unique name="intelligenceIdUnicity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Checks unicity of intelligence identifiers over whole ORBAT.</xs:documentation>
+              <xs:documentation xml:lang="fr"> Vérifie l'unicité de l'identifiant de l'intelligence au sein de l'ordre de bataille.</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath=".//intelligence"/>
+            <xs:field xpath="@id"/>
+          </xs:unique>
+        </xs:element>
+        <xs:element name="diplomacy">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines diplomacy relationships between parties.</xs:documentation>
+            <xs:documentation xml:lang="fr">Définit les relations diplomatiques entre les camps.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="party" type="diplomacyRelationshipType" minOccurs="0" maxOccurs="unbounded">
+                <xs:unique name="relationshipTargetUnicity">
+                  <xs:annotation>
+                    <xs:documentation xml:lang="en">Checks that diplomacy is only defined once for each target party.</xs:documentation>
+                    <xs:documentation xml:lang="fr">Vérifie que la diplomatie est unique pour chacun des autres camps.</xs:documentation>
+                  </xs:annotation>
+                  <xs:selector xpath="relationship"/>
+                  <xs:field xpath="@party"/>
+                </xs:unique>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+          <xs:unique name="relationshipSourceUnicity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en"> Checks that diplomacy is only defined once for each source party.</xs:documentation>
+              <xs:documentation xml:lang="fr"> Vérifie que la diplomatie est unique pour chaque camp.</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="party"/>
+            <xs:field xpath="@id"/>
+          </xs:unique>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="model-version" type="T_Version"/>
+    </xs:complexType>
+    <xs:key name="partyKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines key for party.</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit une clé pour le camp.</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath=".//parties/party"/>
+      <xs:field xpath="@id"/>
+    </xs:key>
+    <xs:keyref name="relationshipPartyKeyRef" refer="partyKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Checks that referenced party exists.</xs:documentation>
+        <xs:documentation xml:lang="fr">Vérifie que le camp désigné existe.</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="diplomacy/party"/>
+      <xs:field xpath="@id"/>
+    </xs:keyref>
+    <xs:keyref name="diplomacyRelationshipRef" refer="partyKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Checks that relationship party exists.</xs:documentation>
+        <xs:documentation xml:lang="fr">Vérifie que le camp auquel on affecte une diplomatie existe.</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="diplomacy/party/relationship"/>
+      <xs:field xpath="@party"/>
+    </xs:keyref>
+  </xs:element>
+  <xs:complexType name="entityType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Base type for entities.</xs:documentation>
+      <xs:documentation xml:lang="fr">Type de base pour les entités.</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines unique identifier for internal references.</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit un identifiant unique pour les références internes.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines display name of entity.</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit un nom pour l'affichage de l'entité.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:element name="party">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines party composition.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit la composition du camp.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="entityType">
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="communication">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines communication hierarchy.</xs:documentation>
+                <xs:documentation xml:lang="fr">Définit la hiérarchie de communication.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="knowledge-group" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="logistics">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines logistics hierarchy.</xs:documentation>
+                <xs:documentation xml:lang="fr">Définit une hiérarchie logistique.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="logistic-base" type="logisticBaseRelationshipType" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:choice>
+              </xs:complexType>
+              <xs:unique name="logisticBaseRelationhipIdUnicity">
+                <xs:selector xpath="logistic-base"/>
+                <xs:field xpath="@id"/>
+              </xs:unique>
+            </xs:element>
+            <xs:element name="objects">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines objects belonging to party.</xs:documentation>
+                <xs:documentation xml:lang="fr">Définit les objets appartenant au camp.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="object" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="populations">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines crowds belonging to party.</xs:documentation>
+                <xs:documentation xml:lang="fr">Définit les foules appartenant au camp.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="population" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="inhabitants" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines populations belonging to party.</xs:documentation>
+                <xs:documentation xml:lang="fr">Définit les populations couvrantes appartenant au camp.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="inhabitant" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="tactical">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines tactical hierarchy (formations, automats and units).</xs:documentation>
+                <xs:documentation xml:lang="fr">Définit la hiérarchie tactique (formations, automates et unités).</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element ref="formation" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
+          </xs:choice>
+          <xs:attribute name="type" type="karmaType" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines party type (karma).</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le type de camp (karma).</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="color" type="T_ColorRGB" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
+              <xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+    <xs:key name="automatKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines key for automat.</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit une clé pour l'automate.</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath=".//automat"/>
+      <xs:field xpath="@id"/>
+    </xs:key>
+    <xs:key name="formationKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines key for formations</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit une clé pour les formations</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath=".//formation"/>
+      <xs:field xpath="@id"/>
+    </xs:key>
+    <xs:key name="logisticElementKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines key for formations</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit une clé pour les formations</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath=".//formation|.//automat"/>
+      <!-- Should add test on logistic-level -->
+      <xs:field xpath="@id"/>
+    </xs:key>
+    <!-- objects constraints -->
+    <xs:keyref name="objectTc2KeyRef" refer="logisticElementKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Checks that referenced automat exists in same party.</xs:documentation>
+        <xs:documentation xml:lang="fr">Vérifie que l'automate existe dans le même camp.</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="objects/object/attributes/logistic-base"/>
+      <xs:field xpath="@id"/>
+    </xs:keyref>
+    <!-- logistics constraints -->
+    <xs:keyref name="logisticSubordinateKeyRef" refer="logisticElementKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Checks existence of source and target logistic automats referenced in links.</xs:documentation>
+        <xs:documentation xml:lang="fr">Vérifie l'existence de l'automate source et cible du lien logistique.</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="logistics/logistic-base|logistics/logistic-base/subordinate"/>
+      <xs:field xpath="@id"/>
+    </xs:keyref>
+    <xs:keyref name="logisticBaseKeyRef" refer="logisticElementKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Checks existence of source and target logistic automats referenced in links.</xs:documentation>
+        <xs:documentation xml:lang="fr">Vérifie l'existence de l'automate source et cible du lien logistique.</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="logistics/logistic-base"/>
+      <xs:field xpath="@id"/>
+    </xs:keyref>
+    <!-- knowledge group constraints -->
+    <xs:key name="knowledgeGroupKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines key for knowledge group.</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit une clé pour le groupe de connaissance.</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="communication/knowledge-group"/>
+      <xs:field xpath="@id"/>
+    </xs:key>
+    <xs:keyref name="knowledgeGroupKeyRef" refer="knowledgeGroupKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Checks that knowledge group exists in same party.</xs:documentation>
+        <xs:documentation xml:lang="fr">Vérifie que le groupe de connaissance existe dans le même camp.</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="tactical/formation/automat|tactical/automat/automat"/>
+      <xs:field xpath="@knowledge-group"/>
+    </xs:keyref>
+  </xs:element>
+  <xs:simpleType name="logisticLevelType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines logistic level type for automat and formation .</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit le type de niveau logistique pour les automates ou les formations.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="logistic-base"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="karmaType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines party affinity</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit l'affinité du camp.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="friend"/>
+      <xs:enumeration value="enemy"/>
+      <xs:enumeration value="neutral"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="knowledge-group">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines a knowledge/communication group.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit un groupe de connaissance.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="entityType">
+          <xs:sequence>
+            <xs:element ref="knowledge-group" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+          <xs:attribute name="type" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the type of knowledge group, references "Communications.xml".</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le type de groupe de connaissance. Renvoie vers "Communications.xml".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="logisticBaseRelationshipType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines logistic link between an automat and its logistic subordinates.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit le lien logistique entre un automate et ses subordonnés logistiques.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="subordinate" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines link nature and parameters for specified logistic subordinate.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit la nature du lien et les paramètres pour le subordonné logistique.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="quotas" type="resourcesType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines quotas granted to subordinate by logistic superior.</xs:documentation>
+                <xs:documentation xml:lang="fr">Définit les quotas alloués au subordonné par son supérieur logistique.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies the subordinate (automat).</xs:documentation>
+              <xs:documentation xml:lang="fr">Identifiant de l'automate subordonné</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Identifies the logistic base</xs:documentation>
+        <xs:documentation xml:lang="fr">Identifiant de la base logistic base</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:element name="object">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines a tactical object.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit un objet tactique.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="entityType">
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="shape" type="shapeType">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines the location and shape of the object.</xs:documentation>
+                <xs:documentation xml:lang="fr">Définit la géolocalisation et la forme de l'objet.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="attributes" type="T_ObjectAttributes">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines specific object attributes.</xs:documentation>
+                <xs:documentation xml:lang="fr">Définit les attributs spécifiques à l'objet.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:attribute name="type" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the type of the object. This is a reference to an existing object type from "Objects.xml".</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le type d'objet tactique. Renvoie vers "Objects.xml".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="color" type="T_ColorRGB" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
+              <xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="population">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines a crowd.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit une foule.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="entityType">
+          <xs:all>
+            <xs:element name="composition">
+              <xs:complexType>
+                <xs:attribute name="healthy" type="T_NonNegativeInteger" use="required">
+                  <xs:annotation>
+                    <xs:documentation xml:lang="en">Defines the initial number of healthy people composing the crowd.</xs:documentation>
+                    <xs:documentation xml:lang="fr">Définit le nombre initial d'individus sains formant la foule.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="wounded" type="T_NonNegativeInteger" use="required">
+                  <xs:annotation>
+                    <xs:documentation xml:lang="en">Defines the initial number of wounded people composing the crowd.</xs:documentation>
+                    <xs:documentation xml:lang="fr">Définit le nombre initial d'individus blessés formant la foule.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="dead" type="T_NonNegativeInteger" use="required">
+                  <xs:annotation>
+                    <xs:documentation xml:lang="en">Defines the initial number of dead people composing the crowd.</xs:documentation>
+                    <xs:documentation xml:lang="fr">Définit le nombre initial d'individus morts formant la foule.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="contaminated" type="T_NonNegativeInteger" use="required">
+                  <xs:annotation>
+                    <xs:documentation xml:lang="en">Defines the initial number of contaminated people composing the crowd.</xs:documentation>
+                    <xs:documentation xml:lang="fr">Définit le nombre initial d'individus contaminés formant la foule.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element ref="adhesions" minOccurs="0"/>
+            <xs:element name="armed-individuals" minOccurs="0">
+              <xs:complexType>
+                <xs:attribute name="value" type="T_ZeroToOneDouble" use="required">
+                  <xs:annotation>
+                    <xs:documentation xml:lang="en">Defines the initial percentage of armed individuals composing the crowd.</xs:documentation>
+                    <xs:documentation xml:lang="fr">Définit le nombre initial d'individus armés formant la foule.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="critical-intelligence" minOccurs="0">
+              <xs:complexType>
+                <xs:attribute name="content" type="xs:string" use="required">
+                  <xs:annotation>
+                    <xs:documentation>Defines the critical intelligence known by the population.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
+            <xs:element name="repartition" type="T_Repartition" minOccurs="0"/>
+          </xs:all>
+          <xs:attribute name="attitude" type="populationAttitudeType" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the initial crowd attitude.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit l'attitude initiale de la foule.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="position" type="utmCoordinatesType" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the initial position of the center of the crowd concentration.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit la géolocalisation initiale du centre de la foule.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="type" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the type of crowd. References an existing crowd type from "Populations.xml".</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le type de la foule. Renvoie vers "Populations.xml".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="inhabitant">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines a population.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit une population couvrante.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="entityType">
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="extensions" type="T_ExtensionsType"/>
+            <xs:element name="information"/>
+            <xs:element ref="living-area"/>
+            <xs:element ref="composition"/>
+            <xs:element ref="adhesions"/>
+            <xs:element name="health-need">
+              <xs:annotation>
+                <xs:documentation>Defines the health satisfaction level, i.e. the number of medical infrastructures needed  to satisfy the population (not necessarily an integer value)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="quantity" type="xs:float" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+          <xs:attribute name="type" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the type of population. References an existing population type from "Populations.xml".</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le type de la population. Renvoie vers "Populations.xml".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="living-area">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines the living area of a population.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit la zone de vie d'une population couvrante.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="urban-block" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="urban-block">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines a reference to an urban block.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit une référence à un bloc urbain.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="composition">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines the composition of a population (number of healthy, wounded and dead people).</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit la composition d'une population couvrante (nombre de personnes en bonne santé, blessées et mortes).</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attribute name="healthy" type="xs:nonNegativeInteger" use="required"/>
+      <xs:attribute name="wounded" type="xs:nonNegativeInteger" use="required"/>
+      <xs:attribute name="dead" type="xs:nonNegativeInteger" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="adhesions">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines the adhesions of a population to the various parties.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit l'adhésion d'une population couvrante aux différents camps.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="adhesion" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="adhesion">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines the adhesion of a population to a party.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit l'adhésion d'une population couvrante à un camp.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attribute name="party" type="xs:nonNegativeInteger" use="required"/>
+      <xs:attribute name="value" type="MinusOneToOneFloat" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="MinusOneToOneFloat">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="-1"/>
+      <xs:maxInclusive value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="utmCoordinatesType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines Universal Transverse Mercator geographic coordinates.</xs:documentation>
+      <xs:documentation xml:lang="fr"> Format des coordonnées UTM (Universal Transverse Mercator).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(\d{2})?[A-Z]{3}\d{8}(\d{2})?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="populationAttitudeType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines the different population attitudes.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit les attitudes possibles d'une population.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="calme"/>
+      <xs:enumeration value="agitee"/>
+      <xs:enumeration value="excitee"/>
+      <xs:enumeration value="agressive"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="diplomacyRelationshipType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines the diplomatical relationships between one party and the others.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit les relations diplomatiques entre un camp et les autres.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="relationship" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines a diplomatical relationship between two parties.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit la relation diplomatique entre deux camps.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="party" type="xs:nonNegativeInteger" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the party with whom to define relationship.</xs:documentation>
+              <xs:documentation xml:lang="fr">Désigne le camp avec qui la relation diplomatique est définie.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="diplomacy" type="affinityType" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the kind of affinity between the two parties conpartyred.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le type d'affinité entre les deux camps considérés.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+        <xs:unique name="diplomacyRelationshipDefinitionUnicity">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Checks that relationship are only defined once.</xs:documentation>
+            <xs:documentation xml:lang="fr">Vérifie que les relations diplomatiques sont définies une seule foi.</xs:documentation>
+          </xs:annotation>
+          <xs:selector xpath="."/>
+          <xs:field xpath="@party"/>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines the identifier of the party whose relationships are to be defined.</xs:documentation>
+        <xs:documentation xml:lang="fr"> Définit l'identifiant du camp avec qui la relation diplomatique est définie.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:simpleType name="affinityType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines the list of available affinity types.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit la liste des types d'affinitépossibles.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="friend"/>
+      <xs:enumeration value="enemy"/>
+      <xs:enumeration value="neutral"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="shapeType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines a geometrical shape.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit une forme géométrique.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="points">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines a list of points.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit une liste de points.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="point" type="utmCoordinatesType" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines a point using UTM coordinates.</xs:documentation>
+                <xs:documentation xml:lang="fr">Géolocalisation d'un point en coordonnées UTM.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="type"/>
+  </xs:complexType>
+  <xs:complexType name="resourcesType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines a list of resources with associated quantity.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit la liste des ressources avec les quantités associées.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="resource" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines a resource reference and associated quantity.</xs:documentation>
+            <xs:documentation xml:lang="fr">Définit une ressource et la quantité associée.</xs:documentation>
+          </xs:annotation>
+          <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the name of the resources. References existing resource from "Resources.xml".</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le nom de la ressource. Renvoie vers "Resources.xml".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="quantity" type="xs:double" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the quantity of the conpartyred resource.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit la quantité de la ressource associée.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="logistic-threshold" type="xs:double" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the logistic threshold of the associated resource.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le seuil logistique de la ressource associée.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="formation">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines a formation, which is an organisational entity containing formations and automats.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit une formation, c'est-à-dire un ensemble d'automates et d'autres formations permettant ainsi de décrire l'organisation hiérarchique des unités.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="entityType">
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="automat" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="phantom" type="phantom_automat" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="formation" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="intelligence" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
+          </xs:choice>
+          <xs:attribute name="level" type="hierarchicalLevelType" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the hierarchical level of the formation.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le niveau hiérarchique de la formation.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="nature" type="app6SymbolType" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the nature of the formation following APP6 symbology.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit la nature de la formation suivant la symbologie APP6.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="logistic-level" type="logisticLevelType" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the logistic level, if any.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le niveau logistique, le cas échéant.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="color" type="T_ColorRGB" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
+              <xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="symbol" type="xs:string" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Overrides symbol</xs:documentation>
+              <xs:documentation xml:lang="fr">Surdéfinit le symbole</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="hierarchicalLevelType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines the list of military hierarchical level.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit la liste des niveaux hiérarchiques d'une armée.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="b"/>
+      <xs:enumeration value="o"/>
+      <xs:enumeration value="c"/>
+      <xs:enumeration value="oo"/>
+      <xs:enumeration value="ooo"/>
+      <xs:enumeration value="i"/>
+      <xs:enumeration value="ii"/>
+      <xs:enumeration value="iii"/>
+      <xs:enumeration value="x"/>
+      <xs:enumeration value="xx"/>
+      <xs:enumeration value="xxx"/>
+      <xs:enumeration value="xxxx"/>
+      <xs:enumeration value="xxxxx"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="automat">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines an automat.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit un automate.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="entityType">
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="unit" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="phantom" type="phantom_agent" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="automat" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="intelligence" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
+          </xs:choice>
+          <xs:attribute name="engaged" type="xs:boolean" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines whether automat is initially engaged or not.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit si un automate est initialement embrayé ou non.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="knowledge-group" type="xs:nonNegativeInteger" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines reference to existing knowledge group which automat belongs to.</xs:documentation>
+              <xs:documentation xml:lang="fr">Désigne le groupe de connaissance auquel l'automate appartient.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="type" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines automat type. References type defined in "Automat.xml".</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le type d'automate. Renvoie vers "Automat.xml".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="logistic-level" type="logisticLevelType" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the logistic level, if any.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le niveau logistique, le cas échéant.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="nature" type="app6SymbolType" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the nature of the automaton following APP6 symbology.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit la nature de l'automat suivant la symbologie APP6.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="color" type="T_ColorRGB" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
+              <xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="symbol" type="xs:string" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Overrides symbol</xs:documentation>
+              <xs:documentation xml:lang="fr">Surdéfinit le symbole</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+    <!--xs:unique name="commandPostUnicity">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Checks that there is exactly one command post unit.</xs:documentation>
+      <xs:documentation xml:lang="fr">Vérifie qu'il existe une et une seule unité ayant le poste de commande.</xs:documentation>
+    </xs:annotation>
+    <xs:selector xpath="unit"></xs:selector>
+    <xs:field xpath="@command-post"></xs:field>
+  </xs:unique-->
+  </xs:element>
+  <xs:element name="unit">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines a unit.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit une unité.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="entityType">
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="equipments" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines overloaded equipment status.</xs:documentation>
+                <xs:documentation xml:lang="fr">Redéfinit l'état initial de l'équipement.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="equipment" type="equipmentType" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">Defines overloaded status for specified equipment.</xs:documentation>
+                      <xs:documentation xml:lang="fr">Redéfinit l'état initial de l'équipement spécifié.</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="human-factors" minOccurs="0">
+              <xs:annotation>
+                <xs:appinfo>Not implemented in preparation and simulation.</xs:appinfo>
+                <xs:documentation xml:lang="en">Defines overloaded human factors.</xs:documentation>
+                <xs:documentation xml:lang="fr">Redéfinit le facteur humain initial.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:all>
+                  <xs:element name="tiredness" type="tirednessType">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">Defines overloaded tiredness human factor.</xs:documentation>
+                      <xs:documentation xml:lang="fr">Redéfinit le facteur humain de la fatigue.</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="morale" type="moraleType">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">Defines overloaded morale human factor.</xs:documentation>
+                      <xs:documentation xml:lang="fr"> Redéfinit le facteur humain du moral.</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="experience" type="experienceType">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">Defines overloaded experience human factor.</xs:documentation>
+                      <xs:documentation xml:lang="fr">Redéfinit le facteur humain de l'expérience.</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:all>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="humans" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines overloaded human components.</xs:documentation>
+                <xs:documentation xml:lang="fr">Redéfinit l'état initial de l'effectif humain.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="human" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">Defines overloaded status for specified human components.</xs:documentation>
+                      <xs:documentation xml:lang="fr">Redéfinit l'état initial de l'effectif humain spécifié.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                      <xs:attribute name="rank" type="T_CrewRank" use="required">
+                        <xs:annotation>
+                          <xs:documentation xml:lang="en">Defines overloaded human state for specified count of human components.</xs:documentation>
+                          <xs:documentation xml:lang="fr">Redéfinit l'état initial de l'effectif humain.</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                      <xs:attribute name="state" type="T_WoundType" use="required">
+                        <xs:annotation>
+                          <xs:documentation xml:lang="en">Defines overloaded health state for specified count of human components.</xs:documentation>
+                          <xs:documentation xml:lang="fr">Redéfinit l'état de santé de l'effectif humain.</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                      <xs:attribute name="psyop" type="xs:boolean" use="optional">
+                        <xs:annotation>
+                          <xs:documentation xml:lang="en">Defines whether specified count of human components is psychologically damage or not.</xs:documentation>
+                          <xs:documentation xml:lang="fr">Vrai si l'effectif humain a des dégats psychologiques.</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                      <xs:attribute name="contaminated" type="xs:boolean" use="optional">
+                        <xs:annotation>
+                          <xs:documentation xml:lang="en">Defines whether specified count of human components is contaminated or not.</xs:documentation>
+                          <xs:documentation xml:lang="fr">Vrai si l'effectif humain est contaminé.</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                      <xs:attribute name="number" type="xs:nonNegativeInteger" use="required">
+                        <xs:annotation>
+                          <xs:documentation xml:lang="en">Defines the amount of human components affected.</xs:documentation>
+                          <xs:documentation xml:lang="fr">Définit la taille de l'effectif humain concerné.</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="stocks" type="resourcesType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines additional resource stocks.</xs:documentation>
+                <xs:documentation xml:lang="fr">Définit un stock additionnel de ressources.</xs:documentation>
+              </xs:annotation>
+              <xs:unique name="stocksResourceUnicity">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">Checks that resources only appears once in list.</xs:documentation>
+                  <xs:documentation xml:lang="fr">Vérifie que la liste de ressources ne comporte pas de doublons.</xs:documentation>
+                </xs:annotation>
+                <xs:selector xpath="resource"/>
+                <xs:field xpath="@name"/>
+              </xs:unique>
+            </xs:element>
+            <xs:element name="resources" type="resourcesType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Defines overloaded additional initial resources.</xs:documentation>
+                <xs:documentation xml:lang="fr">Redéfinit les ressources additionnelles initiales.</xs:documentation>
+              </xs:annotation>
+              <xs:unique name="resourcesResourceUnicity">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">Checks that resources only appears once in list.</xs:documentation>
+                  <xs:documentation xml:lang="fr"> Vérifie que la liste de ressources ne comporte pas de doublons.</xs:documentation>
+                </xs:annotation>
+                <xs:selector xpath="resource"/>
+                <xs:field xpath="@name"/>
+              </xs:unique>
+            </xs:element>
+            <xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
+            <xs:element name="critical-intelligence" minOccurs="0">
+              <xs:complexType>
+                <xs:attribute name="content" type="xs:string" use="required">
+                  <xs:annotation>
+                    <xs:documentation>Defines the critical intelligence known by the population.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element ref="adhesions" minOccurs="0"/>
+          </xs:choice>
+          <xs:attribute name="type" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines unit type. Reference type from "Units.xml".</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le type d'unité. Renvoie vers "Units.xml".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="position" type="utmCoordinatesType" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines unit position as UTM coordinates.</xs:documentation>
+              <xs:documentation xml:lang="fr"> Géolocalisation de l'unité en coordonnées UTM.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="command-post" type="xs:boolean" default="false">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines whether unit stands as a command-post.</xs:documentation>
+              <xs:documentation xml:lang="fr">Vrai si l'unité est un poste de commande.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="nature" type="app6SymbolType" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the nature of the automaton following APP6 symbology.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit la nature de l'automat suivant la symbologie APP6.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="level" type="hierarchicalLevelType" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the hierarchical level of the formation.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le niveau hiérarchique de la formation.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="color" type="T_ColorRGB" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
+              <xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="overridden-symbol" type="xs:boolean" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines if the symbol has been manually overridden in preparation.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit si le symbole a été surchargé en préparation.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+    <xs:key name="unitKey">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines key for unit.</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit un identifiant pour l'unité.</xs:documentation>
+      </xs:annotation>
+      <xs:selector xpath="."/>
+      <xs:field xpath="@id"/>
+    </xs:key>
+  </xs:element>
+  <xs:simpleType name="tirednessType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines list of tiredness     </xs:documentation>
+      <xs:documentation xml:lang="fr">Définit la liste des degrés de fatigue possible.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="normal"/>
+      <xs:enumeration value="fatigue"/>
+      <xs:enumeration value="epuise"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="moraleType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines list of morale states.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit la liste des niveaux caractérisant le moral des troupes.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="fanatique"/>
+      <xs:enumeration value="bon"/>
+      <xs:enumeration value="moyen"/>
+      <xs:enumeration value="mauvais"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="experienceType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines list of experience states.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit la liste des degrés d'expérience possibles.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="veteran"/>
+      <xs:enumeration value="experimente"/>
+      <xs:enumeration value="conscrit"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="equipmentType">
+    <xs:attribute name="type" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines the type of equipment to define overloaded status for. References existing equipment from "Composantes.xml".</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit le type d'équipement dont on va redéfinir l'état initial. Renvoie vers "Composantes.xml".</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="state" type="equipmentStateType" use="required">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines the state of the equipment to define overloaded status for.</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit l'état de l'équipement dont on va redéfinir l'état initial.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="breakdown" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines the breakdown of the equipment to define overloaded status for. References existing breakdown from "Pannes.xml".</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit la panne de l'équipement dont on va redéfinir l'état initial. Renvoie vers "Pannes.xml".</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="borrower" type="xs:nonNegativeInteger" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines the unit id of the equipment borrower if any</xs:documentation>
+        <xs:documentation xml:lang="fr">Definit l'id de l'unité emprunteuse de l'équipement si elle existe</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:simpleType name="equipmentStateType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines list of equipment states.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit la liste des niveaux caractérisant l'état d'un equipment.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Disponible"/>
+      <xs:enumeration value="ReparableAvecEvacuation"/>
+      <xs:enumeration value="ReparableSurPlace"/>
+      <xs:enumeration value="Detruit"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="tacticalLineType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines a tactical line.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit une ligne tactique.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="point" type="utmCoordinatesType" minOccurs="2" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the list of points constituting the line geometry.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit la liste des points caractérisant une ligne brisée.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines the name identifying the tactical line. Does not have to be unique.</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit le nom de la ligne tactique. Il n'y a pas de contrainte d'unicité.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:simpleType name="app6SymbolType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines a symbol string conforming to MIL2525B/APP6 symbology, with 'symbols/' prepended.</xs:documentation>
+      <xs:documentation xml:lang="fr">Format des symboles MIL2525B/APP6 avec 'symbols/' en préposition.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="23" fixed="true"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="intelligence">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines an intelligence.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit une intelligence.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attribute name="embarked" type="xs:boolean" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines whether intelligence is performing embarked fight.</xs:documentation>
+          <xs:documentation xml:lang="fr">Vrai si une intelligence est en mesure d'effectuer un combat embarqué.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="karma" type="karmaType" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the karma of the intelligence.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit le karma de l'intelligence.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="level" type="hierarchicalLevelType" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the hierarchical level of the intelligence.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit le niveau hiérarchique de l'intelligence.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="name" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the name of the intelligence.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit le nom de l'intelligence.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="nature" type="app6SymbolType" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the nature of the intelligence following APP6 symbology.</xs:documentation>
+          <xs:documentation xml:lang="fr">Défnit la nature de l'intelligence suivant la symbologie APP6.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="position" type="utmCoordinatesType" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the position of the intelligence as UTM coordinates.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit la géolocalisation de l'intelligence en coordonnées UTM.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="phantomType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines list of phantom type.</xs:documentation>
+      <xs:documentation xml:lang="fr">Définit les types de fantôme possible.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="agent"/>
+      <xs:enumeration value="automat"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="phantom_profile">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Base type for phantom logistic relationship.</xs:documentation>
+      <xs:documentation xml:lang="fr">Type de base pour les relation logistique des fantôme.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="profile" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the logistic superior of the current automat phantom.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit le supérieur logistique de l'automate fantôme.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="write" type="xs:string" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identify the profile that can write this phantom.</xs:documentation>
+              <xs:documentation xml:lang="fr">Identifie le profile qui possède les droits en ecriture sur ce fantôme.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="read" type="xs:string" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identify the profile that can read this phantom.</xs:documentation>
+              <xs:documentation xml:lang="fr">Identifie le profile qui possède les droits en lecture sur ce fantôme.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="phantom_logistic">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Base type for phantom logistic relationship.</xs:documentation>
+      <xs:documentation xml:lang="fr">Type de base pour les relation logistique des fantôme.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="superior" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the logistic superior of the current automat phantom.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit le supérieur logistique de l'automate fantôme.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies the logistic superior.</xs:documentation>
+              <xs:documentation xml:lang="fr">Identifiant du superieur logistique.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="subordinate" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines a logistic subordinate of the current automat phantom.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit un subordonné logistique de l'automate fantôme.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies the subordinate (automat).</xs:documentation>
+              <xs:documentation xml:lang="fr">Identifiant de l'automate subordonné</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="quotas" type="resourcesType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines quotas granted to this logistic phantom.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit les quotas alloués à cette automate fantôme.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="phantom_phantom">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Base type for agent phantom under a phantom automat.</xs:documentation>
+      <xs:documentation xml:lang="fr">Type de base pour les fantôme agent sous un fantôme automate.</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="name" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines the name of the phantom.</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit le nom du fantôme</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="position" type="utmCoordinatesType" use="required">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Defines the position of the phantom as UTM coordinates.</xs:documentation>
+        <xs:documentation xml:lang="fr">Définit la géolocalisation du fantôme en coordonnées UTM.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="phantom_agent">
+    <xs:complexContent>
+      <xs:extension base="entityType">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Base type for agent phantom.</xs:documentation>
+          <xs:documentation xml:lang="fr">Type de base pour les fantôme agent.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="ghost-type" type="phantomType" use="required">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines whether phantom is an automat or an agent.</xs:documentation>
+            <xs:documentation xml:lang="fr">Définit si le fantôme est un automate ou un agent.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="level" type="hierarchicalLevelType" use="required">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines the hierarchical level of the phantom.</xs:documentation>
+            <xs:documentation xml:lang="fr">Définit le niveau hiérarchique du fantôme.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="type" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines the name of the phantom.</xs:documentation>
+            <xs:documentation xml:lang="fr">Définit le nom du fantôme.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="nature" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines the nature of the phantom following APP6 symbology.</xs:documentation>
+            <xs:documentation xml:lang="fr">Défnit la nature du fantôme suivant la symbologie APP6.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="position" type="utmCoordinatesType" use="required">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines the position of the phantom as UTM coordinates.</xs:documentation>
+            <xs:documentation xml:lang="fr">Définit la géolocalisation du fantôme en coordonnées UTM.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="color" type="T_ColorRGB" use="optional">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
+            <xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="symbol" type="xs:string" use="optional">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Overrides symbol</xs:documentation>
+            <xs:documentation xml:lang="fr">Surdéfinit le symbole</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="command-post" type="xs:boolean" use="optional" default="false">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines whether unit stands as a command-post.</xs:documentation>
+            <xs:documentation xml:lang="fr">Vrai si l'unité est un poste de commande.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="phantom_automat">
+    <xs:complexContent>
+      <xs:extension base="phantom_agent">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Base type for automat phantom.</xs:documentation>
+          <xs:documentation xml:lang="fr">Type de base pour les fantôme automate.</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="phantom" type="phantom_phantom" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="logistic" type="phantom_logistic" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="profiles" type="phantom_profile" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+        <xs:attribute name="logistic-level" type="logisticLevelType" use="optional">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines the logistic level, if any.</xs:documentation>
+            <xs:documentation xml:lang="fr">Définit le niveau logistique, le cas échéant.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="knowledge-group" type="xs:nonNegativeInteger" use="required">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines reference to existing knowledge group which phantom automat belongs to. Not present in agent automat</xs:documentation>
+            <xs:documentation xml:lang="fr">Désigne le groupe de connaissance auquel l'automate fantôme appartient.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>
