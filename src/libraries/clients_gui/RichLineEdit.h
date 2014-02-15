@@ -87,6 +87,7 @@ protected:
 public slots:
     //! @name Slots
     //@{
+    void SetText( const QString& text );
     void UpdateTextMargins();
     void clear();
     //@}

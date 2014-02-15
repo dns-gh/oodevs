@@ -14,6 +14,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Availability.h"
+#include "clients_kernel/EquipmentType.h"
 #include "gaming/LogisticHelpers.h"
 #include <tools/ElementObserver_ABC.h>
 #include <tools/SelectionObserver_ABC.h>
@@ -268,7 +269,15 @@ void ResourcesListView_ABC< Extension >::AddAvailability( const kernel::Entity_A
         if( curAvailabilies )
             for( auto it = curAvailabilies->begin(); it != curAvailabilies->end(); ++it )
                 if( !filter_ || filter_( *it ) )
-                    availabilities_.push_back( *it );
+                {
+                    auto availability = std::find_if( availabilities_.begin(), availabilities_.end(),
+                        [&]( kernel::Availability& value )->bool {
+                            return value.type_->GetId() == (*it).type_->GetId(); } );
+                    if( availability != availabilities_.end() )
+                        *availability += *it;
+                    else
+                        availabilities_.push_back( *it );
+                }
     }
 }
 

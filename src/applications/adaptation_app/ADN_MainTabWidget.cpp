@@ -30,6 +30,7 @@ ADN_MainTabWidget::ADN_MainTabWidget()
 // -----------------------------------------------------------------------------
 ADN_MainTabWidget::~ADN_MainTabWidget()
 {
+    clear();
     history_.clear();
     elementIndexMap_.clear();
 }

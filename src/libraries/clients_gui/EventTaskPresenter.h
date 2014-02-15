@@ -39,14 +39,14 @@ public:
     //! @name Operations
     //@{
     virtual void FillFrom( const Event& event );
-    void OnDescriptionChanged( const QString& label );
-    void OnPayloadChanged( const QString& label );
     //@}
 
 public slots:
     //! @name Slots
     //@{
+    void OnDescriptionChanged( const QString& label );
     void OnLabelChanged( const QString& label );
+    void OnPayloadChanged( const QString& label );
     void OnUrlChanged( const QString& label );
     void OnShowClicked();
     //@}
