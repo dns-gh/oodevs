@@ -725,6 +725,14 @@ Arrêt moteur allumé</translation>
         <source>Invalid scan depth, should be greater than scan width.</source>
         <translation>Profondeur de scan invalide, elle doit être supérieure à la largeur.</translation>
     </message>
+    <message>
+        <source>The non-logistic automat &apos;%1&apos; contains one or more logistic units.</source>
+        <translation>L&apos;automate non logistique &apos;%1&apos; contient au moins un pion logistique.</translation>
+    </message>
+    <message>
+        <source>The logistic automat &apos;%1&apos; contains one or more non-logistic units.</source>
+        <translation>L&apos;automate logistique &apos;%1&apos; contient au moins un pion non logistique.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
