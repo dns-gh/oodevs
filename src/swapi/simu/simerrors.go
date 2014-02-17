@@ -130,9 +130,9 @@ var reFunctErr *regexp.Regexp = regexp.MustCompile(makePattern(
 	`Client hasn't answered messages from last tick!`,
 ))
 
-// Reads fp and possibly returns a concatenation of all <functERR> lines, or an
-// empty string.
-func FindLoggedFatalErrors(fp io.Reader, opts *SessionErrorsOpts) (string, error) {
+// Reads reader and possibly returns a concatenation of all <functERR> lines,
+// or an empty string.
+func FindLoggedFatalErrors(reader io.Reader, opts *SessionErrorsOpts) (string, error) {
 	var reIgn *regexp.Regexp
 	var err error
 	if len(opts.IgnorePatterns) > 0 {
@@ -143,7 +143,7 @@ func FindLoggedFatalErrors(fp io.Reader, opts *SessionErrorsOpts) (string, error
 	}
 
 	errors := bytes.Buffer{}
-	scanner := NewLogParser(fp)
+	scanner := NewLogParser(reader)
 	for scanner.Scan() {
 		group := scanner.Text()
 		if strings.Contains(group, "<functERR>") {
@@ -162,13 +162,13 @@ func FindLoggedFatalErrors(fp io.Reader, opts *SessionErrorsOpts) (string, error
 	return errors.String(), nil
 }
 
-// Reads fp and possibly returns a stack trace, or an error.
-func FindStacktrace(fp io.Reader) (string, error) {
+// Reads reader and possibly returns a stack trace, or an error.
+func FindStacktrace(reader io.Reader) (string, error) {
 	// [2014-01-14 11:07:28] <Simulation> <functERR> Crash -
 	reStart := regexp.MustCompile(`<functERR>\s+Crash\s+-`)
 
 	trace := bytes.Buffer{}
-	scanner := NewLogParser(fp)
+	scanner := NewLogParser(reader)
 	for scanner.Scan() {
 		group := scanner.Text()
 		if !reStart.MatchString(group) {
@@ -182,8 +182,8 @@ func FindStacktrace(fp io.Reader) (string, error) {
 	return trace.String(), nil
 }
 
-// Reads fp and returns Lua stack traces, or an error.
-func FindLuaStacktraces(fp io.Reader) (string, error) {
+// Reads reader and returns Lua stack traces, or an error.
+func FindLuaStacktraces(reader io.Reader) (string, error) {
 	// [2014-02-17 08:09:04] <Logger plugin> <info> **** Time tick 24 - \
 	//   [15:22:48] - Trace - SAFETY.Police Unit[73] : \
 	//   resources\integration/Object.lua:55: attempt to index local 'object' \
@@ -191,7 +191,7 @@ func FindLuaStacktraces(fp io.Reader) (string, error) {
 	reTrace := regexp.MustCompile(`<Logger plugin>.*?- Trace -.*?traceback:`)
 
 	traces := bytes.Buffer{}
-	scanner := NewLogParser(fp)
+	scanner := NewLogParser(reader)
 	for scanner.Scan() {
 		group := scanner.Text()
 		if !reTrace.MatchString(group) {
