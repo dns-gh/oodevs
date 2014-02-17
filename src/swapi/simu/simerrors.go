@@ -210,7 +210,7 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 	if opts == nil {
 		opts = &SessionErrorsOpts{}
 	}
-	report := bytes.Buffer{}
+	output := bytes.Buffer{}
 	logFiles := []string{
 		"debug/sim.log",
 		"debug/replayer.log",
@@ -235,7 +235,7 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 			return err
 		}
 		if len(trace) > 0 {
-			report.WriteString(fmt.Sprintf("stacktrace found in %s:\n%s\n", path, trace))
+			output.WriteString(fmt.Sprintf("stacktrace found in %s:\n%s\n", path, trace))
 		}
 
 		fp.Seek(0, 0)
@@ -244,7 +244,7 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 			return err
 		}
 		if len(errors) != 0 {
-			report.WriteString(fmt.Sprintf("fatal errors found in %s:\n%s\n", path, errors))
+			output.WriteString(fmt.Sprintf("fatal errors found in %s:\n%s\n", path, errors))
 		}
 
 		if !opts.IgnoreLua {
@@ -254,7 +254,7 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 				return err
 			}
 			if len(traces) != 0 {
-				report.WriteString(fmt.Sprintf("Lua errors found in %s:\n%s\n", path, traces))
+				output.WriteString(fmt.Sprintf("Lua errors found in %s:\n%s\n", path, traces))
 			}
 		}
 	}
@@ -269,10 +269,10 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 		}
 		if len(dumps) > 0 {
 			s := "dump files found:\n  " + strings.Join(dumps, "\n  ") + "\n"
-			report.WriteString(s)
+			output.WriteString(s)
 		}
 	}
-	found := report.String()
+	found := output.String()
 	if len(found) > 0 {
 		return fmt.Errorf("%s", found)
 	}
