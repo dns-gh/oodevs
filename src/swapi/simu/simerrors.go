@@ -20,6 +20,73 @@ import (
 	"strings"
 )
 
+// Parses log files and returns log file groups. Groups are defined by:
+//
+//   [2014-02-17 08:21:59] header
+//     continuation
+//     continuation
+//
+// Otherwise, the struct behaves like a bufio.Scanner.
+type LogParser struct {
+	scanner *bufio.Scanner
+	reDate  *regexp.Regexp
+	group   string // most recently lines group extracted by Scan()
+	pending string // line read from scanner but belonging to the next group
+	done    bool   // true if !scanner.Scan() and pending was emptied
+}
+
+func NewLogParser(fp io.Reader) *LogParser {
+	return &LogParser{
+		bufio.NewScanner(fp),
+		regexp.MustCompile(`^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\]`),
+		"",
+		"",
+		false,
+	}
+}
+
+func (p *LogParser) Scan() bool {
+	if p.done {
+		return false
+	}
+	var s string
+	p.group = ""
+	for {
+		if len(p.pending) > 0 {
+			s = p.pending
+			p.pending = ""
+		} else {
+			if !p.scanner.Scan() {
+				p.done = true
+				break
+			}
+			s = p.scanner.Text() + "\n"
+		}
+		match := p.reDate.MatchString(s)
+		if len(p.group) == 0 {
+			if !match {
+				continue
+			}
+			p.group += s
+		} else {
+			if match {
+				p.pending = s
+				break
+			}
+			p.group += s
+		}
+	}
+	return len(p.group) > 0
+}
+
+func (p *LogParser) Text() string {
+	return p.group
+}
+
+func (p *LogParser) Err() error {
+	return p.scanner.Err()
+}
+
 type SessionErrorsOpts struct {
 	IgnorePatterns []string
 	IgnoreDumps    bool
@@ -74,17 +141,17 @@ func FindLoggedFatalErrors(fp io.Reader, opts *SessionErrorsOpts) (string, error
 	}
 
 	errors := bytes.Buffer{}
-	scanner := bufio.NewScanner(fp)
+	scanner := NewLogParser(fp)
 	for scanner.Scan() {
-		line := scanner.Text()
-		if strings.Contains(line, "<functERR>") {
-			if reFunctErr.MatchString(line) {
+		group := scanner.Text()
+		if strings.Contains(group, "<functERR>") {
+			if reFunctErr.MatchString(group) {
 				continue
 			}
-			if reIgn != nil && reIgn.MatchString(line) {
+			if reIgn != nil && reIgn.MatchString(group) {
 				continue
 			}
-			errors.WriteString(line + "\n")
+			errors.WriteString(group)
 		}
 	}
 	if err := scanner.Err(); err != nil {
@@ -98,18 +165,14 @@ func FindStacktrace(fp io.Reader) (string, error) {
 	// [2014-01-14 11:07:28] <Simulation> <functERR> Crash -
 	reStart := regexp.MustCompile(`<functERR>\s+Crash\s+-`)
 
-	started := false
 	trace := bytes.Buffer{}
-	scanner := bufio.NewScanner(fp)
+	scanner := NewLogParser(fp)
 	for scanner.Scan() {
-		line := scanner.Text()
-		if !started {
-			if !reStart.MatchString(line) {
-				continue
-			}
-			started = true
+		group := scanner.Text()
+		if !reStart.MatchString(group) {
+			continue
 		}
-		trace.WriteString(line + "\n")
+		trace.WriteString(group)
 	}
 	if err := scanner.Err(); err != nil {
 		return "", err
