@@ -35,7 +35,9 @@ public:
         E_Wgs84Dms,
         E_Local
     };
+    // Returns the name of input projection
     static QString    Convert( Projection proj );
+    // Converts input projection name to a Projection or -1 if invalid
     static Projection Convert( const QString& proj );
     //@}
 
