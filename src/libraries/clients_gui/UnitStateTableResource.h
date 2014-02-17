@@ -27,8 +27,14 @@ class UnitStateTableResource : public UnitStateTable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel );
+             UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel, kernel::Controllers& controllers );
     virtual ~UnitStateTableResource();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual bool IsReadOnlyForType( const std::string& typeName ) const;
     //@}
 
 protected:
@@ -41,12 +47,19 @@ protected:
     //@{
     void MergeLine( const QString& name, const QString& category, unsigned quantity, unsigned maximum, double threshold, double consumption );
     void AddLine( const QString& name, const QString& category, unsigned quantity = 0, unsigned maximum = 0, double threshold = 0., double consumption = 0. );
+    void UpdateColor( QStandardItem* item, int quantity, int maximum );
     //@}
 
 protected slots:
     //! @name Helpers
     //@{
     void OnItemChanged( QStandardItem* item );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    bool blockSlots_;
     //@}
 };
 }

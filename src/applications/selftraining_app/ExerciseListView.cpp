@@ -30,10 +30,6 @@ namespace
         {
             // NOTHING
         }
-        ~CustomSortFilterProxyModel()
-        {
-            // NOTHING
-        }
     protected:
         virtual bool lessThan( const QModelIndex& left, const QModelIndex& right ) const
         {
@@ -41,10 +37,9 @@ namespace
            QStandardItem* itemRight = model_.itemFromIndex( right );
            if( !itemLeft->data( ExerciseRole ).isValid() && itemRight->data( ExerciseRole ).isValid() )
                 return false;
-           else if( itemLeft->data( ExerciseRole ).isValid() && !itemRight->data( ExerciseRole ).isValid() )
+           if( itemLeft->data( ExerciseRole ).isValid() && !itemRight->data( ExerciseRole ).isValid() )
                 return true;
-           else
-                return itemLeft->text().localeAwareCompare( itemRight->text() ) > 0;
+            return itemLeft->text().localeAwareCompare( itemRight->text() ) > 0;
         }
     public:
         const QStandardItemModel& model_;
@@ -56,8 +51,7 @@ namespace
 // Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
 ExerciseListView::ExerciseListView( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : QTreeView()
-    , config_    ( config )
+    : config_( config )
     , fileLoader_( fileLoader )
     , proxy_( new CustomSortFilterProxyModel( model_ ) )
 {
@@ -158,7 +152,7 @@ void ExerciseListView::AddExerciseEntry( const frontend::Exercise_ABC& exercise 
     QStringList path( QString( exerciseName.ToUTF8().c_str() ).split( '\\') );
     QStringList complete;
     QStandardItem* parent = 0;
-    for( QStringList::const_iterator it( path.constBegin() ); it != path.constEnd(); ++it )
+    for( auto it = path.constBegin(); it != path.constEnd(); ++it )
     {
         complete.append( *it );
         const QString current( complete.join( "\\" ) );

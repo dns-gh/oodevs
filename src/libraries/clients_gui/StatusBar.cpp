@@ -25,6 +25,11 @@
 using namespace kernel;
 using namespace gui;
 
+namespace
+{
+    const QString statusBarCoordinates = "/Common/StatusBarCoordinates";
+}
+
 // -----------------------------------------------------------------------------
 // Name: StatusBar constructor
 // Created: SBO 2006-04-14
@@ -45,11 +50,21 @@ StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, Terr
     toolButton->setPopup( pMenu_ );
     pMenu_->menuAction()->setCheckable( true );
 
-    AddField( parent, 155, CoordinateSystems::E_Local, true );
-    AddField( parent, 105, CoordinateSystems::E_Mgrs, true );
-    AddField( parent, 105, CoordinateSystems::E_SanC, false );
-    AddField( parent, 155, CoordinateSystems::E_Wgs84Dd, true );
-    AddField( parent, 215, CoordinateSystems::E_Wgs84Dms, false );
+    QSettings settings( "MASA Group", "SWORD" );
+    const QStringList fields = settings.value( statusBarCoordinates, QStringList()
+        << CoordinateSystems::Convert( CoordinateSystems::E_Local )
+        << CoordinateSystems::Convert( CoordinateSystems::E_Mgrs )
+        << CoordinateSystems::Convert( CoordinateSystems::E_Wgs84Dd )
+        ).toStringList();
+    const auto addField = [&]( unsigned size, CoordinateSystems::Projection proj ){
+        const bool checked = !!fields.contains( CoordinateSystems::Convert( proj ) );
+        AddField( parent, size, proj, checked );
+    };
+    addField( 155, CoordinateSystems::E_Local );
+    addField( 105, CoordinateSystems::E_Mgrs );
+    addField( 105, CoordinateSystems::E_SanC );
+    addField( 155, CoordinateSystems::E_Wgs84Dd );
+    addField( 215, CoordinateSystems::E_Wgs84Dms );
     pMenu_->insertSeparator();
     pElevation_   = AddField( parent, 50, tr( "Elevation" ), true );
     pTerrainType_ = AddField( parent, 150, tr( "Terrain type" ), true );
@@ -87,7 +102,7 @@ QLabel* StatusBar::AddField( QStatusBar* parent, unsigned int size, const QStrin
     menuFields_.push_back( field );
     const int id = pMenu_->insertItem( title, static_cast< int >( menuFields_.size() ) );
     if( checked )
-        ParameterSelected( id );
+        ParameterSelected( id, false );
     return field;
 }
 
@@ -167,14 +182,24 @@ void StatusBar::OnMouseMove( const geometry::Point3f& position )
 // Name: StatusBar::ParameterSelected
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
-void StatusBar::ParameterSelected( int index )
+void StatusBar::ParameterSelected( int index, bool save )
 {
     QLabel* field = menuFields_[index - 1];
-    if( field )
-    {
-        pMenu_->setItemChecked( index, field->isHidden() );
-        field->setVisible( field->isHidden() );
-    }
+    if( !field )
+        return;
+    pMenu_->setItemChecked( index, field->isHidden() );
+    field->setVisible( field->isHidden() );
+    if( save )
+        SaveSettings();
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::ParameterSelected
+// Created: BAX 2014-02-17
+// -----------------------------------------------------------------------------
+void StatusBar::ParameterSelected( int index )
+{
+    ParameterSelected( index, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -231,4 +256,22 @@ void StatusBar::EnsureIsEnabled()
 bool StatusBar::IsVisible() const
 {
     return parent_->isVisible();
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::SaveSettings
+// Created: BAX 2014-02-13
+// -----------------------------------------------------------------------------
+void StatusBar::SaveSettings()
+{
+    QSettings settings( "MASA Group", "SWORD" );
+    QStringList list;
+    for( auto it = coordinateFields_.begin(); it != coordinateFields_.end(); ++it )
+        if( it->second->isVisible() )
+        {
+            const auto proj = CoordinateSystems::Convert( static_cast< CoordinateSystems::Projection >( it->first ) );
+            if( !proj.isEmpty() )
+                list.push_back( proj );
+        }
+    settings.setValue( statusBarCoordinates, list );
 }

@@ -37,13 +37,12 @@
 UnitStateTableEquipment::UnitStateTableEquipment( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
                                                   const kernel::Time_ABC& simulation, QWidget* parent, const kernel::Profile_ABC& profile,
                                                   gui::DisplayExtractor& extractor )
-    : gui::UnitStateTableEquipment( parent, extractor )
+    : gui::UnitStateTableEquipment( parent, extractor, controllers )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
     , simulation_  ( simulation )
     , profile_     ( profile )
-    , selected_    ( controllers )
 {
     controllers_.Register( *this );
 }
@@ -124,7 +123,7 @@ void UnitStateTableEquipment::NotifyUpdated( const Equipments& equipments )
     if( selected_ && selected_->Retrieve< Equipments >() == &equipments )
     {
         Purge();
-        RecursiveLoad( *selected_.ConstCast() );
+        RecursiveLoad( *selected_.ConstCast(), true );
     }
 }
 
@@ -134,7 +133,11 @@ void UnitStateTableEquipment::NotifyUpdated( const Equipments& equipments )
 // -----------------------------------------------------------------------------
 bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
 {
-    assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
+    if( IsReadOnly() || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
+        return false;
+
+    assert( selected_ == &selected );
+
     rowsChanged_.clear();
     for( auto it = selected.Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
     {
@@ -202,7 +205,6 @@ namespace
 // -----------------------------------------------------------------------------
 void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
 {
-    selected_ = &selected;
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     const bool isUnknown = IsReadOnly() && controllers_.GetCurrentMode() != eModes_Replay;
     for( auto it = selected.Get< Equipments >().CreateIterator(); it.HasMoreElements(); )

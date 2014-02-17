@@ -17,8 +17,9 @@ using namespace gui;
 // Name: UnitStateTableResource constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel )
-    : UnitStateTable_ABC( "UnitStateTableResource", parent, 7 )
+UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel, kernel::Controllers& controllers )
+    : UnitStateTable_ABC( "UnitStateTableResource", parent, 7, controllers )
+    , blockSlots_( false )
 {
     horizontalHeaders_ << tr( "Resources" )
                        << tr( "Category" )
@@ -28,6 +29,7 @@ UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString m
                        << tr( "Logistic threshold (%)" )
                        << tr( "Normalized consumption" );
     delegate_.AddDoubleSpinBoxOnColumn( eThreshold, 0, 100, 0.5 );
+    delegate_.AddDoubleSpinBoxOnColumn( ePercentage, 0, std::numeric_limits< double >::max(), 0.5 );
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnItemChanged( QStandardItem* ) ) );
 }
 
@@ -38,6 +40,15 @@ UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString m
 UnitStateTableResource::~UnitStateTableResource()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::IsReadOnlyForType
+// Created: JSR 2012-03-22
+// -----------------------------------------------------------------------------
+bool UnitStateTableResource::IsReadOnlyForType( const std::string& ) const
+{
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,10 +80,10 @@ void UnitStateTableResource::AddLine( const QString& name, const QString& catego
     int row = dataModel_.rowCount();
     AddItem( row, eName, name, name );
     AddItem( row, eCategory, category, category );
-    AddItem( row, ePercentage, "", "" );
+    AddItem( row, ePercentage, "", "", Qt::ItemIsEditable );
     AddItem( row, eMaximum, locale().toString( maximum ), maximum );
     AddItem( row, eQuantity, locale().toString( quantity ), quantity, Qt::ItemIsEditable );
-    AddItem( row, eThreshold, locale().toString( threshold, 'f', 2 ), threshold, Qt::ItemIsEditable );
+    AddItem( row, eThreshold, locale().toString( threshold, 'f', 2 ), threshold, aggregated_ ? Qt::ItemFlags( 0 ) : Qt::ItemIsEditable );
     AddItem( row, eConsumption, locale().toString( consumption ), consumption );
 }
 
@@ -82,32 +93,65 @@ void UnitStateTableResource::AddLine( const QString& name, const QString& catego
 // -----------------------------------------------------------------------------
 void UnitStateTableResource::OnItemChanged( QStandardItem* item )
 {
-    if( item && item->column() == eQuantity )
+    if( blockSlots_ || !item )
+        return;
+    blockSlots_ = true;
+    try
     {
-        int quantity = GetUserData( item->row(), eQuantity ).toInt();
-        int maximum = GetUserData( item->row(), eMaximum ).toInt();
-        if( quantity == 0 && maximum == 0 )
-            SetData( item->row(), ePercentage, "0.00", 0 );
-        else
+        int quantity = 0;
+        int maximum = 0;
+        bool changed = false;
+        if( item->column() == ePercentage && dataModel_.item( item->row(), eQuantity ) && dataModel_.item( item->row(), eMaximum ) )
         {
-            double percentage = std::min( quantity * 100. / static_cast< double >( maximum ), 100. );
+            double percentage = 0.01 * GetUserData( item->row(), ePercentage ).toDouble();
+            maximum = GetUserData( item->row(), eMaximum ).toInt();
+            quantity = static_cast< int >( maximum * percentage );
+            int oldQuantity = GetUserData( item->row(), eQuantity ).toInt();
+            double oldPercentage = oldQuantity / static_cast< double >( maximum );
+            if( static_cast< int >( 10000 * percentage ) != static_cast< int >( 10000 * oldPercentage ) )
+            {
+                SetData( item->row(), eQuantity, locale().toString( quantity ), quantity );
+                UpdateColor( item, quantity, maximum );
+            }
+        }
+        else if( item->column() == eQuantity )
+        {
+            changed = true;
+            quantity = GetUserData( item->row(), eQuantity ).toInt();
+            maximum = GetUserData( item->row(), eMaximum ).toInt();
+            double percentage = maximum ? ( quantity * 100. / static_cast< double >( maximum ) ) : 0;
             SetData( item->row(), ePercentage, locale().toString( percentage, 'f', 2 ), percentage );
+            UpdateColor( item, quantity, maximum );
         }
-        if( quantity <= maximum )
-        {
-            SetColor( item->row(), eMaximum, item->background(), -1 );
-            SetColor( item->row(), ePercentage, item->background(), -1 );
-        }
-        else
-        {
-            SetColor( item->row(), eMaximum, Qt::gray, 0 );
-            SetColor( item->row(), ePercentage, Qt::gray, 0 );
-        }
-        if( maximum == 0 )
-        {
-            QStandardItem* itemPercentage = dataModel_.item( item->row(), ePercentage );
-            if( itemPercentage )
-                itemPercentage->setFlags( Qt::ItemIsSelectable );
-        }
+    }
+    catch( ... )
+    {
+        blockSlots_ = false;
+        throw;
+    }
+    blockSlots_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::UpdateColor
+// Created: LDC 2014-02-17
+// -----------------------------------------------------------------------------
+void UnitStateTableResource::UpdateColor( QStandardItem* item, int quantity, int maximum )
+{
+    if( quantity <= maximum )
+    {
+        SetColor( item->row(), eMaximum, item->background(), -1 );
+        SetColor( item->row(), ePercentage, item->background(), -1 );
+    }
+    else
+    {
+        SetColor( item->row(), eMaximum, Qt::gray, 0 );
+        SetColor( item->row(), ePercentage, Qt::gray, 0 );
+    }
+    if( maximum == 0 )
+    {
+        QStandardItem* itemPercentage = dataModel_.item( item->row(), ePercentage );
+        if( itemPercentage )
+            itemPercentage->setFlags( Qt::ItemIsSelectable );
     }
 }

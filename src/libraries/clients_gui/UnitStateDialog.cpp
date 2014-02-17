@@ -95,9 +95,9 @@ UnitStateDialog::~UnitStateDialog()
 bool UnitStateDialog::IsReadOnly() const
 {
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        if( tabs_[ i ]->IsReadOnly() )
-            return true;
-    return false;
+        if( !tabs_[ i ]->IsReadOnly() )
+            return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
 {
     if( selected_ == element )
         return;
-    if( !IsReadOnly() && selected_ && selected_->GetTypeName() == kernel::Agent_ABC::typeName_ && isShown() )
+    if( !IsReadOnly() && selected_ && isShown() )
         for( unsigned int i = 0; i < tabs_.size(); ++i )
             if( tabs_[ i ]->HasChanged( *selected_.ConstCast() ) )
             {
@@ -141,7 +141,7 @@ void UnitStateDialog::Show()
 // -----------------------------------------------------------------------------
 void UnitStateDialog::Validate() const
 {
-    if( !selected_ || selected_->GetTypeName() != kernel::Agent_ABC::typeName_ )
+    if( !selected_ )
         return;
     for( unsigned int i = 0; i < tabs_.size(); ++i )
         if( tabs_[ i ]->HasChanged( *selected_.ConstCast() ) )
@@ -159,11 +159,15 @@ void UnitStateDialog::Reset()
         tabs_[ i ]->Purge();
     // Disable if needed
     bool readOnly = IsReadOnly();
-    readOnly |= ( selected_ ) ? selected_->GetTypeName() != kernel::Agent_ABC::typeName_ : true;
+    bool activate = !readOnly;
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        tabs_[ i ]->SetReadOnly( readOnly );
-    resetButton_->setEnabled( !readOnly );
-    validateButton_->setEnabled( !readOnly );
+    {
+        bool tabReadOnly = selected_? tabs_[ i ]->IsReadOnlyForType( selected_->GetTypeName() ) : true;
+        tabs_[ i ]->SetReadOnly( readOnly | tabReadOnly );
+        activate |= !tabReadOnly;
+    }
+    resetButton_->setEnabled( activate );
+    validateButton_->setEnabled( activate );
     // Exit if needed
     if( !selected_ )
         return;
@@ -172,5 +176,5 @@ void UnitStateDialog::Reset()
     if( typeName == kernel::Agent_ABC::typeName_ || typeName == kernel::Automat_ABC::typeName_ ||
         typeName == kernel::Formation_ABC::typeName_ || typeName == kernel::Team_ABC::typeName_ )
         for( unsigned int i = 0; i < tabs_.size(); ++i )
-            tabs_[ i ]->RecursiveLoad( *selected_.ConstCast() );
+            tabs_[ i ]->RecursiveLoad( *selected_.ConstCast(), true );
 }
