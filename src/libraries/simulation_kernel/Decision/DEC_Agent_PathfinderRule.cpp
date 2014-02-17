@@ -265,17 +265,6 @@ namespace
 #   define IMPOSSIBLE_WAY( reason )         -1.
 #endif // DEBUG_IMPOSSIBLE_PATHFIND
 
-namespace
-{
-    bool IsSlopeTooSteep( const PHY_RawVisionData& data, const MT_Vector2D& from, const MT_Vector2D& to, double maxSquareSlope )
-    {
-        const double delta = data.GetAltitude( to ) - data.GetAltitude( from );
-        // SLI 2013-12-11: beware of the square in the formula, negative slope (delta)
-        // becomes positive and prevent vehicule to take a segment with a downslope superior than maxSquareSlope
-        return delta * delta > from.SquareDistance( to ) * maxSquareSlope;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::GetCost
 // Created: AGE 2005-03-08
@@ -287,25 +276,31 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
 
     // speed
     double rSpeed = path_.GetUnitSpeeds().GetMaxSpeed( nLinkTerrainType );
-    if( rSpeed <= 0. )
+    if( rSpeed <= 0 )
         return IMPOSSIBLE_WAY( "Speeds on terrain" );
 
     if( ! path_.GetUnitSpeeds().IsPassable( nToTerrainType ) )
         return IMPOSSIBLE_DESTINATION( "Terrain type" );
 
-    auto elevationChecker = boost::bind( &IsSlopeTooSteep,
-            boost::cref( altitudeData_ ), from, _1, rMaxSlope_ * rMaxSlope_ );
-    if( SplitOnMajorGridLines( static_cast< int32_t >( altitudeData_.GetCellSize() ),
-                from, to, elevationChecker ) )
+    if( SplitOnMajorGridLines( static_cast< int32_t >( altitudeData_.GetCellSize() ), from, to,
+        [&]( MT_Vector2D from, MT_Vector2D to ) -> bool
+        {
+            const double delta = altitudeData_.GetAltitude( to ) - altitudeData_.GetAltitude( from );
+            // SLI 2013-12-11: beware of the square in the formula, negative slope (delta)
+            // becomes positive and prevent vehicule to take a segment with a downslope superior than maxSquareSlope
+            return delta * delta > from.SquareDistance( to ) * rMaxSlope_ * rMaxSlope_;
+        } ) )
         return IMPOSSIBLE_WAY( "Slope" );
 
     if( rSlopeDeceleration_ != 0 )
     {
-        SlopeSpeedModifier slopeSpeedModifier;
-        auto decelerationFunc = boost::bind( &SlopeSpeedModifier::ComputeLocalSlope, &slopeSpeedModifier, boost::cref( altitudeData_ ), _1, _2 );
-        SplitOnMajorGridLines( static_cast< int32_t >( altitudeData_.GetCellSize() ),
-                from, to, decelerationFunc );
-        slopeSpeedModifier.ModifySpeed( rSpeed, rSlopeDeceleration_, rMaxSlope_, to );
+        SlopeSpeedModifier modifier;
+        SplitOnMajorGridLines( static_cast< int32_t >( altitudeData_.GetCellSize() ), from, to,
+            [&]( MT_Vector2D from, MT_Vector2D to )
+            {
+                return modifier.ComputeLocalSlope( altitudeData_, from, to );
+            } );
+        modifier.ModifySpeed( rSpeed, rSlopeDeceleration_, rMaxSlope_, to );
         if( rSpeed == 0 )
             return IMPOSSIBLE_WAY( "Speed on slope == 0" );
     }
