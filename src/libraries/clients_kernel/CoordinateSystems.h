@@ -25,7 +25,7 @@ namespace kernel
 class CoordinateSystems : public boost::noncopyable
 {
 public:
-    //! @name Types
+    //! @name Projection
     //@{
     enum Projection
     {
@@ -35,9 +35,13 @@ public:
         E_Wgs84Dms,
         E_Local
     };
-    typedef std::map< int, QString > T_SpatialReference;
     static QString    Convert( Projection proj );
     static Projection Convert( const QString& proj );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< int, QString > T_SpatialReference;
     //@}
 
 public:
