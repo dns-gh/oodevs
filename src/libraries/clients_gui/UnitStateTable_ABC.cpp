@@ -29,7 +29,7 @@ UnitStateTable_ABC::UnitStateTable_ABC( const QString& objectName, QWidget* pare
     , dataModel_ ( parent )
     , proxyModel_( parent )
     , delegate_  ( parent )
-    , agregated_ ( false )
+    , aggregated_( false )
     , selected_  ( controllers )
 {
     dataModel_.setColumnCount( numCols );
@@ -62,7 +62,7 @@ UnitStateTable_ABC::~UnitStateTable_ABC()
 // -----------------------------------------------------------------------------
 void UnitStateTable_ABC::Purge()
 {
-    agregated_ = false;
+    aggregated_ = false;
     dataModel_.clear();
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
     horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
@@ -82,7 +82,7 @@ void UnitStateTable_ABC::RecursiveLoad( kernel::Entity_ABC& entity, bool isSelec
         Load( entity );
     else
     {
-        agregated_ = true;
+        aggregated_ = true;
         assert( typeName == kernel::Automat_ABC::typeName_ || typeName == kernel::Formation_ABC::typeName_ || typeName == kernel::Team_ABC::typeName_ );
         const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
         tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();

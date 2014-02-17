@@ -90,7 +90,7 @@ UnitStateTableResource::~UnitStateTableResource()
 // -----------------------------------------------------------------------------
 void UnitStateTableResource::contextMenuEvent( QContextMenuEvent* e )
 {
-    if( agregated_ || IsReadOnly() )
+    if( aggregated_ || IsReadOnly() )
         return;
     kernel::ContextMenu menu( this );
     kernel::ContextMenu targetMenu( &menu );

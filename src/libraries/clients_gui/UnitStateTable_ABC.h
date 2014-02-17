@@ -79,7 +79,7 @@ protected:
     QSortFilterProxyModel proxyModel_;
     CommonDelegate        delegate_;
     QStringList           horizontalHeaders_;
-    bool                  agregated_;
+    bool                  aggregated_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };

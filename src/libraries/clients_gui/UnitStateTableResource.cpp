@@ -83,7 +83,7 @@ void UnitStateTableResource::AddLine( const QString& name, const QString& catego
     AddItem( row, ePercentage, "", "", Qt::ItemIsEditable );
     AddItem( row, eMaximum, locale().toString( maximum ), maximum );
     AddItem( row, eQuantity, locale().toString( quantity ), quantity, Qt::ItemIsEditable );
-    AddItem( row, eThreshold, locale().toString( threshold, 'f', 2 ), threshold, agregated_ ? Qt::ItemFlags( 0 ) : Qt::ItemIsEditable );
+    AddItem( row, eThreshold, locale().toString( threshold, 'f', 2 ), threshold, aggregated_ ? Qt::ItemFlags( 0 ) : Qt::ItemIsEditable );
     AddItem( row, eConsumption, locale().toString( consumption ), consumption );
 }
 
@@ -119,13 +119,8 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
             changed = true;
             quantity = GetUserData( item->row(), eQuantity ).toInt();
             maximum = GetUserData( item->row(), eMaximum ).toInt();
-            if( quantity == 0 || maximum == 0 )
-                SetData( item->row(), ePercentage, "0.00", 0 );
-            else
-            {
-                double percentage = quantity * 100. / static_cast< double >( maximum );
-                SetData( item->row(), ePercentage, locale().toString( percentage, 'f', 2 ), percentage );
-            }
+            double percentage = maximum ? ( quantity * 100. / static_cast< double >( maximum ) ) : 0;
+            SetData( item->row(), ePercentage, locale().toString( percentage, 'f', 2 ), percentage );
             UpdateColor( item, quantity, maximum );
         }
     }
