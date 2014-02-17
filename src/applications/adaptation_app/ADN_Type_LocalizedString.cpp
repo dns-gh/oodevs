@@ -297,6 +297,16 @@ const boost::shared_ptr< kernel::LocalizedString >& ADN_Type_LocalizedString::Ge
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Type_LocalizedString::Purge
+// Created: ABR 2014-02-17
+// -----------------------------------------------------------------------------
+void ADN_Type_LocalizedString::Purge()
+{
+    translation_.reset();
+    InitTranslation( "" );
+}
+
+// -----------------------------------------------------------------------------
 // Stream operators
 // -----------------------------------------------------------------------------
 std::ostream& operator<<( std::ostream& os, const ADN_Type_LocalizedString& type )

@@ -43,7 +43,6 @@ ADN_ResourceNetworks_Data::ResourceNetworkInfos::~ResourceNetworkInfos()
 ADN_ResourceNetworks_Data::ResourceNetworkInfos* ADN_ResourceNetworks_Data::ResourceNetworkInfos::CreateCopy()
 {
     ResourceNetworkInfos* pCopy = new ResourceNetworkInfos();
-    pCopy->strName_ = strName_.GetData();
     pCopy->strColor_ = strColor_.GetData();
     pCopy->nProduction_ = nProduction_.GetData();
     pCopy->ptrCategory_ = ptrCategory_.GetData();

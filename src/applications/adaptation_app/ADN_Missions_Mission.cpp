@@ -75,7 +75,6 @@ ADN_Missions_Mission::~ADN_Missions_Mission()
 ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
 {
     ADN_Missions_Mission* newMission     = new ADN_Missions_Mission( type_ );
-    newMission->strName_                 = strName_.GetData();
     newMission->diaBehavior_             = diaBehavior_.GetData();
     newMission->cdtDiaBehavior_          = cdtDiaBehavior_.GetData();
     newMission->mrtDiaBehavior_          = mrtDiaBehavior_.GetData();

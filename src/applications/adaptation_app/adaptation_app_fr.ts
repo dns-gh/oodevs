@@ -6458,10 +6458,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>Breakdown_Data</name>
     <message>
-        <source>New breakdown</source>
-        <translation>Nouvelle panne</translation>
-    </message>
-    <message>
         <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
         <translation>Pannes - Type de panne invalide &apos;%1&apos; </translation>
     </message>

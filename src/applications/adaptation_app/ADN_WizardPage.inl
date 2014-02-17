@@ -153,7 +153,11 @@ T* ADN_WizardPage< T >::CreateObject()
 
     // Set name and options
     if( element_ )
+    {
+        if( !element_->strName_.GetData().empty() )
+            throw MASA_EXCEPTION( "Cloned elements should have an empty name before setting the new one" );
         element_->strName_ = strNewName;
+    }
     ApplyOptions();
     return element_;
 }

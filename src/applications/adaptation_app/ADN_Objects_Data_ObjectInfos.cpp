@@ -293,5 +293,6 @@ ADN_Objects_Data_ObjectInfos* ADN_Objects_Data_ObjectInfos::CreateCopy()
     ADN_Objects_Data::ADN_CapacityInfos_Spawn* spawn = static_cast< ADN_Objects_Data::ADN_CapacityInfos_Spawn* >( pCopy->capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Spawn::TAG ].get() );
     spawn->Load( pCopy->strName_.GetData() );
 
+    pCopy->strName_.Purge();
     return pCopy;
 }
