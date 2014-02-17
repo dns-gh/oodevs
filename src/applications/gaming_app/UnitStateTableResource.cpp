@@ -359,7 +359,7 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
         int nResult = QMessageBox::information( const_cast< UnitStateTableResource* >( this ), "Sword", tools::translate( "UnitStateTableResource", "Your modifications will be applied to all sub-units of this entity, do you want to validate ?" ), QMessageBox::Yes, QMessageBox::No );
         if( nResult == QMessageBox::No )
             return;
-        for( int i = 0; i < rowsChanged_.size(); ++i )
+        for( int i = 0; i < static_cast< int >( rowsChanged_.size() ); ++i )
         {
             int row = rowsChanged_[ i ];
             const QString name = GetDisplayData( row, eName );
