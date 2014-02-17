@@ -82,5 +82,5 @@ CoordinateSystems::Projection CoordinateSystems::Convert( const QString& proj )
         return E_Wgs84Dms;
     if( proj == "local" )
         return E_Local;
-    return static_cast< CoordinateSystems::Projection >( -1 );
+    return E_Count;
 }

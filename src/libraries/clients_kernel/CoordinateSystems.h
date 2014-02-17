@@ -33,11 +33,12 @@ public:
         E_SanC,
         E_Wgs84Dd,
         E_Wgs84Dms,
-        E_Local
+        E_Local,
+        E_Count,
     };
     // Returns the name of input projection
     static QString    Convert( Projection proj );
-    // Converts input projection name to a Projection or -1 if invalid
+    // Converts input projection name to a Projection or E_Count if invalid
     static Projection Convert( const QString& proj );
     //@}
 
