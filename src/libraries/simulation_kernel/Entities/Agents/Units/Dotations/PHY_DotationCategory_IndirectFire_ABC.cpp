@@ -14,6 +14,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_World.h"
@@ -104,6 +105,7 @@ void PHY_DotationCategory_IndirectFire_ABC::ApplyDetectionRangeEffect( const MT_
     msg().mutable_ammunition()->set_id( dotationCategory_.GetMosID() );
     for( auto it = fireEffectsIds.begin(); it != fireEffectsIds.end(); ++it )
         msg().add_fire_effects()->set_id( *it );
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
