@@ -110,7 +110,7 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
             double oldPercentage = oldQuantity / static_cast< double >( maximum );
             if( static_cast< int >( 10000 * percentage ) != static_cast< int >( 10000 * oldPercentage ) )
             {
-                SetData( item->row(), eQuantity, QString::number( quantity ), quantity );
+                SetData( item->row(), eQuantity, locale().toString( quantity ), quantity );
                 UpdateColor( item, quantity, maximum );
             }
         }
