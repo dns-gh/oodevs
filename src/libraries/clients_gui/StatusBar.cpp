@@ -27,7 +27,7 @@ using namespace gui;
 
 namespace
 {
-    static const QString statusBarCoordinates = "/Gaming/StatusBarCoordinates";
+    const QString statusBarCoordinates = "/Gaming/StatusBarCoordinates";
 }
 
 // -----------------------------------------------------------------------------
