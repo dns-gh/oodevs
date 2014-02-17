@@ -61,10 +61,10 @@ StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, Terr
         AddField( parent, size, proj, checked );
     };
     addfield( 155, CoordinateSystems::E_Local );
-    addfield( 155, CoordinateSystems::E_Mgrs );
-    addfield( 155, CoordinateSystems::E_SanC );
+    addfield( 105, CoordinateSystems::E_Mgrs );
+    addfield( 105, CoordinateSystems::E_SanC );
     addfield( 155, CoordinateSystems::E_Wgs84Dd );
-    addfield( 155, CoordinateSystems::E_Wgs84Dms );
+    addfield( 215, CoordinateSystems::E_Wgs84Dms );
     pMenu_->insertSeparator();
     pElevation_   = AddField( parent, 50, tr( "Elevation" ), true );
     pTerrainType_ = AddField( parent, 150, tr( "Terrain type" ), true );
