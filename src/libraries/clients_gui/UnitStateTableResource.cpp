@@ -17,8 +17,8 @@ using namespace gui;
 // Name: UnitStateTableResource constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel )
-    : UnitStateTable_ABC( "UnitStateTableResource", parent, 7 )
+UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel, kernel::Controllers& controllers )
+    : UnitStateTable_ABC( "UnitStateTableResource", parent, 7, controllers )
     , blockSlots_( false )
 {
     horizontalHeaders_ << tr( "Resources" )
@@ -96,53 +96,61 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
     if( blockSlots_ || !item )
         return;
     blockSlots_ = true;
-    int quantity = 0;
-    int maximum = 0;
-    bool changed = false;
-    if( item->column() == ePercentage && dataModel_.item( item->row(), eQuantity ) && dataModel_.item( item->row(), eMaximum ) )
+    try
     {
-        double percentage = 0.01 * GetUserData( item->row(), ePercentage ).toDouble();
-        maximum = GetUserData( item->row(), eMaximum ).toInt();
-        quantity = static_cast< int >( maximum * percentage );
-        int oldQuantity = GetUserData( item->row(), eQuantity ).toInt();
-        double oldPercentage = oldQuantity / static_cast< double >( maximum );
-        if( static_cast< int >( 10000 * percentage ) != static_cast< int >( 10000 * oldPercentage ) )
+        int quantity = 0;
+        int maximum = 0;
+        bool changed = false;
+        if( item->column() == ePercentage && dataModel_.item( item->row(), eQuantity ) && dataModel_.item( item->row(), eMaximum ) )
         {
-            SetData( item->row(), eQuantity, QString::number( quantity ), quantity );
+            double percentage = 0.01 * GetUserData( item->row(), ePercentage ).toDouble();
+            maximum = GetUserData( item->row(), eMaximum ).toInt();
+            quantity = static_cast< int >( maximum * percentage );
+            int oldQuantity = GetUserData( item->row(), eQuantity ).toInt();
+            double oldPercentage = oldQuantity / static_cast< double >( maximum );
+            if( static_cast< int >( 10000 * percentage ) != static_cast< int >( 10000 * oldPercentage ) )
+            {
+                SetData( item->row(), eQuantity, QString::number( quantity ), quantity );
+                changed = true;
+            }
+        }
+        else if( item->column() == eQuantity )
+        {
             changed = true;
+            quantity = GetUserData( item->row(), eQuantity ).toInt();
+            maximum = GetUserData( item->row(), eMaximum ).toInt();
+            if( quantity == 0 && maximum == 0 )
+                SetData( item->row(), ePercentage, "0.00", 0 );
+            else
+            {
+                double percentage = quantity * 100. / static_cast< double >( maximum );
+                SetData( item->row(), ePercentage, locale().toString( percentage, 'f', 2 ), percentage );
+            }
+        }
+        if( changed )
+        {
+            if( quantity <= maximum )
+            {
+                SetColor( item->row(), eMaximum, item->background(), -1 );
+                SetColor( item->row(), ePercentage, item->background(), -1 );
+            }
+            else
+            {
+                SetColor( item->row(), eMaximum, Qt::gray, 0 );
+                SetColor( item->row(), ePercentage, Qt::gray, 0 );
+            }
+            if( maximum == 0 )
+            {
+                QStandardItem* itemPercentage = dataModel_.item( item->row(), ePercentage );
+                if( itemPercentage )
+                    itemPercentage->setFlags( Qt::ItemIsSelectable );
+            }
         }
     }
-    else if( item->column() == eQuantity )
+    catch( ... )
     {
-        changed = true;
-        quantity = GetUserData( item->row(), eQuantity ).toInt();
-        maximum = GetUserData( item->row(), eMaximum ).toInt();
-        if( quantity == 0 && maximum == 0 )
-            SetData( item->row(), ePercentage, "0.00", 0 );
-        else
-        {
-            double percentage = quantity * 100. / static_cast< double >( maximum );
-            SetData( item->row(), ePercentage, locale().toString( percentage, 'f', 2 ), percentage );
-        }
-    }
-    if( changed )
-    {
-        if( quantity <= maximum )
-        {
-            SetColor( item->row(), eMaximum, item->background(), -1 );
-            SetColor( item->row(), ePercentage, item->background(), -1 );
-        }
-        else
-        {
-            SetColor( item->row(), eMaximum, Qt::gray, 0 );
-            SetColor( item->row(), ePercentage, Qt::gray, 0 );
-        }
-        if( maximum == 0 )
-        {
-            QStandardItem* itemPercentage = dataModel_.item( item->row(), ePercentage );
-            if( itemPercentage )
-                itemPercentage->setFlags( Qt::ItemIsSelectable );
-        }
+        blockSlots_ = false;
+        throw;
     }
     blockSlots_ = false;
 }

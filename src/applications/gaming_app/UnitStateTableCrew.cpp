@@ -31,12 +31,11 @@
 // -----------------------------------------------------------------------------
 UnitStateTableCrew::UnitStateTableCrew( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
                                        const kernel::Time_ABC& simulation, QWidget* parent )
-    : gui::UnitStateTableCrew( parent )
+    : gui::UnitStateTableCrew( parent, controllers )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
     , simulation_  ( simulation )
-    , selected_    ( controllers )
 {
     PopulateEnumOrderParameters< E_HumanRank >( "HumanRank", "enumeration", eRank, eNbrHumanRank );
     PopulateEnumOrderParameters< E_HumanState >( "HumanState", "enumeration", eState, eNbrHumanState );
@@ -73,7 +72,7 @@ void UnitStateTableCrew::NotifyUpdated( const Troops& troops )
     if( selected_ && selected_->Retrieve< Troops >() == &troops )
     {
         Purge();
-        RecursiveLoad( *selected_.ConstCast() );
+        RecursiveLoad( *selected_.ConstCast(), true );
     }
 }
 
@@ -85,7 +84,6 @@ bool UnitStateTableCrew::HasChanged( kernel::Entity_ABC& selected ) const
 {
     if( IsReadOnly() || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
         return false;
-    // todo
 
     assert( selected_ == &selected );
 

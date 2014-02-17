@@ -24,12 +24,13 @@ using namespace gui;
 // Name: UnitStateTable_ABC constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTable_ABC::UnitStateTable_ABC( const QString& objectName, QWidget* parent, int numCols )
+UnitStateTable_ABC::UnitStateTable_ABC( const QString& objectName, QWidget* parent, int numCols, kernel::Controllers& controllers )
     : RichWidget< QTableView >( objectName, parent )
     , dataModel_ ( parent )
     , proxyModel_( parent )
     , delegate_  ( parent )
     , agregated_ ( false )
+    , selected_  ( controllers )
 {
     dataModel_.setColumnCount( numCols );
     proxyModel_.setSourceModel( &dataModel_ );
@@ -72,8 +73,10 @@ void UnitStateTable_ABC::Purge()
 // Name: UnitStateTable_ABC::RecursiveLoad
 // Created: ABR 2011-07-06
 // -----------------------------------------------------------------------------
-void UnitStateTable_ABC::RecursiveLoad( kernel::Entity_ABC& entity )
+void UnitStateTable_ABC::RecursiveLoad( kernel::Entity_ABC& entity, bool isSelectedEntity )
 {
+    if( isSelectedEntity )
+        selected_ = &entity;
     const std::string& typeName = entity.GetTypeName();
     if( typeName == kernel::Agent_ABC::typeName_ )
         Load( entity );
@@ -84,7 +87,7 @@ void UnitStateTable_ABC::RecursiveLoad( kernel::Entity_ABC& entity )
         const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
         tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
         while( it.HasMoreElements() )
-            RecursiveLoad( const_cast< kernel::Entity_ABC& >( it.NextElement() ) );
+            RecursiveLoad( const_cast< kernel::Entity_ABC& >( it.NextElement() ), false );
     }
 }
 

@@ -27,7 +27,7 @@ class UnitStateTableResource : public UnitStateTable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel );
+             UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel, kernel::Controllers& controllers );
     virtual ~UnitStateTableResource();
     //@}
 

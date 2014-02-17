@@ -20,8 +20,8 @@ using namespace gui;
 // Name: UnitStateTableCrew constructor
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
-UnitStateTableCrew::UnitStateTableCrew( QWidget* parent )
-    : UnitStateTable_ABC( "UnitStateTableCrew", parent, 7 )
+UnitStateTableCrew::UnitStateTableCrew( QWidget* parent, kernel::Controllers& controllers )
+    : UnitStateTable_ABC( "UnitStateTableCrew", parent, 7, controllers )
     , updating_( false )
 {
     horizontalHeaders_ << tr( "Rank" )

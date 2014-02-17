@@ -67,8 +67,8 @@ namespace
 // Name: UnitStateTableResource constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableResource::UnitStateTableResource( QWidget* parent, const StaticModel& staticModel )
-    : gui::UnitStateTableResource( parent, tools::translate( "UnitStateTableResource", "Default capacity" ) )
+UnitStateTableResource::UnitStateTableResource( QWidget* parent, const StaticModel& staticModel, kernel::Controllers& controllers )
+    : gui::UnitStateTableResource( parent, tools::translate( "UnitStateTableResource", "Default capacity" ), controllers )
     , staticModel_( staticModel )
     , typeId_     ( 0 )
 {
@@ -221,23 +221,21 @@ namespace
 bool UnitStateTableResource::HasChanged( kernel::Entity_ABC& selected ) const
 {
     rowChanged_.clear();
-    bool ret = false;
+    bool result = false;
     if( selected.GetTypeName() == kernel::Agent_ABC::typeName_ )
     {
         InitialState& extension = selected.Get< InitialState >();
         if( extension.resources_.size() != static_cast< unsigned int >( dataModel_.rowCount() ) )
             return true;
-        for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+        for( auto it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
         {
             for( int row = 0; row < dataModel_.rowCount(); ++row )
                 if( GetDisplayData( row, eName ) == it->name_ &&
                     GetDisplayData( row, eCategory ) == it->category_ )
                 {
-                    if( it->number_ != GetUserData( row, eQuantity ).toUInt() ||
+                    return( it->number_ != GetUserData( row, eQuantity ).toUInt() ||
                         it->maximum_ != GetUserData( row, eMaximum ).toUInt() ||
-                        it->threshold_ != GetUserData( row, eThreshold ).toDouble() )
-                        return true;
-                    break;
+                        it->threshold_ != GetUserData( row, eThreshold ).toDouble() );
                 }
         }
     }
@@ -248,12 +246,12 @@ bool UnitStateTableResource::HasChanged( kernel::Entity_ABC& selected ) const
             unsigned int quantity = RecursiveQuantity( selected, GetDisplayData( row, eName ), GetDisplayData( row, eCategory ) );
             if( quantity != GetUserData( row, eQuantity ).toUInt() )
             {
-                ret = true;
+                result = true;
                 rowChanged_.push_back( row );
             }
         }
     }
-    return ret;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -279,7 +277,7 @@ namespace
         if( entity.GetTypeName() == kernel::Agent_ABC::typeName_)
         {
             InitialState& extension = entity.Get< InitialState >();
-            for( InitialState::IT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+            for( auto it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
                 if( name == it->name_ && category == it->category_ )
                 {
                     last = &entity;
@@ -337,12 +335,12 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
             if( quantity > 0 && last )
             {
                 InitialState& extension = last->Get< InitialState >();
-                for( InitialState::IT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+                for( auto it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
                     if( name == it->name_ && category == it->category_ )
                         it->number_ += quantity;
             }
         }
         const_cast< UnitStateTableResource* >( this )->Purge();
-        const_cast< UnitStateTableResource* >( this )->RecursiveLoad( selected );
+        const_cast< UnitStateTableResource* >( this )->RecursiveLoad( selected, true );
     }
 }

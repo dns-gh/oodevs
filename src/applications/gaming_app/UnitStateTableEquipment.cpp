@@ -37,13 +37,12 @@
 UnitStateTableEquipment::UnitStateTableEquipment( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
                                                   const kernel::Time_ABC& simulation, QWidget* parent, const kernel::Profile_ABC& profile,
                                                   gui::DisplayExtractor& extractor )
-    : gui::UnitStateTableEquipment( parent, extractor )
+    : gui::UnitStateTableEquipment( parent, extractor, controllers )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
     , simulation_  ( simulation )
     , profile_     ( profile )
-    , selected_    ( controllers )
 {
     controllers_.Register( *this );
 }
@@ -121,11 +120,10 @@ unsigned int UnitStateTableEquipment::BreakdownComboIndexToId( const QStringList
 // -----------------------------------------------------------------------------
 void UnitStateTableEquipment::NotifyUpdated( const Equipments& equipments )
 {
-    // todo
     if( selected_ && selected_->Retrieve< Equipments >() == &equipments )
     {
         Purge();
-        RecursiveLoad( *selected_.ConstCast() );
+        RecursiveLoad( *selected_.ConstCast(), true );
     }
 }
 

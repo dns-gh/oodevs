@@ -34,7 +34,7 @@ class UnitStateTableEquipment : public UnitStateTable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTableEquipment( QWidget* parent, DisplayExtractor& extractor );
+             UnitStateTableEquipment( QWidget* parent, DisplayExtractor& extractor, kernel::Controllers& controllers );
     virtual ~UnitStateTableEquipment();
     //@}
 

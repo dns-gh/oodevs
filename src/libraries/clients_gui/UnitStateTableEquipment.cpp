@@ -22,8 +22,8 @@ using namespace gui;
 // Name: UnitStateTableEquipment constructor
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
-UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, DisplayExtractor& extractor )
-    : UnitStateTable_ABC( "UnitStateTableEquipment", parent, 4 )
+UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, DisplayExtractor& extractor, kernel::Controllers& controllers )
+    : UnitStateTable_ABC( "UnitStateTableEquipment", parent, 4, controllers )
     , linkItemDelegate_( 0 )
     , extractor_       ( extractor )
 {

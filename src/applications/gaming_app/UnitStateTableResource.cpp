@@ -42,12 +42,11 @@
 // -----------------------------------------------------------------------------
 UnitStateTableResource::UnitStateTableResource( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
                                                 const kernel::Time_ABC& simulation, QWidget* parent )
-    : gui::UnitStateTableResource( parent, tools::translate( "UnitStateTableResource", "Maximal capacity" ) )
+    : gui::UnitStateTableResource( parent, tools::translate( "UnitStateTableResource", "Maximal capacity" ), controllers )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
     , simulation_  ( simulation )
-    , selected_    ( controllers )
 {
     delegate_.AddSpinBoxOnColumn( eQuantity, 0, std::numeric_limits< int >::max(), 10 );
     delegate_.SetColumnDependency( eQuantity, eMaximum, gui::CommonDelegate::eLTE );
@@ -111,7 +110,7 @@ std::pair< unsigned int, double > UnitStateTableResource::GetCapacityAndConsumpt
 
 namespace
 {
-    const kernel::Entity_ABC* SubordinateHasDotation( const kernel::Entity_ABC& entity, const kernel::Dotations_ABC& dotations )
+    const kernel::Entity_ABC* SubordinateHavingDotation( const kernel::Entity_ABC& entity, const kernel::Dotations_ABC& dotations )
     {
         if( entity.Retrieve< kernel::Dotations_ABC >() == &dotations )
             return &entity;
@@ -120,7 +119,7 @@ namespace
         while( it.HasMoreElements() )
         {
             const kernel::Entity_ABC& subEntity = it.NextElement();
-            const kernel::Entity_ABC* tmp = SubordinateHasDotation( subEntity, dotations );
+            const kernel::Entity_ABC* tmp = SubordinateHavingDotation( subEntity, dotations );
             if( tmp )
                 return tmp;
         }
@@ -136,15 +135,15 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
 {
     if( !selected_ )
         return;
-    const kernel::Entity_ABC* entity = SubordinateHasDotation( *selected_, dotations );
+    const kernel::Entity_ABC* entity = SubordinateHavingDotation( *selected_, dotations );
 
-    if( entity && entity->Retrieve< kernel::Dotations_ABC >() == &dotations )
+    if( entity )
     {
         tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( dotations ).CreateIterator();
         if( selected_->GetTypeName() != kernel::Agent_ABC::typeName_ || static_cast< const Dotations& >( dotations ).Count() != static_cast< unsigned long >( dataModel_.rowCount() ) )
         {
             Purge();
-            RecursiveLoad( *selected_.ConstCast() );
+            RecursiveLoad( *selected_.ConstCast(), true );
         }
         else
             while( dotationIterator.HasMoreElements() )
@@ -335,26 +334,26 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
         return;
     if( selected.GetTypeName() == kernel::Agent_ABC::typeName_ )
     {
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_dotation" );
-    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
+        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_dotation" );
+        std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
 
-    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-    actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
-    action->AddParameter( *parameterList );
+        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+        actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
+        action->AddParameter( *parameterList );
 
-    for( auto it = rowsChanged_.begin(); it != rowsChanged_.end(); ++it )
-    {
-        assert( it->second >=0 && it->second < dataModel_.rowCount() );
-        actions::parameters::ParameterList& list = parameterList->AddList( "Dotation" );
-        list.AddIdentifier( "ID", it->first );
-        list.AddQuantity( "Quantity", GetUserData( it->second, eQuantity ).toInt() );
-        list.AddNumeric( "Threshold", GetUserData( it->second, eThreshold ).toFloat() );
+        for( auto it = rowsChanged_.begin(); it != rowsChanged_.end(); ++it )
+        {
+            assert( it->second >=0 && it->second < dataModel_.rowCount() );
+            actions::parameters::ParameterList& list = parameterList->AddList( "Dotation" );
+            list.AddIdentifier( "ID", it->first );
+            list.AddQuantity( "Quantity", GetUserData( it->second, eQuantity ).toInt() );
+            list.AddNumeric( "Threshold", GetUserData( it->second, eThreshold ).toFloat() );
+        }
+        rowsChanged_.clear();
+        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new actions::ActionTasker( controllers_.controller_, selected_, false ) );
+        actionsModel_.Publish( *action );
     }
-    rowsChanged_.clear();
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( controllers_.controller_, selected_, false ) );
-    actionsModel_.Publish( *action );
-}
     else
     {
         int nResult = QMessageBox::information( const_cast< UnitStateTableResource* >( this ), "Sword", tools::translate( "UnitStateTableResource", "Your modifications will be applied to all sub-units of this entity, do you want to validate ?" ), QMessageBox::Yes, QMessageBox::No );

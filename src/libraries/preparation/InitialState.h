@@ -56,7 +56,6 @@ public:
     typedef T_Crews::const_iterator               CIT_Crews;
 
     typedef std::vector< InitialStateResource >     T_Resources;
-    typedef T_Resources::iterator                  IT_Resources;
     typedef T_Resources::const_iterator           CIT_Resources;
     //@}
 

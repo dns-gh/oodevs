@@ -89,7 +89,6 @@ private:
     const StaticModel&                        staticModel_;
     actions::ActionsModel&                    actionsModel_;
     const kernel::Time_ABC&                   simulation_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
     mutable T_Changes                         rowsChanged_;
     //@}
 };

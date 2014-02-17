@@ -32,7 +32,7 @@ class UnitStateTableResource : public gui::UnitStateTableResource
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTableResource( QWidget* parent, const StaticModel& staticModel );
+             UnitStateTableResource( QWidget* parent, const StaticModel& staticModel, kernel::Controllers& controllers );
     virtual ~UnitStateTableResource();
     //@}
 

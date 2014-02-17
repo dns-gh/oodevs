@@ -33,7 +33,7 @@ class UnitStateTable_ABC : public RichWidget< QTableView >
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTable_ABC( const QString& objectName, QWidget* parent, int numCols );
+             UnitStateTable_ABC( const QString& objectName, QWidget* parent, int numCols, kernel::Controllers& controllers );
     virtual ~UnitStateTable_ABC();
     //@}
 
@@ -48,7 +48,7 @@ public:
     //@{
     virtual void Purge();
     virtual bool IsReadOnlyForType( const std::string& typeName ) const = 0;
-    void RecursiveLoad( kernel::Entity_ABC& entity );
+    void RecursiveLoad( kernel::Entity_ABC& entity, bool isSelectedEntity );
     void SetReadOnly( bool readOnly );
     bool IsReadOnly() const;
     //@}
@@ -80,6 +80,7 @@ protected:
     CommonDelegate        delegate_;
     QStringList           horizontalHeaders_;
     bool                  agregated_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 
