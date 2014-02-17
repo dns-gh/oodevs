@@ -71,6 +71,7 @@ private:
     //@{
     QLabel* AddField( QStatusBar* parent, unsigned int size, const QString& title, bool checked );
     QLabel* AddField( QStatusBar* parent, unsigned int size, int id, bool checked );
+    void ParameterSelected( int index, bool save );
     void SaveSettings();
     //@}
 

@@ -102,7 +102,7 @@ QLabel* StatusBar::AddField( QStatusBar* parent, unsigned int size, const QStrin
     menuFields_.push_back( field );
     const int id = pMenu_->insertItem( title, static_cast< int >( menuFields_.size() ) );
     if( checked )
-        ParameterSelected( id );
+        ParameterSelected( id, false );
     return field;
 }
 
@@ -182,14 +182,24 @@ void StatusBar::OnMouseMove( const geometry::Point3f& position )
 // Name: StatusBar::ParameterSelected
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
-void StatusBar::ParameterSelected( int index )
+void StatusBar::ParameterSelected( int index, bool save )
 {
     QLabel* field = menuFields_[index - 1];
     if( !field )
         return;
     pMenu_->setItemChecked( index, field->isHidden() );
     field->setVisible( field->isHidden() );
-    SaveSettings();
+    if( save )
+        SaveSettings();
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::ParameterSelected
+// Created: BAX 2014-02-17
+// -----------------------------------------------------------------------------
+void StatusBar::ParameterSelected( int index )
+{
+    ParameterSelected( index, true );
 }
 
 // -----------------------------------------------------------------------------
