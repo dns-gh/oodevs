@@ -185,6 +185,7 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 	if opts == nil {
 		opts = &SessionErrorsOpts{}
 	}
+	report := bytes.Buffer{}
 	logFiles := []string{
 		"debug/sim.log",
 		"debug/replayer.log",
@@ -208,7 +209,7 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 			return err
 		}
 		if len(trace) > 0 {
-			return fmt.Errorf("stacktrace found in %s:\n%s\n", path, trace)
+			report.WriteString(fmt.Sprintf("stacktrace found in %s:\n%s\n", path, trace))
 		}
 
 		fp.Seek(0, 0)
@@ -217,7 +218,7 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 			return err
 		}
 		if len(errors) != 0 {
-			return fmt.Errorf("fatal errors found in %s:\n%s\n", path, errors)
+			report.WriteString(fmt.Sprintf("fatal errors found in %s:\n%s\n", path, errors))
 		}
 	}
 
@@ -231,8 +232,12 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 		}
 		if len(dumps) > 0 {
 			s := "dump files found:\n  " + strings.Join(dumps, "\n  ") + "\n"
-			return fmt.Errorf("%s", s)
+			report.WriteString(s)
 		}
+	}
+	found := report.String()
+	if len(found) > 0 {
+		return fmt.Errorf("%s", found)
 	}
 	return nil
 }
