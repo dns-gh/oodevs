@@ -20,9 +20,78 @@ import (
 	"strings"
 )
 
+// Parses log files and returns log file groups. Groups are defined by:
+//
+//   [2014-02-17 08:21:59] header
+//     continuation
+//     continuation
+//
+// Otherwise, the struct behaves like a bufio.Scanner.
+type LogParser struct {
+	scanner *bufio.Scanner
+	reDate  *regexp.Regexp
+	group   string // most recently lines group extracted by Scan()
+	pending string // line read from scanner but belonging to the next group
+	done    bool   // true if !scanner.Scan() and pending was emptied
+}
+
+func NewLogParser(fp io.Reader) *LogParser {
+	return &LogParser{
+		bufio.NewScanner(fp),
+		regexp.MustCompile(`^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\]`),
+		"",
+		"",
+		false,
+	}
+}
+
+func (p *LogParser) Scan() bool {
+	if p.done {
+		return false
+	}
+	var s string
+	p.group = ""
+	for {
+		if len(p.pending) > 0 {
+			s = p.pending
+			p.pending = ""
+		} else {
+			if !p.scanner.Scan() {
+				p.done = true
+				break
+			}
+			s = p.scanner.Text() + "\n"
+		}
+		match := p.reDate.MatchString(s)
+		if len(p.group) == 0 {
+			if !match {
+				continue
+			}
+			p.group += s
+		} else {
+			if match {
+				p.pending = s
+				break
+			}
+			p.group += s
+		}
+	}
+	return len(p.group) > 0
+}
+
+func (p *LogParser) Text() string {
+	return p.group
+}
+
+func (p *LogParser) Err() error {
+	return p.scanner.Err()
+}
+
 type SessionErrorsOpts struct {
-	IgnorePatterns []string
-	IgnoreDumps    bool
+	IgnorePatterns []string // A list of patterns matching log lines group
+	// to ignore.
+	IgnoreDumps bool // Ignore dump files
+	IgnoreLua   bool // Ignore Lua tracebacks
 }
 
 // Returns a list of dump files found in a dump directory.
@@ -61,9 +130,9 @@ var reFunctErr *regexp.Regexp = regexp.MustCompile(makePattern(
 	`Client hasn't answered messages from last tick!`,
 ))
 
-// Reads fp and possibly returns a concatenation of all <functERR> lines, or an
-// empty string.
-func FindLoggedFatalErrors(fp io.Reader, opts *SessionErrorsOpts) (string, error) {
+// Reads reader and possibly returns a concatenation of all <functERR> lines,
+// or an empty string.
+func FindLoggedFatalErrors(reader io.Reader, opts *SessionErrorsOpts) (string, error) {
 	var reIgn *regexp.Regexp
 	var err error
 	if len(opts.IgnorePatterns) > 0 {
@@ -74,17 +143,17 @@ func FindLoggedFatalErrors(fp io.Reader, opts *SessionErrorsOpts) (string, error
 	}
 
 	errors := bytes.Buffer{}
-	scanner := bufio.NewScanner(fp)
+	scanner := NewLogParser(reader)
 	for scanner.Scan() {
-		line := scanner.Text()
-		if strings.Contains(line, "<functERR>") {
-			if reFunctErr.MatchString(line) {
+		group := scanner.Text()
+		if strings.Contains(group, "<functERR>") {
+			if reFunctErr.MatchString(group) {
 				continue
 			}
-			if reIgn != nil && reIgn.MatchString(line) {
+			if reIgn != nil && reIgn.MatchString(group) {
 				continue
 			}
-			errors.WriteString(line + "\n")
+			errors.WriteString(group)
 		}
 	}
 	if err := scanner.Err(); err != nil {
@@ -93,23 +162,19 @@ func FindLoggedFatalErrors(fp io.Reader, opts *SessionErrorsOpts) (string, error
 	return errors.String(), nil
 }
 
-// Reads fp and possibly returns a stack trace, or an error.
-func FindStacktrace(fp io.Reader) (string, error) {
+// Reads reader and possibly returns a stack trace, or an error.
+func FindStacktrace(reader io.Reader) (string, error) {
 	// [2014-01-14 11:07:28] <Simulation> <functERR> Crash -
 	reStart := regexp.MustCompile(`<functERR>\s+Crash\s+-`)
 
-	started := false
 	trace := bytes.Buffer{}
-	scanner := bufio.NewScanner(fp)
+	scanner := NewLogParser(reader)
 	for scanner.Scan() {
-		line := scanner.Text()
-		if !started {
-			if !reStart.MatchString(line) {
-				continue
-			}
-			started = true
+		group := scanner.Text()
+		if !reStart.MatchString(group) {
+			continue
 		}
-		trace.WriteString(line + "\n")
+		trace.WriteString(group)
 	}
 	if err := scanner.Err(); err != nil {
 		return "", err
@@ -117,11 +182,35 @@ func FindStacktrace(fp io.Reader) (string, error) {
 	return trace.String(), nil
 }
 
+// Reads reader and returns Lua stack traces, or an error.
+func FindLuaStacktraces(reader io.Reader) (string, error) {
+	// [2014-02-17 08:09:04] <Logger plugin> <info> **** Time tick 24 - \
+	//   [15:22:48] - Trace - SAFETY.Police Unit[73] : \
+	//   resources\integration/Object.lua:55: attempt to index local 'object' \
+	//   (a nil value)stack traceback:
+	reTrace := regexp.MustCompile(`<Logger plugin>.*?- Trace -.*?traceback:`)
+
+	traces := bytes.Buffer{}
+	scanner := NewLogParser(reader)
+	for scanner.Scan() {
+		group := scanner.Text()
+		if !reTrace.MatchString(group) {
+			continue
+		}
+		traces.WriteString(group)
+	}
+	if err := scanner.Err(); err != nil {
+		return "", err
+	}
+	return traces.String(), nil
+}
+
 // Checks a session directory for all kind of errors.
 func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 	if opts == nil {
 		opts = &SessionErrorsOpts{}
 	}
+	output := bytes.Buffer{}
 	logFiles := []string{
 		"debug/sim.log",
 		"debug/replayer.log",
@@ -129,6 +218,7 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 		"sim.log",
 		"replayer.log",
 		"dispatcher.log",
+		"messages.log",
 	}
 	for _, logFile := range logFiles {
 		path := filepath.Join(sessionPath, logFile)
@@ -145,7 +235,7 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 			return err
 		}
 		if len(trace) > 0 {
-			return fmt.Errorf("stacktrace found in %s:\n%s\n", path, trace)
+			output.WriteString(fmt.Sprintf("stacktrace found in %s:\n%s\n", path, trace))
 		}
 
 		fp.Seek(0, 0)
@@ -154,7 +244,18 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 			return err
 		}
 		if len(errors) != 0 {
-			return fmt.Errorf("fatal errors found in %s:\n%s\n", path, errors)
+			output.WriteString(fmt.Sprintf("fatal errors found in %s:\n%s\n", path, errors))
+		}
+
+		if !opts.IgnoreLua {
+			fp.Seek(0, 0)
+			traces, err := FindLuaStacktraces(fp)
+			if err != nil {
+				return err
+			}
+			if len(traces) != 0 {
+				output.WriteString(fmt.Sprintf("Lua errors found in %s:\n%s\n", path, traces))
+			}
 		}
 	}
 
@@ -168,8 +269,12 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 		}
 		if len(dumps) > 0 {
 			s := "dump files found:\n  " + strings.Join(dumps, "\n  ") + "\n"
-			return fmt.Errorf("%s", s)
+			output.WriteString(s)
 		}
+	}
+	found := output.String()
+	if len(found) > 0 {
+		return fmt.Errorf("%s", found)
 	}
 	return nil
 }
