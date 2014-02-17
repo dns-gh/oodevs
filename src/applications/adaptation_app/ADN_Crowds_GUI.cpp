@@ -87,6 +87,7 @@ void ADN_Crowds_GUI::Build()
     Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 2, Qt::Horizontal, tr( "Details" ) );
     //{
         QGroupBox* groupBox = new QGroupBox( pPropertiesGroup );
+        groupBox->setObjectName( "crowd-properties" );
         QVBoxLayout* vLayout = new QVBoxLayout;
         groupBox->setLayout( vLayout );
         // Information
