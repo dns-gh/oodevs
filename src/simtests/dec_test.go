@@ -19,9 +19,16 @@ import (
 	"regexp"
 	"strings"
 	"swapi"
+	"swapi/simu"
 	"swtest"
 	"text/template"
 )
+
+func DisableLuaChecks() *simu.SessionErrorsOpts {
+	return &simu.SessionErrorsOpts{
+		IgnoreLua: true,
+	}
+}
 
 func (s *TestSuite) TestExecScript(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
@@ -103,7 +110,8 @@ func diffScript(c *C, client *swapi.Client, script string, keys map[string]inter
 
 func (s *TestSuite) TestGenericLuaErrors(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer stopSimAndClient(c, sim, client)
+	defer stopSim(c, sim, DisableLuaChecks())
+	defer client.Close()
 
 	// Floating point division by zero used to trigger exceptions in the sim
 	checkScript(c, client, `function TestFunction() return 1.0/0.0 end`, nil, "(?i).*inf.*", "")
@@ -118,7 +126,8 @@ end
 
 func (s *TestSuite) TestDecUnit(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer stopSimAndClient(c, sim, client)
+	defer stopSim(c, sim, DisableLuaChecks())
+	defer client.Close()
 	automat := createAutomat(c, client)
 	unit := CreateUnit(c, client, automat.Id)
 

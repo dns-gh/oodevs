@@ -360,9 +360,6 @@ func readFileAsString(c *C, path string) string {
 
 func stopSim(c *C, sim *simu.SimProcess, opts *simu.SessionErrorsOpts) {
 	sim.Stop()
-	if c.Failed() {
-		return
-	}
 	session := sim.Opts.GetSessionDir()
 	err := simu.CheckSessionErrors(session, opts)
 	if err != nil {

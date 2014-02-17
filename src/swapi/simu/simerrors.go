@@ -88,8 +88,10 @@ func (p *LogParser) Err() error {
 }
 
 type SessionErrorsOpts struct {
-	IgnorePatterns []string
-	IgnoreDumps    bool
+	IgnorePatterns []string // A list of patterns matching log lines group
+	// to ignore.
+	IgnoreDumps bool // Ignore dump files
+	IgnoreLua   bool // Ignore Lua tracebacks
 }
 
 // Returns a list of dump files found in a dump directory.
@@ -245,13 +247,15 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 			report.WriteString(fmt.Sprintf("fatal errors found in %s:\n%s\n", path, errors))
 		}
 
-		fp.Seek(0, 0)
-		traces, err := FindLuaStacktraces(fp)
-		if err != nil {
-			return err
-		}
-		if len(traces) != 0 {
-			report.WriteString(fmt.Sprintf("Lua errors found in %s:\n%s\n", path, traces))
+		if !opts.IgnoreLua {
+			fp.Seek(0, 0)
+			traces, err := FindLuaStacktraces(fp)
+			if err != nil {
+				return err
+			}
+			if len(traces) != 0 {
+				report.WriteString(fmt.Sprintf("Lua errors found in %s:\n%s\n", path, traces))
+			}
 		}
 	}
 
