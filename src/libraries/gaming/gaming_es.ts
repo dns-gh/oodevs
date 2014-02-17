@@ -430,6 +430,13 @@
     </message>
 </context>
 <context>
+    <name>Decisions</name>
+    <message>
+        <source>Mission:</source>
+        <translation type="unfinished">Misión:</translation>
+    </message>
+</context>
+<context>
     <name>Dotations</name>
     <message>
         <source>Resources</source>

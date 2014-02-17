@@ -78,7 +78,7 @@ public slots:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( const QModelIndex& next, const QModelIndex& previous );
+    void OnSelectionChanged( const QItemSelection& selected, const QItemSelection& deselected );
     void OnSelectionChanged( QListWidgetItem* item );
     void OnModelNameChanged( const QString& text );
     //@}
@@ -95,7 +95,10 @@ private:
     QTextEdit* GetCurrentDescription() const;
     QString GetCurrentPackage() const;
     bool BrowseClicked();
-    void InternalExportPackage( tools::zip::OutputArchive& archive );
+    void ExportPackage( tools::zip::OutputArchive& archive );
+    void ExportExercise( tools::zip::OutputArchive& archive );
+    void ExportTerrain( tools::zip::OutputArchive& archive );
+    void ExportModels( tools::zip::OutputArchive& archive );
     void WriteContent( tools::zip::OutputArchive& archive ) const;
     //@}
 

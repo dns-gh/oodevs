@@ -2704,6 +2704,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Remove resource</source>
         <translation>Supprimer la ressource</translation>
     </message>
+    <message>
+        <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>
+        <translation type="unfinished">Vos modifications seront appliquées à toutes les sous-unités de cette entité, voulez-vous valider?</translation>
+    </message>
 </context>
 <context>
     <name>UrbanInfosDockWidget</name>

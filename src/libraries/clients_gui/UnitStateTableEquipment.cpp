@@ -22,8 +22,8 @@ using namespace gui;
 // Name: UnitStateTableEquipment constructor
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
-UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, DisplayExtractor& extractor )
-    : UnitStateTable_ABC( "UnitStateTableEquipment", parent, 4 )
+UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, DisplayExtractor& extractor, kernel::Controllers& controllers )
+    : UnitStateTable_ABC( "UnitStateTableEquipment", parent, 4, controllers )
     , linkItemDelegate_( 0 )
     , extractor_       ( extractor )
 {
@@ -45,6 +45,15 @@ UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, DisplayExtrac
 UnitStateTableEquipment::~UnitStateTableEquipment()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableEquipment::IsReadOnlyForType
+// Created: JSR 2012-03-22
+// -----------------------------------------------------------------------------
+bool UnitStateTableEquipment::IsReadOnlyForType( const std::string& typeName ) const
+{
+    return typeName != kernel::Agent_ABC::typeName_;
 }
 
 // -----------------------------------------------------------------------------
