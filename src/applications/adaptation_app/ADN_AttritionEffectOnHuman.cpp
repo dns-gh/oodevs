@@ -25,6 +25,20 @@ std::string AttritionEffectOnHuman::GetItemName()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AttritionEffectOnHuman::CreateCopy
+// Created: ABR 2014-02-17
+// -----------------------------------------------------------------------------
+AttritionEffectOnHuman* AttritionEffectOnHuman::CreateCopy()
+{
+    AttritionEffectOnHuman* pCopy = new AttritionEffectOnHuman();
+    pCopy->strName_ = strName_.GetData();
+    pCopy->nEquipmentState_ = nEquipmentState_.GetData();
+    pCopy->nInjuredPercentage_ = nInjuredPercentage_.GetData();
+    pCopy->nDeadPercentage_ = nDeadPercentage_.GetData();
+    return pCopy;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AttritionEffectOnHuman::ReadArchive
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------

@@ -156,6 +156,18 @@ std::string ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::GetItemNa
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::CreateCopy
+// Created: ABR 2014-02-17
+// -----------------------------------------------------------------------------
+ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons* ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::CreateCopy()
+{
+    ActiveProtectionsInfosWeapons* pCopy = new ActiveProtectionsInfosWeapons();
+    pCopy->SetCrossedElement( GetCrossedElement() );
+    pCopy->coefficient_ = coefficient_.GetData();
+    return pCopy;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_Data::ActiveProtectionInfos
 // Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
@@ -189,7 +201,8 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::
     pCopy->hardKill_ = hardKill_.GetData();
     pCopy->usage_ = usage_.GetData();
     for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
-        pCopy->weapons_.AddItem( *it );
+        if( *it )
+            pCopy->weapons_.AddItem( ( *it )->CreateCopy() );
     pCopy->ptr_ = ptr_.GetData();
     return pCopy;
 }

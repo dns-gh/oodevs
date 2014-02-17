@@ -25,6 +25,7 @@ public:
     AttritionEffectOnHuman();
 
     std::string GetItemName();
+    AttritionEffectOnHuman* CreateCopy();
 
     void ReadArchive( xml::xistream& );
     void WriteArchive( xml::xostream& ) const;
