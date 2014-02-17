@@ -106,6 +106,20 @@ void PHY_ComposanteTypePion::Terminate()
     composantesTypes_.clear();
 }
 
+namespace
+{
+    double ReadMaxSpeed( xml::xistream& xis )
+    {
+        double rMaxSpeed = -1;
+        xis >> xml::start( "speeds" )
+                >> xml::attribute( "max", rMaxSpeed ) // km/h
+            >> xml::end;
+        if( rMaxSpeed <= 0 )
+            throw MASA_EXCEPTION( xis.context() + "speeds: max <= 0" );
+        return MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed ); // m/tick
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion constructor
 // Created: NLD 2004-08-04
@@ -114,7 +128,7 @@ void PHY_ComposanteTypePion::Terminate()
 PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
     : PHY_ComposanteType_ABC                     ( strName, xis )
     , time_                                      ( time )
-    , speeds_                                    ( xis )
+    , speeds_                                    ( xis, ReadMaxSpeed( xis ) )
     , rMaxSlope_                                 ( 1. )
     , rSlopeDeceleration_                        ( 0 )
     , dotationCapacities_                        ( "composition", xis )

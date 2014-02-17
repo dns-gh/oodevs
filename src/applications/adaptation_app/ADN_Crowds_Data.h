@@ -49,7 +49,7 @@ public:
             Cmp( E_Location& val ) : val_( val ) {}
             ~Cmp() {}
 
-            bool operator()( SpeedInfos* tgtnfos ) const
+            bool operator()( const SpeedInfos* tgtnfos ) const
             {
                 return tgtnfos->nTypeTerrain_ == val_;
             }

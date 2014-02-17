@@ -18,7 +18,7 @@
 // Name: PHY_Speeds constructor
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-PHY_Speeds::PHY_Speeds( xml::xistream& xis, double rMaxSpeed /*= -1.*/ )
+PHY_Speeds::PHY_Speeds( xml::xistream& xis, double rMaxSpeed )
     : rMaxSpeed_               ( rMaxSpeed )
     , rBaseSpeed_              ( -1. )
     , nLinearPassabilityMask_  ( 0 )
@@ -27,10 +27,13 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis, double rMaxSpeed /*= -1.*/ )
     , nBorderImpassabilityMask_( 0 )
     , nLinearImpassabilityMask_( 0 )
 {
-    rAreaSpeeds_.resize( TerrainData::nAreaTypes, rMaxSpeed );
-    rBorderSpeeds_.resize( TerrainData::nBorderTypes, rMaxSpeed );
-    rLinearSpeeds_.resize( TerrainData::nLinearTypes, rMaxSpeed );
-    xis >> xml::list( "speeds", *this, &PHY_Speeds::ReadSpeed );
+    const double defaultValue = xis.has_child( "speeds" ) ? -1. : rMaxSpeed;
+    rAreaSpeeds_.resize( TerrainData::nAreaTypes, defaultValue );
+    rBorderSpeeds_.resize( TerrainData::nBorderTypes, defaultValue );
+    rLinearSpeeds_.resize( TerrainData::nLinearTypes, defaultValue );
+    xis >> xml::optional >> xml::start( "speeds" )
+            >> xml::list( "speed", *this, &PHY_Speeds::ReadTerrain )
+        >> xml::end;
     CheckInitialization( xis );
     GenerateMasks();
 }
@@ -71,22 +74,6 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role )
 PHY_Speeds::~PHY_Speeds()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Speeds::ReadSpeed
-// Created: ABL 2007-07-23
-// -----------------------------------------------------------------------------
-void PHY_Speeds::ReadSpeed( xml::xistream& xis )
-{
-    if( rMaxSpeed_ == -1 )
-    {
-        rMaxSpeed_ = xis.attribute< double >( "max" ); // km/h
-        if( rMaxSpeed_ <= 0 )
-            throw MASA_EXCEPTION( xis.context() + "speeds: max <= 0" );
-        rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ ); // m/tick
-    }
-    xis >> xml::list( "speed", *this, &PHY_Speeds::ReadTerrain );
 }
 
 // -----------------------------------------------------------------------------
