@@ -180,6 +180,29 @@ func FindStacktrace(fp io.Reader) (string, error) {
 	return trace.String(), nil
 }
 
+// Reads fp and returns Lua stack traces, or an error.
+func FindLuaStacktraces(fp io.Reader) (string, error) {
+	// [2014-02-17 08:09:04] <Logger plugin> <info> **** Time tick 24 - \
+	//   [15:22:48] - Trace - SAFETY.Police Unit[73] : \
+	//   resources\integration/Object.lua:55: attempt to index local 'object' \
+	//   (a nil value)stack traceback:
+	reTrace := regexp.MustCompile(`<Logger plugin>.*?- Trace -.*?traceback:`)
+
+	traces := bytes.Buffer{}
+	scanner := NewLogParser(fp)
+	for scanner.Scan() {
+		group := scanner.Text()
+		if !reTrace.MatchString(group) {
+			continue
+		}
+		traces.WriteString(group)
+	}
+	if err := scanner.Err(); err != nil {
+		return "", err
+	}
+	return traces.String(), nil
+}
+
 // Checks a session directory for all kind of errors.
 func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 	if opts == nil {
@@ -193,6 +216,7 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 		"sim.log",
 		"replayer.log",
 		"dispatcher.log",
+		"messages.log",
 	}
 	for _, logFile := range logFiles {
 		path := filepath.Join(sessionPath, logFile)
@@ -219,6 +243,15 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 		}
 		if len(errors) != 0 {
 			report.WriteString(fmt.Sprintf("fatal errors found in %s:\n%s\n", path, errors))
+		}
+
+		fp.Seek(0, 0)
+		traces, err := FindLuaStacktraces(fp)
+		if err != nil {
+			return err
+		}
+		if len(traces) != 0 {
+			report.WriteString(fmt.Sprintf("Lua errors found in %s:\n%s\n", path, traces))
 		}
 	}
 

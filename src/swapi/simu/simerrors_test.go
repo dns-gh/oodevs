@@ -111,3 +111,22 @@ OS-Version: 6.1.7601 (Service Pack 1) 0x100-0x1
 3 : trace3
 `)
 }
+
+func (s *TestSuite) TestSimErrorsLuaStacktrace(c *C) {
+	fp := bytes.NewBufferString("" +
+		`[2014-02-17 10:37:54] <Logger plugin> <info> **** Time tick 11 - [15:20:38] - Report - a
+[2014-02-17 10:37:54] <Logger plugin> <info> **** Time tick 11 - [15:20:38] - Trace - SAFETY.Police traceback:
+    resources\integration/SimulationIntegration.lua:265: in function
+    [C]: ?
+    resources\integration/Object.lua:55: in function 'getObjectPositionsForWork'
+[2014-02-17 10:37:54] <Logger plugin> <info> **** Time tick 11 - [15:20:38] - Report - b
+`)
+	trace, err := FindLuaStacktraces(fp)
+	c.Assert(err, IsNil)
+	c.Assert(trace, Equals, ""+
+		`[2014-02-17 10:37:54] <Logger plugin> <info> **** Time tick 11 - [15:20:38] - Trace - SAFETY.Police traceback:
+    resources\integration/SimulationIntegration.lua:265: in function
+    [C]: ?
+    resources\integration/Object.lua:55: in function 'getObjectPositionsForWork'
+`)
+}
