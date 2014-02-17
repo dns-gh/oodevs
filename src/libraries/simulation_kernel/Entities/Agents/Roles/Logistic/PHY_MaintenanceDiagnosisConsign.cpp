@@ -22,7 +22,6 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 
-
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceDiagnosisConsign )
 
 // -----------------------------------------------------------------------------
@@ -282,7 +281,7 @@ bool PHY_MaintenanceDiagnosisConsign::FindAlternativeDiagnosisTeam( const PHY_Co
             if( type )
             {
                 pComposanteState_->GetConsign()->SetState( GetState(), 0 );
-                pComposanteState_->SelectMaintenanceTransporter( *type );
+                pComposanteState_->SelectDiagnosisTeam( *type );
             }
             EnterStateFinished();
             pComposanteState_ = 0; // Crade
