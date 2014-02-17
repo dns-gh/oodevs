@@ -2706,6 +2706,10 @@ Este dato no puede ser proyectado.</translation>
         <source>Remove resource</source>
         <translation>Borrar recurso</translation>
     </message>
+    <message>
+        <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UrbanInfosDockWidget</name>

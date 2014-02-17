@@ -2707,6 +2707,10 @@ This data can&apos;t be projected.</translation>
         <source>Remove resource</source>
         <translation>Remove resource</translation>
     </message>
+    <message>
+        <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UrbanInfosDockWidget</name>

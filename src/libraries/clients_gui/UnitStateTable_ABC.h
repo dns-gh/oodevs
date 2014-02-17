@@ -10,6 +10,7 @@
 #ifndef __gui_UnitStateTable_ABC_h_
 #define __gui_UnitStateTable_ABC_h_
 
+#include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Tools.h"
 #include "CommonDelegate.h"
 #include "RichWidget.h"
@@ -32,7 +33,7 @@ class UnitStateTable_ABC : public RichWidget< QTableView >
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTable_ABC( const QString& objectName, QWidget* parent, int numCols );
+             UnitStateTable_ABC( const QString& objectName, QWidget* parent, int numCols, kernel::Controllers& controllers );
     virtual ~UnitStateTable_ABC();
     //@}
 
@@ -46,7 +47,8 @@ public:
     //! @name Operations
     //@{
     virtual void Purge();
-    void RecursiveLoad( kernel::Entity_ABC& selected );
+    virtual bool IsReadOnlyForType( const std::string& typeName ) const = 0;
+    void RecursiveLoad( kernel::Entity_ABC& entity, bool isSelectedEntity );
     void SetReadOnly( bool readOnly );
     bool IsReadOnly() const;
     //@}
@@ -77,6 +79,8 @@ protected:
     QSortFilterProxyModel proxyModel_;
     CommonDelegate        delegate_;
     QStringList           horizontalHeaders_;
+    bool                  aggregated_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 

@@ -34,8 +34,14 @@ class UnitStateTableEquipment : public UnitStateTable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTableEquipment( QWidget* parent, DisplayExtractor& extractor );
+             UnitStateTableEquipment( QWidget* parent, DisplayExtractor& extractor, kernel::Controllers& controllers );
     virtual ~UnitStateTableEquipment();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual bool IsReadOnlyForType( const std::string& typeName ) const;
     //@}
 
 protected:

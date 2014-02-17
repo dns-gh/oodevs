@@ -31,12 +31,11 @@
 // -----------------------------------------------------------------------------
 UnitStateTableCrew::UnitStateTableCrew( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
                                        const kernel::Time_ABC& simulation, QWidget* parent )
-    : gui::UnitStateTableCrew( parent )
+    : gui::UnitStateTableCrew( parent, controllers )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
     , simulation_  ( simulation )
-    , selected_    ( controllers )
 {
     PopulateEnumOrderParameters< E_HumanRank >( "HumanRank", "enumeration", eRank, eNbrHumanRank );
     PopulateEnumOrderParameters< E_HumanState >( "HumanState", "enumeration", eState, eNbrHumanState );
@@ -73,7 +72,7 @@ void UnitStateTableCrew::NotifyUpdated( const Troops& troops )
     if( selected_ && selected_->Retrieve< Troops >() == &troops )
     {
         Purge();
-        RecursiveLoad( *selected_.ConstCast() );
+        RecursiveLoad( *selected_.ConstCast(), true );
     }
 }
 
@@ -83,7 +82,11 @@ void UnitStateTableCrew::NotifyUpdated( const Troops& troops )
 // -----------------------------------------------------------------------------
 bool UnitStateTableCrew::HasChanged( kernel::Entity_ABC& selected ) const
 {
-    assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
+    if( IsReadOnly() || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
+        return false;
+
+    assert( selected_ == &selected );
+
     Troops& troops = selected.Get< Troops >();
 
     unsigned int nbFound = 0;
