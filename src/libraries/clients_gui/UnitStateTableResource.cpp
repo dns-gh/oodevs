@@ -111,7 +111,7 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
             if( static_cast< int >( 10000 * percentage ) != static_cast< int >( 10000 * oldPercentage ) )
             {
                 SetData( item->row(), eQuantity, QString::number( quantity ), quantity );
-                changed = true;
+                UpdateColor( item, quantity, maximum );
             }
         }
         else if( item->column() == eQuantity )
@@ -119,32 +119,14 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
             changed = true;
             quantity = GetUserData( item->row(), eQuantity ).toInt();
             maximum = GetUserData( item->row(), eMaximum ).toInt();
-            if( quantity == 0 && maximum == 0 )
+            if( quantity == 0 || maximum == 0 )
                 SetData( item->row(), ePercentage, "0.00", 0 );
             else
             {
                 double percentage = quantity * 100. / static_cast< double >( maximum );
                 SetData( item->row(), ePercentage, locale().toString( percentage, 'f', 2 ), percentage );
             }
-        }
-        if( changed )
-        {
-            if( quantity <= maximum )
-            {
-                SetColor( item->row(), eMaximum, item->background(), -1 );
-                SetColor( item->row(), ePercentage, item->background(), -1 );
-            }
-            else
-            {
-                SetColor( item->row(), eMaximum, Qt::gray, 0 );
-                SetColor( item->row(), ePercentage, Qt::gray, 0 );
-            }
-            if( maximum == 0 )
-            {
-                QStandardItem* itemPercentage = dataModel_.item( item->row(), ePercentage );
-                if( itemPercentage )
-                    itemPercentage->setFlags( Qt::ItemIsSelectable );
-            }
+            UpdateColor( item, quantity, maximum );
         }
     }
     catch( ... )
@@ -153,4 +135,28 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
         throw;
     }
     blockSlots_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::UpdateColor
+// Created: LDC 2014-02-17
+// -----------------------------------------------------------------------------
+void UnitStateTableResource::UpdateColor( QStandardItem* item, int quantity, int maximum )
+{
+    if( quantity <= maximum )
+    {
+        SetColor( item->row(), eMaximum, item->background(), -1 );
+        SetColor( item->row(), ePercentage, item->background(), -1 );
+    }
+    else
+    {
+        SetColor( item->row(), eMaximum, Qt::gray, 0 );
+        SetColor( item->row(), ePercentage, Qt::gray, 0 );
+    }
+    if( maximum == 0 )
+    {
+        QStandardItem* itemPercentage = dataModel_.item( item->row(), ePercentage );
+        if( itemPercentage )
+            itemPercentage->setFlags( Qt::ItemIsSelectable );
+    }
 }

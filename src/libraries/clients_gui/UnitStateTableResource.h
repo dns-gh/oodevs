@@ -47,6 +47,7 @@ protected:
     //@{
     void MergeLine( const QString& name, const QString& category, unsigned quantity, unsigned maximum, double threshold, double consumption );
     void AddLine( const QString& name, const QString& category, unsigned quantity = 0, unsigned maximum = 0, double threshold = 0., double consumption = 0. );
+    void UpdateColor( QStandardItem* item, int quantity, int maximum );
     //@}
 
 protected slots:
