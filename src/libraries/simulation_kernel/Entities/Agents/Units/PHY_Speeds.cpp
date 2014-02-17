@@ -18,8 +18,8 @@
 // Name: PHY_Speeds constructor
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-PHY_Speeds::PHY_Speeds( xml::xistream& xis )
-    : rMaxSpeed_               ( -1. )
+PHY_Speeds::PHY_Speeds( xml::xistream& xis, double rMaxSpeed /*= -1.*/ )
+    : rMaxSpeed_               ( rMaxSpeed )
     , rBaseSpeed_              ( -1. )
     , nLinearPassabilityMask_  ( 0 )
     , nAreaPassabilityMask_    ( 0 )
@@ -27,9 +27,9 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis )
     , nBorderImpassabilityMask_( 0 )
     , nLinearImpassabilityMask_( 0 )
 {
-    rAreaSpeeds_.resize( TerrainData::nAreaTypes, -1. );
-    rBorderSpeeds_.resize( TerrainData::nBorderTypes, -1. );
-    rLinearSpeeds_.resize( TerrainData::nLinearTypes, -1. );
+    rAreaSpeeds_.resize( TerrainData::nAreaTypes, rMaxSpeed );
+    rBorderSpeeds_.resize( TerrainData::nBorderTypes, rMaxSpeed );
+    rLinearSpeeds_.resize( TerrainData::nLinearTypes, rMaxSpeed );
     xis >> xml::list( "speeds", *this, &PHY_Speeds::ReadSpeed );
     CheckInitialization( xis );
     GenerateMasks();
@@ -79,10 +79,13 @@ PHY_Speeds::~PHY_Speeds()
 // -----------------------------------------------------------------------------
 void PHY_Speeds::ReadSpeed( xml::xistream& xis )
 {
-    rMaxSpeed_ = xis.attribute< double >( "max" ); // km/h
-    if( rMaxSpeed_ <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "speeds: max <= 0" );
-    rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ ); // m/tick
+    if( rMaxSpeed_ == -1 )
+    {
+        rMaxSpeed_ = xis.attribute< double >( "max" ); // km/h
+        if( rMaxSpeed_ <= 0 )
+            throw MASA_EXCEPTION( xis.context() + "speeds: max <= 0" );
+        rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ ); // m/tick
+    }
     xis >> xml::list( "speed", *this, &PHY_Speeds::ReadTerrain );
 }
 
