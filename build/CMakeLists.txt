@@ -79,7 +79,6 @@ masa_set_internal_library( GRAPHICS_LIBRARIES         libgraphics )
 masa_set_internal_library( PATHFIND_LIBRARIES         libpathfind )
 masa_set_internal_library( SPATIALCONTAINER_LIBRARIES libspatialcontainer )
 masa_set_internal_library( SQLITE3_LIBRARIES          sqlite3 )
-masa_set_internal_library( SVGL_LIBRARIES             libsvgl )
 masa_set_internal_library( TERRAIN_LIBRARIES          libterrain )
 
 
@@ -154,6 +153,14 @@ function( add_target target group dir )
         masa_add_version( ${target} "${root_dir}/build/template.res" "${PRODUCT}" )
     endif()
 endfunction()
+
+# svgl
+add_target( svgl common "libraries/svgl" OPTIONS qt )
+target_link_libraries( svgl ${XERCES_LIBRARIES} )
+
+# svgl_app
+add_target( svgl_app applications "applications/svgl_app" OPTIONS executable qt )
+target_link_libraries( svgl_app svgl )
 
 # protocol
 add_target( protocol common "libraries/protocol" OPTIONS protobuf )
@@ -525,13 +532,13 @@ target_link_libraries( clients_gui
     clients_kernel
     htmlhelp
     meteo
+    svgl
     ${GDAL_I_LIBRARIES}
     ${GLEW_LIBRARIES}
     ${LICENSE_GUI_LIBRARIES}
     ${OPENGL_LIBRARIES}
     ${QT_PHONON_LIBRARY}
     ${SPATIALCONTAINER_LIBRARIES}
-    ${SVGL_LIBRARIES}
     ${TERRAIN_LIBRARIES}
     ${MINIZIP_LIBRARIES}
 )
