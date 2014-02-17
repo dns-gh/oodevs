@@ -56,15 +56,15 @@ StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, Terr
         << CoordinateSystems::Convert( CoordinateSystems::E_Mgrs )
         << CoordinateSystems::Convert( CoordinateSystems::E_Wgs84Dd )
         ).toStringList();
-    const auto addfield = [&]( unsigned size, CoordinateSystems::Projection proj ){
+    const auto addField = [&]( unsigned size, CoordinateSystems::Projection proj ){
         const bool checked = !!fields.contains( CoordinateSystems::Convert( proj ) );
         AddField( parent, size, proj, checked );
     };
-    addfield( 155, CoordinateSystems::E_Local );
-    addfield( 105, CoordinateSystems::E_Mgrs );
-    addfield( 105, CoordinateSystems::E_SanC );
-    addfield( 155, CoordinateSystems::E_Wgs84Dd );
-    addfield( 215, CoordinateSystems::E_Wgs84Dms );
+    addField( 155, CoordinateSystems::E_Local );
+    addField( 105, CoordinateSystems::E_Mgrs );
+    addField( 105, CoordinateSystems::E_SanC );
+    addField( 155, CoordinateSystems::E_Wgs84Dd );
+    addField( 215, CoordinateSystems::E_Wgs84Dms );
     pMenu_->insertSeparator();
     pElevation_   = AddField( parent, 50, tr( "Elevation" ), true );
     pTerrainType_ = AddField( parent, 150, tr( "Terrain type" ), true );
