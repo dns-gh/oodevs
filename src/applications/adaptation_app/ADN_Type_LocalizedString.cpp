@@ -202,6 +202,8 @@ void ADN_Type_LocalizedString::SetType( const std::string& language, kernel::E_T
     translation_->SetType( language, type );
     emit TypeChanged( type );
     CheckValidity();
+    if( type == kernel::eTranslationType_None && translation_->Value( language ).empty() )
+        translation_->SetValue( language, GetKey() );
 }
 
 // -----------------------------------------------------------------------------
