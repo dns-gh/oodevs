@@ -13,14 +13,15 @@
 #include "MIL_PopulationType.h"
 #include "MIL_Population.h"
 #include "MIL_PopulationAttitude.h"
-#include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Decision/DEC_Workspace.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
-#include "Tools/MIL_Tools.h"
-#include "tools/Codec.h"
+#include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "Entities/Agents/Units/PHY_Speeds.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MIL_AgentServer.h"
+#include "Tools/MIL_Tools.h"
+#include "tools/Codec.h"
 
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
 double MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
@@ -88,7 +89,6 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     : strName_              ( strName )
     , rConcentrationDensity_( 0. )
     , rDefaultFlowDensity_  ( 0. )
-    , rMaxSpeed_            ( 0. )
     , rArmedIndividuals_    ( 0. )
     , rMale_                ( 1. )
     , rFemale_              ( 0. )
@@ -100,10 +100,11 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     , urbanDestructionData_ ( MIL_PopulationAttitude::GetAttitudes().size(), sUrbanDestructionData( 0.0, 0.0 ) )
     , canCollideWithFlow_   ( false )
 {
+    double rMaxSpeed = 0;
     xis >> xml::attribute( "id", nID_ )
         >> xml::attribute( "concentration-density", rConcentrationDensity_ )
         >> xml::attribute( "moving-base-density", rDefaultFlowDensity_ )
-        >> xml::attribute( "moving-speed", rMaxSpeed_ )
+        >> xml::attribute( "moving-speed", rMaxSpeed )
         >> xml::optional >> xml::attribute( "armed-individuals", rArmedIndividuals_ )
         >> xml::optional >> xml::attribute( "collides-with-crowds", canCollideWithFlow_ );
 
@@ -111,10 +112,12 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
         throw MASA_EXCEPTION( xis.context() + "population: concentration-density <= 0" );
     if( rDefaultFlowDensity_ <= 0 )
         throw MASA_EXCEPTION( xis.context() + "population: moving-base-density <= 0" );
-    if( rMaxSpeed_ <= 0 )
+    if( rMaxSpeed <= 0 )
         throw MASA_EXCEPTION( xis.context() + "population: moving-speed" );
 
-    rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
+    rMaxSpeed = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed );
+
+    speeds_.reset( new PHY_Speeds( xis, rMaxSpeed ) );
 
     xis >> xml::start( "repartition" )
         >> xml::attribute( "male", rMale_ )
@@ -145,7 +148,6 @@ MIL_PopulationType::MIL_PopulationType( const DEC_Model_ABC& model, double rConc
     : nID_( 0 )
     , rConcentrationDensity_( rConcentrationDensity )
     , rDefaultFlowDensity_( 0. )
-    , rMaxSpeed_( 0. )
     , rArmedIndividuals_( 0. )
     , rMale_( 1. )
     , rFemale_( 0. )
@@ -443,7 +445,17 @@ double MIL_PopulationType::GetChildren() const
 // -----------------------------------------------------------------------------
 double MIL_PopulationType::GetMaxSpeed() const
 {
-    return rMaxSpeed_;
+    return speeds_? speeds_->GetMaxSpeed() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetMaxSpeed
+// Created: JSR 2014-02-14
+// -----------------------------------------------------------------------------
+double MIL_PopulationType::GetMaxSpeed( const TerrainData& data ) const
+{
+    double speed = speeds_ ? speeds_->GetMaxSpeed( data ) : 0;
+    return speed == -1. ? speeds_->GetMaxSpeed() : speed;
 }
 
 // -----------------------------------------------------------------------------

@@ -931,6 +931,10 @@ Parked engine running</translation>
         <source>Collides with other crowds</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Speeds</source>
+        <translation>Speeds</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
@@ -944,6 +948,17 @@ Parked engine running</translation>
     <message>
         <source>Volumes</source>
         <translation>Volumes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_Speeds_GUI</name>
+    <message>
+        <source>Ground type</source>
+        <translation>Ground type</translation>
+    </message>
+    <message>
+        <source>Speed (km/h)</source>
+        <translation>Speed (km/h)</translation>
     </message>
 </context>
 <context>
@@ -6471,6 +6486,13 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Categories - Invalid resource nature</source>
         <translation>Categories - Invalid resource nature</translation>
+    </message>
+</context>
+<context>
+    <name>Crowds_Data</name>
+    <message>
+        <source>Crowd - Invalid terrain type &apos;%1&apos;</source>
+        <translation>Crowd - Invalid terrain type &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

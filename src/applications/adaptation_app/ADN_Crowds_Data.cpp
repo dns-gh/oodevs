@@ -18,6 +18,38 @@
 
 tools::IdManager ADN_Crowds_Data::idManager_;
 
+//-----------------------------------------------------------------------------
+// Name: SpeedInfos::SpeedInfos
+// Created: JSR 2014-02-13
+//-----------------------------------------------------------------------------
+ADN_Crowds_Data::SpeedInfos::SpeedInfos( E_Location nTypeTerrain )
+    : nTypeTerrain_( nTypeTerrain )
+    , rSpeed_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpeedInfos::ReadArchive
+// Created: JSR 2014-02-13
+// -----------------------------------------------------------------------------
+void ADN_Crowds_Data::SpeedInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::attribute( "value", rSpeed_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpeedInfos::WriteArchive
+// Created: JSR 2014-02-13
+// -----------------------------------------------------------------------------
+void ADN_Crowds_Data::SpeedInfos::WriteArchive( xml::xostream& output ) const
+{
+    output << xml::start( "speed" )
+            << xml::attribute( "terrain", ENT_Tr::ConvertFromLocation( nTypeTerrain_ ) )
+            << xml::attribute( "value", rSpeed_ )
+           << xml::end;
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Crowds_Data::FireEffectProtectionInfos::FireEffectProtectionInfos
 // Created: SBO 2005-10-24
@@ -389,6 +421,8 @@ ADN_Crowds_Data::CrowdsInfos::CrowdsInfos()
     , repartition_( tools::translate( "Population_Data", "Crowd" ) )
     , armedIndividuals_( 0 )
     , decontaminationDelay_( "300s" )
+    , bHasSpeeds_( false )
+    , vSpeedInfos_( false )
     , vSpeedEffectInfos_()
     , vFireEffectInfos_()
     , vFireEffectRoeInfos_()
@@ -411,6 +445,8 @@ ADN_Crowds_Data::CrowdsInfos::CrowdsInfos( unsigned int id )
     , repartition_( tools::translate( "Population_Data", "Crowd" ) )
     , armedIndividuals_( 0 )
     , decontaminationDelay_( "300s" )
+    , bHasSpeeds_( false )
+    , vSpeedInfos_( false )
     , vSpeedEffectInfos_()
     , vFireEffectInfos_()
     , vFireEffectRoeInfos_()
@@ -427,6 +463,10 @@ ADN_Crowds_Data::CrowdsInfos::CrowdsInfos( unsigned int id )
 void ADN_Crowds_Data::CrowdsInfos::Initialize()
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eCrowds, "crowds" ) );
+
+    for( int i = 0; i < eNbrLocation; ++i )
+        vSpeedInfos_.AddItem( new SpeedInfos( static_cast< E_Location >( i ) ) );
+
     for( int i = 0; i < eNbrPopulationAttitude; ++i )
     {
         E_PopulationAttitude attitude = static_cast< E_PopulationAttitude >( i );
@@ -476,6 +516,10 @@ ADN_Crowds_Data::CrowdsInfos* ADN_Crowds_Data::CrowdsInfos::CreateCopy()
     pCopy->repartition_           = repartition_;
     pCopy->armedIndividuals_      = armedIndividuals_.GetData();
     pCopy->decontaminationDelay_  = decontaminationDelay_.GetData();
+    pCopy->bHasSpeeds_            = bHasSpeeds_.GetData();
+
+    for( int i = 0; i < eNbrLocation; ++i )
+        pCopy->vSpeedInfos_[ i ]->rSpeed_ = vSpeedInfos_[ i ]->rSpeed_.GetData();
 
     for( int i = 0; i < eNbrPopulationAttitude; ++i )
     {
@@ -527,8 +571,36 @@ void ADN_Crowds_Data::CrowdsInfos::ReadArchive( xml::xistream& input )
         repartition_.ReadArchive( input );
         input >> xml::end;
     }
+    bHasSpeeds_ = input.has_child( "speeds" );
+    if( bHasSpeeds_.GetData() )
+    {
+        input >> xml::start( "speeds" )
+            >> xml::list( "speed", *this, &ADN_Crowds_Data::CrowdsInfos::ReadSpeed )
+            >> xml::end;
+    }
+    else
+        for( auto it = vSpeedInfos_.begin(); it != vSpeedInfos_.end(); ++it )
+            ( *it )->rSpeed_ = rMoveSpeed_.GetData();
 
     armedIndividuals_ = static_cast< int >( rArmedIndividuals * 100 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Crowds_Data::CrowdsInfos::ReadSpeed
+// Created: JSR 2014-02-13
+// -----------------------------------------------------------------------------
+void ADN_Crowds_Data::CrowdsInfos::ReadSpeed( xml::xistream& input )
+{
+    const std::string strLocation = input.attribute< std::string >( "terrain" );
+    try
+    {
+        E_Location nLocation = ENT_Tr::ConvertToLocation( strLocation );
+        vSpeedInfos_.at( nLocation )->ReadArchive( input );
+    }
+    catch( const std::exception& /*e*/ )
+    {
+        throw MASA_EXCEPTION( tools::translate( "Crowds_Data", "Crowd - Invalid terrain type '%1'" ).arg( strLocation.c_str() ).toStdString() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -604,6 +676,14 @@ void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output ) const
             << xml::attribute( "armed-individuals", armedIndividuals_.GetData() / 100. );
     if( bCrowdCollision_.GetData() )
         output << xml::attribute( "collides-with-crowds", true );
+
+    if( bHasSpeeds_.GetData() )
+    {
+        output << xml::start( "speeds" );
+        for( auto itSpeed = vSpeedInfos_.begin(); itSpeed != vSpeedInfos_.end(); ++itSpeed )
+            ( *itSpeed )->WriteArchive( output );
+        output << xml::end;
+    }
 
     output << xml::start( "slowing-effects" );
     for( auto it = vSpeedEffectInfos_.begin(); it != vSpeedEffectInfos_.end(); ++it )

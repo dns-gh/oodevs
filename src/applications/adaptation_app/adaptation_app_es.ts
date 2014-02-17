@@ -932,6 +932,10 @@ Estacionado y motor encendido</translation>
         <source>Collides with other crowds</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Speeds</source>
+        <translation type="unfinished">Velocidades</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
@@ -945,6 +949,17 @@ Estacionado y motor encendido</translation>
     <message>
         <source>Volumes</source>
         <translation>Volúmenes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_Speeds_GUI</name>
+    <message>
+        <source>Ground type</source>
+        <translation type="unfinished">Tipo de terreno</translation>
+    </message>
+    <message>
+        <source>Speed (km/h)</source>
+        <translation type="unfinished">Velocidad (km/h)</translation>
     </message>
 </context>
 <context>
@@ -6484,6 +6499,13 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
     <message>
         <source>Categories - Invalid resource nature</source>
         <translation>Categorías - Recurso naural inválido</translation>
+    </message>
+</context>
+<context>
+    <name>Crowds_Data</name>
+    <message>
+        <source>Crowd - Invalid terrain type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

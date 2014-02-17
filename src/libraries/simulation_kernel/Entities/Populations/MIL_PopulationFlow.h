@@ -176,6 +176,7 @@ private:
     boost::shared_ptr< DEC_Population_Path > pTailPath_;
     MT_Vector2D direction_;
     double rSpeed_;
+    double rWalkedDistance_;
     T_FlowShape flowShape_; 
     mutable T_PointList computedFlowShape_;
     std::vector< MT_Vector2D > pointsToInsert_;

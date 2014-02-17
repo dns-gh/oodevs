@@ -81,6 +81,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , flowShape_                  ( 2, std::make_pair( sourceConcentration.GetPosition(), 0 ) )
     , direction_                  ( 0., 1. )
     , rSpeed_                     ( 0. )
+    , rWalkedDistance_            ( 0 )
     , bHeadMoveFinished_          ( false )
     , bPathUpdated_               ( true )
     , bFlowShapeUpdated_          ( true )
@@ -116,6 +117,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , flowShape_                  ( source.flowShape_ )
     , direction_                  ( 0., 1. )
     , rSpeed_                     ( 0. )
+    , rWalkedDistance_            ( 0 )
     , bHeadMoveFinished_          ( false )
     , bPathUpdated_               ( true )
     , bFlowShapeUpdated_          ( true )
@@ -152,6 +154,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, unsigned int
     , pDestConcentration_         ( 0 )
     , direction_                  ( 0., 1. )
     , rSpeed_                     ( 0. )
+    , rWalkedDistance_            ( 0 )
     , bHeadMoveFinished_          ( false )
     , bPathUpdated_               ( true )
     , bFlowShapeUpdated_          ( true )
@@ -339,9 +342,9 @@ void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // Name: MIL_PopulationFlow::GetSpeed
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-double MIL_PopulationFlow::GetSpeed( const TerrainData& /*environment*/, const MIL_Object_ABC& object ) const
+double MIL_PopulationFlow::GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const
 {
-    double result = GetMaxSpeed();
+    double result = GetPopulation().GetType().GetMaxSpeed( environment );
     if( CanObjectInteractWith( object ) )
     {
         result = object().ApplySpeedPolicy( object().GetMaxSpeed(), result, result, GetPopulation() );
@@ -467,6 +470,7 @@ MIL_PopulationFlow* MIL_PopulationFlow::Split( const MT_Vector2D& splittingPoint
     pHeadPath_.reset();
     assert( flowShape_.size() >= 2 );
 
+    DetachFromDestConcentration();
     bFlowShapeUpdated_ = true;
     UpdateLocation();
     const int nNbrHumans = static_cast< unsigned int >( GetLocation().GetArea() * rDensityBeforeSplit );
@@ -565,23 +569,24 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         return;
     if( bBlocked_ && canCollideWithFlow_ )
         return;
-    const double rWalkedDistance = GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
+    if( !bHeadMoveFinished_ )
+        rWalkedDistance_ = rSpeed/* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
     //$$ TMP
     unsigned int nNbrHumans = 0;
     if( pSourceConcentration_ )
-        nNbrHumans = static_cast< unsigned int >( rWalkedDistance * pSourceConcentration_->GetPullingFlowsDensity() + 0.5f );
+        nNbrHumans = static_cast< unsigned int >( rWalkedDistance_ * pSourceConcentration_->GetPullingFlowsDensity() + 0.5f );
     else
     {
         const double rArea = GetLocation().GetArea();
         if( rArea )
-            nNbrHumans = static_cast< unsigned int >( rWalkedDistance * ( GetAllHumans() / rArea ) + 0.5f );
+            nNbrHumans = static_cast< unsigned int >( rWalkedDistance_ * ( GetAllHumans() / rArea ) + 0.5f );
         if( nNbrHumans == 0 ) // $$$$ ABR 2011-05-20: to prevent ghost flow
             nNbrHumans = GetAllHumans();
     }
     if( nNbrHumans == 0 )
         return;
     SetDirection( direction );
-    SetSpeed( rWalkedDistance );
+    SetSpeed( rWalkedDistance_ );
     if( pSourceConcentration_ )
         nNbrHumans = std::min( nNbrHumans, pSourceConcentration_->GetAllHumans() );
     // Head management
@@ -619,7 +624,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
             PushHumans( pSourceConcentration_->PullHumans( nNbrHumans ) );
     }
     else
-        UpdateTailPosition( rWalkedDistance );
+        UpdateTailPosition( rWalkedDistance_ );
     if( bFlowShapeUpdated_ )
         UpdateLocation();
     if( bFlowShapeUpdated_ || HasHumansChanged() )
@@ -1039,9 +1044,9 @@ void MIL_PopulationFlow::save( MIL_CheckPointOutArchive& file, const unsigned in
 // Name: MIL_PopulationFlow::GetSpeed
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-double MIL_PopulationFlow::GetSpeed( const TerrainData& /*environment*/ ) const
+double MIL_PopulationFlow::GetSpeed( const TerrainData& environment ) const
 {
-    return GetMaxSpeed();
+    return GetPopulation().GetType().GetMaxSpeed( environment );
 }
 
 // -----------------------------------------------------------------------------

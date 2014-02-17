@@ -26,6 +26,8 @@ class MIL_PopulationAttitude;
 class PHY_Volume;
 class PHY_Protection;
 class PHY_RoePopulation;
+class PHY_Speeds;
+class TerrainData;
 
 // =============================================================================
 // @class  MIL_PopulationType
@@ -53,6 +55,7 @@ public:
     double GetConcentrationDensity() const;
     double GetDefaultFlowDensity() const;
     double GetMaxSpeed() const;
+    double GetMaxSpeed( const TerrainData& data ) const;
     double GetDelay() const;
     bool CanCollideWithFlow() const;
     const DEC_Model_ABC& GetModel() const;
@@ -149,7 +152,7 @@ private:
     unsigned int nID_;
     double rConcentrationDensity_;
     double rDefaultFlowDensity_;
-    double rMaxSpeed_;
+    std::unique_ptr< PHY_Speeds > speeds_;
     double rArmedIndividuals_;
     double rMale_;
     double rFemale_;
