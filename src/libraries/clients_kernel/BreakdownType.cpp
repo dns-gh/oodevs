@@ -9,7 +9,10 @@
 
 #include "clients_kernel_pch.h"
 #include "BreakdownType.h"
+
 #include "ENT/ENT_Tr.h"
+#include "tools/Codec.h"
+
 #include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>
 
@@ -28,6 +31,14 @@ namespace
         });
         return parts;
     }
+
+    unsigned ReadRepairTime( xml::xistream& xis )
+    {
+        std::string value;
+        xis >> xml::attribute( "average-repairing-time", value );
+        unsigned reply;
+        return tools::DecodeTime( value, reply ) ? reply : 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -35,11 +46,12 @@ namespace
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
 BreakdownType::BreakdownType( xml::xistream& xis, const std::string& category )
-    : category_( ENT_Tr::ConvertToBreakdownNTI( category ) )
-    , type_    ( ENT_Tr::ConvertToBreakdownType( xis.attribute< std::string >( "type" ) ) )
-    , id_      ( xis.attribute< unsigned long >( "id" ) )
-    , name_    ( xis.attribute< std::string >( "name" ) )
-    , parts_   ( ReadParts( xis ) )
+    : category_  ( ENT_Tr::ConvertToBreakdownNTI( category ) )
+    , type_      ( ENT_Tr::ConvertToBreakdownType( xis.attribute< std::string >( "type" ) ) )
+    , id_        ( xis.attribute< unsigned long >( "id" ) )
+    , name_      ( xis.attribute< std::string >( "name" ) )
+    , parts_     ( ReadParts( xis ) )
+    , repairTime_( ReadRepairTime( xis ) )
 {
     // NOTHING
 }
@@ -105,4 +117,13 @@ E_BreakdownType BreakdownType::GetType() const
 const BreakdownType::T_Parts& BreakdownType::GetParts() const
 {
     return parts_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: BreakdownType::GetRepairTime
+// Created: BAX 2014-02-17
+// -----------------------------------------------------------------------------
+unsigned int BreakdownType::GetRepairTime() const
+{
+    return repairTime_;
 }
