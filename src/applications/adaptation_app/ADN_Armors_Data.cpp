@@ -149,7 +149,8 @@ ADN_Armors_Data::ArmorInfos* ADN_Armors_Data::ArmorInfos::CreateCopy()
     pCopy->rBreakdownEVA_ = rBreakdownEVA_.GetData();
     pCopy->rBreakdownNEVA_ = rBreakdownNEVA_.GetData();
     for( auto it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
-        pCopy->vAttritionEffects_.AddItem( *it );
+        if( *it )
+            pCopy->vAttritionEffects_.AddItem( ( *it )->CreateCopy() );
     return pCopy;
 }
 

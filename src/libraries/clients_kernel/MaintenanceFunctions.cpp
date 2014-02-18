@@ -14,6 +14,7 @@
 #include "EquipmentType.h"
 
 #include "ENT/ENT_Tr.h"
+#include "tools/Codec.h"
 
 using namespace kernel;
 
@@ -36,10 +37,11 @@ MaintenanceFunctions::TowCapacity::TowCapacity( xml::xistream& xis )
 MaintenanceFunctions::RepairCapacity::RepairCapacity( xml::xistream& xis )
     : maxRepairTime_( boost::none )
 {
-    const std::string maxRepairTime = xis.attribute< std::string >( "max-reparation-time", "" );
-    const std::string types = xis.attribute( "type", "" );
-    if( !maxRepairTime.empty() && maxRepairTime != "0s" )
+    const std::string strRepairTime = xis.attribute< std::string >( "max-reparation-time", "" );
+    unsigned int maxRepairTime;
+    if( tools::DecodeTime( strRepairTime, maxRepairTime ) )
         maxRepairTime_ = maxRepairTime;
+    const std::string types = xis.attribute( "type", "" );
     for( int i = 0; i < eNbrBreakdownType; ++i )
     {
         E_BreakdownType type = static_cast< E_BreakdownType >( i );
@@ -103,11 +105,12 @@ bool MaintenanceFunctions::CanHaul( const ComponentType& component ) const
 // -----------------------------------------------------------------------------
 bool MaintenanceFunctions::CanRepair( const BreakdownType& breakdown ) const
 {
-    auto repairCapacity = repairCapacities_.find( breakdown.GetNTI() );
-    return repairCapacity!= repairCapacities_.end() &&
-           std::find( repairCapacity->second.supportedTypes_.begin(),
-                      repairCapacity->second.supportedTypes_.end(),
-                      breakdown.GetType() ) != repairCapacity->second.supportedTypes_.end();
-    // $$$$ 2014-02-06: TODO compute TheoricRepairTime in BreakdownType, then check
-    // repairCapacity->maxRepairTime_ && breakdown->GetTheoricRepairTime() < repairCapacity->maxRepairTime_
+    auto it = repairCapacities_.find( breakdown.GetNTI() );
+    if( it == repairCapacities_.end() )
+        return false;
+    const auto& types = it->second.supportedTypes_;
+    if( std::find( types.begin(), types.end(), breakdown.GetType() ) == types.end() )
+        return false;
+    const auto maxRepairTime = it->second.maxRepairTime_;
+    return !maxRepairTime || breakdown.GetRepairTime() <= *maxRepairTime;
 }

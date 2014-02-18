@@ -49,6 +49,7 @@ private:
     //! @name Helpers
     //@{
     void ResetRepairer();
+    bool FindAlternativeRepairTeam( const PHY_ComposanteTypePion* type = 0 );
 
     bool DoWaitingForParts();
     bool DoWaitingForRepairer();

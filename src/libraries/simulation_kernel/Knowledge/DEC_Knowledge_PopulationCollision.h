@@ -61,7 +61,6 @@ public:
     //! @name Accessors
     //@{
     MIL_Population& GetPopulation() const;
-    const MIL_Agent_ABC& GetAgentColliding() const;
     //@}
 
 private:

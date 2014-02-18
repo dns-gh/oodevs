@@ -6478,10 +6478,6 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
 <context>
     <name>Breakdown_Data</name>
     <message>
-        <source>New breakdown</source>
-        <translation>Nueva Falla</translation>
-    </message>
-    <message>
         <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
         <translation>Averías - tipo de avería &apos;%1&apos; no es válido</translation>
     </message>

@@ -204,7 +204,10 @@ const MIL_ObjectType_ABC& MIL_Object_ABC::GetType() const
 // Created: NLD 2003-09-02
 // -----------------------------------------------------------------------------
 bool MIL_Object_ABC::CanCollideWithEntity() const
-{
+{    
+    const ObstacleAttribute* obstacle = RetrieveAttribute< ObstacleAttribute >();
+    if( obstacle && !obstacle->IsActivated() )
+        return false;
     return !IsMarkedForDestruction();
 }
 

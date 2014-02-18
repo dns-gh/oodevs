@@ -31,6 +31,19 @@ DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision( const MIL_Agent_AB
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectCollision constructor
+// Created: LDC 2014-02-18
+// -----------------------------------------------------------------------------
+DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision( MIL_Object_ABC& object )
+    : DEC_Knowledge_ABC()
+    , pAgentColliding_ ( 0 )
+    , pObject_         ( &object )
+    , bIsValid_        ( false )
+{
+        // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectCollision constructor
 // Created: JVT 2005-03-16
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision()
@@ -107,10 +120,9 @@ MIL_Object_ABC& DEC_Knowledge_ObjectCollision::GetObject() const
 // Name: DEC_Knowledge_ObjectCollision::GetAgentColliding
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
-const MIL_Agent_ABC& DEC_Knowledge_ObjectCollision::GetAgentColliding() const
+const MIL_Agent_ABC* DEC_Knowledge_ObjectCollision::GetAgentColliding() const
 {
-    assert( pAgentColliding_ );
-    return *pAgentColliding_;
+    return pAgentColliding_;
 }
 
 // -----------------------------------------------------------------------------

@@ -53,6 +53,7 @@ public:
     E_BreakdownNTI GetNTI() const;
     E_BreakdownType GetType() const;
     const T_Parts& GetParts() const;
+    unsigned int GetRepairTime() const;
     //@}
 
 private:
@@ -62,6 +63,7 @@ private:
     const E_BreakdownType type_;
     const unsigned long id_;
     const std::string name_;
+    const unsigned int repairTime_;
     const T_Parts parts_;
     //@}
 };

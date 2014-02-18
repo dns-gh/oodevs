@@ -73,11 +73,18 @@ LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel:
     historyTable_ = new LogisticsRequestsHistoryTable( "Logistics requests history", this );
     connect( historyTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
                                                  , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
-    pLayout->addLayout( pCheckBoxLayout );
-    pLayout->addWidget( requestsTable_ );
+    QWidget* top = new QWidget( this );
+    QVBoxLayout* vbox = new QVBoxLayout( top );
+    vbox->addLayout( pCheckBoxLayout );
+    vbox->addWidget( requestsTable_ );
     pDetailLayout_->addWidget( detailsTable_ );
     pDetailLayout_->addWidget( historyTable_ );
-    pLayout->addWidget( box );
+
+    QSplitter* split = new QSplitter( this );
+    split->setOrientation( Qt::Vertical );
+    split->addWidget( top );
+    split->addWidget( box );
+    pLayout->addWidget( split );
 
     controllers_.Register( *this );
 }

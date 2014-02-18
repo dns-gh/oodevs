@@ -56,7 +56,7 @@ private:
     struct RepairCapacity
     {
         explicit RepairCapacity( xml::xistream& xis );
-        boost::optional< std::string > maxRepairTime_;
+        boost::optional< unsigned int > maxRepairTime_;
         std::vector< E_BreakdownType > supportedTypes_;
     };
     //@}
