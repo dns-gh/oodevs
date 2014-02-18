@@ -127,3 +127,31 @@ void TerrainProfile::UpdateVision( const geometry::Point2f& from, const geometry
         x += line.Length();
     }
 }
+
+bool TerrainProfile::event( QEvent* event )
+{
+    if( event->type() != QEvent::ToolTip )
+        return QWidget::event( event );
+    QHelpEvent* helpEvent = static_cast< QHelpEvent* >( event );
+    const auto pos = MapFromViewport( helpEvent->pos() );
+    const auto& data = data_->Data();
+    if( data.size() >= 2 )
+    {
+        auto previous = data.end();
+        auto next = data.begin();
+        while( next != data.end() && next->first < pos.first )
+            previous = next++;
+        if( previous != data.end() && next != data.end() )
+        {
+            const double slope = ( next->second - previous->second ) / ( next->first - previous->first ) / 1000;
+            static const double toDegrees = 360 / ( 2 * std::atan2( 0., -1. ) );
+            const QString percentage = QString::number( static_cast< int >( slope * 100 ) ) + "%";
+            const QString degrees = QString::number( static_cast< int >( std::atan( slope ) * toDegrees ) ) + QChar( 0x00B0 );
+            QToolTip::showText( helpEvent->globalPos(), percentage + "\n" + degrees );
+        }
+        return true;
+    }
+    QToolTip::hideText();
+    event->ignore();
+    return true;
+}

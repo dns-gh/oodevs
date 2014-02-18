@@ -40,6 +40,9 @@ public:
     void Update( const geometry::Point2f& from, const geometry::Point2f& to, float height );
     //@}
 
+protected:
+    bool event( QEvent* event );
+
 private:
     //! @name Copy/Assignment
     //@{

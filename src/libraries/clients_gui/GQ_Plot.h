@@ -132,8 +132,9 @@ public:
 
     //! @name Coordinate system accessors
     //@{
-    QPoint MapToViewport( const T_Point&       ) const;
-    QPoint MapToViewport( double rX, double rY ) const;
+    QPoint  MapToViewport  ( const T_Point&       ) const;
+    QPoint  MapToViewport  ( double rX, double rY ) const;
+    T_Point MapFromViewport( const QPoint&        ) const;
     //@}
 
     //! @name Modifiers
