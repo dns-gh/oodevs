@@ -33,6 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_ObjectCollision( const MIL_Agent_ABC& agentColliding, MIL_Object_ABC& object );
+    explicit DEC_Knowledge_ObjectCollision( MIL_Object_ABC& object );
              DEC_Knowledge_ObjectCollision ();
     virtual ~DEC_Knowledge_ObjectCollision();
     //@}
@@ -52,7 +53,7 @@ public:
     //! @name Accessors
     //@{
     MIL_Object_ABC& GetObject() const;
-    const MIL_Agent_ABC& GetAgentColliding() const;
+    const MIL_Agent_ABC* GetAgentColliding() const;
     const MT_Vector2D& GetPosition() const;
     bool IsValid() const;
 

@@ -173,9 +173,6 @@ bool MIL_Object::CanInteractWith( const MIL_Agent_ABC& entity ) const
 {
     if( !MIL_Object_ABC::CanInteractWith( entity ) )
         return false;
-    const ObstacleAttribute* obstacle = RetrieveAttribute< ObstacleAttribute >();
-    if( obstacle && !obstacle->IsActivated() )
-        return false;
     bool canInteract = true;
     for( auto it = interactives_.begin(); canInteract && it != interactives_.end(); ++it )
         (*it)->CanInteractWith( *this, entity, canInteract );

@@ -474,7 +474,12 @@ void DEC_Knowledge_Object::UpdateFromCrowdPerception()
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     UpdateCurrentPerceptionLevel( PHY_PerceptionLevel::recognized_ );
     UpdateMaxPerceptionLevel( PHY_PerceptionLevel::recognized_ );
-    UpdateLocalisations();// Updaté même quand 'NotPerceived', pour les objets pouvant bouger
+    UpdateLocalisations();// Updaté même quand 'NotPerceived', pour les objets pouvant bouger    
+    if( pObjectKnown_ && !pObjectKnown_->IsMarkedForDestruction() )
+    {
+        DEC_Knowledge_ObjectCollision collision( *pObjectKnown_ );
+        UpdateAttributes( boost::bind( &DEC_Knowledge_IObjectAttributeProxy::UpdateOnCollision, _1, boost::ref( *this ), boost::ref( collision ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

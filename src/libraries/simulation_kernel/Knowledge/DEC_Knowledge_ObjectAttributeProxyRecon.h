@@ -72,7 +72,7 @@ bool DEC_Knowledge_ObjectAttributeProxyRecon< T >::UpdateOnPerception( const DEC
 template< typename T >
 bool DEC_Knowledge_ObjectAttributeProxyRecon< T >::UpdateOnCollision( const DEC_Knowledge_Object& knowledge, const DEC_Knowledge_ObjectCollision& collision )
 {
-    if( !knowledge.IsReconBy( collision.GetAgentColliding().GetType() ) )
+    if( !collision.GetAgentColliding() || !knowledge.IsReconBy( collision.GetAgentColliding()->GetType() ) )
         return false;
     return UpdateAttributeFromSource( collision );
 }

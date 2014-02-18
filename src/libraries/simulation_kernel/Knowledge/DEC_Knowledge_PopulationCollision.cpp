@@ -184,17 +184,6 @@ MIL_Population& DEC_Knowledge_PopulationCollision::GetPopulation() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_PopulationCollision::GetAgentColliding
-// Created: NLD 2004-05-03
-// -----------------------------------------------------------------------------
-const MIL_Agent_ABC& DEC_Knowledge_PopulationCollision::GetAgentColliding() const
-{
-    if( !pAgentColliding_ )
-        throw std::runtime_error( "Collision has no agent" );
-    return *pAgentColliding_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationCollision::Prepare
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
