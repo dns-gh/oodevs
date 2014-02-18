@@ -52,7 +52,7 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, Controllers& controll
 {
     setCaption( tools::translate( "StocksEditionDialog", "Stocks Edition" ) );
     gui::SubObjectName subObject( "LogisticStockEditor" );
-    setMinimumSize( 350, 300 );
+    resize( 550, 350 );
 
     dataModel_ = new QStandardItemModel( this );
 
@@ -70,10 +70,14 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, Controllers& controll
     validateButton_ = new gui::RichPushButton( "ok", tr( "Ok" ), this );
     cancelButton_   = new gui::RichPushButton( "cancel", tr( "Cancel" ), this );
 
-    QGridLayout* layout = new QGridLayout( this, 2, 2, 10 );
-    layout->addMultiCellWidget( tableView_, 0, 0, 0, 1 );
-    layout->addWidget( validateButton_, 1, 0 );
-    layout->addWidget( cancelButton_, 1, 1 );
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    buttonLayout->addStretch( 1 );
+    buttonLayout->addWidget( validateButton_ );
+    buttonLayout->addWidget( cancelButton_ );
+
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    layout->addWidget( tableView_ );
+    layout->addLayout( buttonLayout );
 
     connect( dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnValueChanged( QStandardItem* ) ) );
     connect( validateButton_, SIGNAL( clicked() ), SLOT( Validate() ) );
