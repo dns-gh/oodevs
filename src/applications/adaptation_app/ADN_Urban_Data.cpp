@@ -682,7 +682,6 @@ ADN_Urban_Data::UrbanTemplateInfos* ADN_Urban_Data::UrbanTemplateInfos::CreateCo
 {
     ADN_Urban_Data::UrbanTemplateInfos* result = new ADN_Urban_Data::UrbanTemplateInfos();
 
-    result->strName_= strName_.GetData();
     result->color_ = color_.GetData();
     result->alpha_ = alpha_.GetData();
     result->height_ = height_.GetData();

@@ -73,6 +73,7 @@ public:
     //@{
     void Initialize( ADN_Connector_ABC& dest ) const;
     bool CheckUniqueTranslation() const;
+    void Purge();
     //@}
 
     //! @name Operators
