@@ -628,7 +628,7 @@
         <safe-move file="${out.dir}/debug_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
-                    <fileset dir="${out.dir}/release" includes="**/*.pdb" excludes="lib*.pdb,*_test.pdb,client_sample_app.pdb"/>
+                    <fileset dir="${out.dir}/release" includes="**/*.pdb" excludes="lib*.pdb,*_test.pdb,client_sample_app.pdb,svgl_app.pdb"/>
                     <flattenmapper/>
                 </mappedresources>
              </zip>
@@ -661,7 +661,7 @@
         <safe-move file="${out.dir}/binaries_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
-                    <fileset dir="${out.dir}/release" includes="**/*.exe" excludes="**/*_test.exe,**/client_sample_app.exe"/>
+                    <fileset dir="${out.dir}/release" includes="**/*.exe" excludes="**/*_test.exe,**/client_sample_app.exe,**/svgl_app.exe"/>
                     <flattenmapper/>
                 </mappedresources>
                 <fileset dir="${run.dir}">
@@ -847,7 +847,6 @@
         <update name="spatialite" version="3.1.0.r669"/>
         <update name="sqlite" version="3.7.13.r229"/>
         <update name="steel"/>
-        <update name="svgl"/>
         <update name="sword-proto" package="sword-protobuf" todir="${bin.dir}"/>
         <update name="sword-doc" package="doc" todir="${root.dir}/doc"/>
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>

@@ -79,7 +79,6 @@ masa_set_internal_library( GRAPHICS_LIBRARIES         libgraphics )
 masa_set_internal_library( PATHFIND_LIBRARIES         libpathfind )
 masa_set_internal_library( SPATIALCONTAINER_LIBRARIES libspatialcontainer )
 masa_set_internal_library( SQLITE3_LIBRARIES          sqlite3 )
-masa_set_internal_library( SVGL_LIBRARIES             libsvgl )
 masa_set_internal_library( TERRAIN_LIBRARIES          libterrain )
 
 
@@ -519,19 +518,27 @@ target_link_libraries( client_proxy sword_tools )
 add_target( client_proxy_test tests "tests/client_proxy_test" OPTIONS protocol test )
 target_link_libraries( client_proxy_test client_proxy )
 
+# svgl
+add_target( svgl clients "libraries/svgl" OPTIONS qt )
+target_link_libraries( svgl ${XERCES_LIBRARIES} )
+
+# svgl_app
+add_target( svgl_app clients "applications/svgl_app" OPTIONS executable qt )
+target_link_libraries( svgl_app svgl )
+
 # clients_gui
 add_target( clients_gui clients "libraries/clients_gui" OPTIONS qt3 qt protocol )
 target_link_libraries( clients_gui
     clients_kernel
     htmlhelp
     meteo
+    svgl
     ${GDAL_I_LIBRARIES}
     ${GLEW_LIBRARIES}
     ${LICENSE_GUI_LIBRARIES}
     ${OPENGL_LIBRARIES}
     ${QT_PHONON_LIBRARY}
     ${SPATIALCONTAINER_LIBRARIES}
-    ${SVGL_LIBRARIES}
     ${TERRAIN_LIBRARIES}
     ${MINIZIP_LIBRARIES}
 )
