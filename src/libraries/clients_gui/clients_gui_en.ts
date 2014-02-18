@@ -197,6 +197,13 @@
     </message>
 </context>
 <context>
+    <name>DrawerModel</name>
+    <message>
+        <source>Unable to load a drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EntityHierarchies</name>
     <message>
         <source>Hierarchies/Superior</source>
