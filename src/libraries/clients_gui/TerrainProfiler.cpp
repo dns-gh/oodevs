@@ -36,18 +36,19 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
 {
     gui::SubObjectName subObject( this->objectName() );
     {
+        QWidget* box = new QWidget( this );
+        profile_ = new TerrainProfile( box, detection );
         QLabel* heightLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Observation height" ) );
         heightValue_ = new RichSpinBox( "heightValue", 0, 0 );
         heightValue_->setFixedSize( 100, 30 );
         heightValue_->setLineStep( 50 );
         heightValue_->setSuffix( QString( " %L1" ).arg( kernel::Units::meters.AsString() ) );
-
-        QWidget* box = new QWidget( this );
-        profile_ = new TerrainProfile( box, detection );
-        QGridLayout* layout = new QGridLayout( box );
-        layout->addWidget( heightLabel, 1, 3, 1, 1, Qt::AlignLeft );
-        layout->addWidget( heightValue_, 2, 3, 1, 1, Qt::AlignLeft );
-        layout->addWidget( profile_, 0, 0, 32, 32 );
+        QVBoxLayout* vlayout = new QVBoxLayout( box );
+        vlayout->addWidget( profile_ );
+        QHBoxLayout* hlayout = new QHBoxLayout( vlayout );
+        hlayout->addWidget( heightLabel );
+        hlayout->addWidget( heightValue_, 0, Qt::AlignLeft );
+        hlayout->addStretch();
         setWidget( box );
         connect( heightValue_, SIGNAL( valueChanged( int ) ), SLOT( SpinboxChanged() ) );
     }

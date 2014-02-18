@@ -22,8 +22,8 @@ using namespace gui;
 TerrainProfile::TerrainProfile( QWidget* parent, const kernel::DetectionMap& detection )
     : gui::GQ_Plot( parent )
     , detection_( detection )
-    , data_     ( new GQ_PlotData( 0, *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
-    , vision_   ( new GQ_PlotData( 1, *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
+    , data_     ( new GQ_PlotData( 0, *this ) )
+    , vision_   ( new GQ_PlotData( 1, *this ) )
 {
     setFocusPolicy( Qt::ClickFocus );
     YAxis().ShowAxis( true );
@@ -41,7 +41,7 @@ TerrainProfile::TerrainProfile( QWidget* parent, const kernel::DetectionMap& det
 
     SetBackgroundColor( Qt::white );
     setMinimumWidth( 320 );
-    setMinimumHeight( 100 );
+    setMinimumHeight( 140 );
 
     data_->SetLinePen( QPen( QColor( 220, 220, 220 ), 3 ) );
     vision_->SetLinePen( QPen( Qt::blue, 1 ) );
