@@ -403,10 +403,9 @@ func IsProvider(d *swapi.ModelData, obtained uint32, expected *sword.Tasker, isS
 type MaintenanceUpdateChecker struct {
 	name     string
 	provider *sword.Tasker
-	strict   bool
 }
 
-func (cc *MaintenanceUpdateChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *sword.SimToClient_Content) bool {
+func (cc *MaintenanceUpdateChecker) check(c *C, ctx *MaintenanceCheckContext, msg *sword.SimToClient_Content, strict bool) bool {
 	c.Check(msg.LogMaintenanceHandlingCreation, IsNil)
 	c.Check(msg.LogMaintenanceHandlingDestruction, IsNil)
 	m := msg.LogMaintenanceHandlingUpdate
@@ -418,7 +417,7 @@ func (cc *MaintenanceUpdateChecker) Check(c *C, ctx *MaintenanceCheckContext, ms
 	}
 	c.Check(ctx.handlingId, Not(Equals), uint32(0))
 	c.Check(m.GetRequest().GetId(), Equals, ctx.handlingId)
-	c.Check(IsProvider(ctx.data, m.GetProvider().GetId(), cc.provider, cc.strict), Equals, true)
+	c.Check(IsProvider(ctx.data, m.GetProvider().GetId(), cc.provider, strict), Equals, true)
 	value, ok := sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus_value[cc.name]
 	next := sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus(value)
 	c.Check(ok, Equals, true)
@@ -429,6 +428,18 @@ func (cc *MaintenanceUpdateChecker) Check(c *C, ctx *MaintenanceCheckContext, ms
 	ctx.diagnosed = ctx.diagnosed || m.GetDiagnosed()
 	ctx.last = next
 	return true
+}
+
+func (cc *MaintenanceUpdateChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *sword.SimToClient_Content) bool {
+	return cc.check(c, ctx, msg, false)
+}
+
+type MaintenanceStrictUpdateChecker struct {
+	MaintenanceUpdateChecker
+}
+
+func (cc *MaintenanceStrictUpdateChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *sword.SimToClient_Content) bool {
+	return cc.check(c, ctx, msg, true)
 }
 
 type MaintenanceApplyChecker struct {
@@ -561,86 +572,99 @@ func (s *TestSuite) TestMaintenanceHandlingsBase(c *C) {
 	blt := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLT").Id)
 	zero := &sword.Tasker{}
 	checkMaintenanceUpdates(c, client, unit, electronic_1, []MaintenanceUpdateChecker{
-		{"moving_to_supply", tc2, false},
-		{"diagnosing", tc2, false},
-		{"waiting_for_repairer", tc2, false},
-		{"repairing", tc2, false},
-		{"moving_back", tc2, false},
-		{"finished", zero, false},
+		{"moving_to_supply", tc2},
+		{"diagnosing", tc2},
+		{"waiting_for_repairer", tc2},
+		{"repairing", tc2},
+		{"moving_back", tc2},
+		{"finished", zero},
 	})
 	checkMaintenanceUpdates(c, client, unit, mobility_1, []MaintenanceUpdateChecker{
-		{"transporter_moving_to_supply", tc2, false},
-		{"transporter_loading", tc2, false},
-		{"transporter_moving_back", tc2, false},
-		{"transporter_unloading", tc2, false},
-		{"diagnosing", tc2, false},
-		{"waiting_for_repairer", tc2, false},
-		{"repairing", tc2, false},
-		{"moving_back", tc2, false},
-		{"finished", zero, false},
+		{"transporter_moving_to_supply", tc2},
+		{"transporter_loading", tc2},
+		{"transporter_moving_back", tc2},
+		{"transporter_unloading", tc2},
+		{"diagnosing", tc2},
+		{"waiting_for_repairer", tc2},
+		{"repairing", tc2},
+		{"moving_back", tc2},
+		{"finished", zero},
 	})
 	checkMaintenanceUpdates(c, client, unit, electronic_2, []MaintenanceUpdateChecker{
-		{"moving_to_supply", tc2, false},
-		{"diagnosing", tc2, false},
-		{"searching_upper_levels", tc2, false},
-		{"moving_to_supply", bld, false},
-		{"waiting_for_repairer", bld, false},
-		{"repairing", bld, false},
-		{"moving_back", bld, false},
-		{"finished", zero, false},
+		{"moving_to_supply", tc2},
+		{"diagnosing", tc2},
+		{"searching_upper_levels", tc2},
+		{"moving_to_supply", bld},
+		{"waiting_for_repairer", bld},
+		{"repairing", bld},
+		{"moving_back", bld},
+		{"finished", zero},
 	})
 	checkMaintenanceUpdates(c, client, unit, mobility_2, []MaintenanceUpdateChecker{
-		{"transporter_moving_to_supply", tc2, false},
-		{"transporter_loading", tc2, false},
-		{"transporter_moving_back", tc2, false},
-		{"transporter_unloading", tc2, false},
-		{"diagnosing", tc2, false},
-		{"searching_upper_levels", tc2, false},
-		{"waiting_for_transporter", bld, false},
-		{"transporter_moving_to_supply", bld, false},
-		{"transporter_loading", bld, false},
-		{"transporter_moving_back", bld, false},
-		{"transporter_unloading", bld, false},
-		{"waiting_for_repairer", bld, false},
-		{"repairing", bld, false},
-		{"moving_back", bld, false},
-		{"finished", zero, false},
+		{"transporter_moving_to_supply", tc2},
+		{"transporter_loading", tc2},
+		{"transporter_moving_back", tc2},
+		{"transporter_unloading", tc2},
+		{"diagnosing", tc2},
+		{"searching_upper_levels", tc2},
+		{"waiting_for_transporter", bld},
+		{"transporter_moving_to_supply", bld},
+		{"transporter_loading", bld},
+		{"transporter_moving_back", bld},
+		{"transporter_unloading", bld},
+		{"waiting_for_repairer", bld},
+		{"repairing", bld},
+		{"moving_back", bld},
+		{"finished", zero},
 	})
 	checkMaintenanceUpdates(c, client, unit, electronic_3, []MaintenanceUpdateChecker{
-		{"moving_to_supply", tc2, false},
-		{"diagnosing", tc2, false},
-		{"searching_upper_levels", tc2, false},
-		{"moving_to_supply", bld, false},
-		{"searching_upper_levels", bld, false},
-		{"moving_to_supply", blt, false},
-		{"waiting_for_repairer", blt, false},
-		{"repairing", blt, false},
-		{"moving_back", blt, false},
-		{"finished", zero, false},
+		{"moving_to_supply", tc2},
+		{"diagnosing", tc2},
+		{"searching_upper_levels", tc2},
+		{"moving_to_supply", bld},
+		{"searching_upper_levels", bld},
+		{"moving_to_supply", blt},
+		{"waiting_for_repairer", blt},
+		{"repairing", blt},
+		{"moving_back", blt},
+		{"finished", zero},
 	})
 	checkMaintenanceUpdates(c, client, unit, mobility_3, []MaintenanceUpdateChecker{
-		{"transporter_moving_to_supply", tc2, false},
-		{"transporter_loading", tc2, false},
-		{"transporter_moving_back", tc2, false},
-		{"transporter_unloading", tc2, false},
-		{"diagnosing", tc2, false},
-		{"searching_upper_levels", tc2, false},
-		{"waiting_for_transporter", bld, false},
-		{"transporter_moving_to_supply", bld, false},
-		{"transporter_loading", bld, false},
-		{"transporter_moving_back", bld, false},
-		{"transporter_unloading", bld, false},
-		{"searching_upper_levels", bld, false},
-		{"waiting_for_transporter", blt, false},
-		{"transporter_moving_to_supply", blt, false},
-		{"transporter_loading", blt, false},
-		{"transporter_moving_back", blt, false},
-		{"transporter_unloading", blt, false},
-		{"waiting_for_repairer", blt, false},
-		{"repairing", blt, false},
-		{"moving_back", blt, false},
-		{"finished", zero, false},
+		{"transporter_moving_to_supply", tc2},
+		{"transporter_loading", tc2},
+		{"transporter_moving_back", tc2},
+		{"transporter_unloading", tc2},
+		{"diagnosing", tc2},
+		{"searching_upper_levels", tc2},
+		{"waiting_for_transporter", bld},
+		{"transporter_moving_to_supply", bld},
+		{"transporter_loading", bld},
+		{"transporter_moving_back", bld},
+		{"transporter_unloading", bld},
+		{"searching_upper_levels", bld},
+		{"waiting_for_transporter", blt},
+		{"transporter_moving_to_supply", blt},
+		{"transporter_loading", blt},
+		{"transporter_moving_back", blt},
+		{"transporter_unloading", blt},
+		{"waiting_for_repairer", blt},
+		{"repairing", blt},
+		{"moving_back", blt},
+		{"finished", zero},
 	})
+}
+
+func checkUpdateThenApply(state string, provider *sword.Tasker, strict bool, op func(ctx *MaintenanceCheckContext) error) MaintenanceChecker {
+	updater := MaintenanceUpdateChecker{state, provider}
+	var checker MaintenanceChecker = &updater
+	if strict {
+		checker = &MaintenanceStrictUpdateChecker{updater}
+	}
+	return &MaintenanceApplyChecker{checker, op}
+}
+
+func checkUpdate(state string, provider *sword.Tasker) MaintenanceChecker {
+	return &MaintenanceUpdateChecker{state, provider}
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
@@ -654,39 +678,35 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 	c.Assert(err, IsNil)
 	checkMaintenance(c, client, unit, 0, electronic_1,
 		MaintenanceCreateChecker{},
-		&MaintenanceUpdateChecker{"moving_to_supply", tc2, false},
-		&MaintenanceUpdateChecker{"diagnosing", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_parts", tc2, false},
+		checkUpdate("moving_to_supply", tc2),
+		checkUpdate("diagnosing", tc2),
+		checkUpdateThenApply("waiting_for_parts", tc2, false,
 			func(ctx *MaintenanceCheckContext) error {
 				return setParts(client, tc2, 10, electrogen_1)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_repairer", tc2, false},
-		&MaintenanceUpdateChecker{"repairing", tc2, false},
-		&MaintenanceUpdateChecker{"moving_back", tc2, false},
-		&MaintenanceUpdateChecker{"finished", zero, false},
+			}),
+		checkUpdate("waiting_for_repairer", tc2),
+		checkUpdate("repairing", tc2),
+		checkUpdate("moving_back", tc2),
+		checkUpdate("finished", zero),
 		MaintenanceDeleteChecker{},
 	)
 	err = setParts(client, tc2, 0, gyroscope_1)
 	c.Assert(err, IsNil)
 	checkMaintenance(c, client, unit, 0, mobility_1,
 		MaintenanceCreateChecker{},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_loading", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", tc2, false},
-		&MaintenanceUpdateChecker{"diagnosing", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_parts", tc2, false},
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		checkUpdate("diagnosing", tc2),
+		checkUpdateThenApply("waiting_for_parts", tc2, false,
 			func(ctx *MaintenanceCheckContext) error {
 				return setParts(client, tc2, 10, gyroscope_1)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_repairer", tc2, false},
-		&MaintenanceUpdateChecker{"repairing", tc2, false},
-		&MaintenanceUpdateChecker{"moving_back", tc2, false},
-		&MaintenanceUpdateChecker{"finished", zero, false},
+			}),
+		checkUpdate("waiting_for_repairer", tc2),
+		checkUpdate("repairing", tc2),
+		checkUpdate("moving_back", tc2),
+		checkUpdate("finished", zero),
 		MaintenanceDeleteChecker{},
 	)
 }
@@ -719,47 +739,39 @@ func (s *TestSuite) TestMaintenanceHandlingsWithAutomaticSelection(c *C) {
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2, true},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectNewLogisticState(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_loading", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2, true},
+			}),
+		checkUpdate("waiting_for_transporter", tc2),
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		checkUpdateThenApply("waiting_for_diagnosis_team_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectNewLogisticState(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"diagnosing", tc2, false},
-		&MaintenanceUpdateChecker{"searching_upper_levels", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", bld, true},
+			}),
+		checkUpdate("diagnosing", tc2),
+		checkUpdate("searching_upper_levels", tc2),
+		checkUpdateThenApply("waiting_for_transporter_selection", bld, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectNewLogisticState(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld, false},
-		&MaintenanceUpdateChecker{"transporter_loading", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", bld, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", bld, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_repair_team_selection", bld, true},
+			}),
+		checkUpdate("waiting_for_transporter", bld),
+		checkUpdate("transporter_moving_to_supply", bld),
+		checkUpdate("transporter_loading", bld),
+		checkUpdate("transporter_moving_back", bld),
+		checkUpdate("transporter_unloading", bld),
+		checkUpdateThenApply("waiting_for_repair_team_selection", bld, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectNewLogisticState(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_parts", bld, false},
-		&MaintenanceUpdateChecker{"waiting_for_repairer", bld, false},
-		&MaintenanceUpdateChecker{"repairing", bld, false},
-		&MaintenanceUpdateChecker{"moving_back", bld, false},
-		&MaintenanceUpdateChecker{"finished", zero, false},
+			}),
+		checkUpdate("waiting_for_parts", bld),
+		checkUpdate("waiting_for_repairer", bld),
+		checkUpdate("repairing", bld),
+		checkUpdate("moving_back", bld),
+		checkUpdate("finished", zero),
 		MaintenanceDeleteChecker{},
 	)
 }
@@ -783,43 +795,35 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualSelection(c *C) {
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2, true},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck)
-			},
-		},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_loading", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2, true},
+			}),
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		checkUpdateThenApply("waiting_for_diagnosis_team_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectDiagnosisTeam(ctx.handlingId, gyroscrew_1)
-			},
-		},
-		&MaintenanceUpdateChecker{"diagnosing", tc2, false},
-		&MaintenanceUpdateChecker{"searching_upper_levels", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", bld, true},
+			}),
+		checkUpdate("diagnosing", tc2),
+		checkUpdate("searching_upper_levels", tc2),
+		checkUpdateThenApply("waiting_for_transporter_selection", bld, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck)
-			},
-		},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld, false},
-		&MaintenanceUpdateChecker{"transporter_loading", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", bld, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", bld, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_repair_team_selection", bld, true},
+			}),
+		checkUpdate("transporter_moving_to_supply", bld),
+		checkUpdate("transporter_loading", bld),
+		checkUpdate("transporter_moving_back", bld),
+		checkUpdate("transporter_unloading", bld),
+		checkUpdateThenApply("waiting_for_repair_team_selection", bld, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectRepairTeam(ctx.handlingId, gyroscrew_2)
-			},
-		},
-		&MaintenanceUpdateChecker{"repairing", bld, false},
-		&MaintenanceUpdateChecker{"moving_back", bld, false},
-		&MaintenanceUpdateChecker{"finished", zero, false},
+			}),
+		checkUpdate("repairing", bld),
+		checkUpdate("moving_back", bld),
+		checkUpdate("finished", zero),
 		MaintenanceDeleteChecker{},
 	)
 }
@@ -854,28 +858,26 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2, true},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return toAutomatic(tc2Id)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_loading", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", tc2, false},
-		&MaintenanceUpdateChecker{"diagnosing", tc2, false},
-		&MaintenanceUpdateChecker{"searching_upper_levels", tc2, false},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld, false},
-		&MaintenanceUpdateChecker{"transporter_loading", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", bld, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", bld, false},
-		&MaintenanceUpdateChecker{"waiting_for_repairer", bld, false},
-		&MaintenanceUpdateChecker{"repairing", bld, false},
-		&MaintenanceUpdateChecker{"moving_back", bld, false},
-		&MaintenanceUpdateChecker{"finished", zero, false},
+			}),
+		checkUpdate("waiting_for_transporter", tc2),
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		checkUpdate("diagnosing", tc2),
+		checkUpdate("searching_upper_levels", tc2),
+		checkUpdate("waiting_for_transporter", bld),
+		checkUpdate("transporter_moving_to_supply", bld),
+		checkUpdate("transporter_loading", bld),
+		checkUpdate("transporter_moving_back", bld),
+		checkUpdate("transporter_unloading", bld),
+		checkUpdate("waiting_for_repairer", bld),
+		checkUpdate("repairing", bld),
+		checkUpdate("moving_back", bld),
+		checkUpdate("finished", zero),
 		MaintenanceDeleteChecker{},
 	)
 
@@ -883,34 +885,30 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2, true},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectNewLogisticState(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_loading", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2, true},
+			}),
+		checkUpdate("waiting_for_transporter", tc2),
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		checkUpdateThenApply("waiting_for_diagnosis_team_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return toAutomatic(tc2Id)
-			},
-		},
-		&MaintenanceUpdateChecker{"diagnosing", tc2, false},
-		&MaintenanceUpdateChecker{"searching_upper_levels", tc2, false},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld, false},
-		&MaintenanceUpdateChecker{"transporter_loading", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", bld, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", bld, false},
-		&MaintenanceUpdateChecker{"waiting_for_repairer", bld, false},
-		&MaintenanceUpdateChecker{"repairing", bld, false},
-		&MaintenanceUpdateChecker{"moving_back", bld, false},
-		&MaintenanceUpdateChecker{"finished", zero, false},
+			}),
+		checkUpdate("diagnosing", tc2),
+		checkUpdate("searching_upper_levels", tc2),
+		checkUpdate("waiting_for_transporter", bld),
+		checkUpdate("transporter_moving_to_supply", bld),
+		checkUpdate("transporter_loading", bld),
+		checkUpdate("transporter_moving_back", bld),
+		checkUpdate("transporter_unloading", bld),
+		checkUpdate("waiting_for_repairer", bld),
+		checkUpdate("repairing", bld),
+		checkUpdate("moving_back", bld),
+		checkUpdate("finished", zero),
 		MaintenanceDeleteChecker{},
 	)
 
@@ -918,34 +916,30 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_loading", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", tc2, false},
-		&MaintenanceUpdateChecker{"diagnosing", tc2, false},
-		&MaintenanceUpdateChecker{"searching_upper_levels", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", bld, true},
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		checkUpdate("diagnosing", tc2),
+		checkUpdate("searching_upper_levels", tc2),
+		checkUpdateThenApply("waiting_for_transporter_selection", bld, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectNewLogisticState(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld, false},
-		&MaintenanceUpdateChecker{"transporter_loading", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", bld, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", bld, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_repair_team_selection", bld, true},
+			}),
+		checkUpdate("waiting_for_transporter", bld),
+		checkUpdate("transporter_moving_to_supply", bld),
+		checkUpdate("transporter_loading", bld),
+		checkUpdate("transporter_moving_back", bld),
+		checkUpdate("transporter_unloading", bld),
+		checkUpdateThenApply("waiting_for_repair_team_selection", bld, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return toAutomatic(bldId)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_parts", bld, false},
-		&MaintenanceUpdateChecker{"waiting_for_repairer", bld, false},
-		&MaintenanceUpdateChecker{"repairing", bld, false},
-		&MaintenanceUpdateChecker{"moving_back", bld, false},
-		&MaintenanceUpdateChecker{"finished", zero, false},
+			}),
+		checkUpdate("waiting_for_parts", bld),
+		checkUpdate("waiting_for_repairer", bld),
+		checkUpdate("repairing", bld),
+		checkUpdate("moving_back", bld),
+		checkUpdate("finished", zero),
 		MaintenanceDeleteChecker{},
 	)
 }
@@ -964,20 +958,17 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForTransporting(c *
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2, true},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.TransferToLogisticSuperior(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"searching_upper_levels", tc2, false},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld, false},
-		&MaintenanceUpdateChecker{"transporter_loading", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", bld, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", bld, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"diagnosing", bld, false},
+			}),
+		checkUpdate("searching_upper_levels", tc2),
+		checkUpdate("waiting_for_transporter", bld),
+		checkUpdate("transporter_moving_to_supply", bld),
+		checkUpdate("transporter_loading", bld),
+		checkUpdate("transporter_moving_back", bld),
+		checkUpdate("transporter_unloading", bld),
+		checkUpdateThenApply("diagnosing", bld, false,
 			func(ctx *MaintenanceCheckContext) error {
 				err := client.TransferToLogisticSuperior(ctx.handlingId)
 				ok, msg := IsSwordError.Check([]interface{}{err, "error_invalid_parameter"}, nil)
@@ -985,12 +976,11 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForTransporting(c *
 					return fmt.Errorf(msg)
 				}
 				return nil
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_repairer", bld, false},
-		&MaintenanceUpdateChecker{"repairing", bld, false},
-		&MaintenanceUpdateChecker{"moving_back", bld, false},
-		&MaintenanceUpdateChecker{"finished", zero, false},
+			}),
+		checkUpdate("waiting_for_repairer", bld),
+		checkUpdate("repairing", bld),
+		checkUpdate("moving_back", bld),
+		checkUpdate("finished", zero),
 		MaintenanceDeleteChecker{},
 	)
 }
@@ -1009,34 +999,30 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForDiagnosing(c *C)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2, true},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectNewLogisticState(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_loading", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2, true},
+			}),
+		checkUpdate("waiting_for_transporter", tc2),
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		checkUpdateThenApply("waiting_for_diagnosis_team_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.TransferToLogisticSuperior(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"searching_upper_levels", tc2, false},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld, false},
-		&MaintenanceUpdateChecker{"transporter_loading", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", bld, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", bld, false},
-		&MaintenanceUpdateChecker{"diagnosing", bld, false},
-		&MaintenanceUpdateChecker{"waiting_for_repairer", bld, false},
-		&MaintenanceUpdateChecker{"repairing", bld, false},
-		&MaintenanceUpdateChecker{"moving_back", bld, false},
-		&MaintenanceUpdateChecker{"finished", zero, false},
+			}),
+		checkUpdate("searching_upper_levels", tc2),
+		checkUpdate("waiting_for_transporter", bld),
+		checkUpdate("transporter_moving_to_supply", bld),
+		checkUpdate("transporter_loading", bld),
+		checkUpdate("transporter_moving_back", bld),
+		checkUpdate("transporter_unloading", bld),
+		checkUpdate("diagnosing", bld),
+		checkUpdate("waiting_for_repairer", bld),
+		checkUpdate("repairing", bld),
+		checkUpdate("moving_back", bld),
+		checkUpdate("finished", zero),
 		MaintenanceDeleteChecker{},
 	)
 }
@@ -1059,48 +1045,40 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForRepair(c *C) {
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2, true},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectNewLogisticState(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_loading", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", tc2, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2, true},
+			}),
+		checkUpdate("waiting_for_transporter", tc2),
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		checkUpdateThenApply("waiting_for_diagnosis_team_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectNewLogisticState(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"diagnosing", tc2, false},
-		&MaintenanceUpdateChecker{"searching_upper_levels", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", bld, true},
+			}),
+		checkUpdate("diagnosing", tc2),
+		checkUpdate("searching_upper_levels", tc2),
+		checkUpdateThenApply("waiting_for_transporter_selection", bld, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.SelectNewLogisticState(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"waiting_for_transporter", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld, false},
-		&MaintenanceUpdateChecker{"transporter_loading", bld, false},
-		&MaintenanceUpdateChecker{"transporter_moving_back", bld, false},
-		&MaintenanceUpdateChecker{"transporter_unloading", bld, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_repair_team_selection", bld, true},
+			}),
+		checkUpdate("waiting_for_transporter", bld),
+		checkUpdate("transporter_moving_to_supply", bld),
+		checkUpdate("transporter_loading", bld),
+		checkUpdate("transporter_moving_back", bld),
+		checkUpdate("transporter_unloading", bld),
+		checkUpdateThenApply("waiting_for_repair_team_selection", bld, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.TransferToLogisticSuperior(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"searching_upper_levels", bld, false},
-		&MaintenanceUpdateChecker{"waiting_for_parts", blt, false},
-		&MaintenanceUpdateChecker{"waiting_for_repairer", blt, false},
-		&MaintenanceUpdateChecker{"repairing", blt, false},
-		&MaintenanceUpdateChecker{"moving_back", blt, false},
-		&MaintenanceUpdateChecker{"finished", zero, false},
+			}),
+		checkUpdate("searching_upper_levels", bld),
+		checkUpdate("waiting_for_parts", blt),
+		checkUpdate("waiting_for_repairer", blt),
+		checkUpdate("repairing", blt),
+		checkUpdate("moving_back", blt),
+		checkUpdate("finished", zero),
 		MaintenanceDeleteChecker{},
 	)
 }
@@ -1127,27 +1105,21 @@ func (s *TestSuite) TestMaintenanceSuperiorUnableToRepair(c *C) {
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2, true},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.TransferToLogisticSuperior(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"searching_upper_levels", tc2, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", bld, true},
+			}),
+		checkUpdate("searching_upper_levels", tc2),
+		checkUpdateThenApply("waiting_for_transporter_selection", bld, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.TransferToLogisticSuperior(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"searching_upper_levels", bld, false},
-		&MaintenanceApplyChecker{
-			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", blt, true},
+			}),
+		checkUpdate("searching_upper_levels", bld),
+		checkUpdateThenApply("waiting_for_transporter_selection", blt, true,
 			func(ctx *MaintenanceCheckContext) error {
 				return client.TransferToLogisticSuperior(ctx.handlingId)
-			},
-		},
-		&MaintenanceUpdateChecker{"searching_upper_levels", blt, false},
+			}),
+		checkUpdate("searching_upper_levels", blt),
 	)
 	client.Model.WaitTicks(2)
 	reports := reporter.Stop()
