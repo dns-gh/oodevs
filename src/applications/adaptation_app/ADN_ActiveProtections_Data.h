@@ -32,6 +32,7 @@ public:
                  ActiveProtectionsInfosWeapons();
         virtual ~ActiveProtectionsInfosWeapons() {}
         std::string GetItemName();
+        ActiveProtectionsInfosWeapons* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& xos ) const;
