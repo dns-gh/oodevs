@@ -126,19 +126,9 @@ bool PHY_MaintenanceRepairConsign::DoWaitingForRepairer()
     if( !pRepairer_ )
     {
         // Find alternative repair unit
-        MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
-        if( pLogisticManager && pComposanteState_ )
-        {
-            PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeRepairHandler( *pComposanteState_ );
-            if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForRepair( *pComposanteState_ ) )
-            {
-                EnterStateFinished();
-                pComposanteState_ = 0; // Crade
-                return false;
-            }
-        }
-        if( !GetPionMaintenance().HasUsableRepairer( pComposanteState_->GetComposanteBreakdown() ) )
-            EnterStateWaitingForCarrier();
+        if( !FindAlternativeRepairTeam() )
+            if( !GetPionMaintenance().HasUsableRepairer( pComposanteState_->GetComposanteBreakdown() ) )
+                EnterStateWaitingForCarrier();
         return false;
     }
     GetPionMaintenance().StartUsingForLogistic( *pRepairer_ );
@@ -347,8 +337,32 @@ void PHY_MaintenanceRepairConsign::SelectRepairTeam( const PHY_ComposanteTypePio
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
         throw MASA_EXCEPTION( "repair consign not in a waiting for repair team selection state" );
     pRepairer_ = GetPionMaintenance().GetAvailableRepairer( pComposanteState_->GetComposanteBreakdown(), &type );
-    if( !pRepairer_ )
+    if( pRepairer_ )
+    {
+        GetPionMaintenance().StartUsingForLogistic( *pRepairer_ );
+        EnterStateWaitingForParts();
+    }
+    else if( !FindAlternativeRepairTeam( &type ) )
         throw MASA_EXCEPTION( "no component of specified type available for repair team selection" );
-    GetPionMaintenance().StartUsingForLogistic( *pRepairer_ );
-    EnterStateWaitingForParts();
+}
+
+bool PHY_MaintenanceRepairConsign::FindAlternativeRepairTeam( const PHY_ComposanteTypePion* type )
+{
+    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
+    if( pLogisticManager && pComposanteState_ )
+    {
+        PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeRepairHandler( *pComposanteState_, type );
+        if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForRepair( *pComposanteState_ ) )
+        {
+            if( type )
+            {
+                pComposanteState_->GetConsign()->SetState( GetState(), 0 );
+                pComposanteState_->SelectRepairTeam( *type );
+            }
+            EnterStateFinished();
+            pComposanteState_ = 0; // Crade
+            return true;
+        }
+    }
+    return false;
 }

@@ -24,6 +24,7 @@ namespace actions
 namespace kernel
 {
     class Availability;
+    class BreakdownType;
     class ComponentType;
     class Controller;
     class Controllers;
@@ -98,6 +99,7 @@ private:
     int lastContext_;
     kernel::SafePointer< kernel::Entity_ABC > handler_;
     const kernel::ComponentType* componentType_;
+    const kernel::BreakdownType* breakdownType_;
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus status_;
     std::map< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus, int > indexMap_;
     const kernel::Availability* availability_;

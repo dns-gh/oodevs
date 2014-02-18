@@ -199,6 +199,8 @@ ADN_Drawings_Data::DrawingInfo* const ADN_Drawings_Data::GetDrawing( const std::
 // -----------------------------------------------------------------------------
 ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetGeometryDrawings( const std::string& geometries, const std::string& category )
 {
+    if( geometryMap_.find( geometries ) == geometryMap_.end() )
+        geometryMap_[ geometries ] = ADN_Type_Vector_ABC< DrawingInfo >( true, false );
     T_DrawingInfoVector& currentVector = geometryMap_[ geometries ];
     if( currentVector.empty() )
     {
@@ -218,6 +220,8 @@ ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetGeometryDrawings( 
 // -----------------------------------------------------------------------------
 ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetCategoryDrawings( const std::string& category )
 {
+    if( categoryMap_.find( category ) == categoryMap_.end() )
+        categoryMap_[ category ] = ADN_Type_Vector_ABC< DrawingInfo >( true, false );
     T_DrawingInfoVector& currentVector = categoryMap_[ category ];
     if( currentVector.empty() )
         for( auto it = drawings_.begin(); it != drawings_.end(); ++it )

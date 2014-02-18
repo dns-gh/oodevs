@@ -6417,10 +6417,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>Breakdown_Data</name>
     <message>
-        <source>New breakdown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>

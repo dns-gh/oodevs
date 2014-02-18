@@ -211,7 +211,6 @@ ADN_Fires_Data::FireClassInfos* ADN_Fires_Data::FireClassInfos::CreateCopy()
     pCopy->injuryInfos_.CopyFrom( injuryInfos_ );
     for( size_t i = 0; i < modifUrbanBlocks_.size(); ++i )
         pCopy->modifUrbanBlocks_[i]->CopyFrom( *modifUrbanBlocks_[i] );
-    pCopy->strName_ = strName_.GetData();
     pCopy->initialHeat_ = initialHeat_.GetData();
     pCopy->maxHeat_ = maxHeat_.GetData();
     pCopy->increaseRate_ = increaseRate_.GetData();

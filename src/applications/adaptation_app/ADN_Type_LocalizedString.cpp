@@ -202,6 +202,8 @@ void ADN_Type_LocalizedString::SetType( const std::string& language, kernel::E_T
     translation_->SetType( language, type );
     emit TypeChanged( type );
     CheckValidity();
+    if( type == kernel::eTranslationType_None && translation_->Value( language ).empty() )
+        translation_->SetValue( language, GetKey() );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,6 +294,16 @@ bool ADN_Type_LocalizedString::CheckUniqueTranslation() const
 const boost::shared_ptr< kernel::LocalizedString >& ADN_Type_LocalizedString::GetTranslation() const
 {
     return translation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Type_LocalizedString::Purge
+// Created: ABR 2014-02-17
+// -----------------------------------------------------------------------------
+void ADN_Type_LocalizedString::Purge()
+{
+    translation_.reset();
+    InitTranslation( "" );
 }
 
 // -----------------------------------------------------------------------------

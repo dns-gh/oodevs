@@ -105,7 +105,6 @@ ADN_Breakdowns_Data::BreakdownInfo::~BreakdownInfo()
 ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::BreakdownInfo::CreateCopy()
 {
     BreakdownInfo* pCopy = new BreakdownInfo();
-    pCopy->strName_ = tools::translate( "Breakdown_Data", "New breakdown" ).toStdString();
     pCopy->nType_ = nType_.GetData();
     pCopy->nNTI_  = nNTI_.GetData();
     pCopy->repairTime_ = repairTime_.GetData();

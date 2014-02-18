@@ -46,7 +46,6 @@ ADN_Missions_FragOrder::~ADN_Missions_FragOrder()
 ADN_Missions_FragOrder* ADN_Missions_FragOrder::CreateCopy()
 {
     ADN_Missions_FragOrder* newFragOrder = new ADN_Missions_FragOrder();
-    newFragOrder->strName_ = strName_.GetData();
     newFragOrder->missionSheetPath_ = missionSheetPath_.GetData();
     newFragOrder->parameters_.reserve( parameters_.size() );
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )

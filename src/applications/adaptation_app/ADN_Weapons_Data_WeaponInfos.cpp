@@ -70,7 +70,6 @@ ADN_Weapons_Data_WeaponInfos::~ADN_Weapons_Data_WeaponInfos()
 ADN_Weapons_Data_WeaponInfos* ADN_Weapons_Data_WeaponInfos::CreateCopy()
 {
     ADN_Weapons_Data_WeaponInfos* pCopy = new ADN_Weapons_Data_WeaponInfos();
-    pCopy->strName_ = strName_.GetData();
     pCopy->ptrLauncher_ = ptrLauncher_.GetData();
     pCopy->ptrAmmunition_ = ptrAmmunition_.GetData();
     pCopy->nRoundsPerBurst_ = nRoundsPerBurst_.GetData();
