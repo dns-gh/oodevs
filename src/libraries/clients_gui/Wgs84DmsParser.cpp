@@ -53,8 +53,10 @@ bool Wgs84DmsParser::Parse( const QStringList& content, geometry::Point2f& resul
         if( formatCoordX && formatCoordY )
         {
             result = converter_.ConvertFromGeoDms( hintx.toStdString(), hinty.toStdString() );
-            hint.append( hintx );
+            // Lat
             hint.append( hinty );
+            // Long
+            hint.append( hintx );
             return true;
         }
     }
