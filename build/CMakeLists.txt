@@ -154,14 +154,6 @@ function( add_target target group dir )
     endif()
 endfunction()
 
-# svgl
-add_target( svgl common "libraries/svgl" OPTIONS qt )
-target_link_libraries( svgl ${XERCES_LIBRARIES} )
-
-# svgl_app
-add_target( svgl_app applications "applications/svgl_app" OPTIONS executable qt )
-target_link_libraries( svgl_app svgl )
-
 # protocol
 add_target( protocol common "libraries/protocol" OPTIONS protobuf )
 
@@ -525,6 +517,14 @@ target_link_libraries( client_proxy sword_tools )
 # client_proxy_test
 add_target( client_proxy_test tests "tests/client_proxy_test" OPTIONS protocol test )
 target_link_libraries( client_proxy_test client_proxy )
+
+# svgl
+add_target( svgl clients "libraries/svgl" OPTIONS qt )
+target_link_libraries( svgl ${XERCES_LIBRARIES} )
+
+# svgl_app
+add_target( svgl_app clients "applications/svgl_app" OPTIONS executable qt )
+target_link_libraries( svgl_app svgl )
 
 # clients_gui
 add_target( clients_gui clients "libraries/clients_gui" OPTIONS qt3 qt protocol )
