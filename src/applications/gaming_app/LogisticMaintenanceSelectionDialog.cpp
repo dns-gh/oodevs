@@ -73,6 +73,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     , status_( sword::LogMaintenanceHandlingUpdate::finished )
     , availability_( 0 )
     , componentType_( 0 )
+    , breakdownType_( 0 )
 {
     setMinimumSize( 400, 400 );
 
@@ -95,6 +96,13 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     auto* repair = new QWidget();
     auto* layout = new QVBoxLayout( repair );
     repairers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_repair_team_listview", controllers, this );
+    repairers_->SetFilter( [&] ( const kernel::Availability& availability )
+    {
+        return breakdownType_ &&
+               availability.type_ &&
+               availability.type_->GetMaintenanceFunctions() &&
+               availability.type_->GetMaintenanceFunctions()->CanRepair( *breakdownType_ );
+    } );
     parts_ = new PartsView( controllers, this );
     connect( parts_, SIGNAL( Updated() ), this, SLOT( UpdateDisplay() ) );
     layout->addWidget( repairers_ );
@@ -199,6 +207,7 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
     id_ = consign.GetId();
     handler_ = consign.GetHandler();
     componentType_ = maintenanceConsign.GetEquipment();
+    breakdownType_ = maintenanceConsign.GetBreakdown();
     status_ = maintenanceConsign.GetStatus();
     SetCurrentWidget();
     setWindowTitle( tr( "Request #%1 - %2" ).arg( id_ ).arg( QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) ) ) );
