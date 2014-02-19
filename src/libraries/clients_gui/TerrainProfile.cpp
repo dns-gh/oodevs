@@ -82,7 +82,7 @@ void TerrainProfile::Update( const geometry::Point2f& from, const geometry::Poin
     }
     YAxis().SetAxisRange( 0, yMax * 1.1f, true );
     XAxis().SetAxisRange( 0, x / 1000.f, true );
-    UpdateVision( from, to, height );
+    UpdateVision( height );
     UpdateSlopes( slope );
 }
 
@@ -90,45 +90,33 @@ void TerrainProfile::Update( const geometry::Point2f& from, const geometry::Poin
 // Name: TerrainProfile::UpdateVision
 // Created: SBO 2010-04-01
 // -----------------------------------------------------------------------------
-void TerrainProfile::UpdateVision( const geometry::Point2f& from, const geometry::Point2f& to, float height )
+void TerrainProfile::UpdateVision( float height )
 {
     vision_->ClearData();
-    VisionLine line( detection_, from, to, height );
-    float yMax = -1, xMax = 0, x = 0;
-    geometry::Point2f viewer, previous, current, maxpt;
-    while( ! line.IsDone() )
+    const auto& data = data_->Data();
+    auto previous = data.begin();
+    vision_->AddPoint( *previous );
+    const geometry::Point2d viewer( 0, previous->second );
+    geometry::Point2d maxpt( 0, previous->second - height );
+    for( auto it = previous + 1; it != data.end(); previous = it++ )
     {
-        line.Increment();
-        const float value = line.Elevation() + ( x == 0 ? height : 0 );
-        current = geometry::Point2f( x, value );
-        if( x == 0 )
+        const geometry::Point2d current( it->first, it->second );
+        const geometry::Vector2d view2max( viewer, maxpt );
+        const geometry::Vector2d view2current( viewer, current );
+        if( view2max.CrossProduct( view2current ) >= 0 )
         {
-            viewer = geometry::Point2f( 0, value );
-            vision_->AddPoint( 0, value );
-            yMax = value - height;
-            maxpt = geometry::Point2f( xMax, yMax );
+            geometry::Point2d intersectpoint;
+            const geometry::Line2d linemax( viewer, maxpt );
+            const geometry::Line2d linecurrent( geometry::Point2d( previous->first, previous->second ), current );
+            if( linemax.Intersect( linecurrent, intersectpoint )
+                && intersectpoint.X() > previous->first
+                && intersectpoint.X() < it->first )
+                vision_->AddPoint( intersectpoint.X(), intersectpoint.Y() );
+            vision_->AddPoint( *it );
+            maxpt.Set( it->first, it->second );
         }
         else
-        {
-            const geometry::Vector2f view2max    ( viewer, maxpt );
-            const geometry::Vector2f view2current( viewer, current );
-            if( view2max.CrossProduct( view2current ) >= 0 )
-            {
-                geometry::Point2f intersectpoint;
-                const geometry::Line2f linemax    ( viewer, maxpt );
-                const geometry::Line2f linecurrent( previous, current );
-                if( linemax.Intersect( linecurrent, intersectpoint )
-                    && ( intersectpoint.X() > previous.X() && intersectpoint.X() < x ) )
-                    vision_->AddPoint( intersectpoint.X() /1000.f, intersectpoint.Y() );
-
-                vision_->AddPoint( x / 1000.f, value );
-                maxpt.Set( x, value );
-            }
-            else
-                vision_->AddPoint( x / 1000.f, -1.f );
-        }
-        previous = geometry::Point2f( x, value );
-        x += line.Length();
+            vision_->AddPoint( it->first, -1.f );
     }
 }
 
@@ -150,11 +138,11 @@ void TerrainProfile::UpdateSlopes( int threshold )
     if( data.size() < 2 )
         return;
     auto previous = data.begin();
-    for( auto next = previous + 1; next != data.end(); previous = next++ )
+    for( auto it = previous + 1; it != data.end(); previous = it++ )
     {
-        const bool highlight = ComputeSlope( *next, *previous ) > threshold;
+        const bool highlight = ComputeSlope( *it, *previous ) > threshold;
         slopes_->AddPoint( previous->first, highlight ? previous->second : 0 );
-        slopes_->AddPoint( next->first,  highlight ? next->second : 0 );
+        slopes_->AddPoint( it->first,  highlight ? it->second : 0 );
     }
 }
 

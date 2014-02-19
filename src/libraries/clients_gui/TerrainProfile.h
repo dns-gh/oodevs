@@ -52,7 +52,7 @@ private:
 
     //! @name Helpers
     //@{
-    void UpdateVision( const geometry::Point2f& from, const geometry::Point2f& to, float height );
+    void UpdateVision( float height );
     void UpdateSlopes( int threshold );
     //@}
 
