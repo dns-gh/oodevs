@@ -164,7 +164,6 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
         layout->addWidget( new QLabel( tr( "Type:" ), parent ) );
         layout->addWidget( typeCombo_ );
     }
-
     // Target type
     {
         QLabel* label = new QLabel( tr( "Activate:" ), parent );
@@ -176,94 +175,85 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
         layout->addWidget( label );
         layout->addWidget( activatedCombo_ );
     }
-
     // Density
     {
-        QGroupBox* densityBox = static_cast< QGroupBox* >( density_->BuildInterface( "densityBox", parent ) );
+        QWidget* densityBox = density_->BuildInterface( "densityBox", parent );
         density_->SetLimits( 0.f, 5.f );
         densityBox->layout()->setMargin( 0 );
         densityBox->layout()->setSpacing( 0 );
         layout->addWidget( densityBox );
     }
-
     // TC2
     {
-        QGroupBox* tc2Box = static_cast< QGroupBox* >( tc2_->BuildInterface( "tc2Box", parent ) );
+        QWidget* tc2Box = tc2_->BuildInterface( "tc2Box", parent );
         tc2Box->layout()->setMargin( 0 );
         tc2Box->layout()->setSpacing( 0 );
         layout->addWidget( tc2Box );
     }
-
     // Location
     {
-        QGroupBox* locationBox = static_cast< QGroupBox* >( location_->BuildInterface( "locationBox", parent ) );
+        QWidget* locationBox = location_->BuildInterface( "locationBox", parent );
         locationBox->layout()->setMargin( 0 );
         locationBox->layout()->setSpacing( 0 );
         layout->addWidget( locationBox );
     }
     // Name
     {
-        QGroupBox* nameBox = static_cast< QGroupBox* >( name_->BuildInterface( "nameBox", parent ) );
+        QWidget* nameBox = name_->BuildInterface( "nameBox", parent );
         nameBox->layout()->setMargin( 0 );
         nameBox->layout()->setSpacing( 0 );
         layout->addWidget( nameBox );
     }
     // Activity/Activation Times
     {
-        QGroupBox* activityTimeBox = static_cast< QGroupBox* >( activityTime_->BuildInterface( "activityTimeBox", parent ) );
+        QWidget* activityTimeBox = activityTime_->BuildInterface( "activityTimeBox", parent );
         activityTimeBox->layout()->setMargin( 0 );
         activityTimeBox->layout()->setSpacing( 0 );
         layout->addWidget( activityTimeBox );
-        QGroupBox* activationTimeBox = static_cast< QGroupBox* >( activationTime_->BuildInterface( "activationTimeBox", parent ) );
+        QWidget* activationTimeBox = activationTime_->BuildInterface( "activationTimeBox", parent );
         activationTimeBox->layout()->setMargin( 0 );
         activationTimeBox->layout()->setSpacing( 0 );
         layout->addWidget( activationTimeBox );
     }
-
     // Altitude modifier
     {
-        QGroupBox* altitudeBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( altitudeModifier_ )->BuildInterface( "altitudeBox", parent ) );
+        QWidget* altitudeBox = altitudeModifier_->BuildInterface( "altitudeBox", parent );
         altitudeBox->layout()->setMargin( 0 );
         altitudeBox->layout()->setSpacing( 0 );
         layout->addWidget( altitudeBox );
     }
-
     // Time limit
     {
-        QGroupBox* timeLimitBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( timeLimit_ )->BuildInterface( "timeLimit", parent ) );
+        QWidget* timeLimitBox = timeLimit_->BuildInterface( "timeLimit", parent );
         timeLimitBox->layout()->setMargin( 0 );
         timeLimitBox->layout()->setSpacing( 0 );
         layout->addWidget( timeLimitBox );
     }
-
     // Mining
     {
-        QGroupBox* miningBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( mining_ )->BuildInterface( "miningBox", parent ) );
+        QWidget* miningBox = mining_->BuildInterface( "miningBox", parent );
         miningBox->layout()->setMargin( 0 );
         miningBox->layout()->setSpacing( 0 );
         layout->addWidget( miningBox );
     }
-
     // Lodging
     {
-        QGroupBox* lodgingBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( lodging_ )->BuildInterface( "lodgingBox", parent ) );
+        QWidget* lodgingBox = lodging_->BuildInterface( "lodgingBox", parent );
         lodgingBox->layout()->setMargin( 0 );
         lodgingBox->layout()->setSpacing( 0 );
         layout->addWidget( lodgingBox );
     }
-
     // Fire class
     {
-        QGroupBox* fireBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( fireClass_ )->BuildInterface( "FireBox", parent ) );
+        QWidget* fireBox = fireClass_->BuildInterface( "FireBox", parent );
         fireBox->layout()->setMargin( 0 );
         fireBox->layout()->setSpacing( 0 );
         layout->addWidget( fireBox );
-        QGroupBox* maxCombustionBox = static_cast< QGroupBox* >( maxCombustionEnergy_->BuildInterface( "maxCombustionBox", parent ) );
+        QWidget* maxCombustionBox = maxCombustionEnergy_->BuildInterface( "maxCombustionBox", parent );
         maxCombustionBox->layout()->setMargin( 0 );
         maxCombustionBox->layout()->setSpacing( 0 );
         layout->addWidget( maxCombustionBox );
     }
-
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
     OnTypeChanged();
     return group_;
