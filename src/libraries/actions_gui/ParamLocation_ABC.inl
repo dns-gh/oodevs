@@ -119,6 +119,7 @@ void ParamLocation_ABC< BaseParameter >::Handle( kernel::Location_ABC& location 
     {
         location_.reset( &location );
         pPosLabel_->setText( location.GetName() );
+        InternalOnMenuClick();
         NotifyChange();
         Update();
     }
@@ -131,21 +132,20 @@ void ParamLocation_ABC< BaseParameter >::Handle( kernel::Location_ABC& location 
 template< typename BaseParameter >
 void ParamLocation_ABC< BaseParameter >::OnMenuClick()
 {
-    if( parameter_.GetType() == "circle" )
-        layer_.StartCircle( *this );
-    else if( parameter_.GetType() == "line" )
-        layer_.StartLine( *this );
-    else if( parameter_.GetType() == "point" && popupPosition_ )
+    if( parameter_.GetType() == "point" && popupPosition_ )
     {
         kernel::Point locPoint;
         locPoint.AddPoint( *popupPosition_ );
         Handle( locPoint.Clone() );
     }
+    else if( parameter_.GetType() == "circle" )
+        layer_.StartCircle( *this );
+    else if( parameter_.GetType() == "line" )
+        layer_.StartLine( *this );
     else if( parameter_.GetType() == "polygon" )
         layer_.StartPolygon( *this );
     else if( parameter_.GetType() == "rectangle" )
         layer_.StartRectangle( *this );
-    InternalOnMenuClick();
 }
 
 // -----------------------------------------------------------------------------
