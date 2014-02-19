@@ -134,12 +134,3 @@ void RemoteExercise::SetRunning( bool running )
     controller_.Update( static_cast< Exercise_ABC& >( *this ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: RemoteExercise::QueryProfileList
-// Created: AHC 2010-05-20
-// -----------------------------------------------------------------------------
-void RemoteExercise::QueryProfileList() const
-{
-    host_.QueryProfileList( name_ );
-}
-

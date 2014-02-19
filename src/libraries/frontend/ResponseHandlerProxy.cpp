@@ -86,15 +86,6 @@ void ResponseHandlerProxy::Handle( const sword::SessionStopResponse& message )
 
 // -----------------------------------------------------------------------------
 // Name: ResponseHandlerProxy::Handle
-// Created: SBO 2010-11-22
-// -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const sword::ProfileListResponse& message )
-{
-    UpdateHandlers( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResponseHandlerProxy::Handle
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------
 void ResponseHandlerProxy::Handle( const sword::SessionNotification& message )

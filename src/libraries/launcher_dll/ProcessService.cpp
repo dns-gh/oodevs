@@ -270,39 +270,6 @@ void ProcessService::NotifyError( const std::string& /*error*/, const std::strin
     NotifyStopped();
 }
 
-namespace
-{
-    struct ProfileCollector : public frontend::ProfileVisitor_ABC
-    {
-        explicit ProfileCollector( sword::ProfileListResponse& message )
-            : message_( message )
-        {}
-        virtual void Visit( const frontend::Profile& profile )
-        {
-            profile.Send( *message_.add_profile() );
-        }
-        sword::ProfileListResponse& message_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProcessService::SendProfileList
-// @brief fills 'message' with profiles from first running exercise...
-//        exercise name should be added to profile list request
-// Created: SBO 2010-11-19
-// -----------------------------------------------------------------------------
-void ProcessService::SendProfileList( sword::ProfileListResponse& message )
-{
-    boost::recursive_mutex::scoped_lock locker( mutex_ );
-    for( ProcessContainer::const_iterator it = processes_.begin(); it != processes_.end(); ++it )
-        if( it->first.first.ToUTF8() == message.exercise() )
-        {
-            ProfileCollector collector( message );
-            frontend::Profile::VisitProfiles( config_, fileLoader_, it->first.first, collector );
-            return;
-        }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ProcessService::SendCheckpointList
 // Created: LGY 2011-05-17

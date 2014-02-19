@@ -113,17 +113,6 @@ void RemoteHost::StopSession( const tools::Path& exercise, const tools::Path& se
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteHost::QueryProfileList
-// Created: SBO 2010-11-22
-// -----------------------------------------------------------------------------
-void RemoteHost::QueryProfileList(const tools::Path& exercise) const
-{
-    launcher::ProfileListRequest message;
-    message().set_exercise( exercise.ToUTF8() );
-    message.Send( publisher_ );
- }
-
-// -----------------------------------------------------------------------------
 // Name: RemoteHost::Handle
 // Created: SBO 2010-10-21
 // -----------------------------------------------------------------------------
@@ -148,15 +137,6 @@ void RemoteHost::Handle( const sword::SessionStartResponse& message )
     if( !exercise.get() )
         exercise.reset( new RemoteExercise( *this, *this, exercisePath, controller_ ) );
     exercise->SetRunning( true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::Handle
-// Created: SBO 2010-11-22
-// -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::ProfileListResponse& /*message*/ )
-{
-    // $$$$ SBO 2010-11-22: TODO, handle profile list
 }
 
 // -----------------------------------------------------------------------------

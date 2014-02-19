@@ -50,18 +50,6 @@ BOOST_FIXTURE_TEST_CASE( ClientCanListAvailableExercises, Fixture )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientCanStartExercise
-// Created: SBO 2010-11-22
-// -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, ExerciseFixture )
-{
-    sword::ProfileListResponse launcherResponse;
-    MOCK_EXPECT( handler->HandleProfileListResponse ).once().with( mock::retrieve( launcherResponse ) );
-    exercise->QueryProfileList();
-    Wait( launcherResponse );
-}
-
-// -----------------------------------------------------------------------------
 // Name: NotifyUnitExtension
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------

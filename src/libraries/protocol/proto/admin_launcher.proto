@@ -79,14 +79,6 @@ message SessionStopRequest {
     required string session  = 2 [ default = "default" ];
 }
 
-/** @struct ProfileListRequest
-    @brief retrieve list of profiles for a given exercise
-*/
-message ProfileListRequest {
-    //! exercise to list profiles from
-    required string exercise = 1;
-}
-
 /** @struct SessionParameterChangeRequest
     @brief change session parameters
 */
@@ -146,7 +138,6 @@ message AdminToLauncher {
         optional SessionStopRequest         session_stop_request      = 3;
         optional ExerciseListRequest        exercise_list_request     = 4;
         optional SessionListRequest         session_list_request      = 5;
-        optional ProfileListRequest         profile_list_request      = 6;
         optional SessionParameterChangeRequest
             session_parameter_change_request  = 8;
         optional CheckpointListRequest      checkpoint_list_request   = 10;

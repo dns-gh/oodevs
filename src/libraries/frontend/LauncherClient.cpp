@@ -181,8 +181,6 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, con
     }
     else if( message.message().has_exercise_list_response() )
         responseHandler_->Handle( message.message().exercise_list_response() );
-    else if( message.message().has_profile_list_response() )
-        responseHandler_->Handle( message.message().profile_list_response() );
     else if( message.message().has_session_start_response() )
     {
         if( message.message().session_start_response().error_code() != sword::SessionStartResponse::success )

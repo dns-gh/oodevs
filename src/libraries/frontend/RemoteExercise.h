@@ -54,7 +54,6 @@ public:
     virtual void StartDispatcher( const tools::Path& session, const T_Parameters& parameters ) const;
     virtual void Replay( const tools::Path& session ) const;
     virtual void Stop( const tools::Path& session ) const;
-    virtual void QueryProfileList() const;
     //@}
 
     //! @name Operations

@@ -50,7 +50,6 @@ public:
     virtual void StartDispatcher( const tools::Path& exercise, const tools::Path& session, const T_Parameters& parameters ) const;
     virtual void StartReplay( const tools::Path& exercise, const tools::Path& session ) const;
     virtual void StopSession( const tools::Path& exercise, const tools::Path& session ) const;
-    virtual void QueryProfileList( const tools::Path& exercise ) const;
     //@}
 
     //! @name Operation
@@ -59,7 +58,6 @@ public:
     virtual void Handle( const sword::SessionStartResponse& message );
     virtual void Handle( const sword::SessionStopResponse& message );
     virtual void Handle( const sword::SessionListResponse& message );
-    virtual void Handle( const sword::ProfileListResponse& message );
     virtual void Handle( const sword::SessionNotification& message );
     virtual void Handle( const sword::SessionParameterChangeResponse& message );
     virtual void Handle( const sword::SessionStatus& message );
