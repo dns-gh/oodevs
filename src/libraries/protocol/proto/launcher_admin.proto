@@ -71,8 +71,6 @@ message SessionStartResponse {
         simulation = 0;
         //! started a dispatcher.
         dispatch   = 1;
-        //! started a replayer.
-        replay     = 2;
     }
     enum ErrorCode {
         //! session successfully started

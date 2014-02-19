@@ -107,15 +107,6 @@ void RemoteExercise::StartDispatcher( const tools::Path& session, const T_Parame
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteExercise::Start
-// Created: SBO 2010-11-12
-// -----------------------------------------------------------------------------
-void RemoteExercise::Replay( const tools::Path& session ) const
-{
-    host_.StartReplay( name_, session );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RemoteExercise::Stop
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------

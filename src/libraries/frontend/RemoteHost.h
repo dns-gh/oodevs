@@ -48,7 +48,6 @@ public:
     virtual std::string GetId() const;
     virtual void StartSimulation( const tools::Path& exercise, const tools::Path& session ) const;
     virtual void StartDispatcher( const tools::Path& exercise, const tools::Path& session, const T_Parameters& parameters ) const;
-    virtual void StartReplay( const tools::Path& exercise, const tools::Path& session ) const;
     virtual void StopSession( const tools::Path& exercise, const tools::Path& session ) const;
     //@}
 

@@ -54,8 +54,6 @@ message SessionStartRequest {
         simulation = 0;
         //! starts a dispatcher.
         dispatch   = 1;
-        //! starts a replayer.
-        replay     = 2;
     }
     //! exercise to be started
     required string exercise               = 1;

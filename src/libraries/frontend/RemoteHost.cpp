@@ -88,19 +88,6 @@ void RemoteHost::StartDispatcher( const tools::Path& exercise, const tools::Path
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteHost::StartReplay
-// Created: SBO 2010-11-12
-// -----------------------------------------------------------------------------
-void RemoteHost::StartReplay( const tools::Path& exercise, const tools::Path& session ) const
-{
-    launcher::SessionStartRequest message;
-    message().set_exercise( exercise.ToUTF8() );
-    message().set_session( session.ToUTF8() );
-    message().set_type( sword::SessionStartRequest::replay );
-    message.Send( publisher_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RemoteHost::StopSession
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
