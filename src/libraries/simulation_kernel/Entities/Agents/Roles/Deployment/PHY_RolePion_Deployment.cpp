@@ -18,6 +18,14 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Deployment )
 
+namespace
+{
+    double GetTime( double time )
+    {
+        return ( time != 0 ) ? 1 / time : 1;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Deployment constructor
 // Created: ABR 2011-12-15
@@ -26,14 +34,11 @@ PHY_RolePion_Deployment::PHY_RolePion_Deployment( MIL_Agent_ABC& pion )
     : owner_           ( pion )
     , eDeploymentState_( eUndeployed )
     , rDeploymentValue_( 0.f )
+    , rDeploymentGap_  ( GetTime( pion.GetType().GetUnitType().GetInstallationTime() ) )
+    , rUndeploymentGap_( GetTime( pion.GetType().GetUnitType().GetUninstallationTime() ) )
     , bInstallationStateHasChanged_( false )
 {
-    rDeploymentGap_ = ( owner_.GetType().GetUnitType().GetInstallationTime() != 0.f )
-        ? 1.f / owner_.GetType().GetUnitType().GetInstallationTime()
-        : 1.f;
-    rUndeploymentGap_ = ( owner_.GetType().GetUnitType().GetUninstallationTime() != 0.f )
-        ? 1.f / owner_.GetType().GetUnitType().GetUninstallationTime()
-        : 1.f;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -73,12 +78,25 @@ void PHY_RolePion_Deployment::save( MIL_CheckPointOutArchive& file, const unsign
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Deployment::UpdateDeploymentValue()
 {
-    if( rDeploymentValue_ == 1.f )
+    rDeploymentValue_ = std::min( 1., rDeploymentValue_ + rDeploymentGap_ );
+    if( rDeploymentValue_ < 1. )
         return false;
-    rDeploymentValue_ += rDeploymentGap_;
-    rDeploymentValue_ = 1.f;
     eDeploymentState_ = eDeployed;
     MIL_Report::PostEvent( owner_, report::eRC_SectionDeployee );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Deployment::UpdateUndeploymentValue
+// Created: SLI 2014-02-18
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Deployment::UpdateUndeploymentValue()
+{
+    rDeploymentValue_ = std::max( 0., rDeploymentValue_ - rUndeploymentGap_ );
+    if( rDeploymentValue_ > 0. )
+        return false;
+    eDeploymentState_ = eUndeployed;
+    MIL_Report::PostEvent( owner_, report::eRC_SectionUndeployed );
     return true;
 }
 
@@ -95,15 +113,7 @@ void PHY_RolePion_Deployment::Update( bool /*bIsDead*/ )
         hasChanged = UpdateDeploymentValue();
         break;
     case eUndeploying:
-        if( rDeploymentValue_ > 0.f )
-            hasChanged = true;
-        rDeploymentValue_ -= rUndeploymentGap_;
-        if( rDeploymentValue_ <= 0.f )
-        {
-            rDeploymentValue_ = 0.f;
-            eDeploymentState_ = eUndeployed;
-            MIL_Report::PostEvent( owner_, report::eRC_SectionUndeployed );
-        }
+        hasChanged = UpdateUndeploymentValue();
         break;
     case eStartDeploying:
         hasChanged = UpdateDeploymentValue();
@@ -114,13 +124,9 @@ void PHY_RolePion_Deployment::Update( bool /*bIsDead*/ )
     default:
         break;
     }
+    bInstallationStateHasChanged_ = hasChanged;
     if( hasChanged )
-    {
-        bInstallationStateHasChanged_ = true;
         owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-    }
-    else
-        bInstallationStateHasChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
