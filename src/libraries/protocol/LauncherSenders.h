@@ -38,7 +38,6 @@ namespace launcher
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ConnectedProfileListResponse , connected_profile_list_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionStatus , session_status )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionParameterChangeResponse , session_parameter_change_response )
-    GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionCommandExecutionResponse , session_command_execution_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, CheckpointListResponse , checkpoint_list_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, CheckpointDeleteResponse , checkpoint_delete_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionNotification , session_notification )

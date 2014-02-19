@@ -161,15 +161,6 @@ void RemoteHost::Handle( const sword::ProfileListResponse& /*message*/ )
 
 // -----------------------------------------------------------------------------
 // Name: RemoteHost::Handle
-// Created: AHC 2011-05-20
-// -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::SessionCommandExecutionResponse& /*message*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::Handle
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------
 void RemoteHost::Handle( const sword::SessionNotification& /*message*/ )

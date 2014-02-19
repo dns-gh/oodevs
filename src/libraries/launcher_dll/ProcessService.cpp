@@ -21,7 +21,6 @@
 #include "client_proxy/SwordMessageHandler_ABC.h"
 #include "SwordFacade.h"
 #include "Config.h"
-#include "CheckpointMessageHandler.h"
 #include "LauncherService.h"
 #include "NotificationMessageHandler.h"
 #include "ControlInformationMessageHandler.h"
@@ -185,7 +184,6 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
         processes_[ std::make_pair( exercise, session ) ] = wrapper;
     }
     wrapper->Start( *this, command, profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_ );
-    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new CheckpointMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlEndTickMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );

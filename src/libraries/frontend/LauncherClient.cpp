@@ -156,28 +156,6 @@ namespace
             return tools::translate( "LauncherClient", "unknown error" );
         }
     }
-    QString MessageString( const sword::SessionCommandExecutionResponse::ErrorCode& error )
-    {
-        switch( error )
-        {
-        case sword::SessionCommandExecutionResponse::invalid_exercise_name:
-            return tools::translate( "LauncherClient", "invalid exercise name" );
-        case sword::SessionCommandExecutionResponse::invalid_session_name:
-            return tools::translate( "LauncherClient", "invalid session name" );
-        case sword::SessionCommandExecutionResponse::session_not_running:
-            return tools::translate( "LauncherClient", "session not running" );
-        case sword::SessionCommandExecutionResponse::invalid_checkpoint:
-            return tools::translate( "LauncherClient", "invalid checkpoint" );
-        case sword::SessionCommandExecutionResponse::session_already_paused:
-            return tools::translate( "LauncherClient", "session already paused" );
-        case sword::SessionCommandExecutionResponse::session_already_running:
-            return tools::translate( "LauncherClient", "session already running" );
-        case sword::SessionCommandExecutionResponse::invalid_date_time:
-            return tools::translate( "LauncherClient", "invalid date time" );
-        default:
-            return tools::translate( "LauncherClient", "unknown error" );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -218,13 +196,6 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, con
             handler_->OnError( tools::translate( "LauncherClient", "Failed to stop exercise: %1." )
                                 .arg( MessageString( message.message().session_stop_response().error_code() ) ).toStdString() );
         responseHandler_->Handle( message.message().session_stop_response() );
-    }
-    else if( message.message().has_session_command_execution_response() )
-    {
-        if( message.message().session_stop_response().error_code() != sword::SessionCommandExecutionResponse::success )
-            handler_->OnError( tools::translate( "LauncherClient", "Failed to execute command on exercise: %1." )
-                                .arg( MessageString( message.message().session_command_execution_response().error_code() ) ).toStdString() );
-        responseHandler_->Handle( message.message().session_command_execution_response() );
     }
     else if( message.message().has_session_notification() )
         responseHandler_->Handle( message.message().session_notification() );

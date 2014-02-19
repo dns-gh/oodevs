@@ -46,7 +46,6 @@ public:
     virtual void Handle( const sword::SessionStartResponse& message );
     virtual void Handle( const sword::SessionStopResponse& message );
     virtual void Handle( const sword::ProfileListResponse& message );
-    virtual void Handle( const sword::SessionCommandExecutionResponse& message );
     virtual void Handle( const sword::SessionNotification& message );
     virtual void Handle( const sword::SessionParameterChangeResponse& message );
     virtual void Handle( const sword::SessionStatus& message );
