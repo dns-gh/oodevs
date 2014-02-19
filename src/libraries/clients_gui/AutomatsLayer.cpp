@@ -136,14 +136,6 @@ void AutomatsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const ge
         controllers_.actions_.ContextMenu( automat, entity, point, where );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::ShouldDisplay
-// Created: SBO 2007-04-13
-// -----------------------------------------------------------------------------
-bool AutomatsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
-{
-    return EntityLayer< Automat_ABC >::ShouldDisplay( entity ) && !IsAggregated( entity ) && HasSubordinate( entity, boost::bind( &AutomatsLayer::IsAggregated, this, _1 ) );
-}
 
 // -----------------------------------------------------------------------------
 // Name: AutomatsLayer::NotifySelectionChanged

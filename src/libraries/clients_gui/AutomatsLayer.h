@@ -52,7 +52,6 @@ private slots:
 protected:
     //! @name Operations
     //@{
-    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void NotifySelectionChanged( const std::vector< const kernel::Automat_ABC* >& elements );
     virtual void NotifyActivated( const kernel::Automat_ABC& automat );
     //@}

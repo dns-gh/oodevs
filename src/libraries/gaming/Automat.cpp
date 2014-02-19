@@ -10,8 +10,11 @@
 #include "gaming_pch.h"
 #include "Automat.h"
 #include "clients_gui/PropertiesDictionary.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -38,13 +41,25 @@ Automat::~Automat()
     Destroy();
 }
 
+namespace
+{
+    bool IsAggregated( const kernel::Entity_ABC& entity )
+    {
+        if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
+            return positions->IsAggregated();
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Automat::Draw
 // Created: LDC 2013-04-15
 // -----------------------------------------------------------------------------
 void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    drawable_.Draw( *this, where, viewport, tools, -1.5f);
+    if( const kernel::Positions* positions = Retrieve< kernel::Positions >() )
+        if( !positions->IsAggregated() && HasAggregatedSubordinate() && viewport.IsHotpointVisible() )
+            drawable_.Draw( *this, where, viewport, tools, -1.5f);
 }
 
 // -----------------------------------------------------------------------------
@@ -63,4 +78,16 @@ void Automat::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& vie
 const kernel::AutomatType& Automat::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::HasAggregatedSubordinate
+// Created: LGY 2014-02-19
+// -----------------------------------------------------------------------------
+bool Automat::HasAggregatedSubordinate() const
+{
+    tools::Iterator< const kernel::Entity_ABC& > it = Get< TacticalHierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+        return IsAggregated( it.NextElement() );
+    return false;
 }
