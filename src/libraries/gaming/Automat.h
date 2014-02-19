@@ -58,12 +58,6 @@ public:
     //@}
 
 private:
-    //! @name Extensions
-    //@{
-    bool HasAggregatedSubordinate() const;
-    //@}
-
-private:
     //! @name Member data
     //@{
     const kernel::AutomatType& type_;

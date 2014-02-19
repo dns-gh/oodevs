@@ -12,8 +12,7 @@
 #include "Lives.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_gui/AggregatedTools.h"
 
 using namespace kernel;
 
@@ -42,9 +41,8 @@ AutomatLives::~AutomatLives()
 // -----------------------------------------------------------------------------
 void AutomatLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( ! viewport.IsHotpointVisible() )
-        return;
-    tools.DrawLife( where, GetLife(), 2.f );
+    if( !IsAggregated( automat_ ) && HasAggregatedSubordinate( automat_ ) && viewport.IsHotpointVisible() )
+        tools.DrawLife( where, GetLife(), 2.f );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,6 +12,7 @@
 #include "tools/IdManager.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
+#include "clients_gui/AggregatedTools.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
@@ -58,29 +59,18 @@ Automat::~Automat()
     Destroy();
 }
 
-namespace
-{
-    bool IsAggregated( const kernel::Entity_ABC& entity )
-    {
-        if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
-            return positions->IsAggregated();
-        return false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Automat::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( const kernel::Positions* positions = Retrieve< kernel::Positions >() )
-        if( !positions->IsAggregated() && HasAggregatedSubordinate() && viewport.IsVisible( where ) )
-        {
-            InitializeSymbol();
-            tools.DrawApp6SymbolFixedSize( symbol_, where, -1.5f, 0 );
-            tools.DrawApp6SymbolFixedSize( level_, where, -1.5f, 0 );
-        }
+    if( !IsAggregated( *this ) && ::HasAggregatedSubordinate( *this ) && viewport.IsVisible( where ) )
+    {
+        InitializeSymbol();
+        tools.DrawApp6SymbolFixedSize( symbol_, where, -1.5f, 0 );
+        tools.DrawApp6SymbolFixedSize( level_, where, -1.5f, 0 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -115,16 +105,4 @@ void Automat::InitializeSymbol() const
 const AutomatType& Automat::GetType() const
 {
     return type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::HasAggregatedSubordinate
-// Created: LGY 2014-02-19
-// -----------------------------------------------------------------------------
-bool Automat::HasAggregatedSubordinate() const
-{
-    tools::Iterator< const kernel::Entity_ABC& > it = Get< TacticalHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-        return IsAggregated( it.NextElement() );
-    return false;
 }
