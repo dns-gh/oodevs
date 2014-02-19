@@ -15,7 +15,8 @@
 #include "MIL.h"
 #include "PHY_RoleInterface_Maintenance.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkMessageSender_ABC.h"
+#include "LoadingChangeNotificationHandler_ABC.h"
+#include "NetworkMessageSender_ABC.h"
 #include <boost/serialization/export.hpp>
 
 class MIL_AgentPionLOG_ABC;
@@ -34,6 +35,7 @@ class PHY_ComposanteUsePredicate;
 class PHY_RolePionLOG_Maintenance : public PHY_RoleInterface_Maintenance
                                   , public component::ComponentsChangedNotificationHandler_ABC
                                   , public network::NetworkMessageSender_ABC
+                                  , public transport::LoadingChangeNotificationHandler_ABC
 {
 public:
     //! @name Constructor/Destructor
@@ -49,7 +51,7 @@ public:
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-
+        
     //! @name Operations
     //@{
     virtual void Update( bool bIsDead );
@@ -77,6 +79,8 @@ public:
     virtual int GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type = 0 ) const;
 
     virtual void NotifyComponentHasChanged();
+    virtual void NotifyIsLoadedInVab();
+    virtual void NotifyIsUnLoadedInVab();
 
     virtual bool FinishAllHandlingsSuccessfullyWithoutDelay();
 
