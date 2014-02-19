@@ -291,7 +291,10 @@ void ResourcesListView_ABC< Extension >::DisplaySelectionAvailabilities()
     if( !selected_ )
         return;
     availabilities_.clear();
-    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *selected_, boost::bind( &ResourcesListView_ABC< Extension >::AddAvailability, this, _1 ) );
+    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *selected_, [&] ( const kernel::Entity_ABC& entity )
+    {
+        AddAvailability( entity );
+    } );
     DisplayModelWithAvailabilities();
 }
 
