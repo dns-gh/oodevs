@@ -50,6 +50,7 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , objectTypes_( builder.GetStaticModel().objectTypes_ )
     , layer_      ( builder.GetParameterLayer() )
     , converter_  ( builder.GetStaticModel().coordinateConverter_ )
+    , controller_ ( builder.GetControllers().controller_ )
     , typeCombo_  ( 0 )
     , activatedCombo_( 0 )
 {
@@ -89,6 +90,8 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     altitudeModifier_->SetLimit( 0, std::numeric_limits< int >::max() );
     altitudeModifier_->SetSuffix( kernel::Units::meters.AsString() );
     lodging_->SetLimit( 0, std::numeric_limits< int >::max() );
+
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +101,7 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
 ParamObstacle::~ParamObstacle()
 {
     RemoveFromController();
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -267,11 +271,20 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacle::CheckValidity
+// Created: ABR 2014-18-02
+// -----------------------------------------------------------------------------
+bool ParamObstacle::IsChecked() const
+{
+    return Param_ABC::IsChecked();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::CheckValidity
 // Created: ABR 2012-01-10
 // -----------------------------------------------------------------------------
 bool ParamObstacle::CheckValidity()
 {
-    return InternalCheckValidity();
+    return Param_ABC::CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -401,6 +414,7 @@ void ParamObstacle::OnTypeChanged()
     location_->RegisterIn();
     location_->SetVisible( true );
     emit ToggleReservable( type->CanBeActivated() );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -528,4 +542,15 @@ bool ParamObstacle::HasParameter( const Param_ABC& param ) const
         lodging_->HasParameter( param ) ||
         fireClass_->HasParameter( param ) ||
         maxCombustionEnergy_->HasParameter( param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::NotifyUpdated
+// Created: ABR 2013-11-14
+// -----------------------------------------------------------------------------
+void ParamObstacle::NotifyUpdated( const Param_ABC& param )
+{
+    if( location_ && location_->HasParameter( param ) &&
+        IsOptional() && group_ && !group_->isChecked() )
+        group_->setChecked( true );
 }
