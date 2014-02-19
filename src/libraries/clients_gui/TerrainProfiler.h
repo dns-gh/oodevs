@@ -90,6 +90,7 @@ private:
     geometry::Point2f from_;
     geometry::Point2f to_;
     QSpinBox* heightValue_;
+    QSpinBox* slopeValue_;
     //@}
 };
 

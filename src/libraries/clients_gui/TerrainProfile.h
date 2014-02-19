@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const geometry::Point2f& from, const geometry::Point2f& to, float height );
+    void Update( const geometry::Point2f& from, const geometry::Point2f& to, float height, int slope );
     //@}
 
 protected:
@@ -53,6 +53,7 @@ private:
     //! @name Helpers
     //@{
     void UpdateVision( const geometry::Point2f& from, const geometry::Point2f& to, float height );
+    void UpdateSlopes( int threshold );
     //@}
 
 private:
@@ -61,6 +62,7 @@ private:
     const kernel::DetectionMap& detection_;
     gui::GQ_PlotData* data_;
     gui::GQ_PlotData* vision_;
+    gui::GQ_PlotData* slopes_;
     //@}
 };
 

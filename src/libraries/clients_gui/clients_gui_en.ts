@@ -1965,7 +1965,11 @@ Do you want to remove it?</translation>
     </message>
     <message>
         <source>Observation height</source>
-        <translation type="unfinished"></translation>
+        <translation>Observation height</translation>
+    </message>
+    <message>
+        <source>Slope threshold</source>
+        <translation>Slope threshold</translation>
     </message>
 </context>
 <context>

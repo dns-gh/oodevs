@@ -12,6 +12,7 @@
 #include "VisionLine.h"
 
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/Units.h"
 
 using namespace gui;
 
@@ -24,6 +25,7 @@ TerrainProfile::TerrainProfile( QWidget* parent, const kernel::DetectionMap& det
     , detection_( detection )
     , data_     ( new GQ_PlotData( 0, *this ) )
     , vision_   ( new GQ_PlotData( 1, *this ) )
+    , slopes_   ( new GQ_PlotData( 2, *this ) )
 {
     setFocusPolicy( Qt::ClickFocus );
     YAxis().ShowAxis( true );
@@ -46,8 +48,10 @@ TerrainProfile::TerrainProfile( QWidget* parent, const kernel::DetectionMap& det
     data_->SetLinePen( QPen( QColor( 220, 220, 220 ), 3 ) );
     vision_->SetLinePen( QPen( Qt::blue, 1 ) );
     vision_->AddIgnoreValue( -1.f );
+    slopes_->SetLinePen( QPen( Qt::red, 1 ) );
     RegisterPlotData( *data_ );
     RegisterPlotData( *vision_ );
+    RegisterPlotData( *slopes_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +67,7 @@ TerrainProfile::~TerrainProfile()
 // Name: TerrainProfile::Update
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
-void TerrainProfile::Update( const geometry::Point2f& from, const geometry::Point2f& to, float height )
+void TerrainProfile::Update( const geometry::Point2f& from, const geometry::Point2f& to, float height, int slope )
 {
     data_->ClearData();
     VisionLine line( detection_, from, to, height );
@@ -78,8 +82,8 @@ void TerrainProfile::Update( const geometry::Point2f& from, const geometry::Poin
     }
     YAxis().SetAxisRange( 0, yMax * 1.1f, true );
     XAxis().SetAxisRange( 0, x / 1000.f, true );
-
     UpdateVision( from, to, height );
+    UpdateSlopes( slope );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,6 +132,32 @@ void TerrainProfile::UpdateVision( const geometry::Point2f& from, const geometry
     }
 }
 
+namespace
+{
+    template< typename Point >
+    int ComputeSlope( Point from, Point to )
+    {
+        const double slope = ( to.second - from.second ) / ( to.first - from.first ) / 1000;
+        static const double toDegrees = 360 / ( 2 * std::atan2( 0., -1. ) );
+        return static_cast< int >( std::atan( slope ) * toDegrees );
+    }
+}
+
+void TerrainProfile::UpdateSlopes( int threshold )
+{
+    slopes_->ClearData();
+    const auto& data = data_->Data();
+    if( data.size() < 2 )
+        return;
+    auto previous = data.begin();
+    for( auto next = previous + 1; next != data.end(); previous = next++ )
+    {
+        const bool highlight = ComputeSlope( *next, *previous ) > threshold;
+        slopes_->AddPoint( previous->first, highlight ? previous->second : 0 );
+        slopes_->AddPoint( next->first,  highlight ? next->second : 0 );
+    }
+}
+
 bool TerrainProfile::event( QEvent* event )
 {
     if( event->type() != QEvent::ToolTip )
@@ -142,13 +172,8 @@ bool TerrainProfile::event( QEvent* event )
         while( next != data.end() && next->first < pos.first )
             previous = next++;
         if( previous != data.end() && next != data.end() )
-        {
-            const double slope = ( next->second - previous->second ) / ( next->first - previous->first ) / 1000;
-            static const double toDegrees = 360 / ( 2 * std::atan2( 0., -1. ) );
-            const QString percentage = QString::number( static_cast< int >( slope * 100 ) ) + "%";
-            const QString degrees = QString::number( static_cast< int >( std::atan( slope ) * toDegrees ) ) + QChar( 0x00B0 );
-            QToolTip::showText( helpEvent->globalPos(), percentage + "\n" + degrees );
-        }
+            QToolTip::showText( helpEvent->globalPos(),
+                QString::number( ComputeSlope( *next, *previous ) ) + kernel::Units::degrees.AsString() );
         return true;
     }
     QToolTip::hideText();

@@ -39,18 +39,27 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
         QWidget* box = new QWidget( this );
         profile_ = new TerrainProfile( box, detection );
         QLabel* heightLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Observation height" ) );
-        heightValue_ = new RichSpinBox( "heightValue", 0, 0 );
+        heightValue_ = new RichSpinBox( "heightValue" );
         heightValue_->setFixedSize( 100, 30 );
         heightValue_->setLineStep( 50 );
         heightValue_->setSuffix( QString( " %L1" ).arg( kernel::Units::meters.AsString() ) );
+        QLabel* slopeLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Slope threshold" ) );
+        slopeValue_ = new RichSpinBox( "slopeValue", 0, 0, 90 );
+        slopeValue_->setValue( 90 );
+        slopeValue_->setFixedSize( 100, 30 );
+        slopeValue_->setLineStep( 1 );
+        slopeValue_->setSuffix( QString( " %L1" ).arg( kernel::Units::degrees.AsString() ) );
         QVBoxLayout* vlayout = new QVBoxLayout( box );
         vlayout->addWidget( profile_ );
         QHBoxLayout* hlayout = new QHBoxLayout( vlayout );
         hlayout->addWidget( heightLabel );
-        hlayout->addWidget( heightValue_, 0, Qt::AlignLeft );
+        hlayout->addWidget( heightValue_ );
+        hlayout->addWidget( slopeLabel );
+        hlayout->addWidget( slopeValue_ );
         hlayout->addStretch();
         setWidget( box );
         connect( heightValue_, SIGNAL( valueChanged( int ) ), SLOT( SpinboxChanged() ) );
+        connect( slopeValue_, SIGNAL( valueChanged( int ) ), SLOT( SpinboxChanged() ) );
     }
     setFloating( true );
     setVisible( false );
@@ -167,7 +176,7 @@ void TerrainProfiler::SetToPosition( const geometry::Point2f& point )
 void TerrainProfiler::UpdateView()
 {
     if( !to_.IsZero() && !from_.IsZero() )
-        profile_->Update( from_, to_, float( heightValue_->value() ) );
+        profile_->Update( from_, to_, static_cast< float >( heightValue_->value() ), slopeValue_->value() );
 }
 
 // -----------------------------------------------------------------------------
