@@ -561,12 +561,6 @@
             <arg value="--debug-dir=${out.dir}/app_test_dispatcher"/>
             <arg value="--test"/>
         </check-app>
-        <check-app app="launcher_app">
-            <arg value="--test"/>
-        </check-app>
-        <check-app app="launcher_test_app">
-            <arg value="--test"/>
-        </check-app>
         <check-app app="replayer_app"
             logfile="${out.dir}/app_test_replayer/replayer.log">
             <arg value="--root-dir=${data.dir}"/>

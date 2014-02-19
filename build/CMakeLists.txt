@@ -593,17 +593,6 @@ target_link_libraries( launcher_dll
 add_target( launcher_test tests "tests/launcher_test" OPTIONS protocol test )
 target_link_libraries( launcher_test launcher_dll )
 
-# launcher_app
-add_target( launcher_app clients "applications/launcher_app" OPTIONS executable )
-target_link_libraries( launcher_app launcher_dll )
-
-# launcher_test_app
-add_target( launcher_test_app clients "applications/launcher_test_app" OPTIONS protocol executable )
-target_link_libraries( launcher_test_app
-    launcher_dll
-    ${TOOLS_LIBRARIES}
-)
-
 # preparation
 # fixme need qt gui
 add_target( preparation clients "libraries/preparation" OPTIONS qt3 qt protocol )
