@@ -1184,7 +1184,7 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 	endingReports := endingReporter.Stop()
 	// Check that reports are always by pairs "Starting deploy" -> "section deployed"
 	c.Assert(len(startingReports), Equals, len(endingReports))
-	// Check we haveat least auto deployment and undeployment following mission
+	// Check we have at least auto deployment and undeployment following mission
 	c.Assert(len(startingReports) >= 2, Equals, true)
 	// Check there is 1mn delay in deployment
 	for i := 0; i < len(startingReports); i++ {
