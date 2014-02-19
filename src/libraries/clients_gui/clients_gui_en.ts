@@ -1971,6 +1971,10 @@ Do you want to remove it?</translation>
         <source>Slope threshold</source>
         <translation>Slope threshold</translation>
     </message>
+    <message>
+        <source>Terrain profile unit path</source>
+        <translation>Terrain profile unit path</translation>
+    </message>
 </context>
 <context>
     <name>gui::TrafficabilityPrototype_ABC</name>

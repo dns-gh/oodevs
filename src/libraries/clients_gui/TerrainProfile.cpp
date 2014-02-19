@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "TerrainProfile.h"
-#include "VisionLine.h"
 
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
@@ -20,12 +19,11 @@ using namespace gui;
 // Name: TerrainProfile constructor
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
-TerrainProfile::TerrainProfile( QWidget* parent, const kernel::DetectionMap& detection )
+TerrainProfile::TerrainProfile( QWidget* parent )
     : gui::GQ_Plot( parent )
-    , detection_( detection )
-    , data_     ( new GQ_PlotData( 0, *this ) )
-    , vision_   ( new GQ_PlotData( 1, *this ) )
-    , slopes_   ( new GQ_PlotData( 2, *this ) )
+    , data_  ( new GQ_PlotData( 0, *this ) )
+    , vision_( new GQ_PlotData( 1, *this ) )
+    , slopes_( new GQ_PlotData( 2, *this ) )
 {
     setFocusPolicy( Qt::ClickFocus );
     YAxis().ShowAxis( true );
@@ -67,21 +65,18 @@ TerrainProfile::~TerrainProfile()
 // Name: TerrainProfile::Update
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
-void TerrainProfile::Update( const geometry::Point2f& from, const geometry::Point2f& to, float height, int slope )
+void TerrainProfile::Update( const std::vector< T_Point >& points, int height, int slope )
 {
     data_->ClearData();
-    VisionLine line( detection_, from, to, height );
-    float yMax = 0, x = 0;
-    while( ! line.IsDone() )
+    double y = 0, x = 0;
+    for( auto it = points.begin(); it != points.end(); ++it )
     {
-        line.Increment();
-        const float value = line.Elevation() + ( x == 0 ? height : 0 );
-        data_->AddPoint( x / 1000.f, value );
-        yMax = std::max( value, yMax );
-        x += line.Length();
+        data_->AddPoint( *it );
+        y = std::max( y, it->second );
+        x = it->first;
     }
-    YAxis().SetAxisRange( 0, yMax * 1.1f, true );
-    XAxis().SetAxisRange( 0, x / 1000.f, true );
+    YAxis().SetAxisRange( 0, y * 1.1f, true );
+    XAxis().SetAxisRange( 0, x, true );
     UpdateVision( height );
     UpdateSlopes( slope );
 }
@@ -90,10 +85,12 @@ void TerrainProfile::Update( const geometry::Point2f& from, const geometry::Poin
 // Name: TerrainProfile::UpdateVision
 // Created: SBO 2010-04-01
 // -----------------------------------------------------------------------------
-void TerrainProfile::UpdateVision( float height )
+void TerrainProfile::UpdateVision( int height )
 {
     vision_->ClearData();
     const auto& data = data_->Data();
+    if( data.size() < 2 )
+        return;
     auto previous = data.begin();
     vision_->AddPoint( *previous );
     const geometry::Point2d viewer( 0, previous->second );

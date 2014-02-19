@@ -29,7 +29,7 @@ class MT_Vector2D;
 // If from and to lies in the same cell, "f" is called once with boths.
 // If from == to, "f" is not called.
 //
-// If "f" returns true, the walk terminates and the call return true.
+// If "f" returns true, the walk terminates and the call returns true.
 //
 // cellSize, from and to coordinates are assumed to fix on an integer grid.
 bool SplitOnMajorGridLines( int32_t cellSize, MT_Vector2D from, MT_Vector2D to,

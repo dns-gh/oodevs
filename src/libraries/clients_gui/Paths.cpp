@@ -7,21 +7,20 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "clients_gui_pch.h"
 #include "Paths.h"
-#include "clients_gui/GlTools_ABC.h"
-#include "clients_gui/Viewport_ABC.h"
+#include "GlTools_ABC.h"
+#include "Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
 
-using namespace geometry;
-using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: Paths constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Paths::Paths( const CoordinateConverter_ABC& converter )
+Paths::Paths( const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
     , pendingMagicMove_( false )
 {
@@ -46,13 +45,15 @@ void Paths::DoUpdate( const sword::UnitAttributes& message )
     static const float threshold = 30.f * 30.f;
     if( message.has_position()  )
     {
-        const Point2f position = converter_.ConvertToXY( message.position() );
+        const geometry::Point2f position = converter_.ConvertToXY( message.position() );
         if( previousPath_.empty() || previousPath_.back().SquareDistance( position ) > threshold )
         {
             if( pendingMagicMove_ )
             {
-                previousPath_.clear(); previousBox_ = Rectangle2f();
-                plannedPath_.clear(); plannedBox_ = Rectangle2f();
+                previousPath_.clear();
+                previousBox_ = geometry::Rectangle2f();
+                plannedPath_.clear();
+                plannedBox_ = geometry::Rectangle2f();
                 pendingMagicMove_ = false;
             }
             previousPath_.push_back( position );
@@ -69,7 +70,7 @@ void Paths::DoUpdate( const sword::UnitAttributes& message )
 void Paths::DoUpdate( const sword::UnitPathFind& message )
 {
     plannedPath_.clear(); plannedPath_.reserve( message.path().location().coordinates().elem_size() );
-    plannedBox_ = Rectangle2f();
+    plannedBox_ = geometry::Rectangle2f();
     for( int i = 0; i < message.path().location().coordinates().elem_size(); ++i )
     {
         plannedPath_.push_back( converter_.ConvertToXY( message.path().location().coordinates().elem(i) ) );
@@ -96,7 +97,7 @@ void Paths::UpdatePathfind()
     if( plannedPath_.size() <= 1 || previousPath_.empty() )
         return;
 
-    const Point2f position = previousPath_.back();
+    const geometry::Point2f position = previousPath_.back();
     float closestDistance = std::numeric_limits< float >::max();
     IT_PointVector closest = plannedPath_.begin();
     IT_PointVector previous = plannedPath_.begin();
@@ -106,7 +107,7 @@ void Paths::UpdatePathfind()
          current != plannedPath_.end() && closestDistance > 0.1;
          ++current )
     {
-        const Segment2f segment( *previous, *current );
+        const geometry::Segment2f segment( *previous, *current );
         const float squareDist = segment.SquareDistance( position );
 
         if( squareDist < closestDistance )
@@ -127,7 +128,7 @@ void Paths::UpdatePathfind()
 // Name: Paths::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Paths::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void Paths::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     const bool displayPath    = viewport.IsVisible( plannedBox_ )  && tools.ShouldDisplay( "Paths" );
     const bool displayOldPath = viewport.IsVisible( previousBox_ ) && tools.ShouldDisplay( "OldPaths" );
@@ -154,4 +155,9 @@ void Paths::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& viewport, g
     }
     if( displayPath || displayOldPath )
         glPopAttrib();
+}
+
+const T_PointVector& Paths::GetPath() const
+{
+    return plannedPath_;
 }
