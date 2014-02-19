@@ -61,26 +61,26 @@ LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel:
     connect( completedCheckbox_, SIGNAL( stateChanged( int ) ), SLOT( OnCompletedFilter() ) );
     pCheckBoxLayout->addWidget( completedCheckbox_ );
 
-    requestsTable_ = new LogisticsRequestsTable( "Logistics requests", this, requestsHeader, controllers, profile );
+    requestsTable_ = new LogisticsRequestsTable( "Logistics requests", requestsHeader, controllers, profile );
     connect( requestsTable_->selectionModel(), SIGNAL( currentRowChanged( const QModelIndex&, const QModelIndex& ) )
                                              , SLOT( OnRequestsTableSelected( const QModelIndex&, const QModelIndex& ) ) );
     connect( requestsTable_, SIGNAL( RequestSelectionDialog( const LogisticsConsign_ABC& ) ),
                              SLOT( OnSelectionDialogRequested( const LogisticsConsign_ABC& ) ) );
-    detailsTable_ = new LogisticsRequestsDetailsTable( "Logistics requests details", this );
+    detailsTable_ = new LogisticsRequestsDetailsTable( "Logistics requests details" );
     connect( detailsTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
                                                  , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
 
-    historyTable_ = new LogisticsRequestsHistoryTable( "Logistics requests history", this );
+    historyTable_ = new LogisticsRequestsHistoryTable( "Logistics requests history" );
     connect( historyTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
                                                  , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
-    QWidget* top = new QWidget( this );
+    QWidget* top = new QWidget();
     QVBoxLayout* vbox = new QVBoxLayout( top );
     vbox->addLayout( pCheckBoxLayout );
     vbox->addWidget( requestsTable_ );
     pDetailLayout_->addWidget( detailsTable_ );
     pDetailLayout_->addWidget( historyTable_ );
 
-    QSplitter* split = new QSplitter( this );
+    QSplitter* split = new QSplitter();
     split->setOrientation( Qt::Vertical );
     split->addWidget( top );
     split->addWidget( box );

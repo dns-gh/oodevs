@@ -40,7 +40,7 @@ class LogisticsRequestsDetailsTable : public gui::RichWidget< QTableView >
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticsRequestsDetailsTable( const QString& objectName, QWidget* parent );
+             LogisticsRequestsDetailsTable( const QString& objectName, QWidget* parent = 0 );
     virtual ~LogisticsRequestsDetailsTable();
     //@}
 
