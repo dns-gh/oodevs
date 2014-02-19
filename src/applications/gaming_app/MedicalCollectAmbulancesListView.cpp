@@ -23,6 +23,7 @@ MedicalCollectAmbulancesListView::MedicalCollectAmbulancesListView( QWidget* par
 {
     QStringList list;
     list.append( tools::translate( "MedicalCollectAmbulancesListView", "Collect ambulances" ) );
+    list.append( tools::translate( "MedicalCollectAmbulancesListView", "Unit" ) );
     list.append( tools::translate( "MedicalCollectAmbulancesListView", "Total" ) );
     list.append( tools::translate( "MedicalCollectAmbulancesListView", "Available" ) );
     list.append( tools::translate( "MedicalCollectAmbulancesListView", "Working" ) );

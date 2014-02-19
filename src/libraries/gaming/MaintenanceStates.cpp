@@ -78,11 +78,11 @@ void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
 
     dispoHaulers_.clear();
     for( int i = 0; i < message.haulers().elem_size(); ++i )
-        dispoHaulers_.push_back( kernel::Availability( resolver_, message.haulers().elem( i ) ) );
+        dispoHaulers_.push_back( kernel::Availability( entity_, resolver_, message.haulers().elem( i ) ) );
 
     dispoRepairers_.clear();
     for( int i = 0; i < message.repairers().elem_size(); ++i )
-        dispoRepairers_.push_back( kernel::Availability( resolver_, message.repairers().elem( i ) ) );
+        dispoRepairers_.push_back( kernel::Availability( entity_, resolver_, message.repairers().elem( i ) ) );
 
     controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "MaintenanceStates", "Maintenance system" ) ) );
     controller_.Update( static_cast< const MaintenanceStates_ABC& >( *this ) );

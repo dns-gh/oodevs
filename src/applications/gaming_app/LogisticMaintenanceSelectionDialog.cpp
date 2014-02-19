@@ -51,7 +51,7 @@ namespace
     {
         T* view = new T( parent, controllers, false );
         view->setObjectName( objectName );
-        for( int i = 3; i < view->model()->columnCount(); ++i )
+        for( int i = 4; i < view->model()->columnCount(); ++i )
             view->setColumnHidden( i, true );
         QObject::connect( view->selectionModel(), SIGNAL( currentRowChanged( const QModelIndex&, const QModelIndex& ) ),
                           parent,                 SLOT( OnSelectionChanged( const QModelIndex&, const QModelIndex& ) ) );
