@@ -260,6 +260,9 @@ func (model *ModelData) handleUnitAttributes(m *sword.SimToClient_Content) error
 	if mm.Stress != nil {
 		unit.HumanFactors.Stress = *mm.Stress
 	}
+	if mm.Installation != nil {
+		unit.Installation = *mm.Installation
+	}
 	return nil
 }
 

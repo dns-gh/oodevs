@@ -139,6 +139,12 @@ func assertIsPrefixed(c *C, s, prefix string) {
 func initLogisticEvents(c *C, client *swapi.Client) {
 	data := client.Model.GetData()
 	unit := getSomeUnitByName(c, data, "ARMOR.MBT")
+	supply := getSomeUnitByName(c, data, "Logistic CT").Id
+
+	// Waiting for deployment
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[supply].Installation == 100
+	})
 
 	// Generate maintenance activity
 	equipmentId := uint32(11)
@@ -1152,7 +1158,11 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 	startingReporter.Start(client.Model)
 	endingReporter.Start(client.Model)
 	client.Resume(0)
-	model.WaitTicks(10)
+
+	// Waiting for auto deployment
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit.Id].Installation == 100
+	})
 
 	// Deploy TC2 to another position to force undeployment and deployment
 	MissionLogDeploy := uint32(44584)
