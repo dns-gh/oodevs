@@ -461,7 +461,7 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	receiver := getSomeAutomatByName(c, data, "Supply 2").Id
 	const resource = 96
 	const transporter = 12
-	c.Assert( data.Units[unit].Installation, Not(Equals), 100 )
+	c.Assert(data.Units[unit].Installation, Not(Equals), 100)
 
 	// deploy supplier
 	MissionLogDeploy := uint32(8)
