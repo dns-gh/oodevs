@@ -52,7 +52,7 @@ void ResponseHandlerProxy::ResetMainHandler()
 // Name: ResponseHandlerProxy::Register
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Register( boost::shared_ptr< ResponseHandler_ABC > handler )
+void ResponseHandlerProxy::RegisterLauncherHandler( boost::shared_ptr< ResponseHandler_ABC > handler )
 {
     handlers_.push_back( handler );
 }

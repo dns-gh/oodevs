@@ -270,9 +270,9 @@ void LauncherClient::ResetConnection()
 // Name: LauncherClient::Register
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void LauncherClient::Register( boost::shared_ptr< ResponseHandler_ABC > handler )
+void LauncherClient::RegisterLauncherHandler( boost::shared_ptr< ResponseHandler_ABC > handler )
 {
-    responseHandler_->Register( handler );
+    responseHandler_->RegisterLauncherHandler( handler );
 }
 
 // -----------------------------------------------------------------------------

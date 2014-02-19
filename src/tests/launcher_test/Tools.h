@@ -236,7 +236,7 @@ namespace launcher_test
             while( ( !exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && !timeout.Expired() )
                 Update();
             BOOST_REQUIRE( exercise->IsRunning() );
-            client.Register( handler );
+            client.RegisterLauncherHandler( handler );
             mock::verify();
         }
         ~ExerciseFixture()

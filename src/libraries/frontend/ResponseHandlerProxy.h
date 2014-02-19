@@ -37,7 +37,7 @@ public:
     //@{
     void SetMainHandler( boost::shared_ptr< ResponseHandler_ABC > handler );
     void ResetMainHandler();
-    void Register( boost::shared_ptr< ResponseHandler_ABC > handler );
+    void RegisterLauncherHandler( boost::shared_ptr< ResponseHandler_ABC > handler );
     //@}
 
     //! @name Proxy
