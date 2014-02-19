@@ -1709,6 +1709,10 @@ Voulez-vous le remplacer ?</translation>
         <source>Select repair team</source>
         <translation>Sélectionner une équipe de réparation</translation>
     </message>
+    <message>
+        <source>No response received from the simulation.</source>
+        <translation>Aucune réponse reçue de la simulation.</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>
