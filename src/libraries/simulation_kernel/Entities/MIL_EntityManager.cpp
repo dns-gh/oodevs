@@ -963,12 +963,13 @@ void MIL_EntityManager::UpdateKnowledgeGroups()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::UpdateFlowCollisionManager
+// Name: MIL_EntityManager::UpdateCrowdCollisions
 // Created: JSR 2014-01-09
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::UpdateFlowCollisionManager()
+void MIL_EntityManager::UpdateCrowdCollisions()
 {
     flowCollisionManager_->Update();
+    populationFactory_->Apply( boost::bind( &MIL_Population::UpdateCrowdCollisions, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -979,9 +980,9 @@ void MIL_EntityManager::Update()
 {
     PreprocessRandomBreakdowns();
     UpdateKnowledges();
+    UpdateCrowdCollisions();
     UpdateDecisions();
     UpdateActions();
-    UpdateFlowCollisionManager();
     UpdateEffects();
     UpdateStates();
     UpdateKnowledgeGroups(); // LTO

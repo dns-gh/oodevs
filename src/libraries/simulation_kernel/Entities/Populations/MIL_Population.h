@@ -133,6 +133,7 @@ public:
     void UpdateKnowledges();
     void CleanKnowledges();
     void UpdateDecision( float duration );
+    void UpdateCrowdCollisions();
     void UpdateState();
     void Clean();
     void ClearObjectCollisions();

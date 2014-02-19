@@ -51,8 +51,9 @@ private:
     //! @name Helpers
     //@{
     void Split();
-    bool SplitOnSegment( const MT_Line& line, std::size_t& segmentIndex );
+    bool SplitOnSegment( const MT_Line& line, std::size_t& segmentIndex, double& cumulatedMagnitude );
     void RemovedPassedOverFlows();
+    bool IsGoingFlowNear() const;
     bool IsTimerOver();
     //@}
 

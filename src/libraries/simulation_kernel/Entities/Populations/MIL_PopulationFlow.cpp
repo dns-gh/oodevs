@@ -132,7 +132,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , objectDensity_              ( 1. )
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
     , hasDoneMagicMove_( false )
-    , speedLimit_( std::numeric_limits< double >::max() )
+    , speedLimit_( source.speedLimit_ )
     , moveAlongPath_( source.moveAlongPath_ )
 {
     auto itSplit = FindPointInShape( splitPoint );
@@ -352,7 +352,7 @@ double MIL_PopulationFlow::GetSpeed( const TerrainData& environment, const MIL_O
         if( populationAttribute && populationAttribute->GetDensity() == 0)
             result = 0.;
     }
-    return result;
+    return std::min( speedLimit_, result );
 }
 
 // -----------------------------------------------------------------------------
@@ -467,6 +467,7 @@ MIL_PopulationFlow* MIL_PopulationFlow::Split( const MT_Vector2D& splittingPoint
         return 0;
     MIL_PopulationFlow& newFlow = GetPopulation().CreateFlow( *this, splittingPoint );
     flowShape_.erase( std::next( insertIt ), flowShape_.end() );
+    flowShape_.push_back( std::make_pair( splittingPoint, flowShape_.rbegin()->second ) );
     pHeadPath_.reset();
     assert( flowShape_.size() >= 2 );
 
@@ -639,7 +640,7 @@ namespace
             return false;
         const MT_Vector2D nV1 = ( l1.GetPosEnd() - l1.GetPosStart() ).Normalized();
         const MT_Vector2D nV2 = ( l2.GetPosEnd() - l2.GetPosStart() ).Normalized();
-        return CrossProduct( nV1, nV2 ) < 0.1 && DotProduct( nV1, nV2 ) < 0;
+        return std::abs( CrossProduct( nV1, nV2 ) ) < 0.1 && DotProduct( nV1, nV2 ) < 0;
     }
 }
 
@@ -700,9 +701,30 @@ void MIL_PopulationFlow::ComputeSpeedLimit()
                 if( flow->pSourceConcentration_ && flow->pSourceConcentration_ != pDestConcentration_ )
                     speedLimit_ = 0;
                 else
-                    speedLimit_ = std::min( speedLimit_, sqrt( squareDistance ) );
+                    speedLimit_ = std::min( speedLimit_, sqrt( squareDistance ) / 2 );
             }
         }
+    }
+}
+
+namespace
+{
+    bool AreNear( const MT_Line& line, const MT_Line& flowSegment, MT_Vector2D& intersection )
+    {
+        static const double nearSquareDistance = 10;
+        if( line.GetPosStart().SquareDistance( flowSegment.GetPosStart() ) < nearSquareDistance ||
+            line.GetPosEnd().SquareDistance( flowSegment.GetPosStart() ) < nearSquareDistance )
+        {
+            intersection = flowSegment.GetPosStart();
+            return true;
+        }
+        if( line.GetPosStart().SquareDistance( flowSegment.GetPosEnd() ) < nearSquareDistance ||
+            line.GetPosEnd().SquareDistance( flowSegment.GetPosEnd() ) < nearSquareDistance )
+        {
+            intersection = flowSegment.GetPosEnd();
+            return true;
+        }
+        return false;
     }
 }
 
@@ -713,7 +735,7 @@ void MIL_PopulationFlow::ComputeSpeedLimit()
 bool MIL_PopulationFlow::AddFlowCollision( const MT_Line& line, const MT_Line& flowSegment, T_FlowCollisions& collisions )
 {
     MT_Vector2D intersection;
-    if( flowSegment.Intersect2D( line, intersection ) == eDoIntersect )
+    if( AreNear( line, flowSegment, intersection ) || flowSegment.Intersect2D( line, intersection ) == eDoIntersect )
     {
         if( AreReverse( line, flowSegment ) )
             return false;
@@ -1046,7 +1068,7 @@ void MIL_PopulationFlow::save( MIL_CheckPointOutArchive& file, const unsigned in
 // -----------------------------------------------------------------------------
 double MIL_PopulationFlow::GetSpeed( const TerrainData& environment ) const
 {
-    return GetPopulation().GetType().GetMaxSpeed( environment );
+    return std::min( speedLimit_, GetPopulation().GetType().GetMaxSpeed( environment ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1203,30 +1225,19 @@ void MIL_PopulationFlow::SetSpeed( const double rSpeed )
 void MIL_PopulationFlow::SetHeadPosition( const MT_Vector2D& position )
 {
     assert( flowShape_.size() >= 2 );
-    const MT_Vector2D& headPoint = GetHeadPosition();
-    if( headPoint == position )
+    if( GetHeadPosition() == position )
         return;
-
-    if( pHeadPath_ && std::find( pointsToInsert_.begin(), pointsToInsert_.end(), headPoint ) == pointsToInsert_.end() )
-    {
-        const DEC_PathResult::T_PathPoints& list = pHeadPath_->GetResult();
-        for( auto it = list.begin(); it != list.end(); ++it )
-        {
-            if( ( *it )->GetPos().SquareDistance( headPoint ) < 1 )
-            {
-                pointsToInsert_.push_back( headPoint );
-                break;
-            }
-        }
-    }
 
     bFlowShapeUpdated_ = true;
     flowShape_.back().first = position;
     
     for( auto it = pointsToInsert_.begin(); it != pointsToInsert_.end(); ++it )
     {
-        auto itTmp = std::prev( flowShape_.end() );
-        flowShape_.insert( itTmp, std::make_pair( *it, flowShape_.back().second ) );
+        if( FindPointInShape( *it ) == flowShape_.end() )
+        {
+            auto itTmp = std::prev( flowShape_.end() );
+            flowShape_.insert( itTmp, std::make_pair( *it, flowShape_.back().second ) );
+        }
     }
     pointsToInsert_.clear();
 }

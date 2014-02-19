@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     bool Update();
+    void UpdateCrowdCollisions();
     void Clean ();
     virtual bool IsValid() const; // false = will be deleted
     virtual bool CanBePerceived() const;
@@ -118,7 +119,6 @@ private:
     void SetDirection( const MT_Vector2D& direction );
     void SetSpeed( const double rSpeed );
     void UpdateLocation();
-    void UpdateCrowdCollisions();
     bool ComputeFlowCollisions( const MT_Line& line, T_FlowCollisions& collisions );
     bool AddFlowCollision( const MT_Line& line, const MT_Line& flowSegment, T_FlowCollisions& collisions );
     void ComputeSpeedLimit();

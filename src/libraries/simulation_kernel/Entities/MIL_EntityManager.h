@@ -294,7 +294,7 @@ private:
     void UpdateEffects();
     void UpdateStates();
     void UpdateKnowledgeGroups();
-    void UpdateFlowCollisionManager();
+    void UpdateCrowdCollisions();
 
     void PreprocessRandomBreakdowns();
     //@}
