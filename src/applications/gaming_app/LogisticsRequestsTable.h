@@ -47,10 +47,10 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticsRequestsTable( const QString& objectName,
-                                     QWidget* parent,
                                      const QStringList& horizontalHeaders,
                                      const kernel::Controllers& controllers,
-                                     const kernel::Profile_ABC& profile );
+                                     const kernel::Profile_ABC& profile,
+                                     QWidget* parent = 0 );
     virtual ~LogisticsRequestsTable();
     //@}
 
