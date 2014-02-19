@@ -131,14 +131,6 @@ void ResponseHandlerProxy::Handle( const sword::SessionListResponse& message )
 
 // -----------------------------------------------------------------------------
 // Name: ResponseHandlerProxy::Handle
-// Created: AHC 2011-05-24
-// -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const sword::ConnectedProfileListResponse& message )
-{
-    UpdateHandlers( message );
-}
-// -----------------------------------------------------------------------------
-// Name: ResponseHandlerProxy::Handle
 // Created: AHC 2011-05-30
 // -----------------------------------------------------------------------------
 void ResponseHandlerProxy::Handle( const sword::CheckpointListResponse& message )

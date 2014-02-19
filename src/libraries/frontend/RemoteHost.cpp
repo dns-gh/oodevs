@@ -209,15 +209,6 @@ void RemoteHost::Handle( const sword::SessionStopResponse& message )
 
 // -----------------------------------------------------------------------------
 // Name: RemoteHost::Handle
-// Created: AHC 2011-05-24
-// -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::ConnectedProfileListResponse& /*message*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::Handle
 // Created: AHC 2011-05-30
 // -----------------------------------------------------------------------------
 void RemoteHost::Handle( const sword::CheckpointListResponse& /*message*/ )
@@ -232,16 +223,4 @@ void RemoteHost::Handle( const sword::CheckpointListResponse& /*message*/ )
 void RemoteHost::Handle( const sword::CheckpointDeleteResponse& /*message*/ )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::QueryConnectedProfileList
-// Created: AHC 2010-05-20
-// -----------------------------------------------------------------------------
-void RemoteHost::QueryConnectedProfileList( const tools::Path& exercise, const tools::Path& session ) const
-{
-    launcher::ConnectedProfileListRequest message;
-    message().set_exercise( exercise.ToUTF8() );
-    message().set_session( session.ToUTF8() );
-    message.Send( publisher_ );
 }

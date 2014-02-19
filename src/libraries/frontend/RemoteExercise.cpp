@@ -143,11 +143,3 @@ void RemoteExercise::QueryProfileList() const
     host_.QueryProfileList( name_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: RemoteExercise::QueryConnectedProfileList
-// Created: AHC 2010-05-23
-// -----------------------------------------------------------------------------
-void RemoteExercise::QueryConnectedProfileList( const tools::Path& session ) const
-{
-    host_.QueryConnectedProfileList( name_, session );
-}

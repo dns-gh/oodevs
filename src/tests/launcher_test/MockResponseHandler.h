@@ -30,7 +30,6 @@ MOCK_BASE_CLASS( MockResponseHandler, frontend::ResponseHandler_ABC )
     MOCK_METHOD( Handle, 1, void( const sword::SessionNotification& ), HandleSessionNotification );
     MOCK_METHOD( Handle, 1, void( const sword::SessionParameterChangeResponse& ), HandleSessionParameterChangeResponse );
     MOCK_METHOD( Handle, 1, void( const sword::SessionStatus& ), HandleSessionStatus );
-    MOCK_METHOD( Handle, 1, void( const sword::ConnectedProfileListResponse& ), HandleConnectedProfileList );
     MOCK_METHOD( Handle, 1, void( const sword::CheckpointListResponse& ), HandleCheckpointListResponse );
     MOCK_METHOD( Handle, 1, void( const sword::CheckpointDeleteResponse& ), HandleCheckpointDeleteResponse );
 };

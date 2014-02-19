@@ -203,8 +203,6 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, con
         responseHandler_->Handle( message.message().session_parameter_change_response() );
     else if( message.message().has_session_status() )
         responseHandler_->Handle( message.message().session_status() );
-    else if( message.message().has_connected_profile_list_response() )
-        responseHandler_->Handle( message.message().connected_profile_list_response() );
     else if( message.message().has_session_list_response() )
         responseHandler_->Handle( message.message().session_list_response() );
     else if( message.message().has_checkpoint_list_response() )

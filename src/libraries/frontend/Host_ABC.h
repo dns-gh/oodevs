@@ -45,7 +45,6 @@ public:
     virtual void StartReplay( const tools::Path& exercise, const tools::Path& session ) const = 0;
     virtual void StopSession( const tools::Path& exercise, const tools::Path& session ) const = 0;
     virtual void QueryProfileList( const tools::Path& exercise ) const = 0;
-    virtual void QueryConnectedProfileList( const tools::Path& exercise, const tools::Path& session ) const = 0;
     //@}
 };
 

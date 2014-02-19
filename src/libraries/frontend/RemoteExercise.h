@@ -55,7 +55,6 @@ public:
     virtual void Replay( const tools::Path& session ) const;
     virtual void Stop( const tools::Path& session ) const;
     virtual void QueryProfileList() const;
-    virtual void QueryConnectedProfileList( const tools::Path& session ) const;
     //@}
 
     //! @name Operations

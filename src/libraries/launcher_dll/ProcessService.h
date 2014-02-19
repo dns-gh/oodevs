@@ -62,7 +62,6 @@ public:
     sword::SessionStopResponse::ErrorCode StopSession( const sword::SessionStopRequest& message );
     bool IsRunning( const tools::Path& exercise, const tools::Path& session ) const;
     void ChangeParameter( const std::string& endpoint, const sword::SessionParameterChangeRequest& message );
-    void SendConnectedProfiles( const std::string& endpoint, const sword::ConnectedProfileListRequest& message );
     void SendSessionsStatuses( const std::string& endpoint );
     virtual void NotifyStopped();
     virtual void NotifyError( const std::string& error, const std::string& commanderEndpoint = "" );

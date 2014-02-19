@@ -25,7 +25,6 @@
 #include "NotificationMessageHandler.h"
 #include "ControlInformationMessageHandler.h"
 #include "ControlEndTickMessageHandler.h"
-#include "ConnectedProfilesMessageHandler.h"
 #include "SessionStatusMessageHandler.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
@@ -396,26 +395,6 @@ void ProcessService::ChangeParameter( const std::string& endpoint, const sword::
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: ProcessService::SendConnectedProfiles
-// Created: AHC 2011-05-20
-// -----------------------------------------------------------------------------
-void ProcessService::SendConnectedProfiles( const std::string& endpoint, const sword::ConnectedProfileListRequest& message )
-{
-    const tools::Path exercise = tools::Path::FromUTF8( message.exercise() );
-    const tools::Path session = tools::Path::FromUTF8( message.session() );
-    auto it = processes_.find( std::make_pair( exercise, session ) );
-    static int context = 1;
-    if( processes_.end() == it )
-        return SendErrorMessage< ConnectedProfileListResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::ConnectedProfileListResponse::invalid_session_name );
-    if( !it->second->IsConnected() )
-        return SendErrorMessage< ConnectedProfileListResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::ConnectedProfileListResponse::session_not_running );
-    boost::shared_ptr< SwordFacade > client( it->second );
-    client->RegisterMessageHandler( context, std::auto_ptr< MessageHandler_ABC >( new ConnectedProfilesMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
-    authentication::ConnectedProfilesRequest request;
-    request.Send( *client, context );
-    ++context;
-}
 // -----------------------------------------------------------------------------
 // Name: ProcessService::SendSessionsStatuses
 // Created: RPD 2011-09-12

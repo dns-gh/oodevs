@@ -51,7 +51,6 @@ public:
     virtual void StartReplay( const tools::Path& exercise, const tools::Path& session ) const;
     virtual void StopSession( const tools::Path& exercise, const tools::Path& session ) const;
     virtual void QueryProfileList( const tools::Path& exercise ) const;
-    virtual void QueryConnectedProfileList( const tools::Path& exercise, const tools::Path& session ) const;
     //@}
 
     //! @name Operation
@@ -64,7 +63,6 @@ public:
     virtual void Handle( const sword::SessionNotification& message );
     virtual void Handle( const sword::SessionParameterChangeResponse& message );
     virtual void Handle( const sword::SessionStatus& message );
-    virtual void Handle( const sword::ConnectedProfileListResponse& message );
     virtual void Handle( const sword::CheckpointListResponse& message );
     virtual void Handle( const sword::CheckpointDeleteResponse& message );
     //@}

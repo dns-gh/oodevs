@@ -87,16 +87,6 @@ message ProfileListRequest {
     required string exercise = 1;
 }
 
-/** @struct ConnectedProfileListRequest
-    @brief retrieve list of connected profiles for a given exercise/session
-*/
-message ConnectedProfileListRequest {
-    //! exercise to list connected profiles from
-    required string exercise = 1;
-    //! session to list connected profiles from
-    required string session  = 2 [ default = "default" ];
-}
-
 /** @struct SessionParameterChangeRequest
     @brief change session parameters
 */
@@ -157,8 +147,6 @@ message AdminToLauncher {
         optional ExerciseListRequest        exercise_list_request     = 4;
         optional SessionListRequest         session_list_request      = 5;
         optional ProfileListRequest         profile_list_request      = 6;
-        optional ConnectedProfileListRequest
-            connected_profile_list_request    = 7;
         optional SessionParameterChangeRequest
             session_parameter_change_request  = 8;
         optional CheckpointListRequest      checkpoint_list_request   = 10;
