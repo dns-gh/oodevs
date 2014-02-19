@@ -39,7 +39,7 @@ class LogisticsRequestsHistoryTable : public gui::RichTableView
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticsRequestsHistoryTable( const QString& objectName, QWidget* parent );
+             LogisticsRequestsHistoryTable( const QString& objectName, QWidget* parent = 0 );
     virtual ~LogisticsRequestsHistoryTable();
     //@}
 

@@ -61,6 +61,7 @@ def main(opts, args):
                 log = file(opts.logfile, 'rb').read()
                 sys.stderr.write(log)
                 sys.stderr.write('\n')
+                sys.stderr.write("error code 0x%X\n" % (proc.returncode & 0xFFFFFFFF))
             except (IOError, OSError):
                 pass
         return proc.returncode

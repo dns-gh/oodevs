@@ -103,7 +103,7 @@ void DrawerModel::ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffu
     }
     catch( ... )
     {
-        // $$$$ SBO 2008-06-04: invalid drawing
+        throw MASA_EXCEPTION( tools::translate( "DrawerModel", "Unable to load a drawing" ).toStdString() );
     }
 }
 
