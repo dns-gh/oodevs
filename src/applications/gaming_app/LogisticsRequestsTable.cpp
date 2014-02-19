@@ -25,10 +25,10 @@ Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
 LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName,
-                                                QWidget* parent,
                                                 const QStringList& horizontalHeaders,
                                                 const kernel::Controllers& controllers,
-                                                const kernel::Profile_ABC& profile )
+                                                const kernel::Profile_ABC& profile,
+                                                QWidget* parent )
     : gui::RichTableView( objectName, parent )
     , dataModel_ ( parent )
     , proxyModel_( new QSortFilterProxyModel( parent ) )
