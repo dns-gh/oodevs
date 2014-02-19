@@ -144,42 +144,6 @@ void RemoteExercise::QueryProfileList() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteExercise::Pause
-// Created: AHC 2010-05-20
-// -----------------------------------------------------------------------------
-void RemoteExercise::Pause( const tools::Path& session ) const
-{
-    host_.Pause( name_, session );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteExercise::Resume
-// Created: AHC 2010-05-20
-// -----------------------------------------------------------------------------
-void RemoteExercise::Resume( const tools::Path& session ) const
-{
-    host_.Resume( name_, session );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteExercise::ChangeDateTime
-// Created: LGY 2011-06-22
-// -----------------------------------------------------------------------------
-void RemoteExercise::ChangeDateTime( const tools::Path& session, const std::string& date ) const
-{
-    host_.ChangeDateTime( name_, session, date );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteExercise::SaveCheckpoint
-// Created: AHC 2010-05-20
-// -----------------------------------------------------------------------------
-void RemoteExercise::SaveCheckpoint( const tools::Path& session, const tools::Path& name ) const
-{
-    host_.SaveCheckpoint( name_, session, name );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RemoteExercise::QueryConnectedProfileList
 // Created: AHC 2010-05-23
 // -----------------------------------------------------------------------------

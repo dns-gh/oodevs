@@ -244,58 +244,6 @@ void RemoteHost::Handle( const sword::CheckpointDeleteResponse& /*message*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteHost::Pause
-// Created: AHC 2010-05-20
-// -----------------------------------------------------------------------------
-void RemoteHost::Pause( const tools::Path& exercise, const tools::Path& session ) const
-{
-    launcher::SessionCommandExecutionRequest message;
-    message().set_exercise( exercise.ToUTF8() );
-    message().set_session( session.ToUTF8() );
-    message().set_set_running( false );
-    message.Send( publisher_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::Resume
-// Created: AHC 2010-05-20
-// -----------------------------------------------------------------------------
-void RemoteHost::Resume( const tools::Path& exercise, const tools::Path& session ) const
-{
-    launcher::SessionCommandExecutionRequest message;
-    message().set_exercise( exercise.ToUTF8() );
-    message().set_session( session.ToUTF8() );
-    message().set_set_running( true );
-    message.Send( publisher_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::SaveCheckpoint
-// Created: AHC 2010-05-20
-// -----------------------------------------------------------------------------
-void RemoteHost::SaveCheckpoint( const tools::Path& exercise, const tools::Path& session, const tools::Path& name ) const
-{
-    launcher::SessionCommandExecutionRequest message;
-    message().set_exercise( exercise.ToUTF8() );
-    message().set_session( session.ToUTF8() );
-    message().set_save_checkpoint( name.ToUTF8() );
-    message.Send( publisher_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::ChangeDateTime
-// Created: LGY 2011-06-22
-// -----------------------------------------------------------------------------
-void RemoteHost::ChangeDateTime( const tools::Path& exercise, const tools::Path& session, const std::string& date ) const
-{
-    launcher::SessionCommandExecutionRequest message;
-    message().set_exercise( exercise.ToUTF8() );
-    message().set_session( session.ToUTF8() );
-    message().mutable_time_change()->set_data( date );
-    message.Send( publisher_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RemoteHost::QueryConnectedProfileList
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------

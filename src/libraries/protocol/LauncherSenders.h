@@ -25,7 +25,6 @@ namespace launcher
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, ProfileListRequest , profile_list_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, ConnectedProfileListRequest , connected_profile_list_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, SessionParameterChangeRequest , session_parameter_change_request )
-    GENERATE_MESSAGE( sword::AdminToLauncher, sword, SessionCommandExecutionRequest , session_command_execution_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, CheckpointListRequest , checkpoint_list_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, CheckpointDeleteRequest , checkpoint_delete_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, SessionNotificationRequest , session_notification )

@@ -111,23 +111,6 @@ message SessionParameterChangeRequest {
     optional uint32 acceleration_factor  = 4;
 }
 
-/** @struct SessionCommandExecutionRequest
-    @brief request command execution to running session
-*/
-message SessionCommandExecutionRequest {
-    //! exercise to send command to
-    required string     exercise        = 1;
-    //! session to send command to
-    required string     session         = 2 [ default = "default" ];
-    //! if set, save a checkpoint with specified name or default (timestamp)
-    optional string     save_checkpoint = 3;
-    //! if set to false, send a pause command; if set to true, set a
-    //! resume command
-    optional bool       set_running     = 4;
-    //! if set, change exercise time
-    optional DateTime   time_change     = 5;
-}
-
 /** @struct CheckpointListRequest
     @brief retrieve list of checkpoints for a given exercise/session
 */
@@ -178,8 +161,6 @@ message AdminToLauncher {
             connected_profile_list_request    = 7;
         optional SessionParameterChangeRequest
             session_parameter_change_request  = 8;
-        optional SessionCommandExecutionRequest
-            session_command_execution_request = 9;
         optional CheckpointListRequest      checkpoint_list_request   = 10;
         optional CheckpointDeleteRequest    checkpoint_delete_request = 11;
         optional SessionNotificationRequest session_notification      = 12;

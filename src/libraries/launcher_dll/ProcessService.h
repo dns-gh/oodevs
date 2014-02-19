@@ -61,7 +61,6 @@ public:
     sword::SessionStartResponse::ErrorCode StartSession( const std::string& endpoint, const sword::SessionStartRequest& message );
     sword::SessionStopResponse::ErrorCode StopSession( const sword::SessionStopRequest& message );
     bool IsRunning( const tools::Path& exercise, const tools::Path& session ) const;
-    void ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message );
     void ChangeParameter( const std::string& endpoint, const sword::SessionParameterChangeRequest& message );
     void SendConnectedProfiles( const std::string& endpoint, const sword::ConnectedProfileListRequest& message );
     void SendSessionsStatuses( const std::string& endpoint );
@@ -69,16 +68,6 @@ public:
     virtual void NotifyError( const std::string& error, const std::string& commanderEndpoint = "" );
     void Update();
     void SendRunningExercices( const std::string& endpoint ) const;
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void ExecutePauseResume( const std::string& endpoint, const tools::Path& exercise, const tools::Path& session,
-                             bool running, int context, SwordFacade& facade );
-    void ExecuteChangeTime( const std::string& endpoint, const tools::Path& exercise, const tools::Path& session,
-                            const std::string& date, int context, SwordFacade& facade );
-    void SaveCheckpoint( const tools::Path& name, SwordFacade& facade );
     //@}
 
 public:

@@ -55,10 +55,6 @@ public:
     virtual void Replay( const tools::Path& session ) const;
     virtual void Stop( const tools::Path& session ) const;
     virtual void QueryProfileList() const;
-    virtual void Pause( const tools::Path& session ) const;
-    virtual void Resume( const tools::Path& session ) const;
-    virtual void ChangeDateTime( const tools::Path& session, const std::string& date ) const;
-    virtual void SaveCheckpoint( const tools::Path& session, const tools::Path& name ) const;
     virtual void QueryConnectedProfileList( const tools::Path& session ) const;
     //@}
 

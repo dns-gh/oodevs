@@ -22,9 +22,7 @@
 #include "SwordFacade.h"
 #include "Config.h"
 #include "CheckpointMessageHandler.h"
-#include "PauseResumeMessageHandler.h"
 #include "LauncherService.h"
-#include "TimeMessageHandler.h"
 #include "NotificationMessageHandler.h"
 #include "ControlInformationMessageHandler.h"
 #include "ControlEndTickMessageHandler.h"
@@ -358,81 +356,6 @@ namespace
         message().set_error_code( error );
         message.Send( publisher );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProcessService::ExecuteCommand
-// Created: AHC 2011-05-16
-// -----------------------------------------------------------------------------
-void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message )
-{
-    const tools::Path exercise = tools::Path::FromUTF8( message.exercise() );
-    const tools::Path session = tools::Path::FromUTF8( message.session() );
-    ProcessContainer::const_iterator it = processes_.find( std::make_pair( exercise, session ) );
-    static int context = 1;
-    if( processes_.end() == it )
-        return SendErrorMessage< SessionCommandExecutionResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::SessionCommandExecutionResponse::invalid_session_name );
-    if( !it->second->IsConnected() )
-        return SendErrorMessage< SessionCommandExecutionResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::SessionCommandExecutionResponse::session_not_running );
-    boost::shared_ptr< SwordFacade > client( it->second );
-    if( message.has_set_running() )
-    {
-        ExecutePauseResume( endpoint, exercise, session, message.set_running(), context, *client );
-        ++context;
-    }
-    if( message.has_save_checkpoint() )
-        SaveCheckpoint( tools::Path::FromUTF8( message.save_checkpoint() ), *client );
-    if( message.has_time_change() )
-    {
-        ExecuteChangeTime( endpoint, exercise, session, message.time_change().data(), context, *client );
-        ++context;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProcessService::ExecutePauseResume
-// Created: LGY 2011-05-18
-// -----------------------------------------------------------------------------
-void ProcessService::ExecutePauseResume( const std::string& endpoint, const tools::Path& exercise, const tools::Path& session,
-                                         bool running, int context, SwordFacade& facade )
-{
-    facade.RegisterMessageHandler( context,
-        std::auto_ptr< MessageHandler_ABC >( new PauseResumeMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
-    if( running )
-    {
-        simulation::ControlResume request;
-        request.Send( facade, context );
-    }
-    else
-    {
-        simulation::ControlPause request;
-        request.Send( facade, context );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProcessService::ExecuteChangeTime
-// Created: LGY 2011-06-22
-// -----------------------------------------------------------------------------
-void ProcessService::ExecuteChangeTime( const std::string& endpoint, const tools::Path& exercise, const tools::Path& session,
-                                        const std::string& date, int context, SwordFacade& facade )
-{
-    facade.RegisterMessageHandler( context,
-        std::auto_ptr< MessageHandler_ABC >( new TimeMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
-    simulation::ControlDateTimeChange request;
-    request().mutable_date_time()->set_data( date );
-    request.Send( facade, context );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProcessService::SaveCheckpoint
-// Created: LGY 2011-05-18
-// -----------------------------------------------------------------------------
-void ProcessService::SaveCheckpoint( const tools::Path& name, SwordFacade& facade )
-{
-    simulation::ControlCheckPointSaveNow request;
-    request().set_name( name.ToUTF8() );
-    request.Send( facade );
 }
 
 // -----------------------------------------------------------------------------

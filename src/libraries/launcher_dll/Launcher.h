@@ -23,7 +23,6 @@ namespace sword
     class ProfileListRequest;
     class ConnectedProfileListRequest;
     class SessionParameterChangeRequest;
-    class SessionCommandExecutionRequest;
     class CheckpointListRequest;
     class CheckpointDeleteRequest;
     class SessionNotificationRequest;
@@ -74,7 +73,6 @@ private:
     void HandleRequest( const std::string& endpoint, const sword::ProfileListRequest& message );
     void HandleRequest( const std::string& endpoint, const sword::ConnectedProfileListRequest& message );
     void HandleRequest( const std::string& endpoint, const sword::SessionParameterChangeRequest& message );
-    void HandleRequest( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message );
     void HandleRequest( const std::string& endpoint, const sword::CheckpointListRequest& message );
     void HandleRequest( const std::string& endpoint, const sword::CheckpointDeleteRequest& message );
     void HandleRequest( const std::string& endpoint, const sword::SessionNotificationRequest& message );

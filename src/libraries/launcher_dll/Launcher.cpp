@@ -77,8 +77,6 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const sword::
         HandleRequest( endpoint, message.message().connected_profile_list_request() );
     else if( message.message().has_session_parameter_change_request() )
         HandleRequest( endpoint, message.message().session_parameter_change_request() );
-    else if( message.message().has_session_command_execution_request() )
-        HandleRequest( endpoint, message.message().session_command_execution_request() );
     else if( message.message().has_checkpoint_list_request() )
         HandleRequest( endpoint, message.message().checkpoint_list_request() );
     else if( message.message().has_checkpoint_delete_request() )
@@ -194,15 +192,6 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Connecte
 void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionParameterChangeRequest& message )
 {
     processes_->ChangeParameter( endpoint, message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Launcher::HandleRequest
-// Created: AHC 2011-05-12
-// -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message )
-{
-    processes_->ExecuteCommand( endpoint, message );
 }
 
 // -----------------------------------------------------------------------------
