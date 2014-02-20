@@ -30,7 +30,7 @@ namespace
 }
 
 PartsView::PartsView( kernel::Controllers& controllers, QWidget* parent )
-    : RichTableView( "manual_selection_repair_team_partsview", parent )
+    : gui::RichWidget< QTreeView >( "manual_selection_repair_team_partsview", parent )
     , controller_  ( controllers.controller_ )
     , entity_      ( controllers.controller_ )
     , valid_       ( false )
@@ -41,19 +41,18 @@ PartsView::PartsView( kernel::Controllers& controllers, QWidget* parent )
         << tr( "Available" );
     model_ = new QStandardItemModel( parent );
     model_->setHorizontalHeaderLabels( headers );
+    setRootIsDecorated( false );
     setEditTriggers( 0 );
     setModel( model_ );
     setSortingEnabled( false );
     setAlternatingRowColors( true );
     setSelectionMode( NoSelection );
-    setSelectionBehavior( SelectRows );
     setFocusPolicy( Qt::NoFocus );
-    auto header = horizontalHeader();
-    header->setResizeMode( eName, QHeaderView::Stretch );
-    header->setResizeMode( eRequired, QHeaderView::ResizeToContents );
-    header->setResizeMode( eAvailable, QHeaderView::ResizeToContents );
-    header->setHighlightSections( false );
-    verticalHeader()->setVisible( false );
+    header()->setHighlightSections( false );
+    header()->setStretchLastSection( false );
+    header()->setResizeMode( eName, QHeaderView::Stretch );
+    header()->setResizeMode( eRequired, QHeaderView::ResizeToContents );
+    header()->setResizeMode( eAvailable, QHeaderView::ResizeToContents );
     controller_.Register( *this );
 }
 

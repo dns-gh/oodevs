@@ -11,7 +11,7 @@
 #define GAMING_APP_PARTS_VIEW_H
 
 #include "clients_kernel/SafePointer.h"
-#include "clients_gui/RichTableView.h"
+#include "clients_gui/RichWidget.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 
@@ -29,7 +29,7 @@ namespace kernel
 
 class LogMaintenanceConsign;
 
-class PartsView : public gui::RichTableView
+class PartsView : public gui::RichWidget< QTreeView >
                 , public tools::Observer_ABC
                 , public tools::ElementObserver_ABC< kernel::Dotations_ABC >
 {
