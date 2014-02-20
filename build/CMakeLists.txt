@@ -510,14 +510,6 @@ masa_add_test_target( decisional_test decisional_test
     --data_directory=${MASA_RUN}/resources
 )
 
-# client_proxy
-add_target( client_proxy clients "libraries/client_proxy" OPTIONS protocol )
-target_link_libraries( client_proxy sword_tools )
-
-# client_proxy_test
-add_target( client_proxy_test tests "tests/client_proxy_test" OPTIONS protocol test )
-target_link_libraries( client_proxy_test client_proxy )
-
 # svgl
 add_target( svgl clients "libraries/svgl" OPTIONS qt )
 target_link_libraries( svgl ${XERCES_LIBRARIES} )
@@ -581,17 +573,9 @@ target_link_libraries( gaming_app
     ${GEOS_I_LIBRARIES}
 )
 
-# launcher_dll
-add_target( launcher_dll clients "libraries/launcher_dll" OPTIONS protocol shared )
-masa_add_target_definition( launcher_dll LAUNCHER_DLL_EXPORTS )
-target_link_libraries( launcher_dll
-    client_proxy
-    frontend
-)
-
 # launcher_test
 add_target( launcher_test tests "tests/launcher_test" OPTIONS protocol test )
-target_link_libraries( launcher_test launcher_dll )
+target_link_libraries( launcher_test frontend )
 
 # preparation
 # fixme need qt gui
