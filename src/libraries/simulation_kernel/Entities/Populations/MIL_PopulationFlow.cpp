@@ -205,7 +205,7 @@ void MIL_PopulationFlow::DetachFromDestConcentration()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
 {
-    boost::shared_ptr< MT_Vector2D > pDestination = boost::make_shared< MT_Vector2D >( destination );
+    auto pDestination = boost::make_shared< MT_Vector2D >( destination );
     std::vector< boost::shared_ptr< MT_Vector2D > > vDestination;
     vDestination.push_back( pDestination );
     ComputePathAlong( vDestination, vDestination );
@@ -415,8 +415,7 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
         if( rDist < rDirLength )
         {
             vCur = vCur + ( vDir * rDist );
-            auto itStart = std::next( flowShape_.begin() );
-            flowShape_.erase( itStart, itNext );
+            flowShape_.erase( std::next( flowShape_.begin() ), itNext );
             SetTailPosition( vCur );
             break;
         }
@@ -427,9 +426,7 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
             ++itNext;
             if( itNext == flowShape_.end() )
             {
-                auto itTmp = std::prev( flowShape_.end() );
-                auto itStart = std::next( flowShape_.begin() );
-                flowShape_.erase( itStart, itTmp );
+                flowShape_.erase( std::next( flowShape_.begin() ), std::prev( flowShape_.end() ) );
                 SetTailPosition( GetHeadPosition() );
                 break;
             }
@@ -645,10 +642,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::ComputeSpeedLimit
+// Name: MIL_PopulationFlow::UpdateSpeedLimit
 // Created: JSR 2014-01-31
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::ComputeSpeedLimit()
+void MIL_PopulationFlow::UpdateSpeedLimit()
 {
     speedLimit_ = std::numeric_limits< double >::max();
     if( canCollideWithFlow_ )
@@ -695,14 +692,8 @@ void MIL_PopulationFlow::ComputeSpeedLimit()
                     }
                 }
             }
-
             if( !reverse )
-            {
-                if( flow->pSourceConcentration_ && flow->pSourceConcentration_ != pDestConcentration_ )
-                    speedLimit_ = 0;
-                else
-                    speedLimit_ = std::min( speedLimit_, sqrt( squareDistance ) / 2 );
-            }
+                speedLimit_ = std::min( speedLimit_, sqrt( squareDistance ) / 2 );
         }
     }
 }
@@ -835,7 +826,7 @@ void MIL_PopulationFlow::UpdateCrowdCollisions()
         T_FlowCollisions collisions;
         ApplyOnShape( boost::bind( &MIL_PopulationFlow::ComputeFlowCollisions, this, _1, boost::ref( collisions ) ) );
         GetFlowCollisionManager().SetCollisions( this, collisions );
-        ComputeSpeedLimit();
+        UpdateSpeedLimit();
     }
 }
 
@@ -1378,9 +1369,9 @@ const T_PointList& MIL_PopulationFlow::GetFlowShape() const
     if( bFlowShapeUpdated_ || computedFlowShape_.empty() )
     {
         computedFlowShape_.resize( flowShape_.size() );
-        std::transform( flowShape_.begin(), flowShape_.end(), computedFlowShape_.begin(), 
-            [ & ]( std::pair< MT_Vector2D, std::size_t > value )->MT_Vector2D {
-                return value.first; } );
+        auto itComputed = computedFlowShape_.begin();
+        for( auto it = flowShape_.begin(); it != flowShape_.end(); ++it, ++itComputed )
+            *itComputed = it->first;
     }
     return computedFlowShape_;
 }

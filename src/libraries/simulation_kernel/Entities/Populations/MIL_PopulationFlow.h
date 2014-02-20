@@ -96,6 +96,9 @@ private:
     //! @name Types
     //@{
     typedef std::vector< std::pair< MIL_PopulationFlow*, MT_Vector2D > > T_FlowCollisions;
+
+    /* size_t : if the path contains mutiple waypoints after a MoveAlong, size_t is the index
+       of the next waypoint to go, to avoid a flow to go back to first waypoint after a split */
     typedef std::list< std::pair< MT_Vector2D, std::size_t > > T_FlowShape;
     //@}
 
@@ -121,7 +124,7 @@ private:
     void UpdateLocation();
     bool ComputeFlowCollisions( const MT_Line& line, T_FlowCollisions& collisions );
     bool AddFlowCollision( const MT_Line& line, const MT_Line& flowSegment, T_FlowCollisions& collisions );
-    void ComputeSpeedLimit();
+    void UpdateSpeedLimit();
     //@}
 
     //! @name Notifications
