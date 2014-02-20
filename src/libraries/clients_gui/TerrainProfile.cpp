@@ -137,7 +137,7 @@ void TerrainProfile::UpdateSlopes( int threshold )
     auto previous = data.begin();
     for( auto it = previous + 1; it != data.end(); previous = it++ )
     {
-        const bool highlight = ComputeSlope( *it, *previous ) > threshold;
+        const bool highlight = std::abs( ComputeSlope( *it, *previous ) ) > threshold;
         slopes_->AddPoint( previous->first, highlight ? previous->second : 0 );
         slopes_->AddPoint( it->first,  highlight ? it->second : 0 );
     }
