@@ -11,7 +11,7 @@
 #include "PartsView.h"
 #include "moc_PartsView.cpp"
 
-#include "clients_kernel/BreakdownType.h"
+#include "clients_kernel/BreakdownPart.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "gaming/Dotation.h"
@@ -57,20 +57,21 @@ void PartsView::Purge()
     parts_.clear();
 }
 
-void PartsView::Select( kernel::Entity_ABC* handler, const LogMaintenanceConsign& consign )
+void PartsView::Select( kernel::Entity_ABC* handler, const std::vector< kernel::BreakdownPart >& parts )
 {
     base_ = handler;
     Purge();
-    const auto& parts = consign.GetBreakdown()->GetParts();
     int row = 0;
     valid_ = true;
     for( auto it = parts.begin(); it != parts.end(); ++it )
     {
-        model_->setItem( row, 0, new QStandardItem( QString::fromStdString( it->resource ) ) );
-        model_->setItem( row, 1, new QStandardItem( QString::number( it->quantity ) ) );
+        const std::string resourceName = it->GetResource().GetName();
+        unsigned int quantity = it->GetQuantity();
+        model_->setItem( row, 0, new QStandardItem( QString::fromStdString( resourceName ) ) );
+        model_->setItem( row, 1, new QStandardItem( QString::number( quantity ) ) );
         model_->setItem( row, 2, new QStandardItem( "0" ) );
-        parts_.insert( std::make_pair( it->resource, row ) );
-        valid_ &= !it->quantity;
+        parts_.insert( std::make_pair( resourceName, row ) );
+        valid_ &= !quantity;
         row++;
     }
     if( auto dotations = base_->Retrieve< kernel::Dotations_ABC >() )

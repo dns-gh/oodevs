@@ -20,6 +20,7 @@
 
 namespace kernel
 {
+    class BreakdownPart;
     class Controller;
     class Controllers;
     class Dotations_ABC;
@@ -37,7 +38,7 @@ public:
      PartsView( kernel::Controllers& controllers, QWidget* parent );
     ~PartsView();
 
-    void Select( kernel::Entity_ABC* handler, const LogMaintenanceConsign& consign );
+    void Select( kernel::Entity_ABC* handler, const std::vector< kernel::BreakdownPart >& parts );
     bool IsValid() const;
 
 signals:

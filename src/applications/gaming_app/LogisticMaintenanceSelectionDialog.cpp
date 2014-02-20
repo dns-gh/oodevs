@@ -18,6 +18,7 @@
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/Roles.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/BreakdownType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/MaintenanceFunctions.h"
@@ -252,7 +253,7 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
         manualButton_->setText( tr( "Select repair team" ) );
         repairers_->selectionModel()->clear();
         repairers_->SelectEntity( handler_ );
-        parts_->Select( consign.GetHandler(), maintenanceConsign );
+        parts_->Select( consign.GetHandler(), breakdownType_->GetParts() );
     }
     UpdateDisplay();
     show();
