@@ -965,6 +965,7 @@ void MIL_EntityManager::UpdateKnowledgeGroups()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Update()
 {
+    pObjectManager_->Clean();
     PreprocessRandomBreakdowns();
     UpdateKnowledges();
     UpdateDecisions();
