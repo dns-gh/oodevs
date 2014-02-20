@@ -45,13 +45,14 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
         heightValue_ = new RichSpinBox( "heightValue" );
         heightValue_->setFixedSize( 100, 30 );
         heightValue_->setLineStep( 50 );
-        heightValue_->setSuffix( QString( " %L1" ).arg( kernel::Units::meters.AsString() ) );
+        heightValue_->setSuffix( " " + kernel::Units::meters.AsString() );
+        heightValue_->setValue( 1 );
         QLabel* slopeLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Slope threshold" ) );
         slopeValue_ = new RichSpinBox( "slopeValue", 0, 0, 90 );
-        slopeValue_->setValue( 90 );
         slopeValue_->setFixedSize( 100, 30 );
         slopeValue_->setLineStep( 1 );
-        slopeValue_->setSuffix( QString( " %L1" ).arg( kernel::Units::degrees.AsString() ) );
+        slopeValue_->setSuffix( " " + kernel::Units::degrees.AsString() );
+        slopeValue_->setValue( 90 );
         QVBoxLayout* vlayout = new QVBoxLayout( box );
         vlayout->addWidget( profile_ );
         QHBoxLayout* hlayout = new QHBoxLayout( vlayout );
