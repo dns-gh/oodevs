@@ -320,6 +320,10 @@
         <source>3D</source>
         <translation>3D</translation>
     </message>
+    <message>
+        <source>Refresh rate</source>
+        <translation>Période de rafraîchissement</translation>
+    </message>
 </context>
 <context>
     <name>Règle GL</name>
@@ -1696,6 +1700,17 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Preset name already exists.</source>
         <translation>Le nom du dégradé existe déjà.</translation>
+    </message>
+</context>
+<context>
+    <name>gui::RefreshRatePanel</name>
+    <message>
+        <source>Refresh rate</source>
+        <translation>Période de rafraîchissement</translation>
+    </message>
+    <message>
+        <source>Select refresh rate (in ms):</source>
+        <translation>Sélectionner la période de rafraîchissement (en ms):</translation>
     </message>
 </context>
 <context>

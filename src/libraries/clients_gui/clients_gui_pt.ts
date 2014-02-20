@@ -319,6 +319,10 @@
         <source>3D</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Refresh rate</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Règle GL</name>
@@ -1690,6 +1694,17 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>Preset name already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::RefreshRatePanel</name>
+    <message>
+        <source>Refresh rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select refresh rate (in ms):</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

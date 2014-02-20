@@ -113,6 +113,7 @@ private:
 
     bool b3d_;
     bool bDragMapWithWheel_;
+    int refreshRate_;
     //@}
 };
 

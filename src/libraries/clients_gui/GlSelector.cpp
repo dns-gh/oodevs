@@ -45,6 +45,7 @@ GlSelector::GlSelector( QWidget* parent, GlProxy& proxy, Controllers& controller
     , glPlaceHolder_    ( 0 )
     , b3d_              ( false )
     , bDragMapWithWheel_( false )
+    , refreshRate_      ( 50 )
 {
     setObjectName( "GlSelector" );
     displayTimer_ = new QTimer( this );
@@ -89,7 +90,7 @@ void GlSelector::Load()
     setCurrentWidget( widget2d_ );
     controllers_.options_.Change( "MapDraggingType", static_cast <int> ( !bDragMapWithWheel_ ));
     connect( displayTimer_, SIGNAL(timeout()), widget2d_, SLOT(updateGL()) );
-    displayTimer_->start( 50 );
+    displayTimer_->start( refreshRate_ );
     connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), this, SIGNAL( MouseMove( const geometry::Point2f& ) ) );
     widget2d_->show();
     emit Widget2dChanged( widget2d_ );
@@ -196,6 +197,11 @@ void GlSelector::OptionChanged( const std::string& name, const OptionVariant& va
     else if( name == "MapDraggingType" )
     {
         bDragMapWithWheel_ = value.To< int >() == 0 ? false : true;
+    }
+    else if( name == "RefreshRate" )
+    {
+        refreshRate_ = value.To< int >();
+        displayTimer_->start( refreshRate_ );
     }
 }
 
