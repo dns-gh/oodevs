@@ -122,9 +122,9 @@ namespace
     template< typename Point >
     int ComputeSlope( Point from, Point to )
     {
-        const double slope = ( to.second - from.second ) / ( to.first - from.first ) / 1000;
         static const double toDegrees = 360 / ( 2 * std::atan2( 0., -1. ) );
-        return static_cast< int >( std::atan( slope ) * toDegrees );
+        const double slope = std::atan( ( to.second - from.second ) / ( to.first - from.first ) / 1000 ) * toDegrees;
+        return static_cast< int >( slope > 0 ? std::ceil( slope ) : std::floor( slope ) );
     }
 }
 
