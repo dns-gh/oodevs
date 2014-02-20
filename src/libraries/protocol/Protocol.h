@@ -14,7 +14,6 @@
 // first element is the typeid name in VS2010, followed by the tag value.
 //
 // "class sword::AarToClient"            3335378374
-// "class sword::AdminToLauncher"        487143762
 // "class sword::AuthenticationToClient" 468259588
 // "class sword::ClientToAar"            496354747
 // "class sword::ClientToAuthentication" 3393095543
@@ -23,7 +22,6 @@
 // "class sword::ClientToSim"            496449857
 // "class sword::DispatcherToClient"     3012412245
 // "class sword::DispatcherToSim"        4036107609
-// "class sword::LauncherToAdmin"        1796776068
 // "class sword::MessengerToClient"      4281023046
 // "class sword::ReplayToClient"         2824568610
 // "class sword::SimToClient"            3540368649
@@ -42,8 +40,6 @@
 #include "protocol/proto/messenger_client.pb.h"
 #include "protocol/proto/replay_client.pb.h"
 #include "protocol/proto/simulation_client.pb.h"
-#include "protocol/proto/launcher_admin.pb.h"
-#include "protocol/proto/admin_launcher.pb.h"
 #pragma warning( pop )
 
 #endif // __protocol_Protocol_h_
