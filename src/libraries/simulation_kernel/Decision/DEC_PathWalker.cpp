@@ -434,10 +434,7 @@ bool DEC_PathWalker::TryToMoveTo( const MT_Vector2D& vNewPosTmp, double& rTimeRe
         return true;
 
     if( rCurrentSpeed_ <= 0. )
-    {
-        MT_LOG_ERROR_MSG( "Current speed is not positive" );
         return false;
-    }
 
     MT_Vector2D vNewPos( vNewPos_ );
 
