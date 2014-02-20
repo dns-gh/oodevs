@@ -182,6 +182,7 @@ void TerrainProfiler::SetToPosition( const geometry::Point2f& point )
 void TerrainProfiler::SetPath()
 {
     to_ = from_ = geometry::Point2f();
+    path_.clear();
     path_.push_back( candidateUnitPoint_ );
     path_.insert( path_.end(), candidatePath_.begin(), candidatePath_.end() );
     from_ = path_.front();
