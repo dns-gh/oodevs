@@ -14,9 +14,7 @@
 #include "frontend/CreateSession.h"
 #include "frontend/Profile.h"
 #include "frontend/ProcessWrapper.h"
-#include "frontend/ProfileVisitor_ABC.h"
 #include "frontend/StartExercise.h"
-#include "frontend/StartDispatcher.h"
 #include "frontend/StartReplay.h"
 #include "client_proxy/SwordMessageHandler_ABC.h"
 #include "SwordFacade.h"
@@ -111,29 +109,6 @@ void ProcessService::SendRunningExercices( const std::string& endpoint ) const
     }
 }
 
-namespace
-{
-    struct SupervisorProfileCollector : public frontend::ProfileVisitor_ABC
-    {
-        SupervisorProfileCollector()
-            : found_( false )
-            , supervisorProfile_( "" )
-            , supervisorPassword_( "" )
-            {}
-        void Visit( const frontend::Profile& profile )
-        {
-            if( !found_ && profile.IsSupervision() )
-            {
-                supervisorProfile_ = profile.GetLogin().toStdString();
-                supervisorPassword_ = profile.GetPassword().toStdString();
-                found_ = true;
-            }
-        }
-        std::string supervisorProfile_;
-        std::string supervisorPassword_;
-        bool found_;
-    };
-}
 // -----------------------------------------------------------------------------
 // Name: ProcessService::StartExercise
 // Created: SBO 2010-10-07
@@ -168,21 +143,14 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
             ( "checkpoint", checkpoint.ToUTF8() );
         command.reset( new frontend::StartExercise( config_, exercise, session, arguments, false, endpoint ) );
     }
-    else if( message.type() == sword::SessionStartRequest::dispatch )
-        command.reset( new frontend::StartDispatcher( config_, exercise, session, checkpoint, "", endpoint ) );
-    else
-        command.reset( new frontend::StartReplay( config_, exercise, session, 10001, endpoint ) );
     command->AddArgument( "--silent" );
 
-    SupervisorProfileCollector profileCollector;
-    frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );
-
-    boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( message.type() == sword::SessionStartRequest::dispatch ) );
+    boost::shared_ptr< SwordFacade > wrapper( new SwordFacade() );
     {
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         processes_[ std::make_pair( exercise, session ) ] = wrapper;
     }
-    wrapper->Start( *this, command, profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_ );
+    wrapper->Start( *this, command, config_ );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlEndTickMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );

@@ -25,9 +25,8 @@ using namespace launcher;
 // Name: SwordFacade constructor
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-SwordFacade::SwordFacade( bool isDispatcher )
-    : isDispatcher_   ( isDispatcher )
-    , isConnected_    ( false )
+SwordFacade::SwordFacade()
+    : isConnected_    ( false )
     , isAuthenticated_( false )
 {
     // NOTHING
@@ -46,20 +45,15 @@ SwordFacade::~SwordFacade()
 // Name: SwordFacade::Start
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command,
-                        const std::string& supervisorProfile, const std::string& supervisorPassword, const launcher::Config& config )
+void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, 
+        boost::shared_ptr< frontend::SpawnCommand > command,
+        const launcher::Config& config )
 {
     if( ! config.GetTestMode() )
     {
         process_ = boost::make_shared< frontend::ProcessWrapper >( observer );
         process_->Add( command );
         frontend::ProcessWrapper::Start( process_ );
-    }
-    if( isDispatcher_ )
-    {
-        client_.reset( new SwordProxy( "localhost", config.GetDispatcherPort(), supervisorProfile, supervisorPassword ) );
-        client_->RegisterMessageHandler( this );
-        client_->Connect( this );
     }
 }
 

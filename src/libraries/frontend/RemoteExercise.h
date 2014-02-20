@@ -51,7 +51,6 @@ public:
     virtual bool IsRunning() const;
     virtual bool IsHostedBy( const std::string& host ) const;
     virtual void Start( const tools::Path& session ) const;
-    virtual void StartDispatcher( const tools::Path& session, const T_Parameters& parameters ) const;
     virtual void Stop( const tools::Path& session ) const;
     //@}
 

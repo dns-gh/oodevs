@@ -52,8 +52,6 @@ message SessionStartRequest {
         //! starts a simulation. Starts an embedded dispatcher if
         //! specified in session.
         simulation = 0;
-        //! starts a dispatcher.
-        dispatch   = 1;
     }
     //! exercise to be started
     required string exercise               = 1;

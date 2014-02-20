@@ -98,15 +98,6 @@ void RemoteExercise::Start( const tools::Path& session ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteExercise::StartDispatcher
-// Created: AHC 2011-05-19
-// -----------------------------------------------------------------------------
-void RemoteExercise::StartDispatcher( const tools::Path& session, const T_Parameters& parameters ) const
-{
-    host_.StartDispatcher( name_, session, parameters );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RemoteExercise::Stop
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------

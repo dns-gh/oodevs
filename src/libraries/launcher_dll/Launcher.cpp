@@ -122,9 +122,6 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionS
         case sword::SessionStartRequest::simulation:
             response().set_type( sword::SessionStartResponse::simulation );
             break;
-        case sword::SessionStartRequest::dispatch:
-            response().set_type( sword::SessionStartResponse::dispatch );
-            break;
     }
     response().set_checkpoint( message.has_checkpoint() ? message.checkpoint() : "" );
     response.Send( server_->ResolveClient( endpoint ) );

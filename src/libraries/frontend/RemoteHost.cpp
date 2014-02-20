@@ -69,25 +69,6 @@ void RemoteHost::StartSimulation( const tools::Path& exercise, const tools::Path
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteHost::StartDispatcher
-// Created: AHC 2011-05-19
-// -----------------------------------------------------------------------------
-void RemoteHost::StartDispatcher( const tools::Path& exercise, const tools::Path& session, const T_Parameters& parameters ) const
-{
-    launcher::SessionStartRequest message;
-    message().set_exercise( exercise.ToUTF8() );
-    message().set_session( session.ToUTF8() );
-    message().set_type( sword::SessionStartRequest::dispatch );
-    for( T_Parameters::const_iterator it = parameters.begin(); it != parameters.end(); ++it )
-    {
-        sword::SessionParameter* pParameter = message().add_parameter();
-        pParameter->set_key( it->first );
-        pParameter->set_value( it->second );
-    }
-    message.Send( publisher_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RemoteHost::StopSession
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------

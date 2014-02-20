@@ -53,7 +53,7 @@ class SwordFacade : public SwordConnectionHandler_ABC
 public:
     //! @name Constructor/destructor
     //@{
-    explicit SwordFacade( bool isDispatcher = false );
+             SwordFacade();
     virtual ~SwordFacade();
     //@}
 
@@ -65,8 +65,10 @@ public:
 
     //! @name Operations
     //@{
-    void Start( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command,
-                const std::string& supervisorProfile, const std::string& supervisorPassword, const launcher::Config& config );
+    void Start( frontend::ProcessObserver_ABC& observer,
+            boost::shared_ptr< frontend::SpawnCommand > command,
+            const launcher::Config& config );
+           
     void Stop();
     // SwordConnectionHandler_ABC interface
     virtual void OnConnectionSucceeded( const std::string& local, const std::string& remote );
@@ -109,7 +111,6 @@ private:
 private:
     //! @name Member Data
     //@{
-    bool isDispatcher_;
     bool isConnected_;
     bool isAuthenticated_;
     boost::shared_ptr< frontend::ProcessWrapper > process_;
