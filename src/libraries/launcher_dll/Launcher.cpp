@@ -65,10 +65,6 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const sword::
         HandleRequest( endpoint, message.message().connection_request() );
     else if( message.message().has_exercise_list_request() )
         HandleRequest( endpoint, message.message().exercise_list_request() );
-    else if( message.message().has_checkpoint_list_request() )
-        HandleRequest( endpoint, message.message().checkpoint_list_request() );
-    else if( message.message().has_checkpoint_delete_request() )
-        HandleRequest( endpoint, message.message().checkpoint_delete_request() );
     else if( message.message().has_session_notification() )
         HandleRequest( endpoint, message.message().session_notification() );
 }
@@ -97,35 +93,6 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Exercise
     processes_->SendExerciseList( response() );
     response.Send( server_->ResolveClient( endpoint ) );
     processes_->SendRunningExercices( endpoint );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Launcher::HandleRequest
-// Created: AHC 2011-05-12
-// -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::CheckpointListRequest& message )
-{
-    CheckpointListResponse response;
-    response().set_exercise( message.exercise() );
-    response().set_session( message.session() );
-    processes_->SendCheckpointList( response(), tools::Path::FromUTF8( message.exercise() ), tools::Path::FromUTF8( message.session() ) );
-    response.Send( server_->ResolveClient( endpoint ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Launcher::HandleRequest
-// Created: AHC 2011-05-12
-// -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::CheckpointDeleteRequest& message )
-{
-    CheckpointDeleteResponse response;
-    response().set_exercise( message.exercise() );
-    response().set_session( message.session() );
-    tools::Path::T_Paths checkpoints;
-    for( int i = 0; i < message.checkpoint_size(); ++i )
-        checkpoints.push_back( tools::Path::FromUTF8( message.checkpoint( i ) ) );
-    processes_->RemoveCheckpoint( response(), checkpoints, tools::Path::FromUTF8( message.exercise() ), tools::Path::FromUTF8( message.session() ) );
-    response.Send( server_->ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------

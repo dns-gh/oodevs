@@ -155,10 +155,6 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, con
         responseHandler_->Handle( message.message().session_notification() );
     else if( message.message().has_session_status() )
         responseHandler_->Handle( message.message().session_status() );
-    else if( message.message().has_checkpoint_list_response() )
-        responseHandler_->Handle( message.message().checkpoint_list_response() );
-    else if( message.message().has_checkpoint_delete_response() )
-        responseHandler_->Handle( message.message().checkpoint_delete_response() );
 }
 
 // -----------------------------------------------------------------------------

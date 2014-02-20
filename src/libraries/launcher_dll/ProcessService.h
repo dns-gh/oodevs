@@ -54,9 +54,6 @@ public:
     //! @name Operations
     //@{
     void SendExerciseList( sword::ExerciseListResponse& message );
-    void SendCheckpointList( sword::CheckpointListResponse& message, const tools::Path& exercice, const tools::Path& session );
-    void RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const tools::Path::T_Paths& checkpoints,
-                           const tools::Path& exercice, const tools::Path& session );
     bool IsRunning( const tools::Path& exercise, const tools::Path& session ) const;
     void SendSessionsStatuses( const std::string& endpoint );
     virtual void NotifyStopped();

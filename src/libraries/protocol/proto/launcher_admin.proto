@@ -60,50 +60,6 @@ message SessionStatus {
     optional string     breakdown_information = 4;
 }
 
-/** @struct CheckpointListResponse
-    @brief reponse to checkpoint list request
-*/
-message CheckpointListResponse {
-    enum ErrorCode {
-        //! checkpoints successfully listed
-        success                 = 0;
-        //! the specified exercise name could not be found
-        invalid_exercise_name   = 1;
-        //! the kspecified session name could not be found
-        invalid_session_name    = 2;
-    }
-    //! operation return code
-    required ErrorCode error_code = 1 [ default = success ];
-    //! exercise for which checkpoints are listed
-    required string    exercise   = 2;
-    //! session for which checkpoints are listed
-    required string    session    = 3 [ default = "default" ];
-    //! list of checkpoints for specified session
-    repeated string    checkpoint = 4;
-}
-
-/** @struct CheckpointDeleteResponse
-    @brief delete checkpoint for a given exercise/session
-*/
-message CheckpointDeleteResponse {
-    enum ErrorCode {
-        //! checkpoints successfully listed
-        success                 = 0;
-        //! the specified exercise name could not be found
-        invalid_exercise_name   = 1;
-        //! the specified session name could not be found
-        invalid_session_name    = 2;
-    }
-    //! operation return code
-    required ErrorCode error_code = 1 [ default = success ];
-    //! exercise for which checkpoints are to be deleted
-    required string    exercise   = 2;
-    //! session for which checkpoints are to be deleted
-    required string    session    = 3;
-    //! list of deleted checkpoints for specified session
-    repeated string    checkpoint = 4;
-}
-
 /** @struct SessionNotification
     @brief notification from specified exercise/session
 */
@@ -165,8 +121,6 @@ message LauncherToAdmin {
         optional ConnectionResponse           connection_response        = 1;
         optional ExerciseListResponse         exercise_list_response     = 2;
         optional SessionStatus                session_status             = 9;
-        optional CheckpointListResponse       checkpoint_list_response   = 12;
-        optional CheckpointDeleteResponse     checkpoint_delete_response = 13;
         optional SessionNotification          session_notification       = 14;
         optional TickInformation              tick_information           = 15;
         optional ClientConnectionNotification connected_clients_update   = 16;

@@ -45,8 +45,6 @@ public:
     virtual void Handle( const sword::ExerciseListResponse& message );
     virtual void Handle( const sword::SessionNotification& message );
     virtual void Handle( const sword::SessionStatus& message );
-    virtual void Handle( const sword::CheckpointListResponse& message );
-    virtual void Handle( const sword::CheckpointDeleteResponse& message );
     //@}
 
 private:

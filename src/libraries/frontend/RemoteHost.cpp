@@ -88,21 +88,3 @@ void RemoteHost::Handle( const sword::SessionStatus& message )
     if( it != exercises_.end() && message.status() == sword::SessionStatus::running )
         it->second->SetRunning( true );
 }
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::Handle
-// Created: AHC 2011-05-30
-// -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::CheckpointListResponse& /*message*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::Handle
-// Created: AHC 2011-05-30
-// -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::CheckpointDeleteResponse& /*message*/ )
-{
-    // NOTHING
-}

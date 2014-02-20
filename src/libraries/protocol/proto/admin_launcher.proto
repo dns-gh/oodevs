@@ -31,33 +31,6 @@ message ConnectionRequest {
 */
 message ExerciseListRequest {}
 
-message SessionParameter {
-    required string key   = 1;
-    required string value = 2;
-}
-
-/** @struct CheckpointListRequest
-    @brief retrieve list of checkpoints for a given exercise/session
-*/
-message CheckpointListRequest {
-    //! exercise to list checkpoint from
-    required string exercise = 1;
-    //! session to list checkpoint from
-    required string session  = 2 [ default = "default" ];
-}
-
-/** @struct CheckpointDeleteRequest
-    @brief delete checkpoint for a given exercise/session
-*/
-message CheckpointDeleteRequest {
-    //! exercise to delete checkpoint from
-    required string exercise   = 1;
-    //! session to delete checkpoint from
-    required string session    = 2 [ default = "default" ];
-    //! delete all checkpoints if not specified
-    repeated string checkpoint = 3;
-}
-
 /** @struct SessionNotification
     @brief notification to specified exercise/session
 */
@@ -78,8 +51,6 @@ message AdminToLauncher {
     message Content {
         optional ConnectionRequest          connection_request        = 1;
         optional ExerciseListRequest        exercise_list_request     = 4;
-        optional CheckpointListRequest      checkpoint_list_request   = 10;
-        optional CheckpointDeleteRequest    checkpoint_delete_request = 11;
         optional SessionNotificationRequest session_notification      = 12;
     }
     optional int32   context = 1;

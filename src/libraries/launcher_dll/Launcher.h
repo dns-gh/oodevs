@@ -18,8 +18,6 @@ namespace sword
     class ConnectionRequest;
     class ExerciseListRequest;
     class SessionParameterChangeRequest;
-    class CheckpointListRequest;
-    class CheckpointDeleteRequest;
     class SessionNotificationRequest;
 }
 
@@ -62,8 +60,6 @@ private:
     //@{
     void HandleRequest( const std::string& endpoint, const sword::ConnectionRequest& message );
     void HandleRequest( const std::string& endpoint, const sword::ExerciseListRequest& message );
-    void HandleRequest( const std::string& endpoint, const sword::CheckpointListRequest& message );
-    void HandleRequest( const std::string& endpoint, const sword::CheckpointDeleteRequest& message );
     void HandleRequest( const std::string& endpoint, const sword::SessionNotificationRequest& message );
     //@}
 

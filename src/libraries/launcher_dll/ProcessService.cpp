@@ -154,45 +154,6 @@ void ProcessService::NotifyError( const std::string& /*error*/, const std::strin
     NotifyStopped();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ProcessService::SendCheckpointList
-// Created: LGY 2011-05-17
-// -----------------------------------------------------------------------------
-void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message, const tools::Path& exercice, const tools::Path& session )
-{
-    if( !frontend::commands::ExerciseExists( config_, exercice ) )
-        message.set_error_code( sword::CheckpointListResponse::invalid_exercise_name );
-    else if( ! frontend::commands::SessionExists( config_, exercice, session ) )
-        message.set_error_code( sword::CheckpointListResponse::invalid_session_name );
-    else
-    {
-        message.set_error_code( sword::CheckpointListResponse::success );
-        const tools::Path::T_Paths checkpoints = frontend::commands::ListCheckpoints( config_, exercice, session );
-        for( auto it = checkpoints.begin(); it != checkpoints.end(); ++it )
-            message.add_checkpoint( it->ToUTF8() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProcessService::RemoveCheckpoint
-// Created: LGY 2011-05-19
-// -----------------------------------------------------------------------------
-void ProcessService::RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const tools::Path::T_Paths& checkpoints,
-                                       const tools::Path& exercice, const tools::Path& session )
-{
-    if( !frontend::commands::ExerciseExists( config_, exercice ) )
-        message.set_error_code( sword::CheckpointDeleteResponse::invalid_exercise_name );
-    else if( ! frontend::commands::SessionExists( config_, exercice, session ) )
-        message.set_error_code( sword::CheckpointDeleteResponse::invalid_session_name );
-    else
-    {
-        message.set_error_code( sword::CheckpointDeleteResponse::success );
-        const tools::Path::T_Paths result = frontend::commands::RemoveCheckpoint( config_, exercice, session, checkpoints );
-        BOOST_FOREACH( const tools::Path& name, result )
-            message.add_checkpoint( name.ToUTF8() );
-    }
-}
-
 namespace
 {
     template< typename T, typename U >
