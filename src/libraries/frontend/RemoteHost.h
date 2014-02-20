@@ -51,7 +51,6 @@ public:
     //! @name Operation
     //@{
     virtual void Handle( const sword::ExerciseListResponse& message );
-    virtual void Handle( const sword::SessionStatus& message );
     //@}
 
 private:

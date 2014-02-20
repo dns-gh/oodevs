@@ -68,14 +68,3 @@ void RemoteHost::Handle( const sword::ExerciseListResponse& message )
         exercises_[ exercise->GetName() ] = exercise;
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::Handle
-// Created: LGY 2011-05-23
-// -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::SessionStatus& message )
-{
-    auto it = exercises_.find( tools::Path::FromUTF8( message.exercise() ) );
-    if( it != exercises_.end() && message.status() == sword::SessionStatus::running )
-        it->second->SetRunning( true );
-}

@@ -37,18 +37,8 @@ public:
     virtual ~Exercise_ABC() {}
     //@}
 
-    //! @name Accessors
-    //@{
     virtual const std::string& GetId() const = 0;
     virtual const tools::Path& GetName() const = 0;
-    virtual unsigned int GetPort() const = 0;
-    virtual bool IsRunning() const = 0;
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void SetRunning( bool running ) = 0;
-    //@}
 };
 
 }

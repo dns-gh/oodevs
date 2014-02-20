@@ -22,8 +22,6 @@ namespace launcher
 
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ConnectionResponse          , connection_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ExerciseListResponse  , exercise_list_response )
-    GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionStatus , session_status )
-    GENERATE_MESSAGE( sword::LauncherToAdmin, sword, TickInformation , tick_information )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ClientConnectionNotification , connected_clients_update )
 
 }

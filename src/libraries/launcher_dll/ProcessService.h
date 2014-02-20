@@ -55,11 +55,9 @@ public:
     //@{
     void SendExerciseList( sword::ExerciseListResponse& message );
     bool IsRunning( const tools::Path& exercise, const tools::Path& session ) const;
-    void SendSessionsStatuses( const std::string& endpoint );
     virtual void NotifyStopped();
     virtual void NotifyError( const std::string& error, const std::string& commanderEndpoint = "" );
     void Update();
-    void SendRunningExercices( const std::string& endpoint ) const;
     //@}
 
 public:

@@ -28,8 +28,6 @@ RemoteExercise::RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFa
     , host_      ( host )
     , name_      ( exercise )
     , id_        ( factory.CreateIdentifier( exercise ) )
-    , port_      ( 0 )
-    , running_   ( false )
 {
     controller_.Create( static_cast< Exercise_ABC& >( *this ) );
 }
@@ -59,33 +57,5 @@ const std::string& RemoteExercise::GetId() const
 const tools::Path& RemoteExercise::GetName() const
 {
     return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteExercise::GetPort
-// Created: SBO 2010-10-01
-// -----------------------------------------------------------------------------
-unsigned int RemoteExercise::GetPort() const
-{
-    return port_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteExercise::IsRunning
-// Created: SBO 2010-10-01
-// -----------------------------------------------------------------------------
-bool RemoteExercise::IsRunning() const
-{
-    return running_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteExercise::SetRunning
-// Created: SBO 2010-10-26
-// -----------------------------------------------------------------------------
-void RemoteExercise::SetRunning( bool running )
-{
-    running_ = running;
-    controller_.Update( static_cast< Exercise_ABC& >( *this ) );
 }
 

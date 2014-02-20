@@ -78,7 +78,6 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Connecti
     response().set_error_code( valid ? sword::ConnectionResponse::success : sword::ConnectionResponse::incompatible_protocol_version );
     response().mutable_server_version()->set_value( sword::ProtocolVersion().value() );
     response.Send( server_->ResolveClient( endpoint ) );
-    processes_->SendSessionsStatuses( endpoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +89,5 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Exercise
     ExerciseListResponse response;
     processes_->SendExerciseList( response() );
     response.Send( server_->ResolveClient( endpoint ) );
-    processes_->SendRunningExercices( endpoint );
 }
 

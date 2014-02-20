@@ -101,11 +101,10 @@ void ReplayPage::StartExercise()
     if( !exercise_ || session_.IsEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( parentWidget()->parentWidget() ) )
         return;
     const tools::Path exerciseName = exercise_->GetName();
-    const unsigned int port = exercise_->GetPort();
     const auto features = registry::ReadFeatures();
     ConfigureSession( exerciseName, session_ );
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, port, "" ) );
+    process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, 0, "" ) );
     process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_ ) );
     const auto profile = profile_.GetLogin();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,

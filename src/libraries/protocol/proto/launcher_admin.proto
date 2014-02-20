@@ -40,23 +40,6 @@ message ExerciseListResponse {
     repeated string exercise = 1;
 }
 
-/** @struct SessionStatus
-    @brief pushed session status
-*/
-message SessionStatus {
-    enum Status {
-        starting    = 0;
-        running     = 1;
-        paused      = 2;
-        not_running = 3;
-        breakdown   = 4;
-    }
-    required string     exercise              = 1;
-    required string     session               = 2;
-    required Status     status                = 3;
-    optional string     breakdown_information = 4;
-}
-
 /** @struct ClientConnectionNotification
     @brief connection notification from client
 */
@@ -70,17 +53,6 @@ message ClientConnectionNotification {
     repeated ClientConnection connection = 3;
 }
 
-/** @struct TickInformation
-    @brief tick information from client
-*/
-message TickInformation {
-    required int32 current_tick                   = 1;
-    required int32 tick_duration                  = 2;
-    required int32 time_factor                    = 3;
-    required int32 pathfind_request_number        = 4;
-    optional int32 last_checkpoint_build_duration = 5;
-}
-
 /** @struct LauncherToAdmin
     @brief Lancher to admin protocol messages
 */
@@ -88,8 +60,6 @@ message LauncherToAdmin {
     message Content {
         optional ConnectionResponse           connection_response        = 1;
         optional ExerciseListResponse         exercise_list_response     = 2;
-        optional SessionStatus                session_status             = 9;
-        optional TickInformation              tick_information           = 15;
         optional ClientConnectionNotification connected_clients_update   = 16;
     }
     optional int32   context = 1;

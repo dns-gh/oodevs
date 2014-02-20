@@ -73,26 +73,6 @@ void ProcessService::SendExerciseList( sword::ExerciseListResponse& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProcessService::SendRunningExercices
-// Created: SLI 2011-07-22
-// -----------------------------------------------------------------------------
-void ProcessService::SendRunningExercices( const std::string& endpoint ) const
-{
-    for( ProcessContainer::const_iterator it = processes_.begin(); it != processes_.end(); ++it )
-    {
-        const std::pair< tools::Path, tools::Path >& key = it->first;
-        if( IsRunning( key.first, key.second ) )
-        {
-            SessionStatus message;
-            message().set_exercise( key.first.ToUTF8() );
-            message().set_session( key.second.ToUTF8() );
-            message().set_status( sword::SessionStatus::running );
-            message.Send( server_.ResolveClient( endpoint ) );
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: ProcessService::IsRunning
 // Created: SBO 2010-10-07
 // -----------------------------------------------------------------------------
@@ -116,41 +96,12 @@ void ProcessService::NotifyStopped()
             ++it;
 }
 
-namespace
-{
-    void NotifyError( const std::string& endpoint,
-                      const LauncherService& server,
-                      ProcessService::ProcessContainer& processes )
-    {
-        if( endpoint.empty() )
-            return;
-        for( auto cur = processes.begin(); cur != processes.end(); ++cur )
-        {
-            const auto spawns = cur->second->GetProcess()->GetSpawns();
-            for( auto it = spawns.begin(); it != spawns.end(); ++it )
-            {
-                auto cmd = *it;
-                if( cmd->GetName() != endpoint )
-                    continue;
-                SessionStatus msg;
-                msg().set_status( sword::SessionStatus::not_running );
-                msg().set_exercise( cmd->GetExercise().ToUTF8() );
-                msg().set_session( cmd->GetSession().ToUTF8() );
-                msg.Send( server.ResolveClient( endpoint ) );
-                processes.erase( cur );
-                return;
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ProcessService::NotifyError
 // Created: SBO 2010-12-09
 // -----------------------------------------------------------------------------
-void ProcessService::NotifyError( const std::string& /*error*/, const std::string& endpoint )
+void ProcessService::NotifyError( const std::string& /*error*/, const std::string& /*endpoint*/ )
 {
-    ::NotifyError( endpoint, server_, processes_ );
     NotifyStopped();
 }
 
@@ -175,32 +126,4 @@ void ProcessService::Update()
 {
     for( ProcessContainer::iterator it = processes_.begin(); processes_.end() != it; ++it )
         it->second->Update();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProcessService::SendSessionsStatuses
-// Created: RPD 2011-09-12
-// -----------------------------------------------------------------------------
-void ProcessService::SendSessionsStatuses( const std::string& endpoint )
-{
-    if( endpoint.empty() )
-        return;
-    LauncherPublisher& publisher = server_.ResolveClient( endpoint );
-    for( ProcessContainer::iterator cur = processes_.begin(); cur != processes_.end(); ++cur )
-    {
-        const auto spawns = cur->second->GetProcess()->GetSpawns();
-        for( auto it = spawns.begin(); it != spawns.end(); ++it )
-        {
-            auto cmd = *it;
-            if( cmd->GetName() != endpoint )
-                continue;
-            SessionStatus msg;
-            const tools::Path exercise = cmd->GetExercise();
-            const tools::Path session = cmd->GetSession();
-            msg().set_status( IsRunning( exercise, session )? sword::SessionStatus::running : sword::SessionStatus::not_running );
-            msg().set_exercise( exercise.ToUTF8() );
-            msg().set_session( session.ToUTF8() );
-            msg.Send( publisher );
-        }
-    }
 }

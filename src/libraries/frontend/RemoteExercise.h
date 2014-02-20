@@ -47,13 +47,6 @@ public:
     //@{
     virtual const std::string& GetId() const;
     virtual const tools::Path& GetName() const;
-    virtual unsigned int GetPort() const;
-    virtual bool IsRunning() const;
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void SetRunning( bool running );
     //@}
 
 private:
@@ -63,8 +56,6 @@ private:
     const Host_ABC& host_;
     const tools::Path name_;
     const std::string id_;
-    const unsigned int port_;
-    bool running_;
     //@}
 };
 

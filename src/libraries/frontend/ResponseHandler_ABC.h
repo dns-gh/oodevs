@@ -15,7 +15,6 @@
 namespace sword
 {
     class ExerciseListResponse;
-    class SessionStatus;
 }
 
 namespace frontend
@@ -38,7 +37,6 @@ public:
     //! @name Operations
     //@{
     virtual void Handle( const sword::ExerciseListResponse& message ) = 0;
-    virtual void Handle( const sword::SessionStatus& message ) = 0;
     //@}
 };
 
