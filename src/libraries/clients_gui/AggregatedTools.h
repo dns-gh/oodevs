@@ -10,34 +10,15 @@
 #ifndef __AggregatedTools_h_
 #define __AggregatedTools_h_
 
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Positions.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include <boost/function.hpp>
-#include <boost/bind.hpp>
 
-namespace
+namespace kernel
 {
-    bool IsAggregated( const kernel::Entity_ABC& entity )
-    {
-        if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
-            return positions->IsAggregated();
-        return false;
-    }
-
-    bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun )
-    {
-        tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
-        while( it.HasMoreElements() )
-            return fun( it.NextElement() );
-        return false;
-    }
-
-    bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity )
-    {
-        return HasAggregatedSubordinate( entity, boost::bind( &IsAggregated, _1 ) );
-    }
+    class Entity_ABC;
 }
 
+bool IsAggregated( const kernel::Entity_ABC& entity );
+bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun );
+bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity );
 
 #endif // __AggregatedTools_h_

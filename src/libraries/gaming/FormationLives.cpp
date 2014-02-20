@@ -13,6 +13,8 @@
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_gui/AggregatedTools.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "tools/Iterator.h"
 
 using namespace kernel;
 
@@ -53,7 +55,7 @@ float FormationLives::GetLife() const
 {
     float result = 0;
     unsigned count = 0;
-    tools::Iterator< const Entity_ABC& > children = formation_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+    auto children = formation_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         result += children.NextElement().Get< Lives_ABC >().GetLife();
