@@ -238,11 +238,7 @@ bool ParamLocationComposite::IsChecked() const
 void ParamLocationComposite::OnChecked( bool checked )
 {
     for( std::vector< QWidget* >::iterator it = widgets_.begin(); it != widgets_.end(); ++it )
-    {
-        disconnect( static_cast< QGroupBox* >( *it ), SIGNAL( clicked( bool ) ), this, SLOT( OnChecked( bool ) ) );
         static_cast< QGroupBox* >( *it )->setChecked( checked );
-        connect( static_cast< QGroupBox* >( *it ), SIGNAL( clicked( bool ) ), this, SLOT( OnChecked( bool ) ) );
-    }
     Update();
 }
 
