@@ -38,14 +38,14 @@ public:
      PartsView( kernel::Controllers& controllers, QWidget* parent );
     ~PartsView();
 
-    void Select( kernel::Entity_ABC* handler, const std::vector< kernel::BreakdownPart >& parts );
+    void Purge();
+    void Select( const kernel::Entity_ABC* handler, const std::vector< kernel::BreakdownPart >& parts );
     bool IsValid() const;
 
 signals:
     void Updated();
 
 private:
-    void Purge();
     void NotifyUpdated( const kernel::Dotations_ABC& dotations );
 
 protected:

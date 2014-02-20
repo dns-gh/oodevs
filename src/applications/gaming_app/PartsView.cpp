@@ -57,7 +57,7 @@ void PartsView::Purge()
     parts_.clear();
 }
 
-void PartsView::Select( kernel::Entity_ABC* handler, const std::vector< kernel::BreakdownPart >& parts )
+void PartsView::Select( const kernel::Entity_ABC* handler, const std::vector< kernel::BreakdownPart >& parts )
 {
     base_ = handler;
     Purge();

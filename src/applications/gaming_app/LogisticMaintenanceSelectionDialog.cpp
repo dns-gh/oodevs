@@ -253,7 +253,7 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
         manualButton_->setText( tr( "Select repair team" ) );
         repairers_->selectionModel()->clear();
         repairers_->SelectEntity( handler_ );
-        parts_->Select( consign.GetHandler(), breakdownType_->GetParts() );
+        parts_->Purge();
     }
     UpdateDisplay();
     show();
@@ -338,10 +338,18 @@ void LogisticMaintenanceSelectionDialog::OnSelectionChanged( const QModelIndex& 
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
             availability_ = diagnosers_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+        {
             availability_ = repairers_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
+            if( availability_ && breakdownType_ )
+                parts_->Select( availability_->entity_, breakdownType_->GetParts() );
+            else
+                throw MASA_EXCEPTION( "Missing availability or breakdown type to display related parts" );
+        }
         else
             throw MASA_EXCEPTION( "Unhandled status " + ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) );
     }
+    else if( !current.isValid() && status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+        parts_->Purge();
     UpdateDisplay();
 }
 
