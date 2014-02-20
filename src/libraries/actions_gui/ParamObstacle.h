@@ -13,6 +13,7 @@
 #include "ParamLocationComposite.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ValuedComboBox.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {
@@ -49,6 +50,7 @@ namespace actions
 // Created: APE 2004-05-18
 // =============================================================================
 class ParamObstacle : public ParamLocationComposite
+                    , public tools::ElementObserver_ABC< Param_ABC >
 {
     Q_OBJECT
 
@@ -66,6 +68,7 @@ public:
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual bool CheckValidity();
+    virtual bool IsChecked() const;
     virtual bool InternalCheckValidity() const;
     virtual kernel::ContextMenu::T_MenuVariant CreateMenu( kernel::ContextMenu& menu );
     virtual void NotifyChanged( Param_ABC& param );
@@ -83,6 +86,12 @@ public:
     virtual void Visit( const actions::parameters::String& param );
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    void NotifyUpdated( const Param_ABC& param );
+    //@}
+
 signals:
     //! @name Signals
     //@{
@@ -98,6 +107,7 @@ private slots:
 private:
     //! @name Member data
     //@{
+    kernel::Controller&                                 controller_;
     const kernel::ObjectTypes&                          objectTypes_;
     ::gui::ParametersLayer&                             layer_;
     const kernel::CoordinateConverter_ABC&              converter_;

@@ -1504,6 +1504,15 @@ void MIL_KnowledgeGroup::UpdateKnowledgeFromTransported( const MIL_Agent_ABC& pe
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::GetJammedPion
+// Created: LDC 2014-02-18
+// -----------------------------------------------------------------------------
+const MIL_Agent_ABC* MIL_KnowledgeGroup::GetJammedPion() const
+{
+    return jammedPion_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::GetObjectKnowledgeToUpdate
 // Created: MMC 2011-06-15
 // -----------------------------------------------------------------------------

@@ -59,6 +59,7 @@ private:
     //@}
 
     bool UpdateDeploymentValue();
+    bool UpdateUndeploymentValue();
 
     //! @name Serialization
     //@{
@@ -71,8 +72,8 @@ private:
     MIL_Agent_ABC& owner_;
     E_DeploymentState eDeploymentState_;
     double rDeploymentValue_;
-    double rDeploymentGap_;
-    double rUndeploymentGap_;
+    const double rDeploymentGap_;
+    const double rUndeploymentGap_;
     bool bInstallationStateHasChanged_;
     //@}
 };

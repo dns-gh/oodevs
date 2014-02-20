@@ -106,6 +106,35 @@ void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision( con
     GetKnowledgeToUpdate( collision.GetObject() )->Update( collision );
 }
 
+namespace
+{
+    template< typename PerceptionFun, typename CollisionFun >
+    void SynthetizeAgentPerception( MIL_AgentPion& pion, const MIL_KnowledgeGroup& knowledgeGroup, PerceptionFun& methodUpdateKnowledgesFromObjectPerception, CollisionFun& methodUpdateKnowledgesFromObjectCollision )
+    {
+        if( pion.IsDead() || pion.GetKnowledgeGroup().get() != &knowledgeGroup )
+            return;
+        PHY_RoleInterface_Communications* communication = pion.RetrieveRole< PHY_RoleInterface_Communications >();
+        if( communication )
+        {
+            DEC_KnowledgeBlackBoard_AgentPion& blackboard = pion.GetKnowledge();
+            DEC_BlackBoard_CanContainKnowledgeObjectPerception& perceptions = blackboard.GetKnowledgeObjectPerceptionContainer();
+            DEC_BlackBoard_CanContainKnowledgeObjectCollision& collisions = blackboard.GetKnowledgeObjectCollisionContainer();
+            if( communication->CanEmit() )
+            {
+                perceptions.ApplyOnKnowledgesObjectPerception( methodUpdateKnowledgesFromObjectPerception );
+                collisions.ApplyOnKnowledgesObjectCollision( methodUpdateKnowledgesFromObjectCollision  );
+            }
+            else
+            {
+                auto methodUpdateAgentKnowledgesFromObjectPerception = boost::bind( &PHY_RoleInterface_Communications::UpdateKnowledgesFromObjectPerception, communication, _1 );
+                perceptions.ApplyOnKnowledgesObjectPerception( methodUpdateAgentKnowledgesFromObjectPerception );
+                auto methodUpdateAgentKnowledgesFromObjectCollision = boost::bind ( &PHY_RoleInterface_Communications::UpdateKnowledgesFromObjectCollision , communication, _1 );
+                collisions.ApplyOnKnowledgesObjectCollision ( methodUpdateAgentKnowledgesFromObjectCollision );
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception
 // Created: NLD 2004-06-04
@@ -114,36 +143,17 @@ void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
 {
     auto methodUpdateKnowledgesFromObjectPerception = boost::bind( &DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception, this, _1 );
     auto methodUpdateKnowledgesFromObjectCollision = boost::bind( &DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision , this, _1 );
-    const auto& automates = pBlackBoard_->GetKnowledgeGroup()->GetAutomates();
+    auto knowledgeGroup = pBlackBoard_->GetKnowledgeGroup();
+    const auto& automates = knowledgeGroup->GetAutomates();
     for( auto itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
     {
         const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
         for( auto itPion = pions.begin(); itPion != pions.end(); ++itPion )
-        {
-            MIL_AgentPion& pion = **itPion;
-            if( pion.IsDead() )
-                continue;
-            PHY_RoleInterface_Communications* communication = pion.RetrieveRole< PHY_RoleInterface_Communications >();
-            if( communication )
-            {
-                DEC_KnowledgeBlackBoard_AgentPion& blackboard = pion.GetKnowledge();
-                DEC_BlackBoard_CanContainKnowledgeObjectPerception& perceptions = blackboard.GetKnowledgeObjectPerceptionContainer();
-                DEC_BlackBoard_CanContainKnowledgeObjectCollision& collisions = blackboard.GetKnowledgeObjectCollisionContainer();
-                if( communication->CanEmit() )
-                {
-                    perceptions.ApplyOnKnowledgesObjectPerception( methodUpdateKnowledgesFromObjectPerception );
-                    collisions.ApplyOnKnowledgesObjectCollision( methodUpdateKnowledgesFromObjectCollision  );
-                }
-                else
-                {
-                    auto methodUpdateAgentKnowledgesFromObjectPerception = boost::bind( &PHY_RoleInterface_Communications::UpdateKnowledgesFromObjectPerception, communication, _1 );
-                    perceptions.ApplyOnKnowledgesObjectPerception( methodUpdateAgentKnowledgesFromObjectPerception );
-                    auto methodUpdateAgentKnowledgesFromObjectCollision = boost::bind ( &PHY_RoleInterface_Communications::UpdateKnowledgesFromObjectCollision , communication, _1 );
-                    collisions.ApplyOnKnowledgesObjectCollision ( methodUpdateAgentKnowledgesFromObjectCollision  );
-                }
-            }
-        }
+            ::SynthetizeAgentPerception( **itPion, *knowledgeGroup, methodUpdateKnowledgesFromObjectPerception, methodUpdateKnowledgesFromObjectCollision );
     }
+    MIL_AgentPion* jammed = const_cast< MIL_AgentPion* >( static_cast< const MIL_AgentPion* >( knowledgeGroup->GetJammedPion() ) );
+    if( jammed )
+        ::SynthetizeAgentPerception( *jammed, *knowledgeGroup, methodUpdateKnowledgesFromObjectPerception, methodUpdateKnowledgesFromObjectCollision );
 }
 
 // -----------------------------------------------------------------------------

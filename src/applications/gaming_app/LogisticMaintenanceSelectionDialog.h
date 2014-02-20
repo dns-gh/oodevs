@@ -78,7 +78,7 @@ private:
     //@{
     void Purge();
     void AddWidget( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus status, QWidget* widget );
-    void SetCurrentWidget();
+    bool SetCurrentWidget();
     //@}
 
 private slots:

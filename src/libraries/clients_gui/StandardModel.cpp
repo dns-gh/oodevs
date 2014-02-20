@@ -201,7 +201,7 @@ QMimeData* StandardModel::mimeData( const QModelIndexList& indexes ) const
     QMimeData* mimeData = dragAndDropObserver_->MimeData( indexes, overriden );
     if( overriden )
         return mimeData;
-    mimeData = new QMimeData();
+    mimeData = 0;
     QByteArray encodedData;
     QDataStream stream( &encodedData, QIODevice::WriteOnly );
     QString mimeType;
@@ -215,13 +215,18 @@ QMimeData* StandardModel::mimeData( const QModelIndexList& indexes ) const
                 const QString itemMimeType = item->data( Roles::MimeTypeRole ).value< QString >();
                 if( mimeType.isNull() || mimeType == itemMimeType )
                 {
-                    mimeType = itemMimeType;
-                    stream << reinterpret_cast< unsigned int >( item->data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_ );
+                    if( item->data( Roles::DataRole ).isValid() )
+                    {
+                        mimeData = mimeData ? mimeData : new QMimeData();
+                        mimeType = itemMimeType;
+                        stream << reinterpret_cast< unsigned int >( item->data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_ );
+                    }
                 }
             }
         }
     }
-    mimeData->setData( mimeType, encodedData );
+    if( mimeData )
+        mimeData->setData( mimeType, encodedData );
     return mimeData;
 }
 

@@ -157,6 +157,7 @@ public:
     DEC_Knowledge_Population& CreateKnowledgePopulation( MIL_Population& perceived );
     DEC_Knowledge_Population& GetPopulationKnowledgeToUpdate( MIL_Population& populationKnown );
     void UpdateKnowledgeFromTransported( const MIL_Agent_ABC& perceived );
+    const MIL_Agent_ABC* GetJammedPion() const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgent( UnaryFunction& fct ) const
