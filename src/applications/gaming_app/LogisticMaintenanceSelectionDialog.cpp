@@ -169,19 +169,16 @@ void LogisticMaintenanceSelectionDialog::AddWidget( sword::LogMaintenanceHandlin
 // Name: LogisticMaintenanceSelectionDialog::SetCurrentWidget
 // Created: ABR 2014-01-29
 // -----------------------------------------------------------------------------
-void LogisticMaintenanceSelectionDialog::SetCurrentWidget()
+bool LogisticMaintenanceSelectionDialog::SetCurrentWidget()
 {
-    if( !stack_ )
-        return;
     auto it = indexMap_.find( status_ );
-    if(  it == indexMap_.end() ||
-         stack_->widget( it->second ) == 0 ||
-         !handler_ )
-    {
-        reject();
-        throw MASA_EXCEPTION( "No widget defined for status: " + ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) );
-    }
+    if( !stack_ ||
+        it == indexMap_.end() ||
+        stack_->widget( it->second ) == 0 ||
+        !handler_ )
+        return false;
     stack_->setCurrentIndex( it->second );
+    return true;
 }
 
 namespace
@@ -209,7 +206,8 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
     componentType_ = maintenanceConsign.GetEquipment();
     breakdownType_ = maintenanceConsign.GetBreakdown();
     status_ = maintenanceConsign.GetStatus();
-    SetCurrentWidget();
+    if( !SetCurrentWidget() )
+        return;
     setWindowTitle( tr( "Request #%1 - %2" ).arg( id_ ).arg( QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) ) ) );
     manualButton_->setChecked( true );
     evacuateButton_->setEnabled( CanRequestEvacuationBySuperior( handler_ ) );
