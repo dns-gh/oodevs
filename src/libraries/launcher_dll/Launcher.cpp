@@ -65,10 +65,6 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const sword::
         HandleRequest( endpoint, message.message().connection_request() );
     else if( message.message().has_exercise_list_request() )
         HandleRequest( endpoint, message.message().exercise_list_request() );
-    else if( message.message().has_session_start_request() )
-        HandleRequest( endpoint, message.message().session_start_request() );
-    else if( message.message().has_session_stop_request() )
-        HandleRequest( endpoint, message.message().session_stop_request() );
     else if( message.message().has_session_list_request() )
         HandleRequest( endpoint, message.message().session_list_request() );
     else if( message.message().has_session_parameter_change_request() )
@@ -105,39 +101,6 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Exercise
     processes_->SendExerciseList( response() );
     response.Send( server_->ResolveClient( endpoint ) );
     processes_->SendRunningExercices( endpoint );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Launcher::HandleRequest
-// Created: SBO 2010-10-06
-// -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionStartRequest& message )
-{
-    SessionStartResponse response;
-    response().set_exercise( message.exercise() );
-    response().set_session( message.session() );
-    response().set_error_code( processes_->StartSession( endpoint, message ) );
-    switch( message.type() )
-    {
-        case sword::SessionStartRequest::simulation:
-            response().set_type( sword::SessionStartResponse::simulation );
-            break;
-    }
-    response().set_checkpoint( message.has_checkpoint() ? message.checkpoint() : "" );
-    response.Send( server_->ResolveClient( endpoint ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Launcher::HandleRequest
-// Created: SBO 2010-10-28
-// -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionStopRequest& message )
-{
-    SessionStopResponse response;
-    response().set_exercise( message.exercise() );
-    response().set_session( message.session() );
-    response().set_error_code( processes_->StopSession( message ) );
-    response.Send( server_->ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------

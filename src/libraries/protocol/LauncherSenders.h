@@ -18,8 +18,6 @@ namespace launcher
     struct Service {};
 
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, ConnectionRequest   , connection_request )
-    GENERATE_MESSAGE( sword::AdminToLauncher, sword, SessionStartRequest, session_start_request )
-    GENERATE_MESSAGE( sword::AdminToLauncher, sword, SessionStopRequest , session_stop_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, ExerciseListRequest, exercise_list_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, SessionListRequest , session_list_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, SessionParameterChangeRequest , session_parameter_change_request )
@@ -30,8 +28,6 @@ namespace launcher
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ConnectionResponse          , connection_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ExerciseListResponse  , exercise_list_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionListResponse, session_list_response )
-    GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionStartResponse , session_start_response )
-    GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionStopResponse , session_stop_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionStatus , session_status )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionParameterChangeResponse , session_parameter_change_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, CheckpointListResponse , checkpoint_list_response )

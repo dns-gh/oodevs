@@ -44,37 +44,6 @@ message SessionParameter {
     required string value = 2;
 }
 
-/** @struct SessionStartRequest
-    @brief start a session using the given exercise/session.
-*/
-message SessionStartRequest {
-    enum Type {
-        //! starts a simulation. Starts an embedded dispatcher if
-        //! specified in session.
-        simulation = 0;
-    }
-    //! exercise to be started
-    required string exercise               = 1;
-    //! session name (created with default parameters if it does not exist)
-    required string session                = 2 [ default = "default" ];
-    //! type of exercise session to start
-    required Type   type                   = 3;
-    //! load the specified checkpoint
-    optional string checkpoint             = 4;
-    //! list of overloaded session parameters
-    repeated SessionParameter   parameter  = 5;
-}
-
-/** @struct SessionStopRequest
-    @brief stop a given running session
-*/
-message SessionStopRequest {
-    //! exercise to stop
-    required string exercise = 1;
-    //! session to stop
-    required string session  = 2 [ default = "default" ];
-}
-
 /** @struct SessionParameterChangeRequest
     @brief change session parameters
 */
@@ -130,8 +99,6 @@ message SessionNotificationRequest {
 message AdminToLauncher {
     message Content {
         optional ConnectionRequest          connection_request        = 1;
-        optional SessionStartRequest        session_start_request     = 2;
-        optional SessionStopRequest         session_stop_request      = 3;
         optional ExerciseListRequest        exercise_list_request     = 4;
         optional SessionListRequest         session_list_request      = 5;
         optional SessionParameterChangeRequest

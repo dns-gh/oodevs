@@ -56,31 +56,6 @@ std::string RemoteHost::CreateIdentifier( const tools::Path& exercise ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteHost::StartSimulation
-// Created: SBO 2010-10-28
-// -----------------------------------------------------------------------------
-void RemoteHost::StartSimulation( const tools::Path& exercise, const tools::Path& session ) const
-{
-    launcher::SessionStartRequest message;
-    message().set_exercise( exercise.ToUTF8() );
-    message().set_session( session.ToUTF8() );
-    message().set_type( sword::SessionStartRequest::simulation );
-    message.Send( publisher_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::StopSession
-// Created: SBO 2010-10-28
-// -----------------------------------------------------------------------------
-void RemoteHost::StopSession( const tools::Path& exercise, const tools::Path& session ) const
-{
-    launcher::SessionStopRequest message;
-    message().set_exercise( exercise.ToUTF8() );
-    message().set_session( session.ToUTF8() );
-    message.Send( publisher_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RemoteHost::Handle
 // Created: SBO 2010-10-21
 // -----------------------------------------------------------------------------
@@ -92,19 +67,6 @@ void RemoteHost::Handle( const sword::ExerciseListResponse& message )
         boost::shared_ptr< RemoteExercise > exercise( new RemoteExercise( *this, *this, tools::Path::FromUTF8( message.exercise( i ) ), controller_ ) );
         exercises_[ exercise->GetName() ] = exercise;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::Handle
-// Created: SBO 2010-10-25
-// -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::SessionStartResponse& message )
-{
-    tools::Path exercisePath = tools::Path::FromUTF8( message.exercise() );
-    boost::shared_ptr< Exercise_ABC > exercise( exercises_[ exercisePath ] );
-    if( !exercise.get() )
-        exercise.reset( new RemoteExercise( *this, *this, exercisePath, controller_ ) );
-    exercise->SetRunning( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,16 +105,6 @@ void RemoteHost::Handle( const sword::SessionStatus& message )
 void RemoteHost::Handle( const sword::SessionListResponse& /*message*/ )
 {
     // NOTHING
-}
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::Handle
-// Created: SBO 2010-10-28
-// -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::SessionStopResponse& message )
-{
-    auto it = exercises_.find( tools::Path::FromUTF8( message.exercise() ) );
-    if( it != exercises_.end() )
-        it->second->SetRunning( false );
 }
 
 // -----------------------------------------------------------------------------

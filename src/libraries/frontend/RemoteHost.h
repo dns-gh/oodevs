@@ -46,15 +46,11 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetId() const;
-    virtual void StartSimulation( const tools::Path& exercise, const tools::Path& session ) const;
-    virtual void StopSession( const tools::Path& exercise, const tools::Path& session ) const;
     //@}
 
     //! @name Operation
     //@{
     virtual void Handle( const sword::ExerciseListResponse& message );
-    virtual void Handle( const sword::SessionStartResponse& message );
-    virtual void Handle( const sword::SessionStopResponse& message );
     virtual void Handle( const sword::SessionListResponse& message );
     virtual void Handle( const sword::SessionNotification& message );
     virtual void Handle( const sword::SessionParameterChangeResponse& message );

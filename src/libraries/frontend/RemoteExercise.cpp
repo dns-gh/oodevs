@@ -89,24 +89,6 @@ bool RemoteExercise::IsHostedBy( const std::string& host ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteExercise::Start
-// Created: SBO 2010-10-28
-// -----------------------------------------------------------------------------
-void RemoteExercise::Start( const tools::Path& session ) const
-{
-    host_.StartSimulation( name_, session );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteExercise::Stop
-// Created: SBO 2010-10-28
-// -----------------------------------------------------------------------------
-void RemoteExercise::Stop( const tools::Path& session ) const
-{
-    host_.StopSession( name_, session );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RemoteExercise::SetRunning
 // Created: SBO 2010-10-26
 // -----------------------------------------------------------------------------

@@ -40,8 +40,6 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetId() const = 0;
-    virtual void StartSimulation( const tools::Path& exercise, const tools::Path& session ) const = 0;
-    virtual void StopSession( const tools::Path& exercise, const tools::Path& session ) const = 0;
     //@}
 };
 
