@@ -139,6 +139,12 @@ func assertIsPrefixed(c *C, s, prefix string) {
 func initLogisticEvents(c *C, client *swapi.Client) {
 	data := client.Model.GetData()
 	unit := getSomeUnitByName(c, data, "ARMOR.MBT")
+	supply := getSomeUnitByName(c, data, "Logistic CT").Id
+
+	// Waiting for deployment
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[supply].Installation == 100
+	})
 
 	// Generate maintenance activity
 	equipmentId := uint32(11)
@@ -1124,4 +1130,64 @@ func (s *TestSuite) TestMaintenanceSuperiorUnableToRepair(c *C) {
 	client.Model.WaitTicks(2)
 	reports := reporter.Stop()
 	c.Assert(len(reports), Equals, 1)
+}
+
+func CheckDeployTime(c *C, start, end *sword.DateTime, duration time.Duration) {
+	startTime, _ := swapi.GetTime(start)
+	endTime, _ := swapi.GetTime(end)
+	c.Assert(endTime.Sub(startTime), Equals, duration)
+}
+
+func (s *TestSuite) TestLogisticDeployment(c *C) {
+	phydb := loadWWPhysical(c)
+	opts := NewAdminOpts(ExCrossroadSmallLog)
+	opts.Paused = true
+	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
+	model := client.Model
+	tc2 := getSomeAutomatByName(c, model.GetData(), "LOG.Logistic combat train")
+	unit := getSomeUnitByName(c, model.GetData(), "LOG.Logistic CT")
+	startingReportsTypes := []string{
+		"Starting deploy",
+		"Starting undeploy"}
+	endingReportsTypes := []string{
+		"section deployed",
+		"Section undeployed"}
+	startingReporter := newReporter(c, unit.Id, phydb, startingReportsTypes...)
+	endingReporter := newReporter(c, unit.Id, phydb, endingReportsTypes...)
+	startingReporter.Start(client.Model)
+	endingReporter.Start(client.Model)
+	client.Resume(0)
+
+	// Waiting for auto deployment
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit.Id].Installation == 100
+	})
+
+	// Deploy TC2 to another position to force undeployment and deployment
+	MissionLogDeploy := uint32(44584)
+	heading := swapi.MakeHeading(0)
+	limit1 := swapi.MakeLimit(
+		swapi.Point{X: -15.8302, Y: 28.3765},
+		swapi.Point{X: -15.825, Y: 28.3413})
+	limit2 := swapi.MakeLimit(
+		swapi.Point{X: -15.7983, Y: 28.3765},
+		swapi.Point{X: -15.7991, Y: 28.3413})
+	destination := swapi.Point{X: -15.8164, Y: 28.3567}
+	params := swapi.MakeParameters(heading, nil, limit1, limit2, swapi.MakePointParam(destination))
+	_, err := client.SendAutomatOrder(tc2.Id, MissionLogDeploy, params)
+	c.Assert(err, IsNil)
+	model.WaitTicks(10)
+
+	// Check reports
+	startingReports := startingReporter.Stop()
+	endingReports := endingReporter.Stop()
+	// Check that reports are always by pairs "Starting deploy" -> "section deployed"
+	c.Assert(len(startingReports), Equals, len(endingReports))
+	// Check we have at least auto deployment and undeployment following mission
+	c.Assert(len(startingReports) >= 2, Equals, true)
+	// Check there is 1mn delay in deployment
+	for i := 0; i < len(startingReports); i++ {
+		CheckDeployTime(c, startingReports[i].Time, endingReports[i].Time, 1*time.Minute)
+	}
 }

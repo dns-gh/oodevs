@@ -419,9 +419,9 @@ const (
 )
 
 // Helper combining reports source and message filters.
-func newReporter(c *C, source uint32, db *phy.PhysicalFile, pattern string) *swapi.Reporter {
+func newReporter(c *C, source uint32, db *phy.PhysicalFile, patterns ...string) *swapi.Reporter {
 	ids := swapi.ReportSources(source)
-	messages, err := swapi.ReportMessages(db, pattern)
+	messages, err := swapi.ReportMessages(db, patterns...)
 	c.Assert(err, IsNil)
 	filter := func(r *sword.Report) bool {
 		return ids(r) && messages(r)
