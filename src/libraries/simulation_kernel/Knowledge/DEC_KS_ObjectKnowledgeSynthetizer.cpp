@@ -109,7 +109,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision( con
 namespace
 {
     template< typename PerceptionFun, typename CollisionFun >
-    void SynthetizeAgentPerception( MIL_AgentPion& pion, const MIL_KnowledgeGroup& knowledgeGroup, PerceptionFun& methodUpdateKnowledgesFromObjectPerception, CollisionFun& methodUpdateKnowledgesFromObjectCollision )
+    void SynthetizeAgentPerception( MIL_Agent_ABC& pion, const MIL_KnowledgeGroup& knowledgeGroup, PerceptionFun& methodUpdateKnowledgesFromObjectPerception, CollisionFun& methodUpdateKnowledgesFromObjectCollision )
     {
         if( pion.IsDead() || pion.GetKnowledgeGroup().get() != &knowledgeGroup )
             return;
@@ -151,7 +151,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
         for( auto itPion = pions.begin(); itPion != pions.end(); ++itPion )
             ::SynthetizeAgentPerception( **itPion, *knowledgeGroup, methodUpdateKnowledgesFromObjectPerception, methodUpdateKnowledgesFromObjectCollision );
     }
-    MIL_AgentPion* jammed = const_cast< MIL_AgentPion* >( static_cast< const MIL_AgentPion* >( knowledgeGroup->GetJammedPion() ) );
+    MIL_Agent_ABC* jammed = const_cast< MIL_Agent_ABC* >( knowledgeGroup->GetJammedPion() );
     if( jammed )
         ::SynthetizeAgentPerception( *jammed, *knowledgeGroup, methodUpdateKnowledgesFromObjectPerception, methodUpdateKnowledgesFromObjectCollision );
 }
