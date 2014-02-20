@@ -457,9 +457,11 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 
 	data := client.Model.GetData()
 	supplier := getSomeAutomatByName(c, data, "Supply 1").Id
+	unit := getSomeUnitByName(c, data, "Log Unit 4 1").Id
 	receiver := getSomeAutomatByName(c, data, "Supply 2").Id
 	const resource = 96
 	const transporter = 12
+	c.Assert(data.Units[unit].Installation, Not(Equals), 100)
 
 	// deploy supplier
 	MissionLogDeploy := uint32(8)
@@ -475,6 +477,11 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 			nil))
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
+
+	// Waiting for deployment
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit].Installation == 100
+	})
 
 	// error: invalid supplier
 	result, err := client.LogisticsSupplyPushFlow(1000, receiver, nil, nil)
@@ -503,7 +510,6 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	c.Assert(result, HasLen, 0)
 
 	// valid no transporter
-	unit := getSomeUnitByName(c, data, "Log Unit 4 1").Id
 	transporters := client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
 	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, nil)
 	c.Assert(err, IsNil)
@@ -557,6 +563,7 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 
 	data := client.Model.GetData()
 	supplier := getSomeAutomatByName(c, data, "Supply 1").Id
+	unit := getSomeUnitByName(c, data, "Log Unit 4 2").Id
 	receiver := getSomeAutomatByName(c, data, "Supply 2").Id
 	const resource = 96
 	const transporter = 12
@@ -574,7 +581,11 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 				swapi.Point{X: -15.7570, Y: 28.2744}),
 			nil))
 	c.Assert(err, IsNil)
-	client.Model.WaitTicks(2)
+
+	// Waiting for deployment
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit].Installation == 100
+	})
 
 	// error: invalid supplier parameter
 	result, err := client.LogisticsSupplyPullFlow(receiver, 1000, nil, nil)
@@ -598,7 +609,6 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	c.Assert(result, HasLen, 0)
 
 	// valid no transporter
-	unit := getSomeUnitByName(c, data, "Log Unit 4 2").Id
 	transporters := client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
 	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, nil)
 	c.Assert(err, IsNil)

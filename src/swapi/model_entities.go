@@ -255,6 +255,7 @@ type Unit struct {
 	RawOperationalState int32
 	Neutralized         bool
 	Stocks              []*Stock
+	Installation        int32
 }
 
 type Automat struct {
