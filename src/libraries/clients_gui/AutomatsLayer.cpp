@@ -92,7 +92,7 @@ void AutomatsLayer::NotifyContextMenu( const Automat_ABC& automat, kernel::Conte
     selected_ = &automat;
     if( !IsAggregated( automat ) )
     {
-        if( !HasSubordinate( automat, boost::bind( &IsAggregated, _1 ) ) )
+        if( !HasSubordinate( automat, &IsAggregated ) )
             menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
         else
             menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
@@ -133,7 +133,7 @@ void AutomatsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const ge
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Automat_ABC& automat = static_cast< const Automat_ABC& >( selectable );
-    if( !IsAggregated( entity ) && HasSubordinate( entity, boost::bind( &IsAggregated, _1 ) ) )
+    if( !IsAggregated( entity ) && HasSubordinate( entity, &IsAggregated ) )
         controllers_.actions_.ContextMenu( automat, entity, point, where );
 }
 

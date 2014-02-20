@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2014 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
@@ -12,7 +12,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include <boost/bind.hpp>
 
 bool IsAggregated( const kernel::Entity_ABC& entity )
 {
@@ -21,15 +20,15 @@ bool IsAggregated( const kernel::Entity_ABC& entity )
     return false;
 }
 
-bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun )
+bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity, const std::function< bool( const kernel::Entity_ABC& ) >& fun )
 {
     auto it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
+    if( it.HasMoreElements() )
         return fun( it.NextElement() );
     return false;
 }
 
 bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity )
 {
-    return HasAggregatedSubordinate( entity, boost::bind( &IsAggregated, _1 ) );
+    return HasAggregatedSubordinate( entity, &IsAggregated );
 }

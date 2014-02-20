@@ -43,7 +43,7 @@ AutomatLives::~AutomatLives()
 // -----------------------------------------------------------------------------
 void AutomatLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( !::IsAggregated( automat_ ) && HasAggregatedSubordinate( automat_ ) && viewport.IsHotpointVisible() )
+    if( !IsAggregated( automat_ ) && HasAggregatedSubordinate( automat_ ) && viewport.IsHotpointVisible() )
         tools.DrawLife( where, GetLife(), 2.f );
 }
 
