@@ -10,7 +10,7 @@
 #ifndef __ReplayPage_h_
 #define __ReplayPage_h_
 
-#include "LauncherClientPage.h"
+#include "ContentPage.h"
 #include "frontend/Profile.h"
 
 namespace frontend
@@ -30,8 +30,9 @@ namespace tools
 }
 
 class Application;
-class ProgressPage;
+class ExerciseContainer;
 class ExerciseList;
+class ProgressPage;
 class SessionList;
 
 // =============================================================================
@@ -40,7 +41,7 @@ class SessionList;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class ReplayPage : public LauncherClientPage
+class ReplayPage : public ContentPage
 {
     Q_OBJECT;
 
@@ -48,8 +49,10 @@ public:
     //! @name Constructors/Destructor
     //@{
              ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous,
-                         const frontend::Config& config, const tools::Loader_ABC& fileLoader,
-                         kernel::Controllers& controllers, frontend::LauncherClient& launcher );
+                         const frontend::Config& config,
+                         const tools::Loader_ABC& fileLoader,
+                         kernel::Controllers& controllers,
+                         ExerciseContainer& exercises );
     virtual ~ReplayPage();
     //@}
 
@@ -77,6 +80,7 @@ private:
     const frontend::Config& config_;
     const tools::Loader_ABC& fileLoader_;
     kernel::Controllers& controllers_;
+    ExerciseContainer& exerciseContainer_;
     ProgressPage* progressPage_;
     ExerciseList* exercises_;
     SessionList* sessions_;

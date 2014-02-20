@@ -26,24 +26,24 @@
 HomePage::HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
                     Config& config, const tools::Loader_ABC& fileLoader,
                     kernel::Controllers& controllers,
-                    frontend::LauncherClient& launcher )
+                    ExerciseContainer& exercises )
     : MenuPage( pages, *this, eButtonAdmin | eButtonQuit )
     , config_( config )
-    , optionsPage_( new OptionsPage( app, parent, pages, *this, config, fileLoader, controllers, launcher ) )
+    , optionsPage_( new OptionsPage( app, parent, pages, *this, config, fileLoader, controllers, exercises ) )
 {
     setWindowTitle( "HomePage" );
 
     adaptPage_ = new AuthoringPage( app, parent, pages, *this, config, controllers );
     adapt_ =   AddLink( *adaptPage_ );
 
-    editPage_ = new ScenarioEditPage( app, parent, pages, *this, config, fileLoader, controllers, launcher );
+    editPage_ = new ScenarioEditPage( app, parent, pages, *this, config, fileLoader, controllers, exercises );
     prepare_ = AddLink( *editPage_, false );
     connect( prepare_, SIGNAL( clicked() ), this, SLOT( OnPrepare() ) );
 
-    playPage_ = new SelfTrainingPage( app, pages, *this, config, fileLoader, controllers, launcher );
+    playPage_ = new SelfTrainingPage( app, pages, *this, config, fileLoader, controllers, exercises );
     play_ =    AddLink( *playPage_ );
 
-    replayPage_ = new ReplayPage( app, pages, *this , config, fileLoader, controllers, launcher );
+    replayPage_ = new ReplayPage( app, pages, *this , config, fileLoader, controllers, exercises );
     replay_ =  AddLink( *replayPage_, false );
     connect( replay_,  SIGNAL( clicked() ), this, SLOT( OnReplay() ) );
 }

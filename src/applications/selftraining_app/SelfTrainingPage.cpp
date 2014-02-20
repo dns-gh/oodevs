@@ -24,15 +24,15 @@ SelfTrainingPage::SelfTrainingPage( Application& app, QStackedWidget* pages,
                                     Page_ABC& previous, const Config& config,
                                     const tools::Loader_ABC& fileLoader,
                                     kernel::Controllers& controllers,
-                                    frontend::LauncherClient& launcher )
+                                    ExerciseContainer& exercises )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_( config )
 {
     setWindowTitle( "SelfTrainingPage" );
-    launcher_ = new ScenarioLauncherPage( app, pages, *this, controllers, config, fileLoader, launcher );
+    launcher_ = new ScenarioLauncherPage( app, pages, *this, controllers, config, fileLoader, exercises );
     startButton_ = AddLink( *launcher_, false );
     connect( startButton_, SIGNAL( clicked() ), this, SLOT( OnStart() ) );
-    joinButton_ = AddLink( *new ScenarioJoinPage( app, pages, *this, controllers, config, fileLoader, launcher ) );
+    joinButton_ = AddLink( *new ScenarioJoinPage( app, pages, *this, controllers, config, fileLoader, exercises ) );
 }
 
 // -----------------------------------------------------------------------------

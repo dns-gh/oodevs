@@ -16,7 +16,7 @@
 #include "ImportWidget.h"
 #include "ExportWidget.h"
 #include "Config.h"
-#include "Launcher.h"
+#include "ExerciseContainer.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/LanguageController.h"
@@ -34,15 +34,17 @@
 // -----------------------------------------------------------------------------
 OptionsPage::OptionsPage( Application& app, QWidget* parent, QStackedWidget* pages,
                           Page_ABC& previous, Config& config,
-                          const tools::Loader_ABC& loader, kernel::Controllers& controllers,
-                          frontend::LauncherClient& launcher )
-    : LauncherClientPage( pages, previous, eButtonBack | eButtonApply, launcher )
+                          const tools::Loader_ABC& loader,
+                          kernel::Controllers& controllers,
+                          ExerciseContainer& exercises )
+    : ContentPage( pages, previous, eButtonBack | eButtonApply )
     , app_               ( app )
     , parent_            ( parent )
     , tabs_              ( new QTabWidget() )
     , config_            ( config )
     , loader_            ( loader )
     , controllers_       ( controllers )
+    , exercises_         ( exercises )
     , selectedLanguage_  ( tools::Language::Current() )
     , hasChanged_        ( false )
     , languageHasChanged_( false )
@@ -296,7 +298,7 @@ void OptionsPage::UpdateButton()
 // -----------------------------------------------------------------------------
 void OptionsPage::Reconnect()
 {
-    Connect( "localhost", config_.GetLauncherPort() );
+    exercises_.Refresh();
     export_->Update();
     data_->Update();
 }
@@ -395,7 +397,6 @@ void OptionsPage::Commit()
     settings.setValue( "/Common/Language", selectedLanguage_.c_str() );
     settings.setValue( "/Common/DataDirectory", selectedDataDir_.ToUTF8().c_str() );
 
-    app_.GetLauncher().SetRootDir( selectedDataDir_ );
     config_.SetRootDir( selectedDataDir_ );
 }
 

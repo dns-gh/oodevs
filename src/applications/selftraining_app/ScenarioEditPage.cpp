@@ -11,6 +11,7 @@
 #include "ScenarioEditPage.h"
 #include "moc_ScenarioEditPage.cpp"
 #include "CreateExerciceWidget.h"
+#include "ExerciseContainer.h"
 #include "ExerciseList.h"
 #include "ProgressPage.h"
 #include "clients_kernel/Tools.h"
@@ -26,12 +27,15 @@
 // Name: ScenarioEditPage constructor
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------
-ScenarioEditPage::ScenarioEditPage( Application& app, QWidget* parent, QStackedWidget* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
-    : LauncherClientPage( pages, previous, eButtonBack | eButtonEdit, launcher )
+ScenarioEditPage::ScenarioEditPage( Application& app, QWidget* parent, QStackedWidget* pages,
+    Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader,
+    kernel::Controllers& controllers, ExerciseContainer& exerciseContainer )
+    : ContentPage( pages, previous, eButtonBack | eButtonEdit )
     , config_( config )
     , fileLoader_( fileLoader )
     , controllers_( controllers )
     , progressPage_( new ProgressPage( app, pages, *this ) )
+    , exerciseContainer_( exerciseContainer )
 {
     setWindowTitle( "ScenarioEditPage" );
     QWidget* box = new QWidget( this );
@@ -75,7 +79,7 @@ void ScenarioEditPage::OnLanguageChanged()
     mainTabs_->setTabText( eTabs_Edit, tools::translate( "ScenarioEditPage", "Edit" ) );
     mainTabs_->setTabText( eTabs_Create, tools::translate( "ScenarioEditPage", "Create" ) );
     UpdateEditButton();
-    LauncherClientPage::OnLanguageChanged();
+    ContentPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +98,7 @@ bool ScenarioEditPage::ExerciceExists( const tools::Path& exercise )
 void ScenarioEditPage::Update()
 {
     exercises_->Clear();
-    Connect( "localhost", config_.GetLauncherPort() );
+    exerciseContainer_.Refresh();
     createExerciceWidget_->Update();
 }
 

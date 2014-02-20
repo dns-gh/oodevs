@@ -12,11 +12,6 @@
 
 #include "MenuPage.h"
 
-namespace frontend
-{
-    class LauncherClient;
-}
-
 namespace kernel
 {
     class Controllers;
@@ -28,6 +23,7 @@ namespace tools
 }
 
 class Application;
+class ExerciseContainer;
 class Config;
 class ScenarioLauncherPage;
 
@@ -47,7 +43,7 @@ public:
                                Page_ABC& previous, const Config& config,
                                const tools::Loader_ABC& fileLoader,
                                kernel::Controllers& controllers,
-                               frontend::LauncherClient& launcher );
+                               ExerciseContainer& exercises );
     virtual ~SelfTrainingPage();
     //@}
 

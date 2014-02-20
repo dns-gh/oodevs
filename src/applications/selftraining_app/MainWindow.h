@@ -20,17 +20,13 @@ namespace kernel
     class Controllers;
 }
 
-namespace frontend
-{
-    class LauncherClient;
-}
-
 namespace tools
 {
     class Loader_ABC;
 }
 
 class Application;
+class ExerciseContainer;
 class Config;
 class QStackedWidget;
 class SessionTray;
@@ -53,7 +49,7 @@ public:
              MainWindow( Application& app, Config& config,
                          const tools::Loader_ABC& fileLoader,
                          kernel::Controllers& controllers,
-                         frontend::LauncherClient& launcherClient );
+                         ExerciseContainer& exercises );
     virtual ~MainWindow();
     //@}
 

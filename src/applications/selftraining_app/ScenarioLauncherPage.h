@@ -10,7 +10,7 @@
 #ifndef __ScenarioLauncherPage_h_
 #define __ScenarioLauncherPage_h_
 
-#include "LauncherClientPage.h"
+#include "ContentPage.h"
 #include "Config.h"
 #include "frontend/Profile.h"
 #include <vector>
@@ -33,6 +33,7 @@ namespace tools
 }
 
 class Application;
+class ExerciseContainer;
 class ExerciseList;
 class ProgressPage;
 class DebugConfigPanel;
@@ -43,7 +44,7 @@ class DebugConfigPanel;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class ScenarioLauncherPage : public LauncherClientPage
+class ScenarioLauncherPage : public ContentPage
 {
     Q_OBJECT;
 
@@ -54,7 +55,7 @@ public:
                                    Page_ABC& previous, kernel::Controllers& controllers,
                                    const Config& config,
                                    const tools::Loader_ABC& fileLoader,
-                                   frontend::LauncherClient& launcher );
+                                   ExerciseContainer& exercises );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -94,6 +95,7 @@ private:
     const Config&                 config_;
     const tools::Loader_ABC&      fileLoader_;
     kernel::Controllers&          controllers_;
+    ExerciseContainer&            exerciseContainer_;
     ProgressPage*                 progressPage_;
     ExerciseList*                 exercises_;
     const frontend::Exercise_ABC* exercise_;

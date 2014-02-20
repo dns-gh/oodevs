@@ -12,11 +12,6 @@
 
 #include "clients_gui/Application_ABC.h"
 
-namespace frontend
-{
-    class LauncherClient;
-}
-
 namespace gui
 {
     class ApplicationMonitor;
@@ -34,7 +29,7 @@ namespace tools
 }
 
 class Config;
-class Launcher;
+class ExerciseContainer;
 class QMainWindow;
 
 // =============================================================================
@@ -62,7 +57,6 @@ public:
 
     //! @name Accessors
     //@{
-    Launcher& GetLauncher() const;
     QWidget* GetMainWindow();
     //@}
 
@@ -74,7 +68,6 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnTimer();
     void OnWaitCursorTimeout();
     //@}
 
@@ -91,9 +84,7 @@ private:
     std::auto_ptr< tools::RealFileLoaderObserver_ABC >  fileLoaderObserver_;
     std::auto_ptr< tools::Loader_ABC >                  fileLoader_;
     std::auto_ptr< kernel::Controllers >                controllers_;
-    std::auto_ptr< Launcher >                           launcher_;
-    std::auto_ptr< frontend::LauncherClient >           launcherClient_;
-    std::auto_ptr< QTimer >                             timer_;
+    std::auto_ptr< ExerciseContainer>                   exercises_;
     QMainWindow*                                        mainWindow_;
 
     std::auto_ptr< QTimer > cursorTimer_;

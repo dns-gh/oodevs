@@ -11,6 +11,7 @@
 #include "ReplayPage.h"
 #include "moc_ReplayPage.cpp"
 
+#include "ExerciseContainer.h"
 #include "ExerciseList.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
@@ -34,11 +35,12 @@
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
-    : LauncherClientPage( pages, previous, eButtonBack | eButtonStart, launcher )
+ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises )
+    : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_( config )
     , fileLoader_( fileLoader )
     , controllers_( controllers )
+    , exerciseContainer_( exercises )
     , progressPage_( new ProgressPage( app, pages, *this ) )
 {
     //Main Window
@@ -79,7 +81,7 @@ void ReplayPage::OnLanguageChanged()
 {
     SetTitle( tools::translate( "ReplayPage", "Replay" ) );
     progressPage_->SetTitle( tools::translate( "ReplayPage", "Starting replay session" ) );
-    LauncherClientPage::OnLanguageChanged();
+    ContentPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +91,7 @@ void ReplayPage::OnLanguageChanged()
 void ReplayPage::Update()
 {
     exercises_->Clear();
-    Connect( "localhost", config_.GetLauncherPort() );
+    exerciseContainer_.Refresh();
 }
 
 // -----------------------------------------------------------------------------

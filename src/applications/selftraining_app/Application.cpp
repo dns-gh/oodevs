@@ -11,7 +11,7 @@
 #include "Application.h"
 #include "moc_Application.cpp"
 #include "Config.h"
-#include "Launcher.h"
+#include "ExerciseContainer.h"
 #include "MainWindow.h"
 #include "MessageDialog.h"
 #include "ProgressPage.h"
@@ -19,7 +19,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/LanguageController.h"
 #include "clients_kernel/Tools.h"
-#include "frontend/LauncherClient.h"
 #include "frontend/ProcessList.h"
 #include "tools/NullFileLoaderObserver.h"
 #include "tools/DefaultLoader.h"
@@ -46,15 +45,12 @@ Application::Application( gui::ApplicationMonitor& monitor, int argc, char** arg
     fileLoaderObserver_.reset( new tools::NullFileLoaderObserver() );
     fileLoader_.reset( new tools::DefaultLoader( *fileLoaderObserver_ ) );
     controllers_.reset( new kernel::Controllers() );
-    launcher_.reset( new Launcher( argc, argv ) );
-    launcherClient_.reset( new frontend::LauncherClient( controllers_->controller_ ) );
-    timer_.reset( new QTimer( this ) );
-    connect( timer_.get(), SIGNAL( timeout() ), SLOT( OnTimer() ) );
+    exercises_.reset( new ExerciseContainer( *config_, controllers_->controller_ ));
     cursorTimer_.reset( new QTimer( this ) );
     connect( cursorTimer_.get(), SIGNAL( timeout() ), SLOT( OnWaitCursorTimeout() ) );
 
     // GUI
-    mainWindow_ = new MainWindow( *this, *config_, *fileLoader_, *controllers_, *launcherClient_ );
+    mainWindow_ = new MainWindow( *this, *config_, *fileLoader_, *controllers_, *exercises_ );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
     controllers_->languages_.Register( *this );
 }
@@ -66,10 +62,6 @@ Application::Application( gui::ApplicationMonitor& monitor, int argc, char** arg
 Application::~Application()
 {
     controllers_->languages_.Unregister( *this );
-    launcher_.reset();
-    if( timer_.get() )
-        timer_->stop();
-    launcherClient_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -101,15 +93,8 @@ void Application::InitializeStyle()
 // -----------------------------------------------------------------------------
 int Application::Run()
 {
-    if( !launcher_->IsInitialized() )
-    {
-        QMessageBox::critical( mainWindow_, tools::translate( "Application", "Error" ), tools::translate( "Application", "Launcher service cannot be started: %1."  ).arg( launcher_->GetLastError().c_str() ) );
-        return EXIT_FAILURE;
-    }
-
     mainWindow_->show();
     QCoreApplication::sendEvent( mainWindow_, new QEvent( QEvent::LanguageChange ) );
-    timer_->start( 10 );
 
     if( !config_->IsTestMode() )
     {
@@ -138,15 +123,6 @@ void Application::SetWaitingCursor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Application::OnTimer
-// Created: SBO 2010-11-04
-// -----------------------------------------------------------------------------
-void Application::OnTimer()
-{
-    launcherClient_->Update();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Application::OnWaitCursorTimeout
 // Created: JSR 2014-02-21
 // -----------------------------------------------------------------------------
@@ -155,16 +131,6 @@ void Application::OnWaitCursorTimeout()
     if( waitCursor_ )
         qApp->restoreOverrideCursor();
     waitCursor_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application::GetLauncher
-// Created: ABR 2012-07-12
-// -----------------------------------------------------------------------------
-Launcher& Application::GetLauncher() const
-{
-    assert( launcher_.get() );
-    return *launcher_;
 }
 
 // -----------------------------------------------------------------------------

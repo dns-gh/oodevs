@@ -12,6 +12,7 @@
 #include "moc_ScenarioLauncherPage.cpp"
 #include "DebugConfigPanel.h"
 #include "OrbatConfigPanel.h"
+#include "ExerciseContainer.h"
 #include "ExerciseList.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
@@ -100,13 +101,14 @@ namespace
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages, Page_ABC& previous,
-                                            kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader,
-                                            frontend::LauncherClient& launcher )
-    : LauncherClientPage( pages, previous, eButtonBack | eButtonStart, launcher )
+ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages,
+        Page_ABC& previous, kernel::Controllers& controllers, const Config& config,
+        const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises )
+    : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
     , controllers_      ( controllers )
+    , exerciseContainer_( exercises )
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
     , hasClient_        ( !registry::ReadBool( "NoClientSelected" ) )
@@ -214,7 +216,7 @@ void ScenarioLauncherPage::OnLanguageChanged()
     for( int i = 0; i < configTabs_->count() && i < static_cast< int >( plugins_.size()); ++i )
         if( plugins_[ i ]->IsVisible() )
             configTabs_->setTabText( i, plugins_[ i ]->GetName() );
-    LauncherClientPage::OnLanguageChanged();
+    ContentPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +226,7 @@ void ScenarioLauncherPage::OnLanguageChanged()
 void ScenarioLauncherPage::Update()
 {
     exercises_->Clear();
-    Connect( "localhost", config_.GetLauncherPort() );
+    exerciseContainer_.Refresh();
 }
 
 // -----------------------------------------------------------------------------

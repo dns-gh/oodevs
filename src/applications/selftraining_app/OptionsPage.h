@@ -10,18 +10,14 @@
 #ifndef __OptionsPage_h_
 #define __OptionsPage_h_
 
-#include "LauncherClientPage.h"
+#include "ContentPage.h"
 
 class Application;
 class Config;
 class DataWidget;
-class ImportWidget;
+class ExerciseContainer;
 class ExportWidget;
-
-namespace frontend
-{
-    class LauncherClient;
-}
+class ImportWidget;
 
 namespace tools
 {
@@ -39,7 +35,7 @@ namespace kernel
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class OptionsPage : public LauncherClientPage
+class OptionsPage : public ContentPage
 {
     Q_OBJECT;
 
@@ -47,9 +43,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              OptionsPage( Application& app, QWidget* parent, QStackedWidget* pages,
-                          Page_ABC& previous, Config& config,
-                          const tools::Loader_ABC& loader, kernel::Controllers& controllers,
-                          frontend::LauncherClient& launcher );
+                  Page_ABC& previous, Config& config,
+                  const tools::Loader_ABC& loader, kernel::Controllers& controllers,
+                  ExerciseContainer& exercises );
     virtual ~OptionsPage();
     //@}
 
@@ -112,6 +108,7 @@ private:
     Config&                  config_;
     const tools::Loader_ABC& loader_;
     kernel::Controllers&     controllers_;
+    ExerciseContainer&       exercises_;
     //@}
 
     //! @name Settings tab

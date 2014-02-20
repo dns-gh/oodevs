@@ -616,7 +616,7 @@ target_link_libraries( preparation_app
 add_target( selftraining_app clients "applications/selftraining_app" OPTIONS qt3 qt executable )
 target_link_libraries( selftraining_app
     clients_gui
-    launcher_dll
+    frontend
 )
 
 # adaptation_app

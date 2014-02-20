@@ -11,6 +11,7 @@
 #include "ScenarioJoinPage.h"
 #include "moc_ScenarioJoinPage.cpp"
 #include "Config.h"
+#include "ExerciseContainer.h"
 #include "ExerciseList.h"
 #include "ProgressPage.h"
 #include "ProcessDialogs.h"
@@ -27,9 +28,10 @@
 // Name: ScenarioJoinPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
-    : LauncherClientPage( pages, previous, eButtonBack | eButtonJoin, launcher )
+ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, ExerciseContainer& exercises )
+    : ContentPage( pages, previous, eButtonBack | eButtonJoin )
     , controllers_      ( controllers )
+    , exerciseContainer_( exercises )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
@@ -124,7 +126,7 @@ void ScenarioJoinPage::OnLanguageChanged()
     mapnik_->setText(        tools::translate( "ScenarioJoinPage", "Enable Mapnik" ) );
     oldTimeline_->setText(   tools::translate( "ScenarioJoinPage", "Enable Legacy Timeline" ) );
 
-    LauncherClientPage::OnLanguageChanged();
+    ContentPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +136,7 @@ void ScenarioJoinPage::OnLanguageChanged()
 void ScenarioJoinPage::Update()
 {
     exercises_->Clear();
-    Connect( "localhost", config_.GetLauncherPort() );
+    exerciseContainer_.Refresh();
 }
 
 // -----------------------------------------------------------------------------

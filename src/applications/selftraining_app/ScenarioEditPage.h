@@ -10,7 +10,7 @@
 #ifndef __ScenarioEditPage_h_
 #define __ScenarioEditPage_h_
 
-#include "LauncherClientPage.h"
+#include "ContentPage.h"
 
 namespace frontend
 {
@@ -30,6 +30,7 @@ namespace tools
 
 class Application;
 class CreateExerciceWidget;
+class ExerciseContainer;
 class ExerciseList;
 class ProgressPage;
 
@@ -39,7 +40,7 @@ class ProgressPage;
 */
 // Created: RDS 2008-09-09
 // =============================================================================
-class ScenarioEditPage : public LauncherClientPage
+class ScenarioEditPage : public ContentPage
 {
     Q_OBJECT;
 
@@ -50,7 +51,7 @@ public:
                                Page_ABC& previous, const frontend::Config& config,
                                const tools::Loader_ABC& fileLoader,
                                kernel::Controllers& controllers,
-                               frontend::LauncherClient& launcher );
+                               ExerciseContainer& exerciseContainer );
     virtual ~ScenarioEditPage();
     //@}
 
@@ -100,6 +101,7 @@ private:
     const frontend::Exercise_ABC* exercise_;
     QTabWidget* mainTabs_;
     CreateExerciceWidget* createExerciceWidget_;
+    ExerciseContainer& exerciseContainer_;
     //@}
 };
 

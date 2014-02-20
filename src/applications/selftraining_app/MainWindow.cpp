@@ -25,7 +25,7 @@
 // Name: MainWindow constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient )
+MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, ExerciseContainer& exercises )
     : gui::WidgetLanguageObserver_ABC< QMainWindow >()
     , sessionTray_( 0 )
 {
@@ -35,7 +35,7 @@ MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_AB
     setFixedHeight( 600 );
     SetStyle();
     pages_ = new QStackedWidget( this );
-    HomePage* home = new HomePage( app, this, pages_, config, fileLoader, controllers, launcherClient );
+    HomePage* home = new HomePage( app, this, pages_, config, fileLoader, controllers, exercises );
     pages_->setCurrentWidget( home );
     setCentralWidget( pages_ );
     CenterWindow();

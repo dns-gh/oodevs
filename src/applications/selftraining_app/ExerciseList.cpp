@@ -17,11 +17,6 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 
-namespace
-{
-    static int clearEvent = 4242;
-}
-
 namespace frontend
 {
     Exercise_ABC;
@@ -162,21 +157,9 @@ void ExerciseList::SelectProfile( const frontend::Profile& profile )
 void ExerciseList::Clear()
 {
     emit ClearSelection();
-    QApplication::postEvent( this, new QEvent( static_cast< QEvent::Type >( ::clearEvent ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseList::customEvent
-// Created: SBO 2008-11-05
-// -----------------------------------------------------------------------------
-void ExerciseList::customEvent( QEvent* e )
-{
-    if( e->type() == ::clearEvent )
-    {
-        profiles_->clear();
-        exercises_->Clear();
-        properties_->Update();
-    }
+    profiles_->clear();
+    exercises_->Clear();
+    properties_->Update();
 }
 
 // -----------------------------------------------------------------------------

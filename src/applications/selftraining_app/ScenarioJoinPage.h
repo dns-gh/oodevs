@@ -10,7 +10,7 @@
 #ifndef __ScenarioJoinPage_h_
 #define __ScenarioJoinPage_h_
 
-#include "LauncherClientPage.h"
+#include "ContentPage.h"
 
 namespace frontend
 {
@@ -29,6 +29,7 @@ namespace tools
 
 class Application;
 class Config;
+class ExerciseContainer;
 class ExerciseList;
 class ProgressPage;
 class QSpinBox;
@@ -39,7 +40,7 @@ class QSpinBox;
 */
 // Created: SBO 2008-10-14
 // =============================================================================
-class ScenarioJoinPage : public LauncherClientPage
+class ScenarioJoinPage : public ContentPage
 {
     Q_OBJECT;
 
@@ -49,7 +50,7 @@ public:
              ScenarioJoinPage( Application& app, QStackedWidget* pages,
                                Page_ABC& previous, kernel::Controllers& controllers,
                                const Config& config, const tools::Loader_ABC& fileLoader,
-                               frontend::LauncherClient& launcher );
+                               ExerciseContainer& exercises );
     virtual ~ScenarioJoinPage();
     //@}
 
@@ -72,6 +73,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    ExerciseContainer& exerciseContainer_;
     const Config& config_;
     const tools::Loader_ABC& fileLoader_;
     QTabWidget* tabs_;
