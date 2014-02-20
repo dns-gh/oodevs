@@ -46,6 +46,7 @@ class MIL_BurningCells;
 class MIL_Config;
 class MIL_UrbanCache;
 class MIL_ObjectFactory;
+class MagicOrderManager_ABC;
 
 // If filePath exists, returns the largest identifier referenced in expressions
 // such as id="\d+". Returns 0 otherwise.
@@ -114,6 +115,7 @@ public:
     MIL_BurningCells& GetBurningCells() const;
     tools::ExerciseSettings& GetSettings() const;
     MIL_ObjectFactory& GetObjectFactory() const;
+    MagicOrderManager_ABC& GetMagicOrderManager() const;
     //@}
 
     //! @name Workspace management
@@ -213,6 +215,7 @@ private:
     // loop.
     bool updateState_;
     //@}
+    std::unique_ptr< MagicOrderManager_ABC > magicOrders_;
 
 private:
     static MIL_AgentServer* pTheAgentServer_;

@@ -18,6 +18,8 @@
 #include "FormationFactory.h"
 #include "InhabitantFactory.h"
 #include "KnowledgesVisitor_ABC.h"
+#include "MagicOrderManager_ABC.h"
+#include "MIL_AgentServer.h"
 #include "MIL_Army.h"
 #include "MIL_EntityManagerStaticMethods.h"
 #include "MIL_Formation.h"
@@ -95,7 +97,6 @@
 #include "Knowledge/KnowledgeGroupFactory.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
-#include "MIL_AgentServer.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -1066,13 +1067,16 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
 void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::UnitMagicActionAck ack;
-
+    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
+    const auto magicId = magics.Register( message );
+    ack().set_id( magicId );
     const auto tasker = protocol::TryGetTasker( message.tasker() );
     if( !tasker )
     {
         ack().mutable_unit()->set_id( 0 );
         ack().set_error_code( UnitActionAck::error_invalid_unit );
         ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+        magics.Send( magicId );
         return;
     }
     const auto id = *tasker;
@@ -1209,6 +1213,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
         ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    magics.Send( magicId );
 }
 
 // -----------------------------------------------------------------------------
@@ -1439,7 +1444,10 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
+    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
+    const auto magicId = magics.Register( message );
     client::KnowledgeGroupMagicActionAck ack;
+    ack().set_id( magicId );
     ack().mutable_knowledge_group()->set_id( message.knowledge_group().id() );
     ack().set_error_code( KnowledgeGroupAck::no_error );
     try
@@ -1460,6 +1468,7 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
         ack().set_error_msg( e.what() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    magics.Send( magicId );
 }
 
 // -----------------------------------------------------------------------------
@@ -1550,7 +1559,10 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message, unsigned int nCtx, unsigned int clientId )
 {
+    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
+    const auto magicId = magics.Register( message );
     client::SetAutomatModeAck ack;
+    ack().set_id( magicId );
     ack().mutable_automate()->set_id( message.automate().id() );
     ack().set_error_code( SetAutomatModeAck::no_error );
     try
@@ -1565,6 +1577,7 @@ void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message,
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    magics.Send( magicId );
 }
 
 // -----------------------------------------------------------------------------
@@ -1595,7 +1608,10 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest&
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    pObjectManager_->OnReceiveObjectMagicAction( message, nCtx, clientId, *armyFactory_, *pFloodModel_ );
+    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
+    const auto magicId = magics.Register( message );
+    pObjectManager_->OnReceiveObjectMagicAction( message, nCtx, clientId, magicId, *armyFactory_, *pFloodModel_ );
+    magics.Send( magicId );
 }
 
 // -----------------------------------------------------------------------------
