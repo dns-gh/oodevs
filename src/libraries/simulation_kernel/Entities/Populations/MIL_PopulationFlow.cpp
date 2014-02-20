@@ -45,29 +45,42 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationFlow )
 
 MIL_IDManager MIL_PopulationFlow::idManager_;
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const MIL_PopulationFlow* flow, const unsigned int /*version*/ )
-{
-    MIL_Population* const pPopulation = &flow->GetPopulation();
-    unsigned int nID = flow->GetID();
-    archive << pPopulation << nID;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, MIL_PopulationFlow* flow, const unsigned int /*version*/ )
-{
-    MIL_Population* pPopulation;
-    unsigned int nID;
-    archive >> pPopulation >> nID;
-    ::new( flow )MIL_PopulationFlow( *pPopulation, nID);
-}
-
 namespace
 {
     MIL_FlowCollisionManager& GetFlowCollisionManager()
     {
         return MIL_AgentServer::GetWorkspace().GetEntityManager().GetFlowCollisionManager();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow constructor
+// Created: JSR 2014-02-20
+// -----------------------------------------------------------------------------
+MIL_PopulationFlow::MIL_PopulationFlow()
+    : MIL_PopulationElement_ABC()
+    , pSourceConcentration_( 0 )
+    , pDestConcentration_( 0 )
+    , direction_( 0., 1. )
+    , rSpeed_( 0. )
+    , rWalkedDistance_( 0 )
+    , bHeadMoveFinished_( false )
+    , bPathUpdated_( true )
+    , bFlowShapeUpdated_( true )
+    , bDirectionUpdated_( true )
+    , bSpeedUpdated_( true )
+    , bBlocked_( false )
+    , pSplittingObject_( 0 )
+    , pBlockingObject_( 0 )
+    , pFirstSplittingObject_( 0 )
+    , personsPassedThroughObject_( 0 )
+    , armedIndividualsBeforeSplit_( 0 )
+    , objectDensity_( 1. )
+    , canCollideWithFlow_( false )
+    , hasDoneMagicMove_( false )
+    , speedLimit_( std::numeric_limits< double >::max() )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -142,36 +155,6 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     SetAttitude( source.GetAttitude() );
     UpdateLocation();
     SendCreation();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow constructor
-// Created: SBO 2005-10-18
-// -----------------------------------------------------------------------------
-MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, unsigned int nID )
-    : MIL_PopulationElement_ABC( population, nID )
-    , pSourceConcentration_       ( 0 )
-    , pDestConcentration_         ( 0 )
-    , direction_                  ( 0., 1. )
-    , rSpeed_                     ( 0. )
-    , rWalkedDistance_            ( 0 )
-    , bHeadMoveFinished_          ( false )
-    , bPathUpdated_               ( true )
-    , bFlowShapeUpdated_          ( true )
-    , bDirectionUpdated_          ( true )
-    , bSpeedUpdated_              ( true )
-    , bBlocked_                   ( false )
-    , pSplittingObject_           ( 0 )
-    , pBlockingObject_            ( 0 )
-    , pFirstSplittingObject_      ( 0 )
-    , personsPassedThroughObject_ ( 0 )
-    , armedIndividualsBeforeSplit_( 0 )
-    , objectDensity_              ( 1. )
-    , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
-    , hasDoneMagicMove_( false )
-    , speedLimit_( std::numeric_limits< double >::max() )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1033,6 +1016,7 @@ void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const unsigned int
          >> flowShape_
          >> direction_
          >> rSpeed_;
+    canCollideWithFlow_ = GetPopulation().GetType().CanCollideWithFlow();
     idManager_.GetId( MIL_PopulationElement_ABC::GetID(), true );
     UpdateLocation();
 }

@@ -30,6 +30,7 @@ class MIL_PopulationFlow : public PHY_MovingEntity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_PopulationFlow();
              MIL_PopulationFlow( MIL_Population& population, const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint );
              MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration );
     virtual ~MIL_PopulationFlow();
@@ -88,9 +89,6 @@ public:
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-
-protected:
-    MIL_PopulationFlow( MIL_Population& population, unsigned int nID );
 
 private:
     //! @name Types
@@ -154,12 +152,6 @@ private:
     void ComputePathAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& headDestination, const std::vector< boost::shared_ptr< MT_Vector2D > >& tailDestination );
     void DetachFromDestConcentration();
     T_FlowShape::const_iterator FindPointInShape( const MT_Vector2D& v ) const;
-    //@}
-
-    //! @name Serialization
-    //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_PopulationFlow* flow, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_PopulationFlow* flow, const unsigned int /*version*/ );
     //@}
 
     //! @name Network

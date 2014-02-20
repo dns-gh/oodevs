@@ -34,21 +34,19 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationConcentration )
 
 MIL_IDManager MIL_PopulationConcentration::idManager_;
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const MIL_PopulationConcentration* concentration, const unsigned int /*version*/ )
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration constructor
+// Created: JSR 2014-02-20
+// -----------------------------------------------------------------------------
+MIL_PopulationConcentration::MIL_PopulationConcentration()
+    : MIL_PopulationElement_ABC()
+    , TER_PopulationConcentration_ABC()
+    , pPullingFlow_( 0 )
+    , pSplittingObject_( 0 )
+    , hasDoneMagicMove_( false )
+    , rPullingFlowsDensity_( 0 )
 {
-    MIL_Population* const pPopulation = &concentration->GetPopulation();
-    unsigned int nID = concentration->GetID();
-    archive << pPopulation << nID;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, MIL_PopulationConcentration* concentration, const unsigned int /*version*/ )
-{
-    MIL_Population* pPopulation;
-    unsigned int nID;
-    archive >> pPopulation >> nID;
-    ::new( concentration )MIL_PopulationConcentration( *pPopulation, nID );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,8 +56,8 @@ void load_construct_data( Archive& archive, MIL_PopulationConcentration* concent
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, unsigned int id )
     : MIL_PopulationElement_ABC( population, id )
     , TER_PopulationConcentration_ABC()
-    , pPullingFlow_        ( 0 )
-    , pSplittingObject_    ( 0 )
+    , pPullingFlow_( 0 )
+    , pSplittingObject_( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
 {
