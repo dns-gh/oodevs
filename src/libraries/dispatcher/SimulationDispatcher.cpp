@@ -11,6 +11,7 @@
 #include "SimulationDispatcher.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
+#include "MT_Tools/MT_Logger.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "ReplaySynchronisations.h"
@@ -70,6 +71,11 @@ bool SimulationDispatcher::IsDestruction( const sword::SimToClient& wrapper ) co
 // -----------------------------------------------------------------------------
 void SimulationDispatcher::Receive( const sword::SimToClient& wrapper )
 {
+    if( asnMsg.message().has_control_begin_tick() )
+    {
+        int currentTick = asnMsg.message().control_begin_tick().current_tick();
+        MT_LOG_INFO_MSG( "New tick : " << currentTick ? currentTick : 2 );
+    }
     if( !synching_ || IsDestruction( wrapper )
         || ( wrapper.message().has_control_begin_tick() && wrapper.message().control_begin_tick().current_tick() == 0 )
         || ( wrapper.message().has_control_end_tick() && wrapper.message().control_end_tick().current_tick() == 0 ) )
