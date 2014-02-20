@@ -471,6 +471,16 @@ void MIL_Population::UpdateDecision( float duration )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::UpdateCrowdCollisions
+// Created: JSR 2014-02-19
+// -----------------------------------------------------------------------------
+void MIL_Population::UpdateCrowdCollisions()
+{
+    for( auto itFlow = flows_.cbegin(); itFlow != flows_.end(); ++itFlow )
+        ( *itFlow )->UpdateCrowdCollisions();
+}
+
 namespace
 {
     template< typename T >
