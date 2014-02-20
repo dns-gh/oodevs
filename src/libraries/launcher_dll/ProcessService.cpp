@@ -231,36 +231,6 @@ void ProcessService::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProcessService::ChangeParameter
-// Created: AHC 2011-05-20
-// -----------------------------------------------------------------------------
-void ProcessService::ChangeParameter( const std::string& endpoint, const sword::SessionParameterChangeRequest& message )
-{
-    const tools::Path exercise = tools::Path::FromUTF8( message.exercise() );
-    const tools::Path session = tools::Path::FromUTF8( message.session() );
-    auto it = processes_.find( std::make_pair( exercise, session ) );
-    static int context = 1;
-    if( processes_.end() == it )
-        return SendErrorMessage< SessionParameterChangeResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::SessionParameterChangeResponse::invalid_session_name );
-    if( !it->second->IsConnected() )
-        return SendErrorMessage< SessionParameterChangeResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::SessionParameterChangeResponse::session_not_running );
-
-    boost::shared_ptr< SwordFacade > client( it->second );
-    if( message.has_acceleration_factor() )
-    {
-        simulation::ControlChangeTimeFactor request;
-        request().set_time_factor( message.acceleration_factor() );
-        request.Send( *client, 0 );
-    }
-    if( message.has_checkpoint_frequency() )
-    {
-        simulation::ControlCheckPointSetFrequency request;
-        request().set_frequency( message.checkpoint_frequency() );
-        request.Send( *client, 0 );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: ProcessService::SendSessionsStatuses
 // Created: RPD 2011-09-12
 // -----------------------------------------------------------------------------

@@ -82,15 +82,6 @@ void RemoteHost::Handle( const sword::SessionNotification& /*message*/ )
 // Name: RemoteHost::Handle
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::SessionParameterChangeResponse& /*message*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::Handle
-// Created: LGY 2011-05-23
-// -----------------------------------------------------------------------------
 void RemoteHost::Handle( const sword::SessionStatus& message )
 {
     auto it = exercises_.find( tools::Path::FromUTF8( message.exercise() ) );

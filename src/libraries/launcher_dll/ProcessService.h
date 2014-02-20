@@ -59,7 +59,6 @@ public:
     void RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const tools::Path::T_Paths& checkpoints,
                            const tools::Path& exercice, const tools::Path& session );
     bool IsRunning( const tools::Path& exercise, const tools::Path& session ) const;
-    void ChangeParameter( const std::string& endpoint, const sword::SessionParameterChangeRequest& message );
     void SendSessionsStatuses( const std::string& endpoint );
     virtual void NotifyStopped();
     virtual void NotifyError( const std::string& error, const std::string& commanderEndpoint = "" );

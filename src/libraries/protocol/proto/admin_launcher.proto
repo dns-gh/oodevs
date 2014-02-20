@@ -44,20 +44,6 @@ message SessionParameter {
     required string value = 2;
 }
 
-/** @struct SessionParameterChangeRequest
-    @brief change session parameters
-*/
-message SessionParameterChangeRequest {
-    //! exercise to change parameter from
-    required string exercise             = 1;
-    //! session to change parameter from
-    required string session              = 2 [ default = "default" ];
-    //! if set, change checkpoint frequency
-    optional uint32 checkpoint_frequency = 3;
-    //! if set, change acceleration factor
-    optional uint32 acceleration_factor  = 4;
-}
-
 /** @struct CheckpointListRequest
     @brief retrieve list of checkpoints for a given exercise/session
 */
@@ -101,8 +87,6 @@ message AdminToLauncher {
         optional ConnectionRequest          connection_request        = 1;
         optional ExerciseListRequest        exercise_list_request     = 4;
         optional SessionListRequest         session_list_request      = 5;
-        optional SessionParameterChangeRequest
-            session_parameter_change_request  = 8;
         optional CheckpointListRequest      checkpoint_list_request   = 10;
         optional CheckpointDeleteRequest    checkpoint_delete_request = 11;
         optional SessionNotificationRequest session_notification      = 12;

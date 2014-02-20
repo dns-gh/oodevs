@@ -45,7 +45,6 @@ public:
     virtual void Handle( const sword::ExerciseListResponse& message ) = 0;
     virtual void Handle( const sword::SessionListResponse& message ) = 0;
     virtual void Handle( const sword::SessionNotification& message ) = 0;
-    virtual void Handle( const sword::SessionParameterChangeResponse& message ) = 0;
     virtual void Handle( const sword::SessionStatus& message ) = 0;
     virtual void Handle( const sword::CheckpointListResponse& message ) = 0;
     virtual void Handle( const sword::CheckpointDeleteResponse& message ) = 0;

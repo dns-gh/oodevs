@@ -153,8 +153,6 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, con
         responseHandler_->Handle( message.message().exercise_list_response() );
     else if( message.message().has_session_notification() )
         responseHandler_->Handle( message.message().session_notification() );
-    else if( message.message().has_session_parameter_change_response() )
-        responseHandler_->Handle( message.message().session_parameter_change_response() );
     else if( message.message().has_session_status() )
         responseHandler_->Handle( message.message().session_status() );
     else if( message.message().has_session_list_response() )
