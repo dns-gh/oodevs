@@ -19,14 +19,12 @@ namespace launcher
 
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, ConnectionRequest   , connection_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, ExerciseListRequest, exercise_list_request )
-    GENERATE_MESSAGE( sword::AdminToLauncher, sword, SessionListRequest , session_list_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, CheckpointListRequest , checkpoint_list_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, CheckpointDeleteRequest , checkpoint_delete_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, SessionNotificationRequest , session_notification )
 
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ConnectionResponse          , connection_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ExerciseListResponse  , exercise_list_response )
-    GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionListResponse, session_list_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionStatus , session_status )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, CheckpointListResponse , checkpoint_list_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, CheckpointDeleteResponse , checkpoint_delete_response )

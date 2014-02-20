@@ -65,8 +65,6 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const sword::
         HandleRequest( endpoint, message.message().connection_request() );
     else if( message.message().has_exercise_list_request() )
         HandleRequest( endpoint, message.message().exercise_list_request() );
-    else if( message.message().has_session_list_request() )
-        HandleRequest( endpoint, message.message().session_list_request() );
     else if( message.message().has_checkpoint_list_request() )
         HandleRequest( endpoint, message.message().checkpoint_list_request() );
     else if( message.message().has_checkpoint_delete_request() )
@@ -99,19 +97,6 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Exercise
     processes_->SendExerciseList( response() );
     response.Send( server_->ResolveClient( endpoint ) );
     processes_->SendRunningExercices( endpoint );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Launcher::HandleRequest
-// Created: AHC 2011-05-12
-// -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionListRequest& message )
-{
-    SessionListResponse response;
-    response().set_exercise( message.exercise() );
-    processes_->SendSessionList( response() );
-    response().set_error_code( sword::SessionListResponse::success );
-    response.Send( server_->ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------

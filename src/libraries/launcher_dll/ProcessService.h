@@ -54,7 +54,6 @@ public:
     //! @name Operations
     //@{
     void SendExerciseList( sword::ExerciseListResponse& message );
-    void SendSessionList( sword::SessionListResponse& message );
     void SendCheckpointList( sword::CheckpointListResponse& message, const tools::Path& exercice, const tools::Path& session );
     void RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const tools::Path::T_Paths& checkpoints,
                            const tools::Path& exercice, const tools::Path& session );

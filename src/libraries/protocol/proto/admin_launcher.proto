@@ -31,14 +31,6 @@ message ConnectionRequest {
 */
 message ExerciseListRequest {}
 
-/** @struct SessionListRequest
-    @brief retrieve session list for an exercise
-*/
-message SessionListRequest {
-    //! exercise from which to list sessions
-    required string exercise = 1;
-}
-
 message SessionParameter {
     required string key   = 1;
     required string value = 2;
@@ -86,7 +78,6 @@ message AdminToLauncher {
     message Content {
         optional ConnectionRequest          connection_request        = 1;
         optional ExerciseListRequest        exercise_list_request     = 4;
-        optional SessionListRequest         session_list_request      = 5;
         optional CheckpointListRequest      checkpoint_list_request   = 10;
         optional CheckpointDeleteRequest    checkpoint_delete_request = 11;
         optional SessionNotificationRequest session_notification      = 12;

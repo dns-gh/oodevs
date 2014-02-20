@@ -73,20 +73,6 @@ void ProcessService::SendExerciseList( sword::ExerciseListResponse& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProcessService::SendSessionList
-// Created: SBO 2010-09-30
-// -----------------------------------------------------------------------------
-void ProcessService::SendSessionList( sword::SessionListResponse& message )
-{
-    for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
-    {
-        const std::pair< tools::Path, tools::Path >& key = it->first;
-        if( key.first.ToUTF8() == message.exercise() )
-            message.add_session( key.second.ToUTF8() );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: ProcessService::SendRunningExercices
 // Created: SLI 2011-07-22
 // -----------------------------------------------------------------------------

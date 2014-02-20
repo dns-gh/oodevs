@@ -88,15 +88,6 @@ void ResponseHandlerProxy::Handle( const sword::SessionStatus& message )
 // Name: ResponseHandlerProxy::Handle
 // Created: AHC 2011-05-30
 // -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const sword::SessionListResponse& message )
-{
-    UpdateHandlers( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResponseHandlerProxy::Handle
-// Created: AHC 2011-05-30
-// -----------------------------------------------------------------------------
 void ResponseHandlerProxy::Handle( const sword::CheckpointListResponse& message )
 {
     UpdateHandlers( message );

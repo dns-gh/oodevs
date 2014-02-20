@@ -43,24 +43,6 @@ message ExerciseListResponse {
     repeated string exercise = 1;
 }
 
-/** @struct SessionListResponse
-    @brief response to session list request
-*/
-message SessionListResponse {
-    enum ErrorCode {
-        //! connected profiles successfully listed
-        success                 = 0;
-        //! the specified exercise name could not be found
-        invalid_exercise_name   = 1;
-    }
-    //! operation return code
-    required ErrorCode error_code = 1 [ default = success ];
-    //! exercise from which sessions are listed
-    required string    exercise   = 2;
-    //! list of session names
-    repeated string    session    = 3;
-}
-
 /** @struct SessionStatus
     @brief pushed session status
 */
@@ -182,7 +164,6 @@ message LauncherToAdmin {
     message Content {
         optional ConnectionResponse           connection_response        = 1;
         optional ExerciseListResponse         exercise_list_response     = 2;
-        optional SessionListResponse          session_list_response      = 3;
         optional SessionStatus                session_status             = 9;
         optional CheckpointListResponse       checkpoint_list_response   = 12;
         optional CheckpointDeleteResponse     checkpoint_delete_response = 13;

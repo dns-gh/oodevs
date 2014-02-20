@@ -93,15 +93,6 @@ void RemoteHost::Handle( const sword::SessionStatus& message )
 // Name: RemoteHost::Handle
 // Created: AHC 2011-05-30
 // -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::SessionListResponse& /*message*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteHost::Handle
-// Created: AHC 2011-05-30
-// -----------------------------------------------------------------------------
 void RemoteHost::Handle( const sword::CheckpointListResponse& /*message*/ )
 {
     // NOTHING

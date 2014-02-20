@@ -15,7 +15,6 @@
 namespace sword
 {
     class ExerciseListResponse;
-    class SessionListResponse;
     class SessionNotification;
     class SessionParameterChangeResponse;
     class SessionStatus;
@@ -43,7 +42,6 @@ public:
     //! @name Operations
     //@{
     virtual void Handle( const sword::ExerciseListResponse& message ) = 0;
-    virtual void Handle( const sword::SessionListResponse& message ) = 0;
     virtual void Handle( const sword::SessionNotification& message ) = 0;
     virtual void Handle( const sword::SessionStatus& message ) = 0;
     virtual void Handle( const sword::CheckpointListResponse& message ) = 0;
