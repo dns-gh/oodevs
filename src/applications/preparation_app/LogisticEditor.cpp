@@ -120,9 +120,10 @@ void LogisticEditor::NotifyUpdated( const ModelLoaded& )
         item->setText( logClass.GetName().c_str() );
         dataModel_->setItem( row, eCategory, item );
 
+        const double defaultValue = 1.;
         item = new QStandardItem();
         item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable );
-        item->setData( QVariant( 1 ), Qt::EditRole ); // default value : 1
+        item->setText( locale().toString( defaultValue, 'f', 2 ) );
         dataModel_->setItem( row, eDays, item );
         ++row;
     }
