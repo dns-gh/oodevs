@@ -29,10 +29,10 @@
 #include "gaming/LogMaintenanceConsign.h"
 #include "protocol/Protocol.h"
 
-#define TIMEOUT_MS 10000
-
 namespace
 {
+    const int acknowledgeTimeout = 10000;
+
     QAbstractButton* AddRadioButton( const QString& objectName,
                                      const QString& title,
                                      QObject* parent )
@@ -77,7 +77,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     , componentType_( 0 )
     , breakdownType_( 0 )
 {
-    resize( 400, 400 );
+    resize( 500, 400 );
 
     // Radio buttons
     automaticButton_ = AddRadioButton( "automated_selection_button_automatic", tr( "Resolve automatically" ), this );
@@ -136,7 +136,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     mainLayout->addLayout( bottomLayout );
     setLayout( mainLayout );
 
-    timeout_.setInterval( TIMEOUT_MS );
+    timeout_.setInterval( acknowledgeTimeout );
     timeout_.setSingleShot( true );
     connect( &timeout_, SIGNAL( timeout() ), this, SLOT( OnTimeout() ) );
 
