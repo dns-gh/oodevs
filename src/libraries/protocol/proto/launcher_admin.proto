@@ -7,9 +7,6 @@
 //
 // *****************************************************************************
 
-import "common.proto";
-import "simulation_client.proto";
-import "authentication_client.proto";
 import "version.proto";
 
 package sword;
@@ -60,35 +57,6 @@ message SessionStatus {
     optional string     breakdown_information = 4;
 }
 
-/** @struct SessionNotification
-    @brief notification from specified exercise/session
-*/
-message SessionNotification {
-    message UnitUpdate {
-        required Id        unit       = 1;
-        optional Extension extensions = 2;
-    }
-    message FormationUpdate {
-        required Id          formation  = 1;
-        optional Extension   extensions = 2;
-    }
-    message ProfileCreation {
-        required Profile profile = 1;
-    }
-    message ProfileUpdate {
-        required Profile    profile = 1;
-    }
-    message Notification {
-        optional UnitUpdate      unit_update        = 1;
-        optional FormationUpdate formation_update   = 2;
-        optional ProfileCreation profile_creation     = 3;
-        optional ProfileUpdate   profile_update       = 4;
-    }
-    required string         exercise = 1;
-    required string         session  = 2;
-    required Notification   notification  = 3;
-}
-
 /** @struct ClientConnectionNotification
     @brief connection notification from client
 */
@@ -121,7 +89,6 @@ message LauncherToAdmin {
         optional ConnectionResponse           connection_response        = 1;
         optional ExerciseListResponse         exercise_list_response     = 2;
         optional SessionStatus                session_status             = 9;
-        optional SessionNotification          session_notification       = 14;
         optional TickInformation              tick_information           = 15;
         optional ClientConnectionNotification connected_clients_update   = 16;
     }

@@ -70,15 +70,6 @@ void ResponseHandlerProxy::Handle( const sword::ExerciseListResponse& message )
 // Name: ResponseHandlerProxy::Handle
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const sword::SessionNotification& message )
-{
-    UpdateHandlers( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResponseHandlerProxy::Handle
-// Created: LGY 2011-05-23
-// -----------------------------------------------------------------------------
 void ResponseHandlerProxy::Handle( const sword::SessionStatus& message )
 {
     UpdateHandlers( message );

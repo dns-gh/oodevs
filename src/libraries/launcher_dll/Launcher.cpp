@@ -65,8 +65,6 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const sword::
         HandleRequest( endpoint, message.message().connection_request() );
     else if( message.message().has_exercise_list_request() )
         HandleRequest( endpoint, message.message().exercise_list_request() );
-    else if( message.message().has_session_notification() )
-        HandleRequest( endpoint, message.message().session_notification() );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,11 +93,3 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Exercise
     processes_->SendRunningExercices( endpoint );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Launcher::HandleRequest
-// Created: AHC 2011-05-12
-// -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& /*endpoint*/, const sword::SessionNotificationRequest& /*message*/ )
-{
-    // TODO AHC
-}

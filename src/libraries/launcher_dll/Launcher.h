@@ -17,8 +17,6 @@ namespace sword
 {
     class ConnectionRequest;
     class ExerciseListRequest;
-    class SessionParameterChangeRequest;
-    class SessionNotificationRequest;
 }
 
 namespace tools
@@ -60,7 +58,6 @@ private:
     //@{
     void HandleRequest( const std::string& endpoint, const sword::ConnectionRequest& message );
     void HandleRequest( const std::string& endpoint, const sword::ExerciseListRequest& message );
-    void HandleRequest( const std::string& endpoint, const sword::SessionNotificationRequest& message );
     //@}
 
 private:
