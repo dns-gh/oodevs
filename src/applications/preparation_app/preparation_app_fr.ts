@@ -2084,11 +2084,11 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Score edition - %1 </source>
-        <translation type="unfinished"></translation>
+        <translation>Edition de score - %1 </translation>
     </message>
     <message>
         <source>Formula is empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Formule non renseignée.</translation>
     </message>
 </context>
 <context>
