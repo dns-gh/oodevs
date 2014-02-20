@@ -29,6 +29,8 @@
 #include "gaming/LogMaintenanceConsign.h"
 #include "protocol/Protocol.h"
 
+#define TIMEOUT_MS 10000
+
 namespace
 {
     QAbstractButton* AddRadioButton( const QString& objectName,
@@ -75,7 +77,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     , componentType_( 0 )
     , breakdownType_( 0 )
 {
-    setMinimumSize( 400, 400 );
+    resize( 400, 400 );
 
     // Radio buttons
     automaticButton_ = AddRadioButton( "automated_selection_button_automatic", tr( "Resolve automatically" ), this );
@@ -113,7 +115,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     acceptButton_ = new gui::RichPushButton( "automated_selection_button_accept", tr( "Ok" ) );
     acceptButton_->setDefault( true );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( reject() ) );
-    connect( acceptButton_, SIGNAL( clicked() ), SLOT( accept() ) );
+    connect( acceptButton_, SIGNAL( clicked() ), SLOT( OnOkClicked() ) );
 
     // Layouts
     stack_ = new QStackedWidget();
@@ -134,11 +136,23 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     mainLayout->addLayout( bottomLayout );
     setLayout( mainLayout );
 
+    timeout_.setInterval( TIMEOUT_MS );
+    timeout_.setSingleShot( true );
+    connect( &timeout_, SIGNAL( timeout() ), this, SLOT( OnTimeout() ) );
+
     actionsModel_.RegisterHandler( [&]( const sword::SimToClient& message )
     {
-        if( message.message().has_magic_action_ack() && lastContext_ == message.context() &&
-            message.message().magic_action_ack().error_code() == sword::MagicActionAck_ErrorCode_error_invalid_parameter )
-             QMessageBox::warning( this, tr( "SWORD" ), tr( "This request cannot be resolved." ) );
+        if( lastContext_ == 0 || !isVisible() ||
+            !message.message().has_magic_action_ack() || lastContext_ != message.context() )
+            return;
+        Purge();
+        if( message.message().magic_action_ack().error_code() == sword::MagicActionAck_ErrorCode_error_invalid_parameter )
+        {
+            QMessageBox::warning( this, tr( "SWORD" ), tr( "This request cannot be resolved." ) );
+            reject();
+        }
+        else
+            accept();
     } );
     controller_.Register( *this );
 }
@@ -150,6 +164,16 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
 LogisticMaintenanceSelectionDialog::~LogisticMaintenanceSelectionDialog()
 {
     controller_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticMaintenanceSelectionDialog::OnTimeout
+// Created: ABR 2014-02-19
+// -----------------------------------------------------------------------------
+void LogisticMaintenanceSelectionDialog::OnTimeout()
+{
+    lastContext_ = 0;
+    QMessageBox::warning( this, tr( "SWORD" ), tr( "No response received from the simulation." ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,10 +259,10 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticMaintenanceSelectionDialog::accept
+// Name: LogisticMaintenanceSelectionDialog::OnOkClicked
 // Created: ABR 2014-01-27
 // -----------------------------------------------------------------------------
-void LogisticMaintenanceSelectionDialog::accept()
+void LogisticMaintenanceSelectionDialog::OnOkClicked()
 {
     if( automaticButton_->isChecked() )
         lastContext_ = actionsModel_.PublishSelectNewLogisticState( id_ );
@@ -257,8 +281,7 @@ void LogisticMaintenanceSelectionDialog::accept()
     }
     else if( evacuateButton_->isChecked() )
         lastContext_ = actionsModel_.PublishTransferToLogisticSuperior( id_ );
-    Purge();
-    LogisticSelectionDialog_ABC::accept();
+    timeout_.start();
 }
 
 // -----------------------------------------------------------------------------
@@ -269,8 +292,12 @@ void LogisticMaintenanceSelectionDialog::Purge()
 {
     id_ = 0;
     handler_ = 0;
+    componentType_ = 0;
+    breakdownType_ = 0;
     availability_ = 0;
+    lastContext_ = 0;
     status_ = sword::LogMaintenanceHandlingUpdate::finished;
+    timeout_.stop();
 }
 
 // -----------------------------------------------------------------------------

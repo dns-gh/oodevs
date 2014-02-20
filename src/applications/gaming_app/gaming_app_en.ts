@@ -1707,6 +1707,10 @@ Do you want to replace it?</translation>
         <source>Select repair team</source>
         <translation>Select repair team</translation>
     </message>
+    <message>
+        <source>No response received from the simulation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>
