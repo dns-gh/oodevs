@@ -11,6 +11,7 @@
 
 #include <runtime/FileSystem.h>
 #include <runtime/Io.h>
+#include <runtime/Scoper.h>
 #include <tools/BoostTest.h>
 
 #include <cpplog/cpplog.hpp>
@@ -101,6 +102,7 @@ namespace
         VirtualDevice dev;
         const auto input = testOptions.GetDataPath( "archive" ).ToBoost();
         const auto output = testOptions.GetTempDir().ToBoost() / suffix;
+        const Scoper removeOutput = [&](){ fs.Remove( output ); };
         const auto ref = MakeSnapshot( fs, input );
         {
             auto packer = fs.Pack( dev, fmt );
@@ -117,7 +119,6 @@ namespace
         }
         const auto got = MakeSnapshot( fs, output );
         Compare( ref, got );
-        fs.Remove( output );
     }
 }
 
@@ -125,6 +126,33 @@ BOOST_AUTO_TEST_CASE( archive_cycle )
 {
     TestArchiveCycle( "zip",    ARCHIVE_FMT_ZIP );
     TestArchiveCycle( "tar.gz", ARCHIVE_FMT_TAR_GZ );
+}
+
+namespace
+{
+    void CheckUnpack( const FileSystem_ABC& fs, const std::string& name )
+    {
+        const auto path = testOptions.GetDataPath( tools::Path::FromUTF8( name ) ).ToBoost();
+        const auto output = fs.MakeAnyPath( testOptions.GetTempDir().ToBoost() );
+        const Scoper removeOutput = [&](){ fs.Remove( output ); };
+        const auto data = fs.ReadFile( path );
+        VirtualDevice input;
+        input.Write( data.data(), data.size() );
+        {
+            auto unpacker = fs.Unpack( output, input, 0 );
+            unpacker->Unpack();
+        }
+    }
+}
+
+BOOST_AUTO_TEST_CASE( resilient_against_7z_archives )
+{
+    MockLog log;
+    FileSystem fs( log );
+    CheckUnpack( fs, "crash.zip" ); // 7z + pure unicode filename
+    CheckUnpack( fs, "crash.tar.gz" ); // 7z + pure unicode filename
+    // I don't know how to handle this case properly, but we must not crash
+    BOOST_CHECK_THROW( CheckUnpack( fs, "crash2.zip" ), std::runtime_error ); // 7z + locale filename
 }
 
 BOOST_AUTO_TEST_CASE( fs_copy_directory_is_unicode )

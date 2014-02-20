@@ -444,7 +444,10 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
         }
         else
         {
-            next = root / archive_entry_pathname_w( entry );
+            const auto name = archive_entry_pathname_w( entry );
+            if( !name )
+                throw std::runtime_error( "missing entry path name" );
+            next = root / name;
         }
 
         archive_entry_copy_pathname_w( entry, next.wstring().c_str() );
@@ -498,9 +501,9 @@ struct Unpacker : public Unpacker_ABC
     void Unpack()
     {
         boost::shared_ptr< Archive > src( archive_read_new(), archive_read_free );
-        archive_read_support_format_zip( src.get() );
-        archive_read_support_format_gnutar( src.get() );
-        archive_read_support_filter_gzip( src.get() );
+        archive_read_support_compression_all( src.get() );
+        archive_read_support_filter_all( src.get() );
+        archive_read_support_format_all( src.get() );
         archive_read_set_read_callback( src.get(), &Unpacker::Read );
         archive_read_set_callback_data( src.get(), this );
         int err = archive_read_set_options( src.get(), "hdrcharset=UTF-8" );
