@@ -24,7 +24,6 @@ namespace kernel
 
 namespace frontend
 {
-    class ExerciseIdentifierFactory_ABC;
     class Host_ABC;
 
 // =============================================================================
@@ -38,14 +37,12 @@ class RemoteExercise : public Exercise_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory,
-                             const tools::Path& exercise, kernel::Controller& controller );
+             RemoteExercise( const tools::Path& exercise, kernel::Controller& controller );
     virtual ~RemoteExercise();
     //@}
 
     //! @name Accessors
     //@{
-    virtual const std::string& GetId() const;
     virtual const tools::Path& GetName() const;
     //@}
 
@@ -53,9 +50,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const Host_ABC& host_;
     const tools::Path name_;
-    const std::string id_;
     //@}
 };
 

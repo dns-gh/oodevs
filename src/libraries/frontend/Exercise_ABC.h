@@ -11,8 +11,6 @@
 #define __Exercise_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include <string>
-#include <map>
 
 namespace frontend
 {
@@ -27,17 +25,10 @@ class Exercise_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    typedef std::map< std::string, std::string > T_Parameters;
-    //@}
-
-public:
-    //! @name Constructors/Destructor
-    //@{
              Exercise_ABC() {}
     virtual ~Exercise_ABC() {}
     //@}
 
-    virtual const std::string& GetId() const = 0;
     virtual const tools::Path& GetName() const = 0;
 };
 

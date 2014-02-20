@@ -9,7 +9,6 @@
 
 #include "frontend_pch.h"
 #include "RemoteExercise.h"
-#include "ExerciseIdentifierFactory_ABC.h"
 #include "Host_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "protocol/Protocol.h"
@@ -22,12 +21,9 @@ using namespace frontend;
 // Name: RemoteExercise constructor
 // Created: SBO 2010-10-01
 // -----------------------------------------------------------------------------
-RemoteExercise::RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory,
-                                const tools::Path& exercise, kernel::Controller& controller )
+RemoteExercise::RemoteExercise( const tools::Path& exercise, kernel::Controller& controller )
     : controller_( controller )
-    , host_      ( host )
     , name_      ( exercise )
-    , id_        ( factory.CreateIdentifier( exercise ) )
 {
     controller_.Create( static_cast< Exercise_ABC& >( *this ) );
 }
@@ -39,15 +35,6 @@ RemoteExercise::RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFa
 RemoteExercise::~RemoteExercise()
 {
     controller_.Delete( static_cast< Exercise_ABC& >( *this ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RemoteExercise::GetId
-// Created: SBO 2010-10-21
-// -----------------------------------------------------------------------------
-const std::string& RemoteExercise::GetId() const
-{
-    return id_;
 }
 
 // -----------------------------------------------------------------------------

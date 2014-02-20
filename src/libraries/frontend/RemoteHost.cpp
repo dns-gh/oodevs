@@ -47,15 +47,6 @@ std::string RemoteHost::GetId() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteHost::CreateIdentifier
-// Created: SBO 2010-10-28
-// -----------------------------------------------------------------------------
-std::string RemoteHost::CreateIdentifier( const tools::Path& exercise ) const
-{
-    return id_ + "/" + exercise.ToUTF8();
-}
-
-// -----------------------------------------------------------------------------
 // Name: RemoteHost::Handle
 // Created: SBO 2010-10-21
 // -----------------------------------------------------------------------------
@@ -64,7 +55,7 @@ void RemoteHost::Handle( const sword::ExerciseListResponse& message )
     exercises_.clear();
     for( int i = 0; i < message.exercise().size(); ++i )
     {
-        boost::shared_ptr< RemoteExercise > exercise( new RemoteExercise( *this, *this, tools::Path::FromUTF8( message.exercise( i ) ), controller_ ) );
+        boost::shared_ptr< RemoteExercise > exercise( new RemoteExercise( tools::Path::FromUTF8( message.exercise( i ) ), controller_ ) );
         exercises_[ exercise->GetName() ] = exercise;
     }
 }

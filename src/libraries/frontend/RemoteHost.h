@@ -10,7 +10,6 @@
 #ifndef __RemoteHost_h_
 #define __RemoteHost_h_
 
-#include "ExerciseIdentifierFactory_ABC.h"
 #include "ResponseHandler_ABC.h"
 #include "Host_ABC.h"
 #include <boost/shared_ptr.hpp>
@@ -33,7 +32,6 @@ namespace frontend
 // Created: SBO 2010-10-21
 // =============================================================================
 class RemoteHost : public Host_ABC
-                 , private ExerciseIdentifierFactory_ABC
                  , public ResponseHandler_ABC
 {
 public:
@@ -51,12 +49,6 @@ public:
     //! @name Operation
     //@{
     virtual void Handle( const sword::ExerciseListResponse& message );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual std::string CreateIdentifier( const tools::Path& exercise ) const;
     //@}
 
 private:
