@@ -69,6 +69,31 @@ namespace
         return reply;
     }
 
+    struct Snapshot
+    {
+        std::set< Path > paths;
+        std::string crc;
+        size_t size;
+    };
+
+    void Compare( const Snapshot& a, const Snapshot& b )
+    {
+        BOOST_CHECK_EQUAL( a.size, b.size );
+        BOOST_CHECK_EQUAL( a.crc, b.crc );
+        BOOST_CHECK_EQUAL_COLLECTIONS( a.paths.begin(), a.paths.end(), b.paths.begin(), b.paths.end() );
+    }
+
+    Snapshot MakeSnapshot( const FileSystem_ABC& fs, const Path& src )
+    {
+        Snapshot dst;
+        dst.size = 0;
+        dst.crc = fs.Checksum( src, [&]( const Path& path ) -> bool {
+            dst.paths.insert( GetSubPath( src, path ) );
+            return true;
+        }, dst.size );
+        return dst;
+    }
+
     void TestArchiveCycle( const std::string& suffix, ArchiveFormat fmt )
     {
         MockLog log;
@@ -76,12 +101,7 @@ namespace
         VirtualDevice dev;
         const auto input = testOptions.GetDataPath( "archive" ).ToBoost();
         const auto output = testOptions.GetTempDir().ToBoost() / suffix;
-        size_t refsize = 0;
-        std::set< Path > refpaths;
-        const std::string refcrc = fs.Checksum( input, [&]( const Path& path ) -> bool {
-            refpaths.insert( GetSubPath( input, path ) );
-            return true;
-        }, refsize );
+        const auto ref = MakeSnapshot( fs, input );
         {
             auto packer = fs.Pack( dev, fmt );
             packer->Pack( input, []( const Path& path ) {
@@ -95,15 +115,8 @@ namespace
             auto unpacker = fs.Unpack( output, dev, 0 );
             unpacker->Unpack();
         }
-        size_t read = 0;
-        std::set< Path > outpaths;
-        const std::string crc = fs.Checksum( output, [&]( const Path& path ) -> bool {
-            outpaths.insert( GetSubPath( output, path ) );
-            return true;
-        }, read );
-        BOOST_CHECK_EQUAL( read, refsize );
-        BOOST_CHECK_EQUAL( crc, refcrc );
-        BOOST_CHECK_EQUAL_COLLECTIONS( refpaths.begin(), refpaths.end(), outpaths.begin(), outpaths.end() );
+        const auto got = MakeSnapshot( fs, output );
+        Compare( ref, got );
         fs.Remove( output );
     }
 }
@@ -112,4 +125,15 @@ BOOST_AUTO_TEST_CASE( archive_cycle )
 {
     TestArchiveCycle( "zip",    ARCHIVE_FMT_ZIP );
     TestArchiveCycle( "tar.gz", ARCHIVE_FMT_TAR_GZ );
+}
+
+BOOST_AUTO_TEST_CASE( fs_copy_directory_is_unicode )
+{
+    MockLog log;
+    FileSystem fs( log );
+    const auto input = testOptions.GetDataPath( "archive" ).ToBoost();
+    const auto output = fs.MakeAnyPath( testOptions.GetTempDir().ToBoost() );
+    fs.CopyDirectory( input, output );
+    Compare( MakeSnapshot( fs, input ), MakeSnapshot( fs, output ) );
+    fs.Remove( output );
 }

@@ -98,9 +98,9 @@ bool FileSystem::Exists( const Path& path ) const
 
 namespace
 {
-Path MovePath( const Path& dst, const std::string& prefix, const Path& src )
+Path MovePath( const Path& dst, const std::wstring& prefix, const Path& src )
 {
-    return dst / Utf8( src ).substr( prefix.size() );
+    return dst / src.wstring().substr( prefix.size() );
 }
 }
 
@@ -110,7 +110,7 @@ Path MovePath( const Path& dst, const std::string& prefix, const Path& src )
 // -----------------------------------------------------------------------------
 void FileSystem::CopyDirectory( const Path& src, const Path& dst ) const
 {
-    const std::string prefix = Utf8( src );
+    const std::wstring prefix = src.wstring();
     for( boost::filesystem::recursive_directory_iterator it( src ); it != boost::filesystem::recursive_directory_iterator(); ++it )
         if( boost::filesystem::is_directory( it->status() ) )
             boost::filesystem::create_directory( MovePath( dst, prefix, *it ) );
