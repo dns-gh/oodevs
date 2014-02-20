@@ -13,7 +13,6 @@
 #include "ExerciseProperties.h"
 #include "ProfileList.h"
 #include "ExerciseListView.h"
-#include "frontend/LocalExerciseFilter.h"
 #include "frontend/Profile.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
@@ -36,8 +35,6 @@ ExerciseList::ExerciseList( Application& app, QWidget* parent, const tools::Gene
                             bool showBrief /* = true*/, bool showProfile /* =true*/, bool showParams /* = true*/, bool enableParams /* = true*/ )
     : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , controllers_      ( controllers )
-    , filter_           ( 0 )
-    , defaultFilter_    ( new frontend::LocalExerciseFilter() )
 {
     //left box
     exerciseLabel_ = new QLabel();
@@ -98,8 +95,7 @@ void ExerciseList::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void ExerciseList::NotifyCreated( const frontend::Exercise_ABC& exercise )
 {
-    if( !filter_ && defaultFilter_->Allows( exercise ) || filter_ && filter_->Allows( exercise ) )
-        UpdateExerciseEntry( exercise );
+    UpdateExerciseEntry( exercise );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,15 +114,6 @@ void ExerciseList::NotifyUpdated( const frontend::Exercise_ABC& exercise )
 void ExerciseList::NotifyDeleted( const frontend::Exercise_ABC& exercise )
 {
     exercises_->DeleteExerciseEntry( exercise );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseList::SetFilter
-// Created: SBO 2010-10-21
-// -----------------------------------------------------------------------------
-void ExerciseList::SetFilter( const frontend::ExerciseFilter_ABC& filter )
-{
-    filter_ = &filter;
 }
 
 // -----------------------------------------------------------------------------
@@ -198,13 +185,9 @@ void ExerciseList::customEvent( QEvent* e )
 // -----------------------------------------------------------------------------
 void ExerciseList::UpdateExerciseEntry( const frontend::Exercise_ABC& exercise )
 {
-    const bool isAllowed = !filter_ && defaultFilter_->Allows( exercise ) || filter_ && filter_->Allows( exercise );
     if( exercises_->FindExerciseItem( exercise ) != 0 )
-    {
-        if( !isAllowed )
-            exercises_->DeleteExerciseEntry( exercise );
-    }
-    else if( isAllowed )
+        exercises_->DeleteExerciseEntry( exercise );
+    else
         exercises_->AddExerciseEntry( exercise );
 }
 

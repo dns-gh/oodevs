@@ -49,7 +49,6 @@ public:
     virtual const tools::Path& GetName() const;
     virtual unsigned int GetPort() const;
     virtual bool IsRunning() const;
-    virtual bool IsHostedBy( const std::string& host ) const;
     //@}
 
     //! @name Operations

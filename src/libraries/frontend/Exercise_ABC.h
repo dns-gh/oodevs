@@ -43,7 +43,6 @@ public:
     virtual const tools::Path& GetName() const = 0;
     virtual unsigned int GetPort() const = 0;
     virtual bool IsRunning() const = 0;
-    virtual bool IsHostedBy( const std::string& host ) const = 0;
     //@}
 
     //! @name Operations

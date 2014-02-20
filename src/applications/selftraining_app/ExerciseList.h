@@ -17,7 +17,6 @@
 namespace frontend
 {
     class Exercise_ABC;
-    class ExerciseFilter_ABC;
     class Profile;
 }
 
@@ -59,7 +58,6 @@ public:
 
     //! @name Operations
     //@{
-    void SetFilter( const frontend::ExerciseFilter_ABC& filter );
     bool Exists( const tools::Path& exercise ) const;
     bool IsPropertiesValid() const;
     bool ChangeExerciceParameters();
@@ -105,8 +103,6 @@ private:
     kernel::Controllers& controllers_;
     ExerciseListView* exercises_;
     ProfileList* profiles_;
-    const frontend::ExerciseFilter_ABC* filter_;
-    std::auto_ptr< frontend::ExerciseFilter_ABC > defaultFilter_;
     ExerciseProperties* properties_;
     QLabel* exerciseLabel_;
     QLabel* profileLabel_;

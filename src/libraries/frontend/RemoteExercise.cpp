@@ -80,15 +80,6 @@ bool RemoteExercise::IsRunning() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteExercise::IsHostedBy
-// Created: SBO 2010-10-22
-// -----------------------------------------------------------------------------
-bool RemoteExercise::IsHostedBy( const std::string& host ) const
-{
-    return boost::algorithm::starts_with( GetId(), host ); // $$$$ SBO 2010-10-22: TODO, something better (resolve host)
-}
-
-// -----------------------------------------------------------------------------
 // Name: RemoteExercise::SetRunning
 // Created: SBO 2010-10-26
 // -----------------------------------------------------------------------------
