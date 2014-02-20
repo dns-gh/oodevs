@@ -203,7 +203,8 @@ namespace
     void UpdateView( T* view, const kernel::Entity_ABC& entity, QAbstractButton* button, const QString& buttonText )
     {
         button->setText( buttonText );
-        view->selectionModel()->clear();
+        view->selectionModel()->reset();
+        view->clearFocus();
         view->SelectEntity( &entity );
     }
 }
@@ -244,6 +245,7 @@ bool LogisticMaintenanceSelectionDialog::SetCurrentStatus( sword::LogMaintenance
 // -----------------------------------------------------------------------------
 void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consign )
 {
+    Purge();
     if( consign.GetType() != eMaintenance )
         throw MASA_EXCEPTION( "Not supposed to display a maintenance dialog on a non-maintenance consign" );
     const LogMaintenanceConsign& maintenanceConsign = static_cast< const LogMaintenanceConsign& >( consign );

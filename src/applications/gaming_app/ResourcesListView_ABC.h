@@ -105,6 +105,7 @@ ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent,
 {
     setRootIsDecorated( false );
     setEditTriggers( 0 );
+    setSelectionBehavior( SelectRows );
     header()->setResizeMode( QHeaderView::ResizeToContents );
     header()->setStretchLastSection( false );
     setModel( &model_ );
