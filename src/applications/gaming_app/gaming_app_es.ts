@@ -2810,6 +2810,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>Available</source>
         <translation>Disponible</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PlanificationModePanel</name>

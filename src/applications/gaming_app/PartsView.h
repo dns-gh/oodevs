@@ -38,8 +38,8 @@ public:
      PartsView( kernel::Controllers& controllers, QWidget* parent );
     ~PartsView();
 
-    void Purge();
-    void Select( const kernel::Entity_ABC* handler, const std::vector< kernel::BreakdownPart >& parts );
+    void Fill( const std::vector< kernel::BreakdownPart >& parts );
+    void SelectEntity( const kernel::Entity_ABC* entity );
     bool IsValid() const;
 
 signals:
@@ -47,15 +47,20 @@ signals:
 
 private:
     void NotifyUpdated( const kernel::Dotations_ABC& dotations );
+    bool SetAvailable( int row, int available );
 
-protected:
-    virtual void setSelection( const QRect& /*rect*/, QItemSelectionModel::SelectionFlags /*flags*/ );
+    enum E_Column
+    {
+        eName,
+        eRequired,
+        eAvailable,
+        eNbrColumn,
+    };
 
 private:
     kernel::Controller& controller_;
     QStandardItemModel* model_;
-    kernel::SafePointer< kernel::Entity_ABC > base_;
-    std::map< std::string, int > parts_;
+    kernel::SafePointer< kernel::Entity_ABC > entity_;
     bool valid_;
 };
 

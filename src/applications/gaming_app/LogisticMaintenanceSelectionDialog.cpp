@@ -190,31 +190,52 @@ void LogisticMaintenanceSelectionDialog::AddWidget( sword::LogMaintenanceHandlin
     indexMap_[ status ] = stack_->addWidget( widget );
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticMaintenanceSelectionDialog::SetCurrentWidget
-// Created: ABR 2014-01-29
-// -----------------------------------------------------------------------------
-bool LogisticMaintenanceSelectionDialog::SetCurrentWidget()
-{
-    auto it = indexMap_.find( status_ );
-    if( !stack_ ||
-        it == indexMap_.end() ||
-        stack_->widget( it->second ) == 0 ||
-        !handler_ )
-        return false;
-    stack_->setCurrentIndex( it->second );
-    return true;
-}
-
 namespace
 {
-    bool CanRequestEvacuationBySuperior( const kernel::Entity_ABC* entity )
+    bool CanRequestEvacuationBySuperior( const kernel::Entity_ABC& entity )
     {
-        if( auto base = logistic_helpers::GetLogisticBase( entity ) )
+        if( auto base = logistic_helpers::GetLogisticBase( &entity ) )
             if( auto links = base->Retrieve< LogisticLinks >() )
                 return links->GetCurrentSuperior() != 0;
         return false;
     }
+    template< typename T >
+    void UpdateView( T* view, const kernel::Entity_ABC& entity, QAbstractButton* button, const QString& buttonText )
+    {
+        button->setText( buttonText );
+        view->selectionModel()->clear();
+        view->SelectEntity( &entity );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticMaintenanceSelectionDialog::SetCurrentStatus
+// Created: ABR 2014-01-29
+// -----------------------------------------------------------------------------
+bool LogisticMaintenanceSelectionDialog::SetCurrentStatus( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus status )
+{
+    auto it = indexMap_.find( status );
+    if( !stack_ ||
+        it == indexMap_.end() ||
+        stack_->widget( it->second ) == 0 ||
+        !handler_ ||
+        !componentType_ ||
+        !breakdownType_ )
+        return false;
+    status_ = status;
+    stack_->setCurrentIndex( it->second );
+    setWindowTitle( tr( "Request #%1 - %2" ).arg( id_ ).arg( QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) ) ) );
+    if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
+        UpdateView( transporters_, *handler_, manualButton_, tr( "Select tow truck" ) );
+    else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
+        UpdateView( diagnosers_, *handler_, manualButton_, tr( "Select diagnosis team" ) );
+    else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+        UpdateView( repairers_, *handler_, manualButton_, tr( "Select repair team" ) );
+    parts_->Fill( breakdownType_->GetParts() );
+    manualButton_->setChecked( true );
+    evacuateButton_->setEnabled( CanRequestEvacuationBySuperior( *handler_ ) );
+    UpdateDisplay();
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -230,32 +251,8 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
     handler_ = consign.GetHandler();
     componentType_ = maintenanceConsign.GetEquipment();
     breakdownType_ = maintenanceConsign.GetBreakdown();
-    status_ = maintenanceConsign.GetStatus();
-    if( !SetCurrentWidget() )
+    if( !SetCurrentStatus( maintenanceConsign.GetStatus() ) )
         return;
-    setWindowTitle( tr( "Request #%1 - %2" ).arg( id_ ).arg( QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) ) ) );
-    manualButton_->setChecked( true );
-    evacuateButton_->setEnabled( CanRequestEvacuationBySuperior( handler_ ) );
-    if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-    {
-        manualButton_->setText( tr( "Select tow truck" ) );
-        transporters_->selectionModel()->clear();
-        transporters_->SelectEntity( handler_ );
-    }
-    else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
-    {
-        manualButton_->setText( tr( "Select diagnosis team" ) );
-        diagnosers_->selectionModel()->clear();
-        diagnosers_->SelectEntity( handler_ );
-    }
-    else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
-    {
-        manualButton_->setText( tr( "Select repair team" ) );
-        repairers_->selectionModel()->clear();
-        repairers_->SelectEntity( handler_ );
-        parts_->Purge();
-    }
-    UpdateDisplay();
     show();
 }
 
@@ -340,16 +337,16 @@ void LogisticMaintenanceSelectionDialog::OnSelectionChanged( const QModelIndex& 
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
         {
             availability_ = repairers_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
-            if( availability_ && breakdownType_ )
-                parts_->Select( availability_->entity_, breakdownType_->GetParts() );
+            if( availability_ )
+                parts_->SelectEntity( availability_->entity_ );
             else
-                throw MASA_EXCEPTION( "Missing availability or breakdown type to display related parts" );
+                throw MASA_EXCEPTION( "Not supposed to select a line without availability in a ResourcesListView_ABC" );
         }
         else
             throw MASA_EXCEPTION( "Unhandled status " + ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) );
     }
     else if( !current.isValid() && status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
-        parts_->Purge();
+        parts_->SelectEntity( 0 );
     UpdateDisplay();
 }
 

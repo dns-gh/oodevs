@@ -2801,6 +2801,10 @@ This data can&apos;t be projected.</source>
         <source>Available</source>
         <translation type="unfinished">متاح</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PlanificationModePanel</name>

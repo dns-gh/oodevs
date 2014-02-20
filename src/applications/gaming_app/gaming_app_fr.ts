@@ -2815,6 +2815,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Available</source>
         <translation>Disponible</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PlanificationModePanel</name>

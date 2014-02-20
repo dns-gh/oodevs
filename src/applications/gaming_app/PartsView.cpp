@@ -21,7 +21,7 @@
 PartsView::PartsView( kernel::Controllers& controllers, QWidget* parent )
     : RichTableView( "manual_selection_repair_team_partsview", parent )
     , controller_  ( controllers.controller_ )
-    , base_        ( controllers.controller_ )
+    , entity_      ( controllers.controller_ )
     , valid_       ( false )
 {
     const QStringList headers = QStringList()
@@ -34,13 +34,13 @@ PartsView::PartsView( kernel::Controllers& controllers, QWidget* parent )
     setModel( model_ );
     setSortingEnabled( false );
     setAlternatingRowColors( true );
-    setSelectionMode( SingleSelection );
+    setSelectionMode( NoSelection );
     setSelectionBehavior( SelectRows );
     setFocusPolicy( Qt::NoFocus );
     auto header = horizontalHeader();
-    header->setResizeMode( 0, QHeaderView::Stretch );
-    header->setResizeMode( 1, QHeaderView::ResizeToContents );
-    header->setResizeMode( 2, QHeaderView::ResizeToContents );
+    header->setResizeMode( eName, QHeaderView::Stretch );
+    header->setResizeMode( eRequired, QHeaderView::ResizeToContents );
+    header->setResizeMode( eAvailable, QHeaderView::ResizeToContents );
     header->setHighlightSections( false );
     verticalHeader()->setVisible( false );
     controller_.Register( *this );
@@ -51,64 +51,76 @@ PartsView::~PartsView()
     controller_.Unregister( *this );
 }
 
-void PartsView::Purge()
+void PartsView::Fill( const std::vector< kernel::BreakdownPart >& parts )
 {
+    valid_ = false;
     model_->removeRows( 0, model_->rowCount() );
-    parts_.clear();
-}
-
-void PartsView::Select( const kernel::Entity_ABC* handler, const std::vector< kernel::BreakdownPart >& parts )
-{
-    base_ = handler;
-    Purge();
     int row = 0;
-    valid_ = true;
     for( auto it = parts.begin(); it != parts.end(); ++it )
     {
         const std::string resourceName = it->GetResource().GetName();
         unsigned int quantity = it->GetQuantity();
-        model_->setItem( row, 0, new QStandardItem( QString::fromStdString( resourceName ) ) );
-        model_->setItem( row, 1, new QStandardItem( QString::number( quantity ) ) );
-        model_->setItem( row, 2, new QStandardItem( "0" ) );
-        parts_.insert( std::make_pair( resourceName, row ) );
-        valid_ &= !quantity;
+        model_->setItem( row, eName, new QStandardItem( QString::fromStdString( resourceName ) ) );
+        model_->setItem( row, eRequired, new QStandardItem( QString::number( quantity ) ) );
+        SetAvailable( row, -1 );
         row++;
     }
-    if( auto dotations = base_->Retrieve< kernel::Dotations_ABC >() )
-        NotifyUpdated( *dotations );
 }
 
-void PartsView::setSelection( const QRect& /*rect*/, QItemSelectionModel::SelectionFlags /*flags*/ )
+void PartsView::SelectEntity( const kernel::Entity_ABC* entity )
 {
-    // NOTHING
+    valid_ = false;
+    entity_ = entity;
+    auto dotations = entity_ ? entity_->Retrieve< kernel::Dotations_ABC >() : 0;
+    if( dotations )
+       NotifyUpdated( *dotations );
+    else
+        for( int row = 0; row < model_->rowCount(); ++row )
+            SetAvailable( row, -1 );
 }
+
+bool PartsView::SetAvailable( int row, int available )
+{
+    if( available < 0 )
+    {
+        model_->setItem( row, eAvailable, new QStandardItem( tr( "N/A" ) ) );
+        for( int col = 0; col < eNbrColumn; ++col )
+            model_->setData( model_->index( row, col ), QVariant(), Qt::ForegroundRole );
+        return false;
+    }
+    model_->item( row, eAvailable )->setText( QString::number( available ) );
+    const bool isRowValid = available >= model_->item( row, eRequired )->text().toInt();
+    const QVariant next = isRowValid ? QVariant() : QBrush( Qt::red );
+    for( int col = 0; col < eNbrColumn; ++col )
+        model_->setData( model_->index( row, col ), next, Qt::ForegroundRole );
+    return isRowValid;
+}
+
 
 void PartsView::NotifyUpdated( const kernel::Dotations_ABC& dotations )
 {
     const auto dots = dynamic_cast< const Dotations* >( &dotations );
-    if( !dots )
+    if( !dots || !entity_ || entity_ != &dots->entity_ )
         return;
-    if( !base_ || base_ != &dots->entity_ )
-        return;
-    auto it = dots->CreateIterator();
-    const QBrush red( Qt::red );
-    bool valid = true;
-    while( it.HasMoreElements() )
+    valid_ = true;
+    for( int row = 0; row < model_->rowCount(); ++row )
     {
-        const auto& elem = it.NextElement();
-        auto part = parts_.find( elem.type_->GetName() );
-        if( part == parts_.end() )
-            continue;
-        const QModelIndex& available = model_->index( part->second, 2 );
-        model_->setData( available, elem.quantity_ );
-        const int required = model_->index( part->second, 1 ).data().toInt();
-        const bool isRowValid = elem.quantity_ >= required;
-        valid &= isRowValid;
-        const QVariant next = isRowValid ? QVariant() : red;
-        for( int i = 0; i < 3; i++ )
-            model_->setData( model_->index( part->second, i ), next, Qt::ForegroundRole );
+        auto it = dots->CreateIterator();
+        bool isRowValid = false;
+        bool hasDotation = false;
+        while( it.HasMoreElements() && !hasDotation )
+        {
+            const auto& elem = it.NextElement();
+            if( model_->item( row, eName )->text().toStdString() == elem.type_->GetName() )
+            {
+                isRowValid = SetAvailable( row, elem.quantity_ );
+                hasDotation = true;
+            }
+        }
+        if( !hasDotation )
+            SetAvailable( row, 0 );
+        valid_ &= isRowValid;
     }
-    valid_ = valid;
     emit Updated();
 }
 
