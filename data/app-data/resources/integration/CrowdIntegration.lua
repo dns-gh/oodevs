@@ -323,15 +323,18 @@ integration.getNbPersonConcentration = function ( crowd, concentration )
 end
 
 --- Extracts wounded humans from the given crowd.
--- This method creates a concentration on a safe position near the given crowd (i.e. a closeby
--- position at the periphery of the given crowd at the opposite of the current danger direction)
+-- This method creates a concentration on the given position
 -- with all the wounded humans of the given crowd.
+-- If no position is provided, then the concentration is created instead on a 
+-- safe position near the given crowd (i.e. a closeby position at the periphery
+-- of the given crowd at the opposite of the current danger direction).
 -- This method does nothing if there is no wounded humans in the crowd.
 -- This method can only be called by an agent.
 -- @param crowd Crowd knowledge
+-- @param position Simulation point
 -- @return Boolean, whether or not the extraction occurred successfully.
-integration.extractVictimsFromCrowd = function( crowd )
-    local position = DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
+integration.extractVictimsFromCrowd = function( crowd, position )
+    position = position or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
     if not position then
         position = DEC_Agent_Position() -- extract wounded creating a new crowd on my own position
     end
@@ -340,15 +343,18 @@ integration.extractVictimsFromCrowd = function( crowd )
 end
 
 --- Extracts dead humans from the given crowd.
--- This method creates a concentration on a safe position near the given crowd (i.e. a closeby
--- position at the periphery of the given crowd at the opposite of the current danger direction)
+-- This method creates a concentration on the given position
 -- with all the dead humans of the given crowd.
+-- If no position is provided, then the concentration is created instead on a 
+-- safe position near the given crowd (i.e. a closeby position at the periphery
+-- of the given crowd at the opposite of the current danger direction).
 -- This method does nothing if there is no dead humans in the crowd.
 -- This method can only be called by an agent.
 -- @param crowd Crowd knowledge
+-- @param position Simulation point
 -- @return Boolean, whether or not the extraction occurred successfully.
-integration.extractDeadFromCrowd = function( crowd )
-    local position = DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
+integration.extractDeadFromCrowd = function( crowd, position )
+    position = position or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
     if not position then
         position = DEC_Agent_Position() -- extract dead creating a new crowd on my own position
     end
