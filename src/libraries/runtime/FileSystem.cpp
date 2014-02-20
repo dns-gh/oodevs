@@ -503,7 +503,10 @@ struct Unpacker : public Unpacker_ABC
         archive_read_support_filter_gzip( src.get() );
         archive_read_set_read_callback( src.get(), &Unpacker::Read );
         archive_read_set_callback_data( src.get(), this );
-        int err = archive_read_open1( src.get() );
+        int err = archive_read_set_options( src.get(), "hdrcharset=UTF-8" );
+        if( err != ARCHIVE_OK )
+            throw std::runtime_error( archive_error_string( src.get() ) );
+        err = archive_read_open1( src.get() );
         if( err != ARCHIVE_OK )
             throw std::runtime_error( archive_error_string( src.get() ) );
 
@@ -557,8 +560,11 @@ struct Packer : public Packer_ABC
                 archive_write_add_filter_gzip( dst_.get() );
                 break;
         }
+        int err = archive_write_set_options( dst_.get(), "hdrcharset=UTF-8");
+        if( err != ARCHIVE_OK )
+            throw std::runtime_error( archive_error_string( dst_.get() ) );
         archive_write_set_bytes_in_last_block( dst_.get(), 1 );
-        int err = archive_write_open( dst_.get(), this, Packer::Dummy, Packer::Write, Packer::Dummy );
+        err = archive_write_open( dst_.get(), this, Packer::Dummy, Packer::Write, Packer::Dummy );
         if( err != ARCHIVE_OK )
             throw std::runtime_error( archive_error_string( dst_.get() ) );
     }

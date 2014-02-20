@@ -14,6 +14,7 @@
 #include <tools/BoostTest.h>
 
 #include <cpplog/cpplog.hpp>
+#include <set>
 
 using namespace runtime;
 
@@ -56,6 +57,18 @@ namespace
         std::vector< char > buffer_;
     };
 
+    Path GetSubPath( const Path& root, const Path& path )
+    {
+        Path reply;
+        auto a = root.begin();
+        for( auto b = path.begin(); b != path.end(); ++b )
+            if( a != root.end() )
+                ++a;
+            else
+                reply /= *b;
+        return reply;
+    }
+
     void TestArchiveCycle( const std::string& suffix, ArchiveFormat fmt )
     {
         MockLog log;
@@ -64,7 +77,11 @@ namespace
         const auto input = testOptions.GetDataPath( "archive" ).ToBoost();
         const auto output = testOptions.GetTempDir().ToBoost() / suffix;
         size_t refsize = 0;
-        const std::string refcrc = fs.Checksum( input, []( const Path& ){ return true; }, refsize );
+        std::set< Path > refpaths;
+        const std::string refcrc = fs.Checksum( input, [&]( const Path& path ) -> bool {
+            refpaths.insert( GetSubPath( input, path ) );
+            return true;
+        }, refsize );
         {
             auto packer = fs.Pack( dev, fmt );
             packer->Pack( input, []( const Path& path ) {
@@ -79,9 +96,14 @@ namespace
             unpacker->Unpack();
         }
         size_t read = 0;
-        const std::string crc = fs.Checksum( output, []( const Path& ){ return true; }, read );
+        std::set< Path > outpaths;
+        const std::string crc = fs.Checksum( output, [&]( const Path& path ) -> bool {
+            outpaths.insert( GetSubPath( output, path ) );
+            return true;
+        }, read );
         BOOST_CHECK_EQUAL( read, refsize );
         BOOST_CHECK_EQUAL( crc, refcrc );
+        BOOST_CHECK_EQUAL_COLLECTIONS( refpaths.begin(), refpaths.end(), outpaths.begin(), outpaths.end() );
         fs.Remove( output );
     }
 }
