@@ -30,6 +30,7 @@ namespace launcher
 {
 
 class SwordFacade;
+class LauncherPublisher;
 class LauncherService;
 class Config;
 

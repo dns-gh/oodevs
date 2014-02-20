@@ -19,11 +19,8 @@
 #include "client_proxy/SwordMessageHandler_ABC.h"
 #include "SwordFacade.h"
 #include "Config.h"
+#include "LauncherPublisher.h"
 #include "LauncherService.h"
-#include "NotificationMessageHandler.h"
-#include "ControlInformationMessageHandler.h"
-#include "ControlEndTickMessageHandler.h"
-#include "SessionStatusMessageHandler.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>

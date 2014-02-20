@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __LauncherPublisher_h_
-#define __LauncherPublisher_h_
+#ifndef FRONTEND_LAUNCHER_PUBLISHER_H
+#define FRONTEND_LAUNCHER_PUBLISHER_H
 
 #include <boost/noncopyable.hpp>
 
@@ -63,4 +63,4 @@ private:
 
 }
 
-#endif // __LauncherPublisher_h_
+#endif // FRONTEND_LAUNCHER_PUBLISHER_H
