@@ -30,17 +30,17 @@ namespace logistic_helpers
 {
     const kernel::Entity_ABC* GetLogisticBase( const kernel::Entity_ABC* entity );
 
-    void VisitBaseStocksDotations( const kernel::Entity_ABC& logisticBase, std::function< void( const Dotation& ) > func );
-    void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, std::function< void( const kernel::Entity_ABC& ) > func );
-    bool CheckEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, std::function< bool( const kernel::Entity_ABC& ) > func );
+    void VisitBaseStocksDotations( const kernel::Entity_ABC& logisticBase, const std::function< void( const Dotation& ) >& func );
+    void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, const std::function< void( const kernel::Entity_ABC& ) >& func );
+    bool CheckEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, const std::function< bool( const kernel::Entity_ABC& ) >& func );
 
     template< typename Extension >
     bool HasRetrieveEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, const Extension* pExtension = 0 )
     {
         return CheckEntityAndSubordinatesUpToBaseLog( entity, [&]( const kernel::Entity_ABC& entity ) -> bool
         {
-            return pExtension && entity.Retrieve< Extension >() == pExtension ||
-                   !pExtension && entity.Retrieve< Extension >();
+            auto ptr = entity.Retrieve< Extension >();
+            return ptr && ( !pExtension || pExtension == ptr );
         } );
     }
 

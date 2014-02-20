@@ -272,7 +272,7 @@ void ResourcesListView_ABC< Extension >::AddAvailability( const kernel::Entity_A
                 if( !filter_ || filter_( *it ) )
                 {
                     auto availability = std::find_if( availabilities_.begin(), availabilities_.end(),
-                        [&]( kernel::Availability& value )->bool {
+                        [&]( kernel::Availability& value ) {
                             return value.entity_->GetId() == (*it).entity_->GetId() &&
                                    value.type_->GetId() == (*it).type_->GetId(); } );
                     if( availability != availabilities_.end() )

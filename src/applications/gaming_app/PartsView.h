@@ -49,14 +49,6 @@ private:
     void NotifyUpdated( const kernel::Dotations_ABC& dotations );
     bool SetAvailable( int row, int available );
 
-    enum E_Column
-    {
-        eName,
-        eRequired,
-        eAvailable,
-        eNbrColumn,
-    };
-
 private:
     kernel::Controller& controller_;
     QStandardItemModel* model_;

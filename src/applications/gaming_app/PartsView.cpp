@@ -18,6 +18,17 @@
 #include "gaming/Dotations.h"
 #include "gaming/LogMaintenanceConsign.h"
 
+namespace
+{
+    enum E_Column
+    {
+        eName,
+        eRequired,
+        eAvailable,
+        eNbrColumn,
+    };
+}
+
 PartsView::PartsView( kernel::Controllers& controllers, QWidget* parent )
     : RichTableView( "manual_selection_repair_team_partsview", parent )
     , controller_  ( controllers.controller_ )
@@ -59,7 +70,7 @@ void PartsView::Fill( const std::vector< kernel::BreakdownPart >& parts )
     for( auto it = parts.begin(); it != parts.end(); ++it )
     {
         const std::string resourceName = it->GetResource().GetName();
-        unsigned int quantity = it->GetQuantity();
+        const unsigned int quantity = it->GetQuantity();
         model_->setItem( row, eName, new QStandardItem( QString::fromStdString( resourceName ) ) );
         model_->setItem( row, eRequired, new QStandardItem( QString::number( quantity ) ) );
         SetAvailable( row, -1 );
@@ -95,7 +106,6 @@ bool PartsView::SetAvailable( int row, int available )
         model_->setData( model_->index( row, col ), next, Qt::ForegroundRole );
     return isRowValid;
 }
-
 
 void PartsView::NotifyUpdated( const kernel::Dotations_ABC& dotations )
 {

@@ -27,7 +27,7 @@ using namespace kernel;
 namespace logistic_helpers
 {
     // -----------------------------------------------------------------------------
-    void VisitBaseStocksDotations( const Entity_ABC& entity, std::function< void( const Dotation& ) > func )
+    void VisitBaseStocksDotations( const Entity_ABC& entity, const std::function< void( const Dotation& ) >& func )
     {
         VisitEntityAndSubordinatesUpToBaseLog( entity, [&]( const kernel::Entity_ABC& entity )
         {
@@ -40,7 +40,7 @@ namespace logistic_helpers
         } );
     }
     // -----------------------------------------------------------------------------
-    void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, std::function< void( const kernel::Entity_ABC& ) > func )
+    void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, const std::function< void( const kernel::Entity_ABC& ) >& func )
     {
         CheckEntityAndSubordinatesUpToBaseLog( entity, [&]( const kernel::Entity_ABC& entity ) -> bool
         {
@@ -49,7 +49,7 @@ namespace logistic_helpers
         } );
     }
     // -----------------------------------------------------------------------------
-    bool CheckEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, std::function< bool( const kernel::Entity_ABC& ) > func )
+    bool CheckEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, const std::function< bool( const kernel::Entity_ABC& ) >& func )
     {
         if( func( entity ) )
             return true;
