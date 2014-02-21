@@ -43,14 +43,14 @@ using namespace kernel;
 // Name: LogisticEditor constructor
 // Created: MMC 2011-07-21
 // -----------------------------------------------------------------------------
-LogisticEditor::LogisticEditor( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel )
+LogisticEditor::LogisticEditor( QWidget* parent, const QString& objectName, Controllers& controllers, const ::StaticModel& staticModel )
     : QDialog( parent, "StocksEditionDialog", 0, Qt::WStyle_Customize | Qt::WStyle_Title )
     , staticModel_( staticModel )
     , controllers_( controllers )
     , selected_   ( controllers )
 {
     setCaption( tools::translate( "StocksEditionDialog", "Stocks Edition" ) );
-    gui::SubObjectName subObject( "LogisticEditor" );
+    gui::SubObjectName subObject( objectName );
     resize( 550, 350 );
 
     dataModel_ = new QStandardItemModel( this );

@@ -43,7 +43,7 @@ using namespace kernel;
 // Created: SLI 2014-02-19
 // -----------------------------------------------------------------------------
 LogisticQuotaEditor::LogisticQuotaEditor( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel )
-    : LogisticEditor( parent, controllers, staticModel )
+    : LogisticEditor( parent, "LogisticQuotaEditor", controllers, staticModel )
 {
     setCaption( tools::translate( "StocksEditionDialog", "Quotas Edition" ) );
 }
