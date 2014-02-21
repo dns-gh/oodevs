@@ -34,6 +34,7 @@ class MIL_PopulationConcentration : public MIL_PopulationElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_PopulationConcentration();
              MIL_PopulationConcentration( MIL_Population& population, unsigned int id );
              MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
              MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nHumans = 0 );
@@ -115,8 +116,6 @@ private:
     bool hasDoneMagicMove_;
     static MIL_IDManager idManager_;
     //@}
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_PopulationConcentration* concentration, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_PopulationConcentration* concentration, const unsigned int /*version*/ );
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_PopulationConcentration )

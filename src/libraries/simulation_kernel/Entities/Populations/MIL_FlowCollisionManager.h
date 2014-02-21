@@ -38,19 +38,6 @@ public:
     void NotifyFlowDestruction( const MIL_PopulationFlow* flow );
     //@}
 
-    //! @name CheckPoints
-    //@{
-//     BOOST_SERIALIZATION_SPLIT_MEMBER()
-// 
-//     void load( MIL_CheckPointInArchive&, const unsigned int );
-//     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

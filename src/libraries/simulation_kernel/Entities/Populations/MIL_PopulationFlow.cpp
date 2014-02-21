@@ -45,29 +45,42 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationFlow )
 
 MIL_IDManager MIL_PopulationFlow::idManager_;
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const MIL_PopulationFlow* flow, const unsigned int /*version*/ )
-{
-    MIL_Population* const pPopulation = &flow->GetPopulation();
-    unsigned int nID = flow->GetID();
-    archive << pPopulation << nID;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, MIL_PopulationFlow* flow, const unsigned int /*version*/ )
-{
-    MIL_Population* pPopulation;
-    unsigned int nID;
-    archive >> pPopulation >> nID;
-    ::new( flow )MIL_PopulationFlow( *pPopulation, nID);
-}
-
 namespace
 {
     MIL_FlowCollisionManager& GetFlowCollisionManager()
     {
         return MIL_AgentServer::GetWorkspace().GetEntityManager().GetFlowCollisionManager();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow constructor
+// Created: JSR 2014-02-20
+// -----------------------------------------------------------------------------
+MIL_PopulationFlow::MIL_PopulationFlow()
+    : MIL_PopulationElement_ABC()
+    , pSourceConcentration_( 0 )
+    , pDestConcentration_( 0 )
+    , direction_( 0., 1. )
+    , rSpeed_( 0. )
+    , rWalkedDistance_( 0 )
+    , bHeadMoveFinished_( false )
+    , bPathUpdated_( true )
+    , bFlowShapeUpdated_( true )
+    , bDirectionUpdated_( true )
+    , bSpeedUpdated_( true )
+    , bBlocked_( false )
+    , pSplittingObject_( 0 )
+    , pBlockingObject_( 0 )
+    , pFirstSplittingObject_( 0 )
+    , personsPassedThroughObject_( 0 )
+    , armedIndividualsBeforeSplit_( 0 )
+    , objectDensity_( 1. )
+    , canCollideWithFlow_( false )
+    , hasDoneMagicMove_( false )
+    , speedLimit_( std::numeric_limits< double >::max() )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -145,36 +158,6 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow constructor
-// Created: SBO 2005-10-18
-// -----------------------------------------------------------------------------
-MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, unsigned int nID )
-    : MIL_PopulationElement_ABC( population, nID )
-    , pSourceConcentration_       ( 0 )
-    , pDestConcentration_         ( 0 )
-    , direction_                  ( 0., 1. )
-    , rSpeed_                     ( 0. )
-    , rWalkedDistance_            ( 0 )
-    , bHeadMoveFinished_          ( false )
-    , bPathUpdated_               ( true )
-    , bFlowShapeUpdated_          ( true )
-    , bDirectionUpdated_          ( true )
-    , bSpeedUpdated_              ( true )
-    , bBlocked_                   ( false )
-    , pSplittingObject_           ( 0 )
-    , pBlockingObject_            ( 0 )
-    , pFirstSplittingObject_      ( 0 )
-    , personsPassedThroughObject_ ( 0 )
-    , armedIndividualsBeforeSplit_( 0 )
-    , objectDensity_              ( 1. )
-    , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
-    , hasDoneMagicMove_( false )
-    , speedLimit_( std::numeric_limits< double >::max() )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow destructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
@@ -205,7 +188,7 @@ void MIL_PopulationFlow::DetachFromDestConcentration()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
 {
-    boost::shared_ptr< MT_Vector2D > pDestination = boost::make_shared< MT_Vector2D >( destination );
+    auto pDestination = boost::make_shared< MT_Vector2D >( destination );
     std::vector< boost::shared_ptr< MT_Vector2D > > vDestination;
     vDestination.push_back( pDestination );
     ComputePathAlong( vDestination, vDestination );
@@ -415,8 +398,7 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
         if( rDist < rDirLength )
         {
             vCur = vCur + ( vDir * rDist );
-            auto itStart = std::next( flowShape_.begin() );
-            flowShape_.erase( itStart, itNext );
+            flowShape_.erase( std::next( flowShape_.begin() ), itNext );
             SetTailPosition( vCur );
             break;
         }
@@ -427,9 +409,7 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
             ++itNext;
             if( itNext == flowShape_.end() )
             {
-                auto itTmp = std::prev( flowShape_.end() );
-                auto itStart = std::next( flowShape_.begin() );
-                flowShape_.erase( itStart, itTmp );
+                flowShape_.erase( std::next( flowShape_.begin() ), std::prev( flowShape_.end() ) );
                 SetTailPosition( GetHeadPosition() );
                 break;
             }
@@ -645,10 +625,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::ComputeSpeedLimit
+// Name: MIL_PopulationFlow::UpdateSpeedLimit
 // Created: JSR 2014-01-31
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::ComputeSpeedLimit()
+void MIL_PopulationFlow::UpdateSpeedLimit()
 {
     speedLimit_ = std::numeric_limits< double >::max();
     if( canCollideWithFlow_ )
@@ -695,14 +675,8 @@ void MIL_PopulationFlow::ComputeSpeedLimit()
                     }
                 }
             }
-
             if( !reverse )
-            {
-                if( flow->pSourceConcentration_ && flow->pSourceConcentration_ != pDestConcentration_ )
-                    speedLimit_ = 0;
-                else
-                    speedLimit_ = std::min( speedLimit_, sqrt( squareDistance ) / 2 );
-            }
+                speedLimit_ = std::min( speedLimit_, sqrt( squareDistance ) / 2 );
         }
     }
 }
@@ -835,7 +809,7 @@ void MIL_PopulationFlow::UpdateCrowdCollisions()
         T_FlowCollisions collisions;
         ApplyOnShape( boost::bind( &MIL_PopulationFlow::ComputeFlowCollisions, this, _1, boost::ref( collisions ) ) );
         GetFlowCollisionManager().SetCollisions( this, collisions );
-        ComputeSpeedLimit();
+        UpdateSpeedLimit();
     }
 }
 
@@ -1042,6 +1016,7 @@ void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const unsigned int
          >> flowShape_
          >> direction_
          >> rSpeed_;
+    canCollideWithFlow_ = GetPopulation().GetType().CanCollideWithFlow();
     idManager_.GetId( MIL_PopulationElement_ABC::GetID(), true );
     UpdateLocation();
 }
@@ -1378,9 +1353,9 @@ const T_PointList& MIL_PopulationFlow::GetFlowShape() const
     if( bFlowShapeUpdated_ || computedFlowShape_.empty() )
     {
         computedFlowShape_.resize( flowShape_.size() );
-        std::transform( flowShape_.begin(), flowShape_.end(), computedFlowShape_.begin(), 
-            [ & ]( std::pair< MT_Vector2D, std::size_t > value )->MT_Vector2D {
-                return value.first; } );
+        auto itComputed = computedFlowShape_.begin();
+        for( auto it = flowShape_.begin(); it != flowShape_.end(); ++it, ++itComputed )
+            *itComputed = it->first;
     }
     return computedFlowShape_;
 }

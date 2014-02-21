@@ -40,6 +40,22 @@
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC constructor
+// Created: JSR 2014-02-20
+// -----------------------------------------------------------------------------
+MIL_PopulationElement_ABC::MIL_PopulationElement_ABC()
+    : pPopulation_( 0 )
+    , nID_( 0 )
+    , rDensity_( 0. )
+    , pAttitude_( 0 )
+    , bAttitudeUpdated_( true )
+    , bHumansUpdated_( true )
+    , pDecontaminationEffect_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_PopulationElement_ABC::MIL_PopulationElement_ABC( MIL_Population& population, unsigned int nID )
@@ -288,7 +304,9 @@ boost::shared_ptr< MT_Vector2D > MIL_PopulationElement_ABC::GetSecuringPoint( co
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> humans_
+    file >> const_cast< unsigned int& >( nID_ )
+         >> pPopulation_
+         >> humans_
          >> rDensity_
          >> collidingAgents_
          >> collidingObjects_
@@ -300,6 +318,7 @@ void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsig
     assert( pAttitude_ );
     file >> intoxicationEffects_;
     file >> contaminationEffects_;
+    pDecontaminationEffect_.reset( new MIL_DecontaminationEffect( humans_, pPopulation_->GetType().GetDecontaminationDelay() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -309,15 +328,17 @@ void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsig
 void MIL_PopulationElement_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned attitude = pAttitude_->GetID();
-    file << humans_
+    file << nID_
+         << pPopulation_
+         << humans_
          << rDensity_
          << collidingAgents_
          << collidingObjects_
          << collidingPopulationConcentrations_
          << collidingPopulationFlows_
-         << attitude;
-    file << intoxicationEffects_;
-    file << contaminationEffects_;
+         << attitude
+         << intoxicationEffects_
+         << contaminationEffects_;
 }
 
 // -----------------------------------------------------------------------------
