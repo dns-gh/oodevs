@@ -30,8 +30,6 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Formation_ABC;
-    class ModelLoaded;
-    class ModelUnLoaded;
     class DotationType;
     class LogisticSupplyClass;
 }
@@ -46,8 +44,6 @@ class LogisticEditor : public QDialog
                      , public tools::Observer_ABC
                      , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                      , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
-                     , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                     , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT
 
@@ -60,8 +56,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyUpdated( const kernel::ModelLoaded& );
-    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu );
     //@}
@@ -107,6 +101,7 @@ private slots:
     void Accept();
     void Reject();
     void closeEvent( QCloseEvent* pEvent );
+    void Show();
     //@}
 
 protected:

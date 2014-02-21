@@ -85,7 +85,7 @@ void LogisticQuotaEditor::Update( const kernel::Entity_ABC& entity, ContextMenu&
     if( !HasLogisticBaseSubordinate( entity ) )
         return;
     ContextMenu* pSubMenu = menu.SubMenu( "Helpers", tr( "Logistic" ), false, 7 );
-    pSubMenu->insertItem( tools::translate( "LogisticEditor", "Edit Quotas" ), this, SLOT( show() ) );
+    pSubMenu->insertItem( tools::translate( "LogisticEditor", "Edit Quotas" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------

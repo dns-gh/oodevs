@@ -95,10 +95,10 @@ LogisticEditor::~LogisticEditor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticEditor::NotifyUpdated
-// Created: JSR 2011-10-03
+// Name: LogisticEditor::Show
+// Created: SLI 2014-02-21
 // -----------------------------------------------------------------------------
-void LogisticEditor::NotifyUpdated( const ModelLoaded& )
+void LogisticEditor::Show()
 {
     dataModel_->clear();
     QStringList horizontalHeaders;
@@ -127,15 +127,7 @@ void LogisticEditor::NotifyUpdated( const ModelLoaded& )
         dataModel_->setItem( row, eDays, item );
         ++row;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEditor::NotifyUpdated
-// Created: JSR 2011-10-03
-// -----------------------------------------------------------------------------
-void LogisticEditor::NotifyUpdated( const ModelUnLoaded& )
-{
-    dataModel_->clear();
+    show();
 }
 
 // -----------------------------------------------------------------------------

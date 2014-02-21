@@ -64,7 +64,7 @@ LogisticStockEditor::~LogisticStockEditor()
 void LogisticStockEditor::Update( const kernel::Entity_ABC& /*entity*/, ContextMenu& menu )
 {
     ContextMenu* pSubMenu = menu.SubMenu( "Helpers", tr( "Logistic" ), false, 7 );
-    pSubMenu->insertItem( tools::translate( "LogisticEditor", "Edit Stocks" ), this, SLOT( show() ) );
+    pSubMenu->insertItem( tools::translate( "LogisticEditor", "Edit Stocks" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------
