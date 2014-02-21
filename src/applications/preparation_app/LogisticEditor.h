@@ -54,7 +54,7 @@ class LogisticEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticEditor( QWidget* parent, kernel::Controllers& controllers, const ::StaticModel& staticModel );
+             LogisticEditor( QWidget* parent, const QString& objectName, kernel::Controllers& controllers, const ::StaticModel& staticModel );
     virtual ~LogisticEditor();
     //@}
 
