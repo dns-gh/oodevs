@@ -2421,7 +2421,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , pObjectManager_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , wk.GetUrbanCache().GetUrbanBlocks().size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d urbans"     , wk.GetUrbanCache().GetUrbanBlocks().size() ) );
 }
 
 // -----------------------------------------------------------------------------
