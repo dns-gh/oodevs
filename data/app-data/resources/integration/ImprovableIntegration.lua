@@ -22,6 +22,36 @@ integration.hasEnoughtDotationForImprovement = function( object )
     end
 end
 
+--- Returns 'true' if the agent has the physical ability to improve the provided object
+-- This method can only be called by an agent.
+-- @return Boolean, returns 'true' if the agent has the physical ability to improve the provided object.
+-- It returns 'false' otherwise. See the 'equipments' tab, 'object' section in authoring 
+-- tool.
+integration.agentCanImproveObject = function( object )
+    return DEC_Agent_PeutValoriserObjet( object.source )
+end
+
+--- Returns 'true' if the agent has enough dotations to improve the provided object
+-- This method can only be called by an agent.
+-- @return Boolean, returns 'true' if the agent has enough dotations to improve the provided object.
+-- It returns 'false' otherwise. See the 'equipments' tab, 'ressources' section in authoring.
+-- tool.
+integration.hasEnoughDotationForImprovementWithReinforcement = function( object )
+    local dotations = DEC_GetAgentDotationManquantePourValoriserObjet( meKnowledge.source, object.source )
+    if not dotations.first then -- the agent has the dotation
+        return true
+    else -- A dotation is missing. verify the agent is reinforced and if reinforcing agents has the dotation.
+        local reinforcingAgents = DEC_Agent_Renforts( meKnowledge.source )
+        for i = 1, #reinforcingAgents do
+            local nbreDotation = DEC_Agent_GetAgentDotation( reinforcingAgents[ i ], dotations.first )
+            if nbreDotation > 1 then
+                return true -- at least one agent has the dotations
+            end
+        end
+    end
+    return false
+end
+
 integration.canBeImproved = function( object )
     return DEC_ConnaissanceObjet_PeutEtreValorise( object.source )
 end
