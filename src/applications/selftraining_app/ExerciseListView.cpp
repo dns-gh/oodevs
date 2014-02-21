@@ -9,6 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "ExerciseListView.h"
+#include "Application.h"
 #include "frontend/Exercise_ABC.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
@@ -50,8 +51,9 @@ namespace
 // Name: ExerciseListView::ExerciseListView
 // Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
-ExerciseListView::ExerciseListView( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : config_( config )
+ExerciseListView::ExerciseListView( Application& app, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
+    : app_( app )
+    , config_( config )
     , fileLoader_( fileLoader )
     , proxy_( new CustomSortFilterProxyModel( model_ ) )
 {
@@ -147,7 +149,7 @@ void ExerciseListView::AddExerciseEntry( const frontend::Exercise_ABC& exercise 
     static const QPixmap directory( "resources/images/selftraining/directory.png" );
     static const QPixmap mission( "resources/images/selftraining/mission.png" );
 
-    qApp->setOverrideCursor( Qt::WaitCursor );
+    app_.SetWaitingCursor();
     tools::Path exerciseName = exercise.GetName();
     QStringList path( QString( exerciseName.ToUTF8().c_str() ).split( '\\') );
     QStringList complete;
@@ -174,7 +176,6 @@ void ExerciseListView::AddExerciseEntry( const frontend::Exercise_ABC& exercise 
         parent->setIcon( mission );
         parent->setData( QVariant::fromValue( &exercise ), ExerciseRole );
     }
-    qApp->restoreOverrideCursor();
 }
 
 // -----------------------------------------------------------------------------

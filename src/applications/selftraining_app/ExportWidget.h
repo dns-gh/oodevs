@@ -35,6 +35,7 @@ namespace kernel
     class Controllers;
 }
 
+class Application;
 class ExerciseListView;
 
 // =============================================================================
@@ -53,7 +54,7 @@ class ExportWidget : public gui::WidgetLanguageObserver_ABC< QWidget >
 public:
     //! @name Constructors/Destructor
     //@{
-             ExportWidget( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers );
+             ExportWidget( Application& app, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers );
     virtual ~ExportWidget();
     //@}
 

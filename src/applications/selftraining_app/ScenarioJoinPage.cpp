@@ -71,7 +71,7 @@ ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Pag
         genlayout->addWidget( w );
     }
     {
-        exercises_ = new ExerciseList( gen, config_, fileLoader_, controllers, true, false, true, false );
+        exercises_ = new ExerciseList( app, gen, config_, fileLoader_, controllers, true, false, true, false );
         connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC& ) ) );
         connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
         genlayout->addWidget( exercises_ );

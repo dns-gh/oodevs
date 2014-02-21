@@ -32,7 +32,7 @@ namespace frontend
 // Name: ExerciseList constructor
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers,
+ExerciseList::ExerciseList( Application& app, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers,
                             bool showBrief /* = true*/, bool showProfile /* =true*/, bool showParams /* = true*/, bool enableParams /* = true*/ )
     : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , controllers_      ( controllers )
@@ -46,7 +46,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     QWidget* leftBox = new QWidget();
     QVBoxLayout* leftBoxLayout = new QVBoxLayout();
     {
-        exercises_ = new ExerciseListView( config, fileLoader );
+        exercises_ = new ExerciseListView( app, config, fileLoader );
         connect( exercises_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( SelectExercise( const QModelIndex&, const QModelIndex& ) ) );
         profiles_ = new ProfileList( leftBox, config, fileLoader );
         profiles_->setVisible( showProfile );

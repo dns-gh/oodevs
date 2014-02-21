@@ -32,6 +32,7 @@ namespace tools
     class Loader_ABC;
 }
 
+class Application;
 class ExerciseProperties;
 class ProfileList;
 class ExerciseListView;
@@ -52,7 +53,7 @@ class ExerciseList : public gui::WidgetLanguageObserver_ABC< QWidget >
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, bool showBrief = true, bool showProfile = true, bool showParams = true, bool enableParams = true );
+             ExerciseList( Application& app, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, bool showBrief = true, bool showProfile = true, bool showParams = true, bool enableParams = true );
     virtual ~ExerciseList();
     //@}
 

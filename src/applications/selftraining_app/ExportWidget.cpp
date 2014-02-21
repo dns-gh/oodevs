@@ -36,7 +36,7 @@ namespace fc = frontend::commands;
 // Name: ExportWidget constructor
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
-ExportWidget::ExportWidget( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers )
+ExportWidget::ExportWidget( Application& app, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers )
     : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , config_     ( config )
     , fileLoader_ ( fileLoader )
@@ -55,7 +55,7 @@ ExportWidget::ExportWidget( QWidget* parent, const tools::GeneralConfig& config,
 
     //exercise list
     exerciseLabel_ = new QLabel();
-    exerciseList_ = new ExerciseListView( config, fileLoader );
+    exerciseList_ = new ExerciseListView( app, config, fileLoader );
     exerciseList_->setSelectionMode( QAbstractItemView::ExtendedSelection );
     connect( exerciseList_->selectionModel(),
         SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ),

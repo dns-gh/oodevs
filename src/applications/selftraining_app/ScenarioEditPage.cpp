@@ -39,7 +39,7 @@ ScenarioEditPage::ScenarioEditPage( Application& app, QWidget* parent, QStackedW
     mainTabs_ = new QTabWidget( box );
 
     // eTabs_Edit
-    exercises_ = new ExerciseList( parent, config_, fileLoader_, controllers, true, false );
+    exercises_ = new ExerciseList( app, parent, config_, fileLoader_, controllers, true, false );
     mainTabs_->addTab( exercises_, "" );
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
