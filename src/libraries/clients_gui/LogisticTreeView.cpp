@@ -356,7 +356,7 @@ QStringList LogisticTreeView::MimeTypes() const
 {
     QStringList l;
     l << typeid( kernel::Automat_ABC ).name() << typeid( kernel::Formation_ABC ).name()
-      << typeid( gui::LogisticBase ).name();
+      << typeid( sword::EnumLogisticLevel ).name();
     return l;
 }
 
@@ -494,7 +494,7 @@ void LogisticTreeView::contextMenuEvent( QContextMenuEvent* event )
     if( !IsReadOnly() && event )
     {
         QStandardItem* targetItem = dataModel_.GetItemFromIndex( indexAt( event->pos() ) );
-        if( targetItem && !dnd::IsA< gui::LogisticBase>( *targetItem ) )
+        if( targetItem && !dnd::IsA< sword::EnumLogisticLevel >( *targetItem ) )
             HierarchyTreeView_ABC::contextMenuEvent( event );
     }
 }
