@@ -197,7 +197,7 @@ void LogisticEditor::NotifyContextMenu( const Automat_ABC& automat, ContextMenu&
     if( automat.GetId() == 0 || !automat.Get< gui::LogisticBase >().IsBase() )
         return;
     selected_ = static_cast< const Entity_ABC* >( &automat );
-    Update( menu );
+    Update( automat, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +209,7 @@ void LogisticEditor::NotifyContextMenu( const Formation_ABC& formation, ContextM
     if( formation.GetId() == 0 || !formation.Get< gui::LogisticBase >().IsBase() )
         return;
     selected_ = static_cast< const Entity_ABC* >( &formation );
-    Update( menu );
+    Update( formation, menu );
 }
 
 // -----------------------------------------------------------------------------

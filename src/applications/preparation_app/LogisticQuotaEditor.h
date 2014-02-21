@@ -32,7 +32,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void Update( kernel::ContextMenu& menu );
+    virtual void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void SupplyHierarchy( const kernel::Entity_ABC& entity, const gui::LogisticHierarchiesBase& logHierarchy );
     //@}
 

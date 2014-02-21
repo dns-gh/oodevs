@@ -80,7 +80,7 @@ protected:
 protected:
     //! @name Operations
     //@{
-    virtual void Update( kernel::ContextMenu& menu ) = 0;
+    virtual void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu ) = 0;
     virtual void SupplyHierarchy( const kernel::Entity_ABC& entity, const gui::LogisticHierarchiesBase& logHierarchy ) = 0;
     //@}
 
