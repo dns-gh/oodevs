@@ -328,20 +328,21 @@ end
 -- If no position is provided, then the concentration is created instead on a 
 -- safe position near the given crowd (i.e. a closeby position at the periphery
 -- of the given crowd at the opposite of the current danger direction).
+-- The actual extraction position is a random position at the given distance
+-- from the previously computed position.
 -- This method does nothing if there is no wounded humans in the crowd.
 -- This method can only be called by an agent.
 -- @param crowd Crowd knowledge
 -- @param position Simulation point
--- @param randomizingDistance Float, the distance between the computed extraction position and
--- the actual extraction position, obtained by picking a random position at the given distance
--- (in meters, optional, 50 by default).
+-- @param distance Float, the distance between the computed extraction position and
+-- the actual extraction position
 -- @return Boolean, whether or not the extraction occurred successfully.
-integration.extractVictimsFromCrowd = function( crowd, position, randomizingDistance )
+integration.extractVictimsFromCrowd = function( crowd, position, distance )
     position = position or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
     if not position then
         position = DEC_Agent_Position() -- extract wounded creating a new crowd on my own position
     end
-    position = DEC_Geometrie_PositionAleatoireSurCercle( position, randomizingDistance or 50 )
+    position = DEC_Geometrie_PositionAleatoireSurCercle( position, distance or 50 )
     return DEC_Crowd_ExtractWoundedFromCrowd( crowd.source, position )
 end
 
@@ -351,20 +352,21 @@ end
 -- If no position is provided, then the concentration is created instead on a 
 -- safe position near the given crowd (i.e. a closeby position at the periphery
 -- of the given crowd at the opposite of the current danger direction).
+-- The actual extraction position is a random position at the given distance
+-- from the previously computed position.
 -- This method does nothing if there is no dead humans in the crowd.
 -- This method can only be called by an agent.
 -- @param crowd Crowd knowledge
 -- @param position Simulation point
--- @param randomizingDistance Float, the distance between the computed extraction position and
--- the actual extraction position, obtained by picking a random position at the given distance
--- (in meters, optional, 50 by default).
+-- @param distance Float, the distance between the computed extraction position and
+-- the actual extraction position
 -- @return Boolean, whether or not the extraction occurred successfully.
-integration.extractDeadFromCrowd = function( crowd, position, randomizingDistance )
+integration.extractDeadFromCrowd = function( crowd, position, distance )
     position = position or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
     if not position then
         position = DEC_Agent_Position() -- extract dead creating a new crowd on my own position
     end
-    position = DEC_Geometrie_PositionAleatoireSurCercle( position, randomizingDistance or 50 )
+    position = DEC_Geometrie_PositionAleatoireSurCercle( position, distance or 50 )
     return DEC_Crowd_ExtractDeadFromCrowd( crowd.source, position )
 end
 
