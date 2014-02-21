@@ -61,7 +61,7 @@ DetectionMapIterator::DetectionMapIterator( const DetectionMap& map, const Point
 // -----------------------------------------------------------------------------
 void DetectionMapIterator::Increment()
 {
-    Vector2f increment = ComputeIncrement();
+    const Vector2f increment = ComputeIncrement();
 
     xCurrent_ += increment.X();
     xOffset_  += increment.X();

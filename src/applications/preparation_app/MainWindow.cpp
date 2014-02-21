@@ -86,7 +86,6 @@
 #include "clients_gui/GraphicPreferences.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Logger_ABC.h"
 #include "clients_kernel/ModeController.h"

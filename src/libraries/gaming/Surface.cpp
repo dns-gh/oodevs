@@ -103,11 +103,8 @@ void Surface::Update( VisionMap& map )
             const Point2f point = map_.Map( i, j );
             const std::pair< unsigned, unsigned > mappedPoint( i, j );
             if( IsInSector( point ) && map.ShouldUpdate( mappedPoint ) )
-            {
-                E_PerceptionResult perception = ComputePerception( point );
-                map.Update( mappedPoint, perception );
-            }
-        };
+                map.Update( mappedPoint, ComputePerception( point ) );
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +123,7 @@ Rectangle2f Surface::Extent() const
 // -----------------------------------------------------------------------------
 Rectangle2< int > Surface::MappedExtent() const
 {
-    Rectangle2f extent = Extent();
+    const Rectangle2f extent = Extent();
     std::pair< unsigned, unsigned > bl = map_.Unmap( extent.BottomLeft() );
     std::pair< unsigned, unsigned > tr = map_.Unmap( extent.TopRight() );
     return Rectangle2< int >( bl.first, bl.second, tr.first, tr.second );
