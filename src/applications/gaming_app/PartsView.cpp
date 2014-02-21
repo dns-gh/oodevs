@@ -108,6 +108,8 @@ bool PartsView::SetAvailable( int row, int available )
 
 void PartsView::NotifyUpdated( const kernel::Dotations_ABC& dotations )
 {
+    if( !isVisible() )
+        return;
     const auto dots = dynamic_cast< const Dotations* >( &dotations );
     if( !dots || !entity_ || entity_ != &dots->entity_ )
         return;
