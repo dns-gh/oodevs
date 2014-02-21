@@ -2595,7 +2595,7 @@ const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const
 // Name: MIL_EntityManager::ConvertUrbanIdToSimId
 // Created: JSR 2011-01-18
 // -----------------------------------------------------------------------------
-unsigned int MIL_EntityManager::ConvertUrbanIdToSimId( unsigned int urbanId )
+unsigned int MIL_EntityManager::ConvertUrbanIdToSimId( unsigned int urbanId ) const
 {
     for( auto it = cities_.begin(); it != cities_.end(); ++it )
     {

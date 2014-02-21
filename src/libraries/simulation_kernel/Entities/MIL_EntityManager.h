@@ -150,7 +150,7 @@ public:
 
     MIL_Population* FindPopulation( MIL_UrbanObject_ABC* urbanObject ) const;
     const tools::Resolver< MIL_Army_ABC >& GetArmies() const;
-    unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
+    unsigned int ConvertUrbanIdToSimId( unsigned int urbanId ) const;
     bool ConvertIdToUrbanId( unsigned int& id ) const;
     //@}
 
