@@ -25,27 +25,27 @@ namespace tools
 
 namespace sword
 {
-    enum ObstacleType_DemolitionTargetType;
     enum MagicActionAck_ErrorCode;
-    class CrowdOrder;
-    class UnitOrder;
+    enum ObstacleType_DemolitionTargetType;
     class AutomatOrder;
-    class Tasker;
-    class FragOrder;
-    class ObjectMagicAction;
+    class BurningCellRequest;
     class ControlEnableVisionCones;
-    class SetAutomatMode;
-    class UnitCreationRequest;
-    class UnitMagicAction;
-    class UnitMagicActionAck;
+    class CrowdOrder;
+    class FragOrder;
     class KnowledgeMagicAction;
     class MagicAction;
     class MagicActionAck;
-    class MissionParameters;
     class MissionParameter_Value;
-    class BurningCellRequest;
+    class MissionParameters;
+    class ObjectMagicAction;
     class ParentEntity;
+    class SetAutomatMode;
     class Sink_ABC;
+    class Tasker;
+    class UnitCreationRequest;
+    class UnitMagicAction;
+    class UnitMagicActionAck;
+    class UnitOrder;
 }
 
 namespace client
@@ -55,8 +55,8 @@ namespace client
 
 namespace xml
 {
-    class xostream;
     class xistream;
+    class xostream;
 }
 
 namespace propagation
@@ -64,41 +64,41 @@ namespace propagation
     class FloodModel_ABC;
 }
 
-class ArmyFactory_ABC;
 class AgentFactory_ABC;
+class ArmyFactory_ABC;
 class AutomateFactory_ABC;
 class FormationFactory_ABC;
+class InhabitantFactory_ABC;
 class KnowledgeGroupFactory;
-class MIL_AgentTypePion;
-class MIL_AutomateType;
-class MIL_EffectManager;
-class MIL_ObjectManager;
-class MIL_Army_ABC;
+class KnowledgesVisitor_ABC;
 class MIL_AgentPion;
+class MIL_AgentTypePion;
+class MIL_Army_ABC;
 class MIL_Automate;
 class MIL_AutomateLOG;
+class MIL_AutomateType;
 class MIL_Config;
-class MIL_Entity_ABC;
 class MIL_DictionaryExtensions;
+class MIL_DictionaryExtensions;
+class MIL_EffectManager;
+class MIL_Entity_ABC;
 class MIL_Formation;
 class MIL_IDManager;
+class MIL_Inhabitant;
 class MIL_KnowledgeGroup;
 class MIL_Object_ABC;
-class MIL_ObjectType_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_ObjectFactory;
-class MIL_UrbanObject_ABC;
+class MIL_ObjectManager;
+class MIL_ObjectType_ABC;
 class MIL_Population;
-class MIL_Inhabitant;
 class MIL_ProfilerManager;
 class MIL_Time_ABC;
+class MIL_UrbanObject_ABC;
+class MIL_UrbanObject_ABC;
 class MissionController_ABC;
-class InhabitantFactory_ABC;
 class PopulationFactory_ABC;
 class TER_Localisation;
-class MIL_UrbanObject_ABC;
-class KnowledgesVisitor_ABC;
-class MIL_DictionaryExtensions;
 
 void TerminatePhysicalSingletons();
 void TerminateMilitarySingletons();
