@@ -57,14 +57,35 @@ LogisticQuotaEditor::~LogisticQuotaEditor()
     // NOTHING
 }
 
+namespace
+{
+    bool HasLogisticBaseSubordinate( const kernel::Entity_ABC& entity )
+    {
+        const gui::LogisticHierarchiesBase* logHierarchy = entity.Retrieve< gui::LogisticHierarchiesBase >();
+        if( !logHierarchy )
+            return false;
+        if( !logistic_helpers::IsLogisticBase( entity ) )
+            return false;
+        auto itLogChildren = logHierarchy->CreateSubordinateIterator();
+        while( itLogChildren.HasMoreElements() )
+        {
+            if( logistic_helpers::IsLogisticBase( itLogChildren.NextElement() ) )
+                return true;
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticQuotaEditor::Update
 // Created: MMC 2011-07-21
 // -----------------------------------------------------------------------------
-void LogisticQuotaEditor::Update( ContextMenu& menu )
+void LogisticQuotaEditor::Update( const kernel::Entity_ABC& entity, ContextMenu& menu )
 {
+    if( !HasLogisticBaseSubordinate( entity ) )
+        return;
     ContextMenu* pSubMenu = menu.SubMenu( "Helpers", tr( "Logistic" ), false, 7 );
-    pSubMenu->insertItem( tools::translate( "LogisticEditor", "Edit Quotas" ), this, SLOT( show() ) );
+    pSubMenu->insertItem( tools::translate( "LogisticEditor", "Edit Quotas" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------

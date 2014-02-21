@@ -61,10 +61,10 @@ LogisticStockEditor::~LogisticStockEditor()
 // Name: LogisticQuotaEditor::Update
 // Created: MMC 2011-07-21
 // -----------------------------------------------------------------------------
-void LogisticStockEditor::Update( ContextMenu& menu )
+void LogisticStockEditor::Update( const kernel::Entity_ABC& /*entity*/, ContextMenu& menu )
 {
     ContextMenu* pSubMenu = menu.SubMenu( "Helpers", tr( "Logistic" ), false, 7 );
-    pSubMenu->insertItem( tools::translate( "LogisticEditor", "Edit Stocks" ), this, SLOT( show() ) );
+    pSubMenu->insertItem( tools::translate( "LogisticEditor", "Edit Stocks" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------

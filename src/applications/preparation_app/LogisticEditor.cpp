@@ -95,10 +95,10 @@ LogisticEditor::~LogisticEditor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticEditor::NotifyUpdated
-// Created: JSR 2011-10-03
+// Name: LogisticEditor::Show
+// Created: SLI 2014-02-21
 // -----------------------------------------------------------------------------
-void LogisticEditor::NotifyUpdated( const ModelLoaded& )
+void LogisticEditor::Show()
 {
     dataModel_->clear();
     QStringList horizontalHeaders;
@@ -127,15 +127,7 @@ void LogisticEditor::NotifyUpdated( const ModelLoaded& )
         dataModel_->setItem( row, eDays, item );
         ++row;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEditor::NotifyUpdated
-// Created: JSR 2011-10-03
-// -----------------------------------------------------------------------------
-void LogisticEditor::NotifyUpdated( const ModelUnLoaded& )
-{
-    dataModel_->clear();
+    show();
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +189,7 @@ void LogisticEditor::NotifyContextMenu( const Automat_ABC& automat, ContextMenu&
     if( automat.GetId() == 0 || !automat.Get< gui::LogisticBase >().IsBase() )
         return;
     selected_ = static_cast< const Entity_ABC* >( &automat );
-    Update( menu );
+    Update( automat, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +201,7 @@ void LogisticEditor::NotifyContextMenu( const Formation_ABC& formation, ContextM
     if( formation.GetId() == 0 || !formation.Get< gui::LogisticBase >().IsBase() )
         return;
     selected_ = static_cast< const Entity_ABC* >( &formation );
-    Update( menu );
+    Update( formation, menu );
 }
 
 // -----------------------------------------------------------------------------
