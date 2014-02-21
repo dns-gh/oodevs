@@ -64,6 +64,7 @@
 #include "Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -248,18 +249,16 @@ void save_construct_data( Archive& archive, const MIL_EntityManager* manager, co
     //archive << armyFactory_
     //        << formationFactory_
     //        <<
-    const Sink_ABC* sink = manager->sink_.get();
-    archive << sink;
+    archive << manager->sink_;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_EntityManager* manager, const unsigned int /*version*/ )
 {
-    Sink_ABC* sink;
+    std::auto_ptr< Sink_ABC > sink;
     archive >> sink;
-    std::auto_ptr< Sink_ABC > pSink( sink );
     ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(), MIL_EffectManager::GetEffectManager(),
-                                       pSink,
+                                       sink,
                                        MIL_AgentServer::GetWorkspace().GetConfig() );
 }
 
@@ -293,9 +292,9 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
-    , sink_                         ( std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) ))
+    , sink_                         ( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
-    , pFloodModel_                  ( sink_->CreateFloodModel() )
+    , pFloodModel_                  ( sink_->CreateFloodModel().release() )
     , automateFactory_              ( new AutomateFactory( *idManager_, *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
@@ -325,7 +324,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rEffectsTime_                 ( 0 )
     , rStatesTime_                  ( 0 )
     , idManager_                    ( new MIL_IDManager() )
-    , sink_                         ( sink )
+    , sink_                         ( sink.release() )
 {
     // NOTHING
 }
@@ -1801,7 +1800,7 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
     std::set< const PHY_DotationCategory* > quotasTypes;
     const sword::MissionParameter& quotas = message.parameters().elem( 1 );
     const boost::shared_ptr< logistic::LogisticLink_ABC > superiorLink = pSupplied->FindSuperiorLink( *pSupplier );
-    if( !superiorLink.get() )
+    if( !superiorLink )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver superior logistic link" );
 
     quotasTypes = superiorLink->OnReceiveChangeQuotas( quotas );
@@ -2388,26 +2387,16 @@ bool MIL_EntityManager::IsInhabitantsEvacuated( const TER_Localisation& localisa
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    ArmyFactory_ABC * armyFactory;
-    FormationFactory_ABC * formationFactory;
-    AutomateFactory_ABC * automateFactory;
-    AgentFactory_ABC * agentFactory;
-    PopulationFactory_ABC * populationFactory;
-    InhabitantFactory_ABC * inhabitantFactory;
-    KnowledgeGroupFactory * knowledgeGroupFactory;
-    MIL_ObjectManager* objectManager;
-    MissionController_ABC* missionController;
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
-         >> knowledgeGroupFactory;
-    knowledgeGroupFactory_.reset( knowledgeGroupFactory );
-    file >> armyFactory
-         >> formationFactory//@TODO MGD serialize
-         >> agentFactory
-         >> automateFactory
-         >> populationFactory
-         >> inhabitantFactory
-         >> objectManager
-         >> missionController
+         >> knowledgeGroupFactory_;
+    file >> armyFactory_
+         >> formationFactory_//@TODO MGD serialize
+         >> agentFactory_
+         >> automateFactory_
+         >> populationFactory_
+         >> inhabitantFactory_
+         >> pObjectManager_
+         >> missionController_
          >> rKnowledgesTime_
          >> rAutomatesDecisionTime_
          >> rPionsDecisionTime_
@@ -2418,31 +2407,21 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> nRandomBreakdownsNextTimeStep_
          >> cities_
          >> MIL_Report::nextMessageId_;
-
-    MIL_AgentServer::GetWorkspace().GetUrbanCache().CreateQuadTree(
+    auto& wk = MIL_AgentServer::GetWorkspace();
+    wk.GetUrbanCache().CreateQuadTree(
         cities_,
         geometry::Rectangle2d(
             geometry::Point2d( 0, 0 ),
-            geometry::Point2d(
-                MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainWidth(),
-                MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainHeight() ) ) );
-    armyFactory_.reset( armyFactory );
-    formationFactory_.reset( formationFactory );
-    agentFactory_.reset( agentFactory );
-    automateFactory_.reset( automateFactory );
-    populationFactory_.reset( populationFactory );
-    inhabitantFactory_.reset( inhabitantFactory );
-    pFloodModel_ = sink_->CreateFloodModel();
-    pObjectManager_.reset( objectManager );
+            geometry::Point2d( wk.GetConfig().GetTerrainWidth(), wk.GetConfig().GetTerrainHeight() ) ) );
+    pFloodModel_.reset( sink_->CreateFloodModel().release() );
     pObjectManager_->FinalizeObjects( *pFloodModel_ );
-    missionController_.reset( missionController );
-    missionController_->Initialize( *sink_, *populationFactory );
+    missionController_->Initialize( *sink_, *populationFactory_ );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , sink_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , pObjectManager_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocks().size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , wk.GetUrbanCache().GetUrbanBlocks().size() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -2451,26 +2430,16 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    const ArmyFactory_ABC * const tempArmy = armyFactory_.get();
-    const FormationFactory_ABC * const tempFormationFactory = formationFactory_.get();
-    const AgentFactory_ABC * const tempAgentFactory = agentFactory_.get();
-    const AutomateFactory_ABC * const tempAutomateFactory = automateFactory_.get();
-    const PopulationFactory_ABC * const populationFactory = populationFactory_.get();
-    const InhabitantFactory_ABC * const inhabitantFactory = inhabitantFactory_.get();
-    const KnowledgeGroupFactory* const knowledgeGroupFactory = knowledgeGroupFactory_.get();
-    const MIL_ObjectManager* const objectManager = pObjectManager_.get();
-    const MissionController_ABC* const missionController = missionController_.get();
-
          //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
-    file << knowledgeGroupFactory; // LTO
-    file << tempArmy
-         << tempFormationFactory
-         << tempAgentFactory
-         << tempAutomateFactory
-         << populationFactory
-         << inhabitantFactory
-         << objectManager
-         << missionController
+    file << knowledgeGroupFactory_; // LTO
+    file << armyFactory_
+         << formationFactory_
+         << agentFactory_
+         << automateFactory_
+         << populationFactory_
+         << inhabitantFactory_
+         << pObjectManager_
+         << missionController_
          << rKnowledgesTime_
          << rAutomatesDecisionTime_
          << rPionsDecisionTime_

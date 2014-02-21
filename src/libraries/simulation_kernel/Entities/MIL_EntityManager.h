@@ -307,7 +307,7 @@ private:
 
     // Profiling
     std::map< std::string, double > profilers_;
-    std::auto_ptr< MIL_ProfilerManager > profilerManager_;
+    std::unique_ptr< MIL_ProfilerManager > profilerManager_;
     unsigned int nRandomBreakdownsNextTimeStep_;
     double rKnowledgesTime_;
     double rAutomatesDecisionTime_;
@@ -318,18 +318,18 @@ private:
     double rStatesTime_;
 
     // Order is important here
-    std::auto_ptr< MIL_IDManager >               idManager_;          // has to be declared before agentFactory & automatFactory
-    std::auto_ptr< MissionController_ABC >       missionController_;  // has to be declared before populationFactory and agentFactory
-    std::auto_ptr< PopulationFactory_ABC >       populationFactory_;      // has to be declared before armyFactory
-    std::auto_ptr< InhabitantFactory_ABC >       inhabitantFactory_;      // has to be declared before armyFactory
-    std::auto_ptr< AgentFactory_ABC >            agentFactory_;           // has to be declared before Sink
-    std::auto_ptr< sword::Sink_ABC >             sink_;
-    std::auto_ptr< MIL_ObjectManager >           pObjectManager_;
-    std::auto_ptr< propagation::FloodModel_ABC > pFloodModel_;
-    std::auto_ptr< AutomateFactory_ABC >         automateFactory_;        // has to be declared before armyFactory & formation factory
-    std::auto_ptr< FormationFactory_ABC >        formationFactory_;       // has to be declared before armyFactory
-    std::auto_ptr< KnowledgeGroupFactory >       knowledgeGroupFactory_;  // has to be declared before armyFactory
-    std::auto_ptr< ArmyFactory_ABC >             armyFactory_;
+    std::unique_ptr< MIL_IDManager >               idManager_;          // has to be declared before agentFactory & automatFactory
+    std::unique_ptr< MissionController_ABC >       missionController_;  // has to be declared before populationFactory and agentFactory
+    std::unique_ptr< PopulationFactory_ABC >       populationFactory_;      // has to be declared before armyFactory
+    std::unique_ptr< InhabitantFactory_ABC >       inhabitantFactory_;      // has to be declared before armyFactory
+    std::unique_ptr< AgentFactory_ABC >            agentFactory_;           // has to be declared before Sink
+    std::unique_ptr< sword::Sink_ABC >             sink_;
+    std::unique_ptr< MIL_ObjectManager >           pObjectManager_;
+    std::unique_ptr< propagation::FloodModel_ABC > pFloodModel_;
+    std::unique_ptr< AutomateFactory_ABC >         automateFactory_;        // has to be declared before armyFactory & formation factory
+    std::unique_ptr< FormationFactory_ABC >        formationFactory_;       // has to be declared before armyFactory
+    std::unique_ptr< KnowledgeGroupFactory >       knowledgeGroupFactory_;  // has to be declared before armyFactory
+    std::unique_ptr< ArmyFactory_ABC >             armyFactory_;
     //@}
 };
 
