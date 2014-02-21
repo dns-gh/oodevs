@@ -409,12 +409,9 @@ void GQ_PlotData::SetDataRange( unsigned int nFirstPoint, int nNbrPoints )
 void GQ_PlotData::AddPoint( const T_Point& point )
 {
     pData_->push_back( point );
-
     if( nNbrPoints_ == -1 || pData_->size() <= nFirstPoint_ + nNbrPoints_ )
-    {
-        if( bbox_.UpdateWithPoint( point ) )
+        if( ignoredValues_.find( point.second ) == ignoredValues_.end() && bbox_.UpdateWithPoint( point ) )
             TouchRange();
-    }
 }
 
 // -----------------------------------------------------------------------------
