@@ -34,6 +34,7 @@
 // -----------------------------------------------------------------------------
 Application::Application( gui::ApplicationMonitor& monitor, int argc, char** argv )
     : gui::Application_ABC( monitor )
+    , waitCursor_( false )
 {
     // Application_ABC initialization
     Initialize();
@@ -49,6 +50,8 @@ Application::Application( gui::ApplicationMonitor& monitor, int argc, char** arg
     launcherClient_.reset( new frontend::LauncherClient( controllers_->controller_ ) );
     timer_.reset( new QTimer( this ) );
     connect( timer_.get(), SIGNAL( timeout() ), SLOT( OnTimer() ) );
+    cursorTimer_.reset( new QTimer( this ) );
+    connect( cursorTimer_.get(), SIGNAL( timeout() ), SLOT( OnWaitCursorTimeout() ) );
 
     // GUI
     mainWindow_ = new MainWindow( *this, *config_, *fileLoader_, *controllers_, *launcherClient_ );
@@ -123,12 +126,35 @@ int Application::Run()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Application::SetWaitingCursor
+// Created: JSR 2014-02-21
+// -----------------------------------------------------------------------------
+void Application::SetWaitingCursor()
+{
+    if( !waitCursor_ )
+        qApp->setOverrideCursor( Qt::WaitCursor );
+    waitCursor_ = true;
+    cursorTimer_->start( 50 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Application::OnTimer
 // Created: SBO 2010-11-04
 // -----------------------------------------------------------------------------
 void Application::OnTimer()
 {
     launcherClient_->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::OnWaitCursorTimeout
+// Created: JSR 2014-02-21
+// -----------------------------------------------------------------------------
+void Application::OnWaitCursorTimeout()
+{
+    if( waitCursor_ )
+        qApp->restoreOverrideCursor();
+    waitCursor_ = false;
 }
 
 // -----------------------------------------------------------------------------

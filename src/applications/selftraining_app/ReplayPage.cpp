@@ -49,7 +49,7 @@ ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previ
     mainBoxLayout->setSpacing( 10 );
 
     //exercise list
-    exercises_ = new ExerciseList( mainBox, config, fileLoader_, controllers, false, true, false );
+    exercises_ = new ExerciseList( app, mainBox, config, fileLoader_, controllers, false, true, false );
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelectExercise( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
     mainBoxLayout->addWidget( exercises_ );

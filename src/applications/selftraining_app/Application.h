@@ -66,10 +66,16 @@ public:
     QWidget* GetMainWindow();
     //@}
 
+    //! @name Operations
+    //@{
+    void SetWaitingCursor();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
     void OnTimer();
+    void OnWaitCursorTimeout();
     //@}
 
 private:
@@ -89,6 +95,10 @@ private:
     std::auto_ptr< frontend::LauncherClient >           launcherClient_;
     std::auto_ptr< QTimer >                             timer_;
     QMainWindow*                                        mainWindow_;
+
+    std::auto_ptr< QTimer > cursorTimer_;
+    bool waitCursor_;
+
     //@}
 };
 

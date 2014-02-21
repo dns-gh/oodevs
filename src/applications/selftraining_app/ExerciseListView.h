@@ -21,6 +21,8 @@ namespace tools
     class Loader_ABC;
 }
 
+class Application;
+
 // =============================================================================
 /** @class  ExerciseListView
     @brief  Exercise list view
@@ -32,7 +34,7 @@ class ExerciseListView : public QTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseListView( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader );
+             ExerciseListView( Application& app, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader );
     virtual ~ExerciseListView();
     //@}
 
@@ -57,6 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Application& app_;
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC& fileLoader_;
     QStandardItemModel model_;

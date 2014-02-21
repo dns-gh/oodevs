@@ -143,7 +143,7 @@ void OptionsPage::SetImportLayout()
 // -----------------------------------------------------------------------------
 void OptionsPage::SetExportLayout()
 {
-    export_ = new ExportWidget( parent_, config_, loader_, controllers_ );
+    export_ = new ExportWidget( app_, parent_, config_, loader_, controllers_ );
     tabs_->addTab( export_, "" );
     connect( export_, SIGNAL( ButtonChanged( bool, const QString& ) ),
              SLOT( OnButtonChanged( bool, const QString& ) ) );

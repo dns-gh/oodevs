@@ -123,7 +123,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     boxLayout->addWidget( tabs_ );
 
     //general tab
-    exercises_ = new ExerciseList( tabs_, config_, fileLoader_, controllers, true, true, true, false );
+    exercises_ = new ExerciseList( app, tabs_, config_, fileLoader_, controllers, true, true, true, false );
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
     tabs_->addTab( exercises_, "" ); // General
