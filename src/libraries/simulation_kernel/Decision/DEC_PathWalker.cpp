@@ -114,7 +114,7 @@ void DEC_PathWalker::ComputeCurrentSpeed()
     if( curPathPoint.IsSlopeValid() )
     {
         const double maxSlope = movingEntity_.GetMaxSlope();
-        if( maxSlope <= 0 || curPathPoint.GetSlope() >= maxSlope )
+        if( maxSlope <= 0 || curPathPoint.GetSlope() > maxSlope )
             rCurrentSpeed_ = 0;
         else
         {

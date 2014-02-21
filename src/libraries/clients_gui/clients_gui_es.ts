@@ -1970,6 +1970,14 @@ Desea eliminarlo?</translation>
         <source>Observation height</source>
         <translation>Altura de observación</translation>
     </message>
+    <message>
+        <source>Slope threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain profile unit path</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::TrafficabilityPrototype_ABC</name>

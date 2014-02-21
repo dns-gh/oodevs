@@ -54,7 +54,8 @@ private slots:
     void SetToPosition();
     void SetFromUnitPosition();
     void SetToUnitPosition();
-    void SpinboxChanged();
+    void SetPath();
+    void UpdateView();
     //@}
 
 private:
@@ -74,7 +75,8 @@ private:
     virtual QSize sizeHint () const;
     void SetFromPosition( const geometry::Point2f& point );
     void SetToPosition( const geometry::Point2f& point );
-    void UpdateView();
+    void UpdatePathView();
+    void UpdatePointsView();
     //@}
 
 private:
@@ -86,10 +88,13 @@ private:
     TerrainProfile* profile_;
     geometry::Point2f candidatePoint_;
     geometry::Point2f candidateUnitPoint_;
+    T_PointVector candidatePath_;
     float candidateHeight_;
     geometry::Point2f from_;
     geometry::Point2f to_;
+    T_PointVector path_;
     QSpinBox* heightValue_;
+    QSpinBox* slopeValue_;
     //@}
 };
 

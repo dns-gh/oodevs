@@ -1967,6 +1967,14 @@ Voulez-vous le supprimer?</translation>
         <source>Observation height</source>
         <translation>Hauteur d&apos;observation</translation>
     </message>
+    <message>
+        <source>Slope threshold</source>
+        <translation>Seuil de pente</translation>
+    </message>
+    <message>
+        <source>Terrain profile unit path</source>
+        <translation>Coupe de terrain du chemin de cette unité</translation>
+    </message>
 </context>
 <context>
     <name>gui::TrafficabilityPrototype_ABC</name>

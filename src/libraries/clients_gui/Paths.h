@@ -10,7 +10,7 @@
 #ifndef __Paths_h_
 #define __Paths_h_
 
-#include "clients_gui/Drawable_ABC.h"
+#include "Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
@@ -23,9 +23,12 @@ namespace sword
 
 namespace kernel
 {
+    class Controller;
     class CoordinateConverter_ABC;
 }
 
+namespace gui
+{
 // =============================================================================
 /** @class  Paths
     @brief  Paths
@@ -49,6 +52,8 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     //@}
+
+    const T_PointVector& GetPath() const;
 
 private:
     //! @name Copy/Assignment
@@ -76,5 +81,7 @@ private:
     bool pendingMagicMove_;
     //@}
 };
+
+}
 
 #endif // __Paths_h_

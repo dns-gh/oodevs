@@ -847,10 +847,9 @@ QPoint GQ_Plot::MapToViewport( const T_Point& point ) const
 // -----------------------------------------------------------------------------
 QPoint GQ_Plot::MapToViewport( double rX, double rY ) const
 {
-    int nX = x_.MapToViewport( rX );
-    int nY = x_.MapToViewport( rY );
-
-    return QPoint( nX, nY );
+    const int nX = x_.MapToViewport( rX );
+    const int nY = y_.MapToViewport( rY );
+    return QPoint( nX, nY ) + plotRect_.bottomLeft();
 }
 
 // -----------------------------------------------------------------------------
@@ -862,9 +861,8 @@ QPoint GQ_Plot::MapToViewport( double rX, double rY ) const
 // -----------------------------------------------------------------------------
 GQ_Plot::T_Point GQ_Plot::MapFromViewport( const QPoint& point ) const
 {
-    double rX = x_.MapFromViewport( point.x() );
-    double rY = x_.MapFromViewport( point.y() );
-
+    const double rX = x_.MapFromViewport( point.x() - plotRect_.left() );
+    const double rY = y_.MapFromViewport( point.y() - plotRect_.bottom() );
     return T_Point( rX, rY );
 }
 

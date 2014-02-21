@@ -49,7 +49,6 @@
 #include "Model.h"
 #include "ObjectDetections.h"
 #include "ObjectsModel.h"
-#include "Paths.h"
 #include "PointingKnowledges.h"
 #include "Population.h"
 #include "PopulationDecisions.h"
@@ -76,6 +75,7 @@
 #include "clients_gui/CriticalIntelligence.h"
 #include "clients_gui/EntityType.h"
 #include "clients_gui/LogisticBase.h"
+#include "clients_gui/Paths.h"
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Color_ABC.h"
@@ -270,7 +270,7 @@ void AgentFactory::AttachExtensions( kernel::Entity_ABC& agent )
 {
     agent.Attach( *new DebugPoints( static_.coordinateConverter_ ) );
     agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_, agent.GetId() ) );
-    agent.Attach( *new Paths( static_.coordinateConverter_ ) );
+    agent.Attach( *new gui::Paths( static_.coordinateConverter_ ) );
     agent.Attach( *new Reports( agent, controllers_.controller_, static_.reportFactory_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
     agent.Attach( *new PopulationDetections( controllers_.controller_, static_.coordinateConverter_, model_.agents_, agent ) );

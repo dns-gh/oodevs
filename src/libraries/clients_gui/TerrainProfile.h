@@ -12,11 +12,6 @@
 
 #include "GQ_Plot.h"
 
-namespace kernel
-{
-    class DetectionMap;
-}
-
 namespace gui
 {
 
@@ -31,14 +26,17 @@ class TerrainProfile : public gui::GQ_Plot
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainProfile( QWidget* parent, const kernel::DetectionMap& detection );
+    explicit TerrainProfile( QWidget* parent );
     virtual ~TerrainProfile();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const geometry::Point2f& from, const geometry::Point2f& to, float height );
+    void Update( const std::vector< T_Point >& points, int height, int solope );
     //@}
+
+protected:
+    bool event( QEvent* event );
 
 private:
     //! @name Copy/Assignment
@@ -49,15 +47,16 @@ private:
 
     //! @name Helpers
     //@{
-    void UpdateVision( const geometry::Point2f& from, const geometry::Point2f& to, float height );
+    void UpdateVision( int height );
+    void UpdateSlopes( int threshold );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::DetectionMap& detection_;
     gui::GQ_PlotData* data_;
     gui::GQ_PlotData* vision_;
+    gui::GQ_PlotData* slopes_;
     //@}
 };
 
