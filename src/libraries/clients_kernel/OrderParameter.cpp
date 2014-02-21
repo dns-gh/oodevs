@@ -197,6 +197,18 @@ const OrderParameterValue& OrderParameter::GetValue( unsigned int id ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderParameter::FindValue
+// Created: LGY 2014-02-21
+// -----------------------------------------------------------------------------
+const OrderParameterValue* OrderParameter::FindValue( unsigned int id ) const
+{
+    auto it = values_.find( id );
+    if( it == values_.end() )
+        return 0;
+    return &it->second;
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrderParameter::GetChoice
 // Created: RCD 2011-05-06
 // -----------------------------------------------------------------------------

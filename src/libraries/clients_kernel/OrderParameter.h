@@ -72,6 +72,7 @@ public:
     double MinValue() const;
     double MaxValue() const;
     bool IsList() const;
+    const OrderParameterValue* FindValue( unsigned int id ) const;
     const OrderParameterValue& GetValue( unsigned int id ) const;
     const std::string& GetChoice( unsigned int id ) const;
     void AddValue( int id, const std::string& name );
