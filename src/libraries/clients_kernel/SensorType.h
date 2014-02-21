@@ -44,7 +44,6 @@ public:
     //@{
     float GetMaxDistance   ( float distanceModificator ) const;
     float ComputeExtinction( float distanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather = 0 ) const;
-    float ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather = 0 ) const;
 
     E_PerceptionResult InterpreteNRJ( float skyRock ) const;
     //@}

@@ -245,7 +245,6 @@ float SensorType::GetMaxDistance( float distanceModificator ) const
 // Created: JVT 03-04-28
 // Modified: JVT 2004-09-27
 //-----------------------------------------------------------------------------
-inline
 float SensorType::ComputeEnvironmentFactor( bool inForest, bool inTown, bool inGround ) const
 {
     float res = 1.f;
@@ -264,6 +263,8 @@ float SensorType::ComputeEnvironmentFactor( bool inForest, bool inTown, bool inG
 // -----------------------------------------------------------------------------
 float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather ) const
 {
+    if( rCurrentNRJ == std::numeric_limits< float >::infinity() )
+        rCurrentNRJ = rDetectionDist_;
     bool bIsAroundBU = false;
     bIsAroundBU = ComputeUrbanExtinction( rCurrentNRJ, distance, material, weather );
     if( rCurrentNRJ > 0 && !bIsAroundBU )
@@ -317,15 +318,6 @@ float SensorType::GetAngle() const
 const std::vector< float >& SensorType::GetPostureSourceFactors() const
 {
     return postureSourceFactors_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SensorType::ComputeExtinction
-// Created: JVT 2004-09-28
-// -----------------------------------------------------------------------------
-float SensorType::ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather ) const
-{
-    return ComputeExtinction( distanceModificator, rDetectionDist_, inForest, inTown, inGround, distance, material, weather );
 }
 
 // -----------------------------------------------------------------------------
