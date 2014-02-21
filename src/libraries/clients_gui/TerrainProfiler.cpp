@@ -229,7 +229,7 @@ void TerrainProfiler::UpdatePointsView()
     while( ! line.IsDone() )
     {
         line.Increment();
-        const double value = line.Elevation() + ( x == 0 ? height : 0 );
+        const double value = line.Elevation();
         points.push_back( std::make_pair( x / 1000, value ) );
         x += line.Length();
     }
