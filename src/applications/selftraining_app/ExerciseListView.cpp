@@ -80,7 +80,10 @@ ExerciseListView::~ExerciseListView()
 // -----------------------------------------------------------------------------
 const QStandardItem* ExerciseListView::GetSelectedExerciseItem() const
 {
-    const QModelIndex index = selectionModel()->currentIndex();
+    const QModelIndexList selected = selectedIndexes();
+    if( selected.empty() )
+        return 0;
+    const QModelIndex index = selected.front();
     if( index.isValid() )
         return model_.itemFromIndex( proxy_->mapToSource( index ) );
     return 0;
