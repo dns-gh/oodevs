@@ -122,7 +122,7 @@ namespace
     {
         static const double toDegrees = 360 / ( 2 * std::atan2( 0., -1. ) );
         const double slope = std::atan( ( to.second - from.second ) / ( to.first - from.first ) / 1000 ) * toDegrees;
-        return static_cast< int >( slope > 0 ? std::ceil( slope ) : std::floor( slope ) );
+        return static_cast< int >( slope );
     }
 }
 
