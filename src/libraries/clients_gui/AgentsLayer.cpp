@@ -9,8 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "AgentsLayer.h"
+#include "AggregatedTools.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -52,17 +52,6 @@ void AgentsLayer::Select( const GraphicalEntity_ABC& selectable, bool control, b
     }
     else
         controllers_.actions_.SetSelected( selectable, control );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::IsAggregated
-// Created: LGY 2011-03-08
-// -----------------------------------------------------------------------------
-bool AgentsLayer::IsAggregated( const kernel::Entity_ABC& entity ) const
-{
-    if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
-        return positions->IsAggregated();
-    return false;
 }
 
 // -----------------------------------------------------------------------------

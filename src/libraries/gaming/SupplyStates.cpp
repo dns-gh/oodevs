@@ -63,7 +63,7 @@ void SupplyStates::DoUpdate( const sword::LogSupplyState& message )
     {
         dispoTransporters_.resize( message.transporters().elem_size() );
         for( int i = 0; i < message.transporters().elem_size(); ++i )
-            dispoTransporters_[i] = Availability( resolver_, message.transporters().elem( i ) );
+            dispoTransporters_[i] = Availability( entity_, resolver_, message.transporters().elem( i ) );
     }
     if( message.has_stocks() )
     {

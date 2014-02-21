@@ -18,8 +18,16 @@ namespace xml
     class xistream;
 }
 
+namespace tools
+{
+    template< typename T, typename U > class Resolver_ABC;
+}
+
 namespace kernel
 {
+    class DotationType;
+    class BreakdownPart;
+
 // =============================================================================
 /** @class  BreakdownType
     @brief  BreakdownType
@@ -31,18 +39,15 @@ class BreakdownType : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             BreakdownType( xml::xistream& xis, const std::string& category );
+             BreakdownType( xml::xistream& xis,
+                            const std::string& category,
+                            const tools::Resolver_ABC< DotationType, std::string >& dotationResolver );
     virtual ~BreakdownType();
     //@}
 
     //! @name Parts
     //@{
-    struct T_Part
-    {
-        int quantity;
-        std::string resource;
-    };
-    typedef std::vector< T_Part > T_Parts;
+    typedef std::vector< BreakdownPart > T_BreakdownParts;
     //@}
 
     //! @name Operations
@@ -52,7 +57,7 @@ public:
     std::string GetUnknownName() const;
     E_BreakdownNTI GetNTI() const;
     E_BreakdownType GetType() const;
-    const T_Parts& GetParts() const;
+    const T_BreakdownParts& GetParts() const;
     unsigned int GetRepairTime() const;
     //@}
 
@@ -64,7 +69,7 @@ private:
     const unsigned long id_;
     const std::string name_;
     const unsigned int repairTime_;
-    const T_Parts parts_;
+    const T_BreakdownParts parts_;
     //@}
 };
 

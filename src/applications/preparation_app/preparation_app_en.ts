@@ -794,6 +794,33 @@
     </message>
 </context>
 <context>
+    <name>LogisticEditor</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished">Category</translation>
+    </message>
+    <message>
+        <source>Days</source>
+        <translation type="unfinished">Days</translation>
+    </message>
+    <message>
+        <source>Edit Stocks</source>
+        <translation type="unfinished">Edit Stocks</translation>
+    </message>
+    <message>
+        <source>Edit Quotas</source>
+        <translation type="unfinished">Edit Quotas</translation>
+    </message>
+</context>
+<context>
     <name>LogisticLinksEditor</name>
     <message>
         <source>Assign logistic subordinates</source>
@@ -817,34 +844,17 @@
     </message>
 </context>
 <context>
-    <name>LogisticStockEditor</name>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Category</source>
-        <translation>Category</translation>
-    </message>
-    <message>
-        <source>Days</source>
-        <translation>Days</translation>
-    </message>
+    <name>LogisticQuotaEditor</name>
     <message>
         <source>Logistic</source>
-        <translation>Logistics</translation>
+        <translation type="unfinished">Logistics</translation>
     </message>
+</context>
+<context>
+    <name>LogisticStockEditor</name>
     <message>
-        <source>Edit Stocks</source>
-        <translation>Edit Stocks</translation>
-    </message>
-    <message>
-        <source>Edit Quotas</source>
-        <translation>Edit Quotas</translation>
+        <source>Logistic</source>
+        <translation type="unfinished">Logistics</translation>
     </message>
 </context>
 <context>

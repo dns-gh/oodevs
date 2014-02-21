@@ -18,7 +18,8 @@ using namespace kernel;
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 Availability::Availability()
-    : type_( 0 )
+    : entity_( 0 )
+    , type_( 0 )
     , total_( 0 )
     , available_( 0 )
     , atWork_( 0 )
@@ -33,7 +34,8 @@ Availability::Availability()
 // Created: ABR 2014-01-30
 // -----------------------------------------------------------------------------
 Availability::Availability( const Availability& other )
-    : type_( other.type_ )
+    : entity_( other.entity_ )
+    , type_( other.type_ )
     , total_( other.total_)
     , available_( other.available_ )
     , atWork_( other.atWork_ )

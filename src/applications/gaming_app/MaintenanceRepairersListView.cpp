@@ -25,6 +25,7 @@ MaintenanceRepairersListView::MaintenanceRepairersListView( QWidget* parent,
 {
     QStringList list;
     list.append( tools::translate( "MaintenanceRepairersListView", "Repairers" ) );
+    list.append( tools::translate( "MaintenanceRepairersListView", "Unit" ) );
     list.append( tools::translate( "MaintenanceRepairersListView", "Total" ) );
     list.append( tools::translate( "MaintenanceRepairersListView", "Available" ) );
     list.append( tools::translate( "MaintenanceRepairersListView", "Working" ) );

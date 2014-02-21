@@ -80,8 +80,6 @@ private:
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     void InitializeSymbol() const;
-    bool IsAggregated( const kernel::Entity_ABC& entity ) const;
-    bool HasAggregatedSubordinate() const;
     //@}
 
 private:

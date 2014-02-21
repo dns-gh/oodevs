@@ -792,6 +792,33 @@
     </message>
 </context>
 <context>
+    <name>LogisticEditor</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished">Categoría</translation>
+    </message>
+    <message>
+        <source>Days</source>
+        <translation type="unfinished">Días</translation>
+    </message>
+    <message>
+        <source>Edit Stocks</source>
+        <translation type="unfinished">Generar stocks</translation>
+    </message>
+    <message>
+        <source>Edit Quotas</source>
+        <translation type="unfinished">Generar cuotas</translation>
+    </message>
+</context>
+<context>
     <name>LogisticLinksEditor</name>
     <message>
         <source>Assign logistic subordinates</source>
@@ -815,34 +842,17 @@
     </message>
 </context>
 <context>
-    <name>LogisticStockEditor</name>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Category</source>
-        <translation>Categoría</translation>
-    </message>
-    <message>
-        <source>Days</source>
-        <translation>Días</translation>
-    </message>
+    <name>LogisticQuotaEditor</name>
     <message>
         <source>Logistic</source>
-        <translation>Logística</translation>
+        <translation type="unfinished">Logística</translation>
     </message>
+</context>
+<context>
+    <name>LogisticStockEditor</name>
     <message>
-        <source>Edit Stocks</source>
-        <translation>Generar stocks</translation>
-    </message>
-    <message>
-        <source>Edit Quotas</source>
-        <translation>Generar cuotas</translation>
+        <source>Logistic</source>
+        <translation type="unfinished">Logística</translation>
     </message>
 </context>
 <context>

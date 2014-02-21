@@ -1709,6 +1709,10 @@ Voulez-vous le remplacer ?</translation>
         <source>Select repair team</source>
         <translation>Sélectionner une équipe de réparation</translation>
     </message>
+    <message>
+        <source>No response received from the simulation.</source>
+        <translation>Aucune réponse reçue de la simulation.</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>
@@ -1779,7 +1783,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Erreur</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>The convoy is unable to carry that much weight and/or volume</source>
@@ -1822,7 +1826,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
-        <translation type="unfinished">Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
+        <translation>Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>The convoy is unable to carry all types of resources</source>
@@ -2134,6 +2138,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Lent</source>
         <translation>Prêté</translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unité</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceRepairersListView</name>
@@ -2160,6 +2168,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Lent</source>
         <translation>Prêté</translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unité</translation>
     </message>
 </context>
 <context>
@@ -2203,6 +2215,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Lent</source>
         <translation>Prêté</translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unité</translation>
+    </message>
 </context>
 <context>
     <name>MedicalDoctorsListView</name>
@@ -2230,6 +2246,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Lent</source>
         <translation>Prêté</translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unité</translation>
+    </message>
 </context>
 <context>
     <name>MedicalReliefAmbulancesListView</name>
@@ -2256,6 +2276,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Lent</source>
         <translation>Prêté</translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unité</translation>
     </message>
 </context>
 <context>
@@ -2791,6 +2815,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Available</source>
         <translation>Disponible</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PlanificationModePanel</name>
@@ -3215,6 +3243,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Lent</source>
         <translation>Prêté</translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unité</translation>
+    </message>
 </context>
 <context>
     <name>TacticalTreeView</name>
@@ -3235,15 +3267,15 @@ Ces données ne peuvent pas être projetées.</translation>
     <name>TaskerWidget</name>
     <message>
         <source>Recipient</source>
-        <translation type="unfinished">Destinataire</translation>
+        <translation>Destinataire</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Selectionner</translation>
+        <translation>Selectionner</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
@@ -3490,7 +3522,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Invalid timeline binary &apos;%1&apos;</source>
-        <translation type="unfinished">Binaire de timeline invalide &apos;%1&apos;</translation>
+        <translation>Binaire de timeline invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

@@ -13,6 +13,7 @@
 #include "tools/IdManager.h"
 #include "LogisticBaseStates.h"
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/AggregatedTools.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -112,7 +113,7 @@ void Formation::InitializeSymbol() const
 // -----------------------------------------------------------------------------
 void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( !IsAggregated( *this ) && HasAggregatedSubordinate() && viewport.IsVisible( where ) )
+    if( !IsAggregated( *this ) && HasAggregatedSubordinate( *this ) && viewport.IsVisible( where ) )
     {
         InitializeSymbol();
         tools.DrawApp6SymbolFixedSize( symbolPath_, where, -2.f, 0 );
@@ -165,27 +166,4 @@ void Formation::SerializeAttributes( xml::xostream& xos ) const
 {
     gui::EntityImplementation< kernel::Formation_ABC >::SerializeAttributes( xos );
     xos << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::IsAggregated
-// Created: LGY 2011-03-10
-// -----------------------------------------------------------------------------
-bool Formation::IsAggregated( const kernel::Entity_ABC& entity ) const
-{
-    if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
-        return positions->IsAggregated();
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::HasAggregatedSubordinate
-// Created: LGY 2011-03-10
-// -----------------------------------------------------------------------------
-bool Formation::HasAggregatedSubordinate() const
-{
-    tools::Iterator< const kernel::Entity_ABC& > it = Get< TacticalHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-        return IsAggregated( it.NextElement() );
-    return false;
 }

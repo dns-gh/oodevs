@@ -978,6 +978,7 @@ void MIL_EntityManager::UpdateCrowdCollisions()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Update()
 {
+    pObjectManager_->Clean();
     PreprocessRandomBreakdowns();
     UpdateKnowledges();
     UpdateCrowdCollisions();

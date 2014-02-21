@@ -1706,6 +1706,10 @@ Do you want to replace it?</source>
         <source>Select repair team</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No response received from the simulation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>
@@ -2130,6 +2134,10 @@ This data can&apos;t be projected.</source>
         <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceRepairersListView</name>
@@ -2155,6 +2163,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Lent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2199,6 +2211,10 @@ This data can&apos;t be projected.</source>
         <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MedicalDoctorsListView</name>
@@ -2226,6 +2242,10 @@ This data can&apos;t be projected.</source>
         <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MedicalReliefAmbulancesListView</name>
@@ -2251,6 +2271,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Lent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2776,6 +2800,10 @@ This data can&apos;t be projected.</source>
         <source>Available</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PlanificationModePanel</name>
@@ -3198,6 +3226,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Lent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
