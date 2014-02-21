@@ -23,6 +23,7 @@ SupplyTransportersListView::SupplyTransportersListView( QWidget* parent, kernel:
 {
     QStringList list;
     list.append( tools::translate( "SupplyTransportersListView", "Transporters" ) );
+    list.append( tools::translate( "SupplyTransportersListView", "Unit" ) );
     list.append( tools::translate( "SupplyTransportersListView", "Total" ) );
     list.append( tools::translate( "SupplyTransportersListView", "Available" ) );
     list.append( tools::translate( "SupplyTransportersListView", "Working" ) );

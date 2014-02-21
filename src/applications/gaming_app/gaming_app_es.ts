@@ -1708,6 +1708,10 @@ Do you want to replace it?</source>
         <source>Select repair team</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No response received from the simulation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>
@@ -2133,6 +2137,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">Unidades</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceRepairersListView</name>
@@ -2159,6 +2167,10 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Lent</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">Unidades</translation>
     </message>
 </context>
 <context>
@@ -2202,6 +2214,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">Unidades</translation>
+    </message>
 </context>
 <context>
     <name>MedicalDoctorsListView</name>
@@ -2229,6 +2245,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">Unidades</translation>
+    </message>
 </context>
 <context>
     <name>MedicalReliefAmbulancesListView</name>
@@ -2255,6 +2275,10 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Lent</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">Unidades</translation>
     </message>
 </context>
 <context>
@@ -2786,6 +2810,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>Available</source>
         <translation>Disponible</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PlanificationModePanel</name>
@@ -3209,6 +3237,10 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Lent</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">Unidades</translation>
     </message>
 </context>
 <context>

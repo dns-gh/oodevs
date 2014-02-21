@@ -791,6 +791,33 @@
     </message>
 </context>
 <context>
+    <name>LogisticEditor</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">موافق</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء الأمر</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished">الفئة</translation>
+    </message>
+    <message>
+        <source>Days</source>
+        <translation type="unfinished">أيام</translation>
+    </message>
+    <message>
+        <source>Edit Stocks</source>
+        <translation type="unfinished">تحرير الأرصدة</translation>
+    </message>
+    <message>
+        <source>Edit Quotas</source>
+        <translation type="unfinished">تحرير الحصص</translation>
+    </message>
+</context>
+<context>
     <name>LogisticLinksEditor</name>
     <message>
         <source>Assign logistic subordinates</source>
@@ -814,34 +841,17 @@
     </message>
 </context>
 <context>
-    <name>LogisticStockEditor</name>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">موافق</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء الأمر</translation>
-    </message>
-    <message>
-        <source>Category</source>
-        <translation type="unfinished">الفئة</translation>
-    </message>
-    <message>
-        <source>Days</source>
-        <translation type="unfinished">أيام</translation>
-    </message>
+    <name>LogisticQuotaEditor</name>
     <message>
         <source>Logistic</source>
         <translation type="unfinished">السوقي</translation>
     </message>
+</context>
+<context>
+    <name>LogisticStockEditor</name>
     <message>
-        <source>Edit Stocks</source>
-        <translation type="unfinished">تحرير الأرصدة</translation>
-    </message>
-    <message>
-        <source>Edit Quotas</source>
-        <translation type="unfinished">تحرير الحصص</translation>
+        <source>Logistic</source>
+        <translation type="unfinished">السوقي</translation>
     </message>
 </context>
 <context>

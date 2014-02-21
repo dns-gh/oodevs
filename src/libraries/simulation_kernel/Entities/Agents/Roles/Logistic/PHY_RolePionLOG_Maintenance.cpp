@@ -757,6 +757,24 @@ void PHY_RolePionLOG_Maintenance::NotifyComponentHasChanged()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::NotifyIsLoadedInVab
+// Created: LDC 2014-02-19
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Maintenance::NotifyIsLoadedInVab()
+{
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::NotifyIsUnLoadedInVab
+// Created: LDC 2014-02-19
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Maintenance::NotifyIsUnLoadedInVab()
+{
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay
 // Created: NLD 2012-01-09
 // -----------------------------------------------------------------------------

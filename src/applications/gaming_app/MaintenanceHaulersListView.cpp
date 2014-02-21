@@ -26,6 +26,7 @@ MaintenanceHaulersListView::MaintenanceHaulersListView( QWidget* parent,
 {
     QStringList list;
     list.append( tools::translate( "MaintenanceHaulersListView", "Tow trucks" ) );
+    list.append( tools::translate( "MaintenanceHaulersListView", "Unit" ) );
     list.append( tools::translate( "MaintenanceHaulersListView", "Total" ) );
     list.append( tools::translate( "MaintenanceHaulersListView", "Available" ) );
     list.append( tools::translate( "MaintenanceHaulersListView", "Working" ) );

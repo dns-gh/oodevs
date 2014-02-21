@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "AutomatsLayer.h"
 #include "moc_AutomatsLayer.cpp"
+#include "AggregatedTools.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -91,7 +92,7 @@ void AutomatsLayer::NotifyContextMenu( const Automat_ABC& automat, kernel::Conte
     selected_ = &automat;
     if( !IsAggregated( automat ) )
     {
-        if( !HasSubordinate( automat, boost::bind( &AutomatsLayer::IsAggregated, this, _1 ) ) )
+        if( !HasSubordinate( automat, &IsAggregated ) )
             menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
         else
             menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
@@ -132,18 +133,10 @@ void AutomatsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const ge
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Automat_ABC& automat = static_cast< const Automat_ABC& >( selectable );
-    if( !IsAggregated( entity ) && HasSubordinate( entity, boost::bind( &AutomatsLayer::IsAggregated, this, _1 ) ) )
+    if( !IsAggregated( entity ) && HasSubordinate( entity, &IsAggregated ) )
         controllers_.actions_.ContextMenu( automat, entity, point, where );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::ShouldDisplay
-// Created: SBO 2007-04-13
-// -----------------------------------------------------------------------------
-bool AutomatsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
-{
-    return EntityLayer< Automat_ABC >::ShouldDisplay( entity ) && !IsAggregated( entity ) && HasSubordinate( entity, boost::bind( &AutomatsLayer::IsAggregated, this, _1 ) );
-}
 
 // -----------------------------------------------------------------------------
 // Name: AutomatsLayer::NotifySelectionChanged
@@ -155,16 +148,6 @@ void AutomatsLayer::NotifySelectionChanged( const std::vector< const kernel::Aut
     selected_ = elements.size() == 1 ? elements.front() : 0;
 }
 
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::IsAggregated
-// Created: LGY 2011-03-07
-// -----------------------------------------------------------------------------
-bool AutomatsLayer::IsAggregated( const kernel::Entity_ABC& entity ) const
-{
-    if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
-        return positions->IsAggregated();
-    return false;
-}
 
 // -----------------------------------------------------------------------------
 // Name: AutomatsLayer::HasSubordinate

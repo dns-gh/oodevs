@@ -78,16 +78,17 @@ private:
     //@{
     void Purge();
     void AddWidget( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus status, QWidget* widget );
-    bool SetCurrentWidget();
+    bool SetCurrentStatus( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus status );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    virtual void accept();
+    virtual void OnOkClicked();
     virtual void OnRadioButtonChanged();
     virtual void OnSelectionChanged( const QModelIndex&, const QModelIndex& );
     void UpdateDisplay();
+    void OnTimeout();
     //@}
 
 private:
@@ -113,6 +114,7 @@ private:
     MaintenanceRepairersListView* repairers_;
     MaintenanceRepairersListView* diagnosers_;
     PartsView* parts_;
+    QTimer timeout_;
     //@}
 };
 

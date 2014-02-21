@@ -791,6 +791,33 @@
     </message>
 </context>
 <context>
+    <name>LogisticEditor</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished">Catégorie</translation>
+    </message>
+    <message>
+        <source>Days</source>
+        <translation type="unfinished">Jours</translation>
+    </message>
+    <message>
+        <source>Edit Stocks</source>
+        <translation type="unfinished">Editer les stocks</translation>
+    </message>
+    <message>
+        <source>Edit Quotas</source>
+        <translation type="unfinished">Editer les quotas</translation>
+    </message>
+</context>
+<context>
     <name>LogisticLinksEditor</name>
     <message>
         <source>Assign logistic subordinates</source>
@@ -814,34 +841,17 @@
     </message>
 </context>
 <context>
-    <name>LogisticStockEditor</name>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Category</source>
-        <translation>Catégorie</translation>
-    </message>
-    <message>
-        <source>Days</source>
-        <translation>Jours</translation>
-    </message>
+    <name>LogisticQuotaEditor</name>
     <message>
         <source>Logistic</source>
-        <translation>Logistique</translation>
+        <translation type="unfinished">Logistique</translation>
     </message>
+</context>
+<context>
+    <name>LogisticStockEditor</name>
     <message>
-        <source>Edit Stocks</source>
-        <translation>Editer les stocks</translation>
-    </message>
-    <message>
-        <source>Edit Quotas</source>
-        <translation>Editer les quotas</translation>
+        <source>Logistic</source>
+        <translation type="unfinished">Logistique</translation>
     </message>
 </context>
 <context>
@@ -2084,11 +2094,11 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Score edition - %1 </source>
-        <translation type="unfinished"></translation>
+        <translation>Edition de score - %1 </translation>
     </message>
     <message>
         <source>Formula is empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Formule non renseignée.</translation>
     </message>
 </context>
 <context>

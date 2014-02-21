@@ -70,15 +70,15 @@ void MedicalStates::DoUpdate( const sword::LogMedicalState& message )
 
     dispoRamassageAmbulances_.clear();
     for( int i = 0; i < message.collection_ambulances().elem_size(); ++i )
-        dispoRamassageAmbulances_.push_back( kernel::Availability( resolver_, message.collection_ambulances().elem( i ) ) );
+        dispoRamassageAmbulances_.push_back( kernel::Availability( entity_, resolver_, message.collection_ambulances().elem( i ) ) );
 
     dispoReleveAmbulances_.clear();
     for( int i = 0; i < message.evacuation_ambulances().elem_size(); ++i )
-        dispoReleveAmbulances_.push_back( kernel::Availability( resolver_, message.evacuation_ambulances().elem( i ) ) );
+        dispoReleveAmbulances_.push_back( kernel::Availability( entity_, resolver_, message.evacuation_ambulances().elem( i ) ) );
 
     dispoDoctors_.clear();
     for( int i = 0; i < message.doctors().elem_size(); ++i )
-        dispoDoctors_.push_back( kernel::Availability( resolver_, message.doctors().elem( i ) ) );
+        dispoDoctors_.push_back( kernel::Availability( entity_, resolver_, message.doctors().elem( i ) ) );
 
     controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "MedicalStates", "Medical system" ) ) );
     controller_.Update( *this );

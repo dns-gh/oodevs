@@ -14,8 +14,9 @@
 
 namespace kernel
 {
-    class EquipmentType;
     class Displayer_ABC;
+    class Entity_ABC;
+    class EquipmentType;
 
 // =============================================================================
 /** @class  Availability
@@ -31,8 +32,11 @@ public:
              Availability();
     explicit Availability( const Availability& other );
     template< typename Message >
-    Availability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
-        : type_     ( & resolver.Get( message.equipment().id() ) )
+    Availability( const kernel::Entity_ABC& entity,
+                  const tools::Resolver_ABC< kernel::EquipmentType >& resolver,
+                  const Message& message )
+        : entity_   ( &entity )
+        , type_     ( & resolver.Get( message.equipment().id() ) )
         , total_    ( message.total() )
         , available_( message.available() )
         , atWork_   ( message.working() )
@@ -51,6 +55,7 @@ public:
 public:
     //! @name Member data
     //@{
+    const kernel::Entity_ABC* entity_;
     const kernel::EquipmentType* type_;
     unsigned int total_;
     unsigned int available_;

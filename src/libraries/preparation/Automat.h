@@ -70,6 +70,7 @@ private:
     //! @name Helpers
     //@{
     void InitializeSymbol() const;
+    bool HasAggregatedSubordinate() const;
     //@}
 
 private:

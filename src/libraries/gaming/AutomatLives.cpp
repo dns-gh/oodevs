@@ -12,8 +12,9 @@
 #include "Lives.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "clients_gui/AggregatedTools.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "tools/Iterator.h"
 
 using namespace kernel;
 
@@ -42,9 +43,8 @@ AutomatLives::~AutomatLives()
 // -----------------------------------------------------------------------------
 void AutomatLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( ! viewport.IsHotpointVisible() )
-        return;
-    tools.DrawLife( where, GetLife(), 2.f );
+    if( !IsAggregated( automat_ ) && HasAggregatedSubordinate( automat_ ) && viewport.IsHotpointVisible() )
+        tools.DrawLife( where, GetLife(), 2.f );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ float AutomatLives::GetLife() const
 {
     float result = 0;
     unsigned count = 0;
-    tools::Iterator< const Entity_ABC& > children = automat_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+    auto children = automat_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         result += children.NextElement().Get< Lives_ABC >().GetLife();

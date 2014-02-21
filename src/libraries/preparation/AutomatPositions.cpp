@@ -12,6 +12,7 @@
 #include "AgentPositions.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
+#include "clients_gui/AggregatedTools.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -121,7 +122,7 @@ void AutomatPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void AutomatPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( viewport.IsVisible( where ) )
+    if( !::IsAggregated( automat_ ) && HasAggregatedSubordinate( automat_ ) && viewport.IsVisible( where ) )
         tools.DrawCross( where, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
 }
 
