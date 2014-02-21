@@ -326,16 +326,14 @@ end
 -- This method creates a concentration on the given position
 -- with all the wounded humans of the given crowd.
 -- If no position is provided, then the concentration is created instead on a 
--- safe position near the given crowd (i.e. a closeby position at the periphery
--- of the given crowd at the opposite of the current danger direction).
--- The actual extraction position is a random position at the given distance
--- from the previously computed position.
+-- safe position near the given crowd (i.e. a position at the given distance of
+-- the periphery of the given crowd at the opposite of the current danger direction).
 -- This method does nothing if there is no wounded humans in the crowd.
 -- This method can only be called by an agent.
 -- @param crowd Crowd knowledge
 -- @param position Simulation point
--- @param distance Float, the distance between the computed extraction position and
--- the actual extraction position
+-- @param distance Float, the distance between the extraction position and the
+-- periphery of the given crowd (in meters, optional, 50 by default).
 -- @return Boolean, whether or not the extraction occurred successfully.
 integration.extractVictimsFromCrowd = function( crowd, position, distance )
     position = position or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
@@ -350,16 +348,14 @@ end
 -- This method creates a concentration on the given position
 -- with all the dead humans of the given crowd.
 -- If no position is provided, then the concentration is created instead on a 
--- safe position near the given crowd (i.e. a closeby position at the periphery
--- of the given crowd at the opposite of the current danger direction).
--- The actual extraction position is a random position at the given distance
--- from the previously computed position.
+-- safe position near the given crowd (i.e. a position at the given distance of
+-- the periphery of the given crowd at the opposite of the current danger direction).
 -- This method does nothing if there is no dead humans in the crowd.
 -- This method can only be called by an agent.
 -- @param crowd Crowd knowledge
 -- @param position Simulation point
--- @param distance Float, the distance between the computed extraction position and
--- the actual extraction position
+-- @param distance Float, the distance between the extraction position and the
+-- periphery of the given crowd (in meters, optional, 50 by default).
 -- @return Boolean, whether or not the extraction occurred successfully.
 integration.extractDeadFromCrowd = function( crowd, position, distance )
     position = position or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
