@@ -203,6 +203,7 @@ void EquipmentTransferDialog::InitializeEquipments()
     const Equipments* equipments = selectedFrom_->Retrieve< Equipments >();
     if( !equipments )
         throw MASA_EXCEPTION( "Cannot find Equipments extension.");
+    delegate_->Purge();
     equipmentTable_->clearContents();
     equipmentTable_->setRowCount( 0 );
     equipmentIdMap_.clear();
