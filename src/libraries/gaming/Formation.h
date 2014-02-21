@@ -66,17 +66,15 @@ private:
     //! @name Helpers
     //@{
     void InitializeSymbol() const;
-    bool IsAggregated( const kernel::Entity_ABC& entity ) const;
-    bool HasAggregatedSubordinate() const;
     void DoUpdate( const sword::FormationUpdate& message );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller&          controller_;
-    E_NatureLevel                level_;
-    DrawableUnitContainer        drawable_;
+    kernel::Controller&   controller_;
+    E_NatureLevel         level_;
+    DrawableUnitContainer drawable_;
     //@}
 };
 

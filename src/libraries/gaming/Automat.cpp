@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "Automat.h"
 #include "clients_gui/PropertiesDictionary.h"
+#include "clients_gui/Viewport_ABC.h"
+#include "clients_gui/AggregatedTools.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
 #include "protocol/Protocol.h"
@@ -44,7 +46,8 @@ Automat::~Automat()
 // -----------------------------------------------------------------------------
 void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    drawable_.Draw( *this, where, viewport, tools, -1.5f);
+    if( !IsAggregated( *this ) && HasAggregatedSubordinate( *this ) && viewport.IsHotpointVisible() )
+        drawable_.Draw( *this, where, viewport, tools, -1.5f );
 }
 
 // -----------------------------------------------------------------------------

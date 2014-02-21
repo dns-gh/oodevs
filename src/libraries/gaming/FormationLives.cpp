@@ -12,9 +12,9 @@
 #include "Lives.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "clients_gui/AggregatedTools.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Positions.h"
+#include "tools/Iterator.h"
 
 using namespace kernel;
 
@@ -43,7 +43,7 @@ FormationLives::~FormationLives()
 // -----------------------------------------------------------------------------
 void FormationLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( !IsAggregated( formation_ ) && HasAggregatedSubordinate() && viewport.IsHotpointVisible() )
+    if( !IsAggregated( formation_ ) && HasAggregatedSubordinate( formation_ ) && viewport.IsHotpointVisible() )
         tools.DrawLife( where, GetLife(), 4.f );
 }
 
@@ -55,34 +55,11 @@ float FormationLives::GetLife() const
 {
     float result = 0;
     unsigned count = 0;
-    tools::Iterator< const Entity_ABC& > children = formation_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+    auto children = formation_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         result += children.NextElement().Get< Lives_ABC >().GetLife();
         ++count;
     }
     return count ? result / count : result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLives::IsAggregated
-// Created: LGY 2011-03-10
-// -----------------------------------------------------------------------------
-bool FormationLives::IsAggregated( const kernel::Entity_ABC& entity ) const
-{
-    if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
-        return positions->IsAggregated();
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLives::HasAggregatedSubordinate
-// Created: LGY 2011-03-10
-// -----------------------------------------------------------------------------
-bool FormationLives::HasAggregatedSubordinate() const
-{
-    tools::Iterator< const kernel::Entity_ABC& > it = formation_.Get< TacticalHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-        return IsAggregated( it.NextElement() );
-    return false;
 }

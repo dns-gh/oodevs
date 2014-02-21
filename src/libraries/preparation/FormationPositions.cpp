@@ -13,6 +13,7 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_gui/AggregatedTools.h"
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
@@ -49,7 +50,7 @@ geometry::Point2f FormationPositions::GetPosition( bool aggregated ) const
         while( children.HasMoreElements() )
         {
             const kernel::Entity_ABC& child = children.NextElement();
-            if( HasSubordinate( child, boost::bind( &FormationPositions::IsAgent, this, _1 ) ) )
+            if( HasAggregatedSubordinate( child, boost::bind( &FormationPositions::IsAgent, this, _1 ) ) )
             {
                 const geometry::Point2f& childPosition = child.Get< kernel::Positions >().GetPosition( false );
                 aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
@@ -156,17 +157,6 @@ void FormationPositions::Aggregate( const bool& bDummy )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationPositions::IsAggregated
-// Created: LGY 2011-03-11
-// -----------------------------------------------------------------------------
-bool FormationPositions::IsAggregated( const kernel::Entity_ABC& entity ) const
-{
-    if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
-        return positions->IsAggregated();
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: FormationPositions::IsAgent
 // Created: LGY 2011-07-18
 // -----------------------------------------------------------------------------
@@ -174,17 +164,5 @@ bool FormationPositions::IsAgent( const kernel::Entity_ABC& entity ) const
 {
     if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
         return true;
-    return HasSubordinate( entity, boost::bind( &FormationPositions::IsAgent, this, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationPositions::HasSubordinate
-// Created: LGY 2011-03-11
-// -----------------------------------------------------------------------------
-bool FormationPositions::HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun ) const
-{
-    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-        return fun( it.NextElement() );
-    return false;
+    return HasAggregatedSubordinate( entity, boost::bind( &FormationPositions::IsAgent, this, _1 ) );
 }

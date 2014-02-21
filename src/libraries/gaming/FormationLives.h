@@ -46,13 +46,6 @@ private:
     //@}
 
 private:
-    //! @name Operations
-    //@{
-    bool IsAggregated( const kernel::Entity_ABC& entity ) const;
-    bool HasAggregatedSubordinate() const;
-    //@}
-
-private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& formation_;

@@ -12,12 +12,14 @@
 #include "tools/IdManager.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
+#include "clients_gui/AggregatedTools.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_gui/EntityType.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/Positions.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -63,7 +65,7 @@ Automat::~Automat()
 // -----------------------------------------------------------------------------
 void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( viewport.IsVisible( where ) )
+    if( !IsAggregated( *this ) && ::HasAggregatedSubordinate( *this ) && viewport.IsVisible( where ) )
     {
         InitializeSymbol();
         tools.DrawApp6SymbolFixedSize( symbol_, where, -1.5f, 0 );
