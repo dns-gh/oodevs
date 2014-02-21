@@ -11,7 +11,7 @@
 #define GAMING_APP_PARTS_VIEW_H
 
 #include "clients_kernel/SafePointer.h"
-#include "clients_gui/RichTableView.h"
+#include "clients_gui/RichWidget.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 
@@ -20,6 +20,7 @@
 
 namespace kernel
 {
+    class BreakdownPart;
     class Controller;
     class Controllers;
     class Dotations_ABC;
@@ -28,7 +29,7 @@ namespace kernel
 
 class LogMaintenanceConsign;
 
-class PartsView : public gui::RichTableView
+class PartsView : public gui::RichWidget< QTreeView >
                 , public tools::Observer_ABC
                 , public tools::ElementObserver_ABC< kernel::Dotations_ABC >
 {
@@ -37,24 +38,21 @@ public:
      PartsView( kernel::Controllers& controllers, QWidget* parent );
     ~PartsView();
 
-    void Select( kernel::Entity_ABC* handler, const LogMaintenanceConsign& consign );
+    void Fill( const std::vector< kernel::BreakdownPart >& parts );
+    void SelectEntity( const kernel::Entity_ABC* entity );
     bool IsValid() const;
 
 signals:
     void Updated();
 
 private:
-    void Purge();
     void NotifyUpdated( const kernel::Dotations_ABC& dotations );
-
-protected:
-    virtual void setSelection( const QRect& /*rect*/, QItemSelectionModel::SelectionFlags /*flags*/ );
+    bool SetAvailable( int row, int available );
 
 private:
     kernel::Controller& controller_;
     QStandardItemModel* model_;
-    kernel::SafePointer< kernel::Entity_ABC > base_;
-    std::map< std::string, int > parts_;
+    kernel::SafePointer< kernel::Entity_ABC > entity_;
     bool valid_;
 };
 

@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "BreakdownType.h"
+#include "BreakdownPart.h"
 
 #include "ENT/ENT_Tr.h"
 #include "tools/Codec.h"
@@ -20,14 +21,12 @@ using namespace kernel;
 
 namespace
 {
-    BreakdownType::T_Parts ReadParts( xml::xistream& xis )
+    BreakdownType::T_BreakdownParts ReadParts( xml::xistream& xis,
+                                               const tools::Resolver_ABC< DotationType, std::string >& dotationResolver )
     {
-        BreakdownType::T_Parts parts;
+        BreakdownType::T_BreakdownParts parts;
         xis >> xml::list( "part", [&]( xml::xistream& xis ){
-            BreakdownType::T_Part part;
-            xis >> xml::attribute( "quantity", part.quantity )
-                >> xml::attribute( "resource", part.resource );
-            parts.push_back( part );
+            parts.push_back( BreakdownPart( xis, dotationResolver ) );
         });
         return parts;
     }
@@ -45,12 +44,14 @@ namespace
 // Name: BreakdownType constructor
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-BreakdownType::BreakdownType( xml::xistream& xis, const std::string& category )
+BreakdownType::BreakdownType( xml::xistream& xis,
+                              const std::string& category,
+                              const tools::Resolver_ABC< DotationType, std::string >& dotationResolver )
     : category_  ( ENT_Tr::ConvertToBreakdownNTI( category ) )
     , type_      ( ENT_Tr::ConvertToBreakdownType( xis.attribute< std::string >( "type" ) ) )
     , id_        ( xis.attribute< unsigned long >( "id" ) )
     , name_      ( xis.attribute< std::string >( "name" ) )
-    , parts_     ( ReadParts( xis ) )
+    , parts_     ( ReadParts( xis, dotationResolver ) )
     , repairTime_( ReadRepairTime( xis ) )
 {
     // NOTHING
@@ -114,7 +115,7 @@ E_BreakdownType BreakdownType::GetType() const
 // Name: BreakdownType::GetParts
 // Created: BAX 2014-02-10
 // -----------------------------------------------------------------------------
-const BreakdownType::T_Parts& BreakdownType::GetParts() const
+const BreakdownType::T_BreakdownParts& BreakdownType::GetParts() const
 {
     return parts_;
 }

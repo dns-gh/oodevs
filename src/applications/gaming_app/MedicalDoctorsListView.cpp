@@ -23,6 +23,7 @@ MedicalDoctorsListView::MedicalDoctorsListView( QWidget* parent, kernel::Control
 {
     QStringList list;
     list.append( tools::translate( "MedicalDoctorsListView", "Doctors" ) );
+    list.append( tools::translate( "MedicalDoctorsListView", "Unit" ) );
     list.append( tools::translate( "MedicalDoctorsListView", "Total" ) );
     list.append( tools::translate( "MedicalDoctorsListView", "Available" ) );
     list.append( tools::translate( "MedicalDoctorsListView", "Working" ) );

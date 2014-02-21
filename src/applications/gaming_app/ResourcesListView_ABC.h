@@ -50,7 +50,7 @@ public:
     virtual ~ResourcesListView_ABC();
     //@}
 
-    // If a validator is set, only accepted Availability will be registered by AddAvailability
+    // If a filter is set, only accepted Availability will be displayed
     void SetFilter( const std::function< bool( const kernel::Availability& ) >& filter );
 
 protected:
@@ -105,6 +105,7 @@ ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent,
 {
     setRootIsDecorated( false );
     setEditTriggers( 0 );
+    setSelectionBehavior( SelectRows );
     header()->setResizeMode( QHeaderView::ResizeToContents );
     header()->setStretchLastSection( false );
     setModel( &model_ );
@@ -244,14 +245,15 @@ void ResourcesListView_ABC< Extension >::DisplayModelWithAvailabilities()
     unsigned int index = 0;
     for( auto it = availabilities_.begin(); it != availabilities_.end(); ++it )
     {
-        if( it->type_ == 0 )
-            throw MASA_EXCEPTION( "Missing equipment type on Availability" );
+        if( it->type_ == 0 || it->entity_ == 0 )
+            throw MASA_EXCEPTION( "Missing equipment type or entity in Availability" );
         AddItem( index, 0, QString::fromStdString( it->type_->GetName() ), *it );
-        AddItem( index, 1, QString::number( it->total_ ), *it );
-        AddItem( index, 2, QString::number( it->available_ ), *it );
-        AddItem( index, 3, QString::number( it->atWork_ ), *it );
-        AddItem( index, 4, QString::number( it->atRest_ ), *it );
-        AddItem( index, 5, QString::number( it->lent_ ), *it );
+        AddItem( index, 1, it->entity_->GetName(), *it );
+        AddItem( index, 2, QString::number( it->total_ ), *it );
+        AddItem( index, 3, QString::number( it->available_ ), *it );
+        AddItem( index, 4, QString::number( it->atWork_ ), *it );
+        AddItem( index, 5, QString::number( it->atRest_ ), *it );
+        AddItem( index, 6, QString::number( it->lent_ ), *it );
         ++index;
     }
 }
@@ -271,8 +273,9 @@ void ResourcesListView_ABC< Extension >::AddAvailability( const kernel::Entity_A
                 if( !filter_ || filter_( *it ) )
                 {
                     auto availability = std::find_if( availabilities_.begin(), availabilities_.end(),
-                        [&]( kernel::Availability& value )->bool {
-                            return value.type_->GetId() == (*it).type_->GetId(); } );
+                        [&]( kernel::Availability& value ) {
+                            return value.entity_->GetId() == (*it).entity_->GetId() &&
+                                   value.type_->GetId() == (*it).type_->GetId(); } );
                     if( availability != availabilities_.end() )
                         *availability += *it;
                     else
@@ -291,7 +294,10 @@ void ResourcesListView_ABC< Extension >::DisplaySelectionAvailabilities()
     if( !selected_ )
         return;
     availabilities_.clear();
-    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *selected_, boost::bind( &ResourcesListView_ABC< Extension >::AddAvailability, this, _1 ) );
+    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *selected_, [&] ( const kernel::Entity_ABC& entity )
+    {
+        AddAvailability( entity );
+    } );
     DisplayModelWithAvailabilities();
 }
 

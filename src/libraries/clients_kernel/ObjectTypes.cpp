@@ -243,7 +243,7 @@ void ObjectTypes::ReadBreakdownCategory( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadBreakdown( xml::xistream& xis, const std::string& category )
 {
-    BreakdownType* breakdown = new BreakdownType( xis, category );
+    BreakdownType* breakdown = new BreakdownType( xis, category, *this );
     Resolver2< BreakdownType >::Register( breakdown->GetId(), breakdown->GetName(), *breakdown );
 }
 

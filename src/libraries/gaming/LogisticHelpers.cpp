@@ -27,62 +27,29 @@ using namespace kernel;
 namespace logistic_helpers
 {
     // -----------------------------------------------------------------------------
-    namespace
+    void VisitBaseStocksDotations( const Entity_ABC& entity, const std::function< void( const Dotation& ) >& func )
     {
-        struct VisitDotationsFunc
+        VisitEntityAndSubordinatesUpToBaseLog( entity, [&]( const kernel::Entity_ABC& entity )
         {
-            VisitDotationsFunc( boost::function< void( const Dotation& ) > func ) : func_( func ) {}
-            void Call( const kernel::Entity_ABC& entity )
+            if( entity.Retrieve< SupplyStates >() )
             {
-                if( entity.Retrieve< SupplyStates >() )
-                {
-                    auto it = entity.Get< SupplyStates >().CreateIterator();
-                    while( it.HasMoreElements() )
-                        func_( it.NextElement() );
-                }
+                auto it = entity.Get< SupplyStates >().CreateIterator();
+                while( it.HasMoreElements() )
+                    func( it.NextElement() );
             }
-
-            boost::function< void( const Dotation& ) > func_;
-        };
+        } );
     }
-
     // -----------------------------------------------------------------------------
-    // Name: VisitBaseStocksDotations
-    // Created: MMC 2012-10-10
-    // -----------------------------------------------------------------------------
-    void VisitBaseStocksDotations( const Entity_ABC& entity, boost::function< void( const Dotation& ) > func )
+    void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, const std::function< void( const kernel::Entity_ABC& ) >& func )
     {
-        VisitDotationsFunc visitFunc( func );
-        VisitEntityAndSubordinatesUpToBaseLog( entity, boost::bind( &VisitDotationsFunc::Call, &visitFunc, _1 ) );
-    }
-
-    // -----------------------------------------------------------------------------
-    namespace
-    {
-        struct ProxyReturnFalseFunc
+        CheckEntityAndSubordinatesUpToBaseLog( entity, [&]( const kernel::Entity_ABC& entity ) -> bool
         {
-            ProxyReturnFalseFunc( boost::function< void( const kernel::Entity_ABC& ) > func ) : func_( func ) {}
-            bool Call( const kernel::Entity_ABC& entity ) { func_( entity ); return false; }
-
-            boost::function< void( const kernel::Entity_ABC& ) > func_;
-        };
+            func( entity );
+            return false;
+        } );
     }
-
     // -----------------------------------------------------------------------------
-    // Name: VisitEntityAndSubordinatesUpToBaseLog
-    // Created: MMC 2012-01-23
-    // -----------------------------------------------------------------------------
-    void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, boost::function< void( const kernel::Entity_ABC& ) > func )
-    {
-        logistic_helpers::ProxyReturnFalseFunc checkFunc( func );
-        CheckEntityAndSubordinatesUpToBaseLog( entity, boost::bind( &ProxyReturnFalseFunc::Call, &checkFunc, _1 ) );
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: CheckEntityAndSubordinatesUpToBaseLog
-    // Created: MMC 2012-01-23
-    // -----------------------------------------------------------------------------
-    bool CheckEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > func )
+    bool CheckEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, const std::function< bool( const kernel::Entity_ABC& ) >& func )
     {
         if( func( entity ) )
             return true;
@@ -99,10 +66,6 @@ namespace logistic_helpers
         }
         return false;
     }
-
-    // -----------------------------------------------------------------------------
-    // Name: LogisticHelpers::GetLogisticBase
-    // Created: ABR 2014-02-07
     // -----------------------------------------------------------------------------
     const kernel::Entity_ABC* GetLogisticBase( const kernel::Entity_ABC* entity )
     {

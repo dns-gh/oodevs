@@ -2135,6 +2135,10 @@ This data can&apos;t be projected.</source>
         <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">وحدة</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceRepairersListView</name>
@@ -2161,6 +2165,10 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Lent</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">وحدة</translation>
     </message>
 </context>
 <context>
@@ -2204,6 +2212,10 @@ This data can&apos;t be projected.</source>
         <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">وحدة</translation>
+    </message>
 </context>
 <context>
     <name>MedicalDoctorsListView</name>
@@ -2231,6 +2243,10 @@ This data can&apos;t be projected.</source>
         <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">وحدة</translation>
+    </message>
 </context>
 <context>
     <name>MedicalReliefAmbulancesListView</name>
@@ -2257,6 +2273,10 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Lent</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">وحدة</translation>
     </message>
 </context>
 <context>
@@ -2781,6 +2801,10 @@ This data can&apos;t be projected.</source>
         <source>Available</source>
         <translation type="unfinished">متاح</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PlanificationModePanel</name>
@@ -3204,6 +3228,10 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Lent</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">وحدة</translation>
     </message>
 </context>
 <context>
