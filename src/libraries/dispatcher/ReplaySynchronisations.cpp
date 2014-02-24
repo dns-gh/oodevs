@@ -107,6 +107,7 @@ DO_UPDATE( sword::LogFuneralHandlingCreation );
 DO_UPDATE( sword::LogMaintenanceHandlingCreation );
 DO_UPDATE( sword::LogMedicalHandlingCreation );
 DO_UPDATE( sword::LogSupplyHandlingCreation );
+DO_UPDATE( sword::MagicOrder );
 DO_UPDATE( sword::ObjectCreation );
 DO_UPDATE( sword::ObjectKnowledgeCreation );
 DO_UPDATE( sword::ControlGlobalWeather );
@@ -201,7 +202,7 @@ void ReplaySynchronisations::DoUpdate( const sword::CrowdFlowKnowledgeDestructio
     if( msg.knowledge().id() == holder_.GetId() )
         DoDestroy();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ReplaySynchronisations::DoUpdate
 // Created: LDC 2014-01-06
@@ -249,6 +250,16 @@ void ReplaySynchronisations::DoUpdate( const sword::LogMedicalHandlingDestructio
 void ReplaySynchronisations::DoUpdate( const sword::LogSupplyHandlingDestruction& msg )
 {
     if( msg.request().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: BAX 2014-02-14
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::MagicOrderDestruction& msg )
+{
+    if( msg.id() == holder_.GetId() )
         DoDestroy();
 }
 
