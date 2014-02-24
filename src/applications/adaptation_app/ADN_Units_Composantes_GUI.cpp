@@ -49,6 +49,8 @@ ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI( const QString& objectName,
     delegate_.AddCheckBoxOnColumn( 3 );
     delegate_.AddCheckBoxOnColumn( 4 );
     delegate_.AddSpinBoxOnColumn( 5, 0, std::numeric_limits< int >::max() );
+    proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->sort( 0, Qt::AscendingOrder );
 }
 
 //-----------------------------------------------------------------------------
