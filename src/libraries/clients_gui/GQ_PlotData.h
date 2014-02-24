@@ -124,6 +124,8 @@ public:
 
     void AddPoint( const T_Point& );
     void AddPoint( double rX, double rY );
+    void ChangePoint( uint nIndex, const T_Point& point );
+    void DeletePoint( uint nIndex );
     //@}
 
     //! @name Operators
@@ -161,6 +163,8 @@ private:
     virtual void DrawPoint      ( QPainter&, const QPoint&      );
     virtual void DrawPolyline   ( QPainter&, const Q3PointArray& );
     virtual void DrawBars       ( QPainter&, const Q3PointArray& );
+
+    virtual void UpdateBBox();
     //@}
 
 protected:

@@ -672,8 +672,7 @@ QString GQ_PlotAxis::GetStrValue( double rValue ) const
 {
     if( pValueToString_ )
         return pValueToString_->GetConversion( rValue );
-    QLocale locale; // Get the default local
-    return locale.toString( rValue );
+    return QLocale().toString( rValue );
 }
 
 // -----------------------------------------------------------------------------

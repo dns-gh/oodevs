@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Connector_Graph_ABC.h"
-#include "ADN_Graph.h"
+#include "clients_gui/GQ_Plot.h"
 #include "ADN_GraphData.h"
 #include "ADN_GraphValue.h"
 
@@ -17,11 +17,11 @@
 // Name: ADN_Connector_Graph_ABC constructor
 // Created: APE 2004-12-15
 // -----------------------------------------------------------------------------
-ADN_Connector_Graph_ABC::ADN_Connector_Graph_ABC( ADN_Graph& graph )
+ADN_Connector_Graph_ABC::ADN_Connector_Graph_ABC( gui::GQ_Plot& graph )
 : ADN_Connector_Vector_ABC()
 , graph_( graph )
 {
-    graph_.SetConnector( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ bool ADN_Connector_Graph_ABC::RemItemPrivate(void* pObj )
         return false;
 
     // Iterate over all the graphDatas.
-    ADN_Graph::iterator it( graph_ );
+    gui::GQ_Plot::iterator it( graph_ );
     for( it = graph_.begin(); it != graph_.end(); ++it )
     {
         ADN_GraphData& graphData = (ADN_GraphData&)(*it);

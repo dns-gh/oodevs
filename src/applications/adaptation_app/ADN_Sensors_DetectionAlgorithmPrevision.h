@@ -16,7 +16,11 @@
 
 class ModificatorEnvironmentInfos;
 class ADN_GuiBuilder;
-class GQ_PlotData;
+
+namespace gui
+{
+    class GQ_PlotData;
+}
 
 // =============================================================================
 /** @class  ADN_Sensors_DetectionAlgorithmPrevision
@@ -80,8 +84,8 @@ private:
     QLineEdit* populationValue_;
     QLineEdit* urbanHeightRatioValue_;
     QLineEdit* urbanOccupationValue_;
-    GQ_PlotData* pGraphData_;
-    GQ_PlotData* pBaseGraphData_;
+    gui::GQ_PlotData* pGraphData_;
+    gui::GQ_PlotData* pBaseGraphData_;
     double perceiverPostureFactor_;
     double targetPostureFactor_;
     double sizeFactor_;

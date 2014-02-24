@@ -12,7 +12,11 @@
 
 #include "ADN_Connector_Vector_ABC.h"
 
-class ADN_Graph;
+namespace gui
+{
+    class GQ_Plot;
+}
+
 class ADN_GraphValue;
 
 // =============================================================================
@@ -31,7 +35,7 @@ class ADN_Connector_Graph_ABC : public ADN_Connector_Vector_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Connector_Graph_ABC( ADN_Graph& Graph );
+    explicit ADN_Connector_Graph_ABC( gui::GQ_Plot& Graph );
     virtual ~ADN_Connector_Graph_ABC();
     //@}
 
@@ -46,7 +50,7 @@ protected:
     virtual ADN_GraphValue* CreateValue( void* pObj ) = 0;
 
 protected:
-    ADN_Graph& graph_;
+    gui::GQ_Plot& graph_;
 };
 
 #endif // __ADN_Connector_Graph_ABC_h_

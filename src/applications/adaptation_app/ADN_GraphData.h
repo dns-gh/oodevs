@@ -10,7 +10,7 @@
 #ifndef __ADN_GraphData_h_
 #define __ADN_GraphData_h_
 
-#include "GQ_PlotData.h"
+#include "clients_gui/GQ_PlotData.h"
 #include <boost/noncopyable.hpp>
 
 class ADN_GraphValue;
@@ -26,7 +26,7 @@ class ADN_Connector_ABC;
 */
 // Created: APE 2004-12-21
 // =============================================================================
-class ADN_GraphData : public GQ_PlotData
+class ADN_GraphData : public gui::GQ_PlotData
                     , private boost::noncopyable
 {
 
@@ -36,7 +36,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_GraphData( uint nUserID, GQ_Plot& );
+             ADN_GraphData( uint nUserID, gui::GQ_Plot& );
     virtual ~ADN_GraphData();
     //@}
 
@@ -48,8 +48,6 @@ public:
     void OnDataChanged( ADN_GraphValue& );
 
     int GetDataIndex( const ADN_GraphValue& ) const;
-
-    void SelectRelatedData( void* pObj );
 
     void SetConnector( ADN_Connector_ABC& connector );
     //@}

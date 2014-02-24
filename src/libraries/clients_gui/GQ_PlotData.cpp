@@ -28,7 +28,6 @@ GQ_PlotData::GQ_PlotData( unsigned int nUserID, GQ_Plot& plot )
 , plot_           ( plot  )
 , bOwnData_       ( true  )
 , nUserID_        ( nUserID )
-, name_           ()
 , bVisible_       ( true )
 , pointPen_       ( Qt::red   )
 , linePen_        ( Qt::blue  )
@@ -36,7 +35,6 @@ GQ_PlotData::GQ_PlotData( unsigned int nUserID, GQ_Plot& plot )
 , barBrush_       ( Qt::green )
 , captionFont_    ( "helvetica", 8, QFont::DemiBold )
 , nPointShapeType_( eDot )
-, pointShape_     ()
 , bPolylineShape_ ( true )
 , bDrawBars_      ( false )
 , rBarWidth_      ( -1 )
@@ -44,7 +42,6 @@ GQ_PlotData::GQ_PlotData( unsigned int nUserID, GQ_Plot& plot )
 , pData_          ( new T_Data() )
 , nFirstPoint_    ( 0 )
 , nNbrPoints_     ( -1 )
-, bbox_           ()
 {
     // NOTHING
 }
@@ -61,7 +58,6 @@ GQ_PlotData::GQ_PlotData( unsigned int nUserID, GQ_Plot& plot, T_Data& data, uns
 , plot_           ( plot  )
 , bOwnData_       ( false )
 , nUserID_        ( nUserID )
-, name_           ()
 , bVisible_       ( true )
 , pointPen_       ( Qt::red   )
 , linePen_        ( Qt::blue  )
@@ -69,14 +65,12 @@ GQ_PlotData::GQ_PlotData( unsigned int nUserID, GQ_Plot& plot, T_Data& data, uns
 , barBrush_       ( Qt::green )
 , captionFont_    ( "helvetica", 8, QFont::DemiBold )
 , nPointShapeType_( eDot )
-, pointShape_     ()
 , bPolylineShape_ ( true )
 , bDrawBars_      ( false )
 , rBarWidth_      ( -1 )
 , pData_          ( &data )
 , nFirstPoint_    ( nFirstPoint )
 , nNbrPoints_     ( nNbrPoints  )
-, bbox_           ()
 {
     TouchData();
 }
@@ -410,8 +404,7 @@ void GQ_PlotData::AddPoint( const T_Point& point )
 {
     pData_->push_back( point );
     if( nNbrPoints_ == -1 || pData_->size() <= nFirstPoint_ + nNbrPoints_ )
-        if( ignoredValues_.find( point.second ) == ignoredValues_.end() && bbox_.UpdateWithPoint( point ) )
-            TouchRange();
+        UpdateBBox();
 }
 
 // -----------------------------------------------------------------------------
@@ -424,6 +417,35 @@ void GQ_PlotData::AddPoint( const T_Point& point )
 void GQ_PlotData::AddPoint( double rX, double rY )
 {
     AddPoint( T_Point( rX, rY ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GQ_PlotData::ChangePoint
+/** @param  nIndex
+    @param  point
+    */
+// Created: APE 2004-12-21
+// -----------------------------------------------------------------------------
+void GQ_PlotData::ChangePoint( uint nIndex, const T_Point& point )
+{
+    assert( pData_ !=0 );
+    assert( nIndex < pData_->size() );
+    pData_->at( nIndex ) = point;
+    UpdateBBox();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GQ_PlotData::DeletePoint
+/** @param  nIndex
+*/
+// Created: APE 2004-12-21
+// -----------------------------------------------------------------------------
+void GQ_PlotData::DeletePoint( uint nIndex )
+{
+    assert( pData_ !=0 );
+    assert( nIndex < pData_->size() );
+    pData_->erase( pData_->begin() + nIndex );
+    UpdateBBox();
 }
 
 // -----------------------------------------------------------------------------
@@ -443,8 +465,7 @@ void GQ_PlotData::TouchData()
 {
     emit DataTouched();
 
-    if( bbox_.SetData( *pData_, nFirstPoint_, nNbrPoints_ ) )
-        TouchRange();
+    UpdateBBox();
 }
 
 // -----------------------------------------------------------------------------
@@ -533,6 +554,13 @@ void GQ_PlotData::DrawCaption( QPixmap& caption, int nSize )
     }
 }
 
+typedef std::vector<QPoint> T_QPointVector;
+
+struct QPointVector_Comp
+{
+    bool operator ()( const QPoint& lhs, const QPoint& rhs ) { return  lhs.x() < rhs.x(); }
+};
+
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::PreparePoints
 /** @param
@@ -567,6 +595,13 @@ void GQ_PlotData::PreparePoints( Q3PointArray& points )
             points.setPoint( i - nFirstPoint_, ppoint );
         }
     }
+
+    T_QPointVector vPoints;
+    for( int n = 0; n < points.count(); ++n )
+        vPoints.push_back( points.point( n ) );
+    std::sort( vPoints.begin(), vPoints.end(), QPointVector_Comp() );
+    for( int n = 0; n < points.count(); ++n )
+        points.setPoint( n, vPoints[ n ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -759,6 +794,43 @@ void GQ_PlotData::DrawBars( QPainter& painter, const Q3PointArray& points )
 
         nPrevX = nNextX;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: GQ_PlotData::UpdateBBox
+// Created: APE 2004-12-22
+// -----------------------------------------------------------------------------
+void GQ_PlotData::UpdateBBox()
+{
+    unsigned int nLastPoint = static_cast< unsigned >( pData_->size() );
+    GQ_PlotDataBBox boundingBox;
+    for( unsigned int i = nFirstPoint_; i < nLastPoint; ++i )
+    {
+        const auto& point = (*pData_)[i];
+        if( ignoredValues_.find( point.second ) == ignoredValues_.end() )
+            boundingBox.UpdateWithPoint( point );
+    }
+
+    // If we are drawing bars, we must take into account the bars' width.
+    if( bDrawBars_ && rBarWidth_ > 0.0 && ! boundingBox.IsEmpty() )
+    {
+        switch( nBarAlignment_ )
+        {
+            case eAlign_Left:
+                boundingBox.UpdateWithPoint( T_Point( boundingBox.XMax() + rBarWidth_, boundingBox.YMax() ) );
+                break;
+            case eAlign_Right:
+                boundingBox.UpdateWithPoint( T_Point( boundingBox.XMin() - rBarWidth_, boundingBox.YMax() ) );
+                break;
+            case eAlign_Center:
+                boundingBox.UpdateWithPoint( T_Point( boundingBox.XMax() + rBarWidth_ / 2.0, boundingBox.YMax() ) );
+                boundingBox.UpdateWithPoint( T_Point( boundingBox.XMin() - rBarWidth_ / 2.0, boundingBox.YMax() ) );
+                break;
+        }
+    }
+
+    if( bbox_.SetBBox( boundingBox ) )
+        TouchRange();
 }
 
 // -----------------------------------------------------------------------------

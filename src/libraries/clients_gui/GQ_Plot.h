@@ -44,12 +44,10 @@ class GQ_Plot : public QWidget
     Q_OBJECT
 
 public:
-    typedef std::pair< double, double >    T_Point;
-    typedef std::vector< GQ_PlotData* >    T_PlotLayer;
-    typedef std::map< int, T_PlotLayer >   T_LayerMap; //!< map< layer depth, layer >
-    typedef T_LayerMap::iterator          IT_LayerMap;
-    typedef T_LayerMap::const_iterator   CIT_LayerMap;
-    typedef std::pair< int, int >          T_DataIndex;
+    typedef std::pair< double, double >  T_Point;
+    typedef std::vector< GQ_PlotData* >  T_PlotLayer;
+    typedef std::map< int, T_PlotLayer > T_LayerMap; //!< map< layer depth, layer >
+    typedef std::pair< int, int >        T_DataIndex;
 
     typedef GQ_ValueConvertor< T_Point, QString > T_CoordToString; //!< string convertor for coordinates display
 
@@ -141,6 +139,7 @@ public:
     //@{
     void RegisterPlotData  ( GQ_PlotData&, int nDepth = 0 );
     bool UnregisterPlotData( GQ_PlotData&, bool bDestroy );
+    void UnregisterAllPlotData( bool bDestroy );
 
     void SetLayerVisible( bool bVisible, int nDepth = 0 );
     void SetAllVisible  ( bool bVisible );
@@ -167,8 +166,6 @@ protected:
     //! @name Qt overloaded methods
     //@{
     virtual void paintEvent( QPaintEvent* );
-//    virtual void resizeEvent( QResizeEvent* pResizeEvent );
-
     virtual void Draw( QPainter&, const QColorGroup& );
 
     virtual void UpdateDataRange();

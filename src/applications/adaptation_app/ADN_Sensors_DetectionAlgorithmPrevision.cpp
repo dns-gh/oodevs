@@ -12,14 +12,11 @@
 #include "moc_ADN_Sensors_DetectionAlgorithmPrevision.cpp"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Sensors_GUI.h"
-#include "ADN_Graph.h"
-#include "ADN_Connector_Graph_ABC.h"
-#include "ADN_GraphData.h"
-#include "GQ_PlotData.h"
+#include "clients_gui/GQ_Plot.h"
 
 namespace
 {
-    class PerceptionConverter : public GQ_ValueConvertor< double, QString >
+    class PerceptionConverter : public gui::GQ_ValueConvertor< double, QString >
     {
     public:
         virtual void Convert( double input, QString& output ) const
@@ -49,12 +46,12 @@ namespace
 
     PerceptionConverter convertor;
 
-    GQ_PlotData* CreateGraphData( unsigned int hue, unsigned int valence, GQ_Plot* pGraph )
+    gui::GQ_PlotData* CreateGraphData( unsigned int hue, unsigned int valence, gui::GQ_Plot* pGraph )
     {
-        GQ_PlotData* plotData = new GQ_PlotData( 0, *pGraph );
+        gui::GQ_PlotData* plotData = new gui::GQ_PlotData( 0, *pGraph );
         QColor color;
         color.setHsv( hue, 255, valence );
-        GQ_PlotData::E_PointShapeType nPointShape = GQ_PlotData::eDot;
+        gui::GQ_PlotData::E_PointShapeType nPointShape = gui::GQ_PlotData::eDot;
         plotData->SetPointShape( nPointShape );
         plotData->SetPointPen( QPen( color ) );
         plotData->SetLinePen( QPen( color ) );
@@ -130,10 +127,10 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
         connect( urbanOccupationValue_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnUrbanOccupationChanged( const QString& ) ) );
     }
 
-    GQ_Plot* pGraph = new GQ_Plot( this );
+    gui::GQ_Plot* pGraph = new gui::GQ_Plot( this );
     pGraph->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     pGraph->setMinimumSize( 400, 200 );
-    GQ_PlotAxis& yAxis = pGraph->YAxis();
+    gui::GQ_PlotAxis& yAxis = pGraph->YAxis();
     yAxis.SetAxisCaption( tr( "Perception" ) );
     yAxis.SetAxisRange( 0, 3, true );
     yAxis.SetTicksLength( 2 );
@@ -143,7 +140,7 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
     yAxis.SetValueToStringConvertor( &convertor );
     yAxis.InitTickMultiplesForIntegers();
 
-    GQ_PlotAxis& xAxis = pGraph->XAxis();
+    gui::GQ_PlotAxis& xAxis = pGraph->XAxis();
     xAxis.SetAxisCaption( tr( "Distance (m)" ) );
     xAxis.ShowTicks( 50 );
     xAxis.ShowSubTicks( 10 );

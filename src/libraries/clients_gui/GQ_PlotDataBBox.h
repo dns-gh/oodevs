@@ -35,8 +35,6 @@ public:
     //! @name Constructors/Destructor
     //@{
     GQ_PlotDataBBox();
-    GQ_PlotDataBBox( const T_Data&, unsigned int nFirstPoint, int nNbrPoints );
-    virtual ~GQ_PlotDataBBox();
 
     GQ_PlotDataBBox& operator= ( const GQ_PlotDataBBox& );
     bool             operator==( const GQ_PlotDataBBox& ) const;
@@ -71,7 +69,6 @@ public:
 
     //! @name Modifiers
     //@{
-    bool SetData ( const T_Data&, unsigned int nFirstPoint, int nNbrPoints );
     bool SetBBox ( const GQ_PlotDataBBox& );
     bool UpdateWithPoint( const T_Point& );
     bool UpdateWithBBox ( const GQ_PlotDataBBox& );

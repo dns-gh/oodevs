@@ -29,40 +29,6 @@ GQ_PlotDataBBox::GQ_PlotDataBBox()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GQ_PlotDataBBox constructor
-/** @param  T_Data&
-    @param  nFirstPoint
-    @param  nNbrPoints
-*/
-// Created: CBX 2003-08-08
-// -----------------------------------------------------------------------------
-GQ_PlotDataBBox::GQ_PlotDataBBox( const T_Data& data, unsigned int nFirstPoint, int nNbrPoints )
-: bEmpty_( true )
-, rXMin_ ( 0.0 )
-, rXMax_ ( 0.0 )
-, rYMin_ ( 0.0 )
-, rYMax_ ( 0.0 )
-{
-    std::size_t nLastPoint = data.size();
-    if( nNbrPoints >= 0 && nFirstPoint + nNbrPoints < nLastPoint )
-        nLastPoint = nFirstPoint + nNbrPoints;
-
-    for( unsigned int i = nFirstPoint; i < nLastPoint; ++i )
-    {
-        AddPoint( data[i] );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: GQ_PlotDataBBox destructor
-// Created: CBX 2003-08-08
-// -----------------------------------------------------------------------------
-GQ_PlotDataBBox::~GQ_PlotDataBBox()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: GQ_PlotDataBBox::operator=
 /** @param  rhs
     @return
@@ -131,25 +97,6 @@ bool GQ_PlotDataBBox::Reset()
     rYMax_  = 0.0;
 
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GQ_PlotDataBBox::SetData
-/** @param  T_Data&
-    @param  nFirstPoint
-    @param  nNbrPoints
-    @return
-*/
-// Created: CBX 2003-08-08
-// -----------------------------------------------------------------------------
-bool GQ_PlotDataBBox::SetData( const T_Data& data, unsigned int nFirstPoint, int nNbrPoints )
-{
-    if( nNbrPoints == 0 || nFirstPoint >= data.size() )
-        return Reset();
-
-    GQ_PlotDataBBox bbox( data, nFirstPoint, nNbrPoints );
-
-    return SetBBox( bbox );
 }
 
 // -----------------------------------------------------------------------------
