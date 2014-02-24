@@ -12,7 +12,6 @@
 
 #include "TemplateElement_ABC.h"
 #include "clients_kernel/Color_ABC.h"
-#include <tools/Resolver_ABC.h>
 #include <boost/optional/optional.hpp>
 
 namespace kernel
@@ -35,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatTemplateElement( AgentsModel& agents, const kernel::Automat_ABC& automat );
-             AutomatTemplateElement( AgentsModel& agents, const tools::Resolver_ABC< kernel::AutomatType, std::string >& types, xml::xistream& input );
+             AutomatTemplateElement( AgentsModel& agents, const kernel::AutomatType& type, xml::xistream& input );
     virtual ~AutomatTemplateElement();
     //@}
 

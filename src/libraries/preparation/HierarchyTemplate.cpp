@@ -137,6 +137,15 @@ TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, Form
     return 0;
 }
 
+namespace
+{
+    template< typename T >
+    const T& ReadType( const tools::Resolver_ABC< T, std::string >& types, xml::xistream& input, const std::string& xmlTag )
+    {
+        return types.Get( input.attribute< std::string >( xmlTag ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: HierarchyTemplate::CreateElement
 // Created: AGE 2007-05-29
@@ -158,9 +167,9 @@ TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, Form
     if( type == "formation" )
         result = new FormationTemplateElement( formations, input );
     else if( type == "automat" )
-        result = new AutomatTemplateElement( agents, types, input );
+        result = new AutomatTemplateElement( agents, ReadType< AutomatType >( types, input, "automatType" ), input );
     else if( type == "agent" )
-        result = new AgentTemplateElement( agents, types, input );
+        result = new AgentTemplateElement( agents, ReadType< AgentType >( types, input, "agentType" ), input );
     input >> xml::end;
     return result;
 }

@@ -61,9 +61,9 @@ namespace
 // Name: AutomatTemplateElement constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const tools::Resolver_ABC< kernel::AutomatType, std::string >& types, xml::xistream& input )
+AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const kernel::AutomatType& type, xml::xistream& input )
     : agents_( agents )
-    , type_  ( ReadType( types, input ) )
+    , type_  ( type )
 {
     ReadName( input, name_ );
     if( name_.isEmpty() )

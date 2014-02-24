@@ -47,11 +47,6 @@ AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const kernel::A
 
 namespace
 {
-    const kernel::AgentType& ReadType( const tools::Resolver_ABC< kernel::AgentType, std::string >& types, xml::xistream& input )
-    {
-        return types.Get( input.attribute< std::string >( "agentType" ) );
-    }
-
     void ReadName( xml::xistream& input, QString& name )
     {
         std::string str;
@@ -64,9 +59,9 @@ namespace
 // Name: AgentTemplateElement constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const tools::Resolver_ABC< kernel::AgentType, std::string >& types, xml::xistream& input )
+AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const kernel::AgentType& type, xml::xistream& input )
     : agents_( agents )
-    , type_( ReadType( types, input ) )
+    , type_( type )
     , cp_ ( false )
 {
     ReadName( input, name_ );

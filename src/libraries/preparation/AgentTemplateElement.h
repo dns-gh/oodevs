@@ -12,7 +12,6 @@
 
 #include "TemplateElement_ABC.h"
 #include "clients_kernel/Color_ABC.h"
-#include <tools/Resolver_ABC.h>
 #include <boost/optional/optional.hpp>
 
 class AgentsModel;
@@ -35,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentTemplateElement( AgentsModel& agents, const kernel::Agent_ABC& agent );
-             AgentTemplateElement( AgentsModel& agents, const tools::Resolver_ABC< kernel::AgentType, std::string >& types, xml::xistream& input );
+             AgentTemplateElement( AgentsModel& agents, const kernel::AgentType& type, xml::xistream& input );
     virtual ~AgentTemplateElement();
     //@}
 
