@@ -31,6 +31,8 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/Dotation.h"
 #include "gaming/Dotations.h"
+#include "gaming/Equipments.h"
+#include "gaming/Equipment.h"
 #include "gaming/StaticModel.h"
 #include <assert.h>
 
@@ -84,46 +86,36 @@ void UnitStateTableResource::ComputeCapacityAndConsumption( const std::string& n
 // Name: UnitStateTableResource::GetCapacityAndConsumption
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
-std::pair< unsigned int, double > UnitStateTableResource::GetCapacityAndConsumption( const std::string& name, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator ) const
+std::pair< unsigned int, double > UnitStateTableResource::GetCapacityAndConsumption( const std::string& name, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, tools::Iterator< const Equipment& > equipmentsIterator ) const
 {
     unsigned int capacity = 0;
     double consumption = 0;
 
     ComputeCapacityAndConsumption( name, capacity, consumption, agentResourceIterator );
-    while( agentCompositionIterator.HasMoreElements() )
+    while( equipmentsIterator.HasMoreElements() )
     {
-        const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
-        const std::string& agentName = agentComposition.GetType().GetName();
-        tools::Iterator< const kernel::EquipmentType& > equipmentTypeIterator = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::CreateIterator();
-        while( equipmentTypeIterator.HasMoreElements() )
-        {
-            const kernel::EquipmentType& equipmentType = equipmentTypeIterator.NextElement();
-            if( equipmentType.GetName() == agentName )
-            {
-                ComputeCapacityAndConsumption( name, capacity, consumption, equipmentType.CreateResourcesIterator(), agentComposition.GetCount() );
-                break;
-            }
-        }
+        const Equipment& equipment = equipmentsIterator.NextElement();
+        ComputeCapacityAndConsumption( name, capacity, consumption, equipment.type_.CreateResourcesIterator(), equipment.Total() );
     }
     return std::make_pair< unsigned int, double >( capacity, consumption );
 }
 
 namespace
 {
-    const kernel::Entity_ABC* SubordinateHavingDotation( const kernel::Entity_ABC& entity, const kernel::Dotations_ABC& dotations )
+    template< class T >
+    bool HasSubordinateWithExtension( const kernel::Entity_ABC& entity, const T& extension )
     {
-        if( entity.Retrieve< kernel::Dotations_ABC >() == &dotations )
-            return &entity;
+        if( entity.Retrieve< T >() == &extension)
+            return true;
         const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
         tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
         while( it.HasMoreElements() )
         {
             const kernel::Entity_ABC& subEntity = it.NextElement();
-            const kernel::Entity_ABC* tmp = SubordinateHavingDotation( subEntity, dotations );
-            if( tmp )
-                return tmp;
+            if( HasSubordinateWithExtension( subEntity, extension ) )
+                return true;
         }
-        return 0;
+        return false;
     }
 }
 
@@ -133,11 +125,7 @@ namespace
 // -----------------------------------------------------------------------------
 void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotations )
 {
-    if( !selected_ )
-        return;
-    const kernel::Entity_ABC* entity = SubordinateHavingDotation( *selected_, dotations );
-
-    if( entity )
+    if( selected_ && HasSubordinateWithExtension< kernel::Dotations_ABC >( *selected_, dotations ) )
     {
         tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( dotations ).CreateIterator();
         if( selected_->GetTypeName() != kernel::Agent_ABC::typeName_ || static_cast< const Dotations& >( dotations ).Count() != static_cast< unsigned long >( dataModel_.rowCount() ) )
@@ -158,6 +146,19 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
                         break;
                     }
             }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::NotifyUpdated
+// Created: JSR 2014-02-24
+// -----------------------------------------------------------------------------
+void UnitStateTableResource::NotifyUpdated( const Equipments& equipments )
+{
+    if( selected_ && HasSubordinateWithExtension< Equipments >( *selected_, equipments ) )
+    {
+        Purge();
+        RecursiveLoad( *selected_.ConstCast(), true );
     }
 }
 
@@ -257,7 +258,7 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
     {
         const Dotation& dotation = dotationIterator.NextElement();
         const std::string& name = dotation.type_->GetName();
-        std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name, agent.CreateResourcesIterator(), agent.CreateIterator() );
+        std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name, agent.CreateResourcesIterator(), selected.Get< Equipments >().CreateIterator() );
         MergeLine( name.c_str(), dotation.type_->GetCategoryDisplay().c_str(), dotation.quantity_, capacityAndConsumption.first, dotation.thresholdPercentage_, capacityAndConsumption.second );
     }
 }
@@ -268,8 +269,6 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
 // -----------------------------------------------------------------------------
 void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, const QString& name, double percentage, unsigned int& quantity, kernel::Entity_ABC*& last ) const
 {
-    if( quantity == 0 )
-        return;
     if( entity.GetTypeName() == kernel::Agent_ABC::typeName_)
     {
         tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( entity.Get< kernel::Dotations_ABC >() ).CreateIterator();
@@ -281,7 +280,7 @@ void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, c
                 last = &entity;
 
                 kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( static_cast< kernel::Agent_ABC& >( entity ).GetType().GetId() );
-                std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name.ascii(), agent.CreateResourcesIterator(), agent.CreateIterator() );
+                std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name.ascii(), agent.CreateResourcesIterator(), entity.Get< Equipments >().CreateIterator() );
 
                 unsigned int newQuantity = std::min( quantity, static_cast< unsigned int >( capacityAndConsumption.first * percentage ) );
                 quantity -= newQuantity;
@@ -359,9 +358,9 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
         int nResult = QMessageBox::information( const_cast< UnitStateTableResource* >( this ), "Sword", tools::translate( "UnitStateTableResource", "Your modifications will be applied to all sub-units of this entity, do you want to validate ?" ), QMessageBox::Yes, QMessageBox::No );
         if( nResult == QMessageBox::No )
             return;
-        for( int i = 0; i < static_cast< int >( rowsChanged_.size() ); ++i )
+        for( auto it = rowsChanged_.begin(); it != rowsChanged_.end(); ++it )
         {
-            int row = rowsChanged_[ i ];
+            int row = it->second;
             const QString name = GetDisplayData( row, eName );
             double percentage = GetUserData( row, ePercentage ).toDouble() * 0.01;
             unsigned int quantity = GetUserData( row, eQuantity ).toUInt();
@@ -375,7 +374,10 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
                     const Dotation& dotation = dotationIterator.NextElement();
                     if( dotation.type_ && dotation.type_->GetName().c_str() == name )
                     {
-                        CreateMagicAction( dotation.quantity_ + quantity, dotation, last );
+                        kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( static_cast< kernel::Agent_ABC& >( *last ).GetType().GetId() );
+                        std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name.ascii(), agent.CreateResourcesIterator(), last->Get< Equipments >().CreateIterator() );
+                        unsigned int newQuantity = static_cast< unsigned int >( capacityAndConsumption.first * percentage );
+                        CreateMagicAction( newQuantity + quantity, dotation, last );
                         break;
                     }
                 }
