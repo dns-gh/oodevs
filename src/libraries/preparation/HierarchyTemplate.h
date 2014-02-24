@@ -70,7 +70,6 @@ private:
     T_Templates subTemplates_;
     std::unique_ptr< TemplateElement_ABC > element_;
     geometry::Point2f referencePosition_;
-    QString name_;
     ColorController& colorController_;
     //@}
 };

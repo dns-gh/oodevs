@@ -11,16 +11,14 @@
 #define __AgentTemplateElement_h_
 
 #include "TemplateElement_ABC.h"
-#include "clients_kernel/Color_ABC.h"
-#include <boost/optional/optional.hpp>
-
-class AgentsModel;
 
 namespace kernel
 {
     class AgentType;
     class Agent_ABC;
 }
+
+class AgentsModel;
 
 // =============================================================================
 /** @class  AgentTemplateElement
@@ -33,24 +31,22 @@ class AgentTemplateElement : public TemplateElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentTemplateElement( AgentsModel& agents, const kernel::Agent_ABC& agent );
-             AgentTemplateElement( AgentsModel& agents, const kernel::AgentType& type, xml::xistream& input );
+             AgentTemplateElement( AgentsModel& agents,
+                                   const kernel::Agent_ABC& agent );
+             AgentTemplateElement( AgentsModel& agents,
+                                   const kernel::AgentType& type,
+                                   xml::xistream& xis );
     virtual ~AgentTemplateElement();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center, ColorController& colorController );
-    virtual void Serialize( xml::xostream& output );
-    virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const;
-    virtual QString GetName() const;
-    virtual void Rename( const QString& name );
-    //@}
-
 private:
-    //! @name Helpers
+    //! @name TemplateElement_ABC implementation
     //@{
-    void ReadExtension( xml::xistream& xis );
+    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior,
+                                             const geometry::Point2f& center,
+                                             ColorController& colorController );
+    virtual void Serialize( xml::xostream& xos );
+    virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const;
     //@}
 
 private:
@@ -59,9 +55,6 @@ private:
     AgentsModel& agents_;
     const kernel::AgentType& type_;
     bool cp_;
-    QString name_;
-    boost::optional< kernel::Color_ABC::T_Color > color_;
-    std::map< std::string, std::string > extensions_;
     //@}
 };
 

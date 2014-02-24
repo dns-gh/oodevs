@@ -11,6 +11,8 @@
 #define __TemplateElement_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include <boost/optional/optional.hpp>
+#include <boost/tuple/tuple.hpp>
 
 namespace kernel
 {
@@ -30,17 +32,36 @@ class TemplateElement_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             TemplateElement_ABC() {}
-    virtual ~TemplateElement_ABC() {}
+             TemplateElement_ABC();
+    explicit TemplateElement_ABC( const kernel::Entity_ABC& entity );
+    explicit TemplateElement_ABC( xml::xistream& xis );
+    virtual ~TemplateElement_ABC();
+    //@}
+
+    //! @name Abstract operations
+    //@{
+    virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const = 0;
+    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior,
+                                             const geometry::Point2f& center,
+                                             ColorController& colorController ) = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center, ColorController& colorController ) = 0;
-    virtual void Serialize( xml::xostream& output ) = 0;
-    virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const = 0;
-    virtual QString GetName() const = 0;
-    virtual void Rename( const QString& name ) = 0;
+    virtual void Serialize( xml::xostream& output );
+    void SetColor( kernel::Entity_ABC& entity,
+                   ColorController& colorController );
+    void SetExtensions( kernel::Entity_ABC& entity );
+    QString GetName() const;
+    void Rename( const QString& name );
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    QString name_;
+    boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > color_;
+    std::map< std::string, std::string > extensions_;
     //@}
 };
 

@@ -9,16 +9,16 @@
 
 #include "preparation_pch.h"
 #include "HierarchyTemplate.h"
+#include "AgentTemplateElement.h"
+#include "AutomatTemplateElement.h"
+#include "FormationTemplateElement.h"
+
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/AgentTypes.h"
-#include "FormationTemplateElement.h"
-#include "AutomatTemplateElement.h"
-#include "AgentTemplateElement.h"
-#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 
@@ -26,13 +26,10 @@ using namespace kernel;
 // Name: HierarchyTemplate constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& base, bool root, ColorController& colorController )
-    : name_           ( "" )
-    , colorController_( colorController )
+HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const Entity_ABC& base, bool root, ColorController& colorController )
+    : colorController_( colorController )
 {
     element_.reset( CreateElement( agents, formations, base ) );
-    if( element_.get() )
-        name_ = element_->GetName();
     if( const TacticalHierarchies* hierarchies = base.Retrieve< TacticalHierarchies >() )
     {
         tools::Iterator< const Entity_ABC& > children = hierarchies->CreateSubordinateIterator();
@@ -54,9 +51,8 @@ HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& forma
 // Name: HierarchyTemplate constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, xml::xistream& input, ColorController& colorController )
-    : name_           ( "" )
-    , colorController_( colorController )
+HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const AgentTypes& types, xml::xistream& input, ColorController& colorController )
+    : colorController_( colorController )
 {
     element_.reset( CreateElement( agents, formations, types, input ) );
     input >> xml::list( "template", *this, &HierarchyTemplate::ReadSubTemplate, agents, formations, types );
@@ -66,7 +62,7 @@ HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& forma
 // Name: HierarchyTemplate::ReadSubTemplate
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void HierarchyTemplate::ReadSubTemplate( xml::xistream& input, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types )
+void HierarchyTemplate::ReadSubTemplate( xml::xistream& input, AgentsModel& agents, FormationModel& formations, const AgentTypes& types )
 {
     subTemplates_.push_back( new HierarchyTemplate( agents, formations, types, input, colorController_ ) );
 }
@@ -88,12 +84,12 @@ HierarchyTemplate::~HierarchyTemplate()
 void HierarchyTemplate::Serialize( xml::xostream& output ) const
 {
     output << xml::start( "template" );
-    if( element_.get() )
+    if( element_ )
     {
         output << xml::start( "element" )
                << xml::attribute( "x", referencePosition_.X() )
                << xml::attribute( "y", referencePosition_.Y() )
-               << xml::attribute( "name", name_.toStdString() );
+               << xml::attribute( "name", element_->GetName() );
         element_->Serialize( output );
         output << xml::end;
     }
@@ -106,13 +102,13 @@ void HierarchyTemplate::Serialize( xml::xostream& output ) const
 // Name: HierarchyTemplate::Instanciate
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-void HierarchyTemplate::Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center ) const
+void HierarchyTemplate::Instanciate( Entity_ABC& superior, const geometry::Point2f& center ) const
 {
-    if( element_.get() )
+    if( element_ )
     {
         geometry::Point2f position( referencePosition_.X() + center.X(),
                                     referencePosition_.Y() + center.Y() );
-        kernel::Entity_ABC* entity = element_->Instanciate( superior, position, colorController_ );
+        Entity_ABC* entity = element_->Instanciate( superior, position, colorController_ );
         if( entity )
             for( auto it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
                 (*it)->Instanciate( *entity, center );
@@ -123,16 +119,16 @@ void HierarchyTemplate::Instanciate( kernel::Entity_ABC& superior, const geometr
 // Name: HierarchyTemplate::CreateElement
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& entity )
+TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, FormationModel& formations, const Entity_ABC& entity )
 {
-    if( const kernel::Agent_ABC* agent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
+    if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &entity ) )
     {
         referencePosition_ = agent->Get< Positions >().GetPosition();
         return new AgentTemplateElement( agents, *agent );
     }
-    if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
+    if( const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &entity ) )
         return new AutomatTemplateElement( agents, *automat );
-    if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
+    if( const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &entity ) )
         return new FormationTemplateElement( formations, *formation );
     return 0;
 }
@@ -150,7 +146,7 @@ namespace
 // Name: HierarchyTemplate::CreateElement
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, xml::xistream& input )
+TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, FormationModel& formations, const AgentTypes& types, xml::xistream& input )
 {
     std::string type, name;
     float x = 0, y = 0;
@@ -158,10 +154,7 @@ TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, Form
           >> xml::start( "element" )
              >> xml::attribute( "type", type )
              >> xml::attribute( "x", x )
-             >> xml::attribute( "y", y )
-             >> xml::attribute( "name", name );
-    name_ = name.c_str();
-
+             >> xml::attribute( "y", y );
     referencePosition_.Set( x, y );
     TemplateElement_ABC* result = 0;
     if( type == "formation" )
@@ -178,9 +171,9 @@ TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, Form
 // Name: HierarchyTemplate::IsCompatible
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-bool HierarchyTemplate::IsCompatible( const kernel::Entity_ABC& superior ) const
+bool HierarchyTemplate::IsCompatible( const Entity_ABC& superior ) const
 {
-    return element_.get() && element_->IsCompatible( superior );
+    return element_ && element_->IsCompatible( superior );
 }
 
 // -----------------------------------------------------------------------------
@@ -189,8 +182,7 @@ bool HierarchyTemplate::IsCompatible( const kernel::Entity_ABC& superior ) const
 // -----------------------------------------------------------------------------
 void HierarchyTemplate::Rename( const QString& name )
 {
-    name_ = name;
-    if( element_.get() )
+    if( element_ )
         element_->Rename( name );
 }
 
@@ -200,7 +192,7 @@ void HierarchyTemplate::Rename( const QString& name )
 // -----------------------------------------------------------------------------
 QString HierarchyTemplate::GetName() const
 {
-    return element_.get() ? element_->GetName() : QString();
+    return element_ ? element_->GetName() : QString();
 }
 
 // -----------------------------------------------------------------------------

@@ -11,8 +11,6 @@
 #define __FormationTemplateElement_h_
 
 #include "TemplateElement_ABC.h"
-#include "clients_kernel/Color_ABC.h"
-#include <boost/optional/optional.hpp>
 
 namespace kernel
 {
@@ -32,24 +30,21 @@ class FormationTemplateElement : public TemplateElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationTemplateElement( FormationModel& formations, const kernel::Formation_ABC& formation );
-             FormationTemplateElement( FormationModel& formations, xml::xistream& input );
+             FormationTemplateElement( FormationModel& formations,
+                                       const kernel::Formation_ABC& formation );
+             FormationTemplateElement( FormationModel& formations,
+                                       xml::xistream& xis );
     virtual ~FormationTemplateElement();
     //@}
 
-    //! @name Operations
+private:
+    //! @name TemplateElement_ABC implementation
     //@{
-    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center, ColorController& colorController );
+    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior,
+                                             const geometry::Point2f& center,
+                                             ColorController& colorController );
     virtual void Serialize( xml::xostream& output );
     virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const;
-    virtual QString GetName() const;
-    virtual void Rename( const QString& name );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void ReadExtension( xml::xistream& xis );
     //@}
 
 private:
@@ -57,9 +52,6 @@ private:
     //@{
     FormationModel& formations_;
     unsigned int levelId_;
-    QString name_;
-    boost::optional< kernel::Color_ABC::T_Color > color_;
-    std::map< std::string, std::string > extensions_;
     std::string symbol_;
     //@}
 };
