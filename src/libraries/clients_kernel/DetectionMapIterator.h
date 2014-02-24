@@ -10,6 +10,8 @@
 #ifndef __DetectionMapIterator_h_
 #define __DetectionMapIterator_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class DetectionMap;
@@ -20,13 +22,12 @@ namespace kernel
 */
 // Created: AGE 2006-04-06
 // =============================================================================
-class DetectionMapIterator
+class DetectionMapIterator : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DetectionMapIterator( const DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to );
-    virtual ~DetectionMapIterator();
+    DetectionMapIterator( const DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to );
     //@}
 
     //! @name Operations
@@ -43,12 +44,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DetectionMapIterator( const DetectionMapIterator& );            //!< Copy constructor
-    DetectionMapIterator& operator=( const DetectionMapIterator& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     geometry::Vector2f ComputeIncrement();

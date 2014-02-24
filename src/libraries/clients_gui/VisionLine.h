@@ -14,14 +14,13 @@
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  VisionLine
     @brief  VisionLine
 */
 // Created: AGE 2006-04-14
 // =============================================================================
-class VisionLine : public kernel::DetectionMapIterator
+class VisionLine : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -33,24 +32,22 @@ public:
     //! @name Operations
     //@{
     void Increment();
+    bool IsDone() const;
 
     bool IsInGround() const;
     bool IsInTown() const;
     bool IsInForest() const;
 
+    short Elevation() const;
     float Length() const;
-    //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    VisionLine( const VisionLine& );            //!< Copy constructor
-    VisionLine& operator=( const VisionLine& ); //!< Assignment operator
+    geometry::Point2f CurrentPoint() const;
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::DetectionMapIterator iterator_;
     float fromAltitude_;
     float toAltitude_;
     float totalDistance_;

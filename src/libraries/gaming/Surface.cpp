@@ -103,11 +103,8 @@ void Surface::Update( VisionMap& map )
             const Point2f point = map_.Map( i, j );
             const std::pair< unsigned, unsigned > mappedPoint( i, j );
             if( IsInSector( point ) && map.ShouldUpdate( mappedPoint ) )
-            {
-                E_PerceptionResult perception = ComputePerception( point );
-                map.Update( mappedPoint, perception );
-            }
-        };
+                map.Update( mappedPoint, ComputePerception( point ) );
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +123,7 @@ Rectangle2f Surface::Extent() const
 // -----------------------------------------------------------------------------
 Rectangle2< int > Surface::MappedExtent() const
 {
-    Rectangle2f extent = Extent();
+    const Rectangle2f extent = Extent();
     std::pair< unsigned, unsigned > bl = map_.Unmap( extent.BottomLeft() );
     std::pair< unsigned, unsigned > tr = map_.Unmap( extent.TopRight() );
     return Rectangle2< int >( bl.first, bl.second, tr.first, tr.second );
@@ -155,12 +152,9 @@ E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) 
     while( ! line.IsDone() && startEnergy > 0 )
     {
         line.Increment();
-        if( startEnergy == std::numeric_limits< float >::infinity() )
-            startEnergy = sensorType_.ComputeExtinction( distanceModificator_,
-                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetEnvironment( line.CurrentPoint() ), meteoModel_.GetMeteo( line.CurrentPoint() ) );
-        else
-            startEnergy = sensorType_.ComputeExtinction( distanceModificator_, startEnergy,
-                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetEnvironment( line.CurrentPoint() ), meteoModel_.GetMeteo( line.CurrentPoint() ) );
+        startEnergy = sensorType_.ComputeExtinction( distanceModificator_, startEnergy,
+            line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(),
+            urbanModelMap_.GetEnvironment( line.CurrentPoint() ), meteoModel_.GetMeteo( line.CurrentPoint() ) );
     }
     return sensorType_.InterpreteNRJ( startEnergy );
 }

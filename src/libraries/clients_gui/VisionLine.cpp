@@ -18,7 +18,7 @@ using namespace gui;
 // Created: AGE 2006-04-14
 // -----------------------------------------------------------------------------
 VisionLine::VisionLine( const kernel::DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height )
-    : kernel::DetectionMapIterator( map, from, to )
+    : iterator_        ( map, from, to )
     , fromAltitude_    ( map.ElevationAt( from ) + height )
     , toAltitude_      ( map.ElevationAt( to ) + 2.f )
     , totalDistance_   ( from.Distance( to ) + 0.1f )
@@ -37,15 +37,20 @@ VisionLine::~VisionLine()
     // NOTHING
 }
 
+bool VisionLine::IsDone() const
+{
+    return iterator_.IsDone();
+}
+
 // -----------------------------------------------------------------------------
 // Name: VisionLine::Increment
 // Created: AGE 2006-04-14
 // -----------------------------------------------------------------------------
 void VisionLine::Increment()
 {
-    const geometry::Point2f current = CurrentPoint();
-    kernel::DetectionMapIterator::Increment();
-    const geometry::Point2f next = CurrentPoint();
+    const geometry::Point2f current = iterator_.CurrentPoint();
+    iterator_.Increment();
+    const geometry::Point2f next = iterator_.CurrentPoint();
     length_ = current.Distance( next );
     advancedDistance_ += length_;
     const float alpha = advancedDistance_ / totalDistance_;
@@ -58,7 +63,7 @@ void VisionLine::Increment()
 // -----------------------------------------------------------------------------
 bool VisionLine::IsInGround() const
 {
-    return currentAltitude_ < Altitude() - 0.1; // $$$$ AGE 2006-04-18: epsilon ?
+    return currentAltitude_ < iterator_.Altitude() - 0.1; // $$$$ AGE 2006-04-18: epsilon ?
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +72,7 @@ bool VisionLine::IsInGround() const
 // -----------------------------------------------------------------------------
 bool VisionLine::IsInTown() const
 {
-    return currentAltitude_ < Elevation() && kernel::DetectionMapIterator::IsInTown();
+    return currentAltitude_ < iterator_.Elevation() && iterator_.IsInTown();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +81,12 @@ bool VisionLine::IsInTown() const
 // -----------------------------------------------------------------------------
 bool VisionLine::IsInForest() const
 {
-    return currentAltitude_ < Elevation() && kernel::DetectionMapIterator::IsInForest();
+    return currentAltitude_ < iterator_.Elevation() && iterator_.IsInForest();
+}
+
+short VisionLine::Elevation() const
+{
+    return iterator_.Elevation();
 }
 
 // -----------------------------------------------------------------------------
@@ -86,4 +96,9 @@ bool VisionLine::IsInForest() const
 float VisionLine::Length() const
 {
     return length_;
+}
+
+geometry::Point2f VisionLine::CurrentPoint() const
+{
+    return iterator_.CurrentPoint();
 }

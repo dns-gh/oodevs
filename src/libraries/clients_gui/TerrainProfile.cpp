@@ -68,15 +68,12 @@ TerrainProfile::~TerrainProfile()
 void TerrainProfile::Update( const std::vector< T_Point >& points, int height, int slope )
 {
     data_->ClearData();
-    double y = 0, x = 0;
+    double x = 0;
     for( auto it = points.begin(); it != points.end(); ++it )
     {
         data_->AddPoint( *it );
-        y = std::max( y, it->second );
         x = it->first;
     }
-    YAxis().SetAxisRange( 0, y * 1.1f, true );
-    XAxis().SetAxisRange( 0, x, true );
     UpdateVision( height );
     UpdateSlopes( slope );
 }
@@ -92,9 +89,10 @@ void TerrainProfile::UpdateVision( int height )
     if( data.size() < 2 )
         return;
     auto previous = data.begin();
+    vision_->AddPoint( previous->first, previous->second + height );
     vision_->AddPoint( *previous );
-    const geometry::Point2d viewer( 0, previous->second );
-    geometry::Point2d maxpt( 0, previous->second - height );
+    const geometry::Point2d viewer( 0, previous->second + height );
+    geometry::Point2d maxpt( 0, previous->second );
     for( auto it = previous + 1; it != data.end(); previous = it++ )
     {
         const geometry::Point2d current( it->first, it->second );
@@ -124,7 +122,7 @@ namespace
     {
         static const double toDegrees = 360 / ( 2 * std::atan2( 0., -1. ) );
         const double slope = std::atan( ( to.second - from.second ) / ( to.first - from.first ) / 1000 ) * toDegrees;
-        return static_cast< int >( slope > 0 ? std::ceil( slope ) : std::floor( slope ) );
+        return static_cast< int >( slope );
     }
 }
 

@@ -56,21 +56,12 @@ DetectionMapIterator::DetectionMapIterator( const DetectionMap& map, const Point
 }
 
 // -----------------------------------------------------------------------------
-// Name: DetectionMapIterator destructor
-// Created: AGE 2006-04-06
-// -----------------------------------------------------------------------------
-DetectionMapIterator::~DetectionMapIterator()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: DetectionMapIterator::Increment
 // Created: AGE 2006-04-06
 // -----------------------------------------------------------------------------
 void DetectionMapIterator::Increment()
 {
-    Vector2f increment = ComputeIncrement();
+    const Vector2f increment = ComputeIncrement();
 
     xCurrent_ += increment.X();
     xOffset_  += increment.X();

@@ -199,7 +199,7 @@ bool GQ_PlotDataBBox::UpdateWithBBox( const GQ_PlotDataBBox& bbox )
         rXMin_ = bbox.rXMin_;
         bTouched = true;
     }
-    else if( bbox.rXMax_ > rXMax_ )
+    if( bbox.rXMax_ > rXMax_ )
     {
         rXMax_ = bbox.rXMax_;
         bTouched = true;
@@ -210,7 +210,7 @@ bool GQ_PlotDataBBox::UpdateWithBBox( const GQ_PlotDataBBox& bbox )
         rYMin_ = bbox.rYMin_;
         bTouched = true;
     }
-    else if( bbox.rYMax_ > rYMax_ )
+    if( bbox.rYMax_ > rYMax_ )
     {
         rYMax_ = bbox.rYMax_;
         bTouched = true;
