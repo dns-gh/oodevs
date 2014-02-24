@@ -78,17 +78,17 @@ QWidget* LogisticSupplyAvailabilityItemDelegate::createEditor( QWidget* parent, 
         QString curName = index.model()->index( index.row(), eName ).data().value< QString >();
         if( curName.isEmpty() )
             return 0;
-        int available = 0, qty = 0;
+        int available = 0, quantity = 0;
         const QAbstractItemModel* model = index.model();
         if( model )
         {
             int row = index.row();
             available = model->data( model->index( row, eAvailable ), Qt::UserRole ).value< int >();
-            qty = model->data( model->index( row, eValue ), Qt::UserRole ).value< int >();
+            quantity = model->data( model->index( row, eValue ), Qt::UserRole ).value< int >();
         }
         gui::RichSpinBox* spinBox = new gui::RichSpinBox( "spinBox", parent );
         spinBox->setRange( 1, available );
-        spinBox->setValue( qty );
+        spinBox->setValue( quantity );
         spinBox->setSingleStep( 1 );
         connect( spinBox, SIGNAL( valueChanged( int ) ), parentTable, SLOT( OnQuantityChanged() ) );
         return spinBox;

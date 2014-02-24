@@ -79,16 +79,16 @@ QWidget* LogisticSupplyValueItemDelegate::createEditor( QWidget* parent, const Q
         QString curName = index.model()->index( index.row(), eName ).data().value< QString >();
         if( curName.isEmpty() )
             return 0;
-        int qty = 0;
+        int quantity = 0;
         const QAbstractItemModel* model = index.model();
         if( model )
         {
             int row = index.row();
-            qty = model->data( model->index( row, eValue ), Qt::UserRole ).value< int >();
+            quantity = model->data( model->index( row, eValue ), Qt::UserRole ).value< int >();
         }
         RichSpinBox* spinBox = new RichSpinBox( "spinBox", parent );
         spinBox->setRange( 0, std::numeric_limits< int >::max() );
-        spinBox->setValue( qty );
+        spinBox->setValue( quantity );
         spinBox->setSingleStep( 1 );
         return spinBox;
     }
@@ -238,11 +238,10 @@ void LogisticSupplyValuesTableWidget::SetQuantities( QMap< QString, int >& quant
         QAbstractItemModel* model = this->model();
         if( model && !name.isEmpty() && quantity > 0 && ( possible.find( name ) != possible.end() )  )
         {
-            QModelIndex nameIndex = model->index( i, eName );
-            QModelIndex qtyIndex = model->index( i, eValue );
-            model->setData( nameIndex, name, Qt::DisplayRole );
-            model->setData( qtyIndex, locale().toString( quantity ), Qt::DisplayRole );
-            model->setData( qtyIndex, quantity, Qt::UserRole );
+            model->setData( model->index( i, eName ), name, Qt::DisplayRole );
+            const QModelIndex index = model->index( i, eValue );
+            model->setData( index, locale().toString( quantity ), Qt::DisplayRole );
+            model->setData( index, quantity, Qt::UserRole );
             item( i, eValue )->setTextAlignment( Qt::AlignVCenter | Qt::AlignRight );
             ++i;
         }
@@ -273,11 +272,10 @@ void LogisticSupplyValuesTableWidget::OnNameChanged( const QString& newName )
     }
     else if( newName != previousName )
     {
-        QModelIndex indexResource = model->index( row, eName );
-        QModelIndex indexQty = model->index( row, eValue );
-        model->setData( indexResource, newName, Qt::DisplayRole );
-        model->setData( indexQty, locale().toString( 1 ), Qt::DisplayRole );
-        model->setData( indexQty, 1, Qt::UserRole );
+        const QModelIndex index = model->index( row, eValue );
+        model->setData( model->index( row, eName ), newName, Qt::DisplayRole );
+        model->setData( index, locale().toString( 1 ), Qt::DisplayRole );
+        model->setData( index, 1, Qt::UserRole );
         item( row, eValue )->setTextAlignment( Qt::AlignVCenter | Qt::AlignRight );
         setCurrentCell( row, 2, QItemSelectionModel::Select );
         clearSelection();
