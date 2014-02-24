@@ -76,6 +76,37 @@ boost::posix_time::ptime tools::QTimeToBoostTime( const QDateTime& qtime )
 }
 
 // -----------------------------------------------------------------------------
+// Name: tools::BuildDurationString
+// Created: JSR 2014-01-27
+// -----------------------------------------------------------------------------
+QString tools::BuildDurationString( const std::string& hours, const std::string& minutes, const std::string& seconds )
+{
+    return qApp->isLeftToRight()
+        ? ( hours + ":" + minutes + ":" + seconds ).c_str()
+        : ( seconds + ":" + minutes + ":" + hours ).c_str();
+}
+
+namespace
+{
+    std::string Fill( int number )
+    {
+        return ( number  < 10 ? "0" : "" ) + boost::lexical_cast< std::string >( number );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::DurationFromSeconds
+// Created: JSR 2014-01-27
+// -----------------------------------------------------------------------------
+QString tools::DurationFromSeconds( int value )
+{
+    const int minutes = ( value / 60 ) % 60;
+    const int hours = value / 3600;
+    const int seconds = value - hours * 3600 - minutes * 60;
+    return BuildDurationString( boost::lexical_cast< std::string >( hours ), Fill( minutes ), Fill( seconds ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: tools::AddTranslator
 // Created: ABR 2012-07-11
 // -----------------------------------------------------------------------------

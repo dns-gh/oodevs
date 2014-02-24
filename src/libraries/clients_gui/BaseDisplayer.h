@@ -59,7 +59,7 @@ namespace gui
 // =============================================================================
 class BaseDisplayer : public kernel::Displayer_ABC
                     , public tools::Caller< bool >
-                    , public tools::Caller< QTime >
+                    , public tools::Caller< kernel::Duration >
                     , public tools::Caller< kernel::Population_ABC>
                     , public tools::Caller< kernel::Inhabitant_ABC>
                     , public tools::Caller< kernel::PopulationConcentration_ABC >
@@ -109,7 +109,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Call( const bool& value );
-    virtual void Call( const QTime& value );
+    virtual void Call( const kernel::Duration& value );
     virtual void Call( const kernel::Agent_ABC& value );
     virtual void Call( const kernel::Automat_ABC& value );
     virtual void Call( const kernel::Population_ABC& value );

@@ -28,6 +28,7 @@ namespace kernel
     DECLARE_SUBTYPE( TeamKarma, const Karma* );
     DECLARE_SUBTYPE( CriticalIntelligenceType, QString );
     DECLARE_SUBTYPE( DisasterDirectory, tools::Path );
+    DECLARE_SUBTYPE( Duration, int);
 }
 
 #endif // __SubTypes_h_

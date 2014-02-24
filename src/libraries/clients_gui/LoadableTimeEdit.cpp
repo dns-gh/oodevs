@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "LoadableTimeEdit.h"
+#include "DurationEditor.h"
 #include "ObjectPrototypeLoader_ABC.h"
 #include "ObjectNameManager.h"
 #include "RichWidget.h"
@@ -20,12 +21,9 @@ using namespace gui;
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
 LoadableTimeEdit::LoadableTimeEdit( const QString& objectName, QWidget* parent )
-    : LoadableFieldTemplate< QTimeEdit >( parent, objectName )
+    : LoadableFieldTemplate< QSpinBox >( parent, objectName )
 {
-    SetDefaultValueWidget( new RichWidget< QTimeEdit >( "default" + objectName ,this ) );
-    QString displayFormat = GetDefaultValueWidget()->displayFormat();
-    displayFormat.remove( " ap", Qt::CaseInsensitive );
-    GetDefaultValueWidget()->setDisplayFormat( displayFormat );
+    SetDefaultValueWidget( new RichWidget< DurationEditor >( "default" + objectName ,this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,17 +36,17 @@ LoadableTimeEdit::~LoadableTimeEdit()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LoadableTimeEdit::time
-// Created: BCI 2011-05-12
+// Name: LoadableTimeEdit::Seconds
+// Created: JSR 2014-02-24
 // -----------------------------------------------------------------------------
-QTime LoadableTimeEdit::time() const
+int LoadableTimeEdit::Seconds() const
 {
     if( currentLoader_ )
     {
         QString field = GetField();
         if( !field.isNull() )
-            return QTime().addSecs( currentLoader_->GetCurrentFieldValueAsInt( field ) );
+            return currentLoader_->GetCurrentFieldValueAsInt( field );
     }
-    return GetDefaultValueWidget()->time();
+    return GetDefaultValueWidget()->value();
 }
 

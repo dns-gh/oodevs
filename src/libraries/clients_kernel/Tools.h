@@ -40,6 +40,9 @@ namespace tools
     QDateTime BoostTimeToQTime( const boost::posix_time::ptime& btime );
     boost::posix_time::ptime QTimeToBoostTime( const QDateTime& qtime );
 
+    QString BuildDurationString( const std::string& hours, const std::string& minutes, const std::string& seconds );
+    QString DurationFromSeconds( int seconds );
+
     QTranslator* AddTranslator( QApplication& application, const std::string& languageCode, const char* t );
 
     QString translate( const char* context, const char* what );
