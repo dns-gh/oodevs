@@ -29,7 +29,7 @@ namespace
 
 LogisticSupplyCarriersTableWidget::LogisticSupplyCarriersTableWidget( QWidget* parent, const QStringList& header,
     const T_CarrierTypes& types, const LogisticSupplyAvailabilityTableWidget& resources, const T_AvailableDotations& dotations )
-    : LogisticSupplyAvailabilityTableWidget( parent, header )
+    : LogisticSupplyAvailabilityTableWidget( parent, header, dotations )
     , types_( types )
     , resources_( resources )
     , dotations_( dotations )
