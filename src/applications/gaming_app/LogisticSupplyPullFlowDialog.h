@@ -25,7 +25,7 @@ namespace kernel
 // =============================================================================
 class LogisticSupplyPullFlowDialog : public LogisticSupplyFlowDialog_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
