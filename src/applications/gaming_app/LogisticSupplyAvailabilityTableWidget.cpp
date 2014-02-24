@@ -87,7 +87,7 @@ QWidget* LogisticSupplyAvailabilityItemDelegate::createEditor( QWidget* parent, 
             qty = model->data( model->index( row, eValue ), Qt::UserRole ).value< int >();
         }
         gui::RichSpinBox* spinBox = new gui::RichSpinBox( "spinBox", parent );
-        spinBox->setRange( 1, available );
+        spinBox->setRange( 0, available );
         spinBox->setValue( qty );
         spinBox->setSingleStep( 1 );
         connect( spinBox, SIGNAL( valueChanged( int ) ), parentTable, SLOT( OnQuantityChanged() ) );
