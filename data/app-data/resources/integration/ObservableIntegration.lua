@@ -90,8 +90,8 @@ integration.getUrbanBlockCurrentReconnaissanceState = function( urbanBlock )
 end
 
 -- Orientate the agent's sensors toward the given entities (a localized element)
--- @param a 'LocalizedElement' knowledge (such as 'Point', 'Area', UrbanBlock', 'Object' types of objective)
--- @param a boolean to determine if the agent actives his radar for detection
+-- @param objective a 'LocalizedElement' knowledge (such as 'Point', 'Area', UrbanBlock', 'Object' types of objective)
+-- @param activeRadar a boolean to determine if the agent activates his radar for detection
 integration.observeIt = function( objective, activeRadar )
     if masalife.brain.core.class.isOfType( objective, integration.ontology.types.direction ) then
         DEC_Perception_VisionVerrouilleeSurDirection( objective.source )
