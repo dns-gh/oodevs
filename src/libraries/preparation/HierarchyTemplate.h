@@ -10,6 +10,8 @@
 #ifndef __HierarchyTemplate_h_
 #define __HierarchyTemplate_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Entity_ABC;
@@ -29,7 +31,7 @@ class TemplateElement_ABC;
 */
 // Created: AGE 2007-05-29
 // =============================================================================
-class HierarchyTemplate
+class HierarchyTemplate : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -49,16 +51,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    HierarchyTemplate( const HierarchyTemplate& );            //!< Copy constructor
-    HierarchyTemplate& operator=( const HierarchyTemplate& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< HierarchyTemplate* > T_Templates;
-    typedef T_Templates::const_iterator     CIT_Templates;
     //@}
 
     //! @name Helpers
@@ -73,7 +68,7 @@ private:
     //! @name Member data
     //@{
     T_Templates subTemplates_;
-    std::auto_ptr< TemplateElement_ABC > element_;
+    std::unique_ptr< TemplateElement_ABC > element_;
     geometry::Point2f referencePosition_;
     QString name_;
     ColorController& colorController_;

@@ -13,7 +13,6 @@
 #include "TemplateElement_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include <tools/Resolver_ABC.h>
-#include <boost/noncopyable.hpp>
 #include <boost/optional/optional.hpp>
 
 namespace kernel
@@ -31,7 +30,6 @@ class AgentsModel;
 // Created: AGE 2007-05-29
 // =============================================================================
 class AutomatTemplateElement : public TemplateElement_ABC
-                             , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

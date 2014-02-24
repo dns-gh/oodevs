@@ -168,7 +168,7 @@ void AgentTemplateElement::ReadExtension( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 bool AgentTemplateElement::IsCompatible( const kernel::Entity_ABC& superior ) const
 {
-    return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0;
+    return superior.GetTypeName() == kernel::Automat_ABC::typeName_;
 }
 
 // -----------------------------------------------------------------------------

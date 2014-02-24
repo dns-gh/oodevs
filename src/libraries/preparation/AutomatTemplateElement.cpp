@@ -101,8 +101,7 @@ AutomatTemplateElement::~AutomatTemplateElement()
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* AutomatTemplateElement::Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f&, ColorController& colorController )
 {
-    if( dynamic_cast< kernel::Formation_ABC* >( &superior )
-     || dynamic_cast< kernel::Automat_ABC* >( &superior ) )
+    if( superior.GetTypeName() == kernel::Formation_ABC::typeName_ )
     {
         kernel::Automat_ABC& automat = agents_.CreateAutomat( superior, type_, name_ );
         if( !extensions_.empty() )
@@ -172,8 +171,7 @@ void AutomatTemplateElement::ReadExtension( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 bool AutomatTemplateElement::IsCompatible( const kernel::Entity_ABC& superior ) const
 {
-    return dynamic_cast< const kernel::Formation_ABC* >( &superior )
-         || dynamic_cast< const kernel::Automat_ABC* >( &superior );
+    return superior.GetTypeName() == kernel::Formation_ABC::typeName_;
 }
 
 // -----------------------------------------------------------------------------

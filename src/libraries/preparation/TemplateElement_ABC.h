@@ -10,6 +10,8 @@
 #ifndef __TemplateElement_ABC_h_
 #define __TemplateElement_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Entity_ABC;
@@ -23,7 +25,7 @@ class ColorController;
 */
 // Created: AGE 2007-05-29
 // =============================================================================
-class TemplateElement_ABC
+class TemplateElement_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

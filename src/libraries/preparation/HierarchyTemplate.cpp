@@ -204,6 +204,4 @@ void HierarchyTemplate::SetBasePosition( geometry::Point2f center )
         (*it)->SetBasePosition( center );
     referencePosition_.Set( referencePosition_.X() - center.X(),
                             referencePosition_.Y() - center.Y() );
-
 }
-

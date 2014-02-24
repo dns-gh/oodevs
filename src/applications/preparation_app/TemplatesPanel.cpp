@@ -32,7 +32,6 @@ TemplatesPanel::TemplatesPanel( QWidget* parent, gui::PanelStack_ABC& panel, ker
     list_ = new TemplateListView( "templateListView", this, controllers, agents, formations, types, colorController );
     setWidget( list_ );
     controllers_.Register( *this );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -78,9 +77,9 @@ void TemplatesPanel::NotifyUpdated( const kernel::ModelUnLoaded& )
 // -----------------------------------------------------------------------------
 void TemplatesPanel::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( dynamic_cast< const kernel::Formation_ABC* >( & entity )
-        || dynamic_cast< const kernel::Automat_ABC* >( & entity )
-        || dynamic_cast< const kernel::Agent_ABC* >( & entity ) )
+    if( entity.GetTypeName() == kernel::Formation_ABC::typeName_ ||
+        entity.GetTypeName() == kernel::Automat_ABC::typeName_ ||
+        entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
     {
         menuEntity_ = &entity;
         menu.InsertItem( "Command", tr( "Create template" ), this, SLOT( OnCreateTemplate() ), false, 2 );

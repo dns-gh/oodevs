@@ -155,8 +155,8 @@ void FormationTemplateElement::ReadExtension( xml::xistream& xis )
 bool FormationTemplateElement::IsCompatible( const kernel::Entity_ABC& superior ) const
 {
     const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &superior );
-    return ( formation && static_cast< unsigned int >( formation->GetLevel() ) > levelId_ )
-        || dynamic_cast< const kernel::Team_ABC* >( &superior );
+    return formation && static_cast< unsigned int >( formation->GetLevel() ) > levelId_ ||
+           superior.GetTypeName() == kernel::Team_ABC::typeName_;
 }
 
 // -----------------------------------------------------------------------------
