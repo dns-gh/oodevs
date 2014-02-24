@@ -20,23 +20,16 @@ namespace actions
     class ActionsModel;
 }
 
-namespace tools
-{
-    template< typename T > class Iterator;
-}
 
 namespace kernel
 {
-    class AgentComposition;
     class Controllers;
-    class DotationCapacityType;
     class Dotations_ABC;
     class Entity_ABC;
     class Time_ABC;
 }
 
 class Dotation;
-class Equipment;
 class Equipments;
 class StaticModel;
 
@@ -72,8 +65,6 @@ private:
     //@{
     virtual void NotifyUpdated( const kernel::Dotations_ABC& dotations );
     virtual void NotifyUpdated( const Equipments& equipments );
-    void ComputeCapacityAndConsumption( const std::string& name, unsigned int& capacity, double& consumption, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, unsigned int factor = 1 ) const;
-    std::pair< unsigned int, double > GetCapacityAndConsumption( const std::string& name, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, tools::Iterator< const Equipment& > equipmentsIterator ) const;
     int HasDotationChanged( const Dotation& dotation ) const;
     void RecursiveMagicAction( kernel::Entity_ABC& entity, const QString& name, double percentage, unsigned int& quantity, kernel::Entity_ABC*& last ) const;
     void CreateMagicAction( unsigned int quantity, const Dotation& dotation, kernel::Entity_ABC* entity ) const;
@@ -82,18 +73,17 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< unsigned int, int >   T_Changes;
-    typedef T_Changes::const_iterator     CIT_Changes;
+    typedef std::map< unsigned int, int > T_Changes;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&                      controllers_;
-    const StaticModel&                        staticModel_;
-    actions::ActionsModel&                    actionsModel_;
-    const kernel::Time_ABC&                   simulation_;
-    mutable T_Changes                         rowsChanged_;
+    kernel::Controllers& controllers_;
+    const StaticModel& staticModel_;
+    actions::ActionsModel& actionsModel_;
+    const kernel::Time_ABC& simulation_;
+    mutable T_Changes rowsChanged_;
     //@}
 };
 
