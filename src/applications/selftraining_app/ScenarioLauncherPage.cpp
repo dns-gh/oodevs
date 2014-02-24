@@ -47,20 +47,25 @@ namespace
         return QString( "%1://%2" ).arg( protocol ).arg( file.ToUTF8().c_str() );
     }
 
-    bool IsValid( const tools::Path& fileName, const tools::Loader_ABC& fileLoader )
+    bool IsValid( const tools::Path& path, const tools::Loader_ABC& fileLoader, const Config& config )
     {
         bool isValid = true;
+        tools::Path terrain;
+        const tools::Path fileName = config.GetExerciseFile( path );
         try
         {
             std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
             *xis >> xml::start( "exercise" )
+                    >> xml::start( "terrain" )
+                        >> xml::attribute( "name", terrain )
+                    >> xml::end
                     >> xml::optional >> xml::attribute( "valid", isValid );
         }
         catch( ... )
         {
             // NOTHING
         }
-        return isValid;
+        return isValid && config.GetTerrainDir( terrain ).Exists();
     }
 
     struct ResourcesLoadingWrapper
@@ -328,8 +333,7 @@ bool ScenarioLauncherPage::CanBeStarted() const
 {
     if( !exercise_ )
         return false;
-    const tools::Path exerciseFile = config_.GetExerciseFile( exercise_->GetName() );
-    if( !IsValid( exerciseFile, fileLoader_ ) )
+    if( !IsValid( exercise_->GetName(), fileLoader_, config_ ) )
         return false;
     return profile_.IsValid() || !hasClient_;
 }
