@@ -32,12 +32,10 @@
 #include "ADN_Launchers_GUI.h"
 #include "ADN_Resources_GUI.h"
 #include "ADN_TimeField.h"
-#include "ADN_Graph.h"
 #include "ADN_GraphData.h"
 #include "ADN_GraphValue.h"
 #include "ADN_Connector_Graph_ABC.h"
-#include "GQ_PlotAxis.h"
-#include "GQ_PlotCaption.h"
+#include "clients_gui/GQ_Plot.h"
 #include "ENT/ENT_Tr.h"
 
 namespace
@@ -102,7 +100,7 @@ private:
 class ADN_GC_PhSize : public ADN_Connector_Graph_ABC
 {
 public:
-    explicit ADN_GC_PhSize( ADN_Graph& graph )
+    explicit ADN_GC_PhSize( gui::GQ_Plot& graph )
         : ADN_Connector_Graph_ABC( graph )
         , userId_( 0 )
     {
@@ -126,7 +124,7 @@ public:
         ADN_GraphData* pNewData = new ADN_GraphData( userIds_[ pItem ], graph_ );
         QColor color;
         color.setHsv( nNbrDatas_ * 100, 255, 255 );
-        GQ_PlotData::E_PointShapeType nPointShape = static_cast< GQ_PlotData::E_PointShapeType >( nNbrDatas_ % ( GQ_PlotData::eUserShape - 1 ) + 1 );
+        gui::GQ_PlotData::E_PointShapeType nPointShape = static_cast< gui::GQ_PlotData::E_PointShapeType >( nNbrDatas_ % ( gui::GQ_PlotData::eUserShape - 1 ) + 1 );
         pNewData->SetPointShape( nPointShape );
         pNewData->SetPointPen( QPen( color ) );
         pNewData->SetLinePen( QPen( color ) );
@@ -150,7 +148,7 @@ public:
             assert( false );
             return false;
         }
-        GQ_PlotData* pPlotData = graph_.FindPlotData( itId->second );
+        gui::GQ_PlotData* pPlotData = graph_.FindPlotData( itId->second );
         userIds_.erase( itId );
         if( pPlotData == 0 )
             return false;
@@ -303,7 +301,7 @@ void ADN_Weapons_GUI::Build()
     pDirectGroup->setCheckable( false );
     vInfosConnectors[ eDirect ] = &pDirectGroup->GetConnector();
 
-    ADN_Graph* pGraph = new ADN_Graph(/* pDirectGroup */);
+    gui::GQ_Plot* pGraph = new gui::GQ_Plot(/* pDirectGroup */);
     pGraph->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     pGraph->setMinimumSize( 400, 200 );
     pGraph->YAxis().SetAxisCaption( tr( "Ph (%)" ) );
@@ -319,7 +317,7 @@ void ADN_Weapons_GUI::Build()
     graphConnector_.reset( new ADN_GC_PhSize( *pGraph ) );
     vInfosConnectors[ ePhsGraph ] = graphConnector_.get();
 
-    ADN_Weapons_PhSizeListView* pPhSizeListView = builder.AddWidget< ADN_Weapons_PhSizeListView, GQ_Plot&, const std::map< void*, unsigned int >& >( "ph-size", *pGraph, static_cast< ADN_GC_PhSize& >( *graphConnector_ ).GetUserIds() );
+    ADN_Weapons_PhSizeListView* pPhSizeListView = builder.AddWidget< ADN_Weapons_PhSizeListView, gui::GQ_Plot&, const std::map< void*, unsigned int >& >( "ph-size", *pGraph, static_cast< ADN_GC_PhSize& >( *graphConnector_ ).GetUserIds() );
     vInfosConnectors[ ePhs ] = &pPhSizeListView->GetConnector();
     T_ConnectorVector vPhConnectors( eNbrPhSizeGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 

@@ -17,8 +17,8 @@
 */
 // Created: APE 2004-12-21
 // -----------------------------------------------------------------------------
-ADN_GraphData::ADN_GraphData( uint nUserID, GQ_Plot& plot )
-    : GQ_PlotData( nUserID, plot )
+ADN_GraphData::ADN_GraphData( uint nUserID, gui::GQ_Plot& plot )
+    : gui::GQ_PlotData( nUserID, plot )
     , pConnector_( 0 )
 {
     // NOTHING
@@ -31,7 +31,6 @@ ADN_GraphData::ADN_GraphData( uint nUserID, GQ_Plot& plot )
 ADN_GraphData::~ADN_GraphData()
 {
     clear_owned_ptrs( graphValueList_ );
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -85,23 +84,4 @@ void ADN_GraphData::OnDataChanged( ADN_GraphValue& value )
     T_Point newPoint = value.GetPoint();
     this->ChangePoint( static_cast< unsigned int >( std::distance( graphValueList_.begin(), it ) ), newPoint );
     TouchData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GraphData::SelectRelatedData
-/** @param  pObj
-*/
-// Created: APE 2004-12-22
-// -----------------------------------------------------------------------------
-void ADN_GraphData::SelectRelatedData( void* pObj )
-{
-    SetSelected( false );
-    for( auto it = graphValueList_.begin(); it != graphValueList_.end(); ++it )
-    {
-        ADN_GraphValue* pValue = *it;
-        if( pValue->GetRelatedObject() == pObj )
-        {
-            SetSelected( static_cast< unsigned int >( std::distance( graphValueList_.begin(), it ) ), true );
-        }
-    }
 }

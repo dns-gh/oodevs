@@ -13,7 +13,10 @@
 #include "ADN_ListView.h"
 #include <boost/noncopyable.hpp>
 
-class GQ_Plot;
+namespace gui
+{
+    class GQ_Plot;
+}
 
 // =============================================================================
 /** @class  ADN_Weapons_PhSizeListView
@@ -28,7 +31,7 @@ class ADN_Weapons_PhSizeListView : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Weapons_PhSizeListView( GQ_Plot& plot, const std::map< void*, unsigned int >& userIds );
+    explicit ADN_Weapons_PhSizeListView( gui::GQ_Plot& plot, const std::map< void*, unsigned int >& userIds );
     virtual ~ADN_Weapons_PhSizeListView();
     //@}
 

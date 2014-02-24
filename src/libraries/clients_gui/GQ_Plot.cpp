@@ -26,8 +26,6 @@
 #include <algorithm>
 #include <cassert>
 
-#pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
-
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -42,7 +40,6 @@ GQ_Plot::GQ_Plot( QWidget* pParent, const char* name )
 , x_                ( this, Qt::Horizontal )
 , y_                ( this, Qt::Vertical   )
 , pCoordToString_   ( 0 )
-, layerMap_         ()
 , pBackground_      ( new QPixmap()  )
 , pPlot_            ( new QPixmap()  )
 , nPlotMargin_      ( 20 )
@@ -306,7 +303,7 @@ GQ_Plot::T_DataIndex GQ_Plot::GetNextDataIndex( T_DataIndex dataIndex ) const
     int nCurrentDepth = dataIndex.first;
     int nCurrentIndex = dataIndex.second;
 
-    CIT_LayerMap it = layerMap_.lower_bound( nCurrentDepth );
+    auto it = layerMap_.lower_bound( nCurrentDepth );
     if( it == layerMap_.end() )
         return T_DataIndex( 0, -1 );
 
@@ -335,7 +332,7 @@ GQ_PlotData& GQ_Plot::GetPlotData( T_DataIndex dataIndex ) const
     if( dataIndex.second == -1 )
         throw MASA_EXCEPTION( "GQ_Plot : invalid iterator" );
 
-    CIT_LayerMap it = layerMap_.find( dataIndex.first );
+    auto it = layerMap_.find( dataIndex.first );
     if( it == layerMap_.end() || dataIndex.second >= ( int )it->second.size() )
         throw MASA_EXCEPTION( "GQ_Plot : invalid iterator" );
 
@@ -518,7 +515,7 @@ void GQ_Plot::UpdateBackground( const QColorGroup& colors )
     x_.DrawGrid( painter, colors, plotRect_ );
     y_.DrawGrid( painter, colors, plotRect_ );
 
-    for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         T_PlotLayer& layer = it->second;
         for( std::size_t i = 0; i < layer.size(); ++i )
@@ -554,7 +551,7 @@ void GQ_Plot::UpdateDataPlot( const QColorGroup& colors )
 
     int nLastDepth = -1;
 
-    for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         int nDepth = it->first;
         T_PlotLayer& layer = it->second;
@@ -605,7 +602,7 @@ void GQ_Plot::CenterOnPlotRect( QPainter& painter )
 // -----------------------------------------------------------------------------
 void GQ_Plot::RegisterPlotData( GQ_PlotData& data, int nDepth )
 {
-    IT_LayerMap it = layerMap_.find( nDepth );
+    auto it = layerMap_.find( nDepth );
     if( it == layerMap_.end() )
         it = layerMap_.insert( std::make_pair( nDepth, T_PlotLayer() ) ).first;
 
@@ -627,7 +624,7 @@ void GQ_Plot::RegisterPlotData( GQ_PlotData& data, int nDepth )
 // -----------------------------------------------------------------------------
 bool GQ_Plot::UnregisterPlotData( GQ_PlotData& data, bool bDestroy )
 {
-    for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         T_PlotLayer& layer = it->second;
 
@@ -647,6 +644,30 @@ bool GQ_Plot::UnregisterPlotData( GQ_PlotData& data, bool bDestroy )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GQ_Plot::UnregisterAllPlotData
+/** @param  bDestroy
+*/
+// Created: APE 2005-01-13
+// -----------------------------------------------------------------------------
+void GQ_Plot::UnregisterAllPlotData( bool bDestroy )
+{
+    for( auto itLayer = layerMap_.begin(); itLayer != layerMap_.end(); ++itLayer )
+    {
+        T_PlotLayer& layer = itLayer->second;
+
+        while( ! layer.empty() )
+        {
+            GQ_PlotData* pData = layer.back();
+            assert( pData );
+            layer.pop_back();
+            if( bDestroy )
+                delete pData;
+        }
+    }
+    TouchData();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetLayerVisible
 /** @param  nDepth
     @param  bVisible
@@ -655,7 +676,7 @@ bool GQ_Plot::UnregisterPlotData( GQ_PlotData& data, bool bDestroy )
 // -----------------------------------------------------------------------------
 void GQ_Plot::SetLayerVisible( bool bVisible, int nDepth )
 {
-    IT_LayerMap it = layerMap_.find( nDepth );
+    auto it = layerMap_.find( nDepth );
     if( it == layerMap_.end() )
         return;
 
@@ -676,7 +697,7 @@ void GQ_Plot::SetLayerVisible( bool bVisible, int nDepth )
 // -----------------------------------------------------------------------------
 void GQ_Plot::SetAllVisible( bool bVisible )
 {
-    for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         int nDepth = it->first;
         SetLayerVisible( bVisible, nDepth );
@@ -691,7 +712,7 @@ void GQ_Plot::SetAllVisible( bool bVisible )
 // -----------------------------------------------------------------------------
 void GQ_Plot::ClearLayerData( int nDepth )
 {
-    IT_LayerMap it = layerMap_.find( nDepth );
+    auto it = layerMap_.find( nDepth );
     if( it == layerMap_.end() )
         return;
 
@@ -710,7 +731,7 @@ void GQ_Plot::ClearLayerData( int nDepth )
 // -----------------------------------------------------------------------------
 void GQ_Plot::ClearAllData()
 {
-    for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         int nDepth = it->first;
         ClearLayerData( nDepth );
@@ -725,7 +746,7 @@ void GQ_Plot::ClearAllData()
 // -----------------------------------------------------------------------------
 GQ_PlotData* GQ_Plot::GetPlotData( unsigned int nPlotIndex, int nDepth ) const
 {
-    CIT_LayerMap it = layerMap_.find( nDepth );
+    auto it = layerMap_.find( nDepth );
     if( it == layerMap_.end() )
         return 0;
 
@@ -737,8 +758,6 @@ GQ_PlotData* GQ_Plot::GetPlotData( unsigned int nPlotIndex, int nDepth ) const
 }
 
 // -----------------------------------------------------------------------------
-// -----------------------------------------------------------------------------
-
 // Name: GQ_Plot::FindPlotData
 /** @param  nUserID
     @return
@@ -817,6 +836,13 @@ QPoint GQ_Plot::MapToViewport( double rX, double rY ) const
     return QPoint( nX, nY ) + plotRect_.bottomLeft();
 }
 
+// -----------------------------------------------------------------------------
+// Name: GQ_Plot::MapFromViewport
+/** @param  point
+    @return
+*/
+// Created: APE 2004-12-17
+// -----------------------------------------------------------------------------
 GQ_Plot::T_Point GQ_Plot::MapFromViewport( const QPoint& point ) const
 {
     const double rX = x_.MapFromViewport( point.x() - plotRect_.left() );

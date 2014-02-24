@@ -15,8 +15,8 @@
 #include "ADN_Weapons_Data_PhInfos.h"
 #include "ADN_Weapons_GUI.h"
 #include "ADN_Tr.h"
-#include "GQ_PlotData.h"
-#include "GQ_Plot.h"
+#include "clients_gui/GQ_PlotData.h"
+#include "clients_gui/GQ_Plot.h"
 
 typedef ADN_Weapons_Data_PhSizeInfos PhSizeInfos;
 
@@ -28,7 +28,7 @@ class ADN_CLV_PhSizes : public ADN_Connector_ListView_ABC
 {
 
 public:
-    ADN_CLV_PhSizes( ADN_Weapons_PhSizeListView& list, GQ_Plot& plot, const std::map< void*, unsigned int >& userIds )
+    ADN_CLV_PhSizes( ADN_Weapons_PhSizeListView& list, gui::GQ_Plot& plot, const std::map< void*, unsigned int >& userIds )
         : ADN_Connector_ListView_ABC( list )
         , plot_ ( plot )
         , userIds_( userIds )
@@ -50,7 +50,7 @@ public:
             return 0;
         }
         // Retrieve the display icon for this item from the plot.
-        GQ_PlotData* pData = plot_.FindPlotData( it->second );
+        gui::GQ_PlotData* pData = plot_.FindPlotData( it->second );
         assert( pData != 0 );
         QPixmap icon;
         pData->DrawCaption( icon );
@@ -68,7 +68,7 @@ public:
     }
 
 private:
-    GQ_Plot& plot_;
+    gui::GQ_Plot& plot_;
     const std::map< void*, unsigned int >& userIds_;
 };
 
@@ -76,7 +76,7 @@ private:
 // Name: ADN_Weapons_PhSizeListView constructor
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
-ADN_Weapons_PhSizeListView::ADN_Weapons_PhSizeListView( GQ_Plot& plot, const std::map< void*, unsigned int >& userIds )
+ADN_Weapons_PhSizeListView::ADN_Weapons_PhSizeListView( gui::GQ_Plot& plot, const std::map< void*, unsigned int >& userIds )
     : ADN_ListView( 0, "ADNWeaponsPhSizeListView", tools::translate( "ADN_Weapons_PhSizeListView", "Target size" ) )
 {
     setMaximumHeight( 300 );
