@@ -213,7 +213,7 @@ void LogisticSupplyValuesTableWidget::GetQuantities( QMap< QString, int >& quant
         {
             QString name = model->data( model->index( i, eName ), Qt::DisplayRole ).value< QString >();
             int quantity = model->data( model->index( i, eValue ), Qt::UserRole ).value< int >();
-            if( !name.isEmpty() && quantity >= 0 )
+            if( !name.isEmpty() && quantity > 0 )
                 quantities[ name ] = quantity;
         }
     }
