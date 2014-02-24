@@ -11,7 +11,9 @@
 #include "LogisticSupplyAvailabilityTableWidget.h"
 #include "moc_LogisticSupplyAvailabilityTableWidget.cpp"
 #include "clients_gui/RichSpinBox.h"
+#include "clients_kernel/DotationType.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/Dotation.h"
 
 namespace
 {
@@ -19,7 +21,9 @@ namespace
     {
         eName,
         eAvailable,
-        eValue
+        eValue,
+        eMass,
+        eVolume
     };
 }
 
@@ -78,17 +82,17 @@ QWidget* LogisticSupplyAvailabilityItemDelegate::createEditor( QWidget* parent, 
         QString curName = index.model()->index( index.row(), eName ).data().value< QString >();
         if( curName.isEmpty() )
             return 0;
-        int available = 0, qty = 0;
+        int available = 0, quantity = 0;
         const QAbstractItemModel* model = index.model();
         if( model )
         {
             int row = index.row();
             available = model->data( model->index( row, eAvailable ), Qt::UserRole ).value< int >();
-            qty = model->data( model->index( row, eValue ), Qt::UserRole ).value< int >();
+            quantity = model->data( model->index( row, eValue ), Qt::UserRole ).value< int >();
         }
         gui::RichSpinBox* spinBox = new gui::RichSpinBox( "spinBox", parent );
-        spinBox->setRange( 1, available );
-        spinBox->setValue( qty );
+        spinBox->setRange( 0, available );
+        spinBox->setValue( quantity );
         spinBox->setSingleStep( 1 );
         connect( spinBox, SIGNAL( valueChanged( int ) ), parentTable, SLOT( OnQuantityChanged() ) );
         return spinBox;
@@ -153,9 +157,10 @@ bool LogisticSupplyAvailabilityItemDelegate::IsNameInTable( const QAbstractItemM
 // Name: LogisticSupplyAvailabilityTableWidget constructor
 // Created: MMC 2012-10-11
 // -----------------------------------------------------------------------------
-LogisticSupplyAvailabilityTableWidget::LogisticSupplyAvailabilityTableWidget( QWidget* parent, const QStringList& header )
+LogisticSupplyAvailabilityTableWidget::LogisticSupplyAvailabilityTableWidget( QWidget* parent, const QStringList& header, const T_AvailableDotations& dotations )
     : QTableWidget( parent )
     , header_( header )
+    , dotations_( dotations )
 {
     setColumnCount( header.size() );
     setSelectionMode( QAbstractItemView::NoSelection );
@@ -277,6 +282,7 @@ void LogisticSupplyAvailabilityTableWidget::OnNameChanged( const QString& newNam
 
 void LogisticSupplyAvailabilityTableWidget::OnQuantityChanged()
 {
+    UpdateMassVolume( currentIndex().row() );
     emit OnChanged( currentIndex().row() );
 }
 
@@ -285,12 +291,33 @@ void LogisticSupplyAvailabilityTableWidget::AddRow( int row, const QString& newN
     SetContent( row, eName, newName );
     SetContent( row, eAvailable, available );
     SetContent( row, eValue, 1 );
+    UpdateMassVolume( row );
+}
+
+void LogisticSupplyAvailabilityTableWidget::UpdateMassVolume( int row )
+{
+    const QString name = model()->data( model()->index( row, eName ) ).asString();
+    const int available = model()->data( model()->index( row, eValue ), Qt::UserRole ).value< int >();
+    auto it = dotations_.find( name );
+    if( it != dotations_.end() )
+    {
+        SetContent( row, eMass, available * it->second.type_->GetUnitWeight() );
+        SetContent( row, eVolume, available * it->second.type_->GetUnitVolume() );
+    }
+}
+
+void LogisticSupplyAvailabilityTableWidget::SetContent( int row, int col, int value )
+{
+    const QModelIndex index = model()->index( row, col );
+    model()->setData( index, value, Qt::DisplayRole );
+    model()->setData( index, value, Qt::UserRole );
+    item( row, col )->setTextAlignment( Qt::AlignVCenter | Qt::AlignRight );
 }
 
 void LogisticSupplyAvailabilityTableWidget::SetContent( int row, int col, double value )
 {
     const QModelIndex index = model()->index( row, col );
-    model()->setData( index, locale().toString( value, 'f', 0 ), Qt::DisplayRole );
+    model()->setData( index, locale().toString( value, 'f', 2 ), Qt::DisplayRole );
     model()->setData( index, value, Qt::UserRole );
     item( row, col )->setTextAlignment( Qt::AlignVCenter | Qt::AlignRight );
 }

@@ -130,8 +130,8 @@ void PHY_MedicalHealingConsign::EnterStateResting()
     assert( pDoctor_ );
 
     GetPionMedical().StopUsingForLogistic( *pDoctor_ );
-    pDoctor_ = 0;
     SetState( sword::LogMedicalHandlingUpdate::resting, pHumanState_->Heal( *pDoctor_ ) );
+    pDoctor_ = 0;
 }
 
 // -----------------------------------------------------------------------------
