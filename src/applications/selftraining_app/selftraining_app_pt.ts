@@ -8,10 +8,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Launcher service cannot be started: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Already running</source>
         <translation type="unfinished"></translation>
     </message>
@@ -363,17 +359,6 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>otpak corrupted: unable to load content properly</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LauncherClientPage</name>
-    <message>
-        <source>Failed to connect to host: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

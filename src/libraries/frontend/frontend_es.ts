@@ -112,65 +112,6 @@
     </message>
 </context>
 <context>
-    <name>LauncherClient</name>
-    <message>
-        <source>incompatible protocol version</source>
-        <translation>versión de protocolo incompatible</translation>
-    </message>
-    <message>
-        <source>unknown error</source>
-        <translation>error desconocido</translation>
-    </message>
-    <message>
-        <source>invalid checkpoint</source>
-        <translation>punto de control no válido</translation>
-    </message>
-    <message>
-        <source>Failed to contact launcher service: %1.</source>
-        <translation>Error al contactar servicio de lanzador: %1.</translation>
-    </message>
-    <message>
-        <source>Failed to stop exercise: %1.</source>
-        <translation>Error al detener ejercicio: %1.</translation>
-    </message>
-    <message>
-        <source>success</source>
-        <translation>éxito</translation>
-    </message>
-    <message>
-        <source>invalid exercise name</source>
-        <translation>nombre de ejercício no válido</translation>
-    </message>
-    <message>
-        <source>session already running</source>
-        <translation>sesión en ejecución</translation>
-    </message>
-    <message>
-        <source>invalid session name</source>
-        <translation>nombre de sesión no válida</translation>
-    </message>
-    <message>
-        <source>session not running</source>
-        <translation>la sesión no está ejecutándose</translation>
-    </message>
-    <message>
-        <source>Failed to start session: %1.</source>
-        <translation>Error al iniciar sesión: %1.</translation>
-    </message>
-    <message>
-        <source>session already paused</source>
-        <translation>sesión pausada</translation>
-    </message>
-    <message>
-        <source>Failed to execute command on exercise: %1.</source>
-        <translation>Error al ejecutar comando en el ejercicio: %1.</translation>
-    </message>
-    <message>
-        <source>invalid date time</source>
-        <translation>fecha/hora no válida</translation>
-    </message>
-</context>
-<context>
     <name>PluginConfig</name>
     <message>
         <source>Enable %1 plugin v%2 </source>

@@ -112,65 +112,6 @@
     </message>
 </context>
 <context>
-    <name>LauncherClient</name>
-    <message>
-        <source>success</source>
-        <translation type="unfinished">النجاح</translation>
-    </message>
-    <message>
-        <source>incompatible protocol version</source>
-        <translation type="unfinished">إصدار بروتوكول غير متوافق</translation>
-    </message>
-    <message>
-        <source>unknown error</source>
-        <translation type="unfinished">خطأ غير معروف</translation>
-    </message>
-    <message>
-        <source>invalid exercise name</source>
-        <translation type="unfinished">اسم العملية غير صالحة</translation>
-    </message>
-    <message>
-        <source>session already running</source>
-        <translation type="unfinished">الدورة التي قيد التشغيل بالفعل</translation>
-    </message>
-    <message>
-        <source>invalid checkpoint</source>
-        <translation type="unfinished">نقطة تفتيش غير صالحة</translation>
-    </message>
-    <message>
-        <source>invalid session name</source>
-        <translation type="unfinished">اسم جلسة العمل غير صالح</translation>
-    </message>
-    <message>
-        <source>session not running</source>
-        <translation type="unfinished">الدورة ليست قيد التشغيل</translation>
-    </message>
-    <message>
-        <source>session already paused</source>
-        <translation type="unfinished">دورة الفعل مؤقتاً</translation>
-    </message>
-    <message>
-        <source>invalid date time</source>
-        <translation type="unfinished">وقت تاريخ غير صالح</translation>
-    </message>
-    <message>
-        <source>Failed to contact launcher service: %1.</source>
-        <translation type="unfinished">فشل في الاتصال بمشغل الخدمة: %1.</translation>
-    </message>
-    <message>
-        <source>Failed to start session: %1.</source>
-        <translation type="unfinished">فشل في بدء الدورة: %1.</translation>
-    </message>
-    <message>
-        <source>Failed to stop exercise: %1.</source>
-        <translation type="unfinished">فشل إيقاف ممارسة: %1.</translation>
-    </message>
-    <message>
-        <source>Failed to execute command on exercise: %1.</source>
-        <translation type="unfinished">فشل تنفيذ الأمر على ممارسة: %1.</translation>
-    </message>
-</context>
-<context>
     <name>PluginConfig</name>
     <message>
         <source>Enable %1 plugin v%2 </source>

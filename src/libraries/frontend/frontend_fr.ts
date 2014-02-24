@@ -112,65 +112,6 @@
     </message>
 </context>
 <context>
-    <name>LauncherClient</name>
-    <message>
-        <source>Failed to contact launcher service: %1.</source>
-        <translation>Impossible de joindre le service launcher: %1.</translation>
-    </message>
-    <message>
-        <source>Failed to stop exercise: %1.</source>
-        <translation>Impossible d&apos;arrêter l&apos;exercice: %1.</translation>
-    </message>
-    <message>
-        <source>incompatible protocol version</source>
-        <translation>version du protocol incompatible</translation>
-    </message>
-    <message>
-        <source>unknown error</source>
-        <translation>erreur inconnue</translation>
-    </message>
-    <message>
-        <source>invalid checkpoint</source>
-        <translation>point de reprise invalide</translation>
-    </message>
-    <message>
-        <source>success</source>
-        <translation>succès</translation>
-    </message>
-    <message>
-        <source>invalid exercise name</source>
-        <translation>nom d&apos;exercice invalide</translation>
-    </message>
-    <message>
-        <source>session already running</source>
-        <translation>session déjà en cours d&apos;exécution</translation>
-    </message>
-    <message>
-        <source>invalid session name</source>
-        <translation>nom de session invalide</translation>
-    </message>
-    <message>
-        <source>session not running</source>
-        <translation>session non lancée</translation>
-    </message>
-    <message>
-        <source>Failed to start session: %1.</source>
-        <translation>Impossible de démarer la session: %1</translation>
-    </message>
-    <message>
-        <source>session already paused</source>
-        <translation>session déjà en pause</translation>
-    </message>
-    <message>
-        <source>Failed to execute command on exercise: %1.</source>
-        <translation>Impossible d&apos;exécuter la command sur l&apos;exercice: %1.</translation>
-    </message>
-    <message>
-        <source>invalid date time</source>
-        <translation>date/heure invalide</translation>
-    </message>
-</context>
-<context>
     <name>PluginConfig</name>
     <message>
         <source>Enable %1 plugin v%2 </source>

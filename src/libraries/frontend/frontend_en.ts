@@ -112,65 +112,6 @@
     </message>
 </context>
 <context>
-    <name>LauncherClient</name>
-    <message>
-        <source>success</source>
-        <translation>success</translation>
-    </message>
-    <message>
-        <source>incompatible protocol version</source>
-        <translation>incompatible protocol version</translation>
-    </message>
-    <message>
-        <source>unknown error</source>
-        <translation>unknown error</translation>
-    </message>
-    <message>
-        <source>invalid exercise name</source>
-        <translation>invalid exercise name</translation>
-    </message>
-    <message>
-        <source>session already running</source>
-        <translation>session already running</translation>
-    </message>
-    <message>
-        <source>invalid checkpoint</source>
-        <translation>invalid checkpoint</translation>
-    </message>
-    <message>
-        <source>invalid session name</source>
-        <translation>invalid session name</translation>
-    </message>
-    <message>
-        <source>session not running</source>
-        <translation>session not running</translation>
-    </message>
-    <message>
-        <source>session already paused</source>
-        <translation>session already paused</translation>
-    </message>
-    <message>
-        <source>invalid date time</source>
-        <translation>invalid date time</translation>
-    </message>
-    <message>
-        <source>Failed to contact launcher service: %1.</source>
-        <translation>Failed to contact launcher service: %1.</translation>
-    </message>
-    <message>
-        <source>Failed to start session: %1.</source>
-        <translation>Failed to start session: %1.</translation>
-    </message>
-    <message>
-        <source>Failed to stop exercise: %1.</source>
-        <translation>Failed to stop exercise: %1.</translation>
-    </message>
-    <message>
-        <source>Failed to execute command on exercise: %1.</source>
-        <translation>Failed to execute command on exercise: %1.</translation>
-    </message>
-</context>
-<context>
     <name>PluginConfig</name>
     <message>
         <source>Enable %1 plugin v%2 </source>

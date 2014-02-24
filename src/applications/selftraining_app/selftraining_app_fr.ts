@@ -23,10 +23,6 @@
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
-    <message>
-        <source>Launcher service cannot be started: %1.</source>
-        <translation>Le service de lancement ne peut pas être démarré : %1.</translation>
-    </message>
 </context>
 <context>
     <name>AuthoringPage</name>
@@ -368,17 +364,6 @@ Do you want to replace it?</source>
     <message>
         <source>Version:</source>
         <translation>Version :</translation>
-    </message>
-</context>
-<context>
-    <name>LauncherClientPage</name>
-    <message>
-        <source>Failed to connect to host: %1.</source>
-        <translation>Impossible de se connecter à l&apos;hôte: %1.</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
     </message>
 </context>
 <context>

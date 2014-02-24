@@ -112,65 +112,6 @@
     </message>
 </context>
 <context>
-    <name>LauncherClient</name>
-    <message>
-        <source>success</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>incompatible protocol version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>unknown error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>invalid exercise name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>session already running</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>invalid checkpoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>invalid session name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>session not running</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>session already paused</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>invalid date time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to contact launcher service: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to start session: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to stop exercise: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to execute command on exercise: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PluginConfig</name>
     <message>
         <source>Enable %1 plugin v%2 </source>
