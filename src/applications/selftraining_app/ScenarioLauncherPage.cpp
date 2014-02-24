@@ -50,7 +50,7 @@ namespace
     bool IsValid( const tools::Path& path, const tools::Loader_ABC& fileLoader, const Config& config )
     {
         bool isValid = true;
-        tools::Path terrain;
+        tools::Path terrain, dataSet, physical;
         const tools::Path fileName = config.GetExerciseFile( path );
         try
         {
@@ -59,13 +59,18 @@ namespace
                     >> xml::start( "terrain" )
                         >> xml::attribute( "name", terrain )
                     >> xml::end
+                    >> xml::start( "model" )
+                        >> xml::attribute( "dataset", dataSet )
+                        >> xml::attribute( "physical", physical )
+                    >> xml::end
                     >> xml::optional >> xml::attribute( "valid", isValid );
         }
         catch( ... )
         {
             // NOTHING
         }
-        return isValid && config.GetTerrainDir( terrain ).Exists();
+        return isValid && config.GetTerrainDir( terrain ).Exists() &&
+             config.GetPhysicalsDir( dataSet, physical ).Exists();
     }
 
     struct ResourcesLoadingWrapper
