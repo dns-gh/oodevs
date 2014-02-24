@@ -80,7 +80,10 @@ ExerciseListView::~ExerciseListView()
 // -----------------------------------------------------------------------------
 const QStandardItem* ExerciseListView::GetSelectedExerciseItem() const
 {
-    const QModelIndex index = selectionModel()->currentIndex();
+    const QModelIndexList selected = selectedIndexes();
+    if( selected.empty() )
+        return 0;
+    const QModelIndex index = selected.front();
     if( index.isValid() )
         return model_.itemFromIndex( proxy_->mapToSource( index ) );
     return 0;
@@ -162,6 +165,7 @@ void ExerciseListView::AddExerciseEntry( const frontend::Exercise_ABC& exercise 
             const std::string fullpath( complete.size() < path.size() ? "\\" + current.toStdString() : current.toStdString() );
             item = new QStandardItem( directory, *it );
             item->setData( QString( fullpath.c_str() ), FullpathRole );
+            item->setFlags( Qt::ItemIsEnabled );
             if( parent )
                 parent->setChild( parent->rowCount(), item );
             else
@@ -173,6 +177,7 @@ void ExerciseListView::AddExerciseEntry( const frontend::Exercise_ABC& exercise 
     {
         parent->setIcon( mission );
         parent->setData( QVariant::fromValue( &exercise ), ExerciseRole );
+        parent->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
     }
     qApp->restoreOverrideCursor();
 }
