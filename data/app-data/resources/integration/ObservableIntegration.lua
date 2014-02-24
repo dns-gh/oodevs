@@ -90,12 +90,18 @@ integration.getUrbanBlockCurrentReconnaissanceState = function( urbanBlock )
 end
 
 -- Orientate the agent's sensors toward the given entities (a localized element)
--- @param a 'LocalizedElement' knowledge (such as 'Point', 'Area', UrbanBlock', 'Object' types of objective)
-integration.observeIt = function( objective )
+-- @param objective a 'LocalizedElement' knowledge (such as 'Point', 'Area', UrbanBlock', 'Object' types of objective)
+-- @param activeRadar a boolean to determine if the agent activates his radar for detection
+integration.observeIt = function( objective, activeRadar )
     if masalife.brain.core.class.isOfType( objective, integration.ontology.types.direction ) then
         DEC_Perception_VisionVerrouilleeSurDirection( objective.source )
     else
-        DEC_Perception_VisionVerrouilleeSurPointPtr( objective:getPosition() )
+        if objective:isValid() then
+            DEC_Perception_VisionVerrouilleeSurPointPtr( objective:getPosition() )
+            if activeRadar then
+              DEC_Perception_ActiverRadarSurPointPtr( eRadarType_Radar, objective:getPosition() )
+            end
+        end
     end
   -- reportFunction(eRC_VisionVerrouilleeSur ) @TODO GGE à déplacer pour être gérer sans boucler
 end
