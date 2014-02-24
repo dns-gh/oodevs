@@ -77,8 +77,8 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
     resourcesHeader << tools::translate( "Logistic : Push supply flow", "Resource" )
         << tools::translate( "Logistic : Push supply flow", "Available" )
         << tools::translate( "Logistic : Push supply flow", "Quantity" )
-        << tools::translate( "Logistic : Push supply flow", "Mass" )
-        << tools::translate( "Logistic : Push supply flow", "Volume" );
+        << tools::translate( "Logistic : Push supply flow", "Mass (T)" )
+        << tools::translate( "Logistic : Push supply flow", "Volume (m3)" );
     resourcesTable_ = new LogisticSupplyAvailabilityTableWidget( this, resourcesHeader, availableSupplies_ );
 
     resourcesTab_ = new QWidget( tabs_ );

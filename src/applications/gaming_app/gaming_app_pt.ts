@@ -1602,6 +1602,14 @@ Do you want to replace it?</source>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mass (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Logistic : supply flow</name>
