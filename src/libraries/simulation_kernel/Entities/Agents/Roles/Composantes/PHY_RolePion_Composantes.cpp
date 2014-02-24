@@ -2035,8 +2035,13 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ChangeHumanState( sword::MissionParameters msg )
 {
+    std::set< boost::shared_ptr< Human_ABC > > done;
+    // First match all wounds to existing humans in order not to mess with their logistic state
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        (*it)->ChangeHumanState( msg );
+        (*it)->UpdateHumanState( msg, done );
+    // Second change the states of humans whose state cannot be kept.
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+        (*it)->ChangeHumanState( msg, done );
 }
 
 // -----------------------------------------------------------------------------
