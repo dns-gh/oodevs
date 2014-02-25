@@ -84,6 +84,15 @@ private:
     //@}
 };
 
-#include "MIL_Random.inl"
+// -----------------------------------------------------------------------------
+// Name: MIL_Random::random_shuffle
+// Created: JSR 2011-05-05
+// -----------------------------------------------------------------------------
+template< typename T >
+void MIL_Random::random_shuffle( std::vector< T >& vector, int ctxt )
+{
+    boost::function< unsigned long( unsigned long ) > fun =  boost::bind( &MIL_Random::rand32_io, 0, _1, ctxt );
+    std::random_shuffle( vector.begin(), vector.end(), fun );
+}
 
 #endif // __MIL_Random_h_
