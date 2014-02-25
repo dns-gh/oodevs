@@ -12,10 +12,10 @@
 #ifndef __MIL_Config_h_
 #define __MIL_Config_h_
 
-#include "MIL_Random.h"
 #include "tools/SessionConfig.h"
 #include <boost/optional.hpp>
 #include <map>
+#include <vector>
 
 namespace xml
 {
@@ -127,9 +127,10 @@ private:
     bool           bPausedAtStartup_;
     tools::Path    strCheckPointNameTestMode_;
     int            randomSeed_;
-    bool           randomGaussian_[ MIL_Random::eContextsNbr ];
-    double         randomDeviation_[ MIL_Random::eContextsNbr ];
-    double         randomMean_[ MIL_Random::eContextsNbr ];
+    // non-conforming vector< bool > is so awesome
+    std::unique_ptr< bool[] > randomGaussian_;
+    std::vector< double > randomDeviation_;
+    std::vector< double > randomMean_;
     unsigned int   setpause_;
     unsigned int   setstepmul_;
     tools::Path    integrationDir_;

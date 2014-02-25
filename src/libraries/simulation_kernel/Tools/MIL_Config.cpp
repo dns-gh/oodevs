@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Config.h"
+#include "MIL_Random.h"
 #include "MIL_Tools.h"
 #include "tools/Codec.h"
 #include "tools/FileWrapper.h"
@@ -52,11 +53,16 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , bEmbeddedDispatcher_( false )
     , bPausedAtStartup_( false )
     , randomSeed_( 0 )
+    , randomGaussian_( new bool[ MIL_Random::eContextsNbr ] )
+    , randomDeviation_( MIL_Random::eContextsNbr, 0 )
+    , randomMean_( MIL_Random::eContextsNbr, 0 )
     , setpause_( 0 )
     , setstepmul_( 0 )
     , integrationDir_( "resources" )
     , bTestCommands_( false )
 {
+    for( int i = 0; i != MIL_Random::eContextsNbr; ++i )
+        randomGaussian_[i] = false;
     po::options_description desc( "Simulation options" );
     desc.add_options()
         ( "checkpointorbat"                                               , "use backup orbat with checkpoint"          )
@@ -519,7 +525,7 @@ int MIL_Config::GetRandomSeed() const
 // -----------------------------------------------------------------------------
 const bool* MIL_Config::GetRandomGaussian() const
 {
-    return randomGaussian_;
+    return randomGaussian_.get();
 }
 
 // -----------------------------------------------------------------------------
@@ -528,7 +534,7 @@ const bool* MIL_Config::GetRandomGaussian() const
 // -----------------------------------------------------------------------------
 const double* MIL_Config::GetRandomDeviation() const
 {
-    return randomDeviation_;
+    return &randomDeviation_[0];
 }
 
 // -----------------------------------------------------------------------------
@@ -537,7 +543,7 @@ const double* MIL_Config::GetRandomDeviation() const
 // -----------------------------------------------------------------------------
 const double* MIL_Config::GetRandomMean() const
 {
-    return randomMean_;
+    return &randomMean_[0];
 }
 
 bool MIL_Config::EnableTestCommands() const
