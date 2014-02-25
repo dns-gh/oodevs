@@ -49,6 +49,7 @@ private:
     //! @name Helpers
     //@{
     void AddItem( int row, int col, const QString& text );
+    bool ItemHasText( int row, int col, const QString& text ) const;
     //@}
 
 private:
