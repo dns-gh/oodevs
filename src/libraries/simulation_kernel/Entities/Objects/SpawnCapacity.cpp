@@ -11,6 +11,7 @@
 #include "SpawnCapacity.h"
 #include "MIL_AgentServer.h"
 #include "ChildObjectAttribute.h"
+#include "SpawnedAttribute.h"
 #include "Object.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
@@ -128,8 +129,13 @@ void SpawnCapacity::CreateObject( MIL_Object_ABC& object )
 {
     TER_Localisation location = object.GetLocalisation();
     location.Scale( rActionRange_ );
-    Object* childObject= static_cast< Object* >( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( childType_, object.GetArmy(), location, object.GetID() + 1 ) );
-    object.GetAttribute< ChildObjectAttribute >().AddChildObject( *childObject );
+    Object* childObject = static_cast< Object* >( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( childType_,
+        object.GetArmy(), location, object.GetID() + 1 ) );
+    if( childObject )
+    {
+        object.GetAttribute< ChildObjectAttribute >().AddChildObject( *childObject );
+        childObject->GetAttribute< SpawnedAttribute >();
+    }
 }
 
 namespace
