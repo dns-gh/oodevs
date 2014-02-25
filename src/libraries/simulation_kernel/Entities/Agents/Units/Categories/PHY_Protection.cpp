@@ -167,19 +167,19 @@ PHY_Protection::~PHY_Protection()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Protection::CanRandomlyBreaksDownEva
+// Name: PHY_Protection::DrawRandomEvacBreakdown
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-bool PHY_Protection::CanRandomlyBreaksDownEva() const
+bool PHY_Protection::DrawRandomEvacBreakdown() const
 {
     return ( 1. - MIL_Random::rand_oi( 0., 1., MIL_Random::eBreakdowns ) <= rBreakdownProbabilityEva_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Protection::CanRandomlyBreaksDownNeva
+// Name: PHY_Protection::DrawRandomNonEvacBreakdown
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-bool PHY_Protection::CanRandomlyBreaksDownNeva() const
+bool PHY_Protection::DrawRandomNonEvacBreakdown() const
 {
     return ( 1. - MIL_Random::rand_oi( 0., 1., MIL_Random::eBreakdowns ) <= rBreakdownProbabilityNeva_ );
 }
