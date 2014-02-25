@@ -70,6 +70,7 @@ void TemplateListView::contextMenuEvent( QContextMenuEvent* event )
         QMenu* menu = new QMenu( this  );
         connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
         menu->addAction( tr( "Rename" ), this, SLOT( OnRename() ) );
+        menu->addAction( tr( "Delete" ), this, SLOT( OnDelete() ) );
         menu->popup( event->globalPos() );
     }
 }
@@ -177,9 +178,19 @@ void TemplateListView::Clear()
 // -----------------------------------------------------------------------------
 void TemplateListView::keyPressEvent( QKeyEvent* evt )
 {
+    if( evt && evt->key() == Qt::Key_Delete )
+        OnDelete();
+    RichTreeView::keyPressEvent( evt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TemplateListView::OnDelete
+// Created: ABR 2014-02-25
+// -----------------------------------------------------------------------------
+void TemplateListView::OnDelete()
+{
     const QModelIndex index = selectionModel()->currentIndex();
-    if( evt && evt->key() == Qt::Key_Delete && index.isValid() )
-    {
+    if( index.isValid() )
         if( HierarchyTemplate* pTemplate = dataModel_.GetDataFromIndex< HierarchyTemplate >( index ) )
         {
             auto it = std::find( templates_.begin(), templates_.end(), pTemplate );
@@ -195,7 +206,4 @@ void TemplateListView::keyPressEvent( QKeyEvent* evt )
                     delete *it;
             }
         }
-    }
-    else
-        RichTreeView::keyPressEvent( evt );
 }

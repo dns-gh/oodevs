@@ -53,6 +53,7 @@ private slots:
     //@{
     void OnRename( const QModelIndex& index, const QVariant& variant );
     void OnRename();
+    void OnDelete();
     //@}
 
 private:

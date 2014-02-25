@@ -2558,6 +2558,10 @@ This data can&apos;t be projected.</translation>
         <source>Rename</source>
         <translation>Rename</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Delete</translation>
+    </message>
 </context>
 <context>
     <name>TemplatesPanel</name>

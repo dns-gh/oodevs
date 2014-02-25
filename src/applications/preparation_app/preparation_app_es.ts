@@ -2557,6 +2557,10 @@ Este dato no puede ser proyectado.</translation>
         <source>Rename</source>
         <translation>Renombrar</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Borrar</translation>
+    </message>
 </context>
 <context>
     <name>TemplatesPanel</name>
