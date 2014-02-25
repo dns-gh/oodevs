@@ -92,6 +92,9 @@ private:
     void InitializePasses();
     //@}
 
+public:
+    static const int defaultFrameRate_;
+
 private:
     //! @name Member data
     //@{

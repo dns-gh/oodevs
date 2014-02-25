@@ -27,6 +27,8 @@
 using namespace gui;
 using namespace kernel;
 
+const int GlSelector::defaultFrameRate_( 50 );
+
 // -----------------------------------------------------------------------------
 // Name: GlSelector constructor
 // Created: AGE 2007-03-09
@@ -45,7 +47,7 @@ GlSelector::GlSelector( QWidget* parent, GlProxy& proxy, Controllers& controller
     , glPlaceHolder_    ( 0 )
     , b3d_              ( false )
     , bDragMapWithWheel_( false )
-    , refreshRate_      ( 50 )
+    , refreshRate_      ( defaultFrameRate_ )
 {
     setObjectName( "GlSelector" );
     displayTimer_ = new QTimer( this );
