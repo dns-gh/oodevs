@@ -277,6 +277,11 @@
                 <xs:documentation xml:lang="en">Enables pathfind information logging.</xs:documentation>
               </xs:annotation>
             </xs:attribute>
+            <xs:attribute name="disable-random-breakdowns" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Disable random breakdowns, default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
           </xs:complexType>
         </xs:element>
         <xs:element name="decisional">

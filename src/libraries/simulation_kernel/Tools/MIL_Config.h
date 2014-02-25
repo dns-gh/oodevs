@@ -54,6 +54,8 @@ public:
     unsigned long      GetNetworkTimeout           () const;
     bool               IsThreadedNetwork           () const;
     bool               EnableTestCommands          () const;
+    // Disable drawing of random breakdowns on equipments, mostly for tests.
+    bool               DisableRandomBreakdowns     () const;
 
     bool               UseNetworkLogger            () const;
     unsigned short     GetNetworkLoggerPort        () const;
@@ -125,6 +127,7 @@ private:
     bool           bSaveCheckpointTestMode_;
     bool           bEmbeddedDispatcher_;
     bool           bPausedAtStartup_;
+    bool           bDisableRandomBreakdowns_;
     tools::Path    strCheckPointNameTestMode_;
     int            randomSeed_;
     // non-conforming vector< bool > is so awesome
