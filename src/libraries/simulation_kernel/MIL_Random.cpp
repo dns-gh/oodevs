@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Random.h"
+#include "MT_Tools/MT_Random.h"
+#include "MT_Tools/MT_GaussianRandom.h"
 
 MIL_Random* MIL_Random::pInstance_ = 0;
 std::vector< MT_GaussianRandom* > MIL_Random::gaussianRandom_;

@@ -10,8 +10,9 @@
 #ifndef __MIL_Random_h_
 #define __MIL_Random_h_
 
-#include "MT_Tools/MT_Random.h"
-#include "MT_Tools/MT_GaussianRandom.h"
+#include <vector>
+
+class MT_GaussianRandom;
 
 // =============================================================================
 /** @class  MIL_Random

@@ -170,7 +170,7 @@ bool PHY_DirectFireData::CanFire()
 {
     if( !firer_.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
         return true;
-    bTemporarilyBlocked_ = !( MT_Random::GetInstance().rand32_io( 0u, 100u ) < PHY_DirectFireData::nUrbanCoefficient_ );
+    bTemporarilyBlocked_ = !( MIL_Random::rand32_io( 0u, 100u ) < PHY_DirectFireData::nUrbanCoefficient_ );
     return !bTemporarilyBlocked_;
 }
 
