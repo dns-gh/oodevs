@@ -12,6 +12,7 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/SubTypes.h"
 #include "clients_kernel/Units.h"
 
 namespace kernel
@@ -73,7 +74,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QTime activityTime_;
+    kernel::Duration activityTime_;
     //@}
 };
 
