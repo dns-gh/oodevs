@@ -24,7 +24,7 @@ class DurationEditor : public QSpinBox
 public:
     //! @name Constructors/Destructor
     //@{
-             DurationEditor( QWidget* parent = 0 );
+    explicit DurationEditor( QWidget* parent = 0 );
     virtual ~DurationEditor();
     //@}
 

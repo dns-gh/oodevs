@@ -19,7 +19,7 @@ namespace
     int ComputeModifier( const std::string& text, int cursor )
     {
         const std::size_t ucursor = boost::numeric_cast< std::size_t >( cursor );
-        if( qApp->isLeftToRight() )
+        if( tools::IsTimeLeftToRight() )
             return ucursor <= text.find_first_of( ':' ) ? 3600
             : ucursor <= text.find_last_of( ':' )       ? 60
             :                                             1;
@@ -61,7 +61,7 @@ int DurationEditor::valueFromText( const QString& text ) const
     QStringList buffer = text.split( ":" );
     if( buffer.size() < 3 )
         throw std::exception( tools::translate( "DurationEditor", "Invalid duration '%1'" ).arg( text ) );
-    if( qApp->isLeftToRight() )
+    if( tools::IsTimeLeftToRight() )
         return buffer.at( 0 ).toInt() * 3600 + buffer.at( 1 ).toInt() * 60 + buffer.at( 2 ).toInt();
     return buffer.at( 2 ).toInt() * 3600 + buffer.at( 1 ).toInt() * 60 + buffer.at( 0 ).toInt();
 }
@@ -83,7 +83,10 @@ void DurationEditor::stepBy( int steps )
 {
     const std::string text( lineEdit()->text().toStdString() );
     const int cursor = lineEdit()->cursorPosition();
+    const int posFromEnd = lineEdit()->text().length() - cursor;
     setValue( value() + steps * ComputeModifier( text, cursor ) );
+    if( tools::IsTimeLeftToRight() )
+        lineEdit()->setCursorPosition( lineEdit()->text().length() - posFromEnd );
 }
 
 // -----------------------------------------------------------------------------

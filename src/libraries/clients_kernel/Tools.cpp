@@ -76,21 +76,30 @@ boost::posix_time::ptime tools::QTimeToBoostTime( const QDateTime& qtime )
 }
 
 // -----------------------------------------------------------------------------
+// Name: tools::IsTimeLeftToRight
+// Created: JSR 2014-02-25
+// -----------------------------------------------------------------------------
+bool tools::IsTimeLeftToRight()
+{
+    return !QLocale().timeFormat().endsWith( 'h', Qt::CaseInsensitive );
+}
+
+// -----------------------------------------------------------------------------
 // Name: tools::BuildDurationString
 // Created: JSR 2014-01-27
 // -----------------------------------------------------------------------------
-QString tools::BuildDurationString( const std::string& hours, const std::string& minutes, const std::string& seconds )
+QString tools::BuildDurationString( const QString& hours, const QString& minutes, const QString& seconds )
 {
-    return qApp->isLeftToRight()
-        ? ( hours + ":" + minutes + ":" + seconds ).c_str()
-        : ( seconds + ":" + minutes + ":" + hours ).c_str();
+    return IsTimeLeftToRight()
+        ? hours + ":" + minutes + ":" + seconds
+        : seconds + ":" + minutes + ":" + hours;
 }
 
 namespace
 {
-    std::string Fill( int number )
+    QString Fill( int number )
     {
-        return ( number  < 10 ? "0" : "" ) + boost::lexical_cast< std::string >( number );
+        return ( number  < 10 ? "0" : "" ) + QString::number( number );
     }
 }
 
@@ -100,10 +109,10 @@ namespace
 // -----------------------------------------------------------------------------
 QString tools::DurationFromSeconds( int value )
 {
-    const int minutes = ( value / 60 ) % 60;
+    const int minutes = value / 60 % 60;
     const int hours = value / 3600;
     const int seconds = value - hours * 3600 - minutes * 60;
-    return BuildDurationString( boost::lexical_cast< std::string >( hours ), Fill( minutes ), Fill( seconds ) );
+    return BuildDurationString( QString::number( hours ), Fill( minutes ), Fill( seconds ) );
 }
 
 // -----------------------------------------------------------------------------
