@@ -10,7 +10,9 @@
 #include "gaming_app_pch.h"
 #include "LogisticsRequestsHistoryTable.h"
 #include "moc_LogisticsRequestsHistoryTable.cpp"
+#include "clients_gui/CommonDelegate.h"
 #include "clients_gui/LinkItemDelegate.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/LogisticsConsign_ABC.h"
 
 Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
@@ -22,23 +24,24 @@ Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 LogisticsRequestsHistoryTable::LogisticsRequestsHistoryTable( const QString& objectName, QWidget* parent )
     : gui::RichTableView( objectName, parent )
 {
-    horizontalHeaders_ << tools::translate( "LogisticsRequestsHistoryTable", "Previous state" )
-        << tools::translate( "LogisticsRequestsHistoryTable", "Started" )
-        << tools::translate( "LogisticsRequestsHistoryTable", "Ended" )
-        << tools::translate( "LogisticsRequestsHistoryTable", "Handler" );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tools::translate( "LogisticsRequestsHistoryTable", "Previous state" )
+                      << tools::translate( "LogisticsRequestsHistoryTable", "Started" )
+                      << tools::translate( "LogisticsRequestsHistoryTable", "Ended" )
+                      << tools::translate( "LogisticsRequestsHistoryTable", "Handler" );
 
-    dataModel_          = new QStandardItemModel( parent );
-    dataModel_->setHorizontalHeaderLabels( horizontalHeaders_ );
+    dataModel_ = new QStandardItemModel( parent );
+    dataModel_->setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Interactive );
-    proxyModel_         = new QSortFilterProxyModel( parent );
-    delegate_           = new gui::CommonDelegate( parent );
-    linkItemDelegate_   = new gui::LinkItemDelegate( this );
+    QSortFilterProxyModel* proxyModel = new QSortFilterProxyModel( parent );
+    gui::CommonDelegate* delegate = new gui::CommonDelegate( parent );
+    linkItemDelegate_ = new gui::LinkItemDelegate( this );
 
-    dataModel_->setColumnCount( horizontalHeaders_.size() );
-    proxyModel_->setSourceModel( dataModel_ );
-    proxyModel_->setSortRole( Qt::UserRole );
-    setModel( proxyModel_ );
-    setItemDelegate( delegate_ );
+    dataModel_->setColumnCount( horizontalHeaders.size() );
+    proxyModel->setSourceModel( dataModel_ );
+    proxyModel->setSortRole( Qt::UserRole );
+    setModel( proxyModel );
+    setItemDelegate( delegate );
     setItemDelegateForColumn( 3, linkItemDelegate_ );
 
     setSortingEnabled( false );
@@ -96,12 +99,10 @@ void LogisticsRequestsHistoryTable::AddRequest( const QString& state, const QStr
 // Name: LogisticsRequestsHistoryTable::AddItem
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-void LogisticsRequestsHistoryTable::AddItem( int row, int col, QString text )
+void LogisticsRequestsHistoryTable::AddItem( int row, int col, const QString& text )
 {
-    QStandardItem* item = new QStandardItem();
+    QStandardItem* item = new QStandardItem( text );
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-    item->setData( QVariant( text ), Qt::DisplayRole );
-
     if( col == 1 || col == 2 )
         item->setTextAlignment( Qt::AlignCenter );
     else
