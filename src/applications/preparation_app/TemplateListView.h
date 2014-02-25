@@ -22,6 +22,7 @@ namespace kernel
 class AgentsModel;
 class ColorController;
 class FormationModel;
+class GhostModel;
 class HierarchyTemplate;
 
 // =============================================================================
@@ -37,7 +38,14 @@ class TemplateListView : public gui::RichTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             TemplateListView( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController );
+             TemplateListView( const QString& objectName,
+                               QWidget* parent,
+                               kernel::Controllers& controllers,
+                               AgentsModel& agents,
+                               FormationModel& formations,
+                               GhostModel& ghosts,
+                               const kernel::AgentTypes& types,
+                               ColorController& colorController );
     virtual ~TemplateListView();
     //@}
 
@@ -67,7 +75,6 @@ private:
     void contextMenuEvent( QContextMenuEvent* event );
     virtual QStringList MimeTypes() const;
     void Clear();
-    void ReadTemplate( xml::xistream& input );
     void CreateItem( HierarchyTemplate& t );
     void CreateItem( HierarchyTemplate& t, const QString& name );
     virtual void keyPressEvent( QKeyEvent* event );
@@ -78,6 +85,7 @@ private:
     //@{
     AgentsModel& agents_;
     FormationModel& formations_;
+    GhostModel& ghosts_;
     const kernel::AgentTypes& types_;
     ColorController& colorController_;
     T_Templates templates_;

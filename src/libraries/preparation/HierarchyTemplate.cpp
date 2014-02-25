@@ -12,30 +12,113 @@
 #include "AgentTemplateElement.h"
 #include "AutomatTemplateElement.h"
 #include "FormationTemplateElement.h"
+#include "GhostTemplateElement.h"
 
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/AgentTypes.h"
 
 using namespace kernel;
+
+namespace
+{
+    template< typename T >
+    const T* ReadType( const tools::Resolver_ABC< T, std::string >& types,
+                       xml::xistream& xis,
+                       const std::string& xmlTag )
+    {
+        return types.Find( xis.attribute< std::string >( xmlTag ) );
+    }
+
+    TemplateElement_ABC* CreateElement( AgentsModel& agents,
+                                        FormationModel& formations,
+                                        GhostModel& ghosts,
+                                        const Entity_ABC& entity,
+                                        geometry::Point2f& position )
+    {
+        if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &entity ) )
+        {
+            position = agent->Get< Positions >().GetPosition();
+            return new AgentTemplateElement( agents, *agent );
+        }
+        if( const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &entity ) )
+            return new AutomatTemplateElement( agents, *automat );
+        if( const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &entity ) )
+            return new FormationTemplateElement( formations, *formation );
+        if( const Ghost_ABC* ghost = dynamic_cast< const Ghost_ABC* >( &entity ) )
+        {
+            position = ghost->Get< Positions >().GetPosition();
+            return new GhostTemplateElement( ghosts, *ghost );
+        }
+        return 0;
+    }
+
+    TemplateElement_ABC* CreateElement( AgentsModel& agents,
+                                        FormationModel& formations,
+                                        GhostModel& ghosts,
+                                        const AgentTypes& types,
+                                        xml::xistream& xis,
+                                        geometry::Point2f& position )
+    {
+        std::string type, name;
+        float x = 0, y = 0;
+        xis >> xml::optional
+            >> xml::start( "element" )
+               >> xml::attribute( "type", type )
+               >> xml::attribute( "x", x )
+               >> xml::attribute( "y", y );
+        position.Set( x, y );
+        TemplateElement_ABC* result = 0;
+        if( type == "formation" )
+            result = new FormationTemplateElement( formations, xis );
+        else if( type == "automat" )
+        {
+            if( auto automatType = ReadType< AutomatType >( types, xis, "automatType" ) )
+                result = new AutomatTemplateElement( agents, *automatType, xis );
+            else
+                result = new GhostTemplateElement( ghosts, eGhostType_Automat, xis );
+        }
+        else if( type == "agent" )
+        {
+            if( auto agentType = ReadType< AgentType >( types, xis, "agentType" ) )
+                result = new AgentTemplateElement( agents, *agentType, xis );
+            else
+                result = new GhostTemplateElement( ghosts, eGhostType_Agent, xis );
+        }
+        else if( type == "ghost" )
+            result = new GhostTemplateElement( ghosts, xis );
+        xis >> xml::end;
+        return result;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: HierarchyTemplate constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const Entity_ABC& base, bool root, ColorController& colorController )
+HierarchyTemplate::HierarchyTemplate( AgentsModel& agents,
+                                      FormationModel& formations,
+                                      GhostModel& ghosts,
+                                      const Entity_ABC& base,
+                                      bool root,
+                                      ColorController& colorController )
     : colorController_( colorController )
 {
-    element_.reset( CreateElement( agents, formations, base ) );
+    element_.reset( CreateElement( agents,
+                                   formations,
+                                   ghosts,
+                                   base,
+                                   referencePosition_ ) );
     if( const TacticalHierarchies* hierarchies = base.Retrieve< TacticalHierarchies >() )
     {
         tools::Iterator< const Entity_ABC& > children = hierarchies->CreateSubordinateIterator();
         while( children.HasMoreElements() )
         {
-            subTemplates_.push_back( new HierarchyTemplate( agents, formations, children.NextElement(), false, colorController_ ) );
+            subTemplates_.push_back( new HierarchyTemplate( agents, formations, ghosts, children.NextElement(), false, colorController_ ) );
             referencePosition_.Set( referencePosition_.X() + subTemplates_.back()->referencePosition_.X(),
                                     referencePosition_.Y() + subTemplates_.back()->referencePosition_.Y() );
         }
@@ -51,20 +134,31 @@ HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& forma
 // Name: HierarchyTemplate constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const AgentTypes& types, xml::xistream& input, ColorController& colorController )
+HierarchyTemplate::HierarchyTemplate( AgentsModel& agents,
+                                      FormationModel& formations,
+                                      GhostModel& ghosts,
+                                      const AgentTypes& types,
+                                      xml::xistream& xis,
+                                      ColorController& colorController )
     : colorController_( colorController )
 {
-    element_.reset( CreateElement( agents, formations, types, input ) );
-    input >> xml::list( "template", *this, &HierarchyTemplate::ReadSubTemplate, agents, formations, types );
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyTemplate::ReadSubTemplate
-// Created: AGE 2007-05-30
-// -----------------------------------------------------------------------------
-void HierarchyTemplate::ReadSubTemplate( xml::xistream& input, AgentsModel& agents, FormationModel& formations, const AgentTypes& types )
-{
-    subTemplates_.push_back( new HierarchyTemplate( agents, formations, types, input, colorController_ ) );
+    element_.reset( CreateElement( agents,
+                                   formations,
+                                   ghosts,
+                                   types,
+                                   xis,
+                                   referencePosition_ ) );
+    bool isGhost = element_ && dynamic_cast< GhostTemplateElement* >( element_.get() ) != 0;
+    if( !isGhost )
+        xis >> xml::list( "template", [&] ( xml::xistream& subXis )
+            {
+                subTemplates_.push_back( new HierarchyTemplate( agents,
+                                                                formations,
+                                                                ghosts,
+                                                                types,
+                                                                subXis,
+                                                                colorController_ ) );
+            } );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,28 +175,29 @@ HierarchyTemplate::~HierarchyTemplate()
 // Name: HierarchyTemplate::Serialize
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-void HierarchyTemplate::Serialize( xml::xostream& output ) const
+void HierarchyTemplate::Serialize( xml::xostream& xos ) const
 {
-    output << xml::start( "template" );
+    xos << xml::start( "template" );
     if( element_ )
     {
-        output << xml::start( "element" )
-               << xml::attribute( "x", referencePosition_.X() )
-               << xml::attribute( "y", referencePosition_.Y() )
-               << xml::attribute( "name", element_->GetName() );
-        element_->Serialize( output );
-        output << xml::end;
+        xos << xml::start( "element" )
+                << xml::attribute( "x", referencePosition_.X() )
+                << xml::attribute( "y", referencePosition_.Y() )
+                << xml::attribute( "name", element_->GetName() );
+        element_->Serialize( xos );
+        xos << xml::end;
     }
     for( auto it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
-        (*it)->Serialize( output );
-    output << xml::end;
+        (*it)->Serialize( xos );
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
 // Name: HierarchyTemplate::Instanciate
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-void HierarchyTemplate::Instanciate( Entity_ABC& superior, const geometry::Point2f& center ) const
+void HierarchyTemplate::Instanciate( Entity_ABC& superior,
+                                     const geometry::Point2f& center ) const
 {
     if( element_ )
     {
@@ -113,58 +208,6 @@ void HierarchyTemplate::Instanciate( Entity_ABC& superior, const geometry::Point
             for( auto it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
                 (*it)->Instanciate( *entity, center );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyTemplate::CreateElement
-// Created: AGE 2007-05-29
-// -----------------------------------------------------------------------------
-TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, FormationModel& formations, const Entity_ABC& entity )
-{
-    if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &entity ) )
-    {
-        referencePosition_ = agent->Get< Positions >().GetPosition();
-        return new AgentTemplateElement( agents, *agent );
-    }
-    if( const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &entity ) )
-        return new AutomatTemplateElement( agents, *automat );
-    if( const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &entity ) )
-        return new FormationTemplateElement( formations, *formation );
-    return 0;
-}
-
-namespace
-{
-    template< typename T >
-    const T& ReadType( const tools::Resolver_ABC< T, std::string >& types, xml::xistream& input, const std::string& xmlTag )
-    {
-        return types.Get( input.attribute< std::string >( xmlTag ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyTemplate::CreateElement
-// Created: AGE 2007-05-29
-// -----------------------------------------------------------------------------
-TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, FormationModel& formations, const AgentTypes& types, xml::xistream& input )
-{
-    std::string type, name;
-    float x = 0, y = 0;
-    input >> xml::optional
-          >> xml::start( "element" )
-             >> xml::attribute( "type", type )
-             >> xml::attribute( "x", x )
-             >> xml::attribute( "y", y );
-    referencePosition_.Set( x, y );
-    TemplateElement_ABC* result = 0;
-    if( type == "formation" )
-        result = new FormationTemplateElement( formations, input );
-    else if( type == "automat" )
-        result = new AutomatTemplateElement( agents, ReadType< AutomatType >( types, input, "automatType" ), input );
-    else if( type == "agent" )
-        result = new AgentTemplateElement( agents, ReadType< AgentType >( types, input, "agentType" ), input );
-    input >> xml::end;
-    return result;
 }
 
 // -----------------------------------------------------------------------------

@@ -23,13 +23,20 @@
 // Name: TemplatesPanel constructor
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-TemplatesPanel::TemplatesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController )
+TemplatesPanel::TemplatesPanel( QWidget* parent,
+                                gui::PanelStack_ABC& panel,
+                                kernel::Controllers& controllers,
+                                AgentsModel& agents,
+                                FormationModel& formations,
+                                GhostModel& ghosts,
+                                const kernel::AgentTypes& types,
+                                ColorController& colorController )
     : InfoPanel_ABC( parent, panel, tr( "Templates" ) )
     , controllers_ ( controllers )
     , menuEntity_  ( controllers )
 {
     gui::SubObjectName subObject( "templatesPanel" );
-    list_ = new TemplateListView( "templateListView", this, controllers, agents, formations, types, colorController );
+    list_ = new TemplateListView( "templateListView", this, controllers, agents, formations, ghosts, types, colorController );
     setWidget( list_ );
     controllers_.Register( *this );
 }

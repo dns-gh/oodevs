@@ -23,6 +23,7 @@ class AgentsModel;
 class ColorController;
 class FormationFactory_ABC;
 class FormationModel;
+class GhostModel;
 class TemplateElement_ABC;
 
 // =============================================================================
@@ -36,15 +37,26 @@ class HierarchyTemplate : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& base, bool root, ColorController& colorController );
-             HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, xml::xistream& input, ColorController& colorController );
+             HierarchyTemplate( AgentsModel& agents,
+                                FormationModel& formations,
+                                GhostModel& ghosts,
+                                const kernel::Entity_ABC& base,
+                                bool root,
+                                ColorController& colorController );
+             HierarchyTemplate( AgentsModel& agents,
+                                FormationModel& formations,
+                                GhostModel& ghosts,
+                                const kernel::AgentTypes& types,
+                                xml::xistream& xis,
+                                ColorController& colorController );
     virtual ~HierarchyTemplate();
     //@}
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& output ) const;
-    void Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center ) const;
+    void Serialize( xml::xostream& xos ) const;
+    void Instanciate( kernel::Entity_ABC& superior,
+                      const geometry::Point2f& center ) const;
     bool IsCompatible( const kernel::Entity_ABC& superior ) const;
     QString GetName() const;
     void Rename( const QString& name );
@@ -58,9 +70,6 @@ private:
 
     //! @name Helpers
     //@{
-    TemplateElement_ABC* CreateElement( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& entity );
-    TemplateElement_ABC* CreateElement( AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, xml::xistream& input );
-    void ReadSubTemplate( xml::xistream& input, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types );
     void SetBasePosition( geometry::Point2f center );
     //@}
 
