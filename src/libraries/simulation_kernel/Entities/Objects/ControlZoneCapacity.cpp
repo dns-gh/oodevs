@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
 #include "Entities/MIL_Army.h"
+#include "MIL_Random.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
 

@@ -19,6 +19,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MineAttribute.h"
+#include "MIL_Random.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_Geometry.h"

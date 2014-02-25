@@ -16,6 +16,7 @@
 #include "Tools/MIL_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
+#include "MIL_Random.h"
 #include "meteo/PHY_Precipitation.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"

@@ -41,6 +41,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "CheckPoints/SerializationTools.h"
+#include "MIL_Random.h"
 #include "Tools/NET_AsnException.h"
 
 double PHY_ComposantePion::rOpStateWeightHumans_ = 0.;

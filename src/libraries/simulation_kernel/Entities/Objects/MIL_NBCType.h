@@ -12,8 +12,6 @@
 #ifndef __MIL_NBCType_h_
 #define __MIL_NBCType_h_
 
-#include "MIL_Random.h"
-
 namespace xml
 {
     class xistream;
