@@ -64,7 +64,8 @@ public:
     unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange );
     unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound, bool psyop = false, bool contaminated = false );
     unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound );
-    void ChangeHumanState( sword::MissionParameters& msg );
+    void ChangeHumanState( sword::MissionParameters& msg, std::set< boost::shared_ptr< Human_ABC > >& done );
+    void UpdateHumanState( sword::MissionParameters& msg, std::set< boost::shared_ptr< Human_ABC > >& done );
     void RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove );
     virtual void CancelLogisticRequests();
 

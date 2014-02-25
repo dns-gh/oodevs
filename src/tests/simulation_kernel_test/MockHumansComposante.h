@@ -19,7 +19,8 @@
 MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
 {
     MOCK_METHOD( ChangeHumanRank, 3 );
-    MOCK_METHOD( ChangeHumanState, 1 );
+    MOCK_METHOD( ChangeHumanState, 2 );
+    MOCK_METHOD( UpdateHumanState, 2 );
     MOCK_METHOD( RemoveHealthyHumans, 2 );
     MOCK_METHOD( CancelLogisticRequests, 0 );
     MOCK_METHOD( ApplyContamination, 0 );
