@@ -242,7 +242,7 @@ void LogisticSupplyAvailabilityTableWidget::SetQuantities( const QMap< QString, 
         int available = maxQuantities_[ name ];
         QAbstractItemModel* model = this->model();
         if( model && !name.isEmpty() && available > 0 && quantity > 0 )
-            AddRow( i++, name, available );
+            AddRow( i++, name, available, quantity );
     }
     setRowCount( i + 1 );
 }
@@ -271,7 +271,7 @@ void LogisticSupplyAvailabilityTableWidget::OnNameChanged( const QString& newNam
     else if( newName != previousName )
     {
         int available = maxQuantities_[ newName ];
-        AddRow( row, newName, available );
+        AddRow( row, newName, available, 1 );
         setCurrentCell( row, 2, QItemSelectionModel::Select );
         clearSelection();
         if( isLastRow && previousName.isEmpty() )
@@ -286,11 +286,11 @@ void LogisticSupplyAvailabilityTableWidget::OnQuantityChanged()
     emit OnChanged( currentIndex().row() );
 }
 
-void LogisticSupplyAvailabilityTableWidget::AddRow( int row, const QString& newName, int available )
+void LogisticSupplyAvailabilityTableWidget::AddRow( int row, const QString& newName, int available, int quantity )
 {
     SetContent( row, eName, newName );
     SetContent( row, eAvailable, available );
-    SetContent( row, eValue, 1 );
+    SetContent( row, eValue, quantity );
     UpdateMassVolume( row );
 }
 

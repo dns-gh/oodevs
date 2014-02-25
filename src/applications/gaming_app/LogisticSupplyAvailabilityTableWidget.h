@@ -61,7 +61,7 @@ signals:
     void OnChanged( int row );
 
 protected:
-    virtual void AddRow( int row, const QString& newName, int available );
+    virtual void AddRow( int row, const QString& newName, int available, int quantity );
 
     void SetContent( int row, int col, int value );
     void SetContent( int row, int col, double value );
