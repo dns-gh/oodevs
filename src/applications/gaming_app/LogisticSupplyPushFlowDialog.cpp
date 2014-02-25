@@ -233,7 +233,7 @@ void LogisticSupplyPushFlowDialog::Reject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::AddRecipientItem
+// Name: LogisticSupplyPushFlowDialog::AddRecipient
 // Created: MMC 2011-09-19
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::AddRecipient( const QString& recipientName )
