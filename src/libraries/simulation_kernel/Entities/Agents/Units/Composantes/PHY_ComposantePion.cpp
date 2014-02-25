@@ -1596,10 +1596,19 @@ bool PHY_ComposantePion::DestroyIndirectFire( const PHY_DotationCategory& catego
 // Name: PHY_ComposantePion::ChangeHumanState
 // Created: ABR 2011-08-12
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ChangeHumanState( sword::MissionParameters& msg )
+void PHY_ComposantePion::ChangeHumanState( sword::MissionParameters& msg, std::set< boost::shared_ptr< Human_ABC > >& done )
 {
     assert( pHumans_ );
-    pHumans_->ChangeHumanState( msg );
+    pHumans_->ChangeHumanState( msg, done );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::UpdateHumanState
+// Created: LDC 2014-02-24
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::UpdateHumanState( sword::MissionParameters& msg, std::set< boost::shared_ptr< Human_ABC > >& done )
+{
+    pHumans_->UpdateHumanState( msg, done );
 }
 
 // -----------------------------------------------------------------------------

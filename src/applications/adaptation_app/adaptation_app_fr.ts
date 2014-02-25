@@ -4593,7 +4593,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
     <message>
         <source>Unit type</source>
-        <translation>Type</translation>
+        <translation>Type de pion</translation>
     </message>
     <message>
         <source>Convoy setup duration</source>

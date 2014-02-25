@@ -124,7 +124,8 @@ public:
     bool CanHealHuman( const Human_ABC& human ) const;
     unsigned int GetHealingTime( const Human_ABC& human ) const;
     unsigned int Heal( Human_ABC& human ) const;
-    void ChangeHumanState( sword::MissionParameters& msg );
+    void ChangeHumanState( sword::MissionParameters& msg, std::set< boost::shared_ptr< Human_ABC > >& done );
+    void UpdateHumanState( sword::MissionParameters& msg, std::set< boost::shared_ptr< Human_ABC > >& done );
     //@}
 
     //! @name Logistic - Supply
