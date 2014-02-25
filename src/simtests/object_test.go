@@ -415,3 +415,58 @@ func (s *TestSuite) TestEngineerPreparedObject(c *C) {
 		return data.Units[unitId3].Posture.New == sword.UnitAttributes_parked_on_self_prepared_area
 	})
 }
+
+func (s *TestSuite) TestDeleteParentOfSpawnObject(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSimAndClient(c, sim, client)
+	data := client.Model.GetData()
+	party := data.FindPartyByName("party1")
+	from := swapi.Point{X: -15.8193, Y: 28.3456}
+	to := swapi.Point{X: -15.8183, Y: 28.3466}
+
+	// Create Object
+	object, err := client.CreateObject("sensors", party.Id,
+		swapi.MakePolygonLocation(
+			from, swapi.Point{X: from.X, Y: to.Y},
+			to, swapi.Point{X: to.X, Y: from.Y}))
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		spawnObject := data.Objects[object.Id+1]
+		return spawnObject != nil && spawnObject.ObjectType == "sensorsDetectionZone"
+	})
+
+	// When the parent is deleted, the spawn object is also deleted
+	err = client.DeleteObject(object.Id)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.Objects) == 0
+	})
+}
+
+func (s *TestSuite) TestDeleteSpawnObject(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSimAndClient(c, sim, client)
+	data := client.Model.GetData()
+	party := data.FindPartyByName("party1")
+	from := swapi.Point{X: -15.8193, Y: 28.3456}
+	to := swapi.Point{X: -15.8183, Y: 28.3466}
+
+	// Create Object
+	object, err := client.CreateObject("sensors", party.Id,
+		swapi.MakePolygonLocation(
+			from, swapi.Point{X: from.X, Y: to.Y},
+			to, swapi.Point{X: to.X, Y: from.Y}))
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		spawnObject := data.Objects[object.Id+1]
+		return spawnObject != nil && spawnObject.ObjectType == "sensorsDetectionZone"
+	})
+
+	// We can't delete a spawn object if its parent is present
+	err = client.DeleteObject(object.Id + 1)
+	c.Assert(err, IsSwordError, "error_invalid_object")
+}
