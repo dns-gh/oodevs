@@ -1603,6 +1603,14 @@ Do you want to replace it?</translation>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
+    <message>
+        <source>Mass (T)</source>
+        <translation>Mass (T)</translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation>Volume (m3)</translation>
+    </message>
 </context>
 <context>
     <name>Logistic : supply flow</name>

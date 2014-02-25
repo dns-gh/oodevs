@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyPullFlowDialog.h"
 #include "moc_LogisticSupplyPullFlowDialog.cpp"
-#include "LogisticSupplyAvailabilityTableWidget.h"
 #include "LogisticSupplyCarriersTableWidget.h"
 
 #include "actions/ActionsModel.h"

@@ -104,7 +104,7 @@ QStandardItem& LogisticTreeView::RetrieveTeamItem( const kernel::Entity_ABC& ent
 // -----------------------------------------------------------------------------
 QStandardItem& LogisticTreeView::RetrieveTypeItem( const kernel::Entity_ABC& entity, QStandardItem& teamItem )
 {
-    QStandardItem* typeItem = dataModel_.FindTextItem( entity.Get< gui::LogisticBase >().IsBase() ? tools::translate( "gui::LogisticTreeView", "Supported units" ) : tools::translate( "gui::LogisticTreeView", "Unsupported units" ), &teamItem );
+    QStandardItem* typeItem = dataModel_.FindDataItem( entity.Get< gui::LogisticBase >().IsBase() ? level_base : level_none, &teamItem );
     assert( typeItem );
     return *typeItem;
 }
@@ -198,10 +198,10 @@ void LogisticTreeView::NotifyCreated( const kernel::Team_ABC& team )
         return;
 
     teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team.GetTooltip(), team );
-    QStandardItem* item = dataModel_.AddChildTextItem( teamItem, teamItem->rowCount(), 0, tools::translate( "gui::LogisticTreeView", "Unsupported units" ), "", Qt::ItemIsDropEnabled );
+    QStandardItem* item = dataModel_.AddChildDataItem( teamItem, teamItem->rowCount(), 0, tools::translate( "gui::LogisticTreeView", "Unsupported units" ), "", level_none, Qt::ItemIsDropEnabled );
     if( item )
         item->setSelectable( false );
-    item = dataModel_.AddChildTextItem( teamItem, teamItem->rowCount(), 0, tools::translate( "gui::LogisticTreeView", "Supported units" ), "", Qt::ItemIsDropEnabled );
+    item = dataModel_.AddChildDataItem( teamItem, teamItem->rowCount(), 0, tools::translate( "gui::LogisticTreeView", "Supported units" ), "", level_base, Qt::ItemIsDropEnabled );
     if( item )
         item->setSelectable( false );
 }
@@ -356,7 +356,7 @@ QStringList LogisticTreeView::MimeTypes() const
 {
     QStringList l;
     l << typeid( kernel::Automat_ABC ).name() << typeid( kernel::Formation_ABC ).name()
-      << typeid( gui::LogisticBase ).name();
+      << typeid( sword::EnumLogisticLevel ).name();
     return l;
 }
 
@@ -494,7 +494,7 @@ void LogisticTreeView::contextMenuEvent( QContextMenuEvent* event )
     if( !IsReadOnly() && event )
     {
         QStandardItem* targetItem = dataModel_.GetItemFromIndex( indexAt( event->pos() ) );
-        if( targetItem && !dnd::IsA< gui::LogisticBase>( *targetItem ) )
+        if( targetItem && !dnd::IsA< sword::EnumLogisticLevel >( *targetItem ) )
             HierarchyTreeView_ABC::contextMenuEvent( event );
     }
 }

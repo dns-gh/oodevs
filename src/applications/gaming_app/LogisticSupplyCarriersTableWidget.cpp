@@ -29,7 +29,7 @@ namespace
 
 LogisticSupplyCarriersTableWidget::LogisticSupplyCarriersTableWidget( QWidget* parent, const QStringList& header,
     const T_CarrierTypes& types, const LogisticSupplyAvailabilityTableWidget& resources, const T_AvailableDotations& dotations )
-    : LogisticSupplyAvailabilityTableWidget( parent, header )
+    : LogisticSupplyAvailabilityTableWidget( parent, header, dotations )
     , types_( types )
     , resources_( resources )
     , dotations_( dotations )
@@ -94,6 +94,9 @@ std::pair< double, double > LogisticSupplyCarriersTableWidget::ComputeMassVolume
 {
     if( !function )
         return std::make_pair( 0, 0 );
+    const double total = ComputeMaxMass( function->stockNature_ );
+    if( total == 0 )
+        return std::make_pair( 0, 0 );
     double mass = 0;
     double volume = 0;
     QMap< QString, int > quantities;
@@ -107,7 +110,6 @@ std::pair< double, double > LogisticSupplyCarriersTableWidget::ComputeMassVolume
             volume += it.value() * it2->second.type_->GetUnitVolume();
         }
     }
-    const double total = ComputeMaxMass( function->stockNature_ );
     return std::make_pair( mass / total, volume * maxMass / total / maxVolume );
 }
 

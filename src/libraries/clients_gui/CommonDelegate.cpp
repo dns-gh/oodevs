@@ -320,13 +320,9 @@ void CommonDelegate::setEditorData( QWidget* editor, const QModelIndex& index ) 
     }
     else if( const QStringList* element = Find( comboBoxs_, position->id_ ) )
     {
-        bool ok = true;
-        int value = newIndex.model()->data( newIndex, Roles::DataRole ).toInt( &ok );
-        if( ok )
-        {
-            RichWidget< QComboBox >* comboBox = static_cast< RichWidget< QComboBox >* >( editor );
-            comboBox->setCurrentIndex( value );
-        }
+        int value = newIndex.model()->data( newIndex, Roles::DataRole ).toInt();
+        RichWidget< QComboBox >* comboBox = static_cast< RichWidget< QComboBox >* >( editor );
+        comboBox->setCurrentIndex( value );
     }
     else if( const QString* element = Find( lineEdits_, position->id_ ) )
     {

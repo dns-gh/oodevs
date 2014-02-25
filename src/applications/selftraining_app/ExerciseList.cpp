@@ -14,6 +14,7 @@
 #include "ProfileList.h"
 #include "ExerciseListView.h"
 #include "frontend/Profile.h"
+#include "frontend/Exercise_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 
@@ -39,7 +40,7 @@ ExerciseList::ExerciseList( Application& app, QWidget* parent, const tools::Gene
     QVBoxLayout* leftBoxLayout = new QVBoxLayout();
     {
         exercises_ = new ExerciseListView( app, config, fileLoader );
-        connect( exercises_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( SelectExercise( const QModelIndex&, const QModelIndex& ) ) );
+        connect( exercises_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( SelectExercise( const QItemSelection&, const QItemSelection& ) ) );
         profiles_ = new ProfileList( leftBox, config, fileLoader );
         profiles_->setVisible( showProfile );
         connect( profiles_ , SIGNAL( Select( const frontend::Profile& ) ), this, SLOT( SelectProfile( const frontend::Profile& ) ) );
@@ -115,11 +116,11 @@ void ExerciseList::NotifyDeleted( const frontend::Exercise_ABC& exercise )
 // Name: ExerciseList::SelectExercise
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-void ExerciseList::SelectExercise( const QModelIndex& current, const QModelIndex& /*previous*/ )
+void ExerciseList::SelectExercise( const QItemSelection&, const QItemSelection& )
 {
     if( const frontend::Exercise_ABC* selected = GetSelectedExercise() )
     {
-        profiles_->Update( exercises_->GetExerciseName( current ) );
+        profiles_->Update( selected->GetName() );
         properties_->Select( selected );
         emit Select( *selected, frontend::Profile() );
     }

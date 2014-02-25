@@ -206,7 +206,7 @@ namespace
 void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
 {
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
-    const bool isUnknown = IsReadOnly() && controllers_.GetCurrentMode() != eModes_Replay;
+    const bool isUnknown = !profile_.CanDoMagic( selected ) && controllers_.GetCurrentMode() != eModes_Replay;
     for( auto it = selected.Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
     {
         const Equipment& equipment = it.NextElement();

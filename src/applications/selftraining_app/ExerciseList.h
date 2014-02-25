@@ -80,7 +80,7 @@ public slots:
 private slots:
     //! @name Slots
     //@{
-    void SelectExercise( const QModelIndex& current, const QModelIndex& previous );
+    void SelectExercise( const QItemSelection&, const QItemSelection& );
     void SelectProfile( const frontend::Profile& profile );
     void OnExercisePropertiesChanged();
     //@}

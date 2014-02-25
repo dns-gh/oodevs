@@ -33,6 +33,8 @@ private:
     bool IsNameInTable( const QAbstractItemModel* model, const QString& name ) const;
 };
 
+class Dotation;
+
 // =============================================================================
 /** @class  LogisticSupplyAvailabilityTableWidget
     @brief  LogisticSupplyAvailabilityTableWidget
@@ -43,8 +45,11 @@ class LogisticSupplyAvailabilityTableWidget: public QTableWidget
 {
     Q_OBJECT;
 
+private:
+    typedef std::map< QString, Dotation > T_AvailableDotations;
+
 public:
-    LogisticSupplyAvailabilityTableWidget( QWidget* parent, const QStringList& header );
+    LogisticSupplyAvailabilityTableWidget( QWidget* parent, const QStringList& header, const T_AvailableDotations& dotations );
     ~LogisticSupplyAvailabilityTableWidget();
 
     void Clear();
@@ -58,6 +63,7 @@ signals:
 protected:
     virtual void AddRow( int row, const QString& newName, int available );
 
+    void SetContent( int row, int col, int value );
     void SetContent( int row, int col, double value );
     void SetContent( int row, int col, const QString& value, const QString& warning = "" );
 
@@ -69,10 +75,14 @@ private slots:
     //@}
 
 private:
+    void UpdateMassVolume( int row );
+
+private:
     //! @name Member data
     //@{
     QMap< QString, int > maxQuantities_;
     QStringList header_;
+    const T_AvailableDotations& dotations_;
     //@}
 
 };

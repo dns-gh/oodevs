@@ -29,6 +29,9 @@ QStandardItem* StandardModel::AddChildItem( QStandardItem* root, int row, int co
     QStandardItem* item = new QStandardItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
     item->setData( QVariant( showValue_ ), Roles::FilterRole );
+    item->setData( QVariant(), Roles::DataRole );
+    item->setData( QVariant(), Roles::SafeRole );
+    item->setData( QVariant(), Roles::MimeTypeRole );
     root->setChild( row, col, item );
     return item;
 }
