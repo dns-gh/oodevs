@@ -1,12 +1,5 @@
 require 'debug'
 
-
-CallbackMovingOnPath = function( position )
-    if myself.callbackMovingOnPath then
-        myself.callbackMovingOnPath( position )
-    end
-end
-
 --- Return a linear interpolation between to point
 -- @param min The min value on Y axis
 -- @param min The max value on Y axis
