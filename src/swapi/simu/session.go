@@ -37,13 +37,15 @@ func NewRecordPlugin() *RecorderPlugin {
 }
 
 type Session struct {
-	GamingServer string
-	EndTick      int
-	Paused       bool
-	Recorder     *RecorderPlugin
-	SimLog       LogOpts
-	TimeFactor   int
-	TimeStep     int
+	GamingServer     string
+	EndTick          int
+	Paused           bool
+	Recorder         *RecorderPlugin
+	SimLog           LogOpts
+	TimeFactor       int
+	TimeStep         int
+	RandomBreakdowns bool
+	Seed             int
 }
 
 func ReadBool(value string) bool {
@@ -64,10 +66,12 @@ func (s *Session) syncSession(x *xmlSession) error {
 	s.GamingServer = x.GamingNetwork.Server
 	s.EndTick = x.Sim.Time.EndTick
 	s.Paused = ReadBool(x.Sim.Time.Paused)
+	s.RandomBreakdowns = x.Sim.Debug.RandomBreakdowns
 	s.Recorder = nil
 	if p := x.Dispatcher.Plugins.Recorder; p != nil {
 		s.Recorder = p
 	}
+	s.Seed = x.Sim.Random.Seed
 	s.SimLog.Count = x.Sim.Debug.LogFiles
 	if s.SimLog.Count == 1 {
 		s.SimLog.Count = 0
@@ -91,7 +95,9 @@ func (s *Session) syncXml(x *xmlSession) error {
 		x.Sim.Debug.LogFiles = 0
 	}
 	x.Sim.Debug.LogSize = s.SimLog.Size
+	x.Sim.Debug.RandomBreakdowns = s.RandomBreakdowns
 	x.Sim.Debug.SizeUnit = s.SimLog.Unit
+	x.Sim.Random.Seed = s.Seed
 	x.Sim.Time.EndTick = s.EndTick
 	x.Sim.Time.Factor = s.TimeFactor
 	x.Sim.Time.Step = s.TimeStep
@@ -138,6 +144,7 @@ type xmlDebug struct {
 	NetworkLoggerPort string `xml:"networkloggerport,attr"`
 	Pathfind          string `xml:"pathfind,attr"`
 	SizeUnit          string `xml:"sizeunit,attr,omitempty"`
+	RandomBreakdowns  bool   `xml:"random-breakdowns,attr"`
 }
 
 type xmlDecisional struct {
@@ -168,7 +175,7 @@ type xmlProfiling struct {
 }
 
 type xmlRandom struct {
-	Seed string `xml:"seed,attr"`
+	Seed int `xml:"seed,attr"`
 }
 
 type xmlRandomX struct {
@@ -262,7 +269,8 @@ const defaultSession = `
       <GarbageCollector setpause="100" setstepmul="100"/>
       <checkpoint frequency="100000h" keep="1" usecrc="true"/>
       <debug decisional="false" diadebugger="false" diadebuggerport="15000"
-        networklogger="true" networkloggerport="20000" pathfind="false"/>
+        networklogger="true" networkloggerport="20000" pathfind="false"
+        random-breakdowns="false"/>
       <decisional useonlybinaries="false"/>
       <dispatcher embedded="true"/>
       <network port="10000"/>

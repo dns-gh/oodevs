@@ -192,6 +192,7 @@ type ClientOpts struct {
 	Logger      swapi.MessageLogger
 	WaitTimeout time.Duration
 	StartGaming bool
+	Seed        int
 }
 
 func NewAllUserOpts(exercise string) *ClientOpts {
@@ -208,6 +209,35 @@ func NewAdminOpts(exercise string) *ClientOpts {
 		User:     "admin",
 		Password: "",
 	}
+}
+
+// Prints input and output client messages to stderr.
+func (opts *ClientOpts) AddLogger() *ClientOpts {
+	opts.Logger = func(in bool, size int, msg *swapi.SwordMessage) {
+		prefix := "in "
+		if !in {
+			prefix = "out"
+		}
+		fmt.Fprintf(os.Stderr, "%s %v\n", prefix,
+			proto.CompactTextString(msg.GetMessage()))
+	}
+	return opts
+}
+
+// Start a gaming_app after starting the simulation and before connecting the
+// test client. First the simulation will be paused (if not already), then
+// gaming will be started and call will wait for the simulation to be unpaused
+// before moving on.
+func (opts *ClientOpts) AddGaming() *ClientOpts {
+	opts.StartGaming = true
+	return opts
+}
+
+// Fix simulation seed, might help with tests with random events like weapon
+// fires.
+func (opts *ClientOpts) FixSeed() *ClientOpts {
+	opts.Seed = 1
+	return opts
 }
 
 type Simulator interface {
@@ -240,27 +270,6 @@ func connectClient(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	})
 	checkOrderAckSequences(c, client)
 	return client
-}
-
-func AddLogger(opts *ClientOpts) *ClientOpts {
-	opts.Logger = func(in bool, size int, msg *swapi.SwordMessage) {
-		prefix := "in "
-		if !in {
-			prefix = "out"
-		}
-		fmt.Fprintf(os.Stderr, "%s %v\n", prefix,
-			proto.CompactTextString(msg.GetMessage()))
-	}
-	return opts
-}
-
-// Start a gaming_app after starting the simulation and before connecting the
-// test client. First the simulation will be paused (if not already), then
-// gaming will be started and call will wait for the simulation to be unpaused
-// before moving on.
-func AddGaming(opts *ClientOpts) *ClientOpts {
-	opts.StartGaming = true
-	return opts
 }
 
 func loginAndWaitModel(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
