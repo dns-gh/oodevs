@@ -2109,8 +2109,12 @@ Desea eliminarlo?</translation>
         <translation>Umbral de Logística (%)</translation>
     </message>
     <message>
-        <source>Normalized consumption</source>
-        <translation>Consumo normalizado</translation>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Normalized quantity</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

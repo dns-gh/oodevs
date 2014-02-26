@@ -2106,8 +2106,12 @@ Voulez-vous le supprimer?</translation>
         <translation>Seuil logistique (%)</translation>
     </message>
     <message>
-        <source>Normalized consumption</source>
-        <translation>Consommation normalisée</translation>
+        <source>N/A</source>
+        <translation>N/A</translation>
+    </message>
+    <message>
+        <source>Normalized quantity</source>
+        <translation>Quantité normalisée</translation>
     </message>
 </context>
 <context>

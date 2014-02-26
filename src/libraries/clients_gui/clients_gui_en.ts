@@ -2106,8 +2106,12 @@ Do you want to remove it?</translation>
         <translation>Logistics threshold (%)</translation>
     </message>
     <message>
-        <source>Normalized consumption</source>
-        <translation>Normalized consumption</translation>
+        <source>N/A</source>
+        <translation>N/A</translation>
+    </message>
+    <message>
+        <source>Normalized quantity</source>
+        <translation>Normalized quantity</translation>
     </message>
 </context>
 <context>
