@@ -1718,6 +1718,10 @@ Do you want to replace it?</source>
         <source>No response received from the simulation.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Estimated repair duration: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>
