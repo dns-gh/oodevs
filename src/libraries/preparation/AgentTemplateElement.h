@@ -54,7 +54,7 @@ private:
     //@{
     AgentsModel& agents_;
     const kernel::AgentType& type_;
-    bool cp_;
+    const bool cp_;
     //@}
 };
 

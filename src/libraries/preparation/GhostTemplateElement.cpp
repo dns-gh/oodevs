@@ -75,7 +75,7 @@ GhostTemplateElement::GhostTemplateElement( GhostModel& ghosts,
     : TemplateElement_ABC( xis )
     , ghosts_( ghosts )
     , ghost_( new kernel::GhostPrototype() )
-    , isCommandPost_( false )
+    , isCommandPost_( xis.attribute( "commandPost", false ) )
     , isLogisticBase_( false )
     , fromUnknownType_( true )
 {
@@ -85,10 +85,7 @@ GhostTemplateElement::GhostTemplateElement( GhostModel& ghosts,
     ghost_->nature_ = "undefined/undefined/undefined/undefined";
     ghost_->level_ = ghostType == eGhostType_Automat ? "ii" : "ooo";
     if( ghostType == eGhostType_Agent )
-    {
-        xis >> xml::attribute( "agentType", ghost_->type_ )
-            >> xml::attribute( "commandPost", isCommandPost_ );
-    }
+        xis >> xml::attribute( "agentType", ghost_->type_ );
     else if( ghostType == eGhostType_Automat )
     {
         xis >> xml::attribute( "automatType", ghost_->type_ )

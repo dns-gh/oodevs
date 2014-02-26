@@ -19,6 +19,53 @@
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
+namespace
+{
+    boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > GetColor( const kernel::Entity_ABC& entity )
+    {
+        boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > result;
+        const kernel::Color_ABC& color = entity.Get< kernel::Color_ABC >();
+        if( color.IsOverriden() )
+            result = color.GetColor();
+        return result;
+    }
+    boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > GetColor( xml::xistream& xis  )
+    {
+        boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > result;
+        const std::string strColor = xis.attribute( "color", "" );
+        if( !strColor.empty() )
+        {
+            unsigned int color;
+            std::stringstream ss( strColor );
+            ss >> std::hex >> color;
+            unsigned int red = ( color >> 16 ) & 0xff;
+            unsigned int green = ( color >> 8 ) & 0xff;
+            unsigned int blue = color & 0xff;
+            result = boost::tuples::make_tuple( red, green, blue );
+        }
+        return result;
+    }
+    std::map< std::string, std::string > GetExtensions( const kernel::Entity_ABC& entity )
+    {
+        std::map< std::string, std::string > result;
+        if( const kernel::DictionaryExtensions* extensions = entity.Retrieve< kernel::DictionaryExtensions >() )
+            if( extensions->IsEnabled() )
+                result = extensions->GetExtensions();
+        return result;
+    }
+    std::map< std::string, std::string > GetExtensions( xml::xistream& xis )
+    {
+        std::map< std::string, std::string > result;
+        xis >> xml::optional >> xml::start( "extensions" )
+                >> xml::list( "entry", [&] ( xml::xistream& xis )
+                {
+                    result[ xis.attribute< std::string >( "key") ] = xis.attribute< std::string >( "value");
+                } )
+            >> xml::end;
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TemplateElement_ABC constructor
 // Created: ABR 2014-02-24
@@ -34,13 +81,10 @@ TemplateElement_ABC::TemplateElement_ABC()
 // -----------------------------------------------------------------------------
 TemplateElement_ABC::TemplateElement_ABC( const kernel::Entity_ABC& entity )
     : name_( entity.GetName() )
+    , color_( GetColor( entity ) )
+    , extensions_( GetExtensions( entity ) )
 {
-    const kernel::Color_ABC& color = entity.Get< kernel::Color_ABC >();
-    if( color.IsOverriden() )
-        color_ = color.GetColor();
-    if( const kernel::DictionaryExtensions* extensions = entity.Retrieve< kernel::DictionaryExtensions >() )
-        if( extensions->IsEnabled() )
-            extensions_ = extensions->GetExtensions();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,28 +92,11 @@ TemplateElement_ABC::TemplateElement_ABC( const kernel::Entity_ABC& entity )
 // Created: ABR 2014-02-24
 // -----------------------------------------------------------------------------
 TemplateElement_ABC::TemplateElement_ABC( xml::xistream& xis )
+    : name_( QString::fromStdString( xis.attribute( "name", "" ) ) )
+    , color_( GetColor( xis ) )
+    , extensions_( GetExtensions( xis ) )
 {
-    std::string strName;
-    std::string strColor;
-    xis >> xml::optional >> xml::attribute( "name", strName )
-        >> xml::optional >> xml::attribute( "color", strColor )
-        >> xml::optional >> xml::start( "extensions" )
-            >> xml::list( "entry", [&] ( xml::xistream& xis )
-            {
-                extensions_[ xis.attribute< std::string >( "key") ] = xis.attribute< std::string >( "value");
-            } )
-        >> xml::end;
-    name_ = QString::fromStdString( strName );
-    if( !strColor.empty() )
-    {
-        unsigned int color;
-        std::stringstream ss( strColor );
-        ss >> std::hex >> color;
-        unsigned int red = ( color >> 16 ) & 0xff;
-        unsigned int green = ( color >> 8 ) & 0xff;
-        unsigned int blue = color & 0xff;
-        color_ = boost::tuples::make_tuple( red, green, blue );
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

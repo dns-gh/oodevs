@@ -58,9 +58,9 @@ private:
     //@{
     GhostModel& ghosts_;
     std::unique_ptr< kernel::GhostPrototype > ghost_;
-    bool isCommandPost_;
-    bool isLogisticBase_;
-    bool fromUnknownType_;
+    const bool isCommandPost_;
+    const bool isLogisticBase_;
+    const bool fromUnknownType_;
     //@}
 };
 

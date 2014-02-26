@@ -60,7 +60,7 @@ protected:
     //! @name Member data
     //@{
     QString name_;
-    boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > color_;
+    const boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > color_;
     std::map< std::string, std::string > extensions_;
     //@}
 };
