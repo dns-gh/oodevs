@@ -34,7 +34,7 @@ class MagicOrder : public SimpleEntity<>
                  , public kernel::Updatable_ABC< sword::MagicOrder >
 {
 public:
-    explicit MagicOrder( const Model& model, const sword::MagicOrder& msg );
+             MagicOrder( const Model& model, const sword::MagicOrder& msg );
     virtual ~MagicOrder();
 
     void DoUpdate( const sword::MagicOrder& msg );
