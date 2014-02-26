@@ -13,6 +13,7 @@
 #include "MIL_NbcAgentType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Populations/MIL_IntoxicationEffect.h"
+#include "MIL_Random.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"

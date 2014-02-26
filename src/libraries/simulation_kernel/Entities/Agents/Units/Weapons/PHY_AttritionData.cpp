@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_AttritionData.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
+#include "MIL_Random.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_AttritionData constructor

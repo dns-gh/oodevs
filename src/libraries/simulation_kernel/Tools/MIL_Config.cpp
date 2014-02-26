@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Config.h"
+#include "MIL_Random.h"
 #include "MIL_Tools.h"
 #include "tools/Codec.h"
 #include "tools/FileWrapper.h"
@@ -51,7 +52,11 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , bSaveCheckpointTestMode_( false )
     , bEmbeddedDispatcher_( false )
     , bPausedAtStartup_( false )
+    , bEnableRandomBreakdowns_( true )
     , randomSeed_( 0 )
+    , randomGaussian_( MIL_Random::eContextsNbr, false )
+    , randomDeviation_( MIL_Random::eContextsNbr, 0 )
+    , randomMean_( MIL_Random::eContextsNbr, 0 )
     , setpause_( 0 )
     , setstepmul_( 0 )
     , integrationDir_( "resources" )
@@ -193,15 +198,16 @@ void MIL_Config::ConfigureRandom( xml::xistream& xis )
 {
     for( int i = 0; i < MIL_Random::eContextsNbr; ++i )
     {
-        randomGaussian_[ i ] = false;
+        bool gaussian = false;
         randomDeviation_[ i ] = 0.;
         randomMean_[ i ] = 0.;
         xis >> xml::optional
             >> xml::start( "random" + boost::lexical_cast< std::string >( i ) )
-                >> xml::attribute( "distribution", randomGaussian_[ i ] )
+                >> xml::attribute( "distribution", gaussian )
                 >> xml::attribute( "deviation", randomDeviation_[ i ] )
                 >> xml::attribute( "mean", randomMean_[ i ] )
             >> xml::end;
+        randomGaussian_[ i ] = gaussian;
     }
 }
 
@@ -233,6 +239,8 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
             >> xml::attribute( "networklogger", bUseNetworkLogger_ )
             >> xml::optional >> xml::attribute( "decisional-logger", bDecisionalLoggerEnabled_ )
             >> xml::optional >> xml::attribute( "networkloggerport", networkLoggerPort_ )
+            >> xml::optional >> xml::attribute(
+                    "random-breakdowns", bEnableRandomBreakdowns_ )
             >> logSim
         >> xml::end;
     SetSimLogSettings( logSim );
@@ -517,7 +525,7 @@ int MIL_Config::GetRandomSeed() const
 // Name: MIL_Config::GetRandomGaussian
 // Created: JSR 2010-07-02
 // -----------------------------------------------------------------------------
-const bool* MIL_Config::GetRandomGaussian() const
+const std::vector< bool >& MIL_Config::GetRandomGaussian() const
 {
     return randomGaussian_;
 }
@@ -526,7 +534,7 @@ const bool* MIL_Config::GetRandomGaussian() const
 // Name: MIL_Config::GetRandomDeviation
 // Created: JSR 2010-07-02
 // -----------------------------------------------------------------------------
-const double* MIL_Config::GetRandomDeviation() const
+const std::vector< double >& MIL_Config::GetRandomDeviation() const
 {
     return randomDeviation_;
 }
@@ -535,7 +543,7 @@ const double* MIL_Config::GetRandomDeviation() const
 // Name: MIL_Config::GetRandomMean
 // Created: JSR 2010-07-02
 // -----------------------------------------------------------------------------
-const double* MIL_Config::GetRandomMean() const
+const std::vector< double >& MIL_Config::GetRandomMean() const
 {
     return randomMean_;
 }
@@ -543,4 +551,9 @@ const double* MIL_Config::GetRandomMean() const
 bool MIL_Config::EnableTestCommands() const
 {
     return bTestCommands_;
+}
+
+bool MIL_Config::EnableRandomBreakdowns() const
+{
+    return bEnableRandomBreakdowns_;
 }

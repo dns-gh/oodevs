@@ -35,6 +35,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MIL_AgentServer.h"
+#include "MIL_Random.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Circle.h"
 #include "simulation_terrain/TER_Agent_ABC.h"

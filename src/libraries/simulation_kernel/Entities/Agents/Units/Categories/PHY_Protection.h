@@ -56,8 +56,8 @@ public:
 
     //! @name Operations
     //@{
-    bool CanRandomlyBreaksDownEva () const;
-    bool CanRandomlyBreaksDownNeva() const;
+    bool TriggerRandomEvacuationBreakdown () const;
+    bool TriggerRandomNonEvacuationBreakdown() const;
     //@}
 
 private:

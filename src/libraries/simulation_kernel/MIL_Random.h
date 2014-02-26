@@ -10,8 +10,9 @@
 #ifndef __MIL_Random_h_
 #define __MIL_Random_h_
 
-#include "MT_Tools/MT_Random.h"
-#include "MT_Tools/MT_GaussianRandom.h"
+#include <vector>
+
+class MT_GaussianRandom;
 
 // =============================================================================
 /** @class  MIL_Random
@@ -32,7 +33,8 @@ public:
     };
 
 public:
-    static void Initialize( int nSeed, const bool* bGaussian, const double* rDeviation, const double* rMean );
+    static void Initialize( int nSeed, const std::vector< bool >& bGaussian,
+        const std::vector< double >& rDeviation, const std::vector< double >& rMean );
     static void Terminate();
 
     static long rand32();                            // [ 0  , 0xffffffff ]
@@ -56,7 +58,8 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-             MIL_Random( int nSeed, const bool* bGaussian, const double* rDeviation, const double* rMean );
+             MIL_Random( int nSeed, const std::vector< bool >& bGaussian,
+                 const std::vector< double >& rDeviation, const std::vector< double >& rMean );
     virtual ~MIL_Random();
     //@}
 
@@ -84,6 +87,15 @@ private:
     //@}
 };
 
-#include "MIL_Random.inl"
+// -----------------------------------------------------------------------------
+// Name: MIL_Random::random_shuffle
+// Created: JSR 2011-05-05
+// -----------------------------------------------------------------------------
+template< typename T >
+void MIL_Random::random_shuffle( std::vector< T >& vector, int ctxt )
+{
+    boost::function< unsigned long( unsigned long ) > fun =  boost::bind( &MIL_Random::rand32_io, 0, _1, ctxt );
+    std::random_shuffle( vector.begin(), vector.end(), fun );
+}
 
 #endif // __MIL_Random_h_

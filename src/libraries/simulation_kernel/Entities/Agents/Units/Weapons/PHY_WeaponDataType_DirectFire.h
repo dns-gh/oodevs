@@ -12,7 +12,6 @@
 #ifndef __PHY_WeaponDataType_DirectFire_h_
 #define __PHY_WeaponDataType_DirectFire_h_
 
-#include "MIL_Random.h"
 #include "MT_Tools/MT_InterpolatedFunction.h"
 #include "MT_Tools/MT_Vector3D.h"
 
