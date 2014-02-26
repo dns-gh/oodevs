@@ -456,10 +456,11 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
         else if( msg.type() == sword::ObjectMagicAction::destroy )
         {
             MIL_Object_ABC* pObject = Find( msg.object().id() );
-            protocol::Check( pObject && !pObject->Retrieve< CrowdCapacity >(),
-                    "invalid object identifier" );
+            protocol::Check( pObject, "invalid object identifier" );
+            protocol::Check( !pObject->Retrieve< CrowdCapacity >(),
+                    "population movement objects cannot be destroyed" );
             protocol::Check( !pObject->RetrieveAttribute< SpawnedAttribute >(),
-                    "spawn object can't be destroyed" );
+                    "spawned object cannot be destroyed" );
             MIL_Army_ABC* army = pObject->GetArmy();
             if( army )
             {

@@ -24,8 +24,12 @@ public:
     //! @name Constructors/Destructor
     //@{
              SpawnedAttribute();
-    explicit SpawnedAttribute( MIL_Object_ABC& object );
     virtual ~SpawnedAttribute();
+    //@}
+
+    //! @name From ObjectAttribute_ABC
+    //@{
+    virtual void Register( MIL_Object_ABC& object ) const;
     //@}
 
     //! @name CheckPoint
@@ -33,5 +37,7 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( SpawnedAttribute )
 
 #endif // __SpawnedAttribute_h_

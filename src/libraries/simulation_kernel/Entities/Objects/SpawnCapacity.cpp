@@ -23,7 +23,7 @@
 #include "MIL_NbcAgentType.h"
 #include "NBCAttribute.h"
 
-BOOST_CLASS_EXPORT_GUID( SpawnCapacity, "SpawnCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( SpawnCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCapacity constructor

@@ -68,5 +68,6 @@ private:
     //@}
 
 };
+BOOST_CLASS_EXPORT_KEY( SpawnCapacity )
 
 #endif // __SpawnCapacity_h_

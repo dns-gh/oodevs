@@ -11,7 +11,7 @@
 #include "ChildObjectAttribute.h"
 #include "Object.h"
 
-BOOST_CLASS_EXPORT_GUID( ChildObjectAttribute, "ChildObjectAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( ChildObjectAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: ChildObjectAttribute constructor
