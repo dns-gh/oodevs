@@ -1379,7 +1379,7 @@ func (model *ModelData) handleFireEffectDestruction(m *sword.SimToClient_Content
 }
 
 func (model *ModelData) handleMagicOrderCreation(m *sword.SimToClient_Content) error {
-	mm := m.GetMagicOrderCreation()
+	mm := m.GetMagicOrder()
 	if mm == nil {
 		return ErrSkipHandler
 	}
