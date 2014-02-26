@@ -64,13 +64,14 @@ end
 -- @author PSN
 -- @release 2010-03-30
 integration.canRemoveIt = function( object )
-    -- $$$ MIA return false if object is not valid.
-    return DEC_Agent_PeutDetruireObjet( object.source )
+    return masalife.brain.core.class.isOfType( object, integration.ontology.types.object ) 
+           and DEC_Agent_PeutDetruireObjet( object.source ) or true  -- return false if object is not valid.
 end
 
 -- $$$ MIA merge with military: return true if agent can remove the objet depending on its physical capabilities
 integration.canRemoveItSecu = function( object )
-    object.canRemoveit = object.canRemoveit or DEC_Agent_PeutDetruireObjet( object.source )
+    object.canRemoveit = masalife.brain.core.class.isOfType( object, integration.ontology.types.object ) 
+                         and DEC_Agent_PeutDetruireObjet( object.source ) or true
     return object.canRemoveit
 end
 
