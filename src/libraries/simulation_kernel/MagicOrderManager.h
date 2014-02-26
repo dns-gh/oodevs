@@ -23,6 +23,8 @@ namespace sword
     class UnitMagicAction;
 }
 
+// MagicOrderManager stores all magic orders and assign to them a unique id
+// When a new client connects, it will receive all previously stored magic orders.
 class MagicOrderManager
 {
 public:
