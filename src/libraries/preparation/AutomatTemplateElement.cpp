@@ -23,7 +23,7 @@
 // -----------------------------------------------------------------------------
 AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents,
                                                 const kernel::Automat_ABC& automat )
-    : TemplateElement_ABC( automat )
+    : TemplateElement( automat )
     , agents_( agents )
     , type_  ( automat.Get< gui::EntityType< kernel::AutomatType > >().GetType() )
 {
@@ -39,7 +39,7 @@ AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents,
 AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents,
                                                 const kernel::AutomatType& type,
                                                 xml::xistream& xis )
-    : TemplateElement_ABC( xis )
+    : TemplateElement( xis )
     , agents_( agents )
     , type_  ( type )
     , symbol_( xis.attribute( "symbol", "" ) )
@@ -86,7 +86,7 @@ kernel::Entity_ABC* AutomatTemplateElement::Instanciate( kernel::Entity_ABC& sup
 // -----------------------------------------------------------------------------
 void AutomatTemplateElement::Serialize( xml::xostream& xos ) const
 {
-    TemplateElement_ABC::Serialize( xos );
+    TemplateElement::Serialize( xos );
     xos << xml::attribute( "type", "automat" )
         << xml::attribute( "automatType", type_.GetName() );
     if( !symbol_.empty() )

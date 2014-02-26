@@ -10,7 +10,7 @@
 #ifndef GhostTemplateElement_h
 #define GhostTemplateElement_h
 
-#include "TemplateElement_ABC.h"
+#include "TemplateElement.h"
 
 enum E_GhostType;
 
@@ -28,7 +28,7 @@ class GhostModel;
 */
 // Created: ABR 2014-02-24
 // =============================================================================
-class GhostTemplateElement : public TemplateElement_ABC
+class GhostTemplateElement : public TemplateElement
 {
 public:
     //! @name Constructors/Destructor
@@ -44,7 +44,7 @@ public:
     //@}
 
 private:
-    //! @name TemplateElement_ABC implementation
+    //! @name TemplateElement implementation
     //@{
     virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior,
                                              const geometry::Point2f& center,

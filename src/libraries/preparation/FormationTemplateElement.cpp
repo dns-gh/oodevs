@@ -21,7 +21,7 @@
 // -----------------------------------------------------------------------------
 FormationTemplateElement::FormationTemplateElement( FormationModel& formations,
                                                     const kernel::Formation_ABC& formation )
-    : TemplateElement_ABC( formation )
+    : TemplateElement( formation )
     , formations_( formations )
     , levelId_   ( static_cast< unsigned int >( formation.GetLevel() ) )
 {
@@ -36,7 +36,7 @@ FormationTemplateElement::FormationTemplateElement( FormationModel& formations,
 // -----------------------------------------------------------------------------
 FormationTemplateElement::FormationTemplateElement( FormationModel& formations,
                                                     xml::xistream& xis )
-    : TemplateElement_ABC( xis )
+    : TemplateElement( xis )
     , formations_( formations )
     , levelId_( xis.attribute< unsigned int >( "level" ) )
     , symbol_( xis.attribute( "symbol", "" ) )
@@ -81,7 +81,7 @@ kernel::Entity_ABC* FormationTemplateElement::Instanciate( kernel::Entity_ABC& s
 // -----------------------------------------------------------------------------
 void FormationTemplateElement::Serialize( xml::xostream& xos ) const
 {
-    TemplateElement_ABC::Serialize( xos );
+    TemplateElement::Serialize( xos );
     xos << xml::attribute( "type", "formation" )
         << xml::attribute( "level", levelId_ );
     if( !symbol_.empty() )

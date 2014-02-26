@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __TemplateElement_ABC_h_
-#define __TemplateElement_ABC_h_
+#ifndef __TemplateElement_h_
+#define __TemplateElement_h_
 
 #include <boost/noncopyable.hpp>
 #include <boost/optional/optional.hpp>
@@ -22,20 +22,20 @@ namespace kernel
 class ColorController;
 
 // =============================================================================
-/** @class  TemplateElement_ABC
-    @brief  TemplateElement_ABC
+/** @class  TemplateElement
+    @brief  TemplateElement
 */
 // Created: AGE 2007-05-29
 // =============================================================================
-class TemplateElement_ABC : private boost::noncopyable
+class TemplateElement : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TemplateElement_ABC();
-    explicit TemplateElement_ABC( const kernel::Entity_ABC& entity );
-    explicit TemplateElement_ABC( xml::xistream& xis );
-    virtual ~TemplateElement_ABC();
+             TemplateElement();
+    explicit TemplateElement( const kernel::Entity_ABC& entity );
+    explicit TemplateElement( xml::xistream& xis );
+    virtual ~TemplateElement();
     //@}
 
     //! @name Abstract operations
@@ -65,4 +65,4 @@ protected:
     //@}
 };
 
-#endif // __TemplateElement_ABC_h_
+#endif // __TemplateElement_h_

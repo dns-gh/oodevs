@@ -22,7 +22,7 @@
 // -----------------------------------------------------------------------------
 AgentTemplateElement::AgentTemplateElement( AgentsModel& agents,
                                             const kernel::Agent_ABC& agent )
-    : TemplateElement_ABC( agent )
+    : TemplateElement( agent )
     , agents_( agents )
     , type_( agent.GetType() )
     , cp_( tools::IsCommandPost( agent ) )
@@ -37,7 +37,7 @@ AgentTemplateElement::AgentTemplateElement( AgentsModel& agents,
 AgentTemplateElement::AgentTemplateElement( AgentsModel& agents,
                                             const kernel::AgentType& type,
                                             xml::xistream& xis )
-    : TemplateElement_ABC( xis )
+    : TemplateElement( xis )
     , agents_( agents )
     , type_( type )
     , cp_( xis.attribute( "commandPost", false ) )
@@ -78,7 +78,7 @@ kernel::Entity_ABC* AgentTemplateElement::Instanciate( kernel::Entity_ABC& super
 // -----------------------------------------------------------------------------
 void AgentTemplateElement::Serialize( xml::xostream& xos ) const
 {
-    TemplateElement_ABC::Serialize( xos );
+    TemplateElement::Serialize( xos );
     xos << xml::attribute( "type", "agent" )
         << xml::attribute( "agentType", type_.GetKeyName() )
         << xml::attribute( "commandPost", cp_ );

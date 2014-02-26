@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "TemplateElement_ABC.h"
+#include "TemplateElement.h"
 #include "ColorController.h"
 
 #include "clients_kernel/Color_ABC.h"
@@ -67,19 +67,19 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: TemplateElement_ABC constructor
+// Name: TemplateElement constructor
 // Created: ABR 2014-02-24
 // -----------------------------------------------------------------------------
-TemplateElement_ABC::TemplateElement_ABC()
+TemplateElement::TemplateElement()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TemplateElement_ABC constructor
+// Name: TemplateElement constructor
 // Created: ABR 2014-02-24
 // -----------------------------------------------------------------------------
-TemplateElement_ABC::TemplateElement_ABC( const kernel::Entity_ABC& entity )
+TemplateElement::TemplateElement( const kernel::Entity_ABC& entity )
     : name_( entity.GetName() )
     , color_( GetColor( entity ) )
     , extensions_( GetExtensions( entity ) )
@@ -88,10 +88,10 @@ TemplateElement_ABC::TemplateElement_ABC( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TemplateElement_ABC constructor
+// Name: TemplateElement constructor
 // Created: ABR 2014-02-24
 // -----------------------------------------------------------------------------
-TemplateElement_ABC::TemplateElement_ABC( xml::xistream& xis )
+TemplateElement::TemplateElement( xml::xistream& xis )
     : name_( QString::fromStdString( xis.attribute( "name", "" ) ) )
     , color_( GetColor( xis ) )
     , extensions_( GetExtensions( xis ) )
@@ -100,37 +100,37 @@ TemplateElement_ABC::TemplateElement_ABC( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TemplateElement_ABC destructor
+// Name: TemplateElement destructor
 // Created: ABR 2014-02-24
 // -----------------------------------------------------------------------------
-TemplateElement_ABC::~TemplateElement_ABC()
+TemplateElement::~TemplateElement()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TemplateElement_ABC::GetName
+// Name: TemplateElement::GetName
 // Created: ABR 2014-02-24
 // -----------------------------------------------------------------------------
-QString TemplateElement_ABC::GetName() const
+QString TemplateElement::GetName() const
 {
     return name_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TemplateElement_ABC::Rename
+// Name: TemplateElement::Rename
 // Created: ABR 2014-02-24
 // -----------------------------------------------------------------------------
-void TemplateElement_ABC::Rename( const QString& name )
+void TemplateElement::Rename( const QString& name )
 {
     name_ = name;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TemplateElement_ABC::SetColor
+// Name: TemplateElement::SetColor
 // Created: ABR 2014-02-25
 // -----------------------------------------------------------------------------
-void TemplateElement_ABC::SetColor( kernel::Entity_ABC& entity,
+void TemplateElement::SetColor( kernel::Entity_ABC& entity,
                                     ColorController& colorController )
 {
     if( color_ )
@@ -141,10 +141,10 @@ void TemplateElement_ABC::SetColor( kernel::Entity_ABC& entity,
 }
 
 // -----------------------------------------------------------------------------
-// Name: TemplateElement_ABC::SetExtensions
+// Name: TemplateElement::SetExtensions
 // Created: ABR 2014-02-25
 // -----------------------------------------------------------------------------
-void TemplateElement_ABC::SetExtensions( kernel::Entity_ABC& entity )
+void TemplateElement::SetExtensions( kernel::Entity_ABC& entity )
 {
     if( !extensions_.empty() )
     {
@@ -156,10 +156,10 @@ void TemplateElement_ABC::SetExtensions( kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TemplateElement_ABC::Serialize
+// Name: TemplateElement::Serialize
 // Created: ABR 2014-02-24
 // -----------------------------------------------------------------------------
-void TemplateElement_ABC::Serialize( xml::xostream& output ) const
+void TemplateElement::Serialize( xml::xostream& output ) const
 {
     output << xml::attribute( "name", name_.toStdString() );
     if( color_ )

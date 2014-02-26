@@ -34,7 +34,7 @@ namespace
         return types.Find( xis.attribute< std::string >( xmlTag ) );
     }
 
-    TemplateElement_ABC* CreateElement( AgentsModel& agents,
+    TemplateElement* CreateElement( AgentsModel& agents,
                                         FormationModel& formations,
                                         GhostModel& ghosts,
                                         const Entity_ABC& entity,
@@ -57,7 +57,7 @@ namespace
         return 0;
     }
 
-    TemplateElement_ABC* CreateElement( AgentsModel& agents,
+    TemplateElement* CreateElement( AgentsModel& agents,
                                         FormationModel& formations,
                                         GhostModel& ghosts,
                                         const AgentTypes& types,
@@ -72,7 +72,7 @@ namespace
                >> xml::attribute( "x", x )
                >> xml::attribute( "y", y );
         position.Set( x, y );
-        TemplateElement_ABC* result = 0;
+        TemplateElement* result = 0;
         if( type == "formation" )
             result = new FormationTemplateElement( formations, xis );
         else if( type == "automat" )

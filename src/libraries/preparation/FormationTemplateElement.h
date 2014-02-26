@@ -10,7 +10,7 @@
 #ifndef __FormationTemplateElement_h_
 #define __FormationTemplateElement_h_
 
-#include "TemplateElement_ABC.h"
+#include "TemplateElement.h"
 
 namespace kernel
 {
@@ -25,7 +25,7 @@ class FormationModel;
 */
 // Created: AGE 2007-05-29
 // =============================================================================
-class FormationTemplateElement : public TemplateElement_ABC
+class FormationTemplateElement : public TemplateElement
 {
 public:
     //! @name Constructors/Destructor
@@ -38,7 +38,7 @@ public:
     //@}
 
 private:
-    //! @name TemplateElement_ABC implementation
+    //! @name TemplateElement implementation
     //@{
     virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior,
                                              const geometry::Point2f& center,

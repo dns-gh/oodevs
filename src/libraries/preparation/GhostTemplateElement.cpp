@@ -27,7 +27,7 @@
 // -----------------------------------------------------------------------------
 GhostTemplateElement::GhostTemplateElement( GhostModel& ghosts,
                                             const kernel::Ghost_ABC& ghost )
-    : TemplateElement_ABC( ghost )
+    : TemplateElement( ghost )
     , ghosts_( ghosts )
     , ghost_( new kernel::GhostPrototype() )
     , isCommandPost_( tools::IsCommandPost( ghost ) )
@@ -48,7 +48,7 @@ GhostTemplateElement::GhostTemplateElement( GhostModel& ghosts,
 // -----------------------------------------------------------------------------
 GhostTemplateElement::GhostTemplateElement( GhostModel& ghosts,
                                             xml::xistream& xis )
-    : TemplateElement_ABC( xis )
+    : TemplateElement( xis )
     , ghosts_( ghosts )
     , ghost_( new kernel::GhostPrototype() )
     , isCommandPost_( xis.attribute( "commandPost", false ) )
@@ -72,7 +72,7 @@ GhostTemplateElement::GhostTemplateElement( GhostModel& ghosts,
 GhostTemplateElement::GhostTemplateElement( GhostModel& ghosts,
                                             E_GhostType ghostType,
                                             xml::xistream& xis )
-    : TemplateElement_ABC( xis )
+    : TemplateElement( xis )
     , ghosts_( ghosts )
     , ghost_( new kernel::GhostPrototype() )
     , isCommandPost_( xis.attribute( "commandPost", false ) )
@@ -136,7 +136,7 @@ kernel::Entity_ABC* GhostTemplateElement::Instanciate( kernel::Entity_ABC& super
 // -----------------------------------------------------------------------------
 void GhostTemplateElement::Serialize( xml::xostream& xos ) const
 {
-    TemplateElement_ABC::Serialize( xos );
+    TemplateElement::Serialize( xos );
     xos << xml::attribute( "type", "ghost" )
         << xml::attribute( "ghostType", ghost_->type_ )
         << xml::attribute( "subGhostType", ENT_Tr::ConvertFromGhostType( ghost_->ghostType_, ENT_Tr::eToSim ) )

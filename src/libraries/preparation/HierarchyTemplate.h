@@ -24,7 +24,7 @@ class ColorController;
 class FormationFactory_ABC;
 class FormationModel;
 class GhostModel;
-class TemplateElement_ABC;
+class TemplateElement;
 
 // =============================================================================
 /** @class  HierarchyTemplate
@@ -77,7 +77,7 @@ private:
     //! @name Member data
     //@{
     T_Templates subTemplates_;
-    std::unique_ptr< TemplateElement_ABC > element_;
+    std::unique_ptr< TemplateElement > element_;
     geometry::Point2f referencePosition_;
     ColorController& colorController_;
     //@}
