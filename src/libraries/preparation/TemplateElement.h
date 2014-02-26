@@ -61,7 +61,7 @@ protected:
     //@{
     QString name_;
     const boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > color_;
-    std::map< std::string, std::string > extensions_;
+    const std::map< std::string, std::string > extensions_;
     //@}
 };
 

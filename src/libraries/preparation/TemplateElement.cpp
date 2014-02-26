@@ -23,15 +23,13 @@ namespace
 {
     boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > GetColor( const kernel::Entity_ABC& entity )
     {
-        boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > result;
         const kernel::Color_ABC& color = entity.Get< kernel::Color_ABC >();
         if( color.IsOverriden() )
-            result = color.GetColor();
-        return result;
+            return color.GetColor();
+        return boost::none;
     }
     boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > GetColor( xml::xistream& xis  )
     {
-        boost::optional< boost::tuple< unsigned int, unsigned int, unsigned int > > result;
         const std::string strColor = xis.attribute( "color", "" );
         if( !strColor.empty() )
         {
@@ -41,17 +39,16 @@ namespace
             unsigned int red = ( color >> 16 ) & 0xff;
             unsigned int green = ( color >> 8 ) & 0xff;
             unsigned int blue = color & 0xff;
-            result = boost::tuples::make_tuple( red, green, blue );
+            return boost::tuples::make_tuple( red, green, blue );
         }
-        return result;
+        return boost::none;
     }
     std::map< std::string, std::string > GetExtensions( const kernel::Entity_ABC& entity )
     {
-        std::map< std::string, std::string > result;
         if( const kernel::DictionaryExtensions* extensions = entity.Retrieve< kernel::DictionaryExtensions >() )
             if( extensions->IsEnabled() )
-                result = extensions->GetExtensions();
-        return result;
+                return extensions->GetExtensions();
+        return std::map< std::string, std::string >();
     }
     std::map< std::string, std::string > GetExtensions( xml::xistream& xis )
     {
