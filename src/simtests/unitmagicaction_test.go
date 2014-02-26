@@ -1497,6 +1497,7 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 	human.Injury = 0
 	human.Psyop = false
 	human.Contaminated = false
+	human.Quantity = 7
 
 	officer := swapi.HumanDotation{
 		Quantity: 1,
