@@ -366,6 +366,9 @@ integration.startMoveToIt = function( objective, pathType, waypoints )
     -- Terrain management: reach a accessible position if position is not accessible 
     -- with a mounted agent.
     -- --------------------------------------------------------------------------------
+    if DEC_ObjectKnowledge_IsPositionInside(meKnowledge.source,"contamination", objective:getPosition()) then
+        meKnowledge:equipNBCOutfit()
+    end
     objective.initialeDestination = DEC_Geometrie_CopiePoint( objective:getPosition() )
     if not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination )
        and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() ) 
@@ -780,6 +783,10 @@ integration.updateMoveToItCrowd = function( objective, pathType, inertness )
     if reachableDestination then
         local currentPosition = objective:getPosition()
         local distance = DEC_Geometrie_DistanceBetweenPoints( reachableDestination, currentPosition )
+        local distanceDestination = DEC_Geometrie_DistanceBetweenPoints( reachableDestination, objective.initialPosition )
+        if distanceDestination <= 10 then -- LMT : HardCode distance in MIL_PopulationConcentration::IsNearPosition function
+            return true
+        end
         if distance > epsilon then
             integration.stopMoveToItCrowd( objective )
             return integration.startMoveToItCrowd( objective, pathType )
