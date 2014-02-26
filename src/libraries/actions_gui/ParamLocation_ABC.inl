@@ -123,11 +123,7 @@ template< typename BaseParameter >
 void ParamLocation_ABC< BaseParameter >::OnMenuClick()
 {
     if( parameter_.GetType() == "point" && popupPosition_ )
-    {
-        kernel::Point locPoint;
-        locPoint.AddPoint( *popupPosition_ );
-        Handle( locPoint.Clone() );
-    }
+        layer_.SetPoint( *this, *popupPosition_ );
     else if( parameter_.GetType() == "circle" )
         layer_.StartCircle( *this );
     else if( parameter_.GetType() == "line" )

@@ -299,3 +299,14 @@ void ParametersLayer::SelectRaster( ShapeHandler_ABC& handler )
     location->AddPoint( world_.TopRight() );
     handler.Handle( *location );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParametersLayer::SetPoint
+// Created: ABR 2014-02-26
+// -----------------------------------------------------------------------------
+void ParametersLayer::SetPoint( ShapeHandler_ABC& handler, const geometry::Point2f& point )
+{
+    Point location;
+    location.AddPoint( point );
+    handler.Handle( location.Clone() );
+}
