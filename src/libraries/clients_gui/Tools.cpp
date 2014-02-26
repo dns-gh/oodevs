@@ -11,7 +11,10 @@
 #include "Tools.h"
 #include "AutomatDecisions.h"
 
+#include "clients_gui/MergingTacticalHierarchies.h"
+#include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -62,4 +65,24 @@ tools::Path tools::SanitizeFileName( QString text, const QString& after /*= "-"*
 {
     text.replace( QRegExp( "[/\"<>|*\?:\\\\]+" ), after );
     return tools::Path::FromUnicode( text.simplified().toStdWString() );
+}
+
+void tools::SetKarma( const kernel::Entity_ABC& entity, std::string& symbol )
+{
+    if( const kernel::TacticalHierarchies* pHierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
+        kernel::App6Symbol::SetKarma( symbol, pHierarchy->GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
+}
+
+void tools::SetLevel( const kernel::Entity_ABC& entity, std::string& level )
+{
+    if( const kernel::TacticalHierarchies* pHierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
+    {
+        std::string levelSymbol = pHierarchy->GetLevel();
+        if( !levelSymbol.empty() )
+        {
+            level = gui::MergingTacticalHierarchies::DecreaseLevel( levelSymbol );
+            if( level.find( "levels/" ) != std::string::npos )
+                level.erase( 0, 7 );
+        }
+    }
 }

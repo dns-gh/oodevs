@@ -3,40 +3,44 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __AutomatTemplateElement_h_
-#define __AutomatTemplateElement_h_
+#ifndef GhostTemplateElement_h
+#define GhostTemplateElement_h
 
 #include "TemplateElement.h"
 
+enum E_GhostType;
+
 namespace kernel
 {
-    class Automat_ABC;
-    class AutomatType;
+    class Ghost_ABC;
+    class GhostPrototype;
 }
 
-class AgentsModel;
+class GhostModel;
 
 // =============================================================================
-/** @class  AutomatTemplateElement
-    @brief  AutomatTemplateElement
+/** @class  GhostTemplateElement
+    @brief  GhostTemplateElement
 */
-// Created: AGE 2007-05-29
+// Created: ABR 2014-02-24
 // =============================================================================
-class AutomatTemplateElement : public TemplateElement
+class GhostTemplateElement : public TemplateElement
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatTemplateElement( AgentsModel& agents,
-                                     const kernel::Automat_ABC& automat );
-             AutomatTemplateElement( AgentsModel& agents,
-                                     const kernel::AutomatType& type,
-                                     xml::xistream& xis );
-    virtual ~AutomatTemplateElement();
+             GhostTemplateElement( GhostModel& ghosts,
+                                   const kernel::Ghost_ABC& ghost );
+             GhostTemplateElement( GhostModel& ghosts,
+                                   xml::xistream& xis );
+             GhostTemplateElement( GhostModel& ghosts,
+                                   E_GhostType ghostType,
+                                   xml::xistream& xis );
+    virtual ~GhostTemplateElement();
     //@}
 
 private:
@@ -52,10 +56,12 @@ private:
 private:
     //! @name Member data
     //@{
-    AgentsModel& agents_;
-    const kernel::AutomatType& type_;
-    std::string symbol_;
+    GhostModel& ghosts_;
+    std::unique_ptr< kernel::GhostPrototype > ghost_;
+    const bool isCommandPost_;
+    const bool isLogisticBase_;
+    const bool fromUnknownType_;
     //@}
 };
 
-#endif // __AutomatTemplateElement_h_
+#endif // GhostTemplateElement_h

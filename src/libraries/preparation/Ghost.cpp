@@ -22,6 +22,7 @@
 
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/LogisticHierarchiesBase.h"
+#include "clients_gui/Tools.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -80,16 +81,12 @@ Ghost::Ghost( kernel::Controller& controller, const Model& model, tools::IdManag
     , logisticSuperiorID_( -1 )
 {
     assert( ghostType_ != eGhostType_Invalid && !nature_.empty() && !level_.empty() );
-
     if( ghostType_ == eGhostType_Automat )
     {
         ReadGhostAttributes( xis );
-        E_GhostType childGhostType = eGhostType_Agent;
         xis >> xml::list( "unit", *this, &Ghost::ReadChildren );
-        childGhostType = eGhostType_Automat;
         xis >> xml::list( "phantom", *this, &Ghost::ReadChildren );
     }
-
     symbol_ = symbolsFactory.CreateSymbol( nature_ );
     idManager.Lock( id_ );
     AddExtension( *this );
@@ -113,28 +110,13 @@ Ghost::Ghost( Controller& controller, const Model& model, tools::IdManager& idMa
     , logisticSuperiorID_( -1 )
 {
     assert( ghostType_ != eGhostType_Invalid );
-
     if( ghostType == eGhostType_Automat )
     {
-        E_GhostType childGhostType = eGhostType_Agent;
         xis >> xml::list( "unit", *this, &Ghost::ReadChildren );
-        childGhostType = eGhostType_Automat;
         xis >> xml::list( "phantom", *this, &Ghost::ReadChildren );
     }
-
-    if( const kernel::TacticalHierarchies* pHierarchy = parent.Retrieve< kernel::TacticalHierarchies >() )
-    {
-        kernel::App6Symbol::SetKarma( symbol_, pHierarchy->GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
-
-        std::string levelSymbol = pHierarchy->GetLevel();
-        if( !levelSymbol.empty() )
-        {
-            level_ = gui::MergingTacticalHierarchies::DecreaseLevel( levelSymbol );
-            if( level_.find( "levels/" ) != std::string::npos )
-                level_.erase( 0, 7 );
-        }
-    }
-
+    tools::SetKarma( parent, symbol_ );
+    tools::SetLevel( parent, level_ );
     idManager.Lock( id_ );
     AddExtension( *this );
     CreateDictionary();

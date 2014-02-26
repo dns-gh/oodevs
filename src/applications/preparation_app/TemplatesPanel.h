@@ -27,6 +27,7 @@ namespace kernel
 class AgentsModel;
 class ColorController;
 class FormationModel;
+class GhostModel;
 class TemplateListView;
 
 // =============================================================================
@@ -46,7 +47,14 @@ class TemplatesPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TemplatesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController );
+             TemplatesPanel( QWidget* parent,
+                             gui::PanelStack_ABC& panel,
+                             kernel::Controllers& controllers,
+                             AgentsModel& agents,
+                             FormationModel& formations,
+                             GhostModel& ghosts,
+                             const kernel::AgentTypes& types,
+                             ColorController& colorController );
     virtual ~TemplatesPanel();
     //@}
 

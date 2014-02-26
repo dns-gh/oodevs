@@ -2555,6 +2555,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Rename</source>
         <translation>Renommer</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
 </context>
 <context>
     <name>TemplatesPanel</name>

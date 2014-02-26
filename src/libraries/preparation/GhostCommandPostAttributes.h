@@ -57,11 +57,15 @@ public:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
+    //! @name Operations
+    //@{
+    void Update( const bool& commandPost );
+    //@}
+
 private:
     //! @name Helpers
     //@{
     void CreateDictionary( gui::PropertiesDictionary& dictionary );
-    void Update( const bool& commandPost );
     //@}
 
 private:

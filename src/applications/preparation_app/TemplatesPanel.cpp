@@ -23,16 +23,22 @@
 // Name: TemplatesPanel constructor
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-TemplatesPanel::TemplatesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController )
+TemplatesPanel::TemplatesPanel( QWidget* parent,
+                                gui::PanelStack_ABC& panel,
+                                kernel::Controllers& controllers,
+                                AgentsModel& agents,
+                                FormationModel& formations,
+                                GhostModel& ghosts,
+                                const kernel::AgentTypes& types,
+                                ColorController& colorController )
     : InfoPanel_ABC( parent, panel, tr( "Templates" ) )
     , controllers_ ( controllers )
     , menuEntity_  ( controllers )
 {
     gui::SubObjectName subObject( "templatesPanel" );
-    list_ = new TemplateListView( "templateListView", this, controllers, agents, formations, types, colorController );
+    list_ = new TemplateListView( "templateListView", this, controllers, agents, formations, ghosts, types, colorController );
     setWidget( list_ );
     controllers_.Register( *this );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -78,9 +84,9 @@ void TemplatesPanel::NotifyUpdated( const kernel::ModelUnLoaded& )
 // -----------------------------------------------------------------------------
 void TemplatesPanel::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( dynamic_cast< const kernel::Formation_ABC* >( & entity )
-        || dynamic_cast< const kernel::Automat_ABC* >( & entity )
-        || dynamic_cast< const kernel::Agent_ABC* >( & entity ) )
+    if( entity.GetTypeName() == kernel::Formation_ABC::typeName_ ||
+        entity.GetTypeName() == kernel::Automat_ABC::typeName_ ||
+        entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
     {
         menuEntity_ = &entity;
         menu.InsertItem( "Command", tr( "Create template" ), this, SLOT( OnCreateTemplate() ), false, 2 );
