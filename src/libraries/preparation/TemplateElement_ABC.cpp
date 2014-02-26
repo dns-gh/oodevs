@@ -132,7 +132,7 @@ void TemplateElement_ABC::SetExtensions( kernel::Entity_ABC& entity )
 // Name: TemplateElement_ABC::Serialize
 // Created: ABR 2014-02-24
 // -----------------------------------------------------------------------------
-void TemplateElement_ABC::Serialize( xml::xostream& output )
+void TemplateElement_ABC::Serialize( xml::xostream& output ) const
 {
     output << xml::attribute( "name", name_.toStdString() );
     if( color_ )

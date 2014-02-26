@@ -79,7 +79,7 @@ kernel::Entity_ABC* FormationTemplateElement::Instanciate( kernel::Entity_ABC& s
 // Name: FormationTemplateElement::Serialize
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-void FormationTemplateElement::Serialize( xml::xostream& xos )
+void FormationTemplateElement::Serialize( xml::xostream& xos ) const
 {
     TemplateElement_ABC::Serialize( xos );
     xos << xml::attribute( "type", "formation" )

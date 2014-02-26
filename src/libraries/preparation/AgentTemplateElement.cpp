@@ -76,7 +76,7 @@ kernel::Entity_ABC* AgentTemplateElement::Instanciate( kernel::Entity_ABC& super
 // Name: AgentTemplateElement::Serialize
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-void AgentTemplateElement::Serialize( xml::xostream& xos )
+void AgentTemplateElement::Serialize( xml::xostream& xos ) const
 {
     TemplateElement_ABC::Serialize( xos );
     xos << xml::attribute( "type", "agent" )

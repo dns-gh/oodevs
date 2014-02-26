@@ -137,7 +137,7 @@ kernel::Entity_ABC* GhostTemplateElement::Instanciate( kernel::Entity_ABC& super
 // Name: GhostTemplateElement::Serialize
 // Created: ABR 2014-02-24
 // -----------------------------------------------------------------------------
-void GhostTemplateElement::Serialize( xml::xostream& xos )
+void GhostTemplateElement::Serialize( xml::xostream& xos ) const
 {
     TemplateElement_ABC::Serialize( xos );
     xos << xml::attribute( "type", "ghost" )

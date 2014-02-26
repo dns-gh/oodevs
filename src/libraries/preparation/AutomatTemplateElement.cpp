@@ -84,7 +84,7 @@ kernel::Entity_ABC* AutomatTemplateElement::Instanciate( kernel::Entity_ABC& sup
 // Name: AutomatTemplateElement::Serialize
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-void AutomatTemplateElement::Serialize( xml::xostream& xos )
+void AutomatTemplateElement::Serialize( xml::xostream& xos ) const
 {
     TemplateElement_ABC::Serialize( xos );
     xos << xml::attribute( "type", "automat" )

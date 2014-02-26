@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( xml::xostream& output );
+    virtual void Serialize( xml::xostream& output ) const;
     void SetColor( kernel::Entity_ABC& entity,
                    ColorController& colorController );
     void SetExtensions( kernel::Entity_ABC& entity );
