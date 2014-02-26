@@ -52,7 +52,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , bSaveCheckpointTestMode_( false )
     , bEmbeddedDispatcher_( false )
     , bPausedAtStartup_( false )
-    , bDisableRandomBreakdowns_( false )
+    , bEnableRandomBreakdowns_( true )
     , randomSeed_( 0 )
     , randomGaussian_( MIL_Random::eContextsNbr, false )
     , randomDeviation_( MIL_Random::eContextsNbr, 0 )
@@ -240,7 +240,7 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
             >> xml::optional >> xml::attribute( "decisional-logger", bDecisionalLoggerEnabled_ )
             >> xml::optional >> xml::attribute( "networkloggerport", networkLoggerPort_ )
             >> xml::optional >> xml::attribute(
-                    "disable-random-breakdowns", bDisableRandomBreakdowns_ )
+                    "random-breakdowns", bEnableRandomBreakdowns_ )
             >> logSim
         >> xml::end;
     SetSimLogSettings( logSim );
@@ -553,7 +553,7 @@ bool MIL_Config::EnableTestCommands() const
     return bTestCommands_;
 }
 
-bool MIL_Config::DisableRandomBreakdowns() const
+bool MIL_Config::EnableRandomBreakdowns() const
 {
-    return bDisableRandomBreakdowns_;
+    return bEnableRandomBreakdowns_;
 }
