@@ -45,6 +45,7 @@ type Session struct {
 	TimeFactor       int
 	TimeStep         int
 	RandomBreakdowns bool
+	Seed             int
 }
 
 func ReadBool(value string) bool {
@@ -70,6 +71,7 @@ func (s *Session) syncSession(x *xmlSession) error {
 	if p := x.Dispatcher.Plugins.Recorder; p != nil {
 		s.Recorder = p
 	}
+	s.Seed = x.Sim.Random.Seed
 	s.SimLog.Count = x.Sim.Debug.LogFiles
 	if s.SimLog.Count == 1 {
 		s.SimLog.Count = 0
@@ -95,6 +97,7 @@ func (s *Session) syncXml(x *xmlSession) error {
 	x.Sim.Debug.LogSize = s.SimLog.Size
 	x.Sim.Debug.RandomBreakdowns = s.RandomBreakdowns
 	x.Sim.Debug.SizeUnit = s.SimLog.Unit
+	x.Sim.Random.Seed = s.Seed
 	x.Sim.Time.EndTick = s.EndTick
 	x.Sim.Time.Factor = s.TimeFactor
 	x.Sim.Time.Step = s.TimeStep
@@ -172,7 +175,7 @@ type xmlProfiling struct {
 }
 
 type xmlRandom struct {
-	Seed string `xml:"seed,attr"`
+	Seed int `xml:"seed,attr"`
 }
 
 type xmlRandomX struct {

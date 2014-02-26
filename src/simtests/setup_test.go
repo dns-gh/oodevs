@@ -192,6 +192,7 @@ type ClientOpts struct {
 	Logger      swapi.MessageLogger
 	WaitTimeout time.Duration
 	StartGaming bool
+	Seed        int
 }
 
 func NewAllUserOpts(exercise string) *ClientOpts {
@@ -260,6 +261,13 @@ func AddLogger(opts *ClientOpts) *ClientOpts {
 // before moving on.
 func AddGaming(opts *ClientOpts) *ClientOpts {
 	opts.StartGaming = true
+	return opts
+}
+
+// Fix simulation seed, might help with tests with random events like weapon
+// fires.
+func FixSeed(opts *ClientOpts) *ClientOpts {
+	opts.Seed = 1
 	return opts
 }
 

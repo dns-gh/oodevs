@@ -830,7 +830,9 @@ func checkUnitsFireDamages(msg *swapi.SwordMessage) error {
 }
 
 func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	opts := NewAdminOpts(ExCrossroadSmallOrbat)
+	opts = FixSeed(opts) // help with mortar shots
+	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
 
 	// Check unit damages messages
