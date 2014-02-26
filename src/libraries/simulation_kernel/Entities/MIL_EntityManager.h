@@ -304,7 +304,7 @@ private:
     MIL_EffectManager& effectManager_;
     std::vector< const MIL_UrbanObject_ABC* > cities_;
     bool bSendUnitVisionCones_;
-    bool bDisableRandomBreakdowns_;
+    const bool bDisableRandomBreakdowns_;
 
     // Profiling
     std::map< std::string, double > profilers_;
