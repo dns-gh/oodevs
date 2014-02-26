@@ -82,6 +82,7 @@ private:
     kernel::Controllers& controllers_;
     std::function< bool( const kernel::Availability& ) > filter_;
     bool listenSelectionChanged_;
+    bool isSelecting_;
 
 protected:
     QStandardItemModel model_;
@@ -102,6 +103,7 @@ ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent,
     , controllers_( controllers )
     , selected_( controllers )
     , listenSelectionChanged_( listenSelectionChanged )
+    , isSelecting_( false )
 {
     setRootIsDecorated( false );
     setEditTriggers( 0 );
@@ -149,7 +151,8 @@ void ResourcesListView_ABC< Extension >::polish()
 template< typename Extension >
 void ResourcesListView_ABC< Extension >::showEvent( QShowEvent* event )
 {
-    SelectEntity( selected_ );
+    if( !isSelecting_ )
+        SelectEntity( selected_ );
     QTreeView::showEvent( event );
 }
 
@@ -172,6 +175,7 @@ void ResourcesListView_ABC< Extension >::NotifySelected( const kernel::Entity_AB
 template< typename Extension >
 void ResourcesListView_ABC< Extension >::SelectEntity( const kernel::Entity_ABC* entity )
 {
+    isSelecting_ = true;
     selected_ = entity;
     if( const Extension* extension = selected_ ? selected_->Retrieve< Extension >() : 0 )
     {
@@ -180,6 +184,7 @@ void ResourcesListView_ABC< Extension >::SelectEntity( const kernel::Entity_ABC*
     }
     else
         hide();
+    isSelecting_ = false;
 }
 
 // -----------------------------------------------------------------------------
