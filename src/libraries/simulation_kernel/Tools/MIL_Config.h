@@ -74,9 +74,9 @@ public:
     const std::string& GetPathfindFilter           () const;
 
     int                GetRandomSeed               () const;
-    const bool*        GetRandomGaussian           () const;
-    const double*      GetRandomDeviation          () const;
-    const double*      GetRandomMean               () const;
+    const std::vector< bool >& GetRandomGaussian   () const;
+    const std::vector< double>& GetRandomDeviation () const;
+    const std::vector< double >& GetRandomMean     () const;
     unsigned int       GetGarbageCollectorPause    () const;
     unsigned int       GetGarbageCollectorStepMul  () const;
     //@}
@@ -131,7 +131,7 @@ private:
     tools::Path    strCheckPointNameTestMode_;
     int            randomSeed_;
     // non-conforming vector< bool > is so awesome
-    std::unique_ptr< bool[] > randomGaussian_;
+    std::vector< bool > randomGaussian_;
     std::vector< double > randomDeviation_;
     std::vector< double > randomMean_;
     unsigned int   setpause_;

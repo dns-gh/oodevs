@@ -33,7 +33,8 @@ public:
     };
 
 public:
-    static void Initialize( int nSeed, const bool* bGaussian, const double* rDeviation, const double* rMean );
+    static void Initialize( int nSeed, const std::vector< bool >& bGaussian,
+        const std::vector< double >& rDeviation, const std::vector< double >& rMean );
     static void Terminate();
 
     static long rand32();                            // [ 0  , 0xffffffff ]
@@ -57,7 +58,8 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-             MIL_Random( int nSeed, const bool* bGaussian, const double* rDeviation, const double* rMean );
+             MIL_Random( int nSeed, const std::vector< bool >& bGaussian,
+                 const std::vector< double >& rDeviation, const std::vector< double >& rMean );
     virtual ~MIL_Random();
     //@}
 

@@ -54,7 +54,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , bPausedAtStartup_( false )
     , bDisableRandomBreakdowns_( false )
     , randomSeed_( 0 )
-    , randomGaussian_( new bool[ MIL_Random::eContextsNbr ] )
+    , randomGaussian_( MIL_Random::eContextsNbr, false )
     , randomDeviation_( MIL_Random::eContextsNbr, 0 )
     , randomMean_( MIL_Random::eContextsNbr, 0 )
     , setpause_( 0 )
@@ -62,8 +62,6 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , integrationDir_( "resources" )
     , bTestCommands_( false )
 {
-    for( int i = 0; i != MIL_Random::eContextsNbr; ++i )
-        randomGaussian_[i] = false;
     po::options_description desc( "Simulation options" );
     desc.add_options()
         ( "checkpointorbat"                                               , "use backup orbat with checkpoint"          )
@@ -200,15 +198,16 @@ void MIL_Config::ConfigureRandom( xml::xistream& xis )
 {
     for( int i = 0; i < MIL_Random::eContextsNbr; ++i )
     {
-        randomGaussian_[ i ] = false;
+        bool gaussian = false;
         randomDeviation_[ i ] = 0.;
         randomMean_[ i ] = 0.;
         xis >> xml::optional
             >> xml::start( "random" + boost::lexical_cast< std::string >( i ) )
-                >> xml::attribute( "distribution", randomGaussian_[ i ] )
+                >> xml::attribute( "distribution", gaussian )
                 >> xml::attribute( "deviation", randomDeviation_[ i ] )
                 >> xml::attribute( "mean", randomMean_[ i ] )
             >> xml::end;
+        randomGaussian_[ i ] = gaussian;
     }
 }
 
@@ -526,27 +525,27 @@ int MIL_Config::GetRandomSeed() const
 // Name: MIL_Config::GetRandomGaussian
 // Created: JSR 2010-07-02
 // -----------------------------------------------------------------------------
-const bool* MIL_Config::GetRandomGaussian() const
+const std::vector< bool >& MIL_Config::GetRandomGaussian() const
 {
-    return randomGaussian_.get();
+    return randomGaussian_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Config::GetRandomDeviation
 // Created: JSR 2010-07-02
 // -----------------------------------------------------------------------------
-const double* MIL_Config::GetRandomDeviation() const
+const std::vector< double >& MIL_Config::GetRandomDeviation() const
 {
-    return &randomDeviation_[0];
+    return randomDeviation_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Config::GetRandomMean
 // Created: JSR 2010-07-02
 // -----------------------------------------------------------------------------
-const double* MIL_Config::GetRandomMean() const
+const std::vector< double >& MIL_Config::GetRandomMean() const
 {
-    return &randomMean_[0];
+    return randomMean_;
 }
 
 bool MIL_Config::EnableTestCommands() const
