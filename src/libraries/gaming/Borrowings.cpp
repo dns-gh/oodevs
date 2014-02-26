@@ -24,7 +24,7 @@ Borrowings::Borrowings( Controller& controller, const tools::Resolver_ABC< Agent
     , resolver_( resolver )
     , equipmentResolver_( equipmentResolver )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ Borrowings::Borrowings( Controller& controller, const tools::Resolver_ABC< Agent
 // -----------------------------------------------------------------------------
 Borrowings::~Borrowings()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,4 +55,16 @@ void Borrowings::DoUpdate( const sword::UnitAttributes& message )
                                      pret.quantity() ) );
     }
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Borrowings::NotifyDeleted
+// Created: ABR 2014-02-26
+// -----------------------------------------------------------------------------
+void Borrowings::NotifyDeleted( const kernel::Agent_ABC& agent )
+{
+    borrowings_.erase( std::remove_if( borrowings_.begin(),
+                                       borrowings_.end(),
+                                       [&]( const Loan& loan ) { return loan.agent_ == &agent; } ),
+                       borrowings_.end() );
 }
