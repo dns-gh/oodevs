@@ -27,7 +27,7 @@ UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString m
                        << maximalCapacityLabel
                        << tr( "Percentage (%)" )
                        << tr( "Logistic threshold (%)" )
-                       << tr( "Normalized consumption" );
+                       << tr( "Normalized quantity" );
     delegate_.AddDoubleSpinBoxOnColumn( eThreshold, 0, 100, 0.5 );
     delegate_.AddDoubleSpinBoxOnColumn( ePercentage, 0, std::numeric_limits< double >::max(), 0.5 );
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnItemChanged( QStandardItem* ) ) );
@@ -63,9 +63,11 @@ void UnitStateTableResource::MergeLine( const QString& name, const QString& cate
             quantity += GetUserData( row, eQuantity ).toUInt();
             maximum += GetUserData( row, eMaximum ).toUInt();
             consumption += GetUserData( row, eConsumption ).toDouble();
+            const QString strNormalizedQuantity = consumption == 0 ?
+                tr( "N/A" ) : locale().toString( quantity / consumption );
             SetData( row, eMaximum, locale().toString( maximum ), maximum );
             SetData( row, eQuantity, locale().toString( quantity ), quantity );
-            SetData( row, eConsumption, locale().toString( consumption ), consumption );
+            SetData( row, eConsumption, strNormalizedQuantity, consumption );
             return;
         }
     AddLine( name, category, quantity, maximum, threshold, consumption );
@@ -84,7 +86,9 @@ void UnitStateTableResource::AddLine( const QString& name, const QString& catego
     AddItem( row, eMaximum, locale().toString( maximum ), maximum );
     AddItem( row, eQuantity, locale().toString( quantity ), quantity, Qt::ItemIsEditable );
     AddItem( row, eThreshold, locale().toString( threshold, 'f', 2 ), threshold, aggregated_ ? Qt::ItemFlags( 0 ) : Qt::ItemIsEditable );
-    AddItem( row, eConsumption, locale().toString( consumption ), consumption );
+    const QString strNormalizedQuantity = consumption == 0 ?
+        tr( "N/A" ) : locale().toString( quantity / consumption );
+    AddItem( row, eConsumption, strNormalizedQuantity, consumption );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,6 +116,7 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
             {
                 SetData( item->row(), eQuantity, locale().toString( quantity ), quantity );
                 UpdateColor( item, quantity, maximum );
+                UpdateNormalizedQuantity( item->row(), quantity );
             }
         }
         else if( item->column() == eQuantity )
@@ -122,6 +127,7 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
             double percentage = maximum ? ( quantity * 100. / static_cast< double >( maximum ) ) : 0;
             SetData( item->row(), ePercentage, locale().toString( percentage, 'f', 2 ), percentage );
             UpdateColor( item, quantity, maximum );
+            UpdateNormalizedQuantity( item->row(), quantity );
         }
     }
     catch( ... )
@@ -154,4 +160,18 @@ void UnitStateTableResource::UpdateColor( QStandardItem* item, int quantity, int
         if( itemPercentage )
             itemPercentage->setFlags( Qt::ItemIsSelectable );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::UpdateNormalizedQuantity
+// Created: JSR 2014-02-26
+// -----------------------------------------------------------------------------
+void UnitStateTableResource::UpdateNormalizedQuantity( int row, int quantity )
+{
+    if( dataModel_.item( row, eConsumption ) == 0 )
+        return;
+    const double consumption = GetUserData( row, eConsumption ).toDouble();
+    const QString strNormalizedQuantity = consumption == 0 ?
+        tr( "N/A" ) : locale().toString( quantity / consumption );
+    SetData( row, eConsumption, strNormalizedQuantity, consumption );
 }
