@@ -34,11 +34,11 @@ namespace
 LogisticsRequestsHistoryTable::LogisticsRequestsHistoryTable( const QString& objectName, QWidget* parent )
     : gui::RichTableView( objectName, parent )
 {
-    QStringList horizontalHeaders;
-    horizontalHeaders << tools::translate( "LogisticsRequestsHistoryTable", "Previous state" )
-                      << tools::translate( "LogisticsRequestsHistoryTable", "Started" )
-                      << tools::translate( "LogisticsRequestsHistoryTable", "Ended" )
-                      << tools::translate( "LogisticsRequestsHistoryTable", "Handler" );
+    const QStringList horizontalHeaders = QStringList()
+        << tools::translate( "LogisticsRequestsHistoryTable", "Previous state" )
+        << tools::translate( "LogisticsRequestsHistoryTable", "Started" )
+        << tools::translate( "LogisticsRequestsHistoryTable", "Ended" )
+        << tools::translate( "LogisticsRequestsHistoryTable", "Handler" );
 
     dataModel_ = new QStandardItemModel( parent );
     dataModel_->setHorizontalHeaderLabels( horizontalHeaders );
