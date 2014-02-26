@@ -13,7 +13,7 @@ integration.tableIsReachingFor = function( knowledges, objectives)
     local res = {}
     for _, knowledge in pairs( knowledges ) do
         for _, objective in pairs( objectives ) do
-            if knowledge:isReachingFor(objective) then
+            if objective:isValid() and knowledge:isReachingFor(objective) then
                 res [ #res  + 1 ] = knowledge
                 break
             end
@@ -26,7 +26,7 @@ integration.tableIsDestroyingFor = function( knowledges, objectives )
     local res = {}
     for _, knowledge in pairs( knowledges ) do
         for _, objective in pairs( objectives ) do
-            if knowledge:isDestroyingFor(objective) then
+            if objective:isValid() and knowledge:isDestroyingFor(objective) then
                 res [ #res  + 1 ] = knowledge
                 break
             end
@@ -39,7 +39,7 @@ integration.tableIsNeutralizingFor = function( knowledges, objectives )
     local res = {}
     for _, knowledge in pairs( knowledges ) do
         for _, objective in pairs( objectives ) do
-            if knowledge:isNeutralizingFor(objective) then
+            if objective:isValid() and knowledge:isNeutralizingFor(objective) then
                 res [ #res  + 1 ] = knowledge
                 break
             end
@@ -175,7 +175,7 @@ end
 -- @release 2010-10-01
 -- --------------------------------------------------------------------------------
 integration.query.getNbrFront = function( nbrEchelon )
-    if nbrEchelon == 0 then
+    if nbrEchelon == NIL or nbrEchelon == 0 then
         return #( DEC_Automate_PionsAvecPC() ) -- all
     end
     local pions = DEC_Automate_PionsMelee()
@@ -369,6 +369,10 @@ integration.getEntitiesFromBatallion = function ()
     return knowledges
  end
  
+integration.getOperationnalEntitiesDespiteJammedFromAutomat = function ( automat, role, withPC)
+    return integration.getOperationnalEntitiesFromAutomat( automat, role, withPC)
+ end
+
  -- -------------------------------------------------------------------------------- 
 -- Param a automat
 -- Return a list of operationnal platoon
@@ -480,6 +484,19 @@ integration.query.getSiteFranchissementDansZone = function ( zone )
     return allRes
 end
 
+--- Get the list of continuous and discontinuous bridges inside an area
+-- @param area. area knowledge
+-- @return list of knowledges ( bridges )
+integration.query.getPontoonBridgesInArea = function( area )
+    local allRes = {}
+    local pontoonBridges = {}
+    pontoonBridges = DEC_ObjectKnowledgesInZone( area.source, { eTypeObjectContinuousPontoonBridge, eTypeObjectDiscontinuousPontoonBridge } )
+    for i = 1, #pontoonBridges do
+        allRes[ #allRes + 1 ] = CreateKnowledge( sword.military.world.Object, pontoonBridges[ i ] )
+    end
+    return allRes
+end	
+
 -- -------------------------------------------------------------------------------- 
 -- Return a postion for ASA fire
 -- @author LMT
@@ -528,12 +545,19 @@ end
 -- @author GGE
 -- @release 2011-08-29
 -- --------------------------------------------------------------------------------
-integration.query.getEnemiesToIndirectFireWhenSupport = function( friends )
+integration.query.getEnemiesToIndirectFireWhenSupport = function( friends, onlyRespondFire )
+    local DEC_Connaissances_UnitesPrenantAPartieSurAmi = DEC_Connaissances_UnitesPrenantAPartieSurAmi
+    local DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion
     local integration = integration
     local CreateKnowledge = CreateKnowledge
     local enemies = {}
+    local simEnemies = {}
     for i = 1, #friends do
-        local simEnemies = integration.getMortarUnitsToNeutralize( friends[i] )
+        if onlyRespondFire then
+            simEnemies = DEC_Connaissances_UnitesPrenantAPartieSurAmi(friends[i].source )
+        else
+            simEnemies = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( friends[i].source )
+        end
         for j = 1, #simEnemies do
             local eny = CreateKnowledge( integration.ontology.types.agentKnowledge, simEnemies[j] )
             if not eny:isTransported() then
@@ -588,4 +612,14 @@ integration.query.getEntitiesToCombatSupportPlatoonsTask = function( platoons, o
     end
     --Return new elements
     return platoonsToSupport
+end
+
+integration.getNearestElement = function( elements )
+    local nearestElement = elements[ 1 ] -- init
+    for _, element in pairs ( elements ) do
+        if integration.distance( meKnowledge, element ) > integration.distance( meKnowledge, nearestElement ) then
+            nearestElement = element
+        end
+    end
+    return nearestElement
 end

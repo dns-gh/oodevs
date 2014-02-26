@@ -168,6 +168,10 @@ integration.communication.StartMissionAutomate = function( content )
 end
 
 -- Coordination Manager
+integration.communication.StopMovingInFrontOfPE = function( content )
+    myself.inFrontOfPE = true
+end
+
 integration.communication.SlowDown = function( content )
     myself.speedModulation = myself.speedModulation or {}
     myself.speedModulation.coordination = 0.01 -- scipio 

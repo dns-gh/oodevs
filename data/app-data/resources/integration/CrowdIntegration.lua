@@ -443,6 +443,31 @@ integration.stopDemonstrate = function( crowd )
     DEC_Population_ChangeDemonstrationState( false )
 end
 
+integration.startAgressCrowd = function( self )
+    self.actionOnCrowd = DEC_StartAgresserFoule()
+end
+
+integration.stopAgressCrowd = function( self )
+    if self.actionOnCrowd then
+        self.actionOnCrowd = DEC__StopAction(self.actionOnCrowd)
+        self.actionOnCrowd = nil
+    end
+end
+
+integration.startAgress = function( self )
+    integration.startAgressCrowd( self )
+    self.manifIntensity = S_IntensiteManifestationSurPions()
+    self.actionSurPions = DEC__StartTirSurPions( self.manifIntensity )
+end
+
+integration.stopAgress = function( self )
+    integration.stopAgressCrowd( self )
+    if self.actionSurPions then
+        self.actionSurPions = DEC__StopAction( self.actionSurPions )
+        self.actionSurPions = nil
+    end
+end
+
 integration.isCivilian = function( pion )
     local typePion = DEC_ConnaissanceAgent_GetMilPionType( pion.source )
     if typePion == "Pion Civilian"
