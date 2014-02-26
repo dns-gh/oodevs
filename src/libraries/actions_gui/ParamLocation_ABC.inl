@@ -70,17 +70,6 @@ bool ParamLocation_ABC< BaseParameter >::InternalCheckValidity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLocation_ABC::InternalOnMenuClick
-// Created: ABR 2012-01-03
-// -----------------------------------------------------------------------------
-template< typename BaseParameter >
-void ParamLocation_ABC< BaseParameter >::InternalOnMenuClick()
-{
-    if( group_ && IsOptional() )
-        group_->setChecked( true );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ParamLocation_ABC::NotifyContextMenu
 // Created: ABR 2012-01-03
 // -----------------------------------------------------------------------------
@@ -119,7 +108,8 @@ void ParamLocation_ABC< BaseParameter >::Handle( kernel::Location_ABC& location 
     {
         location_.reset( &location );
         pPosLabel_->setText( location.GetName() );
-        InternalOnMenuClick();
+        if( group_ && IsOptional() )
+            group_->setChecked( true );
         NotifyChange();
         Update();
     }

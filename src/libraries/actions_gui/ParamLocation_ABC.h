@@ -78,7 +78,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    void InternalOnMenuClick();
     virtual bool InternalCheckValidity() const;
     void InternalVisit( const actions::parameters::Location& param );
     //@}
