@@ -411,7 +411,8 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
         end
     end
 
-    local tasksForSE = self.params.supportTasks..";"..self.params.defaultTask
+    local tasksForSE = ( ( self.params.supportTasks and self.params.supportTasks ~= NIL ) and ( self.params.supportTasks..";" ) or "" ) 
+                            .. self.params.defaultTask
     local hqUnit = integration.query.getPCUnit()
 
     -- if a unit has been removed from automaton, we dispatch again the missions
@@ -480,11 +481,17 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
                     local tasksForNewEntity = ""
                     if myself.taskParams.echelonNumber == 1 or self.nbrFront > #echelons[1] then
                           tasksForNewEntity = ( myself.leadData.dynamicEchelonTasks or emptyTable )[ eEtatEchelon_First ]
-                                        or self.params.mainTasks..";"..self.params.supportTasks..";"..self.params.defaultTask
+                                        or self.params.mainTasks..";"..( ( self.params.supportTasks and self.params.supportTasks ~= NIL )
+                                                                           and ( self.params.supportTasks..";" )
+                                                                           or "" ) 
+                                                                     ..self.params.defaultTask
                           integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_First, { entity }, false, findBestsFunction, disengageTask )
                     else
                           tasksForNewEntity = ( myself.leadData.dynamicEchelonTasks or emptyTable )[ eEtatEchelon_Second ]
-                                        or self.params.supportTasks..";"..self.params.defaultTask
+                                        or ( ( self.params.supportTasks and self.params.supportTasks ~= NIL ) 
+                                                and ( self.params.supportTasks..";" ) 
+                                                or "" ) 
+                                        .. self.params.defaultTask
                           integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity }, false, findBestsFunction, disengageTask )
                     end
                 end
@@ -892,7 +899,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     end
 
     -- Le second echelon recoit les missions de "supportTask"
-    if giveSupportTask then
+    if giveSupportTask and self.params.supportTasks and self.params.supportTasks ~= NIL then
         integration.issueMission ( self, self.params.supportTasks, #self.entitiesWithoutMission, eEtatEchelon_Second, nil, false, findBestsFunction, disengageTask )
     end
 
