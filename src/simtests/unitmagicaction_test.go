@@ -831,7 +831,7 @@ func checkUnitsFireDamages(msg *swapi.SwordMessage) error {
 
 func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	opts := NewAdminOpts(ExCrossroadSmallOrbat)
-	opts = FixSeed(opts) // help with mortar shots
+	opts.FixSeed() // help with mortar shots
 	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
 
