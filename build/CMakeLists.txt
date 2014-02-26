@@ -455,9 +455,49 @@ target_link_libraries( simulation_terrain
 add_target( simulation_terrain_test tests "tests/simulation_terrain_test" OPTIONS test )
 target_link_libraries( simulation_terrain_test simulation_terrain )
 
+function( collect output dir excludes )
+    # we could recurse once the filesystem and
+    # manipulate lists after, but it's not critical on ssds
+    masa_extract_options( options ${ARGN} )
+    masa_has_item( recurse "recurse" ${options} )
+    set( glob GLOB )
+    if( recurse )
+        set( glob GLOB_RECURSE )
+    endif()
+    file( ${glob} files "${dir}/*" )
+    if( NOT ${excludes} STREQUAL "" )
+        foreach( it ${files} )
+            if( ${it} MATCHES ${excludes} )
+                list( REMOVE_ITEM files ${it} )
+            endif()
+        endforeach()
+    endif()
+    masa_group_files( src ${dir} ${files} )
+    set( ${output} ${files} PARENT_SCOPE )
+endfunction()
+
+function( add_kernel target directory excludes )
+    # autogenerate a pch file for our target, using simulation_kernel_pch.h
+    qt4_make_output_file( "${root_dir}/src/${dir}/${target}_pch" "" "h"   pch_h )
+    qt4_make_output_file( "${root_dir}/src/${dir}/${target}_pch" "" "cpp" pch_cpp )
+    source_group( autogen FILES ${pch_h} ${pch_cpp} )
+    if( NOT EXISTS ${pch_h} )
+        file( WRITE ${pch_h} "#include \"simulation_kernel_pch.h\"" )
+    endif()
+    if( NOT EXISTS ${pch_cpp} )
+        file( WRITE ${pch_cpp} "#include \"${target}_pch.h\"" )
+    endif()
+    masa_extract_options( options ${ARGN} )
+    collect( files "${root_dir}/src/libraries/${directory}" "${excludes}" OPTIONS ${options} )
+    add_target( ${target} kernel "" OPTIONS protocol ${options} FILES ${pch_h} ${pch_cpp} ${files} )
+    masa_add_target_include( ${target} "${root_dir}/src/libraries/simulation_kernel" )
+    masa_add_target_compile_flag( ${target} "/bigobj" )
+    target_link_libraries( simulation_kernel ${target} )
+endfunction()
+
 # simulation_kernel
-# fixme not working in shared mode
-add_target( simulation_kernel server "libraries/simulation_kernel" OPTIONS recurse protocol )
+collect( files "${root_dir}/src/libraries/simulation_kernel" "simulation_kernel/(Entities|Knowledge|Decision)/" OPTIONS recurse )
+add_target( simulation_kernel kernel "" OPTIONS protocol recurse FILES ${files} )
 masa_add_target_include( simulation_kernel "${root_dir}/src/libraries/simulation_kernel" )
 masa_add_target_compile_flag( simulation_kernel "/bigobj" )
 target_link_libraries( simulation_kernel
@@ -469,6 +509,14 @@ target_link_libraries( simulation_kernel
     ${GEODATA_LIBRARIES}
     ${TERRAIN_LIBRARIES}
 )
+
+add_kernel( decision "simulation_kernel/Decision" "" )
+add_kernel( knowledge "simulation_kernel/Knowledge" "" )
+add_kernel( agent_roles "simulation_kernel/Entities/Agents/Roles" "" OPTIONS recurse )
+add_kernel( agents "simulation_kernel/Entities/Agents" "simulation_kernel/Entities/Agents/Roles/" OPTIONS recurse )
+add_kernel( entities "simulation_kernel/Entities" "simulation_kernel/Entities/(Agents|Objects|Orders)/" OPTIONS recurse )
+add_kernel( objects "simulation_kernel/Entities/Objects" "" )
+add_kernel( orders "simulation_kernel/Entities/Orders" "" )
 
 # simulation_kernel_test
 add_target( simulation_kernel_test tests "tests/simulation_kernel_test" OPTIONS protocol test )
