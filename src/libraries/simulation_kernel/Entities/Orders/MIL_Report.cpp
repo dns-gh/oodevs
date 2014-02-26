@@ -128,7 +128,7 @@ bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boo
     message().mutable_type()->set_id( nID_ );
     message().set_category( sword::Report::EnumReportType( nType ) );
     NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *message().mutable_time() );
-    for( unsigned int i = 0; i < expectedSize; ++i )
+    for( std::size_t i = 0; i < expectedSize; ++i )
     {
         if( !params[ i ]->IsOfType( parameters_[i]->GetType() ) )
             return false;
