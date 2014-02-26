@@ -11,6 +11,7 @@
 #define __gui_EditorFactory_h_
 
 #include "EditorFactory_ABC.h"
+#include "clients_kernel/SubTypes.h"
 
 namespace gui
 {
@@ -22,7 +23,7 @@ namespace gui
 // =============================================================================
 class EditorFactory : public EditorFactory_ABC
                     , public tools::Caller< QString* >
-                    , public tools::Caller< QTime* >
+                    , public tools::Caller< kernel::Duration* >
                     , public tools::Caller< QDateTime* >
                     , public tools::Caller< double* >
                     , public tools::Caller< float* >
@@ -43,7 +44,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Call( QString* const& value );
-    virtual void Call( QTime* const& value );
+    virtual void Call( kernel::Duration* const& value );
     virtual void Call( QDateTime* const& value );
     virtual void Call( double* const& value );
     virtual void Call( float* const& value );

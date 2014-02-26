@@ -1335,12 +1335,24 @@ void PHY_RolePion_Composantes::NotifyLentComposanteReceived( MIL_Agent_ABC& lend
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyLentComposanteReturned( MIL_Agent_ABC& lender, PHY_ComposantePion& composante )
 {
-    PHY_ComposantePion::T_ComposantePionVector& lentComps = borrowedComposantes_[ &lender ];
-    auto itComp = std::find( lentComps.begin(), lentComps.end(), &composante );
-    assert( itComp != lentComps.end() );
-    lentComps.erase( itComp );
-    if( lentComps.empty() )
+    PHY_ComposantePion::T_ComposantePionVector& borrowedComps = borrowedComposantes_[ &lender ];
+    auto itComp = std::find( borrowedComps.begin(), borrowedComps.end(), &composante );
+    assert( itComp != borrowedComps.end() );
+    borrowedComps.erase( itComp );
+    if( borrowedComps.empty() )
         borrowedComposantes_.erase( borrowedComposantes_.find( &lender ) );
+    MIL_Agent_ABC* secondBorrower = 0;
+    for( auto it = lentComposantes_.begin(); it != lentComposantes_.end() && !secondBorrower; ++it )
+    {
+        PHY_ComposantePion::T_ComposantePionVector& lentComposantes = it->second;
+        for( auto itComposantes = lentComposantes.begin(); itComposantes != lentComposantes.end(); ++itComposantes )
+        {
+            if( *itComposantes == &composante )
+                secondBorrower = const_cast< MIL_Agent_ABC* >( it->first );
+        }
+    }
+    if( secondBorrower )
+        RetrieveLentComposante( *secondBorrower, composante );
     bLoansChanged_ = true;
 }
 
@@ -1367,12 +1379,12 @@ void PHY_RolePion_Composantes::RetrieveLentComposante( MIL_Agent_ABC& borrower, 
     auto it = std::find( lentComps.begin(), lentComps.end(), &composante );
     if( it == lentComps.end() )
         return;
-    composante.TransferComposante( *this );
     lentComps.erase( it );
     if( lentComps.empty() )
         lentComposantes_.erase( &borrower );
     bLoansChanged_ = true;
     borrower.GetRole< PHY_RoleInterface_Composantes >().NotifyLentComposanteReturned( *owner_, composante );
+    composante.TransferComposante( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -200,6 +200,13 @@
     </message>
 </context>
 <context>
+    <name>DurationEditor</name>
+    <message>
+        <source>Invalid duration &apos;%1&apos;</source>
+        <translation>Durée invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>EntityHierarchies</name>
     <message>
         <source>Hierarchies/Superior</source>
@@ -369,13 +376,6 @@
     <message>
         <source>Mute sounds</source>
         <translation>Désactiver les sons</translation>
-    </message>
-</context>
-<context>
-    <name>Time Format</name>
-    <message>
-        <source>hh:mm:ss</source>
-        <translation>hh:mm:ss</translation>
     </message>
 </context>
 <context>

@@ -21,7 +21,7 @@ namespace gui
 */
 // Created: BCI 2011-05-09
 // =============================================================================
-class LoadableTimeEdit : public LoadableFieldTemplate< QTimeEdit >
+class LoadableTimeEdit : public LoadableFieldTemplate< QSpinBox >
 {
 public:
 
@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    QTime time() const;
+    int Seconds() const;
     //@}
 };
 

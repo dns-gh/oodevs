@@ -46,10 +46,7 @@ void ActivityTimePrototype::Commit( const kernel::Team_ABC& )
     {
         gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         TimeLimitedAttribute* attribute = new TimeLimitedAttribute( dictionary, *creation_ );
-        QTime t = activityTime_->time();
-        attribute->SetActivityTime( 3600 * t.hour() +
-                                      60 * t.minute() +
-                                           t.second() );
+        attribute->SetActivityTime( activityTime_->Seconds() );
         creation_->Attach( *attribute );
     }
 }

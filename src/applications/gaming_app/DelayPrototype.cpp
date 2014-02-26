@@ -44,10 +44,7 @@ DelayPrototype::~DelayPrototype()
 // -----------------------------------------------------------------------------
 void DelayPrototype::Commit( const kernel::Team_ABC& )
 {
-    int time = 3600 * delayTime_->time().hour() +
-               60 * delayTime_->time().minute() +
-               delayTime_->time().second();
     actions::parameters::ParameterList& list = attributesList_->AddList( "Delay" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_effect_delay );
-    list.AddQuantity( "Time", time );
+    list.AddQuantity( "Time", delayTime_->Seconds() );
 }

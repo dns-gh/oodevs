@@ -14,14 +14,12 @@
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: TimeLimitedAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
-    : activityTime_( 0, 0 )
+    : activityTime_( 0 )
 {
     CreateDictionary( dictionary, entity );
 }
@@ -31,10 +29,8 @@ TimeLimitedAttribute::TimeLimitedAttribute( gui::PropertiesDictionary& dictionar
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
-    : activityTime_( 0, 0 )
+    : activityTime_( xis.attribute< unsigned int >( "value" ) )
 {
-    QTime activityTime;
-    activityTime_ = activityTime.addSecs( xis.attribute< unsigned int >( "value" ) );
     CreateDictionary( dictionary, entity );
 }
 
@@ -51,7 +47,7 @@ TimeLimitedAttribute::~TimeLimitedAttribute()
 // Name: TimeLimitedAttribute::Display
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::Display( Displayer_ABC& displayer ) const
+void TimeLimitedAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Mine parameters" ) )
            .Display( tools::translate( "Object", "Life time:" ), activityTime_ );
@@ -63,9 +59,8 @@ void TimeLimitedAttribute::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void TimeLimitedAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
-    unsigned int time = activityTime_.hour() * 3600 + activityTime_.minute() * 60 + activityTime_.second();
     xos << xml::start( "activity-time" )
-        << xml::attribute( "value", time )
+        << xml::attribute( "value", activityTime_ )
         << xml::end;
 }
 
@@ -75,8 +70,7 @@ void TimeLimitedAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void TimeLimitedAttribute::SetActivityTime( unsigned int time )
 {
-    QTime activityTime;
-    activityTime_ = activityTime.addSecs( time );
+    activityTime_ = time;
 }
 
 // -----------------------------------------------------------------------------

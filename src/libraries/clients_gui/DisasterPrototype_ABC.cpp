@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "DisasterPrototype_ABC.h"
 #include "moc_DisasterPrototype_ABC.cpp"
-#include "LoadableTimeEdit.h"
 #include "RichCheckBox.h"
 #include "RichWidget.h"
 #include "SubObjectName.h"

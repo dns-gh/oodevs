@@ -267,10 +267,9 @@ void BaseDisplayer::Call( const kernel::InhabitantType& value )
 // Name: BaseDisplayer::Call
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void BaseDisplayer::Call( const QTime& value )
+void BaseDisplayer::Call( const kernel::Duration& value )
 {
-    static QString format = tools::translate( "Time Format", "hh:mm:ss" );
-    AddToDisplay( value.toString( format ) );
+    AddToDisplay( tools::DurationFromSeconds( value() ) );
 }
 
 // -----------------------------------------------------------------------------

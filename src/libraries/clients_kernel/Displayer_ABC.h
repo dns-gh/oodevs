@@ -262,9 +262,9 @@ struct Formatter< QDateTime >
 };
 
 template< >
-struct Formatter< QTime >
+struct Formatter< kernel::Duration >
 {
-    void operator()( const QTime& value, Displayer_ABC& displayer ) const;
+    void operator()( const kernel::Duration& value, Displayer_ABC& displayer ) const;
 };
 
 // =============================================================================

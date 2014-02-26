@@ -148,6 +148,16 @@ integration.switchEmitOnlyOffRadio = function( self )
     DEC_Agent_PasserEnSilenceRadioPartiel()
 end
 
+integration.switchEmitOnly = function( self )
+    F_Pion_SeteEtatRadio( self.source, eEtatRadio_Silence_Partiel )
+    DEC_Agent_PasserEnEmissionRestreinte()
+end
+
+integration.disableEmitOnly = function( self )
+    F_Pion_SeteEtatRadio( self.source, eEtatRadio_Ouverte )
+    DEC_Agent_ArreterSilenceRadio()
+end
+
 --- Switch on radio
 -- @author MGD
 -- @release 2010-04-27
@@ -157,6 +167,59 @@ integration.switchOnRadio = function( self )
     DEC_Agent_ArreterSilenceRadio()
 end
 
+integration.enabledSharedPerception = function( supportedUnit )
+    DEC_EnableSharedPerception( supportedUnit.source )
+end
+
+integration.disabledSharedPerception = function( supportedUnit )
+    DEC_DisabledSharedPerception( supportedUnit.source )
+end
+
+integration.enableSharingKnowledges = function( unit )
+    DEC_EnableSharingKnowledges( unit.source )
+end
+
+integration.disabledSharingKnowledges = function( unit )
+    DEC_DisabledSharingKnowledges( unit.source )
+end
+
+integration.enabledSharedPerceptionWithKnowledge = function( supportedUnit )
+    DEC_EnableSharedPerceptionWithKnowledge( myself, supportedUnit.source )
+end
+
+integration.disableSharedPerceptionWithKnowledge = function( supportedUnit )
+    DEC_DisabledSharedPerceptionWithKnowledge( myself, supportedUnit.source )
+end
+
+integration.enableSharingKnowledgesWithKnowledge = function( unit )
+    DEC_EnableSharingKnowledgesWithKnowledge( myself, unit.source )
+end
+
+integration.disabledSharingKnowledgesKnowledge = function( unit )
+    DEC_DisabledSharingKnowledgesWithKnowledge( myself, unit.source )
+end
+
+integration.agentKnowledgeSharedPerception = function( self )
+    local agent = DEC_ConnaissanceAgent_EnAgent( self.source)
+    DEC_Knowledge_EnableSharedPerceptionWithKnowledge( agent, myself)
+end
+
+integration.agentKnowledgeStopSharedPerceptionWithKnowledge = function( self )
+    local agent = DEC_ConnaissanceAgent_EnAgent( self.source)
+    DEC_Knowledge_DisabledSharedPerceptionWithKnowledge( agent, myself )
+end
+
+integration.communicateWithKnowledge = function( supportedUnit )
+   return DEC_Knowledge_CommunicateWithKnowledgeGroup( myself, supportedUnit.source )
+end
+
+integration.isPartialRadioState = function( self )
+    return eEtatRadio_Silence_Partiel == integration.getRadioState( self )
+end
+
+integration.getRadioState = function( self )
+    return F_Pion_GeteEtatRadio( myself )
+end
 
 --- Switch off radar
 -- @author MGD
