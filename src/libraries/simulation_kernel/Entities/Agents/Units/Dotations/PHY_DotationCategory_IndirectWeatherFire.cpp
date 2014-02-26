@@ -93,9 +93,9 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC*
         if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
             continue;
         if( category_ == PHY_IndirectFireDotationClass::eclairant_ )
-            MIL_Report::PostEvent( target, report::eRC_PrisSousTirEclairant );
+            MIL_Report::PostEvent( target, report::eRC_PrisSousTirEclairant, dotationCategory_ );
         else if( category_ == PHY_IndirectFireDotationClass::fumigene_  )
-            MIL_Report::PostEvent( target, report::eRC_PrisSousTirFumigene );
+            MIL_Report::PostEvent( target, report::eRC_PrisSousTirFumigene, dotationCategory_ );
     }
 }
 

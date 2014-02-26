@@ -250,9 +250,9 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                 PHY_RoleInterface_Composantes& targetRoleComposantes = target.GetRole< PHY_RoleInterface_Composantes >();
                 targetRoleComposantes.Neutralize();
                 if( dotationCategory_.IsIED() )
-                    MIL_Report::PostEvent( target, report::eRC_PrisSousTirIED );
+                    MIL_Report::PostEvent( target, report::eRC_PrisSousTirIED, dotationCategory_ );
                 else
-                    MIL_Report::PostEvent( target, report::eRC_PrisSousTirArtillerie );
+                    MIL_Report::PostEvent( target, report::eRC_PrisSousTirArtillerie, dotationCategory_ );
                 double ratioComposanteHit = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( attritionSurface );
                 if( ratioComposanteHit > 0 )
                     targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, ratioComposanteHit * phFactor );
