@@ -367,7 +367,7 @@ integration.startMoveToIt = function( objective, pathType, waypoints )
     -- with a mounted agent.
     -- --------------------------------------------------------------------------------
     if DEC_ObjectKnowledge_IsPositionInside(meKnowledge.source,"contamination", objective:getPosition()) then
-        meKnowledge:equipNBCOutfit()
+        integration.equipNBCOutfit()
     end
     objective.initialeDestination = DEC_Geometrie_CopiePoint( objective:getPosition() )
     if not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination )
