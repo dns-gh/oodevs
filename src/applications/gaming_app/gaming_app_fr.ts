@@ -1721,6 +1721,10 @@ Voulez-vous le remplacer ?</translation>
         <source>No response received from the simulation.</source>
         <translation>Aucune réponse reçue de la simulation.</translation>
     </message>
+    <message>
+        <source>Estimated repair duration: %1</source>
+        <translation>Durée de réparation estimée : %1</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>

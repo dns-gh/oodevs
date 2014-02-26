@@ -24,6 +24,7 @@
 #include "clients_kernel/MaintenanceFunctions.h"
 #include "clients_kernel/MaintenanceStates_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/LogisticsConsign_ABC.h"
@@ -106,9 +107,12 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
                availability.type_->GetMaintenanceFunctions() &&
                availability.type_->GetMaintenanceFunctions()->CanRepair( *breakdownType_ );
     } );
+    duration_ = new QLabel( this );
+    duration_->setVisible( false );
     parts_ = new PartsView( controllers, this );
     connect( parts_, SIGNAL( Updated() ), this, SLOT( UpdateDisplay() ) );
     layout->addWidget( repairers_ );
+    layout->addWidget( duration_ );
     layout->addWidget( parts_ );
 
     // Buttons
@@ -231,7 +235,11 @@ bool LogisticMaintenanceSelectionDialog::SetCurrentStatus( sword::LogMaintenance
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
         UpdateView( diagnosers_, *handler_, manualButton_, tr( "Select diagnosis team" ) );
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+    {
         UpdateView( repairers_, *handler_, manualButton_, tr( "Select repair team" ) );
+        duration_->setText( tr( "Estimated repair duration: %1" ).arg( tools::DurationFromSeconds( breakdownType_->GetRepairTime() ) ) );
+        duration_->setVisible( true );
+    }
     parts_->Fill( breakdownType_->GetParts() );
     manualButton_->setChecked( true );
     evacuateButton_->setEnabled( CanRequestEvacuationBySuperior( *handler_ ) );
@@ -297,6 +305,7 @@ void LogisticMaintenanceSelectionDialog::Purge()
     availability_ = 0;
     lastContext_ = 0;
     status_ = sword::LogMaintenanceHandlingUpdate::finished;
+    duration_->setVisible( false );
     timeout_.stop();
 }
 
