@@ -54,7 +54,7 @@ public:
     unsigned long      GetNetworkTimeout           () const;
     bool               IsThreadedNetwork           () const;
     bool               EnableTestCommands          () const;
-    // Disable drawing of random breakdowns on equipments, mostly for tests.
+    // Disable triggering of random breakdowns on equipments, mostly for tests.
     bool               DisableRandomBreakdowns     () const;
 
     bool               UseNetworkLogger            () const;

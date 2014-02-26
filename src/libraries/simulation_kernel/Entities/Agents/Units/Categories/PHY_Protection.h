@@ -56,8 +56,8 @@ public:
 
     //! @name Operations
     //@{
-    bool DrawRandomEvacBreakdown () const;
-    bool DrawRandomNonEvacBreakdown() const;
+    bool TriggerRandomEvacuationBreakdown () const;
+    bool TriggerRandomNonEvacuationBreakdown() const;
     //@}
 
 private:

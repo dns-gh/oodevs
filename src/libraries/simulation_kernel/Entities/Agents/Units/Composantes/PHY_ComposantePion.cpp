@@ -556,12 +556,12 @@ void PHY_ComposantePion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeSte
 {
     assert( !pRandomBreakdownState_ && !nRandomBreakdownNextTimeStep_ );
     assert( pType_ );
-    if( pType_->GetProtection().DrawRandomEvacBreakdown() )
+    if( pType_->GetProtection().TriggerRandomEvacuationBreakdown() )
     {
         pRandomBreakdownState_ = &PHY_ComposanteState::repairableWithEvacuation_;
         nRandomBreakdownNextTimeStep_ = MIL_Random::rand32_oo( time_.GetCurrentTimeStep(), nEndDayTimeStep );
     }
-    else if( pType_->GetProtection().DrawRandomNonEvacBreakdown() )
+    else if( pType_->GetProtection().TriggerRandomNonEvacuationBreakdown() )
     {
         pRandomBreakdownState_ = &PHY_ComposanteState::repairableWithoutEvacuation_;
         nRandomBreakdownNextTimeStep_ = MIL_Random::rand32_oo( time_.GetCurrentTimeStep(), nEndDayTimeStep );
