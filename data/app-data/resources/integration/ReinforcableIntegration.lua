@@ -80,12 +80,18 @@ integration.setNeedReinforcement = function( unit, action, obstacle, needDotatio
             end
             local dotation = result.first
             local number = result.second
-            unit:sendDotationNeededForReinforcement( integration.GetSuperiorKnowledge( unit ), obstacle, dotation, number , unit )
+            if unit.sendCapacityNeededForReinforcement then
+                unit:sendDotationNeededForReinforcement( integration.GetSuperiorKnowledge( unit ), obstacle, dotation, number , unit )
+            end
         else
-            unit:sendCapacityNeededForReinforcement( integration.GetSuperiorKnowledge( unit ), obstacle, unit, action )
+            if unit.sendCapacityNeededForReinforcement then 
+                unit:sendCapacityNeededForReinforcement( integration.GetSuperiorKnowledge( unit ), obstacle, unit, action )
+            end
         end
     else
-        unit:sendNoLongerNeedReinforcement( integration.GetSuperiorKnowledge( unit ), unit )    
+        if unit.sendCapacityNeededForReinforcement then
+            unit:sendNoLongerNeedReinforcement( integration.GetSuperiorKnowledge( unit ), unit )
+        end    
     end
 end
 
