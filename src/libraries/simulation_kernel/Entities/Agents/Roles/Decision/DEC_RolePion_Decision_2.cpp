@@ -707,6 +707,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< void( int, const double ) >( boost::bind( &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2, boost::ref( GetPion() ), _1, _2, -1 ) ) );
     RegisterFunction( "DEC_ChangeValeurDotations3",
         boost::function< void( int, const double, int ) >( boost::bind( &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2, boost::ref( GetPion() ), _1, _2, _3 ) ) );
+    RegisterFunction( "DEC_CreateBreakdown",
+        boost::function< bool( unsigned int, unsigned int ) >( boost::bind( &DEC_AgentFunctions::CreateBreakdown, boost::ref( GetPion() ), _1, _2 ) ) );
 
     // Transport / Heliportage
     RegisterFunction( "DEC_Transport_AjouterPion",

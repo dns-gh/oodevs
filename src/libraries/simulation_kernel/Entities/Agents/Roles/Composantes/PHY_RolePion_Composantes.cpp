@@ -1859,7 +1859,7 @@ bool PHY_RolePion_Composantes::CanStockMoreOf( PHY_RoleInterface_Supply& supplyR
 // Name: PHY_RolePion_Composantes::CreateBreakdowns
 // Created: ABR 2011-08-10
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::CreateBreakdowns( const PHY_ComposanteTypePion& composanteType, unsigned int quantity, const PHY_BreakdownType* breakdown )
+bool PHY_RolePion_Composantes::CreateBreakdowns( const PHY_ComposanteTypePion& composanteType, unsigned int quantity, const PHY_BreakdownType* breakdown )
 {
     const PHY_BreakdownType* breakdownType = !breakdown ? composanteType.GetRandomBreakdownType() : breakdown;
     assert( breakdownType != 0 );
@@ -1875,7 +1875,11 @@ void PHY_RolePion_Composantes::CreateBreakdowns( const PHY_ComposanteTypePion& c
         }
     }
     if( quantity )
+    {
         MT_LOG_WARNING_MSG( "Agent " << owner_->GetID() << " - Cannot create all the breakdowns in the magic action, " << quantity << " breakdowns for composante " << composanteType.GetName() << " remaining." );
+        return false;
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------
