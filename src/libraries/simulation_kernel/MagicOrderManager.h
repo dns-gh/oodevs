@@ -10,12 +10,20 @@
 #ifndef __MagicOrderManager_h_
 #define __MagicOrderManager_h_
 
-#include "MagicOrderManager_ABC.h"
-#include "protocol/SimulationSenders.h"
 #include <cstdint>
 #include <map>
 
-class MagicOrderManager : public MagicOrderManager_ABC
+namespace sword
+{
+    class KnowledgeMagicAction;
+    class MagicAction;
+    class MagicOrder;
+    class ObjectMagicAction;
+    class SetAutomatMode;
+    class UnitMagicAction;
+}
+
+class MagicOrderManager
 {
 public:
              MagicOrderManager();
@@ -23,12 +31,12 @@ public:
 
     template< typename Archive > void serialize( Archive& file, const unsigned int version );
 
-    virtual uint32_t Register( const sword::MagicAction& msg );
-    virtual uint32_t Register( const sword::UnitMagicAction& msg );
-    virtual uint32_t Register( const sword::ObjectMagicAction& msg );
-    virtual uint32_t Register( const sword::KnowledgeMagicAction& msg );
-    virtual uint32_t Register( const sword::SetAutomatMode& msg );
-    virtual void     Send    ( uint32_t id );
+    uint32_t Register( const sword::MagicAction& msg );
+    uint32_t Register( const sword::UnitMagicAction& msg );
+    uint32_t Register( const sword::ObjectMagicAction& msg );
+    uint32_t Register( const sword::KnowledgeMagicAction& msg );
+    uint32_t Register( const sword::SetAutomatMode& msg );
+    void     Send    ( uint32_t id );
 
     virtual void SendStateToNewClient();
 

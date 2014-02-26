@@ -18,7 +18,7 @@
 #include "FormationFactory.h"
 #include "InhabitantFactory.h"
 #include "KnowledgesVisitor_ABC.h"
-#include "MagicOrderManager_ABC.h"
+#include "MagicOrderManager.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Army.h"
 #include "MIL_EntityManagerStaticMethods.h"

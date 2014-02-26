@@ -56,8 +56,7 @@ MagicOrderManager::~MagicOrderManager()
 template< typename Archive >
 void MagicOrderManager::serialize( Archive& ar, const unsigned int )
 {
-    ar & boost::serialization::base_object< MagicOrderManager_ABC >( *this )
-       & ids_ & orders_;
+    ar & ids_ & orders_;
 }
 
 namespace

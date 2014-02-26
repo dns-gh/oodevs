@@ -807,7 +807,7 @@ resource::ResourceTools_ABC& MIL_AgentServer::GetResourceTools() const
 // Name: MIL_AgentServer::GetMagicOrderManager
 // Created: BAX 2014-02-21
 // -----------------------------------------------------------------------------
-MagicOrderManager_ABC& MIL_AgentServer::GetMagicOrderManager() const
+MagicOrderManager& MIL_AgentServer::GetMagicOrderManager() const
 {
     return *magicOrders_;
 }

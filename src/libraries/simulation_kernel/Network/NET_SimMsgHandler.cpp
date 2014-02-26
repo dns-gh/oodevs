@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "NET_SimMsgHandler.h"
-#include "MagicOrderManager_ABC.h"
+#include "MagicOrderManager.h"
 #include "MIL_AgentServer.h"
 #include "NET_AgentServer.h"
 #include "NET_Simulation_ABC.h"
