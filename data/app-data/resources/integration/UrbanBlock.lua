@@ -11,7 +11,7 @@ integration.alertUrbanBlock = function( urbanBlock )
         reportFunction(eRC_ObjectiveAlerted )
     else
         reportFunction(eRC_NoPopulationInUrbanBlock )
-        meKnowledge:sendMessage( "the urban block is not inhabited, population cannot be alerted" )
+        integration.displayTrace( "the urban block is not inhabited, population cannot be alerted" )
     end
     return true
 end
@@ -27,7 +27,7 @@ integration.undoAlertUrbanBlock = function( urbanBlock )
         reportFunction(eRC_ObjectiveIsNoLongerAlerted )
     else
         reportFunction(eRC_NoPopulationInUrbanBlock )
-        meKnowledge:sendMessage( "the urban block is not inhabited" )
+        integration.displayTrace( "the urban block is not inhabited" )
     end
     return true
 end
@@ -53,7 +53,7 @@ integration.confineUrbanBlock = masalife.brain.integration.startStopAction(
                     urbanBlock.confinementDelay_ = 1
                     reportFunction(eRC_ZoneConfinementInProgress )
                 else
-                    meKnowledge:sendMessage( "the urban block is not inhabited, population cannot be confined" )
+                    integration.displayTrace( "the urban block is not inhabited, population cannot be confined" )
                     reportFunction(eRC_NoPopulationInUrbanBlock )
                 end
               end,
@@ -85,7 +85,7 @@ integration.undoConfineUrbanBlock = function( urbanBlock )
         DEC_Agent_UndoConfine( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
         reportFunction(eRC_ObjectiveIsNoLongerConfined )
     else
-        meKnowledge:sendMessage( "the urban block is not inhabited" )
+        integration.displayTrace( "the urban block is not inhabited" )
         reportFunction(eRC_NoPopulationInUrbanBlock )
     end
     return true
@@ -111,7 +111,7 @@ integration.evacuateUrbanBlock = masalife.brain.integration.startStopAction(
                     urbanBlock.evacuationDelay_ = 1
                     reportFunction(eRC_ZoneEvacuationInProgress )
                 else
-                    meKnowledge:sendMessage( "the urban block is not inhabited" )
+                    integration.displayTrace( "the urban block is not inhabited" )
                     reportFunction(eRC_NoPopulationInUrbanBlock )
                 end
               end,
@@ -143,7 +143,7 @@ integration.undoEvacuateUrbanBlock = function( urbanBlock )
         DEC_Agent_UndoEvacuate( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
         reportFunction(eRC_ObjectiveIsNoLongerEvacuated )
     else
-        meKnowledge:sendMessage( "the urban block is not inhabited" )
+        integration.displayTrace( "the urban block is not inhabited" )
         reportFunction(eRC_NoPopulationInUrbanBlock )
     end
     return true 
