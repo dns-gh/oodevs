@@ -54,6 +54,8 @@ func (s *TestSuite) TestWriteSession(c *C) {
 	session.GamingServer = "masagroup.net"
 	session.EndTick = 42
 	session.Paused = true
+	session.RandomBreakdowns = true
+	session.Seed = 1
 	session.TimeFactor = 999
 	session.TimeStep = 333
 	data, err := WriteSession(session)
@@ -73,14 +75,14 @@ func (s *TestSuite) TestWriteSession(c *C) {
     <simulation>
       <GarbageCollector setpause="100" setstepmul="100"></GarbageCollector>
       <checkpoint frequency="100000h" keep="1" usecrc="true"></checkpoint>
-      <debug decisional="false" diadebugger="false" diadebuggerport="15000" networklogger="true" networkloggerport="20000" pathfind="false"></debug>
+      <debug decisional="false" diadebugger="false" diadebuggerport="15000" networklogger="true" networkloggerport="20000" pathfind="false" random-breakdowns="true"></debug>
       <decisional useonlybinaries="false"></decisional>
       <dispatcher embedded="true"></dispatcher>
       <network port="10000"></network>
       <orbat checkcomposition="false"></orbat>
       <pathfinder threads="1" max-calculation-time="12h"></pathfinder>
       <profiling enabled="false" command="false" hook="false"></profiling>
-      <random seed="0"></random>
+      <random seed="1"></random>
       <random0 deviation="0.5" distribution="0" mean="0.5"></random0>
       <random1 deviation="0.5" distribution="0" mean="0.5"></random1>
       <random2 deviation="0.5" distribution="0" mean="0.5"></random2>
