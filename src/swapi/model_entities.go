@@ -428,6 +428,21 @@ type Order struct {
 	TaskerId    uint32
 }
 
+type MagicOrderKind int
+
+const (
+	MagicAction MagicOrderKind = iota
+	UnitMagicAction
+	ObjectMagicAction
+	KnowledgeMagicAction
+	SetAutomatMode
+)
+
+type MagicOrder struct {
+	Id   uint32
+	Kind MagicOrderKind
+}
+
 type MaintenanceHandlingProvider struct {
 	Id    uint32
 	State sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus
@@ -501,6 +516,7 @@ type ModelData struct {
 	Profiles             map[string]*Profile
 	Urbans               map[uint32]*Urban
 	Orders               map[uint32]*Order
+	MagicOrders          map[uint32]*MagicOrder
 	Objects              map[uint32]*Object
 	MaintenanceHandlings map[uint32]*MaintenanceHandling
 	MedicalHandlings     map[uint32]*MedicalHandling
@@ -539,6 +555,7 @@ func NewModelData() *ModelData {
 		LocalWeathers:        map[uint32]*LocalWeather{},
 		Urbans:               map[uint32]*Urban{},
 		Orders:               map[uint32]*Order{},
+		MagicOrders:          map[uint32]*MagicOrder{},
 		Objects:              map[uint32]*Object{},
 		MaintenanceHandlings: map[uint32]*MaintenanceHandling{},
 		MedicalHandlings:     map[uint32]*MedicalHandling{},
@@ -843,6 +860,18 @@ func (model *ModelData) addOrder(order *Order) bool {
 	return size != len(model.Orders)
 }
 
+func (model *ModelData) addMagicOrder(magic *MagicOrder) bool {
+	size := len(model.MagicOrders)
+	model.MagicOrders[magic.Id] = magic
+	return size != len(model.MagicOrders)
+}
+
+func (model *ModelData) removeMagicOrder(id uint32) bool {
+	size := len(model.MagicOrders)
+	delete(model.MagicOrders, id)
+	return size != len(model.MagicOrders)
+}
+
 func (model *ModelData) changeAutomatLogisticsLinks(entityId uint32, superiors []uint32) bool {
 	if automat, ok := model.Automats[entityId]; ok {
 		automat.LogSuperiors = append([]uint32{}, superiors...)
@@ -953,6 +982,8 @@ var (
 		(*ModelData).handleLogSupplyHandlingUpdate,
 		(*ModelData).handleLogSupplyQuotas,
 		(*ModelData).handleLogSupplyState,
+		(*ModelData).handleMagicOrderCreation,
+		(*ModelData).handleMagicOrderDestruction,
 		(*ModelData).handleObjectCreation,
 		(*ModelData).handleObjectDestruction,
 		(*ModelData).handleObjectKnowledgeCreation,

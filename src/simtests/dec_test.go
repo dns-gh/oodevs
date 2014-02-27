@@ -16,6 +16,7 @@ import (
 	. "launchpad.net/gocheck"
 	"os"
 	"path/filepath"
+	"reflect"
 	"regexp"
 	"strings"
 	"swapi"
@@ -65,18 +66,21 @@ func (s *TestSuite) TestExecScript(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter:.*string expected, got nil.*")
 }
 
-func execScript(c *C, client *swapi.Client, script string, keys map[string]interface{}) (
-	string, error) {
-
+func Parse(c *C, script string, keys map[string]interface{}) string {
 	w := &bytes.Buffer{}
 	t, err := template.New("test").Parse(script)
 	c.Assert(err, IsNil)
 	err = t.Execute(w, keys)
 	c.Assert(err, IsNil)
-	text := string(w.Bytes())
+	return string(w.Bytes())
+}
+
+func execScript(c *C, client *swapi.Client, script string, keys map[string]interface{}) (
+	string, error) {
 
 	unit := getRandomUnit(c, client)
-	output, err := client.ExecScript(unit.Id, "TestFunction", text)
+	output, err := client.ExecScript(unit.Id, "TestFunction",
+		Parse(c, script, keys))
 	return output, err
 }
 
@@ -241,4 +245,60 @@ func (s *TestSuite) TestDecGeometry(c *C) {
 
 	runScript("point_test")
 	runScript("polygon_test")
+}
+
+func DecCreateBreakdown(c *C, client *swapi.Client, unitId, equipmentType uint32,
+	breakdownType int32, result string) {
+	script := `function TestFunction()
+		return tostring(DEC_CreateBreakdown({{.equipmentType}},
+			{{.breakdownType}}))
+	end`
+	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
+		map[string]interface{}{"equipmentType": equipmentType,
+			"breakdownType": breakdownType}))
+	c.Assert(err, IsNil)
+	c.Assert(output, Equals, result)
+}
+
+func (s *TestSuite) TestDecCreateBreakdown(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer stopSim(c, sim, DisableLuaChecks())
+	defer client.Close()
+	automat := createAutomat(c, client)
+	// ARMOR.MBT platoon
+	unit := CreateUnit(c, client, automat.Id)
+	// ARMOR.Main Battle Tank
+	equipmentType := uint32(11)
+	// MOB Breakdown 3 EB Evac
+	breakdownType := int32(15)
+
+	// Invalid equipment type
+	DecCreateBreakdown(c, client, unit.Id, 12345, 12345, "false")
+	// Invalid breakdown type
+	DecCreateBreakdown(c, client, unit.Id, equipmentType, 12345, "false")
+
+	// Check initial state
+	equipment := swapi.EquipmentDotation{
+		Available:     4,
+		Unavailable:   0,
+		Repairable:    0,
+		OnSiteFixable: 0,
+	}
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return reflect.DeepEqual(data.Units[unit.Id].EquipmentDotations[equipmentType], &equipment)
+	})
+
+	DecCreateBreakdown(c, client, unit.Id, equipmentType, breakdownType, "true")
+
+	// Check breakdown
+	equipment = swapi.EquipmentDotation{
+		Available:     3,
+		Unavailable:   0,
+		Repairable:    1,
+		OnSiteFixable: 0,
+		Breakdowns:    []int32{breakdownType},
+	}
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return reflect.DeepEqual(data.Units[unit.Id].EquipmentDotations[equipmentType], &equipment)
+	})
 }
