@@ -805,6 +805,11 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     self.parameters = myself.taskParams
     self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    if #self.parameters.commandingEntities == 0 or #self.operationnalEntities == 0 then
+        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        self.Feedback( self.feedbacks.done )
+        return
+    end
     for _, pion in pairs( self.parameters.commandingEntities ) do
         integration.setNeedReinforcement( pion, nil, nil, false )
     end
@@ -926,6 +931,14 @@ integration.leadActivate = function( self, findBestsFunction )
     if myself.newTask then
       self:create()
     end
+
+    self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
+    self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    if #self.parameters.commandingEntities == 0 or #self.operationnalEntities == 0 then
+        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        self.Feedback( self.feedbacks.done )
+        return
+    end
     
     if self.listenFrontElementInitialized then -- if a subordinate destroyed before and tasks issued a new time
         for _, elem in pairs( self.bestUnits or emptyTable ) do
@@ -1010,6 +1023,14 @@ integration.leadDelayActivate = function( self, disengageTask )
     local myself = myself
     local meKnowledge = meKnowledge
     local Activate = Activate
+
+    self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
+    self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    if #self.parameters.commandingEntities == 0 or #self.operationnalEntities == 0 then
+        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        self.Feedback( self.feedbacks.done )
+        return
+    end
 
     manageAddedAndDeletedUnits( self, findBests, disengageTask )
     
@@ -1129,6 +1150,13 @@ integration.leadDroneActivate = function( self, findBestsFunction )
     if myself.newTask then
       self:create()
     end
+    self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
+    self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    if #self.parameters.commandingEntities == 0 or #self.operationnalEntities == 0 then
+        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        self.Feedback( self.feedbacks.done )
+        return
+    end
     local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
     local pionsPE = echelons[1]
     local pionsSE = echelons[2]
@@ -1157,7 +1185,7 @@ end
 -- @release 2013-07-05
 integration.leadDestroy = function ( self, setEchelonNone )
     local integration = integration
-    if self.companyTask.destroy then
+    if self.companyTask and self.companyTask.destroy then
         self.companyTask:destroy( self.params, self.parameters )
     end
     local entities = self.parameters.commandingEntities
