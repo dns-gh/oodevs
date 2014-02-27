@@ -45,7 +45,6 @@ private:
     void Split();
     bool SplitOnSegment( const MT_Line& line, std::size_t& segmentIndex, double& cumulatedMagnitude );
     void RemovedPassedOverFlows();
-    bool IsGoingFlowNear() const;
     bool IsTimerOver();
     //@}
 
@@ -55,7 +54,6 @@ private:
     MT_Vector2D point_;
     std::vector< MIL_PopulationFlow* > collidingFlows_;
     MIL_PopulationFlow* going_;
-    bool isFlowing_;
     bool markedForDestruction_;
     std::size_t movingIndex_;
     double randomThreshold_;

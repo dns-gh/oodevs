@@ -20,7 +20,6 @@
 // -----------------------------------------------------------------------------
 MIL_FlowCollision::MIL_FlowCollision( const MT_Vector2D& point )
     : point_( point )
-    , isFlowing_( true )
     , markedForDestruction_( false )
     , movingIndex_( 0 )
     , going_( 0 )
@@ -77,7 +76,7 @@ bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow ) const
         return true;
     auto flowIt = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow );
     if( flowIt != collidingFlows_.end() )
-        if( !isFlowing_ || collidingFlows_[ movingIndex_ ] != flow || going_ != flow && IsGoingFlowNear() )
+        if( collidingFlows_[ movingIndex_ ] != flow )
             return false;
     return true;
 }
@@ -125,17 +124,16 @@ void MIL_FlowCollision::Update()
 {
     if( markedForDestruction_ )
         return;
-    if( !isFlowing_ )
+    MIL_PopulationFlow* oldGoing = going_;
+    if( IsTimerOver() )
+        Split();
+    if( oldGoing != going_ )
     {
-        isFlowing_ = true;
         if( ++movingIndex_ >= collidingFlows_.size() )
             movingIndex_ = 0;
     }
-    else if( IsTimerOver() )
-        Split();
 
-    if( isFlowing_ )
-        RemovedPassedOverFlows();
+    RemovedPassedOverFlows();
 }
 
 // -----------------------------------------------------------------------------
@@ -228,25 +226,12 @@ bool MIL_FlowCollision::SplitOnSegment( const MT_Line& line, std::size_t& segmen
         if( splitFlow )
         {
             going_ = splitFlow;
-            isFlowing_ = false;
             return true;
         }
     }
     ++segmentIndex;
     cumulatedMagnitude += line.Magnitude();
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_FlowCollision::IsGoingFlowNear
-// Created: JSR 2014-02-18
-// -----------------------------------------------------------------------------
-bool MIL_FlowCollision::IsGoingFlowNear() const
-{
-    if( !going_ )
-        return false;
-    const double maxSpeed = going_->GetPopulation().GetType().GetMaxSpeed();
-    return going_->GetFlowShape().front().SquareDistance( point_ ) < maxSpeed * maxSpeed;
 }
 
 // -----------------------------------------------------------------------------
