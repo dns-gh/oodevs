@@ -48,8 +48,20 @@
             </unit>
           </automat>
           <automat engaged="true" id="128" knowledge-group="3" logistic-level="logistic-base" name="Supply 2" symbol="symbols/sfgpuss" type="Log Automat 4">
-            <unit command-post="true" id="129" name="Log Unit 4 2" position="28RDS2843930786" type="Log Unit 4"/>
+            <unit command-post="true" id="129" name="Log Unit 4 2" position="28RDS2843930786" type="Log Unit 4">
+              <stocks>
+                <resource name="electrogen 1" quantity="50"/>
+              </stocks>
+            </unit>
           </automat>
+          <formation id="130" level="x" name="F4" symbol="symbols/sfgpu">
+            <automat engaged="true" id="131" knowledge-group="3" name="Mobile Infantry Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
+              <unit command-post="true" id="132" name="Mobile Infantry" position="28RDS2867130958" type="Mobile Infantry"/>
+              <unit command-post="false" id="133" name="Mobile Infantry 2" position="28RDS2856031032" type="Mobile Infantry"/>
+              <unit command-post="false" id="134" name="Mobile Infantry" position="28RDS2830031037" type="Mobile Infantry"/>
+              <unit command-post="false" id="135" name="Mobile Infantry" position="28RDS2842630956" type="Mobile Infantry"/>
+            </automat>
+          </formation>
         </formation>
       </tactical>
       <communication>
@@ -78,6 +90,9 @@
               <resource name="gyroscope 2" quantity="1"/>
             </quotas>
           </subordinate>
+        </logistic-base>
+        <logistic-base id="128">
+          <subordinate id="131"/>
         </logistic-base>
       </logistics>
     </party>
