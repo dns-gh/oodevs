@@ -392,15 +392,6 @@ int ActionsModel::Publish( const Action_ABC& action )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::SetTimelineHandler
-// Created: ABR 2013-12-13
-// -----------------------------------------------------------------------------
-void ActionsModel::SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& handler )
-{
-    publisher_->SetTimelineHandler( handler );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionsModel::RegisterHandler
 // Created: LGY 2014-01-06
 // -----------------------------------------------------------------------------

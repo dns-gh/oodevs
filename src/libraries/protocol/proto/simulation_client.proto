@@ -123,6 +123,8 @@ message SetAutomatModeAck {
     }
     required Id        automate   = 1;
     required ErrorCode error_code = 2;
+    //! Unique order identifier
+    optional uint32    id         = 3;
 }
 
 /** @struct UnitActionAck
@@ -194,6 +196,9 @@ message UnitMagicActionAck {
     optional UnitMagicAction.Type    type       = 7;
     //! optional name
     optional string                  name       = 8;
+    //! Unique order identifier
+    optional uint32                  id         = 9;
+
 }
 
 /** @struct MagicActionAck
@@ -221,6 +226,8 @@ message MagicActionAck {
     optional MissionParameters result = 3;
     //! More detailed account of the returned error
     optional string    error_msg      = 4;
+    //! Unique order identifier
+    optional uint32    id             = 5;
 }
 
 /** @struct ObjectMagicActionAck
@@ -258,6 +265,8 @@ message ObjectMagicActionAck {
     optional Id        object     = 2;
     //! More detailed account of the returned error
     optional string    error_msg  = 3;
+    //! Unique order identifier
+    optional uint32    id         = 4;
 }
 
 /** @struct CrowdMagicActionAck
@@ -2886,6 +2895,8 @@ message KnowledgeGroupMagicActionAck {
     optional string                      error_msg       = 3;
     //! Action results, depends on the action type and outcome.
     optional MissionParameters           result          = 4;
+    //! Unique order identifier
+    optional uint32                      id              = 5;
 }
 
 //! DEPRECATED in 5.3
@@ -3087,6 +3098,19 @@ message PopulationUpdate {
     repeated BlockOccupation occupations  = 8;
     //! The extension fields
     optional Extension       extension    = 9;
+}
+
+message MagicOrder {
+    required uint32               id                     = 1;
+    optional MagicAction          magic_action           = 2;
+    optional UnitMagicAction      unit_magic_action      = 3;
+    optional ObjectMagicAction    object_magic_action    = 4;
+    optional KnowledgeMagicAction knowledge_magic_action = 5;
+    optional SetAutomatMode       set_automat_mode       = 6;
+}
+
+message MagicOrderDestruction {
+    required uint32 id = 1;
 }
 
 message SimToClient {
@@ -3409,6 +3433,8 @@ message SimToClient {
         optional ListEnabledVisionConesAck list_enabled_vision_cones_ack = 149;
         optional LogisticHistoryAck logistic_history_ack = 150;
         optional ListLogisticRequestsAck list_logistic_requests_ack = 151;
+        optional MagicOrder            magic_order = 152;
+        optional MagicOrderDestruction magic_order_destruction = 153;
     }
     /** @property context
         @brief Identifies the request matching the response

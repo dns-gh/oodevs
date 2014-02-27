@@ -40,7 +40,6 @@ namespace kernel
     class StaticModel;
     class Resolver_ABC;
     class Time_ABC;
-    class TimelineHandler_ABC;
 }
 
 namespace xml
@@ -91,8 +90,6 @@ public:
 
     //! @name Operations
     //@{
-    void SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& handler );
-
     void Destroy( const Action_ABC& action );
     void Purge( const ActionsFilter_ABC* filter = 0 );
     void Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader, bool readonly = false );

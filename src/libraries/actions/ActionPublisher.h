@@ -14,13 +14,11 @@
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
 
 namespace kernel
 {
     class Controllers;
     class Time_ABC;
-    class TimelineHandler_ABC;
 }
 
 namespace actions
@@ -44,11 +42,6 @@ public:
                               kernel::Controllers& controllers,
                               const kernel::Time_ABC& time );
     virtual ~ActionPublisher();
-    //@}
-
-    //! @name Operations
-    //@{
-    void SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& handler );
     //@}
 
     //! @name Publisher_ABC implementation
@@ -75,7 +68,6 @@ private:
     Publisher_ABC& publisher_;
     bool design_;
     const kernel::Time_ABC& simulation_;
-    boost::shared_ptr< kernel::TimelineHandler_ABC > handler_;
     //@}
 };
 
