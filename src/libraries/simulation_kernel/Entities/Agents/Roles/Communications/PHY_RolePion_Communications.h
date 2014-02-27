@@ -122,9 +122,9 @@ private:
     //@{
     MIL_Agent_ABC*      owner_;
     std::set< const MIL_Object_ABC* > jammers_;
-    bool                bBlackoutEmmittedActivated_;
+    bool                bBlackoutEmittedActivated_;
     bool                bBlackoutReceivedActivated_;
-    bool                bBlackoutEmmittedReport_;
+    bool                bBlackoutEmittedReport_;
     bool                bHasChanged_;
     bool                bSilentBeforeCapture_;
     bool                bIsAutonomous_;
