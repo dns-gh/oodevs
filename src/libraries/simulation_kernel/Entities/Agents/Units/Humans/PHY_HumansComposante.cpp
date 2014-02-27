@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_HumansComposante.h"
 #include "MIL_Time_ABC.h"
+#include "MIL_Random.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"

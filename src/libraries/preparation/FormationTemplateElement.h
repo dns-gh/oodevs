@@ -10,10 +10,7 @@
 #ifndef __FormationTemplateElement_h_
 #define __FormationTemplateElement_h_
 
-#include "TemplateElement_ABC.h"
-#include "clients_kernel/Color_ABC.h"
-#include <boost/noncopyable.hpp>
-#include <boost/optional/optional.hpp>
+#include "TemplateElement.h"
 
 namespace kernel
 {
@@ -28,30 +25,26 @@ class FormationModel;
 */
 // Created: AGE 2007-05-29
 // =============================================================================
-class FormationTemplateElement : public TemplateElement_ABC
-                               , private boost::noncopyable
+class FormationTemplateElement : public TemplateElement
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationTemplateElement( FormationModel& formations, const kernel::Formation_ABC& formation );
-             FormationTemplateElement( FormationModel& formations, xml::xistream& input );
+             FormationTemplateElement( FormationModel& formations,
+                                       const kernel::Formation_ABC& formation );
+             FormationTemplateElement( FormationModel& formations,
+                                       xml::xistream& xis );
     virtual ~FormationTemplateElement();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center, ColorController& colorController );
-    virtual void Serialize( xml::xostream& output );
-    virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const;
-    virtual QString GetName() const;
-    virtual void Rename( const QString& name );
-    //@}
-
 private:
-    //! @name Helpers
+    //! @name TemplateElement implementation
     //@{
-    void ReadExtension( xml::xistream& xis );
+    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior,
+                                             const geometry::Point2f& center,
+                                             ColorController& colorController );
+    virtual void Serialize( xml::xostream& output ) const;
+    virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const;
     //@}
 
 private:
@@ -59,9 +52,6 @@ private:
     //@{
     FormationModel& formations_;
     unsigned int levelId_;
-    QString name_;
-    boost::optional< kernel::Color_ABC::T_Color > color_;
-    std::map< std::string, std::string > extensions_;
     std::string symbol_;
     //@}
 };

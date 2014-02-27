@@ -13,7 +13,10 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "Loan.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Observer_ABC.h>
 #include <tools/Resolver_ABC.h>
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
@@ -35,6 +38,9 @@ namespace kernel
 // =============================================================================
 class Borrowings : public kernel::Extension_ABC
                  , public kernel::Updatable_ABC< sword::UnitAttributes >
+                 , public tools::Observer_ABC
+                 , public tools::ElementObserver_ABC< kernel::Agent_ABC >
+                 , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,18 +50,13 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Borrowings( const Borrowings& );            //!< Copy constructor
-    Borrowings& operator=( const Borrowings& ); //!< Assignment operator
-    //@}
-
     typedef std::vector< Loan > T_Borrowings;
     //@}
 
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::UnitAttributes& message );
+    virtual void NotifyDeleted( const kernel::Agent_ABC& );
     //@}
 
 public:

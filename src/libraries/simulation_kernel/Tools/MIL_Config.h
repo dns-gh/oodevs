@@ -12,10 +12,10 @@
 #ifndef __MIL_Config_h_
 #define __MIL_Config_h_
 
-#include "MIL_Random.h"
 #include "tools/SessionConfig.h"
 #include <boost/optional.hpp>
 #include <map>
+#include <vector>
 
 namespace xml
 {
@@ -54,6 +54,8 @@ public:
     unsigned long      GetNetworkTimeout           () const;
     bool               IsThreadedNetwork           () const;
     bool               EnableTestCommands          () const;
+    // Enable triggering of random breakdowns on equipments, mostly for tests.
+    bool               EnableRandomBreakdowns      () const;
 
     bool               UseNetworkLogger            () const;
     unsigned short     GetNetworkLoggerPort        () const;
@@ -72,9 +74,9 @@ public:
     const std::string& GetPathfindFilter           () const;
 
     int                GetRandomSeed               () const;
-    const bool*        GetRandomGaussian           () const;
-    const double*      GetRandomDeviation          () const;
-    const double*      GetRandomMean               () const;
+    const std::vector< bool >& GetRandomGaussian   () const;
+    const std::vector< double>& GetRandomDeviation () const;
+    const std::vector< double >& GetRandomMean     () const;
     unsigned int       GetGarbageCollectorPause    () const;
     unsigned int       GetGarbageCollectorStepMul  () const;
     //@}
@@ -125,11 +127,13 @@ private:
     bool           bSaveCheckpointTestMode_;
     bool           bEmbeddedDispatcher_;
     bool           bPausedAtStartup_;
+    bool           bEnableRandomBreakdowns_;
     tools::Path    strCheckPointNameTestMode_;
     int            randomSeed_;
-    bool           randomGaussian_[ MIL_Random::eContextsNbr ];
-    double         randomDeviation_[ MIL_Random::eContextsNbr ];
-    double         randomMean_[ MIL_Random::eContextsNbr ];
+    // non-conforming vector< bool > is so awesome
+    std::vector< bool > randomGaussian_;
+    std::vector< double > randomDeviation_;
+    std::vector< double > randomMean_;
     unsigned int   setpause_;
     unsigned int   setstepmul_;
     tools::Path    integrationDir_;

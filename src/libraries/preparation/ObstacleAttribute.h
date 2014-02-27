@@ -12,6 +12,7 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/SubTypes.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -69,8 +70,8 @@ private:
     //@{
     gui::PropertiesDictionary& dictionary_;
     bool bActivated_;
-    QTime activationTime_;
-    QTime activityTime_;
+    kernel::Duration activationTime_;
+    kernel::Duration activityTime_;
     //@}
 };
 

@@ -51,4 +51,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( ChildObjectAttribute )
+
 #endif // __ChildObjectAttribute_h_

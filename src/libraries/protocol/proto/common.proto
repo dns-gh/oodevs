@@ -1808,6 +1808,25 @@ message UnitMagicAction {
         //!       contaminated.
         //! The new human states are described in a following
         //! UnitAttributes message human_dotation field.
+        //!
+        //! Note the simulation assumes the first parameter describes
+        //! the state of all humans matched by ranks in target unit.
+        //! For historical reasons, the action accepts partial states
+        //! and resolves them by:
+        //! 1. Removing from the request all human states already
+        //!    in target unit.
+        //! 2. Applying the remaining changes, ignoring extra values.
+        //!
+        //! Assuming a unit with 2 healthy troopers, the following calls
+        //! to change_human_state:
+        //!   1. Mark 1 trooper injured
+        //!   2. Mark 1 trooper healthy
+        //! result in a unit with 1 healthy and 1 injured trooper. The
+        //! second request will be matched by the existing healthy
+        //! trooper and be turned into a no-operation.
+        //!
+        //! Future versions are likely to fail upon partial state
+        //! changes.
         change_human_state                = 46;
         //! Changes unit resources.
         //! The tasker is set to target unit.

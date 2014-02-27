@@ -149,6 +149,10 @@ integration.isPointVisible = function ( point )
     return DEC_Perception_PointEstVisible( point.source )
 end
 
+integration.getRelevance = function( knowledge )
+  return knowledge.source:DEC_AgentKnowledge_Relevance()
+end
+
 integration.getDetectionDistance = function ()
     return DEC_Detection_Distance()
 end

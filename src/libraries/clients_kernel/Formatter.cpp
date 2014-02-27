@@ -48,9 +48,9 @@ void Formatter< QDateTime >::operator()( const QDateTime& value, Displayer_ABC& 
     displayer.AddToDisplay( value.toString( "dd/MM/yy HH:mm" ) );
 }
 
-void Formatter< QTime >::operator()( const QTime& value, Displayer_ABC& displayer ) const
+void Formatter< Duration >::operator()( const Duration& value, Displayer_ABC& displayer ) const
 {
-    displayer.AddToDisplay( value.toString( "hh:mm:ss" ) );
+    displayer.AddToDisplay( tools::DurationFromSeconds( value ) );
 }
 
 void Formatter< ValueNotSet >::operator()( const ValueNotSet& , Displayer_ABC& displayer ) const

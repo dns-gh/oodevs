@@ -237,6 +237,8 @@ void PHY_RolePion_Location::Hide()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 {
+    if( owner_->IsMarkedForDestruction() )
+        return;
     Move( vPosition, vDirection_, 0. );
 
     TER_Object_ABC::T_ObjectVector objectsColliding;

@@ -15,7 +15,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
-#include "MIL_Random.h"
 #include "MT_Tools/MT_Logger.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>

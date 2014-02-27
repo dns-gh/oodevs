@@ -11,7 +11,6 @@
 #define __ControlZoneCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
-#include "MIL_Random.h"
 
 namespace xml
 {

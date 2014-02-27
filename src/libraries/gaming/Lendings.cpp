@@ -24,7 +24,7 @@ Lendings::Lendings( Controller& controller, const tools::Resolver_ABC< Agent_ABC
     , resolver_( resolver )
     , equipmentResolver_( equipmentResolver )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ Lendings::Lendings( Controller& controller, const tools::Resolver_ABC< Agent_ABC
 // -----------------------------------------------------------------------------
 Lendings::~Lendings()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,4 +55,16 @@ void Lendings::DoUpdate( const sword::UnitAttributes& message )
                                    pret.quantity() ) );
     }
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lendings::NotifyDeleted
+// Created: ABR 2014-02-26
+// -----------------------------------------------------------------------------
+void Lendings::NotifyDeleted( const kernel::Agent_ABC& agent )
+{
+    lendings_.erase( std::remove_if( lendings_.begin(),
+                                     lendings_.end(),
+                                     [&]( const Loan& loan ) { return loan.agent_ == &agent; } ),
+                     lendings_.end() );
 }

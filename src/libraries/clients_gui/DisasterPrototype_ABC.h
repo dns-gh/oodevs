@@ -22,7 +22,6 @@ namespace gui
 {
     class RichCheckBox;
     class RichLabel;
-    class LoadableTimeEdit;
 
 // =============================================================================
 /** @class  DisasterPrototype_ABC

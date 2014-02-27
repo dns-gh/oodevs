@@ -269,3 +269,9 @@ end
 installErrorHandler = function()
     errorhandlermanager.installErrorHandler( swordErrorHandler )
 end
+
+CallbackMovingOnPath = function( position )
+    if myself.callbackMovingOnPath then
+        myself.callbackMovingOnPath( position )
+    end
+end

@@ -2555,6 +2555,10 @@ This data can&apos;t be projected.</source>
         <source>Rename</source>
         <translation type="unfinished">إعادة تسمية</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">حذف</translation>
+    </message>
 </context>
 <context>
     <name>TemplatesPanel</name>

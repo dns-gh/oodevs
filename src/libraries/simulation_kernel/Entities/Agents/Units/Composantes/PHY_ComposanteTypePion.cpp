@@ -37,6 +37,7 @@
 #include "Entities/Objects/ObjectTypeResolver_ABC.h"
 #include "PHY_ComposanteTypeObjectData.h"
 #include "ENT/ENT_Tr.h"
+#include "MIL_Random.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"

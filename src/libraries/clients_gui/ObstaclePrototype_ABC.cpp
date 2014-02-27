@@ -167,10 +167,7 @@ int ObstaclePrototype_ABC::GetActivationTime() const
     switch( activationCombo_->currentIndex() )
     {
     case eActivationDelay:
-    {
-        QTime time = activationDelay_->time();
-        return 3600 * time.hour() + 60 * time.minute() + time.second();
-    }
+        return activationDelay_->Seconds();
     case eActivationDate:
         return std::max( 0, GetCreationDate().secsTo( activationDate_->dateTime() ) );
     case eActivationImmediately:
@@ -202,10 +199,7 @@ int ObstaclePrototype_ABC::GetActivityTime() const
     switch( deactivationCombo_->currentIndex() )
     {
     case eDeactivationDelay:
-        {
-            QTime time = deactivationDelay_->time();
-            return 3600 * time.hour() + 60 * time.minute() + time.second();
-        }
+        return deactivationDelay_->Seconds();
     case eDeactivationDate:
         return std::max( 0, GetCreationDate().addSecs( GetActivationTime() ).secsTo( deactivationDate_->dateTime() ) );
     case eDeactivationNever:

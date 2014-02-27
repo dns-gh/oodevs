@@ -12,7 +12,6 @@
 #ifndef __PHY_DirectFireData_h_
 #define __PHY_DirectFireData_h_
 
-#include "MIL_Random.h"
 #include "FireData_ABC.h"
 #include <tools/Map.h>
 

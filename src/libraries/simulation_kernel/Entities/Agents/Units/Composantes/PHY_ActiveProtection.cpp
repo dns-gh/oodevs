@@ -14,6 +14,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "MIL_Random.h"
 
 namespace
 {

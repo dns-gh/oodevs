@@ -12,8 +12,6 @@
 #ifndef __PHY_AttritionData_h_
 #define __PHY_AttritionData_h_
 
-#include "MIL_Random.h"
-
 namespace xml
 {
     class xistream;

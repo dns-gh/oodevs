@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "EditorFactory.h"
+#include "DurationEditor.h"
 #include "RichLineEdit.h"
 #include "RichSpinBox.h"
 #include "SubObjectName.h"
@@ -103,24 +104,24 @@ void EditorFactory::Call( QString* const& value )
 // =============================================================================
 namespace
 {
-    class QTimeEditor : public QTimeEdit
-                      , public ValueEditor< QTime >
+    class LocalDurationEditor : public DurationEditor
+                              , public ValueEditor< kernel::Duration >
     {
     public:
-        explicit QTimeEditor( QWidget* parent )
-            : QTimeEdit( parent )
+        explicit LocalDurationEditor( QWidget* parent )
+            : DurationEditor( parent )
         {
             // NOTHING
         }
 
-        virtual ~QTimeEditor()
+        virtual ~LocalDurationEditor()
         {
             // NOTHING
         }
 
-        virtual QTime GetValue()
+        virtual kernel::Duration GetValue()
         {
-            return time();
+            return value();
         }
     };
 }
@@ -129,11 +130,10 @@ namespace
 // Name: EditorFactory::Call
 // Created: LGY 2011-12-06
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( QTime* const& value )
+void EditorFactory::Call( kernel::Duration* const& value )
 {
-    QTimeEditor* editor = new QTimeEditor( parent_ );
-    editor->setDisplayFormat( "HH:mm:ss" );
-    editor->setTime( *value );
+    LocalDurationEditor* editor = new LocalDurationEditor( parent_ );
+    editor->setValue( *value );
     result_ = editor;
 }
 

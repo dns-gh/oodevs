@@ -28,6 +28,8 @@ namespace tools
     bool LessThanById( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
     bool LessThanByPC( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
     tools::Path SanitizeFileName( QString text, const QString& after = "-" );
+    void SetKarma( const kernel::Entity_ABC& entity, std::string& symbol );
+    void SetLevel( const kernel::Entity_ABC& entity, std::string& level );
 
 }  //! namespace tools
 

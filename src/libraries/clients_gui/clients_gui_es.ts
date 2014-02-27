@@ -200,6 +200,13 @@
     </message>
 </context>
 <context>
+    <name>DurationEditor</name>
+    <message>
+        <source>Invalid duration &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EntityHierarchies</name>
     <message>
         <source>Hierarchies/Superior</source>
@@ -369,13 +376,6 @@
     <message>
         <source>Mute sounds</source>
         <translation>Apagar sonidos</translation>
-    </message>
-</context>
-<context>
-    <name>Time Format</name>
-    <message>
-        <source>hh:mm:ss</source>
-        <translation>hh:mm:ss</translation>
     </message>
 </context>
 <context>
@@ -2117,8 +2117,12 @@ Desea eliminarlo?</translation>
         <translation>Umbral de Logística (%)</translation>
     </message>
     <message>
-        <source>Normalized consumption</source>
-        <translation>Consumo normalizado</translation>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Normalized quantity</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

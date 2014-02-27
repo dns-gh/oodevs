@@ -17,11 +17,19 @@
 // Name: TemplateListView constructor
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-TemplateListView::TemplateListView( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController )
+TemplateListView::TemplateListView( const QString& objectName,
+                                    QWidget* parent,
+                                    kernel::Controllers& controllers,
+                                    AgentsModel& agents,
+                                    FormationModel& formations,
+                                    GhostModel& ghosts,
+                                    const kernel::AgentTypes& types,
+                                    ColorController& colorController )
     : gui::RichTreeView( objectName, parent, &controllers )
-    , agents_         ( agents )
-    , formations_     ( formations )
-    , types_          ( types )
+    , agents_( agents )
+    , formations_( formations )
+    , ghosts_( ghosts )
+    , types_( types )
     , colorController_( colorController )
 {
     EnableDragAndDrop( true );
@@ -45,7 +53,7 @@ TemplateListView::~TemplateListView()
 // -----------------------------------------------------------------------------
 void TemplateListView::CreateTemplate( const kernel::Entity_ABC& entity )
 {
-    HierarchyTemplate* pTemplate = new HierarchyTemplate( agents_, formations_, entity, true, colorController_ );
+    HierarchyTemplate* pTemplate = new HierarchyTemplate( agents_, formations_, ghosts_, entity, true, colorController_ );
     templates_.push_back( pTemplate );
     CreateItem( *pTemplate );
 }
@@ -70,6 +78,7 @@ void TemplateListView::contextMenuEvent( QContextMenuEvent* event )
         QMenu* menu = new QMenu( this  );
         connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
         menu->addAction( tr( "Rename" ), this, SLOT( OnRename() ) );
+        menu->addAction( tr( "Delete" ), this, SLOT( OnDelete() ) );
         menu->popup( event->globalPos() );
     }
 }
@@ -102,20 +111,16 @@ void TemplateListView::OnRename( const QModelIndex& index, const QVariant& varia
 // -----------------------------------------------------------------------------
 void TemplateListView::LoadTemplates( const tools::Path& filename )
 {
-    try
-    {
-        Clear();
-        if( !filename.IsEmpty() && filename.Exists() )
+    Clear();
+    if( filename.IsEmpty() || !filename.Exists() )
+        return;
+    tools::Xifstream xif( filename );
+    xif >> xml::start( "templates" )
+        >> xml::list( "template", [&] ( xml::xistream& xis ) 
         {
-            tools::Xifstream input( filename );
-            input >> xml::start( "templates" )
-                  >> xml::list( "template", *this, &TemplateListView::ReadTemplate );
-        }
-    }
-    catch( ... )
-    {
-        // NOTHING
-    }
+            templates_.push_back( new HierarchyTemplate( agents_, formations_, ghosts_, types_, xis, colorController_ ) );
+            CreateItem( *templates_.back() );
+        } );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,16 +134,6 @@ void TemplateListView::SaveTemplates( const tools::Path& filename ) const
     for( auto it = templates_.begin(); it != templates_.end(); ++it )
         (*it)->Serialize( output );
     output << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TemplateListView::ReadTemplate
-// Created: AGE 2007-05-30
-// -----------------------------------------------------------------------------
-void TemplateListView::ReadTemplate( xml::xistream& input )
-{
-    templates_.push_back( new HierarchyTemplate( agents_, formations_, types_, input, colorController_ ) );
-    CreateItem( *templates_.back() );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,9 +172,19 @@ void TemplateListView::Clear()
 // -----------------------------------------------------------------------------
 void TemplateListView::keyPressEvent( QKeyEvent* evt )
 {
+    if( evt && evt->key() == Qt::Key_Delete )
+        OnDelete();
+    RichTreeView::keyPressEvent( evt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TemplateListView::OnDelete
+// Created: ABR 2014-02-25
+// -----------------------------------------------------------------------------
+void TemplateListView::OnDelete()
+{
     const QModelIndex index = selectionModel()->currentIndex();
-    if( evt && evt->key() == Qt::Key_Delete && index.isValid() )
-    {
+    if( index.isValid() )
         if( HierarchyTemplate* pTemplate = dataModel_.GetDataFromIndex< HierarchyTemplate >( index ) )
         {
             auto it = std::find( templates_.begin(), templates_.end(), pTemplate );
@@ -195,7 +200,4 @@ void TemplateListView::keyPressEvent( QKeyEvent* evt )
                     delete *it;
             }
         }
-    }
-    else
-        RichTreeView::keyPressEvent( evt );
 }

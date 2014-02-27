@@ -113,6 +113,7 @@ private:
     MaintenanceHaulersListView* transporters_;
     MaintenanceRepairersListView* repairers_;
     MaintenanceRepairersListView* diagnosers_;
+    QLabel* duration_;
     PartsView* parts_;
     QTimer timeout_;
     //@}

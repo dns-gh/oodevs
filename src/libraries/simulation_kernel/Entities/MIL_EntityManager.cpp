@@ -280,6 +280,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
     , effectManager_                ( effects )
     , bSendUnitVisionCones_         ( false )
+    , bEnableRandomBreakdowns_      ( config.EnableRandomBreakdowns() )
     , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0 )
     , rKnowledgesTime_              ( 0 )
@@ -317,6 +318,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
     , effectManager_                ( effects )
     , bSendUnitVisionCones_         ( false )
+    , bEnableRandomBreakdowns_      ( config.EnableRandomBreakdowns() )
     , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0 )
@@ -354,6 +356,8 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading ODB    ----" );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
+    if( !bEnableRandomBreakdowns_ )
+        MT_LOG_INFO_MSG( "Disabling random breakdowns" );
 
     const tools::Path orbatFile = config.GetOrbatFile();
     MT_LOG_INFO_MSG( "ODB file name : '" << orbatFile.ToUTF8() << "'" );
@@ -979,7 +983,8 @@ void MIL_EntityManager::UpdateCrowdCollisions()
 void MIL_EntityManager::Update()
 {
     pObjectManager_->Clean();
-    PreprocessRandomBreakdowns();
+    if( bEnableRandomBreakdowns_ )
+        PreprocessRandomBreakdowns();
     UpdateKnowledges();
     UpdateCrowdCollisions();
     UpdateDecisions();

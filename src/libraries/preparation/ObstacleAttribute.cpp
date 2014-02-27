@@ -20,8 +20,8 @@
 ObstacleAttribute::ObstacleAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : dictionary_    ( dictionary )
     , bActivated_    ( true )
-    , activationTime_( 0, 0 )
-    , activityTime_  ( 0, 0 )
+    , activationTime_( 0 )
+    , activityTime_  ( 0 )
 {
     CreateDictionary( entity );
 }
@@ -46,13 +46,9 @@ namespace
 ObstacleAttribute::ObstacleAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : dictionary_    ( dictionary )
     , bActivated_    ( xis.attribute< bool >( "activated" ) )
-    , activationTime_( 0, 0 )
-    , activityTime_  ( 0, 0 )
+    , activationTime_( ReadOptionalTime( xis, "activation-time" ) )
+    , activityTime_  ( ReadOptionalTime( xis, "activity-time" ) )
 {
-    QTime activationTime;
-    activationTime_ = activationTime.addSecs( ReadOptionalTime( xis, "activation-time" ) );
-    QTime activityTime;
-    activityTime_ = activityTime.addSecs( ReadOptionalTime( xis, "activity-time" ) );
     CreateDictionary( entity );
 }
 
@@ -88,14 +84,6 @@ void ObstacleAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) con
              .Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
 }
 
-namespace
-{
-    unsigned int Convert( const QTime& time )
-    {
-        return  time.hour() * 3600 + time.minute() * 60 + time.second();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::SerializeObjectAttributes
 // Created: SBO 2007-02-08
@@ -104,15 +92,13 @@ void ObstacleAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "obstacle" )
             << xml::attribute( "activated", bActivated_ );
-    unsigned int time = Convert( activationTime_ );
-    if( time > 0 )
+    if( activationTime_ > 0 )
         xos << xml::start( "activation-time" )
-                << xml::attribute( "value", time )
+                << xml::attribute( "value", activationTime_ )
             << xml::end;
-    time = Convert( activityTime_);
-    if( time > 0 )
+    if( activityTime_ > 0 )
         xos << xml::start( "activity-time" )
-                << xml::attribute( "value", time )
+                << xml::attribute( "value", activityTime_ )
             << xml::end;
     xos << xml::end;
 }
@@ -143,8 +129,7 @@ void ObstacleAttribute::Activate( bool activate )
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::SetActivationTime( int time )
 {
-    QTime activationTime;
-    activationTime_ = activationTime.addSecs( time );
+    activationTime_ = time;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,8 +138,7 @@ void ObstacleAttribute::SetActivationTime( int time )
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::SetActivityTime( int time )
 {
-    QTime activityTime;
-    activityTime_ = activityTime.addSecs( time );
+    activityTime_ = time;
 }
 
 // -----------------------------------------------------------------------------

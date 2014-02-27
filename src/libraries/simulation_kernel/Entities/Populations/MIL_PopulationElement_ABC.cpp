@@ -29,6 +29,7 @@
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_Time_ABC.h"
+#include "MIL_Random.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Tools/MIL_Geometry.h"
 #include "simulation_terrain/TER_AgentManager.h"
