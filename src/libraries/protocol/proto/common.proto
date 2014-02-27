@@ -1809,7 +1809,7 @@ message UnitMagicAction {
         //! The new human states are described in a following
         //! UnitAttributes message human_dotation field.
         //!
-        //! Note the simulation assumes the first parameters describes
+        //! Note the simulation assumes the first parameter describes
         //! the state of all humans matched by ranks in target unit.
         //! For historical reasons, the action accepts partial states
         //! and resolves them by:
@@ -1817,13 +1817,12 @@ message UnitMagicAction {
         //!    in target unit.
         //! 2. Applying the remaining changes, ignoring extra values.
         //!
-        //! Assuming a unit with 2 troopers the result of two
-        //! consecutive change_human_state like:
-        //! - Mark 1 trooper injured
-        //! - Mark 1 trooper healthy
-        //!
-        //! results in a unit with 1 healthy and 1 injured trooper, as
-        //! the second request will be matched by the existing healthy
+        //! Assuming a unit with 2 healthy troopers, the following calls
+        //! to change_human_state:
+        //!   1. Mark 1 trooper injured
+        //!   2. Mark 1 trooper healthy
+        //! result in a unit with 1 healthy and 1 injured trooper. The
+        //! second request will be matched by the existing healthy
         //! trooper and be turned into a no-operation.
         //!
         //! Future versions are likely to fail upon partial state
