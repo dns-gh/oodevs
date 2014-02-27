@@ -112,7 +112,7 @@ private:
     //! @name  Position operations
     //@{
     virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
-    void UpdateTailPosition( const double rWalkedDistance );
+    void UpdateTailPosition();
     const MT_Vector2D& GetHeadPosition() const;
     const MT_Vector2D& GetTailPosition() const;
     void SetHeadPosition( const MT_Vector2D& position );
