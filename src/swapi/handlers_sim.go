@@ -1377,3 +1377,40 @@ func (model *ModelData) handleFireEffectDestruction(m *sword.SimToClient_Content
 	}
 	return nil
 }
+
+func (model *ModelData) handleMagicOrderCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetMagicOrder()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	magic := MagicOrder{Id: mm.GetId()}
+	switch {
+	case mm.MagicAction != nil:
+		magic.Kind = MagicAction
+	case mm.UnitMagicAction != nil:
+		magic.Kind = UnitMagicAction
+	case mm.ObjectMagicAction != nil:
+		magic.Kind = ObjectMagicAction
+	case mm.KnowledgeMagicAction != nil:
+		magic.Kind = KnowledgeMagicAction
+	case mm.SetAutomatMode != nil:
+		magic.Kind = SetAutomatMode
+	default:
+		return fmt.Errorf("missing action on magic order %d", magic.Id)
+	}
+	if !model.addMagicOrder(&magic) {
+		return fmt.Errorf("cannot insert magic order %d", magic.Id)
+	}
+	return nil
+}
+
+func (model *ModelData) handleMagicOrderDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetMagicOrderDestruction()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	if !model.removeMagicOrder(mm.GetId()) {
+		return fmt.Errorf("cannot destroy magic order %d", mm.GetId())
+	}
+	return nil
+}
