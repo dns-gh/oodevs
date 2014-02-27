@@ -128,7 +128,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, const st
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectFactory::ReadObject
+// Name: MIL_ObjectFactory::CreateObject
 // Created: JCR 2008-05-23
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, xml::xistream& xis, MIL_Army_ABC* army ) const
