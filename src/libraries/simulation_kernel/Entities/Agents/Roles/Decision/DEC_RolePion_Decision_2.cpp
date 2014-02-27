@@ -390,8 +390,24 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
 
     // Blackout
     RegisterFunction( "DEC_Agent_PasserEnSilenceRadio", boost::bind( &DEC_AgentFunctions::ActivateBlackout, boost::ref( GetPion() ) ) );
-    RegisterFunction( "DEC_Agent_PasserEnSilenceRadioPartiel", boost::bind( &DEC_AgentFunctions::ActivatePartialBlackout, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Agent_PasserEnSilenceRadioPartiel", boost::bind( &DEC_AgentFunctions::ActivatePartialBlackout, boost::ref( GetPion() ), true ) );
     RegisterFunction( "DEC_Agent_ArreterSilenceRadio", boost::bind( &DEC_AgentFunctions::DeactivateBlackout, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Agent_PasserEnEmissionRestreinte", boost::bind( &DEC_AgentFunctions::ActivatePartialBlackout, boost::ref( GetPion() ), false ) );
+
+    // Knowledge sharing
+    RegisterFunction( "DEC_EnableSharedPerception", boost::function< void( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::EnableSharedPerception, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_DisabledSharedPerception", boost::function< void( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::DisabledSharedPerception, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_EnableSharedPerceptionWithKnowledge", &DEC_AgentFunctions::EnableSharedPerceptionWithKnowledge );
+    RegisterFunction( "DEC_DisabledSharedPerceptionWithKnowledge", &DEC_AgentFunctions::DisabledSharedPerceptionWithKnowledge );
+    RegisterFunction( "DEC_Knowledge_EnableSharedPerceptionWithKnowledge", &DEC_AgentFunctions::KnowledgeEnableSharedPerceptionWithKnowledge );
+    RegisterFunction( "DEC_Knowledge_DisabledSharedPerceptionWithKnowledge", &DEC_AgentFunctions::KnowledgeDisabledSharedPerceptionWithKnowledge );
+
+    RegisterFunction( "DEC_EnableSharingKnowledges", boost::function< void( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::EnableSharingKnowledges, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_DisabledSharingKnowledges", boost::function< void( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::DisabledSharingKnowledges, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_EnableSharingKnowledgesWithKnowledge", &DEC_AgentFunctions::EnableSharingKnowledgesWithKnowledge );
+    RegisterFunction( "DEC_DisabledSharingKnowledgesWithKnowledge", &DEC_AgentFunctions::DisabledSharingKnowledgesWithKnowledge );
+
+    RegisterFunction( "DEC_Knowledge_CommunicateWithKnowledgeGroup", &DEC_AgentFunctions::KnowledgeCommunicate );
 
     // Misc
     RegisterFunction( "DEC_ModulationVitesseCourante",

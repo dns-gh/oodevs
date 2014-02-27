@@ -74,6 +74,7 @@ public:
     //@{
     virtual bool CanReceive() const;
     virtual bool CanEmit() const;
+    virtual bool CanReport() const;
 
     virtual void UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
@@ -85,7 +86,7 @@ public:
     virtual void Unjam( const MIL_Object_ABC& jammer );
 
     virtual void ActivateBlackout();
-    virtual void ActivatePartialBlackout();
+    virtual void ActivatePartialBlackout( bool report = true );
     virtual void DeactivateBlackout();
     //@}
 
@@ -123,6 +124,7 @@ private:
     std::set< const MIL_Object_ABC* > jammers_;
     bool                bBlackoutEmmittedActivated_;
     bool                bBlackoutReceivedActivated_;
+    bool                bBlackoutEmmittedReport_;
     bool                bHasChanged_;
     bool                bSilentBeforeCapture_;
     bool                bIsAutonomous_;
