@@ -24,6 +24,7 @@ class MT_Vector2D;
 class MIL_UrbanObject_ABC;
 class DEC_Gen_Object;
 class MIL_Object_ABC;
+class PHY_ComposanteTypePion;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -155,6 +156,7 @@ public:
     static bool IsInReceptionBlackout( DEC_Decision_ABC* pAgent );
     static void SetToAmbianceSafety( MIL_Agent_ABC& callerAgent, bool safety );
     static bool IsInSmoke( DEC_Decision_ABC* pAgent );
+    static bool CreateBreakdown( MIL_Agent_ABC& callerAgent, unsigned int type, unsigned int breakdown );
     
     // Etat d'un agent
     static double GetRapForLocalAgent( const DEC_Decision_ABC* agent );

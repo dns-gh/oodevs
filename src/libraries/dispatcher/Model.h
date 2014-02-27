@@ -33,6 +33,7 @@ namespace dispatcher
     class LogConsignMaintenance;
     class LogConsignMedical;
     class LogConsignSupply;
+    class MagicOrder;
     class MeteoModel;
     class PopulationFire;
     class Report;
@@ -117,6 +118,8 @@ private:
     template< typename T >
     void UpdateAnyAgent( unsigned id, const T& message );
     template< typename T, typename M >
+    void Destroy( tools::Resolver< T >& resolver, unsigned id, const M* message );
+    template< typename T, typename M >
     void Destroy( tools::Resolver< T >& resolver, unsigned id, const M& message );
 
     template< typename T >
@@ -175,6 +178,7 @@ private:
     tools::Resolver< FireEffect >            fireEffects_;
     tools::Resolver< DetectionRangeEffect >  detectionRangeEffects_;
     tools::Resolver< Report >                reports_;
+    tools::Resolver< MagicOrder >            magicOrders_;
     //@}
 };
 

@@ -216,7 +216,7 @@ add_target( clients_kernel_test tests "tests/clients_kernel_test" OPTIONS test )
 target_link_libraries( clients_kernel_test clients_kernel )
 
 # actions
-add_target( actions common "libraries/actions" OPTIONS qt3 qt protocol )
+add_target( actions clients "libraries/actions" OPTIONS qt3 qt protocol )
 target_link_libraries( actions
     clients_gui
     clients_kernel

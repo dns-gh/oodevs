@@ -435,10 +435,11 @@ void MIL_ObjectManager::SendFullState()
 // Name: MIL_ObjectManager::OnReceiveObjectMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg, unsigned int nCtx, unsigned int clientId,
+void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg, unsigned int nCtx, unsigned int clientId, uint32_t magicId,
                                                     const tools::Resolver< MIL_Army_ABC >& armies, const propagation::FloodModel_ABC& floodModel )
 {
     client::ObjectMagicActionAck ack;
+    ack().set_id( magicId );
     ack().set_error_code( sword::ObjectMagicActionAck::no_error );
     ack().set_error_msg( "" );
     unsigned int id = 0u;

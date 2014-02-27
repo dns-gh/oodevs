@@ -111,6 +111,8 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, LogSupplyQuotas                                , log_supply_quotas                         )
     GENERATE_MESSAGE( sword::SimToClient, sword, LogSupplyState                                 , log_supply_state                          )
     GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, MagicActionAck                   , magic_action_ack                          )
+    GENERATE_MESSAGE( sword::SimToClient, sword, MagicOrder                                     , magic_order                               )
+    GENERATE_MESSAGE( sword::SimToClient, sword, MagicOrderDestruction                          , magic_order_destruction                   )
     GENERATE_MESSAGE( sword::SimToClient, sword, ObjectCreation                                 , object_creation                           )
     GENERATE_MESSAGE( sword::SimToClient, sword, ObjectDestruction                              , object_destruction                        )
     GENERATE_MESSAGE( sword::SimToClient, sword, ObjectDetection                                , object_detection                          )

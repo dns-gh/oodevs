@@ -204,7 +204,6 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         timelineDockWidget_ = new TimelineDockWidget( parent, controllers, config, model );
         timelineDockWidget_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timelineDockWidget_ );
-        model.actions_.SetTimelineHandler( timelineDockWidget_->GetWebView() );
         eventDockWidget_->SetTimelineHandler( timelineDockWidget_->GetWebView() );
         QObject::connect( timelineDockWidget_->GetWebView().get(), SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), &eventDockWidget_->GetPresenter(), SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
     }

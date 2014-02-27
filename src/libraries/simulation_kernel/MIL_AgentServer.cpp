@@ -4,7 +4,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentServer.h"
+#include "MagicOrderManager.h"
+
 #include "CheckPoints/MIL_CheckPointManager.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Workspace.h"
 #include "Entities/MIL_EntityManager.h"
@@ -139,6 +142,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pObjectFactory_       ( new MIL_ObjectFactory() )
     , pathfindTime_         ( 0 )
     , updateState_          ( false )
+    , magicOrders_          ( new MagicOrderManager() )
 {
     MIL_Time_ABC::RegisterTime( *this );
     loopTimer_.Start();
@@ -366,6 +370,7 @@ void MIL_AgentServer::SendStateToNewClient() const
 {
     pEntityManager_->SendStateToNewClient();
     pMeteoDataManager_->SendStateToNewClient();
+    magicOrders_->SendStateToNewClient();
 }
 
 // -----------------------------------------------------------------------------
@@ -387,7 +392,8 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 //         << pAgentServer_         // moi-même ( static )
          << nInitialRealTime_
          << nRealTime_
-         << localTime;
+         << localTime
+         << magicOrders_;
     pBurningCells_->save( file );
 }
 
@@ -409,7 +415,8 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 //         >> pAgentServer_
          >> nInitialRealTime_
          >> nRealTime_
-         >> localTime_;
+         >> localTime_
+         >> magicOrders_;
     pBurningCells_->load( file );
     pBurningCells_->finalizeLoad( GetEntityManager() );
 }
@@ -813,6 +820,15 @@ resource::ResourceTools_ABC& MIL_AgentServer::GetResourceTools() const
 {
     assert( pResourceTools_ );
     return *pResourceTools_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetMagicOrderManager
+// Created: BAX 2014-02-21
+// -----------------------------------------------------------------------------
+MagicOrderManager& MIL_AgentServer::GetMagicOrderManager() const
+{
+    return *magicOrders_;
 }
 
 // -----------------------------------------------------------------------------

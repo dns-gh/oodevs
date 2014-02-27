@@ -11,123 +11,127 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_EntityManager.h"
+
 #include "AgentFactory.h"
 #include "ArmyFactory.h"
 #include "AutomateFactory.h"
 #include "FormationFactory.h"
-#include "MIL_Army.h"
-#include "MIL_Formation.h"
-#include "MissionController.h"
-#include "MIL_EntityManagerStaticMethods.h"
-#include "PopulationFactory.h"
 #include "InhabitantFactory.h"
 #include "KnowledgesVisitor_ABC.h"
+#include "MagicOrderManager.h"
+#include "MIL_AgentServer.h"
+#include "MIL_Army.h"
+#include "MIL_EntityManagerStaticMethods.h"
+#include "MIL_Formation.h"
+#include "MissionController.h"
 #include "OnComponentComputer_ABC.h"
-#include "Agents/MIL_AgentTypePion.h"
-#include "Agents/MIL_AgentPion.h"
+#include "PopulationFactory.h"
+
 #include "Actions/PHY_FireResults_Default.h"
+#include "Adapters/Legacy/Sink.h"
 #include "Agents/Actions/Firing/PHY_FireResults_Pion.h"
-#include "Agents/Units/Categories/PHY_NatureLevel.h"
-#include "Agents/Units/Categories/PHY_NatureAtlas.h"
-#include "Agents/Units/Categories/PHY_RoePopulation.h"
-#include "Agents/Units/Categories/PHY_Volume.h"
-#include "Agents/Units/Categories/PHY_Protection.h"
-#include "Agents/Units/HumanFactors/PHY_Experience.h"
-#include "Agents/Units/HumanFactors/PHY_Stress.h"
-#include "Agents/Units/HumanFactors/PHY_Tiredness.h"
-#include "Agents/Units/HumanFactors/PHY_Morale.h"
-#include "Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
-#include "Agents/Units/Dotations/PHY_DotationType.h"
-#include "Agents/Units/Dotations/PHY_DotationLogisticType.h"
-#include "Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
-#include "Agents/Units/Dotations/PHY_AmmoDotationClass.h"
-#include "Agents/Units/Dotations/PHY_DotationNature.h"
-#include "Agents/Units/Weapons/PHY_LauncherType.h"
-#include "Agents/Units/Weapons/PHY_WeaponType.h"
-#include "Agents/Units/Sensors/PHY_SensorType.h"
-#include "Agents/Units/Radars/PHY_RadarType.h"
-#include "Agents/Units/Radars/PHY_RadarClass.h"
-#include "Agents/Units/Humans/PHY_HumanRank.h"
-#include "Agents/Units/Humans/PHY_HumanWound.h"
-#include "Agents/Units/Composantes/PHY_ComposanteTypePion.h"
-#include "Agents/Units/Composantes/PHY_ComposanteState.h"
-#include "Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
-#include "Agents/Units/Logistic/PHY_MaintenanceLevel.h"
+#include "Agents/MIL_AgentPion.h"
+#include "Agents/MIL_AgentTypePion.h"
+#include "Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
-#include "Agents/Roles/Logistic/SupplyConvoyConfig.h"
+#include "Agents/Roles/Logistic/FuneralConfig.h"
 #include "Agents/Roles/Logistic/PHY_MaintenanceResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_MedicalResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_SupplyResourcesAlarms.h"
-#include "Agents/Roles/Logistic/FuneralConfig.h"
-#include "Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Automates/MIL_AutomateType.h"
+#include "Agents/Roles/Logistic/SupplyConvoyConfig.h"
+#include "Agents/Units/Categories/PHY_NatureAtlas.h"
+#include "Agents/Units/Categories/PHY_NatureLevel.h"
+#include "Agents/Units/Categories/PHY_Protection.h"
+#include "Agents/Units/Categories/PHY_RoePopulation.h"
+#include "Agents/Units/Categories/PHY_Volume.h"
+#include "Agents/Units/Composantes/PHY_ComposanteState.h"
+#include "Agents/Units/Composantes/PHY_ComposanteTypePion.h"
+#include "Agents/Units/Dotations/PHY_AmmoDotationClass.h"
+#include "Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
+#include "Agents/Units/Dotations/PHY_DotationLogisticType.h"
+#include "Agents/Units/Dotations/PHY_DotationNature.h"
+#include "Agents/Units/Dotations/PHY_DotationType.h"
+#include "Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
+#include "Agents/Units/HumanFactors/PHY_Experience.h"
+#include "Agents/Units/HumanFactors/PHY_Morale.h"
+#include "Agents/Units/HumanFactors/PHY_Stress.h"
+#include "Agents/Units/HumanFactors/PHY_Tiredness.h"
+#include "Agents/Units/Humans/PHY_HumanRank.h"
+#include "Agents/Units/Humans/PHY_HumanWound.h"
+#include "Agents/Units/Logistic/PHY_MaintenanceLevel.h"
+#include "Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
+#include "Agents/Units/Radars/PHY_RadarClass.h"
+#include "Agents/Units/Radars/PHY_RadarType.h"
+#include "Agents/Units/Sensors/PHY_SensorType.h"
+#include "Agents/Units/Weapons/PHY_LauncherType.h"
+#include "Agents/Units/Weapons/PHY_WeaponType.h"
 #include "Automates/MIL_Automate.h"
+#include "Automates/MIL_AutomateType.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
-#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Logistic/SupplyDotationManualRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Objects/BurnSurfaceAttribute.h"
+#include "Entities/Objects/MIL_DisasterType.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
+#include "Entities/Objects/MIL_ObjectManager.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Populations/MIL_FlowCollisionManager.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
-#include "Entities/Objects/MIL_ObjectManager.h"
-#include "Entities/Objects/MIL_ObjectFactory.h"
-#include "Entities/Objects/MIL_DisasterType.h"
-#include "Entities/Orders/MIL_PopulationOrderManager.h"
-#include "propagation/FloodModel.h"
-#include "Inhabitants/MIL_InhabitantType.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Inhabitants/MIL_Inhabitant.h"
+#include "Inhabitants/MIL_InhabitantType.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Knowledge/KnowledgeGroupFactory.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "Knowledge/MIL_KnowledgeGroupType.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
-#include "MIL_AgentServer.h"
-#include "Tools/NET_AsnException.h"
+#include "Knowledge/KnowledgeGroupFactory.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/MIL_KnowledgeGroupType.h"
+#include "MT_Tools/MT_FormatString.h"
+#include "MT_Tools/MT_Logger.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Objects/MIL_FireClass.h"
 #include "Objects/MIL_NbcAgentType.h"
 #include "Objects/MIL_Object_ABC.h"
 #include "Orders/MIL_LimaFunction.h"
 #include "Orders/MIL_Report.h"
-#include "Populations/MIL_PopulationType.h"
-#include "Populations/MIL_PopulationAttitude.h"
 #include "Populations/MIL_Population.h"
-#include "Tools/MIL_IDManager.h"
-#include "Tools/MIL_Config.h"
-#include "Tools/MIL_ProfilerManager.h"
-#include "Tools/MIL_Tools.h"
-#include "Tools/MIL_DictionaryExtensions.h"
-#include "Tools/MIL_MessageParameters.h"
-#include "tools/SchemaWriter.h"
-#include "MT_Tools/MT_FormatString.h"
-#include "MT_Tools/MT_Logger.h"
+#include "Populations/MIL_PopulationAttitude.h"
+#include "Populations/MIL_PopulationType.h"
+#include "propagation/FloodModel.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/Protocol.h"
 #include "resource_network/ResourceNetworkModel.h"
 #include "tools/Loader_ABC.h"
+#include "Tools/MIL_Config.h"
+#include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MIL_IDManager.h"
+#include "Tools/MIL_MessageParameters.h"
+#include "Tools/MIL_ProfilerManager.h"
+#include "Tools/MIL_Tools.h"
+#include "Tools/NET_AsnException.h"
+#include "tools/SchemaWriter.h"
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/MIL_UrbanObject.h"
+#include "Urban/PHY_AccomodationType.h"
 #include "Urban/PHY_InfrastructureType.h"
 #include "Urban/PHY_MaterialCompositionType.h"
-#include "Urban/PHY_AccomodationType.h"
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Urban/PHY_RoofShapeType.h"
+
 #include <boost/lexical_cast.hpp>
 #include <tuple>
-
-#include "Adapters/Legacy/Sink.h"
 
 using namespace sword;
 
@@ -249,18 +253,16 @@ void save_construct_data( Archive& archive, const MIL_EntityManager* manager, co
     //archive << armyFactory_
     //        << formationFactory_
     //        <<
-    const Sink_ABC* sink = manager->sink_.get();
-    archive << sink;
+    archive << manager->sink_;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_EntityManager* manager, const unsigned int /*version*/ )
 {
-    Sink_ABC* sink;
+    std::auto_ptr< Sink_ABC > sink;
     archive >> sink;
-    std::auto_ptr< Sink_ABC > pSink( sink );
     ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(), MIL_EffectManager::GetEffectManager(),
-                                       pSink,
+                                       sink,
                                        MIL_AgentServer::GetWorkspace().GetConfig() );
 }
 
@@ -295,9 +297,9 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
-    , sink_                         ( std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) ))
+    , sink_                         ( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
-    , pFloodModel_                  ( sink_->CreateFloodModel() )
+    , pFloodModel_                  ( sink_->CreateFloodModel().release() )
     , automateFactory_              ( new AutomateFactory( *idManager_, *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
@@ -329,7 +331,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rEffectsTime_                 ( 0 )
     , rStatesTime_                  ( 0 )
     , idManager_                    ( new MIL_IDManager() )
-    , sink_                         ( sink )
+    , sink_                         ( sink.release() )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() ) // todo : delete if saved in checkpoint
 {
     // NOTHING
@@ -1085,13 +1087,16 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
 void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::UnitMagicActionAck ack;
-
+    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
+    const auto magicId = magics.Register( message );
+    ack().set_id( magicId );
     const auto tasker = protocol::TryGetTasker( message.tasker() );
     if( !tasker )
     {
         ack().mutable_unit()->set_id( 0 );
         ack().set_error_code( UnitActionAck::error_invalid_unit );
         ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+        magics.Send( magicId );
         return;
     }
     const auto id = *tasker;
@@ -1228,6 +1233,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
         ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    magics.Send( magicId );
 }
 
 // -----------------------------------------------------------------------------
@@ -1458,7 +1464,10 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
+    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
+    const auto magicId = magics.Register( message );
     client::KnowledgeGroupMagicActionAck ack;
+    ack().set_id( magicId );
     ack().mutable_knowledge_group()->set_id( message.knowledge_group().id() );
     ack().set_error_code( KnowledgeGroupAck::no_error );
     try
@@ -1479,6 +1488,7 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
         ack().set_error_msg( e.what() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    magics.Send( magicId );
 }
 
 // -----------------------------------------------------------------------------
@@ -1569,7 +1579,10 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message, unsigned int nCtx, unsigned int clientId )
 {
+    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
+    const auto magicId = magics.Register( message );
     client::SetAutomatModeAck ack;
+    ack().set_id( magicId );
     ack().mutable_automate()->set_id( message.automate().id() );
     ack().set_error_code( SetAutomatModeAck::no_error );
     try
@@ -1584,6 +1597,7 @@ void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message,
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    magics.Send( magicId );
 }
 
 // -----------------------------------------------------------------------------
@@ -1614,7 +1628,10 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest&
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    pObjectManager_->OnReceiveObjectMagicAction( message, nCtx, clientId, *armyFactory_, *pFloodModel_ );
+    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
+    const auto magicId = magics.Register( message );
+    pObjectManager_->OnReceiveObjectMagicAction( message, nCtx, clientId, magicId, *armyFactory_, *pFloodModel_ );
+    magics.Send( magicId );
 }
 
 // -----------------------------------------------------------------------------
@@ -1821,7 +1838,7 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
     std::set< const PHY_DotationCategory* > quotasTypes;
     const sword::MissionParameter& quotas = message.parameters().elem( 1 );
     const boost::shared_ptr< logistic::LogisticLink_ABC > superiorLink = pSupplied->FindSuperiorLink( *pSupplier );
-    if( !superiorLink.get() )
+    if( !superiorLink )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver superior logistic link" );
 
     quotasTypes = superiorLink->OnReceiveChangeQuotas( quotas );
@@ -2408,26 +2425,16 @@ bool MIL_EntityManager::IsInhabitantsEvacuated( const TER_Localisation& localisa
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    ArmyFactory_ABC * armyFactory;
-    FormationFactory_ABC * formationFactory;
-    AutomateFactory_ABC * automateFactory;
-    AgentFactory_ABC * agentFactory;
-    PopulationFactory_ABC * populationFactory;
-    InhabitantFactory_ABC * inhabitantFactory;
-    KnowledgeGroupFactory * knowledgeGroupFactory;
-    MIL_ObjectManager* objectManager;
-    MissionController_ABC* missionController;
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
-         >> knowledgeGroupFactory;
-    knowledgeGroupFactory_.reset( knowledgeGroupFactory );
-    file >> armyFactory
-         >> formationFactory//@TODO MGD serialize
-         >> agentFactory
-         >> automateFactory
-         >> populationFactory
-         >> inhabitantFactory
-         >> objectManager
-         >> missionController
+         >> knowledgeGroupFactory_;
+    file >> armyFactory_
+         >> formationFactory_//@TODO MGD serialize
+         >> agentFactory_
+         >> automateFactory_
+         >> populationFactory_
+         >> inhabitantFactory_
+         >> pObjectManager_
+         >> missionController_
          >> rKnowledgesTime_
          >> rAutomatesDecisionTime_
          >> rPionsDecisionTime_
@@ -2438,31 +2445,21 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> nRandomBreakdownsNextTimeStep_
          >> cities_
          >> MIL_Report::nextMessageId_;
-
-    MIL_AgentServer::GetWorkspace().GetUrbanCache().CreateQuadTree(
+    auto& wk = MIL_AgentServer::GetWorkspace();
+    wk.GetUrbanCache().CreateQuadTree(
         cities_,
         geometry::Rectangle2d(
             geometry::Point2d( 0, 0 ),
-            geometry::Point2d(
-                MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainWidth(),
-                MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainHeight() ) ) );
-    armyFactory_.reset( armyFactory );
-    formationFactory_.reset( formationFactory );
-    agentFactory_.reset( agentFactory );
-    automateFactory_.reset( automateFactory );
-    populationFactory_.reset( populationFactory );
-    inhabitantFactory_.reset( inhabitantFactory );
-    pFloodModel_ = sink_->CreateFloodModel();
-    pObjectManager_.reset( objectManager );
+            geometry::Point2d( wk.GetConfig().GetTerrainWidth(), wk.GetConfig().GetTerrainHeight() ) ) );
+    pFloodModel_.reset( sink_->CreateFloodModel().release() );
     pObjectManager_->FinalizeObjects( *pFloodModel_ );
-    missionController_.reset( missionController );
-    missionController_->Initialize( *sink_, *populationFactory );
+    missionController_->Initialize( *sink_, *populationFactory_ );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , sink_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , pObjectManager_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocks().size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d urbans"     , wk.GetUrbanCache().GetUrbanBlocks().size() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -2471,26 +2468,16 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    const ArmyFactory_ABC * const tempArmy = armyFactory_.get();
-    const FormationFactory_ABC * const tempFormationFactory = formationFactory_.get();
-    const AgentFactory_ABC * const tempAgentFactory = agentFactory_.get();
-    const AutomateFactory_ABC * const tempAutomateFactory = automateFactory_.get();
-    const PopulationFactory_ABC * const populationFactory = populationFactory_.get();
-    const InhabitantFactory_ABC * const inhabitantFactory = inhabitantFactory_.get();
-    const KnowledgeGroupFactory* const knowledgeGroupFactory = knowledgeGroupFactory_.get();
-    const MIL_ObjectManager* const objectManager = pObjectManager_.get();
-    const MissionController_ABC* const missionController = missionController_.get();
-
          //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
-    file << knowledgeGroupFactory; // LTO
-    file << tempArmy
-         << tempFormationFactory
-         << tempAgentFactory
-         << tempAutomateFactory
-         << populationFactory
-         << inhabitantFactory
-         << objectManager
-         << missionController
+    file << knowledgeGroupFactory_; // LTO
+    file << armyFactory_
+         << formationFactory_
+         << agentFactory_
+         << automateFactory_
+         << populationFactory_
+         << inhabitantFactory_
+         << pObjectManager_
+         << missionController_
          << rKnowledgesTime_
          << rAutomatesDecisionTime_
          << rPionsDecisionTime_
@@ -2646,7 +2633,7 @@ const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const
 // Name: MIL_EntityManager::ConvertUrbanIdToSimId
 // Created: JSR 2011-01-18
 // -----------------------------------------------------------------------------
-unsigned int MIL_EntityManager::ConvertUrbanIdToSimId( unsigned int urbanId )
+unsigned int MIL_EntityManager::ConvertUrbanIdToSimId( unsigned int urbanId ) const
 {
     for( auto it = cities_.begin(); it != cities_.end(); ++it )
     {
