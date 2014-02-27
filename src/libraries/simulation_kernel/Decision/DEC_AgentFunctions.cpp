@@ -46,6 +46,7 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
+#include "Entities/Agents/Units/Logistic/PHY_BreakdownType.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_Suicide.h"
 #include "Entities/Specialisations/LOG/Medical/MIL_AgentTypePionLOGMedical.h"
@@ -1777,4 +1778,18 @@ double DEC_AgentFunctions::GetMaxSpeed( const DEC_Decision_ABC& agent )
 {
     const moving::PHY_RoleAction_InterfaceMoving& roleMoving = agent.GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >();
     return MIL_Tools::ConvertSecondsToSim( roleMoving.GetMaxSpeed() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CreateBreakdown
+// Created: LGY 2014-02-26
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CreateBreakdown( MIL_Agent_ABC& callerAgent, unsigned int type, unsigned int breakdown )
+{
+    const PHY_BreakdownType* breakdownType = PHY_BreakdownType::Find( breakdown );
+    const PHY_ComposanteTypePion* composanteType = PHY_ComposanteTypePion::Find( type );
+    if( breakdownType && composanteType )
+        return callerAgent.GetRole< PHY_RolePion_Composantes >().
+            CreateBreakdowns( *composanteType, 1, breakdownType );
+    return false;
 }
