@@ -1,19 +1,12 @@
--------------------------------------------------------------------------------
--- Communication Implementation
--- @author MGD
--- @created 2010-01-15
--- @modified MGD 2010-04-16
---
--- This file is part of a MASA library or program.
--- Refer to the included end-user license agreement for restrictions.
---
--- Copyright (c) 2010 MASA Group
--------------------------------------------------------------------------------
+-------------------------------------------------------------------
+---- COMMUNICATIONINTEGRATION INTERFACE IMPLEMENTATION
+-------------------------------------------------------------------
 
 integration.taskKnowledge = {}
 
 integration.communication = {}
 
+--- Defines the mission type parameters in the table myself.ParameterListRegistrationFunctor
 initializeAssignMissions = function()
     local myself = myself
     myself.ParameterRegistrationFunctor = {}
@@ -46,6 +39,9 @@ initializeAssignMissions = function()
     myself.ParameterListRegistrationFunctor[integration.ontology.types.population] = DEC_AssignMissionCrowdListParameter
 end
 
+--- Returns the given parameter's type
+-- @param param, A parameter
+-- @return The type of the given parameter
 local function InferType( param )
     if param.GetTypeName then
         return param:GetTypeName()
@@ -56,12 +52,22 @@ local function InferType( param )
     end
 end
 
+--- Assign parameters to the given mission
+-- @param missionPion, The mission
+-- @param parameterName, The name of the parameter (Adaptation tool, tab 'missions', part 'parameters', column 'name')
+-- @param parameterType, The type of the parameter (Adaptation tool, tab 'missions', part 'parameters', column 'type')
+-- @param value, The value og the parameter, filling by the user when he give a mission
+-- @return Error code
 local AssignMissionParameter = function ( missionPion, parameterName, parameterType, value )
     if not myself.ParameterRegistrationFunctor then initializeAssignMissions() end
     if not myself.ParameterRegistrationFunctor[ parameterType ] then error( "No parameter assignment for "..tostring( parameterType ) ) end
     return myself.ParameterRegistrationFunctor[ parameterType ](missionPion, parameterName, value )
 end
 
+--- Assign list parameters to the given mission
+-- @param missionPion, The mission
+-- @param parameterName, The name of the parameter (Adaptation tool, tab 'missions', part 'parameters', column 'name')
+-- @param value, The value og the parameter, filling by the user when he give a mission
 local AssignMissionParameterList = function ( missionPion, parameterName, value )
     local myself = myself
     if not myself.ParameterListRegistrationFunctor then initializeAssignMissions() end
@@ -91,6 +97,11 @@ local AssignMissionParameterList = function ( missionPion, parameterName, value 
     end
 end
 
+--- Fill all parameters of the given mission
+-- @see AssignMissionParameter
+-- @see AssignMissionParameterList
+-- @param mission, The mission
+-- @param params, The list of mission's parameters (Adaptation tool, tab 'missions', part 'parameters'). For each element we have the parameter's name and the parameter's value
 local function fillParameters( mission, params )
     local masalife = masalife
     for parameterName, parameterValue in pairs( params ) do
