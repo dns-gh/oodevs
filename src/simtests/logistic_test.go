@@ -1215,13 +1215,12 @@ func (SupplyDeleteChecker) Check(c *C, ctx *SupplyCheckContext, msg *sword.SimTo
 	return true
 }
 
-func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, checkers ...SupplyChecker) {
+func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, resource ResourceType, checkers ...SupplyChecker) {
 	client.Pause()
 	check := SupplyCheckContext{
 		data:    client.Model.GetData(),
 		unitId:  unit.Id,
 		errors:  make(chan error),
-		verbose: true,
 	}
 	idx := 0
 	quit := make(chan struct{})
@@ -1250,12 +1249,12 @@ func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, check
 		return false
 	})
 	defer client.Unregister(ctx)
-	resource := swapi.ResourceDotation{
-		Quantity:  0,
-		Threshold: 50,
-	}
 	err := client.ChangeDotation(unit.Id,
-		map[uint32]*swapi.ResourceDotation{uint32(electrogen_1): &resource})
+		map[uint32]*swapi.ResourceDotation{
+			uint32(resource): &swapi.ResourceDotation{
+				Quantity:  0,
+				Threshold: 50,
+			}})
 	c.Assert(err, IsNil)
 	client.Resume(0)
 	select {
@@ -1273,13 +1272,13 @@ func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, check
 	c.Assert(idx, Equals, len(checkers))
 }
 
-func checkSupplyUpdates(c *C, client *swapi.Client, unit *swapi.Unit, provider *sword.Tasker, updates []SupplyUpdateChecker) {
+func checkSupplyUpdates(c *C, client *swapi.Client, unit *swapi.Unit, provider *sword.Tasker, resource ResourceType, updates []SupplyUpdateChecker) {
 	checkers := []SupplyChecker{&SupplyCreateChecker{provider, provider}}
 	for i := range updates {
 		checkers = append(checkers, &updates[i])
 	}
 	checkers = append(checkers, SupplyDeleteChecker{})
-	checkSupply(c, client, unit, -1, checkers...)
+	checkSupply(c, client, unit, -1, resource, checkers...)
 }
 
 func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
@@ -1287,8 +1286,34 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
-	supply2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id)
-	checkSupplyUpdates(c, client, unit, supply2, []SupplyUpdateChecker{
+	supplyId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
+	supply := swapi.MakeAutomatTasker(supplyId)
+	checkSupplyUpdates(c, client, unit, supply, electrogen_1, []SupplyUpdateChecker{
+		{"convoy_waiting_for_transporters"},
+		{"convoy_setup"},
+		{"convoy_moving_to_loading_point"},
+		{"convoy_loading"},
+		{"convoy_moving_to_unloading_point"},
+		{"convoy_unloading"},
+		{"convoy_moving_back_to_loading_point"},
+		{"convoy_finished"},
+	})
+	automat := getSomeAutomatByName(c, d, "Supply Mobile Infantry Platoon")
+	supply2Id := getSomeAutomatByName(c, d, "Supply Log Automat 1d").Id
+	supply2 := swapi.MakeAutomatTasker(supply2Id)
+	err := client.LogisticsChangeLinks(automat.Id, []uint32{supplyId,supply2Id})
+	c.Assert(err, IsNil)
+	checkSupplyUpdates(c, client, unit, supply2, electrogen_2, []SupplyUpdateChecker{
+		{"convoy_waiting_for_transporters"},
+		{"convoy_setup"},
+		{"convoy_moving_to_loading_point"},
+		{"convoy_loading"},
+		{"convoy_moving_to_unloading_point"},
+		{"convoy_unloading"},
+		{"convoy_moving_back_to_loading_point"},
+		{"convoy_finished"},
+	})
+	checkSupplyUpdates(c, client, unit, supply, electrogen_1, []SupplyUpdateChecker{
 		{"convoy_waiting_for_transporters"},
 		{"convoy_setup"},
 		{"convoy_moving_to_loading_point"},

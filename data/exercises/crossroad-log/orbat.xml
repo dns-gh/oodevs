@@ -58,37 +58,26 @@
           </automat>
         </formation>
         <formation id="176" level="xxxx" name="Supply F3" symbol="symbols/sfgpu">
-          <formation id="177" level="xx" name="Supply F2" symbol="symbols/sfgpu">
-            <formation id="130" level="x" name="Supply F1" symbol="symbols/sfgpu">
-              <automat engaged="true" id="131" knowledge-group="3" name="Supply Mobile Infantry Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
-                <unit command-post="true" id="132" name="Supply Mobile Infantry" position="28RDS1390241628" type="Mobile Infantry"/>
-                <unit command-post="false" id="133" name="Supply Mobile Infantry" position="28RDS1387641647" type="Mobile Infantry"/>
-                <unit command-post="false" id="134" name="Supply Mobile Infantry" position="28RDS1381641649" type="Mobile Infantry"/>
-                <unit command-post="false" id="135" name="Supply Mobile Infantry" position="28RDS1384341631" type="Mobile Infantry"/>
-              </automat>
-              <automat engaged="true" id="180" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1c" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
-                <unit command-post="true" id="181" name="Supply Log Unit 1c" position="28RDS1376141521" type="Supply Log Unit 1">
-                  <stocks>
-                    <resource name="electrogen 1" quantity="50"/>
-                  </stocks>
-                </unit>
-              </automat>
-            </formation>
-            <formation id="178" level="x" logistic-level="logistic-base" name="Supply BLD" symbol="symbols/sfgpuss">
-              <automat engaged="true" id="182" knowledge-group="3" name="Supply Log Automat 1d" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
-                <unit command-post="true" id="183" name="Supply Log Unit 1d" position="28RDS1385341492" type="Supply Log Unit 1">
-                  <stocks>
-                    <resource name="electrogen 2" quantity="50"/>
-                  </stocks>
-                </unit>
-              </automat>
-            </formation>
-          </formation>
-          <formation id="179" level="xx" logistic-level="logistic-base" name="Supply BLT" symbol="symbols/sfgpuss">
-            <automat engaged="true" id="184" knowledge-group="3" name="Supply Log Automat 1e" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
-              <unit command-post="true" id="185" name="Supply Log Unit 1e" position="28RDS1393741466" type="Supply Log Unit 1">
+          <formation id="130" level="x" logistic-level="logistic-base" name="Supply F1" symbol="symbols/sfgpu">
+            <automat engaged="true" id="131" knowledge-group="3" name="Supply Mobile Infantry Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
+              <unit command-post="true" id="132" name="Supply Mobile Infantry" position="28RDS1390241628" type="Mobile Infantry"/>
+              <unit command-post="false" id="133" name="Supply Mobile Infantry" position="28RDS1387641647" type="Mobile Infantry"/>
+              <unit command-post="false" id="134" name="Supply Mobile Infantry" position="28RDS1381641649" type="Mobile Infantry"/>
+              <unit command-post="false" id="135" name="Supply Mobile Infantry" position="28RDS1384341631" type="Mobile Infantry"/>
+            </automat>
+            <automat engaged="true" id="180" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1c" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
+              <unit command-post="true" id="181" name="Supply Log Unit 1c" position="28RDS1376141521" type="Supply Log Unit 1">
                 <stocks>
-                  <resource name="electrogen 3" quantity="50"/>
+                  <resource name="electrogen 1" quantity="50"/>
+                </stocks>
+              </unit>
+            </automat>
+          </formation>
+          <formation id="177" level="xx" logistic-level="logistic-base" name="Supply F2" symbol="symbols/sfgpuss">
+            <automat engaged="true" id="182" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1d" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
+              <unit command-post="true" id="183" name="Supply Log Unit 1d" position="28RDS1385341492" type="Supply Log Unit 1">
+                <stocks>
+                  <resource name="electrogen 2" quantity="50"/>
                 </stocks>
               </unit>
             </automat>
@@ -124,12 +113,6 @@
         </logistic-base>
         <logistic-base id="180">
           <subordinate id="131"/>
-        </logistic-base>
-        <logistic-base id="178">
-          <subordinate id="180"/>
-        </logistic-base>
-        <logistic-base id="179">
-          <subordinate id="178"/>
         </logistic-base>
       </logistics>
     </party>
