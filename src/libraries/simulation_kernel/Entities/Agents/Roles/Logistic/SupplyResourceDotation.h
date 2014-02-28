@@ -57,4 +57,4 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( logistic::SupplyResourceDotation )
 
-#endif // __SupplyRequestContainer_ABC_h_
+#endif // __SupplyResourceDotation_h_
