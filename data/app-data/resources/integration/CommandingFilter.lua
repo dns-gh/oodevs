@@ -127,9 +127,9 @@ integration.nbPlatoonsHaveTask = function( listPlatoonAlly, targetTask )
     return nb
 end
 
---- Returns true if the automat is moving (indeed one of his agents), 0 otherwise
+--- Returns true if the automat is moving (indeed one of his agents), false otherwise
 -- @param company, DirectIA automat
--- @return Boolean, true if the automat is moving (indeed one of his agents), 0 otherwise
+-- @return Boolean, true if the automat is moving (indeed one of his agents), false otherwise
 integration.isCompanyMoving = function( company )
     local subordinates = company.source:DEC_Automate_PionsAvecPC()
     for _, subordinate in pairs( subordinates or emptyTable ) do
@@ -140,9 +140,9 @@ integration.isCompanyMoving = function( company )
     return false
 end
 
---- Returns true if the automat is flying (indeed all of his agents), 0 otherwise
+--- Returns true if the automat is flying (indeed all of his agents), false otherwise
 -- @param company, DirectIA automat
--- @return Boolean, true if the automat is moving (indeed all of his agents), 0 otherwise
+-- @return Boolean, true if the automat is moving (indeed all of his agents), false otherwise
 integration.isCompanyFlying = function( company )
     local subordinates = company.source:DEC_Automate_PionsAvecPC()
     local flyingUnits = {}
