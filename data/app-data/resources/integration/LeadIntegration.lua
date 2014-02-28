@@ -381,7 +381,7 @@ local isHQTaskUsingRelievingUnit = function( self, hqUnit, unit, param )
     return false
 end
 
-local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
+local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask, newOperationnalEntities )
     local integration = integration
     local myself = myself
     local meKnowledge = meKnowledge
@@ -397,7 +397,6 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
     self.listenFrontElementInitialized = false
     local oldEntities = self.parameters.commandingEntities
     local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
-    local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
 
     local echelons = integration.getPionsInEchelons( newEntities )
     local pionsPE = echelons[1]
@@ -947,7 +946,7 @@ integration.leadActivate = function( self, findBestsFunction )
     end
 
     if self.params.manageAddedAndDeletedUnits ~= false then
-        manageAddedAndDeletedUnits( self, findBestsFunction )
+        manageAddedAndDeletedUnits( self, findBestsFunction, nil, self.operationnalEntities )
     end
 
     local Activate = Activate
@@ -1030,7 +1029,7 @@ integration.leadDelayActivate = function( self, disengageTask )
         return
     end
 
-    manageAddedAndDeletedUnits( self, findBests, disengageTask )
+    manageAddedAndDeletedUnits( self, findBests, disengageTask, self.operationnalEntities )
     
     -- Mis à jour des echelons
     integration.setPionsEchelons( myself.leadData.pionsLima1, eEtatEchelon_First )
