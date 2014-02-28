@@ -21,6 +21,7 @@ ParamLocation_ABC< BaseParameter >::ParamLocation_ABC( const InterfaceBuilder_AB
     pPosLabel_ = new QLabel( "---" );
     pPosLabel_->setMinimumWidth( 100 );
     pPosLabel_->setAlignment( Qt::AlignCenter );
+    ActivateSwitchEditor( parameter_.GetType() == "point" );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,8 +44,10 @@ template< typename BaseParameter >
 QWidget* ParamLocation_ABC< BaseParameter >::BuildInterface( const QString& objectName, QWidget* parent )
 {
     Param_ABC::BuildInterface( objectName, parent );
-    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    QHBoxLayout* layout = new QHBoxLayout( group_ );
     layout->addWidget( pPosLabel_ );
+    if( needSwitchEditor_ )
+        layout->addWidget( CreateSwitchEditor() );
     return group_;
 }
 
@@ -202,4 +205,15 @@ template< typename BaseParameter >
 void ParamLocation_ABC< BaseParameter >::Visit( const actions::parameters::Location& param )
 {
     InternalVisit( param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation_ABC::Purge
+// Created: ABR 2014-02-27
+// -----------------------------------------------------------------------------
+template< typename BaseParameter >
+void ParamLocation_ABC< BaseParameter >::Purge()
+{
+    location_.reset();
+    pPosLabel_->setText( "---" );
 }

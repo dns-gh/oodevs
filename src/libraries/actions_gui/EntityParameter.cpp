@@ -21,6 +21,8 @@ EntityParameterBase::EntityParameterBase( const InterfaceBuilder_ABC& builder, c
     : Param_ABC( builder, parameter )
 {
     entityLabel_ = new QLabel();
+    entityLabel_->setMinimumWidth( 100 );
+    entityLabel_->setAlignment( Qt::AlignCenter );
     Display( "---" );
 }
 
@@ -40,10 +42,10 @@ EntityParameterBase::~EntityParameterBase()
 QWidget* EntityParameterBase::BuildInterface( const QString& objectName, QWidget* parent )
 {
     Param_ABC::BuildInterface( objectName, parent );
-    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    QHBoxLayout* layout = new QHBoxLayout( group_ );
     layout->addWidget( entityLabel_ );
-    entityLabel_->setMinimumWidth( 100 );
-    entityLabel_->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
+    if( needSwitchEditor_ )
+        layout->addWidget( CreateSwitchEditor() );
     return group_;
 }
 

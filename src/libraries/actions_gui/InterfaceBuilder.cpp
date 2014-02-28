@@ -33,6 +33,7 @@
 #include "ParamObjectKnowledge.h"
 #include "ParamObstacle.h"
 #include "ParamPath.h"
+#include "ParamPoint.h"
 #include "ParamPopulationKnowledge.h"
 #include "ParamQuantity.h"
 #include "ParamResourceNetworkNode.h"

@@ -43,13 +43,20 @@ namespace
     public:
         ParameterChoiceVisitor( ParamLocationComposite& paramcomposite )
             : paramcomposite_( paramcomposite )
+            , hasPoint_( false )
         {}
         virtual void Visit( const std::string& type )
         {
             paramcomposite_.AddElement( type );
+            hasPoint_ |= type == "point";
+        }
+        bool HasPoint() const
+        {
+            return hasPoint_;
         }
     private:
         ParamLocationComposite& paramcomposite_;
+        bool hasPoint_;
     };
 }
 
@@ -65,6 +72,8 @@ ParamLocationComposite::ParamLocationComposite( const InterfaceBuilder_ABC& buil
 {
     ParameterChoiceVisitor visitor( *this );
     parameter.Accept( visitor );
+    for( auto it = params_.begin(); it != params_.end(); ++it )
+        ( *it )->ActivateSwitchEditor( visitor.HasPoint() );
 }
 
 // -----------------------------------------------------------------------------
@@ -410,4 +419,35 @@ bool ParamLocationComposite::HasParameter( const Param_ABC& param ) const
         if( ( *it )->HasParameter( param ) )
             return true;
     return Param_ABC::HasParameter( param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::SetSwitchEditorChecked
+// Created: ABR 2014-02-27
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::SetSwitchEditorChecked( bool checked )
+{
+    for( auto it = params_.begin(); it != params_.end(); ++it )
+        ( *it )->SetSwitchEditorChecked( checked );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::OnSwitchEditorClicked
+// Created: ABR 2014-02-27
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::OnSwitchEditorClicked( bool checked )
+{
+    for( int i = 0; i < params_.size(); ++i )
+    {
+        auto param = params_[ i ];
+        param->SetSwitchEditorChecked( checked );
+        if( param->GetType() == "point" )
+        {
+            selectedParam_ = param;
+            stack_->setCurrentIndex( i );
+        }
+        else
+            param->Purge();
+    }
+    Update();
 }

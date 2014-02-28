@@ -187,6 +187,13 @@
     </message>
 </context>
 <context>
+    <name>actions::gui::ParamPoint</name>
+    <message>
+        <source>Feature</source>
+        <translation>Element</translation>
+    </message>
+</context>
+<context>
     <name>gui::ObstaclePrototype_ABC</name>
     <message>
         <source>Activity time:</source>
