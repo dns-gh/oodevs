@@ -4,7 +4,7 @@
 
 --- Returns all platoons in the company
 -- This method can only be called by a company
--- @return list of platoons
+-- @return list of DirectIA agents
 integration.defaultPlatoonInCompany = function( )
     local allRes = {}
     local listPlatoon = DEC_Automate_PionsAvecPCCommunication()
@@ -16,10 +16,10 @@ integration.defaultPlatoonInCompany = function( )
     return allRes
 end
 
---- Filter a list of Simulation agents corresponding to the given role
--- @param listPlatoonAlly, A list of Simulation agents
+--- Filter a list of agents corresponding to the given role
+-- @param listPlatoonAlly, A list of DirectIA agents
 -- @param role, The role to find (Adaptation tools, tab "units", "type" field)
--- @return list of platoons with the appropriate role
+-- @return list of DirectIA agents with the appropriate role
 integration.filterPionWithRole = function( listPlatoonAlly, role )
     local _res =  {}
     for _,x in pairs( listPlatoonAlly or emptyTable ) do
@@ -30,10 +30,10 @@ integration.filterPionWithRole = function( listPlatoonAlly, role )
     return _res
 end
 
---- Filter a list of Simulation agents corresponding to the given echelon level
--- @param listPlatoonAlly, A list of Simulation agents
+--- Filter a list of agents corresponding to the given echelon level
+-- @param listPlatoonAlly, A list of DirectIA agents
 -- @param echelon, The echelon level to find (eEtatEchelon_None, eEtatEchelon_Second, eEtatEchelon_First, eEtatEchelon_Scout, eEtatEchelon_Reserve)
--- @return list of Simulation agents with the appropriate echelon
+-- @return list of DirectIA agents with the appropriate echelon
 integration.filterPionWithEchelon = function( listPlatoonAlly, echelon )
     local _res =  {}
     for _,x in pairs( listPlatoonAlly or emptyTable ) do
@@ -44,14 +44,14 @@ integration.filterPionWithEchelon = function( listPlatoonAlly, echelon )
     return _res
 end
 
--- Return a tab of Simulation agents sorting by the echelon level
--- @param pions, A list of Simulation agents
--- @return tab of Simulation agents sorting by the echelon level like
--- @return tab[1]: list of Simulation agents in first echelon
--- @return tab[2]: list of Simulation agents  second echelon and in the reserve
--- @return tab[3]: list of Simulation agents in scout echelon 
--- @return tab[4]: list of Simulation agents in reserve echelon 
--- @return tab[5]: list of Simulation agents none
+-- Return a table of agents sorted by the echelon level
+-- @param pions, A list of DirectIA agents
+-- @return table of DirectIA agents sorting by the echelon level like
+-- @return tab[1]: list of DirectIA agents in first echelon
+-- @return tab[2]: list of DirectIA agents in second echelon and in the reserve
+-- @return tab[3]: list of DirectIA agents in scout echelon 
+-- @return tab[4]: list of DirectIA agents in reserve echelon 
+-- @return tab[5]: list of DirectIA agents in none echelon
 integration.getPionsInEchelons = function( pions )
  
     local result = { {}, {}, {}, {}, {} }
@@ -73,18 +73,18 @@ integration.getPionsInEchelons = function( pions )
      return result
  end
 
--- Modify the echelon of all Simulation agents with the given echelon
--- @param pions, A list of Simulation agents
--- @param echelon, The echelon level to find (eEtatEchelon_None, eEtatEchelon_Second, eEtatEchelon_First, eEtatEchelon_Scout, eEtatEchelon_Reserve)
+-- Modify the echelon of all agents with the given echelon
+-- @param pions, A list of DirectIA agents
+-- @param echelon, The echelon level to set (eEtatEchelon_None, eEtatEchelon_Second, eEtatEchelon_First, eEtatEchelon_Scout, eEtatEchelon_Reserve)
 integration.setPionsEchelons = function( pions, echelon )
      for _, pion in pairs( pions ) do
        F_Pion_SeteEtatEchelon( pion.source, echelon )
      end
  end
  
--- Return a tab of Simulation agents sorting by the echelon level
--- @param listPlatoonAlly, A list of Simulation agents
--- @return tab of Simulation agents indexed by echelon level
+-- Return a table of agents sorting by the echelon level
+-- @param listPlatoonAlly, A list of DirectIA agents
+-- @return list of DirectIA agents indexed by echelon level
 integration.filterPionByEchelon = function( listPlatoonAlly )
     local _res =  {}
     for _,x in pairs( listPlatoonAlly or emptyTable ) do
@@ -98,23 +98,25 @@ integration.filterPionByEchelon = function( listPlatoonAlly )
     return _res
 end
 
---- Number of platoons in automat with a reconnaissance efficiency (Adaptation tool, tab "units", part "skills", filed "Recon" ) upper than 80%
--- @param listPlatoonAlly, A list of Simulation agents
--- @return Integer, the number of Simulation agents with a good reconnaissance efficiency
-integration.reconPlatoons = function( listPlatoonAlly )
+--- Returns the number of agents in automat with a reconnaissance efficiency (Adaptation tool, tab "units", part "skills", filed "Recon" ) greater than the given minEfficiency (80 by default)
+-- @param listPlatoonAlly, A list of DirectIA agents
+-- @param minEfficiency, An percentage of efficiency (80 by default)
+-- @return Integer, the number of DirectIA agents with a good reconnaissance efficiency
+integration.reconPlatoons = function( listPlatoonAlly, minEfficiency )
+    minEfficiency = minEfficiency or 80
     local nb =  0
     for _, platoon in pairs( listPlatoonAlly or emptyTable ) do
-       if platoon:computePhysicalEfficiency( ePionEfficiencyRecon ) > 80 then
+       if platoon:computePhysicalEfficiency( ePionEfficiencyRecon ) > minEfficiency then
         nb = nb + 1 
        end
     end
     return nb
 end
 
---- Number of platoons in automat who have the targetTask  (Adaptation tool, tab "Doctrine models")
--- @param listPlatoonAlly, A list of Simulation agents
+--- Number of agents in automat who can perform the given targetTask  (Adaptation tool, tab "Doctrine models")
+-- @param listPlatoonAlly, A list of DirectIA agents
 -- @param targetTask, A task name
--- @return Integer, the number of Simulation agents with the specific task
+-- @return Integer, the number of DirectIA agents with the specific task
 integration.nbPlatoonsHaveTask = function( listPlatoonAlly, targetTask )
     local nb =  0
     for _, platoon in pairs( listPlatoonAlly or emptyTable ) do
@@ -125,9 +127,9 @@ integration.nbPlatoonsHaveTask = function( listPlatoonAlly, targetTask )
     return nb
 end
 
---- Returns true if the automat is moving (indeed on of his agents), 0 otherwise
--- @param company, Directia automat
--- @return Boolean, true if the automat is moving (indeed on of his agents), 0 otherwise
+--- Returns true if the automat is moving (indeed one of his agents), 0 otherwise
+-- @param company, DirectIA automat
+-- @return Boolean, true if the automat is moving (indeed one of his agents), 0 otherwise
 integration.isCompanyMoving = function( company )
     local subordinates = company.source:DEC_Automate_PionsAvecPC()
     for _, subordinate in pairs( subordinates or emptyTable ) do
@@ -139,7 +141,7 @@ integration.isCompanyMoving = function( company )
 end
 
 --- Returns true if the automat is flying (indeed all of his agents), 0 otherwise
--- @param company, Directia automat
+-- @param company, DirectIA automat
 -- @return Boolean, true if the automat is moving (indeed all of his agents), 0 otherwise
 integration.isCompanyFlying = function( company )
     local subordinates = company.source:DEC_Automate_PionsAvecPC()
