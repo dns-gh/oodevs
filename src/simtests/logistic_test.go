@@ -1218,9 +1218,9 @@ func (SupplyDeleteChecker) Check(c *C, ctx *SupplyCheckContext, msg *sword.SimTo
 func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, resource ResourceType, checkers ...SupplyChecker) {
 	client.Pause()
 	check := SupplyCheckContext{
-		data:    client.Model.GetData(),
-		unitId:  unit.Id,
-		errors:  make(chan error),
+		data:   client.Model.GetData(),
+		unitId: unit.Id,
+		errors: make(chan error),
 	}
 	idx := 0
 	quit := make(chan struct{})
@@ -1301,7 +1301,7 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	automat := getSomeAutomatByName(c, d, "Supply Mobile Infantry Platoon")
 	supply2Id := getSomeAutomatByName(c, d, "Supply Log Automat 1d").Id
 	supply2 := swapi.MakeAutomatTasker(supply2Id)
-	err := client.LogisticsChangeLinks(automat.Id, []uint32{supplyId,supply2Id})
+	err := client.LogisticsChangeLinks(automat.Id, []uint32{supplyId, supply2Id})
 	c.Assert(err, IsNil)
 	checkSupplyUpdates(c, client, unit, supply2, electrogen_2, []SupplyUpdateChecker{
 		{"convoy_waiting_for_transporters"},
