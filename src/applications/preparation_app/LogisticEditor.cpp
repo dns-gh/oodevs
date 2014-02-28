@@ -49,10 +49,11 @@ LogisticEditor::LogisticEditor( QWidget* parent, const QString& objectName, Cont
     , controllers_( controllers )
     , selected_   ( controllers )
 {
+    setModal( true );
     setCaption( tools::translate( "StocksEditionDialog", "Stocks Edition" ) );
     gui::SubObjectName subObject( objectName );
     resize( 550, 350 );
-
+    // setMinimumSize( 500, 300 ); ??
     dataModel_ = new QStandardItemModel( this );
 
     delegate_ = new gui::CommonDelegate( this );
@@ -98,8 +99,12 @@ LogisticEditor::~LogisticEditor()
 // Name: LogisticEditor::Show
 // Created: SLI 2014-02-21
 // -----------------------------------------------------------------------------
-void LogisticEditor::Show()
+void LogisticEditor::Show( const kernel::Entity_ABC& entity )
 {
+    if( entity.GetId() == 0 )
+        return;
+    selected_ = const_cast< Entity_ABC* >( &entity );
+
     dataModel_->clear();
     QStringList horizontalHeaders;
     dataModel_->setColumnCount( 2 );
@@ -178,30 +183,6 @@ void LogisticEditor::Reject()
 void LogisticEditor::closeEvent( QCloseEvent* /*pEvent*/ )
 {
     Reject();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEditor::NotifyContextMenu
-// Created: MMC 2011-07-21
-// -----------------------------------------------------------------------------
-void LogisticEditor::NotifyContextMenu( const Automat_ABC& automat, ContextMenu& menu )
-{
-    if( automat.GetId() == 0 || !automat.Get< gui::LogisticBase >().IsBase() )
-        return;
-    selected_ = static_cast< const Entity_ABC* >( &automat );
-    Update( automat, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEditor::NotifyContextMenu
-// Created: MMC 2011-07-21
-// -----------------------------------------------------------------------------
-void LogisticEditor::NotifyContextMenu( const Formation_ABC& formation, ContextMenu& menu )
-{
-    if( formation.GetId() == 0 || !formation.Get< gui::LogisticBase >().IsBase() )
-        return;
-    selected_ = static_cast< const Entity_ABC* >( &formation );
-    Update( formation, menu );
 }
 
 // -----------------------------------------------------------------------------

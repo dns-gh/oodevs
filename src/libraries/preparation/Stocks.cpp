@@ -152,7 +152,6 @@ void Stocks::SerializeAttributes( xml::xostream& xos ) const
 void Stocks::CreateDictionary( Entity_ABC& entity, gui::PropertiesDictionary& dico )
 {
     item_ = new DotationsItem( controller_, entity, dico, tools::translate( "Stocks", "Stocks" ), *static_cast< Resolver< Dotation >* >( this ), true );
-    dico.Register( entity, tools::translate( "Stocks", "Stocks/Edit Stocks" ), item_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +186,7 @@ bool Stocks::HasDotationType( const kernel::DotationType& dotationType ) const
 // Name: Stocks::ComputeWeightAndVolume
 // Created: JSR 2012-03-08
 // -----------------------------------------------------------------------------
-void Stocks::ComputeWeightAndVolume( const std::string& dotationNature, double& weight, double& volume )
+void Stocks::ComputeWeightAndVolume( const std::string& dotationNature, double& weight, double& volume ) const
 {
     weight = 0;
     volume = 0;

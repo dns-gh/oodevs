@@ -54,7 +54,7 @@ public:
     void DeleteAll();
     bool HasDotations() const;
     void Clear();
-    void ComputeWeightAndVolume( const std::string& dotationNature, double& weight, double& volume );
+    void ComputeWeightAndVolume( const std::string& dotationNature, double& weight, double& volume ) const;
     bool HasDotationType( const kernel::DotationType& dotationType ) const;
     const std::vector< std::string >& GetInvalidDotations() const;
     void clearInvalidDotations();

@@ -77,23 +77,12 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticQuotaEditor::Update
-// Created: MMC 2011-07-21
-// -----------------------------------------------------------------------------
-void LogisticQuotaEditor::Update( const kernel::Entity_ABC& entity, ContextMenu& menu )
-{
-    if( !HasLogisticBaseSubordinate( entity ) )
-        return;
-    ContextMenu* pSubMenu = menu.SubMenu( "Helpers", tr( "Logistic" ), false, 7 );
-    pSubMenu->insertItem( tools::translate( "LogisticEditor", "Edit Quotas" ), this, SLOT( Show() ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticQuotaEditor::SupplyHierarchy
 // Created: SLI 2014-02-19
 // -----------------------------------------------------------------------------
 void LogisticQuotaEditor::SupplyHierarchy( const kernel::Entity_ABC& /*entity*/, const gui::LogisticHierarchiesBase& logHierarchy )
 {
+    std::map< const kernel::Entity_ABC*, T_Requirements > generatedQuotas;
     auto itLogChildren = logHierarchy.CreateSubordinateIterator();
     while( itLogChildren.HasMoreElements() )
     {
@@ -111,23 +100,23 @@ void LogisticQuotaEditor::SupplyHierarchy( const kernel::Entity_ABC& /*entity*/,
                     if( dataModel_->item( row )->checkState() == Qt::Checked )
                         SupplyLogisticBaseStocks( pLogChildrenHierarchy->GetEntity(), supplyClass, requirements );
                 }
-                SetQuotas( *pLogChildrenHierarchy, requirements );
+                SetQuotas( *pLogChildrenHierarchy, requirements, generatedQuotas[ &logChildren ] );
             }
         }
     }
+    emit DotationsQuotasComputed( generatedQuotas );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticQuotaEditor::SetQuotas
 // Created: MMC 2012-03-23
 // -----------------------------------------------------------------------------
-void LogisticQuotaEditor::SetQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const T_Requirements& requirements )
+void LogisticQuotaEditor::SetQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const T_Requirements& requirements, T_Requirements& generatedQuotas )
 {
     const LogisticBaseStates* pBaseStates = dynamic_cast< const LogisticBaseStates* >( &logHierarchy );
     if( !pBaseStates )
         return;
 
-    LogisticBaseStates& baseStates = *const_cast< LogisticBaseStates* >( pBaseStates );
     for( auto itRequired = requirements.begin(); itRequired != requirements.end(); ++itRequired )
     {
         const DotationType& dotationType = *itRequired->first;
@@ -135,12 +124,15 @@ void LogisticQuotaEditor::SetQuotas( const gui::LogisticHierarchiesBase& logHier
         for( int row = 0; itLogClass.HasMoreElements(); ++row )
         {
             const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
-            if( dataModel_->item( row )->checkState() == Qt::Checked )
+            if( row < dataModel_->rowCount() && dataModel_->item( row )->checkState() == Qt::Checked )
             {
                 if( supplyClass.GetId() == dotationType.GetLogisticSupplyClass().GetId() )
                 {
-                    const unsigned int quantity = GetQuantity( *dataModel_, row, itRequired->second );
-                    baseStates.SetDotation( dotationType, quantity );
+                    //const unsigned int quantity = GetQuantity( *dataModel_, row, itRequired->second );
+                    // check: days or not???
+                    int days = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
+                    unsigned int quantity = static_cast< unsigned int >( days * itRequired->second + 0.5 );
+                    generatedQuotas[ &dotationType ] += quantity;
                 }
             }
         }

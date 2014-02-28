@@ -29,17 +29,22 @@ public:
     virtual ~LogisticQuotaEditor();
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void DotationsQuotasComputed( LogisticEditor::T_RequirementsMap& );
+    //@}
+
 private:
     //! @name Operations
     //@{
-    virtual void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void SupplyHierarchy( const kernel::Entity_ABC& entity, const gui::LogisticHierarchiesBase& logHierarchy );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void SetQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const T_Requirements& requirements );
+    void SetQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const T_Requirements& requirements, T_Requirements& generatedQuotas );
     //@}
 };
 

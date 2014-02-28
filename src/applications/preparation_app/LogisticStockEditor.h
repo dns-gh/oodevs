@@ -29,10 +29,15 @@ public:
     virtual ~LogisticStockEditor();
     //@}
 
-private:
-    //! @name Operations
+signals:
+    //! @name Signals
     //@{
-    virtual void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    void DotationsStocksComputed( const LogisticEditor::T_Requirements& );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
     virtual void SupplyHierarchy( const kernel::Entity_ABC& entity, const gui::LogisticHierarchiesBase& logHierarchy );
     //@}
 
@@ -40,9 +45,6 @@ private:
     //! @name Helpers
     //@{
     void FindStocks( const kernel::Entity_ABC& rootEntity , const kernel::Entity_ABC& entity, std::set< const kernel::Agent_ABC* >& entStocks );
-    void CleanStocks( std::set< const kernel::Agent_ABC* >& entStocks );
-    void SupplyStocks( std::set< const kernel::Agent_ABC* >& entStocks, const T_Requirements& requirements );
-    bool IsStockValid(  const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation );
     double DoDotationDistribution( std::set< const kernel::Agent_ABC* >& entStocks, const kernel::DotationType& dotationType, double quantity );
     void ComputeAvailableCapacity( const kernel::Agent_ABC& entStock, const kernel::DotationType& dotationType, double& weight, double& volume );
     //@}

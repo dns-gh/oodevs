@@ -10,7 +10,6 @@
 #ifndef _LogisticEditor_h
 #define _LogisticEditor_h
 
-#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 class StaticModel;
@@ -42,8 +41,6 @@ namespace kernel
 // =============================================================================
 class LogisticEditor : public QDialog
                      , public tools::Observer_ABC
-                     , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
-                     , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
     Q_OBJECT
 
@@ -54,16 +51,11 @@ public:
     virtual ~LogisticEditor();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu );
-    //@}
-
-protected:
+public:
     //! @name Types
     //@{
     typedef std::map< const kernel::DotationType*, double > T_Requirements;
+    typedef std::map< const kernel::Entity_ABC*, T_Requirements > T_RequirementsMap;
     enum
     {
         eCategory,
@@ -71,10 +63,15 @@ protected:
     };
     //@}
 
+public:
+    //! @name Operations
+    //@{
+    void Show( const kernel::Entity_ABC& entity );
+    //@}
+
 protected:
     //! @name Operations
     //@{
-    virtual void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu ) = 0;
     virtual void SupplyHierarchy( const kernel::Entity_ABC& entity, const gui::LogisticHierarchiesBase& logHierarchy ) = 0;
     //@}
 
@@ -101,7 +98,6 @@ private slots:
     void Accept();
     void Reject();
     void closeEvent( QCloseEvent* pEvent );
-    void Show();
     //@}
 
 protected:

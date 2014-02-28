@@ -58,16 +58,6 @@ LogisticStockEditor::~LogisticStockEditor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticQuotaEditor::Update
-// Created: MMC 2011-07-21
-// -----------------------------------------------------------------------------
-void LogisticStockEditor::Update( const kernel::Entity_ABC& /*entity*/, ContextMenu& menu )
-{
-    ContextMenu* pSubMenu = menu.SubMenu( "Helpers", tr( "Logistic" ), false, 7 );
-    pSubMenu->insertItem( tools::translate( "LogisticEditor", "Edit Stocks" ), this, SLOT( Show() ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticStockEditor::SupplyHierarchy
 // Created: SLI 2014-02-19
 // -----------------------------------------------------------------------------
@@ -75,17 +65,21 @@ void LogisticStockEditor::SupplyHierarchy( const kernel::Entity_ABC& entity, con
 {
     std::set< const Agent_ABC* > entStocks;
     FindStocks( entity, entity, entStocks );
-    CleanStocks( entStocks );
     T_Requirements requirements;
     auto itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
     for( int row = 0; itLogClass.HasMoreElements(); ++row )
     {
         const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
         if( dataModel_->item( row )->checkState() == Qt::Checked )
-            SupplyLogisticBaseStocks( logHierarchy.GetEntity(), supplyClass, requirements );
+        {
+            int days = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
+            T_Requirements curRequirements;
+            SupplyLogisticBaseStocks( logHierarchy.GetEntity(), supplyClass, curRequirements );
+            for( auto itReq = curRequirements.begin(); itReq != curRequirements.end(); ++itReq )
+                requirements[ itReq->first ] += static_cast< double >( days ) * itReq->second;
+        }
     }
-    SupplyStocks( entStocks, requirements );
-}
+    emit DotationsStocksComputed( requirements );}
 
 // -----------------------------------------------------------------------------
 // Name: LogisticStockEditor::FindStocks
@@ -117,101 +111,6 @@ void LogisticStockEditor::FindStocks( const Entity_ABC& rootEntity , const Entit
         else
             FindStocks( rootEntity, childrenEntity, entStocks );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStockEditor::CleanStocks
-// Created: MMC 2011-08-31
-// -----------------------------------------------------------------------------
-void LogisticStockEditor::CleanStocks( std::set< const Agent_ABC* >& entStocks )
-{
-    for( auto itEnt = entStocks.begin(); itEnt != entStocks.end(); ++itEnt )
-    {
-        Stocks& stocks = const_cast< Stocks& >( (*itEnt)->Get< Stocks >() );
-        std::vector< const DotationType* > toReset;
-        auto itDotation = stocks.CreateIterator();
-        while( itDotation.HasMoreElements() )
-        {
-            const Dotation& curDotation = itDotation.NextElement();
-            auto itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
-            int row = 0;
-            for( ; itLogClass.HasMoreElements(); ++row )
-            {
-                const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
-                if( supplyClass.GetId() == curDotation.type_.GetLogisticSupplyClass().GetId() )
-                    break;
-            }
-            if( dataModel_->item( row )->checkState() == Qt::Checked )
-                toReset.push_back( &curDotation.type_ );
-        }
-        for( auto it = toReset.begin(); it!= toReset.end(); ++it )
-            stocks.SetDotation( **it, 0, false );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEditor::SupplyStocks
-// Created: MMC 2011-08-31
-// -----------------------------------------------------------------------------
-void LogisticStockEditor::SupplyStocks( std::set< const Agent_ABC* >& entStocks, const T_Requirements& requirements )
-{
-    for( auto itRequired = requirements.begin(); itRequired != requirements.end(); ++itRequired )
-    {
-        const DotationType& dotationType = *itRequired->first;
-
-        auto itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
-        int row = 0;
-        for( ; itLogClass.HasMoreElements(); ++row )
-        {
-            const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
-            if( supplyClass.GetId() == dotationType.GetLogisticSupplyClass().GetId() )
-                break;
-        }
-
-        if( dataModel_->item( row )->checkState() == Qt::Checked )
-        {
-            const unsigned int quantity = GetQuantity( *dataModel_, row, itRequired->second );
-
-            std::set< const Agent_ABC* > entDotationStocks;
-            for( auto it = entStocks.begin(); it != entStocks.end(); ++it )
-                if( IsStockValid( **it, dotationType ) )
-                {
-                    Stocks& stocks = const_cast< Stocks& >( ( *it )->Get< Stocks >() );
-                    stocks.SetDotation( dotationType, 0, false );
-                    entDotationStocks.insert( *it );
-                }
-            if( quantity == 0 )
-                continue;
-            std::set< const Agent_ABC* > copyEntDotationStocks = entDotationStocks;
-            const double surplus = DoDotationDistribution( entDotationStocks, dotationType, quantity );
-            int size = static_cast< int >( copyEntDotationStocks.size() );
-            if( surplus >= 1 && size > 0 )
-            {
-                int remaining = static_cast< int >( surplus );
-                int mean =  remaining / size;
-                int rest = remaining - size * mean;
-                for( auto itEnt = copyEntDotationStocks.begin(); itEnt != copyEntDotationStocks.end(); ++itEnt )
-                {
-                    const Agent_ABC& entStock = **itEnt;
-                    Stocks& stocks = const_cast< Stocks& >( entStock.Get< Stocks >() );
-                    stocks.SetDotation( dotationType, mean + rest, true );
-                    remaining -= mean + rest;
-                    rest = 0;
-                }
-                assert( remaining == 0);
-            }
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStockEditor::IsStockValid
-// Created: MMC 2011-08-30
-// -----------------------------------------------------------------------------
-bool LogisticStockEditor::IsStockValid( const Agent_ABC& stockUnit, const DotationType& dotation )
-{
-    AgentType& agentType = staticModel_.types_.tools::Resolver< AgentType >::Get( stockUnit.GetType().GetId() );
-    return agentType.IsStockCategoryDefined( dotation.GetLogisticSupplyClass() );
 }
 
 // -----------------------------------------------------------------------------
