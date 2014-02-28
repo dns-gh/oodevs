@@ -269,6 +269,7 @@ type Automat struct {
 	LogSuperiors         []uint32
 	SuperiorQuotas       map[uint32]int32
 	LogMaintenanceManual bool
+	LogSupplyManual      bool
 }
 
 type Formation struct {
@@ -281,19 +282,7 @@ type Formation struct {
 	LogSuperiors         []uint32
 	SuperiorQuotas       map[uint32]int32
 	LogMaintenanceManual bool
-}
-
-func NewFormation(id uint32, name string, parentId uint32,
-	partyId uint32, level, logLevel string, logMaintenanceManual bool) *Formation {
-	return &Formation{
-		Id:                   id,
-		PartyId:              partyId,
-		ParentId:             parentId,
-		Name:                 name,
-		Level:                level,
-		LogLevel:             logLevel,
-		LogMaintenanceManual: logMaintenanceManual,
-	}
+	LogSupplyManual      bool
 }
 
 type KnowledgeGroup struct {

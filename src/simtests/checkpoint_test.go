@@ -331,6 +331,8 @@ func (s *TestSuite) TestCheckpointAutomat(c *C) {
 	c.Assert(automat, NotNil)
 	err := client.SetManualMaintenance(automat.Id, true)
 	c.Assert(err, IsNil)
+	err = client.SetManualSupply(automat.Id, true)
+	c.Assert(err, IsNil)
 	checkpointCompareAndStop(c, sim, client)
 }
 
@@ -341,6 +343,8 @@ func (s *TestSuite) TestCheckpointFormation(c *C) {
 	formation := client.Model.GetFormation(13)
 	c.Assert(formation, NotNil)
 	err := client.SetManualMaintenance(formation.Id, true)
+	c.Assert(err, IsNil)
+	err = client.SetManualSupply(formation.Id, true)
 	c.Assert(err, IsNil)
 	checkpointCompareAndStop(c, sim, client)
 }

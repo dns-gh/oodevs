@@ -1625,6 +1625,15 @@ func (c *Client) SetManualMaintenance(unitId uint32, mode bool) error {
 	return c.SetManualMaintenanceTest(unitId, MakeParameters(MakeBoolean(mode)))
 }
 
+func (c *Client) SetManualSupplyTest(unitId uint32, parameters *sword.MissionParameters) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), parameters,
+		sword.UnitMagicAction_log_supply_set_manual)
+}
+
+func (c *Client) SetManualSupply(unitId uint32, mode bool) error {
+	return c.SetManualSupplyTest(unitId, MakeParameters(MakeBoolean(mode)))
+}
+
 func (c *Client) SelectNewLogisticStateTest(params *sword.MissionParameters) error {
 	msg := CreateMagicAction(params, sword.MagicAction_select_new_logistic_state)
 	return <-c.postSimRequest(msg, defaultMagicHandler)

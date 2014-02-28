@@ -278,6 +278,7 @@ func (model *ModelData) handleAutomatCreation(m *sword.SimToClient_Content) erro
 		Engaged:              true,
 		KnowledgeGroupId:     mm.GetKnowledgeGroup().GetId(),
 		LogMaintenanceManual: mm.GetLogMaintenanceManual(),
+		LogSupplyManual:      mm.GetLogSupplyManual(),
 	}
 	if parent := mm.GetParent().GetFormation(); parent != nil {
 		automat.FormationId = parent.GetId()
@@ -319,10 +320,13 @@ func (model *ModelData) handleAutomatAttributes(m *sword.SimToClient_Content) er
 		}
 	}
 	if mm.BrainDebug != nil {
-		automat.DebugBrain = mm.GetBrainDebug()
+		automat.DebugBrain = *mm.BrainDebug
 	}
 	if mm.LogMaintenanceManual != nil {
-		automat.LogMaintenanceManual = mm.GetLogMaintenanceManual()
+		automat.LogMaintenanceManual = *mm.LogMaintenanceManual
+	}
+	if mm.LogSupplyManual != nil {
+		automat.LogSupplyManual = *mm.LogSupplyManual
 	}
 	return nil
 }
@@ -340,15 +344,16 @@ func (model *ModelData) handleFormationCreation(m *sword.SimToClient_Content) er
 	if !ok {
 		logLevel = "unknown"
 	}
-	formation := NewFormation(
-		mm.GetFormation().GetId(),
-		mm.GetName(),
-		mm.GetParent().GetId(),
-		mm.GetParty().GetId(),
-		level,
-		logLevel,
-		mm.GetLogMaintenanceManual(),
-	)
+	formation := &Formation{
+		Id:                   mm.GetFormation().GetId(),
+		Name:                 mm.GetName(),
+		ParentId:             mm.GetParent().GetId(),
+		PartyId:              mm.GetParty().GetId(),
+		Level:                level,
+		LogLevel:             logLevel,
+		LogMaintenanceManual: mm.GetLogMaintenanceManual(),
+		LogSupplyManual:      mm.GetLogSupplyManual(),
+	}
 	if !model.addFormation(formation) {
 		return fmt.Errorf("cannot create formation %v with unknown"+
 			"parent party=%v/parent=%v", formation.Id, formation.PartyId,
@@ -381,6 +386,9 @@ func (model *ModelData) handleFormationUpdate(m *sword.SimToClient_Content) erro
 	}
 	if mm.LogMaintenanceManual != nil {
 		formation.LogMaintenanceManual = *mm.LogMaintenanceManual
+	}
+	if mm.LogSupplyManual != nil {
+		formation.LogSupplyManual = *mm.LogSupplyManual
 	}
 	return nil
 }
