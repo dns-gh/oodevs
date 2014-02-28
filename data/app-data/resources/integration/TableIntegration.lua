@@ -54,21 +54,27 @@ fusionList = function( table1, table2 )
 end
 
 --- Removes the given value from the provided list, and returns it.
---- Shifts down any remaining integer keys.
+-- Shifts down any remaining integer keys.
+-- Removes only the first occurrence of the given value, does nothing
+-- if the value is not in the provided list.
 -- @param value Any type, the value to remove
 -- @param list List upon which the removal will take place
--- @return List, the provided list without the given value
+-- @return Two return values : 
+-- <ul> <li> List, the provided list without the given value; </li>
+-- <li> Integer, the first index where the value was found, 0 if the value was not found. </li> </ul>
 removeFromList = function( value, list )
+    local index = 0
     for i = 1, #list do
         if value == list[i] then
+            index = i
             table.remove( list, i )
             break
         end
     end
-    return list
+    return list, index
 end
 
---+ Removes all the given values from the provided list, and returns it.
+--- Removes all the given values from the provided list, and returns it.
 --- Shifts down any remaining integer keys.
 -- @param values Table of values to remove
 -- @param list List upon which the removal will take place
