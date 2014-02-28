@@ -12,9 +12,13 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/ptr_container/ptr_map.hpp>
 
-PHY_ResourceNetworkType::T_ResourceNetworkMap PHY_ResourceNetworkType::resourceNetworks_;
-unsigned int PHY_ResourceNetworkType::nNextId_ = 0;
+namespace
+{
+    boost::ptr_map< std::string, PHY_ResourceNetworkType > resourceNetworks;
+    unsigned int nNextId;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ResourceNetworkType::Initialize
@@ -34,19 +38,8 @@ void PHY_ResourceNetworkType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ResourceNetworkType::Terminate()
 {
-    for( CIT_ResourceNetworkMap itResource = resourceNetworks_.begin(); itResource != resourceNetworks_.end(); ++itResource )
-        delete itResource->second;
-    resourceNetworks_.clear();
-    nNextId_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ResourceNetworkType::GetResourceNetworks
-// Created: JSR 2010-09-10
-// -----------------------------------------------------------------------------
-const PHY_ResourceNetworkType::T_ResourceNetworkMap& PHY_ResourceNetworkType::GetResourceNetworks()
-{
-    return resourceNetworks_;
+    ::resourceNetworks.clear();
+    ::nNextId = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -55,10 +48,10 @@ const PHY_ResourceNetworkType::T_ResourceNetworkMap& PHY_ResourceNetworkType::Ge
 // -----------------------------------------------------------------------------
 const PHY_ResourceNetworkType* PHY_ResourceNetworkType::Find( const std::string& strName )
 {
-    CIT_ResourceNetworkMap itResource = resourceNetworks_.find( strName );
-    if( itResource == resourceNetworks_.end() )
+    auto it = ::resourceNetworks.find( strName );
+    if( it == ::resourceNetworks.end() )
         return 0;
-    return itResource->second;
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +60,7 @@ const PHY_ResourceNetworkType* PHY_ResourceNetworkType::Find( const std::string&
 // -----------------------------------------------------------------------------
 const PHY_ResourceNetworkType* PHY_ResourceNetworkType::Find( unsigned int id )
 {
-    for( auto it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
+    for( auto it = ::resourceNetworks.begin(); it != ::resourceNetworks.end(); ++it )
         if( it->second->GetId() == id )
             return it->second;
     return 0;
@@ -79,7 +72,7 @@ const PHY_ResourceNetworkType* PHY_ResourceNetworkType::Find( unsigned int id )
 // -----------------------------------------------------------------------------
 const PHY_ResourceNetworkType* PHY_ResourceNetworkType::FindByDotation( const PHY_DotationCategory& dotation )
 {
-    for( auto it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
+    for( auto it = ::resourceNetworks.begin(); it != ::resourceNetworks.end(); ++it )
         if( &it->second->GetDotationCategory() == &dotation )
             return it->second;
     return 0;
@@ -119,7 +112,7 @@ const PHY_DotationCategory& PHY_ResourceNetworkType::GetDotationCategory() const
 PHY_ResourceNetworkType::PHY_ResourceNetworkType( const std::string& strName, const PHY_DotationCategory& dotationCategory )
     : strName_         ( strName )
     , dotationCategory_( dotationCategory )
-    , nId_             ( nNextId_++ )
+    , nId_             ( ::nNextId++ )
 {
     // NOTHING
 }
@@ -140,8 +133,7 @@ PHY_ResourceNetworkType::~PHY_ResourceNetworkType()
 void PHY_ResourceNetworkType::ReadResourceNetwork( xml::xistream& xis )
 {
     std::string strResourceNetwork = xis.attribute< std::string >( "name" );
-    const PHY_ResourceNetworkType*& pResourceNetwork = resourceNetworks_[ strResourceNetwork ];
-    if( pResourceNetwork )
+    if( ::resourceNetworks.count( strResourceNetwork ) )
         throw MASA_EXCEPTION( xis.context() + "Resource network " + strResourceNetwork + " already defined" );
     unsigned int resourceId;
     xis >> xml::start( "resource" )
@@ -150,5 +142,6 @@ void PHY_ResourceNetworkType::ReadResourceNetwork( xml::xistream& xis )
     const PHY_DotationCategory* dotationCategory = PHY_DotationType::FindDotationCategory( resourceId );
     if( !dotationCategory )
         throw MASA_EXCEPTION( xis.context() + "Unknown dotation category Id: " + boost::lexical_cast< std::string >( resourceId ) );
-    pResourceNetwork = new PHY_ResourceNetworkType( strResourceNetwork, *dotationCategory );
+    auto next = std::auto_ptr< PHY_ResourceNetworkType >( new PHY_ResourceNetworkType( strResourceNetwork, *dotationCategory ) );
+    resourceNetworks.insert( strResourceNetwork, next );
 }
