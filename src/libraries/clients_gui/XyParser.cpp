@@ -105,9 +105,7 @@ const LocationParserDescriptor& XyParser::GetDescriptor() const
 // -----------------------------------------------------------------------------
 QStringList XyParser::Split( const QString& input ) const
 {
-    auto list = input.split( ":" );
-    std::swap( list[0], list[1] );
-    return list;
+    return input.split( ":" );
 }
 
 // -----------------------------------------------------------------------------

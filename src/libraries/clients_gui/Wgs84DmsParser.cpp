@@ -135,9 +135,7 @@ const LocationParserDescriptor& Wgs84DmsParser::GetDescriptor() const
 // -----------------------------------------------------------------------------
 QStringList Wgs84DmsParser::Split( const QString& input ) const
 {
-    auto list = input.split( ":" );
-    std::swap( list[0], list[1] );
-    return list;
+    return input.split( ":" );
 }
 
 // -----------------------------------------------------------------------------

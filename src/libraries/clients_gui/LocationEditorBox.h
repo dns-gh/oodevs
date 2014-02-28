@@ -26,6 +26,8 @@ namespace gui
      class LocationParser_ABC;
 }
 
+class QPushButton;
+
 namespace gui
 {
 struct Field
@@ -47,29 +49,38 @@ class LocationEditorBox : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationEditorBox( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter );
+             LocationEditorBox( kernel::Controllers& controllers,
+                                const kernel::CoordinateConverter_ABC& converter,
+                                Qt::Orientation orientation = Qt::Horizontal );
     virtual ~LocationEditorBox();
     //@}
 
     //! @name Operations
     //@{
-    void FillDefaultMenu();
+    bool IsValid() const;
     void AddParser( LocationParser_ABC* parser, const QString& name );
-    bool GetPosition( geometry::Point2f& result );
+    bool GetPosition( geometry::Point2f& result ) const;
     void UpdateField( const geometry::Point2f& position );
     const LocationParser_ABC* GetCurrentParser() const;
+    void Purge();
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void DataChanged();
     //@}
 
 public slots:
     //! @name Slots
     //@{
     void SelectParser( int index );
+    void UpdateValidity();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void SelectHint( int index );
     QValidator::State Complete( QString& data, int idx );
     QValidator::State Complete( QString& data, int idx, Field& field );
     //@}
@@ -77,7 +88,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    void UpdateParamZone();
+    void ResetFields();
     void SetValid( bool valid );
     //@}
 
@@ -89,10 +100,11 @@ private:
     LocationParser_ABC*                    current_;
     QPushButton*                           combo_;
     kernel::ContextMenu*                   menu_;
-    QMenu*                                 subMenu_;
-    QListWidget*                           hints_;
     std::vector< Field >                   fields_;
+    bool valid_;
     //@}
 };
-}
+
+} //! namespace gui
+
 #endif // __LocationEditorBox_h_

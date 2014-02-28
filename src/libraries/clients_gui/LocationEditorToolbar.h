@@ -62,7 +62,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    bool GetPosition( geometry::Point2f& point );
+    bool GetPosition( geometry::Point2f& point ) const;
     void CreateBookmark( const std::string& defaultName );
     //@}
 

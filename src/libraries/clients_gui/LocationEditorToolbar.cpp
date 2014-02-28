@@ -170,7 +170,7 @@ void LocationEditorToolbar::ClearBookmarks()
 // Name: LocationEditorToolbar::GetPosition
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-bool LocationEditorToolbar::GetPosition( geometry::Point2f& result )
+bool LocationEditorToolbar::GetPosition( geometry::Point2f& result ) const
 {
     return locBox_->GetPosition( result );
 }
