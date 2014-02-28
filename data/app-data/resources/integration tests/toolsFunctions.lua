@@ -203,31 +203,40 @@ end
 
 removeFromList_TEST = function()
 	local list = { "a", "b", "c" }
+	local index
 
 	-- Test 1
-	list = removeFromList( "b", list )
+	list, index = removeFromList( "b", list )
 	assert_table( list )
 	assert_equal( 2, #list )
 	assert_equal( "a", list[1] )
 	assert_equal( "c", list[2] )
+	assert_number( index )
+	assert_equal( 2, index )
 
 	-- Test 2 (the element to remove is not in the list)
-	list = removeFromList( "d", list )
+	list, index = removeFromList( "d", list )
 	assert_table( list )
 	assert_equal( 2, #list )
 	assert_equal( "a", list[1] )
 	assert_equal( "c", list[2] )
+	assert_number( index )
+	assert_equal( 0, index )
 
 	-- Test 3
-	list = removeFromList( "a", list )
+	list, index = removeFromList( "a", list )
 	assert_table( list )
 	assert_equal( 1, #list )
 	assert_equal( "c", list[1] )
+	assert_number( index )
+	assert_equal( 1, index )
 
 	-- Test 4
-	list = removeFromList( "c", list )
+	list, index = removeFromList( "c", list )
 	assert_table( list )
 	assert_equal( 0, #list )
+	assert_number( index )
+	assert_equal( 1, index )
 end
 
 removeListFromList_TEST = function()
