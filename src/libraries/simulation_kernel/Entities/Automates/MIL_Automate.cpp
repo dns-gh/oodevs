@@ -613,15 +613,6 @@ void MIL_Automate::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotat
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::HasDotationSupplyNeededNotified
-// Created: MMC 2013-04-24
-// -----------------------------------------------------------------------------
-bool MIL_Automate::HasDotationSupplyNeededNotified( const PHY_DotationCategory& dotationCategory )
-{
-    return pDotationSupplyManager_->HasDotationSupplyNeededNotified( dotationCategory );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Automate::RequestDotationSupply
 // Created: NLD 2005-03-03
 // -----------------------------------------------------------------------------
@@ -637,15 +628,6 @@ void MIL_Automate::RequestDotationSupply()
 void MIL_Automate::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory )
 {
     pStockSupplyManager_->NotifyStockSupplyNeeded( dotationCategory );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::HasStockSupplyNeededNotified
-// Created: AHC 2010-09-27
-// -----------------------------------------------------------------------------
-bool MIL_Automate::HasStockSupplyNeededNotified( const PHY_DotationCategory& dotationCategory )
-{
-    return pStockSupplyManager_->HasStockSupplyNeededNotified( dotationCategory );
 }
 
 //-----------------------------------------------------------------------------

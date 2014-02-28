@@ -85,6 +85,7 @@ private:
     //@{
     void SetValue( double rValue );
     bool IsJammed() const;
+    void NotifySupplyNeeded();
     //@}
 
 private:
@@ -100,6 +101,7 @@ private:
     double rConsumptionReservation_;
     double rFireReservation_;
     double rSupplyThreshold_;
+    bool bNotified_;
     bool bDotationBlocked_; // Prisoner
     bool bInfiniteDotations_;
     //@}

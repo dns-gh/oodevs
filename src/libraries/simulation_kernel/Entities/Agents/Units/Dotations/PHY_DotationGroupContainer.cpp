@@ -375,16 +375,6 @@ void PHY_DotationGroupContainer::NotifySupplyNeeded( const PHY_DotationCategory&
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationGroupContainer::HasSupplyNeededNotified
-// Created: MMC 2013-04-24
-// -----------------------------------------------------------------------------
-bool PHY_DotationGroupContainer::HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const
-{
-    assert( pRoleDotation_ );
-    return pRoleDotation_->HasSupplyNeededNotified( dotationCategory );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::Apply
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------

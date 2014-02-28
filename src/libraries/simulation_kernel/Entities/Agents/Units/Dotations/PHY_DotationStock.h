@@ -73,6 +73,7 @@ private:
     //@{
     void     SetValue  ( double rValue );
     bool     IsJammed() const;
+    void     NotifySupplyNeeded();
     //@}
 
 private:
@@ -85,6 +86,7 @@ private:
     double rRequestedValue_;
     double rCapacity_; // Les stocks peuvent dépasser leurs capacités (Stockage à terre)
     double rSupplyThreshold_;
+    bool bNotified_;
     bool bInfiniteDotations_;
     //@}
 };

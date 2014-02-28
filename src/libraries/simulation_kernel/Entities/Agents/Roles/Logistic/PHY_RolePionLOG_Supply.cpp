@@ -379,20 +379,10 @@ void PHY_RolePionLOG_Supply::StopUsingForLogistic( PHY_ComposantePion& composant
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
-    if( owner_.IsJammed() || owner_.IsLogisticJammed() )
-        return;
     if( bNewNeed )
         MIL_Report::PostEvent< MIL_Agent_ABC >( owner_, report::eRC_SeuilLogistiqueStockDepasse, dotationCategory );
-    owner_.GetAutomate().NotifyStockSupplyNeeded( dotationCategory );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Supply::HasSupplyNeededNotified
-// Created: MMC 2013-04-24
-// -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Supply::HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const
-{
-    return owner_.GetAutomate().HasStockSupplyNeededNotified( dotationCategory );
+    if( !owner_.IsJammed() && !owner_.IsLogisticJammed() )
+        owner_.GetAutomate().NotifyStockSupplyNeeded( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------

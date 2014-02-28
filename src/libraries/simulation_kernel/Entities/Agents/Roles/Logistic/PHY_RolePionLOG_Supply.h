@@ -97,7 +97,6 @@ public:
     virtual void ResupplyStocks    ( const PHY_DotationCategory& category, double rNbr );
     virtual void ConnectToResourceNode( unsigned int objectId, const std::string& resource );
     virtual void DisconnectFromResourceNode();
-    virtual bool HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const;
     virtual void UpdateSupplyNeeded();
     //@}
 

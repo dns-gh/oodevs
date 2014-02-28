@@ -222,11 +222,9 @@ public:
     virtual void NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) const;
 
     void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
-    bool HasDotationSupplyNeededNotified( const PHY_DotationCategory& dotationCategory );
     void RequestDotationSupply     ();
 
     void NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory );
-    bool HasStockSupplyNeededNotified( const PHY_DotationCategory& dotationCategory );
     //@}
 
     //! @name Tools

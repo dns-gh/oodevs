@@ -30,10 +30,11 @@ const double PHY_DotationStock::maxCapacity_ = 10000000;
 PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, double rSupplyThresholdRatio, double rCapacity, bool bInfiniteDotations, bool bCreateEmpty )
     : pStockContainer_   ( &stockContainer    )
     , pCategory_         ( &dotationCategory  )
-    , rValue_            ( 0. )
-    , rRequestedValue_   ( 0. )
+    , rValue_            ( 0 )
+    , rRequestedValue_   ( 0 )
     , rCapacity_         ( bInfiniteDotations ? maxCapacity_ : rCapacity )
     , rSupplyThreshold_  ( rCapacity * rSupplyThresholdRatio )
+    , bNotified_         ( false )
     , bInfiniteDotations_( bInfiniteDotations )
 {
     if( !bCreateEmpty )
@@ -45,12 +46,13 @@ PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 PHY_DotationStock::PHY_DotationStock()
-    : pStockContainer_  ( 0 )
-    , pCategory_        ( 0 )
-    , rValue_           ( 0. )
-    , rRequestedValue_  ( 0. )
-    , rCapacity_        ( 0. )
-    , rSupplyThreshold_ ( 0. )
+    : pStockContainer_   ( 0 )
+    , pCategory_         ( 0 )
+    , rValue_            ( 0 )
+    , rRequestedValue_   ( 0 )
+    , rCapacity_         ( 0 )
+    , rSupplyThreshold_  ( 0 )
+    , bNotified_         ( false )
     , bInfiniteDotations_( false)
 {
     // NOTHING
@@ -76,6 +78,7 @@ void PHY_DotationStock::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> rValue_
          >> rCapacity_
          >> rSupplyThreshold_
+         >> bNotified_
          >> bInfiniteDotations_;
 }
 
@@ -90,6 +93,7 @@ void PHY_DotationStock::save( MIL_CheckPointOutArchive& file, const unsigned int
          << rValue_
          << rCapacity_
          << rSupplyThreshold_
+         << bNotified_
          << bInfiniteDotations_;
 }
 
@@ -109,19 +113,28 @@ void PHY_DotationStock::SetValue( double rValue )
     if( (unsigned int)rValue_ != (unsigned int)rValue )
         pStockContainer_->NotifyDotationChanged( *this, rValue - rValue_ );
 
-    const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
-
     rValue_ = rValue;
+    bNotified_ &= rValue_ < rSupplyThreshold_;
 
     if( HasReachedSupplyThreshold() )
     {
         if( rRequestedValue_ == 0 )
             rRequestedValue_ = rCapacity_ - rValue_;
-        assert( pCategory_ );
-        pStockContainer_->NotifySupplyNeeded( *pCategory_, !bSupplyThresholdAlreadyReached );
+        NotifySupplyNeeded();
     }
     else
         rRequestedValue_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStock::NotifySupplyNeeded
+// Created: BAX 2014-02-28
+// -----------------------------------------------------------------------------
+void PHY_DotationStock::NotifySupplyNeeded()
+{
+    const bool first = !bNotified_;
+    bNotified_ = true;
+    pStockContainer_->NotifySupplyNeeded( *pCategory_, first );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,10 +265,8 @@ void PHY_DotationStock::Resupply( bool withLog )
 // -----------------------------------------------------------------------------
 void PHY_DotationStock::UpdateSupplyNeeded()
 {
-    assert( pCategory_ );
-    assert( pStockContainer_ );
-    if( HasReachedSupplyThreshold() && !pStockContainer_->HasSupplyNeededNotified( *pCategory_ ) )
-        pStockContainer_->NotifySupplyNeeded( *pCategory_, true );
+    if( HasReachedSupplyThreshold() )
+        NotifySupplyNeeded();
 }
 
 // -----------------------------------------------------------------------------
