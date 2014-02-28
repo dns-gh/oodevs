@@ -143,17 +143,17 @@ template< typename T > void MIL_AutomateLOG::Visit( T& visitor ) const
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 template < typename Archive >
-void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
+void MIL_AutomateLOG::serialize( Archive& ar, const unsigned int )
 {
-    file & boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this );
-    file & boost::serialization::base_object< logistic::SupplySupplier_ABC >( *this );
-    file & pAssociatedAutomate_;
-    file & pAssociatedFormation_;
-    file & pLogisticHierarchy_;
-    file & supplyRequests_;
-    file & supplyConsigns_;
-    file & maintenanceManual_;
-    file & supplyManual_;
+    ar & boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this )
+       & boost::serialization::base_object< logistic::SupplySupplier_ABC >( *this )
+       & pAssociatedAutomate_
+       & pAssociatedFormation_
+       & pLogisticHierarchy_
+       & supplyRequests_
+       & supplyConsigns_
+       & maintenanceManual_
+       & supplyManual_;
 }
 
 // -----------------------------------------------------------------------------

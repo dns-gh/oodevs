@@ -68,33 +68,19 @@ PHY_DotationStock::~PHY_DotationStock()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationStock::load
+// Name: PHY_DotationStock::serialize
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
-void PHY_DotationStock::load( MIL_CheckPointInArchive& file, const unsigned int )
+template< typename Archive >
+void PHY_DotationStock::serialize( Archive& ar, const unsigned int )
 {
-    file >> pStockContainer_
-         >> pCategory_
-         >> rValue_
-         >> rCapacity_
-         >> rSupplyThreshold_
-         >> bNotified_
-         >> bInfiniteDotations_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationStock::save
-// Created: JVT 2005-04-01
-// -----------------------------------------------------------------------------
-void PHY_DotationStock::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
-{
-    file << pStockContainer_
-         << pCategory_
-         << rValue_
-         << rCapacity_
-         << rSupplyThreshold_
-         << bNotified_
-         << bInfiniteDotations_;
+    ar & pStockContainer_
+       & pCategory_
+       & rValue_
+       & rCapacity_
+       & rSupplyThreshold_
+       & bNotified_
+       & bInfiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------

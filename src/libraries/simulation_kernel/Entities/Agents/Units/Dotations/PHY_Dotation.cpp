@@ -75,39 +75,22 @@ PHY_Dotation::~PHY_Dotation()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Dotation::load
+// Name: PHY_Dotation::serialize
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_Dotation::load( MIL_CheckPointInArchive& file, const unsigned int )
+template< typename Archive >
+void PHY_Dotation::serialize( Archive& ar, const unsigned int )
 {
-    file >> pCategory_
-         >> pGroup_
-         >> rValue_
-         >> rCapacity_
-         >> rConsumptionReservation_
-         >> rFireReservation_
-         >> rSupplyThreshold_
-         >> bNotified_
-         >> bDotationBlocked_
-         >> bInfiniteDotations_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Dotation::save
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
-{
-    file << pCategory_
-         << pGroup_
-         << rValue_
-         << rCapacity_
-         << rConsumptionReservation_
-         << rFireReservation_
-         << rSupplyThreshold_
-         << bNotified_
-         << bDotationBlocked_
-         << bInfiniteDotations_;
+    ar & pCategory_
+       & pGroup_
+       & rValue_
+       & rCapacity_
+       & rConsumptionReservation_
+       & rFireReservation_
+       & rSupplyThreshold_
+       & bNotified_
+       & bDotationBlocked_
+       & bInfiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------
