@@ -805,7 +805,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     self.parameters = myself.taskParams
     self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
-    if #self.parameters.commandingEntities == 0 or #self.operationnalEntities == 0 then
+    if #self.operationnalEntities == 0 then
         Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
         self.Feedback( self.feedbacks.done )
         return
@@ -932,9 +932,8 @@ integration.leadActivate = function( self, findBestsFunction )
       self:create()
     end
 
-    self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
-    if #self.parameters.commandingEntities == 0 or #self.operationnalEntities == 0 then
+    if #self.operationnalEntities == 0 then
         Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
         self.Feedback( self.feedbacks.done )
         return
@@ -1024,9 +1023,8 @@ integration.leadDelayActivate = function( self, disengageTask )
     local meKnowledge = meKnowledge
     local Activate = Activate
 
-    self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
-    if #self.parameters.commandingEntities == 0 or #self.operationnalEntities == 0 then
+    if #self.operationnalEntities == 0 then
         Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
         self.Feedback( self.feedbacks.done )
         return
@@ -1150,9 +1148,8 @@ integration.leadDroneActivate = function( self, findBestsFunction )
     if myself.newTask then
       self:create()
     end
-    self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
-    if #self.parameters.commandingEntities == 0 or #self.operationnalEntities == 0 then
+    if #self.operationnalEntities == 0 then
         Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
         self.Feedback( self.feedbacks.done )
         return
