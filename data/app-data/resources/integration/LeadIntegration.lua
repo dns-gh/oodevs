@@ -381,7 +381,7 @@ local isHQTaskUsingRelievingUnit = function( self, hqUnit, unit, param )
     return false
 end
 
-local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
+local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask, newOperationnalEntities )
     local integration = integration
     local myself = myself
     local meKnowledge = meKnowledge
@@ -397,7 +397,6 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
     self.listenFrontElementInitialized = false
     local oldEntities = self.parameters.commandingEntities
     local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
-    local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
 
     local echelons = integration.getPionsInEchelons( newEntities )
     local pionsPE = echelons[1]
@@ -805,6 +804,11 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     self.parameters = myself.taskParams
     self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    if #self.operationnalEntities == 0 then
+        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        self.Feedback( self.feedbacks.done )
+        return
+    end
     for _, pion in pairs( self.parameters.commandingEntities ) do
         integration.setNeedReinforcement( pion, nil, nil, false )
     end
@@ -926,6 +930,13 @@ integration.leadActivate = function( self, findBestsFunction )
     if myself.newTask then
       self:create()
     end
+
+    self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    if #self.operationnalEntities == 0 then
+        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        self.Feedback( self.feedbacks.done )
+        return
+    end
     
     if self.listenFrontElementInitialized then -- if a subordinate destroyed before and tasks issued a new time
         for _, elem in pairs( self.bestUnits or emptyTable ) do
@@ -935,7 +946,7 @@ integration.leadActivate = function( self, findBestsFunction )
     end
 
     if self.params.manageAddedAndDeletedUnits ~= false then
-        manageAddedAndDeletedUnits( self, findBestsFunction )
+        manageAddedAndDeletedUnits( self, findBestsFunction, nil, self.operationnalEntities )
     end
 
     local Activate = Activate
@@ -1011,7 +1022,14 @@ integration.leadDelayActivate = function( self, disengageTask )
     local meKnowledge = meKnowledge
     local Activate = Activate
 
-    manageAddedAndDeletedUnits( self, findBests, disengageTask )
+    self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    if #self.operationnalEntities == 0 then
+        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        self.Feedback( self.feedbacks.done )
+        return
+    end
+
+    manageAddedAndDeletedUnits( self, findBests, disengageTask, self.operationnalEntities )
     
     -- Mis à jour des echelons
     integration.setPionsEchelons( myself.leadData.pionsLima1, eEtatEchelon_First )
@@ -1129,6 +1147,12 @@ integration.leadDroneActivate = function( self, findBestsFunction )
     if myself.newTask then
       self:create()
     end
+    self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    if #self.operationnalEntities == 0 then
+        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        self.Feedback( self.feedbacks.done )
+        return
+    end
     local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
     local pionsPE = echelons[1]
     local pionsSE = echelons[2]
@@ -1157,7 +1181,7 @@ end
 -- @release 2013-07-05
 integration.leadDestroy = function ( self, setEchelonNone )
     local integration = integration
-    if self.companyTask.destroy then
+    if self.companyTask and self.companyTask.destroy then
         self.companyTask:destroy( self.params, self.parameters )
     end
     local entities = self.parameters.commandingEntities
