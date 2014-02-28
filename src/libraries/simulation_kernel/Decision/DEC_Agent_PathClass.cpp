@@ -137,13 +137,13 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const std::vector<
         >> xml::optional
         >> xml::start( "preferred-terrains" )
             >> xml::optional >> xml::attribute( "strength", rPreferedTerrainCost_ )
-            >> xml::list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadPrefferedTerrains, preferedTerrain_ )
+            >> xml::list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadTerrain, preferedTerrain_ )
         >> xml::end
 
         >> xml::optional
         >> xml::start( "avoided-terrains" )
             >> xml::optional >> xml::attribute( "strength", rAvoidedTerrainCost_ )
-            >> xml::list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadAvoidedTerrain, avoidedTerrain_ )
+            >> xml::list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadTerrain, avoidedTerrain_ )
         >> xml::end
 
         >> xml::optional
@@ -201,26 +201,6 @@ void DEC_Agent_PathClass::ReadObject( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathClass::ReadTerrains
-// Created: AGE 2005-08-04
-// -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::ReadPrefferedTerrains( xml::xistream& xis, TerrainData& destinationData )
-{
-    destinationData = TerrainData();
-    xis >> xml::list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadTerrain, destinationData );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathClass::ReadAvoidedTerrain
-// Created: ABL 2007-07-25
-// -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::ReadAvoidedTerrain( xml::xistream& xis, TerrainData& destinationData )
-{
-    destinationData = TerrainData();
-    xis >> xml::list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadTerrain, destinationData );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::ReadTerrain
 // Created: ABL 2007-07-25
 // -----------------------------------------------------------------------------
@@ -230,7 +210,10 @@ void DEC_Agent_PathClass::ReadTerrain( xml::xistream& xis, TerrainData& destinat
     xis >> xml::attribute( "type", strType );
     const TerrainData data = TerrainData( strType );
     if( data.Area() == 0xFF )
-        throw MASA_EXCEPTION( xis.context() + "Unknown terrain type '" + strType + "'" );
+    {
+        MT_LOG_ERROR_MSG( xis.context() + "Unknown terrain type '" + strType + "'" );
+        return;
+    }
     destinationData.Merge( data );
 }
 

@@ -94,8 +94,6 @@ private:
     void ReadAutomataFuseau   ( xml::xistream& xis );
     void ReadDangerDirection  ( xml::xistream& xis );
     void ReadEnemiesCost      ( xml::xistream& xis );
-    void ReadPrefferedTerrains( xml::xistream& xis, TerrainData& data );
-    void ReadAvoidedTerrain   ( xml::xistream& xis, TerrainData& data );
     void ReadPopulationsCost  ( xml::xistream& xis );
     void ReadObjectsCost      ( xml::xistream& xis );
     //@}
