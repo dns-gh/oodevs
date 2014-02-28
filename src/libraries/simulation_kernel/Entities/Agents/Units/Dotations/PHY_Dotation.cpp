@@ -21,7 +21,10 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Dotation )
 
-const double PHY_Dotation::maxCapacity_ = 10000000;
+namespace
+{
+    const double maxCapacity = 10000000;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Dotation constructor
@@ -121,7 +124,7 @@ void PHY_Dotation::SetValue( double rValue )
         return;
     if( bInfiniteDotations_ && rValue < rSupplyThreshold_ )
         rValue = rCapacity_;
-    rValue = std::min( rValue, maxCapacity_ );
+    rValue = std::min( rValue, ::maxCapacity );
     const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
     assert( pCategory_ );
     if( pCategory_->IsSignificantChange( rValue, rLastValueSent_, rCapacity_ ) || ( rValue < rSupplyThreshold_ ) != bSupplyThresholdAlreadyReached )
@@ -162,13 +165,13 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity, double qua
     assert( rValue_ <= rCapacity_ );
     if( bInfiniteDotations_ && MT_IsZero( rCapacity_ ) )
     {
-        rCapacity_ = maxCapacity_;
-        SetValue( maxCapacity_ );
+        rCapacity_ = ::maxCapacity;
+        SetValue( ::maxCapacity );
     }
     else
     {
-        rCapacity_ = std::min( rCapacity_ + capacity.GetCapacity(), maxCapacity_ );
-        SetValue( std::min( rValue_ + std::min( capacity.GetCapacity(), quantity ), maxCapacity_ ) );
+        rCapacity_ = std::min( rCapacity_ + capacity.GetCapacity(), ::maxCapacity );
+        SetValue( std::min( rValue_ + std::min( capacity.GetCapacity(), quantity ), ::maxCapacity ) );
     }
     if( quantity )
         pGroup_->NotifyDotationChanged( *this );

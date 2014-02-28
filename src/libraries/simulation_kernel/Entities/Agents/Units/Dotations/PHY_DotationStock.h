@@ -76,7 +76,6 @@ private:
 private:
     //! @name Member data
     //@{
-    static const double maxCapacity_;
     PHY_DotationStockContainer* pStockContainer_;
     const PHY_DotationCategory* pCategory_;
     double rValue_;

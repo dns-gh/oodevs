@@ -88,7 +88,6 @@ private:
 private:
     //! @name Member data
     //@{
-    static const double maxCapacity_;
     const PHY_DotationCategory* pCategory_;
     PHY_DotationGroup* pGroup_;
     double rValue_;

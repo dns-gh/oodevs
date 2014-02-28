@@ -21,7 +21,10 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStock )
 
-const double PHY_DotationStock::maxCapacity_ = 10000000;
+namespace
+{
+    const double maxCapacity = 10000000;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStock constructor
@@ -32,7 +35,7 @@ PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer
     , pCategory_         ( &dotationCategory  )
     , rValue_            ( 0 )
     , rRequestedValue_   ( 0 )
-    , rCapacity_         ( bInfiniteDotations ? maxCapacity_ : rCapacity )
+    , rCapacity_         ( bInfiniteDotations ? ::maxCapacity : rCapacity )
     , rSupplyThreshold_  ( rCapacity * rSupplyThresholdRatio )
     , bNotified_         ( false )
     , bInfiniteDotations_( bInfiniteDotations )
@@ -94,7 +97,7 @@ void PHY_DotationStock::SetValue( double rValue )
     if( bInfiniteDotations_ && rValue < rSupplyThreshold_ )
         rValue = rCapacity_;
 
-    rValue = std::min( rValue, maxCapacity_ );
+    rValue = std::min( rValue, ::maxCapacity );
 
     if( (unsigned int)rValue_ != (unsigned int)rValue )
         pStockContainer_->NotifyDotationChanged( *this, rValue - rValue_ );
