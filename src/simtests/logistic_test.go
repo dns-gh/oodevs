@@ -572,10 +572,10 @@ func (s *TestSuite) TestMaintenanceHandlingsBase(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	unit := getSomeUnitByName(c, d, "Mobile Infantry")
-	tc2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "TC2").Id)
-	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
-	blt := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLT").Id)
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "Maintenance Automat 1").Id)
+	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "Maintenance BLD").Id)
+	blt := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "Maintenance BLT").Id)
 	zero := &sword.Tasker{}
 	checkMaintenanceUpdates(c, client, unit, electronic_1, []MaintenanceUpdateChecker{
 		{"moving_to_supply", tc2},
@@ -677,8 +677,8 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	unit := getSomeUnitByName(c, d, "Mobile Infantry")
-	tc2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "TC2").Id)
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "Maintenance Automat 1").Id)
 	zero := &sword.Tasker{}
 	err := setParts(client, tc2, 0, electrogen_1)
 	c.Assert(err, IsNil)
@@ -733,9 +733,9 @@ func (s *TestSuite) TestMaintenanceHandlingsWithAutomaticSelection(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	unit := getSomeUnitByName(c, d, "Mobile Infantry")
-	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
-	bldId := getSomeFormationByName(c, d, "BLD").Id
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
+	bldId := getSomeFormationByName(c, d, "Maintenance BLD").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	bld := swapi.MakeFormationTasker(bldId)
 	zero := &sword.Tasker{}
@@ -786,10 +786,10 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualSelection(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	unit := getSomeUnitByName(c, d, "Mobile Infantry")
-	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
-	bldId := getSomeFormationByName(c, d, "BLD").Id
+	bldId := getSomeFormationByName(c, d, "Maintenance BLD").Id
 	bld := swapi.MakeFormationTasker(bldId)
 	zero := &sword.Tasker{}
 	const TowTruck = 4
@@ -838,10 +838,10 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	unit := getSomeUnitByName(c, d, "Mobile Infantry")
-	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
-	bldId := getSomeFormationByName(c, d, "BLD").Id
+	bldId := getSomeFormationByName(c, d, "Maintenance BLD").Id
 	bld := swapi.MakeFormationTasker(bldId)
 	zero := &sword.Tasker{}
 
@@ -954,10 +954,10 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForTransporting(c *
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	unit := getSomeUnitByName(c, d, "Mobile Infantry")
-	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
-	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "Maintenance BLD").Id)
 	zero := &sword.Tasker{}
 
 	SetMaintenanceManualMode(c, client, tc2Id)
@@ -995,10 +995,10 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForDiagnosing(c *C)
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	unit := getSomeUnitByName(c, d, "Mobile Infantry")
-	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
-	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "Maintenance BLD").Id)
 	zero := &sword.Tasker{}
 
 	SetMaintenanceManualMode(c, client, tc2Id)
@@ -1037,12 +1037,12 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForRepair(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	unit := getSomeUnitByName(c, d, "Mobile Infantry")
-	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
-	bldId := getSomeFormationByName(c, d, "BLD").Id
+	bldId := getSomeFormationByName(c, d, "Maintenance BLD").Id
 	bld := swapi.MakeFormationTasker(bldId)
-	bltId := getSomeFormationByName(c, d, "BLT").Id
+	bltId := getSomeFormationByName(c, d, "Maintenance BLT").Id
 	blt := swapi.MakeFormationTasker(bltId)
 	zero := &sword.Tasker{}
 
@@ -1093,12 +1093,12 @@ func (s *TestSuite) TestMaintenanceSuperiorUnableToRepair(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	unit := getSomeUnitByName(c, d, "Mobile Infantry")
-	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
-	bldId := getSomeFormationByName(c, d, "BLD").Id
+	bldId := getSomeFormationByName(c, d, "Maintenance BLD").Id
 	bld := swapi.MakeFormationTasker(bldId)
-	bltId := getSomeFormationByName(c, d, "BLT").Id
+	bltId := getSomeFormationByName(c, d, "Maintenance BLT").Id
 	blt := swapi.MakeFormationTasker(bltId)
 
 	SetMaintenanceManualMode(c, client, tc2Id)
@@ -1286,8 +1286,8 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	unit := getSomeUnitByName(c, d, "Mobile Infantry 2")
-	supply2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "Supply 2").Id)
+	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
+	supply2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id)
 	checkSupplyUpdates(c, client, unit, supply2, []SupplyUpdateChecker{
 		{"convoy_waiting_for_transporters"},
 		{"convoy_setup"},
