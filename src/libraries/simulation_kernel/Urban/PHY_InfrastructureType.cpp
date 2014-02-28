@@ -10,8 +10,12 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_InfrastructureType.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/ptr_container/ptr_map.hpp>
 
-PHY_InfrastructureType::T_InfrastructureMap PHY_InfrastructureType::infrastructures_;
+namespace
+{
+    boost::ptr_map< std::string, PHY_InfrastructureType > infrastructures;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_InfrastructureType::Initialize
@@ -33,9 +37,7 @@ void PHY_InfrastructureType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_InfrastructureType::Terminate()
 {
-    for( CIT_InfrastructureMap itInfrastructure = infrastructures_.begin(); itInfrastructure != infrastructures_.end(); ++itInfrastructure )
-        delete itInfrastructure->second;
-    infrastructures_.clear();
+    ::infrastructures.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -44,10 +46,10 @@ void PHY_InfrastructureType::Terminate()
 // -----------------------------------------------------------------------------
 const PHY_InfrastructureType* PHY_InfrastructureType::Find( const std::string& strName )
 {
-    CIT_InfrastructureMap itInfrastructure = infrastructures_.find( strName );
-    if( itInfrastructure == infrastructures_.end() )
+    auto it = ::infrastructures.find( strName );
+    if( it == ::infrastructures.end() )
         return 0;
-    return itInfrastructure->second;
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +98,8 @@ bool PHY_InfrastructureType::IsMedical() const
 void PHY_InfrastructureType::ReadInfrastructure( xml::xistream& xis )
 {
     std::string strName = xis.attribute< std::string >( "name" );
-    const PHY_InfrastructureType*& pInfrastructure = infrastructures_[ strName ];
-    if( pInfrastructure )
+    if( infrastructures.count( strName ) )
         throw MASA_EXCEPTION( xis.context() + "Infrastructure " + strName + " already defined" );
-    pInfrastructure = new PHY_InfrastructureType( strName, xis );
+    auto next = std::auto_ptr< PHY_InfrastructureType >( new PHY_InfrastructureType( strName, xis ) );
+    infrastructures.insert( strName, next );
 }
