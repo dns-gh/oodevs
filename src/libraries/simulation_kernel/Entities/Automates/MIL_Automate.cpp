@@ -863,7 +863,8 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     message().set_app6symbol( symbol_ );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
-    message().set_log_maintenance_manual( pBrainLogistic_.get() ? pBrainLogistic_->IsMaintenanceManual() : false );
+    message().set_log_maintenance_manual( pBrainLogistic_.get() && pBrainLogistic_->IsMaintenanceManual() );
+    message().set_log_supply_manual( pBrainLogistic_.get() && pBrainLogistic_->IsSupplyManual() );
     message().set_name( GetName() );
     pColor_->SendFullState( message );
     pExtensions_->SendFullState( message );
@@ -1086,6 +1087,11 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         if( !pBrainLogistic_.get() )
             throw MASA_BADUNIT_UNIT( "automat must be a logistic base" );
         pBrainLogistic_->OnReceiveLogMaintenanceSetManual( msg.parameters() );
+        break;
+    case sword::UnitMagicAction::log_supply_set_manual:
+        if( !pBrainLogistic_.get() )
+            throw MASA_BADUNIT_UNIT( "automat must be a logistic base" );
+        pBrainLogistic_->OnReceiveLogSupplySetManual( msg.parameters() );
         break;
     default:
         {

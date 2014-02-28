@@ -760,6 +760,9 @@ message FormationCreation {
     //! The logistic maintenance mode: true for manual,
     //! false for automatic (by default)
     optional bool              log_maintenance_manual = 12;
+    //! The logistic supply mode: true for manual,
+    //! false for automatic (by default)
+    optional bool              log_supply_manual      = 13;
 }
 
 /** @struct FormationUpdate
@@ -773,6 +776,9 @@ message FormationUpdate {
     //! The logistic maintenance mode: true for manual,
     //! false for automatic, unchanged if omitted.
     optional bool      log_maintenance_manual   = 3;
+    //! The logistic supply mode: true for manual,
+    //! false for automatic, unchanged if omitted.
+    optional bool      log_supply_manual        = 4;
 }
 
 /** @struct FormationDestruction
@@ -811,6 +817,9 @@ message AutomatCreation {
     //! The logistic maintenance mode: true for manual,
     //! false for automatic (by default)
     optional bool              log_maintenance_manual = 12;
+    //! The logistic supply mode: true for manual,
+    //! false for automatic (by default)
+    optional bool              log_supply_manual      = 13;
 }
 
 /** @struct RulesOfEngagement
@@ -904,6 +913,9 @@ message AutomatAttributes {
     //! The logistic maintenance mode: true for manual,
     //! false for automatic, unchanged if omitted.
     optional bool                        log_maintenance_manual = 12;
+    //! The logistic supply mode: true for manual,
+    //! false for automatic, unchanged if omitted
+    optional bool                        log_supply_manual      = 13;
 }
 
 /** @struct AutomatDestruction

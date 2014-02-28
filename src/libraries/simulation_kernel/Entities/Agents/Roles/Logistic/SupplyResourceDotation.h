@@ -43,7 +43,7 @@ public:
     //@{
     virtual const PHY_DotationCategory& GetCategory() const;
     //@}
-        
+
     //! @name Checkpoints
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
