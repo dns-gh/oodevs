@@ -292,15 +292,6 @@ func (s *TestSuite) TestTriggerError(c *C) {
 	c.Assert(err, IsNil)
 }
 
-func SetAutomatManualMode(c *C, client *swapi.Client) {
-	automatLog := uint32(14)
-	err := client.SetManualMaintenance(automatLog, true)
-	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Automats[automatLog].LogMaintenanceManual
-	})
-}
-
 func TriggerBreakdown(c *C, client *swapi.Client) uint32 {
 	unit := client.Model.GetUnit(8)
 	equipmentId := uint32(39)
@@ -345,6 +336,10 @@ func WaitStateLeft(c *C, client *swapi.Client, handlingId uint32,
 	})
 }
 
+const (
+	automatLog = 14
+)
+
 func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 	opts := NewAllUserOpts(ExCrossroadSmallLog)
 	opts.Step = 300
@@ -368,7 +363,7 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 	err = client.SelectMaintenanceTransporter(1000, TRANSHeavyEquipmentTransporterSystem)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
 
-	SetAutomatManualMode(c, client)
+	SetManualMaintenance(c, client, automatLog)
 	handlingId := TriggerBreakdown(c, client)
 
 	WaitStateEntered(c, client, handlingId,
@@ -414,7 +409,7 @@ func (s *TestSuite) TestSelectDiagnosisTeam(c *C) {
 	err = client.SelectDiagnosisTeam(1000, MobilityRepairsTeam)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
 
-	SetAutomatManualMode(c, client)
+	SetManualMaintenance(c, client, automatLog)
 	handlingId := TriggerBreakdown(c, client)
 
 	// error: not in diagnosis team waiting state
@@ -464,7 +459,7 @@ func (s *TestSuite) TestSelectRepairTeam(c *C) {
 	err = client.SelectRepairTeam(1000, MobilityRepairsTeam)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
 
-	SetAutomatManualMode(c, client)
+	SetManualMaintenance(c, client, automatLog)
 	handlingId := TriggerBreakdown(c, client)
 
 	// error: not a repair consign
