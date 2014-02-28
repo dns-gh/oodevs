@@ -419,7 +419,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 	)
 }
 
-func SetMaintenanceManualMode(c *C, client *swapi.Client, id uint32) {
+func SetManualMaintenance(c *C, client *swapi.Client, id uint32) {
 	err := client.LogMaintenanceSetManual(id, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -442,8 +442,8 @@ func (s *TestSuite) TestMaintenanceHandlingsWithAutomaticSelection(c *C) {
 	bld := swapi.MakeFormationTasker(bldId)
 	zero := &sword.Tasker{}
 
-	SetMaintenanceManualMode(c, client, tc2Id)
-	SetMaintenanceManualMode(c, client, bldId)
+	SetManualMaintenance(c, client, tc2Id)
+	SetManualMaintenance(c, client, bldId)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -498,8 +498,8 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualSelection(c *C) {
 	const gyroscrew_1 = 6
 	const gyroscrew_2 = 7
 
-	SetMaintenanceManualMode(c, client, tc2Id)
-	SetMaintenanceManualMode(c, client, bldId)
+	SetManualMaintenance(c, client, tc2Id)
+	SetManualMaintenance(c, client, bldId)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -562,7 +562,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 		return nil
 	}
 
-	SetMaintenanceManualMode(c, client, tc2Id)
+	SetManualMaintenance(c, client, tc2Id)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -589,7 +589,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 		MaintenanceDeleteChecker{},
 	)
 
-	SetMaintenanceManualMode(c, client, tc2Id)
+	SetManualMaintenance(c, client, tc2Id)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -620,7 +620,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 		MaintenanceDeleteChecker{},
 	)
 
-	SetMaintenanceManualMode(c, client, bldId)
+	SetManualMaintenance(c, client, bldId)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -662,7 +662,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForTransporting(c *
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "Maintenance BLD").Id)
 	zero := &sword.Tasker{}
 
-	SetMaintenanceManualMode(c, client, tc2Id)
+	SetManualMaintenance(c, client, tc2Id)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -703,7 +703,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForDiagnosing(c *C)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "Maintenance BLD").Id)
 	zero := &sword.Tasker{}
 
-	SetMaintenanceManualMode(c, client, tc2Id)
+	SetManualMaintenance(c, client, tc2Id)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -748,8 +748,8 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForRepair(c *C) {
 	blt := swapi.MakeFormationTasker(bltId)
 	zero := &sword.Tasker{}
 
-	SetMaintenanceManualMode(c, client, tc2Id)
-	SetMaintenanceManualMode(c, client, bldId)
+	SetManualMaintenance(c, client, tc2Id)
+	SetManualMaintenance(c, client, bldId)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -803,9 +803,9 @@ func (s *TestSuite) TestMaintenanceSuperiorUnableToRepair(c *C) {
 	bltId := getSomeFormationByName(c, d, "Maintenance BLT").Id
 	blt := swapi.MakeFormationTasker(bltId)
 
-	SetMaintenanceManualMode(c, client, tc2Id)
-	SetMaintenanceManualMode(c, client, bldId)
-	SetMaintenanceManualMode(c, client, bltId)
+	SetManualMaintenance(c, client, tc2Id)
+	SetManualMaintenance(c, client, bldId)
+	SetManualMaintenance(c, client, bltId)
 
 	phydb := loadWWPhysical(c)
 	reporter := newReporter(c, unit.Id, phydb, "Unable to repair")

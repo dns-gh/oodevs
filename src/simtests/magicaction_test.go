@@ -294,7 +294,7 @@ func (s *TestSuite) TestTriggerError(c *C) {
 
 func SetAutomatManualMode(c *C, client *swapi.Client) {
 	automatLog := uint32(14)
-	err := client.LogMaintenanceSetManual(automatLog, true)
+	err := client.SetManualMaintenance(automatLog, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Automats[automatLog].LogMaintenanceManual

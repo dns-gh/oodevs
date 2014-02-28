@@ -1616,13 +1616,13 @@ func (c *Client) ListLogisticRequests(currentTick, maxCount int, entityId ...uin
 	return entries, err
 }
 
-func (c *Client) LogMaintenanceSetManualTest(unitId uint32, parameters *sword.MissionParameters) error {
+func (c *Client) SetManualMaintenanceTest(unitId uint32, parameters *sword.MissionParameters) error {
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), parameters,
 		sword.UnitMagicAction_log_maintenance_set_manual)
 }
 
-func (c *Client) LogMaintenanceSetManual(unitId uint32, mode bool) error {
-	return c.LogMaintenanceSetManualTest(unitId, MakeParameters(MakeBoolean(mode)))
+func (c *Client) SetManualMaintenance(unitId uint32, mode bool) error {
+	return c.SetManualMaintenanceTest(unitId, MakeParameters(MakeBoolean(mode)))
 }
 
 func (c *Client) SelectNewLogisticStateTest(params *sword.MissionParameters) error {

@@ -2454,31 +2454,31 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	c.Assert(funerals[handlingId].Handler.State, Equals, sword.LogFuneralHandlingUpdate_finished)
 }
 
-func (s *TestSuite) TestLogMaintenanceSetManual(c *C) {
+func (s *TestSuite) TestSetManualMaintenance(c *C) {
 	// user without supervision rights can send log maintenance magic action
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallLog))
 	defer stopSimAndClient(c, sim, client)
 
 	const formation = 13
 	// invalid unit
-	err := client.LogMaintenanceSetManual(1000, true)
+	err := client.SetManualMaintenance(1000, true)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// invalid formation without logistic base
-	err = client.LogMaintenanceSetManual(5, true)
+	err = client.SetManualMaintenance(5, true)
 	c.Assert(err, ErrorMatches, "error_invalid_unit: formation must be a logistic base")
 
 	// invalid empty parameter
-	err = client.LogMaintenanceSetManualTest(formation, swapi.MakeParameters())
+	err = client.SetManualMaintenanceTest(formation, swapi.MakeParameters())
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// invalid parameter
-	err = client.LogMaintenanceSetManualTest(formation, swapi.MakeParameters(swapi.MakeInt(1337)))
+	err = client.SetManualMaintenanceTest(formation, swapi.MakeParameters(swapi.MakeInt(1337)))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// setting manual mode updates formation model
 	c.Assert(client.Model.GetFormation(formation).LogMaintenanceManual, Equals, false)
-	err = client.LogMaintenanceSetManual(formation, true)
+	err = client.SetManualMaintenance(formation, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Formations[formation].LogMaintenanceManual
@@ -2487,7 +2487,7 @@ func (s *TestSuite) TestLogMaintenanceSetManual(c *C) {
 	const automat = 14
 	// setting manual mode updates automat model
 	c.Assert(client.Model.GetAutomat(automat).LogMaintenanceManual, Equals, false)
-	err = client.LogMaintenanceSetManual(automat, true)
+	err = client.SetManualMaintenance(automat, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Automats[automat].LogMaintenanceManual
