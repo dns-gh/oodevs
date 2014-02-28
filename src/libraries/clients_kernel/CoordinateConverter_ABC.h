@@ -12,6 +12,8 @@
 
 #include <geometry/Types.h>
 
+enum E_CoordinateSystem;
+
 namespace tools
 {
     class ExerciseConfig;
@@ -19,7 +21,7 @@ namespace tools
 
 namespace kernel
 {
-    class CoordinateSystems;
+
 // =============================================================================
 /** @class  CoordinateConverter_ABC
     @brief  CoordinateConverter_ABC
@@ -48,9 +50,11 @@ public:
     virtual std::string       ConvertToGeoDms       ( const geometry::Point2f& pos ) const = 0;
     virtual std::string       ConvertToUtm          ( const geometry::Point2f& pos ) const = 0;
     virtual geometry::Point2f ConvertFromGeoDms     ( const std::string& longitude, const std::string& latitude ) const = 0;
-    virtual const CoordinateSystems& GetCoordSystem() const = 0;
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const = 0;
     virtual std::string GetStringPosition( const geometry::Point2f& position, int projection ) const = 0;
+
+    virtual E_CoordinateSystem GetDefaultCoordinateSystem() const = 0;
+    virtual void SetDefaultCoordinateSystem( E_CoordinateSystem ) = 0;
 
     virtual std::string       ConvertTo  ( const geometry::Point2f& p, const std::string& code = "WGE" ) const = 0;
     virtual geometry::Point2f ConvertFrom( const std::string& pos, const std::string& code = "WGE" ) const = 0;

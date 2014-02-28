@@ -32,7 +32,7 @@ class Wgs84DdParser : public LocationParser_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Wgs84DdParser( const kernel::CoordinateConverter_ABC& converter, int coordinateSystems );
+             Wgs84DdParser( const kernel::CoordinateConverter_ABC& converter );
     virtual ~Wgs84DdParser();
     //@}
 
@@ -48,7 +48,6 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    int coordinateSystems_;
     //@}
 };
 

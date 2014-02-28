@@ -11,7 +11,6 @@
 #include "ZoomViewCommand.h"
 #include "gaming/Command.h"
 #include "gaming/CommandHandler.h"
-#include "clients_kernel/CoordinateSystems.h"
 #include "clients_gui/View_ABC.h"
 #include "clients_gui/XyParser.h"
 #pragma warning( push )
@@ -69,7 +68,7 @@ void ZoomViewCommand::Receive( const Command& command )
 // -----------------------------------------------------------------------------
 void ZoomViewCommand::Center( const std::string& arg )
 {
-    gui::XyParser parser( converter_, kernel::CoordinateSystems::E_Local );
+    gui::XyParser parser( converter_ );
     QString content = arg.c_str();
     QString hint;
     geometry::Point2f result;

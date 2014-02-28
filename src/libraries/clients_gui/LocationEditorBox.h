@@ -15,7 +15,6 @@
 
 namespace kernel
 {
-    class CoordinateSystems;
     class CoordinateConverter_ABC;
     class Controllers;
     class ContextMenu;

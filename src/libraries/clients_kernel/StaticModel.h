@@ -24,7 +24,6 @@ namespace kernel
     class AtlasNatures;
     class Controllers;
     class CoordinateConverter_ABC;
-    class CoordinateSystems;
     class DetectionMap;
     class ExtensionTypes;
     class ObjectTypes;
@@ -54,7 +53,6 @@ public:
 public:
     //! @name Member data
     //@{
-    CoordinateSystems&       coordinateSystems_;
     CoordinateConverter_ABC& coordinateConverter_;
     AgentTypes&              types_;
     DisasterTypes&           disasterTypes_;

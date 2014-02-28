@@ -21,9 +21,8 @@ using namespace gui;
 // Name: Wgs84DdParser constructor
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
-Wgs84DdParser::Wgs84DdParser( const kernel::CoordinateConverter_ABC& converter, int coordinateSystems )
+Wgs84DdParser::Wgs84DdParser( const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
-    , coordinateSystems_( coordinateSystems )
 {
     // NOTHING
 }
@@ -93,5 +92,5 @@ QStringList Wgs84DdParser::Split( const QString& input ) const
 // -----------------------------------------------------------------------------
 std::string Wgs84DdParser::GetStringPosition( const geometry::Point2f& position ) const
 {
-    return converter_.GetStringPosition( position, coordinateSystems_ );
+    return converter_.GetStringPosition( position, eCoordinateSystem_Wgs84Dd );
 }

@@ -13,7 +13,6 @@
 #include "clients_gui/LocationEditorBox.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_kernel/Moveable_ABC.h"
-#include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -31,7 +30,7 @@ PositionEditor::PositionEditor( QWidget* parent, kernel::Controllers& controller
     pMainLayout->setMargin( 10 );
 
     locBox_ = new gui::LocationEditorBox( controllers, converter );
-    locBox_->SelectParser( converter.GetCoordSystem().GetDefault() );
+    locBox_->SelectParser( converter.GetDefaultCoordinateSystem() );
     pMainLayout->addWidget( locBox_ );
 
     QHBoxLayout* pbuttonBox = new QHBoxLayout();

@@ -18,8 +18,8 @@
 #include "RichPushButton.h"
 
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/ContextMenu.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace gui;
 
@@ -79,7 +79,7 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers, const ke
     coordLayout->setMargin( 0 );
 
     FillDefaultMenu();
-    SelectParser( converter.GetCoordSystem().GetDefault() );
+    SelectParser( converter.GetDefaultCoordinateSystem() );
 
     subMenu_ = new kernel::ContextMenu();
     hints_ = new RichWidget< QListWidget >( "hints", subMenu_ );
@@ -108,9 +108,8 @@ LocationEditorBox::~LocationEditorBox()
 // -----------------------------------------------------------------------------
 void LocationEditorBox::FillDefaultMenu()
 {
-    const auto& systems = converter_.GetCoordSystem().GetSystems();
-    for( auto it = systems.begin(); it != systems.end(); ++it )
-        menu_->insertItem( it->second, it->first );
+    for( int i = 0; i < eNbrCoordinateSystem; ++i )
+        menu_->insertItem( QString::fromStdString( ENT_Tr::ConvertFromCoordinateSystem( static_cast< E_CoordinateSystem >( i ) ) ), i );
 }
 
 // -----------------------------------------------------------------------------
