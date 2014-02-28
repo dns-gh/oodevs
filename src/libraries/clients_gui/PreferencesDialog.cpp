@@ -10,20 +10,21 @@
 #include "clients_gui_pch.h"
 #include "PreferencesDialog.h"
 #include "moc_PreferencesDialog.cpp"
+#include "CoordinateSystemsPanel.h"
+#include "ElevationPanel.h"
+#include "Elevation2dLayer.h"
+#include "RefreshRatePanel.h"
 #include "GraphicsPanel.h"
 #include "GraphicPreferences.h"
+#include "InhabitantPanel.h"
+#include "LayersPanel.h"
+#include "LightingPanel.h"
 #include "PreferencesList.h"
 #include "PreferencePanel_ABC.h"
-#include "CoordinateSystemsPanel.h"
-#include "VisualisationScalesPanel.h"
-#include "LightingPanel.h"
-#include "LayersPanel.h"
-#include "InhabitantPanel.h"
 #include "resources.h"
 #include "RichPushButton.h"
 #include "SubObjectName.h"
-#include "ElevationPanel.h"
-#include "Elevation2dLayer.h"
+#include "VisualisationScalesPanel.h"
 #include "clients_kernel/ModeController.h"
 #include "clients_kernel/Tools.h"
 
@@ -198,4 +199,5 @@ void PreferencesDialog::BuildSettings()
     AddPage( tools::translate( "PreferencesDialog", "2D/Population" ), *new InhabitantPanel( this, controllers_ ) );
     AddPage( tools::translate( "PreferencesDialog", "2D/Elevation" ), *new ElevationPanel( this, elevation2dLayer_, controllers_, painter_ ) );
     AddPage( tools::translate( "PreferencesDialog", "3D" ), *new LightingPanel( this, lighting_, controllers_ ) );
+    AddPage( tools::translate( "PreferencesDialog", "Refresh rate" ), *new RefreshRatePanel( this, controllers_ ) );
 }
