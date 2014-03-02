@@ -45,7 +45,7 @@ PHY_LocalMeteo::PHY_LocalMeteo()
 // -----------------------------------------------------------------------------
 PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis,
         const weather::PHY_Lighting& light, unsigned int timeStep,
-        const std::shared_ptr< TER_World >& world )
+        const boost::shared_ptr< TER_World >& world )
     : Meteo( id, xis, &light, timeStep )
     , world_( world )
     , bIsPatched_( false )
@@ -69,7 +69,7 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis,
 // -----------------------------------------------------------------------------
 PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& msg,
         const weather::PHY_Lighting& light, unsigned int timeStep,
-        const std::shared_ptr< TER_World >& world )
+        const boost::shared_ptr< TER_World >& world )
     : Meteo( id, msg, light, timeStep )
     , world_( world )
     , bIsPatched_( false )

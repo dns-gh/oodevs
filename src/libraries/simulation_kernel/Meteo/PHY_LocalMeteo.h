@@ -12,7 +12,7 @@
 
 #include "meteo/Meteo.h"
 #include <boost/serialization/split_member.hpp>
-#include <memory>
+#include <boost/shared_ptr.hpp>
 
 namespace sword
 {
@@ -43,10 +43,10 @@ public:
              PHY_LocalMeteo();
              PHY_LocalMeteo( unsigned int id, xml::xistream& xis,
                  const weather::PHY_Lighting& light, unsigned int timeStep,
-                 const std::shared_ptr< TER_World >& world );
+                 const boost::shared_ptr< TER_World >& world );
              PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& message,
                  const weather::PHY_Lighting& light, unsigned int timeStep,
-                 const std::shared_ptr< TER_World >& world );
+                 const boost::shared_ptr< TER_World >& world );
     virtual ~PHY_LocalMeteo();
     //@}
 
@@ -78,7 +78,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::shared_ptr< TER_World > world_;
+    boost::shared_ptr< TER_World > world_;
     int startTime_;
     int endTime_;
     MT_Vector2D upLeft_;

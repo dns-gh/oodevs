@@ -88,7 +88,9 @@ namespace
         return std::max( maxUrbanId, maxOrbatId ) + 2;
     }
 
-    PHY_MeteoDataManager* CreateMeteoManager( MIL_Config& config, uint32_t tickDuration )
+    PHY_MeteoDataManager* CreateMeteoManager(
+        const boost::shared_ptr< TER_World >& world, MIL_Config& config,
+        uint32_t tickDuration )
     {
         auto xis = config.GetLoader().LoadFile( config.GetWeatherFile() );
 
@@ -104,7 +106,7 @@ namespace
         const auto now = MIL_Time_ABC::GetTime().GetRealTime();
 
         return new PHY_MeteoDataManager(
-                *xis, config.GetDetectionFile(), now, tickDuration );
+                world, *xis, config.GetDetectionFile(), now, tickDuration );
     }
 }
 
@@ -168,6 +170,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", 
         TER_World::GetWorld().GetWidth() / 1000.,
         TER_World::GetWorld().GetHeight()  / 1000. ) );
+    const auto world = TER_World::GetWorldPtr();
 
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
@@ -183,7 +186,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     else
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
-        pMeteoDataManager_ = CreateMeteoManager( config, GetTickDuration() );
+        pMeteoDataManager_ = CreateMeteoManager( world, config, GetTickDuration() );
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_, config_ );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );

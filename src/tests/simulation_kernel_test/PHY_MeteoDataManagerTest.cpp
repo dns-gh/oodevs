@@ -84,7 +84,8 @@ BOOST_AUTO_TEST_CASE( phy_ephemeride_test )
 namespace
 {
 
-boost::shared_ptr< PHY_MeteoDataManager > CreateMeteoManager()
+boost::shared_ptr< PHY_MeteoDataManager > CreateMeteoManager(
+        const boost::shared_ptr< TER_World >& world )
 {
     xml::xistringstream xis(
     "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"
@@ -104,7 +105,8 @@ boost::shared_ptr< PHY_MeteoDataManager > CreateMeteoManager()
     );
     tools::Path detectionFile = testOptions.GetDataPath(
             "../../data/terrains/Paris_Est/Detection/detection.dat" );
-    return boost::make_shared< PHY_MeteoDataManager >( xis, detectionFile, 0, 10 );
+    return boost::make_shared< PHY_MeteoDataManager >(
+            world, xis, detectionFile, 0, 10 );
 }
 
 boost::shared_ptr< xml::xistringstream > ReadXml( const std::string& data )
@@ -116,10 +118,10 @@ boost::shared_ptr< xml::xistringstream > ReadXml( const std::string& data )
 
 BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_api )
 {
-    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
+    const auto world = CreateWorld( "worldwide/tests/EmptyParis-ML" );
     FakePublisher publisher;
 
-    auto man = CreateMeteoManager();
+    auto man = CreateMeteoManager( world );
 
     // Remove imaginary weather
     BOOST_CHECK( !man->RemoveLocalWeather( 1234 ) );

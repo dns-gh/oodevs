@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include <boost/shared_ptr.hpp>
 #include <map>
+#include <memory>
 
 namespace geometry
 {
@@ -47,6 +48,7 @@ class PHY_GlobalMeteo;
 class PHY_LocalMeteo;
 class PHY_RawVisionData;
 class PHY_IndirectFireDotationClass;
+class TER_World;
 
 //*****************************************************************************
 // Created: JVT 02-10-21
@@ -58,8 +60,9 @@ public:
     //! @name Constructor/Destructor
     //@{
              PHY_MeteoDataManager();
-             PHY_MeteoDataManager( xml::xistream& xis, const tools::Path& detectionFile,
-                     uint32_t now, uint32_t tickDuration );
+             PHY_MeteoDataManager( const boost::shared_ptr< TER_World >& world,
+                 xml::xistream& xis, const tools::Path& detectionFile,
+                 uint32_t now, uint32_t tickDuration );
     virtual ~PHY_MeteoDataManager();
     //@}
 
@@ -127,6 +130,7 @@ private:
 private:
     //! @name Member data
     //@{
+    boost::shared_ptr< TER_World > world_;
     boost::shared_ptr< PHY_Ephemeride > pEphemeride_;
     PHY_GlobalMeteo* pGlobalMeteo_;
     PHY_RawVisionData* pRawData_;

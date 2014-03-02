@@ -9,11 +9,17 @@
 #ifndef __StubTER_World_h_
 #define __StubTER_World_h_
 
+#include <boost/shared_ptr.hpp>
+
+class TER_World;
+
 class FakeWorld
 {
 public:
     FakeWorld( const std::string& exercise );
     virtual ~FakeWorld();
 };
+
+boost::shared_ptr< TER_World > CreateWorld( const std::string& exercise );
 
 #endif //__StubTER_World_h_

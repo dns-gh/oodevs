@@ -20,6 +20,7 @@
 #define __TER_World_h_
 
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 #include <memory>
 
 class TerrainData;
@@ -64,12 +65,16 @@ public:
     //@}
 
 public:
-    ~TER_World();
+    //! @name Constructors/Destructor
+    //@{
+    explicit TER_World( const tools::ExerciseConfig& config );
+            ~TER_World();
+    //@}
 
     //! @name Operations
     //@{
     static TER_World& GetWorld();
-    static std::shared_ptr< TER_World > GetWorldPtr();
+    static boost::shared_ptr< TER_World > GetWorldPtr();
     static void Initialize( const tools::ExerciseConfig& config );
     static void DestroyWorld();
     //@}
@@ -100,12 +105,6 @@ public:
     TER_ObjectManager&     GetObjectManager    () const;
     TER_PopulationManager& GetPopulationManager() const;
     TER_LimitDataManager& GetLimitManager() const;
-    //@}
-
-private:
-    //! @name Constructors/Destructor
-    //@{
-    explicit TER_World( const tools::ExerciseConfig& config );
     //@}
 
 private:
