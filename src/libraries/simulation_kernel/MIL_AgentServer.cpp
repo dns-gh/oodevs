@@ -158,7 +158,21 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
 
     MIL_IDManager::SetKeepIdsMode( true, FindMaxId( config_ ) );
     config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
-    ReadStaticData();
+
+    nTimeStepDuration_ = config_.GetTimeStep();
+    nTimeFactor_ = config_.GetTimeFactor();
+
+    MT_LOG_INFO_MSG( "Initializing terrain" );
+    MT_LOG_INFO_MSG( "Terrain: " << config_.GetTerrainFile() );
+    TER_World::Initialize( config_ );
+    MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", 
+        TER_World::GetWorld().GetWidth() / 1000.,
+        TER_World::GetWorld().GetHeight()  / 1000. ) );
+
+    pWorkspaceDIA_ = new DEC_Workspace( config_ );
+    MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
+    pAgentServer_ = new NET_AgentServer( config_, *this );
+
     pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
     if( config_.HasCheckpoint() )
     {
@@ -215,32 +229,6 @@ MIL_AgentServer::~MIL_AgentServer()
     //    MT_LOG_INFO_MSG( "Terminating Terrain" );
 //    TER_World::DestroyWorld();
     MIL_Time_ABC::UnregisterTime( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::ReadStaticData
-// Created: JVT 2005-03-07
-// -----------------------------------------------------------------------------
-void MIL_AgentServer::ReadStaticData()
-{
-    nTimeStepDuration_ = config_.GetTimeStep();
-    nTimeFactor_ = config_.GetTimeFactor();
-    ReadTerData();
-    pWorkspaceDIA_ = new DEC_Workspace( config_ );
-    MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
-    pAgentServer_ = new NET_AgentServer( config_, *this );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::ReadTerData
-// Created: FBD 02-11-27
-//-----------------------------------------------------------------------------
-void MIL_AgentServer::ReadTerData()
-{
-    MT_LOG_INFO_MSG( "Initializing terrain" );
-    MT_LOG_INFO_MSG( "Terrain: " << config_.GetTerrainFile() );
-    TER_World::Initialize( config_ );
-    MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", TER_World::GetWorld().GetWidth() / 1000., TER_World::GetWorld().GetHeight()  / 1000. ) );
 }
 
 //-----------------------------------------------------------------------------
