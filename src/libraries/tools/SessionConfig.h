@@ -26,7 +26,7 @@ class SessionConfig : public ExerciseConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionConfig( RealFileLoaderObserver_ABC& observer );
+             SessionConfig( const boost::shared_ptr< RealFileLoaderObserver_ABC>& observer );
     virtual ~SessionConfig();
     //@}
 

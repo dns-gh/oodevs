@@ -9,8 +9,9 @@
 
 #include "hla_plugin_test_pch.h"
 #include "tools/FileWrapper.h"
-#include "tools/SessionConfig.h"
+#include "tools/NullFileLoaderObserver.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
+#include "tools/SessionConfig.h"
 #include "tools/XmlStreamOperators.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
@@ -22,13 +23,6 @@
 
 namespace
 {
-    struct VoidRealFileLoaderObserver : tools::RealFileLoaderObserver_ABC
-    {
-        virtual bool NotifyInvalidXml          ( const tools::Path& , const xml::exception&  ) { return true; }
-        virtual void NotifyNoXmlSchemaSpecified( const tools::Path& ) {}
-        virtual void NotifyFileMigrated        ( const tools::Path&  , const std::string& , const std::string& ) {}
-    };
-
     char* CMD_LINE[] = { "blah.exe",
                         "--root-dir=../../data",
                         "--exercise=worldwide/Egypt",
@@ -38,7 +32,7 @@ namespace
     {
     public:
         Fixture()
-            : config_( fileObserver_ )
+            : config_( tools::CreateNullFileLoaderObserver() )
         {
             config_.Parse( sizeof(CMD_LINE)/sizeof(CMD_LINE[0]), CMD_LINE );
             pluginRoot_ = config_.BuildPluginDirectory( "hla" );
@@ -67,7 +61,6 @@ namespace
         const kernel::StaticModel& StaticModel() const { return staticModel_; }
 
     private:
-        VoidRealFileLoaderObserver fileObserver_;
         tools::SessionConfig config_;
         tools::Path pluginRoot_;
         tools::Path aggregateMapping_, surfaceMapping_, componentMapping_, munitionMapping_, objectMapping_;
@@ -168,7 +161,7 @@ namespace
     {
     public:
         MissionFixture()
-            : config_( fileObserver_ )
+            : config_( tools::CreateNullFileLoaderObserver() )
         {
             config_.Parse( sizeof(CMD_LINE)/sizeof(CMD_LINE[0]), CMD_LINE );
             pluginRoot_ = config_.BuildPluginDirectory( "hla" );
@@ -199,7 +192,6 @@ namespace
         const kernel::StaticModel& StaticModel() const { return staticModel_; }
 
     private:
-        VoidRealFileLoaderObserver fileObserver_;
         tools::SessionConfig config_;
         tools::Path pluginRoot_;
         kernel::StaticModel staticModel_;

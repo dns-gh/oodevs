@@ -30,10 +30,11 @@ namespace tools
 // Name: ExerciseConfig constructor
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-ExerciseConfig::ExerciseConfig( RealFileLoaderObserver_ABC& observer )
+ExerciseConfig::ExerciseConfig( 
+    const boost::shared_ptr< RealFileLoaderObserver_ABC >& observer )
     : pWorldParameters_( 0 )
     , observer_( observer )
-    , loader_( new DefaultLoader( observer ))
+    , loader_( new DefaultLoader( *observer ))
 {
     po::options_description desc( "Exercise options" );
     desc.add_options()
@@ -90,7 +91,7 @@ void ExerciseConfig::LoadExercise( const Path& file )
 {
     try
     {
-        DefaultLoader loader( observer_ );
+        DefaultLoader loader( *observer_ );
         loader.LoadFile( file, boost::bind( &ExerciseConfig::ReadExercise, this, _1 ) );
         if( GetExerciseFile() != file )
             SetExerciseName( file );

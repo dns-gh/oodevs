@@ -21,11 +21,6 @@ namespace dispatcher
     class Dispatcher;
 }
 
-namespace tools
-{
-    class RealFileLoaderObserver_ABC;
-}
-
 class MT_ConsoleLogger;
 class MT_FileLogger;
 
@@ -56,7 +51,6 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
     std::auto_ptr< dispatcher::Config > config_;
     std::auto_ptr< dispatcher::Dispatcher > dispatcher_;
     std::auto_ptr< MT_ConsoleLogger > console_;

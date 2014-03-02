@@ -20,7 +20,6 @@
 
 namespace tools
 {
-    class RealFileLoaderObserver_ABC;
     class WinArguments;
     class WaitEvent;
 }
@@ -68,7 +67,6 @@ private:
     const int maxConnections_;
     const bool verbose_;
 
-    std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
     std::auto_ptr< MIL_Config > config_;
     std::auto_ptr< tools::WinArguments > winArguments_;
     std::auto_ptr< SIM_NetworkLogger > pNetworkLogger_;

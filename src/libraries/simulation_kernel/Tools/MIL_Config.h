@@ -35,7 +35,7 @@ class MIL_Config : public virtual tools::SessionConfig
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_Config( tools::RealFileLoaderObserver_ABC& observer );
+    explicit MIL_Config( const boost::shared_ptr< tools::RealFileLoaderObserver_ABC >& observer );
     virtual ~MIL_Config();
     //@}
 

@@ -15,7 +15,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include "resource.h"
 #include "tools/IpcWatch.h"
-#include "tools/NullFileLoaderObserver.h"
 #include "tools/WaitEvent.h"
 #include "tools/WinArguments.h"
 #include <tools/Exception.h>
@@ -34,8 +33,7 @@ static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1};
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/, LPWSTR lpCmdLine, int /* nCmdShow */, bool replayLog )
-    : observer_( new tools::NullFileLoaderObserver() )
-    , config_  ( new dispatcher::Config( *observer_ ) )
+    : config_  ( new dispatcher::Config() )
     , quit_    ( new tools::WaitEvent() )
     , test_    ( false )
 {

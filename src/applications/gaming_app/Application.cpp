@@ -28,7 +28,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Workers.h"
-#include "tools/NullFileLoaderObserver.h"
 #include "ENT/ENT_Tr.h"
 #pragma warning( push, 1 )
 #pragma warning( disable : 4512 )
@@ -48,8 +47,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     Initialize();
 
     // Data
-    observer_.reset( new tools::NullFileLoaderObserver() );
-    config_.reset( new Config( argc, argv, *observer_ ) );
+    config_.reset( new Config( argc, argv ) );
     LoadCommandLineLanguage( config_->GetLanguages(), config_->GetCommandLineLanguage() );
     controllers_.reset( new Controllers() );
     logger_.reset( new LoggerProxy() );

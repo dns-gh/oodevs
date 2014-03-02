@@ -11,6 +11,7 @@
 #include "Config.h"
 #include "gaming/Network.h"
 #include "clients_kernel/Tools.h"
+#include "tools/NullFileLoaderObserver.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
@@ -22,8 +23,8 @@ namespace po  = boost::program_options;
 // Name: Config constructor
 // Created: NLD 2007-01-12
 // -----------------------------------------------------------------------------
-Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observer )
-    : SessionConfig( observer )
+Config::Config( int argc, char** argv )
+    : SessionConfig( tools::CreateNullFileLoaderObserver() )
     , orderFile_     ( "" )
     , networkTimeOut_( 10000 )
     , hasTimeline_( false )

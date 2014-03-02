@@ -29,8 +29,7 @@ namespace
         SerializerFixture()
             : factory_( primitives_, variables_ )
         {
-            tools::NullFileLoaderObserver observer;
-            tools::ExerciseConfig config( observer );
+            tools::ExerciseConfig config( tools::CreateNullFileLoaderObserver() );
             xml::xifstream xis( BOOST_RESOLVE( "../../app-data/resources/IndicatorPrimitives.xml" ));
             primitives_.Load( xis );
         }

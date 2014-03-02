@@ -18,8 +18,7 @@ namespace
 
 void WorldInitialize( const std::string& exercise )
 {
-    tools::NullFileLoaderObserver observer;
-    tools::ExerciseConfig config( observer );
+    tools::ExerciseConfig config( tools::CreateNullFileLoaderObserver() );
     char* params[4];
     params[0] = "simulation_kernel_test.exe";
     params[1] = "--root-dir=../../data";

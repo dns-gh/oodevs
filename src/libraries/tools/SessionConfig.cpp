@@ -21,7 +21,8 @@ namespace po = boost::program_options;
 // Name: SessionConfig constructor
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-SessionConfig::SessionConfig( RealFileLoaderObserver_ABC& observer )
+SessionConfig::SessionConfig(
+        const boost::shared_ptr< RealFileLoaderObserver_ABC>& observer )
     : ExerciseConfig    ( observer )
     , sessionConfigFile_( "session.xml" )
     , hasCheckPoint_    ( false )

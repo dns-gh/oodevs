@@ -11,6 +11,7 @@
 #define __preparation_Application_h_
 
 #include "clients_gui/Application_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace gui
 {
@@ -52,7 +53,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< FileLoaderObserver >  observer_;
+    boost::shared_ptr< FileLoaderObserver >  observer_;
     std::auto_ptr< Config >              config_;
     std::auto_ptr< kernel::Controllers > controllers_;
     std::auto_ptr< StaticModel >         staticModel_;

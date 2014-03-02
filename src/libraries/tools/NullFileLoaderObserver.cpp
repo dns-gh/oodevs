@@ -12,6 +12,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include <tools/Path.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace tools;
 
@@ -59,4 +60,9 @@ void NullFileLoaderObserver::NotifyNoXmlSchemaSpecified( const Path& fileName )
 void NullFileLoaderObserver::NotifyFileMigrated( const Path& /*fileName*/, const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
 {
     // NOTHING
+}
+
+boost::shared_ptr< NullFileLoaderObserver > tools::CreateNullFileLoaderObserver()
+{
+    return boost::make_shared< NullFileLoaderObserver >();
 }
