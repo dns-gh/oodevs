@@ -30,6 +30,7 @@
 #include "MT_Tools/MT_Rect.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/make_shared.hpp>
 
 namespace
 {
@@ -44,7 +45,7 @@ boost::shared_ptr< TER_World > world_;
 // -----------------------------------------------------------------------------
 void TER_World::Initialize( const tools::ExerciseConfig& config )
 {
-    world_ = boost::shared_ptr< TER_World >( new TER_World( config ));
+    world_ = boost::make_shared< TER_World >( config );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +191,7 @@ TER_World& TER_World::GetWorld()
     return *world_;
 }
 
-boost::shared_ptr< TER_World > TER_World::GetWorldPtr()
+const boost::shared_ptr< TER_World >& TER_World::GetWorldPtr()
 {
     return world_;
 }

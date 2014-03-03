@@ -74,7 +74,7 @@ public:
     //! @name Operations
     //@{
     static TER_World& GetWorld();
-    static boost::shared_ptr< TER_World > GetWorldPtr();
+    static const boost::shared_ptr< TER_World >& GetWorldPtr();
     static void Initialize( const tools::ExerciseConfig& config );
     static void DestroyWorld();
     //@}
