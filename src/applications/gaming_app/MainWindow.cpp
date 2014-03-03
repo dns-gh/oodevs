@@ -50,6 +50,7 @@
 #include "TeamLayer.h"
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
+#include "PathfindLayer.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController.h"
@@ -316,6 +317,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, *parameters_, *glProxy_, profile_ );
     gui::Layer& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
     gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
+    gui::Layer& pathfindLayer        = *new PathfindLayer( controllers_, *glProxy_, model_.publisher_, staticModel_.coordinateConverter_ );
 
     // ordre de dessin
     AddLayer( defaultLayer );
@@ -351,6 +353,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( profilerLayer, "main" );
     AddLayer( drawerLayer, "main,miniviews" );
     AddLayer( fogLayer, "fog" );
+    AddLayer( pathfindLayer, "main" );
     AddTooltipLayer( tooltipLayer );
 
     // ordre des evenements

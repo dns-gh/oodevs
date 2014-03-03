@@ -226,6 +226,7 @@ message ClientToSim {
         optional ListEnabledVisionCones   list_enabled_vision_cones       = 25;
         optional LogisticHistoryRequest   logistic_history_request        = 26;
         optional ListLogisticRequests     list_logistic_requests          = 27;
+        optional PathfindRequest          pathfind_request                = 28;
     }
     /** @property context
         @brief Identifies the request matching the response
