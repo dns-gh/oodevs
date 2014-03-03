@@ -230,7 +230,7 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> localCounter_
          >> pGlobalMeteo_
          >> pEphemeride_
-         >> tickDuration_
+         >> const_cast< uint32_t& >( tickDuration_ )
          >> size;
     MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
     pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config.GetDetectionFile(), this );

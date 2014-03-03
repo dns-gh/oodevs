@@ -135,7 +135,7 @@ private:
     PHY_GlobalMeteo* pGlobalMeteo_;
     PHY_RawVisionData* pRawData_;
     std::map< uint32_t, boost::shared_ptr< PHY_LocalMeteo > > meteos_;
-    uint32_t tickDuration_;
+    const uint32_t tickDuration_;
     static unsigned int localCounter_;
     //@}
 };
