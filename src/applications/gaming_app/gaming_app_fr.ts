@@ -1735,6 +1735,21 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticStatusWidget</name>
+    <message>
+        <source>Mode</source>
+        <translation>Mode</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation>Manuel</translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation>Automatique</translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyCarriersTableWidget</name>
     <message>
         <source>The convoy is unable to carry that much weight</source>
@@ -2192,21 +2207,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Unit</source>
         <translation>Unité</translation>
-    </message>
-</context>
-<context>
-    <name>MaintenanceStatusWidget</name>
-    <message>
-        <source>Mode</source>
-        <translation>Mode</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Manuel</translation>
-    </message>
-    <message>
-        <source>Automatic</source>
-        <translation>Automatique</translation>
     </message>
 </context>
 <context>

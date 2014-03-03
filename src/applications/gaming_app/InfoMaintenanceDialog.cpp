@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "InfoMaintenanceDialog.h"
 #include "LogisticsRequestsMaintenanceWidget.h"
-#include "LogisticStatusWidgets.h"
+#include "LogisticStatusWidget.h"
 #include "MaintenanceHaulersListView.h"
 #include "MaintenanceRepairersListView.h"
 

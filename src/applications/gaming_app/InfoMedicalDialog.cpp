@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "InfoMedicalDialog.h"
 #include "LogisticsRequestsMedicalWidget.h"
-#include "LogisticStatusWidgets.h"
+#include "LogisticStatusWidget.h"
 #include "MedicalCollectAmbulancesListView.h"
 #include "MedicalDoctorsListView.h"
 #include "MedicalReliefAmbulancesListView.h"
