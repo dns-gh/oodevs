@@ -23,6 +23,7 @@
 #include "simulation_terrain/TER_AnalyzerManager.h"
 #include "simulation_terrain/TER_World.h"
 
+#include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
 
 class DEC_Decision_ABC;
@@ -275,7 +276,8 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
             clippedLocalisation.Split( nNbrParts, result );
         else
         {
-            result.push_back( boost::shared_ptr< TER_Localisation >( new TER_Localisation( clippedLocalisation ) ) );
+            auto loc = boost::make_shared< TER_Localisation >( clippedLocalisation );
+            result.push_back( loc );
             for( unsigned int n = 1; n < nNbrParts; n *= 4 )
             {
                 T_ResultVector splitted;
@@ -332,7 +334,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBaryc
     {
         assert( TER_World::GetWorld().IsValidPosition( vBarycenter ) );
         // 3. Envoi du résulat à DIA
-        result.reset( new MT_Vector2D( vBarycenter ) );
+        result = boost::make_shared< MT_Vector2D >( vBarycenter );
     }
     return result;
 }
@@ -344,7 +346,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBaryc
 template< typename T >
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPoint( const T& caller )
 {
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() ); //$$$$ RAM
+    auto pResult = boost::make_shared< MT_Vector2D >(); //$$$$ RAM
     caller.GetOrderManager().GetFuseau().ComputeFurthestExtremityPoint( *pResult );
     return pResult;
 }
@@ -377,7 +379,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetLeavingAreaPosition( 
     boost::shared_ptr< MT_Vector2D > pResult;
     MT_Vector2D vResult;
     if( scale.ComputeNearestOutsidePoint( GetPosition( caller ), vResult ) )
-        pResult.reset( new MT_Vector2D( vResult ) );
+        pResult = boost::make_shared< MT_Vector2D >( vResult );
 
     return pResult;
 }
@@ -455,7 +457,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputePointBeforeLima( 
     {
         MT_Vector2D vResult;
         if( caller.GetOrderManager().GetFuseau().ComputePointBeforeLima( *pLima, MIL_Tools::ConvertMeterToSim( distanceBefore ), vResult ) )
-            pResult.reset( new MT_Vector2D( vResult ) );
+            pResult = boost::make_shared< MT_Vector2D >( vResult );
     }
     return pResult;
 }
@@ -475,7 +477,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputePointBeforeLimaIn
     {
         MT_Vector2D vResult;
         if ( pFuseau->ComputePointBeforeLima( *pLima, rDistBeforeLima, vResult ) )
-            pResult.reset( new MT_Vector2D( vResult ) );
+            pResult = boost::make_shared< MT_Vector2D >( vResult );
     }
     return pResult;
 }
@@ -496,7 +498,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestLocalisati
     {
         MT_Vector2D vResult;
         if( clipped.ComputeNearestPoint( GetPosition( caller ), vResult ) )
-            pResult.reset( new MT_Vector2D( vResult ) );
+            pResult = boost::make_shared< MT_Vector2D >( vResult );
     }
     return pResult;
 }
@@ -517,7 +519,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestUnclippedL
 
     MT_Vector2D vResult;
     if ( fuseauLocation.ComputeNearestPoint( pLocation->ComputeBarycenter(), vResult ) )
-        pResult.reset( new MT_Vector2D( vResult ) );
+        pResult = boost::make_shared< MT_Vector2D >( vResult );
     return pResult;
 }
 
