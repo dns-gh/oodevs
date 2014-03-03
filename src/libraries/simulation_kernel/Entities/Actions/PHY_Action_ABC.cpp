@@ -11,15 +11,19 @@
 #include "PHY_Action_ABC.h"
 #include "PHY_Actor.h"
 #include "Decision/DEC_Tools.h"
+#include "Tools/MIL_IDManager.h"
 
-MIL_IDManager PHY_Action_ABC::idManager_;
+namespace
+{
+    MIL_IDManager idManager;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Action_ABC constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 PHY_Action_ABC::PHY_Action_ABC()
-    : id_        ( idManager_.GetId() )
+    : id_        ( idManager.GetId() )
     , bSuspended_( false )
 {
     // NOTHING

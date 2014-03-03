@@ -11,7 +11,6 @@
 #define __PHY_Action_ABC_h_
 
 #include "MIL.h"
-#include "Tools/MIL_IDManager.h"
 
 namespace xml
 {
@@ -65,7 +64,6 @@ private:
     //@{
     unsigned int id_;
     bool bSuspended_;
-    static MIL_IDManager idManager_;
     //@}
 };
 
