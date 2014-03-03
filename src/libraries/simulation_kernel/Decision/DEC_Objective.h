@@ -58,6 +58,4 @@ private:
     //@}
 };
 
-#include "DEC_Objective.inl"
-
 #endif // __DEC_Objective_h_

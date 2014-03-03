@@ -954,7 +954,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ClipLocalisation( c
     if( ClipLocalisationInFuseau( localisation, fuseau, clippedResult ) )
         result.reset( new TER_Localisation( clippedResult ) );
     return result;
-}    
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::SplitLocalisation
@@ -1020,7 +1020,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
          throw std::runtime_error( "Null unit when splitting location in parts" );
     return SplitLocalisationInParts< MIL_AgentPion >( caller->GetPion(), pLocalisation, nNbrParts, direction);
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeLocalisationBarycenter
 // Created: JVT 2005-01-17
@@ -1251,7 +1251,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeMeanDirection( co
     return pResult;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter
 // Created: JVT 2005-01-17
@@ -1373,7 +1372,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( co
 // Created: JVT 2005-02-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCircle( MT_Vector2D* pCenter, float radius )
-{    
+{
     if( !pCenter )
         throw MASA_EXCEPTION( "Invalid center" );
     boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >( 0., 1. );
@@ -1404,7 +1403,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCirc
     TER_World::GetWorld().ClipPointInsideWorld( *pRandomPosition );
     return pRandomPosition;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInZone
@@ -1553,7 +1551,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolygonLocali
 // Created: LDC 2011-03-29
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateScaledLocalisation( TER_Localisation* location, double length )
-{    
+{
     if( !location )
         throw MASA_EXCEPTION( "Invalid location" );
     boost::shared_ptr< TER_Localisation > pResult = boost::make_shared< TER_Localisation >( *location );
@@ -2054,7 +2052,7 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
 // Created: MGD 2009-10-30
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeBarycenter( const TER_Localisation* localisation )
-{    
+{
     if( !localisation )
         throw MASA_EXCEPTION( "Invalid location" );
     boost::shared_ptr< MT_Vector2D > result;
@@ -2138,7 +2136,7 @@ boost::shared_ptr< MT_Vector2D > ComputeObstaclePosition( const MIL_Fuseau& fuse
     if ( pCapacity )
     {
         sBestNodeForObstacle  costEvaluationFunctor( fuseau, *pCapacity, *pCenter, rRadius );
-        TER_World::GetWorld().GetAnalyzerManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );        
+        TER_World::GetWorld().GetAnalyzerManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );
         if( costEvaluationFunctor.FoundAPoint() )
             pResultPos.reset( new MT_Vector2D( costEvaluationFunctor.BestPosition() ) );
     }
@@ -2159,4 +2157,22 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePositionF
 {
     return ::ComputeObstaclePosition( automat.GetOrderManager().GetFuseau(), pCenter,
             type, rRadius );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetPosition
+// Created: JVT 2005-01-03
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_GeometryFunctions::GetPosition( const MIL_AgentPion& pion )
+{
+    return pion.GetRole< PHY_RoleInterface_Location >().GetPosition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetPosition
+// Created: JVT 2005-01-03
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_GeometryFunctions::GetPosition( const MIL_Automate& automate )
+{
+    return automate.GetPosition();
 }

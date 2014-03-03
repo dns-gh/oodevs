@@ -88,6 +88,4 @@ private:
     //@}
 };
 
-#include "DEC_Path.inl"
-
 #endif // __DEC_Path_h_

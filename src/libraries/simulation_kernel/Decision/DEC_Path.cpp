@@ -191,3 +191,43 @@ void DEC_Path::RemoveComputedWaypoint()
     if( !computedWaypoints_.empty() )
         computedWaypoints_.erase( computedWaypoints_.begin() );
 }
+
+//-----------------------------------------------------------------------------
+// Name: DEC_Path::GetState
+// Created: JDY 03-02-12
+//-----------------------------------------------------------------------------
+DEC_Path_ABC::E_State DEC_Path::GetState() const
+{
+    return nState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path::GetComputedWaypoints
+// Created: CMA 2012-02-23
+// -----------------------------------------------------------------------------
+const T_PointVector& DEC_Path::GetComputedWaypoints() const
+{
+    return computedWaypoints_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path::GetLastWaypoint
+// Created: CMA 2012-05-21
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_Path::GetLastWaypoint() const
+{
+    return lastWaypoint_;
+}
+
+// =============================================================================
+// TOOLS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_ABC::RegisterPathSection
+// Created: NLD 2005-02-22
+// -----------------------------------------------------------------------------
+void DEC_Path::RegisterPathSection( DEC_PathSection_ABC& section )
+{
+    pathSections_.push_back( &section );
+}

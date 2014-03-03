@@ -101,7 +101,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Connaissances_UnitesPrenantAPartieUnAmi", &DEC_KnowledgeFunctions::GetEnemiesAttacking );
     brain.RegisterFunction( "DEC_Connaissances_UniteLaPlusProcheDunAmi", &DEC_KnowledgeFunctions::GetNearestToFriend );
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesDansZone", &DEC_KnowledgeFunctions::GetEnemyAgentsInZone );
-    
+
     brain.RegisterFunction( "DEC_Agent_Renforts", &DEC_MiscFunctions::GetAgentReinforcements );
     brain.RegisterFunction( "DEC_Agent_NombreRenforts", &DEC_MiscFunctions::GetAgentReinforcementsNumber );
     brain.RegisterFunction( "DEC_Pion_PionPCDeAutomate", &DEC_AgentFunctions::GetPionPCOfAutomate );
@@ -120,7 +120,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Pion_GetMilPionName", &DEC_AgentFunctions::GetMilPionName );
     brain.RegisterFunction( "DEC_Agent_EstImmobilise", &DEC_AgentFunctions::IsImmobilized );
     brain.RegisterFunction( "DEC_Agent_CanMoveOn", &DEC_TerrainFunctions::CanMoveOn );
-    
+
     brain.RegisterFunction( "DEC_Agent_ForcerImmunisationNbc", &DEC_AgentFunctions::TemporaryImmunizeAgent );
     brain.RegisterFunction( "DEC_Agent_ARadar", &DEC_AgentFunctions::AgentHasRadar );
     brain.RegisterFunction( "DEC_Agent_RapportDeForceLocal", &DEC_AgentFunctions::GetRapForLocalAgent );
@@ -128,7 +128,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
 
     brain.RegisterFunction( "DEC_Agent_GetTempsDeploiement", &DEC_AgentFunctions::GetInstallationTime );     // $$$$ ABR 2011-12-15: Old method, should be removed soon
     brain.RegisterFunction( "DEC_Agent_GetTempsDedeploiement", &DEC_AgentFunctions::GetUninstallationTime ); // $$$$ ABR 2011-12-15: Old method, should be removed soon
-    
+
     brain.RegisterFunction( "DEC_GenObject_CreateInstantaneously", &DEC_AgentFunctions::CreateInstantaneously );
     brain.RegisterFunction( "DEC_Agent_CanPerformHealthEvacuation", &DEC_AgentFunctions::CanPerformHealthEvacuation );
     brain.RegisterFunction( "DEC_Agent_EstBrouille", &DEC_AgentFunctions::IsJammed );
@@ -199,7 +199,7 @@ void RegisterAgentKnowledgeFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_Connaissances_UnitesPrenantAPartieSurAmi" , &DEC_KnowledgeFunctions::GetAgentsAttackingAlly );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_GetMilPionType", &DEC_KnowledgeAgentFunctions::GetMilPionType );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion", &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion );
-    brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance", &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge );    
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance", &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EnAgent", &DEC_KnowledgeAgentFunctions::GetAgent );
     brain.RegisterFunction( "DEC_Connaissances_PartageConnaissancesAvecConnaissanceAgent", &DEC_KnowledgeAgentFunctions::ShareKnowledgesWith );
     brain.RegisterFunction( "DEC_ObjectKnowledge_GetObjectsInZone", &DEC_KnowledgeFunctions::GetObjectsWithCapacityInZone );
@@ -318,7 +318,7 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_StopCalculLignesAvantEtArriere", &DEC_GeometryFunctions::StopComputingFrontAndBackLines );
     brain.RegisterFunction( "DEC_Geometrie_PositionAdvanceAlongDangerDirection", &DEC_GeometryFunctions::ComputePositionAdvanceAlongDangerDirection );
     brain.RegisterFunction( "DEC_Geometrie_ConvexHull", &DEC_GeometryFunctions::ComputeConvexHull );
-    
+
     brain.RegisterFunction( "DEC_Geometrie_FindRoadIntersectionWithZone", &DEC_TerrainFunctions::GetRoadIntersectionsWithZone );
     brain.RegisterFunction( "DEC_Geometrie_IsLinearRiverInBetween", &DEC_TerrainFunctions::IsLinearRiverInBetween );
     brain.RegisterFunction( "DEC_Geometrie_IsWaterInBetween", &DEC_TerrainFunctions::IsWaterInBetween );
@@ -587,7 +587,7 @@ void RegisterObjectFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_Agent_AgentPeutDetruireTypeObjetAvecLocalisation", &DEC_AgentFunctions::AgentCanDestroyObjectTypeWithLocalisation );
 
     brain.RegisterFunction( "DEC_Agent_PeutActiverObjet", &DEC_AgentFunctions::CanActivateObject );
-    
+
     brain.RegisterFunction( "DEC_Agent_GetAgentDotation", &DEC_AgentFunctions::GetAgentDotationNumber );
     brain.RegisterFunction( "DEC_GetAgentDotationManquantePourConstruireObjet", &DEC_AgentFunctions::GetAgentMissingDotationForBuildingObject );
     brain.RegisterFunction( "DEC_GetAgentDotationManquantePourConstruireObjetExistant", &DEC_AgentFunctions::GetAgentMissingDotationForBuildingExistingObject );
@@ -1593,7 +1593,6 @@ void InitFunctions()
         functorsBM[ "ResourceNetworkTypeList" ] = ResourceNetworkTypeListFunctionBM;
     }
 }
-
 
 class RegisterMissionParameterVisitor : public MIL_MissionParameterVisitor_ABC
 {

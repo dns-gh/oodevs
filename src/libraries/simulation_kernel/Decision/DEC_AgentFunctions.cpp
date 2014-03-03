@@ -650,8 +650,6 @@ bool DEC_AgentFunctions::PionCanFly( const DEC_Decision_ABC* callerAgent )
     return callerAgent && callerAgent->GetPion().GetType().GetUnitType().CanFly();
 }
 
-
-
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::NotifyForceRatioStateChanged
 // Created: NLD 2004-10-15
@@ -1390,7 +1388,6 @@ double DEC_AgentFunctions::GetRapForLocalAgent( const DEC_Decision_ABC* agent )
     return agent ? agent->GetPion().GetKnowledge().GetRapForLocalValue() : 0.;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetCurrentSpeed
 // Created: LMT 2011-07-05
@@ -1735,7 +1732,7 @@ bool DEC_AgentFunctions::AgentHasRadar( const DEC_Decision_ABC* agent, int typeR
 // Created: GGE 2010-03-25
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::AgentHasFuseau(const MIL_Agent_ABC& callerAgent )
-{ 
+{
     return !callerAgent.GetOrderManager().GetFuseau().IsNull();
 }
 
