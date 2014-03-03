@@ -63,6 +63,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -135,9 +136,9 @@ void DEC_AgentFunctions::ActivateBlackout( MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::ActivatePartialBlackout
 // Created: HBD 2010-06-16
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::ActivatePartialBlackout( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::ActivatePartialBlackout( MIL_Agent_ABC& callerAgent, bool report )
 {
-    callerAgent.CallRole( &PHY_RoleInterface_Communications::ActivatePartialBlackout );
+    callerAgent.CallRole( &PHY_RoleInterface_Communications::ActivatePartialBlackout, report );
 }
 
 // -----------------------------------------------------------------------------
@@ -1795,4 +1796,118 @@ bool DEC_AgentFunctions::CreateBreakdown( MIL_Agent_ABC& callerAgent, unsigned i
         return callerAgent.GetRole< PHY_RolePion_Composantes >().
             CreateBreakdowns( *composanteType, 1, breakdownType );
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::EnableSharedPerception
+// Created: LGY 2013-05-07
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::EnableSharedPerception( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        throw std::runtime_error( "Invalid pion in EnableSharedPerception" );
+    pAgent->GetPion().GetKnowledgeGroup()->RegisterSharingPerceptions( callerAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::DisabledSharedPerception
+// Created: LGY 2013-05-07
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::DisabledSharedPerception( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        throw std::runtime_error( "Invalid pion in DisabledSharedPerception" );
+    pAgent->GetPion().GetKnowledgeGroup()->UnregisterSharingPerceptions( callerAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::EnableSharingKnowledges
+// Created: LGY 2013-05-07
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::EnableSharingKnowledges( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        throw std::runtime_error( "Invalid pion in EnableSharedPerception" );
+    callerAgent.GetKnowledgeGroup()->RegisterSharingKnowledges( pAgent->GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::DisabledSharingKnowledges
+// Created: LGY 2013-05-07
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::DisabledSharingKnowledges( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        throw std::runtime_error( "Invalid pion in DisabledSharedPerception" );
+    callerAgent.GetKnowledgeGroup()->UnregisterSharingKnowledges( pAgent->GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::EnableSharedPerceptionWithKnowledge
+// Created: GGE 2013-06-03
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::EnableSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid())
+        pKnowledge->GetAgentKnown().GetKnowledgeGroup()->RegisterSharingPerceptions( callerAgent.GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::DisabledSharedPerceptionWithKnowledge
+// Created: GGE 2013-06-03
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::DisabledSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid())
+        pKnowledge->GetAgentKnown().GetKnowledgeGroup()->UnregisterSharingPerceptions( callerAgent.GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::EnableSharingKnowledgesWithKnowledge
+// Created: LGY 2013-09-09
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::EnableSharingKnowledgesWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid())
+        pKnowledge->GetAgentKnown().GetKnowledgeGroup()->RegisterSharingKnowledges( callerAgent.GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::DisabledSharingKnowledgesWithKnowledge
+// Created: LGY 2013-09-09
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::DisabledSharingKnowledgesWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid())
+        pKnowledge->GetAgentKnown().GetKnowledgeGroup()->UnregisterSharingKnowledges( callerAgent.GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::KnowledgeEnableSharedPerceptionWithKnowledge
+// Created: GGE 2013-06-03
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::KnowledgeEnableSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        throw std::runtime_error( "Invalid pion in KnowledgeEnableSharedPerceptionWithKnowledge" );
+
+    pAgent->GetPion().GetKnowledgeGroup()->RegisterSharingPerceptions( callerAgent.GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::KnowledgeDisabledSharedPerceptionWithKnowledge
+// Created: GGE 2013-06-03
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::KnowledgeDisabledSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        throw std::runtime_error( "Invalid pion in KnowledgeDisabledSharedPerceptionWithKnowledge" );
+    pAgent->GetPion().GetKnowledgeGroup()->UnregisterSharingPerceptions( callerAgent.GetPion() );
+}
+
+bool DEC_AgentFunctions::KnowledgeCommunicate( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        throw std::runtime_error( "Invalid pion in KnowledgeCommunicate" );
+    return pAgent->GetPion().GetKnowledgeGroup()->GetId() == callerAgent.GetKnowledgeGroup()->GetId();
 }

@@ -114,17 +114,21 @@ void MIL_Report::ReadParameter( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
 {
-    if( params.size() != parameters_.size() )
+    const std::size_t expectedSize = parameters_.size();
+    const std::size_t receivedSize = params.size();
+    if( receivedSize < expectedSize )
     {
-        MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (invalid DIA parameters)" );
+        MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (parameters missing)" );
         return false;
     }
+    else if( receivedSize > expectedSize )
+        MT_LOG_INFO_MSG( "Report '" << strMessage_ << "' optional parameters omitted" );
 
     message().mutable_report()->set_id( nextMessageId_-- ); // descending order
     message().mutable_type()->set_id( nID_ );
     message().set_category( sword::Report::EnumReportType( nType ) );
     NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *message().mutable_time() );
-    for( unsigned int i = 0; i < parameters_.size(); ++i )
+    for( std::size_t i = 0; i < expectedSize; ++i )
     {
         if( !params[ i ]->IsOfType( parameters_[i]->GetType() ) )
             return false;

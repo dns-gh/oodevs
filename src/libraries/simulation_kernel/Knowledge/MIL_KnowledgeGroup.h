@@ -43,6 +43,8 @@ class MIL_Object_ABC;
 class MIL_Population;
 class PHY_PerceptionLevel;
 class KnowledgesVisitor_ABC;
+class DEC_Knowledge_ObjectCollision;
+class DEC_Knowledge_ObjectPerception;
 
 namespace sword
 {
@@ -97,6 +99,10 @@ public:
     void RefreshTimeToDiffuseToKnowledgeGroup();
     void RegisterAutomate( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
+    void RegisterSharingPerceptions( const MIL_Agent_ABC& agent );
+    void UnregisterSharingPerceptions( const MIL_Agent_ABC& agent );
+    void RegisterSharingKnowledges( const MIL_Agent_ABC& agent );
+    void UnregisterSharingKnowledges( const MIL_Agent_ABC& agent );
     void RegisterPopulation( MIL_Population& population );
     void UnregisterPopulation( MIL_Population& population );
 
@@ -110,6 +116,7 @@ public:
     bool IsPerceptionDistanceHacked( MIL_Agent_ABC& agentKnown ) const;
     bool IsPerceptionDistanceHacked( const MIL_Object_ABC& objectKnown ) const;
     bool IsPerceptionDistanceHacked( MIL_Population& populationKnown ) const;
+    bool CanReport() const;
     const PHY_PerceptionLevel& GetPerceptionLevel( MIL_Agent_ABC& agentKnown ) const;
     const PHY_PerceptionLevel& GetPerceptionLevel( const MIL_Object_ABC& ObjectKnown ) const;
     const PHY_PerceptionLevel& GetPerceptionLevel( MIL_Population& populationKnown ) const;
@@ -179,6 +186,39 @@ public:
         if( knowledgeBlackBoard_ )
             knowledgeBlackBoard_->ApplyOnKnowledgesObject( fct );
     }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesAgentPerception( UnaryFunction& fct ) const
+    {
+        if( jammedPion_ )
+            jammedPion_->GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( fct );
+    }
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesPopulationPerception( UnaryFunction& fct ) const
+    {
+        if( jammedPion_ )
+            jammedPion_->GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( fct );
+    }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesPopulationCollision( UnaryFunction& fct ) const
+    {
+        if( jammedPion_ )
+            jammedPion_->GetKnowledge().GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( fct );
+    }
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesObjectPerception( UnaryFunction& fct ) const
+    {
+        if( jammedPion_ )
+            jammedPion_->GetKnowledge().GetKnowledgeObjectPerceptionContainer().ApplyOnKnowledgesObjectPerception( fct );
+    }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesObjectCollision( UnaryFunction& fct ) const
+    {
+        if( jammedPion_ )
+            jammedPion_->GetKnowledge().GetKnowledgeObjectCollisionContainer().ApplyOnKnowledgesObjectCollision( fct );
+    }
     //@}
 
 private:
@@ -196,21 +236,30 @@ private:
     void ApplyOnKnowledgesPopulationPerception( int currentTimeStep );
     void ApplyOnKnowledgesAgentPerception( int currentTimeStep );
     void ApplyOnKnowledgesObjectPerception( int currentTimeStep );
-    void UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision, int currentTimeStep  );
-    void UpdatePopulationKnowledgeFromPerception( const DEC_Knowledge_PopulationPerception& perception, int currentTimeStep  );
+    void UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision, int currentTimeStep );
+    void UpdatePopulationKnowledgeFromPerception( const DEC_Knowledge_PopulationPerception& perception, int currentTimeStep );
+    void UpdateObjectKnowledgeFromCollision( const DEC_Knowledge_ObjectCollision& collision, int currentTimeStep );
+    void UpdateObjectKnowledgeFromPerception( const DEC_Knowledge_ObjectPerception& perception, int currentTimeStep );
     DEC_Knowledge_Agent& GetAgentKnowledgeToUpdate( const MIL_Agent_ABC& agentKnown );
     void UpdateAgentKnowledgeFromCrowdPerception( MIL_Agent_ABC& agent, int currentTimeStep );
     void UpdateConcentrationKnowledgeFromCrowdPerception( TER_PopulationConcentration_ABC& concentration, int currentTimeStep );
     void UpdateFlowKnowledgeFromCrowdPerception( TER_PopulationFlow_ABC& flow, int currentTimeStep );
     void UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_ABC& object );
     void UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
+    void UpdateAgentKnowledgeFromAgent( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
+    void UpdateObjectKnowledgeFromAgent( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, int currentTimeStep );
     void UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
     void UpdateObjectKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Object& objectKnowledge, int currentTimeStep );
+    void UpdatePopulationKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Population& pnowledge, int currentTimeStep );
+    void UpdatePopulationKnowledgeFromAgent( const DEC_Knowledge_Population& knowledge, int currentTimeStep );
     void UpdateCrowdKnowledgeFromCrowdPerception( const MIL_Population& perveicer, const MIL_Population& perceived );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_ABC& agent, unsigned int perception );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object_ABC& agent, unsigned int perception );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception );
     boost::shared_ptr< DEC_Knowledge_Object > GetObjectKnowledgeToUpdate( MIL_Object_ABC& objectKnown );
+    void ApplyAgentPerception( const MIL_Agent_ABC& pion, int currentTimeStep );
+    void ApplyPopulationPerception( const MIL_Agent_ABC& pion, int currentTimeStep );
+    void UpdateObjectPerception( const MIL_KnowledgeGroup& group, int currentTimeStep );
     //@}
 
 private:
@@ -235,6 +284,8 @@ private:
     bool crowd_;
     const MIL_Agent_ABC* jammedPion_;
     static MIL_IDManager idManager_;
+    std::vector< const MIL_Agent_ABC* > sharingPercetionsGroup_;
+    std::vector< const MIL_Agent_ABC* > sharingKnowledgesGroup_;
     //@}
 };
 

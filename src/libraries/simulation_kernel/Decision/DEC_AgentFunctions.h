@@ -52,7 +52,7 @@ public:
     static float GetReconnoissanceDistance( MIL_Agent_ABC& callerAgent );
     static float GetDetectionDistance( MIL_Agent_ABC& callerAgent );
     static void ActivateBlackout( MIL_Agent_ABC& callerAgent );
-    static void ActivatePartialBlackout( MIL_Agent_ABC& callerAgent );
+    static void ActivatePartialBlackout( MIL_Agent_ABC& callerAgent, bool report );
     static void DeactivateBlackout( MIL_Agent_ABC& callerAgent );
     static int GetPosture( const MIL_Agent_ABC& callerAgent );
     static int GetNbcSuitLevel( const MIL_Agent_ABC& callerAgent );
@@ -235,6 +235,18 @@ public:
     static void EvacuateInhabitants( const TER_Localisation* location );
     static void UndoEvacuateInhabitants( const TER_Localisation* location );
     static bool IsInhabitantsEvacuated( const TER_Localisation* location );
+
+    static void EnableSharedPerception( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent );
+    static void DisabledSharedPerception( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent );
+    static void EnableSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void DisabledSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void EnableSharingKnowledges( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent );
+    static void DisabledSharingKnowledges( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent );
+    static void KnowledgeEnableSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pAgent );
+    static void KnowledgeDisabledSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pAgent );
+    static void EnableSharingKnowledgesWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void DisabledSharingKnowledgesWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static bool KnowledgeCommunicate( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pAgent );
 
     // Perception
     static void IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, const TER_Localisation* location );

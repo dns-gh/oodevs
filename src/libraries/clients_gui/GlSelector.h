@@ -92,6 +92,9 @@ private:
     void InitializePasses();
     //@}
 
+public:
+    static const int defaultFrameRate_;
+
 private:
     //! @name Member data
     //@{
@@ -113,6 +116,7 @@ private:
 
     bool b3d_;
     bool bDragMapWithWheel_;
+    int refreshRate_;
     //@}
 };
 

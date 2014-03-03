@@ -295,6 +295,15 @@ void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationFlowPercept
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Update
+// Created: LDC 2014-02-27
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::Update( const DEC_Knowledge_Population& pKnowledge, int /*currentTimeStep*/ )
+{
+    CopyFrom( pKnowledge );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::UpdateFromCrowdPerception
 // Created: JSR 2013-07-11
 // -----------------------------------------------------------------------------
