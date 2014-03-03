@@ -114,7 +114,6 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type,
     , pKnowledgeBlackBoard_  ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
     , pArmySurrenderedTo_    ( 0 )
     , pLogisticHierarchy_    ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
-    , pBrainLogistic_        ( 0 )
     , pDotationSupplyManager_( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_   ( new MIL_StockSupplyManager( *this ) )
     , pColor_                ( new MIL_Color( xis ) )
@@ -145,11 +144,8 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type,
     , pKnowledgeBlackBoard_  ( 0 )
     , pArmySurrenderedTo_    ( 0 )
     , pLogisticHierarchy_    ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
-    , pBrainLogistic_        ( 0 )
     , pDotationSupplyManager_( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_   ( new MIL_StockSupplyManager( *this ) )
-    , pExtensions_           ( 0 )
-    , pColor_                ( 0 )
 {
     // NOTHING
 }
@@ -178,7 +174,6 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type,
     , pPionPC_               ( 0 )
     , bAutomateModeChanged_  ( true )
     , pLogisticHierarchy_    ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
-    , pBrainLogistic_        ( 0 )
     , pKnowledgeBlackBoard_  ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
     , pArmySurrenderedTo_    ( 0 )
     , pDotationSupplyManager_( new MIL_DotationSupplyManager( *this ) )
@@ -256,8 +251,6 @@ DEC_Decision_ABC& MIL_Automate::GetDecision()
 // -----------------------------------------------------------------------------
 void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    MIL_DictionaryExtensions* pExtensions;
-    MIL_Color* pColor;
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this );
     {
@@ -276,21 +269,19 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> bAutomateModeChanged_;
     file >> pKnowledgeBlackBoard_;
     file >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ );
-    file >> pExtensions;
-    file >> pColor;
+    file >> pExtensions_;
+    file >> pColor_;
     file >> symbol_;
     file >> pLogisticHierarchy_;
     file >> pBrainLogistic_;
     file >> pDotationSupplyManager_;
     file >> pStockSupplyManager_;
 
-    if( pBrainLogistic_.get() )
+    if( pBrainLogistic_ )
     {
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_ ) );
         RegisterAction( pLogisticAction_ );
     }
-    pColor_.reset( pColor );
-    pExtensions_.reset( pExtensions );
 }
 
 // -----------------------------------------------------------------------------
@@ -299,8 +290,6 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
-    const MIL_Color* const pColor = pColor_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file << boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this );
     SaveRole< DEC_AutomateDecision >( *this, file );
@@ -314,8 +303,8 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
     file << bAutomateModeChanged_;
     file << pKnowledgeBlackBoard_;
     file << pArmySurrenderedTo_;
-    file << pExtensions;
-    file << pColor;
+    file << pExtensions_;
+    file << pColor_;
     file << symbol_;
     file << pLogisticHierarchy_;
     file << pBrainLogistic_;
@@ -404,7 +393,7 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
     xos     << xml::attribute( "id", GetID() )
             << xml::attribute( "engaged", bEngaged_ )
             << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetId() );
-    if( pBrainLogistic_.get() )
+    if( pBrainLogistic_ )
         xos << xml::attribute( "logistic-level", pBrainLogistic_->GetLogisticLevel().GetName() );
     xos << xml::attribute( "type", pType_->GetName() );
     if( !symbol_.empty() )
@@ -433,7 +422,7 @@ void MIL_Automate::ReadOverloading( xml::xistream& /*refMission*/ )
 // -----------------------------------------------------------------------------
 void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis )
 {
-    if( pBrainLogistic_.get() )
+    if( pBrainLogistic_ )
         throw MASA_EXCEPTION( xis.context() + "The logistic link of a logistic automat (usually a TC2) must not be overwritten: it should always be itself" );
     pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, superior, false /* no quotas*/, xis ) );
 }
@@ -444,7 +433,7 @@ void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& x
 // -----------------------------------------------------------------------------
 void MIL_Automate::WriteLogisticLinksODB( xml::xostream& xos ) const
 {
-    if( pBrainLogistic_.get() )
+    if( pBrainLogistic_ )
         pBrainLogistic_->WriteLogisticLinksODB( xos );
     else
         pLogisticHierarchy_->WriteODB( xos );
@@ -552,7 +541,7 @@ void MIL_Automate::UpdateNetwork() const
             GetRole< DEC_AutomateDecision >().SendChangedState( msg );
             pExtensions_->UpdateNetwork( msg );
         }
-        if( pBrainLogistic_.get() )
+        if( pBrainLogistic_ )
             mustSend |= pBrainLogistic_->SendChangedState( msg );
         else
             pLogisticHierarchy_->SendChangedState();
@@ -593,7 +582,7 @@ void MIL_Automate::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Automate::Clean()
 {
-    if( pBrainLogistic_.get() )
+    if( pBrainLogistic_ )
         pBrainLogistic_->Clean();
     bAutomateModeChanged_ = false;
     pDotationSupplyManager_->Clean();
@@ -843,10 +832,10 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     message().mutable_knowledge_group()->set_id( GetKnowledgeGroup()->GetId() );
     message().set_symbol( symbol_ );
     message().set_app6symbol( symbol_ );
-    message().set_logistic_level( pBrainLogistic_.get() ?
+    message().set_logistic_level( pBrainLogistic_ ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
-    message().set_log_maintenance_manual( pBrainLogistic_.get() && pBrainLogistic_->IsMaintenanceManual() );
-    message().set_log_supply_manual( pBrainLogistic_.get() && pBrainLogistic_->IsSupplyManual() );
+    message().set_log_maintenance_manual( pBrainLogistic_ && pBrainLogistic_->IsMaintenanceManual() );
+    message().set_log_supply_manual( pBrainLogistic_ && pBrainLogistic_->IsSupplyManual() );
     message().set_name( GetName() );
     pColor_->SendFullState( message );
     pExtensions_->SendFullState( message );
@@ -878,7 +867,7 @@ void MIL_Automate::SendFullState( unsigned int contex ) const
     message.Send( NET_Publisher_ABC::Publisher() );
 
     pLogisticHierarchy_->SendFullState();
-    if( pBrainLogistic_.get() )
+    if( pBrainLogistic_ )
         pBrainLogistic_->SendFullState( message );
     pDotationSupplyManager_->SendFullState();
     pStockSupplyManager_->SendFullState();
@@ -1060,18 +1049,18 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         OnChangeBrainDebug( msg.parameters() );
         break;
     case sword::UnitMagicAction::log_finish_handlings:
-        if( ! pBrainLogistic_.get() )
+        if( !pBrainLogistic_ )
             throw MASA_BADUNIT_UNIT( "automat must be a logistic base" );
         if( ! pBrainLogistic_->FinishAllHandlingsSuccessfullyWithoutDelay() )
             throw MASA_BADUNIT_UNIT( "automat must have logistic handlings pending" );
         break;
     case sword::UnitMagicAction::log_maintenance_set_manual:
-        if( !pBrainLogistic_.get() )
+        if( !pBrainLogistic_ )
             throw MASA_BADUNIT_UNIT( "automat must be a logistic base" );
         pBrainLogistic_->OnReceiveLogMaintenanceSetManual( msg.parameters() );
         break;
     case sword::UnitMagicAction::log_supply_set_manual:
-        if( !pBrainLogistic_.get() )
+        if( !pBrainLogistic_ )
             throw MASA_BADUNIT_UNIT( "automat must be a logistic base" );
         pBrainLogistic_->OnReceiveLogSupplySetManual( msg.parameters() );
         break;
@@ -1223,7 +1212,7 @@ void MIL_Automate::OnReceiveFragOrder( const sword::FragOrder& msg, const std::f
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG* MIL_Automate::FindLogisticManager() const
 {
-    if( pBrainLogistic_.get() )
+    if( pBrainLogistic_ )
         return pBrainLogistic_.get();
     return pParentFormation_->FindLogisticManager();
 }
