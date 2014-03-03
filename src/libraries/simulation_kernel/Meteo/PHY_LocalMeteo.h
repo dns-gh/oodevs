@@ -63,9 +63,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive& ar, const unsigned int );
-    void save( MIL_CheckPointOutArchive& ar, const unsigned int ) const;
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Serialize( xml::xostream& xos ) const;
     //@}
 

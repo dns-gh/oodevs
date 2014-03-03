@@ -92,25 +92,17 @@ PHY_LocalMeteo::~PHY_LocalMeteo()
 // Name: PHY_LocalMeteo::serialize
 // Created: JSR 2011-11-22
 // -----------------------------------------------------------------------------
-void PHY_LocalMeteo::load( MIL_CheckPointInArchive& ar, const unsigned int )
+template< typename Archive >
+void PHY_LocalMeteo::serialize( Archive& file, const unsigned int )
 {
-    world_ = TER_World::GetWorldPtr();
-    ar >> boost::serialization::base_object< weather::Meteo >( *this );
-    ar >> startTime_;
-    ar >> endTime_;
-    ar >> upLeft_;
-    ar >> downRight_;
-    ar >> bIsPatched_;
-}
-
-void PHY_LocalMeteo::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
-{
-    ar << boost::serialization::base_object< weather::Meteo >( *this );
-    ar << startTime_;
-    ar << endTime_;
-    ar << upLeft_;
-    ar << downRight_;
-    ar << bIsPatched_;
+    if( !world_ )
+        world_ = TER_World::GetWorldPtr();
+    file & boost::serialization::base_object< weather::Meteo >( *this )
+         & startTime_
+         & endTime_
+         & upLeft_
+         & downRight_
+         & bIsPatched_;
 }
 
 // -----------------------------------------------------------------------------
