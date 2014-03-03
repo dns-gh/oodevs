@@ -16,7 +16,9 @@
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_gui/ObjectNameManager.h"
+#include "tools/GeneralConfig.h"
 #include "MT_Tools/MT_Logger.h"
 
 #include <QtGui/QToolButton>
@@ -494,6 +496,7 @@ QWidget* Param_ABC::CreateSwitchEditor()
 {
     switchEditor_ = new QToolButton();
     switchEditor_->setCheckable( true );
+    switchEditor_->setIcon( ::gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/edit.png" ) ) );
     if( IsInParam() )
         connect( switchEditor_, SIGNAL( clicked( bool ) ), parentParameter_, SLOT( OnSwitchEditorClicked( bool ) ) );
     return switchEditor_;
