@@ -106,6 +106,7 @@
 #include "Objects/MIL_Object_ABC.h"
 #include "Orders/MIL_LimaFunction.h"
 #include "Orders/MIL_Report.h"
+#include "PathfindComputer.h"
 #include "Populations/MIL_Population.h"
 #include "Populations/MIL_PopulationAttitude.h"
 #include "Populations/MIL_PopulationType.h"
@@ -305,6 +306,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() )
+    , pathfindComputer_             ( new PathfindComputer() )
 {
     // NOTHING
 }
@@ -333,6 +335,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , idManager_                    ( new MIL_IDManager() )
     , sink_                         ( sink.release() )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() ) // todo : delete if saved in checkpoint
+    , pathfindComputer_             ( new PathfindComputer() )
 {
     // NOTHING
 }
@@ -994,6 +997,7 @@ void MIL_EntityManager::Update()
     UpdateEffects();
     UpdateStates();
     UpdateKnowledgeGroups(); // LTO
+    pathfindComputer_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -2066,6 +2070,32 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
             blackboard->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *it->second );
     }
     ack.mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
+}
+
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnPathfindRequest
+// Created: LGY 2014-02-28
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId )
+{
+    MT_Vector2D start;
+    MIL_Tools::ConvertCoordMosToSim( message.start(), start );
+    MT_Vector2D end;
+    MIL_Tools::ConvertCoordMosToSim( message.end(), end );
+    unsigned int id = message.unit().id();
+    if( MIL_AgentPion* pPion = FindAgentPion( id ) )
+        pathfindComputer_->Compute( *pPion, start, end, nCtx, clientId );
+    else if( MIL_Population* pPopulation = FindPopulation( id ) )
+        pathfindComputer_->Compute( *pPopulation, start, end, nCtx, clientId );
+    else
+    {
+        client::PathfindRequestAck ack;
+        ack().set_error_code( PathfindRequestAck::error_invalid_parameter );
+        ack().set_error_msg( "invalid crowd or unit identifier" );
+        ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    }
 }
 
 // -----------------------------------------------------------------------------

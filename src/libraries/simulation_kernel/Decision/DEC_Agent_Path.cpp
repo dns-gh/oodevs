@@ -138,6 +138,34 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vP
 }
 
 //-----------------------------------------------------------------------------
+// Name: DEC_Agent_Path constructor
+// Created: JVT 02-09-17
+//-----------------------------------------------------------------------------
+DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosStart, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType )
+    : DEC_PathResult            ( pathType )
+    , queryMaker_               ( queryMaker )
+    , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
+    , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
+    , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
+    , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
+    , rSlopeDeceleration_       ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetSlopeDeceleration() )
+    , rCostOutsideOfAllObjects_ ( 0. )
+    , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
+    , bDecPointsInserted_       ( false )
+    , destroyed_( false )
+{
+    queryMaker_.RegisterPath( *this );
+    fuseau_ = queryMaker.GetOrderManager().GetFuseau();
+    automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
+    initialWaypoints_.reserve( 2 );
+    nextWaypoints_.reserve( 1 );
+    initialWaypoints_.push_back( vPosStart );
+    initialWaypoints_.push_back( vPosEnd );
+    nextWaypoints_.push_back( vPosEnd );
+    Initialize( initialWaypoints_ );
+}
+
+//-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path destructor
 // Created: DFT 02-03-04
 // Last modified: JVT 02-09-17
@@ -681,18 +709,13 @@ bool DEC_Agent_Path::IsWaypoint( const MT_Vector2D& point ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::ComputePath
+// Name: DEC_Agent_Path::CancelPath
 // Created: LDC 2012-03-23
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::ComputePath( boost::shared_ptr< DEC_Path_ABC > pPath )
+void DEC_Agent_Path::CancelPath()
 {
-    if( !IsDestinationTrafficable() )
-    {
-        queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( report::eRC_TerrainDifficile );
-        Cancel();
-    }
-    else
-        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
+    queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( report::eRC_TerrainDifficile );
+    Cancel();
 }
 
 // -----------------------------------------------------------------------------

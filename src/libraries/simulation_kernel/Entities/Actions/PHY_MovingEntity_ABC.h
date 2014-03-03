@@ -98,13 +98,13 @@ public:
     //@{
     template< typename Archive >
     void serialize( Archive& /*file*/, const unsigned int ) {}
+    void SerializeCurrentPath( sword::Path& asn ) const;
     //@}
 
 protected:
     //! @name Network
     //@{
     void SerializeEnvironmentType( sword::UnitEnvironmentType& msg ) const;
-    void SerializeCurrentPath( sword::Path& asn ) const;
     //@}
 
     //! @name Tools

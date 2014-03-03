@@ -3449,6 +3449,7 @@ message SimToClient {
         optional ListLogisticRequestsAck list_logistic_requests_ack = 151;
         optional MagicOrder            magic_order = 152;
         optional MagicOrderDestruction magic_order_destruction = 153;
+        optional PathfindRequestAck pathfind_request_ask = 154;
     }
     /** @property context
         @brief Identifies the request matching the response

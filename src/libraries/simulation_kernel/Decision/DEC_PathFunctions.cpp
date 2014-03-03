@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFunctions.h"
+#include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
@@ -40,6 +41,17 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_Ag
     return CreatePathToPoint( callerAgent, end.get(), pathType );
 }
 
+namespace
+{
+    void StartCompute( boost::shared_ptr< DEC_Agent_Path >& path )
+    {
+        if( !path->IsDestinationTrafficable() )
+            path->CancelPath();
+        else
+            MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( path );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPoint
 // Created: NLD 2004-09-23
@@ -47,10 +59,11 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_Ag
 boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType )
 {
     assert( pEnd );
+
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
     boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType ) );
-    pPath->ComputePath( pPath );
+    StartCompute( pPath );
     return pPath;
 }
 
@@ -64,7 +77,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
     boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, listPt, *pPathType ) );
-    pPath->ComputePath( pPath );
+    StartCompute( pPath );
     return pPath;
 }
 

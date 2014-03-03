@@ -97,6 +97,7 @@ class MIL_Time_ABC;
 class MIL_UrbanObject_ABC;
 class MIL_UrbanObject_ABC;
 class MissionController_ABC;
+class PathfindComputer;
 class PopulationFactory_ABC;
 class TER_Localisation;
 
@@ -209,6 +210,7 @@ public:
     void OnReceiveTransferToLogisticSuperior  ( const sword::MagicAction&          message );
     void OnReceiveBurningCellRequest          ( const sword::BurningCellRequest&   message, unsigned int nCtx );
     void OnReceiveKnowledgeGroupCreation      ( const sword::MagicAction&          message, sword::MagicActionAck& ack );
+    void OnPathfindRequest                    ( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId );
     //@}
 
     //! @name Population channeling
@@ -335,6 +337,7 @@ private:
     std::unique_ptr< KnowledgeGroupFactory >       knowledgeGroupFactory_;  // has to be declared before armyFactory
     std::unique_ptr< ArmyFactory_ABC >             armyFactory_;
     std::auto_ptr< MIL_FlowCollisionManager >    flowCollisionManager_;
+    std::auto_ptr< PathfindComputer >            pathfindComputer_;
     //@}
 };
 
