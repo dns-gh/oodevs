@@ -16,7 +16,7 @@ class TER_World;
 class FakeWorld
 {
 public:
-    FakeWorld( const std::string& exercise );
+    explicit FakeWorld( const std::string& exercise );
     virtual ~FakeWorld();
 };
 

@@ -30,17 +30,12 @@ std::shared_ptr< tools::ExerciseConfig > CreateConfig( const std::string& exerci
     return config;
 }
 
-void WorldInitialize( const std::string& exercise )
-{
-    const auto config = CreateConfig( exercise );
-    TER_World::Initialize( *config );
-}
-
 }  // namespace
 
 FakeWorld::FakeWorld( const std::string& exercise )
 {
-    WorldInitialize( exercise );
+    const auto config = CreateConfig( exercise );
+    TER_World::Initialize( *config );
 }
 
 FakeWorld::~FakeWorld()

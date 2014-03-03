@@ -109,14 +109,9 @@ boost::shared_ptr< PHY_MeteoDataManager > CreateMeteoManager(
             world, xis, detectionFile, 0, 10 );
 }
 
-boost::shared_ptr< xml::xistringstream > ReadXml( const std::string& data )
-{
-    return boost::make_shared< xml::xistringstream >( data );
-}
-
 }  // namespace
 
-BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_api )
+BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_creation_destruction )
 {
     const auto world = CreateWorld( "worldwide/tests/EmptyParis-ML" );
     FakePublisher publisher;
@@ -127,16 +122,16 @@ BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_api )
     BOOST_CHECK( !man->RemoveLocalWeather( 1234 ) );
 
     // Add and remove a valid one
-    const std::string valid(
-    "<local bottom-right=\"31UEQ1312638405\" end-time=\"20110409T095036\" start-time=\"20110408T095036\" top-left=\"31UDQ7958368892\">"
-    "  <wind direction=\"0\" speed=\"0\"/>"
-    "  <cloud-cover ceiling=\"0\" density=\"0\" floor=\"0\"/>"
-    "  <temperature value=\"20\"/>"
-    "  <precipitation value=\"PasDePrecipitation\"/>"
-    "</local>"
+    xml::xistringstream xis(
+        "<local bottom-right=\"31UEQ1312638405\" end-time=\"20110409T095036\" start-time=\"20110408T095036\" top-left=\"31UDQ7958368892\">"
+        "  <wind direction=\"0\" speed=\"0\"/>"
+        "  <cloud-cover ceiling=\"0\" density=\"0\" floor=\"0\"/>"
+        "  <temperature value=\"20\"/>"
+        "  <precipitation value=\"PasDePrecipitation\"/>"
+        "</local>"
     );
 
-    const auto w1 = man->AddLocalWeather( *ReadXml( valid ) );
+    const auto w1 = man->AddLocalWeather( xis );
     BOOST_CHECK( w1 );
     BOOST_CHECK( man->RemoveLocalWeather( w1->GetId() ));
 }
