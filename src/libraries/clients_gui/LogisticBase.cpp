@@ -32,6 +32,8 @@ LogisticBase::LogisticBase( kernel::Controllers& controllers,
     , isBase_( isBase )
     , entity_( entity )
     , isMaintenanceManual_( false )
+    , isSupplyManual_( false )
+    , hasChanged_( false )
 {
     CreateDictionary( dictionary, active, ( controllers.GetCurrentMode() & eModes_AllGaming ) != 0 );
 }
@@ -50,6 +52,8 @@ LogisticBase::LogisticBase( kernel::Controllers& controllers,
                xis.attribute( "logistic-level", "" ) == ENT_Tr::ConvertFromLogisticLevel( sword::logistic_base, ENT_Tr::eToSim ) )
     , entity_( entity )
     , isMaintenanceManual_( false )
+    , isSupplyManual_( false )
+    , hasChanged_( false )
 {
     CreateDictionary( dictionary, active, ( controllers.GetCurrentMode() & eModes_AllGaming ) != 0 );
 }
@@ -151,7 +155,28 @@ void LogisticBase::SetMaintenanceManual( bool manual )
     if( manual == isMaintenanceManual_ )
         return;
     isMaintenanceManual_ = manual;
-    controller_.Update( *this );
+    hasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBase::IsSupplyManual
+// Created: ABR 2014-03-03
+// -----------------------------------------------------------------------------
+bool LogisticBase::IsSupplyManual() const
+{
+    return isSupplyManual_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBase::SetSupplyManual
+// Created: ABR 2014-03-03
+// -----------------------------------------------------------------------------
+void LogisticBase::SetSupplyManual( bool manual )
+{
+    if( manual == isSupplyManual_ )
+        return;
+    isSupplyManual_ = manual;
+    hasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -197,6 +222,11 @@ void LogisticBase::DoUpdate( const sword::FormationUpdate& message )
 template< typename T >
 void LogisticBase::Update( const T& message )
 {
+    hasChanged_ = false;
     if( message.has_log_maintenance_manual() )
         SetMaintenanceManual( message.log_maintenance_manual() );
+    if( message.has_log_supply_manual() )
+        SetSupplyManual( message.log_supply_manual() );
+    if( hasChanged_ )
+        controller_.Update( *this );
 }

@@ -125,6 +125,7 @@ public:
     virtual Action_ABC* CreateObjectDestroyMagicAction( const kernel::Entity_ABC& object ) const = 0;
 
     virtual Action_ABC* CreateLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual ) const = 0;
+    virtual Action_ABC* CreateLogSupplySetManual( const kernel::Entity_ABC& tasker, bool manual ) const = 0;
     virtual Action_ABC* CreateSelectNewLogisticState( unsigned int consignId ) const = 0;
     virtual Action_ABC* CreateTransferToLogisticSuperior( unsigned int consignId ) const = 0;
     virtual Action_ABC* CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId ) const = 0;

@@ -75,6 +75,7 @@ private slots:
     void OnPushFlow();
     void OnResupply();
     void OnSwitchMaintenanceMode();
+    void OnSwitchSupplyMode();
     //@}
 
 private:

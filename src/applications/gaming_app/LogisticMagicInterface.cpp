@@ -115,10 +115,16 @@ void LogisticMagicInterface::AddMenuEntries( kernel::ContextMenu& menu )
     if( selected_->GetTypeName() == kernel::Automat_ABC::typeName_ )
         subMenu->InsertItem( "Command", tr( "Pull supply flow" ), this, SLOT( OnPullFlow() ) );
     if( profile_.IsSupervision() )
+    {
         subMenu->InsertItem( "Command",
             selected_->Get< gui::LogisticBase >().IsMaintenanceManual()
                 ? tr( "Switch to automated maintenance" )
                 : tr( "Switch to manual maintenance" ), this, SLOT( OnSwitchMaintenanceMode() ) );
+        subMenu->InsertItem( "Command",
+            selected_->Get< gui::LogisticBase >().IsSupplyManual()
+                ? tr( "Switch to automated supply" )
+                : tr( "Switch to manual supply" ), this, SLOT( OnSwitchSupplyMode() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -175,4 +181,16 @@ void LogisticMagicInterface::OnSwitchMaintenanceMode()
         return;
     actionsModel_.PublishLogMaintenanceSetManualAction( *selected_,
                                                         !selected_->Get< gui::LogisticBase >().IsMaintenanceManual() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticMagicInterface::OnSwitchSupplyMode
+// Created: ABR 2014-03-03
+// -----------------------------------------------------------------------------
+void LogisticMagicInterface::OnSwitchSupplyMode()
+{
+    if( !selected_ )
+        return;
+    actionsModel_.PublishLogSupplySetManual( *selected_,
+                                             !selected_->Get< gui::LogisticBase >().IsSupplyManual() );
 }

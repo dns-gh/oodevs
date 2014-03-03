@@ -73,6 +73,7 @@ public:
     void SetBase( const bool& isBase );
     const kernel::Entity_ABC& GetEntity() const;
     bool IsMaintenanceManual() const;
+    bool IsSupplyManual() const;
     //@}
 
 private:
@@ -92,6 +93,7 @@ private:
     //! @name Helpers
     //@{
     void SetMaintenanceManual( bool manual );
+    void SetSupplyManual( bool manual );
     template< typename T >
     void Update( const T& message );
     void CreateDictionary( gui::PropertiesDictionary& dictionary,
@@ -106,6 +108,8 @@ private:
     const kernel::Entity_ABC& entity_;
     bool isBase_;
     bool isMaintenanceManual_;
+    bool isSupplyManual_;
+    bool hasChanged_;
     //@}
 };
 

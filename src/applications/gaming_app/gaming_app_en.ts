@@ -1672,6 +1672,14 @@ Do you want to replace it?</translation>
         <source>Pull supply flow</source>
         <translation type="unfinished">Pull supply flow</translation>
     </message>
+    <message>
+        <source>Switch to automated supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to manual supply</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticMaintenanceSelectionDialog</name>

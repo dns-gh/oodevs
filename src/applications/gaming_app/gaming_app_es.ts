@@ -1673,6 +1673,14 @@ Do you want to replace it?</source>
         <source>Switch to manual maintenance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Switch to automated supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to manual supply</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticMaintenanceSelectionDialog</name>

@@ -1674,6 +1674,14 @@ Voulez-vous le remplacer ?</translation>
         <source>Pull supply flow</source>
         <translation>Tirer flux</translation>
     </message>
+    <message>
+        <source>Switch to automated supply</source>
+        <translation>Passer en ravitaillement automatique</translation>
+    </message>
+    <message>
+        <source>Switch to manual supply</source>
+        <translation>Passer en ravitaillement manuel</translation>
+    </message>
 </context>
 <context>
     <name>LogisticMaintenanceSelectionDialog</name>
