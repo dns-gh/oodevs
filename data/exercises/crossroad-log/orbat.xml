@@ -57,8 +57,8 @@
             </unit>
           </automat>
         </formation>
-        <formation id="176" level="xxxx" name="Supply F3" symbol="symbols/sfgpu">
-          <formation id="130" level="x" logistic-level="logistic-base" name="Supply F1" symbol="symbols/sfgpu">
+        <formation id="176" level="xxx" name="Supply F3" symbol="symbols/sfgpu">
+          <formation id="130" level="xx" logistic-level="logistic-base" name="Supply F1" symbol="symbols/sfgpu">
             <automat engaged="true" id="131" knowledge-group="3" name="Supply Mobile Infantry Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
               <unit command-post="true" id="132" name="Supply Mobile Infantry" position="28RDS1390241628" type="Mobile Infantry"/>
               <unit command-post="false" id="133" name="Supply Mobile Infantry" position="28RDS1387641647" type="Mobile Infantry"/>
