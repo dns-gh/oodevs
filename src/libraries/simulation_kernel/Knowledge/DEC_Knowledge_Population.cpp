@@ -760,12 +760,3 @@ const DEC_Knowledge_Population::T_FlowMap& DEC_Knowledge_Population::GetFlowMap(
 {
     return flows_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Population::Update
-// Created: LGY 2013-08-06
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_Population::Update( const DEC_Knowledge_Population& pKnowledge, int /*currentTimeStep*/ )
-{
-    CopyFrom( pKnowledge );
-}
