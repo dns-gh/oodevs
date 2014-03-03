@@ -1301,8 +1301,10 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	automat := getSomeAutomatByName(c, d, "Supply Mobile Infantry Platoon")
 	supply2Id := getSomeAutomatByName(c, d, "Supply Log Automat 1d").Id
 	supply2 := swapi.MakeAutomatTasker(supply2Id)
+	// change links to have different superiors e.g. a 'current' and a 'nominal'
 	err := client.LogisticsChangeLinks(automat.Id, []uint32{supplyId, supply2Id})
 	c.Assert(err, IsNil)
+	// the 'current' superior is searched first
 	checkSupplyUpdates(c, client, unit, supply2, electrogen_2, []SupplyUpdateChecker{
 		{"convoy_waiting_for_transporters"},
 		{"convoy_setup"},
@@ -1313,6 +1315,7 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 		{"convoy_moving_back_to_loading_point"},
 		{"convoy_finished"},
 	})
+	// the 'nominal' superior is searched if the 'current' superior cannot handle the request
 	checkSupplyUpdates(c, client, unit, supply, electrogen_1, []SupplyUpdateChecker{
 		{"convoy_waiting_for_transporters"},
 		{"convoy_setup"},
