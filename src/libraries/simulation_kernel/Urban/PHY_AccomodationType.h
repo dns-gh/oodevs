@@ -10,6 +10,7 @@
 #ifndef __PHY_AccomodationType_h_
 #define __PHY_AccomodationType_h_
 
+#include <functional>
 
 // =============================================================================
 /** @class  PHY_AccomodationType
@@ -20,10 +21,9 @@
 class PHY_AccomodationType : private boost::noncopyable
 {
 public:
-    //! @name Types
+    //! @name Destructor
     //@{
-    typedef std::map< std::string, const PHY_AccomodationType* > T_AccomodationMap;
-    typedef T_AccomodationMap::const_iterator CIT_AccomodationMap;
+    ~PHY_AccomodationType();
     //@}
 
 public:
@@ -32,11 +32,12 @@ public:
     static void Initialize( xml::xistream& xis );
     static void Terminate();
     static const PHY_AccomodationType* Find( const std::string& strName );
-    static const T_AccomodationMap& GetAccomodations();
+    static void Walk( const std::function< void( const PHY_AccomodationType& ) >& operand );
     //@}
 
     //! @name Accessors
     //@{
+    const std::string& GetRole() const;
     float GetNominalCapacity() const;
     float GetMaxCapacity() const;
     //@}
@@ -44,8 +45,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-             PHY_AccomodationType( const std::string& role, float nominalCapacity, float maxCapacity );
-    virtual ~PHY_AccomodationType();
+    PHY_AccomodationType( const std::string& role, float nominalCapacity, float maxCapacity );
     //@}
 
     //! @name Helpers
@@ -56,10 +56,9 @@ private:
 private:
     //! @name Member data
     //@{
-    static T_AccomodationMap accomodations_;
-    std::string role_;
-    float nominalCapacity_;
-    float maxCapacity_;
+    const std::string role_;
+    const float nominalCapacity_;
+    const float maxCapacity_;
     //@}
 };
 
