@@ -456,9 +456,9 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	defer stopSimAndClient(c, sim, client)
 
 	data := client.Model.GetData()
-	supplier := getSomeAutomatByName(c, data, "Supply 1").Id
-	unit := getSomeUnitByName(c, data, "Log Unit 4 1").Id
-	receiver := getSomeAutomatByName(c, data, "Supply 2").Id
+	supplier := getSomeAutomatByName(c, data, "Supply Log Automat 1a").Id
+	unit := getSomeUnitByName(c, data, "Supply Log Unit 1a").Id
+	receiver := getSomeAutomatByName(c, data, "Supply Log Automat 1b").Id
 	const resource = 96
 	const transporter = 12
 	c.Assert(data.Units[unit].Installation, Not(Equals), 100)
@@ -562,9 +562,9 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	defer stopSimAndClient(c, sim, client)
 
 	data := client.Model.GetData()
-	supplier := getSomeAutomatByName(c, data, "Supply 1").Id
-	unit := getSomeUnitByName(c, data, "Log Unit 4 2").Id
-	receiver := getSomeAutomatByName(c, data, "Supply 2").Id
+	supplier := getSomeAutomatByName(c, data, "Supply Log Automat 1a").Id
+	unit := getSomeUnitByName(c, data, "Supply Log Unit 1b").Id
+	receiver := getSomeAutomatByName(c, data, "Supply Log Automat 1b").Id
 	const resource = 96
 	const transporter = 12
 

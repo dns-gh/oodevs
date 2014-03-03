@@ -4,52 +4,84 @@
     <party id="1" name="party1" type="friend">
       <objects/>
       <tactical>
-        <formation id="76" level="xxx" name="F3" symbol="symbols/sfgpusx">
-          <formation id="83" level="xx" name="F2" symbol="symbols/sfgpusx">
-            <formation id="90" level="x" name="F1" symbol="symbols/sfgpusx">
-              <automat engaged="true" id="91" knowledge-group="3" logistic-level="logistic-base" name="TC2" symbol="symbols/sfgpusx" type="Log Automat 1">
-                <unit command-post="true" id="92" name="Log Unit 1" position="28RDS1398330726" type="Log Unit 1"/>
-                <unit command-post="false" id="93" name="Log Unit 1" position="28RDS1398430826" type="Log Unit 1"/>
-                <unit command-post="false" id="94" name="Log Unit 1" position="28RDS1408330725" type="Log Unit 1"/>
-                <unit command-post="false" id="95" name="Log Unit 1" position="28RDS1398330626" type="Log Unit 1"/>
-                <unit command-post="false" id="96" name="Log Unit 1" position="28RDS1388330727" type="Log Unit 1"/>
+        <formation id="76" level="xxx" name="Maintenance F3" symbol="symbols/sfgpusx">
+          <formation id="83" level="xx" name="Maintenance F2" symbol="symbols/sfgpusx">
+            <formation id="90" level="x" name="Maintenance F1" symbol="symbols/sfgpusx">
+              <automat engaged="true" id="91" knowledge-group="3" logistic-level="logistic-base" name="Maintenance Automat 1" symbol="symbols/sfgpusx" type="Maintenance Log Automat 1">
+                <unit command-post="true" id="92" name="Maintenance Log Unit 1" position="28RDS1398330726" type="Maintenance Log Unit 1"/>
+                <unit command-post="false" id="93" name="Maintenance Log Unit 1" position="28RDS1398430826" type="Maintenance Log Unit 1"/>
+                <unit command-post="false" id="94" name="Maintenance Log Unit 1" position="28RDS1408330725" type="Maintenance Log Unit 1"/>
+                <unit command-post="false" id="95" name="Maintenance Log Unit 1" position="28RDS1398330626" type="Maintenance Log Unit 1"/>
+                <unit command-post="false" id="96" name="Maintenance Log Unit 1" position="28RDS1388330727" type="Maintenance Log Unit 1"/>
               </automat>
-              <automat engaged="true" id="97" knowledge-group="3" name="Mobile Infantry Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
-                <unit command-post="true" id="98" name="Mobile Infantry" position="28RDS1330530703" type="Mobile Infantry"/>
-                <unit command-post="false" id="99" name="Mobile Infantry" position="28RDS1330530802" type="Mobile Infantry"/>
-                <unit command-post="false" id="100" name="Mobile Infantry" position="28RDS1339130652" type="Mobile Infantry"/>
-                <unit command-post="false" id="101" name="Mobile Infantry" position="28RDS1321830654" type="Mobile Infantry"/>
+              <automat engaged="true" id="97" knowledge-group="3" name="Maintenance Mobile Infantry Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
+                <unit command-post="true" id="98" name="Maintenance Mobile Infantry" position="28RDS1330530703" type="Mobile Infantry"/>
+                <unit command-post="false" id="99" name="Maintenance Mobile Infantry" position="28RDS1330530802" type="Mobile Infantry"/>
+                <unit command-post="false" id="100" name="Maintenance Mobile Infantry" position="28RDS1339130652" type="Mobile Infantry"/>
+                <unit command-post="false" id="101" name="Maintenance Mobile Infantry" position="28RDS1321830654" type="Mobile Infantry"/>
               </automat>
             </formation>
-            <formation id="104" level="x" logistic-level="logistic-base" name="BLD" symbol="symbols/sfgpusx">
-              <automat engaged="true" id="84" knowledge-group="3" name="Log Automat 2" symbol="symbols/sfgpusx" type="Log Automat 2">
-                <unit command-post="true" id="85" name="Log Unit 2" position="28RDS1461530716" type="Log Unit 2"/>
-                <unit command-post="false" id="86" name="Log Unit 2" position="28RDS1461630815" type="Log Unit 2"/>
-                <unit command-post="false" id="87" name="Log Unit 2" position="28RDS1471630715" type="Log Unit 2"/>
-                <unit command-post="false" id="88" name="Log Unit 2" position="28RDS1461530616" type="Log Unit 2"/>
-                <unit command-post="false" id="89" name="Log Unit 2" position="28RDS1451530716" type="Log Unit 2"/>
+            <formation id="104" level="x" logistic-level="logistic-base" name="Maintenance BLD" symbol="symbols/sfgpusx">
+              <automat engaged="true" id="84" knowledge-group="3" name="Maintenance Log Automat 2" symbol="symbols/sfgpusx" type="Maintenance Log Automat 2">
+                <unit command-post="true" id="85" name="Maintenance Log Unit 2" position="28RDS1461530716" type="Maintenance Log Unit 2"/>
+                <unit command-post="false" id="86" name="Maintenance Log Unit 2" position="28RDS1461630815" type="Maintenance Log Unit 2"/>
+                <unit command-post="false" id="87" name="Maintenance Log Unit 2" position="28RDS1471630715" type="Maintenance Log Unit 2"/>
+                <unit command-post="false" id="88" name="Maintenance Log Unit 2" position="28RDS1461530616" type="Maintenance Log Unit 2"/>
+                <unit command-post="false" id="89" name="Maintenance Log Unit 2" position="28RDS1451530716" type="Maintenance Log Unit 2"/>
               </automat>
             </formation>
           </formation>
-          <formation id="103" level="xx" logistic-level="logistic-base" name="BLT" symbol="symbols/sfgpusx">
-            <automat engaged="true" id="77" knowledge-group="3" name="Log Automat 3" symbol="symbols/sfgpusx" type="Log Automat 3">
-              <unit command-post="true" id="78" name="Log Unit 3" position="28RDS1535830734" type="Log Unit 3"/>
-              <unit command-post="false" id="79" name="Log Unit 3" position="28RDS1535930834" type="Log Unit 3"/>
-              <unit command-post="false" id="80" name="Log Unit 3" position="28RDS1545830733" type="Log Unit 3"/>
-              <unit command-post="false" id="81" name="Log Unit 3" position="28RDS1535730635" type="Log Unit 3"/>
-              <unit command-post="false" id="82" name="Log Unit 3" position="28RDS1525830735" type="Log Unit 3"/>
+          <formation id="103" level="xx" logistic-level="logistic-base" name="Maintenance BLT" symbol="symbols/sfgpusx">
+            <automat engaged="true" id="77" knowledge-group="3" name="Maintenance Log Automat 3" symbol="symbols/sfgpusx" type="Maintenance Log Automat 3">
+              <unit command-post="true" id="78" name="Maintenance Log Unit 3" position="28RDS1535830734" type="Maintenance Log Unit 3"/>
+              <unit command-post="false" id="79" name="Maintenance Log Unit 3" position="28RDS1535930834" type="Maintenance Log Unit 3"/>
+              <unit command-post="false" id="80" name="Maintenance Log Unit 3" position="28RDS1545830733" type="Maintenance Log Unit 3"/>
+              <unit command-post="false" id="81" name="Maintenance Log Unit 3" position="28RDS1535730635" type="Maintenance Log Unit 3"/>
+              <unit command-post="false" id="82" name="Maintenance Log Unit 3" position="28RDS1525830735" type="Maintenance Log Unit 3"/>
             </automat>
           </formation>
-          <automat engaged="true" id="126" knowledge-group="3" logistic-level="logistic-base" name="Supply 1" symbol="symbols/sfgpuss" type="Log Automat 4">
-            <unit command-post="true" id="127" name="Log Unit 4 1" position="28RDS2595928743" type="Log Unit 4">
+        </formation>
+        <formation id="175" level="xxx" name="Pull/Push flow F1" symbol="symbols/sfgpuss">
+          <automat engaged="true" id="126" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1a" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
+            <unit command-post="true" id="127" name="Supply Log Unit 1a" position="28RDS2579129477" type="Supply Log Unit 1">
               <stocks>
                 <resource name="ammunition" quantity="100"/>
               </stocks>
             </unit>
           </automat>
-          <automat engaged="true" id="128" knowledge-group="3" logistic-level="logistic-base" name="Supply 2" symbol="symbols/sfgpuss" type="Log Automat 4">
-            <unit command-post="true" id="129" name="Log Unit 4 2" position="28RDS2843930786" type="Log Unit 4"/>
+          <automat engaged="true" id="128" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1b" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
+            <unit command-post="true" id="129" name="Supply Log Unit 1b" position="28RDS2614229750" type="Supply Log Unit 1">
+              <stocks>
+                <resource name="electrogen 1" quantity="50"/>
+              </stocks>
+            </unit>
           </automat>
+        </formation>
+        <formation id="176" level="xxxx" name="Supply F3" symbol="symbols/sfgpu">
+          <formation id="130" level="x" logistic-level="logistic-base" name="Supply F1" symbol="symbols/sfgpu">
+            <automat engaged="true" id="131" knowledge-group="3" name="Supply Mobile Infantry Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
+              <unit command-post="true" id="132" name="Supply Mobile Infantry" position="28RDS1390241628" type="Mobile Infantry"/>
+              <unit command-post="false" id="133" name="Supply Mobile Infantry" position="28RDS1387641647" type="Mobile Infantry"/>
+              <unit command-post="false" id="134" name="Supply Mobile Infantry" position="28RDS1381641649" type="Mobile Infantry"/>
+              <unit command-post="false" id="135" name="Supply Mobile Infantry" position="28RDS1384341631" type="Mobile Infantry"/>
+            </automat>
+            <automat engaged="true" id="180" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1c" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
+              <unit command-post="true" id="181" name="Supply Log Unit 1c" position="28RDS1376141521" type="Supply Log Unit 1">
+                <stocks>
+                  <resource name="electrogen 1" quantity="50"/>
+                </stocks>
+              </unit>
+            </automat>
+          </formation>
+          <formation id="177" level="xx" logistic-level="logistic-base" name="Supply F2" symbol="symbols/sfgpuss">
+            <automat engaged="true" id="182" knowledge-group="3" logistic-level="logistic-base" name="Supply Log Automat 1d" symbol="symbols/sfgpuss" type="Supply Log Automat 1">
+              <unit command-post="true" id="183" name="Supply Log Unit 1d" position="28RDS1385341492" type="Supply Log Unit 1">
+                <stocks>
+                  <resource name="electrogen 2" quantity="50"/>
+                </stocks>
+              </unit>
+            </automat>
+          </formation>
         </formation>
       </tactical>
       <communication>
@@ -78,6 +110,9 @@
               <resource name="gyroscope 2" quantity="1"/>
             </quotas>
           </subordinate>
+        </logistic-base>
+        <logistic-base id="180">
+          <subordinate id="131"/>
         </logistic-base>
       </logistics>
     </party>
