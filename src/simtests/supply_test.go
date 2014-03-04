@@ -37,10 +37,6 @@ type SupplyCreateChecker struct {
 	provider *sword.Tasker
 }
 
-func IsParentEntity(actual *sword.ParentEntity, expected *sword.Tasker) bool {
-	return swapi.GetParentEntityId(actual) == swapi.GetTaskerId(expected)
-}
-
 func (cc *SupplyCreateChecker) Check(c *C, ctx *SupplyCheckContext, msg *sword.SimToClient_Content) bool {
 	c.Check(msg.LogSupplyHandlingUpdate, IsNil)
 	c.Check(msg.LogSupplyHandlingDestruction, IsNil)
@@ -53,8 +49,8 @@ func (cc *SupplyCreateChecker) Check(c *C, ctx *SupplyCheckContext, msg *sword.S
 	}
 	c.Check(ctx.handlingId, Equals, uint32(0))
 	ctx.handlingId = m.GetRequest().GetId()
-	c.Check(IsParentEntity(m.GetSupplier(), cc.supplier), Equals, true)
-	c.Check(IsParentEntity(m.GetTransportersProvider(), cc.provider), Equals, true)
+	c.Check(swapi.GetParentEntityId(m.GetSupplier()), Equals, swapi.GetTaskerId(cc.supplier))
+	c.Check(swapi.GetParentEntityId(m.GetTransportersProvider()), Equals, swapi.GetTaskerId(cc.provider))
 	return true
 }
 
@@ -100,7 +96,9 @@ func (SupplyDeleteChecker) Check(c *C, ctx *SupplyCheckContext, msg *sword.SimTo
 	return true
 }
 
-func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, resource ResourceType, checkers ...SupplyChecker) {
+type SupplyCallback func()
+
+func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, callback SupplyCallback, checkers ...SupplyChecker) {
 	client.Pause()
 	check := SupplyCheckContext{
 		data:   client.Model.GetData(),
@@ -134,13 +132,7 @@ func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, resou
 		return false
 	})
 	defer client.Unregister(ctx)
-	err := client.ChangeDotation(unit.Id,
-		map[uint32]*swapi.ResourceDotation{
-			uint32(resource): &swapi.ResourceDotation{
-				Quantity:  0,
-				Threshold: 50,
-			}})
-	c.Assert(err, IsNil)
+	callback()
 	client.Resume(0)
 	select {
 	case <-quit:
@@ -157,13 +149,13 @@ func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, resou
 	c.Assert(idx, Equals, len(checkers))
 }
 
-func checkSupplyUpdates(c *C, client *swapi.Client, unit *swapi.Unit, provider *sword.Tasker, resource ResourceType, updates []SupplyUpdateChecker) {
-	checkers := []SupplyChecker{&SupplyCreateChecker{provider, provider}}
+func checkSupplyUpdates(c *C, client *swapi.Client, unit *swapi.Unit, supplier *sword.Tasker, provider *sword.Tasker, callback SupplyCallback, updates []SupplyUpdateChecker) {
+	checkers := []SupplyChecker{&SupplyCreateChecker{supplier, provider}}
 	for i := range updates {
 		checkers = append(checkers, &updates[i])
 	}
 	checkers = append(checkers, SupplyDeleteChecker{})
-	checkSupply(c, client, unit, -1, resource, checkers...)
+	checkSupply(c, client, unit, -1, callback, checkers...)
 }
 
 func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
@@ -171,9 +163,18 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
-	supplyId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
-	supply := swapi.MakeAutomatTasker(supplyId)
-	checkSupplyUpdates(c, client, unit, supply, electrogen_1, []SupplyUpdateChecker{
+	supplierId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
+	supplier := swapi.MakeAutomatTasker(supplierId)
+	removeElectrogen_1 := func() {
+		err := client.ChangeDotation(unit.Id,
+			map[uint32]*swapi.ResourceDotation{
+				uint32(electrogen_1): &swapi.ResourceDotation{
+					Quantity:  0,
+					Threshold: 50,
+				}})
+		c.Assert(err, IsNil)
+	}
+	checkSupplyUpdates(c, client, unit, supplier, supplier, removeElectrogen_1, []SupplyUpdateChecker{
 		{"convoy_waiting_for_transporters"},
 		{"convoy_setup"},
 		{"convoy_moving_to_loading_point"},
@@ -184,13 +185,22 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 		{"convoy_finished"},
 	})
 	automat := getSomeAutomatByName(c, d, "Supply Mobile Infantry Platoon")
-	supply2Id := getSomeAutomatByName(c, d, "Supply Log Automat 1d").Id
-	supply2 := swapi.MakeAutomatTasker(supply2Id)
-	// change links to have different superiors e.g. a 'current' and a 'nominal'
-	err := client.LogisticsChangeLinks(automat.Id, []uint32{supplyId, supply2Id})
+	supplier2Id := getSomeFormationByName(c, d, "Supply F2").Id
+	supplier2 := swapi.MakeFormationTasker(supplier2Id)
+	// change links to have different superiors e.g. a 'nominal' and a 'current'
+	err := client.LogisticsChangeLinks(automat.Id, []uint32{supplierId, supplier2Id})
 	c.Assert(err, IsNil)
+	removeElectrogen_2 := func() {
+		err := client.ChangeDotation(unit.Id,
+			map[uint32]*swapi.ResourceDotation{
+				uint32(electrogen_2): &swapi.ResourceDotation{
+					Quantity:  0,
+					Threshold: 50,
+				}})
+		c.Assert(err, IsNil)
+	}
 	// the 'current' superior is searched first
-	checkSupplyUpdates(c, client, unit, supply2, electrogen_2, []SupplyUpdateChecker{
+	checkSupplyUpdates(c, client, unit, supplier2, supplier2, removeElectrogen_2, []SupplyUpdateChecker{
 		{"convoy_waiting_for_transporters"},
 		{"convoy_setup"},
 		{"convoy_moving_to_loading_point"},
@@ -201,7 +211,84 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 		{"convoy_finished"},
 	})
 	// the 'nominal' superior is searched if the 'current' superior cannot handle the request
-	checkSupplyUpdates(c, client, unit, supply, electrogen_1, []SupplyUpdateChecker{
+	checkSupplyUpdates(c, client, unit, supplier, supplier, removeElectrogen_1, []SupplyUpdateChecker{
+		{"convoy_waiting_for_transporters"},
+		{"convoy_setup"},
+		{"convoy_moving_to_loading_point"},
+		{"convoy_loading"},
+		{"convoy_moving_to_unloading_point"},
+		{"convoy_unloading"},
+		{"convoy_moving_back_to_loading_point"},
+		{"convoy_finished"},
+	})
+}
+
+func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Supply Log Unit 1c")
+	supplierId := getSomeFormationByName(c, d, "Supply F3").Id
+	supplier := swapi.MakeFormationTasker(supplierId)
+	automat := getSomeAutomatByName(c, d, "Supply Log Automat 1c")
+	provider := swapi.MakeAutomatTasker(automat.Id)
+	quotas := map[uint32]int32{
+		uint32(electrogen_1): 1000,
+		uint32(electrogen_3): 1000,
+	}
+	err := client.LogisticsSupplyChangeQuotas(supplierId, provider, quotas)
+	c.Assert(err, IsNil)
+	removeElectrogen_1 := func() {
+		err := client.RecoverStocks(unit.Id,
+			map[uint32]*swapi.ResourceDotation{
+				uint32(electrogen_1): &swapi.ResourceDotation{
+					Quantity:  0,
+					Threshold: 50,
+				}})
+		c.Assert(err, IsNil)
+	}
+	checkSupplyUpdates(c, client, unit, supplier, provider, removeElectrogen_1, []SupplyUpdateChecker{
+		{"convoy_waiting_for_transporters"},
+		{"convoy_setup"},
+		{"convoy_moving_to_loading_point"},
+		{"convoy_loading"},
+		{"convoy_moving_to_unloading_point"},
+		{"convoy_unloading"},
+		{"convoy_moving_back_to_loading_point"},
+		{"convoy_finished"},
+	})
+
+	supplier2Id := getSomeFormationByName(c, d, "Supply F4").Id
+	supplier2 := swapi.MakeFormationTasker(supplier2Id)
+	// change links to have different superiors e.g. a 'nominal' and a 'current'
+	err = client.LogisticsChangeLinks(automat.Id, []uint32{supplierId, supplier2Id})
+	c.Assert(err, IsNil)
+	err = client.LogisticsSupplyChangeQuotas(supplierId, provider, quotas)
+	c.Assert(err, IsNil)
+	err = client.LogisticsSupplyChangeQuotas(supplier2Id, provider, quotas)
+	c.Assert(err, IsNil)
+	removeElectrogen_3 := func() {
+		err := client.RecoverStocks(unit.Id,
+			map[uint32]*swapi.ResourceDotation{
+				uint32(electrogen_3): &swapi.ResourceDotation{
+					Quantity:  0,
+					Threshold: 50,
+				}})
+		c.Assert(err, IsNil)
+	}
+	// the 'current' superior is searched first
+	checkSupplyUpdates(c, client, unit, supplier2, provider, removeElectrogen_3, []SupplyUpdateChecker{
+		{"convoy_waiting_for_transporters"},
+		{"convoy_setup"},
+		{"convoy_moving_to_loading_point"},
+		{"convoy_loading"},
+		{"convoy_moving_to_unloading_point"},
+		{"convoy_unloading"},
+		{"convoy_moving_back_to_loading_point"},
+		{"convoy_finished"},
+	})
+	// the 'nominal' superior is searched if the 'current' superior cannot handle the request
+	checkSupplyUpdates(c, client, unit, supplier, provider, removeElectrogen_1, []SupplyUpdateChecker{
 		{"convoy_waiting_for_transporters"},
 		{"convoy_setup"},
 		{"convoy_moving_to_loading_point"},

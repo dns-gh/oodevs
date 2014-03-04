@@ -483,3 +483,14 @@ func MakeSupplyFlowTransporters(equipments map[uint32]uint32) []*sword.SupplyFlo
 	}
 	return transporters
 }
+
+func MakeStocks(resources map[uint32]*ResourceDotation) *sword.MissionParameter {
+	list := []*sword.MissionParameter_Value{}
+	for k, v := range resources {
+		list = append(list, MakeList(
+			MakeIdentifier(k),
+			MakeQuantity(v.Quantity),
+		))
+	}
+	return MakeParameter(list...)
+}

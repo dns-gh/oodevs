@@ -1678,3 +1678,14 @@ func (c *Client) SelectRepairTeam(handlingId, equipmentId uint32) error {
 	return c.SelectRepairTeamTest(
 		MakeParameters(MakeIdentifier(handlingId), MakeIdentifier(equipmentId)))
 }
+
+func (c *Client) RecoverStocks(unitId uint32, resources map[uint32]*ResourceDotation) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId),
+		MakeParameters(
+			MakeNullValue(),
+			MakeNullValue(),
+			MakeNullValue(),
+			MakeNullValue(),
+			MakeStocks(resources)),
+		sword.UnitMagicAction_partial_recovery)
+}
