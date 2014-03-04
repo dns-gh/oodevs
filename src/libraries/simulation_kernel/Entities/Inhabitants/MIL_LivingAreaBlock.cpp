@@ -234,7 +234,7 @@ namespace
 unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motivation ) const
 {
     auto ptr = PHY_AccomodationType::Find( motivation );
-    if( ptr  )
+    if( ptr )
         return GetNominalOccupation( motivation, ptr );
     return 0u;
 }
