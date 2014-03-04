@@ -270,7 +270,7 @@ void MIL_LivingAreaBlock::DistributeHumans( unsigned int persons, MIL_LivingArea
 {
     unsigned long blockTmp = persons;
     std::string firstAccommodation;
-    PHY_AccomodationType::Walk( [&]( const PHY_AccomodationType& accommodation ){
+    PHY_AccomodationType::Visit( [&]( const PHY_AccomodationType& accommodation ){
         const auto& role = accommodation.GetRole();
         float proportion = GetProportion( role );
         if( proportion <= 0 )
@@ -297,11 +297,11 @@ void MIL_LivingAreaBlock::DistributeHumans( unsigned int persons, MIL_LivingArea
 // -----------------------------------------------------------------------------
 float MIL_LivingAreaBlock::ComputeOccupationFactor() const
 {
-    unsigned int totalPerson = GetTotalNumberOfPersons();;
+    unsigned int totalPerson = GetTotalNumberOfPersons();
     if( totalPerson == 0 )
         return 0;
     int blockOccupation = 0;
-    PHY_AccomodationType::Walk( [&]( const PHY_AccomodationType& type ){
+    PHY_AccomodationType::Visit( [&]( const PHY_AccomodationType& type ){
         blockOccupation += GetNominalOccupation( type.GetRole(), &type );
     });
     int totalPopulation = urbanObject_->GetTotalInhabitants() - totalPerson;
@@ -371,7 +371,7 @@ unsigned int MIL_LivingAreaBlock::IncreasePeopleWhenMoving( const std::string& m
     else
     {
         remaining = number;
-        PHY_AccomodationType::Walk( [&]( const PHY_AccomodationType& type ){
+        PHY_AccomodationType::Visit( [&]( const PHY_AccomodationType& type ){
             remaining = IncreasePeopleWhenMoving( type.GetRole(), remaining, livingArea );
         });
     }
