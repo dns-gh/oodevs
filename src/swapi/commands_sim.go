@@ -1689,3 +1689,32 @@ func (c *Client) RecoverStocks(unitId uint32, resources map[uint32]*ResourceDota
 			MakeStocks(resources)),
 		sword.UnitMagicAction_partial_recovery)
 }
+
+func (c *Client) PathfindRequest(unitId uint32, start, end Point) ([]Point, error) {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				PathfindRequest: &sword.PathfindRequest{
+					Unit:  MakeId(unitId),
+					Start: MakeCoordLatLong(start),
+					End:   MakeCoordLatLong(end),
+				},
+			},
+		},
+	}
+	var points []Point
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetPathfindRequestAsk()
+		if reply == nil {
+			return ErrContinue
+		}
+		code := reply.GetErrorCode()
+		if code != sword.PathfindRequestAck_no_error {
+			return makeError(reply, int32(code), sword.PathfindRequestAck_ErrorCode_name)
+		}
+		points = ReadPoints(reply.GetPath().GetLocation().GetCoordinates())
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return points, err
+}

@@ -164,13 +164,17 @@ func MakeQuantity(value int32) *sword.MissionParameter {
 		})
 }
 
+func MakeCoordLatLong(point Point) *sword.CoordLatLong {
+	return &sword.CoordLatLong{
+		Latitude:  proto.Float64(point.Y),
+		Longitude: proto.Float64(point.X),
+	}
+}
+
 func MakeCoords(points ...Point) *sword.CoordLatLongList {
 	coords := []*sword.CoordLatLong{}
 	for _, p := range points {
-		coords = append(coords, &sword.CoordLatLong{
-			Latitude:  proto.Float64(p.Y),
-			Longitude: proto.Float64(p.X),
-		})
+		coords = append(coords, MakeCoordLatLong(p))
 	}
 	return &sword.CoordLatLongList{
 		Elem: coords,
@@ -224,6 +228,14 @@ func ReadPoint(value *sword.CoordLatLong) Point {
 		return Point{}
 	}
 	return Point{X: value.GetLongitude(), Y: value.GetLatitude()}
+}
+
+func ReadPoints(msg *sword.CoordLatLongList) []Point {
+	points := []Point{}
+	for _, v := range msg.Elem {
+		points = append(points, ReadPoint(v))
+	}
+	return points
 }
 
 func MakePointLocation(point Point) *sword.Location {
