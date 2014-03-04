@@ -420,7 +420,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 }
 
 func SetManualMaintenance(c *C, client *swapi.Client, id uint32) {
-	err := client.LogMaintenanceSetManual(id, true)
+	err := client.SetManualMaintenance(id, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		automat := data.Automats[id]
@@ -549,7 +549,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 
 	toAutomatic := func(id uint32) error {
 		// set automat back to automatic mode
-		err := client.LogMaintenanceSetManual(id, false)
+		err := client.SetManualMaintenance(id, false)
 		if err != nil {
 			return err
 		}
