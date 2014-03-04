@@ -10,7 +10,6 @@
 #ifndef __PHY_ResourceNetworkType_h_
 #define __PHY_ResourceNetworkType_h_
 
-
 namespace xml
 {
     class xistream;
@@ -27,10 +26,9 @@ class PHY_DotationCategory;
 class PHY_ResourceNetworkType : private boost::noncopyable
 {
 public:
-    //! @name Types
+    //! @name Destructor
     //@{
-    typedef std::map< std::string, const PHY_ResourceNetworkType* > T_ResourceNetworkMap;
-    typedef T_ResourceNetworkMap::const_iterator CIT_ResourceNetworkMap;
+    ~PHY_ResourceNetworkType();
     //@}
 
 public:
@@ -38,7 +36,6 @@ public:
     //@{
     static void Initialize( xml::xistream& xis );
     static void Terminate ();
-    static const T_ResourceNetworkMap& GetResourceNetworks();
     static const PHY_ResourceNetworkType* Find( const std::string& strName );
     static const PHY_ResourceNetworkType* Find( unsigned int id );
     static const PHY_ResourceNetworkType* FindByDotation( const PHY_DotationCategory& dotation );
@@ -52,10 +49,9 @@ public:
     //@}
 
 private:
-    //! @name Constructors/Destructor
+    //! @name Constructors
     //@{
-             PHY_ResourceNetworkType( const std::string& strName, const PHY_DotationCategory& dotationCategory );
-    virtual ~PHY_ResourceNetworkType();
+    PHY_ResourceNetworkType( const std::string& strName, const PHY_DotationCategory& dotationCategory );
     //@}
 
     //! @name Helpers
@@ -64,16 +60,10 @@ private:
     //@}
 
 private:
-    //! @name Static data
-    //@{
-    static T_ResourceNetworkMap resourceNetworks_;
-    static unsigned int nNextId_;
-    //@}
-
     //! @name Member data
     //@{
     const std::string strName_;
-    unsigned int nId_;
+    const unsigned int nId_;
     const PHY_DotationCategory& dotationCategory_;
     //@}
 };

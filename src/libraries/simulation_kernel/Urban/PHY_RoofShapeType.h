@@ -10,7 +10,6 @@
 #ifndef __PHY_RoofShapeType_h_
 #define __PHY_RoofShapeType_h_
 
-
 // =============================================================================
 /** @class  PHY_RoofShapeType
     @brief  PHY_RoofShapeType
@@ -20,10 +19,9 @@
 class PHY_RoofShapeType : private boost::noncopyable
 {
 public:
-    //! @name Types
+    //! @name Destructor
     //@{
-    typedef std::map< std::string, const PHY_RoofShapeType* > T_RoofShapeMap;
-    typedef T_RoofShapeMap::const_iterator CIT_RoofShapeMap;
+    ~PHY_RoofShapeType();
     //@}
 
 public:
@@ -38,7 +36,6 @@ private:
     //! @name Constructors/Destructor
     //@{
     explicit PHY_RoofShapeType( const std::string& strName );
-    virtual ~PHY_RoofShapeType();
     //@}
 
     //! @name Helpers
@@ -49,8 +46,7 @@ private:
 private:
     //! @name Static data
     //@{
-    static T_RoofShapeMap roofShapes_;
-    std::string strName_;
+    const std::string strName_;
     //@}
 };
 

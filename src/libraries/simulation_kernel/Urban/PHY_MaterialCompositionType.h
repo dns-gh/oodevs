@@ -10,7 +10,6 @@
 #ifndef __PHY_MaterialCompositionType_h_
 #define __PHY_MaterialCompositionType_h_
 
-
 // =============================================================================
 /** @class  PHY_MaterialCompositionType
     @brief  PHY_MaterialCompositionType
@@ -22,16 +21,8 @@ class PHY_MaterialCompositionType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_MaterialCompositionType* > T_MaterialCompositionMap;
-    typedef T_MaterialCompositionMap::const_iterator CIT_MaterialCompositionMap;
-
     struct AttritionData
     {
-        //! @name Constructors/Destructor
-        //@{
-        explicit AttritionData( const std::string& protection, xml::xistream& xis );
-        //@}
-
         //! @name Member data
         //@{
         std::string protection_;
@@ -40,11 +31,15 @@ public:
         float repairableNoEvac_;
         //@}
     };
-    typedef std::map< std::string, AttritionData* > T_AttritionInfos;
-    typedef T_AttritionInfos::const_iterator      CIT_AttritionInfos;
+    typedef std::map< std::string, AttritionData > T_AttritionInfos;
     //@}
 
 public:
+    //! @name Destructor
+    //@{
+    ~PHY_MaterialCompositionType();
+    //@}
+
     //! @name Manager
     //@{
     static void Initialize( xml::xistream& xis );
@@ -57,30 +52,26 @@ public:
     //@{
     unsigned int GetId() const;
     const std::string& GetName() const;
-    PHY_MaterialCompositionType::AttritionData* FindAttrition( const std::string& protection ) const;
+    const PHY_MaterialCompositionType::AttritionData* FindAttrition( const std::string& protection ) const;
     //@}
 
 private:
-    //! @name Constructors/Destructor
+    //! @name Constructors
     //@{
-             PHY_MaterialCompositionType( const std::string& name, xml::xistream& xis );
-    virtual ~PHY_MaterialCompositionType();
+    PHY_MaterialCompositionType( const std::string& name, xml::xistream& xis );
     //@}
 
     //! @name Helpers
     //@{
     static void ReadMaterialComposition( xml::xistream& xis );
-    void ReadAttrition( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    static T_MaterialCompositionMap materialCompositions_;
-    static unsigned int nNextId_;
-    std::string name_;
-    unsigned int nId_;
-    T_AttritionInfos attritions_;
+    const std::string name_;
+    const unsigned int nId_;
+    const T_AttritionInfos attritions_;
     //@}
 };
 

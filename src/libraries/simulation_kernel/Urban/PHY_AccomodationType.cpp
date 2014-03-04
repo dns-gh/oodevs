@@ -10,8 +10,12 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_AccomodationType.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/ptr_container/ptr_map.hpp>
 
-PHY_AccomodationType::T_AccomodationMap PHY_AccomodationType::accomodations_;
+namespace
+{
+    boost::ptr_map< std::string, PHY_AccomodationType > accomodations;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_AccomodationType::Initialize
@@ -33,9 +37,7 @@ void PHY_AccomodationType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_AccomodationType::Terminate()
 {
-    for( CIT_AccomodationMap itAccomodation = accomodations_.begin(); itAccomodation != accomodations_.end(); ++itAccomodation )
-        delete itAccomodation->second;
-    accomodations_.clear();
+    accomodations.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -44,19 +46,19 @@ void PHY_AccomodationType::Terminate()
 // -----------------------------------------------------------------------------
 const PHY_AccomodationType* PHY_AccomodationType::Find( const std::string& strName )
 {
-    CIT_AccomodationMap itAccomodation = accomodations_.find( strName );
-    if( itAccomodation == accomodations_.end() )
+    auto it = accomodations.find( strName );
+    if( it == accomodations.end() )
         return 0;
-    return itAccomodation->second;
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_AccomodationType::GetAccomodations
-// Created: JSR 2011-02-17
+// Name: PHY_AccomodationType::GetRole
+// Created: BAX 2014-02-28
 // -----------------------------------------------------------------------------
-const PHY_AccomodationType::T_AccomodationMap& PHY_AccomodationType::GetAccomodations()
+const std::string& PHY_AccomodationType::GetRole() const
 {
-    return accomodations_;
+    return role_;
 }
 
 // -----------------------------------------------------------------------------
@@ -105,8 +107,18 @@ PHY_AccomodationType::~PHY_AccomodationType()
 void PHY_AccomodationType::ReadAccomodation( xml::xistream& xis )
 {
     std::string strRole = xis.attribute< std::string >( "role" );
-    const PHY_AccomodationType*& pAccomodation = accomodations_[ strRole ];
-    if( pAccomodation )
+    if( accomodations.count( strRole ) )
         throw MASA_EXCEPTION( xis.context() + "Accomodation " + strRole + " already defined" );
-    pAccomodation = new PHY_AccomodationType( strRole, xis.attribute< float >( "nominal-capacity" ), xis.attribute< float >( "max-capacity" ) );
+    auto next = std::auto_ptr< PHY_AccomodationType >( new PHY_AccomodationType( strRole, xis.attribute< float >( "nominal-capacity" ), xis.attribute< float >( "max-capacity" ) ) );
+    accomodations.insert( strRole, next );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_AccomodationType::Visit
+// Created: BAX 2014-02-28
+// -----------------------------------------------------------------------------
+void PHY_AccomodationType::Visit( const std::function< void( const PHY_AccomodationType& ) >& visitor )
+{
+    for( auto it = accomodations.begin(); it != accomodations.end(); ++it )
+        visitor( *it->second );
 }

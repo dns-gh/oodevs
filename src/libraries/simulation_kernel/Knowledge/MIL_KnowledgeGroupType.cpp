@@ -14,8 +14,13 @@
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"
 
-MIL_KnowledgeGroupType::T_KnowledgeGroupTypeMap MIL_KnowledgeGroupType::knowledgeGroupTypes_;
-unsigned int MIL_KnowledgeGroupType::nNextID_ = 0;
+#include <boost/ptr_container/ptr_map.hpp>
+
+namespace
+{
+    boost::ptr_map< std::string, MIL_KnowledgeGroupType > knowledgeGroupTypes;
+    unsigned int nNextID;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroupType::InitializeWithTime
@@ -25,7 +30,13 @@ void MIL_KnowledgeGroupType::InitializeWithTime( xml::xistream& xis, double time
 {
     MT_LOG_INFO_MSG( "Initializing knowledge groups types" );
     xis >> xml::start( "knowledge-groups" )
-            >> xml::list( "knowledge-group", boost::bind( &MIL_KnowledgeGroupType::ReadKnowledgeGroup, _1, timeFactor ) )
+            >> xml::list( "knowledge-group", [&]( xml::xistream& xis ){
+                const std::string name = xis.attribute< std::string >( "name" );
+                if( knowledgeGroupTypes.count( name ) )
+                    throw MASA_EXCEPTION( xis.context() + "Type already defined" );
+                auto next = std::auto_ptr< MIL_KnowledgeGroupType >( new MIL_KnowledgeGroupType( name, xis, timeFactor ) );
+                knowledgeGroupTypes.insert( name, next );
+            })
         >> xml::end;
 }
 
@@ -39,28 +50,36 @@ void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroupType::ReadKnowledgeGroup
-// Created: ABL 2007-07-23
-// -----------------------------------------------------------------------------
-void MIL_KnowledgeGroupType::ReadKnowledgeGroup( xml::xistream& xis, double timeFactor )
-{
-    std::string strName;
-    xis >> xml::attribute( "name", strName );
-    const MIL_KnowledgeGroupType*& pType = knowledgeGroupTypes_[ strName ];
-    if( pType )
-        throw MASA_EXCEPTION( xis.context() + "Type already defined" );
-    pType = new MIL_KnowledgeGroupType( strName, xis, timeFactor );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroupType::Terminate
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroupType::Terminate()
 {
-    for( auto it = knowledgeGroupTypes_.begin(); it != knowledgeGroupTypes_.end(); ++it )
-        delete it->second;
-    knowledgeGroupTypes_.clear();
+    knowledgeGroupTypes.clear();
+}
+
+namespace
+{
+    double ReadTime( xml::xisubstream xis, const std::string& start, const std::string& name )
+    {
+        if( !start.empty() )
+            xis >> xml::start( start );
+        double value;
+        tools::ReadTimeAttribute( xis, name, value );
+        if( value <= 0 )
+            throw MASA_EXCEPTION( xis.context() + ( start.empty() ? "" : name + ": " ) + name + " <= 0" );
+        return value;
+    }
+
+    double ReadMaxDistance( xml::xisubstream xis )
+    {
+        xis >> xml::start( "unit-knowledge" );
+        unsigned int nTmp = std::numeric_limits< unsigned int >::max();
+        xis >> xml::optional >> xml::attribute( "max-unit-to-knowledge-distance", nTmp );
+        if( nTmp <= 0 )
+            throw MASA_EXCEPTION( xis.context() + "unit-knowledge: max-unit-to-knowledge-distance <= 0" );
+        return MIL_Tools::ConvertMeterToSim( nTmp );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -69,41 +88,14 @@ void MIL_KnowledgeGroupType::Terminate()
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis, double timeFactor )
     : strName_                                      ( strName )
-    , nID_                                          ( nNextID_++ )
-    , rKnowledgeAgentMaxLifeTime_                   ( 0. )
-    , rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_( 0. )
-    , rKnowledgeAgentExtrapolationTime_             ( 0. )
-    , rKnowledgePopulationMaxLifeTime_              ( 0. )
-    , rCommunicationDelay_                          ( 0. ) // LTO
+    , nID_                                          ( nNextID++ )
+    , rKnowledgeAgentMaxLifeTime_                   ( ReadTime( xis, "unit-knowledge", "max-lifetime" ) * timeFactor )
+    , rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_( ReadMaxDistance( xis ) )
+    , rKnowledgeAgentExtrapolationTime_             ( std::max( 1., ReadTime( xis, "unit-knowledge", "interpolation-time" ) * timeFactor ) )
+    , rKnowledgePopulationMaxLifeTime_              ( ReadTime( xis, "population-knowledge", "max-lifetime" ) * timeFactor )
+    , rCommunicationDelay_                          ( ReadTime( xis, "", "communication-delay" ) * timeFactor )
 {
-    tools::ReadTimeAttribute( xis, "communication-delay", rCommunicationDelay_ ); // LTO
-    if( rCommunicationDelay_ < 0 ) // LTO
-        throw MASA_EXCEPTION( xis.context() + "unit-knowledge: max-lifetime <= 0" ); // LTO
-    rCommunicationDelay_ *= timeFactor; // LTO
-    // Connaissances agent
-    xis >> xml::start( "unit-knowledge" );
-    tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgeAgentMaxLifeTime_ );
-    if( rKnowledgeAgentMaxLifeTime_ <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "unit-knowledge: max-lifetime <= 0" );
-    rKnowledgeAgentMaxLifeTime_ = timeFactor * rKnowledgeAgentMaxLifeTime_; // LTO
-    unsigned int nTmp = std::numeric_limits< unsigned int >::max();
-    xis >> xml::optional >> xml::attribute( "max-unit-to-knowledge-distance", nTmp );
-    if( nTmp <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "unit-knowledge: max-unit-to-knowledge-distance <= 0" );
-    rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_ = MIL_Tools::ConvertMeterToSim( nTmp );
-    if( tools::ReadTimeAttribute(xis, "interpolation-time", rKnowledgeAgentExtrapolationTime_ ) )
-        if( rKnowledgeAgentExtrapolationTime_ <= 0 )
-            throw MASA_EXCEPTION( xis.context() + "unit-knowledge: interpolation-time <= 0" );
-    rKnowledgeAgentExtrapolationTime_ = std::max( 1., timeFactor * rKnowledgeAgentExtrapolationTime_ );
-    // JVT : 1 car lorsque l'on perd de vue une unité, on veux au moins que l'emplacement de la connaissance soit celle au pas de temps suivant le non vu
-    xis >> xml::end;
-    // Connaissances population
-    xis >> xml::start( "population-knowledge" );
-    tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgePopulationMaxLifeTime_ );
-    if( rKnowledgePopulationMaxLifeTime_ <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "population-knowledge: max-lifetime <= 0" );
-    rKnowledgePopulationMaxLifeTime_ = timeFactor * rKnowledgePopulationMaxLifeTime_;
-    xis >> xml::end;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -121,8 +113,8 @@ MIL_KnowledgeGroupType::~MIL_KnowledgeGroupType()
 // -----------------------------------------------------------------------------
 const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( const std::string& strName )
 {
-    CIT_KnowledgeGroupTypeMap it = knowledgeGroupTypes_.find( strName );
-    return it == knowledgeGroupTypes_.end() ? 0 : it->second;
+    auto it = knowledgeGroupTypes.find( strName );
+    return it == knowledgeGroupTypes.end() ? 0 : it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +123,7 @@ const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( const std::strin
 // -----------------------------------------------------------------------------
 const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( unsigned int nID )
 {
-    for( auto it = knowledgeGroupTypes_.begin(); it != knowledgeGroupTypes_.end(); ++it )
+    for( auto it = knowledgeGroupTypes.begin(); it != knowledgeGroupTypes.end(); ++it )
         if( it->second->GetID() == nID )
             return it->second;
     return 0;
@@ -144,8 +136,8 @@ const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( unsigned int nID
 const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindTypeOrAny( const std::string& strName )
 {
     const MIL_KnowledgeGroupType* type = FindType( strName );
-    if( !type && !knowledgeGroupTypes_.empty() )
-        type = knowledgeGroupTypes_.begin()->second;
+    if( !type && !::knowledgeGroupTypes.empty() )
+        type = knowledgeGroupTypes.begin()->second;
     return type;
 }
 
