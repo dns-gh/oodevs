@@ -463,3 +463,38 @@ func (s *TestSuite) TestDeleteSpawnedObject(c *C) {
 	err := client.DeleteObject(objectId + 1)
 	c.Assert(err, IsSwordError, "error_invalid_object")
 }
+
+func (s *TestSuite) TestTrafficabilityAttribute(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	model := client.Model
+	data := model.GetData()
+	location := swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456})
+
+	// Get a party identifier
+	party := data.FindPartyByName("party")
+	c.Assert(party, NotNil)
+
+	// Create landslide by default
+	object, err := client.CreateObject("landslide", party.Id, location)
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Objects[object.Id].Trafficability == 0.1
+	})
+
+	// Change trafficability
+	trafficability := float32(1.5)
+	params := swapi.MakeList(
+		swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_trafficability)), // attribute type
+		swapi.MakeFloat(trafficability),                                      // trafficability
+	)
+	object, err = client.CreateObject("landslide", party.Id, location, params)
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+
+	// Check new trafficability
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Objects[object.Id].Trafficability == trafficability
+	})
+}
