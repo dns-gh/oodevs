@@ -211,7 +211,7 @@ void MIL_LivingArea::GetUsagesOccupation( std::map< std::string, unsigned int >&
 {
     // $$$$ JSR 2011-03-22: à vérifier pour la satisfaction
     BOOST_FOREACH( const MIL_LivingAreaBlock* block, blocks_ )
-        PHY_AccomodationType::Walk( [&]( const PHY_AccomodationType& type ){
+        PHY_AccomodationType::Visit( [&]( const PHY_AccomodationType& type ){
             occupations[ type.GetRole() ] += block->GetNominalOccupation( type.GetRole(), &type );
         });
 }
@@ -593,7 +593,7 @@ unsigned int MIL_LivingArea::ComputeStartingBlocks( const std::string& motivatio
     {
         if( !block->CanMove() )
             continue;
-        PHY_AccomodationType::Walk( [&]( const PHY_AccomodationType& type ){
+        PHY_AccomodationType::Visit( [&]( const PHY_AccomodationType& type ){
             const auto& role = type.GetRole();
             if( motivation == role )
                 return;
@@ -645,7 +645,7 @@ void MIL_LivingArea::ForceEvacuation( const std::string& motivation )
             continue;
         unsigned int people = 0;
         unsigned int maximalOccupation = 0;
-        PHY_AccomodationType::Walk( [&]( const PHY_AccomodationType& type ){
+        PHY_AccomodationType::Visit( [&]( const PHY_AccomodationType& type ){
             const auto& role = type.GetRole();
             if( role == motivation )
                 return;

@@ -114,11 +114,11 @@ void PHY_AccomodationType::ReadAccomodation( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_AccomodationType::Walk
+// Name: PHY_AccomodationType::Visit
 // Created: BAX 2014-02-28
 // -----------------------------------------------------------------------------
-void PHY_AccomodationType::Walk( const std::function< void( const PHY_AccomodationType& ) >& operand )
+void PHY_AccomodationType::Visit( const std::function< void( const PHY_AccomodationType& ) >& visitor )
 {
     for( auto it = ::accomodations.begin(); it != ::accomodations.end(); ++it )
-        operand( *it->second );
+        visitor( *it->second );
 }

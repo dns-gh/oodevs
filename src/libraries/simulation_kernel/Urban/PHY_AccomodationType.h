@@ -32,7 +32,7 @@ public:
     static void Initialize( xml::xistream& xis );
     static void Terminate();
     static const PHY_AccomodationType* Find( const std::string& strName );
-    static void Walk( const std::function< void( const PHY_AccomodationType& ) >& operand );
+    static void Visit( const std::function< void( const PHY_AccomodationType& ) >& visitor );
     //@}
 
     //! @name Accessors
