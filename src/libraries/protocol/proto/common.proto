@@ -2002,6 +2002,12 @@ message UnitMagicAction {
         //! result[0], AutomatId: created automat identifier.
         //! result[1+], AgentId: created units identifier
         automat_and_units_creation        = 60;
+        //! Switch the manual/automatic mode for supply.
+        //! The tasker is set to target logistic base:
+        //!    an automat or a formation identifier.
+        //! parameters[0], BooleanValue: if true, supply is in manual mode,
+        //!   otherwise supply is in automated mode.
+        log_supply_set_manual             = 61;
     }
     //! The tasker @todo Explain what is a "tasker"
     required Tasker            tasker     = 1;

@@ -1350,5 +1350,9 @@
         <source>Switch Log Maintenance Mode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Switch Log Supply Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

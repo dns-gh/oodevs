@@ -549,6 +549,7 @@ T_ConverterUnitMagicActionType UnitMagicActionTypeConverter_[] =
     T_ConverterUnitMagicActionType( "log_supply_change_quotas",         QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Log Supply Change Quotas" ), sword::UnitMagicAction::log_supply_change_quotas ),
     T_ConverterUnitMagicActionType( "log_supply_pull_flow",             QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Log Supply Pull Flow" ), sword::UnitMagicAction::log_supply_pull_flow ),
     T_ConverterUnitMagicActionType( "log_supply_push_flow",             QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Log Supply Push Flow" ), sword::UnitMagicAction::log_supply_push_flow ),
+    T_ConverterUnitMagicActionType( "log_supply_set_manual",            QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Switch Log Supply Mode" ), sword::UnitMagicAction::log_supply_set_manual ),
     T_ConverterUnitMagicActionType( "log_maintenance_set_manual",       QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Switch Log Maintenance Mode" ), sword::UnitMagicAction::log_maintenance_set_manual ),
     T_ConverterUnitMagicActionType( "partial_recovery",                 QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Partial Recovery" ), sword::UnitMagicAction::partial_recovery ),
     T_ConverterUnitMagicActionType( "recover_all",                      QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Recover - All" ), sword::UnitMagicAction::recover_all ),

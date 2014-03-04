@@ -94,6 +94,18 @@ void MIL_StockSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigne
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::IsSupplyManual
+// Created: BAX 2014-02-27
+// -----------------------------------------------------------------------------
+bool MIL_StockSupplyManager::IsSupplyManual() const
+{
+    if( !pAutomate_ )
+        return false;
+    auto brain = pAutomate_->GetLogisticHierarchy().GetPrimarySuperior();
+    return brain && brain->IsSupplyManual();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::Update
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
@@ -104,11 +116,10 @@ void MIL_StockSupplyManager::Update()
     if( !bSupplyNeeded_ )
         return;
     MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
-    if( logisticManager )
-    {
-        logistic::SupplyRequestHierarchyDispatcher dispatcher( logisticManager->GetLogisticHierarchy() );
-        bSupplyNeeded_ = !autoSupplyRequest_->Execute( dispatcher );
-    }
+    if( !logisticManager )
+        return;
+    logistic::SupplyRequestHierarchyDispatcher dispatcher( logisticManager->GetLogisticHierarchy() );
+    bSupplyNeeded_ = !autoSupplyRequest_->Execute( dispatcher );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,10 +139,9 @@ void MIL_StockSupplyManager::Clean()
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory )
 {
-    if( HasStockSupplyNeededNotified( dotationCategory ) )
-        return;
-    bSupplyNeeded_ = true;
-    if( SendSupplyNeededReport() )
+    const bool wasNeeded = bSupplyNeeded_;
+    bSupplyNeeded_ |= !IsSupplyManual() && !IsSupplyInProgress( dotationCategory );
+    if( !wasNeeded && bSupplyNeeded_ && SendSupplyNeededReport() )
         MIL_Report::PostEvent( *pAutomate_, report::eRC_DemandeRavitaillementStocks );
 }
 
@@ -184,15 +194,6 @@ bool MIL_StockSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dot
     return boost::find_if( scheduledSupplies_,
             boost::bind( &logistic::SupplyConsign_ABC::IsSupplying, _1, boost::cref( dotationCategory ), boost::cref( *this ) ) )
         != scheduledSupplies_.end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::HasStockSupplyNeededNotified
-// Created: MMC 2013-04-24
-// -----------------------------------------------------------------------------
-bool MIL_StockSupplyManager::HasStockSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const
-{
-    return bSupplyNeeded_ || IsSupplyInProgress( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------

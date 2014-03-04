@@ -102,17 +102,28 @@ void MIL_DotationSupplyManager::RequestDotationSupply()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::IsSupplyManual
+// Created: BAX 2014-02-27
+// -----------------------------------------------------------------------------
+bool MIL_DotationSupplyManager::IsSupplyManual() const
+{
+    if( !pAutomate_ )
+        return false;
+    auto brain = pAutomate_->GetLogisticHierarchy().GetPrimarySuperior();
+    return brain && brain->IsSupplyManual();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::Update
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::Update()
 {
     supplyRequests_->Update();
-    if( bSupplyNeeded_ )
-    {
-        logistic::SupplyRequestHierarchyDispatcher dispatcher( pAutomate_->GetLogisticHierarchy(), bDotationSupplyExplicitlyRequested_ );
-        bSupplyNeeded_ = !supplyRequests_->Execute( dispatcher );
-    }
+    if( !bSupplyNeeded_ )
+        return;
+    logistic::SupplyRequestHierarchyDispatcher dispatcher( pAutomate_->GetLogisticHierarchy(), bDotationSupplyExplicitlyRequested_ );
+    bSupplyNeeded_ = !supplyRequests_->Execute( dispatcher );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,20 +178,10 @@ void MIL_DotationSupplyManager::ResetConsignsForConvoyPion( const MIL_AgentPion&
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory )
 {
-    if( HasDotationSupplyNeededNotified( dotationCategory ) )
-        return;
-    bSupplyNeeded_ = true;
-    if( SendSupplyNeededReport() )
+    const bool wasNeeded = bSupplyNeeded_;
+    bSupplyNeeded_ |= !IsSupplyManual() && !IsSupplyInProgress( dotationCategory );
+    if( !wasNeeded && bSupplyNeeded_ && SendSupplyNeededReport() )
         MIL_Report::PostEvent( *pAutomate_, report::eRC_DemandeRavitaillementDotations );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_DotationSupplyManager::HasDotationSupplyNeededNotified
-// Created: MMC 2013-04-24
-// -----------------------------------------------------------------------------
-bool MIL_DotationSupplyManager::HasDotationSupplyNeededNotified( const PHY_DotationCategory& dotationCategory )
-{
-    return bSupplyNeeded_ || IsSupplyInProgress( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------

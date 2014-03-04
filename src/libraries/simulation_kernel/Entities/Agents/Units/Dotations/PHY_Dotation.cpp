@@ -21,24 +21,28 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Dotation )
 
-const double PHY_Dotation::maxCapacity_ = 10000000;
+namespace
+{
+    const double maxCapacity = 10000000;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Dotation constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
 PHY_Dotation::PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGroup& group, bool bInfiniteDotations )
-    : pCategory_( &category )
-    , pGroup_( &group )
-    , rValue_( 0. )
-    , rRequestedValue_( 0. )
-    , rLastValueSent_( 0. )
-    , rCapacity_( 0. )
-    , rConsumptionReservation_( 0. )
-    , rFireReservation_( 0. )
-    , rSupplyThreshold_( 0. )
-    , bDotationBlocked_( false )
-    , bInfiniteDotations_( bInfiniteDotations )
+    : pCategory_              ( &category )
+    , pGroup_                 ( &group )
+    , rValue_                 ( 0 )
+    , rRequestedValue_        ( 0 )
+    , rLastValueSent_         ( 0 )
+    , rCapacity_              ( 0 )
+    , rConsumptionReservation_( 0 )
+    , rFireReservation_       ( 0 )
+    , rSupplyThreshold_       ( 0 )
+    , bNotified_              ( false )
+    , bDotationBlocked_       ( false )
+    , bInfiniteDotations_     ( bInfiniteDotations )
 {
     // NOTHING
 }
@@ -48,17 +52,18 @@ PHY_Dotation::PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGr
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_Dotation::PHY_Dotation()
-    : pCategory_( 0 )
-    , pGroup_( 0 )
-    , rValue_( 0. )
-    , rRequestedValue_( 0. )
-    , rLastValueSent_( 0. )
-    , rCapacity_( 0. )
-    , rConsumptionReservation_( 0. )
-    , rFireReservation_( 0. )
-    , rSupplyThreshold_( 0. )
-    , bDotationBlocked_( false )
-    , bInfiniteDotations_( false )
+    : pCategory_              ( 0 )
+    , pGroup_                 ( 0 )
+    , rValue_                 ( 0 )
+    , rRequestedValue_        ( 0 )
+    , rLastValueSent_         ( 0 )
+    , rCapacity_              ( 0 )
+    , rConsumptionReservation_( 0 )
+    , rFireReservation_       ( 0 )
+    , rSupplyThreshold_       ( 0 )
+    , bNotified_              ( false )
+    , bDotationBlocked_       ( false )
+    , bInfiniteDotations_     ( false )
 {
     // NOTHING
 }
@@ -73,37 +78,22 @@ PHY_Dotation::~PHY_Dotation()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Dotation::load
+// Name: PHY_Dotation::serialize
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_Dotation::load( MIL_CheckPointInArchive& file, const unsigned int )
+template< typename Archive >
+void PHY_Dotation::serialize( Archive& ar, const unsigned int )
 {
-    file >> pCategory_
-         >> pGroup_
-         >> rValue_
-         >> rCapacity_
-         >> rConsumptionReservation_
-         >> rFireReservation_
-         >> rSupplyThreshold_
-         >> bDotationBlocked_
-         >> bInfiniteDotations_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Dotation::save
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
-{
-    file << pCategory_
-         << pGroup_
-         << rValue_
-         << rCapacity_
-         << rConsumptionReservation_
-         << rFireReservation_
-         << rSupplyThreshold_
-         << bDotationBlocked_
-         << bInfiniteDotations_;
+    ar & pCategory_
+       & pGroup_
+       & rValue_
+       & rCapacity_
+       & rConsumptionReservation_
+       & rFireReservation_
+       & rSupplyThreshold_
+       & bNotified_
+       & bDotationBlocked_
+       & bInfiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +124,7 @@ void PHY_Dotation::SetValue( double rValue )
         return;
     if( bInfiniteDotations_ && rValue < rSupplyThreshold_ )
         rValue = rCapacity_;
-    rValue = std::min( rValue, maxCapacity_ );
+    rValue = std::min( rValue, ::maxCapacity );
     const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
     assert( pCategory_ );
     if( pCategory_->IsSignificantChange( rValue, rLastValueSent_, rCapacity_ ) || ( rValue < rSupplyThreshold_ ) != bSupplyThresholdAlreadyReached )
@@ -144,15 +134,26 @@ void PHY_Dotation::SetValue( double rValue )
         rLastValueSent_ = rValue;
     }
     rValue_ = rValue;
+    bNotified_ &= rValue_ <= rSupplyThreshold_; // reset notify flag as soon as value > threshold
     if( HasReachedSupplyThreshold() )
     {
         if( rRequestedValue_ == 0 )
             rRequestedValue_ = rCapacity_ - rValue_;
-        assert( pGroup_ );
-        pGroup_->NotifySupplyNeeded( *pCategory_, !bSupplyThresholdAlreadyReached );
+        NotifySupplyNeeded();
     }
     else
         rRequestedValue_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Dotation::NotifySupplyNeeded
+// Created: BAX 2014-02-28
+// -----------------------------------------------------------------------------
+void PHY_Dotation::NotifySupplyNeeded()
+{
+    const bool first = !bNotified_;
+    bNotified_ = true;
+    pGroup_->NotifySupplyNeeded( *pCategory_, first );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,13 +165,13 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity, double qua
     assert( rValue_ <= rCapacity_ );
     if( bInfiniteDotations_ && MT_IsZero( rCapacity_ ) )
     {
-        rCapacity_ = maxCapacity_;
-        SetValue( maxCapacity_ );
+        rCapacity_ = ::maxCapacity;
+        SetValue( ::maxCapacity );
     }
     else
     {
-        rCapacity_ = std::min( rCapacity_ + capacity.GetCapacity(), maxCapacity_ );
-        SetValue( std::min( rValue_ + std::min( capacity.GetCapacity(), quantity ), maxCapacity_ ) );
+        rCapacity_ = std::min( rCapacity_ + capacity.GetCapacity(), ::maxCapacity );
+        SetValue( std::min( rValue_ + std::min( capacity.GetCapacity(), quantity ), ::maxCapacity ) );
     }
     if( quantity )
         pGroup_->NotifyDotationChanged( *this );
@@ -393,10 +394,8 @@ void PHY_Dotation::ConsumeConsumptionReservation()
 // -----------------------------------------------------------------------------
 void PHY_Dotation::UpdateSupplyNeeded()
 {
-    assert( pCategory_ );
-    assert( pGroup_ );
-    if( HasReachedSupplyThreshold() && !pGroup_->HasSupplyNeededNotified( *pCategory_ ) )
-        pGroup_->NotifySupplyNeeded( *pCategory_, true );
+    if( HasReachedSupplyThreshold() )
+        NotifySupplyNeeded();
 }
 
 // -----------------------------------------------------------------------------

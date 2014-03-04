@@ -73,7 +73,7 @@ public:
     virtual logistic::SupplySupplier_ABC*  ConvoyGetTransportersProvider  () const;
     virtual const T_PointVector*           ConvoyGetPathToNextDestination () const;
     virtual bool                           ConvoyIsPushedFlow             () const;
-  
+
     virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     //@}
 
@@ -81,7 +81,6 @@ public:
     //@{
     virtual void NotifyComposanteChanged( PHY_ComposantePion& composante );
     virtual void NotifySupplyNeeded     ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bNewNeed*/ ) const {};
-    virtual bool HasSupplyNeededNotified( const PHY_DotationCategory& /*dotationCategory*/ ) const { return true; }
     virtual void UpdateSupplyNeeded() {}
     //@}
 

@@ -279,7 +279,8 @@ void MIL_Formation::SendCreation( unsigned int context /*= 0*/ ) const
     message().set_app6symbol( symbol_ );
     pColor_->SendFullState( message );
     pExtensions_->SendFullState( message );
-    message().set_log_maintenance_manual( pBrainLogistic_.get() ? pBrainLogistic_->IsMaintenanceManual() : false );
+    message().set_log_maintenance_manual( pBrainLogistic_.get() && pBrainLogistic_->IsMaintenanceManual() );
+    message().set_log_supply_manual( pBrainLogistic_.get() && pBrainLogistic_->IsSupplyManual() );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     if( pParent_ )
@@ -321,6 +322,11 @@ void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg 
         if( !pBrainLogistic_.get() )
             throw MASA_BADUNIT_UNIT( "formation must be a logistic base" );
         pBrainLogistic_->OnReceiveLogMaintenanceSetManual( msg.parameters() );
+        break;
+    case sword::UnitMagicAction::log_supply_set_manual:
+        if( !pBrainLogistic_.get() )
+            throw MASA_BADUNIT_UNIT( "formation must be a logistic base" );
+        pBrainLogistic_->OnReceiveLogSupplySetManual( msg.parameters() );
         break;
     default:
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,

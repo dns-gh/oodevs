@@ -35,6 +35,7 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
     , logisticEntity_      ( 0 )
     , parent_              ( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
     , logMaintenanceManual_( msg.log_maintenance_manual() )
+    , logSupplyManual_     ( msg.log_supply_manual() )
 {
     if( parent_ )
         parent_->Register( *this );
@@ -146,6 +147,7 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
         entry->set_value( it->second );
     }
     message().set_log_maintenance_manual( logMaintenanceManual_ );
+    message().set_log_supply_manual( logSupplyManual_ );
     message.Send( publisher );
 }
 
@@ -159,6 +161,7 @@ void Formation::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         client::FormationUpdate asn;
         asn().mutable_formation()->set_id( GetId() );
         asn().set_log_maintenance_manual( logMaintenanceManual_ );
+        asn().set_log_supply_manual( logSupplyManual_ );
         for( auto it = extensions_.begin(); it !=  extensions_.end(); ++it )
         {
             sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
@@ -303,6 +306,8 @@ void Formation::DoUpdate( const sword::FormationUpdate& msg )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.has_log_maintenance_manual() )
         logMaintenanceManual_ = msg.log_maintenance_manual();
+    if( msg.has_log_supply_manual() )
+        logSupplyManual_ = msg.log_supply_manual();
 }
 
 // -----------------------------------------------------------------------------

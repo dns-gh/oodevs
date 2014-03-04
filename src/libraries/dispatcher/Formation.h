@@ -108,6 +108,7 @@ private:
     tools::Resolver< dispatcher::Automat_ABC >   automats_;
     std::map< std::string, std::string >         extensions_;
     bool                                         logMaintenanceManual_;
+    bool                                         logSupplyManual_;
     //@}
 };
 

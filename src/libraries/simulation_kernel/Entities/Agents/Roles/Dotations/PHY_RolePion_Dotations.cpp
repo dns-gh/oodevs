@@ -175,7 +175,7 @@ void PHY_RolePion_Dotations::NotifySurrendered()
     assert( pDotations_ );
     pDotations_->NotifyCaptured();
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::NotifySurrenderCanceled
 // Created: LDC 2012-08-06
@@ -361,24 +361,14 @@ void PHY_RolePion_Dotations::EnforceAviationResources( E_AviationRange aviationR
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
-    if( owner_->IsJammed() || owner_->IsLogisticJammed() )
-        return;
     if( bNewNeed )
     {
         MIL_Report::PostEvent( *owner_, report::eRC_SeuilLogistiqueDotationDepasse, dotationCategory );
         if( owner_->GetType().IsRefugee() || owner_->GetRole< surrender::PHY_RoleInterface_Surrender >().IsPrisoner() )
             MIL_Report::PostEvent( *owner_, report::eRC_PrisonersUnsupplied );
     }
-    owner_->GetAutomate().NotifyDotationSupplyNeeded( dotationCategory );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Dotations::HasSupplyNeededNotified
-// Created: MMC 2013-04-24
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Dotations::HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const
-{
-    return owner_->GetAutomate().HasDotationSupplyNeededNotified( dotationCategory );
+    if( !owner_->IsJammed() && !owner_->IsLogisticJammed() )
+        owner_->GetAutomate().NotifyDotationSupplyNeeded( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -552,7 +542,6 @@ void PHY_RolePion_Dotations::Apply( boost::function< void( PHY_Dotation& ) > vis
     assert( pDotations_ );
     pDotations_->Apply( visitor );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::SendChangedState

@@ -101,6 +101,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_CanBeUnderAFormation, Fixture )
     message.set_app6symbol( "sfgpu----------" );
     message.set_symbol( "sfgpu----------" );
     message.set_log_maintenance_manual( false );
+    message.set_log_supply_manual( false );
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
     // creation
@@ -138,6 +139,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_CanBeUnderAnAutomat, Fixture )
     message.set_app6symbol( "sfgpu----------" );
     message.set_symbol( "sfgpu----------" );
     message.set_log_maintenance_manual( false );
+    message.set_log_supply_manual( false );
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
     // creation
@@ -322,6 +324,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_AttributesCanBeChanged, Fixture )
         message.set_app6symbol( "sfgpu----------" );
         message.set_symbol( "sfgpu----------" );
         message.set_log_maintenance_manual( false );
+        message.set_log_supply_manual( false );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         MOCK_EXPECT( automat.RegisterAutomat ).once();
@@ -342,7 +345,8 @@ BOOST_FIXTURE_TEST_CASE( Automat_AttributesCanBeChanged, Fixture )
         message.set_roe( sword::RulesOfEngagement::retaliation_only );
         message.set_decisional_model( "brain" );
         message.set_brain_debug( false );
-    message.set_log_maintenance_manual( false );
+        message.set_log_maintenance_manual( false );
+        message.set_log_supply_manual( false );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         automats.Get( 1 ).Update( message );
 
@@ -465,6 +469,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_CreationWithExtensions, Fixture )
     message.set_app6symbol( "sfgpu----------" );
     message.set_symbol( "sfgpu----------" );
     message.set_log_maintenance_manual( false );
+    message.set_log_supply_manual( false );
     sword::Extension_Entry* entry = message.mutable_extension()->add_entries();
     entry->set_name( "extension" );
     entry->set_value( "value" );

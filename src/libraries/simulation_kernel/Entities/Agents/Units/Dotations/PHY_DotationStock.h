@@ -33,10 +33,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-
-    void load( MIL_CheckPointInArchive&, const unsigned int );
-    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    template< typename Archive > void serialize( Archive& ar, const unsigned int );
     //@}
 
     //! @name Accessors
@@ -73,18 +70,19 @@ private:
     //@{
     void     SetValue  ( double rValue );
     bool     IsJammed() const;
+    void     NotifySupplyNeeded();
     //@}
 
 private:
     //! @name Member data
     //@{
-    static const double maxCapacity_;
     PHY_DotationStockContainer* pStockContainer_;
     const PHY_DotationCategory* pCategory_;
     double rValue_;
     double rRequestedValue_;
     double rCapacity_; // Les stocks peuvent dépasser leurs capacités (Stockage à terre)
     double rSupplyThreshold_;
+    bool bNotified_;
     bool bInfiniteDotations_;
     //@}
 };

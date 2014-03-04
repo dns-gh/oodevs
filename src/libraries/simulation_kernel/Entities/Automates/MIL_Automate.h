@@ -222,11 +222,9 @@ public:
     virtual void NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) const;
 
     void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
-    bool HasDotationSupplyNeededNotified( const PHY_DotationCategory& dotationCategory );
     void RequestDotationSupply     ();
 
     void NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory );
-    bool HasStockSupplyNeededNotified( const PHY_DotationCategory& dotationCategory );
     //@}
 
     //! @name Tools
@@ -282,13 +280,13 @@ private:
     // Surrendered / prisoner
     const MIL_Army_ABC* pArmySurrenderedTo_;
     // Logistic
-    std::auto_ptr< logistic::LogisticHierarchy > pLogisticHierarchy_;
-    std::auto_ptr< MIL_AutomateLOG > pBrainLogistic_;
+    std::unique_ptr< logistic::LogisticHierarchy > pLogisticHierarchy_;
+    std::unique_ptr< MIL_AutomateLOG > pBrainLogistic_;
     boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > > pLogisticAction_;
-    std::auto_ptr< MIL_DotationSupplyManager > pDotationSupplyManager_;
-    std::auto_ptr< MIL_StockSupplyManager > pStockSupplyManager_;
-    std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
-    std::auto_ptr< MIL_Color > pColor_;
+    std::unique_ptr< MIL_DotationSupplyManager > pDotationSupplyManager_;
+    std::unique_ptr< MIL_StockSupplyManager > pStockSupplyManager_;
+    std::unique_ptr< MIL_DictionaryExtensions > pExtensions_;
+    std::unique_ptr< MIL_Color > pColor_;
     std::string symbol_;
     //@}
 };

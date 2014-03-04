@@ -76,7 +76,6 @@ public:
     //! @name Notifications
     //@{
     void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
-    bool HasDotationSupplyNeededNotified( const PHY_DotationCategory& dotationCategory );
     void RequestDotationSupply();
     //@}
 
@@ -84,6 +83,7 @@ private:
     //! @name Helpers
     //@{
     bool IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const;
+    bool IsSupplyManual() const;
     //@}
 
 private:
