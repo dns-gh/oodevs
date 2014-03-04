@@ -32,11 +32,9 @@ namespace gui
 namespace kernel
 {
     class Agent_ABC;
-    class AgentType;
     class Automat_ABC;
     class Controllers;
     class Entity_ABC;
-    class EquipmentType;
     class Formation_ABC;
     class ModelUnLoaded;
     class DotationType;
@@ -92,10 +90,6 @@ private:
     //@{
     void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     bool IsLogisticBase( const kernel::Entity_ABC& rootEntity );
-    void CleanStocks( std::vector< const kernel::Agent_ABC* >& entStocks ) const;
-    bool IsStockValid( const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation ) const;
-    void ComputeStockWeightVolumeLeft( const kernel::Agent_ABC& stockUnit, std::string nature, MaxStockNaturesTable::WeightVolume& result ) const;
-    void SupplyStocks( const kernel::Entity_ABC& entityBase, const LogisticEditor::T_Requirements& requirements ) const;
     void NotifyAutomaticQuotas( const LogisticEditor::T_Requirements& stocks );
     void ApplyQuotas();
     void ApplyQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const LogisticEditor::T_Requirements& generatedQuotas );
@@ -118,8 +112,6 @@ private:
     //! @name Member data
     //@{
     const tools::StringResolver< kernel::LogisticSupplyClass >& supplyClasses_;
-    const tools::Resolver< kernel::AgentType >& agentTypes_;
-    const kernel::Resolver2< kernel::EquipmentType >& equipments_;
 
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;

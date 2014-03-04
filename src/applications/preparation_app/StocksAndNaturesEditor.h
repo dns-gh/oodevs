@@ -37,11 +37,11 @@ public:
 public:
     //! @name Operations
     //@{
-    void ComputeValueByDotation( LogisticEditor::T_Requirements& dotations ) const;
     void ClearStocks();
     void UpdateInitStocks( const kernel::Entity_ABC& entity );
     void UpdateMaxStocks( const kernel::Entity_ABC& entity );
     void Update( const MaxStockNaturesTable::T_WeightVolumes& currentValues ); // todo change name
+    void SupplyStocks( kernel::Entity_ABC& entity ) const;
     //@}
 
 private:

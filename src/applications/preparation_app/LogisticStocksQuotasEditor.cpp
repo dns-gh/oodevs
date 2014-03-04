@@ -19,17 +19,11 @@
 #include "clients_gui/RichPushButton.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/ComponentType.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticSupplyClass.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/tools.h"
 #include "preparation/Dotation.h"
 #include "preparation/LogisticBaseStates.h"
 #include "preparation/StaticModel.h"
@@ -46,8 +40,6 @@ LogisticStocksQuotasEditor::LogisticStocksQuotasEditor( QWidget* parent, kernel:
     , stocksTabIndex_( 0 )
     , quotasTabIndex_( 0 )
     , supplyClasses_( staticModel.objectTypes_ )
-    , agentTypes_( staticModel.types_ )
-    , equipments_( staticModel.objectTypes_ )
 {
     automaticStocksEditor_ = new LogisticStockEditor( parent, controllers, staticModel );
     automaticQuotaEditor_ = new LogisticQuotaEditor( parent, controllers, staticModel );
@@ -122,196 +114,6 @@ void LogisticStocksQuotasEditor::NotifyUpdated( const kernel::ModelUnLoaded& )
     Reject();
 }
 
-namespace
-{
-    // todo en double, à virer
-void FindStocks( const kernel::Entity_ABC& rootEntity , const kernel::Entity_ABC& entity, std::vector< const kernel::Agent_ABC* >& entStocks )
-{
-    const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
-    if( !pTacticalHierarchies )
-        return;
-    if( entity.GetId() != rootEntity.GetId() && logistic_helpers::IsLogisticBase( entity ) )
-        return;
-    auto child = pTacticalHierarchies->CreateSubordinateIterator();
-    while( child.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& childEntity = child.NextElement();
-        if( const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &childEntity ) )
-        {
-            if( pAgent->GetType().IsLogisticSupply() )
-            {
-                Stocks* stocks = const_cast< Stocks* >( pAgent->Retrieve< Stocks >() );
-                if( stocks && ( std::find( entStocks.begin(), entStocks.end(), pAgent ) == entStocks.end() ) )
-                    entStocks.push_back( pAgent );
-            }
-        }
-        else
-            FindStocks( rootEntity, childEntity, entStocks );
-    }
-}
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::CleanStocks
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::CleanStocks( std::vector< const kernel::Agent_ABC* >& entStocks ) const
-{
-    for( auto it = entStocks.begin(); it != entStocks.end(); ++it )
-    {
-        Stocks& stocks = const_cast< Stocks& >( ( *it )->Get< Stocks >() );
-        std::vector< const kernel::DotationType* > toReset;
-        auto itDotation = stocks.CreateIterator();
-        while( itDotation.HasMoreElements() )
-        {
-            const Dotation& curDotation = itDotation.NextElement();
-            auto itLogClass = supplyClasses_.CreateIterator();
-            for( int row = 0; itLogClass.HasMoreElements(); ++row )
-            {
-                const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
-                if( supplyClass.GetId() == curDotation.type_.GetLogisticSupplyClass().GetId() )
-                    break;
-            }
-            toReset.push_back( &curDotation.type_ );
-        }
-        for( std::vector< const kernel::DotationType* >::iterator it = toReset.begin(); it!= toReset.end(); ++it )
-            stocks.SetDotation( **it, 0, false );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::IsStockValid
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-bool LogisticStocksQuotasEditor::IsStockValid( const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation ) const
-{
-    const kernel::AgentType& agentType = agentTypes_.Get( stockUnit.GetType().GetId() );
-    return agentType.IsStockCategoryDefined( dotation.GetLogisticSupplyClass() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::ComputeStockWeightVolumeLeft
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::ComputeStockWeightVolumeLeft( const kernel::Agent_ABC& stockUnit, std::string nature, MaxStockNaturesTable::WeightVolume& result ) const
-{
-    if( !stockUnit.GetType().IsLogisticSupply() )
-        return;
-    auto pStocks = stockUnit.Retrieve< Stocks >();
-    if( !pStocks )
-        return;
-    MaxStockNaturesTable::WeightVolume maxCapacity;
-    tools::Iterator< const kernel::AgentComposition& > itComposition = stockUnit.GetType().CreateIterator();
-    while( itComposition.HasMoreElements() )
-    {
-        const kernel::AgentComposition& agentComposition = itComposition.NextElement();
-        const kernel::ComponentType& equipment = agentComposition.GetType();
-        const kernel::EquipmentType& equipmentType = equipments_.Get( equipment.GetId() );
-        if( const kernel::EquipmentType::CarryingSupplyFunction* carrying = equipmentType.GetLogSupplyFunctionCarrying() )
-        {
-            unsigned int nEquipments = agentComposition. GetCount();
-            if( nature == carrying->stockNature_ )
-            {
-                maxCapacity.weight_ += nEquipments * carrying->stockMaxWeightCapacity_;
-                maxCapacity.volume_ += nEquipments * carrying->stockMaxVolumeCapacity_;
-            }
-        }
-    }
-    MaxStockNaturesTable::WeightVolume usedCapacity;
-    double weightUsed = 0;
-    double volumeUsed = 0;
-    pStocks->ComputeWeightAndVolume( nature, weightUsed, volumeUsed );
-    if( weightUsed < maxCapacity.weight_ )
-        result.weight_ = maxCapacity.weight_ - weightUsed;
-    if( volumeUsed < maxCapacity.volume_ )
-        result.volume_ = maxCapacity.volume_ - volumeUsed;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::SupplyStocks
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::SupplyStocks( const kernel::Entity_ABC& entityBase, const LogisticEditor::T_Requirements& requirements ) const
-{
-    std::vector< const kernel::Agent_ABC* > stocks;
-    FindStocks( entityBase , entityBase, stocks );
-    CleanStocks( stocks );
-
-    LogisticEditor::T_Requirements dotationToStocks( requirements );
-    for( auto itRequired = dotationToStocks.begin(); itRequired != dotationToStocks.end(); ++itRequired )
-    {
-        const kernel::DotationType& dotationType = *itRequired->first;
-        for( auto it = stocks.begin(); it != stocks.end(); ++it )
-        {
-            if( itRequired->second <= 0 )
-                break;
-            const auto& curStock = **it;
-            auto pStocks = const_cast< Stocks* >( curStock.Retrieve< Stocks >() );
-            if( !pStocks )
-                continue;
-            if( !IsStockValid( curStock, dotationType ) )
-                continue;
-            MaxStockNaturesTable::WeightVolume stockLeft;
-            ComputeStockWeightVolumeLeft( **it, dotationType.GetNature(), stockLeft );
-            unsigned int maxQuantityForWeight = itRequired->second;
-            if( dotationType.GetUnitWeight() > 0 )
-                maxQuantityForWeight = static_cast< unsigned int >( stockLeft.weight_ / dotationType.GetUnitWeight() );
-            unsigned int maxQuantityForVolume = itRequired->second;
-            if( dotationType.GetUnitVolume() > 0 )
-                maxQuantityForVolume = static_cast< unsigned int >( stockLeft.volume_ / dotationType.GetUnitVolume() );
-            unsigned int q = std::min( itRequired->second, std::min( maxQuantityForWeight, maxQuantityForVolume ) );
-            pStocks->SetDotation( dotationType, q, true );
-            itRequired->second = std::max( 0u, itRequired->second - q );
-        }
-    }
-
-    bool bDotationsToStockLeft = false;
-    LogisticEditor::T_Requirements stocksByDotation;
-    for( auto itRequired = dotationToStocks.begin(); itRequired != dotationToStocks.end(); ++itRequired )
-    {
-        const kernel::DotationType& dotationType = *itRequired->first;
-        if( itRequired->second > 0 )
-            bDotationsToStockLeft = true;
-        for( auto it = stocks.begin(); it != stocks.end(); ++it )
-            if( IsStockValid( **it, dotationType ) )
-                ++stocksByDotation[ &dotationType ];
-    }
-    if( !bDotationsToStockLeft )
-        return;
-
-    LogisticEditor::T_Requirements meansDotationsByStock;
-    for( auto it = stocksByDotation.begin(); it != stocksByDotation.end(); ++it )
-    {
-        double quantityLeft = dotationToStocks[ it->first ];
-        double stocksCount = it->second;
-        if( quantityLeft > 0 && stocksCount > 0 )
-            meansDotationsByStock[ it->first ] = static_cast< unsigned int >( quantityLeft / stocksCount );
-    }
-
-    for( auto itRequired = dotationToStocks.begin(); itRequired != dotationToStocks.end(); ++itRequired )
-    {
-        const kernel::DotationType& dotationType = *itRequired->first;
-        auto itMean = meansDotationsByStock.find( &dotationType );
-        if( itMean == meansDotationsByStock.end() )
-            continue;
-        double meanByStock = itMean->second;
-        for( auto it = stocks.begin(); it != stocks.end(); ++it )
-        {
-            if( itRequired->second <= 0 )
-                continue;
-            const auto& curStock = **it;
-            if( !IsStockValid( curStock, dotationType ) )
-                continue;
-            if( auto pStocks = const_cast< Stocks* >( curStock.Retrieve< Stocks >() ) )
-            {
-                int quantityToStock = static_cast< int >( meanByStock + 0.5 );
-                pStocks->SetDotation( dotationType, quantityToStock, true );
-                itRequired->second = std::max( 0u,  itRequired->second - quantityToStock );
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogisticStocksQuotasEditor::ApplyQuotas
 // Created: MMC 2013-10-24
@@ -367,26 +169,11 @@ void LogisticStocksQuotasEditor::Accept()
 {
     if( !selected_ )
         return;
-    LogisticEditor::T_Requirements dotations;
-    stockAndNaturesEditor_->ComputeValueByDotation( dotations );
-    if( auto pAgent = dynamic_cast< const kernel::Agent_ABC* >( selected_.ConstCast() ) )
-    {
-        std::vector< const kernel::Agent_ABC* > entStock;
-        entStock.push_back( pAgent );
-        CleanStocks( entStock );
-        for( auto itRequired = dotations.begin(); itRequired != dotations.end(); ++itRequired )
-        {
-            const kernel::DotationType& dotationType = *itRequired->first;
-            if( IsStockValid( *pAgent, dotationType ) )
-                if( auto pStocks = const_cast< Stocks* >( pAgent->Retrieve< Stocks >() ) )
-                    pStocks->SetDotation( dotationType, itRequired->second, true );
-        }
-    }
-    else
-    {
-        SupplyStocks( *selected_.ConstCast(), dotations );
+    stockAndNaturesEditor_->SupplyStocks( *selected_.ConstCast() );
+
+    if( dynamic_cast< const kernel::Agent_ABC* >( selected_.ConstCast() ) == 0 )
         ApplyQuotas();
-    }
+
     accept();
     selected_ = 0;
 }

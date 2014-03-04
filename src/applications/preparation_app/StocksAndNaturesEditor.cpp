@@ -23,7 +23,7 @@
 StocksAndNaturesEditor::StocksAndNaturesEditor( QWidget* parent, const StaticModel& model )
     : QWidget( parent )
 {
-    stocksTableView_ = new StockResourcesTable( "stocksTable", this, model.objectTypes_ );
+    stocksTableView_ = new StockResourcesTable( "stocksTable", this, model );
     maxStocksTableView_ = new MaxStockNaturesTable( "maxStocksTable", this, model.objectTypes_ );
 
     connect( stocksTableView_, SIGNAL( ResourceValueChanged() ), SLOT( NotifyStocksUserChange() ) );
@@ -43,15 +43,6 @@ StocksAndNaturesEditor::StocksAndNaturesEditor( QWidget* parent, const StaticMod
 StocksAndNaturesEditor::~StocksAndNaturesEditor()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: StocksAndNaturesEditor::ComputeValueByDotation
-// Created: JSR 2014-03-04
-// -----------------------------------------------------------------------------
-void StocksAndNaturesEditor::ComputeValueByDotation( LogisticEditor::T_Requirements& dotations ) const
-{
-    stocksTableView_->ComputeValueByDotation( dotations );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +81,15 @@ void StocksAndNaturesEditor::Update( const MaxStockNaturesTable::T_WeightVolumes
     std::set< std::string > allowedNatures;
     maxStocksTableView_->Update( currentValues, allowedNatures );
     stocksTableView_->SetAllowedNatures( allowedNatures );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StocksAndNaturesEditor::SupplyStocks
+// Created: JSR 2014-03-04
+// -----------------------------------------------------------------------------
+void StocksAndNaturesEditor::SupplyStocks( kernel::Entity_ABC& entity ) const
+{
+    stocksTableView_->SupplyStocks( entity );
 }
 
 // -----------------------------------------------------------------------------
