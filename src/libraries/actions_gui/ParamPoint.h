@@ -14,6 +14,7 @@
 
 namespace gui
 {
+    class FeatureNameParser;
     class LocationEditorBox;
 }
 
@@ -67,6 +68,7 @@ private:
     //! @name Member data
     //@{
     ::gui::LocationEditorBox* locationEditor_;
+    std::shared_ptr< ::gui::FeatureNameParser > featureNameParser_;
     //@}
 };
 

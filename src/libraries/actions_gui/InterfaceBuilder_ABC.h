@@ -34,6 +34,11 @@ namespace gui
     class ParametersLayer;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace actions {
 namespace gui {
 
@@ -74,6 +79,7 @@ public:
     virtual tools::Resolver< kernel::TacticalLine_ABC >* GetTacticalLineResolver() const = 0;
     virtual const QDateTime GetCurrentDateTime() const = 0;
     virtual const kernel::StaticModel& GetStaticModel() const = 0;
+    virtual const tools::ExerciseConfig& GetConfig() const = 0;
     //@}
 
     //! @name Setter

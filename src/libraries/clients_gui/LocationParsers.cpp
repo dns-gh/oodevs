@@ -23,20 +23,18 @@ using namespace gui;
 // Created: AME 2010-03-11
 // -----------------------------------------------------------------------------
 LocationParsers::LocationParsers( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
-    : controllers_( controllers )
-    , converter_( converter )
 {
     parsers_[ eCoordinateSystem_Mgrs ].reset(
-        new UtmParser( controllers_,
+        new UtmParser( controllers,
                        [&]( const std::string& mgrs ) { return converter.ConvertToXY( mgrs ); },
                        [&]( const geometry::Point2f& position ) { return converter.GetStringPosition( position, eCoordinateSystem_Mgrs ); } ) );
     parsers_[ eCoordinateSystem_SanC ].reset(
-        new UtmParser( controllers_,
+        new UtmParser( controllers,
                        [&]( const std::string& s ) { return converter.ConvertFrom( s, "SAN-C" ); },
                        [&]( const geometry::Point2f& position ) { return converter.GetStringPosition( position, eCoordinateSystem_SanC ); } ) );
-    parsers_[ eCoordinateSystem_Local ].reset( new XyParser( converter_ ) );
-    parsers_[ eCoordinateSystem_Wgs84Dd ].reset( new Wgs84DdParser( converter_ ) );
-    parsers_[ eCoordinateSystem_Wgs84Dms ].reset( new Wgs84DmsParser( converter_ ) );
+    parsers_[ eCoordinateSystem_Local ].reset( new XyParser( converter ) );
+    parsers_[ eCoordinateSystem_Wgs84Dd ].reset( new Wgs84DdParser( converter ) );
+    parsers_[ eCoordinateSystem_Wgs84Dms ].reset( new Wgs84DmsParser( converter ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,27 +43,28 @@ LocationParsers::LocationParsers( kernel::Controllers& controllers, const kernel
 // -----------------------------------------------------------------------------
 LocationParsers::~LocationParsers()
 {
-    // NOTHING
+    parsers_.clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: LocationParsers::GetParser
 // Created: AME 2010-03-11
 // -----------------------------------------------------------------------------
-LocationParser_ABC& LocationParsers::GetParser( int parserId )
+const std::shared_ptr< const LocationParser_ABC >& LocationParsers::GetParser( int parserId ) const
 {
     auto it = parsers_.find( parserId );
     if( it == parsers_.end() )
         throw MASA_EXCEPTION( "Invalid parser id." );
-    return *it->second;
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------
 // Name: LocationParsers::AddParser
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
-void LocationParsers::AddParser( LocationParser_ABC* parser, int id )
+void LocationParsers::AddParser( const std::shared_ptr< const LocationParser_ABC >& parser, int id )
 {
-    if( parsers_.find( id ) == parsers_.end() )
-        parsers_[ id ].reset( parser );
+    if( parsers_.find( id ) != parsers_.end() )
+        throw MASA_EXCEPTION( "Parser id already present." );
+    parsers_[ id ] = parser;
 }

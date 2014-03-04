@@ -57,7 +57,6 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers,
                                       Qt::Orientation orientation /* = Qt::Horizontal */ )
     : converter_( converter )
     , parsers_( new LocationParsers( controllers, converter ) )
-    , current_( 0 )
 {
     setMaximumWidth( orientation == Qt::Horizontal ? 300 : 220 );
 
@@ -118,7 +117,7 @@ void LocationEditorBox::SelectParser( int index )
         actions[i]->setCheckable( true );
         actions[i]->setChecked( i == index );
     }
-    current_ = &parsers_->GetParser( index );
+    current_ = parsers_->GetParser( index );
     QToolTip::add( combo_, menu_->text( index ) );
     ResetFields();
     if( valid )
@@ -149,7 +148,7 @@ void LocationEditorBox::ResetFields()
 // Name: LocationEditorBox::AddParser
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
-void LocationEditorBox::AddParser( LocationParser_ABC* parser, const QString& name )
+void LocationEditorBox::AddParser( const std::shared_ptr< const LocationParser_ABC >& parser, const QString& name )
 {
     parsers_->AddParser( parser, menu_->insertItem( name ) );
 }
@@ -254,9 +253,9 @@ QValidator::State LocationEditorBox::Complete( QString& input, int idx, Field& f
 // Name: LocationEditorBox::GetCurrentParser
 // Created: LGY 2014-01-22
 // -----------------------------------------------------------------------------
-const LocationParser_ABC* LocationEditorBox::GetCurrentParser() const
+const LocationParser_ABC& LocationEditorBox::GetCurrentParser() const
 {
-    return current_;
+    return *current_;
 }
 
 // -----------------------------------------------------------------------------

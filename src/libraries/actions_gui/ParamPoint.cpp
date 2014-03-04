@@ -30,7 +30,9 @@ ParamPoint::ParamPoint( const InterfaceBuilder_ABC& builder,
     connect( switchEditor_, SIGNAL( clicked( bool ) ), SLOT( OnSwitchEditorClicked( bool ) ) );
 
     locationEditor_ = new ::gui::LocationEditorBox( controllers_, converter_, Qt::Vertical );
-    locationEditor_->AddParser( new ::gui::FeatureNameParser( controllers_ ), tr( "Feature" ) );
+    featureNameParser_.reset( new ::gui::FeatureNameParser() );
+    locationEditor_->AddParser( featureNameParser_, tr( "Feature" ) );
+    featureNameParser_->Load( builder.GetConfig() );
     locationEditor_->setVisible( false );
     connect( locationEditor_, SIGNAL( DataChanged() ), SLOT( OnEditorDataChanged() ) );
 }

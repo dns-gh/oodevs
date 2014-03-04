@@ -59,10 +59,16 @@ using namespace actions::gui;
 // Name: InterfaceBuilder constructor
 // Created: SBO 2006-11-22
 // -----------------------------------------------------------------------------
-InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers, gui::ParametersLayer& layer, const kernel::StaticModel& staticModel,
-                                    kernel::AgentKnowledgeConverter_ABC* knowledgeConverter /* = 0*/, kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter /* = 0*/,
-                                    const kernel::Time_ABC* simulation /* = 0*/, tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver /* = 0 */ )
+InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers,
+                                    const tools::ExerciseConfig& config,
+                                    gui::ParametersLayer& layer,
+                                    const kernel::StaticModel& staticModel,
+                                    kernel::AgentKnowledgeConverter_ABC* knowledgeConverter /* = 0*/,
+                                    kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter /* = 0*/,
+                                    const kernel::Time_ABC* simulation /* = 0*/,
+                                    tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver /* = 0 */ )
     : controllers_             ( controllers )
+    , config_                  ( config )
     , layer_                   ( layer )
     , knowledgeConverter_      ( knowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
@@ -285,4 +291,13 @@ void InterfaceBuilder::SetParamInterface( ParamInterface_ABC& paramInterface )
 tools::Resolver< kernel::TacticalLine_ABC >* InterfaceBuilder::GetTacticalLineResolver() const
 {
     return tacticalLineResolver_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InterfaceBuilder::GetConfig
+// Created: ABR 2014-03-04
+// -----------------------------------------------------------------------------
+const tools::ExerciseConfig& InterfaceBuilder::GetConfig() const
+{
+    return config_;
 }

@@ -190,7 +190,7 @@
     <name>actions::gui::ParamPoint</name>
     <message>
         <source>Feature</source>
-        <translation>Element</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

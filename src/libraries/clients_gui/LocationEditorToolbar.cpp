@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "LocationEditorToolbar.h"
 #include "moc_LocationEditorToolbar.cpp"
+
 #include "ParametersLayer.h"
 #include "View_ABC.h"
 #include "FeatureNameParser.h"
@@ -17,10 +18,12 @@
 #include "LocationEditorBox.h"
 #include "RichLineEdit.h"
 #include "RichWidget.h"
+#include "resources.h"
+
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ActionController.h"
-#include "resources.h"
+#include "clients_kernel/ModelLoaded.h"
 
 using namespace gui;
 
@@ -37,7 +40,8 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     , bookmarksMenu_( 0 )
 {
     locBox_ = new LocationEditorBox( controllers, converter );
-    locBox_->AddParser( new FeatureNameParser( controllers ), tr( "Feature" ) );
+    featureNameParser_.reset( new FeatureNameParser() );
+    locBox_->AddParser( featureNameParser_, tr( "Feature" ) );
     RichWidget< QToolButton >* gotoButton = new RichWidget< QToolButton >( "gotoButton", this );
     gotoButton->setIconSet( MAKE_PIXMAP( goto ) );
     gotoButton->setPopupDelay( 0 );
@@ -66,6 +70,7 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
 // -----------------------------------------------------------------------------
 LocationEditorToolbar::~LocationEditorToolbar()
 {
+    featureNameParser_.reset();
     controllers_.Unregister( *this );
 }
 
@@ -90,8 +95,7 @@ void LocationEditorToolbar::AddParamPoint()
     if( GetPosition( point ) )
     {
         menuPoint_ = point;
-        if( const LocationParser_ABC* parser = locBox_->GetCurrentParser() )
-            CreateBookmark( parser->GetStringPosition( menuPoint_ ) );
+        CreateBookmark( locBox_->GetCurrentParser().GetStringPosition( menuPoint_ ) );
     }
 }
 
@@ -183,4 +187,13 @@ void LocationEditorToolbar::NotifyContextMenu( const geometry::Point2f& point, k
 {
     menuPoint_ = point;
     menu.InsertItem( "Interface", tr( "Bookmark location" ), this, SLOT( CreateBookmark() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorToolbar::NotifyUpdated
+// Created: ABR 2014-03-04
+// -----------------------------------------------------------------------------
+void LocationEditorToolbar::NotifyUpdated( const kernel::ModelLoaded& model )
+{
+    featureNameParser_->Load( model.config_ );
 }

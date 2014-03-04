@@ -58,10 +58,10 @@ public:
     //! @name Operations
     //@{
     bool IsValid() const;
-    void AddParser( LocationParser_ABC* parser, const QString& name );
+    void AddParser( const std::shared_ptr< const LocationParser_ABC >& parser, const QString& name );
     bool GetPosition( geometry::Point2f& result ) const;
     void UpdateField( const geometry::Point2f& position );
-    const LocationParser_ABC* GetCurrentParser() const;
+    const LocationParser_ABC& GetCurrentParser() const;
     void Purge();
     //@}
 
@@ -96,11 +96,11 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    std::auto_ptr< LocationParsers >       parsers_;
-    LocationParser_ABC*                    current_;
-    QPushButton*                           combo_;
-    kernel::ContextMenu*                   menu_;
-    std::vector< Field >                   fields_;
+    std::unique_ptr< LocationParsers > parsers_;
+    std::shared_ptr< const LocationParser_ABC > current_;
+    QPushButton* combo_;
+    kernel::ContextMenu* menu_;
+    std::vector< Field > fields_;
     bool valid_;
     //@}
 };
