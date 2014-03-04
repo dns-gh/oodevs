@@ -58,12 +58,13 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers,
     : converter_( converter )
     , parsers_( new LocationParsers( controllers, converter ) )
 {
-    setMaximumWidth( orientation == Qt::Horizontal ? 300 : 220 );
+    setFixedWidth( orientation == Qt::Horizontal ? 350 : 220 );
 
     combo_ = new RichPushButton( "choiceParserButton", "" );
     menu_ = new kernel::ContextMenu( combo_ );
     combo_->setPopup( menu_ );
     combo_->setText( tr("Location" ) );
+    combo_->setFixedWidth( 150 );
     for( int i = 0; i < eNbrCoordinateSystem; ++i )
         menu_->insertItem( QString::fromStdString( ENT_Tr::ConvertFromCoordinateSystem( static_cast< E_CoordinateSystem >( i ) ) ), i );
     connect( menu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );
@@ -84,7 +85,6 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers,
         connect( it.edit, SIGNAL( textEdited( const QString& ) ), SIGNAL( DataChanged() ) );
     }
     coordLayout->setMargin( 0 );
-
 
     QBoxLayout* layout = new QBoxLayout( orientation == Qt::Horizontal ? QBoxLayout::LeftToRight : QBoxLayout::TopToBottom, this );
     layout->setMargin( 0 );
@@ -117,8 +117,9 @@ void LocationEditorBox::SelectParser( int index )
         actions[i]->setCheckable( true );
         actions[i]->setChecked( i == index );
     }
+    const auto parserName = menu_->text( index );
     current_ = parsers_->GetParser( index );
-    QToolTip::add( combo_, menu_->text( index ) );
+    combo_->setText( parserName );
     ResetFields();
     if( valid )
         UpdateField( pos );
