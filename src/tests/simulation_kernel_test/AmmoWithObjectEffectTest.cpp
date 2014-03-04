@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 {
     SingletonTerminator terminator;
     MockMIL_Time_ABC time;
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" ); // $$$$ because used in asn and in destructor of action!!!
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
     MockNET_Publisher_ABC mockPublisher;
 
     {
@@ -117,7 +117,5 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         effectManager.Update();
         mock::verify( entityManager );
     }
-
-    TER_World::DestroyWorld();
 }
 

@@ -49,20 +49,20 @@ namespace
     struct ObjectKnowledgeSerializationFixture
     {
         ObjectKnowledgeSerializationFixture()
+            : world_( "worldwide/tests/EmptyParis-ML" )
         {
-            WorldInitialize( "worldwide/tests/EmptyParis-ML" );
             PHY_ConsumptionType::Initialize();
             MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
         }
         ~ObjectKnowledgeSerializationFixture()
         {
-            TER_World::DestroyWorld();
             mock::verify();
         }
         MockMIL_Time_ABC time;
 
     private:
         SingletonTerminator terminator_;
+        FakeWorld world_;
     };
 }
 

@@ -9,8 +9,9 @@
 
 #include "dispatcher_pch.h"
 #include "Config.h"
-#include "tools/XmlStreamOperators.h"
 #include "tools/FileWrapper.h"
+#include "tools/NullFileLoaderObserver.h"
+#include "tools/XmlStreamOperators.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
@@ -23,8 +24,8 @@ using namespace dispatcher;
 // Name: Config constructor
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-Config::Config( tools::RealFileLoaderObserver_ABC& observer )
-    : SessionConfig( observer )
+Config::Config()
+    : SessionConfig( tools::CreateNullFileLoaderObserver() )
     , networkTimeout_          ( 10000 )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )

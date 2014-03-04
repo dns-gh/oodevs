@@ -57,6 +57,4 @@ private:
     //@}
 };
 
-#include "TER_PopulationManager.inl"
-
 #endif // __TER_PopulationManager_h_

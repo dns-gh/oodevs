@@ -142,12 +142,6 @@ private:
     virtual unsigned int GetRealTime() const; // Temps simulé en secondes depuis 01/01/1970
     //@}
 
-    //! @name
-    //@{
-    void ReadStaticData();
-    void ReadTerData();
-    //@}
-
     //! @name Timer
     //@{
     void Wait();

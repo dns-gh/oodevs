@@ -11,39 +11,30 @@
 #include "simulation_kernel/Decision/DEC_GeometryFunctions.h"
 #include "StubTER_World.h"
 
-namespace
+BOOST_AUTO_TEST_CASE( split_localisation_cannot_split_when_increment_is_zero )
 {
-    struct Fixture
-    {
-        Fixture()
-        {
-            WorldInitialize( "worldwide/tests/EmptyParis-ML" );
-        }
-        ~Fixture()
-        {
-            TER_World::DestroyWorld();
-        }
-    };
-}
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
 
-BOOST_FIXTURE_TEST_CASE( split_localisation_cannot_split_when_increment_is_zero, Fixture )
-{
     const TER_Localisation localisation( MT_Vector2D( 0, 0 ), 42 );
     TER_Localisation::T_LocalisationPtrVector result =
         DEC_GeometryFunctions::SplitLocalisation( localisation, MT_Vector2D( 0, 0 ), MT_Vector2D( 0, 1 ), 0 );
     BOOST_CHECK( result.empty() );
 }
 
-BOOST_FIXTURE_TEST_CASE( split_localisation_cannot_split_when_direction_is_zero, Fixture )
+BOOST_AUTO_TEST_CASE( split_localisation_cannot_split_when_direction_is_zero )
 {
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
+
     const TER_Localisation localisation( MT_Vector2D( 0, 0 ), 42 );
     TER_Localisation::T_LocalisationPtrVector result =
         DEC_GeometryFunctions::SplitLocalisation( localisation, MT_Vector2D( 0, 0 ), MT_Vector2D( 0, 0 ), 1 );
     BOOST_CHECK( result.empty() );
 }
 
-BOOST_FIXTURE_TEST_CASE( split_localisation_wants_a_polygon, Fixture )
+BOOST_AUTO_TEST_CASE( split_localisation_wants_a_polygon )
 {
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
+
     T_PointVector points;
     points.push_back( MT_Vector2D( 0, 0 ));
     const TER_Localisation point( TER_Localisation::ePoint, points );

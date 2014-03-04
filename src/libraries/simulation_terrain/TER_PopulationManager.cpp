@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-01-28 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_World.cpp $
-// $Author: Nld $
-// $Modtime: 11/04/05 15:27 $
-// $Revision: 5 $
-// $Workfile: TER_World.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_terrain_pch.h"
 
@@ -40,4 +31,22 @@ TER_PopulationManager::TER_PopulationManager( const MT_Rect& extent )
 TER_PopulationManager::~TER_PopulationManager()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationManager::GetConcentrationManager
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+TER_PopulationConcentrationManager& TER_PopulationManager::GetConcentrationManager()
+{
+    return concentrationManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationManager::GetFlowManager
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+TER_PopulationFlowManager& TER_PopulationManager::GetFlowManager()
+{
+    return flowManager_;
 }

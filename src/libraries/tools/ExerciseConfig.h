@@ -53,7 +53,8 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-    explicit ExerciseConfig( RealFileLoaderObserver_ABC& observer );
+    explicit ExerciseConfig(
+        const boost::shared_ptr< RealFileLoaderObserver_ABC >& observer );
     virtual ~ExerciseConfig();
     //@}
 
@@ -210,10 +211,10 @@ protected:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< tools::Loader_ABC > loader_;
+    const boost::shared_ptr< tools::Loader_ABC > loader_;
     std::auto_ptr< tools::PhyLoader > phyLoader_;
     std::auto_ptr< const tools::WorldParameters > pWorldParameters_;
-    RealFileLoaderObserver_ABC& observer_;
+    boost::shared_ptr< RealFileLoaderObserver_ABC > observer_;
 
     std::string modelVersion_;
 

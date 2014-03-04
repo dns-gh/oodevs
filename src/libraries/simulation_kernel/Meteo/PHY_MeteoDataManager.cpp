@@ -48,6 +48,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MeteoDataManager )
 PHY_MeteoDataManager::PHY_MeteoDataManager()
     : pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
+    , tickDuration_( 1 )
 {
     // NOTHING
 }
@@ -56,10 +57,13 @@ PHY_MeteoDataManager::PHY_MeteoDataManager()
 // Name: PHY_MeteoDataManager constructor
 // Created: JVT 02-10-21
 //-----------------------------------------------------------------------------
-PHY_MeteoDataManager::PHY_MeteoDataManager( xml::xistream& xis,
-       const tools::Path& detectionFile, uint32_t now )
-    : pGlobalMeteo_( 0 )
+PHY_MeteoDataManager::PHY_MeteoDataManager(
+    const boost::shared_ptr< TER_World >& world, xml::xistream& xis,
+    const tools::Path& detectionFile, uint32_t now, uint32_t tickDuration )
+    : world_( world )
+    , pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
+    , tickDuration_( tickDuration )
 {
     xis >> xml::start( "weather" );
     pEphemeride_ = ReadEphemeride( xis, now );
@@ -86,7 +90,7 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() );
+    pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), tickDuration_ );
     pGlobalMeteo_->SetLighting( pEphemeride_->GetLightingBase() );
     xis >> xml::end;
 }
@@ -99,18 +103,39 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 {
     xis >> xml::optional
         >> xml::start( "local-weather" )
-            >> xml::list( "local", *this, &PHY_MeteoDataManager::ReadPatchLocal )
+            >> xml::list( "local", [&]( xml::xistream& xis )
+            {
+                InternalAddLocalWeather( xis );
+            })
         >> xml::end;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::ReadPatchLocal
-// Created: ABL 2007-07-27
-// -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
+boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::InternalAddLocalWeather(
+        xml::xistream& xis )
 {
-    AddMeteo( boost::make_shared< PHY_LocalMeteo >( localCounter_++, xis,
-        pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() ) );
+    const auto w = boost::make_shared< PHY_LocalMeteo >( localCounter_++, xis,
+        pEphemeride_->GetLightingBase(), tickDuration_, world_ );
+    AddMeteo( w );
+    return w;
+}
+
+boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::AddLocalWeather(
+        xml::xistream& xis )
+{
+    xis >> xml::start( "local" );
+    auto w = InternalAddLocalWeather( xis );
+    xis >> xml::end;
+    return w;
+}
+
+bool PHY_MeteoDataManager::RemoveLocalWeather( uint32_t id )
+{
+    const auto it = meteos_.find( id );
+    if( it == meteos_.end() )
+        return false;
+    it->second->SendDestruction();
+    meteos_.erase( it );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,8 +161,7 @@ void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, sw
     if( id == 0 )
     {
         auto meteo = boost::make_shared< PHY_LocalMeteo >( localCounter_++,
-                params, pEphemeride_->GetLightingBase(),
-                MIL_Time_ABC::GetTime().GetTickDuration() );
+                params, pEphemeride_->GetLightingBase(), tickDuration_, world_ );
         id = meteo->GetId();
         AddMeteo( meteo );
     }
@@ -165,12 +189,8 @@ void PHY_MeteoDataManager::RemoveLocalWeather( const sword::MagicAction& msg )
     const auto& params = msg.parameters();
     protocol::CheckCount( params, 1 );
     const uint32_t id = protocol::GetIdentifier( params, 0 );
-    const auto it = meteos_.find( id );
-    if( it == meteos_.end() )
+    if( !RemoveLocalWeather( id ) )
         throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a local weather identifier" );
-
-    it->second->SendDestruction();
-    meteos_.erase( it );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,6 +230,7 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> localCounter_
          >> pGlobalMeteo_
          >> pEphemeride_
+         >> const_cast< uint32_t& >( tickDuration_ )
          >> size;
     MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
     pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config.GetDetectionFile(), this );
@@ -231,6 +252,7 @@ void PHY_MeteoDataManager::save( MIL_CheckPointOutArchive& file, const unsigned 
     file << localCounter_
          << pGlobalMeteo_
          << pEphemeride_
+         << tickDuration_
          << size;
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
     {
@@ -243,13 +265,13 @@ void PHY_MeteoDataManager::save( MIL_CheckPointOutArchive& file, const unsigned 
 // Name: PHY_MeteoDataManager::WriteWeather
 // Created: NPT 2012-09-06
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::WriteWeather( xml::xostream& xos ) const
+void PHY_MeteoDataManager::WriteWeather( xml::xostream& xos, uint32_t now ) const
 {
     tools::SchemaWriter schemaWriter;
     xos << xml::start( "weather" );
     schemaWriter.WriteSchema( xos, "exercise", "weather" );
     xos << xml::start( "exercise-date" )
-            << xml::attribute( "value", bpt::to_iso_string( bpt::from_time_t( MIL_Time_ABC::GetTime().GetRealTime() ) ) )
+            << xml::attribute( "value", bpt::to_iso_string( bpt::from_time_t( now ) ) )
         << xml::end
         << xml::start( "ephemerides" );
             pEphemeride_->WriteUrban( xos );
@@ -323,9 +345,11 @@ void PHY_MeteoDataManager::SendStateToNewClient()
 // Name: PHY_MeteoDataManager::GetLocalWeather
 // Created: ABR 2012-03-21
 // -----------------------------------------------------------------------------
-boost::shared_ptr< weather::Meteo > PHY_MeteoDataManager::GetLocalWeather( const geometry::Point2f& position, boost::shared_ptr< weather::Meteo > pMeteo ) const
+boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::GetLocalWeather(
+    const geometry::Point2f& position,
+    const boost::shared_ptr< const weather::Meteo >& pMeteo ) const
 {
-    boost::shared_ptr< weather::Meteo > result;
+    boost::shared_ptr< const weather::Meteo > result;
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
     {
         const auto meteo = it->second.get();

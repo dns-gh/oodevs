@@ -32,6 +32,7 @@
 
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/make_shared.hpp>
 #include <xeumeuleu/xml.hpp>
 
 #include <csignal>
@@ -52,8 +53,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPWSTR lpC
     int /* nCmdShow */, int maxConnections, bool verbose )
     : maxConnections_( maxConnections )
     , verbose_       ( verbose )
-    , observer_      ( new FileLoaderObserver() )
-    , config_        ( new MIL_Config( *observer_ ) )
+    , config_        ( new MIL_Config( boost::make_shared< FileLoaderObserver >() ) )
     , winArguments_  ( new tools::WinArguments( lpCmdLine ) )
     , quit_          ( new tools::WaitEvent() )
     , result_        ( EXIT_SUCCESS )

@@ -29,7 +29,7 @@ class Config : public tools::ExerciseConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observer );
+             Config( int argc, char** argv, const boost::shared_ptr< tools::RealFileLoaderObserver_ABC >& observer );
     virtual ~Config();
     //@}
 

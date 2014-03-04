@@ -88,7 +88,9 @@ namespace
         return std::max( maxUrbanId, maxOrbatId ) + 2;
     }
 
-    PHY_MeteoDataManager* CreateMeteoManager( MIL_Config& config )
+    PHY_MeteoDataManager* CreateMeteoManager(
+        const boost::shared_ptr< TER_World >& world, MIL_Config& config,
+        uint32_t tickDuration )
     {
         auto xis = config.GetLoader().LoadFile( config.GetWeatherFile() );
 
@@ -103,7 +105,8 @@ namespace
         MIL_AgentServer::GetWorkspace().SetInitialRealTime( since.total_seconds() );
         const auto now = MIL_Time_ABC::GetTime().GetRealTime();
 
-        return new PHY_MeteoDataManager( *xis, config.GetDetectionFile(), now );
+        return new PHY_MeteoDataManager(
+                world, *xis, config.GetDetectionFile(), now, tickDuration );
     }
 }
 
@@ -157,7 +160,22 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
 
     MIL_IDManager::SetKeepIdsMode( true, FindMaxId( config_ ) );
     config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
-    ReadStaticData();
+
+    nTimeStepDuration_ = config_.GetTimeStep();
+    nTimeFactor_ = config_.GetTimeFactor();
+
+    MT_LOG_INFO_MSG( "Initializing terrain" );
+    MT_LOG_INFO_MSG( "Terrain: " << config_.GetTerrainFile() );
+    TER_World::Initialize( config_ );
+    MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", 
+        TER_World::GetWorld().GetWidth() / 1000.,
+        TER_World::GetWorld().GetHeight()  / 1000. ) );
+    const auto world = TER_World::GetWorldPtr();
+
+    pWorkspaceDIA_ = new DEC_Workspace( config_ );
+    MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
+    pAgentServer_ = new NET_AgentServer( config_, *this );
+
     pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
     if( config_.HasCheckpoint() )
     {
@@ -168,7 +186,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     else
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
-        pMeteoDataManager_ = CreateMeteoManager( config );
+        pMeteoDataManager_ = CreateMeteoManager( world, config, GetTickDuration() );
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_, config_ );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
@@ -214,32 +232,6 @@ MIL_AgentServer::~MIL_AgentServer()
     //    MT_LOG_INFO_MSG( "Terminating Terrain" );
 //    TER_World::DestroyWorld();
     MIL_Time_ABC::UnregisterTime( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::ReadStaticData
-// Created: JVT 2005-03-07
-// -----------------------------------------------------------------------------
-void MIL_AgentServer::ReadStaticData()
-{
-    nTimeStepDuration_ = config_.GetTimeStep();
-    nTimeFactor_ = config_.GetTimeFactor();
-    ReadTerData();
-    pWorkspaceDIA_ = new DEC_Workspace( config_ );
-    MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
-    pAgentServer_ = new NET_AgentServer( config_, *this );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::ReadTerData
-// Created: FBD 02-11-27
-//-----------------------------------------------------------------------------
-void MIL_AgentServer::ReadTerData()
-{
-    MT_LOG_INFO_MSG( "Initializing terrain" );
-    MT_LOG_INFO_MSG( "Terrain: " << config_.GetTerrainFile() );
-    TER_World::Initialize( config_ );
-    MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", TER_World::GetWorld().GetWidth() / 1000., TER_World::GetWorld().GetHeight()  / 1000. ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -447,7 +439,8 @@ void MIL_AgentServer::WriteKnowledges( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::WriteWeather( xml::xostream& xos ) const
 {
-    GetWorkspace().GetMeteoDataManager().WriteWeather( xos );
+    const uint32_t now = MIL_Time_ABC::GetTime().GetRealTime();
+    GetWorkspace().GetMeteoDataManager().WriteWeather( xos, now );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,7 +13,6 @@
 #include "positions_plugin/PositionsPluginFactory.h"
 #include "tools/Codec.h"
 #include <tools/Exception.h>
-#include "tools/NullFileLoaderObserver.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
@@ -25,15 +24,13 @@ using namespace plugins;
 // Created: AGE 2008-05-21
 // -----------------------------------------------------------------------------
 DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
-    : observer_( 0 )
-    , config_( 0 )
+    : config_( 0 )
     , dispatcher_( 0 )
     , console_( 0 )
     , file_( 0 )
 {
     tools::SetCodec();
-    observer_.reset( new tools::NullFileLoaderObserver() );
-    config_.reset( new dispatcher::Config( *observer_ ) );
+    config_.reset( new dispatcher::Config() );
     console_.reset( new MT_ConsoleLogger() );
     MT_LOG_REGISTER_LOGGER( *console_ );
     try

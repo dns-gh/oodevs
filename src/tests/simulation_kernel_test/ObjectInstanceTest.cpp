@@ -28,7 +28,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
     MIL_ObjectFactory factory;
     {
         xml::xistringstream xis(
@@ -70,5 +70,4 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
     MOCK_EXPECT( army.UnregisterObject ).once();
     pObject.reset();
     mock::verify( army );
-    TER_World::DestroyWorld();
 }

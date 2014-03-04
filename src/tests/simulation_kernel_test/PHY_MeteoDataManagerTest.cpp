@@ -11,6 +11,9 @@
 #include "simulation_kernel/Meteo/PHY_Ephemeride.h"
 #include "simulation_kernel/Meteo/PHY_MeteoDataManager.h"
 #include "simulation_kernel/MIL_Time_ABC.h"
+#include "simulation_kernel/Network/NET_Publisher_ABC.h"
+#include "StubTER_World.h"
+#include <meteo/Meteo.h>
 #include <tools/Helpers.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/noncopyable.hpp>
@@ -18,43 +21,16 @@
 namespace
 {
 
-class FakeTime : public MIL_Time_ABC
+class FakePublisher : public NET_Publisher_ABC
 {
 public:
-    virtual unsigned int GetTickDuration() const
-    {
-        return 10;
-    }
-    virtual unsigned int GetRealTime() const
-    {
-        return 0;
-    }
-    virtual unsigned int GetCurrentTimeStep() const
-    {
-        return 1;
-    }
+    FakePublisher() {}
+    virtual ~FakePublisher() {}
+
+    virtual void Send( sword::SimToClient& ) {}
 };
 
-struct TimeSetter : private boost::noncopyable
-{
-    TimeSetter( const MIL_Time_ABC& time )
-        : previous_( MIL_Time_ABC::GetTime() )
-    {
-        MIL_Time_ABC::UnregisterTime( MIL_Time_ABC::GetTime() );
-        MIL_Time_ABC::RegisterTime( time );
-    }
-
-    ~TimeSetter()
-    {
-        MIL_Time_ABC::UnregisterTime( MIL_Time_ABC::GetTime() );
-        MIL_Time_ABC::RegisterTime( previous_ );
-    }
-
-private:
-    const MIL_Time_ABC& previous_;
-};
-
-}  // namespace
+} // namespace
 
 BOOST_AUTO_TEST_CASE( phy_ephemeride_test )
 {
@@ -105,14 +81,12 @@ BOOST_AUTO_TEST_CASE( phy_ephemeride_test )
     BOOST_REQUIRE( moon );
 }
 
-BOOST_AUTO_TEST_CASE( phy_meteodatamanager )
+namespace
 {
-    FakeTime time;
-    TimeSetter setter( time );
 
-    // This test may look useless but it actually creates a PHY_MeteoDataManager
-    // without MIL_AgentServer *and without crashing*.
-    // So who is the boss, hmm?
+boost::shared_ptr< PHY_MeteoDataManager > CreateMeteoManager(
+        const boost::shared_ptr< TER_World >& world )
+{
     xml::xistringstream xis(
     "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"
     "<weather model-version=\"4.8.2\" "
@@ -131,5 +105,33 @@ BOOST_AUTO_TEST_CASE( phy_meteodatamanager )
     );
     tools::Path detectionFile = testOptions.GetDataPath(
             "../../data/terrains/Paris_Est/Detection/detection.dat" );
-    PHY_MeteoDataManager meteo( xis, detectionFile, 0 );
+    return boost::make_shared< PHY_MeteoDataManager >(
+            world, xis, detectionFile, 0, 10 );
+}
+
+}  // namespace
+
+BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_creation_destruction )
+{
+    const auto world = CreateWorld( "worldwide/tests/EmptyParis-ML" );
+    FakePublisher publisher;
+
+    auto man = CreateMeteoManager( world );
+
+    // Remove imaginary weather
+    BOOST_CHECK( !man->RemoveLocalWeather( 1234 ) );
+
+    // Add and remove a valid one
+    xml::xistringstream xis(
+        "<local bottom-right=\"31UEQ1312638405\" end-time=\"20110409T095036\" start-time=\"20110408T095036\" top-left=\"31UDQ7958368892\">"
+        "  <wind direction=\"0\" speed=\"0\"/>"
+        "  <cloud-cover ceiling=\"0\" density=\"0\" floor=\"0\"/>"
+        "  <temperature value=\"20\"/>"
+        "  <precipitation value=\"PasDePrecipitation\"/>"
+        "</local>"
+    );
+
+    const auto w1 = man->AddLocalWeather( xis );
+    BOOST_CHECK( w1 );
+    BOOST_CHECK( man->RemoveLocalWeather( w1->GetId() ));
 }

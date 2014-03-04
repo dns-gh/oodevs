@@ -13,11 +13,9 @@
 #include "meteo/PHY_Precipitation.h"
 #include "PHY_MeteoDataManager.h"
 #include "RawVisionData/PHY_RawVisionData.h"
-#include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_MessageParameters.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
-#include "Tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/EnumMaps.h"
 #include "protocol/MessageParameters.h"
@@ -45,8 +43,11 @@ PHY_LocalMeteo::PHY_LocalMeteo()
 // Name: PHY_LocalMeteo constructor
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, unsigned int timeStep )
+PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis,
+        const weather::PHY_Lighting& light, unsigned int timeStep,
+        const boost::shared_ptr< TER_World >& world )
     : Meteo( id, xis, &light, timeStep )
+    , world_( world )
     , bIsPatched_( false )
     , startTime_ ( 0 )
     , endTime_   ( 0 )
@@ -56,8 +57,8 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weath
         >> xml::attribute( "end-time", strEndTime )
         >> xml::attribute( "top-left", strTopLeftPos )
         >> xml::attribute( "bottom-right", strTopRightPos );
-    MIL_Tools::ConvertCoordMosToSim( strTopLeftPos, upLeft_ );
-    MIL_Tools::ConvertCoordMosToSim( strTopRightPos, downRight_ );
+    world->MosToSimMgrsCoord( strTopLeftPos, upLeft_ );
+    world->MosToSimMgrsCoord( strTopRightPos, downRight_ );
     startTime_ = ( bpt::from_iso_string( strStartTime ) - bpt::from_time_t( 0 ) ).total_seconds();
     endTime_ = ( bpt::from_iso_string( strEndTime ) - bpt::from_time_t( 0 ) ).total_seconds();
 }
@@ -66,8 +67,11 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weath
 // Name: PHY_LocalMeteo constructor
 // Created: JSR 2010-04-12
 // -----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& msg, const weather::PHY_Lighting& light, unsigned int timeStep )
+PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& msg,
+        const weather::PHY_Lighting& light, unsigned int timeStep,
+        const boost::shared_ptr< TER_World >& world )
     : Meteo( id, msg, light, timeStep )
+    , world_( world )
     , bIsPatched_( false )
     , startTime_ ( 0 )
     , endTime_   ( 0 )
@@ -91,6 +95,8 @@ PHY_LocalMeteo::~PHY_LocalMeteo()
 template< typename Archive >
 void PHY_LocalMeteo::serialize( Archive& file, const unsigned int )
 {
+    if( !world_ )
+        world_ = TER_World::GetWorldPtr();
     file & boost::serialization::base_object< weather::Meteo >( *this )
          & startTime_
          & endTime_
@@ -109,8 +115,8 @@ void PHY_LocalMeteo::Serialize( xml::xostream& xos ) const
     const std::string end = boost::posix_time::to_iso_string( bpt::from_time_t( endTime_ ) );
     std::string coordUpLeft;
     std::string coordDownRight;
-    TER_World::GetWorld().SimToMosMgrsCoord( upLeft_, coordUpLeft );
-    TER_World::GetWorld().SimToMosMgrsCoord( downRight_, coordDownRight );
+    world_->SimToMosMgrsCoord( upLeft_, coordUpLeft );
+    world_->GetWorld().SimToMosMgrsCoord( downRight_, coordDownRight );
     xos << xml::attribute( "start-time", start )
         << xml::attribute( "end-time", end )
         << xml::attribute( "top-left", coordUpLeft )
@@ -143,8 +149,8 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCr
     }
     const auto& points = protocol::GetLocation( msg, 9 );
     protocol::Check( points.size() == 2u, "must have two points" );
-    NET_ASN_Tools::ReadPoint( points[0], upLeft_    );
-    NET_ASN_Tools::ReadPoint( points[1], downRight_ );
+    world_->MosToSimMgrsCoord( points[0].latitude(), points[0].longitude(), upLeft_ );
+    world_->MosToSimMgrsCoord( points[1].latitude(), points[1].longitude(), downRight_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,10 +180,10 @@ void PHY_LocalMeteo::UpdateMeteoPatch( int date, PHY_RawVisionData& dataVision,
 namespace
 {
 
-void SimToWorld( MT_Vector2D sim, sword::CoordLatLong& world )
+void SimToWorld( const TER_World& w, MT_Vector2D sim, sword::CoordLatLong& world )
 {
     double x, y;
-    TER_World::GetWorld().SimToMosMgrsCoord( sim, x, y );
+    w.SimToMosMgrsCoord( sim, x, y );
     // While sword::CoordLatLong uses double, we convert to float first because
     // MeteoLocal uses float and using double gives a different model between
     // a running simulation and the dispatcher, hence different checkpoints.
@@ -206,8 +212,8 @@ void PHY_LocalMeteo::SendCreation() const
     att->set_precipitation( protocol::ToProto( pPrecipitation_->GetID() ));
     att->set_temperature( temperature_ );
     att->set_lighting( protocol::ToProto( pLighting_->GetID() ));
-    SimToWorld( downRight_, *msg().mutable_bottom_right() );
-    SimToWorld( upLeft_, *msg().mutable_top_left() );
+    SimToWorld( *world_, downRight_, *msg().mutable_bottom_right() );
+    SimToWorld( *world_, upLeft_, *msg().mutable_top_left() );
     msg().mutable_start_date()->set_data( bpt::to_iso_string( bpt::from_time_t( startTime_ ) ) );
     msg().mutable_end_date()->set_data( bpt::to_iso_string( bpt::from_time_t( endTime_ ) ) );
     msg.Send( NET_Publisher_ABC::Publisher() );

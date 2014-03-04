@@ -78,16 +78,16 @@ namespace
     struct ObjectCapacityFixture
     {
         ObjectCapacityFixture()
+            : world_( "worldwide/tests/EmptyParis-ML" )
         {
-            WorldInitialize( "worldwide/tests/EmptyParis-ML" );
             MOCK_EXPECT( army.RegisterObject ).once();
             MOCK_EXPECT( army.GetColor ).once().returns( boost::cref( color ) );
             MOCK_EXPECT( army.UnregisterObject ).once();
         }
         ~ObjectCapacityFixture()
         {
-            TER_World::DestroyWorld();
         }
+        FakeWorld world_;
         MIL_ObjectFactory factory;
         MissionController controller;
         MockArmy army;

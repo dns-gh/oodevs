@@ -23,11 +23,6 @@ namespace kernel
     class Workers;
 }
 
-namespace tools
-{
-    class RealFileLoaderObserver_ABC;
-}
-
 class Network;
 class MainWindow;
 class StaticModel;
@@ -73,7 +68,6 @@ private slots:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
     std::auto_ptr< Config >                            config_;
     std::auto_ptr< kernel::Controllers >               controllers_;
     std::auto_ptr< RcEntityResolver_ABC >              rcResolver_;

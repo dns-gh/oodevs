@@ -97,6 +97,25 @@ private:
     //@}
 };
 
-#include "TER_Object_ABC.inl"
+// -----------------------------------------------------------------------------
+// Name: TER_Object_ABC::load
+// Created: JVT 2005-03-23
+// -----------------------------------------------------------------------------
+template<class Archive>
+void TER_Object_ABC::load( Archive& file, const unsigned int )
+{
+    file >> location_;
+    InsertInWorld();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Object_ABC::save
+// Created: JVT 2005-03-23
+// -----------------------------------------------------------------------------
+template<class Archive>
+void TER_Object_ABC::save( Archive& file, const unsigned int ) const
+{
+    file << location_;
+}
 
 #endif // __TER_Object_ABC_h_

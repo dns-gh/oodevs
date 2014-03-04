@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include <boost/shared_ptr.hpp>
 #include <map>
+#include <memory>
 
 namespace geometry
 {
@@ -47,6 +48,7 @@ class PHY_GlobalMeteo;
 class PHY_LocalMeteo;
 class PHY_RawVisionData;
 class PHY_IndirectFireDotationClass;
+class TER_World;
 
 //*****************************************************************************
 // Created: JVT 02-10-21
@@ -58,8 +60,9 @@ public:
     //! @name Constructor/Destructor
     //@{
              PHY_MeteoDataManager();
-             PHY_MeteoDataManager(
-                 xml::xistream& xis, const tools::Path& detectionFile, uint32_t now );
+             PHY_MeteoDataManager( const boost::shared_ptr< TER_World >& world,
+                 xml::xistream& xis, const tools::Path& detectionFile,
+                 uint32_t now, uint32_t tickDuration );
     virtual ~PHY_MeteoDataManager();
     //@}
 
@@ -69,7 +72,17 @@ public:
     virtual const PHY_Ephemeride& GetEphemeride() const;
     virtual void Update( unsigned int date );
     void SendStateToNewClient();
-    boost::shared_ptr< weather::Meteo > GetLocalWeather( const geometry::Point2f& position, boost::shared_ptr< weather::Meteo > pMeteo ) const;
+
+    // Creates and registers a new local weather object from an XML definition.
+    // The creation notification will be sent during the next Update().
+    // Returned instance is const, use PHY_MeteoDataManager API to modify it.
+    boost::shared_ptr< const weather::Meteo > AddLocalWeather( xml::xistream& xis );
+    boost::shared_ptr< const weather::Meteo > GetLocalWeather(
+        const geometry::Point2f& position, 
+        const boost::shared_ptr< const weather::Meteo >& pMeteo ) const;
+    // Unregisters a local weather, returns false if the entity cannot be found.
+    // The destruction message is sent immediately.
+    bool RemoveLocalWeather( uint32_t id );
     //@}
 
     //! @name Weather effects
@@ -89,7 +102,7 @@ public:
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-    void WriteWeather( xml::xostream& xos ) const;
+    void WriteWeather( xml::xostream& xos, uint32_t now ) const;
     //@}
 
 private:
@@ -100,7 +113,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadPatchLocal( xml::xistream& xis );
+    boost::shared_ptr< const weather::Meteo > InternalAddLocalWeather( xml::xistream& );
     void ReadPatchGlobal( xml::xistream& xis );
     void UpdateGlobalWeather( const sword::MagicAction& msg );
     void ManageLocalWeather( const sword::MagicAction& msg, sword::MagicActionAck& ack );
@@ -117,10 +130,12 @@ private:
 private:
     //! @name Member data
     //@{
+    boost::shared_ptr< TER_World > world_;
     boost::shared_ptr< PHY_Ephemeride > pEphemeride_;
     PHY_GlobalMeteo* pGlobalMeteo_;
     PHY_RawVisionData* pRawData_;
     std::map< uint32_t, boost::shared_ptr< PHY_LocalMeteo > > meteos_;
+    const uint32_t tickDuration_;
     static unsigned int localCounter_;
     //@}
 };

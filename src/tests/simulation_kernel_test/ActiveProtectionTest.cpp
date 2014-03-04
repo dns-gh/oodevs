@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
 {
     SingletonTerminator terminator;
     MockMIL_Time_ABC time;
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" ); // $$$$ because used in asn and in destructor of action!!!
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" ); // $$$$ because used in asn and in destructor of action!!!
     MockNET_Publisher_ABC mockPublisher;
     {
         // Ordre de conduite Appliquer les feux avec munition idoine à un pion de modele SAM / Pion ASS -> "DEC_StartTirIndirectSurPosition"
@@ -156,7 +156,6 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         effectManager.Update();
         mock::verify( entityManager );
     }
-    TER_World::DestroyWorld();
 }
 
 template<>

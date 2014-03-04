@@ -60,7 +60,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RawVisionData( weather::Meteo& globalMeteo, const tools::Path& detection, PHY_MeteoDataManager* manager );
+             PHY_RawVisionData( const weather::Meteo& globalMeteo,
+                     const tools::Path& detection, PHY_MeteoDataManager* manager );
     virtual ~PHY_RawVisionData();
     //@}
 
@@ -93,8 +94,10 @@ public:
 
     void GetVisionObjectsInSurface( const TER_Localisation_ABC& localisation, unsigned int& rEmptySurface, unsigned int& rForestSurface, unsigned int& rUrbanSurface ) const;
 
-    void RegisterMeteoPatch  ( const geometry::Point2d&, const geometry::Point2d&, boost::shared_ptr< weather::Meteo > pMeteo );
-    void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d&, boost::shared_ptr< weather::Meteo > pMeteo );
+    void RegisterMeteoPatch  ( const geometry::Point2d&, const geometry::Point2d&,
+            const boost::shared_ptr< const weather::Meteo >& pMeteo );
+    void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d&,
+            const boost::shared_ptr< const weather::Meteo >& pMeteo );
 
     void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
     void UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
@@ -121,7 +124,7 @@ private:
     std::auto_ptr< ElevationGrid > pElevationGrid_;
 
     PHY_MeteoDataManager* meteoManager_;
-    weather::Meteo& globalMeteo_;
+    const weather::Meteo& globalMeteo_;
 };
 
 #endif // __PHY_RawVisionData_h_

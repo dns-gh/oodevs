@@ -11,6 +11,7 @@
 #define Tools_NullFileLoaderObserver_h
 
 #include "RealFileLoaderObserver_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace tools
 {
@@ -37,6 +38,8 @@ public:
     virtual void NotifyFileMigrated( const Path& file , const std::string& fromVersion, const std::string& toVersion );
     //@}
 };
+
+boost::shared_ptr< NullFileLoaderObserver > CreateNullFileLoaderObserver();
 
 }
 

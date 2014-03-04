@@ -28,7 +28,7 @@ namespace po = boost::program_options;
 // Name: MIL_Config constructor
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
-MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
+MIL_Config::MIL_Config( const boost::shared_ptr< tools::RealFileLoaderObserver_ABC >& observer )
     : tools::SessionConfig( observer )
     , checkPointsKept_( 0 )
     , checkPointsFrequency_( 0 )

@@ -367,20 +367,18 @@ namespace
     struct PopulationFixture : Fixture
     {
         PopulationFixture()
-            : blackBoardGroup1( group1->GetKnowledge()->GetKnowledgePopulationContainer() )
+            : world_( "worldwide/tests/EmptyParis-ML" )
+            , blackBoardGroup1( group1->GetKnowledge()->GetKnowledgePopulationContainer() )
             , blackBoardGroup2( group2->GetKnowledge()->GetKnowledgePopulationContainer() )
             , xis( "<main dia-type='PionTest' file='PionTest.bms'/>" )
             , model( "test", xis >> xml::start( "main" ), testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) )
             , type( model )
         {
-            WorldInitialize( "worldwide/tests/EmptyParis-ML" );
             MIL_PopulationAttitude::Initialize();
             MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1 );
         }
-        ~PopulationFixture()
-        {
-            TER_World::DestroyWorld();
-        }
+
+        FakeWorld world_;
         DEC_BlackBoard_CanContainKnowledgePopulation& blackBoardGroup1;
         DEC_BlackBoard_CanContainKnowledgePopulation& blackBoardGroup2;
         MissionController controller;

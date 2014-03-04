@@ -12,11 +12,6 @@
 
 #include "tools/SessionConfig.h"
 
-namespace tools
-{
-    class RealFileLoaderObserver_ABC;
-}
-
 class Network;
 
 // =============================================================================
@@ -30,7 +25,7 @@ class Config : public tools::SessionConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observer );
+             Config( int argc, char** argv );
     virtual ~Config();
     //@}
 

@@ -19,7 +19,7 @@ namespace po = boost::program_options;
 // Name: Config constructor
 // Created: NLD 2007-01-12
 // -----------------------------------------------------------------------------
-Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observer )
+Config::Config( int argc, char** argv, const boost::shared_ptr< tools::RealFileLoaderObserver_ABC >& observer )
     : ExerciseConfig( observer )
     , generateScores_( false )
 {

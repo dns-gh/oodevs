@@ -84,7 +84,7 @@ private:
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
 
     const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( "ammo" );
 
@@ -133,5 +133,4 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
     BOOST_CHECK_CLOSE( 0.32, urbanRole->ComputeUrbanProtection( *pCategory ), 1. );
 
     urbanBlock.reset();
-    TER_World::DestroyWorld();
 }

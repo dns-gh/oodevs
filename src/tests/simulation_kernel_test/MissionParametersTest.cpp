@@ -403,7 +403,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_LocationParameter )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
     Location in;
     FillRlyehLocation( in );
     MIL_LocationParameter param( in );
@@ -412,7 +412,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_LocationParameter )
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );
     BOOST_CHECK_EQUAL( true, out.has_location() );
     CompareLocationToRlyeh( out.location() );
-    TER_World::DestroyWorld();
 }
 
 // -----------------------------------------------------------------------------
@@ -482,12 +481,11 @@ BOOST_AUTO_TEST_CASE( TestMIL_LogMaintenancePrioritiesParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_Throw )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
     Path in;
     in.mutable_location()->mutable_coordinates()->add_elem();
     FillRlyehLocation( *in.mutable_location() );
     BOOST_CHECK_THROW( MIL_PathParameter param( in ), std::exception );
-    TER_World::DestroyWorld();
 }
 
 // -----------------------------------------------------------------------------
@@ -496,7 +494,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_Throw )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PathParameter )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
     Path in;
     in.mutable_location()->set_type( sword::Location_Geometry_line );
     in.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 48.52f );
@@ -514,7 +512,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter )
     BOOST_CHECK_CLOSE( 2.17, out.path().location().coordinates().elem(0).longitude(), 1. );
     BOOST_CHECK_CLOSE( 49.52, out.path().location().coordinates().elem(1).latitude(), 1. );
     BOOST_CHECK_CLOSE( 3.17, out.path().location().coordinates().elem(1).longitude(), 1. );
-    TER_World::DestroyWorld();
 }
 
 // -----------------------------------------------------------------------------
@@ -523,7 +520,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
     const std::string typeName( "type" );
     PlannedWork in;
     in.set_type( typeName.c_str() );
@@ -548,7 +545,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter )
     BOOST_CHECK_EQUAL( 1, out.plannedwork().density() );
     BOOST_CHECK_EQUAL( 0u, out.plannedwork().combat_train().id() );
     BOOST_CHECK_EQUAL( 2, out.plannedwork().activity_time() );
-    TER_World::DestroyWorld();
 }
 
 // -----------------------------------------------------------------------------
@@ -557,7 +553,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PointParameter )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
     Point in;
     FillRlyehLocation( *in.mutable_location() );
     MIL_PointParameter param( in );
@@ -566,7 +562,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_PointParameter )
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );
     BOOST_CHECK_EQUAL( true, out.has_point() );
     CompareLocationToRlyeh( out.point().location() );
-    TER_World::DestroyWorld();
 }
 
 // -----------------------------------------------------------------------------
@@ -575,7 +570,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PointParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PolygonParameter )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
     Polygon in;
     FillPolygonLocation( *in.mutable_location(), 0.f );
     MIL_PolygonParameter param( in );
@@ -584,7 +579,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_PolygonParameter )
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );
     BOOST_CHECK_EQUAL( true, out.has_area() );
     CompareLocationToPolygon( out.area().location(), 0.f );
-    TER_World::DestroyWorld();
 }
 
 // -----------------------------------------------------------------------------

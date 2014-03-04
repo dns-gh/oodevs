@@ -41,7 +41,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
     {
         MIL_ObjectFactory factory;
         {
@@ -64,5 +64,4 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
             DEC_Knowledge_UrbanPerception kn( *pion.pPion_, pObject->GetID() );
         }
     }
-    TER_World::DestroyWorld();
 }
