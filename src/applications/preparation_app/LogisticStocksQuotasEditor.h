@@ -10,7 +10,7 @@
 #ifndef _LogisticStocksQuotasEditor_h
 #define _LogisticStocksQuotasEditor_h
 
-#include "MaxStockNaturesTable.h" // todo a supprimer?
+#include "StocksAndNaturesEditor.h"
 #include "LogisticEditor.h" // todo for typedef
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/Resolver2.h"
@@ -22,7 +22,6 @@ class LogisticQuotaEditor;
 class LogisticStockEditor;
 class QuotasResourcesTable;
 class StaticModel;
-class StockResourcesTable;
 
 namespace gui
 {
@@ -93,7 +92,6 @@ private:
     //@{
     void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     bool IsLogisticBase( const kernel::Entity_ABC& rootEntity );
-    void ComputeStocksByNature( std::map< std::string, MaxStockNaturesTable::WeightVolume >& result ) const;
     void CleanStocks( std::vector< const kernel::Agent_ABC* >& entStocks ) const;
     bool IsStockValid( const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation ) const;
     void ComputeStockWeightVolumeLeft( const kernel::Agent_ABC& stockUnit, std::string nature, MaxStockNaturesTable::WeightVolume& result ) const;
@@ -101,7 +99,6 @@ private:
     void NotifyAutomaticQuotas( const LogisticEditor::T_Requirements& stocks );
     void ApplyQuotas();
     void ApplyQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const LogisticEditor::T_Requirements& generatedQuotas );
-    void ComputeInitStocks( const kernel::Entity_ABC& entity, LogisticEditor::T_Requirements& requirements ) const;
     void ComputeInitQuotas( const kernel::Entity_ABC& entity, LogisticEditor::T_RequirementsMap& requirements ) const;
     //@}
 
@@ -112,9 +109,7 @@ private slots:
     void Reject();
     void ShowAutomaticDialog();
     void ShowDialog();
-    void NotifyStocksUserChange();
     void NotifyQuotasUserChange();
-    void NotifyAutomaticStocks( const LogisticEditor::T_Requirements& stocks );
     void NotifyAutomaticQuotas( LogisticEditor::T_RequirementsMap& quotas );
     void OnQuotaNameChanged( int index );
     //@}
@@ -133,8 +128,7 @@ private:
     LogisticQuotaEditor* automaticQuotaEditor_;
     CustomTabWidget* tabs_;
     QComboBox* subordinateCombo_;
-    StockResourcesTable* stocksTableView_;
-    MaxStockNaturesTable* maxStocksTableView_;
+    StocksAndNaturesEditor* stockAndNaturesEditor_;
     QuotasResourcesTable* quotasTableView_;
     std::map< unsigned long, LogisticEditor::T_Requirements > quotasByEntity_;
     std::map< unsigned long, const kernel::Entity_ABC* > quotasEntityFromId_;

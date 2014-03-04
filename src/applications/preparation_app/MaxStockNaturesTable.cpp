@@ -59,10 +59,10 @@ void MaxStockNaturesTable::InitHeader()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaxStockNaturesTable::ComputeMaxWeightVolumeByNature
+// Name: MaxStockNaturesTable::UpdateMaxWeightVolumeByNature
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void MaxStockNaturesTable::ComputeMaxWeightVolumeByNature( const kernel::Agent_ABC& agent, T_WeightVolumes& maxValues ) const
+void MaxStockNaturesTable::UpdateMaxWeightVolumeByNature( const kernel::Agent_ABC& agent )
 {
     if( !agent.GetType().IsLogisticSupply() )
         return;
@@ -75,7 +75,7 @@ void MaxStockNaturesTable::ComputeMaxWeightVolumeByNature( const kernel::Agent_A
         if( const kernel::EquipmentType::CarryingSupplyFunction* carrying = equipmentType.GetLogSupplyFunctionCarrying() )
         {
             unsigned int nEquipments = agentComposition. GetCount();
-            auto& curNature = maxValues[ carrying->stockNature_ ];
+            auto& curNature = maxValues_[ carrying->stockNature_ ];
             curNature.weight_ += nEquipments * carrying->stockMaxWeightCapacity_;
             curNature.volume_ += nEquipments * carrying->stockMaxVolumeCapacity_;
         }
@@ -83,19 +83,20 @@ void MaxStockNaturesTable::ComputeMaxWeightVolumeByNature( const kernel::Agent_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaxStockNaturesTable::ComputeMaxStocksByNature
+// Name: MaxStockNaturesTable::UpdateMaxStocksByNature
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void MaxStockNaturesTable::ComputeMaxStocksByNature( const kernel::Entity_ABC& rootEntity, const kernel::Entity_ABC& entity, T_WeightVolumes& maxValues ) const
+void MaxStockNaturesTable::UpdateMaxStocksByNature( const kernel::Entity_ABC& rootEntity, const kernel::Entity_ABC& entity )
 {
     const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
     if( !pTacticalHierarchies )
         return;
+    // todo à cleaner
     if( entity.GetId() == rootEntity.GetId() )
     {
         if( const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
         {
-            ComputeMaxWeightVolumeByNature( *pAgent, maxValues );
+            UpdateMaxWeightVolumeByNature( *pAgent );
             return;
         }
     }
@@ -106,9 +107,9 @@ void MaxStockNaturesTable::ComputeMaxStocksByNature( const kernel::Entity_ABC& r
     {
         const kernel::Entity_ABC& childEntity = children.NextElement();
         if( const kernel::Agent_ABC* pChildAgent = dynamic_cast< const kernel::Agent_ABC* >( &childEntity ) )
-            ComputeMaxWeightVolumeByNature( *pChildAgent, maxValues );
+            UpdateMaxWeightVolumeByNature( *pChildAgent );
         else
-            ComputeMaxStocksByNature( rootEntity, childEntity, maxValues );
+            UpdateMaxStocksByNature( rootEntity, childEntity );
     }
 }
 
@@ -131,37 +132,40 @@ QString FormatValue( double value )
     return QString::number( value, 'f', 2 );
 }
 
-bool IsMaxExceeded( const std::string& key, const MaxStockNaturesTable::T_WeightVolumes& values, const MaxStockNaturesTable::T_WeightVolumes& maxValues )
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaxStockNaturesTable::IsMaxExceeded
+// Created: JSR 2014-03-04
+// -----------------------------------------------------------------------------
+bool MaxStockNaturesTable::IsMaxExceeded( const std::string& key, const MaxStockNaturesTable::T_WeightVolumes& values ) const
 {
-    MaxStockNaturesTable::WeightVolume value, maxValue;
+    MaxStockNaturesTable::WeightVolume value;
+    MaxStockNaturesTable::WeightVolume maxValue;
     auto it = values.find( key );
     if( it != values.end() )
         value = it->second;
-    auto itMax = maxValues.find( key );
-    if( itMax != maxValues.end() )
+    auto itMax = maxValues_.find( key );
+    if( itMax != maxValues_.end() )
         maxValue = itMax->second;
     if( maxValue.weight_ <= 0. || maxValue.volume_ <= 0. )
         return true;
     return ( value.weight_ > maxValue.weight_ ) || ( value.volume_ > maxValue.volume_ );
-}
 }
 
 // -----------------------------------------------------------------------------
 // Name: MaxStockNaturesTable::Update
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void MaxStockNaturesTable::Update( const kernel::Entity_ABC& logBase, const T_WeightVolumes& currentValues, std::set< std::string >& allowedNatures )
+void MaxStockNaturesTable::Update( const T_WeightVolumes& currentValues, std::set< std::string >& allowedNatures )
 {
     dataModel_->clear();
     InitHeader();
 
-    T_WeightVolumes maxValues;
-    ComputeMaxStocksByNature( logBase, logBase, maxValues );
-
     std::set< std::string > dotationNatures;
     for( auto it = currentValues.begin(); it != currentValues.end(); ++it )
         dotationNatures.insert( it->first );
-    for( auto it = maxValues.begin(); it != maxValues.end(); ++it )
+    for( auto it = maxValues_.begin(); it != maxValues_.end(); ++it )
     {
         dotationNatures.insert( it->first );
         allowedNatures.insert( it->first );
@@ -172,11 +176,11 @@ void MaxStockNaturesTable::Update( const kernel::Entity_ABC& logBase, const T_We
         dataModel_->setRowCount( newRowIndex + 1 );
         dataModel_->setData( dataModel_->index( newRowIndex, 0 ), QString::fromStdString( *it ) );
         dataModel_->setData( dataModel_->index( newRowIndex, 1 ), FormatValue( GetWeight( *it, currentValues ) ) );
-        dataModel_->setData( dataModel_->index( newRowIndex, 2 ), FormatValue( GetWeight( *it, maxValues ) ) );
+        dataModel_->setData( dataModel_->index( newRowIndex, 2 ), FormatValue( GetWeight( *it, maxValues_ ) ) );
         dataModel_->setData( dataModel_->index( newRowIndex, 3 ), FormatValue( GetVolume( *it, currentValues ) ) );
-        dataModel_->setData( dataModel_->index( newRowIndex, 4 ), FormatValue( GetVolume( *it, maxValues ) ) );
+        dataModel_->setData( dataModel_->index( newRowIndex, 4 ), FormatValue( GetVolume( *it, maxValues_ ) ) );
 
-        QColor color = IsMaxExceeded( *it, currentValues, maxValues ) ? QColor( Qt::red ) : foregroundColor();
+        QColor color = IsMaxExceeded( *it, currentValues ) ? QColor( Qt::red ) : foregroundColor();
         for( int i = 0; i < 5; ++i )
         {
             if( i > 0 )
@@ -184,4 +188,14 @@ void MaxStockNaturesTable::Update( const kernel::Entity_ABC& logBase, const T_We
             dataModel_->item( newRowIndex, i )->setForeground( color );
         }
    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaxStockNaturesTable::UpdateMaxStocks
+// Created: JSR 2014-03-04
+// -----------------------------------------------------------------------------
+void MaxStockNaturesTable::UpdateMaxStocks( const kernel::Entity_ABC& entity )
+{
+    maxValues_.clear();
+    UpdateMaxStocksByNature( entity, entity );
 }

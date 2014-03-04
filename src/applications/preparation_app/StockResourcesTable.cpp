@@ -11,8 +11,14 @@
 #include "StockResourcesTable.h"
 #include "moc_StockResourcesTable.cpp"
 #include "clients_gui/CommonDelegate.h"
+#include "clients_gui/LogisticHelpers.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentType.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
+#include "preparation/Dotation.h"
+#include "preparation/Stocks.h"
 
 namespace
 {
@@ -54,6 +60,85 @@ void StockResourcesTable::UpdateLine( int row, int value )
     const kernel::DotationType* pDotation = GetDotation( row );
     SetData( row, 2, QString::number( value * pDotation->GetUnitWeight(), 'f', 2 ) );
     SetData( row, 3, QString::number( value * pDotation->GetUnitVolume(), 'f', 2 ) );
+}
+
+namespace
+{
+    void FindStocks( const kernel::Entity_ABC& rootEntity , const kernel::Entity_ABC& entity, std::vector< const kernel::Agent_ABC* >& entStocks )
+    {
+        const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( !pTacticalHierarchies )
+            return;
+        if( entity.GetId() != rootEntity.GetId() && logistic_helpers::IsLogisticBase( entity ) )
+            return;
+        auto child = pTacticalHierarchies->CreateSubordinateIterator();
+        while( child.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& childEntity = child.NextElement();
+            if( const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &childEntity ) )
+            {
+                if( pAgent->GetType().IsLogisticSupply() )
+                {
+                    Stocks* stocks = const_cast< Stocks* >( pAgent->Retrieve< Stocks >() );
+                    if( stocks && ( std::find( entStocks.begin(), entStocks.end(), pAgent ) == entStocks.end() ) )
+                        entStocks.push_back( pAgent );
+                }
+            }
+            else
+                FindStocks( rootEntity, childEntity, entStocks );
+        }
+    }
+
+    void ComputeInitStocks( const kernel::Entity_ABC& entity, LogisticEditor::T_Requirements& requirements )
+    {
+        std::vector< const kernel::Agent_ABC* > stocks;
+        if( auto pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
+        {
+            if( pAgent->GetType().IsLogisticSupply() && const_cast< Stocks* >( pAgent->Retrieve< Stocks >() ) )
+                stocks.push_back( pAgent );
+        }
+        else
+            FindStocks( entity , entity, stocks );
+
+        for( auto it = stocks.begin(); it != stocks.end(); ++it )
+        {
+            const auto& curStock = **it;
+            auto pStocks = const_cast< Stocks* >( curStock.Retrieve< Stocks >() );
+            if( !pStocks )
+                continue;
+            auto dotationIt = pStocks->CreateIterator();
+            while( dotationIt.HasMoreElements() )
+            {
+                const auto& curDotation = dotationIt.NextElement();
+                requirements[ &curDotation.type_ ] += curDotation.quantity_;
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StockResourcesTable::UpdateInitStocks
+// Created: JSR 2014-03-04
+// -----------------------------------------------------------------------------
+void StockResourcesTable::UpdateInitStocks( const kernel::Entity_ABC& entity )
+{
+    LogisticEditor::T_Requirements initialStocks;
+    ComputeInitStocks( entity, initialStocks );
+    UpdateStocks( initialStocks );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StockResourcesTable::UpdateStocks
+// Created: JSR 2014-03-04
+// -----------------------------------------------------------------------------
+void StockResourcesTable::UpdateStocks( const LogisticEditor::T_Requirements& stocks )
+{
+    Disconnect();
+    OnClearItems();
+    for( auto it = stocks.begin(); it != stocks.end(); ++it )
+        AddResource( *it->first, it->second );
+    emit ResourceValueChanged();
+    Connect();
 }
 
 // -----------------------------------------------------------------------------

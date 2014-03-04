@@ -12,9 +12,8 @@
 #include "moc_LogisticStocksQuotasEditor.cpp"
 #include "LogisticQuotaEditor.h"
 #include "LogisticStockEditor.h"
-#include "MaxStockNaturesTable.h"
+#include "StocksAndNaturesEditor.h"
 #include "QuotasResourcesTable.h"
-#include "StockResourcesTable.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/RichPushButton.h"
@@ -59,16 +58,7 @@ LogisticStocksQuotasEditor::LogisticStocksQuotasEditor( QWidget* parent, kernel:
 
     tabs_ = new CustomTabWidget( this );
 
-    stocksTableView_ = new StockResourcesTable( "stocksTable", this, staticModel.objectTypes_ );
-    maxStocksTableView_ = new MaxStockNaturesTable( "maxStocksTable", this, staticModel.objectTypes_ );
-
-    QWidget* pStocks = new QWidget( this, "Stocks" );
-    QGridLayout* stocksLayout = new QGridLayout( pStocks, 2, 1, 10 );
-    stocksLayout->setRowStretch( 0, 2 );
-    stocksLayout->setRowStretch( 1, 1 );
-    stocksLayout->addWidget( stocksTableView_, 0, 0, 1, 1 );
-    stocksLayout->addWidget( maxStocksTableView_, 1, 0, 1, 1 );
-    pStocks->setLayout( stocksLayout );
+    stockAndNaturesEditor_ = new StocksAndNaturesEditor( parent, staticModel );
 
     quotasTableView_ = new QuotasResourcesTable( "quotasTable", this, staticModel.objectTypes_ );
 
@@ -87,7 +77,7 @@ LogisticStocksQuotasEditor::LogisticStocksQuotasEditor( QWidget* parent, kernel:
     quotasLayout->addWidget( quotasTableView_, 1, 0, 1, 1 );
     pQuotas_->setLayout( quotasLayout );
 
-    stocksTabIndex_ = tabs_->addTab( pStocks, "Stocks" );
+    stocksTabIndex_ = tabs_->addTab( stockAndNaturesEditor_, "Stocks" );
     quotasTabIndex_ = tabs_->addTab( pQuotas_, "Quotas" );
 
     QGridLayout* logisticLayout = new QGridLayout( this, 2, 5, 10 );
@@ -102,9 +92,8 @@ LogisticStocksQuotasEditor::LogisticStocksQuotasEditor( QWidget* parent, kernel:
     logisticLayout->addWidget( cancelButton, 1, 4, 1, 1 );
 
     connect( subordinateCombo_, SIGNAL( activated( int ) ), SLOT( OnQuotaNameChanged( int ) ) );
-    connect( automaticStocksEditor_, SIGNAL( DotationsStocksComputed( const LogisticEditor::T_Requirements& ) ), SLOT( NotifyAutomaticStocks( const LogisticEditor::T_Requirements& ) ) );
+    connect( automaticStocksEditor_, SIGNAL( DotationsStocksComputed( const LogisticEditor::T_Requirements& ) ), stockAndNaturesEditor_, SLOT( NotifyAutomaticStocks( const LogisticEditor::T_Requirements& ) ) );
     connect( automaticQuotaEditor_, SIGNAL( DotationsQuotasComputed( LogisticEditor::T_RequirementsMap& ) ), SLOT( NotifyAutomaticQuotas( LogisticEditor::T_RequirementsMap& ) ) );
-    connect( stocksTableView_, SIGNAL( ResourceValueChanged() ), SLOT( NotifyStocksUserChange() ) );
     connect( quotasTableView_, SIGNAL( ResourceValueChanged() ), SLOT( NotifyQuotasUserChange() ) );
     connect( automaticEditButton_, SIGNAL( clicked() ), SLOT( ShowAutomaticDialog() ) );
     connect( validateButton, SIGNAL( clicked() ), SLOT( Accept() ) );
@@ -135,6 +124,7 @@ void LogisticStocksQuotasEditor::NotifyUpdated( const kernel::ModelUnLoaded& )
 
 namespace
 {
+    // todo en double, à virer
 void FindStocks( const kernel::Entity_ABC& rootEntity , const kernel::Entity_ABC& entity, std::vector< const kernel::Agent_ABC* >& entStocks )
 {
     const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
@@ -378,7 +368,7 @@ void LogisticStocksQuotasEditor::Accept()
     if( !selected_ )
         return;
     LogisticEditor::T_Requirements dotations;
-    stocksTableView_->ComputeValueByDotation( dotations );
+    stockAndNaturesEditor_->ComputeValueByDotation( dotations );
     if( auto pAgent = dynamic_cast< const kernel::Agent_ABC* >( selected_.ConstCast() ) )
     {
         std::vector< const kernel::Agent_ABC* > entStock;
@@ -409,36 +399,6 @@ void LogisticStocksQuotasEditor::Reject()
 {
     reject();
     selected_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::ComputeInitStocks
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::ComputeInitStocks( const kernel::Entity_ABC& entity, LogisticEditor::T_Requirements& requirements ) const 
-{
-    std::vector< const kernel::Agent_ABC* > stocks;
-    if( auto pAgent = dynamic_cast< const kernel::Agent_ABC* >( selected_.ConstCast() ) )
-    {
-        if( pAgent->GetType().IsLogisticSupply() && const_cast< Stocks* >( pAgent->Retrieve< Stocks >() ) )
-            stocks.push_back( pAgent );
-    }
-    else
-        FindStocks( entity , entity, stocks );
-
-    for( auto it = stocks.begin(); it != stocks.end(); ++it )
-    {
-        const auto& curStock = **it;
-        auto pStocks = const_cast< Stocks* >( curStock.Retrieve< Stocks >() );
-        if( !pStocks )
-            continue;
-        auto dotationIt = pStocks->CreateIterator();
-        while( dotationIt.HasMoreElements() )
-        {
-            const auto& curDotation = dotationIt.NextElement();
-            requirements[ &curDotation.type_ ] += curDotation.quantity_;
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -482,7 +442,7 @@ void LogisticStocksQuotasEditor::ShowDialog()
     quotasByEntity_.clear();
     quotasEntityFromId_.clear();
     subordinateCombo_->clear();
-    stocksTableView_->OnClearItems();
+    stockAndNaturesEditor_->ClearStocks(); // ??
     quotasTableView_->OnClearItems();
 
     bool bQuotas = false;
@@ -506,8 +466,7 @@ void LogisticStocksQuotasEditor::ShowDialog()
         bQuotas = true;
         setCaption( tools::translate( "StocksEditionDialog", "Stocks & Quotas" ) + QString::fromStdString( " - " ) + pFormation->GetBasicName() );
     }
-    std::set< std::string > dummy;
-    maxStocksTableView_->Update( *pEntity, std::map< std::string, MaxStockNaturesTable::WeightVolume >(), dummy );
+    stockAndNaturesEditor_->UpdateMaxStocks( *pEntity );
     if( bQuotas )
     {
         tabs_->ShowTabBar();
@@ -532,9 +491,7 @@ void LogisticStocksQuotasEditor::ShowDialog()
         }
     }
 
-    LogisticEditor::T_Requirements initialStocks;
-    ComputeInitStocks( *pEntity, initialStocks );
-    NotifyAutomaticStocks( initialStocks );
+    stockAndNaturesEditor_->UpdateInitStocks( *pEntity );
 
     if( bQuotas )
     {
@@ -603,50 +560,6 @@ void LogisticStocksQuotasEditor::ShowAutomaticDialog()
         automaticStocksEditor_->Show( *selected_ );
     else
         automaticQuotaEditor_->Show( *selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::ComputeStocksByNature
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::ComputeStocksByNature( std::map< std::string, MaxStockNaturesTable::WeightVolume >& result ) const
-{
-    LogisticEditor::T_Requirements dotations;
-    stocksTableView_->ComputeValueByDotation( dotations );
-    for( auto it = dotations.begin(); it != dotations.end(); ++it )
-    {
-        const auto& curDotation = *it->first;
-        double value = it->second;
-        result[ curDotation.GetNature() ].weight_ += value * curDotation.GetUnitWeight();
-        result[ curDotation.GetNature() ].volume_ += value * curDotation.GetUnitVolume();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::NotifyAutomaticStocks
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::NotifyAutomaticStocks( const LogisticEditor::T_Requirements& stocks )
-{
-    stocksTableView_->Disconnect();
-    stocksTableView_->OnClearItems();
-    for( auto it = stocks.begin(); it != stocks.end(); ++it )
-        stocksTableView_->AddResource( *it->first, it->second );
-    NotifyStocksUserChange();
-    stocksTableView_->Connect();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::NotifyStocksUserChange
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::NotifyStocksUserChange()
-{
-    std::map< std::string, MaxStockNaturesTable::WeightVolume > valuesByNature;
-    ComputeStocksByNature( valuesByNature );
-    std::set< std::string > allowedNatures;
-    maxStocksTableView_->Update( *selected_.ConstCast(), valuesByNature, allowedNatures );
-    stocksTableView_->SetAllowedNatures( allowedNatures );
 }
 
 // -----------------------------------------------------------------------------

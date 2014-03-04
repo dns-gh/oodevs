@@ -12,6 +12,13 @@
 
 #include "ResourcesEditorTable_ABC.h"
 
+#include "LogisticEditor.h" // à virer
+
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 // =============================================================================
 /** @class  StockResourcesTable
     @brief  StockResourcesTable
@@ -31,6 +38,8 @@ public:
 public:
     //! @name Operations
     //@{
+    void UpdateInitStocks( const kernel::Entity_ABC& entity );
+    void UpdateStocks( const LogisticEditor::T_Requirements& stocks );
     virtual void AddResource( const kernel::DotationType& resource, int value = 0 );
     virtual void UpdateLine( int row, int value );
     virtual void CustomizeMenuAction( QAction* action, const kernel::DotationType& actionDotation ) const;

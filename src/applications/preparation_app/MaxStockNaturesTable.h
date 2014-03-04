@@ -60,14 +60,16 @@ public:
     //! @name Operations
     //@{
     virtual void InitHeader();
-    void Update( const kernel::Entity_ABC& logBase, const T_WeightVolumes& currentValues, std::set< std::string >& allowedNatures );
+    void UpdateMaxStocks( const kernel::Entity_ABC& entity );
+    void Update( const T_WeightVolumes& currentValues, std::set< std::string >& allowedNatures );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ComputeMaxWeightVolumeByNature( const kernel::Agent_ABC& agent, T_WeightVolumes& maxValues ) const;
-    void ComputeMaxStocksByNature( const kernel::Entity_ABC& rootEntity, const kernel::Entity_ABC& entity, T_WeightVolumes& maxValues ) const;
+    void UpdateMaxWeightVolumeByNature( const kernel::Agent_ABC& agent );
+    void UpdateMaxStocksByNature( const kernel::Entity_ABC& rootEntity, const kernel::Entity_ABC& entity );
+    bool IsMaxExceeded( const std::string& key, const MaxStockNaturesTable::T_WeightVolumes& values ) const;
     //@}
 
 private:
@@ -75,6 +77,7 @@ private:
     //@{
     QStandardItemModel* dataModel_;
     const kernel::Resolver2< kernel::EquipmentType >& equipments_;
+    T_WeightVolumes maxValues_;
     //@}
 };
 
