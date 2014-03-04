@@ -10,6 +10,7 @@
 #ifndef __LocationEditorBox_h_
 #define __LocationEditorBox_h_
 
+#include <boost/optional.hpp>
 #include <vector>
 #include <QtGui/QValidator>
 
@@ -102,6 +103,7 @@ private:
     kernel::ContextMenu* menu_;
     std::vector< Field > fields_;
     bool valid_;
+    boost::optional< geometry::Point2f > lastValidPosition_;
     //@}
 };
 

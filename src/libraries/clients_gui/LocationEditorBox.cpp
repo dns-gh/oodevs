@@ -57,6 +57,7 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers,
                                       Qt::Orientation orientation /* = Qt::Horizontal */ )
     : converter_( converter )
     , parsers_( new LocationParsers( controllers, converter ) )
+    , lastValidPosition_( boost::none )
 {
     setFixedWidth( orientation == Qt::Horizontal ? 350 : 220 );
 
@@ -123,6 +124,8 @@ void LocationEditorBox::SelectParser( int index )
     ResetFields();
     if( valid )
         UpdateField( pos );
+    else if( lastValidPosition_ )
+        UpdateField( *lastValidPosition_ );
     emit DataChanged();
 }
 
@@ -276,7 +279,11 @@ void LocationEditorBox::UpdateValidity()
             content << fields_[i].edit->text();
             empty &= content.back().size() == 0;
         }
-    SetValid( empty || current_->Parse( content, pos, hints ) );
+
+    bool valid = empty || current_->Parse( content, pos, hints );
+    if( valid && !empty )
+        lastValidPosition_ = pos;
+    SetValid( valid );
     // use hints here to fill a completion menu when FeatureNameParser::Parse will
     // return consistent hints
 }
@@ -298,4 +305,5 @@ void LocationEditorBox::Purge()
 {
     for( auto it = fields_.begin(); it < fields_.end(); ++it )
         it->edit->clear();
+    lastValidPosition_ = boost::none;
 }
