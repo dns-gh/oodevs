@@ -383,14 +383,16 @@ end
 -- @param position Simulation point
 -- @param distance Float, the distance between the extraction position and the
 -- periphery of the given crowd (in meters, optional, 50 by default).
--- @return Boolean, whether or not the extraction occurred successfully.
+-- @return Two return values :
+-- <ul> <li> Boolean, whether or not the extraction occurred successfully. </li>
+-- <li> Simulation position, the extraction position. </li> </ul>
 integration.extractDeadFromCrowd = function( crowd, position, distance )
     position = position or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
     if not position then
         position = DEC_Agent_Position() -- extract dead creating a new crowd on my own position
     end
     position = DEC_Geometrie_PositionAleatoireSurCercle( position, distance or 50 )
-    return DEC_Crowd_ExtractDeadFromCrowd( crowd.source, position )
+    return DEC_Crowd_ExtractDeadFromCrowd( crowd.source, position ), position
 end
 
 --- Returns true if the given crowd has wounded humans, false otherwise.
