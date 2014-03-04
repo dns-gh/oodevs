@@ -44,7 +44,6 @@
 #include "LogisticConsigns.h"
 #include "LogisticLinks.h"
 #include "Logistics.h"
-#include "MagicOrders.h"
 #include "MissionParameters.h"
 #include "Model.h"
 #include "ObjectDetections.h"
@@ -179,7 +178,6 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach< kernel::Positions >( *new AgentPositions( controllers_.controller_, *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_, controllers_.controller_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
-    result->Attach( *new MagicOrders( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dictionary ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );

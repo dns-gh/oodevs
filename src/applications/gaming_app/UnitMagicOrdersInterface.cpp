@@ -47,7 +47,7 @@
 
 #include "gaming/Attributes.h"
 #include "gaming/LogisticConsigns.h"
-#include "gaming/MagicOrders.h"
+#include "gaming/Transports.h"
 #include "gaming/StaticModel.h"
 
 #include "protocol/SimulationSenders.h"
@@ -121,7 +121,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
     AddReloadBrainMenu( magicMenu, static_.types_.unitModels_,
         agent.Retrieve< gui::Decisions_ABC >() ? agent.Retrieve< gui::Decisions_ABC >()->GetModelName() : "unknown",
         agent.GetType().GetDecisionalModel().GetName() );
-    if( agent.Get< MagicOrders >().CanRetrieveTransporters() )
+    if( agent.Get< Transports >().CanRetrieveTransporters() )
         AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
     AddMagic( tr( "Destroy - Component" ), SLOT( DestroyComponent() ), magicMenu );
     AddMagic( tr( "Delete unit" ), SLOT( DeleteUnit() ), magicMenu );
