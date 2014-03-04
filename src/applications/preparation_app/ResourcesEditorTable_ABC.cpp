@@ -11,33 +11,36 @@
 #include "ResourcesEditorTable_ABC.h"
 #include "moc_ResourcesEditorTable_ABC.cpp"
 #include "clients_gui/CommonDelegate.h"
+#include "clients_gui/SignalAdapter.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/DotationType.h"
+#include <boost/bind.hpp>
+
+Q_DECLARE_METATYPE( const kernel::DotationType* )
 
 // -----------------------------------------------------------------------------
 // Name: ResourcesEditorTable_ABC Constructor
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-ResourcesEditorTable_ABC::ResourcesEditorTable_ABC( const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType ) 
+ResourcesEditorTable_ABC::ResourcesEditorTable_ABC( const QStringList& headers, const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType ) 
     : gui::RichWidget< QTableView >( objectName, parent )
+    , headers_( headers )
     , dotations_( dotationsType )
-    , popupMenu_( new kernel::ContextMenu( this ) )
 {
     dataModel_  = new QStandardItemModel( parent );
-    delegate_   = new gui::CommonDelegate( parent );
+    gui::CommonDelegate* delegate = new gui::CommonDelegate( parent );
 
     setModel( dataModel_ );
-    setItemDelegate( delegate_ );
+    setItemDelegate( delegate );
     setAlternatingRowColors( true );
     setSelectionMode( SingleSelection );
     setSelectionBehavior( SelectRows );
     verticalHeader()->hide();
 
-    resourcesMenu_ = popupMenu_->addMenu( "Add resource" );
-    popupMenu_->insertItem( tr( "Remove resource" ), this, SLOT( OnRemoveCurrentItem() ) );
-    popupMenu_->insertItem( tr( "Clear list" ), this, SLOT( OnClearItems() ) );
-
     Connect();
+
+    InitHeader();
+    delegate->AddSpinBoxOnColumn( dataModel_->columnCount() - 1, 0, std::numeric_limits< int >::max() );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,61 +76,55 @@ void ResourcesEditorTable_ABC::Disconnect()
 // -----------------------------------------------------------------------------
 void ResourcesEditorTable_ABC::contextMenuEvent( QContextMenuEvent* event )
 {
-    popupMenu_->popup( event->globalPos() );
-    possiblyToRemove_ = indexAt( event->pos() );
-    resourcesMenu_->clear();
+    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
+    connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
 
-    std::set< int > currentDotations;
+    QMenu* resourcesMenu = menu->addMenu( tr( "Add resource" ) );
+    const QModelIndex indexClicked = indexAt( event->pos() );
+    if( indexClicked.isValid() )
+    {
+        QAction* action = menu->addAction( tr( "Remove resource" ) );
+        gui::connect( action, SIGNAL( triggered() ), boost::bind( &ResourcesEditorTable_ABC::RemoveResource, this, indexClicked.row() ) );
+    }
+    menu->addAction( tr( "Clear list" ), this, SLOT( OnClearItems() ) );
+
+    std::set< const kernel::DotationType* > currentDotations;
     for( int row = 0; row < dataModel_->rowCount(); ++row )
-        currentDotations.insert( dataModel_->item( row )->data( Qt::UserRole ).toInt() );
+        currentDotations.insert( GetDotation( row ) );
 
     std::map< std::string, std::map< std::string, const kernel::DotationType* > > dotationsByType;
     auto it = dotations_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const auto& dotation = it.NextElement();
-        if( currentDotations.find( dotation.GetId() ) == currentDotations.end() )
+        if( currentDotations.find( &dotation ) == currentDotations.end() )
             dotationsByType[ dotation.GetCategoryDisplay() ][ dotation.GetName() ] = &dotation ;
     }
 
     for( auto it = dotationsByType.begin(); it != dotationsByType.end(); ++it )
     {
-        auto pTypeMenu = new kernel::ContextMenu( resourcesMenu_ );
-        resourcesMenu_->insertItem( QString::fromStdString( it->first ), pTypeMenu );
+        kernel::ContextMenu* pTypeMenu = new kernel::ContextMenu( resourcesMenu );
+        pTypeMenu->setTitle( QString::fromStdString( it->first ) );
+        resourcesMenu->addMenu( pTypeMenu );
         for( auto itD = it->second.begin(); itD != it->second.end(); ++itD )
         {
-            auto pDotation = itD->second;
-            int itemId = pTypeMenu->insertItem( QString::fromStdString( pDotation->GetName() ), this, SLOT( AddLine( int ) ) );
-            pTypeMenu->setItemParameter( itemId, pDotation->GetId() );
-
-            if( !allowedNatures_.empty() && allowedNatures_.find( pDotation->GetNature() ) == allowedNatures_.end() )
-                if( QMenuItem* pItem = pTypeMenu->findItem( itemId ) )
-                    pItem->setFont( QFont( "Arial", 8, 3, true ) );
+            const kernel::DotationType* pDotation = itD->second;
+            QAction* action = pTypeMenu->addAction( QString::fromStdString( pDotation->GetName() ) );
+            gui::connect( action, SIGNAL( triggered() ), boost::bind( &ResourcesEditorTable_ABC::AddResource, this, boost::cref( *pDotation ), 0 ) );
+            CustomizeMenuAction( action, *pDotation );
         }
     }
+    menu->popup( event->globalPos() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourcesEditorTable_ABC::AddLine
-// Created: MMC 2013-10-24
+// Name: ResourcesEditorTable_ABC::RemoveResource
+// Created: JSR 2014-03-03
 // -----------------------------------------------------------------------------
-void ResourcesEditorTable_ABC::AddLine( int dotationId )
+void ResourcesEditorTable_ABC::RemoveResource( int row )
 {
-    if( auto pDotation = dotations_.Find( dotationId ) )
-        AddResource( *pDotation );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourcesEditorTable_ABC::OnRemoveCurrentItem
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-void ResourcesEditorTable_ABC::OnRemoveCurrentItem()
-{
-    if( possiblyToRemove_.isValid() )
-    {
-        dataModel_->removeRow( possiblyToRemove_.row() );
-        emit ResourceValueChanged();
-    }
+    dataModel_->removeRow( row );
+    emit ResourceValueChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -136,9 +133,7 @@ void ResourcesEditorTable_ABC::OnRemoveCurrentItem()
 // -----------------------------------------------------------------------------
 void ResourcesEditorTable_ABC::OnClearItems()
 {
-    possiblyToRemove_ = QModelIndex();
     dataModel_->clear();
-    allowedNatures_.clear();
     InitHeader();
     emit ResourceValueChanged();
 }
@@ -147,49 +142,98 @@ void ResourcesEditorTable_ABC::OnClearItems()
 // Name: ResourcesEditorTable_ABC::OnDataChanged
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void  ResourcesEditorTable_ABC::OnDataChanged( const QModelIndex& index, const QModelIndex& )
+void ResourcesEditorTable_ABC::OnDataChanged( const QModelIndex& index, const QModelIndex& )
 {
-    if( dataModel_->columnCount() < 2 )
-        return;
-    int column = dataModel_->columnCount() - 1;
-    if( index.column() != column )
-        return;
-    double value = dataModel_->item( index.row(), column )->data( Qt::UserRole ).toDouble();    
-    OnValueChanged( index.row(), value );
-    emit ResourceValueChanged();
+    if( index.column() == dataModel_->columnCount() - 1 )
+    {
+        UpdateLine( index.row(), GetValue( index.row() ) );
+        emit ResourceValueChanged();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ResourcesEditorTable_ABC::ComputeValueByDotation
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void ResourcesEditorTable_ABC::ComputeValueByDotation( std::map< const kernel::DotationType*, double >& result ) const
+void ResourcesEditorTable_ABC::ComputeValueByDotation( std::map< const kernel::DotationType*, unsigned int >& result ) const
 {
     if( dataModel_->columnCount() < 2 )
         return;
     for( int i = 0; i < dataModel_->rowCount(); ++i )
-    {
-        int dotationId = dataModel_->item( i, 0 )->data( Qt::UserRole ).toInt();
-        double value = dataModel_->item( i, dataModel_->columnCount() - 1 )->data( Qt::UserRole ).toDouble();
-        if( auto pDotation = dotations_.Find( dotationId ) )
-            result[ pDotation ] += value;
-    }
+        result[ GetDotation( i ) ] += GetValue( i );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourcesEditorTable_ABC::SetAllowedNatures
-// Created: MMC 2013-10-24
+// Name: ResourcesEditorTable_ABC::AddResource
+// Created: JSR 2014-03-03
 // -----------------------------------------------------------------------------
-void ResourcesEditorTable_ABC::SetAllowedNatures( const std::set< std::string >& allowedNatures )
+void ResourcesEditorTable_ABC::AddResource( const kernel::DotationType& resource, int value /*= 0*/ )
 {
-    allowedNatures_ = allowedNatures;
+    const int newRowIndex = dataModel_->rowCount();
+    dataModel_->setRowCount( newRowIndex + 1 );
+    const int lastColumn = dataModel_->columnCount() - 1;
+    SetData( newRowIndex, 0, QString::fromStdString( resource.GetName() ) );
+    SetData( newRowIndex, 0, QVariant::fromValue( &resource ), Qt::UserRole );
+    SetData( newRowIndex, lastColumn, value );
+    SetData( newRowIndex, lastColumn, value, Qt::UserRole, Qt::AlignRight | Qt::AlignVCenter );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourcesEditorTable_ABC::GetDataModel
-// Created: MMC 2013-10-24
+// Name: ResourcesEditorTable_ABC::InitHeader
+// Created: JSR 2014-03-03
 // -----------------------------------------------------------------------------
-QStandardItemModel* ResourcesEditorTable_ABC::GetDataModel() const
+void ResourcesEditorTable_ABC::InitHeader()
 {
-    return dataModel_;
+    dataModel_->setHorizontalHeaderLabels( headers_ );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesEditorTable_ABC::UpdateLine
+// Created: JSR 2014-03-03
+// -----------------------------------------------------------------------------
+void ResourcesEditorTable_ABC::UpdateLine( int /*row*/, int /*value*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesEditorTable_ABC::CustomizeMenuAction
+// Created: JSR 2014-03-04
+// -----------------------------------------------------------------------------
+void ResourcesEditorTable_ABC::CustomizeMenuAction( QAction* /*action*/, const kernel::DotationType& /*actionDotation*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesEditorTable_ABC::SetData
+// Created: JSR 2014-03-03
+// -----------------------------------------------------------------------------
+void ResourcesEditorTable_ABC::SetData( int row, int col, const QVariant& value, int role /* = Qt::DisplayRole */, Qt::Alignment aligment /* = 0 */ )
+{
+    dataModel_->setData( dataModel_->index( row, col ), value, role );
+    if( aligment )
+        dataModel_->item( row, col )->setTextAlignment( aligment );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesEditorTable_ABC::GetDotation
+// Created: JSR 2014-03-03
+// -----------------------------------------------------------------------------
+const kernel::DotationType* ResourcesEditorTable_ABC::GetDotation( int row ) const
+{
+    QStandardItem* item = dataModel_->item( row );
+    return item ? item->data( Qt::UserRole ).value< const kernel::DotationType* >() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesEditorTable_ABC::GetValue
+// Created: JSR 2014-03-03
+// -----------------------------------------------------------------------------
+int ResourcesEditorTable_ABC::GetValue( int row ) const
+{
+    if( dataModel_->columnCount() < 2 )
+        return 0;
+    return dataModel_->item( row, dataModel_->columnCount() - 1 )->data( Qt::UserRole ).toInt();
 }

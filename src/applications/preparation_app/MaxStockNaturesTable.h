@@ -60,8 +60,7 @@ public:
     //! @name Operations
     //@{
     virtual void InitHeader();
-    void Update( const kernel::Entity_ABC& logBase, const T_WeightVolumes& currentValues );
-    const std::set< std::string >& GetAllowedNatures() const;
+    void Update( const kernel::Entity_ABC& logBase, const T_WeightVolumes& currentValues, std::set< std::string >& allowedNatures );
     //@}
 
 private:
@@ -76,7 +75,6 @@ private:
     //@{
     QStandardItemModel* dataModel_;
     const kernel::Resolver2< kernel::EquipmentType >& equipments_;
-    std::set< std::string > allowedNatures_;
     //@}
 };
 

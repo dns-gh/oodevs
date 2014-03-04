@@ -27,14 +27,6 @@ public:
              QuotasResourcesTable( const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType );
     virtual ~QuotasResourcesTable();
     //@}
-
-public:
-    //! @name Operations
-    //@{
-    virtual void AddResource( const kernel::DotationType& resource, double value = 0 );
-    virtual void InitHeader();
-    virtual void OnValueChanged( int row, double value );
-    //@}
 };
 
 #endif // _QuotasResourcesTable_h

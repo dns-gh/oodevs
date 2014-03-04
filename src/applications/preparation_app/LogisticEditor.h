@@ -54,7 +54,7 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< const kernel::DotationType*, double > T_Requirements;
+    typedef std::map< const kernel::DotationType*, unsigned int > T_Requirements;
     typedef std::map< const kernel::Entity_ABC*, T_Requirements > T_RequirementsMap;
     enum
     {

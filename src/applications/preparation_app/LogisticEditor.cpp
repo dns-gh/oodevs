@@ -261,7 +261,7 @@ void LogisticEditor::ComputeRequirements( const Agent_ABC& agent, const kernel::
             const DotationCapacityType& dotationCapacity = resourcesIterator.NextElement();
             const DotationType& category = staticModel_.objectTypes_.Resolver2< DotationType >::Get( dotationCapacity.GetName() );
             if( &category.GetLogisticSupplyClass() == &logType )
-                requirements[ &category ] += agentComposition.GetCount() * dotationCapacity.GetNormalizedConsumption();
+                requirements[ &category ] += static_cast< unsigned int >( agentComposition.GetCount() * dotationCapacity.GetNormalizedConsumption() + 0.5 );
         }
     }
 }

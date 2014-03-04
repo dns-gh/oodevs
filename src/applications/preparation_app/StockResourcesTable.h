@@ -31,9 +31,16 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void AddResource( const kernel::DotationType& resource, double value = 0 );
-    virtual void InitHeader();
-    virtual void OnValueChanged( int row, double value );
+    virtual void AddResource( const kernel::DotationType& resource, int value = 0 );
+    virtual void UpdateLine( int row, int value );
+    virtual void CustomizeMenuAction( QAction* action, const kernel::DotationType& actionDotation ) const;
+    void SetAllowedNatures( const std::set< std::string >& allowedNatures );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::set< std::string > allowedNatures_;
     //@}
 };
 

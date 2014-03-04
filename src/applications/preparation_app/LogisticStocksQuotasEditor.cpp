@@ -263,15 +263,15 @@ void LogisticStocksQuotasEditor::SupplyStocks( const kernel::Entity_ABC& entityB
                 continue;
             MaxStockNaturesTable::WeightVolume stockLeft;
             ComputeStockWeightVolumeLeft( **it, dotationType.GetNature(), stockLeft );
-            unsigned int maxQuantityForWeight = static_cast< unsigned int >( itRequired->second + 0.5 );
+            unsigned int maxQuantityForWeight = itRequired->second;
             if( dotationType.GetUnitWeight() > 0 )
                 maxQuantityForWeight = static_cast< unsigned int >( stockLeft.weight_ / dotationType.GetUnitWeight() );
-            unsigned int maxQuantityForVolume = static_cast< unsigned int >( itRequired->second + 0.5 );
+            unsigned int maxQuantityForVolume = itRequired->second;
             if( dotationType.GetUnitVolume() > 0 )
                 maxQuantityForVolume = static_cast< unsigned int >( stockLeft.volume_ / dotationType.GetUnitVolume() );
-            unsigned int q = std::min( static_cast< unsigned int >( itRequired->second ), std::min( maxQuantityForWeight, maxQuantityForVolume ) );
+            unsigned int q = std::min( itRequired->second, std::min( maxQuantityForWeight, maxQuantityForVolume ) );
             pStocks->SetDotation( dotationType, q, true );
-            itRequired->second = std::max( 0., itRequired->second - q );
+            itRequired->second = std::max( 0u, itRequired->second - q );
         }
     }
 
@@ -284,7 +284,7 @@ void LogisticStocksQuotasEditor::SupplyStocks( const kernel::Entity_ABC& entityB
             bDotationsToStockLeft = true;
         for( auto it = stocks.begin(); it != stocks.end(); ++it )
             if( IsStockValid( **it, dotationType ) )
-                stocksByDotation[ &dotationType ] += 1.;
+                ++stocksByDotation[ &dotationType ];
     }
     if( !bDotationsToStockLeft )
         return;
@@ -295,7 +295,7 @@ void LogisticStocksQuotasEditor::SupplyStocks( const kernel::Entity_ABC& entityB
         double quantityLeft = dotationToStocks[ it->first ];
         double stocksCount = it->second;
         if( quantityLeft > 0 && stocksCount > 0 )
-            meansDotationsByStock[ it->first ] = quantityLeft / stocksCount;
+            meansDotationsByStock[ it->first ] = static_cast< unsigned int >( quantityLeft / stocksCount );
     }
 
     for( auto itRequired = dotationToStocks.begin(); itRequired != dotationToStocks.end(); ++itRequired )
@@ -316,7 +316,7 @@ void LogisticStocksQuotasEditor::SupplyStocks( const kernel::Entity_ABC& entityB
             {
                 int quantityToStock = static_cast< int >( meanByStock + 0.5 );
                 pStocks->SetDotation( dotationType, quantityToStock, true );
-                itRequired->second = std::max( 0.,  itRequired->second - quantityToStock );
+                itRequired->second = std::max( 0u,  itRequired->second - quantityToStock );
             }
         }
     }
@@ -377,7 +377,7 @@ void LogisticStocksQuotasEditor::Accept()
 {
     if( !selected_ )
         return;
-    std::map< const kernel::DotationType*, double > dotations;
+    LogisticEditor::T_Requirements dotations;
     stocksTableView_->ComputeValueByDotation( dotations );
     if( auto pAgent = dynamic_cast< const kernel::Agent_ABC* >( selected_.ConstCast() ) )
     {
@@ -389,7 +389,7 @@ void LogisticStocksQuotasEditor::Accept()
             const kernel::DotationType& dotationType = *itRequired->first;
             if( IsStockValid( *pAgent, dotationType ) )
                 if( auto pStocks = const_cast< Stocks* >( pAgent->Retrieve< Stocks >() ) )
-                    pStocks->SetDotation( dotationType, static_cast< unsigned int >( itRequired->second ), true );
+                    pStocks->SetDotation( dotationType, itRequired->second, true );
         }
     }
     else
@@ -474,7 +474,7 @@ void LogisticStocksQuotasEditor::ComputeInitQuotas( const kernel::Entity_ABC& en
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::ShowQuotasDialog
+// Name: LogisticStocksQuotasEditor::ShowDialog
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
 void LogisticStocksQuotasEditor::ShowDialog()
@@ -506,7 +506,8 @@ void LogisticStocksQuotasEditor::ShowDialog()
         bQuotas = true;
         setCaption( tools::translate( "StocksEditionDialog", "Stocks && Quotas" ) + QString::fromStdString( " - " ) + pFormation->GetBasicName() );
     }
-    maxStocksTableView_->Update( *pEntity, std::map< std::string, MaxStockNaturesTable::WeightVolume >() );
+    std::set< std::string > dummy;
+    maxStocksTableView_->Update( *pEntity, std::map< std::string, MaxStockNaturesTable::WeightVolume >(), dummy );
     if( bQuotas )
     {
         tabs_->ShowTabBar();
@@ -531,9 +532,9 @@ void LogisticStocksQuotasEditor::ShowDialog()
         }
     }
 
-    LogisticEditor::T_Requirements initialSotcks;
-    ComputeInitStocks( *pEntity, initialSotcks );
-    NotifyAutomaticStocks( initialSotcks );
+    LogisticEditor::T_Requirements initialStocks;
+    ComputeInitStocks( *pEntity, initialStocks );
+    NotifyAutomaticStocks( initialStocks );
 
     if( bQuotas )
     {
@@ -610,7 +611,7 @@ void LogisticStocksQuotasEditor::ShowAutomaticDialog()
 // -----------------------------------------------------------------------------
 void LogisticStocksQuotasEditor::ComputeStocksByNature( std::map< std::string, MaxStockNaturesTable::WeightVolume >& result ) const
 {
-    std::map< const kernel::DotationType*, double > dotations;
+    LogisticEditor::T_Requirements dotations;
     stocksTableView_->ComputeValueByDotation( dotations );
     for( auto it = dotations.begin(); it != dotations.end(); ++it )
     {
@@ -643,8 +644,9 @@ void LogisticStocksQuotasEditor::NotifyStocksUserChange()
 {
     std::map< std::string, MaxStockNaturesTable::WeightVolume > valuesByNature;
     ComputeStocksByNature( valuesByNature );
-    maxStocksTableView_->Update( *selected_.ConstCast(), valuesByNature );
-    stocksTableView_->SetAllowedNatures( maxStocksTableView_->GetAllowedNatures() );
+    std::set< std::string > allowedNatures;
+    maxStocksTableView_->Update( *selected_.ConstCast(), valuesByNature, allowedNatures );
+    stocksTableView_->SetAllowedNatures( allowedNatures );
 }
 
 // -----------------------------------------------------------------------------
@@ -695,7 +697,7 @@ void LogisticStocksQuotasEditor::NotifyQuotasUserChange()
     int entityId = subordinateCombo_->itemData( subordinateCombo_->currentIndex(), Qt::UserRole ).toInt();
     if( entityId == 0)
         return;
-    std::map< const kernel::DotationType*, double > dotations;
+    LogisticEditor::T_Requirements dotations;
     quotasTableView_->ComputeValueByDotation( dotations );
     quotasByEntity_[ entityId ] = dotations;
 }

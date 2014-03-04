@@ -128,10 +128,7 @@ void LogisticQuotaEditor::SetQuotas( const gui::LogisticHierarchiesBase& logHier
             {
                 if( supplyClass.GetId() == dotationType.GetLogisticSupplyClass().GetId() )
                 {
-                    //const unsigned int quantity = GetQuantity( *dataModel_, row, itRequired->second );
-                    // check: days or not???
-                    int days = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
-                    unsigned int quantity = static_cast< unsigned int >( days * itRequired->second + 0.5 );
+                    const unsigned int quantity = GetQuantity( *dataModel_, row, itRequired->second );
                     generatedQuotas[ &dotationType ] += quantity;
                 }
             }

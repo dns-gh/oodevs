@@ -72,11 +72,10 @@ void LogisticStockEditor::SupplyHierarchy( const kernel::Entity_ABC& entity, con
         const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
         if( dataModel_->item( row )->checkState() == Qt::Checked )
         {
-            int days = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
             T_Requirements curRequirements;
             SupplyLogisticBaseStocks( logHierarchy.GetEntity(), supplyClass, curRequirements );
             for( auto itReq = curRequirements.begin(); itReq != curRequirements.end(); ++itReq )
-                requirements[ itReq->first ] += static_cast< double >( days ) * itReq->second;
+                requirements[ itReq->first ] += GetQuantity( *dataModel_, row, itReq->second );
         }
     }
     emit DotationsStocksComputed( requirements );}

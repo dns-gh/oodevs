@@ -37,7 +37,7 @@ class ResourcesEditorTable_ABC : public gui::RichWidget< QTableView >
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourcesEditorTable_ABC( const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType );
+             ResourcesEditorTable_ABC( const QStringList& headers, const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType );
     virtual ~ResourcesEditorTable_ABC();
     //@}
 
@@ -52,9 +52,8 @@ public:
 public slots:
     //! @name Slots
     //@{
-    void AddLine( int );
-    void OnRemoveCurrentItem();
-    void OnClearItems();
+    virtual void OnClearItems();
+    void RemoveResource( int row );
     void OnDataChanged( const QModelIndex& index, const QModelIndex& );
     //@}
 
@@ -67,24 +66,28 @@ signals:
 public:
     //! @name Helpers
     //@{
-    virtual void AddResource( const kernel::DotationType& resource, double value = 0 ) = 0;
-    virtual void InitHeader() = 0;
-    virtual void OnValueChanged( int row, double value ) = 0;
-    QStandardItemModel* GetDataModel() const;
-    void ComputeValueByDotation( std::map< const kernel::DotationType*, double >& result ) const;
-    void SetAllowedNatures( const std::set< std::string >& allowedNatures );
-    //@}
+    virtual void AddResource( const kernel::DotationType& resource, int value = 0 );
+    virtual void UpdateLine( int row, int value );
+    void ComputeValueByDotation( std::map< const kernel::DotationType*, unsigned int >& result ) const;
 
 protected:
+    //! @name Helpers
+    //@{
+    virtual void CustomizeMenuAction( QAction* action, const kernel::DotationType& actionDotation ) const;
+    void SetData( int row, int col, const QVariant& value, int role = Qt::DisplayRole, Qt::Alignment aligment = 0 );
+    const kernel::DotationType* GetDotation( int row ) const;
+    int GetValue( int row ) const;
+
+private:
+    void InitHeader();
+    //@}
+
+private:
     //! @name Member data
     //@{
+    QStringList headers_;
     QStandardItemModel* dataModel_;
-    gui::CommonDelegate* delegate_;
-    kernel::ContextMenu* popupMenu_;
-    QMenu* resourcesMenu_;
-    QModelIndex possiblyToRemove_;
     const kernel::Resolver2< kernel::DotationType >& dotations_;
-    std::set< std::string > allowedNatures_;
     //@}
 };
 

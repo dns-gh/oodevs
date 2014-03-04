@@ -150,10 +150,9 @@ bool IsMaxExceeded( const std::string& key, const MaxStockNaturesTable::T_Weight
 // Name: MaxStockNaturesTable::Update
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void MaxStockNaturesTable::Update( const kernel::Entity_ABC& logBase, const T_WeightVolumes& currentValues )
+void MaxStockNaturesTable::Update( const kernel::Entity_ABC& logBase, const T_WeightVolumes& currentValues, std::set< std::string >& allowedNatures )
 {
     dataModel_->clear();
-    allowedNatures_.clear();
     InitHeader();
 
     T_WeightVolumes maxValues;
@@ -165,7 +164,7 @@ void MaxStockNaturesTable::Update( const kernel::Entity_ABC& logBase, const T_We
     for( auto it = maxValues.begin(); it != maxValues.end(); ++it )
     {
         dotationNatures.insert( it->first );
-        allowedNatures_.insert( it->first );
+        allowedNatures.insert( it->first );
     }
     for( auto it = dotationNatures.begin(); it != dotationNatures.end(); ++it )
     {
@@ -185,13 +184,4 @@ void MaxStockNaturesTable::Update( const kernel::Entity_ABC& logBase, const T_We
             dataModel_->item( newRowIndex, i )->setForeground( color );
         }
    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaxStockNaturesTable::GetAllowedNatures
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-const std::set< std::string >& MaxStockNaturesTable::GetAllowedNatures() const
-{
-    return allowedNatures_;
 }

@@ -12,16 +12,28 @@
 #include "moc_StockResourcesTable.cpp"
 #include "clients_gui/CommonDelegate.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/Tools.h"
+
+namespace
+{
+    QStringList GetHeaders()
+    {
+        return QStringList() << tools::translate( "StockResourcesTable", "Resource" )
+                             << tools::translate( "StockResourcesTable", "Nature" )
+                             << tools::translate( "StockResourcesTable", "Weight (T)" )
+                             << tools::translate( "StockResourcesTable", "Volume (m3)" )
+                             << tools::translate( "StockResourcesTable", "Quantity" );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: StockResourcesTable Constructor
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
 StockResourcesTable::StockResourcesTable( const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType ) 
-    : ResourcesEditorTable_ABC( objectName, parent, dotationsType )
+    : ResourcesEditorTable_ABC( GetHeaders(), objectName, parent, dotationsType )
 {
-    InitHeader();
-    delegate_->AddDoubleSpinBoxOnColumn( 4, 0, std::numeric_limits< int >::max() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,47 +46,48 @@ StockResourcesTable::~StockResourcesTable()
 }
 
 // -----------------------------------------------------------------------------
-// Name: StockResourcesTable::InitHeader
+// Name: StockResourcesTable::UpdateLine
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void StockResourcesTable::InitHeader()
+void StockResourcesTable::UpdateLine( int row, int value )
 {
-    dataModel_->setHorizontalHeaderLabels( QStringList() << tr( "Resource" ) << tr( "Nature" ) << tr( "Weight (T)" ) << tr( "Volume (m3)" ) << tr( "Quantity" ) );
-    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
-    horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    horizontalHeader()->setResizeMode( 1, QHeaderView::ResizeToContents );
-}
-
-// -----------------------------------------------------------------------------
-// Name: StockResourcesTable::OnValueChanged
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-void StockResourcesTable::OnValueChanged( int row, double value )
-{
-    int dotationId = dataModel_->item( row, 0 )->data( Qt::UserRole ).toInt();
-    if( auto pDotation = dotations_.Find( dotationId ) )
-    {
-        dataModel_->setData( dataModel_->index( row, 2 ), QString::number( value * pDotation->GetUnitWeight(), 'f', 2 ) );
-        dataModel_->setData( dataModel_->index( row, 3 ), QString::number( value * pDotation->GetUnitVolume(), 'f', 2 ) );
-    }
+    const kernel::DotationType* pDotation = GetDotation( row );
+    SetData( row, 2, QString::number( value * pDotation->GetUnitWeight(), 'f', 2 ) );
+    SetData( row, 3, QString::number( value * pDotation->GetUnitVolume(), 'f', 2 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: StockResourcesTable::AddResource
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void StockResourcesTable::AddResource( const kernel::DotationType& resource, double value /*= 0.0*/ )
+void StockResourcesTable::AddResource( const kernel::DotationType& resource, int value /*= 0.0*/ )
 {
-    int newRowIndex = dataModel_->rowCount();
-    dataModel_->setRowCount( newRowIndex + 1 );
-    dataModel_->setData( dataModel_->index( newRowIndex, 0 ), QString::fromStdString( resource.GetName() ) );
-    dataModel_->setData( dataModel_->index( newRowIndex, 0 ), static_cast< int >( resource.GetId() ), Qt::UserRole );
-    dataModel_->setData( dataModel_->index( newRowIndex, 1 ), QString::fromStdString( resource.GetNature() ) );
-    dataModel_->setData( dataModel_->index( newRowIndex, 2 ), QString::number( value * resource.GetUnitWeight(), 'f', 2 ) );
-    dataModel_->setData( dataModel_->index( newRowIndex, 3 ), QString::number( value * resource.GetUnitVolume(), 'f', 2 ) );
-    dataModel_->setData( dataModel_->index( newRowIndex, 4 ), value );
-    dataModel_->setData( dataModel_->index( newRowIndex, 4 ), value, Qt::UserRole );
-    dataModel_->item( newRowIndex, 2 )->setTextAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    dataModel_->item( newRowIndex, 3 )->setTextAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    dataModel_->item( newRowIndex, 4 )->setTextAlignment( Qt::AlignRight | Qt::AlignVCenter );
+    ResourcesEditorTable_ABC::AddResource( resource, value );
+    const int rowIndex = model()->rowCount() - 1;
+    SetData( rowIndex, 1 , QString::fromStdString( resource.GetNature() ) );
+    SetData( rowIndex, 2, QString::number( value * resource.GetUnitWeight(), 'f', 2 ), Qt::DisplayRole, Qt::AlignRight | Qt::AlignVCenter );
+    SetData( rowIndex, 3, QString::number( value * resource.GetUnitVolume(), 'f', 2 ), Qt::DisplayRole, Qt::AlignRight | Qt::AlignVCenter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StockResourcesTable::CustomizeMenuAction
+// Created: JSR 2014-03-04
+// -----------------------------------------------------------------------------
+void StockResourcesTable::CustomizeMenuAction( QAction* action, const kernel::DotationType& actionDotation ) const
+{
+    if( allowedNatures_.find( actionDotation.GetNature() ) == allowedNatures_.end() )
+    {
+        QFont font = action->font();
+        font.setItalic( true );
+        action->setFont( font );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StockResourcesTable::SetAllowedNatures
+// Created: JSR 2014-03-04
+// -----------------------------------------------------------------------------
+void StockResourcesTable::SetAllowedNatures( const std::set< std::string >& allowedNatures )
+{
+    allowedNatures_ = allowedNatures;
 }
