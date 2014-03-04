@@ -88,6 +88,8 @@ func makeOptsAndSession() (*simu.SimOpts, *simu.Session) {
 func startSimOnExercise(c *C, cfg *ClientOpts) *simu.SimProcess {
 	opts, session := makeOptsAndSession()
 	opts.ExerciseName = cfg.Exercise
+	opts.PathfindDir = cfg.PathfindDir
+	opts.PathfindFilter = cfg.PathfindFilter
 	session.Paused = cfg.Paused
 	if cfg.Step > 0 {
 		session.TimeStep = cfg.Step
@@ -184,15 +186,17 @@ func checkOrderAckSequences(c *C, client *swapi.Client) {
 }
 
 type ClientOpts struct {
-	Exercise    string
-	User        string
-	Password    string
-	Step        int
-	Paused      bool
-	Logger      swapi.MessageLogger
-	WaitTimeout time.Duration
-	StartGaming bool
-	Seed        int
+	Exercise       string
+	User           string
+	Password       string
+	Step           int
+	Paused         bool
+	Logger         swapi.MessageLogger
+	WaitTimeout    time.Duration
+	StartGaming    bool
+	Seed           int
+	PathfindDir    string
+	PathfindFilter string
 }
 
 func NewAllUserOpts(exercise string) *ClientOpts {
@@ -237,6 +241,16 @@ func (opts *ClientOpts) AddGaming() *ClientOpts {
 // fires.
 func (opts *ClientOpts) FixSeed() *ClientOpts {
 	opts.Seed = 1
+	return opts
+}
+
+func (opts *ClientOpts) DumpPathfinds(path string) *ClientOpts {
+	opts.PathfindDir = path
+	return opts
+}
+
+func (opts *ClientOpts) FilterPathfinds(filter string) *ClientOpts {
+	opts.PathfindFilter = filter
 	return opts
 }
 

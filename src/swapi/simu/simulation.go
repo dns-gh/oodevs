@@ -42,6 +42,10 @@ type SimOpts struct {
 	EnableTailing bool
 	// Prefix the tail output with supplied string
 	TailPrefix string
+	// Pathfinds dump directory. Relative paths are resolve relatively to the
+	// the session directory. An empty value disables the feature.
+	PathfindDir    string
+	PathfindFilter string
 }
 
 func CheckPaths(directory bool, paths ...string) error {
@@ -214,6 +218,19 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	}
 	if opts.TestCommands {
 		args = append(args, "--test-commands")
+	}
+	if len(opts.PathfindDir) > 0 {
+		pfDir := opts.PathfindDir
+		if !filepath.IsAbs(pfDir) {
+			pfDir, err = filepath.Abs(filepath.Join(sessionDir, pfDir))
+			if err != nil {
+				return nil, err
+			}
+		}
+		args = append(args, "--dump-pathfinds="+pfDir)
+	}
+	if len(opts.PathfindFilter) > 0 {
+		args = append(args, "--filter-pathfinds="+opts.PathfindFilter)
 	}
 
 	logFiles := []string{}
