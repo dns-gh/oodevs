@@ -1,21 +1,19 @@
--------------------------------------------------------------------------------
--- KnowledgeManager :
--- Manage query and destroy knowledge when task is finish
--- @author MGD
--- @created 2010-03-24
--- @modified MGD 2010-10-28
---
--- This file is part of a MASA library or program.
--- Refer to the included end-user license agreement for restrictions.
---
--- Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
--------------------------------------------------------------------------------
+-------------------------------------------------------------------
+---- CRTASKLISTENER INTERFACE IMPLEMENTATION
+-------------------------------------------------------------------
 
 local type_message = 0
 local type_rc = 1
 local type_event = 2
 local type_warning = 3
 
+--- Call the specific function for displaying a message with parameters
+-- @param RC_Function, the methode using for displaying a message
+-- @param type_rc, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param list, the list of parameters. If it's not a list, return false
+-- @param emitter, the sending agent
+-- @return Boolean, error code
 RC_WithParams = function( RC_Function, type_rc, id, list, emitter )
     if list[1] then
         return RC_Function( type_rc, id, list, emitter )
@@ -24,6 +22,12 @@ RC_WithParams = function( RC_Function, type_rc, id, list, emitter )
     end
 end
 
+--- Call the function for displaying a message
+-- @see RC_WithParams
+-- Any additional parameter will be used as parameters to the report.
+-- @param emitter, the sending agent
+-- @param id, the number of the message
+-- @return Boolean, error code
 integration.reportWithSource = function( emitter, id, ... )
     if tableRC[id] then 
         return RC_WithParams( tableRC[id], type_rc, id, {...}, emitter )
@@ -32,19 +36,31 @@ integration.reportWithSource = function( emitter, id, ... )
     end
 end
 
+--- Call the function for displaying a message
+-- @see integration.report
+-- Any additional parameter will be used as parameters to the report.
 DEC_RC = function( ... )
     integration.report( ... )
 end
 
+--- Call the function for displaying a message
+-- @see integration.reportWithSource
+-- Any additional parameter will be used as parameters to the report.
+-- @param id, the number of the message
 integration.report = function( id, ... )
     integration.reportWithSource( myself, id, ... )
 end
 
-
+--- Call the function for displaying trace
+-- @param stringMessage, String, the message to display
 integration.displayTrace = function ( stringMessage )
     DEC_Trace( stringMessage )
 end
 
+--- Call the function for displaying a message of type "message"
+-- @see RC_WithParams
+-- Any additional parameter will be used as parameters to the report.
+-- @param id, the number of the message
 DEC_Message = function( id, ... )
     if tableRC[id] then 
         return RC_WithParams( tableRC[id], type_message, id, {...} )
@@ -53,6 +69,10 @@ DEC_Message = function( id, ... )
     end
 end
 
+--- Call the function for displaying a message of type "warning"
+-- @see RC_WithParams
+-- Any additional parameter will be used as parameters to the report.
+-- @param id, the number of the message
 DEC_Warning = function( id, ... )
     if tableRC[id] then 
         return RC_WithParams( tableRC[id], type_warning, id, {...} )
@@ -61,10 +81,17 @@ DEC_Warning = function( id, ... )
     end
 end
 
+--- Call the function for displaying a message
+-- @see integration.report
+-- Any additional parameter will be used as parameters to the report.
 integration.genericRC = function ( ... ) 
     integration.report( ... )
 end
 
+--- Call the function for displaying a message
+-- @see integration.report
+-- @see DEC_Message
+-- Any additional parameter will be used as parameters to the report.
 integration.pionRC = function ( ... )
     if not DEC_Agent_AutomateEstEmbraye() then
         integration.report( ... )
@@ -73,6 +100,8 @@ integration.pionRC = function ( ... )
     end
 end
 
+--- Listen the state of the task and execute method for each state
+-- OnNewTick; TaskStarted; StageChanged; Cleanup; TaskFinished; TaskDone
 function RegisterTaskListener()
     local taskListener = {
         stage = {},
@@ -137,6 +166,8 @@ function RegisterTaskListener()
     masalife.brain.core.registerUpdateCallback( taskListener.OnNewTick )
 end
 
+--- Listen the done state of the task depending of the cause
+-- TaskStarted; StageChanged; TaskFinished; TaskDone
 function RegisterDoneTaskListener()
     local doneTaskListener = {}
     doneTaskListener.stage = {}
@@ -155,6 +186,7 @@ function RegisterDoneTaskListener()
     masalife.brain.core.registerTaskListener( doneTaskListener )
 end
 
+--- Notify the automat that the task is done
 integration.notifyTaskEnded = function( )
     local automat = integration.GetSuperiorKnowledge( meKnowledge )
     if automat then
@@ -162,46 +194,105 @@ integration.notifyTaskEnded = function( )
     end
 end
 
+--- Fill the message parameter : String
+-- @param myself, the message sender
+-- @param typeMessage, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param list, the String parameter
 integration.RC_String = function( myself, typeMessage, id, list )
     DEC_RC_String( myself, typeMessage, id, list )
 end
 
+--- Fill the message parameter : Object knowledge
+-- @param myself, the message sender
+-- @param typeMessage, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param list, the Simulation Object knowledge parameter
 integration.RC_ObjectKnowledge = function( myself, typeMessage, id, list )
     DEC_RC_ObjectKnowledge( myself, typeMessage, id, list )
 end
 
+--- Fill the message parameter : Agent knowledge
+-- @param myself, the message sender
+-- @param typeMessage, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param list, the Simulation Agent knowledge parameter
 integration.RC_AgentKnowledge = function( myself, typeMessage, id, list )
     DEC_RC_AgentKnowledge( myself, typeMessage, id, list )
 end
 
+--- Fill the message parameter : Agent and Automat
+-- @param myself, the message sender
+-- @param typeMessage, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param firstList, the Simulation Agent parameter
+-- @param secondList, the Simulation Automat parameter
 integration.RC_Pion_Automate = function( myself, typeMessage, id, firstList, secondList )
     DEC_RC_Pion_Automate( myself, typeMessage, id, firstList, secondList )
 end
 
+--- Fill the message parameter : Agent and Agent
+-- @param myself, the message sender
+-- @param typeMessage, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param firstList, the Simulation Agent parameter
+-- @param secondList, the Simulation Agent parameter
 integration.RC_Pion_Pion = function( myself, typeMessage, id, firstList, secondList )
     DEC_RC_Pion_Pion( myself, typeMessage, id, firstList, secondList )
 end
 
+--- Fill the message parameter : Crowd
+-- @param myself, the message sender
+-- @param typeMessage, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param list, the Simulation Crowd parameter
 integration.RC_Id = function( myself, typeMessage, id, list )
     DEC_RC_Id( myself, typeMessage, id, list )
 end
 
+--- Fill the message parameter : Population
+-- @param myself, the message sender
+-- @param typeMessage, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param list, the Simulation Population
 integration.RC_PopulationKnowledge = function( myself, typeMessage, id, list )
     DEC_RC_PopulationKnowledge( myself, typeMessage, id, list )
 end
 
+--- Fill the message parameter : Float
+-- @param myself, the message sender
+-- @param typeMessage, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param list, the Float
 integration.RC_Float = function( myself, typeMessage, id, list )
     DEC_RC_Float( myself, typeMessage, id, list )
 end
 
+--- Fill the message parameter : Integer and Integer
+-- @param myself, the message sender
+-- @param typeMessage, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param firstList, the Integer parameter
+-- @param secondList, the Integer parameter
 integration.RC_Int_Int = function( myself, typeMessage, id, firstList, secondList )
     DEC_RC_Int_Int( myself, typeMessage, id, firstList, secondList )
 end
 
+--- Fill the message parameter : Float and Float
+-- @param myself, the message sender
+-- @param typeMessage, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param firstList, the Float parameter
+-- @param secondList, the Float parameter
 integration.RC_Float_Float = function( myself, typeMessage, id, firstList, secondList )
     DEC_RC_Float_Float( myself, typeMessage, id, firstList, secondList )
 end
 
+--- Fill the message parameter : Stage
+-- @param myself, the message sender
+-- @param typeMessage, the type of the message (type_message; type_rc; type_event; type_warning)
+-- @param id, the number of the message
+-- @param list, the Stage
 integration.RC_Stage = function( myself, typeMessage, id, list )
     DEC_RC_Stage( myself, typeMessage, id, list )
 end
