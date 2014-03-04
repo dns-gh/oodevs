@@ -55,8 +55,6 @@ void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroupType::Terminate()
 {
-    for( auto it = knowledgeGroupTypes.begin(); it != knowledgeGroupTypes.end(); ++it )
-        delete it->second;
     knowledgeGroupTypes.clear();
 }
 
