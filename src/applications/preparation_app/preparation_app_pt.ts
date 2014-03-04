@@ -808,14 +808,6 @@
         <source>Days</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Edit Stocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Quotas</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LogisticLinksEditor</name>
@@ -841,16 +833,33 @@
     </message>
 </context>
 <context>
-    <name>LogisticQuotaEditor</name>
+    <name>LogisticStocksQuotasEditor</name>
+    <message>
+        <source>Logistics subordinate:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic allocation...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Logistic</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>LogisticStockEditor</name>
     <message>
-        <source>Logistic</source>
+        <source>Edit Logistics Stocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Stocks &amp; Quotas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1021,6 +1030,29 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Resource networks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MaxStockNaturesTable</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weight (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max weight (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max volume (m3)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1793,6 +1825,17 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
+    <name>QuotasResourcesTable</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RemoveBlocksDialog</name>
     <message>
         <source>Remove urban blocks</source>
@@ -1852,6 +1895,21 @@ This data can&apos;t be projected.</source>
     <message>
         <source>A cycle has been detected in the resource network for the block %1.
  The network automatic generation cannot be computed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ResourcesEditorTable_ABC</name>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add resource</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2338,6 +2396,29 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
+    <name>StockResourcesTable</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weight (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>StocksEditionDialog</name>
     <message>
         <source>Stocks Edition</source>
@@ -2345,6 +2426,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Quotas Edition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stocks &amp; Quotas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -611,10 +611,6 @@ Détail: %1.</translation>
         <source>Stocks</source>
         <translation>Stocks</translation>
     </message>
-    <message>
-        <source>Stocks/Edit Stocks</source>
-        <translation>Stocks/Editer les Stocks</translation>
-    </message>
 </context>
 <context>
     <name>StructuralStateAttribute</name>

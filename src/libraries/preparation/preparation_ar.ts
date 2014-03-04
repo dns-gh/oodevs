@@ -603,10 +603,6 @@ Reason: %1.</source>
         <source>Stocks</source>
         <translation type="unfinished">الأرصدة</translation>
     </message>
-    <message>
-        <source>Stocks/Edit Stocks</source>
-        <translation type="unfinished">مخزونات الأرصدة/تحرير</translation>
-    </message>
 </context>
 <context>
     <name>StructuralStateAttribute</name>

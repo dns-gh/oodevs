@@ -603,10 +603,6 @@ Reason: %1.</source>
         <source>Stocks</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Stocks/Edit Stocks</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>StructuralStateAttribute</name>

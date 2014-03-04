@@ -499,12 +499,12 @@ void LogisticStocksQuotasEditor::ShowDialog()
     else if( auto pAutomat = dynamic_cast< const kernel::Automat_ABC* >( pEntity ) )
     {
         bQuotas = true;
-        setCaption( tools::translate( "StocksEditionDialog", "Stocks && Quotas" ) + QString::fromStdString( " - " ) + pAutomat->GetName() );
+        setCaption( tools::translate( "StocksEditionDialog", "Stocks & Quotas" ) + QString::fromStdString( " - " ) + pAutomat->GetName() );
     }
     else if( auto pFormation = dynamic_cast< const kernel::Formation_ABC* >( pEntity ) )
     {
         bQuotas = true;
-        setCaption( tools::translate( "StocksEditionDialog", "Stocks && Quotas" ) + QString::fromStdString( " - " ) + pFormation->GetBasicName() );
+        setCaption( tools::translate( "StocksEditionDialog", "Stocks & Quotas" ) + QString::fromStdString( " - " ) + pFormation->GetBasicName() );
     }
     std::set< std::string > dummy;
     maxStocksTableView_->Update( *pEntity, std::map< std::string, MaxStockNaturesTable::WeightVolume >(), dummy );
@@ -590,7 +590,7 @@ void LogisticStocksQuotasEditor::Update( const kernel::Entity_ABC& entity, kerne
         return;
     selected_ = &entity;
     kernel::ContextMenu* pSubMenu = menu.SubMenu( "Helpers", tr( "Logistic" ), false, 7 );
-    pSubMenu->insertItem( tools::translate( "LogisticStocksQuotasEditor", "Edit Stocks && Quotas" ), this, SLOT( ShowDialog() ) );
+    pSubMenu->insertItem( tools::translate( "LogisticStocksQuotasEditor", "Edit Stocks & Quotas" ), this, SLOT( ShowDialog() ) );
 }
 
 // -----------------------------------------------------------------------------
