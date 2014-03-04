@@ -53,8 +53,8 @@ void PHY_MaterialCompositionType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MaterialCompositionType::Terminate()
 {
-    ::materialCompositions.clear();
-    ::nNextId = 0;
+    materialCompositions.clear();
+    nNextId = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -63,8 +63,8 @@ void PHY_MaterialCompositionType::Terminate()
 // -----------------------------------------------------------------------------
 const PHY_MaterialCompositionType* PHY_MaterialCompositionType::Find( const std::string& strName )
 {
-    auto it = ::materialCompositions.find( strName );
-    if( it == ::materialCompositions.end() )
+    auto it = materialCompositions.find( strName );
+    if( it == materialCompositions.end() )
         return 0;
     return it->second;
 }
@@ -75,7 +75,7 @@ const PHY_MaterialCompositionType* PHY_MaterialCompositionType::Find( const std:
 // -----------------------------------------------------------------------------
 unsigned int PHY_MaterialCompositionType::Count()
 {
-    return static_cast< unsigned >( ::materialCompositions.size() );
+    return static_cast< unsigned >( materialCompositions.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ namespace
 // -----------------------------------------------------------------------------
 PHY_MaterialCompositionType::PHY_MaterialCompositionType( const std::string& name, xml::xistream& xis )
     : name_      ( name )
-    , nId_       ( ::nNextId++ )
+    , nId_       ( nNextId++ )
     , attritions_( ReadAttritions( xis ) )
 {
     // NOTHING
@@ -153,5 +153,5 @@ void PHY_MaterialCompositionType::ReadMaterialComposition( xml::xistream& xis )
     if( materialCompositions.count( strName ) )
         throw MASA_EXCEPTION( xis.context() + "Material composition " + strName + " already defined" );
     auto next = std::auto_ptr< PHY_MaterialCompositionType >( new PHY_MaterialCompositionType( strName, xis ) );
-    ::materialCompositions.insert( strName, next );
+    materialCompositions.insert( strName, next );
 }

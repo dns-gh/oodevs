@@ -39,7 +39,7 @@ void PHY_RoofShapeType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_RoofShapeType::Terminate()
 {
-    ::roofShapes.clear();
+    roofShapes.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -48,8 +48,8 @@ void PHY_RoofShapeType::Terminate()
 // -----------------------------------------------------------------------------
 const PHY_RoofShapeType* PHY_RoofShapeType::Find( const std::string& strName )
 {
-    auto it = ::roofShapes.find( strName );
-    if( it == ::roofShapes.end() )
+    auto it = roofShapes.find( strName );
+    if( it == roofShapes.end() )
         return 0;
     return it->second;
 }
@@ -80,8 +80,8 @@ PHY_RoofShapeType::~PHY_RoofShapeType()
 void PHY_RoofShapeType::ReadRoofShape( xml::xistream& xis )
 {
     std::string shape = xis.attribute< std::string >( "name" );
-    if( ::roofShapes.count( shape ) )
+    if( roofShapes.count( shape ) )
         throw MASA_EXCEPTION( xis.context() + "Roof shape " + shape + " already defined" );
     auto next = std::auto_ptr< PHY_RoofShapeType >( new PHY_RoofShapeType( shape ) );
-    ::roofShapes.insert( shape, next );
+    roofShapes.insert( shape, next );
 }

@@ -37,7 +37,7 @@ void PHY_AccomodationType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_AccomodationType::Terminate()
 {
-    ::accomodations.clear();
+    accomodations.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -46,8 +46,8 @@ void PHY_AccomodationType::Terminate()
 // -----------------------------------------------------------------------------
 const PHY_AccomodationType* PHY_AccomodationType::Find( const std::string& strName )
 {
-    auto it = ::accomodations.find( strName );
-    if( it == ::accomodations.end() )
+    auto it = accomodations.find( strName );
+    if( it == accomodations.end() )
         return 0;
     return it->second;
 }
@@ -119,6 +119,6 @@ void PHY_AccomodationType::ReadAccomodation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_AccomodationType::Visit( const std::function< void( const PHY_AccomodationType& ) >& visitor )
 {
-    for( auto it = ::accomodations.begin(); it != ::accomodations.end(); ++it )
+    for( auto it = accomodations.begin(); it != accomodations.end(); ++it )
         visitor( *it->second );
 }

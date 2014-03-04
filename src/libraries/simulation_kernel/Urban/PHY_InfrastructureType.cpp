@@ -37,7 +37,7 @@ void PHY_InfrastructureType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_InfrastructureType::Terminate()
 {
-    ::infrastructures.clear();
+    infrastructures.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -46,8 +46,8 @@ void PHY_InfrastructureType::Terminate()
 // -----------------------------------------------------------------------------
 const PHY_InfrastructureType* PHY_InfrastructureType::Find( const std::string& strName )
 {
-    auto it = ::infrastructures.find( strName );
-    if( it == ::infrastructures.end() )
+    auto it = infrastructures.find( strName );
+    if( it == infrastructures.end() )
         return 0;
     return it->second;
 }

@@ -32,7 +32,7 @@ void MIL_KnowledgeGroupType::InitializeWithTime( xml::xistream& xis, double time
     xis >> xml::start( "knowledge-groups" )
             >> xml::list( "knowledge-group", [&]( xml::xistream& xis ){
                 const std::string name = xis.attribute< std::string >( "name" );
-                if( ::knowledgeGroupTypes.count( name ) )
+                if( knowledgeGroupTypes.count( name ) )
                     throw MASA_EXCEPTION( xis.context() + "Type already defined" );
                 auto next = std::auto_ptr< MIL_KnowledgeGroupType >( new MIL_KnowledgeGroupType( name, xis, timeFactor ) );
                 knowledgeGroupTypes.insert( name, next );
@@ -55,9 +55,9 @@ void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroupType::Terminate()
 {
-    for( auto it = ::knowledgeGroupTypes.begin(); it != ::knowledgeGroupTypes.end(); ++it )
+    for( auto it = knowledgeGroupTypes.begin(); it != knowledgeGroupTypes.end(); ++it )
         delete it->second;
-    ::knowledgeGroupTypes.clear();
+    knowledgeGroupTypes.clear();
 }
 
 namespace
@@ -90,7 +90,7 @@ namespace
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis, double timeFactor )
     : strName_                                      ( strName )
-    , nID_                                          ( ::nNextID++ )
+    , nID_                                          ( nNextID++ )
     , rKnowledgeAgentMaxLifeTime_                   ( ReadTime( xis, "unit-knowledge", "max-lifetime" ) * timeFactor )
     , rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_( ReadMaxDistance( xis ) )
     , rKnowledgeAgentExtrapolationTime_             ( std::max( 1., ReadTime( xis, "unit-knowledge", "interpolation-time" ) * timeFactor ) )
@@ -115,8 +115,8 @@ MIL_KnowledgeGroupType::~MIL_KnowledgeGroupType()
 // -----------------------------------------------------------------------------
 const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( const std::string& strName )
 {
-    auto it = ::knowledgeGroupTypes.find( strName );
-    return it == ::knowledgeGroupTypes.end() ? 0 : it->second;
+    auto it = knowledgeGroupTypes.find( strName );
+    return it == knowledgeGroupTypes.end() ? 0 : it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +125,7 @@ const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( const std::strin
 // -----------------------------------------------------------------------------
 const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( unsigned int nID )
 {
-    for( auto it = ::knowledgeGroupTypes.begin(); it != ::knowledgeGroupTypes.end(); ++it )
+    for( auto it = knowledgeGroupTypes.begin(); it != knowledgeGroupTypes.end(); ++it )
         if( it->second->GetID() == nID )
             return it->second;
     return 0;
@@ -139,7 +139,7 @@ const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindTypeOrAny( const std::
 {
     const MIL_KnowledgeGroupType* type = FindType( strName );
     if( !type && !::knowledgeGroupTypes.empty() )
-        type = ::knowledgeGroupTypes.begin()->second;
+        type = knowledgeGroupTypes.begin()->second;
     return type;
 }
 
