@@ -31,7 +31,7 @@ ParamPoint::ParamPoint( const InterfaceBuilder_ABC& builder,
 
     locationEditor_ = new ::gui::LocationEditorBox( controllers_, converter_, Qt::Vertical );
     featureNameParser_.reset( new ::gui::FeatureNameParser() );
-    locationEditor_->AddParser( featureNameParser_, tr( "Feature" ) );
+    locationEditor_->AddParser( featureNameParser_, tr( "Terrain feature" ) );
     featureNameParser_->Load( builder.GetConfig() );
     locationEditor_->setVisible( false );
     connect( locationEditor_, SIGNAL( DataChanged() ), SLOT( OnEditorDataChanged() ) );

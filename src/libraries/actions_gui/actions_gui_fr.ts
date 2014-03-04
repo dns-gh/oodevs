@@ -189,8 +189,8 @@
 <context>
     <name>actions::gui::ParamPoint</name>
     <message>
-        <source>Feature</source>
-        <translation type="unfinished"></translation>
+        <source>Terrain feature</source>
+        <translation>Elément de terrain</translation>
     </message>
 </context>
 <context>

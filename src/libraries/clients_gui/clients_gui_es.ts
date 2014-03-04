@@ -1298,8 +1298,8 @@ Desea eliminarlo?</translation>
         <translation>Ubicación de marcador</translation>
     </message>
     <message>
-        <source>Feature</source>
-        <translation>Elemento</translation>
+        <source>Terrain feature</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

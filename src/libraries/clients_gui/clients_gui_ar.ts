@@ -1258,10 +1258,6 @@ Please check access permissions or write protection.</source>
         <translation type="unfinished">محرر الموقع</translation>
     </message>
     <message>
-        <source>Feature</source>
-        <translation type="unfinished">ميزة</translation>
-    </message>
-    <message>
         <source>Center on location</source>
         <translation type="unfinished">مركز على الموقع</translation>
     </message>
@@ -1298,6 +1294,10 @@ Do you want to remove it?</source>
     <message>
         <source>Bookmark location</source>
         <translation type="unfinished">موقع الإشارة المرجعية</translation>
+    </message>
+    <message>
+        <source>Terrain feature</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

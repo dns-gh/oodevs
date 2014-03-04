@@ -41,7 +41,7 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
 {
     locBox_ = new LocationEditorBox( controllers, converter );
     featureNameParser_.reset( new FeatureNameParser() );
-    locBox_->AddParser( featureNameParser_, tr( "Feature" ) );
+    locBox_->AddParser( featureNameParser_, tr( "Terrain feature" ) );
     RichWidget< QToolButton >* gotoButton = new RichWidget< QToolButton >( "gotoButton", this );
     gotoButton->setIconSet( MAKE_PIXMAP( goto ) );
     gotoButton->setPopupDelay( 0 );

@@ -189,7 +189,7 @@
 <context>
     <name>actions::gui::ParamPoint</name>
     <message>
-        <source>Feature</source>
+        <source>Terrain feature</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
