@@ -105,7 +105,9 @@ public:
     bool                            MaintenanceHandleComposanteForDiagnosis   ( PHY_MaintenanceComposanteState& composanteState );
     bool                            MaintenanceHandleComposanteForRepair      ( PHY_MaintenanceComposanteState& composanteState );
     bool                            IsMaintenanceManual() const;
+    bool                            IsSupplyManual() const;
     void                            OnReceiveLogMaintenanceSetManual          ( const sword::MissionParameters& parameters );
+    void                            OnReceiveLogSupplySetManual               ( const sword::MissionParameters& parameters );
 
     //$$$ A FACTORISER AVEC LES FONCTION CI DESSUS
     PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type = 0 );
@@ -177,15 +179,20 @@ public:
     template< typename Message >
     bool SendChangedState( Message& message ) const
     {
-        if( manualHasChanged_ )
+        bool modified = maintenanceManualModified_;
+        if( maintenanceManualModified_ )
             message().set_log_maintenance_manual( maintenanceManual_ );
+        modified |= supplyManualModified_;
+        if( supplyManualModified_ )
+            message().set_log_supply_manual( supplyManual_ );
         SendChangedState();
-        return manualHasChanged_;
+        return modified;
     }
     template< typename Message >
     void SendFullState( Message& message ) const
     {
         message().set_log_maintenance_manual( maintenanceManual_ );
+        message().set_log_supply_manual( supplyManual_ );
         SendFullState();
     }
     virtual void WriteLogisticLinksODB( xml::xostream& xos ) const;
@@ -223,7 +230,9 @@ private:
     std::vector< logistic::SupplyConvoysObserver_ABC* > supplyConvoysObserver_;
 
     bool maintenanceManual_;
-    bool manualHasChanged_;
+    bool maintenanceManualModified_;
+    bool supplyManual_;
+    bool supplyManualModified_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AutomateLOG* pion, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AutomateLOG* pion, const unsigned int /*version*/ );

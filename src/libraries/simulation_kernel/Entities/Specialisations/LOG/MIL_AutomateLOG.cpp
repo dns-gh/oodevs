@@ -70,12 +70,14 @@ void load_construct_data( Archive& archive, MIL_AutomateLOG* automat, const unsi
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG::MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLevel& logLevel )
-    : pAssociatedAutomate_ ( 0 )
-    , pAssociatedFormation_( &formation )
-    , pLogisticHierarchy_  ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
-    , pLogLevel_           ( &logLevel )
-    , maintenanceManual_   ( false )
-    , manualHasChanged_    ( false )
+    : pAssociatedAutomate_      ( 0 )
+    , pAssociatedFormation_     ( &formation )
+    , pLogisticHierarchy_       ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
+    , pLogLevel_                ( &logLevel )
+    , maintenanceManual_        ( false )
+    , maintenanceManualModified_( false )
+    , supplyManual_             ( false )
+    , supplyManualModified_     ( false )
 {
     // NOTHING
 }
@@ -85,12 +87,14 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLe
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG::MIL_AutomateLOG( MIL_Automate& automate, const PHY_LogisticLevel& logLevel )
-    : pAssociatedAutomate_ ( &automate )
-    , pAssociatedFormation_( 0 )
-    , pLogLevel_           ( &logLevel )
-    , pLogisticHierarchy_  ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
-    , maintenanceManual_   ( false )
-    , manualHasChanged_    ( false )
+    : pAssociatedAutomate_      ( &automate )
+    , pAssociatedFormation_     ( 0 )
+    , pLogLevel_                ( &logLevel )
+    , pLogisticHierarchy_       ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
+    , maintenanceManual_        ( false )
+    , maintenanceManualModified_( false )
+    , supplyManual_             ( false )
+    , supplyManualModified_     ( false )
 {
     // NOTHING
 }
@@ -100,12 +104,14 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Automate& automate, const PHY_LogisticLeve
 // Created: AHC 2010-09-28
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG::MIL_AutomateLOG( const PHY_LogisticLevel& level )
-    : pAssociatedAutomate_ ( 0 )
-    , pAssociatedFormation_( 0 )
-    , pLogLevel_           ( &level )
-    , pLogisticHierarchy_  ( 0 )
-    , maintenanceManual_   ( false )
-    , manualHasChanged_    ( false )
+    : pAssociatedAutomate_      ( 0 )
+    , pAssociatedFormation_     ( 0 )
+    , pLogLevel_                ( &level )
+    , pLogisticHierarchy_       ( 0 )
+    , maintenanceManual_        ( false )
+    , maintenanceManualModified_( false )
+    , supplyManual_             ( false )
+    , supplyManualModified_     ( false )
 {
     // NOTHING
 }
@@ -137,16 +143,17 @@ template< typename T > void MIL_AutomateLOG::Visit( T& visitor ) const
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 template < typename Archive >
-void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
+void MIL_AutomateLOG::serialize( Archive& ar, const unsigned int )
 {
-    file & boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this );
-    file & boost::serialization::base_object< logistic::SupplySupplier_ABC >( *this );
-    file & pAssociatedAutomate_;
-    file & pAssociatedFormation_;
-    file & pLogisticHierarchy_;
-    file & supplyRequests_;
-    file & supplyConsigns_;
-    file & maintenanceManual_;
+    ar & boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this )
+       & boost::serialization::base_object< logistic::SupplySupplier_ABC >( *this )
+       & pAssociatedAutomate_
+       & pAssociatedFormation_
+       & pLogisticHierarchy_
+       & supplyRequests_
+       & supplyConsigns_
+       & maintenanceManual_
+       & supplyManual_;
 }
 
 // -----------------------------------------------------------------------------
@@ -773,7 +780,8 @@ void MIL_AutomateLOG::Clean()
 {
     BOOST_FOREACH( T_SupplyRequests::value_type& data, supplyRequests_ )
         data->Clean();
-    manualHasChanged_ = false;
+    maintenanceManualModified_ = false;
+    supplyManualModified_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -904,12 +912,34 @@ bool MIL_AutomateLOG::IsMaintenanceManual() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::IsSupplyManual
+// Created: BAX 2014-02-26
+// -----------------------------------------------------------------------------
+bool MIL_AutomateLOG::IsSupplyManual() const
+{
+    return supplyManual_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::OnReceiveLogMaintenanceSetManual
 // Created: SLI 2014-01-21
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnReceiveLogMaintenanceSetManual( const sword::MissionParameters& parameters )
 {
     protocol::CheckCount( parameters, 1 );
-    maintenanceManual_ = protocol::GetBool( parameters, 0 );
-    manualHasChanged_ = true;
+    const bool value = protocol::GetBool( parameters, 0 );
+    maintenanceManualModified_ = maintenanceManual_ != value;
+    maintenanceManual_ = value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::OnReceiveLogSupplySetManual
+// Created: BAX 2014-02-26
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::OnReceiveLogSupplySetManual( const sword::MissionParameters& parameters )
+{
+    protocol::CheckCount( parameters, 1 );
+    const bool value = protocol::GetBool( parameters, 0 );
+    supplyManualModified_ = supplyManual_ != value;
+    supplyManual_ = value;
 }

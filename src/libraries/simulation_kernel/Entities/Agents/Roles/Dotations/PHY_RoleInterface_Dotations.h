@@ -95,7 +95,6 @@ public:
     //! @name Logistic - Supply
     //@{
     virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const = 0; // Logistic
-    virtual bool HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const = 0;  // Logistic
     virtual void Apply( boost::function< void( PHY_Dotation& ) > visitor ) const = 0;
     virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const = 0;
     //@}

@@ -38,10 +38,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-
-    void load( MIL_CheckPointInArchive&, const unsigned int );
-    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    template< typename Archive > void serialize( Archive& ar, const unsigned int );
     //@}
 
     //! @name Operations
@@ -85,12 +82,12 @@ private:
     //@{
     void SetValue( double rValue );
     bool IsJammed() const;
+    void NotifySupplyNeeded();
     //@}
 
 private:
     //! @name Member data
     //@{
-    static const double maxCapacity_;
     const PHY_DotationCategory* pCategory_;
     PHY_DotationGroup* pGroup_;
     double rValue_;
@@ -100,6 +97,7 @@ private:
     double rConsumptionReservation_;
     double rFireReservation_;
     double rSupplyThreshold_;
+    bool bNotified_;
     bool bDotationBlocked_; // Prisoner
     bool bInfiniteDotations_;
     //@}

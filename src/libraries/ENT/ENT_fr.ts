@@ -1350,5 +1350,9 @@
         <source>Switch Log Maintenance Mode</source>
         <translation>Changement de mode de maintenance</translation>
     </message>
+    <message>
+        <source>Switch Log Supply Mode</source>
+        <translation>Changement de mode de ravitaillement</translation>
+    </message>
 </context>
 </TS>

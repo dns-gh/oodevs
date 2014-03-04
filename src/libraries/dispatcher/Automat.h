@@ -139,6 +139,7 @@ private:
     std::string decisionalModel_;
     bool brainDebug_;
     bool logMaintenanceManual_;
+    bool logSupplyManual_;
     //@}
 };
 

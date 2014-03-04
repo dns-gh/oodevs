@@ -51,6 +51,7 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const too
     , decisionalModel_     ( type_.GetDecisionalModel().GetName() )
     , brainDebug_          ( false )
     , logMaintenanceManual_( msg.log_maintenance_manual() )
+    , logSupplyManual_     ( msg.log_supply_manual() )
 {
     if( ! parentFormation_ && ! parentAutomat_ )
         throw MASA_EXCEPTION( "invalid parent for automat " + msg.name() );
@@ -252,6 +253,8 @@ void Automat::DoUpdate( const sword::AutomatAttributes& msg )
         brainDebug_ = msg.brain_debug();
     if( msg.has_log_maintenance_manual() )
         logMaintenanceManual_ = msg.log_maintenance_manual();
+    if( msg.has_log_supply_manual() )
+        logSupplyManual_ = msg.log_supply_manual();
 }
 
 // -----------------------------------------------------------------------------
@@ -305,6 +308,7 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
         entry->set_value( it->second );
     }
     msg().set_log_maintenance_manual( logMaintenanceManual_ );
+    msg().set_log_supply_manual( logSupplyManual_ );
     msg.Send( publisher );
 }
 
@@ -331,6 +335,7 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         msg().set_decisional_model( decisionalModel_ );
         msg().set_brain_debug( brainDebug_ );
         msg().set_log_maintenance_manual( logMaintenanceManual_ );
+        msg().set_log_supply_manual( logSupplyManual_ );
         msg.Send( publisher );
     }
     if( order_.get() )

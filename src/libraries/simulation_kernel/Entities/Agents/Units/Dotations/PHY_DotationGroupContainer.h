@@ -108,7 +108,6 @@ public:
     //! @name Logistic
     //@{
     void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
-    bool HasSupplyNeededNotified     ( const PHY_DotationCategory& dotationCategory ) const;
     void Apply                       ( boost::function< void( PHY_Dotation& ) > visitor ) const;
     void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor, MIL_AutomateLOG& tc2 ) const;
     void EnforceAviationResources    ( E_AviationRange aviationRange, const PHY_UnitType& unitType, MIL_AutomateLOG& tc2 );
