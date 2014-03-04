@@ -67,7 +67,7 @@ end
 --- Assign list parameters to the given mission
 -- @param missionPion, The mission
 -- @param parameterName, The name of the parameter (Adaptation tool, tab 'missions', part 'parameters', column 'name')
--- @param value, The value og the parameter, filling by the user when he give a mission
+-- @param value, The value of the parameter, filling by the user when he give a mission
 local AssignMissionParameterList = function ( missionPion, parameterName, value )
     local myself = myself
     if not myself.ParameterListRegistrationFunctor then initializeAssignMissions() end
@@ -125,7 +125,10 @@ local function fillParameters( mission, params )
     end
 end
 
-
+--- Assign the mission to the calling DirectIA agent
+-- This method can only be called by an agent
+-- @see fillParameters
+-- @param content, content.mission_type is containing the type of the mission ; content.echelon is containing the echelon ; content.mission_objectives is containing the mission parameters (for each element we have the parameter's name and the parameter's value)
 integration.communication.StartMissionPion = function( content  )
   local mission = DEC_CreerMissionPion( content.mission_type )
   fillParameters( mission, content.mission_objectives )
@@ -133,6 +136,10 @@ integration.communication.StartMissionPion = function( content  )
   F_Pion_SeteEtatEchelon( meKnowledge.source, content.echelon ) 
 end
 
+--- Assign the mission to the calling DirectIA agent
+-- This method can only be called by an agent
+-- @see fillParameters
+-- @param content, content.mission_type is containing the type of the mission ; content.echelon is containing the echelon ; content.mission_objectives is containing the mission parameters (for each element we have the parameter's name and the parameter's value)
 integration.communication.StartMissionPionVersPion = function( content )
   local mission = DEC_CreerMissionPionVersPion( content.mission_type )
   fillParameters( mission, content.mission_objectives ) 
@@ -140,6 +147,10 @@ integration.communication.StartMissionPionVersPion = function( content )
   F_Pion_SeteEtatEchelon( meKnowledge.source, content.echelon ) 
 end
 
+--- Assign the given mission to the calling DirectIA agent with the sender in parameter (usually a follow mission )
+-- This method can only be called by an agent
+-- @param sender, the DirectIA agent, the mission's parameter
+-- @param missionName, the task's name of the mission
 integration.communication.FollowMe = function( missionName, sender )
     local mission = DEC_CreerMissionPionVersPion( missionName )
     local followParam = DEC_AssignMissionPionListParameter( sender )   -- entities to folow: the sender of the message
@@ -149,6 +160,10 @@ integration.communication.FollowMe = function( missionName, sender )
     DEC_DonnerMissionPionVersPion( mission )                           -- Issue the mission
 end
 
+--- Assign the given mission to the calling DirectIA agent with the waypoints in parameter (usually a moveTo mission )
+-- This method can only be called by an agent
+-- @param missionName, the task's name of the mission
+-- @param waypoints, the list of positions given into parameter
 integration.communication.OrderMoveToFromCommander = function( missionName, waypoints )
     local mission = DEC_CreerMissionPion( missionName )
     local tempSimPoints = {}
@@ -160,6 +175,11 @@ integration.communication.OrderMoveToFromCommander = function( missionName, wayp
     DEC_DonnerMissionPion( mission ) -- Issue the mission
 end
 
+--- Assign the given mission to the calling DirectIA agent with the works in parameter (usually a build or remove mission )
+-- This method can only be called by an agent
+-- @param missionName, the task's name of the mission
+-- @param works, the list of Object knowledge given into parameter
+-- @param instantaneously Boolean, if true, the mission is done instantaneously (no delays, no resource used). If false, the mission takes time.
 integration.communication.OrderPerformWorkFromCommander = function( missionName, works, instantaneously )
     local mission = DEC_CreerMissionPion( missionName )
     local tempSimObjects = {}
@@ -171,31 +191,48 @@ integration.communication.OrderPerformWorkFromCommander = function( missionName,
     DEC_DonnerMissionPion( mission ) -- Issue the mission
 end
 
-
+--- Assign the mission to the calling DirectIA automat
+-- This method can only be called by an automat
+-- @see fillParameters
+-- @param content.entity is containing the receiver automat, content, content.taskName is containing the task's name of the mission ; content.mission_params is containing the mission parameters (for each element we have the parameter's name and the parameter's value)
 integration.communication.StartMissionAutomate = function( content )
   local mission = DEC_CreerMissionAutomate( content.entity.source, content.taskName )
   fillParameters( mission, content.params ) 
   DEC_DonnerMissionADAAutomate( mission )
 end
 
--- Coordination Manager
-integration.communication.StopMovingInFrontOfPE = function( content )
+--- Modify the value of the "myself.inFrontOfPE" variable to true.
+-- It means that if the agent is a SE, it cannot move in front of the PE (depends of the dangerous direction)
+-- This method can only be called by an agent
+integration.communication.StopMovingInFrontOfPE = function()
     myself.inFrontOfPE = true
 end
 
-integration.communication.SlowDown = function( content )
+--- Modify the value of the "myself.speedModulation.coordination" variable to 0.01 and the "myself.slowDown" to true.
+-- It means that the calling unit will slow down because he is to far away from the others
+-- This method can only be called by an agent
+-- @see integration.communication.Continue
+integration.communication.SlowDown = function()
     myself.speedModulation = myself.speedModulation or {}
     myself.speedModulation.coordination = 0.01 -- scipio 
     myself.slowDown = true -- ww base
 end
 
-
-integration.communication.Continue = function( content )
+--- Modify the value of the "myself.speedModulation.coordination" variable to 1 and the "myself.slowDown" to false.
+-- It means that the calling unit will stop slowing down because. The agent can have the speed defined in the Adaptation tool.
+-- This method can only be called by an agent
+-- @see integration.communication.Continue
+integration.communication.Continue = function()
     myself.speedModulation = myself.speedModulation or {}
     myself.speedModulation.coordination = 1 -- scipio 
     myself.slowDown = false -- ww base
 end
 
+--- Returns true if the given automat can do the given mission (defines in adaptation tool, tab decisional model )
+-- This method can only be called by an automat
+-- @param entity, the DirectIA automat
+-- @param targetTask, the task's name
+-- @return Boolean, true if the given automat can do the given mission (defines in adaptation tool, tab decisional model ), false otherwise
 integration.RetrieveAutomateTask = function( entity, targetTask )
     local fun = function( task )
         if task.name == targetTask then
@@ -209,6 +246,10 @@ integration.RetrieveAutomateTask = function( entity, targetTask )
     do return task end
 end
 
+--- Returns true if the given agent can do the given mission (defines in adaptation tool, tab decisional model )
+-- @param entity, the DirectIA agent
+-- @param targetTask, the task's name
+-- @return Boolean, true if the given agent can do the given mission (defines in adaptation tool, tab decisional model ), false or nil otherwise
 integration.RetrieveAutomatInBatallionTask = function( entity, targetTask )
     if DEC_IsAutomateMissionAvailable( entity.source, targetTask ) then
         local knowledgeName = integration.taskKnowledge[targetTask]
@@ -217,6 +258,10 @@ integration.RetrieveAutomatInBatallionTask = function( entity, targetTask )
     return nil
 end
 
+--- Returns knowledge class if the given agent can do the given mission (defines in adaptation tool, tab decisional model )
+-- @param entity, the DirectIA agent
+-- @param targetTask, the task's name
+-- @return Boolean, the knowledge class of the task if the given agent can do the given mission (defines in adaptation tool, tab decisional model ), nil otherwise
 integration.RetrievePionTask = function( entity, targetTask )
     if DEC_IsMissionAvailable( entity.source, targetTask ) then
         local knowledgeName = integration.taskKnowledge[ targetTask ]
@@ -229,6 +274,12 @@ integration.RetrievePionTask = function( entity, targetTask )
     return nil
 end
 
+--- Sends a message to the specific automat or agent
+-- @param String, the name of the message
+-- @param list of DirectIA automats or agents, the list of receivers
+-- @param list of elements, all needed for the message
+-- @param list of additionnal element
+-- @return Boolean, the error code
 integration.SendMessage = function( ... )
     local status, err = pcall( masalife.brain.communication.protocol.send, ... )
     if not status then
@@ -237,6 +288,10 @@ integration.SendMessage = function( ... )
     return status
 end
 
+--- Returns true if the given agent can do the given mission (defines in adaptation tool, tab decisional model )
+-- @param entity, the DirectIA agent
+-- @param targetTaskName, the task's name
+-- @return Boolean, true if the given agent can do the given mission (defines in adaptation tool, tab decisional model ), false otherwise
 integration.isMissionAvailable = function( entity, targetTaskName )
     if DEC_IsMissionAvailable( entity.source, targetTaskName ) then
         return true
@@ -244,19 +299,24 @@ integration.isMissionAvailable = function( entity, targetTaskName )
     return false
 end
 
+--- Returns true if the given agent can do the given mission (defines in adaptation tool, tab decisional model )
+-- @param entity, the DirectIA agent
+-- @param targetTaskName, the task's name
+-- @return Boolean, true if the given agent can do the given mission (defines in adaptation tool, tab decisional model ), false otherwise
 integration.isMissionAgentAvailable = function( entity, targetTaskName )
     return DEC_IsMissionPionAvailable( entity, targetTaskName )
 end
 
---- Returns true if the provided fragmentary order is available
---- to the agent, false otherwise
--- @param entity : C++ source of an agent
--- @param fragOrderName : string, the name of the fragmentary order
--- @return boolean, the availability as defined in the physical database
+--- Returns true if the given agent can do the given fragmentary order (defines in adaptation tool, tab decisional model )
+-- @param entity, the DirectIA agent
+-- @param fragOrderName, the name of the fragmentary order
+-- @return Boolean, true if the given agent can do the given fragmentary order (defines in adaptation tool, tab decisional model ), false otherwise
 integration.isFragOrderAvailable = function( entity, fragOrderName )
     return DEC_IsFragOrderAvailable( entity, fragOrderName )
 end
 
+--- Receives the sending message "TaskDone" at the end of a task
+-- @param myFrontElements, the message content
 masalife.brain.communication.setMessageTreatment( "TaskDone",
     function( message )
         local myFrontElements = integration.listenFrontElementCallbacks[meKnowledge]
@@ -279,19 +339,24 @@ masalife.brain.communication.setMessageTreatment( "TaskDone",
 )
 
 integration.listenFrontElementCallbacks = {}
+--- Add the given agent to the list of element to listen
+-- @see integration.initializeListenFrontElement for initialization
+-- @param entity, the DirectIA agent to add to the list.
 integration.ListenFrontElement = function( entity )
-    -- comparer la connaissance meKnowledge (pion) avec la connaissance que l'automate a de ce pion ne fonctionne pas
-    -- maintenant on compare l'objet c++ qui est derriere
     integration.listenFrontElementCallbacks[meKnowledge] = integration.listenFrontElementCallbacks[meKnowledge] or {}
     local listenFrontElementCallbacks = integration.listenFrontElementCallbacks[meKnowledge]
     listenFrontElementCallbacks[entity.source] = true
 end
 
+--- Initialize the list of element to listen
+-- @see integration.ListenFrontElement
 integration.initializeListenFrontElement = function()
     integration.listenFrontElementCallbacks[meKnowledge] = {}
 end
 
--- if the entity is already an agent, return it, otherwise, transform the agenKnowledge into agent
+--- Transforms the knowledge DirectIA agent into a DirectIA agent
+-- @param entity, the DirectIA agent (can be a knowledge or an agent)
+-- @return DirectIA agent, if the given agent is already in the good type, returns it, otherwise, returns the transformation of the knowledge
 integration.getAgentFromKnowledge = function( entity )
     if masalife.brain.core.class.isOfType( entity, integration.ontology.types.agent) then
         return entity
@@ -301,10 +366,17 @@ integration.getAgentFromKnowledge = function( entity )
     end
 end
 
+--- Transforms the knowledge DirectIA agent into a DirectIA agent
+-- @see integration.getAgentFromKnowledge
+-- @param entity, the DirectIA agent (can be a knowledge or an agent)
+-- @return DirectIA agent, if the given agent is already in the good type, returns it, otherwise, returns the transformation of the knowledge
 integration.getAgentFromAutomatKnowledge = function( entity )
     return integration.getAgentFromKnowledge( entity )
 end
 
+--- Returns the current mision of the given agent
+-- @param entity, the DirectIA agent
+-- @return simulation mission, the current mission of the given entity
 function DEC_GetMission( entity )
     local mission = DEC_GetRawMission( entity )
     if entity.mission == mission then
@@ -315,104 +387,176 @@ function DEC_GetMission( entity )
     return mission
 end
 
+--- Returns the current mision of the given agent
+-- @see DEC_GetMission
+-- @param entity, the DirectIA agent
+-- @return simulation mission, the current mission of the given entity
 integration.getMission = function( entity )
     return DEC_GetMission( entity.source )
 end
 
+--- Stop the current mission of the calling element
 integration.stopMission = function()
     DEC_FinMission()
 end
 
+--- Returns the current mision of the given agent
+-- @param entity, the DirectIA agent
+-- @return simulation mission, the current mission of the given entity
 integration.getRawMission = function( entity )
     return DEC_GetRawMission( entity )
 end
 
+--- Returns the danger direction of the given mission
+-- @param mission, the Simulation mission
+-- @return simulation direction, the danger direction of the given mission
 integration.getDirectionEnemy = function( mission )
     return DEC_GetDirectionEnnemi( mission )
 end
 
+--- Returns the subordinates agents of the calling automat without the CP and depends of the possibility of communication (a jamming unit will not be returns)
+-- This method can only be called by an automat
+-- @return list of simulation agent, the agents from the calling automat without the CP and depends of the possibility of communication (a jamming unit will not be returns)
 integration.getUnitsWithoutHQCommunication = function( )
     return DEC_Automate_PionsSansPCCommunication( )
 end
 
+--- Returns if the given agent has got a mission
+-- @param entity, the DirectIA agent
+-- @return Boolean, true if the given agent has got a mission, false otherwise
 integration.hasMission = function( entity )
     return DEC_HasMission( entity )
 end
 
+--- Give the given task to the calling automat
+-- This method can only be called by an automat
+-- @param task, the task's name
+-- @return Boolean, error code
 integration.giveCommanderTask = function( task )
     return DEC_DonnerMissionAutomate( task )
 end
 
+--- Returns the danger direction of the given agent
+-- @param entity, the DirectIA agent
+-- @return simulation direction, the danger direction of the current agent's mission
 integration.getDangerousDirection = function( task )
     return DEC_GetDirectionDanger( task )
 end
 
+--- Returns the fuseau of the calling element
+-- @return simulation fuseau, the element AOR
 integration.getAORFromCommander = function()
     return DEC_Fuseau()
 end
 
---NMI
+--- Returns the fuseau of the calling element
+-- @return simulation fuseau, the element AOR
 integration.getAORFromPlatoon = function()
     return DEC_Fuseau()
 end
 
+--- Returns true if the given AOR is null
+-- @param AOR, Simulation fuseau
+-- @return true if the given AOR is null, false otherwise
 integration.AORisNull = function( AOR )
-		return DEC_Fuseau_IsNull( AOR )
+	return DEC_Fuseau_IsNull( AOR )
 end
 
+--- Returns the given AOR width
+-- @param AOR, Simulation fuseau
+-- @return Integer, the width of the given AOR
 integration.getAORWidth = function( AOR )
     return DEC_Fuseau_Width( AOR )
 end
 
+--- Sets the echelon of the given agent by the given echelon
+-- @param agent, DirectIA agent
+-- @param echelonState, the echelon state ( eEtatEchelon_None; eEtatEchelon_Second; eEtatEchelon_First; eEtatEchelon_Scout; eEtatEchelon_Reserve )
 integration.setEchelonState = function( agent, echelonState )
     F_Pion_SeteEtatEchelon( agent, echelonState )
 end
 
+--- Returns the echelon of the given agent
+-- @param agent, DirectIA agent
+-- @return Integer, the echelon state ( 0 = eEtatEchelon_None; 1 = eEtatEchelon_Second; 2 = eEtatEchelon_First; 3 = eEtatEchelon_Scout; 4 = eEtatEchelon_Reserve )
 integration.getEchelonState = function( agent )
     return F_Pion_GeteEtatEchelon( agent )
 end
 
+--- Returns the path of the given agent
+-- @param agent, DirectIA agent
+-- @return Simulation path of the given agent
 integration.getAgentMovement = function( agent )
     return F_Pion_GetitMvt( agent)
 end
 
+--- Returns the escort agent of the given agent
+-- @param agent, DirectIA agent
+-- @return Simulation agent, the escort of the given agent
 integration.getAgentEscort = function( agent )
     return F_Pion_GetpionEnEscorte( agent )
 end
 
+--- Sets the escort of the given agent
+-- @param agentToEscort, DirectIA agent to escort
+-- @param escortAgent, DirectIA agent escort
 integration.setAgentEscort = function( agentToEscort, escortAgent )
     F_Pion_SetpionEnEscorte( agentToEscort, escortAgent )
 end
 
+--- Sets if the given agent has got a new escort
+-- @param agent, DirectIA agent to escort
+-- @param boolean, true if the given agent has got a new escort, false otherwise
 integration.setAgentNewEscorted = function( agent, boolean )
     F_Pion_SetNewEscorted( agent, boolean )
 end
 
+--- Returns if the given agent has got a new escort
+-- @param agent, DirectIA agent to escort
+-- @return Boolean, true if the given agent has got a new escort, false otherwise
 integration.getAgentNewEscorted = function( agent )
     return F_Pion_GetNewEscorted( agent )
 end
 
+--- Sets the radio state of the given agent
+-- @param agent, DirectIA agent
+-- @param radioState, the radio state of the given agent
 integration.setRadioState = function( agent, radioState )
     F_Pion_SeteEtatRadio( agent, radioState )
 end
 
+--- Returns the decisional state of the given agent
+-- @param agent, DirectIA agent
+-- @return Integer, the decisional state of the given agent (eEtatDec_RAS = 0; eEtatDec_Continu = 1; eEtatDec_Sauvegarde = 2)
 integration.getAgentDecisionalState = function( agent )
     return F_Pion_GeteEtatDec( agent )
 end
 
+--- Returns the decisional state of the given knowledge agent
+-- @param kAgent, DirectIA knowledge agent
+-- @return Integer, the decisional state of the given agent (eEtatDec_RAS = 0; eEtatDec_Continu = 1; eEtatDec_Sauvegarde = 2)
 integration.getKnowledgeAgentDecisionalState = function( kAgent )
     local agent = DEC_ConnaissanceAgent_EnAgent( kAgent)
     return F_Pion_GeteEtatDec( agent )
 end
 
+--- Sets the decisional state of the given agent
+-- @param agent, DirectIA agent
+-- @param decisionalState, the decisional state of the given agent to set (eEtatDec_RAS = 0; eEtatDec_Continu = 1; eEtatDec_Sauvegarde = 2)
 integration.setAgentDecisionalState = function( agent, decisionalState )
     F_Pion_SeteEtatDec( agent, decisionalState )
 end
 
+--- Sets the radar state of the given agent
+-- @param agent, DirectIA agent
+-- @param radarState, the radar state of the given agent
 integration.setRadarState = function( agent, radarState )
     F_Pion_SeteEtatRadar( agent, radarState )
 end
 
+--- Returns the type of anything (like Simulation fragmentary order, Simulation agent, Simulation crowd)
+-- @param any, the element (can be any Simulation element)
+-- @return String, the type (for Simulation fragmentary order it returns his name, for Simulation agent or crowd it returns the type define in Adaptation tool )
 integration.getAnyType = function( any )
     return any:GetType()
 end
