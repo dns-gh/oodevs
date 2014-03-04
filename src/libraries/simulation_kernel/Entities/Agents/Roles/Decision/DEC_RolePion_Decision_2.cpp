@@ -32,6 +32,7 @@
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendHaulerComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendSpecificComposantes.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionConstructObject.h"
+#include "Entities/Agents/Actions/Objects/PHY_ActionConsumeResources.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionPrepareObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionDestroyObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionMineObject.h"
@@ -725,6 +726,11 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< void( int, const double, int ) >( boost::bind( &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     RegisterFunction( "DEC_CreateBreakdown",
         boost::function< bool( unsigned int, unsigned int ) >( boost::bind( &DEC_AgentFunctions::CreateBreakdown, boost::ref( GetPion() ), _1, _2 ) ) );
+    RegisterFunction( "DEC_StartConsumingResources",
+        boost::function< unsigned( const PHY_DotationCategory*, double, double ) >(
+            [&]( const PHY_DotationCategory* category, double value, double duration ) {
+                return DEC_ActionFunctions::StartAction< PHY_ActionConsumeResources >( GetPion(), category, value, duration );
+    }));
 
     // Transport / Heliportage
     RegisterFunction( "DEC_Transport_AjouterPion",
