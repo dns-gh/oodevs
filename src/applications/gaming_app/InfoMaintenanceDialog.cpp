@@ -28,7 +28,10 @@
 InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers,
                                               gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
                                               const SimulationController& simulationController, Model& model )
-    : InfoDialog< kernel::MaintenanceStates_ABC >( parent, controllers, "" )
+    : InfoDialog< kernel::MaintenanceStates_ABC >( controllers,
+                                                   parent,
+                                                   tools::translate( "InfoMaintenanceDialog", "Maintenance system" ),
+                                                   [&]( const gui::LogisticBase& base ) { return base.IsMaintenanceManual(); } )
     , widget_( 0 )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
@@ -81,24 +84,6 @@ bool InfoMaintenanceDialog::ShouldDisplay( const kernel::Entity_ABC& element ) c
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoMaintenanceDialog::NotifySelected
-// Created: MMC 2013-01-09
-// -----------------------------------------------------------------------------
-void InfoMaintenanceDialog::NotifySelected( const kernel::Entity_ABC* entity )
-{
-    selected_ = entity;
-    boost::optional< bool > manual = boost::none;
-    if( entity )
-    {
-        InfoDialog< kernel::MaintenanceStates_ABC >::NotifySelected( entity );
-        if( const auto* base = entity->Retrieve< gui::LogisticBase >() )
-            if( base->IsBase() )
-                manual = base->IsMaintenanceManual();
-    }
-    UpdateTitle( manual );
-}
-
-// -----------------------------------------------------------------------------
 // Name: InfoMaintenanceDialog::NotifyUpdated
 // Created: NPT 2013-05-16
 // -----------------------------------------------------------------------------
@@ -133,31 +118,6 @@ void InfoMaintenanceDialog::FillCurrentModel( const kernel::Entity_ABC& entity )
 void InfoMaintenanceDialog::FillHistoryModel()
 {
     widget_->FillHistoryModel();
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoMaintenanceDialog::UpdateTitle
-// Created: ABR 2014-01-27
-// -----------------------------------------------------------------------------
-void InfoMaintenanceDialog::UpdateTitle( boost::optional< bool > manual )
-{
-    const QString baseTitle = tools::translate( "InfoMaintenanceDialog", "Maintenance system" );
-    if( manual )
-        setWindowTitle( baseTitle + " - " + ( *manual
-                            ? tools::translate( "InfoMaintenanceDialog", "Manual" )
-                            : tools::translate( "InfoMaintenanceDialog", "Automatic" ) ) );
-    else
-        setWindowTitle( baseTitle );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoMaintenanceDialog::NotifyUpdated
-// Created: ABR 2014-01-27
-// -----------------------------------------------------------------------------
-void InfoMaintenanceDialog::NotifyUpdated( const gui::LogisticBase& ext )
-{
-    if( selected_ && selected_->GetId() == ext.GetEntity().GetId() )
-        UpdateTitle( ext.IsMaintenanceManual() );
 }
 
 // -----------------------------------------------------------------------------

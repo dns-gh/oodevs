@@ -1034,6 +1034,17 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>InfoDialog_Base</name>
+    <message>
+        <source>Manual</source>
+        <translation>Manuel</translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation>Automatique</translation>
+    </message>
+</context>
+<context>
     <name>InfoDock</name>
     <message>
         <source>Info</source>
@@ -1107,14 +1118,6 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Chain status</source>
         <translation>Etat de la chaîne</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Manuel</translation>
-    </message>
-    <message>
-        <source>Automatic</source>
-        <translation>Automatique</translation>
     </message>
 </context>
 <context>

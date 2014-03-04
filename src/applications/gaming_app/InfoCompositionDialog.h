@@ -12,11 +12,6 @@
 
 #include "InfoDialog.h"
 
-namespace kernel
-{
-    class Controllers;
-}
-
 namespace gui
 {
     class ItemFactory_ABC;
@@ -29,8 +24,6 @@ namespace gui
 // Created: SBO 2007-02-19
 // =============================================================================
 class InfoCompositionDialog : public InfoDialog_Base
-                            , public tools::Observer_ABC
-                            , public tools::SelectionObserver< kernel::Entity_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -43,11 +36,7 @@ private:
      //! @name Helpers
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
     //@}
-
-private:
-    kernel::Controllers& controllers_;
 };
 
 #endif // __InfoCompositionDialog_h_

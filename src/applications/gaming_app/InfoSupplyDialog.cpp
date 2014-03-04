@@ -10,14 +10,16 @@
 #include "gaming_app_pch.h"
 #include "InfoSupplyDialog.h"
 #include "LogisticsRequestsSupplyWidget.h"
-#include "LogisticStatusWidgets.h"
+#include "LogisticStatusWidget.h"
 #include "SupplyQuotasWidget.h"
 #include "SupplyStocksListView.h"
 #include "SupplyTransportersListView.h"
+
+#include "clients_gui/LogisticBase.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Tools.h"
-#include "clients_gui/LogisticHelpers.h"
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogisticHelpers.h"
 #include "gaming/LogSupplyConsign.h"
@@ -31,7 +33,10 @@ using namespace kernel;
 InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
                                     gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
                                     const SimulationController& simulationController, Model& model )
-    : InfoDialog< SupplyStates >( parent, controllers, tools::translate( "InfoSupplyDialog", "Supply system" ) )
+    : InfoDialog< SupplyStates >( controllers,
+                                  parent,
+                                  tools::translate( "InfoSupplyDialog", "Supply system" ),
+                                  [&]( const gui::LogisticBase& base ) { return base.IsSupplyManual(); } )
     , widget_( 0 )
 {
     tabs_ = new QTabWidget( RootWidget() );
@@ -91,7 +96,7 @@ bool InfoSupplyDialog::ShouldDisplay( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 void InfoSupplyDialog::NotifySelected( const kernel::Entity_ABC* entity )
 {
-    selected_ = entity;
+    InfoDialog< SupplyStates >::NotifySelected( entity );
     if( entity )
     {
         if( logistic_helpers::IsLogisticBase( *entity ) )
@@ -101,7 +106,6 @@ void InfoSupplyDialog::NotifySelected( const kernel::Entity_ABC* entity )
         }
         else if( tabs_->widget( 2 ) == supplyQuotasWidget_ )
             tabs_->removeTab( 2 );
-        InfoDialog< SupplyStates >::NotifySelected( entity );
     }
 }
 
