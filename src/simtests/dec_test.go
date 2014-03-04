@@ -18,6 +18,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"regexp"
+	"strconv"
 	"strings"
 	"swapi"
 	"swapi/simu"
@@ -293,5 +294,118 @@ func (s *TestSuite) TestDecCreateBreakdown(c *C) {
 	}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return reflect.DeepEqual(data.Units[unit.Id].EquipmentDotations[equipmentType], &equipment)
+	})
+}
+
+func DecConsumeResources(c *C, client *swapi.Client, unit uint32, resource ResourceType, offset, duration int) uint32 {
+	script := strings.TrimSpace(`
+function ConsumeResources()
+    dotation = DEC_GetDotation({{.resource}})
+    action = DEC_StartConsumingResources(dotation, {{.offset}}, {{.duration}})
+    return tostring(action)
+end
+`)
+	output, err := client.ExecScript(unit, "ConsumeResources", Parse(c, script,
+		map[string]interface{}{
+			"resource": resource,
+			"offset":   offset,
+			"duration": duration,
+		}))
+	c.Assert(err, IsNil)
+	id, err := strconv.ParseUint(output, 10, 32)
+	c.Assert(err, IsNil)
+	return uint32(id)
+}
+
+func DecApplyAction(c *C, client *swapi.Client, name string, unit, action uint32) {
+	names := map[string]string{
+		"suspend": "Pause",
+		"resume":  "Reprend",
+		"stop":    "_Stop",
+	}
+	script := strings.TrimSpace(`
+function ApplyAction()
+    DEC_{{.name}}Action({{.action}})
+    return ""
+end
+`)
+	_, err := client.ExecScript(unit, "ApplyAction", Parse(c, script,
+		map[string]interface{}{
+			"name":   names[name],
+			"action": action,
+		}))
+	c.Assert(err, IsNil)
+}
+
+func DecSuspendAction(c *C, client *swapi.Client, unit, action uint32) {
+	DecApplyAction(c, client, "suspend", unit, action)
+}
+
+func DecResumeAction(c *C, client *swapi.Client, unit, action uint32) {
+	DecApplyAction(c, client, "resume", unit, action)
+}
+
+func DecStopAction(c *C, client *swapi.Client, unit, action uint32) {
+	DecApplyAction(c, client, "stop", unit, action)
+}
+
+func TickOnce(c *C, client *swapi.Client) {
+	tick := client.Model.GetTick()
+	err := client.Resume(1)
+	c.Assert(err, IsNil)
+	done := client.Model.WaitUntilTickEnds(tick)
+	c.Assert(done, Equals, true)
+}
+
+func testDecStartConsumingResources(c *C, callback func(client *swapi.Client, unit, action, dotation uint32)) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog).StartPaused())
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Maintenance Log Unit 3")
+	const dotation = uint32(electrogen_1)
+	c.Assert(d.Units[unit.Id].ResourceDotations[dotation].Quantity, Equals, int32(10))
+	// This unit has 10 electrogen_1 resources.
+	// Try to deplete it completely after 10 steps
+	action := DecConsumeResources(c, client, unit.Id, electrogen_1, -100, 10*10)
+	TickOnce(c, client) // need one full tick to apply dec command
+	callback(client, unit.Id, action, dotation)
+}
+
+func (s *TestSuite) TestDecStartConsumingResources(c *C) {
+	// normal case
+	testDecStartConsumingResources(c, func(client *swapi.Client, unit, action, dotation uint32) {
+		quantities := []int32{9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0}
+		for _, qty := range quantities {
+			TickOnce(c, client)
+			d := client.Model.GetData()
+			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+		}
+	})
+	// stop action before end
+	testDecStartConsumingResources(c, func(client *swapi.Client, unit, action, dotation uint32) {
+		quantities := []int32{9, 8, 7, 6, 5, 5, 5}
+		for i, qty := range quantities {
+			TickOnce(c, client)
+			d := client.Model.GetData()
+			if i == 3 {
+				DecStopAction(c, client, unit, action)
+			}
+			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+		}
+	})
+	// suspend action in the middle
+	testDecStartConsumingResources(c, func(client *swapi.Client, unit, action, dotation uint32) {
+		quantities := []int32{9, 8, 7, 6, 5, 5, 5, 4, 3, 2, 1, 0, 0, 0}
+		for i, qty := range quantities {
+			TickOnce(c, client)
+			d := client.Model.GetData()
+			if i == 3 {
+				DecSuspendAction(c, client, unit, action)
+			}
+			if i == 5 {
+				DecResumeAction(c, client, unit, action)
+			}
+			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+		}
 	})
 }
