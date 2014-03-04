@@ -682,9 +682,13 @@ T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_[] =
 
 }  // namespace
 
-#define INIT_TR( NAME )\
+#define INIT_TRANSLATION( NAME, CONTEXT )\
     BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1 );\
-    InitTr( ( NAME ## Converter_ ), "ENT_Tr" );
+    InitTr( ( NAME ## Converter_ ), CONTEXT );
+
+#define INIT_TR( NAME ) INIT_TRANSLATION( NAME, "ENT_Tr" )
+
+#define INIT_TR_WITH_CONTEXT( NAME ) INIT_TRANSLATION( NAME, #NAME )
 
 #define INIT_PROTO_TR( CLASS, ALIAS )\
     BOOST_STATIC_ASSERT( COUNT_OF( ALIAS ## Converter_ ) == ( sword:: ## CLASS ## _ARRAYSIZE ) + 1 );\
@@ -741,7 +745,7 @@ void ENT_Tr::InitTranslations()
     INIT_TR( AviationRange );
     INIT_TR( BreakdownNTI );
     INIT_TR( BreakdownType );
-    INIT_TR( CoordinateSystem );
+    INIT_TR_WITH_CONTEXT( CoordinateSystem );
     INIT_TR( CrossingType );
     INIT_TR( Diplomacy );
     INIT_TR( DotationFamily );
