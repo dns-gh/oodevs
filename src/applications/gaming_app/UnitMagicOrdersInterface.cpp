@@ -109,36 +109,33 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
         return;
 
     selectedEntity_ = &agent;
-    if( const MagicOrders* orders = agent.Retrieve< MagicOrders >() )
-    {
-        kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
-        int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
-        magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
-        AddSurrenderMenu( magicMenu, agent );
-        const gui::Decisions_ABC* decisions = agent.Retrieve< gui::Decisions_ABC >();
-        if( decisions->IsDebugActivated() )
-            AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
-        else
-            AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
-        AddReloadBrainMenu( magicMenu, static_.types_.unitModels_,
-            agent.Retrieve< gui::Decisions_ABC >() ? agent.Retrieve< gui::Decisions_ABC >()->GetModelName() : "unknown",
-            agent.GetType().GetDecisionalModel().GetName() );
-        if( orders->CanRetrieveTransporters() )
-            AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
-        AddMagic( tr( "Destroy - Component" ), SLOT( DestroyComponent() ), magicMenu );
-        AddMagic( tr( "Delete unit" ), SLOT( DeleteUnit() ), magicMenu );
 
-        const LogMaintenanceConsigns* maintenanceConsigns = agent.Retrieve< LogMaintenanceConsigns >();
-        const LogMedicalConsigns* medicalConsigns = agent.Retrieve< LogMedicalConsigns >();
-        const LogSupplyConsigns* supplyConsigns = agent.Retrieve< LogSupplyConsigns >();
-        const LogFuneralConsigns* funeralConsigns = agent.Retrieve< LogFuneralConsigns >();
-        if( maintenanceConsigns && maintenanceConsigns->IsHandlingConsigns() ||
-            medicalConsigns && medicalConsigns->IsHandlingConsigns() ||
-            supplyConsigns && supplyConsigns->IsHandlingConsigns() ||
-            funeralConsigns && funeralConsigns->IsHandlingConsigns() )
-            AddMagic( tr( "Finish logistic handlings" ), SLOT( FinishLogisticHandlings() ), magicMenu );
-        FillCommonOrders( magicMenu );
-    }
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
+    AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
+    AddSurrenderMenu( magicMenu, agent );
+    const gui::Decisions_ABC* decisions = agent.Retrieve< gui::Decisions_ABC >();
+    if( decisions->IsDebugActivated() )
+        AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
+    else
+        AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
+    AddReloadBrainMenu( magicMenu, static_.types_.unitModels_,
+        agent.Retrieve< gui::Decisions_ABC >() ? agent.Retrieve< gui::Decisions_ABC >()->GetModelName() : "unknown",
+        agent.GetType().GetDecisionalModel().GetName() );
+    if( agent.Get< MagicOrders >().CanRetrieveTransporters() )
+        AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
+    AddMagic( tr( "Destroy - Component" ), SLOT( DestroyComponent() ), magicMenu );
+    AddMagic( tr( "Delete unit" ), SLOT( DeleteUnit() ), magicMenu );
+
+    const LogMaintenanceConsigns* maintenanceConsigns = agent.Retrieve< LogMaintenanceConsigns >();
+    const LogMedicalConsigns* medicalConsigns = agent.Retrieve< LogMedicalConsigns >();
+    const LogSupplyConsigns* supplyConsigns = agent.Retrieve< LogSupplyConsigns >();
+    const LogFuneralConsigns* funeralConsigns = agent.Retrieve< LogFuneralConsigns >();
+    if( maintenanceConsigns && maintenanceConsigns->IsHandlingConsigns() ||
+        medicalConsigns && medicalConsigns->IsHandlingConsigns() ||
+        supplyConsigns && supplyConsigns->IsHandlingConsigns() ||
+        funeralConsigns && funeralConsigns->IsHandlingConsigns() )
+        AddMagic( tr( "Finish logistic handlings" ), SLOT( FinishLogisticHandlings() ), magicMenu );
+    FillCommonOrders( magicMenu );
 }
 
 // -----------------------------------------------------------------------------
