@@ -17,7 +17,7 @@
 
     <target name="update">
         <update name="buildtools"/>
-        <update name="golang" version="1.2"/>
+        <update name="golang" version="1.2.1"/>
         <update name="golibs"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="terrains-dev" todir="${data.dir}/data/terrains"/>
