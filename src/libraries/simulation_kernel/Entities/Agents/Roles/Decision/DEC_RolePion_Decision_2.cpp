@@ -511,16 +511,16 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< std::vector< unsigned int >( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::GetHumansFromAllTypes< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Crowd_HealWoundedHumans",
         boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HealWoundedHumans, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_ConnaissancePopulation_Verrouiller", 
+    RegisterFunction( "DEC_ConnaissancePopulation_Verrouiller",
         boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::Lock, boost::cref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_ConnaissancePopulation_Deverrouiller", 
+    RegisterFunction( "DEC_ConnaissancePopulation_Deverrouiller",
         boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::Unlock, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Connaissances_BlocUrbain",
         boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlock, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );
     RegisterFunction( "DEC_Connaissances_BlocUrbainPourPosition",
         boost::function< const MIL_UrbanObject_ABC*( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockForPosition, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Connaissances_BlocUrbainDansZone",
-        boost::function< T_UrbanObjectVector( TER_Localisation* )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockInZone, boost::ref( GetPion() ), _1 ) ) );    
+        boost::function< T_UrbanObjectVector( TER_Localisation* )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockInZone, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant", boost::function< float( MIL_UrbanObject_ABC* )>( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentRecceProgress, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_ConnaissanceBlocUrbain_Traficabilite",
         boost::function< double( MIL_UrbanObject_ABC* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetPathfindCost, boost::cref( GetPion() ), _1 ) ) );
@@ -609,14 +609,14 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_OrdersFunctions::GetLima< MIL_Agent_ABC >, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_GetLimasFromType",
         boost::function< std::vector< unsigned int >( unsigned int ) >( boost::bind( &DEC_OrdersFunctions::GetLimasFromType< MIL_Agent_ABC >, boost::ref( GetPion() ), _1 ) ) );
-    
+
     RegisterFunction( "DEC_SetMissionLimaFlag"            ,
         boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::PionSetMissionLimaFlag, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_GetMissionLimaFlag"            ,
         boost::function< bool (unsigned int)> ( boost::bind( &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_SetMissionLimaFlagHoraire"     ,
         boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag, boost::ref( GetPion() ), _1, _2 ) ) );
-    RegisterFunction( "DEC_Fuseau"    , 
+    RegisterFunction( "DEC_Fuseau"    ,
         boost::function< const MIL_Fuseau& ()> ( boost::bind( &DEC_OrdersFunctions::GetFuseau< MIL_AgentPion>, boost::ref( GetPion() ) ) ) );
 
     // Etat décisionnel
@@ -689,7 +689,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_Geometrie_GetLeavingAreaPosition",
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::GetLeavingAreaPosition< MIL_AgentPion>, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Agent_EstDansLeFuseau", boost::bind( &DEC_AgentFunctions::AgentHasFuseau , boost::cref( GetPion() ) ) );
-    
+
     //Keypoint
     RegisterFunction( "DEC_Crossroads",
         boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_TerrainFunctions::GetCrossroads, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) )  );
@@ -764,14 +764,14 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool( const DEC_Decision_ABC*, bool ) >( boost::bind( &DEC_ActionFunctions::CanTransportPion, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Agent_TransportNombreAllerRetour",
         boost::function< double( const DEC_Decision_ABC*, bool ) >( boost::bind( &DEC_ActionFunctions::GetNumberOfRoundTripToTransportPion, boost::ref( GetPion() ), _1, _2 ) ) );
-    RegisterFunction( "DEC_Connaissance_TransportNombreAllerRetour", 
+    RegisterFunction( "DEC_Connaissance_TransportNombreAllerRetour",
         &DEC_ActionFunctions::GetNumberOfRoundTripToTransportKnowledge );
 
     RegisterFunction( "DEC_StartEmbarquerFouleDUneConcentration",
         boost::function< unsigned int( int, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< crowdtransport::PHY_ActionLoadCrowd, int, unsigned int >, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_StartDebarquerFouleSurPosition",
         boost::function< unsigned int( int, MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction< crowdtransport::PHY_ActionUnloadCrowd, int, MT_Vector2D* >, boost::ref( GetPion() ), _1, _2 ) ) );
-    
+
     // Prisonniers
     RegisterFunction( "DEC_Prisonniers_CapturerEtEmbarquer" ,
         boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent > )>(boost::bind(&DEC_ActionFunctions::Prisoners_CaptureAndLoad , boost::ref( GetPion()) ,_1 ) ) );
