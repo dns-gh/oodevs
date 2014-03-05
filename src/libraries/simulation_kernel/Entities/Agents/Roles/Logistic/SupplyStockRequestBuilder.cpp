@@ -13,11 +13,12 @@
 #include "SupplyRecipient_ABC.h"
 #include "SupplyRequestContainer_ABC.h"
 #include "SupplyResourceStock.h"
+#include "SupplyConvoyConfig.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "SupplyConvoyConfig.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include <boost/make_shared.hpp>
 
 using namespace logistic;
 
@@ -31,6 +32,7 @@ SupplyStockRequestBuilder::SupplyStockRequestBuilder( MIL_Automate& automate, Su
     : automate_ ( &automate )
     , recipient_( &recipient )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +43,7 @@ SupplyStockRequestBuilder::SupplyStockRequestBuilder()
     : automate_ ( 0 )
     , recipient_( 0 )
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,11 +52,8 @@ SupplyStockRequestBuilder::SupplyStockRequestBuilder()
 // -----------------------------------------------------------------------------
 SupplyStockRequestBuilder::~SupplyStockRequestBuilder()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SupplyStockRequestBuilder::CreateRequest
@@ -62,12 +61,12 @@ SupplyStockRequestBuilder::~SupplyStockRequestBuilder()
 // -----------------------------------------------------------------------------
 void SupplyStockRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 {
-    automate_->Apply2( (boost::function< void( const MIL_AgentPion& pion, PHY_DotationStock& ) >)boost::bind( &SupplyStockRequestBuilder::VisitStock, this, _1, _2, boost::ref( container ) ) );
-    
-    // If TC2: pulled flow. If BL: Pushed flow. cf. http://jira.masagroup.net/browse/SWBUG-9331
+    boost::function< void( const MIL_AgentPion& pion, PHY_DotationStock& ) > visitor =
+        boost::bind( &SupplyStockRequestBuilder::VisitStock, this, _1, _2, boost::ref( container ) );
+    automate_->Apply2( visitor );
     MIL_AutomateLOG* logisticManager = automate_->FindLogisticManager();
-    bool pushFlow = ( logisticManager && logisticManager->GetLogisticHierarchy().HasSuperior()&& !automate_->GetBrainLogistic() );
-    if( pushFlow )
+    // If TC2: pulled flow. If BL: Pushed flow. cf. http://jira.masagroup.net/browse/SWBUG-9331
+    if( logisticManager && logisticManager->GetLogisticHierarchy().HasSuperior()&& !automate_->GetBrainLogistic() )
         logisticManager = logisticManager->GetLogisticHierarchy().GetPrimarySuperior();
     container.SetTransportersProvider( logisticManager );
     container.SetConvoyFactory( SupplyConvoyConfig::GetStockSupplyConvoyFactory() );
@@ -81,13 +80,13 @@ void SupplyStockRequestBuilder::VisitStock( const MIL_AgentPion& pion, PHY_Dotat
 {
     if( stock.NeedSupply() )
     {
-        double quantityToRequest = std::max( 0., stock.GetCapacity() - stock.GetValue() ); //$$ devrait être le retour de NeedSupply() ?
-        container.AddResource( *recipient_, pion, boost::shared_ptr< SupplyResource_ABC >( new SupplyResourceStock( stock ) ), quantityToRequest );
+        const double quantityToRequest = std::max( 0., stock.GetCapacity() - stock.GetValue() ); //$$ devrait être le retour de NeedSupply() ?
+        container.AddResource( *recipient_, pion, boost::make_shared< SupplyResourceStock >( stock ), quantityToRequest );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void SupplyStockRequestBuilder::serialize
+// Name: SupplyStockRequestBuilder::serialize
 // Created: LDC 2013-01-17
 // -----------------------------------------------------------------------------
 template< typename Archive > void SupplyStockRequestBuilder::serialize( Archive& archive, const unsigned int )
