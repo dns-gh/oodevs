@@ -14,8 +14,9 @@ namespace kernel
 {
     class Entity_ABC;
 }
-#include "clients_kernel/Controllers.h"
+
 #include "ResourcesListView_ABC.h"
+#include "clients_kernel/Controllers.h"
 #include "gaming/Dotation.h"
 #include "gaming/SupplyStates.h"
 

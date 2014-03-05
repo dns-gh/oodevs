@@ -21,6 +21,17 @@
 using namespace kernel;
 using namespace logistic_helpers;
 
+namespace
+{
+    enum
+    {
+        eStock,
+        eQuantity,
+        eMass,
+        eVolume,
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: SupplyStocksListView constructor
 // Created: SBO 2007-02-20
@@ -28,10 +39,11 @@ using namespace logistic_helpers;
 SupplyStocksListView::SupplyStocksListView( QWidget* parent, Controllers& controllers )
     : ResourcesListView_ABC< SupplyStates >( parent, controllers )
 {
-    QStringList list;
-    list.append( tools::translate( "SupplyStocksListView", "Stock" ) );
-    list.append( tools::translate( "SupplyStocksListView", "Quantity" ) );
-    model_.setHorizontalHeaderLabels( list );
+    model_.setHorizontalHeaderLabels(
+        QStringList() << tools::translate( "SupplyStocksListView", "Stock" )
+            << tools::translate( "SupplyStocksListView", "Quantity" )
+            << tools::translate( "SupplyStocksListView", "Mass (T)" )
+            << tools::translate( "SupplyStocksListView", "Volume (m3)" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,8 +67,10 @@ void SupplyStocksListView::Update( const tools::Resolver< Dotation >& dotations 
     while( iterator.HasMoreElements() )
     {
         const Dotation& dotation = iterator.NextElement();
-        model_.item( i, 0 )->setText( QString( dotation.type_->GetName().c_str() ) );
-        model_.item( i, 1 )->setText( QString::number( dotation.quantity_ ) );
+        model_.item( i, eStock )->setText( QString( dotation.type_->GetName().c_str() ) );
+        model_.item( i, eQuantity )->setText( QString::number( dotation.quantity_ ) );
+        model_.item( i, eMass )->setText( locale().toString( dotation.type_->GetUnitWeight() * dotation.quantity_, 'f', 2 ) );
+        model_.item( i, eVolume )->setText( locale().toString( dotation.type_->GetUnitVolume() * dotation.quantity_, 'f', 2 ) );
         ++i;
     }
 }
@@ -76,7 +90,7 @@ void SupplyStocksListView::NotifyUpdated( const SupplyStates& supplyStates )
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoSupplyDialog::NotifySelected
+// Name: SupplyStocksListView::NotifySelected
 // Created: MMC 2012-10-01
 // -----------------------------------------------------------------------------
 void SupplyStocksListView::NotifySelected( const Entity_ABC* entity )
@@ -85,7 +99,7 @@ void SupplyStocksListView::NotifySelected( const Entity_ABC* entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoSupplyDialog::NotifySelected
+// Name: SupplyStocksListView::NotifySelected
 // Created: MMC 2013-01-23
 // -----------------------------------------------------------------------------
 void SupplyStocksListView::UpdateSelected( const kernel::Entity_ABC* entity )
@@ -102,7 +116,7 @@ void SupplyStocksListView::UpdateSelected( const kernel::Entity_ABC* entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoSupplyDialog::TotalizeStocks
+// Name: SupplyStocksListView::TotalizeStocks
 // Created: MMC 2012-10-10
 // -----------------------------------------------------------------------------
 void SupplyStocksListView::TotalizeStocks( const Dotation& dotation )
@@ -116,7 +130,7 @@ void SupplyStocksListView::TotalizeStocks( const Dotation& dotation )
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoSupplyDialog::showEvent
+// Name: SupplyStocksListView::showEvent
 // Created: LGY 2014-02-10
 // -----------------------------------------------------------------------------
 void SupplyStocksListView::showEvent( QShowEvent* event )

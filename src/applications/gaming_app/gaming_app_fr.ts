@@ -3239,6 +3239,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Quantity</source>
         <translation>Quantité</translation>
     </message>
+    <message>
+        <source>Mass (T)</source>
+        <translation>Masse (T)</translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation>Volume (m3)</translation>
+    </message>
 </context>
 <context>
     <name>SupplyTransportersListView</name>

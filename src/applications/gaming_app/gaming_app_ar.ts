@@ -3225,6 +3225,14 @@ This data can&apos;t be projected.</source>
         <source>Quantity</source>
         <translation type="unfinished">الكمية</translation>
     </message>
+    <message>
+        <source>Mass (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SupplyTransportersListView</name>
