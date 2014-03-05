@@ -60,10 +60,15 @@ private slots:
     void ClearBookmarks();
     //@}
 
-private:
+protected:
     //! @name Observers implementation
     //@{
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
+    //@}
+
+private:
+    //! @name Observers implementation
+    //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     //@}
 
