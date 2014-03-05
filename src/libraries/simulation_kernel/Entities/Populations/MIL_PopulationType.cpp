@@ -97,9 +97,9 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     , rFemale_              ( 0 )
     , rChildren_            ( 0 )
     , pModel_               ( 0 )
-    , slowDownData_         ( MIL_PopulationAttitude::GetAttitudes().size(), T_VolumeSlowDownData( PHY_Volume::GetVolumes().size(), sSlowDownData( 0., 0. ) ) )
+    , slowDownData_         ( MIL_PopulationAttitude::Size(), T_VolumeSlowDownData( PHY_Volume::GetVolumes().size(), sSlowDownData( 0., 0. ) ) )
     , damageData_           ( PHY_RoePopulation::GetRoePopulations().size(), sDamageData( 0., 0. ) )
-    , urbanDestructionData_ ( MIL_PopulationAttitude::GetAttitudes().size(), sUrbanDestructionData( 0.0, 0.0 ) )
+    , urbanDestructionData_ ( MIL_PopulationAttitude::Size(), sUrbanDestructionData( 0.0, 0.0 ) )
 {
     xis >> xml::attribute( "id", nID_ )
         >> xml::attribute( "concentration-density", rConcentrationDensity_ )

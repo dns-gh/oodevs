@@ -30,7 +30,7 @@ MIL_PopulationPionAttritionData::sAttritionData::sAttritionData()
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
 MIL_PopulationPionAttritionData::MIL_PopulationPionAttritionData()
-    : attitudeAttritionData_( MIL_PopulationAttitude::GetAttitudes().size(), sAttritionData() )
+    : attitudeAttritionData_( MIL_PopulationAttitude::Size(), sAttritionData() )
 {
     // NOTHING
 }

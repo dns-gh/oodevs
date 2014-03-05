@@ -20,11 +20,22 @@
 // =============================================================================
 class MIL_PopulationAttitude : private boost::noncopyable
 {
-public:
+private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const MIL_PopulationAttitude* > T_AttitudeMap;
-    typedef T_AttitudeMap::const_iterator CIT_AttitudeMap;
+    enum E_Attitude
+    {
+        eCalme     = 0,
+        eAgitee    = 1,
+        eExcitee   = 2,
+        eAgressive = 3
+    };
+    //@}
+
+public:
+    //! @name Destructor
+    //@{
+    ~MIL_PopulationAttitude();
     //@}
 
 public:
@@ -36,7 +47,8 @@ public:
     static const MIL_PopulationAttitude* Find( const std::string& strName );
     static const MIL_PopulationAttitude* Find( sword::EnumCrowdAttitude nAsnID );
     static const MIL_PopulationAttitude* Find( unsigned int nID );
-    static const T_AttitudeMap& GetAttitudes();
+    static size_t Size();
+    static void Visit( const std::function< void( const MIL_PopulationAttitude& ) >& visitor );
     //@}
 
     //! @name Accessors
@@ -57,22 +69,9 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    enum E_Attitude
-    {
-        eCalme     = 0,
-        eAgitee    = 1,
-        eExcitee   = 2,
-        eAgressive = 3
-    };
-    //@}
-
-private:
-    //! @name Constructors/Destructor
+    //! @name Constructor
     //@{
      MIL_PopulationAttitude( const std::string& strName, E_Attitude nAttitude, sword::EnumCrowdAttitude nAsnID );
-    ~MIL_PopulationAttitude();
     //@}
 
 private:
@@ -81,12 +80,6 @@ private:
     const std::string strName_;
     const E_Attitude nAttitude_;
     const sword::EnumCrowdAttitude nAsnID_;
-    //@}
-
-private:
-    //! @name Static members
-    //@{
-    static T_AttitudeMap attitudes_;
     //@}
 };
 
