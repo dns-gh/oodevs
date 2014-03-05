@@ -38,12 +38,6 @@ public:
                  : boost::archive::binary_oarchive_impl<MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type>(os, flags)
                  , world_( world )
              {}
-             MIL_CheckPointOutArchive( std::streambuf & bsb,
-                     const boost::shared_ptr< TER_World >& world,
-                     unsigned int flags = 0 )
-                 : boost::archive::binary_oarchive_impl<MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type>(bsb, flags)
-                 , world_( world )
-             {}
     virtual ~MIL_CheckPointOutArchive(){}
 
     // This accessor is probably useless when writing the archive, but it let's

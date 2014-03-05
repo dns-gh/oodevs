@@ -42,14 +42,6 @@ public:
                  , resolver_( resolver )
                  , world_( world )
              {}
-             MIL_CheckPointInArchive( std::streambuf & bsb,
-                     const ObjectTypeResolver_ABC& resolver,
-                     const boost::shared_ptr< TER_World >& world,
-                     unsigned int flags = 0 )
-                 : boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>( bsb, flags )
-                 , resolver_( resolver )
-                 , world_( world )
-             {}
     virtual ~MIL_CheckPointInArchive(){}
 
 public:
