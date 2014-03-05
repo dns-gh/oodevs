@@ -40,6 +40,7 @@
 #include "Entities/Agents/Units/Humans/PHY_NbcSuit.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
@@ -1163,6 +1164,24 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_AgentFunctions::GetMission( DEC_Decisio
 bool DEC_AgentFunctions::HasMission( DEC_Decision_ABC* pAgent )
 {
     return ( pAgent && 0 != pAgent->GetMission().get() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetDotation
+// Created: BAX 2014-03-04
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory* DEC_AgentFunctions::GetDotation( const MIL_Agent_ABC& caller, unsigned id )
+{
+    const PHY_DotationCategory* reply = nullptr;
+    caller.GetRole< dotation::PHY_RoleInterface_Dotations >().Apply( [&]( PHY_Dotation& dotation )
+    {
+        if( reply )
+            return;
+        const auto& cat = dotation.GetCategory();
+        if( id == cat.GetMosID() )
+            reply = &cat;
+    });
+    return reply;
 }
 
 // -----------------------------------------------------------------------------

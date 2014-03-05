@@ -188,6 +188,7 @@ public:
     static void ChannelPopulations( const TER_Localisation* location );
 
     //Dotations
+    static const PHY_DotationCategory* GetDotation( const MIL_Agent_ABC& caller, unsigned id );
     static bool HasDotation( const MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category );
     static bool HasDotationForFiring( DEC_Decision_ABC* agent, const PHY_DotationCategory* category, int iterations );
     static bool CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category );

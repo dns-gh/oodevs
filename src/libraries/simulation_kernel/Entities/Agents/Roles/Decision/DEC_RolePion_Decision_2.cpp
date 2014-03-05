@@ -354,6 +354,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool ( const PHY_DotationCategory* ) >( boost::bind( &DEC_AgentFunctions::HasDotation, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_CanUseDotation",
         boost::function< bool ( const PHY_DotationCategory* ) >( boost::bind( &DEC_AgentFunctions::CanUseDotation, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_GetDotation",
+        boost::function< const PHY_DotationCategory*( unsigned ) >( [&]( unsigned value ){
+            return DEC_AgentFunctions::GetDotation( GetPion(), value );
+    }));
     RegisterFunction( "DEC_Agent_IlluminateRange", boost::bind( &DEC_AgentFunctions::GetIlluminatingRange, boost::cref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_CanExtinguish",
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_AgentFunctions::AgentCanExtinguish, boost::ref( GetPion() ), _1 ) ) );
