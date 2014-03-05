@@ -1215,7 +1215,7 @@ Voulez-vous le remplacer ?</translation>
         <translation>Transporteurs</translation>
     </message>
     <message>
-        <source>Instructions</source>
+        <source>Orders</source>
         <translation>Consignes</translation>
     </message>
     <message>
@@ -1506,8 +1506,8 @@ Voulez-vous le remplacer ?</translation>
         <translation>Dotation de conditionnement:</translation>
     </message>
     <message>
-        <source>Request date:</source>
-        <translation>Date de la requête:</translation>
+        <source>Created:</source>
+        <translation>Création:</translation>
     </message>
     <message>
         <source>Handler:</source>

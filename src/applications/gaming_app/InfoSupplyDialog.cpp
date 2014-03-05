@@ -51,7 +51,7 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& contro
 
     supplyQuotasWidget_ = new SupplyQuotasWidget( this, controllers, factory );
     widget_ = new LogisticsRequestsSupplyWidget( this, controllers, extractor, profile, simulationController, model );
-    tabs_->addTab( widget_, tools::translate( "InfoSupplyDialog", "Instructions" ) );
+    tabs_->addTab( widget_, tools::translate( "InfoSupplyDialog", "Orders" ) );
     tabs_->addTab( new SupplyStocksListView( this, controllers ), tools::translate( "InfoSupplyDialog", "Stocks" ) );
     tabs_->addTab( supplyQuotasWidget_, tools::translate( "InfoSupplyDialog", "Quotas" ) );
     tabs_->addTab( transportersWidget, tools::translate( "InfoSupplyDialog", "Transporters" ) );

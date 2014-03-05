@@ -1212,7 +1212,7 @@ Do you want to replace it?</source>
         <translation type="unfinished">الناقلون</translation>
     </message>
     <message>
-        <source>Instructions</source>
+        <source>Orders</source>
         <translation type="unfinished">يلقي</translation>
     </message>
     <message>
@@ -1503,7 +1503,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Request date:</source>
+        <source>Created:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

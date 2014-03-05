@@ -65,7 +65,7 @@ void LogisticsRequestsMaintenanceWidget::OnRequestSelected( const LogisticsConsi
     detailsTable_->Add( tools::translate( "Logistic", "Requester:" ),       GetDisplayName( c.GetConsumer() ) );
     detailsTable_->Add( tools::translate( "Logistic", "Equipment:"),        QString::fromStdString( c.GetEquipment()->GetName() ) );
     detailsTable_->Add( tools::translate( "Logistic", "Breakdown:" ),       GetBreakdown( c ) );
-    detailsTable_->Add( tools::translate( "Logistic", "Request date:" ),    c.GetCreationTime() );
+    detailsTable_->Add( tools::translate( "Logistic", "Created:" ), c.GetCreationTime() );
     detailsTable_->Add( tools::translate( "Logistic", "Handler:" ),         GetDisplayName( c.GetHandler() ) );
     detailsTable_->Add( tools::translate( "Logistic", "State:"),            c.GetStatusDisplay() );
     detailsTable_->Add( tools::translate( "Logistic", "Started:" ),         c.GetCurrentStartedTime() );

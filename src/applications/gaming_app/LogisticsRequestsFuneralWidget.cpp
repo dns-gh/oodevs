@@ -51,7 +51,7 @@ void LogisticsRequestsFuneralWidget::OnRequestSelected( const LogisticsConsign_A
     detailsTable_->Add( tools::translate( "Logistic", "Rank:" ),            tools::ToString( c.GetRank() ) );
     detailsTable_->Add( tools::translate( "Logistic", "Current packaging:" )
         , c.GetPackagingResource()? QString::fromStdString( c.GetPackagingResource()->GetName() ) : QString() );
-    detailsTable_->Add( tools::translate( "Logistic", "Request date:" ),    c.GetCreationTime() );
+    detailsTable_->Add( tools::translate( "Logistic", "Created:" ), c.GetCreationTime() );
     detailsTable_->Add( tools::translate( "Logistic", "Handler:" ),         GetDisplayName( c.GetHandler() ) );
     detailsTable_->Add( tools::translate( "Logistic", "State:" ),           c.GetStatusDisplay() );
     detailsTable_->Add( tools::translate( "Logistic", "Started:" ),         c.GetCurrentStartedTime() );
