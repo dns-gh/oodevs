@@ -46,30 +46,14 @@ StocksAndNaturesEditor::~StocksAndNaturesEditor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: StocksAndNaturesEditor::ClearStocks
-// Created: JSR 2014-03-04
+// Name: StocksAndNaturesEditor::Initialize
+// Created: JSR 2014-03-05
 // -----------------------------------------------------------------------------
-void StocksAndNaturesEditor::ClearStocks()
+void StocksAndNaturesEditor::Initialize( const kernel::Entity_ABC& entity )
 {
     stocksTableView_->OnClearItems();
-}
-
-// -----------------------------------------------------------------------------
-// Name: StocksAndNaturesEditor::UpdateInitStocks
-// Created: JSR 2014-03-04
-// -----------------------------------------------------------------------------
-void StocksAndNaturesEditor::UpdateInitStocks( const kernel::Entity_ABC& entity )
-{
-    stocksTableView_->UpdateInitStocks( entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: StocksAndNaturesEditor::UpdateMaxStocks
-// Created: JSR 2014-03-04
-// -----------------------------------------------------------------------------
-void StocksAndNaturesEditor::UpdateMaxStocks( const kernel::Entity_ABC& entity )
-{
     maxStocksTableView_->UpdateMaxStocks( entity );
+    stocksTableView_->UpdateInitStocks( entity );
 }
 
 // -----------------------------------------------------------------------------

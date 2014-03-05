@@ -59,69 +59,37 @@ QuotasEditor::~QuotasEditor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: QuotasEditor::ClearQuotas
+// Name: QuotasEditor::Initialize
 // Created: JSR 2014-03-05
 // -----------------------------------------------------------------------------
-void QuotasEditor::ClearQuotas()
+void QuotasEditor::Initialize( const kernel::Entity_ABC& entity )
 {
     quotasByEntity_.clear();
     subordinateCombo_->clear();
     quotasTableView_->OnClearItems();
-}
 
-// -----------------------------------------------------------------------------
-// Name: QuotasEditor::UpdateQuotas
-// Created: JSR 2014-03-05
-// -----------------------------------------------------------------------------
-void QuotasEditor::UpdateQuotas( const kernel::Entity_ABC& entity )
-{
-    if( const gui::LogisticHierarchiesBase* pLogHierarchy = entity.Retrieve< gui::LogisticHierarchiesBase >() )
-    {
-        tools::Iterator< const kernel::Entity_ABC& > itLogChildren = pLogHierarchy->CreateSubordinateIterator();
-        while( itLogChildren.HasMoreElements() )
-        {
-            const kernel::Entity_ABC& logChildren = itLogChildren.NextElement();
-            if( logistic_helpers::IsLogisticBase( logChildren ) )
-            {
-                subordinateCombo_->addItem( logChildren.GetName(), QVariant::fromValue( &logChildren ) );
-                quotasByEntity_[ &logChildren ] = LogisticEditor::T_Requirements();
-            }
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: QuotasEditor::UpdateInitQuotas
-// Created: JSR 2014-03-05
-// -----------------------------------------------------------------------------
-void QuotasEditor::UpdateInitQuotas( const kernel::Entity_ABC& entity )
-{
-    LogisticEditor::T_RequirementsMap requirements;
-    const gui::LogisticHierarchiesBase* pLogChildrenHierarchy = entity.Retrieve< gui::LogisticHierarchiesBase >();
-    if( !pLogChildrenHierarchy )
+    const gui::LogisticHierarchiesBase* pLogHierarchy = entity.Retrieve< gui::LogisticHierarchiesBase >();
+    if( !pLogHierarchy )
         return;
-
-    tools::Iterator< const kernel::Entity_ABC& > itLogChildren = pLogChildrenHierarchy->CreateSubordinateIterator();
-    while( itLogChildren.HasMoreElements() )
+    tools::Iterator< const kernel::Entity_ABC& > itChildren = pLogHierarchy->CreateSubordinateIterator();
+    while( itChildren.HasMoreElements() )
     {
-        const kernel::Entity_ABC& logChildren = itLogChildren.NextElement();
-        if( logistic_helpers::IsLogisticBase( logChildren ) )
+        const kernel::Entity_ABC& child = itChildren.NextElement();
+        if( logistic_helpers::IsLogisticBase( child ) )
         {
-            const gui::LogisticHierarchiesBase* pLogHierarchyBase = logChildren.Retrieve< gui::LogisticHierarchiesBase >();
-            if( !pLogHierarchyBase )
+            const LogisticBaseStates* bl = static_cast< const LogisticBaseStates* >( child.Retrieve< gui::LogisticHierarchiesBase >() );
+            if( !bl )
                 continue;
-            const LogisticBaseStates* pBaseStates = dynamic_cast< const LogisticBaseStates* >( pLogHierarchyBase );
-            if( !pBaseStates )
-                continue;
-            auto dotationIt = static_cast< const tools::Resolver< Dotation >* >( pBaseStates )->CreateIterator();
+            subordinateCombo_->addItem( child.GetName(), QVariant::fromValue( &child ) );
+            auto dotationIt = static_cast< const tools::Resolver< Dotation >* >( bl )->CreateIterator();
             while( dotationIt.HasMoreElements() )
             {
                 const auto& curDotation = dotationIt.NextElement();
-                requirements[ &logChildren ][ &curDotation.type_ ] += curDotation.quantity_;
+                quotasByEntity_[ &child ][ &curDotation.type_ ] += curDotation.quantity_;
             }
         }
     }
-    NotifyAutomaticQuotas( requirements );
+    OnSubordinateChanged( subordinateCombo_->currentIndex() );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,8 +130,9 @@ void QuotasEditor::ApplyQuotas() const
 // -----------------------------------------------------------------------------
 void QuotasEditor::OnSubordinateChanged( int index )
 {
-    auto entity = subordinateCombo_->itemData( index, Qt::UserRole ).value< const kernel::Entity_ABC* >();
-    quotasTableView_->SetQuotas( quotasByEntity_[ entity ] );
+    QVariant v = subordinateCombo_->itemData( index, Qt::UserRole );
+    if( v.isValid() )
+        quotasTableView_->SetQuotas( quotasByEntity_[ v.value< const kernel::Entity_ABC* >() ] );
 }
 
 // -----------------------------------------------------------------------------

@@ -37,9 +37,7 @@ public:
 public:
     //! @name Operations
     //@{
-    void ClearStocks();
-    void UpdateInitStocks( const kernel::Entity_ABC& entity );
-    void UpdateMaxStocks( const kernel::Entity_ABC& entity );
+    void Initialize( const kernel::Entity_ABC& entity );
     void Update( const MaxStockNaturesTable::T_WeightVolumes& currentValues ); // todo change name
     void SupplyStocks( kernel::Entity_ABC& entity ) const;
     //@}

@@ -851,12 +851,43 @@
         <translation>Logistique</translation>
     </message>
     <message>
-        <source>Edit Logistics Stocks</source>
-        <translation>Editer les Stocks Logistiques</translation>
+        <source>Stocks</source>
+        <translation>Stocks</translation>
     </message>
     <message>
-        <source>Edit Stocks &amp; Quotas</source>
-        <translation>Editer les Stocks &amp; Quotas</translation>
+        <source>Quotas</source>
+        <translation>Quotas</translation>
+    </message>
+    <message>
+        <source>Stocks and Quotas</source>
+        <translation>Stocks et Quotas</translation>
+    </message>
+    <message>
+        <source>Edit stocks and quotas</source>
+        <translation>Editer stocks et quotas</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticStocksDialog</name>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
+    </message>
+    <message>
+        <source>Stocks</source>
+        <translation>Stocks</translation>
+    </message>
+    <message>
+        <source>Edit logistics stocks</source>
+        <translation>Editer les stocks logistiques</translation>
     </message>
 </context>
 <context>
@@ -2431,14 +2462,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Quotas Edition</source>
         <translation>Edition des quotas</translation>
-    </message>
-    <message>
-        <source>Stocks</source>
-        <translation>Stocks</translation>
-    </message>
-    <message>
-        <source>Stocks &amp; Quotas</source>
-        <translation>Stocks &amp; Quotas</translation>
     </message>
 </context>
 <context>

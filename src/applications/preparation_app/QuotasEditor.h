@@ -36,9 +36,7 @@ public:
 public:
     //! @name Operations
     //@{
-    void ClearQuotas();
-    void UpdateQuotas( const kernel::Entity_ABC& entity );
-    void UpdateInitQuotas( const kernel::Entity_ABC& entity );
+    void Initialize( const kernel::Entity_ABC& entity );
     void ApplyQuotas() const;
     //@}
 

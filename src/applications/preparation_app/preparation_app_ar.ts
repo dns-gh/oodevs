@@ -851,11 +851,42 @@
         <translation type="unfinished">السوقي</translation>
     </message>
     <message>
-        <source>Edit Logistics Stocks</source>
+        <source>Stocks</source>
+        <translation type="unfinished">الأرصدة</translation>
+    </message>
+    <message>
+        <source>Quotas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Stocks &amp; Quotas</source>
+        <source>Stocks and Quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit stocks and quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticStocksDialog</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">موافق</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء الأمر</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished">السوقي</translation>
+    </message>
+    <message>
+        <source>Stocks</source>
+        <translation type="unfinished">الأرصدة</translation>
+    </message>
+    <message>
+        <source>Edit logistics stocks</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2431,14 +2462,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Quotas Edition</source>
         <translation type="unfinished">الطبعة الحصص</translation>
-    </message>
-    <message>
-        <source>Stocks</source>
-        <translation type="unfinished">الأرصدة</translation>
-    </message>
-    <message>
-        <source>Stocks &amp; Quotas</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
