@@ -42,7 +42,6 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType );
              DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosStart, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType );
              DEC_Agent_Path( MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType );
              DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );

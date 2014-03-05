@@ -113,34 +113,6 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, std::vector< boost::s
 // Name: DEC_Agent_Path constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType )
-    : DEC_PathResult            ( pathType )
-    , queryMaker_               ( queryMaker )
-    , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
-    , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
-    , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
-    , rSlopeDeceleration_       ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetSlopeDeceleration() )
-    , rCostOutsideOfAllObjects_ ( 0. )
-    , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
-    , bDecPointsInserted_       ( false )
-    , destroyed_( false )
-{
-    queryMaker_.RegisterPath( *this );
-    fuseau_ = queryMaker.GetOrderManager().GetFuseau();
-    automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    initialWaypoints_.reserve( 2 );
-    nextWaypoints_.reserve( 1 );
-    initialWaypoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    initialWaypoints_.push_back( vPosEnd );
-    nextWaypoints_.push_back( vPosEnd );
-    Initialize( initialWaypoints_ );
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Agent_Path constructor
-// Created: JVT 02-09-17
-//-----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosStart, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType )
     : DEC_PathResult            ( pathType )
     , queryMaker_               ( queryMaker )
@@ -157,8 +129,6 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vP
     queryMaker_.RegisterPath( *this );
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    initialWaypoints_.reserve( 2 );
-    nextWaypoints_.reserve( 1 );
     initialWaypoints_.push_back( vPosStart );
     initialWaypoints_.push_back( vPosEnd );
     nextWaypoints_.push_back( vPosEnd );

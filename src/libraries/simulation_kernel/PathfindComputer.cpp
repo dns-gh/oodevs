@@ -87,12 +87,6 @@ void PathfindComputer::Compute( const boost::shared_ptr< DEC_PathResult >& path,
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( path );
 }
 
-namespace
-{
-    const int firstPoint = 0;
-    const int pathSizeThreshold = std::numeric_limits< int >::max();
-}
-
 // -----------------------------------------------------------------------------
 // Name: PathfindComputer::PathComputed
 // Created: LGY 2014-03-03
@@ -112,7 +106,7 @@ bool PathfindComputer::PathComputed( unsigned int clientId, const T_Result& cont
         ack().set_error_code( sword::PathfindRequestAck::no_error );
         sword::Path& msg = *ack().mutable_path();
         msg.mutable_location()->set_type( sword::Location::line );
-        path->Serialize( *ack().mutable_path(), ::firstPoint, ::pathSizeThreshold );
+        path->Serialize( *ack().mutable_path(), 0, std::numeric_limits< int >::max() );
     }
     path->DecRef();
     ack.Send( NET_Publisher_ABC::Publisher(), content.first, clientId );

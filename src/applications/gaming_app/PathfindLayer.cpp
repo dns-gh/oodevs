@@ -34,21 +34,19 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     , coordinateConverter_( coordinateConverter )
 {
     controllers_.Register( *this );
-    std::function< void( const sword::SimToClient& ) > fun = 
-        [&]( const sword::SimToClient& message ) {
-        if( message.message().has_pathfind_request_ask() )
+    std::function< void( const sword::SimToClient& ) > fun = [&]( const sword::SimToClient& message )
         {
-            auto request = message.message().pathfind_request_ask();
-            if( request.error_code() == sword::PathfindRequestAck_ErrorCode_no_error )
+            if( message.message().has_pathfind_request_ask() )
             {
+                auto request = message.message().pathfind_request_ask();
+                if( request.error_code() != sword::PathfindRequestAck_ErrorCode_no_error )
+                    return;
                 const auto& path = request.path();
                 path_.clear();
-                path_.reserve( path.location().coordinates().elem_size() );
                 for( int i = 0; i < path.location().coordinates().elem_size(); ++i )
-                    path_.push_back( coordinateConverter_.ConvertToXY( path.location().coordinates().elem(i) ) );
+                    path_.push_back( coordinateConverter_.ConvertToXY( path.location().coordinates().elem( i ) ) );
             }
-        }
-    };
+        };
     publisher_.Register( fun );
 }
 
@@ -61,32 +59,38 @@ PathfindLayer::~PathfindLayer()
     controllers_.Unregister( *this );
 }
 
+namespace
+{
+    void DrawCross( const boost::optional< geometry::Point2f >& point, gui::GlTools_ABC& tools )
+    {
+        if( point )
+        {
+            glColor4f( COLOR_BLACK );
+            tools.DrawCross( *point, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer::Paint
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
 void PathfindLayer::Paint( gui::Viewport_ABC& )
 {
-    if( !from_ )
-        return;
+    DrawCross( from_, tools_ );
+    DrawCross( to_, tools_ );
 
-    glColor4f( COLOR_BLACK );
-    tools_.DrawCross( *from_, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
-    if( !to_ )
-        return;
-
-    tools_.DrawCross( *to_, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
-    if( path_.empty() )
-        return;
-
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
-    glColor4f( COLOR_PATH );
-    glLineWidth( 3 );
-    glEnable( GL_LINE_STIPPLE );
-    glLineStipple( 1, tools_.StipplePattern() );
-    tools_.DrawLines( path_ );
-    glDisable( GL_LINE_STIPPLE );
-    glPopAttrib();
+    if( !path_.empty() )
+    {
+        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
+        glColor4f( COLOR_PATH );
+        glLineWidth( 3 );
+        glEnable( GL_LINE_STIPPLE );
+        glLineStipple( 1, tools_.StipplePattern() );
+        tools_.DrawLines( path_ );
+        glDisable( GL_LINE_STIPPLE );
+        glPopAttrib();
+    }
 }
 
 // -----------------------------------------------------------------------------

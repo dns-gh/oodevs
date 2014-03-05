@@ -43,7 +43,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_Ag
 
 namespace
 {
-    void StartCompute( boost::shared_ptr< DEC_Agent_Path >& path )
+    void StartCompute( const boost::shared_ptr< DEC_Agent_Path >& path )
     {
         if( !path->IsDestinationTrafficable() )
             path->CancelPath();
@@ -59,10 +59,10 @@ namespace
 boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType )
 {
     assert( pEnd );
-
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType ) );
+    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(),
+        *pEnd, *pPathType ) );
     StartCompute( pPath );
     return pPath;
 }

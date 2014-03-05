@@ -95,7 +95,6 @@ class MIL_Population;
 class MIL_ProfilerManager;
 class MIL_Time_ABC;
 class MIL_UrbanObject_ABC;
-class MIL_UrbanObject_ABC;
 class MissionController_ABC;
 class PathfindComputer;
 class PopulationFactory_ABC;
@@ -336,8 +335,8 @@ private:
     std::unique_ptr< FormationFactory_ABC >        formationFactory_;       // has to be declared before armyFactory
     std::unique_ptr< KnowledgeGroupFactory >       knowledgeGroupFactory_;  // has to be declared before armyFactory
     std::unique_ptr< ArmyFactory_ABC >             armyFactory_;
-    std::auto_ptr< MIL_FlowCollisionManager >    flowCollisionManager_;
-    std::auto_ptr< PathfindComputer >            pathfindComputer_;
+    std::unique_ptr< MIL_FlowCollisionManager >    flowCollisionManager_;
+    std::unique_ptr< PathfindComputer >            pathfindComputer_;
     //@}
 };
 
