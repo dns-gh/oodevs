@@ -977,8 +977,6 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& as
 {
     if( asn.type() != sword::UnitMagicAction::move_to )
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    if( pAutomate_->IsEngaged() )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_automat_engaged );
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1)
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = asn.parameters().elem( 0 );
