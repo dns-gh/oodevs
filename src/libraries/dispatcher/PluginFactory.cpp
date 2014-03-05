@@ -244,7 +244,7 @@ void PluginFactory::LoadPlugin( const tools::Path& name, xml::xistream& xis )
 
 void PluginFactory::Receive( const std::string& link, const sword::ClientToSim& msg )
 {
-    dispatcher::UnicastPublisher unicaster( rights_->GetPublisher( link ), link,
+    dispatcher::UnicastPublisher unicaster( rights_->GetAuthenticatedPublisher( link ), link,
             rights_->GetClientID( link ), msg.context() );
     rootHandler_.HandleClientToSim( msg, unicaster, *clients_ );
 }

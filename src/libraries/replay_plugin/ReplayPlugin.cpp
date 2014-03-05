@@ -110,7 +110,7 @@ void ReplayPlugin::OnTimer()
         bool disconnected = false;
         try
         {
-            ClientPublisher_ABC& client = linkResolver_.GetPublisher( endpoint_ );
+            ClientPublisher_ABC& client = linkResolver_.GetConnectedPublisher( endpoint_ );
             disconnected = !static_cast< dispatcher::Client& >( client ).HasAnsweredSinceLastTick();
         }
         catch( ... )

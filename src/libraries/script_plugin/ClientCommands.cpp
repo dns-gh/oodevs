@@ -68,7 +68,7 @@ void ClientCommands::SendCommandToAll( const std::string& profile, const std::st
 // -----------------------------------------------------------------------------
 void ClientCommands::SendCommand( const std::string& client, const std::string& profile, const std::string& command )
 {
-    Send( profile, command, resolver_.GetPublisher( client ) );
+    Send( profile, command, resolver_.GetAuthenticatedPublisher( client ) );
 }
 
 // -----------------------------------------------------------------------------

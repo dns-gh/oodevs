@@ -40,7 +40,7 @@ bool CheckpointFilterPlugin::ForwardSimToClient( const sword::SimToClient& msg )
             checkpointInProgress_ = true;
         else if( checkpointInProgress_ &&
                 msg.message().has_control_send_current_state_begin() )
-            client_ = &resolver_.GetPublisher( msg.client_id() );
+            client_ = &resolver_.GetAuthenticatedPublisher( msg.client_id() );
     }
 
     if( client_ )

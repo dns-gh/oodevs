@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual ClientPublisher_ABC& GetPublisher( const std::string& link ) const = 0;
+    virtual ClientPublisher_ABC& GetConnectedPublisher( const std::string& link ) const = 0;
     //@}
 };
 

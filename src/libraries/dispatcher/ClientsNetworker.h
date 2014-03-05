@@ -52,7 +52,7 @@ public:
     virtual void Send( const sword::MessengerToClient& msg );
     virtual void Send( const sword::DispatcherToClient& msg );
 
-    virtual ClientPublisher_ABC& GetPublisher( const std::string& link ) const;
+    virtual ClientPublisher_ABC& GetConnectedPublisher( const std::string& link ) const;
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& link,
                                             dispatcher::Profile_ABC& profile, bool uncounted );

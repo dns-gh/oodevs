@@ -91,7 +91,7 @@ void ScorePlugin::OnReceive( const std::string& client, const sword::ClientToAar
     {
         const sword::PlotRequest& request = wrapper.message().plot_request();
         if( boost::starts_with( request.request(), "indicator://" ) )
-            scores_->RequestPlot( resolver_.GetPublisher( client ), request );
+            scores_->RequestPlot( resolver_.GetConnectedPublisher( client ), request );
     }
 }
 

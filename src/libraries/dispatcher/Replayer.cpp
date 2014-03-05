@@ -133,7 +133,7 @@ void Replayer::OnWebControl( xml::xistream& xis )
 void Replayer::ReceiveClientToReplay( const std::string& link,
         const sword::ClientToReplay& msg )
 {
-    dispatcher::UnicastPublisher unicaster( rights_->GetPublisher( link ), link,
+    dispatcher::UnicastPublisher unicaster( rights_->GetAuthenticatedPublisher( link ), link,
             rights_->GetClientID( link ), msg.context() );
     handler_.HandleClientToReplay( msg, unicaster, *clientsNetworker_ );
 }

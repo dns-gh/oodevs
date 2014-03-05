@@ -135,7 +135,7 @@ void RightsPlugin::Logout( ClientPublisher_ABC& client )
     for( auto it = authenticated_.begin(); it != authenticated_.end(); ++it )
     {
         const std::string link = it->first;
-        if( &GetPublisher( link ) == &client )
+        if( &GetAuthenticatedPublisher( link ) == &client )
         {
             authenticated_.erase( it );
             if( silentClients_.erase( link ) == 0 )
@@ -195,13 +195,13 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
 {
     if( wrapper.message().has_disconnection_request() )
     {
-        Logout( resolver_.GetPublisher( link ) );
+        Logout( resolver_.GetConnectedPublisher( link ) );
         MT_LOG_INFO_MSG( "Logged out " + link );
         throw tools::DisconnectionRequest( __FILE__, __FUNCTION__, __LINE__, "disconnection request from " + link );
     }
 
     unsigned int ctx = wrapper.has_context() ? wrapper.context() : 0;
-    AuthenticationSender sender( resolver_.GetPublisher( link ), clients_, ctx );
+    AuthenticationSender sender( resolver_.GetConnectedPublisher( link ), clients_, ctx );
     if( wrapper.message().has_authentication_key_request() )
     {
         sword::AuthenticationToClient ack;
@@ -424,19 +424,19 @@ NullClientPublisher nullPublisher;
 
 }  // namespace
 
-ClientPublisher_ABC& RightsPlugin::GetPublisher( const std::string& link ) const
+ClientPublisher_ABC& RightsPlugin::GetAuthenticatedPublisher( const std::string& link ) const
 {
     auto it = authenticated_.find( link );
     if( it != authenticated_.end() )
-        return resolver_.GetPublisher( link );
+        return resolver_.GetConnectedPublisher( link );
     return nullPublisher;
 }
 
-ClientPublisher_ABC& RightsPlugin::GetPublisher( unsigned int clientId ) const
+ClientPublisher_ABC& RightsPlugin::GetAuthenticatedPublisher( unsigned int clientId ) const
 {
    auto it = ids_.find( clientId );
    if( it != ids_.end() )
-       return resolver_.GetPublisher( it->second );
+       return resolver_.GetConnectedPublisher( it->second );
    return nullPublisher;
 }
 

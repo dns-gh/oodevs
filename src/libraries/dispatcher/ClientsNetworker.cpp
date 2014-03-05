@@ -265,10 +265,10 @@ void ClientsNetworker::Send( const sword::DispatcherToClient& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::GetPublisher
+// Name: ClientsNetworker::GetConnectedPublisher
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link ) const
+ClientPublisher_ABC& ClientsNetworker::GetConnectedPublisher( const std::string& link ) const
 {
     auto it = clients_.find( link );
     if( it == clients_.end() || !it->second )

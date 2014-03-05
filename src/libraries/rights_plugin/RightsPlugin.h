@@ -76,8 +76,8 @@ public:
     virtual void Register( dispatcher::Services& services );
 
     virtual dispatcher::Profile_ABC& GetProfile( const std::string& link ) const;
-    virtual dispatcher::ClientPublisher_ABC& GetPublisher( const std::string& link ) const;
-    virtual dispatcher::ClientPublisher_ABC& GetPublisher( unsigned int clientId ) const;
+    virtual dispatcher::ClientPublisher_ABC& GetAuthenticatedPublisher( const std::string& link ) const;
+    virtual dispatcher::ClientPublisher_ABC& GetAuthenticatedPublisher( unsigned int clientId ) const;
     virtual unsigned int GetClientID( const std::string& link ) const;
     //@}
 

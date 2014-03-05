@@ -36,8 +36,8 @@ public:
     //! @name Operations
     //@{
     virtual Profile_ABC& GetProfile( const std::string& link ) const = 0;
-    virtual ClientPublisher_ABC& GetPublisher( const std::string& link ) const = 0;
-    virtual ClientPublisher_ABC& GetPublisher( unsigned int clientId ) const = 0;
+    virtual ClientPublisher_ABC& GetAuthenticatedPublisher( const std::string& link ) const = 0;
+    virtual ClientPublisher_ABC& GetAuthenticatedPublisher( unsigned int clientId ) const = 0;
     virtual unsigned int GetClientID( const std::string& link ) const = 0;
     //@}
 };

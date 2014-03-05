@@ -115,7 +115,7 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const swor
             lastTick = messages_->FindTickForDate( request.date_time_range().end_date().data() );
         }
         xml::xistringstream xis( request.request() );
-        AarFacade factory( resolver_.GetPublisher( client ), request.identifier(), *model_ );
+        AarFacade factory( resolver_.GetAuthenticatedPublisher( client ), request.identifier(), *model_ );
         xis >> xml::start( "indicator" );
         boost::shared_ptr< Task > task( factory.CreateTask( xis, firstTick, lastTick ) );
         xis >> xml::end;
@@ -127,6 +127,6 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const swor
         message().mutable_values();
         message().set_identifier ( request.identifier() );
         message().set_error( tools::GetExceptionMsg( e ) );
-        message.Send( resolver_.GetPublisher( client ) );
+        message.Send( resolver_.GetAuthenticatedPublisher( client ) );
     }
 }
