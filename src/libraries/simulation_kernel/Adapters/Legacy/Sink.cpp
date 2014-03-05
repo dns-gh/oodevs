@@ -61,10 +61,11 @@ namespace legacy
     {
         AgentFactory_ABC* factory = &sink->factory_;
         const Sink::T_Elements& elements = sink->elements_;
+        bool logEnabled = sink->decLogger_.get() != 0;
         archive << factory
                 << sink->gcPause_
                 << sink->gcMult_
-                << sink->decLogger_
+                << logEnabled
                 << elements;
     }
 
@@ -74,14 +75,14 @@ namespace legacy
         AgentFactory_ABC* factory;
         unsigned int gcPause;
         unsigned int gcMult;
-        std::auto_ptr< sword::DEC_Logger > logger;
+        bool logEnabled;
         Sink::T_Elements elements;
         archive >> factory
                 >> gcPause
                 >> gcMult
-                >> logger
+                >> logEnabled
                 >> elements;
-        ::new( sink )Sink( *factory, gcPause, gcMult, logger );
+        ::new( sink )Sink( *factory, gcPause, gcMult, logEnabled );
         sink->elements_ = elements;
     }
 }
@@ -97,20 +98,6 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
     , gcPause_   ( gcPause )
     , gcMult_    ( gcMult )
     , decLogger_ ( logEnabled ? new DEC_Logger( "Pion" ) : 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink constructor
-// Created: SLI 2013-02-22
-// -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger )
-    : pElevation_( new ElevationGetter() )
-    , factory_   ( factory )
-    , gcPause_   ( gcPause )
-    , gcMult_    ( gcMult )
-    , decLogger_ ( logger )
 {
     // NOTHING
 }

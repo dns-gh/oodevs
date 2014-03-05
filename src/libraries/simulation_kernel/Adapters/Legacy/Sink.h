@@ -88,7 +88,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger );
     MIL_AgentPion& Configure( MIL_AgentPion& pion );
     void CreateRoles( SinkRoleExtender& ext );
 
