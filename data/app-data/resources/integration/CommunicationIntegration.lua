@@ -424,9 +424,8 @@ end
 --- Give the given mission to the calling automat
 -- This method can only be called by an automat
 -- @param task the task's name
--- @return Boolean, error code
 integration.giveCommanderTask = function( task )
-    return DEC_DonnerMissionAutomate( task )
+    DEC_DonnerMissionAutomate( task )
 end
 
 --- Returns the danger direction of the given agent
