@@ -60,13 +60,14 @@ void MIL_KnowledgeGroupType::Terminate()
 
 namespace
 {
-    double ReadTime( xml::xisubstream xis, const std::string& start, const std::string& name )
+    double ReadTime( xml::xisubstream xis, const std::string& start, const std::string& name, bool required )
     {
         if( !start.empty() )
             xis >> xml::start( start );
         double value;
-        tools::ReadTimeAttribute( xis, name, value );
-        if( value <= 0 )
+        if( !tools::ReadTimeAttribute( xis, name, value ) )
+            value = 0;
+        if( required && value <= 0 )
             throw MASA_EXCEPTION( xis.context() + ( start.empty() ? "" : name + ": " ) + name + " <= 0" );
         return value;
     }
@@ -89,11 +90,11 @@ namespace
 MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis, double timeFactor )
     : strName_                                      ( strName )
     , nID_                                          ( nNextID++ )
-    , rKnowledgeAgentMaxLifeTime_                   ( ReadTime( xis, "unit-knowledge", "max-lifetime" ) * timeFactor )
+    , rKnowledgeAgentMaxLifeTime_                   ( ReadTime( xis, "unit-knowledge", "max-lifetime", true ) * timeFactor )
     , rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_( ReadMaxDistance( xis ) )
-    , rKnowledgeAgentExtrapolationTime_             ( std::max( 1., ReadTime( xis, "unit-knowledge", "interpolation-time" ) * timeFactor ) )
-    , rKnowledgePopulationMaxLifeTime_              ( ReadTime( xis, "population-knowledge", "max-lifetime" ) * timeFactor )
-    , rCommunicationDelay_                          ( ReadTime( xis, "", "communication-delay" ) * timeFactor )
+    , rKnowledgeAgentExtrapolationTime_             ( std::max( 1., ReadTime( xis, "unit-knowledge", "interpolation-time", false ) * timeFactor ) )
+    , rKnowledgePopulationMaxLifeTime_              ( ReadTime( xis, "population-knowledge", "max-lifetime", true ) * timeFactor )
+    , rCommunicationDelay_                          ( ReadTime( xis, "", "communication-delay", true ) * timeFactor )
 {
     // NOTHING
 }
