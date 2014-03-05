@@ -33,7 +33,6 @@ LogisticBase::LogisticBase( kernel::Controllers& controllers,
     , entity_( entity )
     , isMaintenanceManual_( false )
     , isSupplyManual_( false )
-    , hasChanged_( false )
 {
     CreateDictionary( dictionary, active, ( controllers.GetCurrentMode() & eModes_AllGaming ) != 0 );
 }
@@ -53,7 +52,6 @@ LogisticBase::LogisticBase( kernel::Controllers& controllers,
     , entity_( entity )
     , isMaintenanceManual_( false )
     , isSupplyManual_( false )
-    , hasChanged_( false )
 {
     CreateDictionary( dictionary, active, ( controllers.GetCurrentMode() & eModes_AllGaming ) != 0 );
 }
@@ -150,12 +148,12 @@ bool LogisticBase::IsMaintenanceManual() const
 // Name: LogisticBase::SetMaintenanceManual
 // Created: ABR 2014-01-21
 // -----------------------------------------------------------------------------
-void LogisticBase::SetMaintenanceManual( bool manual )
+bool LogisticBase::SetMaintenanceManual( bool manual )
 {
     if( manual == isMaintenanceManual_ )
-        return;
+        return false;
     isMaintenanceManual_ = manual;
-    hasChanged_ = true;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -171,12 +169,12 @@ bool LogisticBase::IsSupplyManual() const
 // Name: LogisticBase::SetSupplyManual
 // Created: ABR 2014-03-03
 // -----------------------------------------------------------------------------
-void LogisticBase::SetSupplyManual( bool manual )
+bool LogisticBase::SetSupplyManual( bool manual )
 {
     if( manual == isSupplyManual_ )
-        return;
+        return false;
     isSupplyManual_ = manual;
-    hasChanged_ = true;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -222,11 +220,11 @@ void LogisticBase::DoUpdate( const sword::FormationUpdate& message )
 template< typename T >
 void LogisticBase::Update( const T& message )
 {
-    hasChanged_ = false;
+    bool hasChanged = false;
     if( message.has_log_maintenance_manual() )
-        SetMaintenanceManual( message.log_maintenance_manual() );
+        hasChanged |= SetMaintenanceManual( message.log_maintenance_manual() );
     if( message.has_log_supply_manual() )
-        SetSupplyManual( message.log_supply_manual() );
-    if( hasChanged_ )
+        hasChanged |= SetSupplyManual( message.log_supply_manual() );
+    if( hasChanged )
         controller_.Update( *this );
 }

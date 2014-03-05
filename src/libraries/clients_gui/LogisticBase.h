@@ -92,8 +92,8 @@ private:
 
     //! @name Helpers
     //@{
-    void SetMaintenanceManual( bool manual );
-    void SetSupplyManual( bool manual );
+    bool SetMaintenanceManual( bool manual );
+    bool SetSupplyManual( bool manual );
     template< typename T >
     void Update( const T& message );
     void CreateDictionary( gui::PropertiesDictionary& dictionary,
@@ -109,7 +109,6 @@ private:
     bool isBase_;
     bool isMaintenanceManual_;
     bool isSupplyManual_;
-    bool hasChanged_;
     //@}
 };
 
