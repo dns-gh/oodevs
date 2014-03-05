@@ -49,13 +49,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_CheckPointInArchive( const MIL_CheckPointInArchive& );            //!< Copy constructor
-    MIL_CheckPointInArchive& operator=( const MIL_CheckPointInArchive& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member Data
     //@{
     const ObjectTypeResolver_ABC& resolver_;

@@ -34,15 +34,6 @@ public:
              MIL_CheckPointOutArchive(std::streambuf & bsb, unsigned int flags = 0) : boost::archive::binary_oarchive_impl<MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type>(bsb, flags)
              {}
     virtual ~MIL_CheckPointOutArchive(){}
-
-private:
-
-    //! @name Copy/Assignment
-    //@{
-    MIL_CheckPointOutArchive( const MIL_CheckPointOutArchive& );            //!< Copy constructor
-    MIL_CheckPointOutArchive& operator=( const MIL_CheckPointOutArchive& ); //!< Assignment operator
-    //@}
-
 };
 
 BOOST_SERIALIZATION_REGISTER_ARCHIVE( MIL_CheckPointOutArchive );
