@@ -1034,6 +1034,17 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>InfoDialog_Base</name>
+    <message>
+        <source>Manual</source>
+        <translation>Manuel</translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation>Automatique</translation>
+    </message>
+</context>
+<context>
     <name>InfoDock</name>
     <message>
         <source>Info</source>
@@ -1107,14 +1118,6 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Chain status</source>
         <translation>Etat de la chaîne</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Manuel</translation>
-    </message>
-    <message>
-        <source>Automatic</source>
-        <translation>Automatique</translation>
     </message>
 </context>
 <context>
@@ -1674,6 +1677,14 @@ Voulez-vous le remplacer ?</translation>
         <source>Pull supply flow</source>
         <translation>Tirer flux</translation>
     </message>
+    <message>
+        <source>Switch to automated supply</source>
+        <translation>Passer en ravitaillement automatique</translation>
+    </message>
+    <message>
+        <source>Switch to manual supply</source>
+        <translation>Passer en ravitaillement manuel</translation>
+    </message>
 </context>
 <context>
     <name>LogisticMaintenanceSelectionDialog</name>
@@ -1724,6 +1735,21 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Estimated repair duration: %1</source>
         <translation>Durée de réparation estimée : %1</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticStatusWidget</name>
+    <message>
+        <source>Mode</source>
+        <translation>Mode</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation>Manuel</translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation>Automatique</translation>
     </message>
 </context>
 <context>
@@ -2184,21 +2210,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Unit</source>
         <translation>Unité</translation>
-    </message>
-</context>
-<context>
-    <name>MaintenanceStatusWidget</name>
-    <message>
-        <source>Mode</source>
-        <translation>Mode</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Manuel</translation>
-    </message>
-    <message>
-        <source>Automatic</source>
-        <translation>Automatique</translation>
     </message>
 </context>
 <context>

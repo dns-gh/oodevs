@@ -1033,6 +1033,17 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>InfoDialog_Base</name>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>InfoDock</name>
     <message>
         <source>Info</source>
@@ -1106,14 +1117,6 @@ Do you want to replace it?</source>
     <message>
         <source>Chain status</source>
         <translation>Estado del sistema</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automatic</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1673,6 +1676,14 @@ Do you want to replace it?</source>
         <source>Switch to manual maintenance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Switch to automated supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to manual supply</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticMaintenanceSelectionDialog</name>
@@ -1722,6 +1733,21 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Estimated repair duration: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticStatusWidget</name>
+    <message>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2183,21 +2209,6 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Unit</source>
         <translation type="unfinished">Unidades</translation>
-    </message>
-</context>
-<context>
-    <name>MaintenanceStatusWidget</name>
-    <message>
-        <source>Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automatic</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

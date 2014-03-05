@@ -64,7 +64,6 @@ private:
     //! @name Helpers
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const Troops& troops );
     //@}
 

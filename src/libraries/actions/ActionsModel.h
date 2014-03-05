@@ -118,6 +118,7 @@ public:
     int PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, const std::vector< parameters::ParameterList* >& attributes );
     int PublishObjectDestroyMagicAction( const kernel::Entity_ABC& object );
     int PublishLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual );
+    int PublishLogSupplySetManual( const kernel::Entity_ABC& tasker, bool manual );
     int PublishSelectNewLogisticState( unsigned int consignId );
     int PublishTransferToLogisticSuperior( unsigned int consignId );
     int PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId );
