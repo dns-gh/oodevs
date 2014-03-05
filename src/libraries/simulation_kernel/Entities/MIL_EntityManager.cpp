@@ -119,7 +119,6 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_MessageParameters.h"
 #include "Tools/MIL_ProfilerManager.h"
-#include "Tools/MIL_Tools.h"
 #include "Tools/NET_AsnException.h"
 #include "tools/SchemaWriter.h"
 #include "Urban/MIL_UrbanCache.h"
@@ -129,6 +128,7 @@
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Urban/PHY_RoofShapeType.h"
+#include "simulation_terrain/TER_World.h"
 
 #include <boost/lexical_cast.hpp>
 #include <tuple>
@@ -1307,7 +1307,7 @@ void MIL_EntityManager::ProcessAutomatAndUnitsCreationRequest( const UnitMagicAc
 
     const auto& point = protocol::GetPoint( params, 1 );
     MT_Vector2D position;
-    MIL_Tools::ConvertCoordMosToSim( point, position );
+    world_->MosToSimMgrsCoord( point.latitude(), point.longitude(), position );
 
     unsigned int groupId = 0;
     if( const auto group = protocol::TryGetKnowledgeGroup( params, 1 ) )
@@ -1447,7 +1447,8 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     const unsigned int wounded = parameters.elem( 3 ).value( 0 ).quantity();
     const unsigned int dead = parameters.elem( 4 ).value( 0 ).quantity();
     MT_Vector2D point;
-    MIL_Tools::ConvertCoordMosToSim( location.coordinates().elem( 0 ), point );
+    const auto& position = location.coordinates().elem( 0 );
+    world_->MosToSimMgrsCoord( position.latitude(), position.longitude(), point );
     int number = healthy + wounded + dead;
     if( number == 0 )
         throw MASA_BADPARAM_UNIT( "crowd cannot be created empty" );
@@ -2156,7 +2157,7 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
             pDotationCategory->ConvertToNbrAmmo( iterations ) );
 
     MT_Vector2D targetPos;
-    MIL_Tools::ConvertCoordMosToSim( point, targetPos );
+    world_->MosToSimMgrsCoord( point.latitude(), point.longitude(), targetPos );
     PHY_FireResults_Default fireResult;
     pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
 }
