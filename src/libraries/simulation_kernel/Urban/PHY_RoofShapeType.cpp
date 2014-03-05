@@ -10,8 +10,12 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoofShapeType.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/ptr_container/ptr_map.hpp>
 
-PHY_RoofShapeType::T_RoofShapeMap PHY_RoofShapeType::roofShapes_;
+namespace
+{
+    boost::ptr_map< std::string, PHY_RoofShapeType > roofShapes;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoofShapeType::Initialize
@@ -35,9 +39,7 @@ void PHY_RoofShapeType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_RoofShapeType::Terminate()
 {
-    for( CIT_RoofShapeMap itRoofShape = roofShapes_.begin(); itRoofShape != roofShapes_.end(); ++itRoofShape )
-        delete itRoofShape->second;
-    roofShapes_.clear();
+    roofShapes.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -46,10 +48,10 @@ void PHY_RoofShapeType::Terminate()
 // -----------------------------------------------------------------------------
 const PHY_RoofShapeType* PHY_RoofShapeType::Find( const std::string& strName )
 {
-    CIT_RoofShapeMap itRoofShape = roofShapes_.find( strName );
-    if( itRoofShape == roofShapes_.end() )
+    auto it = roofShapes.find( strName );
+    if( it == roofShapes.end() )
         return 0;
-    return itRoofShape->second;
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,9 +79,9 @@ PHY_RoofShapeType::~PHY_RoofShapeType()
 // -----------------------------------------------------------------------------
 void PHY_RoofShapeType::ReadRoofShape( xml::xistream& xis )
 {
-    std::string strRoofShape = xis.attribute< std::string >( "name" );
-    const PHY_RoofShapeType*& pRoofShape = roofShapes_[ strRoofShape ];
-    if( pRoofShape )
-        throw MASA_EXCEPTION( xis.context() + "Roof shape " + strRoofShape + " already defined" );
-    pRoofShape = new PHY_RoofShapeType( strRoofShape );
+    std::string shape = xis.attribute< std::string >( "name" );
+    if( roofShapes.count( shape ) )
+        throw MASA_EXCEPTION( xis.context() + "Roof shape " + shape + " already defined" );
+    auto next = std::auto_ptr< PHY_RoofShapeType >( new PHY_RoofShapeType( shape ) );
+    roofShapes.insert( shape, next );
 }

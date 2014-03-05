@@ -1655,6 +1655,16 @@ message UnitMagicAction {
         //!     worried, stressed
         change_human_factors              = 10;
         //! A partial recovery magic action
+        //! The tasker must be a valid unit identifier.
+        //! parameters[0], the equipment
+        //! parameters[1], the crew
+        //! parameters[2], the resources
+        //! parameters[3], the ammunitions
+        //! parameters[4], the stocks
+        //! Each parameter must be either a null_value to be omitted or
+        //! a parameter value list:
+        //! value { list { identifier: 1 }
+        //!         list { quantity: 10  } }
         partial_recovery                  = 11;
         //! A unit creation magic action
         //! The tasker must be set to the parent automat.
@@ -1720,7 +1730,7 @@ message UnitMagicAction {
         //! 'superior' that is an identifier, an automat or a formation
         change_logistic_links             = 20;
         //! A unit change superior magic action
-        //!  The tasker must be an unit identifier.
+        //! The tasker must be an unit identifier.
         //! parameters[0], Automat: the new automat
         unit_change_superior              = 21;
         //! Change superior of an automat

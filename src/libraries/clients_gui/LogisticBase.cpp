@@ -32,6 +32,7 @@ LogisticBase::LogisticBase( kernel::Controllers& controllers,
     , isBase_( isBase )
     , entity_( entity )
     , isMaintenanceManual_( false )
+    , isSupplyManual_( false )
 {
     CreateDictionary( dictionary, active, ( controllers.GetCurrentMode() & eModes_AllGaming ) != 0 );
 }
@@ -50,6 +51,7 @@ LogisticBase::LogisticBase( kernel::Controllers& controllers,
                xis.attribute( "logistic-level", "" ) == ENT_Tr::ConvertFromLogisticLevel( sword::logistic_base, ENT_Tr::eToSim ) )
     , entity_( entity )
     , isMaintenanceManual_( false )
+    , isSupplyManual_( false )
 {
     CreateDictionary( dictionary, active, ( controllers.GetCurrentMode() & eModes_AllGaming ) != 0 );
 }
@@ -146,12 +148,33 @@ bool LogisticBase::IsMaintenanceManual() const
 // Name: LogisticBase::SetMaintenanceManual
 // Created: ABR 2014-01-21
 // -----------------------------------------------------------------------------
-void LogisticBase::SetMaintenanceManual( bool manual )
+bool LogisticBase::SetMaintenanceManual( bool manual )
 {
     if( manual == isMaintenanceManual_ )
-        return;
+        return false;
     isMaintenanceManual_ = manual;
-    controller_.Update( *this );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBase::IsSupplyManual
+// Created: ABR 2014-03-03
+// -----------------------------------------------------------------------------
+bool LogisticBase::IsSupplyManual() const
+{
+    return isSupplyManual_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBase::SetSupplyManual
+// Created: ABR 2014-03-03
+// -----------------------------------------------------------------------------
+bool LogisticBase::SetSupplyManual( bool manual )
+{
+    if( manual == isSupplyManual_ )
+        return false;
+    isSupplyManual_ = manual;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -197,6 +220,11 @@ void LogisticBase::DoUpdate( const sword::FormationUpdate& message )
 template< typename T >
 void LogisticBase::Update( const T& message )
 {
+    bool hasChanged = false;
     if( message.has_log_maintenance_manual() )
-        SetMaintenanceManual( message.log_maintenance_manual() );
+        hasChanged |= SetMaintenanceManual( message.log_maintenance_manual() );
+    if( message.has_log_supply_manual() )
+        hasChanged |= SetSupplyManual( message.log_supply_manual() );
+    if( hasChanged )
+        controller_.Update( *this );
 }

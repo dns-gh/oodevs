@@ -376,7 +376,6 @@ void MIL_Automate::ReadAutomatSubordinate( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Automate::DestroyPion( MIL_AgentPion& pion )
 {
-    assert( pion.IsDead() );
     pionsToDelete_.push_back( &pion );
 }
 

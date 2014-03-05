@@ -37,8 +37,6 @@ class Model;
 // Created: SBO 2007-02-20
 // =============================================================================
 class InfoFuneralDialog : public InfoDialog_Base
-                        , public tools::Observer_ABC
-                        , public tools::SelectionObserver< kernel::Entity_ABC >
                         , public tools::ElementObserver_ABC< Troops >
                         , public LogisticDialog_ABC
 {
@@ -63,15 +61,12 @@ private:
     //! @name Helpers
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyUpdated( const Troops& troops );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
     LogisticsRequestsFuneralWidget* widget_;
     //@}
 };

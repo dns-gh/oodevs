@@ -198,6 +198,16 @@ int ActionsModel::PublishLogMaintenanceSetManualAction( const kernel::Entity_ABC
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishLogSupplySetManual
+// Created: ABR 2014-03-03
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishLogSupplySetManual( const kernel::Entity_ABC& tasker, bool manual )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateLogSupplySetManual( tasker, manual ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishSelectNewLogisticState
 // Created: LGY 2014-01-24
 // -----------------------------------------------------------------------------

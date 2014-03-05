@@ -10,7 +10,6 @@
 #ifndef __PHY_InfrastructureType_h_
 #define __PHY_InfrastructureType_h_
 
-
 // =============================================================================
 /** @class  PHY_InfrastructureType
     @brief  PHY_InfrastructureType
@@ -20,10 +19,9 @@
 class PHY_InfrastructureType : private boost::noncopyable
 {
 public:
-    //! @name Types
+    //! @name Destructor
     //@{
-    typedef std::map< std::string, const PHY_InfrastructureType* > T_InfrastructureMap;
-    typedef T_InfrastructureMap::const_iterator CIT_InfrastructureMap;
+    ~PHY_InfrastructureType();
     //@}
 
 public:
@@ -41,10 +39,9 @@ public:
     //@}
 
 private:
-    //! @name Constructors/Destructor
+    //! @name Constructors
     //@{
-             PHY_InfrastructureType( const std::string& name, xml::xistream& xis );
-    virtual ~PHY_InfrastructureType();
+    PHY_InfrastructureType( const std::string& name, xml::xistream& xis );
     //@}
 
 private:
@@ -56,10 +53,9 @@ private:
 private:
     //! @name Member data
     //@{
-    static T_InfrastructureMap infrastructures_;
-    std::string name_;
-    std::string symbol_;
-    bool medical_;
+    const std::string name_;
+    const std::string symbol_;
+    const bool medical_;
     //@}
 };
 

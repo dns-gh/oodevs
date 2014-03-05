@@ -41,7 +41,6 @@ class Model;
 // =============================================================================
 class InfoMaintenanceDialog : public InfoDialog< kernel::MaintenanceStates_ABC >
                             , public tools::ElementObserver_ABC< Equipments >
-                            , public tools::ElementObserver_ABC< gui::LogisticBase >
                             , public LogisticDialog_ABC
 {
 public:
@@ -66,10 +65,7 @@ private:
     //! @name Helpers
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const Equipments& entity );
-    virtual void NotifyUpdated( const gui::LogisticBase& ext );
-    virtual void UpdateTitle( boost::optional< bool > manual );
     //@}
 
 private:

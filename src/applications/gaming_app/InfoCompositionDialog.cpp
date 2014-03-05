@@ -22,11 +22,8 @@
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 InfoCompositionDialog::InfoCompositionDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& /*factory*/ )
-    : InfoDialog_Base( parent, tools::translate( "InfoCompositionDialog", "Composition" ) )
-    , controllers_( controllers )
+    : InfoDialog_Base( controllers, parent, tools::translate( "InfoCompositionDialog", "Composition" ) )
 {
-    controllers_.Register( *this );
-
     new EquipmentsListView( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Equipments" ), RootWidget() ), controllers );
     new HumansListView    ( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Humans" ), RootWidget() ), controllers );
     new LendingsListView( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Lent equipment(s)" ), RootWidget() ), controllers );
@@ -39,7 +36,7 @@ InfoCompositionDialog::InfoCompositionDialog( QWidget* parent, kernel::Controlle
 // -----------------------------------------------------------------------------
 InfoCompositionDialog::~InfoCompositionDialog()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,13 +46,4 @@ InfoCompositionDialog::~InfoCompositionDialog()
 bool InfoCompositionDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
     return element.Retrieve< Lendings >() || element.Retrieve< Equipments >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoCompositionDialog::NotifySelected
-// Created: SBO 2007-02-20
-// -----------------------------------------------------------------------------
-void InfoCompositionDialog::NotifySelected( const kernel::Entity_ABC* element )
-{
-    SetEnabled( element && ShouldDisplay( *element ) );
 }

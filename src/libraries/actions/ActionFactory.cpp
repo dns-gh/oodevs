@@ -913,6 +913,21 @@ Action_ABC* ActionFactory::CreateLogMaintenanceSetManualAction( const kernel::En
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateLogSupplySetManual
+// Created: ABR 2014-03-03
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateLogSupplySetManual( const kernel::Entity_ABC& tasker, bool manual ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "log_supply_set_manual" );
+    std::unique_ptr< UnitMagicAction > action( new UnitMagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Bool( it.NextElement(), manual ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTasker( *action, &tasker, false );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateSelectNewLogisticState
 // Created: LGY 2014-01-24
 // -----------------------------------------------------------------------------

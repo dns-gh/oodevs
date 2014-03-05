@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "InfoMedicalDialog.h"
 #include "LogisticsRequestsMedicalWidget.h"
-#include "LogisticStatusWidgets.h"
+#include "LogisticStatusWidget.h"
 #include "MedicalCollectAmbulancesListView.h"
 #include "MedicalDoctorsListView.h"
 #include "MedicalReliefAmbulancesListView.h"
@@ -28,7 +28,7 @@
 InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers,
                                       gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
                                       const SimulationController& simulationController, Model& model )
-    : InfoDialog< MedicalStates >( parent, controllers, tools::translate( "InfoMedicalDialog", "Medical system" ) )
+    : InfoDialog< MedicalStates >( controllers, parent, tools::translate( "InfoMedicalDialog", "Medical system" ) )
     , widget_( 0 )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
@@ -79,17 +79,6 @@ bool InfoMedicalDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
     MedicalRelevant medicalRelevant;
     return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element, medicalRelevant );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoMedicalDialog::NotifySelected
-// Created: MMC 2013-01-09
-// -----------------------------------------------------------------------------
-void InfoMedicalDialog::NotifySelected( const kernel::Entity_ABC* entity )
-{
-    selected_ = entity;
-    if( entity )
-        InfoDialog< MedicalStates >::NotifySelected( entity );
 }
 
 // -----------------------------------------------------------------------------

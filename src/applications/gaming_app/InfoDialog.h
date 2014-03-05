@@ -10,11 +10,21 @@
 #ifndef __InfoDialog_h_
 #define __InfoDialog_h_
 
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include <tools/SelectionObserver_ABC.h>
 #include <tools/ElementObserver_ABC.h>
+#include <boost/optional.hpp>
+
+namespace gui
+{
+    class LogisticBase;
+}
+
+namespace kernel
+{
+    class Controllers;
+}
 
 // =============================================================================
 /** @class  InfoDialog_Base
@@ -23,22 +33,51 @@
 // Created: SBO 2007-02-15
 // =============================================================================
 class InfoDialog_Base : public QDialog
+                      , public tools::Observer_ABC
+                      , public tools::SelectionObserver< kernel::Entity_ABC >
+                      , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                      , public tools::ElementObserver_ABC< gui::LogisticBase >
 {
-    Q_OBJECT;
+    Q_OBJECT
+
+protected:
+    //! @name Types
+    //@{
+    typedef std::function< bool( const gui::LogisticBase& ) > T_LogisticBaseModeChecker;
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoDialog_Base( QWidget* parent, const QString& title );
+             InfoDialog_Base( kernel::Controllers& controllers,
+                              QWidget* parent,
+                              const QString& title,
+                              const T_LogisticBaseModeChecker& modeChecker = T_LogisticBaseModeChecker() );
     virtual ~InfoDialog_Base();
     //@}
 
     //! @name Operations
     //@{
+    QWidget* RootWidget();
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void SetEnabled( bool state );
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifyUpdated( const kernel::Entity_ABC* element );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void NotifyUpdated( const gui::LogisticBase& ext );
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const = 0;
     virtual QSize sizeHint() const;
     virtual void hideEvent( QHideEvent* );
     virtual void showEvent( QShowEvent* event );
-    QWidget* RootWidget(); // $$$$ SBO 2007-02-19:
+    void UpdateTitle( boost::optional< bool > manual );
     //@}
 
 public slots:
@@ -55,24 +94,20 @@ signals:
     void Shown();
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    InfoDialog_Base( const InfoDialog_Base& );            //!< Copy constructor
-    InfoDialog_Base& operator=( const InfoDialog_Base& ); //!< Assignment operator
-    //@}
-
 protected:
-    //! @name Operations
+    //! @name Protected member data
     //@{
-    void SetEnabled( bool state );
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 
 private:
     //! @name Member data
     //@{
+    const QString baseTitle_;
     Q3VBox* box_;
     bool disconnected_;
+    kernel::Controllers& controllers_;
+    const T_LogisticBaseModeChecker modeChecker_;
     //@}
 };
 
@@ -84,96 +119,32 @@ private:
 // =============================================================================
 template< typename Extension >
 class InfoDialog : public InfoDialog_Base
-                 , public tools::Observer_ABC
-                 , public tools::SelectionObserver< kernel::Entity_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoDialog( QWidget* parent, kernel::Controllers& controllers, const QString& title );
-    virtual ~InfoDialog();
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
-    virtual void NotifyUpdated( const kernel::Entity_ABC* element );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    InfoDialog( const InfoDialog& );            //!< Copy constructor
-    InfoDialog& operator=( const InfoDialog& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
+    InfoDialog( kernel::Controllers& controllers,
+                QWidget* parent,
+                const QString& title,
+                const T_LogisticBaseModeChecker& modeChecker = T_LogisticBaseModeChecker() )
+        : InfoDialog_Base( controllers, parent, title, modeChecker )
+    {
+        // NOTHING
+    }
+    virtual ~InfoDialog()
+    {
+        // NOTHING
+    }
     //@}
 
 private:
-    //! @name Member data
+    //! @name Helpers
     //@{
-    kernel::Controllers& controllers_;
-
-protected:
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const
+    {
+        return element.Retrieve< Extension >() != 0;
+    }
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: InfoDialog constructor
-// Created: SBO 2007-02-20
-// -----------------------------------------------------------------------------
-template< typename Extension >
-InfoDialog< Extension >::InfoDialog( QWidget* parent, kernel::Controllers& controllers, const QString& title )
-    : InfoDialog_Base( parent, title )
-    , controllers_( controllers )
-    , selected_( controllers )
-{
-    controllers_.Register( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoDialog destructor
-// Created: SBO 2007-02-20
-// -----------------------------------------------------------------------------
-template< typename Extension >
-InfoDialog< Extension >::~InfoDialog()
-{
-    controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoDialog::ShouldDisplay
-// Created: SBO 2007-03-30
-// -----------------------------------------------------------------------------
-template< typename Extension >
-bool InfoDialog< Extension >::ShouldDisplay( const kernel::Entity_ABC& element ) const
-{
-    return element.Retrieve< Extension >() != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoDialog::NotifySelected
-// Created: SBO 2007-02-20
-// -----------------------------------------------------------------------------
-template< typename Extension >
-void InfoDialog< Extension >::NotifySelected( const kernel::Entity_ABC* element )
-{
-    SetEnabled( element && ShouldDisplay( *element ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoDialog::NotifyUpdated
-// Created: NPT 2013-05-16
-// -----------------------------------------------------------------------------
-template< typename Extension >
-void InfoDialog< Extension >::NotifyUpdated( const kernel::Entity_ABC* element )
-{
-    SetEnabled( element && ShouldDisplay( *element ) );
-}
 
 #endif // __InfoDialog_h_

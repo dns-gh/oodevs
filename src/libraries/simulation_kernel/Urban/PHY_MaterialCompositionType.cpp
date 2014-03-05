@@ -10,21 +10,25 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_MaterialCompositionType.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/ptr_container/ptr_map.hpp>
 
-PHY_MaterialCompositionType::T_MaterialCompositionMap PHY_MaterialCompositionType::materialCompositions_;
-unsigned int PHY_MaterialCompositionType::nNextId_ = 0;
-
-// -----------------------------------------------------------------------------
-// Name: PHY_MaterialCompositionType::AttritionData constructor
-// Created: JSR 2011-02-17
-// -----------------------------------------------------------------------------
-PHY_MaterialCompositionType::AttritionData::AttritionData( const std::string& protection, xml::xistream& xis )
-    : protection_        ( protection )
-    , destruction_       ( 0 )
-    , repairableWithEvac_( xis.attribute< float >( "repairable-with-evacuation" ) )
-    , repairableNoEvac_  ( xis.attribute< float  >( "repairable-without-evacuation" ) )
+namespace
 {
-    xis >> xml::optional >> xml::attribute( "destruction", destruction_ );
+    boost::ptr_map< std::string, PHY_MaterialCompositionType > materialCompositions;
+    unsigned int nNextId;
+}
+
+namespace
+{
+    PHY_MaterialCompositionType::AttritionData MakeAttrition( const std::string& protection, xml::xistream& xis )
+    {
+        PHY_MaterialCompositionType::AttritionData dst;
+        dst.protection_ = protection;
+        xis >> xml::attribute( "repairable-with-evacuation", dst.repairableWithEvac_ )
+            >> xml::attribute( "repairable-without-evacuation", dst.repairableNoEvac_ )
+            >> xml::optional >> xml::attribute( "destruction", dst.destruction_ );
+        return dst;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -49,10 +53,8 @@ void PHY_MaterialCompositionType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MaterialCompositionType::Terminate()
 {
-    for( CIT_MaterialCompositionMap itMaterial = materialCompositions_.begin(); itMaterial != materialCompositions_.end(); ++itMaterial )
-        delete itMaterial->second;
-    materialCompositions_.clear();
-    nNextId_ = 0;
+    materialCompositions.clear();
+    nNextId = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,10 +63,10 @@ void PHY_MaterialCompositionType::Terminate()
 // -----------------------------------------------------------------------------
 const PHY_MaterialCompositionType* PHY_MaterialCompositionType::Find( const std::string& strName )
 {
-    CIT_MaterialCompositionMap itMaterial = materialCompositions_.find( strName );
-    if( itMaterial == materialCompositions_.end() )
+    auto it = materialCompositions.find( strName );
+    if( it == materialCompositions.end() )
         return 0;
-    return itMaterial->second;
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +75,7 @@ const PHY_MaterialCompositionType* PHY_MaterialCompositionType::Find( const std:
 // -----------------------------------------------------------------------------
 unsigned int PHY_MaterialCompositionType::Count()
 {
-    return static_cast< unsigned >( materialCompositions_.size() );
+    return static_cast< unsigned >( materialCompositions.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,12 +100,26 @@ const std::string& PHY_MaterialCompositionType::GetName() const
 // Name: PHY_MaterialCompositionType::FindAttrition
 // Created: JSR 2011-02-17
 // -----------------------------------------------------------------------------
-PHY_MaterialCompositionType::AttritionData* PHY_MaterialCompositionType::FindAttrition( const std::string& protection ) const
+const PHY_MaterialCompositionType::AttritionData* PHY_MaterialCompositionType::FindAttrition( const std::string& protection ) const
 {
-    CIT_AttritionInfos it = attritions_.find( protection );
+    auto it = attritions_.find( protection );
     if( it != attritions_.end() )
-        return it->second;
+        return &it->second;
     return 0;
+}
+
+namespace
+{
+    PHY_MaterialCompositionType::T_AttritionInfos ReadAttritions( xml::xistream& xis )
+    {
+        PHY_MaterialCompositionType::T_AttritionInfos dst;
+        xis >> xml::start( "attritions" )
+            >> xml::list( "attrition", [&]( xml::xistream& xis ){
+                std::string protection = xis.attribute< std::string >( "protection" );
+                dst.emplace( std::make_pair( protection, MakeAttrition( protection, xis ) ) );
+            }) >> xml::end;
+        return dst;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -111,12 +127,11 @@ PHY_MaterialCompositionType::AttritionData* PHY_MaterialCompositionType::FindAtt
 // Created: JSR 2011-02-17
 // -----------------------------------------------------------------------------
 PHY_MaterialCompositionType::PHY_MaterialCompositionType( const std::string& name, xml::xistream& xis )
-    : name_( name )
-    , nId_ ( nNextId_++ )
+    : name_      ( name )
+    , nId_       ( nNextId++ )
+    , attritions_( ReadAttritions( xis ) )
 {
-    xis >> xml::start( "attritions" )
-            >> xml::list( "attrition", *this, &PHY_MaterialCompositionType::ReadAttrition )
-        >> xml::end;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +140,7 @@ PHY_MaterialCompositionType::PHY_MaterialCompositionType( const std::string& nam
 // -----------------------------------------------------------------------------
 PHY_MaterialCompositionType::~PHY_MaterialCompositionType()
 {
-    for( CIT_AttritionInfos itAttrition = attritions_.begin(); itAttrition != attritions_.end(); ++itAttrition )
-        delete itAttrition->second;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -136,18 +150,8 @@ PHY_MaterialCompositionType::~PHY_MaterialCompositionType()
 void PHY_MaterialCompositionType::ReadMaterialComposition( xml::xistream& xis )
 {
     std::string strName = xis.attribute< std::string >( "name" );
-    const PHY_MaterialCompositionType*& pMaterial = materialCompositions_[ strName ];
-    if( pMaterial )
+    if( materialCompositions.count( strName ) )
         throw MASA_EXCEPTION( xis.context() + "Material composition " + strName + " already defined" );
-    pMaterial = new PHY_MaterialCompositionType( strName, xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_MaterialCompositionType::ReadAttrition
-// Created: JSR 2011-02-17
-// -----------------------------------------------------------------------------
-void PHY_MaterialCompositionType::ReadAttrition( xml::xistream& xis )
-{
-    std::string protection = xis.attribute< std::string >( "protection" );
-    attritions_[ protection ] = new AttritionData( protection, xis );
+    auto next = std::auto_ptr< PHY_MaterialCompositionType >( new PHY_MaterialCompositionType( strName, xis ) );
+    materialCompositions.insert( strName, next );
 }

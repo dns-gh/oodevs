@@ -210,10 +210,10 @@ float MIL_LivingArea::ComputeOccupationFactor() const
 void MIL_LivingArea::GetUsagesOccupation( std::map< std::string, unsigned int >& occupations ) const
 {
     // $$$$ JSR 2011-03-22: à vérifier pour la satisfaction
-    const PHY_AccomodationType::T_AccomodationMap& accomodations = PHY_AccomodationType::GetAccomodations();
     BOOST_FOREACH( const MIL_LivingAreaBlock* block, blocks_ )
-        for( auto it = accomodations.begin(); it != accomodations.end(); ++it )
-            occupations[ it->first ] += block->GetNominalOccupation( it->first, it->second, accomodations );
+        PHY_AccomodationType::Visit( [&]( const PHY_AccomodationType& type ){
+            occupations[ type.GetRole() ] += block->GetNominalOccupation( type.GetRole(), &type );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -593,16 +593,16 @@ unsigned int MIL_LivingArea::ComputeStartingBlocks( const std::string& motivatio
     {
         if( !block->CanMove() )
             continue;
-        for( PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().begin(); it != PHY_AccomodationType::GetAccomodations().end(); ++it )
-        {
-            if( motivation == it->first )
-                continue;
-            unsigned int nbrForAccommodation = block->GetPersonsForAccomodation( it->first );
+        PHY_AccomodationType::Visit( [&]( const PHY_AccomodationType& type ){
+            const auto& role = type.GetRole();
+            if( motivation == role )
+                return;
+            const unsigned int nbrForAccommodation = block->GetPersonsForAccomodation( role );
             if( nbrForAccommodation == 0 )
-                continue;
-            startingBlocks_[ block ][ it->first ] = nbrForAccommodation;
+                return;
+            startingBlocks_[ block ][ role ] = nbrForAccommodation;
             movingNumber += nbrForAccommodation;
-        }
+        });
     }
     return movingNumber;
 }
@@ -645,15 +645,13 @@ void MIL_LivingArea::ForceEvacuation( const std::string& motivation )
             continue;
         unsigned int people = 0;
         unsigned int maximalOccupation = 0;
-        for( PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().begin(); it != PHY_AccomodationType::GetAccomodations().end(); ++it )
-        {
-            if( it->first != motivation )
-            {
-                people += block->GetPersonsForAccomodation( it->first );
-                maximalOccupation += block->GetMaxOccupation( it->first );
-            }
-        }
-
+        PHY_AccomodationType::Visit( [&]( const PHY_AccomodationType& type ){
+            const auto& role = type.GetRole();
+            if( role == motivation )
+                return;
+            people += block->GetPersonsForAccomodation( role );
+            maximalOccupation += block->GetMaxOccupation( role );
+        });
         if( maximalOccupation != 0 )
         {
             unsigned int blockMaximalRemaining = maximalOccupation > people ? maximalOccupation - people : 0;

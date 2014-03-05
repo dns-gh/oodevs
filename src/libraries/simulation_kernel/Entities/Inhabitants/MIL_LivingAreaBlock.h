@@ -25,7 +25,6 @@ class PHY_ResourceNetworkType;
 class TER_Localisation;
 class MIL_UrbanObject_ABC;
 
-
 // =============================================================================
 /** @class  MIL_LivingAreaBlock
     @brief  MIL_LivingAreaBlock
@@ -59,7 +58,7 @@ public:
     unsigned int GetTotalNumberOfPersons() const;
     unsigned int GetPersonsForAccomodation( const std::string& accomodation ) const;
     unsigned int GetNominalOccupation( const std::string& motivation ) const;
-    unsigned int GetNominalOccupation( const std::string& motivation, const PHY_AccomodationType* accomodation, const PHY_AccomodationType::T_AccomodationMap& accomodations ) const;
+    unsigned int GetNominalOccupation( const std::string& motivation, const PHY_AccomodationType* accomodation ) const;
     unsigned int GetMaxOccupation( const std::string& motivation ) const;
     bool CanMove() const;
     bool IsAlerted( const TER_Localisation& localisation ) const;
@@ -89,7 +88,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    float GetProportion( const std::string& motivation, const PHY_AccomodationType::T_AccomodationMap& accommodations ) const;
+    float GetProportion( const std::string& motivation ) const;
     //@}
 
 private:
