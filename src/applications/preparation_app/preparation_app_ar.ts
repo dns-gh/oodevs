@@ -833,7 +833,7 @@
     </message>
 </context>
 <context>
-    <name>LogisticStocksQuotasEditor</name>
+    <name>LogisticStocksAndQuotasDialog</name>
     <message>
         <source>Automatic allocation...</source>
         <translation type="unfinished"></translation>

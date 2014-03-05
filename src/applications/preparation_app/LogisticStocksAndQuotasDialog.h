@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef _LogisticStocksQuotasEditor_h
-#define _LogisticStocksQuotasEditor_h
+#ifndef _LogisticStocksAndQuotasDialog_h
+#define _LogisticStocksAndQuotasDialog_h
 
 #include "LogisticEditor.h" // todo for typedef
 #include "MaxStockNaturesTable.h" // todo for typedef
@@ -38,12 +38,12 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  LogisticStocksQuotasEditor
-@brief  LogisticStocksQuotasEditor
+/** @class  LogisticStocksAndQuotasDialog
+@brief  LogisticStocksAndQuotasDialog
 */
 // Created: MMC 2013-10-24
 // =============================================================================
-class LogisticStocksQuotasEditor : public QDialog
+class LogisticStocksAndQuotasDialog : public QDialog
                                  , public tools::Observer_ABC
                                  , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                                  , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
@@ -55,8 +55,8 @@ class LogisticStocksQuotasEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticStocksQuotasEditor( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel );
-    virtual ~LogisticStocksQuotasEditor();
+             LogisticStocksAndQuotasDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel );
+    virtual ~LogisticStocksAndQuotasDialog();
     //@}
 
     //! @name Operations
@@ -112,4 +112,4 @@ private:
     //@}
 };
 
-#endif // _LogisticStocksQuotasEditor_h
+#endif // _LogisticStocksAndQuotasDialog_h

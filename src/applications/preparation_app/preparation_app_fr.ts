@@ -833,7 +833,7 @@
     </message>
 </context>
 <context>
-    <name>LogisticStocksQuotasEditor</name>
+    <name>LogisticStocksAndQuotasDialog</name>
     <message>
         <source>Automatic allocation...</source>
         <translation>Allocation automatique...</translation>
@@ -848,7 +848,7 @@
     </message>
     <message>
         <source>Logistic</source>
-        <translation type="unfinished">Logistique</translation>
+        <translation>Logistique</translation>
     </message>
     <message>
         <source>Edit Logistics Stocks</source>

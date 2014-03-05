@@ -19,7 +19,7 @@
 #include "SymbolDialog.h"
 #include "LogisticQuotaEditor.h"
 #include "LogisticLinksEditor.h"
-#include "LogisticStocksQuotasEditor.h"
+#include "LogisticStocksAndQuotasDialog.h"
 #include "LongNameEditor.h"
 #include "ModelConsistencyDialog.h"
 #include "OrbatPanel.h"
@@ -71,7 +71,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     new LogisticLinksEditor( parent, controllers );
     new LogisticQuotaEditor( parent, controllers, staticModel );
     new LongNameEditor( parent, controllers, staticModel );
-    new LogisticStocksQuotasEditor( parent, controllers, staticModel );
+    new LogisticStocksAndQuotasDialog( parent, controllers, staticModel );
 
     std::vector< std::string > sounds;
     prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateConverter_, painter, selector, elevation2dLayer, preferences );

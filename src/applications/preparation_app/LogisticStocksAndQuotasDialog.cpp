@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "LogisticStocksQuotasEditor.h"
-#include "moc_LogisticStocksQuotasEditor.cpp"
+#include "LogisticStocksAndQuotasDialog.h"
+#include "moc_LogisticStocksAndQuotasDialog.cpp"
 #include "LogisticQuotaEditor.h"
 #include "LogisticStockEditor.h"
 #include "QuotasEditor.h"
@@ -24,10 +24,10 @@
 #include "preparation/Stocks.h"
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor constructor
+// Name: LogisticStocksAndQuotasDialog constructor
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-LogisticStocksQuotasEditor::LogisticStocksQuotasEditor( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel )
+LogisticStocksAndQuotasDialog::LogisticStocksAndQuotasDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel )
     : QDialog( parent, "StocksEditionDialog", 0, Qt::WStyle_Customize | Qt::WStyle_Title )
     , controllers_( controllers )
     , selected_( controllers )
@@ -38,7 +38,7 @@ LogisticStocksQuotasEditor::LogisticStocksQuotasEditor( QWidget* parent, kernel:
     automaticQuotaEditor_ = new LogisticQuotaEditor( parent, controllers, staticModel );
 
     setCaption( tools::translate( "StocksEditionDialog", "Stocks Edition" ) );
-    gui::SubObjectName subObject( "LogisticStocksQuotasEditor" );
+    gui::SubObjectName subObject( "LogisticStocksAndQuotasDialog" );
     setMinimumSize( 550, 300 );
 
     tabs_ = new CustomTabWidget( this );
@@ -73,28 +73,28 @@ LogisticStocksQuotasEditor::LogisticStocksQuotasEditor( QWidget* parent, kernel:
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::destructor
+// Name: LogisticStocksAndQuotasDialog::destructor
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-LogisticStocksQuotasEditor::~LogisticStocksQuotasEditor()
+LogisticStocksAndQuotasDialog::~LogisticStocksAndQuotasDialog()
 {
     controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::NotifyUpdated
+// Name: LogisticStocksAndQuotasDialog::NotifyUpdated
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::NotifyUpdated( const kernel::ModelUnLoaded& )
+void LogisticStocksAndQuotasDialog::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
     Reject();
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::Accept
+// Name: LogisticStocksAndQuotasDialog::Accept
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::Accept()
+void LogisticStocksAndQuotasDialog::Accept()
 {
     if( !selected_ )
         return;
@@ -108,20 +108,20 @@ void LogisticStocksQuotasEditor::Accept()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::Reject
+// Name: LogisticStocksAndQuotasDialog::Reject
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::Reject()
+void LogisticStocksAndQuotasDialog::Reject()
 {
     reject();
     selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::ShowDialog
+// Name: LogisticStocksAndQuotasDialog::ShowDialog
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::ShowDialog()
+void LogisticStocksAndQuotasDialog::ShowDialog()
 {
     stockAndNaturesEditor_->ClearStocks(); // ??
     quotasEditor_->ClearQuotas();
@@ -168,57 +168,57 @@ void LogisticStocksQuotasEditor::ShowDialog()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::NotifyContextMenu
+// Name: LogisticStocksAndQuotasDialog::NotifyContextMenu
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
+void LogisticStocksAndQuotasDialog::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
 {
     if( agent.GetId() != 0 && agent.GetType().IsLogisticSupply() && agent.Retrieve< Stocks >() )
     {
         selected_ = &agent;
         kernel::ContextMenu* pSubMenu = menu.SubMenu( "Helpers", tr( "Logistic" ), false, 7 );
-        pSubMenu->insertItem( tools::translate( "LogisticStocksQuotasEditor", "Edit Logistics Stocks" ), this, SLOT( ShowDialog() ) );
+        pSubMenu->insertItem( tools::translate( "LogisticStocksAndQuotasDialog", "Edit Logistics Stocks" ), this, SLOT( ShowDialog() ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::NotifyContextMenu
+// Name: LogisticStocksAndQuotasDialog::NotifyContextMenu
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
+void LogisticStocksAndQuotasDialog::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
 {
     if( automat.Get< gui::LogisticBase >().IsBase() )
         Update( automat, menu );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::NotifyContextMenu
+// Name: LogisticStocksAndQuotasDialog::NotifyContextMenu
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
+void LogisticStocksAndQuotasDialog::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
 {
     if( formation.Get< gui::LogisticBase >().IsBase() )
         Update( formation, menu );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::Update
+// Name: LogisticStocksAndQuotasDialog::Update
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+void LogisticStocksAndQuotasDialog::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     if( entity.GetId() == 0 ) // no side team
         return;
     selected_ = &entity;
     kernel::ContextMenu* pSubMenu = menu.SubMenu( "Helpers", tr( "Logistic" ), false, 7 );
-    pSubMenu->insertItem( tools::translate( "LogisticStocksQuotasEditor", "Edit Stocks & Quotas" ), this, SLOT( ShowDialog() ) );
+    pSubMenu->insertItem( tools::translate( "LogisticStocksAndQuotasDialog", "Edit Stocks & Quotas" ), this, SLOT( ShowDialog() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksQuotasEditor::ShowAutomaticDialog
+// Name: LogisticStocksAndQuotasDialog::ShowAutomaticDialog
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void LogisticStocksQuotasEditor::ShowAutomaticDialog()
+void LogisticStocksAndQuotasDialog::ShowAutomaticDialog()
 {
     if( tabs_->currentIndex() == stocksTabIndex_ )
         automaticStocksEditor_->Show( *selected_ );
