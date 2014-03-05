@@ -44,7 +44,7 @@ class LogisticStatusWidget : public gui::RichWidget< QTableView >
                            , public tools::ElementObserver_ABC< gui::LogisticBase >
                            , public tools::SelectionObserver< kernel::Entity_ABC >
 {
-public:
+private:
     //! @name Types
     //@{
     typedef std::function< bool( const gui::LogisticBase& ) > T_LogisticBaseModeChecker;

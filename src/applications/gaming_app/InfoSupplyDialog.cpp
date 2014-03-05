@@ -36,7 +36,7 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& contro
     : InfoDialog< SupplyStates >( controllers,
                                   parent,
                                   tools::translate( "InfoSupplyDialog", "Supply system" ),
-                                  [&]( const gui::LogisticBase& base ) { return base.IsSupplyManual(); } )
+                                  []( const gui::LogisticBase& base ) { return base.IsSupplyManual(); } )
     , widget_( 0 )
 {
     tabs_ = new QTabWidget( RootWidget() );

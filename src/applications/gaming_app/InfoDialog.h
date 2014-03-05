@@ -40,7 +40,7 @@ class InfoDialog_Base : public QDialog
 {
     Q_OBJECT
 
-public:
+protected:
     //! @name Types
     //@{
     typedef std::function< bool( const gui::LogisticBase& ) > T_LogisticBaseModeChecker;
@@ -62,20 +62,21 @@ public:
     //@}
 
 protected:
-    //! @name Observers implementation
-    //@{
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
-    virtual void NotifyUpdated( const kernel::Entity_ABC* element );
-    virtual void NotifyUpdated( const gui::LogisticBase& ext );
-    //@}
-
     //! @name Helpers
     //@{
+    void SetEnabled( bool state );
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifyUpdated( const kernel::Entity_ABC* element );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void NotifyUpdated( const gui::LogisticBase& ext );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const = 0;
     virtual QSize sizeHint() const;
     virtual void hideEvent( QHideEvent* );
     virtual void showEvent( QShowEvent* event );
-    void SetEnabled( bool state );
     void UpdateTitle( boost::optional< bool > manual );
     //@}
 

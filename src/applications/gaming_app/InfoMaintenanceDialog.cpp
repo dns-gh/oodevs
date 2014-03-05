@@ -31,7 +31,7 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
     : InfoDialog< kernel::MaintenanceStates_ABC >( controllers,
                                                    parent,
                                                    tools::translate( "InfoMaintenanceDialog", "Maintenance system" ),
-                                                   [&]( const gui::LogisticBase& base ) { return base.IsMaintenanceManual(); } )
+                                                   []( const gui::LogisticBase& base ) { return base.IsMaintenanceManual(); } )
     , widget_( 0 )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );

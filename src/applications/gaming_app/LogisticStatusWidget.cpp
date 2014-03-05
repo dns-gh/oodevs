@@ -197,7 +197,7 @@ void LogisticStatusWidget< Extension >::NotifySelected( const kernel::Entity_ABC
     if( !selected_ )
         return;
     if( selected_->Retrieve< Extension >() ||
-        ( modeChecker_ && selected_->Retrieve< gui::LogisticBase >() ) )
+        modeChecker_ && selected_->Retrieve< gui::LogisticBase >() )
     {
         show();
         Update();
@@ -214,7 +214,7 @@ MaintenanceStatusWidget::MaintenanceStatusWidget( QWidget* parent, kernel::Contr
         : LogisticStatusWidget< kernel::MaintenanceStates_ABC >( "maintenance_status_widget",
                                                                  parent,
                                                                  controllers,
-                                                                 [&]( const gui::LogisticBase& base ){ return base.IsMaintenanceManual(); } )
+                                                                 []( const gui::LogisticBase& base ){ return base.IsMaintenanceManual(); } )
     {}
 
 // -----------------------------------------------------------------------------
@@ -235,5 +235,5 @@ SupplyStatusWidget::SupplyStatusWidget( QWidget* parent, kernel::Controllers& co
         : LogisticStatusWidget< SupplyStates >( "supply_status_widget",
                                                 parent,
                                                 controllers,
-                                                [&]( const gui::LogisticBase& base ){ return base.IsSupplyManual(); } )
+                                                []( const gui::LogisticBase& base ){ return base.IsSupplyManual(); } )
     {}
