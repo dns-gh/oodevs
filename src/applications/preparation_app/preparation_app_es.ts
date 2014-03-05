@@ -836,10 +836,6 @@
 <context>
     <name>LogisticStocksQuotasEditor</name>
     <message>
-        <source>Logistics subordinate:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automatic allocation...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1824,6 +1820,13 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>&lt;Edit repartition...&gt;</source>
         <translation>&lt;Editar distribución...&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QuotasEditor</name>
+    <message>
+        <source>Logistics subordinate:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

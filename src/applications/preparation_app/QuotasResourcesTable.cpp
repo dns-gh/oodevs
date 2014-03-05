@@ -41,3 +41,16 @@ QuotasResourcesTable::~QuotasResourcesTable()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: QuotasResourcesTable::SetQuotas
+// Created: JSR 2014-03-05
+// -----------------------------------------------------------------------------
+void QuotasResourcesTable::SetQuotas( const LogisticEditor::T_Requirements& stocks )
+{
+    Disconnect();
+    OnClearItems();
+    for( auto it = stocks.begin(); it != stocks.end(); ++it )
+        AddResource( *it->first, it->second );
+    Connect();
+}

@@ -10,6 +10,7 @@
 #ifndef _QuotasResourcesTable_h
 #define _QuotasResourcesTable_h
 
+#include "LogisticEditor.h" // todo for typedef
 #include "ResourcesEditorTable_ABC.h"
 
 // =============================================================================
@@ -26,6 +27,12 @@ public:
     //@{
              QuotasResourcesTable( const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType );
     virtual ~QuotasResourcesTable();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    void SetQuotas( const LogisticEditor::T_Requirements& stocks );
     //@}
 };
 

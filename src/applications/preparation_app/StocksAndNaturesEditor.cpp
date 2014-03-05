@@ -26,14 +26,14 @@ StocksAndNaturesEditor::StocksAndNaturesEditor( QWidget* parent, const StaticMod
     stocksTableView_ = new StockResourcesTable( "stocksTable", this, model );
     maxStocksTableView_ = new MaxStockNaturesTable( "maxStocksTable", this, model.objectTypes_ );
 
-    connect( stocksTableView_, SIGNAL( ResourceValueChanged() ), SLOT( NotifyStocksUserChange() ) );
-
     QVBoxLayout* layout = new QVBoxLayout;
     setLayout( layout );
     layout->addWidget( stocksTableView_ );
     layout->addWidget( maxStocksTableView_ );
     layout->setStretch( 0, 2 );
     layout->setStretch( 1, 1 );
+
+    connect( stocksTableView_, SIGNAL( ResourceValueChanged() ), SLOT( NotifyStocksUserChange() ) );
 }
 
 // -----------------------------------------------------------------------------

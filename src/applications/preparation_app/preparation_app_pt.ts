@@ -835,10 +835,6 @@
 <context>
     <name>LogisticStocksQuotasEditor</name>
     <message>
-        <source>Logistics subordinate:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automatic allocation...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1821,6 +1817,13 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>&lt;Edit repartition...&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuotasEditor</name>
+    <message>
+        <source>Logistics subordinate:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

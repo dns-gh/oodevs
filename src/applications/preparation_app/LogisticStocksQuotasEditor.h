@@ -10,22 +10,20 @@
 #ifndef _LogisticStocksQuotasEditor_h
 #define _LogisticStocksQuotasEditor_h
 
-#include "StocksAndNaturesEditor.h"
 #include "LogisticEditor.h" // todo for typedef
+#include "MaxStockNaturesTable.h" // todo for typedef
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/Resolver2.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver.h"
 
 class LogisticQuotaEditor;
 class LogisticStockEditor;
-class QuotasResourcesTable;
+class QuotasEditor;
+class StocksAndNaturesEditor;
 class StaticModel;
 
 namespace gui
 {
-    class LogisticHierarchiesBase;
     class RichPushButton;
 }
 
@@ -37,8 +35,6 @@ namespace kernel
     class Entity_ABC;
     class Formation_ABC;
     class ModelUnLoaded;
-    class DotationType;
-    class LogisticSupplyClass;
 }
 
 // =============================================================================
@@ -89,11 +85,6 @@ private:
     //! @name Helpers
     //@{
     void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    bool IsLogisticBase( const kernel::Entity_ABC& rootEntity );
-    void NotifyAutomaticQuotas( const LogisticEditor::T_Requirements& stocks );
-    void ApplyQuotas();
-    void ApplyQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const LogisticEditor::T_Requirements& generatedQuotas );
-    void ComputeInitQuotas( const kernel::Entity_ABC& entity, LogisticEditor::T_RequirementsMap& requirements ) const;
     //@}
 
 private slots:
@@ -103,32 +94,20 @@ private slots:
     void Reject();
     void ShowAutomaticDialog();
     void ShowDialog();
-    void NotifyQuotasUserChange();
-    void NotifyAutomaticQuotas( LogisticEditor::T_RequirementsMap& quotas );
-    void OnQuotaNameChanged( int index );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::StringResolver< kernel::LogisticSupplyClass >& supplyClasses_;
-
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-
     LogisticStockEditor* automaticStocksEditor_;
     LogisticQuotaEditor* automaticQuotaEditor_;
     CustomTabWidget* tabs_;
-    QComboBox* subordinateCombo_;
     StocksAndNaturesEditor* stockAndNaturesEditor_;
-    QuotasResourcesTable* quotasTableView_;
-    std::map< unsigned long, LogisticEditor::T_Requirements > quotasByEntity_;
-    std::map< unsigned long, const kernel::Entity_ABC* > quotasEntityFromId_;
-
-    QWidget* pQuotas_;
+    QuotasEditor* quotasEditor_;
     int stocksTabIndex_;
     int quotasTabIndex_;
-
     gui::RichPushButton* automaticEditButton_;
     //@}
 };

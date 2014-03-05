@@ -32,7 +32,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void DotationsQuotasComputed( LogisticEditor::T_RequirementsMap& );
+    void DotationsQuotasComputed( const LogisticEditor::T_RequirementsMap& );
     //@}
 
 private:
