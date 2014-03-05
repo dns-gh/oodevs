@@ -222,7 +222,7 @@ integration.communication.SlowDown = function()
     myself.slowDown = true -- ww base
 end
 
---- Lift the speed restrictions set by integration.communication.SlowDown. The agent can have the speed defined in the Adaptation tool.
+--- Lift the speed restrictions set by integration.communication.SlowDown.
 -- This method can only be called by an agent
 -- @see integration.communication.SlowDown
 integration.communication.Continue = function()
@@ -278,7 +278,7 @@ integration.RetrievePionTask = function( entity, targetTask )
 end
 
 --- Sends a message to the given automat or agent
--- Any additional parameter will be used as parameters.
+-- Any additional parameter will be used as parameters of the message.
 -- @return Boolean, the error code
 integration.SendMessage = function( ... )
     local status, err = pcall( masalife.brain.communication.protocol.send, ... )
@@ -338,6 +338,8 @@ masalife.brain.communication.setMessageTreatment( "TaskDone",
 
 integration.listenFrontElementCallbacks = {}
 --- Add the given agent to the list of elements to listen for feedback done message
+-- When all listenning agents have finished their mission, the calling automat is sending a feedback done
+-- This method can only be called by an automat
 -- @see integration.initializeListenFrontElement for initialization
 -- @param entity the DirectIA agent to add to the list.
 integration.ListenFrontElement = function( entity )
@@ -383,7 +385,7 @@ end
 --- Returns the current mision of the given agent
 -- @see DEC_GetMission
 -- @param entity the DirectIA agent
--- @return simulation mission, the current mission of the given entity
+-- @return simulation mission, the current mission of the given entity filling with parameters
 integration.getMission = function( entity )
     return DEC_GetMission( entity.source )
 end
@@ -394,8 +396,9 @@ integration.stopMission = function()
 end
 
 --- Returns the current mision of the given agent
--- @param entity the DirectIA agent
--- @return simulation mission, the current mission of the given entity
+-- The prefered method is DEC_GetMission (returns the mission with paramaters)
+-- @param entity the Simulation agent
+-- @return simulation mission, the current mission of the given entity without any parameter
 integration.getRawMission = function( entity )
     return DEC_GetRawMission( entity )
 end
@@ -436,12 +439,12 @@ integration.getDangerousDirection = function( task )
 end
 
 --- Returns the area of responsibility of the calling element
--- @return simulation fuseau, the element AOR
+-- @return simulation area of responsibility, the element AOR
 integration.getAORFromCommander = function()
     return DEC_Fuseau()
 end
 
---- Returns the fuseau of the calling element
+--- Returns the area of responsibility of the calling element
 -- @return simulation area of responsibility
 integration.getAORFromPlatoon = function()
     return DEC_Fuseau()
@@ -462,14 +465,14 @@ integration.getAORWidth = function( AOR )
 end
 
 --- Sets the echelon of the given agent to the given echelon
--- @param agent DirectIA agent
+-- @param agent Simulation agent
 -- @param echelonState, the echelon state ( eEtatEchelon_None; eEtatEchelon_Second; eEtatEchelon_First; eEtatEchelon_Scout; eEtatEchelon_Reserve )
 integration.setEchelonState = function( agent, echelonState )
     F_Pion_SeteEtatEchelon( agent, echelonState )
 end
 
 --- Returns the echelon of the given agent
--- @param agent, DirectIA agent
+-- @param agent, Simulation agent
 -- @return Integer, the echelon state ( 0 = eEtatEchelon_None; 1 = eEtatEchelon_Second; 2 = eEtatEchelon_First; 3 = eEtatEchelon_Scout; 4 = eEtatEchelon_Reserve )
 integration.getEchelonState = function( agent )
     return F_Pion_GeteEtatEchelon( agent )
@@ -490,14 +493,14 @@ integration.getAgentEscort = function( agent )
 end
 
 --- Sets the escort of the given agent
--- @param agentToEscort DirectIA agent to escort
--- @param escortAgent, DirectIA agent escort
+-- @param agentToEscort Simulation agent to escort
+-- @param escortAgent, Simulation agent escort
 integration.setAgentEscort = function( agentToEscort, escortAgent )
     F_Pion_SetpionEnEscorte( agentToEscort, escortAgent )
 end
 
 --- Sets if the given agent has got a new escort
--- @param agent DirectIA agent to escort
+-- @param agent Simulation agent to escort
 -- @param boolean, true if the given agent has got a new escort, false otherwise
 integration.setAgentNewEscorted = function( agent, boolean )
     F_Pion_SetNewEscorted( agent, boolean )
@@ -511,8 +514,12 @@ integration.getAgentNewEscorted = function( agent )
 end
 
 --- Sets the radio state of the given agent
--- @param agent DirectIA agent
--- @param radioState, the radio state of the given agent (eEtatRadio_Ouverte = 0; eEtatRadio_Silence = 1; eEtatRadio_Silence_Partiel = 2)
+-- @param agent Simulation agent
+-- @param radioState the radio state of the given agent
+-- <ul><li> 0 = eEtatRadio_Ouverte (on)</li>
+-- <li> 1 = eEtatRadio_Silence (off)</li>
+-- <li> 2 = eEtatRadio_Silence_Partiel (listen but do not emit)</li>
+-- </ul>
 integration.setRadioState = function( agent, radioState )
     F_Pion_SeteEtatRadio( agent, radioState )
 end
@@ -526,22 +533,25 @@ end
 
 --- Returns the decisional state of the given knowledge agent
 -- @param kAgent DirectIA knowledge agent
--- @return Integer, the decisional state of the given agent (eEtatDec_RAS = 0; eEtatDec_Continu = 1; eEtatDec_Sauvegarde = 2). If 2, it means tha the agent is in bad force ratio and try to self-protect himself.
+-- @return Integer, the decisional state of the given agent (eEtatDec_RAS = 0; eEtatDec_Continu = 1; eEtatDec_Sauvegarde = 2). If 2, it means that the agent is in bad force ratio and will try to self-protect.
 integration.getKnowledgeAgentDecisionalState = function( kAgent )
     local agent = DEC_ConnaissanceAgent_EnAgent( kAgent)
     return F_Pion_GeteEtatDec( agent )
 end
 
 --- Sets the decisional state of the given agent
--- @param agent DirectIA agent
+-- @param agent Simulation agent
 -- @param decisionalState, the decisional state of the given agent to set (eEtatDec_RAS = 0; eEtatDec_Continu = 1; eEtatDec_Sauvegarde = 2)
 integration.setAgentDecisionalState = function( agent, decisionalState )
     F_Pion_SeteEtatDec( agent, decisionalState )
 end
 
 --- Sets the radar state of the given agent
--- @param agent DirectIA agent
--- @param radarState, the radar state of the given agent (eEtatRadar_Silence = 0; eEtatRadar_Ouvert = 1)
+-- @param agent Simulation agent
+-- @param radarState the radar state of the given agent
+-- <ul><li> 0 = eEtatRadar_Silence (off)</li>
+-- <li> 1 = eEtatRadar_Ouvert (on)</li>
+-- </ul>
 integration.setRadarState = function( agent, radarState )
     F_Pion_SeteEtatRadar( agent, radarState )
 end
