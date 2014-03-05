@@ -353,31 +353,39 @@ func (s *TestSuite) TestTeleport(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	automat := createAutomat(c, client)
-	from := swapi.Point{X: -15.9219, Y: 28.3456}
-	unit, err := client.CreateUnit(automat.Id, UnitType, from)
+	pos1 := swapi.Point{X: -15.9219, Y: 28.3456}
+	pos2 := swapi.Point{X: -15.8219, Y: 28.2456}
+	unit, err := client.CreateUnit(automat.Id, UnitType, pos1)
 	c.Assert(err, IsNil)
 
-	pos := swapi.Point{X: -15.8219, Y: 28.2456}
-
 	// No tasker
-	err = client.Teleport(swapi.MakeUnitTasker(0), pos)
+	err = client.Teleport(swapi.MakeUnitTasker(0), pos2)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
-
-	// Cannot teleport unit if its automat is engaged
-	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), pos)
-	c.Assert(err, IsSwordError, "error_automat_engaged")
 
 	// Should work with disengaged unit
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
 
 	// Teleport unit
-	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), pos)
+	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), pos2)
 	c.Assert(err, IsNil)
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return isNearby(data.Units[unit.Id].Position, pos)
+		return isNearby(data.Units[unit.Id].Position, pos2)
+	})
+
+	// Should work with engaged unit
+	err = client.SetAutomatMode(automat.Id, true)
+	c.Assert(err, IsNil)
+
+	// Teleport unit
+	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), pos1)
+	c.Assert(err, IsNil)
+
+	// Check unit position
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return isNearby(data.Units[unit.Id].Position, pos1)
 	})
 }
 
