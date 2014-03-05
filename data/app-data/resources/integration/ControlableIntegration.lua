@@ -29,7 +29,7 @@ integration.stopControlArea  = function( area )
     return true
 end
 
---- Start to control an urbanBlock
+--- Start controlling an urbanBlock
 -- An action in the simulation is started
 -- This method can only be called by an agent
 -- @param urbanBlock The DirectIA urbanBlock to control
@@ -40,7 +40,7 @@ integration.startControlUrbanBlock = function( urbanBlock )
     return true
 end
 
---- Stop to control an urbanBlock
+--- Stop controlling an urbanBlock
 -- The action in the simulation is stopped
 -- This method can only be called by an agent
 -- @param urbanBlock, the DirectIA urbanBlock to stop controlling
@@ -51,7 +51,7 @@ integration.stopControlUrbanBlock  = function( urbanBlock )
     return true
 end
 
---- Start to control a point
+--- Start controlling a point
 -- An action in the simulation is started
 -- This method can only be called by an agent
 -- @param point The DirectIA point to control
@@ -66,7 +66,7 @@ integration.startControlPoint = function( point )
     return true
 end
 
---- Stop to control a point
+--- Stop controlling a point
 -- The action in the simulation is stopped
 -- This method can only be called by an agent
 -- @param point, the DirectIA point to stop controlling
