@@ -261,9 +261,9 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
 {
     std::auto_ptr< Sink_ABC > sink;
     archive >> sink;
-    ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(), MIL_EffectManager::GetEffectManager(),
-                                       sink,
-                                       MIL_AgentServer::GetWorkspace().GetConfig() );
+    ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(),
+            MIL_EffectManager::GetEffectManager(), sink,
+            MIL_AgentServer::GetWorkspace().GetConfig(), archive.GetWorld() );
 }
 
 void MIL_EntityManager::Initialize( const tools::PhyLoader& loader, const MIL_Time_ABC& time,
@@ -276,7 +276,9 @@ void MIL_EntityManager::Initialize( const tools::PhyLoader& loader, const MIL_Ti
 // Name: MIL_EntityManager constructor
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory, const MIL_Config& config )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
+        MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
+        const MIL_Config& config, const boost::shared_ptr< const TER_World >& world )
     : time_                         ( time )
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
@@ -297,7 +299,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
-    , sink_                         ( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
+    , sink_                         ( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled(), world ) )
     , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
     , pFloodModel_                  ( sink_->CreateFloodModel().release() )
     , automateFactory_              ( new AutomateFactory( *idManager_, *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
@@ -305,6 +307,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() )
+    , world_                        ( world )
 {
     // NOTHING
 }
@@ -313,8 +316,9 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
 // Name: MIL_EntityManager constructor
 // Created: MCO 2012-09-12
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, std::auto_ptr< sword::Sink_ABC > sink
-                                    , const MIL_Config& config )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
+        MIL_EffectManager& effects, std::auto_ptr< sword::Sink_ABC > sink,
+        const MIL_Config& config, const boost::shared_ptr< const TER_World >& world )
     : time_                         ( time )
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
@@ -333,6 +337,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , idManager_                    ( new MIL_IDManager() )
     , sink_                         ( sink.release() )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() ) // todo : delete if saved in checkpoint
+    , world_                        ( world )
 {
     // NOTHING
 }

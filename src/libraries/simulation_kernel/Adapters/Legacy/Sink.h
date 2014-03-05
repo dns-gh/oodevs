@@ -36,7 +36,7 @@ class Sink : public Sink_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
+             Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled, const boost::shared_ptr< const TER_World >& world );
     virtual ~Sink();
     //@}
 
@@ -102,6 +102,7 @@ private:
     const unsigned int gcPause_;
     const unsigned int gcMult_;
     std::auto_ptr< sword::DEC_Logger > decLogger_;
+    const boost::shared_ptr< const TER_World > world_;
     //@}
 };
 }
