@@ -184,6 +184,7 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 		{"convoy_moving_back_to_loading_point"},
 		{"convoy_finished"},
 	})
+
 	automat := getSomeAutomatByName(c, d, "Supply Mobile Infantry Platoon")
 	supplier2Id := getSomeFormationByName(c, d, "Supply F2").Id
 	supplier2 := swapi.MakeFormationTasker(supplier2Id)
@@ -298,4 +299,93 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
 		{"convoy_moving_back_to_loading_point"},
 		{"convoy_finished"},
 	})
+}
+
+func SetManualSupply(c *C, client *swapi.Client, id uint32, mode bool) {
+	err := client.SetManualSupply(id, mode)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		automat := data.Automats[id]
+		if automat != nil {
+			return automat.LogSupplyManual
+		}
+		return data.Formations[id].LogSupplyManual
+	})
+}
+
+func (s *TestSuite) TestSupplyHandlingsBaseManual(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
+	supplierId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
+	supplier := swapi.MakeAutomatTasker(supplierId)
+
+	// no automatic convoy in manual supply
+	SetManualSupply(c, client, supplierId, true)
+	err := client.ChangeDotation(unit.Id,
+		map[uint32]*swapi.ResourceDotation{
+			uint32(electrogen_1): &swapi.ResourceDotation{
+				Quantity:  0,
+				Threshold: 50,
+			}})
+	c.Assert(err, IsNil)
+	client.Model.WaitTicks(2)
+	c.Assert(client.Model.GetData().SupplyHandlings, HasLen, 0)
+
+	// convoy launched when switching back to automatic supply
+	checkSupplyUpdates(c, client, unit, supplier, supplier,
+		func() { SetManualSupply(c, client, supplierId, false) },
+		[]SupplyUpdateChecker{
+			{"convoy_waiting_for_transporters"},
+			{"convoy_setup"},
+			{"convoy_moving_to_loading_point"},
+			{"convoy_loading"},
+			{"convoy_moving_to_unloading_point"},
+			{"convoy_unloading"},
+			{"convoy_moving_back_to_loading_point"},
+			{"convoy_finished"},
+		})
+}
+
+func (s *TestSuite) TestSupplyHandlingsBaseToBaseManual(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Supply Log Unit 1c")
+	supplierId := getSomeFormationByName(c, d, "Supply F3").Id
+	supplier := swapi.MakeFormationTasker(supplierId)
+	automat := getSomeAutomatByName(c, d, "Supply Log Automat 1c")
+	provider := swapi.MakeAutomatTasker(automat.Id)
+	quotas := map[uint32]int32{
+		uint32(electrogen_1): 1000,
+	}
+	err := client.LogisticsSupplyChangeQuotas(supplierId, provider, quotas)
+	c.Assert(err, IsNil)
+
+	// no automatic convoy in manual supply
+	SetManualSupply(c, client, supplierId, true)
+	err = client.RecoverStocks(unit.Id,
+		map[uint32]*swapi.ResourceDotation{
+			uint32(electrogen_1): &swapi.ResourceDotation{
+				Quantity:  0,
+				Threshold: 50,
+			}})
+	c.Assert(err, IsNil)
+	client.Model.WaitTicks(2)
+	c.Assert(client.Model.GetData().SupplyHandlings, HasLen, 0)
+
+	// convoy launched when switching back to automatic supply
+	checkSupplyUpdates(c, client, unit, supplier, provider,
+		func() { SetManualSupply(c, client, supplierId, false) },
+		[]SupplyUpdateChecker{
+			{"convoy_waiting_for_transporters"},
+			{"convoy_setup"},
+			{"convoy_moving_to_loading_point"},
+			{"convoy_loading"},
+			{"convoy_moving_to_unloading_point"},
+			{"convoy_unloading"},
+			{"convoy_moving_back_to_loading_point"},
+			{"convoy_finished"},
+		})
 }
