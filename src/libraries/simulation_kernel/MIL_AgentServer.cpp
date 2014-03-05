@@ -180,7 +180,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     if( config_.HasCheckpoint() )
     {
         updateState_ = !config_.GetPausedAtStartup();
-        MIL_CheckPointManager::LoadCheckPoint( config_, *pObjectFactory_ );
+        MIL_CheckPointManager::LoadCheckPoint( config_, *pObjectFactory_, world );
         pEntityManager_->Synchronize();
     }
     else
@@ -188,7 +188,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
         pMeteoDataManager_ = CreateMeteoManager( world, config, GetTickDuration() );
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_, config_ );
-        pCheckPointManager_ = new MIL_CheckPointManager( config_ );
+        pCheckPointManager_ = new MIL_CheckPointManager( config_, world );
         pEntityManager_->ReadODB( config_ );
         pEntityManager_->LoadUrbanModel( config_ );
         pEntityManager_->Finalize();

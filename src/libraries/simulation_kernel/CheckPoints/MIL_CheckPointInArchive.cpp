@@ -34,3 +34,8 @@ const ObjectTypeResolver_ABC& MIL_CheckPointInArchive::GetObjectTypeResolver() c
 {
     return resolver_;
 }
+
+const boost::shared_ptr< TER_World > MIL_CheckPointInArchive::GetWorld() const
+{
+    return world_;
+}

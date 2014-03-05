@@ -10,18 +10,19 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyAutomateFactoryPtr_Serialization )
 {
+    const auto world = boost::shared_ptr< TER_World >();
     std::stringstream s;
     {
         MIL_IDManager manager;
         MissionController controller;
-        MIL_CheckPointOutArchive out( s );
+        MIL_CheckPointOutArchive out( s, world );
         AutomateFactory_ABC* factory = new AutomateFactory( manager, controller, 100, 100, false );
         out << factory;
         delete factory;
     }
     {
         MockObjectTypeResolver resolver;
-        MIL_CheckPointInArchive in( s, resolver );
+        MIL_CheckPointInArchive in( s, resolver, world );
         AutomateFactory_ABC* factory = 0;
         in >> factory;
         BOOST_CHECK( factory );

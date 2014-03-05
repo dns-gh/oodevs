@@ -104,6 +104,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
     }
     MOCK_EXPECT( army.UnregisterObject ).with( mock::same( *pObject ) ).once();
 
+    const auto world = boost::shared_ptr< TER_World >();
     MockNET_Publisher_ABC publisher;
     MOCK_EXPECT( publisher.Send ).once(); // object knowledge creation
     MOCK_EXPECT( army.GetID ).returns( 42u );
@@ -111,13 +112,13 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
     knowledge.Update( PHY_PerceptionLevel::identified_ );
     std::stringstream s;
     {
-        MIL_CheckPointOutArchive out( s );
+        MIL_CheckPointOutArchive out( s, world );
         out << knowledge;
     }
     {
         MockObjectTypeResolver resolver;
         MOCK_EXPECT( resolver.FindType ).exactly( 2 ).returns( boost::cref( type ) );
-        MIL_CheckPointInArchive in( s, resolver );
+        MIL_CheckPointInArchive in( s, resolver, world );
         DEC_Knowledge_Object reloaded;
         in >> reloaded;
         MOCK_EXPECT( publisher.Send ).once(); // object knowledge destruction

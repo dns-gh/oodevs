@@ -26,3 +26,8 @@ template class detail::archive_serializer_map<MIL_CheckPointOutArchive>;
 } // namespace archive
 } // namespace boost
 
+const boost::shared_ptr< TER_World >& MIL_CheckPointOutArchive::GetWorld() const
+{
+    return world_;
+}
+

@@ -96,7 +96,7 @@ template< typename Archive >
 void PHY_LocalMeteo::serialize( Archive& file, const unsigned int )
 {
     if( !world_ )
-        world_ = TER_World::GetWorldPtr();
+        world_ = file.GetWorld();
     file & boost::serialization::base_object< weather::Meteo >( *this )
          & startTime_
          & endTime_

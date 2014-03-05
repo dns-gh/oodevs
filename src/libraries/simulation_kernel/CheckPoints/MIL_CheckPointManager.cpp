@@ -53,12 +53,12 @@ void CreateMetaData( const tools::Path& filename, const tools::Path& name )
     }
 }
 
-void CreateData( const tools::Path& filename )
+void CreateData( const tools::Path& filename, const boost::shared_ptr< TER_World >& world )
 {
     tools::Ofstream file( filename, std::ios::out | std::ios::binary );
     if( !file || !file.is_open() )
         throw MASA_EXCEPTION( "Cannot open file '" + filename.ToUTF8() + "'" );
-    MIL_CheckPointOutArchive archive( file );
+    MIL_CheckPointOutArchive archive( file, world );
     MIL_AgentServer::GetWorkspace().save( archive );
     file.close();
 }
@@ -82,12 +82,14 @@ MIL_CheckPointManager::MIL_CheckPointManager()
 // Name: MIL_CheckPointManager constructor
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-MIL_CheckPointManager::MIL_CheckPointManager( const MIL_Config& config )
+MIL_CheckPointManager::MIL_CheckPointManager( const MIL_Config& config,
+       const boost::shared_ptr< TER_World >& world )
     : nMaxCheckPointNbr_    ( config.GetCheckPointsKept() )
     , nCheckPointsFrequency_( config.GetCheckPointsFrequency() )
     , nLastCheckPointTick_  ( 0 )
     , nNextCheckPointTick_  ( 0 )
     , checkpointName_       ( config.GetCheckpointNameTestMode() )
+    , world_( world )
 {
     config.BuildSessionChildFile( "checkpoints" ).CreateDirectories();
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
@@ -110,7 +112,9 @@ MIL_CheckPointManager::~MIL_CheckPointManager()
 // Name: MIL_CheckPointManager::LoadCheckPoint
 // Created: JVT 03-07-23
 //-----------------------------------------------------------------------------
-void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config, const ObjectTypeResolver_ABC& resolver )
+void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config,
+        const ObjectTypeResolver_ABC& resolver,
+        const boost::shared_ptr< TER_World >& world )
 {
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading Checkpoint  ----" );
@@ -119,7 +123,7 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config, const Obje
     tools::Ifstream file( config.BuildCheckpointChildFile( "data" ), std::ios::in | std::ios::binary );
     if( !file || !file.is_open() )
         throw MASA_EXCEPTION( "Cannot open file '" + config.BuildCheckpointChildFile( "data" ).ToUTF8() + "'" );
-    MIL_CheckPointInArchive archive( file, resolver );
+    MIL_CheckPointInArchive archive( file, resolver, world );
     MIL_AgentServer::GetWorkspace().load( archive );
 }
 
@@ -254,7 +258,7 @@ std::string MIL_CheckPointManager::SaveFullCheckPoint( const tools::Path& name,
     const MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
     try
     {
-        CreateData( config.BuildCheckpointChildFile( "data", name ) );
+        CreateData( config.BuildCheckpointChildFile( "data", name ), world_ );
         CreateMetaData( config.BuildCheckpointChildFile( "MetaData.xml", name ), userName );
     }
     catch( const tools::Exception& e )
@@ -383,6 +387,7 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const sword::Con
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    const_cast< boost::shared_ptr< TER_World >& >( world_ ) = file.GetWorld();
     file >> nCheckPointsFrequency_
          >> nMaxCheckPointNbr_;
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
