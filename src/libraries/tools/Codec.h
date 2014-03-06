@@ -53,7 +53,7 @@ namespace tools
     template< typename T >
     bool ReadTimeAttribute( xml::xistream& xis, const std::string& name, T& time )
     {
-        time = static_cast< T >( 0 );
+        time = T();
         std::string timeString;
         xis >> xml::optional >> xml::attribute( name, timeString );
         return DecodeTime( timeString, time );
