@@ -1391,7 +1391,11 @@ func (model *ModelData) handleMagicOrderCreation(m *sword.SimToClient_Content) e
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	magic := MagicOrder{Id: mm.GetId()}
+	magic := MagicOrder{
+		Id:      mm.GetId(),
+		ErrCode: mm.GetErrorCode(),
+		ErrMsg:  mm.GetErrorMsg(),
+	}
 	switch {
 	case mm.MagicAction != nil:
 		magic.Kind = MagicAction
