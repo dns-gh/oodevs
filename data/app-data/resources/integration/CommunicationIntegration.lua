@@ -338,7 +338,7 @@ masalife.brain.communication.setMessageTreatment( "TaskDone",
 
 integration.listenFrontElementCallbacks = {}
 --- Add the given agent to the list of elements to listen for feedback done message
--- When all listenning agents have finished their mission, the calling automat is sending a feedback done
+-- When all listened agents have finished their mission, the calling automat will send a feedback done
 -- This method can only be called by an automat
 -- @see integration.initializeListenFrontElement for initialization
 -- @param entity the DirectIA agent to add to the list.
@@ -396,7 +396,8 @@ integration.stopMission = function()
 end
 
 --- Returns the current mision of the given agent
--- The preferred method is DEC_GetMission (returns the mission with paramaters)
+-- It is not possible to access parameters of the mission returned by this method. Use DEC_GetMission instead if you need to access the mission parameters
+-- @see DEC_GetMission
 -- @param entity the Simulation agent
 -- @return simulation mission, the current mission of the given entity without any parameter
 integration.getRawMission = function( entity )
@@ -526,14 +527,22 @@ end
 
 --- Returns the decisional state of the given agent
 -- @param agent DirectIA agent
--- @return Integer, the decisional state of the given agent (eEtatDec_RAS = 0; eEtatDec_Continu = 1; eEtatDec_Sauvegarde = 2)
+-- @param Integer, the decisional state of the given agent
+-- <ul><li> 0 = eEtatDec_RAS (their is no enemy)</li>
+-- <li> 1 = eEtatDec_Continu (their is enemy but)</li>
+-- <li> 2 = eEtatDec_Sauvegarde (the agent is in bad force ratio and will try to self-protect)</li>
+-- </ul>
 integration.getAgentDecisionalState = function( agent )
     return F_Pion_GeteEtatDec( agent )
 end
 
 --- Returns the decisional state of the given knowledge agent
 -- @param kAgent DirectIA knowledge agent
--- @return Integer, the decisional state of the given agent (eEtatDec_RAS = 0; eEtatDec_Continu = 1; eEtatDec_Sauvegarde = 2). If 2, it means that the agent is in bad force ratio and will try to self-protect.
+-- @param Integer, the decisional state of the given agent
+-- <ul><li> 0 = eEtatDec_RAS (their is no enemy)</li>
+-- <li> 1 = eEtatDec_Continu (their is enemy but)</li>
+-- <li> 2 = eEtatDec_Sauvegarde (the agent is in bad force ratio and will try to self-protect)</li>
+-- </ul>
 integration.getKnowledgeAgentDecisionalState = function( kAgent )
     local agent = DEC_ConnaissanceAgent_EnAgent( kAgent)
     return F_Pion_GeteEtatDec( agent )
