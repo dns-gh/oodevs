@@ -57,17 +57,6 @@ void StocksAndNaturesEditor::Initialize( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: StocksAndNaturesEditor::Update
-// Created: JSR 2014-03-04
-// -----------------------------------------------------------------------------
-void StocksAndNaturesEditor::Update( const MaxStockNaturesTable::T_WeightVolumes& currentValues )
-{
-    std::set< std::string > allowedNatures;
-    maxStocksTableView_->Update( currentValues, allowedNatures );
-    stocksTableView_->SetAllowedNatures( allowedNatures );
-}
-
-// -----------------------------------------------------------------------------
 // Name: StocksAndNaturesEditor::SupplyStocks
 // Created: JSR 2014-03-04
 // -----------------------------------------------------------------------------
@@ -91,25 +80,9 @@ void StocksAndNaturesEditor::NotifyAutomaticStocks( const LogisticEditor::T_Requ
 // -----------------------------------------------------------------------------
 void StocksAndNaturesEditor::NotifyStocksUserChange()
 {
-    std::map< std::string, MaxStockNaturesTable::WeightVolume > valuesByNature;
-    ComputeStocksByNature( valuesByNature );
-    Update( valuesByNature );
-}
-
-// -----------------------------------------------------------------------------
-// Name: StocksAndNaturesEditor::ComputeStocksByNature
-// Created: JSR 2014-03-04
-// -----------------------------------------------------------------------------
-void StocksAndNaturesEditor::ComputeStocksByNature( std::map< std::string, MaxStockNaturesTable::WeightVolume >& result ) const
-{
-    // todo mettre dans stocksTableView_
     LogisticEditor::T_Requirements dotations;
     stocksTableView_->ComputeValueByDotation( dotations );
-    for( auto it = dotations.begin(); it != dotations.end(); ++it )
-    {
-        const auto& curDotation = *it->first;
-        double value = it->second;
-        result[ curDotation.GetNature() ].weight_ += value * curDotation.GetUnitWeight();
-        result[ curDotation.GetNature() ].volume_ += value * curDotation.GetUnitVolume();
-    }
+    std::set< std::string > allowedNatures;
+    maxStocksTableView_->Update( dotations, allowedNatures );
+    stocksTableView_->SetAllowedNatures( allowedNatures );
 }

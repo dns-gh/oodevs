@@ -10,10 +10,10 @@
 #ifndef _StocksAndNaturesEditor_h
 #define _StocksAndNaturesEditor_h
 
-// todo Put typedefs elsewhere to remove includes
+// todo Put typedef elsewhere to remove include
 #include "LogisticEditor.h"
-#include "MaxStockNaturesTable.h"
 
+class MaxStockNaturesTable;
 class StockResourcesTable;
 class StaticModel;
 
@@ -38,14 +38,7 @@ public:
     //! @name Operations
     //@{
     void Initialize( const kernel::Entity_ABC& entity );
-    void Update( const MaxStockNaturesTable::T_WeightVolumes& currentValues ); // todo change name
     void SupplyStocks( kernel::Entity_ABC& entity ) const;
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void ComputeStocksByNature( std::map< std::string, MaxStockNaturesTable::WeightVolume >& result ) const;
     //@}
 
 private slots:

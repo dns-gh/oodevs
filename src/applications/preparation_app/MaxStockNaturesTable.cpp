@@ -16,6 +16,7 @@
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/ComponentType.h"
+#include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -70,14 +71,13 @@ void MaxStockNaturesTable::UpdateMaxWeightVolumeByNature( const kernel::Agent_AB
     while( itComposition.HasMoreElements() )
     {
         const kernel::AgentComposition& agentComposition = itComposition.NextElement();
-        const kernel::ComponentType& equipment = agentComposition.GetType();
-        const kernel::EquipmentType& equipmentType = equipments_.Get( equipment.GetId() );
+        const kernel::EquipmentType& equipmentType = equipments_.Get( agentComposition.GetType().GetId() );
         if( const kernel::EquipmentType::CarryingSupplyFunction* carrying = equipmentType.GetLogSupplyFunctionCarrying() )
         {
-            unsigned int nEquipments = agentComposition. GetCount();
-            auto& curNature = maxValues_[ carrying->stockNature_ ];
-            curNature.weight_ += nEquipments * carrying->stockMaxWeightCapacity_;
-            curNature.volume_ += nEquipments * carrying->stockMaxVolumeCapacity_;
+            const unsigned int nbr = agentComposition. GetCount();
+            const std::string& nature = carrying->stockNature_;
+            maxValues_[ nature ].weight_ += nbr * carrying->stockMaxWeightCapacity_;
+            maxValues_[ nature ].volume_ += nbr * carrying->stockMaxVolumeCapacity_;
         }
     }
 }
@@ -86,107 +86,87 @@ void MaxStockNaturesTable::UpdateMaxWeightVolumeByNature( const kernel::Agent_AB
 // Name: MaxStockNaturesTable::UpdateMaxStocksByNature
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void MaxStockNaturesTable::UpdateMaxStocksByNature( const kernel::Entity_ABC& rootEntity, const kernel::Entity_ABC& entity )
+void MaxStockNaturesTable::UpdateMaxStocksByNature( const kernel::Entity_ABC& entity )
 {
+    if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
+    {
+        UpdateMaxWeightVolumeByNature( static_cast< const kernel::Agent_ABC& >( entity ) );
+        return;
+    }
     const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
     if( !pTacticalHierarchies )
-        return;
-    // todo à cleaner
-    if( entity.GetId() == rootEntity.GetId() )
-    {
-        if( const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
-        {
-            UpdateMaxWeightVolumeByNature( *pAgent );
-            return;
-        }
-    }
-    else if( logistic_helpers::IsLogisticBase( entity ) )
         return;
     tools::Iterator< const kernel::Entity_ABC& > children = pTacticalHierarchies->CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
-        const kernel::Entity_ABC& childEntity = children.NextElement();
-        if( const kernel::Agent_ABC* pChildAgent = dynamic_cast< const kernel::Agent_ABC* >( &childEntity ) )
-            UpdateMaxWeightVolumeByNature( *pChildAgent );
-        else
-            UpdateMaxStocksByNature( rootEntity, childEntity );
+        const kernel::Entity_ABC& child = children.NextElement();
+        if( logistic_helpers::IsLogisticBase( child ) )
+            continue;
+        UpdateMaxStocksByNature( child );
     }
-}
-
-namespace
-{
-double GetWeight( const std::string& key, const MaxStockNaturesTable::T_WeightVolumes& values )
-{
-    auto it = values.find( key );
-    return it == values.end() ? 0 : it->second.weight_;
-}
-
-double GetVolume( const std::string& key, const MaxStockNaturesTable::T_WeightVolumes& values )
-{
-    auto it = values.find( key );
-    return it == values.end() ? 0 : it->second.volume_;
-}
-
-QString FormatValue( double value )
-{
-    return QString::number( value, 'f', 2 );
-}
-
 }
 
 // -----------------------------------------------------------------------------
 // Name: MaxStockNaturesTable::IsMaxExceeded
 // Created: JSR 2014-03-04
 // -----------------------------------------------------------------------------
-bool MaxStockNaturesTable::IsMaxExceeded( const std::string& key, const MaxStockNaturesTable::T_WeightVolumes& values ) const
+bool MaxStockNaturesTable::IsMaxExceeded( const std::string& key, const WeightVolume& value ) const
 {
-    MaxStockNaturesTable::WeightVolume value;
-    MaxStockNaturesTable::WeightVolume maxValue;
-    auto it = values.find( key );
-    if( it != values.end() )
-        value = it->second;
     auto itMax = maxValues_.find( key );
-    if( itMax != maxValues_.end() )
-        maxValue = itMax->second;
-    if( maxValue.weight_ <= 0. || maxValue.volume_ <= 0. )
+    if( itMax == maxValues_.end() )
         return true;
-    return ( value.weight_ > maxValue.weight_ ) || ( value.volume_ > maxValue.volume_ );
+    return value.weight_ > itMax->second.weight_ || value.volume_ > itMax->second.volume_;
+}
+
+namespace
+{
+    QStandardItem* CreateItem( double value, bool red )
+    {
+        QStandardItem* item = new QStandardItem( QString::number( value, 'f', 2 ) );
+        if( red )
+            item->setForeground( Qt::red );
+        item->setTextAlignment( Qt::AlignRight | Qt::AlignVCenter );
+        return item;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MaxStockNaturesTable::Update
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void MaxStockNaturesTable::Update( const T_WeightVolumes& currentValues, std::set< std::string >& allowedNatures )
+void MaxStockNaturesTable::Update( const LogisticEditor::T_Requirements& requirements, std::set< std::string >& allowedNatures )
 {
     dataModel_->clear();
     InitHeader();
 
-    std::set< std::string > dotationNatures;
-    for( auto it = currentValues.begin(); it != currentValues.end(); ++it )
-        dotationNatures.insert( it->first );
+    T_WeightVolumes currentValues;
     for( auto it = maxValues_.begin(); it != maxValues_.end(); ++it )
     {
-        dotationNatures.insert( it->first );
         allowedNatures.insert( it->first );
+        currentValues[ it->first ] = WeightVolume();
     }
-    for( auto it = dotationNatures.begin(); it != dotationNatures.end(); ++it )
+    for( auto it = requirements.begin(); it != requirements.end(); ++it )
     {
-        int newRowIndex = dataModel_->rowCount();
-        dataModel_->setRowCount( newRowIndex + 1 );
-        dataModel_->setData( dataModel_->index( newRowIndex, 0 ), QString::fromStdString( *it ) );
-        dataModel_->setData( dataModel_->index( newRowIndex, 1 ), FormatValue( GetWeight( *it, currentValues ) ) );
-        dataModel_->setData( dataModel_->index( newRowIndex, 2 ), FormatValue( GetWeight( *it, maxValues_ ) ) );
-        dataModel_->setData( dataModel_->index( newRowIndex, 3 ), FormatValue( GetVolume( *it, currentValues ) ) );
-        dataModel_->setData( dataModel_->index( newRowIndex, 4 ), FormatValue( GetVolume( *it, maxValues_ ) ) );
-
-        QColor color = IsMaxExceeded( *it, currentValues ) ? QColor( Qt::red ) : foregroundColor();
-        for( int i = 0; i < 5; ++i )
-        {
-            if( i > 0 )
-                dataModel_->item( newRowIndex, i )->setTextAlignment( Qt::AlignRight | Qt::AlignVCenter );
-            dataModel_->item( newRowIndex, i )->setForeground( color );
-        }
+        const std::string& nature = it->first->GetNature();
+        currentValues[ nature ].weight_ += it->second * it->first->GetUnitWeight();
+        currentValues[ nature ].volume_ += it->second * it->first->GetUnitVolume();
+    }
+    for( auto it = currentValues.begin(); it != currentValues.end(); ++it )
+    {
+        WeightVolume maxValues;
+        auto itMax = maxValues_.find( it->first );
+        if( itMax != maxValues_.end() )
+            maxValues = itMax->second;
+        const bool red = IsMaxExceeded( it->first, it->second );
+        QStandardItem* dotationItem = new QStandardItem( it->first.c_str() );
+        if( red )
+            dotationItem->setForeground( Qt::red );
+        dataModel_->appendRow( QList< QStandardItem* >()
+            << dotationItem
+            << CreateItem( it->second.weight_, red )
+            << CreateItem( maxValues.weight_ , red )
+            << CreateItem( it->second.volume_, red )
+            << CreateItem( maxValues.volume_ , red ) );
    }
 }
 
@@ -197,5 +177,5 @@ void MaxStockNaturesTable::Update( const T_WeightVolumes& currentValues, std::se
 void MaxStockNaturesTable::UpdateMaxStocks( const kernel::Entity_ABC& entity )
 {
     maxValues_.clear();
-    UpdateMaxStocksByNature( entity, entity );
+    UpdateMaxStocksByNature( entity );
 }

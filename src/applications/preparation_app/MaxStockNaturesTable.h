@@ -12,6 +12,7 @@
 
 #include "clients_gui/RichWidget.h"
 #include "clients_kernel/Resolver2.h"
+#include "LogisticEditor.h" // todo à virer
 
 namespace gui
 {
@@ -61,15 +62,15 @@ public:
     //@{
     virtual void InitHeader();
     void UpdateMaxStocks( const kernel::Entity_ABC& entity );
-    void Update( const T_WeightVolumes& currentValues, std::set< std::string >& allowedNatures );
+    void Update( const LogisticEditor::T_Requirements& requirements, std::set< std::string >& allowedNatures );
     //@}
 
 private:
     //! @name Helpers
     //@{
     void UpdateMaxWeightVolumeByNature( const kernel::Agent_ABC& agent );
-    void UpdateMaxStocksByNature( const kernel::Entity_ABC& rootEntity, const kernel::Entity_ABC& entity );
-    bool IsMaxExceeded( const std::string& key, const MaxStockNaturesTable::T_WeightVolumes& values ) const;
+    void UpdateMaxStocksByNature( const kernel::Entity_ABC& entity );
+    bool IsMaxExceeded( const std::string& key, const WeightVolume& value ) const;
     //@}
 
 private:
