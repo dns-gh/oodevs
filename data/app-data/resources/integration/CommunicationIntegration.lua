@@ -396,7 +396,7 @@ integration.stopMission = function()
 end
 
 --- Returns the current mision of the given agent
--- The prefered method is DEC_GetMission (returns the mission with paramaters)
+-- The preferred method is DEC_GetMission (returns the mission with paramaters)
 -- @param entity the Simulation agent
 -- @return simulation mission, the current mission of the given entity without any parameter
 integration.getRawMission = function( entity )
@@ -556,8 +556,8 @@ integration.setRadarState = function( agent, radarState )
     F_Pion_SeteEtatRadar( agent, radarState )
 end
 
---- Returns the type of anything (like Simulation fragmentary order, Simulation agent, Simulation crowd)
--- @param any the element (can be any Simulation element)
+--- Returns the type of anything (like Simulation fragmentary order, Simulation agent, Simulation crowd, DirectiA EngineerObject, DirectIA Object, DirectIA Urban Block )
+-- @param any the element (can be a Simulation fragmentary order, Simulation agent, Simulation crowd, DirectiA EngineerObject, DirectIA Object, DirectIA Urban Block )
 -- @return String, the type (for Simulation fragmentary order it returns his name, for Simulation agent or crowd it returns the type define in Adaptation tool )
 integration.getAnyType = function( any )
     return any:GetType()
