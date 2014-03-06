@@ -29,7 +29,7 @@ namespace
     boost::ptr_map< std::string, MIL_PopulationType > populations;
     double effectReloadingTimeDensity = 0;
     double effectReloadingTimeFactor  = 0;
-    double delay_                     = 0;
+    double delay                      = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::Initialize( xml::xistream& xis )
 {
-    std::string delay = "1h";
+    std::string textDelay = "1h";
     MT_LOG_INFO_MSG( "Initializing population types" );
     xis >> xml::start( "populations" )
             >> xml::start( "reloading-time-effect" )
@@ -47,10 +47,10 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
             >> xml::end
             >> xml::optional
                 >> xml::start( "time-between-nbc-applications" )
-                    >> xml::attribute( "delay", delay )
+                    >> xml::attribute( "delay", textDelay )
                 >> xml::end;
-    tools::DecodeTime( delay, delay_ );
-    delay_ = MIL_Tools::ConvertSecondsToSim( delay_ );
+    tools::DecodeTime( textDelay, delay );
+    delay = MIL_Tools::ConvertSecondsToSim( delay );
 
     if( effectReloadingTimeDensity < 0 )
         throw MASA_EXCEPTION( xis.context() + "reloading-time-effet: population-density < 0" );
@@ -491,7 +491,7 @@ const MIL_PopulationType* MIL_PopulationType::Find( unsigned int nID )
 // -----------------------------------------------------------------------------
 double MIL_PopulationType::GetDelay() const
 {
-    return delay_;
+    return delay;
 }
 
 // -----------------------------------------------------------------------------
