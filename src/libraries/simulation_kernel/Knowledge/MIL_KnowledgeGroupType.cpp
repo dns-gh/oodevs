@@ -60,14 +60,14 @@ void MIL_KnowledgeGroupType::Terminate()
 
 namespace
 {
-    double ReadTime( xml::xisubstream xis, const std::string& start, const std::string& name, bool required )
+    double ReadTime( xml::xisubstream xis, const std::string& start, const std::string& name,
+                     bool required )
     {
         if( !start.empty() )
             xis >> xml::start( start );
-        double value;
-        if( !tools::ReadTimeAttribute( xis, name, value ) )
-            value = 0;
-        if( required && value <= 0 )
+        double value = 0;
+        const bool found = tools::ReadTimeAttribute( xis, name, value );
+        if( ( found || required ) && value <= 0 )
             throw MASA_EXCEPTION( xis.context() + ( start.empty() ? "" : name + ": " ) + name + " <= 0" );
         return value;
     }
