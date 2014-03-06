@@ -1213,8 +1213,8 @@ Do you want to replace it?</translation>
         <translation type="unfinished">Transporters</translation>
     </message>
     <message>
-        <source>Instructions</source>
-        <translation type="unfinished">Requests</translation>
+        <source>Orders</source>
+        <translation>Orders</translation>
     </message>
     <message>
         <source>Chain status</source>
@@ -1504,7 +1504,7 @@ Do you want to replace it?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Request date:</source>
+        <source>Created:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

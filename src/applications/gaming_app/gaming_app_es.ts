@@ -1214,7 +1214,7 @@ Do you want to replace it?</source>
         <translation>Transportes</translation>
     </message>
     <message>
-        <source>Instructions</source>
+        <source>Orders</source>
         <translation>Consignas</translation>
     </message>
     <message>
@@ -1505,8 +1505,8 @@ Do you want to replace it?</source>
         <translation>Empaquetado actual:</translation>
     </message>
     <message>
-        <source>Request date:</source>
-        <translation>Fecha del requerimeinto:</translation>
+        <source>Created:</source>
+        <translation type="unfinished">Creado:</translation>
     </message>
     <message>
         <source>Handler:</source>
