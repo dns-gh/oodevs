@@ -37,14 +37,14 @@ end
 -- It returns 'false' otherwise. See the 'equipments' tab, 'ressources' section in authoring.
 -- tool.
 integration.hasEnoughDotationForImprovementWithReinforcement = function( object )
-    local dotations = DEC_GetAgentDotationManquantePourValoriserObjet( meKnowledge.source, object.source )
-    if not dotations.first then -- the agent has the dotation
+    local dotations = DEC_GetAgentDotationManquantePourValoriserObjet( meKnowledge.source, object.source ) -- returns the needed quantity of dotation to get the element improved.
+    if DEC_Agent_GetAgentDotation( myself, dotations.first ) >= 1 then -- until the agent has at least one dotation it can improve
         return true
-    else -- A dotation is missing. verify the agent is reinforced and if reinforcing agents has the dotation.
+    else -- No dotation left. Verify that the agent is reinforced and if reinforcing agents has the dotation.
         local reinforcingAgents = DEC_Agent_Renforts( meKnowledge.source )
         for i = 1, #reinforcingAgents do
             local nbreDotation = DEC_Agent_GetAgentDotation( reinforcingAgents[ i ], dotations.first )
-            if nbreDotation > 1 then
+            if nbreDotation >= 1 then
                 return true -- at least one agent has the dotations
             end
         end
