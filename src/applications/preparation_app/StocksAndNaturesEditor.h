@@ -54,8 +54,8 @@ private slots:
 private:
     //! @name Member data
     //@{
-    StockResourcesTable* stocksTableView_; // todo rename
-    MaxStockNaturesTable* maxStocksTableView_; // todo rename
+    StockResourcesTable* stockResourcesTable_;
+    MaxStockNaturesTable* maxStockNaturesTable_;
     //@}
 };
 

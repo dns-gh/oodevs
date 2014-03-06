@@ -23,17 +23,17 @@
 StocksAndNaturesEditor::StocksAndNaturesEditor( QWidget* parent, const StaticModel& model )
     : QWidget( parent )
 {
-    stocksTableView_ = new StockResourcesTable( "stocksTable", this, model );
-    maxStocksTableView_ = new MaxStockNaturesTable( "maxStocksTable", this, model.objectTypes_ );
+    stockResourcesTable_ = new StockResourcesTable( "stocksTable", this, model );
+    maxStockNaturesTable_ = new MaxStockNaturesTable( "maxStocksTable", this, model.objectTypes_ );
 
     QVBoxLayout* layout = new QVBoxLayout;
     setLayout( layout );
-    layout->addWidget( stocksTableView_ );
-    layout->addWidget( maxStocksTableView_ );
+    layout->addWidget( stockResourcesTable_ );
+    layout->addWidget( maxStockNaturesTable_ );
     layout->setStretch( 0, 2 );
     layout->setStretch( 1, 1 );
 
-    connect( stocksTableView_, SIGNAL( ResourceValueChanged() ), SLOT( NotifyStocksUserChange() ) );
+    connect( stockResourcesTable_, SIGNAL( ResourceValueChanged() ), SLOT( NotifyStocksUserChange() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,9 +51,9 @@ StocksAndNaturesEditor::~StocksAndNaturesEditor()
 // -----------------------------------------------------------------------------
 void StocksAndNaturesEditor::Initialize( const kernel::Entity_ABC& entity )
 {
-    stocksTableView_->OnClearItems();
-    maxStocksTableView_->UpdateMaxStocks( entity );
-    stocksTableView_->UpdateInitStocks( entity );
+    stockResourcesTable_->OnClearItems();
+    maxStockNaturesTable_->UpdateMaxStocks( entity );
+    stockResourcesTable_->UpdateInitStocks( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void StocksAndNaturesEditor::Initialize( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void StocksAndNaturesEditor::SupplyStocks( kernel::Entity_ABC& entity ) const
 {
-    stocksTableView_->SupplyStocks( entity );
+    stockResourcesTable_->SupplyStocks( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ void StocksAndNaturesEditor::SupplyStocks( kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 void StocksAndNaturesEditor::NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks )
 {
-    stocksTableView_->UpdateStocks( stocks );
+    stockResourcesTable_->UpdateStocks( stocks );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,8 +81,8 @@ void StocksAndNaturesEditor::NotifyAutomaticStocks( const std::map< const kernel
 void StocksAndNaturesEditor::NotifyStocksUserChange()
 {
     std::map< const kernel::DotationType*, unsigned int > dotations;
-    stocksTableView_->ComputeValueByDotation( dotations );
+    stockResourcesTable_->ComputeValueByDotation( dotations );
     std::set< std::string > allowedNatures;
-    maxStocksTableView_->Update( dotations, allowedNatures );
-    stocksTableView_->SetAllowedNatures( allowedNatures );
+    maxStockNaturesTable_->Update( dotations, allowedNatures );
+    stockResourcesTable_->SetAllowedNatures( allowedNatures );
 }

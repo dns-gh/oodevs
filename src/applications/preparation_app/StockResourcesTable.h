@@ -52,8 +52,8 @@ private:
     //! @name Helpers
     //@{
     void ComputeStockWeightVolumeLeft( const kernel::Agent_ABC& stockUnit, const std::string& nature, double& weightResult, double& volumeResult ) const;
-    void CleanStocks( std::vector< const kernel::Agent_ABC* >& entStocks ) const;
-    bool IsStockValid( const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation ) const;
+    bool IsStockValid( const kernel::Agent_ABC& agent, const kernel::DotationType& dotationType ) const;
+    unsigned int FillStockUntilMaxReached( kernel::Agent_ABC& agent, const kernel::DotationType& dotationType, unsigned int quantity ) const;
     //@}
 
 private:

@@ -36,7 +36,6 @@ Stocks::Stocks( Controller& controller, Entity_ABC& entity, gui::PropertiesDicti
 Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, const tools::Resolver_ABC< DotationType, std::string >& resolver, gui::PropertiesDictionary& dico )
     : controller_( controller )
 {
-    invalidDotations_.clear();
     CreateDictionary( entity, dico );
     xis >> xml::optional >> xml::start( "stocks" )
             >> xml::list( "resource", *this, &Stocks::ReadDotation, resolver )
@@ -131,7 +130,7 @@ void Stocks::DeleteAll()
 // -----------------------------------------------------------------------------
 void Stocks::SerializeAttributes( xml::xostream& xos ) const
 {
-    const_cast< Stocks* >( this )->clearInvalidDotations();
+    invalidDotations_.clear();
     if( !IsToSerialize() )
         return;
     xos << xml::start( "stocks" );
@@ -224,13 +223,4 @@ bool Stocks::IsToSerialize() const
 const std::vector< std::string >& Stocks::GetInvalidDotations() const
 {
     return invalidDotations_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Stocks::clearInvalidDotations
-// Created: MMC 2012-05-31
-// -----------------------------------------------------------------------------
-void Stocks::clearInvalidDotations()
-{
-    invalidDotations_.clear();
 }

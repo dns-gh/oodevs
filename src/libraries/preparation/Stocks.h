@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <tools/Resolver.h>
 
 namespace kernel
@@ -43,6 +44,7 @@ class DotationsItem;
 class Stocks : public kernel::Extension_ABC
              , public tools::Resolver< Dotation >
              , public kernel::Serializable_ABC
+             , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -57,16 +59,9 @@ public:
     void ComputeWeightAndVolume( const std::string& dotationNature, double& weight, double& volume ) const;
     bool HasDotationType( const kernel::DotationType& dotationType ) const;
     const std::vector< std::string >& GetInvalidDotations() const;
-    void clearInvalidDotations();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Stocks( const Stocks& );            //!< Copy constructor
-    Stocks& operator=( const Stocks& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Entity_ABC& entity, gui::PropertiesDictionary& dico );
@@ -80,7 +75,7 @@ private:
     //@{
     kernel::Controller& controller_;
     DotationsItem* item_;
-    std::vector< std::string > invalidDotations_;
+    mutable std::vector< std::string > invalidDotations_;
     //@}
 };
 

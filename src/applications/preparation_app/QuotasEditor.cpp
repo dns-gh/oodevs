@@ -130,6 +130,8 @@ void QuotasEditor::ApplyQuotas() const
 // -----------------------------------------------------------------------------
 void QuotasEditor::OnSubordinateChanged( int index )
 {
+    if( index < 0 || index >= subordinateCombo_->count() )
+        return;
     QVariant v = subordinateCombo_->itemData( index, Qt::UserRole );
     if( v.isValid() )
         quotasTableView_->SetQuotas( quotasByEntity_[ v.value< const kernel::Entity_ABC* >() ] );
@@ -141,8 +143,14 @@ void QuotasEditor::OnSubordinateChanged( int index )
 // -----------------------------------------------------------------------------
 void QuotasEditor::NotifyQuotasUserChange()
 {
-    auto entity = subordinateCombo_->itemData( subordinateCombo_->currentIndex(), Qt::UserRole ).value< const kernel::Entity_ABC* >();
-    quotasTableView_->ComputeValueByDotation( quotasByEntity_[ entity ] );
+    if( subordinateCombo_->count() == 0 )
+        return;
+    int currentIndex = subordinateCombo_->currentIndex();
+    if( currentIndex == -1 )
+        return;
+    auto entity = subordinateCombo_->itemData( currentIndex, Qt::UserRole ).value< const kernel::Entity_ABC* >();
+    if( entity )
+        quotasTableView_->ComputeValueByDotation( quotasByEntity_[ entity ] );
 }
 
 // -----------------------------------------------------------------------------
