@@ -54,6 +54,14 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 func (s *TestSuite) TestPathfindRequest(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
+	client2 := loginAndWaitModel(c, sim, NewAllUserOpts(ExCrossroadSmallOrbat))
+	client2.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
+		if msg != nil && msg.SimulationToClient != nil {
+			c.Assert(msg.SimulationToClient.GetMessage().GetPathfindRequestAsk(), IsNil)
+		}
+		return false
+	})
+
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
 	to := swapi.Point{X: -15.8193, Y: 28.3456}
