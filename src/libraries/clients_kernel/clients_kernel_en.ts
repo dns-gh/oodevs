@@ -52,29 +52,6 @@
     </message>
 </context>
 <context>
-    <name>CoordinateSystems</name>
-    <message>
-        <source>UTM MGRS</source>
-        <translation>UTM MGRS</translation>
-    </message>
-    <message>
-        <source>LatLong WGS84 DD</source>
-        <translation>LatLong WGS84 DD</translation>
-    </message>
-    <message>
-        <source>LatLong WGS84 DMS</source>
-        <translation>LatLong WGS84 DMS</translation>
-    </message>
-    <message>
-        <source>Local coordinates</source>
-        <translation>Local coordinates</translation>
-    </message>
-    <message>
-        <source>UTM SAD69 Brazil</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DisplayExtractor_ABC</name>
     <message>
         <source>Unknown element</source>

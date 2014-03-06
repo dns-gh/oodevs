@@ -25,13 +25,11 @@ using namespace gui;
 // Name: TerrainFeatureSearcher constructor
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-TerrainFeatureSearcher::TerrainFeatureSearcher( kernel::Controllers& controllers )
-    : controllers_( controllers )
-    , nameLocations_( new T_NameLocations( 500 ) ) // threshold...
-    , current_( 0 )
-    , index_  ( 0 )
+TerrainFeatureSearcher::TerrainFeatureSearcher()
+    : current_( 0 )
+    , index_( 0 )
 {
-    controllers_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +38,7 @@ TerrainFeatureSearcher::TerrainFeatureSearcher( kernel::Controllers& controllers
 // -----------------------------------------------------------------------------
 TerrainFeatureSearcher::~TerrainFeatureSearcher()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 namespace
@@ -120,26 +118,6 @@ bool TerrainFeatureSearcher::FindNext( geometry::Point2f& point, QString& hint )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainFeatureSearcher::NotifyUpdated
-// Created: AGE 2008-05-29
-// -----------------------------------------------------------------------------
-void TerrainFeatureSearcher::NotifyUpdated( const kernel::ModelLoaded& model )
-{
-    current_ = 0;
-    index_ = 0;
-    nameLocations_.reset( new T_NameLocations( 500 ) );
-
-    const tools::Path& graphicsDirectory = model.config_.GetGraphicsDirectory();
-
-    if( !graphicsDirectory.IsEmpty() )
-    {
-        const tools::Path dump = graphicsDirectory / "shapes.dump";
-        if( dump.Exists() )
-            pendingSourceFile_ = dump;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: TerrainFeatureSearcher::LoadFeatures
 // Created: SBO 2008-08-07
 // -----------------------------------------------------------------------------
@@ -153,4 +131,22 @@ void TerrainFeatureSearcher::LoadFeatures()
     for( std::map< std::string, T_PointVector >::const_iterator it = layer.names_.begin(); it != layer.names_.end(); ++it )
             nameLocations_->Add( it->first, T_Feature( it->first.c_str(), it->second ) );
     pendingSourceFile_.Clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainFeatureSearcher::Load
+// Created: ABR 2014-03-04
+// -----------------------------------------------------------------------------
+void TerrainFeatureSearcher::Load( const tools::ExerciseConfig& config )
+{
+    current_ = 0;
+    index_ = 0;
+    nameLocations_.reset( new T_NameLocations( 500 ) );
+    const tools::Path& graphicsDirectory = config.GetGraphicsDirectory();
+    if( !graphicsDirectory.IsEmpty() )
+    {
+        const tools::Path dump = graphicsDirectory / "shapes.dump";
+        if( dump.Exists() )
+            pendingSourceFile_ = dump;
+    }
 }

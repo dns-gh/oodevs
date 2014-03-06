@@ -24,7 +24,6 @@ namespace tools
 
 namespace kernel
 {
-    class CoordinateSystems;
 
 // =============================================================================
 // Created: APE 2004-07-19
@@ -37,7 +36,7 @@ public:
     //! @name Constructor / Destructor
     //@{
              CoordinateConverter();
-    explicit CoordinateConverter( const CoordinateSystems& coordSystems );
+    explicit CoordinateConverter( E_CoordinateSystem coordSystems );
     explicit CoordinateConverter( const tools::ExerciseConfig& config );
     virtual ~CoordinateConverter();
     //@}
@@ -46,7 +45,9 @@ public:
     //@{
     virtual void Load( const tools::ExerciseConfig& config );
 
-    virtual const CoordinateSystems& GetCoordSystem() const;
+    virtual E_CoordinateSystem GetDefaultCoordinateSystem() const;
+    virtual void SetDefaultCoordinateSystem( E_CoordinateSystem );
+
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const;
     virtual std::string GetStringPosition( const geometry::Point2f& position, int projection ) const;
 
@@ -88,8 +89,7 @@ private:
     mutable geocoord::MGRS mgrs_;
     mutable geocoord::Geodetic geodetic_;
     mutable geocoord::UTM utm_;
-    std::auto_ptr< CoordinateSystems > private_;
-    const CoordinateSystems& systems_;
+    E_CoordinateSystem defaultCoordSystem_;
     //@}
 };
 

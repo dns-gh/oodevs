@@ -44,6 +44,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Purge();
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void SetEntity( const kernel::Entity_ABC* entity );

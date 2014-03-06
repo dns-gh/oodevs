@@ -57,9 +57,14 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-             InterfaceBuilder( kernel::Controllers& controllers, ::gui::ParametersLayer& layer, const kernel::StaticModel& staticModel,
-                               kernel::AgentKnowledgeConverter_ABC* knowledgeConverter = 0, kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter = 0,
-                               const kernel::Time_ABC* simulation = 0, tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver = 0 );
+             InterfaceBuilder( kernel::Controllers& controllers,
+                               const tools::ExerciseConfig& config,
+                               ::gui::ParametersLayer& layer,
+                               const kernel::StaticModel& staticModel,
+                               kernel::AgentKnowledgeConverter_ABC* knowledgeConverter = 0,
+                               kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter = 0,
+                               const kernel::Time_ABC* simulation = 0,
+                               tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver = 0 );
     virtual ~InterfaceBuilder();
     //@}
 
@@ -80,6 +85,7 @@ public:
     virtual tools::Resolver< kernel::TacticalLine_ABC >* GetTacticalLineResolver() const;
     virtual const QDateTime GetCurrentDateTime() const;
     virtual const kernel::StaticModel& GetStaticModel() const;
+    virtual const tools::ExerciseConfig& GetConfig() const;
     //@}
 
     //! @name Setters
@@ -109,6 +115,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers&                   controllers_;
+    const tools::ExerciseConfig&           config_;
     ::gui::ParametersLayer&                layer_;
     const kernel::StaticModel&             staticModel_;
     kernel::AgentKnowledgeConverter_ABC*   knowledgeConverter_;

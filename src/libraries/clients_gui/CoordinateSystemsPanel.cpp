@@ -10,25 +10,29 @@
 #include "clients_gui_pch.h"
 #include "CoordinateSystemsPanel.h"
 #include "moc_CoordinateSystemsPanel.cpp"
+
+#include "RichGroupBox.h"
+#include "RichWidget.h"
+
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Options.h"
-#include "clients_gui/RichWidget.h"
-#include "clients_gui/RichGroupBox.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace gui;
-
-typedef kernel::CoordinateSystems::Projection Projection;
 
 // -----------------------------------------------------------------------------
 // Name: CoordinateSystemsPanel constructor
 // Created: AME 2010-03-15
 // -----------------------------------------------------------------------------
-CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent, kernel::Controllers& controllers, kernel::CoordinateSystems& coordSystems )
+CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent,
+                                                kernel::Controllers& controllers,
+                                                kernel::CoordinateConverter_ABC& coordConverter )
     : PreferencePanel_ABC( parent, "CoordinateSystemsPanel" )
     , controllers_( controllers )
     , options_( controllers.options_ )
-    , coordinateSystems_( coordSystems )
-    , previousCoordinateSystem_( coordSystems.GetDefault() )
+    , coordConverter_( coordConverter )
+    , previousCoordinateSystem_( coordConverter.GetDefaultCoordinateSystem() )
 {
     QLabel* coordinateLabel = new QLabel( tr( "Select current coordinate system:" ) );
     listCoordSys_ = new RichWidget< QComboBox >( "listCoordSys" );
@@ -40,9 +44,8 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent, kernel::Control
     boxLayout->addWidget( listCoordSys_ );
     boxLayout->addStretch( 1 );
 
-    const kernel::CoordinateSystems::T_SpatialReference& systems = coordinateSystems_.GetSystems();
-    for( auto it = systems.begin(); it != systems.end(); ++it )
-        listCoordSys_->insertItem( it->second, it->first );
+    for( int i = 0; i < eNbrCoordinateSystem; ++i )
+        listCoordSys_->insertItem( QString::fromStdString( ENT_Tr::ConvertFromCoordinateSystem( static_cast< E_CoordinateSystem >( i ) ) ), i );
 
     setWidget( box );
     controllers_.Register( *this );
@@ -63,9 +66,9 @@ CoordinateSystemsPanel::~CoordinateSystemsPanel()
 // -----------------------------------------------------------------------------
 void CoordinateSystemsPanel::Commit()
 {
-    coordinateSystems_.SetDefault( static_cast< Projection >( listCoordSys_->currentItem() ) );
-    options_.Change( "CoordSystem", static_cast< int >( coordinateSystems_.GetDefault() ) );
-    previousCoordinateSystem_ = coordinateSystems_.GetDefault();
+    coordConverter_.SetDefaultCoordinateSystem( static_cast< E_CoordinateSystem >( listCoordSys_->currentItem() ) );
+    options_.Change( "CoordSystem", static_cast< int >( coordConverter_.GetDefaultCoordinateSystem() ) );
+    previousCoordinateSystem_ = coordConverter_.GetDefaultCoordinateSystem();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +78,7 @@ void CoordinateSystemsPanel::Commit()
 void CoordinateSystemsPanel::Reset()
 {
     listCoordSys_->setCurrentItem( previousCoordinateSystem_ );
-    coordinateSystems_.SetDefault( previousCoordinateSystem_ );
+    coordConverter_.SetDefaultCoordinateSystem( previousCoordinateSystem_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,6 +90,6 @@ void CoordinateSystemsPanel::OptionChanged( const std::string& name, const kerne
     if( name == "CoordSystem" )
     {
         listCoordSys_->setCurrentItem( value.To< int >() );
-        coordinateSystems_.SetDefault( static_cast< Projection >( listCoordSys_->currentItem() ) );
+        coordConverter_.SetDefaultCoordinateSystem( static_cast< E_CoordinateSystem >( listCoordSys_->currentItem() ) );
     }
 }

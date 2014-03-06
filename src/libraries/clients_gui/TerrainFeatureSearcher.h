@@ -29,14 +29,12 @@ namespace gui
 */
 // Created: AGE 2008-05-29
 // =============================================================================
-class TerrainFeatureSearcher : public tools::Observer_ABC
-                             , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                             , private boost::noncopyable
+class TerrainFeatureSearcher : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TerrainFeatureSearcher( kernel::Controllers& controllers );
+             TerrainFeatureSearcher();
     virtual ~TerrainFeatureSearcher();
     //@}
 
@@ -44,12 +42,7 @@ public:
     //@{
     bool Search( const QString& name, geometry::Point2f& point, QString& hint );
     bool FindNext( geometry::Point2f& point, QString& hint );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    void Load( const tools::ExerciseConfig& config );
     //@}
 
 private:
@@ -67,8 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    std::auto_ptr< T_NameLocations > nameLocations_;
+    std::unique_ptr< T_NameLocations > nameLocations_;
     const T_Feature* current_;
     unsigned index_;
     tools::Path pendingSourceFile_;

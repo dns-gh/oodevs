@@ -11,14 +11,16 @@
 #define __CoordinateSystemsPanel_h_
 
 #include "PreferencePanel_ABC.h"
-#include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
+    class CoordinateConverter_ABC;
     class Options;
 }
+
+enum E_CoordinateSystem;
 
 namespace gui
 {
@@ -37,7 +39,9 @@ class CoordinateSystemsPanel : public PreferencePanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CoordinateSystemsPanel( QWidget* parent, kernel::Controllers& controllers, kernel::CoordinateSystems& coordSystems );
+             CoordinateSystemsPanel( QWidget* parent,
+                                     kernel::Controllers& controllers,
+                                     kernel::CoordinateConverter_ABC& coordConverter );
     virtual ~CoordinateSystemsPanel();
     //@}
 
@@ -53,9 +57,9 @@ private:
     //@{
      kernel::Options& options_;
      kernel::Controllers& controllers_;
-     kernel::CoordinateSystems& coordinateSystems_;
+     kernel::CoordinateConverter_ABC& coordConverter_;
      RichWidget< QComboBox >* listCoordSys_;
-     kernel::CoordinateSystems::Projection previousCoordinateSystem_;
+     E_CoordinateSystem previousCoordinateSystem_;
     //@}
 };
 

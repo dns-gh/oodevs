@@ -21,6 +21,7 @@ ParamLocation_ABC< BaseParameter >::ParamLocation_ABC( const InterfaceBuilder_AB
     pPosLabel_ = new QLabel( "---" );
     pPosLabel_->setMinimumWidth( 100 );
     pPosLabel_->setAlignment( Qt::AlignCenter );
+    ActivateSwitchEditor( parameter_.GetType() == "point" );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,8 +44,10 @@ template< typename BaseParameter >
 QWidget* ParamLocation_ABC< BaseParameter >::BuildInterface( const QString& objectName, QWidget* parent )
 {
     Param_ABC::BuildInterface( objectName, parent );
-    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    QHBoxLayout* layout = new QHBoxLayout( group_ );
     layout->addWidget( pPosLabel_ );
+    if( needSwitchEditor_ )
+        layout->addWidget( CreateSwitchEditor() );
     return group_;
 }
 
@@ -67,17 +70,6 @@ template< typename BaseParameter >
 bool ParamLocation_ABC< BaseParameter >::InternalCheckValidity() const
 {
     return location_ && location_->IsValid();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocation_ABC::InternalOnMenuClick
-// Created: ABR 2012-01-03
-// -----------------------------------------------------------------------------
-template< typename BaseParameter >
-void ParamLocation_ABC< BaseParameter >::InternalOnMenuClick()
-{
-    if( group_ && IsOptional() )
-        group_->setChecked( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +111,8 @@ void ParamLocation_ABC< BaseParameter >::Handle( kernel::Location_ABC& location 
     {
         location_.reset( &location );
         pPosLabel_->setText( location.GetName() );
-        InternalOnMenuClick();
+        if( group_ && IsOptional() )
+            group_->setChecked( true );
         NotifyChange();
         Update();
     }
@@ -133,11 +126,7 @@ template< typename BaseParameter >
 void ParamLocation_ABC< BaseParameter >::OnMenuClick()
 {
     if( parameter_.GetType() == "point" && popupPosition_ )
-    {
-        kernel::Point locPoint;
-        locPoint.AddPoint( *popupPosition_ );
-        Handle( locPoint.Clone() );
-    }
+        layer_.SetPoint( *this, *popupPosition_ );
     else if( parameter_.GetType() == "circle" )
         layer_.StartCircle( *this );
     else if( parameter_.GetType() == "line" )
@@ -216,4 +205,15 @@ template< typename BaseParameter >
 void ParamLocation_ABC< BaseParameter >::Visit( const actions::parameters::Location& param )
 {
     InternalVisit( param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation_ABC::Purge
+// Created: ABR 2014-02-27
+// -----------------------------------------------------------------------------
+template< typename BaseParameter >
+void ParamLocation_ABC< BaseParameter >::Purge()
+{
+    location_.reset();
+    pPosLabel_->setText( "---" );
 }

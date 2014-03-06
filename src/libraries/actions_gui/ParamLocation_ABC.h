@@ -63,24 +63,29 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Purge();
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& extent, ::gui::GlTools_ABC& tools ) const;
-    virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
-    virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
     virtual void OnMenuClick();
+    virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
+    virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Visit( const actions::parameters::Point& param );
     virtual void Visit( const actions::parameters::Polygon& param );
     virtual void Visit( const actions::parameters::Location& param );
     //@}
 
+protected:
+    //! @name 
+    //@{
+    virtual void InternalVisit( const actions::parameters::Location& param );
+    //@}
+
 private:
     //! @name Helpers
     //@{
-    void InternalOnMenuClick();
     virtual bool InternalCheckValidity() const;
-    void InternalVisit( const actions::parameters::Location& param );
     //@}
 
 protected:
@@ -96,9 +101,7 @@ protected:
 
 #include "ParamLocation_ABC.inl"
 
-typedef ParamLocation_ABC< actions::parameters::Point >     ParamPoint;
 typedef ParamLocation_ABC< actions::parameters::Polygon >   ParamPolygon;
-
 typedef ParamLocation_ABC< actions::parameters::Location >  ParamCircle;
 typedef ParamLocation_ABC< actions::parameters::Location >  ParamLine;
 typedef ParamLocation_ABC< actions::parameters::Location >  ParamRectangle;

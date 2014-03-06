@@ -102,6 +102,8 @@ public:
 
     virtual bool HasParameter( const Param_ABC& param ) const;
     virtual void FixOrigin( bool fix ) const;
+    void ActivateSwitchEditor( bool activated );
+    virtual void SetSwitchEditorChecked( bool checked );
     //@}
 
     //! @name Accessors
@@ -140,6 +142,7 @@ protected:
     //@{
     bool IsInList() const;
     bool IsInParam() const;
+    QWidget* CreateSwitchEditor();
     virtual kernel::ContextMenu::T_MenuVariant CreateMenu( kernel::ContextMenu& menu );
     virtual void CreateInternalMenu( kernel::ContextMenu& menu );
     void CreateListMenu( QTreeView* list, const QStandardItemModel& model, const QPoint& pos, bool createEnabled ); // $$$$ ABR 2012-03-23: Here for translation ... enjoy Qt translation
@@ -166,6 +169,8 @@ protected:
     kernel::OrderParameter parameter_;
     kernel::ContextMenu::T_MenuVariant internalMenu_;
     bool registered_;
+    QAbstractButton* switchEditor_;
+    bool needSwitchEditor_;
     //@}
 };
 

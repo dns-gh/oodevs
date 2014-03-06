@@ -70,7 +70,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
 {
     const bool hasLegacyTimeline = config.HasTimeline();
     // Tools
-    interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers, paramLayer, staticModel, &model.agentKnowledgeConverter_, &model.objectKnowledgeConverter_, &simulation, &model.limits_ ) );
+    interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers, config, paramLayer, staticModel, &model.agentKnowledgeConverter_, &model.objectKnowledgeConverter_, &simulation, &model.limits_ ) );
     scheduler_.reset( new ActionsScheduler( parent, controllers, simulation, model.actions_, network.GetMessageMgr(), simulationController, hasLegacyTimeline ) );
     displayExtractor_.reset( new gui::DisplayExtractor( parent ) );
     QObject::connect( displayExtractor_.get(), SIGNAL( LinkClicked( const QString& ) ), &interpreter, SLOT( Interprete( const QString& ) ) );

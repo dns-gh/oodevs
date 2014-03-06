@@ -33,7 +33,7 @@ class XyParser : public LocationParser_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             XyParser( const kernel::CoordinateConverter_ABC& converter, int coordinateSystem );
+             XyParser( const kernel::CoordinateConverter_ABC& converter );
     virtual ~XyParser();
     //@}
 
@@ -54,7 +54,6 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    int coordinateSystem_;
     //@}
 };
 

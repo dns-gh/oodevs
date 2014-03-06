@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual const LocationParserDescriptor& GetDescriptor() const = 0;
-    virtual bool  Parse( const QStringList& content, geometry::Point2f& result, QStringList& hints ) const = 0;
+    virtual bool Parse( const QStringList& content, geometry::Point2f& result, QStringList& hints ) const = 0;
     virtual QStringList Split( const QString& input ) const = 0;
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const = 0;
     //@}
