@@ -437,7 +437,7 @@ void ParamLocationComposite::SetSwitchEditorChecked( bool checked )
 // -----------------------------------------------------------------------------
 void ParamLocationComposite::OnSwitchEditorClicked( bool checked )
 {
-    for( int i = 0; i < params_.size(); ++i )
+    for( int i = 0; i < static_cast< int >( params_.size() ); ++i )
     {
         auto param = params_[ i ];
         param->SetSwitchEditorChecked( checked );
