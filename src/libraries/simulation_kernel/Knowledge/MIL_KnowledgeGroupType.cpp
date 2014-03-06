@@ -91,11 +91,11 @@ namespace
 MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis, double timeFactor )
     : strName_                                      ( strName )
     , nID_                                          ( nNextID++ )
-    , rKnowledgeAgentMaxLifeTime_                   ( ReadTime( xis, "unit-knowledge", "max-lifetime", true, false ) * timeFactor )
+    , rKnowledgeAgentMaxLifeTime_                   ( ReadTime( xis, "unit-knowledge", "max-lifetime", true, true ) * timeFactor )
     , rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_( ReadMaxDistance( xis ) )
-    , rKnowledgeAgentExtrapolationTime_             ( std::max( 1., ReadTime( xis, "unit-knowledge", "interpolation-time", false, false ) * timeFactor ) )
-    , rKnowledgePopulationMaxLifeTime_              ( ReadTime( xis, "population-knowledge", "max-lifetime", true, false ) * timeFactor )
-    , rCommunicationDelay_                          ( ReadTime( xis, "", "communication-delay", true, true ) * timeFactor )
+    , rKnowledgeAgentExtrapolationTime_             ( std::max( 1., ReadTime( xis, "unit-knowledge", "interpolation-time", false, true ) * timeFactor ) )
+    , rKnowledgePopulationMaxLifeTime_              ( ReadTime( xis, "population-knowledge", "max-lifetime", true, true ) * timeFactor )
+    , rCommunicationDelay_                          ( ReadTime( xis, "", "communication-delay", true, false ) * timeFactor )
 {
     // NOTHING
 }
