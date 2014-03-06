@@ -63,7 +63,19 @@ void ClientsNetworker::Receive( const sword::SimToClient& message )
         AllowConnections();
     else if( message.message().has_control_begin_tick() )
         OnNewTick();
-    Broadcast( message );
+    if( HasAcknowledgeMessage( message ) )
+        SendAcknowledge( message );
+    else
+        Broadcast( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::HasAcknowledgeMessage
+// Created: LGY 2014-03-06
+// -----------------------------------------------------------------------------
+bool ClientsNetworker::HasAcknowledgeMessage( const sword::SimToClient& message ) const
+{
+    return message.has_client_id() && message.message().has_pathfind_request_ask();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,11 +84,17 @@ void ClientsNetworker::Receive( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Broadcast( const sword::SimToClient& message )
 {
-    static const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< sword::SimToClient >();
-    tools::Message m;
-    Serialize( message, m );
     for( auto it = internals_.begin(); it != internals_.end(); ++it )
-        it->second->Send( tag, m );
+        it->second->Send( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::SendAcknowledge
+// Created: LGY 2014-03-06
+// -----------------------------------------------------------------------------
+void ClientsNetworker::SendAcknowledge( const sword::SimToClient& message )
+{
+    GetAuthenticatedPublisher( message.client_id() ).Send( message );
 }
 
 // -----------------------------------------------------------------------------
