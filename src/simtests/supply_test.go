@@ -149,12 +149,18 @@ func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, callb
 	c.Assert(idx, Equals, len(checkers))
 }
 
-func checkSupplyUpdates(c *C, client *swapi.Client, unit *swapi.Unit, supplier *sword.Tasker, provider *sword.Tasker, callback SupplyCallback, updates []SupplyUpdateChecker) {
-	checkers := []SupplyChecker{&SupplyCreateChecker{supplier, provider}}
-	for i := range updates {
-		checkers = append(checkers, &updates[i])
+func checkSupplyUpdates(c *C, client *swapi.Client, unit *swapi.Unit, supplier *sword.Tasker, provider *sword.Tasker, callback SupplyCallback) {
+	checkers := []SupplyChecker{&SupplyCreateChecker{supplier, provider},
+		&SupplyUpdateChecker{"convoy_waiting_for_transporters"},
+		&SupplyUpdateChecker{"convoy_setup"},
+		&SupplyUpdateChecker{"convoy_moving_to_loading_point"},
+		&SupplyUpdateChecker{"convoy_loading"},
+		&SupplyUpdateChecker{"convoy_moving_to_unloading_point"},
+		&SupplyUpdateChecker{"convoy_unloading"},
+		&SupplyUpdateChecker{"convoy_moving_back_to_loading_point"},
+		&SupplyUpdateChecker{"convoy_finished"},
+		&SupplyDeleteChecker{},
 	}
-	checkers = append(checkers, SupplyDeleteChecker{})
 	checkSupply(c, client, unit, -1, callback, checkers...)
 }
 
@@ -174,16 +180,7 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 				}})
 		c.Assert(err, IsNil)
 	}
-	checkSupplyUpdates(c, client, unit, supplier, supplier, removeElectrogen_1, []SupplyUpdateChecker{
-		{"convoy_waiting_for_transporters"},
-		{"convoy_setup"},
-		{"convoy_moving_to_loading_point"},
-		{"convoy_loading"},
-		{"convoy_moving_to_unloading_point"},
-		{"convoy_unloading"},
-		{"convoy_moving_back_to_loading_point"},
-		{"convoy_finished"},
-	})
+	checkSupplyUpdates(c, client, unit, supplier, supplier, removeElectrogen_1)
 
 	automat := getSomeAutomatByName(c, d, "Supply Mobile Infantry Platoon")
 	supplier2Id := getSomeFormationByName(c, d, "Supply F2").Id
@@ -201,27 +198,9 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 		c.Assert(err, IsNil)
 	}
 	// the 'current' superior is searched first
-	checkSupplyUpdates(c, client, unit, supplier2, supplier2, removeElectrogen_2, []SupplyUpdateChecker{
-		{"convoy_waiting_for_transporters"},
-		{"convoy_setup"},
-		{"convoy_moving_to_loading_point"},
-		{"convoy_loading"},
-		{"convoy_moving_to_unloading_point"},
-		{"convoy_unloading"},
-		{"convoy_moving_back_to_loading_point"},
-		{"convoy_finished"},
-	})
+	checkSupplyUpdates(c, client, unit, supplier2, supplier2, removeElectrogen_2)
 	// the 'nominal' superior is searched if the 'current' superior cannot handle the request
-	checkSupplyUpdates(c, client, unit, supplier, supplier, removeElectrogen_1, []SupplyUpdateChecker{
-		{"convoy_waiting_for_transporters"},
-		{"convoy_setup"},
-		{"convoy_moving_to_loading_point"},
-		{"convoy_loading"},
-		{"convoy_moving_to_unloading_point"},
-		{"convoy_unloading"},
-		{"convoy_moving_back_to_loading_point"},
-		{"convoy_finished"},
-	})
+	checkSupplyUpdates(c, client, unit, supplier, supplier, removeElectrogen_1)
 }
 
 func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
@@ -248,16 +227,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
 				}})
 		c.Assert(err, IsNil)
 	}
-	checkSupplyUpdates(c, client, unit, supplier, provider, removeElectrogen_1, []SupplyUpdateChecker{
-		{"convoy_waiting_for_transporters"},
-		{"convoy_setup"},
-		{"convoy_moving_to_loading_point"},
-		{"convoy_loading"},
-		{"convoy_moving_to_unloading_point"},
-		{"convoy_unloading"},
-		{"convoy_moving_back_to_loading_point"},
-		{"convoy_finished"},
-	})
+	checkSupplyUpdates(c, client, unit, supplier, provider, removeElectrogen_1)
 
 	supplier2Id := getSomeFormationByName(c, d, "Supply F4").Id
 	supplier2 := swapi.MakeFormationTasker(supplier2Id)
@@ -278,27 +248,9 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
 		c.Assert(err, IsNil)
 	}
 	// the 'current' superior is searched first
-	checkSupplyUpdates(c, client, unit, supplier2, provider, removeElectrogen_3, []SupplyUpdateChecker{
-		{"convoy_waiting_for_transporters"},
-		{"convoy_setup"},
-		{"convoy_moving_to_loading_point"},
-		{"convoy_loading"},
-		{"convoy_moving_to_unloading_point"},
-		{"convoy_unloading"},
-		{"convoy_moving_back_to_loading_point"},
-		{"convoy_finished"},
-	})
+	checkSupplyUpdates(c, client, unit, supplier2, provider, removeElectrogen_3)
 	// the 'nominal' superior is searched if the 'current' superior cannot handle the request
-	checkSupplyUpdates(c, client, unit, supplier, provider, removeElectrogen_1, []SupplyUpdateChecker{
-		{"convoy_waiting_for_transporters"},
-		{"convoy_setup"},
-		{"convoy_moving_to_loading_point"},
-		{"convoy_loading"},
-		{"convoy_moving_to_unloading_point"},
-		{"convoy_unloading"},
-		{"convoy_moving_back_to_loading_point"},
-		{"convoy_finished"},
-	})
+	checkSupplyUpdates(c, client, unit, supplier, provider, removeElectrogen_1)
 }
 
 func SetManualSupply(c *C, client *swapi.Client, id uint32, mode bool) {
@@ -335,17 +287,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseManual(c *C) {
 
 	// convoy launched when switching back to automatic supply
 	checkSupplyUpdates(c, client, unit, supplier, supplier,
-		func() { SetManualSupply(c, client, supplierId, false) },
-		[]SupplyUpdateChecker{
-			{"convoy_waiting_for_transporters"},
-			{"convoy_setup"},
-			{"convoy_moving_to_loading_point"},
-			{"convoy_loading"},
-			{"convoy_moving_to_unloading_point"},
-			{"convoy_unloading"},
-			{"convoy_moving_back_to_loading_point"},
-			{"convoy_finished"},
-		})
+		func() { SetManualSupply(c, client, supplierId, false) })
 }
 
 func (s *TestSuite) TestSupplyHandlingsBaseToBaseManual(c *C) {
@@ -377,15 +319,5 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBaseManual(c *C) {
 
 	// convoy launched when switching back to automatic supply
 	checkSupplyUpdates(c, client, unit, supplier, provider,
-		func() { SetManualSupply(c, client, supplierId, false) },
-		[]SupplyUpdateChecker{
-			{"convoy_waiting_for_transporters"},
-			{"convoy_setup"},
-			{"convoy_moving_to_loading_point"},
-			{"convoy_loading"},
-			{"convoy_moving_to_unloading_point"},
-			{"convoy_unloading"},
-			{"convoy_moving_back_to_loading_point"},
-			{"convoy_finished"},
-		})
+		func() { SetManualSupply(c, client, supplierId, false) })
 }
