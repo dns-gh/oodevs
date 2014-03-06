@@ -13,7 +13,6 @@ local type_warning = 3
 -- @param id the identifier of the message
 -- @param list the list of parameters. If it's not a list, return false
 -- @param emitter the sending agent
--- @return Boolean, error code
 RC_WithParams = function( RC_Function, type_rc, id, list, emitter )
     if list[1] then
         return RC_Function( type_rc, id, list, emitter )
@@ -27,7 +26,6 @@ end
 -- Any additional parameter will be used as parameters to the report.
 -- @param emitte, the sending agent
 -- @param id the identifier of the message
--- @return Boolean, error code
 integration.reportWithSource = function( emitter, id, ... )
     if tableRC[id] then 
         return RC_WithParams( tableRC[id], type_rc, id, {...}, emitter )
@@ -205,7 +203,7 @@ end
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the identifier of the message
--- @param lis, the Simulation Object knowledge parameter
+-- @param list the Simulation Object knowledge parameter
 integration.RC_ObjectKnowledge = function( myself, typeMessage, id, list )
     DEC_RC_ObjectKnowledge( myself, typeMessage, id, list )
 end
