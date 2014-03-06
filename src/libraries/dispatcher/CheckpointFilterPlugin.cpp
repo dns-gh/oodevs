@@ -9,13 +9,13 @@
 
 #include "dispatcher_pch.h"
 #include "CheckpointFilterPlugin.h"
-#include "AuthenticatedLinkResolver_ABC.h"
+#include "LinkResolver_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Simulation.h"
 
 using namespace dispatcher;
 
-CheckpointFilterPlugin::CheckpointFilterPlugin( const AuthenticatedLinkResolver_ABC& resolver )
+CheckpointFilterPlugin::CheckpointFilterPlugin( const LinkResolver_ABC& resolver )
     : resolver_( resolver )
     , checkpointInProgress_( false )
     , client_( 0 )

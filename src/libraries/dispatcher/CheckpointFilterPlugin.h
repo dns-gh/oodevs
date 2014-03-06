@@ -14,13 +14,13 @@
 
 namespace dispatcher
 {
-class AuthenticatedLinkResolver_ABC;
+class LinkResolver_ABC;
 class ClientPublisher_ABC;
 
 class CheckpointFilterPlugin: public PluginContainer
 {
 public:
-    explicit CheckpointFilterPlugin( const AuthenticatedLinkResolver_ABC& resolver );
+    explicit CheckpointFilterPlugin( const LinkResolver_ABC& resolver );
     virtual ~CheckpointFilterPlugin();
 
     virtual void NotifySimulationLeft();
@@ -30,7 +30,7 @@ private:
     void Reset();
 
 private:
-    const AuthenticatedLinkResolver_ABC& resolver_;
+    const LinkResolver_ABC& resolver_;
     bool checkpointInProgress_;
     ClientPublisher_ABC* client_;
 };

@@ -56,7 +56,7 @@ PluginFactory::PluginFactory( const Config& config, const boost::shared_ptr< Mod
     , registrables_( registrables )
     , rights_      ( new plugins::rights::RightsPlugin( *model_, *clients_,
         config_, *clients_, rootHandler_, *clients_, registrables, maxConnections ) )
-    , checkpointFilter_( new CheckpointFilterPlugin( *rights_ ) )
+    , checkpointFilter_( new CheckpointFilterPlugin( *clients_ ) )
     , pOrder_      ( new plugins::order::OrderPlugin( config_, *model_, simulation_ ) )
     , services_    ( services )
 {
@@ -77,7 +77,7 @@ PluginFactory::PluginFactory( const Config& config, const boost::shared_ptr< Mod
     // Vision plugin prevents vision cones from reaching ClientsNetworker and
     // being broadcast.
     auto vision = boost::make_shared< vision::VisionPlugin >( *model_, *clients_,
-            simulation_, *rights_ );
+            simulation_, *clients_ );
     checkpointFilter_->Add( vision );
     vision->Add( clients_ );
 
@@ -112,7 +112,7 @@ void PluginFactory::Instanciate()
     checkpointFilter_->Add( boost::make_shared< messenger::MessengerPlugin >(
                 *clients_, *clients_, *clients_, config_, registrables_ ) );
     checkpointFilter_->Add( boost::make_shared< script::ScriptPlugin >(
-                *model_, config_, simulation_, *clients_, *clients_, *rights_, registrables_ ) );
+                *model_, config_, simulation_, *clients_, *clients_, *clients_, registrables_ ) );
     checkpointFilter_->Add( boost::make_shared< score::ScorePlugin >(
                 *clients_, *clients_, *clients_, config_, registrables_ ) );
     checkpointFilter_->Add( boost::make_shared< logger::LoggerPlugin >( *model_,
@@ -244,7 +244,7 @@ void PluginFactory::LoadPlugin( const tools::Path& name, xml::xistream& xis )
 
 void PluginFactory::Receive( const std::string& link, const sword::ClientToSim& msg )
 {
-    dispatcher::UnicastPublisher unicaster( rights_->GetAuthenticatedPublisher( link ), link,
-            rights_->GetClientID( link ), msg.context() );
+    dispatcher::UnicastPublisher unicaster( clients_->GetAuthenticatedPublisher( link ), link,
+            clients_->GetClientID( link ), msg.context() );
     rootHandler_.HandleClientToSim( msg, unicaster, *clients_ );
 }

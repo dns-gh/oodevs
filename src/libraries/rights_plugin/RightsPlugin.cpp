@@ -116,7 +116,8 @@ void RightsPlugin::Receive( const sword::SimToClient& message )
 // Name: RightsPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& /*link*/, Profile_ABC& /*profile*/, bool /*uncounted*/ )
+void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& /*link*/,
+                                              Profile_ABC& /*profile*/, unsigned int /*clientId*/, bool /*uncounted*/ )
 {
     profiles_->Send( client );
 }
@@ -135,17 +136,11 @@ void RightsPlugin::Logout( ClientPublisher_ABC& client )
     for( auto it = authenticated_.begin(); it != authenticated_.end(); ++it )
     {
         const std::string link = it->first;
-        if( &GetAuthenticatedPublisher( link ) == &client )
+        if( &resolver_.GetAuthenticatedPublisher( link ) == &client )
         {
             authenticated_.erase( it );
             if( silentClients_.erase( link ) == 0 )
                 --currentConnections_;
-            auto id = clientsID_.find( link );
-            if( id != clientsID_.end() )
-            {
-                ids_.erase( id->second );
-                clientsID_.erase( id );
-            }
             AuthenticationSender sender( client, clients_, 0 );
             SendProfiles( sender );
             MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
@@ -306,14 +301,12 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         reply.set_client_id( countID_ );
         sender.Send( reply );
         authenticated_[ link ] = profile;
-        clientsID_[ link ] = countID_;
-        ids_[ countID_ ] = link;
         if( keyAuthenticated )
             silentClients_.insert( link );
         else
             ++currentConnections_;
         SendProfiles( sender );
-        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, keyAuthenticated );
+        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, countID_, keyAuthenticated );
         ++countID_;
         if( !countID_ )
             ++countID_;
@@ -382,7 +375,7 @@ void RightsPlugin::OnReceiveConnectedProfilesRequest( const sword::ConnectedProf
 // -----------------------------------------------------------------------------
 void RightsPlugin::SendReponse( sword::AuthenticationToClient& reply, AuthenticationSender& sender, const std::string& link ) const
 {
-    if( unsigned int id = GetClientID( link ) )
+    if( unsigned int id = resolver_.GetClientID( link ) )
         reply.set_client_id( id );
     sender.Send( reply );
 }
@@ -413,34 +406,6 @@ Profile_ABC& RightsPlugin::GetProfile( const std::string& link ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RightsPlugin::GetPublisher
-// Created: AGE 2007-08-24
-// -----------------------------------------------------------------------------
-
-namespace
-{
-
-NullClientPublisher nullPublisher;
-
-}  // namespace
-
-ClientPublisher_ABC& RightsPlugin::GetAuthenticatedPublisher( const std::string& link ) const
-{
-    auto it = authenticated_.find( link );
-    if( it != authenticated_.end() )
-        return resolver_.GetConnectedPublisher( link );
-    return nullPublisher;
-}
-
-ClientPublisher_ABC& RightsPlugin::GetAuthenticatedPublisher( unsigned int clientId ) const
-{
-   auto it = ids_.find( clientId );
-   if( it != ids_.end() )
-       return resolver_.GetConnectedPublisher( it->second );
-   return nullPublisher;
-}
-
-// -----------------------------------------------------------------------------
 // Name: RightsPlugin::SendProfiles
 // Created: LGY 2011-11-21
 // -----------------------------------------------------------------------------
@@ -451,18 +416,6 @@ void RightsPlugin::SendProfiles( AuthenticationSender& sender ) const
     for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
         it->second->Send( *response );
     sender.Broadcast( reply );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RightsPlugin::GetClientID
-// Created: LGY 2013-04-24
-// -----------------------------------------------------------------------------
-unsigned int RightsPlugin::GetClientID( const std::string& link ) const
-{
-    auto it = clientsID_.find( link );
-    if( it != clientsID_.end() )
-        return it->second;
-    return 0u;
 }
 
 }  // namespace rights

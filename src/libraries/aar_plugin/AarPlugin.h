@@ -31,7 +31,7 @@ namespace dispatcher
 {
     class Config;
     class MessageLoader;
-    class AuthenticatedLinkResolver_ABC;
+    class LinkResolver_ABC;
 }
 
 namespace aar
@@ -55,7 +55,7 @@ class AarPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AarPlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::AuthenticatedLinkResolver_ABC& resolver, const dispatcher::Config& config );
+             AarPlugin( tools::MessageDispatcher_ABC& dispatcher, const dispatcher::LinkResolver_ABC& resolver, const dispatcher::Config& config );
     virtual ~AarPlugin();
     //@}
 
@@ -64,7 +64,7 @@ public:
     virtual void Receive( const sword::SimToClient& message );
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& link,
-                                            dispatcher::Profile_ABC& profile, bool uncounted );
+                                            dispatcher::Profile_ABC& profile, unsigned int clientId, bool uncounted );
 
     virtual void Register( dispatcher::Services& services );
     //@}
@@ -85,7 +85,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::AuthenticatedLinkResolver_ABC& resolver_;
+    const dispatcher::LinkResolver_ABC& resolver_;
     std::auto_ptr< dispatcher::MessageLoader > messages_;
     std::auto_ptr< ::aar::StaticModel > model_;
     //@}

@@ -100,7 +100,7 @@ void ScorePlugin::OnReceive( const std::string& client, const sword::ClientToAar
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
 void ScorePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& /*link*/,
-                                             dispatcher::Profile_ABC& profile, bool /*uncounted*/ )
+                                             dispatcher::Profile_ABC& profile, unsigned int /*clientId*/, bool /*uncounted*/ )
 {
     scores_->SendInformation( client, profile );
 }

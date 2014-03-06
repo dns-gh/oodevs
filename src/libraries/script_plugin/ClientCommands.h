@@ -15,7 +15,7 @@
 namespace dispatcher
 {
     class ClientPublisher_ABC;
-    class AuthenticatedLinkResolver_ABC;
+    class LinkResolver_ABC;
 }
 
 namespace xml
@@ -38,7 +38,7 @@ class ClientCommands : public dispatcher::Registrable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientCommands( dispatcher::ClientPublisher_ABC& clients, dispatcher::AuthenticatedLinkResolver_ABC& resolver );
+             ClientCommands( dispatcher::ClientPublisher_ABC& clients, const dispatcher::LinkResolver_ABC& resolver );
     virtual ~ClientCommands();
     //@}
 
@@ -65,7 +65,7 @@ private:
     //! @name Member data
     //@{
     dispatcher::ClientPublisher_ABC& clients_;
-    dispatcher::AuthenticatedLinkResolver_ABC& resolver_;
+    const dispatcher::LinkResolver_ABC& resolver_;
     //@}
 };
 
