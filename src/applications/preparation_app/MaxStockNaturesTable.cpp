@@ -134,7 +134,7 @@ namespace
 // Name: MaxStockNaturesTable::Update
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void MaxStockNaturesTable::Update( const LogisticEditor::T_Requirements& requirements, std::set< std::string >& allowedNatures )
+void MaxStockNaturesTable::Update( const std::map< const kernel::DotationType*, unsigned int >& requirements, std::set< std::string >& allowedNatures )
 {
     dataModel_->clear();
     InitHeader();

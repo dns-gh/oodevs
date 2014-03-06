@@ -97,7 +97,7 @@ namespace
         }
     }
 
-    void ComputeInitStocks( const kernel::Entity_ABC& entity, LogisticEditor::T_Requirements& requirements )
+    void ComputeInitStocks( const kernel::Entity_ABC& entity, std::map< const kernel::DotationType*, unsigned int >& requirements )
     {
         std::vector< const kernel::Agent_ABC* > stocks;
         if( auto pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
@@ -130,7 +130,7 @@ namespace
 // -----------------------------------------------------------------------------
 void StockResourcesTable::UpdateInitStocks( const kernel::Entity_ABC& entity )
 {
-    LogisticEditor::T_Requirements initialStocks;
+    std::map< const kernel::DotationType*, unsigned int > initialStocks;
     ComputeInitStocks( entity, initialStocks );
     UpdateStocks( initialStocks );
 }
@@ -139,7 +139,7 @@ void StockResourcesTable::UpdateInitStocks( const kernel::Entity_ABC& entity )
 // Name: StockResourcesTable::UpdateStocks
 // Created: JSR 2014-03-04
 // -----------------------------------------------------------------------------
-void StockResourcesTable::UpdateStocks( const LogisticEditor::T_Requirements& stocks )
+void StockResourcesTable::UpdateStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks )
 {
     Disconnect();
     OnClearItems();
@@ -196,7 +196,7 @@ bool StockResourcesTable::IsStockValid( const kernel::Agent_ABC& stockUnit, cons
 // Name: StockResourcesTable::ComputeStockWeightVolumeLeft
 // Created: JSR 2014-03-04
 // -----------------------------------------------------------------------------
-void StockResourcesTable::ComputeStockWeightVolumeLeft( const kernel::Agent_ABC& stockUnit, std::string nature, MaxStockNaturesTable::WeightVolume& result ) const
+void StockResourcesTable::ComputeStockWeightVolumeLeft( const kernel::Agent_ABC& stockUnit, const std::string& nature, double& weightResult, double& volumeResult ) const
 {
     const kernel::Resolver2< kernel::EquipmentType >& equipments = staticModel_.objectTypes_;
     if( !stockUnit.GetType().IsLogisticSupply() )
@@ -204,7 +204,8 @@ void StockResourcesTable::ComputeStockWeightVolumeLeft( const kernel::Agent_ABC&
     auto pStocks = stockUnit.Retrieve< Stocks >();
     if( !pStocks )
         return;
-    MaxStockNaturesTable::WeightVolume maxCapacity;
+    double maxWeight = 0;
+    double maxVolume = 0;
     tools::Iterator< const kernel::AgentComposition& > itComposition = stockUnit.GetType().CreateIterator();
     while( itComposition.HasMoreElements() )
     {
@@ -216,19 +217,18 @@ void StockResourcesTable::ComputeStockWeightVolumeLeft( const kernel::Agent_ABC&
             unsigned int nEquipments = agentComposition. GetCount();
             if( nature == carrying->stockNature_ )
             {
-                maxCapacity.weight_ += nEquipments * carrying->stockMaxWeightCapacity_;
-                maxCapacity.volume_ += nEquipments * carrying->stockMaxVolumeCapacity_;
+                maxWeight += nEquipments * carrying->stockMaxWeightCapacity_;
+                maxVolume += nEquipments * carrying->stockMaxVolumeCapacity_;
             }
         }
     }
-    MaxStockNaturesTable::WeightVolume usedCapacity;
     double weightUsed = 0;
     double volumeUsed = 0;
     pStocks->ComputeWeightAndVolume( nature, weightUsed, volumeUsed );
-    if( weightUsed < maxCapacity.weight_ )
-        result.weight_ = maxCapacity.weight_ - weightUsed;
-    if( volumeUsed < maxCapacity.volume_ )
-        result.volume_ = maxCapacity.volume_ - volumeUsed;
+    if( weightUsed < maxWeight )
+        weightResult = maxWeight - weightUsed;
+    if( volumeUsed < maxVolume )
+        volumeResult = maxVolume - volumeUsed;
 }
 
 // -----------------------------------------------------------------------------
@@ -239,7 +239,7 @@ void StockResourcesTable::SupplyStocks( kernel::Entity_ABC& entity ) const
 {
     // TODO CLEAN!!!
 
-    LogisticEditor::T_Requirements requirements;
+    std::map< const kernel::DotationType*, unsigned int > requirements;
     ComputeValueByDotation( requirements );
 
     if( auto pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
@@ -261,7 +261,7 @@ void StockResourcesTable::SupplyStocks( kernel::Entity_ABC& entity ) const
         FindStocks( entity , entity, stocks );
         CleanStocks( stocks );
 
-        LogisticEditor::T_Requirements dotationToStocks( requirements );
+        std::map< const kernel::DotationType*, unsigned int > dotationToStocks( requirements );
         for( auto itRequired = dotationToStocks.begin(); itRequired != dotationToStocks.end(); ++itRequired )
         {
             const kernel::DotationType& dotationType = *itRequired->first;
@@ -275,14 +275,15 @@ void StockResourcesTable::SupplyStocks( kernel::Entity_ABC& entity ) const
                     continue;
                 if( !IsStockValid( curStock, dotationType ) )
                     continue;
-                MaxStockNaturesTable::WeightVolume stockLeft;
-                ComputeStockWeightVolumeLeft( **it, dotationType.GetNature(), stockLeft );
+                double stockLeftWeight = 0;
+                double stockLeftVolume = 0;
+                ComputeStockWeightVolumeLeft( **it, dotationType.GetNature(), stockLeftWeight, stockLeftVolume );
                 unsigned int maxQuantityForWeight = itRequired->second;
                 if( dotationType.GetUnitWeight() > 0 )
-                    maxQuantityForWeight = static_cast< unsigned int >( stockLeft.weight_ / dotationType.GetUnitWeight() );
+                    maxQuantityForWeight = static_cast< unsigned int >( stockLeftWeight / dotationType.GetUnitWeight() );
                 unsigned int maxQuantityForVolume = itRequired->second;
                 if( dotationType.GetUnitVolume() > 0 )
-                    maxQuantityForVolume = static_cast< unsigned int >( stockLeft.volume_ / dotationType.GetUnitVolume() );
+                    maxQuantityForVolume = static_cast< unsigned int >( stockLeftVolume / dotationType.GetUnitVolume() );
                 unsigned int q = std::min( itRequired->second, std::min( maxQuantityForWeight, maxQuantityForVolume ) );
                 pStocks->SetDotation( dotationType, q, true );
                 itRequired->second = std::max( 0u, itRequired->second - q );
@@ -290,7 +291,7 @@ void StockResourcesTable::SupplyStocks( kernel::Entity_ABC& entity ) const
         }
 
         bool bDotationsToStockLeft = false;
-        LogisticEditor::T_Requirements stocksByDotation;
+        std::map< const kernel::DotationType*, unsigned int > stocksByDotation;
         for( auto itRequired = dotationToStocks.begin(); itRequired != dotationToStocks.end(); ++itRequired )
         {
             const kernel::DotationType& dotationType = *itRequired->first;
@@ -303,7 +304,7 @@ void StockResourcesTable::SupplyStocks( kernel::Entity_ABC& entity ) const
         if( !bDotationsToStockLeft )
             return;
 
-        LogisticEditor::T_Requirements meansDotationsByStock;
+        std::map< const kernel::DotationType*, unsigned int > meansDotationsByStock;
         for( auto it = stocksByDotation.begin(); it != stocksByDotation.end(); ++it )
         {
             double quantityLeft = dotationToStocks[ it->first ];

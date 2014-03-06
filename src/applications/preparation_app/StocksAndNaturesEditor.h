@@ -10,8 +10,11 @@
 #ifndef _StocksAndNaturesEditor_h
 #define _StocksAndNaturesEditor_h
 
-// todo Put typedef elsewhere to remove include
-#include "LogisticEditor.h"
+namespace kernel
+{
+    class DotationType;
+    class Entity_ABC;
+}
 
 class MaxStockNaturesTable;
 class StockResourcesTable;
@@ -45,7 +48,7 @@ private slots:
     //! @name Slots
     //@{
     void NotifyStocksUserChange();
-    void NotifyAutomaticStocks( const LogisticEditor::T_Requirements& stocks );
+    void NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks );
     //@}
 
 private:

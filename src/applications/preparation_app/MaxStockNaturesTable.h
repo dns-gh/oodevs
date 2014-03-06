@@ -12,7 +12,6 @@
 
 #include "clients_gui/RichWidget.h"
 #include "clients_kernel/Resolver2.h"
-#include "LogisticEditor.h" // todo à virer
 
 namespace gui
 {
@@ -22,6 +21,7 @@ namespace gui
 namespace kernel
 {
     class Agent_ABC;
+    class DotationType;
     class Entity_ABC;
     class EquipmentType;
 }
@@ -44,25 +44,25 @@ public:
     //@}
 
 public:
+    //! @name Operations
+    //@{
+    virtual void InitHeader();
+    void UpdateMaxStocks( const kernel::Entity_ABC& entity );
+    void Update( const std::map< const kernel::DotationType*, unsigned int >& requirements, std::set< std::string >& allowedNatures );
+    //@}
+
+private:
     //! @name Types
     //@{
     struct WeightVolume
     {
-         WeightVolume() : weight_( 0 ), volume_( 0 ) {}
+        WeightVolume() : weight_( 0 ), volume_( 0 ) {}
         ~WeightVolume() {}
 
         double weight_;
         double volume_;
     };
     typedef std::map< std::string, WeightVolume > T_WeightVolumes;
-    //@}
-
-public:
-    //! @name Operations
-    //@{
-    virtual void InitHeader();
-    void UpdateMaxStocks( const kernel::Entity_ABC& entity );
-    void Update( const LogisticEditor::T_Requirements& requirements, std::set< std::string >& allowedNatures );
     //@}
 
 private:

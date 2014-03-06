@@ -52,6 +52,12 @@ public:
     //@}
 
 public:
+    //! @name Operations
+    //@{
+    void Show( const kernel::Entity_ABC& entity );
+    //@}
+
+protected:
     //! @name Types
     //@{
     typedef std::map< const kernel::DotationType*, unsigned int > T_Requirements;
@@ -61,12 +67,6 @@ public:
         eCategory,
         eDays
     };
-    //@}
-
-public:
-    //! @name Operations
-    //@{
-    void Show( const kernel::Entity_ABC& entity );
     //@}
 
 protected:

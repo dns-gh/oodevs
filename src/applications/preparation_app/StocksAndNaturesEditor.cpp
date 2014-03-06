@@ -69,7 +69,7 @@ void StocksAndNaturesEditor::SupplyStocks( kernel::Entity_ABC& entity ) const
 // Name: StocksAndNaturesEditor::NotifyAutomaticStocks
 // Created: JSR 2014-03-04
 // -----------------------------------------------------------------------------
-void StocksAndNaturesEditor::NotifyAutomaticStocks( const LogisticEditor::T_Requirements& stocks )
+void StocksAndNaturesEditor::NotifyAutomaticStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks )
 {
     stocksTableView_->UpdateStocks( stocks );
 }
@@ -80,7 +80,7 @@ void StocksAndNaturesEditor::NotifyAutomaticStocks( const LogisticEditor::T_Requ
 // -----------------------------------------------------------------------------
 void StocksAndNaturesEditor::NotifyStocksUserChange()
 {
-    LogisticEditor::T_Requirements dotations;
+    std::map< const kernel::DotationType*, unsigned int > dotations;
     stocksTableView_->ComputeValueByDotation( dotations );
     std::set< std::string > allowedNatures;
     maxStocksTableView_->Update( dotations, allowedNatures );

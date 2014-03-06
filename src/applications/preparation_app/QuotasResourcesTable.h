@@ -10,7 +10,6 @@
 #ifndef _QuotasResourcesTable_h
 #define _QuotasResourcesTable_h
 
-#include "LogisticEditor.h" // todo for typedef
 #include "ResourcesEditorTable_ABC.h"
 
 // =============================================================================
@@ -32,7 +31,7 @@ public:
 public:
     //! @name Operations
     //@{
-    void SetQuotas( const LogisticEditor::T_Requirements& stocks );
+    void SetQuotas( const std::map< const kernel::DotationType*, unsigned int >& stocks );
     //@}
 };
 

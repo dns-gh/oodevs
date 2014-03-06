@@ -12,11 +12,9 @@
 
 #include "ResourcesEditorTable_ABC.h"
 
-#include "MaxStockNaturesTable.h" // pour typedef, à virer
-#include "LogisticEditor.h" // à virer
-
 namespace kernel
 {
+    class Agent_ABC;
     class Entity_ABC;
 }
 
@@ -42,7 +40,7 @@ public:
     //! @name Operations
     //@{
     void UpdateInitStocks( const kernel::Entity_ABC& entity );
-    void UpdateStocks( const LogisticEditor::T_Requirements& stocks );
+    void UpdateStocks( const std::map< const kernel::DotationType*, unsigned int >& stocks );
     void SupplyStocks( kernel::Entity_ABC& entity ) const;
     virtual void AddResource( const kernel::DotationType& resource, int value = 0 );
     virtual void UpdateLine( int row, int value );
@@ -50,11 +48,13 @@ public:
     void SetAllowedNatures( const std::set< std::string >& allowedNatures );
     //@}
 
-
 private:
-    void ComputeStockWeightVolumeLeft( const kernel::Agent_ABC& stockUnit, std::string nature, MaxStockNaturesTable::WeightVolume& result ) const;
+    //! @name Helpers
+    //@{
+    void ComputeStockWeightVolumeLeft( const kernel::Agent_ABC& stockUnit, const std::string& nature, double& weightResult, double& volumeResult ) const;
     void CleanStocks( std::vector< const kernel::Agent_ABC* >& entStocks ) const;
     bool IsStockValid( const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation ) const;
+    //@}
 
 private:
     //! @name Member data

@@ -46,7 +46,7 @@ QuotasResourcesTable::~QuotasResourcesTable()
 // Name: QuotasResourcesTable::SetQuotas
 // Created: JSR 2014-03-05
 // -----------------------------------------------------------------------------
-void QuotasResourcesTable::SetQuotas( const LogisticEditor::T_Requirements& stocks )
+void QuotasResourcesTable::SetQuotas( const std::map< const kernel::DotationType*, unsigned int >& stocks )
 {
     Disconnect();
     OnClearItems();

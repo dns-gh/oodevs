@@ -10,8 +10,19 @@
 #ifndef _QuotasEditor_h
 #define _QuotasEditor_h
 
-#include "LogisticEditor.h" // todo for typedef
 #include "tools/Resolver.h"
+
+namespace gui
+{
+    class LogisticHierarchiesBase;
+}
+
+namespace kernel
+{
+    class DotationType;
+    class Entity_ABC;
+    class LogisticSupplyClass;
+}
 
 class QuotasResourcesTable;
 class StaticModel;
@@ -43,14 +54,14 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ApplyQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const LogisticEditor::T_Requirements& generatedQuotas ) const;
+    void ApplyQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const std::map< const kernel::DotationType*, unsigned int >& generatedQuotas ) const;
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void NotifyQuotasUserChange();
-    void NotifyAutomaticQuotas( const LogisticEditor::T_RequirementsMap& quotas );
+    void NotifyAutomaticQuotas( const std::map< const kernel::Entity_ABC*, std::map< const kernel::DotationType*, unsigned int > >& quotas );
     void OnSubordinateChanged( int i );
     //@}
 
@@ -60,7 +71,7 @@ private:
     const tools::StringResolver< kernel::LogisticSupplyClass >& supplyClasses_;
     QComboBox* subordinateCombo_;
     QuotasResourcesTable* quotasTableView_;
-    std::map< const kernel::Entity_ABC*, LogisticEditor::T_Requirements > quotasByEntity_;
+    std::map< const kernel::Entity_ABC*, std::map< const kernel::DotationType*, unsigned int > > quotasByEntity_;
     //@}
 };
 

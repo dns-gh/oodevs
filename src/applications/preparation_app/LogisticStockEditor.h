@@ -32,7 +32,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void DotationsStocksComputed( const LogisticEditor::T_Requirements& );
+    void DotationsStocksComputed( const std::map< const kernel::DotationType*, unsigned int >& );
     //@}
 
 private:

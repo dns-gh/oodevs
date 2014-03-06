@@ -96,7 +96,7 @@ void QuotasEditor::Initialize( const kernel::Entity_ABC& entity )
 // Name: QuotasEditor::ApplyQuotas
 // Created: JSR 2014-03-05
 // -----------------------------------------------------------------------------
-void QuotasEditor::ApplyQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const LogisticEditor::T_Requirements& generatedQuotas ) const
+void QuotasEditor::ApplyQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const std::map< const kernel::DotationType*, unsigned int >& generatedQuotas ) const
 {
     const LogisticBaseStates* pBaseStates = dynamic_cast< const LogisticBaseStates* >( &logHierarchy );
     if( !pBaseStates )
@@ -149,7 +149,7 @@ void QuotasEditor::NotifyQuotasUserChange()
 // Name: QuotasEditor::NotifyAutomaticQuotas
 // Created: JSR 2014-03-05
 // -----------------------------------------------------------------------------
-void QuotasEditor::NotifyAutomaticQuotas( const LogisticEditor::T_RequirementsMap& quotas )
+void QuotasEditor::NotifyAutomaticQuotas( const std::map< const kernel::Entity_ABC*, std::map< const kernel::DotationType*, unsigned int > >& quotas )
 {
     quotasByEntity_.clear();
     for( auto it = quotas.begin(); it != quotas.end(); ++it )
