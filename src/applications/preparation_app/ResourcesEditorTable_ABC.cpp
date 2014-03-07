@@ -27,14 +27,18 @@ ResourcesEditorTable_ABC::ResourcesEditorTable_ABC( const QStringList& headers, 
     , headers_( headers )
     , dotations_( dotationsType )
 {
-    dataModel_  = new QStandardItemModel( parent );
-    gui::CommonDelegate* delegate = new gui::CommonDelegate( parent );
+    dataModel_  = new QStandardItemModel( this );
+    QSortFilterProxyModel* proxyModel = new QSortFilterProxyModel( this );
+    proxyModel->setSourceModel( dataModel_ );
+    proxyModel->setSortRole( Qt::UserRole + 1 );
+    gui::CommonDelegate* delegate = new gui::CommonDelegate( this );
 
-    setModel( dataModel_ );
+    setModel( proxyModel );
     setItemDelegate( delegate );
     setAlternatingRowColors( true );
     setSelectionMode( SingleSelection );
     setSelectionBehavior( SelectRows );
+    setSortingEnabled( true );
     verticalHeader()->hide();
 
     Connect();
@@ -172,10 +176,10 @@ void ResourcesEditorTable_ABC::AddResource( const kernel::DotationType& resource
     const int newRowIndex = dataModel_->rowCount();
     dataModel_->setRowCount( newRowIndex + 1 );
     const int lastColumn = dataModel_->columnCount() - 1;
-    SetData( newRowIndex, 0, QString::fromStdString( resource.GetName() ) );
-    SetData( newRowIndex, 0, QVariant::fromValue( &resource ), Qt::UserRole );
-    SetData( newRowIndex, lastColumn, value );
-    SetData( newRowIndex, lastColumn, value, Qt::UserRole, Qt::AlignRight | Qt::AlignVCenter );
+    const QString resourceName = resource.GetName().c_str();
+    SetData( newRowIndex, 0, resourceName, true );
+    SetData( newRowIndex, 0, QVariant::fromValue( &resource ), false, Qt::UserRole );
+    SetData( newRowIndex, lastColumn, value, true, Qt::DisplayRole, Qt::AlignRight | Qt::AlignVCenter );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,9 +214,11 @@ void ResourcesEditorTable_ABC::CustomizeMenuAction( QAction* /*action*/, const k
 // Name: ResourcesEditorTable_ABC::SetData
 // Created: JSR 2014-03-03
 // -----------------------------------------------------------------------------
-void ResourcesEditorTable_ABC::SetData( int row, int col, const QVariant& value, int role /* = Qt::DisplayRole */, Qt::Alignment aligment /* = 0 */ )
+void ResourcesEditorTable_ABC::SetData( int row, int col, const QVariant& value, bool isSortType /* = false */, int role /* = Qt::DisplayRole */, Qt::Alignment aligment /* = 0 */ )
 {
     dataModel_->setData( dataModel_->index( row, col ), value, role );
+    if( isSortType && role != Qt::UserRole + 1 )
+        dataModel_->setData( dataModel_->index( row, col ), value, Qt::UserRole + 1 );
     if( aligment )
         dataModel_->item( row, col )->setTextAlignment( aligment );
 }
@@ -235,5 +241,5 @@ int ResourcesEditorTable_ABC::GetValue( int row ) const
 {
     if( dataModel_->columnCount() < 2 )
         return 0;
-    return dataModel_->item( row, dataModel_->columnCount() - 1 )->data( Qt::UserRole ).toInt();
+    return dataModel_->item( row, dataModel_->columnCount() - 1 )->data( Qt::DisplayRole ).toInt();
 }

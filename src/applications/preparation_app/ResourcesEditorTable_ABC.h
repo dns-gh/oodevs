@@ -74,7 +74,7 @@ protected:
     //! @name Helpers
     //@{
     virtual void CustomizeMenuAction( QAction* action, const kernel::DotationType& actionDotation ) const;
-    void SetData( int row, int col, const QVariant& value, int role = Qt::DisplayRole, Qt::Alignment aligment = 0 );
+    void SetData( int row, int col, const QVariant& value, bool isSortType = false, int role = Qt::DisplayRole, Qt::Alignment aligment = 0 );
     const kernel::DotationType* GetDotation( int row ) const;
     int GetValue( int row ) const;
 

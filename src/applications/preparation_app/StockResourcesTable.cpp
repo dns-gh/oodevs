@@ -65,8 +65,8 @@ StockResourcesTable::~StockResourcesTable()
 void StockResourcesTable::UpdateLine( int row, int value )
 {
     const kernel::DotationType* pDotation = GetDotation( row );
-    SetData( row, 2, QString::number( value * pDotation->GetUnitWeight(), 'f', 2 ) );
-    SetData( row, 3, QString::number( value * pDotation->GetUnitVolume(), 'f', 2 ) );
+    SetData( row, 2, QString::number( value * pDotation->GetUnitWeight(), 'f', 2 ), true );
+    SetData( row, 3, QString::number( value * pDotation->GetUnitVolume(), 'f', 2 ), true );
 }
 
 namespace
@@ -259,9 +259,13 @@ void StockResourcesTable::AddResource( const kernel::DotationType& resource, int
 {
     ResourcesEditorTable_ABC::AddResource( resource, value );
     const int rowIndex = model()->rowCount() - 1;
-    SetData( rowIndex, 1, QString::fromStdString( resource.GetNature() ) );
-    SetData( rowIndex, 2, QString::number( value * resource.GetUnitWeight(), 'f', 2 ), Qt::DisplayRole, Qt::AlignRight | Qt::AlignVCenter );
-    SetData( rowIndex, 3, QString::number( value * resource.GetUnitVolume(), 'f', 2 ), Qt::DisplayRole, Qt::AlignRight | Qt::AlignVCenter );
+    const double weight = value * resource.GetUnitWeight();
+    const double volume = value * resource.GetUnitVolume();
+    SetData( rowIndex, 1, QString::fromStdString( resource.GetNature() ) , true);
+    SetData( rowIndex, 2, QString::number( weight, 'f', 2 ) );
+    SetData( rowIndex, 2, weight, true, Qt::UserRole + 1, Qt::AlignRight | Qt::AlignVCenter );
+    SetData( rowIndex, 3, QString::number( volume, 'f', 2 ) );
+    SetData( rowIndex, 3, volume, true, Qt::UserRole + 1, Qt::AlignRight | Qt::AlignVCenter );
 }
 
 // -----------------------------------------------------------------------------

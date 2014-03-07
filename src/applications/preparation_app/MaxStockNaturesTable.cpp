@@ -29,12 +29,16 @@ MaxStockNaturesTable::MaxStockNaturesTable( const QString& objectName, QWidget* 
     , equipments_( equipmentTypes )
 {
     dataModel_  = new QStandardItemModel( parent );
+    QSortFilterProxyModel* proxyModel = new QSortFilterProxyModel( this );
+    proxyModel->setSourceModel( dataModel_ );
+    proxyModel->setSortRole( Qt::UserRole + 1 );
     gui::CommonDelegate* delegate = new gui::CommonDelegate( parent );
 
-    setModel( dataModel_ );
+    setModel( proxyModel );
     setItemDelegate( delegate );
     setAlternatingRowColors( true );
     setSelectionMode( NoSelection );
+    setSortingEnabled( true );
     verticalHeader()->hide();
     InitHeader();
 }
@@ -123,9 +127,10 @@ namespace
     QStandardItem* CreateItem( double value, bool red )
     {
         QStandardItem* item = new QStandardItem( QString::number( value, 'f', 2 ) );
+        item->setData( value );
+        item->setTextAlignment( Qt::AlignRight | Qt::AlignVCenter );
         if( red )
             item->setForeground( Qt::red );
-        item->setTextAlignment( Qt::AlignRight | Qt::AlignVCenter );
         return item;
     }
 }
@@ -158,7 +163,9 @@ void MaxStockNaturesTable::Update( const std::map< const kernel::DotationType*, 
         if( itMax != maxValues_.end() )
             maxValues = itMax->second;
         const bool red = IsMaxExceeded( it->first, it->second );
-        QStandardItem* dotationItem = new QStandardItem( it->first.c_str() );
+        const QString name = it->first.c_str();
+        QStandardItem* dotationItem = new QStandardItem( name );
+        dotationItem->setData( name );
         if( red )
             dotationItem->setForeground( Qt::red );
         dataModel_->appendRow( QList< QStandardItem* >()
