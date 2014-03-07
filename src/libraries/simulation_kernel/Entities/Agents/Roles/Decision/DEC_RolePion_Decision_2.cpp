@@ -64,6 +64,7 @@
 #include "Entities/Agents/Actions/Emergency/PHY_ActionTriggerActivityInArea.h"
 #include "Entities/Agents/Actions/Emergency/PHY_ActionUnloadActivity.h"
 #include "Entities/Agents/Actions/Underground/PHY_ActionMoveUnderground.h"
+#include "MIL_Time_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::RegisterUserArchetypeFunctions
@@ -733,7 +734,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_StartConsumingResources",
         boost::function< unsigned( const PHY_DotationCategory*, double, double ) >(
             [&]( const PHY_DotationCategory* category, double value, double duration ) {
-                return DEC_ActionFunctions::StartAction< PHY_ActionConsumeResources >( GetPion(), category, value, duration );
+                return DEC_ActionFunctions::StartAction< PHY_ActionConsumeResources >( GetPion(), category, value, duration, MIL_Time_ABC::GetTime().GetTickDuration() );
     }));
 
     // Transport / Heliportage

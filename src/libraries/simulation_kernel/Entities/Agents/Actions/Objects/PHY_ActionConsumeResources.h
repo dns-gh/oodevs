@@ -31,7 +31,8 @@ public:
     // from entity and selected dotation category
     PHY_ActionConsumeResources( MIL_Entity_ABC& entity,
                                 const PHY_DotationCategory* category,
-                                double value, double duration );
+                                double value, double duration,
+                                unsigned tickDuration );
     virtual ~PHY_ActionConsumeResources();
 
     virtual void Execute();

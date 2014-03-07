@@ -9,7 +9,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionConsumeResources.h"
 
-#include "MIL_Time_ABC.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 
@@ -22,10 +21,9 @@ namespace
         return *category;
     }
 
-    int GetSteps( double duration )
+    int GetSteps( double duration, unsigned tickDuration )
     {
-        const auto ticks = MIL_Time_ABC::GetTime().GetTickDuration();
-        return static_cast< int >( floor( duration / ticks + 0.5 ) );
+        return static_cast< int >( floor( duration / tickDuration + 0.5 ) );
     }
 
     double GetOffset( const dotation::PHY_RoleInterface_Dotations& dotations,
@@ -40,11 +38,12 @@ namespace
 
 PHY_ActionConsumeResources::PHY_ActionConsumeResources( MIL_Entity_ABC& unit,
                                                         const PHY_DotationCategory* category,
-                                                        double value, double duration )
+                                                        double value, double duration,
+                                                        unsigned tickDuration )
     : PHY_Action_ABC()
     , dotations_    ( unit.GetRole< dotation::PHY_RoleInterface_Dotations >() )
     , category_     ( GetCategory( category ) )
-    , steps_        ( GetSteps( duration ) )
+    , steps_        ( GetSteps( duration, tickDuration ) )
     , offset_       ( GetOffset( dotations_, category_, value, steps_ ) )
 {
     // NOTHING
