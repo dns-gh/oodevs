@@ -51,18 +51,27 @@ func (model *ModelData) handleControlSendCurrentStateEnd(m *sword.SimToClient_Co
 	return nil
 }
 
+type tickMessage interface {
+	GetDateTime() *sword.DateTime
+	GetCurrentTick() int32
+}
+
+func (model *ModelData) handleTickMessage(m tickMessage) error {
+	t, err := GetTime(m.GetDateTime())
+	if err != nil {
+		return err
+	}
+	model.Time = t
+	model.Tick = m.GetCurrentTick()
+	return nil
+}
+
 func (model *ModelData) handleControlBeginTick(m *sword.SimToClient_Content) error {
 	mm := m.GetControlBeginTick()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	t, err := GetTime(mm.GetDateTime())
-	if err != nil {
-		return err
-	}
-	model.Time = t
-	model.Tick = mm.GetCurrentTick()
-	return nil
+	return model.handleTickMessage(mm)
 }
 
 func (model *ModelData) handleControlEndTick(m *sword.SimToClient_Content) error {
@@ -80,7 +89,7 @@ func (model *ModelData) handleControlInformation(m *sword.SimToClient_Content) e
 		return ErrSkipHandler
 	}
 	model.TickDuration = mm.GetTickDuration()
-	return nil
+	return model.handleTickMessage(mm)
 }
 
 func (model *ModelData) handlePartyCreation(m *sword.SimToClient_Content) error {
