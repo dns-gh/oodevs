@@ -19,34 +19,9 @@
 
 #include "protocol/Protocol.h"
 
+#include <boost/lexical_cast.hpp>
+
 using namespace kernel;
-
-namespace
-{
-    class OrderParameterValueVisitor : public OrderParameterValueVisitor_ABC
-                                     , private boost::noncopyable
-    {
-    public:
-        OrderParameterValueVisitor( OrderParameter& parameter )
-            : parameter_( parameter )
-        {
-            // NOTHING
-        }
-
-        virtual ~OrderParameterValueVisitor()
-        {
-            // NOTHING
-        }
-
-        virtual void Visit( const OrderParameterValue& value )
-        {
-            parameter_.AddValue( value.GetId(), value.GetName() );
-        }
-
-    private:
-        OrderParameter& parameter_;
-    };
-}
 
 namespace actions {
     namespace parameters {
@@ -62,6 +37,28 @@ ParameterList::ParameterList( const kernel::OrderParameter& parameter )
     // NOTHING
 }
 
+namespace
+{
+    void RegisterStructure( ParameterList& paramList,
+                            const kernel::OrderParameter& parameter,
+                            const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list,
+                            const actions::ParameterFactory_ABC& factory,
+                            const boost::optional< const kernel::Entity_ABC& >& entity )
+    {
+        if( !parameter.IsStructure() )
+            throw MASA_EXCEPTION( "Parameter should be a structure" );
+        if( static_cast< int >( parameter.Count() ) != list.size() )
+            throw MASA_EXCEPTION( "Mismatched size between structure parameter and the protobuf list associated for param " + parameter.GetName() );
+        for( unsigned int i = 0; i < parameter.Count(); ++i )
+        {
+            std::unique_ptr< Parameter_ABC > param( factory.CreateParameter( parameter.Get( i ), list.Get( i ), entity ) );
+            if( param )
+                paramList.AddParameter( *param );
+            param.release();
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ParameterList constructor
 // Created: MGD 2010-11-09
@@ -69,20 +66,43 @@ ParameterList::ParameterList( const kernel::OrderParameter& parameter )
 ParameterList::ParameterList( const kernel::OrderParameter& parameter,
                               const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list,
                               const actions::ParameterFactory_ABC& factory,
-                              boost::optional< const kernel::Entity_ABC& > entity )
+                              const boost::optional< const kernel::Entity_ABC& >& entity )
     : Parameter< QString >( parameter )
     , parameter_( parameter )
 {
-    int i = 0;
-    for( auto it = list.begin(); it != list.end(); ++it, ++i )
+    // Structure
+    if( parameter.IsStructure() )
+        RegisterStructure( *this, parameter, list, factory, entity );
+    // Union
+    else if( parameter.IsUnion() )
     {
-        kernel::OrderParameter newParameter = OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).toStdString(), parameter.GetType(), parameter.IsOptional() );
-        OrderParameterValueVisitor visitor( newParameter );
-        parameter.Accept( visitor );
-        std::unique_ptr< Parameter_ABC > param( factory.CreateParameter( newParameter, *it, entity ) );
-        if( param )
-            AddParameter( *param );
-        param.release();
+        if( list.size() < 1 )
+            throw MASA_EXCEPTION( "UnionList should be defined by the first element of the list" );
+        auto& idParameter = list.Get( 0 );
+        if( !idParameter.has_identifier() )
+            throw MASA_EXCEPTION( "First parameter of UnionList should be an identifier" );
+        auto id = idParameter.identifier();
+        auto subParam = parameter.Find( id );
+        if( !subParam )
+            throw MASA_EXCEPTION( "No parameter found for UnionList's parameter " + boost::lexical_cast< std::string >( id ) );
+        RegisterStructure( *this, *subParam, list, factory, entity );
+        SetName( QString::fromStdString( subParam->GetName() ) );
+    }
+    // List
+    else
+    {
+        const auto& subParam = !parameter.IsStructure() && parameter.Count() == 1 ? parameter.Get( 0 ) : parameter;
+        for( int i = 0; i < list.size(); ++i )
+        {
+            std::unique_ptr< Parameter_ABC > param( factory.CreateParameter( subParam, list.Get( i ), entity ) );
+            if( param )
+            {
+                if( param->GetName().toStdString() == subParam.GetName() )
+                    param->SetName( tools::translate( "Parameter", "%1 (item %2)" ).arg( param->GetName() ).arg( i + 1 ) );
+                AddParameter( *param );
+            }
+            param.release();
+        }
     }
 }
 
