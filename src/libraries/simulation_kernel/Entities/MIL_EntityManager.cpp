@@ -106,6 +106,7 @@
 #include "Objects/MIL_Object_ABC.h"
 #include "Orders/MIL_LimaFunction.h"
 #include "Orders/MIL_Report.h"
+#include "PathfindComputer.h"
 #include "Populations/MIL_Population.h"
 #include "Populations/MIL_PopulationAttitude.h"
 #include "Populations/MIL_PopulationType.h"
@@ -263,7 +264,8 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
     archive >> sink;
     ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(),
             MIL_EffectManager::GetEffectManager(), sink,
-            MIL_AgentServer::GetWorkspace().GetConfig(), archive.GetWorld() );
+            MIL_AgentServer::GetWorkspace().GetConfig(), archive.GetWorld(),
+            MIL_AgentServer::GetWorkspace().GetPathFindManager() );
 }
 
 void MIL_EntityManager::Initialize( const tools::PhyLoader& loader, const MIL_Time_ABC& time,
@@ -278,7 +280,8 @@ void MIL_EntityManager::Initialize( const tools::PhyLoader& loader, const MIL_Ti
 // -----------------------------------------------------------------------------
 MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
         MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
-        const MIL_Config& config, const boost::shared_ptr< const TER_World >& world )
+        const MIL_Config& config, const boost::shared_ptr< const TER_World >& world,
+        DEC_PathFind_Manager& pathfindManager )
     : time_                         ( time )
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
@@ -308,6 +311,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() )
     , world_                        ( world )
+    , pathfindComputer_             ( new PathfindComputer( pathfindManager ) )
 {
     // NOTHING
 }
@@ -318,7 +322,8 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
 // -----------------------------------------------------------------------------
 MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
         MIL_EffectManager& effects, std::auto_ptr< sword::Sink_ABC > sink,
-        const MIL_Config& config, const boost::shared_ptr< const TER_World >& world )
+        const MIL_Config& config, const boost::shared_ptr< const TER_World >& world,
+        DEC_PathFind_Manager& pathfindManager )
     : time_                         ( time )
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
@@ -338,6 +343,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
     , sink_                         ( sink.release() )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() ) // todo : delete if saved in checkpoint
     , world_                        ( world )
+    , pathfindComputer_             ( new PathfindComputer( pathfindManager ) )
 {
     // NOTHING
 }
@@ -999,6 +1005,7 @@ void MIL_EntityManager::Update()
     UpdateEffects();
     UpdateStates();
     UpdateKnowledgeGroups(); // LTO
+    pathfindComputer_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -2072,6 +2079,36 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
             blackboard->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *it->second );
     }
     ack.mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
+}
+
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnPathfindRequest
+// Created: LGY 2014-02-28
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId )
+{
+    const auto& positions = message.positions();
+    protocol::Check( positions.size() == 2, "must have two points" );
+    MT_Vector2D start;
+    const auto& p0 = positions.Get( 0 );
+    world_->MosToSimMgrsCoord( p0.latitude(), p0.longitude(), start );
+    MT_Vector2D end;
+    const auto& p1 = positions.Get( 1 );
+    world_->MosToSimMgrsCoord( p1.latitude(), p1.longitude(), end );
+    const unsigned int id = message.unit().id();
+    if( MIL_AgentPion* pPion = FindAgentPion( id ) )
+        pathfindComputer_->Compute( *pPion, start, end, nCtx, clientId );
+    else if( MIL_Population* pPopulation = FindPopulation( id ) )
+        pathfindComputer_->Compute( *pPopulation, start, end, nCtx, clientId );
+    else
+    {
+        client::PathfindRequestAck ack;
+        ack().set_error_code( PathfindRequestAck::error_invalid_parameter );
+        ack().set_error_msg( "invalid crowd or unit identifier" );
+        ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    }
 }
 
 // -----------------------------------------------------------------------------

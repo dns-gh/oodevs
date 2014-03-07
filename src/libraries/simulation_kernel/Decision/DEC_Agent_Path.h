@@ -42,7 +42,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType );
+             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosStart, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType );
              DEC_Agent_Path( MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType );
              DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
     virtual ~DEC_Agent_Path();
@@ -60,7 +60,12 @@ public:
     virtual bool IsPathForUnit( MIL_Agent_ABC* pion ) const;
     virtual bool NeedRefine() const;
     virtual bool UseStrictClosest() const;
-    void ComputePath( boost::shared_ptr< DEC_Path_ABC > pPath );
+    void CancelPath();
+    //@}
+
+    //! @name Helper to bypass lack of check of terrain in heuristics.
+    //@{
+    bool IsDestinationTrafficable() const;
     //@}
 
     //! @name Accessors
@@ -95,10 +100,7 @@ private:
     void InitializePathKnowledges( const T_PointVector& pathPoints );
     //@}
 
-    //! @name Helper to bypass lack of check of terrain in heuristics.
-    //@{
-    bool IsDestinationTrafficable() const;
-    //@}
+
 
     //! @name Points insertion Tools
     //@{

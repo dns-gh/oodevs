@@ -13,6 +13,7 @@
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
+#include <boost/assign.hpp>
 #pragma warning( pop )
 
 using namespace tools;
@@ -50,7 +51,8 @@ std::string tools::JoinFeatures( const std::unordered_set< std::string >& featur
 const std::vector< std::string >& tools::GetAvailableFeatures()
 {
     // Fill this with experimental feature switches
-    static const std::vector< std::string > features;
+    static const std::vector< std::string > features =
+        boost::assign::list_of< std::string >( "pathfind" );
     return features;
 }
 

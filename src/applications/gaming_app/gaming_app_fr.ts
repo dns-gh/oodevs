@@ -1446,6 +1446,25 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>LocationEditorToolbar</name>
+    <message>
+        <source>Pathfind</source>
+        <translation>Pathfind</translation>
+    </message>
+    <message>
+        <source>Directions from here</source>
+        <translation>Itinéraire à partir de ce lieu</translation>
+    </message>
+    <message>
+        <source>Directions to here</source>
+        <translation>Itinéraire vers ce lieu</translation>
+    </message>
+    <message>
+        <source>Clear positions</source>
+        <translation>Effacer les positions</translation>
+    </message>
+</context>
+<context>
     <name>LockMapViewController</name>
     <message>
         <source>Unlock view on entity</source>

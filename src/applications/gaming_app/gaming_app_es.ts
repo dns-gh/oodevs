@@ -1445,6 +1445,25 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>LocationEditorToolbar</name>
+    <message>
+        <source>Pathfind</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directions from here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directions to here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear positions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LockMapViewController</name>
     <message>
         <source>Unlock view on entity</source>

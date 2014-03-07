@@ -2570,3 +2570,31 @@ message ListLogisticRequests {
 message ListLogisticRequestsAck {
     repeated LogHistoryEntry entries = 1;
 }
+
+//! Asks a path between positions. This path is
+//! calculated with the physical specifications of the 'unit'.
+//! The 'Id' parameter is an identifier of an agent or a crowd
+message PathfindRequest {
+    required Id           unit      = 1;
+    repeated CoordLatLong positions = 2;
+}
+
+//! Returns a calculated path, if operation succeeded.
+message PathfindRequestAck {
+    enum ErrorCode {
+        //! Operation succeeded
+        no_error                = 0;
+        //! Operation failed because the provided action parameters
+        //! were invalid
+        error_invalid_parameter = 1;
+        //! Operation failed because the path could not be calculated
+        error_path_invalid      = 2;
+    }
+    //! Reason for the failure of the magic action execution operation
+    //! @see ErrorCode
+    required ErrorCode error_code     = 1;
+    //! Returns computed path
+    optional Path      path           = 2;
+    //! More detailed account of the returned error
+    optional string    error_msg      = 3;
+}

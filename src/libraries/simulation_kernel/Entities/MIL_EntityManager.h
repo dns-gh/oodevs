@@ -40,6 +40,7 @@ namespace sword
     class MissionParameters;
     class ObjectMagicAction;
     class ParentEntity;
+    class PathfindRequest;
     class SetAutomatMode;
     class Sink_ABC;
     class Tasker;
@@ -68,6 +69,7 @@ namespace propagation
 class AgentFactory_ABC;
 class ArmyFactory_ABC;
 class AutomateFactory_ABC;
+class DEC_PathFind_Manager;
 class FormationFactory_ABC;
 class InhabitantFactory_ABC;
 class KnowledgeGroupFactory;
@@ -96,8 +98,8 @@ class MIL_Population;
 class MIL_ProfilerManager;
 class MIL_Time_ABC;
 class MIL_UrbanObject_ABC;
-class MIL_UrbanObject_ABC;
 class MissionController_ABC;
+class PathfindComputer;
 class PopulationFactory_ABC;
 class TER_Localisation;
 class TER_World;
@@ -117,7 +119,8 @@ public:
              MIL_EntityManager( const MIL_Time_ABC& time,
                  MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
                  const MIL_Config& config,
-                 const boost::shared_ptr< const TER_World >& world );
+                 const boost::shared_ptr< const TER_World >& world,
+                 DEC_PathFind_Manager& pathfindManager );
     virtual ~MIL_EntityManager();
 
     static void Initialize( const tools::PhyLoader& loader, const MIL_Time_ABC& time,
@@ -214,6 +217,7 @@ public:
     void OnReceiveTransferToLogisticSuperior  ( const sword::MagicAction&          message );
     void OnReceiveBurningCellRequest          ( const sword::BurningCellRequest&   message, unsigned int nCtx );
     void OnReceiveKnowledgeGroupCreation      ( const sword::MagicAction&          message, sword::MagicActionAck& ack );
+    void OnPathfindRequest                    ( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId );
     //@}
 
     //! @name Population channeling
@@ -238,7 +242,8 @@ public:
 
     MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects,
         std::auto_ptr< sword::Sink_ABC > sink, const MIL_Config& config,
-        const boost::shared_ptr< const TER_World >& world );
+        const boost::shared_ptr< const TER_World >& world,
+        DEC_PathFind_Manager& pathfindManager );
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
@@ -341,8 +346,9 @@ private:
     std::unique_ptr< FormationFactory_ABC >        formationFactory_;       // has to be declared before armyFactory
     std::unique_ptr< KnowledgeGroupFactory >       knowledgeGroupFactory_;  // has to be declared before armyFactory
     std::unique_ptr< ArmyFactory_ABC >             armyFactory_;
-    std::auto_ptr< MIL_FlowCollisionManager >    flowCollisionManager_;
-    const boost::shared_ptr< const TER_World >   world_;
+    std::unique_ptr< MIL_FlowCollisionManager >    flowCollisionManager_;
+    const boost::shared_ptr< const TER_World >     world_;
+    std::unique_ptr< PathfindComputer >            pathfindComputer_;
     //@}
 };
 

@@ -2058,6 +2058,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::
         return;
     else if( wrapper.message().has_magic_order_destruction() )
         return;
+    else if( wrapper.message().has_pathfind_request_ask() )
+        return;
     else
         UnhandledMessage( &wrapper.message() );
 }

@@ -118,6 +118,8 @@ void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const swor
         manager.OnReceiveBurningCellRequest( msg.burning_cell_request(), nCtx );
     else if( msg.has_magic_action() )
         OnReceiveMagicAction( msg.magic_action(), nCtx, clientId );
+    else if( msg.has_pathfind_request() )
+        manager.OnPathfindRequest( msg.pathfind_request(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
