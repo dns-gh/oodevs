@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "Sink.h"
+#include "AgentFactory.h"
 #include "Adapters/SinkRoleExtender.h"
 #include "propagation/FloodModel.h"
 #include "propagation/ElevationGetter_ABC.h"
@@ -22,6 +23,7 @@
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "Tools/MIL_IDManager.h"
 #include "MIL_AgentServer.h"
 #include "CheckPoints/SerializationTools.h"
 #include "MT_Tools/MT_FormatString.h"
@@ -59,7 +61,7 @@ namespace legacy
     template< typename Archive >
     void save_construct_data( Archive& archive, const sword::legacy::Sink* sink, const unsigned int /*version*/ )
     {
-        AgentFactory_ABC* factory = &sink->factory_;
+        AgentFactory* factory = &sink->factory_;
         const Sink::T_Elements& elements = sink->elements_;
         bool logEnabled = sink->decLogger_.get() != 0;
         archive << factory
@@ -72,7 +74,7 @@ namespace legacy
     template< typename Archive >
     void load_construct_data( Archive& archive, sword::legacy::Sink* sink, const unsigned int /*version*/ )
     {
-        AgentFactory_ABC* factory;
+        AgentFactory* factory;
         unsigned int gcPause;
         unsigned int gcMult;
         bool logEnabled;
@@ -92,7 +94,7 @@ namespace legacy
 // Name: Sink constructor
 // Created: SLI 2012-01-13
 // -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled, const boost::shared_ptr< const TER_World >& world )
+Sink::Sink( AgentFactory& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled, const boost::shared_ptr< const TER_World >& world )
     : pElevation_( new ElevationGetter() )
     , factory_   ( factory )
     , gcPause_   ( gcPause )

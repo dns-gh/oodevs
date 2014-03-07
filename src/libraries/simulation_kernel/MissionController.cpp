@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MissionController.h"
-#include "AgentFactory_ABC.h"
 #include "PopulationFactory_ABC.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"

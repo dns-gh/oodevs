@@ -66,7 +66,7 @@ namespace propagation
     class FloodModel_ABC;
 }
 
-class AgentFactory_ABC;
+class AgentFactory;
 class ArmyFactory_ABC;
 class AutomateFactory_ABC;
 class DEC_PathFind_Manager;
@@ -338,7 +338,7 @@ private:
     std::unique_ptr< MissionController_ABC >       missionController_;  // has to be declared before populationFactory and agentFactory
     std::unique_ptr< PopulationFactory_ABC >       populationFactory_;      // has to be declared before armyFactory
     std::unique_ptr< InhabitantFactory_ABC >       inhabitantFactory_;      // has to be declared before armyFactory
-    std::unique_ptr< AgentFactory_ABC >            agentFactory_;           // has to be declared before Sink
+    std::unique_ptr< AgentFactory >                agentFactory_;           // has to be declared before Sink
     std::unique_ptr< sword::Sink_ABC >             sink_;
     std::unique_ptr< MIL_ObjectManager >           pObjectManager_;
     std::unique_ptr< propagation::FloodModel_ABC > pFloodModel_;

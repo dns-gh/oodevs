@@ -16,7 +16,6 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Tools/MIL_IDManager.h"
-#include "Tools/MIL_Tools.h"
 #include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
@@ -89,16 +88,14 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 // Name: AgentFactory::load
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
-void AgentFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
+void AgentFactory::load( MIL_CheckPointInArchive&, const unsigned int )
 {
-    file >> boost::serialization::base_object < AgentFactory_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::save
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
-void AgentFactory::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void AgentFactory::save( MIL_CheckPointOutArchive&, const unsigned int ) const
 {
-    file << boost::serialization::base_object < AgentFactory_ABC >( *this );
 }

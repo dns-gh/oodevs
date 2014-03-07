@@ -10,12 +10,22 @@
 #ifndef __AgentFactory_h_
 #define __AgentFactory_h_
 
-#include "AgentFactory_ABC.h"
 #include "MIL.h"
+#include "AlgorithmsFactories.h"
+#include "MissionController_ABC.h"
+#include <boost/noncopyable.hpp>
+#include <memory>
 
+class MIL_AgentPion;
+class MIL_AgentTypePion;
+class MIL_Automate;
 class MIL_IDManager;
-class AlgorithmsFactories;
 class MissionController_ABC;
+
+namespace sword
+{
+    class RoleExtender_ABC;
+}
 
 // =============================================================================
 /** @class  AgentFactory
@@ -23,7 +33,7 @@ class MissionController_ABC;
 */
 // Created: MGD 2009-08-13
 // =============================================================================
-class AgentFactory : public AgentFactory_ABC
+class AgentFactory : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -35,9 +45,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, sword::RoleExtender_ABC* ext );
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, sword::RoleExtender_ABC* ext );
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext );
+    MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, sword::RoleExtender_ABC* ext );
+    MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, sword::RoleExtender_ABC* ext );
+    MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext );
     //@}
 
     //! @name CheckPoint

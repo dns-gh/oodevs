@@ -18,9 +18,15 @@ namespace propagation
     class ElevationGetter_ABC;
 }
 
+class AgentFactory;
+class MIL_AgentPion;
+class MIL_AgentTypePion;
+class MIL_Automate;
+
 namespace sword
 {
     class DEC_Logger;
+    class RoleExtender_ABC;
     class SinkRoleExtender;
 
 namespace legacy
@@ -36,7 +42,7 @@ class Sink : public Sink_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled, const boost::shared_ptr< const TER_World >& world );
+             Sink( AgentFactory& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled, const boost::shared_ptr< const TER_World >& world );
     virtual ~Sink();
     //@}
 
@@ -98,7 +104,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< propagation::ElevationGetter_ABC > pElevation_;
-    AgentFactory_ABC& factory_;
+    AgentFactory& factory_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
     std::auto_ptr< sword::DEC_Logger > decLogger_;
