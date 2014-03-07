@@ -78,8 +78,8 @@ void ExtensionsPanel::NotifySelected( const kernel::Entity_ABC* element )
 // -----------------------------------------------------------------------------
 void ExtensionsPanel::SetReadOnly( bool readOnly ) const
 {
-    validateButton_->setEnabled( !readOnly );
-    resetButton_->setEnabled( !readOnly );
+    validateButton_->setEnabled( !readOnly && validateButton_->isEnabled() );
+    resetButton_->setEnabled( !readOnly && resetButton_->isEnabled() );
     diffusionDialog_->setEnabled( !readOnly );
     if( pGroupBox_ )
     {
@@ -104,6 +104,8 @@ void ExtensionsPanel::OnActivationChanged( bool state )
 // -----------------------------------------------------------------------------
 void ExtensionsPanel::OnValidate()
 {
+    if( !selected_ )
+        return;
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( types_ ).Get( "change_extension" );
     std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
