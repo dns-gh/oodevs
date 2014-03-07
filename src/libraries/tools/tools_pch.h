@@ -11,6 +11,7 @@
 #define __tools_pch_h_
 
 #pragma warning( disable : 4355 ) // 'this' : used in base member initializer list
+#pragma warning( disable : 4503 ) // decorated name length exceeded, name was truncated
 
 #include <string>
 #include "asio.h"
