@@ -28,6 +28,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/format.hpp>
 #include <boost/thread/mutex.hpp>
+#include <boost/thread/lock_guard.hpp>
 
 using namespace timeline::core;
 namespace ipc = tools::ipc;
