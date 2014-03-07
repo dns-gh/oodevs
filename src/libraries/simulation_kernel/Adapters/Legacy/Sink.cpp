@@ -25,7 +25,7 @@
 #include "MIL_AgentServer.h"
 #include "CheckPoints/SerializationTools.h"
 #include "MT_Tools/MT_FormatString.h"
-#include "Tools/MIL_Tools.h"
+#include "simulation_terrain/TER_World.h"
 #include <boost/functional/factory.hpp>
 
 using namespace sword::legacy;
@@ -61,10 +61,11 @@ namespace legacy
     {
         AgentFactory_ABC* factory = &sink->factory_;
         const Sink::T_Elements& elements = sink->elements_;
+        bool logEnabled = sink->decLogger_.get() != 0;
         archive << factory
                 << sink->gcPause_
                 << sink->gcMult_
-                << sink->decLogger_
+                << logEnabled
                 << elements;
     }
 
@@ -74,14 +75,14 @@ namespace legacy
         AgentFactory_ABC* factory;
         unsigned int gcPause;
         unsigned int gcMult;
-        std::auto_ptr< sword::DEC_Logger > logger;
+        bool logEnabled;
         Sink::T_Elements elements;
         archive >> factory
                 >> gcPause
                 >> gcMult
-                >> logger
+                >> logEnabled
                 >> elements;
-        ::new( sink )Sink( *factory, gcPause, gcMult, logger );
+        ::new( sink )Sink( *factory, gcPause, gcMult, logEnabled, archive.GetWorld() );
         sink->elements_ = elements;
     }
 }
@@ -91,26 +92,13 @@ namespace legacy
 // Name: Sink constructor
 // Created: SLI 2012-01-13
 // -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled )
+Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled, const boost::shared_ptr< const TER_World >& world )
     : pElevation_( new ElevationGetter() )
     , factory_   ( factory )
     , gcPause_   ( gcPause )
     , gcMult_    ( gcMult )
     , decLogger_ ( logEnabled ? new DEC_Logger( "Pion" ) : 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink constructor
-// Created: SLI 2013-02-22
-// -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger )
-    : pElevation_( new ElevationGetter() )
-    , factory_   ( factory )
-    , gcPause_   ( gcPause )
-    , gcMult_    ( gcMult )
-    , decLogger_ ( logger )
+    , world_     ( world )
 {
     // NOTHING
 }
@@ -266,7 +254,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
         std::string strPosition;
         xis >> xml::attribute( "position", strPosition );
         MT_Vector2D vPosTmp;
-        MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
+        world_->MosToSimMgrsCoord( strPosition, vPosTmp );
         Initialize( pion, vPosTmp );
     }
     pion.ReadOverloading( xis );

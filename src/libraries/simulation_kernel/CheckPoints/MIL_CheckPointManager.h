@@ -14,6 +14,7 @@
 
 #include <queue>
 #include <tools/Path.h>
+#include <boost/shared_ptr.hpp>
 
 namespace sword
 {
@@ -30,6 +31,7 @@ class MIL_Config;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 class ObjectTypeResolver_ABC;
+class TER_World;
 
 // =============================================================================
 // Created: NLD 2003-08-05
@@ -38,14 +40,17 @@ class MIL_CheckPointManager : private boost::noncopyable
 {
 public:
               MIL_CheckPointManager();
-     explicit MIL_CheckPointManager( const MIL_Config& config );
+              MIL_CheckPointManager( const MIL_Config& config,
+                      const boost::shared_ptr< TER_World >& world );
      virtual ~MIL_CheckPointManager();
 
     //! @name Main
     //@{
     void Update();
 
-    static void LoadCheckPoint( const MIL_Config& config, const ObjectTypeResolver_ABC& resolver );
+    static void LoadCheckPoint( const MIL_Config& config,
+            const ObjectTypeResolver_ABC& resolver,
+            const boost::shared_ptr< TER_World >& world );
     //@}
 
     //! @name Accessors
@@ -94,6 +99,7 @@ private:
     unsigned int         nNextCheckPointTick_;
     tools::Path          checkpointName_;
     T_CheckPointsQueue   currentCheckPoints_;
+    const boost::shared_ptr< TER_World > world_;
 };
 
 #endif // __MIL_CheckPointManager_h_

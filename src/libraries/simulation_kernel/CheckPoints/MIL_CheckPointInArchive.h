@@ -18,8 +18,10 @@
 #include <boost/archive/binary_iarchive_impl.hpp>
 #include <boost/archive/shared_ptr_helper.hpp>
 #pragma warning( pop )
+#include <boost/shared_ptr.hpp>
 
 class ObjectTypeResolver_ABC;
+class TER_World;
 
 // =============================================================================
 /** @class  MIL_CheckPointInArchive
@@ -32,13 +34,13 @@ class  MIL_CheckPointInArchive : public boost::archive::binary_iarchive_impl<MIL
 {
 public:
 
-             MIL_CheckPointInArchive(std::istream & is, const ObjectTypeResolver_ABC& resolver, unsigned int flags = 0)
-                 : boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>(is, flags)
+             MIL_CheckPointInArchive( std::istream & is,
+                     const ObjectTypeResolver_ABC& resolver,
+                     const boost::shared_ptr< TER_World >& world,
+                     unsigned int flags = 0 )
+                 : boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>( is, flags )
                  , resolver_( resolver )
-             {}
-             MIL_CheckPointInArchive(std::streambuf & bsb, const ObjectTypeResolver_ABC& resolver, unsigned int flags = 0)
-                 : boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>(bsb, flags)
-                 , resolver_( resolver )
+                 , world_( world )
              {}
     virtual ~MIL_CheckPointInArchive(){}
 
@@ -46,19 +48,14 @@ public:
     //! @name Operations
     //@{
     const ObjectTypeResolver_ABC& GetObjectTypeResolver() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_CheckPointInArchive( const MIL_CheckPointInArchive& );            //!< Copy constructor
-    MIL_CheckPointInArchive& operator=( const MIL_CheckPointInArchive& ); //!< Assignment operator
+    const boost::shared_ptr< TER_World >& GetWorld() const;
     //@}
 
 private:
     //! @name Member Data
     //@{
     const ObjectTypeResolver_ABC& resolver_;
+    const boost::shared_ptr< TER_World > world_;
     //@}
 };
 

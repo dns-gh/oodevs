@@ -16,6 +16,7 @@
 #include "MIL_EntityManager_ABC.h"
 #include "propagation/ElevationGetter_ABC.h"
 #include <tools/Resolver.h>
+#include <boost/shared_ptr.hpp>
 #include <map>
 
 namespace tools
@@ -99,6 +100,7 @@ class MIL_UrbanObject_ABC;
 class MissionController_ABC;
 class PopulationFactory_ABC;
 class TER_Localisation;
+class TER_World;
 
 void TerminatePhysicalSingletons();
 void TerminateMilitarySingletons();
@@ -112,7 +114,10 @@ class MIL_EntityManager : public MIL_EntityManager_ABC,
                           private boost::noncopyable
 {
 public:
-             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory, const MIL_Config& config );
+             MIL_EntityManager( const MIL_Time_ABC& time,
+                 MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
+                 const MIL_Config& config,
+                 const boost::shared_ptr< const TER_World >& world );
     virtual ~MIL_EntityManager();
 
     static void Initialize( const tools::PhyLoader& loader, const MIL_Time_ABC& time,
@@ -231,7 +236,9 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, std::auto_ptr< sword::Sink_ABC > sink, const MIL_Config& config );
+    MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects,
+        std::auto_ptr< sword::Sink_ABC > sink, const MIL_Config& config,
+        const boost::shared_ptr< const TER_World >& world );
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
@@ -335,6 +342,7 @@ private:
     std::unique_ptr< KnowledgeGroupFactory >       knowledgeGroupFactory_;  // has to be declared before armyFactory
     std::unique_ptr< ArmyFactory_ABC >             armyFactory_;
     std::auto_ptr< MIL_FlowCollisionManager >    flowCollisionManager_;
+    const boost::shared_ptr< const TER_World >   world_;
     //@}
 };
 

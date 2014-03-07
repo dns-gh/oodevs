@@ -36,7 +36,7 @@ class Sink : public Sink_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
+             Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled, const boost::shared_ptr< const TER_World >& world );
     virtual ~Sink();
     //@}
 
@@ -88,7 +88,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger );
     MIL_AgentPion& Configure( MIL_AgentPion& pion );
     void CreateRoles( SinkRoleExtender& ext );
 
@@ -103,6 +102,7 @@ private:
     const unsigned int gcPause_;
     const unsigned int gcMult_;
     std::auto_ptr< sword::DEC_Logger > decLogger_;
+    const boost::shared_ptr< const TER_World > world_;
     //@}
 };
 }
