@@ -48,7 +48,7 @@ public:
     //! @name Operations
     //@{
     const ObjectTypeResolver_ABC& GetObjectTypeResolver() const;
-    const boost::shared_ptr< TER_World > GetWorld() const;
+    const boost::shared_ptr< TER_World >& GetWorld() const;
     //@}
 
 private:
