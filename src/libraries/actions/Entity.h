@@ -13,10 +13,9 @@
 #include "Parameter.h"
 #include "clients_kernel/Controller.h"
 #include <tools/ElementObserver_ABC.h>
-#pragma warning( push )
-#pragma warning( disable : 4702 )
+#ifndef Q_MOC_RUN
 #include <boost/lexical_cast.hpp>
-#pragma warning( pop )
+#endif
 #include <boost/function.hpp>
 #include <xeumeuleu/xml.hpp>
 
