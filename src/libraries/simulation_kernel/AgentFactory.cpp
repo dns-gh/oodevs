@@ -22,18 +22,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
-// Created: MGD 2009-08-13
-// -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController )
-    : idManager_          ( idManager )
-    , missionController_  ( missionController )
-    , algorithmsFactories_( new AlgorithmsFactories() )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentFactory constructor
 // Created: MCO 2013-02-22
 // -----------------------------------------------------------------------------
 AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, std::auto_ptr< AlgorithmsFactories > algorithmsFactories )
@@ -41,7 +29,8 @@ AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& mis
     , missionController_  ( missionController )
     , algorithmsFactories_( algorithmsFactories )
 {
-    // NOTHING
+    if( !algorithmsFactories_.get() )
+        algorithmsFactories_.reset( new AlgorithmsFactories() );
 }
 
 // -----------------------------------------------------------------------------

@@ -38,7 +38,6 @@ class AgentFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController );
              AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, std::auto_ptr< AlgorithmsFactories > algorithmsFactories );
     virtual ~AgentFactory();
     //@}
