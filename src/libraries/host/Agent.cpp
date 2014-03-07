@@ -22,6 +22,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/thread/lock_guard.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;

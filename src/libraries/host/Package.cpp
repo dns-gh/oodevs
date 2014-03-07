@@ -24,6 +24,7 @@
 #include <boost/function.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/thread/lock_guard.hpp>
 
 #include <tools/Version.h>
 

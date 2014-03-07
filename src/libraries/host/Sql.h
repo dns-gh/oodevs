@@ -15,6 +15,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/thread/mutex.hpp>
+#include <boost/thread/lock_guard.hpp>
 
 struct sqlite3;
 struct sqlite3_stmt;

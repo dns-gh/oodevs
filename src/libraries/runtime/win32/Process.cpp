@@ -18,7 +18,7 @@
 
 using namespace runtime;
 
-BOOST_STATIC_ASSERT( sizeof(Handle::pointer) == sizeof(HANDLE) );
+BOOST_STATIC_ASSERT( sizeof(Handle::element_type*) == sizeof(HANDLE) );
 
 // -----------------------------------------------------------------------------
 // Name: runtime::MakeHandle

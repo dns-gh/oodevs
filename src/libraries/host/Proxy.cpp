@@ -20,6 +20,7 @@
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/thread/lock_guard.hpp>
 #include <set>
 
 using namespace host;
