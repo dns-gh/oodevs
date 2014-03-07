@@ -110,18 +110,6 @@ void MaxStockNaturesTable::UpdateMaxStocksByNature( const kernel::Entity_ABC& en
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: MaxStockNaturesTable::IsMaxExceeded
-// Created: JSR 2014-03-04
-// -----------------------------------------------------------------------------
-bool MaxStockNaturesTable::IsMaxExceeded( const std::string& key, const WeightVolume& value ) const
-{
-    auto itMax = maxValues_.find( key );
-    if( itMax == maxValues_.end() )
-        return true;
-    return value.weight_ > itMax->second.weight_ || value.volume_ > itMax->second.volume_;
-}
-
 namespace
 {
     QStandardItem* CreateItem( double value, bool red )
@@ -160,20 +148,22 @@ void MaxStockNaturesTable::Update( const std::map< const kernel::DotationType*, 
     {
         WeightVolume maxValues;
         auto itMax = maxValues_.find( it->first );
-        if( itMax != maxValues_.end() )
+        const bool invalid = ( itMax == maxValues_.end() );
+        if( !invalid )
             maxValues = itMax->second;
-        const bool red = IsMaxExceeded( it->first, it->second );
+        const bool overWeight = invalid || it->second.weight_ > maxValues.weight_;
+        const bool overVolume = invalid || it->second.volume_ > maxValues.volume_;
         const QString name = it->first.c_str();
         QStandardItem* dotationItem = new QStandardItem( name );
         dotationItem->setData( name );
-        if( red )
+        if( invalid )
             dotationItem->setForeground( Qt::red );
         dataModel_->appendRow( QList< QStandardItem* >()
             << dotationItem
-            << CreateItem( it->second.weight_, red )
-            << CreateItem( maxValues.weight_ , red )
-            << CreateItem( it->second.volume_, red )
-            << CreateItem( maxValues.volume_ , red ) );
+            << CreateItem( it->second.weight_, overWeight )
+            << CreateItem( maxValues.weight_ , invalid )
+            << CreateItem( it->second.volume_, overVolume )
+            << CreateItem( maxValues.volume_ , invalid ) );
    }
 }
 

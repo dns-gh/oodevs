@@ -70,7 +70,6 @@ private:
     //@{
     void UpdateMaxWeightVolumeByNature( const kernel::Agent_ABC& agent );
     void UpdateMaxStocksByNature( const kernel::Entity_ABC& entity );
-    bool IsMaxExceeded( const std::string& key, const WeightVolume& value ) const;
     //@}
 
 private:
