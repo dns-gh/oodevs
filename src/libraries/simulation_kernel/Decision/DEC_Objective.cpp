@@ -55,3 +55,48 @@ void DEC_Objective::Serialize( sword::MissionObjective& asn ) const
     NET_ASN_Tools::WriteTick    ( nSchedule_, *asn.mutable_time() );
     NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_location() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Objective::ComputerBarycenter
+// Created: NLD 2007-05-14
+// -----------------------------------------------------------------------------
+MT_Vector2D DEC_Objective::ComputerBarycenter() const
+{
+    return localisation_.ComputeBarycenter();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Objective::GetSchedule
+// Created: NLD 2007-05-14
+// -----------------------------------------------------------------------------
+unsigned int DEC_Objective::GetSchedule() const
+{
+    return nSchedule_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Objective::IsFlagged
+// Created: NLD 2007-05-14
+// -----------------------------------------------------------------------------
+bool DEC_Objective::IsFlagged() const
+{
+    return bFlag_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Objective::Flag
+// Created: NLD 2007-05-14
+// -----------------------------------------------------------------------------
+void DEC_Objective::Flag( bool bValue )
+{
+    bFlag_ = bValue;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Objective::GetLocalisation
+// Created: NLD 2007-05-14
+// -----------------------------------------------------------------------------
+const TER_Localisation& DEC_Objective::GetLocalisation() const
+{
+    return localisation_;
+}

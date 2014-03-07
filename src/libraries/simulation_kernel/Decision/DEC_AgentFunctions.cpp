@@ -40,6 +40,7 @@
 #include "Entities/Agents/Units/Humans/PHY_NbcSuit.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
@@ -650,8 +651,6 @@ bool DEC_AgentFunctions::PionCanFly( const DEC_Decision_ABC* callerAgent )
     return callerAgent && callerAgent->GetPion().GetType().GetUnitType().CanFly();
 }
 
-
-
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::NotifyForceRatioStateChanged
 // Created: NLD 2004-10-15
@@ -1168,6 +1167,24 @@ bool DEC_AgentFunctions::HasMission( DEC_Decision_ABC* pAgent )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetDotation
+// Created: BAX 2014-03-04
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory* DEC_AgentFunctions::GetDotation( const MIL_Agent_ABC& caller, unsigned id )
+{
+    const PHY_DotationCategory* reply = nullptr;
+    caller.GetRole< dotation::PHY_RoleInterface_Dotations >().Apply( [&]( PHY_Dotation& dotation )
+    {
+        if( reply )
+            return;
+        const auto& cat = dotation.GetCategory();
+        if( id == cat.GetMosID() )
+            reply = &cat;
+    });
+    return reply;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::HasDotation
 // Created: LDC 2010-03-26
 // -----------------------------------------------------------------------------
@@ -1389,7 +1406,6 @@ double DEC_AgentFunctions::GetRapForLocalAgent( const DEC_Decision_ABC* agent )
 {
     return agent ? agent->GetPion().GetKnowledge().GetRapForLocalValue() : 0.;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetCurrentSpeed
@@ -1735,7 +1751,7 @@ bool DEC_AgentFunctions::AgentHasRadar( const DEC_Decision_ABC* agent, int typeR
 // Created: GGE 2010-03-25
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::AgentHasFuseau(const MIL_Agent_ABC& callerAgent )
-{ 
+{
     return !callerAgent.GetOrderManager().GetFuseau().IsNull();
 }
 

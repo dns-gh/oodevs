@@ -441,9 +441,10 @@ double PHY_Dotation::Supply( double rSupply )
 {
     if( bDotationBlocked_ )
         return 0.;
-    const double rNewSupply = std::min( rSupply, rCapacity_ - rConsumptionReservation_ - rFireReservation_ - rValue_ );
-    SetValue( rValue_ + rNewSupply );
-    return rNewSupply;
+    const double rNewSupply = std::min( rSupply, rCapacity_ - rConsumptionReservation_ - rFireReservation_ );
+    const double previous = rValue_;
+    SetValue( std::max( 0., rNewSupply ) );
+    return rValue_ - previous;
 }
 
 // -----------------------------------------------------------------------------
