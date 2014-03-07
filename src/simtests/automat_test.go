@@ -9,9 +9,12 @@
 package simtests
 
 import (
+	"fmt"
 	. "launchpad.net/gocheck"
 	"swapi"
+	"swapi/phy"
 	"sword"
+	"sync"
 )
 
 func (s *TestSuite) TestSetAutomatMode(c *C) {
@@ -166,4 +169,86 @@ func (s *TestSuite) TestCreateAutomatAndUnits(c *C) {
 	c.Assert(automat, NotNil)
 	c.Assert(automat.KnowledgeGroupId, Equals, kg0.Id)
 	c.Assert(len(units), Equals, 6)
+}
+
+func testCreateAllUnits(c *C, client *swapi.Client, phydb *phy.PhysicalFile,
+	formation *swapi.Formation, kg *swapi.KnowledgeGroup, pos swapi.Point) {
+
+	automats, err := phy.ReadAutomats(*phydb)
+	c.Assert(err, IsNil)
+	c.Assert(len(automats.Automats), Greater, 0)
+	automatType := automats.Automats[0]
+
+	types, err := phy.ReadUnits(*phydb)
+	c.Assert(err, IsNil)
+	c.Assert(len(types.Units), Greater, 0)
+	automat, err := client.CreateAutomat(formation.Id, automatType.Id, kg.Id)
+	c.Assert(err, IsNil)
+
+	jobs := sync.WaitGroup{}
+	errs := []error{}
+	for _, typ := range types.Units {
+		typ := typ
+		jobs.Add(1)
+		go func() {
+			defer jobs.Done()
+			_, err := client.CreateUnit(automat.Id, typ.Id, pos)
+			if err != nil {
+				errs = append(errs, fmt.Errorf("%s creation failed: %s", typ.Name, err))
+			}
+		}()
+	}
+	jobs.Wait()
+	for _, err := range errs {
+		c.Assert(err, IsNil)
+	}
+}
+
+func testCreateAllAutomats(c *C, client *swapi.Client, phydb *phy.PhysicalFile,
+	formation *swapi.Formation, kg *swapi.KnowledgeGroup, pos swapi.Point) {
+
+	types, err := phy.ReadAutomats(*phydb)
+	c.Assert(err, IsNil)
+	c.Assert(len(types.Automats), Greater, 0)
+
+	// Running them in goroutines reduces test duration from 14s to 8s
+	jobs := sync.WaitGroup{}
+	errs := []error{}
+	for _, typ := range types.Automats {
+		typ := typ
+		jobs.Add(1)
+		go func() {
+			defer jobs.Done()
+			_, _, err := client.CreateAutomatAndUnits(formation.Id, typ.Id, kg.Id, pos)
+			if err != nil {
+				errs = append(errs, fmt.Errorf("%s creation failed: %s", typ.Name, err))
+			}
+		}()
+	}
+	jobs.Wait()
+	for _, err := range errs {
+		c.Assert(err, IsNil)
+	}
+}
+
+func testCreateAllTheThings(c *C, exercise, phyName string) {
+
+	sim, client := connectAndWaitModel(c, NewAdminOpts(exercise))
+	defer stopSimAndClient(c, sim, client)
+	data := client.Model.GetData()
+	formation := getSomeFormation(c, data)
+	kg := getAnyKnowledgeGroupInParty(c, data, formation.PartyId)
+	pos := swapi.Point{X: -15.8219, Y: 28.2456}
+
+	phydb := loadPhysical(c, phyName)
+
+	testCreateAllUnits(c, client, phydb, formation, kg, pos)
+	testCreateAllAutomats(c, client, phydb, formation, kg, pos)
+
+	checkpointCompareAndStop(c, sim, client)
+}
+
+func (s *TestSuite) TestCreateAllTheThings(c *C) {
+	testCreateAllTheThings(c, ExCrossroadSmallOrbat, "worldwide")
+	testCreateAllTheThings(c, ExCrossroadLog, "test")
 }

@@ -23,10 +23,10 @@ type FileHolder struct {
 
 type PhysicalFile struct {
 	XMLName    xml.Name   `xml:"physical"`
+	Automats   FileHolder `xml:"automats"`
 	Components FileHolder `xml:"components"`
 	Reports    FileHolder `xml:"reports"`
 	Resources  FileHolder `xml:"resources"`
-	Automats   FileHolder `xml:"automats"`
 	Units      FileHolder `xml:"units"`
 	BaseDir    string
 }

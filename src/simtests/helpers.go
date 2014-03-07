@@ -98,6 +98,18 @@ func getSomeKnowledgeGroup(c *C, data *swapi.ModelData) *swapi.KnowledgeGroup {
 	return nil
 }
 
+func getAnyKnowledgeGroupInParty(c *C, data *swapi.ModelData,
+	partyId uint32) *swapi.KnowledgeGroup {
+
+	for _, k := range data.KnowledgeGroups {
+		if k.PartyId == partyId {
+			return k
+		}
+	}
+	c.Fatal("missing knowledge groups")
+	return nil
+}
+
 func getAnyKnowledgeGroupIdWithPartyIndex(c *C, data *swapi.ModelData, index int) uint32 {
 	parties := map[uint32]struct{}{}
 	for id, group := range data.KnowledgeGroups {
