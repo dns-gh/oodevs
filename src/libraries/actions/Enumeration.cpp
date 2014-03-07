@@ -40,12 +40,7 @@ Enumeration::Enumeration( const OrderParameter& parameter, xml::xistream& xis )
 {
     if( xis.has_attribute( "value" ) )
     {
-        // We can't check if the enumeration is correct for magic actions, because their structure
-        //   isn't defined(unlike mission). So we force the value without verification.
-        if( const OrderParameterValue* value = parameter.FindValue( xis.attribute< unsigned long >( "value" ) ) )
-            value_ = new OrderParameterValue( *value );
-        else
-            value_ = new OrderParameterValue( xis.attribute< unsigned long >( "value" ), "" );
+        value_ = new OrderParameterValue( parameter.GetValue( xis.attribute< unsigned long >( "value" ) ) );
         SetValue( value_->GetName() );
     }
 }
@@ -56,12 +51,8 @@ Enumeration::Enumeration( const OrderParameter& parameter, xml::xistream& xis )
 // -----------------------------------------------------------------------------
 Enumeration::Enumeration( const OrderParameter& parameter, unsigned int value )
     : Parameter< std::string >( parameter )
-    , value_( 0 )
+    , value_( new OrderParameterValue( parameter.GetValue( value ) ) )
 {
-    if( const OrderParameterValue* order = parameter.FindValue( value ) )
-        value_ = new OrderParameterValue( *order );
-    else
-        value_ = new OrderParameterValue( value, "" );
     SetValue( value_->GetName() );
 }
 
