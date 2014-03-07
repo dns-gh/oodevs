@@ -19,6 +19,28 @@
 
 using namespace kernel;
 
+
+namespace
+{
+    struct CopyVisitor : public OrderParameterValueVisitor_ABC
+                       , public ChoicesVisitor_ABC
+                       , private boost::noncopyable
+    {
+        CopyVisitor( OrderParameter& parameter )
+            : parameter_( parameter )
+        {}
+        virtual void Visit( const std::string& type )
+        {
+            parameter_.AddChoice( type );
+        }
+        virtual void Visit( const OrderParameterValue& value )
+        {
+            parameter_.AddValue( value.GetId(), value.GetName() );
+        }
+        OrderParameter& parameter_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: OrderParameter constructor
 // Created: SBO 2007-04-23
@@ -27,6 +49,8 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     : name_( xis.attribute< std::string >( "name" ) )
     , type_( boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) ) )
     , optional_( xis.attribute( "optional", false ) )
+    , structure_( false )
+    , union_( false )
     , minOccurs_( 1 )
     , maxOccurs_( 1 )
     , minValue_ ( std::numeric_limits< double >::min() )
@@ -57,9 +81,11 @@ OrderParameter::OrderParameter( xml::xistream& xis )
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
 OrderParameter::OrderParameter( const std::string& name, const std::string& type, bool optional, unsigned int min /* = 1*/, unsigned int max /* = 1*/ )
-    : name_    ( name )
-    , type_    ( boost::algorithm::to_lower_copy( type ) )
+    : name_( name )
+    , type_( boost::algorithm::to_lower_copy( type ) )
     , optional_( optional )
+    , structure_( false )
+    , union_( false )
     , minOccurs_( min )
     , maxOccurs_( max )
     , minValue_ ( std::numeric_limits< double >::min() )
@@ -70,12 +96,39 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderParameter constructor
+// Created: ABR 2014-03-05
+// -----------------------------------------------------------------------------
+OrderParameter::OrderParameter( const OrderParameter& other )
+    : name_( other.name_ )
+    , type_( other.type_ )
+    , optional_( other.optional_ )
+    , structure_( other.structure_ )
+    , union_( other.union_ )
+    , minOccurs_( other.minOccurs_ )
+    , maxOccurs_( other.maxOccurs_ )
+    , minValue_ ( other.minValue_ )
+    , maxValue_ ( other.maxValue_ )
+{
+    CopyVisitor visitor( *this );
+    other.Accept( static_cast< OrderParameterValueVisitor_ABC& >( visitor ) );
+    other.Accept( static_cast< ChoicesVisitor_ABC& >( visitor ) );
+    auto it = other.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        auto& element = it.NextElement();
+        auto* copy = new OrderParameter( element );
+        Register( Count(), *copy );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrderParameter destructor
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
 OrderParameter::~OrderParameter()
 {
-    // NOTHING
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -338,4 +391,40 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
 bool OrderParameter::HasGenObject( const std::string& type ) const
 {
     return genObjects_.empty() || ( genObjects_.find( type ) != genObjects_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::IsStructure
+// Created: ABR 2014-03-06
+// -----------------------------------------------------------------------------
+bool OrderParameter::IsStructure() const
+{
+    return structure_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::SetStructure
+// Created: ABR 2014-03-06
+// -----------------------------------------------------------------------------
+void OrderParameter::SetStructure( bool structure )
+{
+    structure_ = structure;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::IsUnion
+// Created: ABR 2014-03-07
+// -----------------------------------------------------------------------------
+bool OrderParameter::IsUnion() const
+{
+    return union_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::SetUnion
+// Created: ABR 2014-03-07
+// -----------------------------------------------------------------------------
+void OrderParameter::SetUnion( bool isUnion )
+{
+    union_ = isUnion;
 }
