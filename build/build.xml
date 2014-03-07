@@ -809,7 +809,7 @@
     <target name="update" description="update package dependencies">
         <update name="7z" version="9.30-1"/>
         <update name="asciidoc" version="8.6.8"/>
-        <update name="boost" version="1.50.r653"/>
+        <update name="boost" version="1.55.r717"/>
         <update name="bugtrap" version="1.3.3291.42976"/>
         <update name="buildtools"/>
         <update name="cmake" version="2.8.11.1-masa1"/>
@@ -825,7 +825,7 @@
         <update name="iconv" version="1.14.r619"/>
         <update name="icu" version="4.52.1"/>
         <update name="libpng" version="1.6.6"/>
-        <update name="mapnik" version="2.2.0.r683"/>
+        <update name="mapnik" version="2.2.0.r719"/>
         <update name="masalife/brain"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
