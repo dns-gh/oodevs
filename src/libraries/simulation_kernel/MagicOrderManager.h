@@ -38,7 +38,7 @@ public:
     uint32_t Register( const sword::ObjectMagicAction& msg );
     uint32_t Register( const sword::KnowledgeMagicAction& msg );
     uint32_t Register( const sword::SetAutomatMode& msg );
-    void     Send    ( uint32_t id );
+    void     Send    ( uint32_t id, int32_t code, const std::string& msg );
 
     virtual void SendStateToNewClient();
 

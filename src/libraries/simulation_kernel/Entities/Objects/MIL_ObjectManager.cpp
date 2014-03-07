@@ -438,13 +438,13 @@ void MIL_ObjectManager::SendFullState()
 // Name: MIL_ObjectManager::OnReceiveObjectMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg, unsigned int nCtx, unsigned int clientId, uint32_t magicId,
-                                                    const tools::Resolver< MIL_Army_ABC >& armies, const propagation::FloodModel_ABC& floodModel )
+void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg,
+                                                    sword::ObjectMagicActionAck& ack,
+                                                    const tools::Resolver< MIL_Army_ABC >& armies,
+                                                    const propagation::FloodModel_ABC& floodModel )
 {
-    client::ObjectMagicActionAck ack;
-    ack().set_id( magicId );
-    ack().set_error_code( sword::ObjectMagicActionAck::no_error );
-    ack().set_error_msg( "" );
+    ack.set_error_code( sword::ObjectMagicActionAck::no_error );
+    ack.set_error_msg( "" );
     unsigned int id = 0u;
     try
     {
@@ -489,16 +489,15 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
     }
     catch( const NET_AsnBadParam< sword::ObjectMagicActionAck::ErrorCode >& e )
     {
-        ack().set_error_code( e.GetErrorID() );
-        ack().set_error_msg( e.what() );
+        ack.set_error_code( e.GetErrorID() );
+        ack.set_error_msg( e.what() );
     }
     catch( const std::exception& e )
     {
-        ack().set_error_code( sword::ObjectMagicActionAck::error_invalid_object );
-        ack().set_error_msg( tools::GetExceptionMsg( e ) );
+        ack.set_error_code( sword::ObjectMagicActionAck::error_invalid_object );
+        ack.set_error_msg( tools::GetExceptionMsg( e ) );
     }
-    ack().mutable_object()->set_id( id );
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    ack.mutable_object()->set_id( id );
 }
 
 // -----------------------------------------------------------------------------
