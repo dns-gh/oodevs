@@ -169,8 +169,9 @@ void PathfindLayer::SendRequest()
         sword::ClientToSim msg;
         auto request = msg.mutable_message()->mutable_pathfind_request();
         request->mutable_unit()->set_id( element_->GetId() );
-        coordinateConverter_.ConvertToGeo( *from_, *request->mutable_start() );
-        coordinateConverter_.ConvertToGeo( *to_, *request->mutable_end() );
+        auto* positions = request->mutable_positions();
+        coordinateConverter_.ConvertToGeo( *from_, *positions->Add() );
+        coordinateConverter_.ConvertToGeo( *to_, *positions->Add() );
         publisher_.Send( msg );
     }
 }

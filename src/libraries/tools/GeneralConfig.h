@@ -78,6 +78,8 @@ public:
 
     const Languages& GetLanguages() const;
     const std::string& GetCommandLineLanguage() const;
+
+    bool IsActivated( const std::string& feature ) const;
     //@}
 
 protected:
@@ -87,9 +89,6 @@ protected:
     static void ResolveNewRelativePath( const Path& oldRoot, const Path& newRoot, Path& path );
     void LoadExercise( const Path& file );
     //@}
-
-private:
-    bool IsActivated( const std::string& feature ) const;
 
 private:
     //! @name Member data

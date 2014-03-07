@@ -264,6 +264,7 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
     archive >> sink;
     ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(), MIL_EffectManager::GetEffectManager(),
                                        sink,
+                                       MIL_AgentServer::GetWorkspace().GetPathFindManager(),
                                        MIL_AgentServer::GetWorkspace().GetConfig() );
 }
 
@@ -277,7 +278,8 @@ void MIL_EntityManager::Initialize( const tools::PhyLoader& loader, const MIL_Ti
 // Name: MIL_EntityManager constructor
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory, const MIL_Config& config )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
+                                      DEC_PathFind_Manager& pathfindManager, const MIL_Config& config )
     : time_                         ( time )
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
@@ -306,7 +308,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() )
-    , pathfindComputer_             ( new PathfindComputer() )
+    , pathfindComputer_             ( new PathfindComputer( pathfindManager ) )
 {
     // NOTHING
 }
@@ -315,8 +317,8 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
 // Name: MIL_EntityManager constructor
 // Created: MCO 2012-09-12
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, std::auto_ptr< sword::Sink_ABC > sink
-                                    , const MIL_Config& config )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, std::auto_ptr< sword::Sink_ABC > sink,
+                                      DEC_PathFind_Manager& pathfindManager, const MIL_Config& config )
     : time_                         ( time )
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
@@ -335,7 +337,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , idManager_                    ( new MIL_IDManager() )
     , sink_                         ( sink.release() )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() ) // todo : delete if saved in checkpoint
-    , pathfindComputer_             ( new PathfindComputer() )
+    , pathfindComputer_             ( new PathfindComputer( pathfindManager ) )
 {
     // NOTHING
 }
@@ -2080,11 +2082,13 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId )
 {
+    const auto& positions = message.positions();
+    protocol::Check( positions.size() == 2, "must have two points" );
     MT_Vector2D start;
-    MIL_Tools::ConvertCoordMosToSim( message.start(), start );
+    MIL_Tools::ConvertCoordMosToSim( positions.Get( 0 ), start );
     MT_Vector2D end;
-    MIL_Tools::ConvertCoordMosToSim( message.end(), end );
-    unsigned int id = message.unit().id();
+    MIL_Tools::ConvertCoordMosToSim( positions.Get( 1 ), end );
+    const unsigned int id = message.unit().id();
     if( MIL_AgentPion* pPion = FindAgentPion( id ) )
         pathfindComputer_->Compute( *pPion, start, end, nCtx, clientId );
     else if( MIL_Population* pPopulation = FindPopulation( id ) )

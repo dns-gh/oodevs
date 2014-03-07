@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PathfindComputer.h"
-#include "MIL_AgentServer.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PathResult.h"
@@ -25,7 +24,8 @@
 // Name: PathfindComputer constructor
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-PathfindComputer::PathfindComputer()
+PathfindComputer::PathfindComputer( DEC_PathFind_Manager& pathfindManager )
+    : pathfindManager_( pathfindManager )
 {
     // NOTHING
 }
@@ -84,7 +84,7 @@ void PathfindComputer::Compute( const boost::shared_ptr< DEC_PathResult >& path,
 {
     path->AddRef();
     results_[ clientId ] = std::make_pair( nCtx, path );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( path );
+    pathfindManager_.StartCompute( path );
 }
 
 // -----------------------------------------------------------------------------

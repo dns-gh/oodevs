@@ -13,8 +13,9 @@
 #include <boost/noncopyable.hpp>
 
 class MIL_AgentPion;
-class MIL_Population;
+class DEC_PathFind_Manager;
 class DEC_PathResult;
+class MIL_Population;
 class MT_Vector2D;
 
 // =============================================================================
@@ -28,7 +29,7 @@ class PathfindComputer : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PathfindComputer();
+    explicit PathfindComputer( DEC_PathFind_Manager& pathfindManager );
     virtual ~PathfindComputer();
     //@}
 
@@ -57,6 +58,7 @@ private:
 private:
     //! @name Member data
     //@{
+    DEC_PathFind_Manager& pathfindManager_;
     T_Results results_;
     //@}
 };

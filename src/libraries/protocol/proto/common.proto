@@ -2561,13 +2561,12 @@ message ListLogisticRequestsAck {
     repeated LogHistoryEntry entries = 1;
 }
 
-//! Asks a path between 'start' and 'end' position. This path is
+//! Asks a path between positions. This path is
 //! calculated with the physical specifications of the 'unit'.
 //! The 'Id' parameter is an identifier of an agent or a crowd
 message PathfindRequest {
-    required Id           unit  = 1;
-    required CoordLatLong start = 2;
-    required CoordLatLong end   = 3;
+    required Id           unit      = 1;
+    repeated CoordLatLong positions = 2;
 }
 
 //! Returns a calculated path, if operation succeeded.

@@ -39,6 +39,7 @@ namespace sword
     class MissionParameters;
     class ObjectMagicAction;
     class ParentEntity;
+    class PathfindRequest;
     class SetAutomatMode;
     class Sink_ABC;
     class Tasker;
@@ -67,6 +68,7 @@ namespace propagation
 class AgentFactory_ABC;
 class ArmyFactory_ABC;
 class AutomateFactory_ABC;
+class DEC_PathFind_Manager;
 class FormationFactory_ABC;
 class InhabitantFactory_ABC;
 class KnowledgeGroupFactory;
@@ -112,7 +114,8 @@ class MIL_EntityManager : public MIL_EntityManager_ABC,
                           private boost::noncopyable
 {
 public:
-             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory, const MIL_Config& config );
+             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
+                                DEC_PathFind_Manager& pathfindManager, const MIL_Config& config );
     virtual ~MIL_EntityManager();
 
     static void Initialize( const tools::PhyLoader& loader, const MIL_Time_ABC& time,
@@ -232,7 +235,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, std::auto_ptr< sword::Sink_ABC > sink, const MIL_Config& config );
+    MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, std::auto_ptr< sword::Sink_ABC > sink,
+                       DEC_PathFind_Manager& pathfindManager, const MIL_Config& config );
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;

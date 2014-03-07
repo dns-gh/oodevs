@@ -317,7 +317,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, *parameters_, *glProxy_, profile_ );
     gui::Layer& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
     gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
-    gui::Layer& pathfindLayer        = *new PathfindLayer( controllers_, *glProxy_, model_.publisher_, staticModel_.coordinateConverter_ );
+
 
     // ordre de dessin
     AddLayer( defaultLayer );
@@ -353,7 +353,6 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( profilerLayer, "main" );
     AddLayer( drawerLayer, "main,miniviews" );
     AddLayer( fogLayer, "fog" );
-    AddLayer( pathfindLayer, "main" );
     AddTooltipLayer( tooltipLayer );
 
     // ordre des evenements
@@ -376,6 +375,14 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     forward_->Register( metrics );
     forward_->Register( elevation3d );
     forward_->Register( weather );
+
+    if( config_.IsActivated( "pathfind" ) )
+    {
+        gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, model_.publisher_, staticModel_.coordinateConverter_ );
+        AddLayer( pathfindLayer, "main" );
+        forward_->Register( pathfindLayer );
+    }
+
     forward_->SetDefault( defaultLayer );
 }
 
