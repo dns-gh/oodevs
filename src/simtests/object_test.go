@@ -41,6 +41,16 @@ func (s *TestSuite) TestCreateEmptyObject(c *C) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return len(data.Objects) == 1
 	})
+
+	// Error: empty parameters
+	params := swapi.MakeList()
+	object, err = client.CreateObject("dyke", party.Id, location, params)
+	c.Assert(err, IsSwordError, "error_invalid_object")
+
+	// Error: first element must be an attribute identifier"
+	params = swapi.MakeList(swapi.MakeBoolean(true))
+	object, err = client.CreateObject("dyke", party.Id, location, params)
+	c.Assert(err, IsSwordError, "error_invalid_object")
 }
 
 func (s *TestSuite) TestDestroyEmptyObject(c *C) {
@@ -144,9 +154,15 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 	party := data.FindPartyByName("party")
 	c.Assert(party, NotNil)
 
+	// Error: parameters count
+	object, err := client.CreateObject("mined area (linear and destructible)",
+		party.Id, location, swapi.MakeList(
+			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_obstacle))))
+	c.Assert(err, IsSwordError, "error_invalid_object")
+
 	// Create mined area (linear and destructible) by default
 	// object isn't activated
-	object, err := client.CreateObject("mined area (linear and destructible)",
+	object, err = client.CreateObject("mined area (linear and destructible)",
 		party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
@@ -224,6 +240,12 @@ func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 	party := data.FindPartyByName("party")
 	c.Assert(party, NotNil)
 
+	// Error: parameters count
+	object, err := client.CreateObject("mined area (linear and destructible)",
+		party.Id, location, swapi.MakeList(
+			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_time_limit))))
+	c.Assert(err, IsSwordError, "error_invalid_object")
+
 	// Create mined area, activated by default
 	delay := int32(120) // 120 seconds
 	params := swapi.MakeList(
@@ -243,7 +265,7 @@ func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 		}
 		return object == nil
 	})
-	object, err := client.CreateObject("mined area (linear and destructible)",
+	object, err = client.CreateObject("mined area (linear and destructible)",
 		party.Id, location, params)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
@@ -265,8 +287,14 @@ func (s *TestSuite) TestBypassAttribute(c *C) {
 	party := data.FindPartyByName("party")
 	c.Assert(party, NotNil)
 
-	// Create mined area by default
+	// Error: parameters count
 	object, err := client.CreateObject("mined area (linear and destructible)",
+		party.Id, location, swapi.MakeList(
+			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_bypass))))
+	c.Assert(err, IsSwordError, "error_invalid_object")
+
+	// Create mined area by default
+	object, err = client.CreateObject("mined area (linear and destructible)",
 		party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
@@ -300,8 +328,14 @@ func (s *TestSuite) TestAltitudeAttribute(c *C) {
 	party := data.FindPartyByName("party")
 	c.Assert(party, NotNil)
 
+	// Error: parameters count
+	object, err := client.CreateObject("dyke",
+		party.Id, location, swapi.MakeList(
+			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_altitude_modifier))))
+	c.Assert(err, IsSwordError, "error_invalid_object")
+
 	// Create mined area by default
-	object, err := client.CreateObject("dyke", party.Id, location)
+	object, err = client.CreateObject("dyke", party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 	c.Assert(object.Altitude, Equals, int32(0))
@@ -475,8 +509,14 @@ func (s *TestSuite) TestTrafficabilityAttribute(c *C) {
 	party := data.FindPartyByName("party")
 	c.Assert(party, NotNil)
 
+	// Error: parameters count
+	object, err := client.CreateObject("landslide",
+		party.Id, location, swapi.MakeList(
+			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_trafficability))))
+	c.Assert(err, IsSwordError, "error_invalid_object")
+
 	// Create landslide by default
-	object, err := client.CreateObject("landslide", party.Id, location)
+	object, err = client.CreateObject("landslide", party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
