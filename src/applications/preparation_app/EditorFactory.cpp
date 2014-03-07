@@ -9,7 +9,6 @@
 
 #include "preparation_app_pch.h"
 #include "EditorFactory.h"
-#include "DotationsEditor.h"
 #include "LogisticSuperiorEditor.h"
 #include "MultipleResolverEditor.h"
 #include "preparation/Model.h"
@@ -224,17 +223,6 @@ void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
     NBCAgentEditor* editor = new NBCAgentEditor( "NBCAgentEditor", parent_, static_cast< T_NBCResolver& >( staticModel_.objectTypes_ ) );
     editor->SetCurrentItem( *value );
     result_ = editor;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::Call
-// Created: SBO 2006-11-10
-// -----------------------------------------------------------------------------
-void EditorFactory::Call( DotationsItem** const& value )
-{
-    DotationsEditor* dotationsEditor = new DotationsEditor( parent_, staticModel_.objectTypes_ );
-    dotationsEditor->SetCurrentItem( *value, *selected_ );
-    result_ = dotationsEditor;
 }
 
 // -----------------------------------------------------------------------------

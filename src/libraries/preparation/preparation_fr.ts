@@ -275,14 +275,6 @@
         <source>Logistic/LogisticBase/Superior</source>
         <translation>Logistique/Base logistique/Supérieur</translation>
     </message>
-    <message>
-        <source>Logistic/LogisticBase/Quotas</source>
-        <translation>Logistique/Base logistique/Quotas</translation>
-    </message>
-    <message>
-        <source>Logistic/LogisticBase/Edit Quotas</source>
-        <translation>Logistique/Base logistique/Editer les Quotas</translation>
-    </message>
 </context>
 <context>
     <name>MedicalTreatment</name>
@@ -603,13 +595,6 @@
 Reason: %1.</source>
         <translation>La définition des scores contient des erreurs:
 Détail: %1.</translation>
-    </message>
-</context>
-<context>
-    <name>Stocks</name>
-    <message>
-        <source>Stocks</source>
-        <translation>Stocks</translation>
     </message>
 </context>
 <context>

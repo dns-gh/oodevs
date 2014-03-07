@@ -275,14 +275,6 @@
         <source>Logistic/LogisticBase/Superior</source>
         <translation type="unfinished">السوقي/لوجيستيكباسي/سوبيريور</translation>
     </message>
-    <message>
-        <source>Logistic/LogisticBase/Quotas</source>
-        <translation type="unfinished">السوقي/لوجيستيكباسي/الحصص</translation>
-    </message>
-    <message>
-        <source>Logistic/LogisticBase/Edit Quotas</source>
-        <translation type="unfinished">الحصص السوقية/لوجيستيكباسي/تحرير</translation>
-    </message>
 </context>
 <context>
     <name>MineAttribute</name>
@@ -595,13 +587,6 @@
         <source>Score definitions contain errors:
 Reason: %1.</source>
         <translation type="unfinished">تحتوي على أخطاء بنقاط التعاريف: السبب: %1.</translation>
-    </message>
-</context>
-<context>
-    <name>Stocks</name>
-    <message>
-        <source>Stocks</source>
-        <translation type="unfinished">الأرصدة</translation>
     </message>
 </context>
 <context>

@@ -38,7 +38,6 @@ namespace tools
 
 class Model;
 class StaticModel;
-class DotationsItem;
 class PopulationRepartition;
 
 // =============================================================================
@@ -57,7 +56,6 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< std::vector< kernel::NBCAgent* >* >
                     , public tools::Caller< Enum_PopulationAttitude* >
                     , public tools::Caller< Enum_NbcState* >
-                    , public tools::Caller< DotationsItem** >
                     , public tools::Caller< kernel::Moveable_ABC** >
                     , public tools::Caller< PopulationRepartition** >
                     , public tools::Caller< kernel::InfrastructureType** >
@@ -85,7 +83,6 @@ public:
     virtual void Call( std::vector< kernel::NBCAgent* >* const& value );
     virtual void Call( Enum_PopulationAttitude* const& value );
     virtual void Call( Enum_NbcState* const& value );
-    virtual void Call( DotationsItem** const& value );
     virtual void Call( kernel::Moveable_ABC** const& value );
     virtual void Call( PopulationRepartition** const& value );
     virtual void Call( kernel::InfrastructureType** const& value );

@@ -107,7 +107,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Automat_ABC& parent, const kern
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dictionary, tools::translate( "Affinities", "Affinities" ) ) );
     if( result->GetType().IsLogisticSupply() )
-        result->Attach( *new Stocks( controllers_.controller_, *result, dictionary ) );
+        result->Attach( *new Stocks( controllers_.controller_ ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, type, dictionary, commandPost ) );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
@@ -240,7 +240,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Attach< Affinities >( *new AgentAffinities( xis, *result, controllers_, model_, dictionary, tools::translate( "Affinities", "Affinities" ) ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( xis, *result, *type, dictionary ) );
     if( result->GetType().IsLogisticSupply() )
-        result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dictionary ) );
+        result->Attach( *new Stocks( xis, controllers_.controller_, static_.objectTypes_ ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Attach( *new TacticalLines() );
@@ -342,7 +342,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dictionary, tools::translate( "Affinities", "Affinities" ) ) );
     if( result->GetType().IsLogisticSupply() )
-        result->Attach( *new Stocks( controllers_.controller_, *result, dictionary ) );
+        result->Attach( *new Stocks( controllers_.controller_ ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, type, dictionary, ghost.Get< kernel::CommandPostAttributes_ABC >().IsCommandPost() ) );
     result->Attach< kernel::Color_ABC >( *new Color( ghost ) );

@@ -269,57 +269,6 @@
     </message>
 </context>
 <context>
-    <name>DotationsEditor</name>
-    <message>
-        <source>Resources editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current weight</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maximal weight</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current volume</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maximal volume</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hide information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display information</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>EditorFactory</name>
     <message>
         <source>NBC agent(s) editor</source>
@@ -1834,10 +1783,6 @@ This data can&apos;t be projected.</source>
 </context>
 <context>
     <name>PropertyDisplayer</name>
-    <message>
-        <source>&lt;Edit Property Group...&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>not set</source>
         <translation type="unfinished"></translation>

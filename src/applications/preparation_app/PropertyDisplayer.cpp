@@ -10,14 +10,11 @@
 #include "preparation_app_pch.h"
 #include "PropertyDisplayer.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/DotationType.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/UrbanTemplateType.h"
 #include "clients_kernel/Tools.h"
-#include "preparation/Dotation.h"
-#include "preparation/DotationsItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: PropertyDisplayer constructor
@@ -54,15 +51,6 @@ void PropertyDisplayer::Call( const Enum_PopulationAttitude& value )
 void PropertyDisplayer::Call( const Enum_NbcState & value )
 {
     AddToDisplay( value.ToString() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertyDisplayer::Call
-// Created: SBO 2006-11-10
-// -----------------------------------------------------------------------------
-void PropertyDisplayer::Call( const DotationsItem& /*value*/ )
-{
-    AddToDisplay( tools::translate( "PropertyDisplayer", "<Edit Property Group...>" ) );
 }
 
 // -----------------------------------------------------------------------------

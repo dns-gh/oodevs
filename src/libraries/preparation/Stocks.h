@@ -19,12 +19,6 @@ namespace kernel
 {
     class Controller;
     class DotationType;
-    class Entity_ABC;
-}
-
-namespace gui
-{
-    class PropertiesDictionary;
 }
 
 namespace xml
@@ -33,7 +27,6 @@ namespace xml
 }
 
 class Dotation;
-class DotationsItem;
 
 // =============================================================================
 /** @class  Stocks
@@ -49,8 +42,8 @@ class Stocks : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Stocks( kernel::Controller& controller, kernel::Entity_ABC& entity, gui::PropertiesDictionary& dico );
-             Stocks( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, gui::PropertiesDictionary& dico );
+             Stocks( kernel::Controller& controller );
+             Stocks( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver );
     virtual ~Stocks();
     void SetDotation( const kernel::DotationType& type, unsigned int quantity, bool add );
     void DeleteAll();
@@ -64,7 +57,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::Entity_ABC& entity, gui::PropertiesDictionary& dico );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     void ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver );
     bool IsToSerialize() const;
@@ -74,7 +66,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    DotationsItem* item_;
     mutable std::vector< std::string > invalidDotations_;
     //@}
 };

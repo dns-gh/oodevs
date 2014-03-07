@@ -271,57 +271,6 @@
     </message>
 </context>
 <context>
-    <name>DotationsEditor</name>
-    <message>
-        <source>Resources editor</source>
-        <translation>Resources editor</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation>Quantity</translation>
-    </message>
-    <message>
-        <source>Current weight</source>
-        <translation>Current weight</translation>
-    </message>
-    <message>
-        <source>Maximal weight</source>
-        <translation>Maximal weight</translation>
-    </message>
-    <message>
-        <source>Current volume</source>
-        <translation>Current volume</translation>
-    </message>
-    <message>
-        <source>Maximal volume</source>
-        <translation>Maximal volume</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Clear</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Hide information</source>
-        <translation>Hide information</translation>
-    </message>
-    <message>
-        <source>Display information</source>
-        <translation>Display information</translation>
-    </message>
-</context>
-<context>
     <name>EditorFactory</name>
     <message>
         <source>NBC agent(s) editor</source>
@@ -1838,10 +1787,6 @@ This data can&apos;t be projected.</translation>
 </context>
 <context>
     <name>PropertyDisplayer</name>
-    <message>
-        <source>&lt;Edit Property Group...&gt;</source>
-        <translation>&lt;Edit Property Group...&gt;</translation>
-    </message>
     <message>
         <source>not set</source>
         <translation>not set</translation>
