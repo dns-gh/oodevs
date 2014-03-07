@@ -723,30 +723,16 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreatePion
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, unsigned int nCtx )
-{
-    MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition, 0 );
-    if( !pPion )
-        throw MASA_EXCEPTION( "Pion couldn't be created." );
-    pPion->SendCreation ( nCtx );
-    pPion->SendFullState( nCtx );
-    pPion->SendKnowledge( nCtx );
-    return *pPion;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreatePion
 // Created: MMC 2011-05-27
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx,
-    const MIL_DictionaryExtensions& extensions )
+MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string* name, unsigned int nCtx,
+    const MIL_DictionaryExtensions* extensions )
 {
     MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition, name, 0 );
     if( !pPion )
         throw MASA_EXCEPTION( "Pion couldn't be created." );
-    pPion->SetExtensions( extensions );
+    if( extensions )
+        pPion->SetExtensions( *extensions );
     pPion->SendCreation ( nCtx );
     pPion->SendFullState( nCtx );
     pPion->SendKnowledge( nCtx );
@@ -1359,7 +1345,7 @@ void MIL_EntityManager::ProcessAutomatAndUnitsCreationRequest( const UnitMagicAc
                     newPosition = MT_Vector2D( 100.f * std::sin( current * angle ), 100.f * std::cos( current * angle ) ) + position;
                     current++;
                 }
-                MIL_AgentPion& pion = CreatePion( *agentType, automat, newPosition, nCtx );
+                MIL_AgentPion& pion = CreatePion( *agentType, automat, newPosition, 0, nCtx, 0 );
                 ack.mutable_result()->add_elem()->add_value()->mutable_agent()
                     ->set_id( pion.GetID() );
             }

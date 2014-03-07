@@ -502,7 +502,7 @@ MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion&
 
     const MT_Vector2D& location = pConvoyAutomate->GetPosition();
 
-    MIL_AgentPion& convoyPion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( type, *pConvoyAutomate, location, 0 );
+    MIL_AgentPion& convoyPion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( type, *pConvoyAutomate, location, 0, 0, 0 );
     PHY_RoleInterface_Supply* itf = convoyPion.RetrieveRole< PHY_RoleInterface_Supply >();
     if( itf )
         itf->AssignConvoy( convoy );

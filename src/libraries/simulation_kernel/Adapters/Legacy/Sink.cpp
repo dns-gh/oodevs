@@ -267,20 +267,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // Name: Sink::Create
 // Created: SLI 2012-02-10
 // -----------------------------------------------------------------------------
-MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, sword::RoleExtender_ABC* ext )
-{
-    SinkRoleExtender chainExt( ext );
-    CreateRoles( chainExt );
-    MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, vPosition, &chainExt ) );
-    Initialize( pion, vPosition );
-    return &pion;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::Create
-// Created: SLI 2012-02-10
-// -----------------------------------------------------------------------------
-MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext )
+MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string* name, sword::RoleExtender_ABC* ext )
 {
     SinkRoleExtender chainExt( ext );
     CreateRoles( chainExt );

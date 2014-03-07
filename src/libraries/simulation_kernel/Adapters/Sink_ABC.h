@@ -59,8 +59,7 @@ public:
     virtual void UpdateUrbanModel( const MIL_UrbanCache& cache ) = 0;
     virtual void LogProfiling() = 0;
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, sword::RoleExtender_ABC* ext ) = 0;
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, sword::RoleExtender_ABC* ext ) = 0;
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext ) = 0;
+    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string* name, sword::RoleExtender_ABC* ext ) = 0;
     //@}
 
     //! @name Commands

@@ -55,20 +55,13 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::Create
-// Created: MGD 2009-08-13
-// -----------------------------------------------------------------------------
-MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, sword::RoleExtender_ABC* ext )
-{
-    return Create( type, automate, vPosition, type.GetName(), ext );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
 // Created: MMC 2011-05-27
 // -----------------------------------------------------------------------------
-MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& /*vPosition*/, const std::string& name, sword::RoleExtender_ABC* ext )
+MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& /*vPosition*/, const std::string* name, sword::RoleExtender_ABC* ext )
 {
-    MIL_AgentPion* pPion = type.InstanciatePion( *algorithmsFactories_, missionController_, automate, name );
+    const std::string unitName = name ? *name : type.GetName();
+    MIL_AgentPion* pPion = type.InstanciatePion( *algorithmsFactories_,
+            missionController_, automate, unitName );
     type.RegisterRoles( *pPion, ext );
     return pPion;
 }
