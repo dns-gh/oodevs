@@ -845,11 +845,11 @@
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
         <update name="terrain"/>
         <update name="tools"/>
-        <update name="turtle" version="1.688"/>
+        <update name="turtle" version="1.723"/>
         <update name="vcredist" version="1.1" package="vcredist"/>
         <update name="xalan-c" version="svn rev 990605 + patch"/>
         <update name="xerces-c" version="3.1.1"/>
-        <update name="xeumeuleu" version="1.750"/>
+        <update name="xeumeuleu" version="1.750-2"/>
         <update name="zlib" version="1.2.6.r167"/>
         <!-- timeline_ui dependencies -->
         <update name="cef" version="1.1364.1123" package="dll/${platform32}" todir="${run.dir}/cef"/>
