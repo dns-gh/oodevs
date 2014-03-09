@@ -14,7 +14,6 @@
 #include "AgentTypes.h"
 #include "AtlasNatures.h"
 #include "CoordinateConverter.h"
-#include "CoordinateSystems.h"
 #include "DetectionMap.h"
 #include "DisasterTypes.h"
 #include "ExtensionTypes.h"
@@ -28,8 +27,7 @@ using namespace kernel;
 // Created: SBO 2010-05-10
 // -----------------------------------------------------------------------------
 StaticModel::StaticModel()
-    : coordinateSystems_  ( *new CoordinateSystems() )
-    , coordinateConverter_( *new CoordinateConverter( coordinateSystems_ ) )
+    : coordinateConverter_( *new CoordinateConverter() )
     , types_              ( *new AgentTypes() )
     , disasterTypes_      ( *new DisasterTypes() )
     , objectTypes_        ( *new ObjectTypes() )
@@ -55,7 +53,6 @@ StaticModel::~StaticModel()
     delete &objectTypes_;
     delete &types_;
     delete &coordinateConverter_;
-    delete &coordinateSystems_;
 }
 
 // -----------------------------------------------------------------------------

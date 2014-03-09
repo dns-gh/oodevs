@@ -16,7 +16,7 @@
 
 namespace kernel
 {
-    class CoordinateSystems;
+    class CoordinateConverter_ABC;
     class Controllers;
 }
 
@@ -48,8 +48,14 @@ class PreferencesDialog : public ModalDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             PreferencesDialog( QWidget* parent, kernel::Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, GraphicPreferences& preferences );
+             PreferencesDialog( QWidget* parent,
+                                kernel::Controllers& controllers,
+                                LightingProxy& lighting,
+                                kernel::CoordinateConverter_ABC& coordConverter,
+                                const Painter_ABC& painter,
+                                GlSelector& selector,
+                                Elevation2dLayer& elevation2dLayer,
+                                GraphicPreferences& preferences );
     virtual ~PreferencesDialog();
     //@}
 

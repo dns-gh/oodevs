@@ -41,7 +41,7 @@ namespace tools
 
         switch( timeUnit )
         {
-        case 's': output = static_cast< T >( fValue ); break;break;
+        case 's': output = static_cast< T >( fValue ); break;
         case 'm': output = static_cast< T >( fValue * 60 ); break;
         case 'h': output = static_cast< T >( fValue * 3600 ); break;
         default:
@@ -53,6 +53,7 @@ namespace tools
     template< typename T >
     bool ReadTimeAttribute( xml::xistream& xis, const std::string& name, T& time )
     {
+        time = T();
         std::string timeString;
         xis >> xml::optional >> xml::attribute( name, timeString );
         return DecodeTime( timeString, time );

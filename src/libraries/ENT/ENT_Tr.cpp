@@ -58,6 +58,8 @@ typedef ENT_Tr::Converter< E_EventTypes > T_ConverterEventTypes;
 typedef ENT_Tr::Converter< E_MissionType > T_ConverterMissionType;
 typedef ENT_Tr::Converter< E_MissionType > T_ConverterMissionType;
 typedef ENT_Tr::Converter< E_EventDockModes > T_ConverterEventDockModes;
+typedef ENT_Tr::Converter< E_CoordinateSystem > T_ConverterCoordinateSystem;
+
 typedef ENT_Tr::Converter< sword::MagicAction::Type > T_ConverterMagicActionType;
 typedef ENT_Tr::Converter< sword::UnitMagicAction::Type > T_ConverterUnitMagicActionType;
 typedef ENT_Tr::Converter< sword::KnowledgeMagicAction::Type > T_ConverterKnowledgeMagicActionType;
@@ -487,6 +489,16 @@ T_ConverterEventDockModes EventDockModesConverter_[] =
     T_ConverterEventDockModes( "", "", (E_EventDockModes)-1 )
 };
 
+T_ConverterCoordinateSystem CoordinateSystemConverter_[] =
+{
+    T_ConverterCoordinateSystem( "mgrs",     QT_TRANSLATE_NOOP( "CoordinateSystem", "UTM MGRS" ),          eCoordinateSystem_Mgrs ),
+    T_ConverterCoordinateSystem( "sanc",     QT_TRANSLATE_NOOP( "CoordinateSystem", "UTM SAD69 Brazil" ),  eCoordinateSystem_SanC ),
+    T_ConverterCoordinateSystem( "wgs84dd",  QT_TRANSLATE_NOOP( "CoordinateSystem", "LatLong WGS84 DD" ),  eCoordinateSystem_Wgs84Dd ),
+    T_ConverterCoordinateSystem( "wgs84dms", QT_TRANSLATE_NOOP( "CoordinateSystem", "LatLong WGS84 DMS" ), eCoordinateSystem_Wgs84Dms ),
+    T_ConverterCoordinateSystem( "local",    QT_TRANSLATE_NOOP( "CoordinateSystem", "Local coordinates" ), eCoordinateSystem_Local ),
+    T_ConverterCoordinateSystem( "", "", (E_CoordinateSystem)-1 )
+};
+
 T_ConverterMagicActionType MagicActionTypeConverter_[] =
 {
     T_ConverterMagicActionType( "change_diplomacy",               QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change diplomacy" ), sword::MagicAction::change_diplomacy ),
@@ -671,9 +683,13 @@ T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_[] =
 
 }  // namespace
 
-#define INIT_TR( NAME )\
+#define INIT_TRANSLATION( NAME, CONTEXT )\
     BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1 );\
-    InitTr( ( NAME ## Converter_ ), "ENT_Tr" );
+    InitTr( ( NAME ## Converter_ ), CONTEXT );
+
+#define INIT_TR( NAME ) INIT_TRANSLATION( NAME, "ENT_Tr" )
+
+#define INIT_TR_WITH_CONTEXT( NAME ) INIT_TRANSLATION( NAME, #NAME )
 
 #define INIT_PROTO_TR( CLASS, ALIAS )\
     BOOST_STATIC_ASSERT( COUNT_OF( ALIAS ## Converter_ ) == ( sword:: ## CLASS ## _ARRAYSIZE ) + 1 );\
@@ -730,6 +746,7 @@ void ENT_Tr::InitTranslations()
     INIT_TR( AviationRange );
     INIT_TR( BreakdownNTI );
     INIT_TR( BreakdownType );
+    INIT_TR_WITH_CONTEXT( CoordinateSystem );
     INIT_TR( CrossingType );
     INIT_TR( Diplomacy );
     INIT_TR( DotationFamily );
@@ -781,6 +798,7 @@ IMPLEMENT_CONVERT_METHODS( AmmunitionType )
 IMPLEMENT_CONVERT_METHODS( AviationRange );
 IMPLEMENT_CONVERT_METHODS( BreakdownNTI );
 IMPLEMENT_CONVERT_METHODS( BreakdownType );
+IMPLEMENT_CONVERT_METHODS( CoordinateSystem );
 IMPLEMENT_CONVERT_METHODS( CrossingType );
 IMPLEMENT_CONVERT_METHODS( Diplomacy );
 IMPLEMENT_CONVERT_METHODS( DotationFamily );

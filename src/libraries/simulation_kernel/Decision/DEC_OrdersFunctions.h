@@ -12,6 +12,11 @@
 #ifndef __DEC_OrdersFunctions_h_
 #define __DEC_OrdersFunctions_h_
 
+#include "Entities/Orders/MIL_LimaOrder.h"
+#include "Entities/Orders/MIL_LimaFunction.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Decision/DEC_Tools.h"
+
 class DEC_Decision_ABC;
 class MIL_AgentPion;
 class MIL_Automate;
@@ -30,7 +35,6 @@ public:
     // Mission
     template< typename T > static void FinishMission      ( T& caller );
     template< typename T > static bool IsNewMissionStarted( T& caller );
-
 
     // Limas
     template< typename T > static unsigned int GetLima                   ( const T& caller, unsigned int limaId );
@@ -66,7 +70,7 @@ public:
     static bool IsPionMissionAvailable( DEC_Decision_ABC* agent, std::string diaType );
     static bool IsAutomateMissionAvailable( DEC_Decision_ABC* agent, std::string diaType );
     static bool IsFragOrderAvailable( DEC_Decision_ABC* agent, const std::string& fragorder );
-    
+
     static bool DEC_Mission_IsPath( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
 
 private:
@@ -76,6 +80,92 @@ private:
     //@}
 };
 
-#include "DEC_OrdersFunctions.inl"
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetMissionLimaFlag
+// Created: NLD 2003-12-23
+// -----------------------------------------------------------------------------
+template< typename T >
+bool DEC_OrdersFunctions::GetMissionLimaFlag( const T& caller, unsigned int limaID)
+{
+    MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( limaID );
+    if( !pLima )
+    {
+        return false;
+    }
+    return pLima->IsFlagged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetLima
+// Created: NLD 2004-05-21
+// -----------------------------------------------------------------------------
+template< typename T >
+unsigned int DEC_OrdersFunctions::GetLima( const T& caller, unsigned int limaId )
+{
+    const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( limaId );
+    if( !pFunction )
+        return 0;
+    MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( *pFunction );
+    if( !pLima )
+        return 0;
+    return pLima->GetID();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetLimasFromType
+// Created: NMI 2013-04-30
+// -----------------------------------------------------------------------------
+template< typename T >
+std::vector< unsigned int > DEC_OrdersFunctions::GetLimasFromType( const T& caller, unsigned int limaId )
+{
+    std::vector< unsigned int > vecIDs;
+    const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( limaId );
+    if( !pFunction )
+        return vecIDs;
+    std::vector< MIL_LimaOrder* > vecLimas = caller.GetOrderManager().FindAllLimas( *pFunction );
+    for( auto it = vecLimas.begin(); it != vecLimas.end(); ++it )
+        vecIDs.push_back( (*it)->GetID() );
+    return vecIDs;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetNextScheduledLima
+// Created: NLD 2007-04-30
+// -----------------------------------------------------------------------------
+template< typename T >
+MIL_LimaOrder* DEC_OrdersFunctions::GetNextScheduledLima( const T& caller )
+{
+    return caller.GetOrderManager().FindNextScheduledLima();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetFuseau
+// Created: NLD 2007-04-11
+// -----------------------------------------------------------------------------
+template< typename T >
+static const MIL_Fuseau& DEC_OrdersFunctions::GetFuseau( const T& caller )
+{
+    return caller.GetOrderManager().GetFuseau();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::FinishMission
+// Created: NLD 2005-09-13
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_OrdersFunctions::FinishMission( T& caller )
+{
+    caller.GetOrderManager().CancelMission();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::IsNewMissionStarted
+// Created: NLD 2005-09-19
+// -----------------------------------------------------------------------------
+template< typename T >
+bool DEC_OrdersFunctions::IsNewMissionStarted( T& caller )
+{
+    return caller.GetOrderManager().IsNewMissionStarted();
+}
 
 #endif // __DEC_OrdersFunctions_h_

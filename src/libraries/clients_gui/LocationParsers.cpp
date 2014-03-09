@@ -14,7 +14,7 @@
 #include "Wgs84DdParser.h"
 #include "Wgs84DmsParser.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/CoordinateSystems.h"
+#include "ENT/ENT_Enums.h"
 
 using namespace gui;
 
@@ -23,16 +23,18 @@ using namespace gui;
 // Created: AME 2010-03-11
 // -----------------------------------------------------------------------------
 LocationParsers::LocationParsers( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
-    : controllers_( controllers )
-    , converter_( converter )
 {
-    parsers_[ kernel::CoordinateSystems::E_Mgrs ].reset( new UtmParser( controllers_, [&]( const std::string& mgrs ) { return converter.ConvertToXY( mgrs ); },
-        [&]( const geometry::Point2f& position ) { return converter.GetStringPosition( position, kernel::CoordinateSystems::E_Mgrs ); } ) );
-    parsers_[ kernel::CoordinateSystems::E_SanC ].reset( new UtmParser( controllers_, [&]( const std::string& s ) { return converter.ConvertFrom( s, "SAN-C" ); },
-        [&]( const geometry::Point2f& position ) { return converter.GetStringPosition( position, kernel::CoordinateSystems::E_SanC ); } ) );
-    parsers_[ kernel::CoordinateSystems::E_Local ].reset( new XyParser( converter_, kernel::CoordinateSystems::E_Local ) );
-    parsers_[ kernel::CoordinateSystems::E_Wgs84Dd ].reset( new Wgs84DdParser( converter_, kernel::CoordinateSystems::E_Wgs84Dd ) );
-    parsers_[ kernel::CoordinateSystems::E_Wgs84Dms ].reset( new Wgs84DmsParser( converter_, kernel::CoordinateSystems::E_Wgs84Dms ) );
+    parsers_[ eCoordinateSystem_Mgrs ].reset(
+        new UtmParser( controllers,
+                       [&]( const std::string& mgrs ) { return converter.ConvertToXY( mgrs ); },
+                       [&]( const geometry::Point2f& position ) { return converter.GetStringPosition( position, eCoordinateSystem_Mgrs ); } ) );
+    parsers_[ eCoordinateSystem_SanC ].reset(
+        new UtmParser( controllers,
+                       [&]( const std::string& s ) { return converter.ConvertFrom( s, "SAN-C" ); },
+                       [&]( const geometry::Point2f& position ) { return converter.GetStringPosition( position, eCoordinateSystem_SanC ); } ) );
+    parsers_[ eCoordinateSystem_Local ].reset( new XyParser( converter ) );
+    parsers_[ eCoordinateSystem_Wgs84Dd ].reset( new Wgs84DdParser( converter ) );
+    parsers_[ eCoordinateSystem_Wgs84Dms ].reset( new Wgs84DmsParser( converter ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,31 +43,28 @@ LocationParsers::LocationParsers( kernel::Controllers& controllers, const kernel
 // -----------------------------------------------------------------------------
 LocationParsers::~LocationParsers()
 {
-    // NOTHING
+    parsers_.clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: LocationParsers::GetParser
 // Created: AME 2010-03-11
 // -----------------------------------------------------------------------------
-LocationParser_ABC& LocationParsers::GetParser( int parserId )
+const std::shared_ptr< const LocationParser_ABC >& LocationParsers::GetParser( int parserId ) const
 {
     auto it = parsers_.find( parserId );
     if( it == parsers_.end() )
         throw MASA_EXCEPTION( "Invalid parser id." );
-    return *it->second;
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------
 // Name: LocationParsers::AddParser
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
-void LocationParsers::AddParser( LocationParser_ABC* parser, int id )
+void LocationParsers::AddParser( const std::shared_ptr< const LocationParser_ABC >& parser, int id )
 {
-    if( id != kernel::CoordinateSystems::E_Mgrs &&
-        id != kernel::CoordinateSystems::E_SanC &&
-        id != kernel::CoordinateSystems::E_Local &&
-        id !=kernel::CoordinateSystems::E_Wgs84Dd &&
-        id != kernel::CoordinateSystems::E_Wgs84Dms )
-        parsers_[ id ].reset( parser );
+    if( parsers_.find( id ) != parsers_.end() )
+        throw MASA_EXCEPTION( "Parser id already present." );
+    parsers_[ id ] = parser;
 }

@@ -1255,10 +1255,6 @@ Please check access permissions or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Feature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Center on location</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1293,6 +1289,10 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>Bookmark location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain feature</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

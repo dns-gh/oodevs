@@ -77,6 +77,8 @@ namespace ENT_Tr
     const std::string& ConvertFromEventTypes( E_EventTypes, E_Conversion = eToTr );
     const std::string& ConvertFromMissionType( E_MissionType, E_Conversion = eToTr );
     const std::string& ConvertFromEventDockModes( E_EventDockModes, E_Conversion = eToTr );
+    const std::string& ConvertFromCoordinateSystem( E_CoordinateSystem, E_Conversion = eToTr );
+
     const std::string& ConvertFromMagicActionType( sword::MagicAction_Type, E_Conversion = eToTr );
     const std::string& ConvertFromUnitMagicActionType( sword::UnitMagicAction_Type, E_Conversion = eToTr );
     const std::string& ConvertFromKnowledgeMagicActionType( sword::KnowledgeMagicAction_Type, E_Conversion = eToTr );
@@ -127,6 +129,8 @@ namespace ENT_Tr
     E_EventTypes ConvertToEventTypes( const std::string&, E_Conversion = eToTr );
     E_MissionType ConvertToMissionType( const std::string&, E_Conversion = eToTr );
     E_EventDockModes ConvertToEventDockModes( const std::string&, E_Conversion = eToTr );
+    E_CoordinateSystem ConvertToCoordinateSystem( const std::string&, E_Conversion = eToTr );
+
     sword::MagicAction_Type ConvertToMagicActionType( const std::string&, E_Conversion = eToSim );
     sword::UnitMagicAction_Type ConvertToUnitMagicActionType( const std::string&, E_Conversion = eToSim );
     sword::KnowledgeMagicAction_Type ConvertToKnowledgeMagicActionType( const std::string&, E_Conversion = eToSim );

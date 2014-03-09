@@ -18,8 +18,8 @@
 #include "RichPushButton.h"
 
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/ContextMenu.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace gui;
 
@@ -52,16 +52,23 @@ namespace
 // Name: LocationEditorBox constructor
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
-LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
+LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers,
+                                      const kernel::CoordinateConverter_ABC& converter,
+                                      Qt::Orientation orientation /* = Qt::Horizontal */ )
     : converter_( converter )
     , parsers_( new LocationParsers( controllers, converter ) )
+    , lastValidPosition_( boost::none )
 {
-    setFixedWidth( 250 );
+    setFixedWidth( orientation == Qt::Horizontal ? 350 : 220 );
 
     combo_ = new RichPushButton( "choiceParserButton", "" );
     menu_ = new kernel::ContextMenu( combo_ );
     combo_->setPopup( menu_ );
     combo_->setText( tr("Location" ) );
+    combo_->setFixedWidth( 150 );
+    for( int i = 0; i < eNbrCoordinateSystem; ++i )
+        menu_->insertItem( QString::fromStdString( ENT_Tr::ConvertFromCoordinateSystem( static_cast< E_CoordinateSystem >( i ) ) ), i );
+    connect( menu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );
 
     auto box = new QWidget();
     auto coordLayout = new QHBoxLayout( box );
@@ -75,22 +82,17 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers, const ke
         coordLayout->addWidget( it.edit );
         auto v = new AutoHinter( [&,i]( QString& input ) { return Complete( input, i ); } );
         it.edit->setValidator( v );
+        connect( it.edit, SIGNAL( textEdited( const QString& ) ), SLOT( UpdateValidity() ) );
+        connect( it.edit, SIGNAL( textEdited( const QString& ) ), SIGNAL( DataChanged() ) );
     }
     coordLayout->setMargin( 0 );
 
-    FillDefaultMenu();
-    SelectParser( converter.GetCoordSystem().GetDefault() );
-
-    subMenu_ = new kernel::ContextMenu();
-    hints_ = new RichWidget< QListWidget >( "hints", subMenu_ );
-    hints_->hide();
-
-    connect( menu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );
-    connect( hints_, SIGNAL( currentRowChanged( int ) ), SLOT( SelectHint( int ) ) );
-
-    QHBoxLayout* layout = new QHBoxLayout( this );
+    QBoxLayout* layout = new QBoxLayout( orientation == Qt::Horizontal ? QBoxLayout::LeftToRight : QBoxLayout::TopToBottom, this );
+    layout->setMargin( 0 );
     layout->addWidget( combo_ );
     layout->addWidget( box );
+
+    SelectParser( converter.GetDefaultCoordinateSystem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,40 +105,36 @@ LocationEditorBox::~LocationEditorBox()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationEditorBox::FillDefaultMenu
-// Created: AME 2010-03-12
-// -----------------------------------------------------------------------------
-void LocationEditorBox::FillDefaultMenu()
-{
-    const auto& systems = converter_.GetCoordSystem().GetSystems();
-    for( auto it = systems.begin(); it != systems.end(); ++it )
-        menu_->insertItem( it->second, it->first );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LocationEditorBox::SelectParser
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
 void LocationEditorBox::SelectParser( int index )
 {
-    auto actions = menu_->actions();
+    geometry::Point2f pos;
+    const bool valid = GetPosition( pos );
+    const auto actions = menu_->actions();
     for( int i = 0; i < actions.size(); ++i )
     {
         actions[i]->setCheckable( true );
         actions[i]->setChecked( i == index );
     }
-    current_ = &parsers_->GetParser( index );
-    QToolTip::add( combo_, menu_->text( index ) );
-    UpdateParamZone();
+    const auto parserName = menu_->text( index );
+    current_ = parsers_->GetParser( index );
+    combo_->setText( parserName );
+    ResetFields();
+    if( valid )
+        UpdateField( pos );
+    else if( lastValidPosition_ )
+        UpdateField( *lastValidPosition_ );
+    emit DataChanged();
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationEditorBox::UpdateParamZone
+// Name: LocationEditorBox::ResetFields
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
-void LocationEditorBox::UpdateParamZone()
+void LocationEditorBox::ResetFields()
 {
-    SetValid( true );
     const auto& labels = current_->GetDescriptor().labels;
     for( auto it = fields_.begin(); it < fields_.end(); ++it )
     {
@@ -147,13 +145,14 @@ void LocationEditorBox::UpdateParamZone()
         it->label->setText( label );
         it->edit->setVisible( i < labels.size() );
     }
+    SetValid( true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LocationEditorBox::AddParser
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
-void LocationEditorBox::AddParser( LocationParser_ABC* parser, const QString& name )
+void LocationEditorBox::AddParser( const std::shared_ptr< const LocationParser_ABC >& parser, const QString& name )
 {
     parsers_->AddParser( parser, menu_->insertItem( name ) );
 }
@@ -164,6 +163,7 @@ void LocationEditorBox::AddParser( LocationParser_ABC* parser, const QString& na
 // -----------------------------------------------------------------------------
 void LocationEditorBox::SetValid( bool valid )
 {
+    valid_ = valid;
     static const QColor color = QColor( Qt::red ).light( 120 );
     for( auto it = fields_.begin(); it != fields_.end(); ++it )
         if( valid )
@@ -173,46 +173,20 @@ void LocationEditorBox::SetValid( bool valid )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationEditorBox::SelectHint
-// Created: AME 2010-03-05
-// -----------------------------------------------------------------------------
-void LocationEditorBox::SelectHint( int index )
-{
-    fields_[0].edit->setText( hints_->item( index )->text() );
-    fields_[0].edit->setFocus();
-    subMenu_->hide();
-}
-
-// -----------------------------------------------------------------------------
 // Name: LocationEditorBox::GetPosition
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
-bool LocationEditorBox::GetPosition( geometry::Point2f& result )
+bool LocationEditorBox::GetPosition( geometry::Point2f& result ) const
 {
-    subMenu_->hide();
+    if( !current_ )
+        return false;
     QStringList content;
     const auto& labels = current_->GetDescriptor().labels;
     for( int i = 0; i < labels.size(); ++i )
         if( i < static_cast< int >( fields_.size() ) )
             content << fields_[i].edit->text();
     QStringList hint;
-    const bool valid = current_->Parse( content, result, hint );
-    if( hint.size() > labels.size() )
-    {
-        hints_->clear();
-        hints_->addItems( hint );
-        auto* edit = fields_[0].edit;
-        const QPoint topLeft = edit->mapToGlobal( QPoint( 0, 0 ) );
-        subMenu_->popup( QPoint( topLeft.x(), topLeft.y() + edit->height() ) );
-        edit->setFocus();
-    }
-    else
-    {
-        for( int i = 0; i < hint.size(); ++i )
-            fields_[i].edit->setText( hint[i] );
-    }
-    SetValid( valid );
-    return valid;
+    return current_->Parse( content, result, hint );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,13 +195,13 @@ bool LocationEditorBox::GetPosition( geometry::Point2f& result )
 // -----------------------------------------------------------------------------
 void LocationEditorBox::UpdateField( const geometry::Point2f& position )
 {
-    const QString coord = QString::fromStdString( converter_.GetStringPosition( position ) );
     const auto& labels = current_->GetDescriptor().labels;
-    const QStringList parts = current_->Split( coord );
-    if( parts.size() != labels.size() )
-        throw MASA_EXCEPTION( "Invalid coordinate " + coord.toStdString() );
-    for( int i = 0; i < parts.size(); ++i )
-        fields_[i].edit->setText( parts[i] );
+    const QStringList texts = current_->Split( QString::fromStdString( current_->GetStringPosition( position ) ) );
+    if( texts.size() != labels.size() )
+        throw MASA_EXCEPTION( "Invalid coordinate " + current_->GetStringPosition( position ) );
+    for( int i = 0; i < texts.size(); ++i )
+        fields_[i].edit->setText( texts[i] );
+    UpdateValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -280,10 +254,56 @@ QValidator::State LocationEditorBox::Complete( QString& input, int idx, Field& f
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationEditorBox::Complete
+// Name: LocationEditorBox::GetCurrentParser
 // Created: LGY 2014-01-22
 // -----------------------------------------------------------------------------
-const LocationParser_ABC* LocationEditorBox::GetCurrentParser() const
+const LocationParser_ABC& LocationEditorBox::GetCurrentParser() const
 {
-    return current_;
+    return *current_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorBox::UpdateValidity
+// Created: ABR 2014-02-28
+// -----------------------------------------------------------------------------
+void LocationEditorBox::UpdateValidity()
+{
+    geometry::Point2f pos;
+    QStringList content;
+    QStringList hints;
+    bool empty = true;
+    const auto& labels = current_->GetDescriptor().labels;
+    for( int i = 0; i < labels.size(); ++i )
+        if( i < static_cast< int >( fields_.size() ) )
+        {
+            content << fields_[i].edit->text();
+            empty &= content.back().size() == 0;
+        }
+
+    bool valid = empty || current_->Parse( content, pos, hints );
+    if( valid && !empty )
+        lastValidPosition_ = pos;
+    SetValid( valid );
+    // use hints here to fill a completion menu when FeatureNameParser::Parse will
+    // return consistent hints
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorBox::IsValid
+// Created: ABR 2014-02-27
+// -----------------------------------------------------------------------------
+bool LocationEditorBox::IsValid() const
+{
+    return valid_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorBox::Purge
+// Created: ABR 2014-02-27
+// -----------------------------------------------------------------------------
+void LocationEditorBox::Purge()
+{
+    for( auto it = fields_.begin(); it < fields_.end(); ++it )
+        it->edit->clear();
+    lastValidPosition_ = boost::none;
 }

@@ -1212,7 +1212,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Instructions</source>
+        <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1522,7 +1522,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Request date:</source>
+        <source>Created:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3241,6 +3241,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mass (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

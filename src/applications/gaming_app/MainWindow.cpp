@@ -200,7 +200,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
     gui::Elevation2dLayer& elevation2d = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d, *graphicPreferences_ ) );
+    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateConverter_, *pPainter_, *selector_, elevation2d, *graphicPreferences_ ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers, *firePlayer_ ) );
     new VisionConesToggler( controllers, simulationController, this );

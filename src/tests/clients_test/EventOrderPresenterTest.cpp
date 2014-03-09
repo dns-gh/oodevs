@@ -97,6 +97,7 @@ namespace
         MOCK_METHOD( GetTacticalLineResolver, 0 );
         MOCK_METHOD( GetCurrentDateTime, 0 );
         MOCK_METHOD( GetStaticModel, 0 );
+        MOCK_METHOD( GetConfig, 0 );
         MOCK_METHOD( SetParentObject, 1 );
         MOCK_METHOD( SetParamInterface, 1 );
     };

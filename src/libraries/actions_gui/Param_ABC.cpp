@@ -9,13 +9,19 @@
 
 #include "actions_gui_pch.h"
 #include "Param_ABC.h"
-#include "ParamInterface_ABC.h"
 #include "moc_Param_ABC.cpp"
+
+#include "ParamInterface_ABC.h"
 #include "ListParameter.h"
+
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_gui/ObjectNameManager.h"
+#include "tools/GeneralConfig.h"
 #include "MT_Tools/MT_Logger.h"
+
+#include <QtGui/QToolButton>
 
 using namespace actions::gui;
 
@@ -26,15 +32,17 @@ using namespace actions::gui;
 Param_ABC::Param_ABC( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : QObject( builder.GetParentObject() )
     , ParameterVisitor_ABC( false )
-    , paramInterface_ ( builder.GetParamInterface() )
-    , parameter_      ( parameter )
-    , parentList_     ( 0 )
+    , paramInterface_( builder.GetParamInterface() )
+    , parameter_( parameter )
+    , parentList_( 0 )
     , parentParameter_( 0 )
-    , name_           ( parameter.GetName().c_str() )
-    , type_           ( parameter.GetType() )
-    , controllers_    ( builder.GetControllers() )
-    , group_          ( 0 )
-    , registered_     ( false )
+    , name_( parameter.GetName().c_str() )
+    , type_( parameter.GetType() )
+    , controllers_( builder.GetControllers() )
+    , group_( 0 )
+    , registered_( false )
+    , switchEditor_( 0 )
+    , needSwitchEditor_( false )
 {
     // NOTHING
 }
@@ -469,4 +477,37 @@ bool Param_ABC::HasParameter( const Param_ABC& param ) const
 void Param_ABC::FixOrigin( bool /* fix */ ) const
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::ActivateSwitchEditor
+// Created: ABR 2014-02-26
+// -----------------------------------------------------------------------------
+void Param_ABC::ActivateSwitchEditor( bool activated )
+{
+    needSwitchEditor_ = activated;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::CreateSwitchEditor
+// Created: ABR 2014-02-26
+// -----------------------------------------------------------------------------
+QWidget* Param_ABC::CreateSwitchEditor()
+{
+    switchEditor_ = new QToolButton();
+    switchEditor_->setCheckable( true );
+    switchEditor_->setIcon( ::gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/edit.png" ) ) );
+    if( IsInParam() )
+        connect( switchEditor_, SIGNAL( clicked( bool ) ), parentParameter_, SLOT( OnSwitchEditorClicked( bool ) ) );
+    return switchEditor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::SetSwitchEditorChecked
+// Created: ABR 2014-02-27
+// -----------------------------------------------------------------------------
+void Param_ABC::SetSwitchEditorChecked( bool checked )
+{
+    if( switchEditor_ )
+        switchEditor_->setChecked( checked );
 }

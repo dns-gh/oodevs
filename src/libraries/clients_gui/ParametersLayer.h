@@ -45,7 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    void StartPoint     ( ShapeHandler_ABC& handler );
+    void SetPoint       ( ShapeHandler_ABC& handler, const geometry::Point2f& point ); // set current location to the input point, without edition
+    void StartPoint     ( ShapeHandler_ABC& handler ); // start point edition
     void StartLine      ( ShapeHandler_ABC& handler );
     void StartRectangle ( ShapeHandler_ABC& handler );
     void StartPolygon   ( ShapeHandler_ABC& handler );

@@ -81,6 +81,7 @@ protected:
     void InternalBuildInterface();
     virtual void NotifyChanged( Param_ABC& param );
     virtual bool IsChecked() const;
+    virtual void SetSwitchEditorChecked( bool checked );
     //@}
 
 private:
@@ -95,16 +96,17 @@ private slots:
     //! @name Slots
     //@{
     void OnChecked( bool checked );
+    void OnSwitchEditorClicked( bool checked );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    const InterfaceBuilder_ABC&            builder_;
-    std::vector< Param_ABC* >              params_;
-    std::vector< QWidget* >                widgets_;
-    QStackedWidget*                        stack_;
-    Param_ABC*                             selectedParam_;
+    const InterfaceBuilder_ABC& builder_;
+    std::vector< Param_ABC* > params_;
+    std::vector< QWidget* > widgets_;
+    QStackedWidget* stack_;
+    Param_ABC* selectedParam_;
     //@}
 };
 

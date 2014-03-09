@@ -1215,7 +1215,7 @@ Voulez-vous le remplacer ?</translation>
         <translation>Transporteurs</translation>
     </message>
     <message>
-        <source>Instructions</source>
+        <source>Orders</source>
         <translation>Consignes</translation>
     </message>
     <message>
@@ -1525,8 +1525,8 @@ Voulez-vous le remplacer ?</translation>
         <translation>Dotation de conditionnement:</translation>
     </message>
     <message>
-        <source>Request date:</source>
-        <translation>Date de la requête:</translation>
+        <source>Created:</source>
+        <translation>Création:</translation>
     </message>
     <message>
         <source>Handler:</source>
@@ -3257,6 +3257,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Quantity</source>
         <translation>Quantité</translation>
+    </message>
+    <message>
+        <source>Mass (T)</source>
+        <translation>Masse (T)</translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation>Volume (m3)</translation>
     </message>
 </context>
 <context>

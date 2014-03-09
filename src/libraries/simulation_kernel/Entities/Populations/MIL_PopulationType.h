@@ -36,6 +36,11 @@ class TerrainData;
 class MIL_PopulationType : private boost::noncopyable
 {
 public:
+    //! @name Accessors
+    //@{
+    virtual ~MIL_PopulationType();
+    //@}
+
     //! @name Manager
     //@{
     static void Initialize( xml::xistream& xis );
@@ -75,15 +80,7 @@ public:
     //@}
 
 protected:
-             MIL_PopulationType( const DEC_Model_ABC& model, double rConcentrationDensity = 0. );
-    virtual ~MIL_PopulationType();
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, const MIL_PopulationType* > T_PopulationMap;
-    typedef T_PopulationMap::const_iterator CIT_PopulationMap;
-    //@}
+    MIL_PopulationType( const DEC_Model_ABC& model, double rConcentrationDensity = 0. );
 
 private:
      MIL_PopulationType( const std::string& strName, xml::xistream& xis );
@@ -164,15 +161,6 @@ private:
     const DEC_Model_ABC* pModel_;
     double decontaminationDelay_;
     bool canCollideWithFlow_;
-    //@}
-
-private:
-    //! @name Static data
-    //@{
-    static T_PopulationMap populations_;
-    static double rEffectReloadingTimeDensity_;
-    static double rEffectReloadingTimeFactor_;
-    static double delay_;
     //@}
 };
 

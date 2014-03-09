@@ -32,12 +32,14 @@ namespace
     private:
         DEC_Path_KnowledgePopulation& container_;
     };
+
     std::vector< double > GetAttitudeCosts( const DEC_Agent_PathClass_ABC& pathClass )
     {
-        const MIL_PopulationAttitude::T_AttitudeMap& attitudes = MIL_PopulationAttitude::GetAttitudes();
-        std::vector< double > result( attitudes.size() );
-        BOOST_FOREACH( auto attitude, attitudes )
-            result[ attitude.second->GetID() ] = pathClass.GetPopulationAttitudeCost( attitude.second->GetID() );
+        std::vector< double > result( MIL_PopulationAttitude::Size() );
+        MIL_PopulationAttitude::Visit( [&]( const MIL_PopulationAttitude& attitude ){
+            // very brittle ...
+            result[ attitude.GetID() ] = pathClass.GetPopulationAttitudeCost( attitude.GetID() );
+        });
         return result;
     }
 };

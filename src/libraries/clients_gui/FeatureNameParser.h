@@ -18,6 +18,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace gui
 {
     class TerrainFeatureSearcher;
@@ -34,8 +39,13 @@ class FeatureNameParser : public LocationParser_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FeatureNameParser( kernel::Controllers& controllers );
+    explicit FeatureNameParser();
     virtual ~FeatureNameParser();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Load( const tools::ExerciseConfig& config );
     //@}
 
     //! @name LocationParser_ABC methods

@@ -1296,8 +1296,8 @@ Voulez-vous le supprimer?</translation>
         <translation>Créer un signet à cette position</translation>
     </message>
     <message>
-        <source>Feature</source>
-        <translation>Element</translation>
+        <source>Terrain feature</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

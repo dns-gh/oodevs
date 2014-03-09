@@ -17,8 +17,8 @@ using namespace gui;
 // Name: FeatureNameParser constructor
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-FeatureNameParser::FeatureNameParser( kernel::Controllers& controllers )
-    : searcher_( new TerrainFeatureSearcher( controllers ) )
+FeatureNameParser::FeatureNameParser()
+    : searcher_( new TerrainFeatureSearcher() )
 {
     // NOTHING
 }
@@ -88,4 +88,13 @@ QStringList FeatureNameParser::Split( const QString& input ) const
 std::string FeatureNameParser::GetStringPosition( const geometry::Point2f& ) const
 {
     return lastRequest_.toStdString();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FeatureNameParser::Load
+// Created: ABR 2014-03-04
+// -----------------------------------------------------------------------------
+void FeatureNameParser::Load( const tools::ExerciseConfig& config )
+{
+    searcher_->Load( config );
 }

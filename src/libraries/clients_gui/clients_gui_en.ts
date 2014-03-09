@@ -1263,10 +1263,6 @@ Please check access permissions or write protection.</translation>
         <translation>Location editor</translation>
     </message>
     <message>
-        <source>Feature</source>
-        <translation>Feature</translation>
-    </message>
-    <message>
         <source>Center on location</source>
         <translation>Center on location</translation>
     </message>
@@ -1303,6 +1299,10 @@ Do you want to remove it?</translation>
     <message>
         <source>Bookmark location</source>
         <translation>Bookmark location</translation>
+    </message>
+    <message>
+        <source>Terrain feature</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1108,7 +1108,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
         ack().mutable_unit()->set_id( 0 );
         ack().set_error_code( UnitActionAck::error_invalid_unit );
         ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-        magics.Send( magicId );
+        magics.Send( magicId, ack().error_code(), "missing tasker" );
         return;
     }
     const auto id = *tasker;
@@ -1245,7 +1245,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
         ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    magics.Send( magicId );
+    magics.Send( magicId, ack().error_code(), ack().error_msg() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1501,7 +1501,7 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
         ack().set_error_msg( e.what() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    magics.Send( magicId );
+    magics.Send( magicId, ack().error_code(), ack().error_msg() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1610,7 +1610,7 @@ void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message,
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    magics.Send( magicId );
+    magics.Send( magicId, ack().error_code(), "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1643,8 +1643,11 @@ void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& mes
 {
     auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
     const auto magicId = magics.Register( message );
-    pObjectManager_->OnReceiveObjectMagicAction( message, nCtx, clientId, magicId, *armyFactory_, *pFloodModel_ );
-    magics.Send( magicId );
+    client::ObjectMagicActionAck ack;
+    ack().set_id( magicId );
+    pObjectManager_->OnReceiveObjectMagicAction( message, ack(), *armyFactory_, *pFloodModel_ );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    magics.Send( magicId, ack().error_code(), ack().error_msg() );
 }
 
 // -----------------------------------------------------------------------------

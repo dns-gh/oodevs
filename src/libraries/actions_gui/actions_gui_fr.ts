@@ -187,6 +187,13 @@
     </message>
 </context>
 <context>
+    <name>actions::gui::ParamPoint</name>
+    <message>
+        <source>Terrain feature</source>
+        <translation>Elément de terrain</translation>
+    </message>
+</context>
+<context>
     <name>gui::ObstaclePrototype_ABC</name>
     <message>
         <source>Activity time:</source>

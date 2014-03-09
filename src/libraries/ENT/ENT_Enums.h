@@ -449,4 +449,14 @@ enum E_EventDockModes
     eNbrEventDockModes
 };
 
+enum E_CoordinateSystem
+{
+    eCoordinateSystem_Mgrs,
+    eCoordinateSystem_SanC,
+    eCoordinateSystem_Wgs84Dd,
+    eCoordinateSystem_Wgs84Dms,
+    eCoordinateSystem_Local,
+    eNbrCoordinateSystem,
+};
+
 #endif __ENT_Enums_h_

@@ -99,3 +99,13 @@ void ParamObjectKnowledge::Visit( const actions::parameters::ObjectKnowledge& pa
 {
     InternalVisit( param );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamObjectKnowledge::Purge
+// Created: ABR 2014-02-27
+// -----------------------------------------------------------------------------
+void ParamObjectKnowledge::Purge()
+{
+    EntityParameter< kernel::ObjectKnowledge_ABC >::Purge();
+    agent_ = 0;
+}

@@ -39,16 +39,14 @@ public:
 
     //! @name Operations
     //@{
-    LocationParser_ABC& GetParser( int parserId );
-    void AddParser( LocationParser_ABC* parser, int id );
+    const std::shared_ptr< const LocationParser_ABC >& GetParser( int parserId ) const;
+    void AddParser( const std::shared_ptr< const LocationParser_ABC >& parser, int id );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    const kernel::CoordinateConverter_ABC& converter_;
-    std::map< int, std::auto_ptr< LocationParser_ABC > > parsers_;
+    std::map< int, std::shared_ptr< const LocationParser_ABC > > parsers_;
     //@}
 };
 

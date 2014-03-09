@@ -9,9 +9,11 @@
 
 #include "clients_kernel_pch.h"
 #include "CoordinateConverter.h"
-#include "CoordinateSystems.h"
-#include "tools/ExerciseConfig.h"
 #include "Tools.h"
+
+#include "tools/ExerciseConfig.h"
+#include "ENT/ENT_Enums.h"
+
 #include <geocoord/Geoid.h>
 #include <geocoord/Datums.h>
 #include <boost/format.hpp>
@@ -25,8 +27,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 CoordinateConverter::CoordinateConverter()
     : planar_ ( parameters_ )
-    , private_( new CoordinateSystems() )
-    , systems_( *private_ )
+    , defaultCoordSystem_( eCoordinateSystem_Mgrs )
 {
     // NOTHING
 }
@@ -35,9 +36,9 @@ CoordinateConverter::CoordinateConverter()
 // Name: CoordinateConverter constructor
 // Created: AGE 2005-03-14
 // -----------------------------------------------------------------------------
-CoordinateConverter::CoordinateConverter( const CoordinateSystems& coordSystems )
+CoordinateConverter::CoordinateConverter( E_CoordinateSystem projection )
     : planar_ ( parameters_ )
-    , systems_( coordSystems )
+    , defaultCoordSystem_( projection )
 {
     // NOTHING
 }
@@ -48,8 +49,7 @@ CoordinateConverter::CoordinateConverter( const CoordinateSystems& coordSystems 
 // -----------------------------------------------------------------------------
 CoordinateConverter::CoordinateConverter( const tools::ExerciseConfig& config )
     : planar_ ( parameters_ )
-    , private_( new CoordinateSystems() )
-    , systems_( *private_ )
+    , defaultCoordSystem_( eCoordinateSystem_Mgrs )
 {
     Load( config );
 }
@@ -219,12 +219,21 @@ geometry::Point2f CoordinateConverter::ConvertFromGeoDms ( const std::string& lo
 }
 
 // -----------------------------------------------------------------------------
-// Name: CoordinateConverter::GetCoordSystem
-// Created: AME 2010-03-15
+// Name: CoordinateConverter::GetDefaultProjection
+// Created: ABR 2014-02-27
 // -----------------------------------------------------------------------------
-const CoordinateSystems& CoordinateConverter::GetCoordSystem() const
+E_CoordinateSystem CoordinateConverter::GetDefaultCoordinateSystem() const
 {
-    return systems_;
+    return defaultCoordSystem_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::SetDefaultCoordinateSystem
+// Created: ABR 2014-02-28
+// -----------------------------------------------------------------------------
+void CoordinateConverter::SetDefaultCoordinateSystem( E_CoordinateSystem coordSystem )
+{
+    defaultCoordSystem_ = coordSystem;
 }
 
 // -----------------------------------------------------------------------------
@@ -233,7 +242,7 @@ const CoordinateSystems& CoordinateConverter::GetCoordSystem() const
 // -----------------------------------------------------------------------------
 std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& position ) const
 {
-    return GetStringPosition( position, systems_.GetDefault() );
+    return GetStringPosition( position, defaultCoordSystem_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -245,22 +254,22 @@ std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& pos
     std::string positionStr;
     switch( projection )
     {
-    case CoordinateSystems::E_Mgrs:
+    case eCoordinateSystem_Mgrs:
         positionStr = ConvertToMgrs( position );
         break;
-    case CoordinateSystems::E_SanC:
+    case eCoordinateSystem_SanC:
         positionStr = ConvertTo( position, "SAN-C" );
         break;
-    case CoordinateSystems::E_Wgs84Dd:
+    case eCoordinateSystem_Wgs84Dd:
         {
             geometry::Point2d pos( ConvertToGeo( position ) );
             positionStr = boost::str( boost::format( "%f:%f" ) % pos.Y() % pos.X() );
             break;
         }
-    case CoordinateSystems::E_Wgs84Dms:
+    case eCoordinateSystem_Wgs84Dms:
         positionStr = ConvertToGeoDms( position );
         break;
-    case CoordinateSystems::E_Local:
+    case eCoordinateSystem_Local:
         positionStr = boost::str( boost::format( "%f:%f" ) % position.Y() % position.X() );
         break;
     default:

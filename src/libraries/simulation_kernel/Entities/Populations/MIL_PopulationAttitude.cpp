@@ -12,8 +12,12 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationAttitude.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/ptr_container/ptr_map.hpp>
 
-MIL_PopulationAttitude::T_AttitudeMap MIL_PopulationAttitude::attitudes_;
+namespace
+{
+    boost::ptr_map< std::string, MIL_PopulationAttitude > attitudes;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationAttitude::Initialize
@@ -22,10 +26,10 @@ MIL_PopulationAttitude::T_AttitudeMap MIL_PopulationAttitude::attitudes_;
 void MIL_PopulationAttitude::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing population attitudes" );
-    attitudes_[ "calme"     ] = new MIL_PopulationAttitude( "calme"    , eCalme    , sword::peaceful  );
-    attitudes_[ "agitee"    ] = new MIL_PopulationAttitude( "agitee"   , eAgitee   , sword::agitated  );
-    attitudes_[ "excitee"   ] = new MIL_PopulationAttitude( "excitee"  , eExcitee  , sword::excited   );
-    attitudes_[ "agressive" ] = new MIL_PopulationAttitude( "agressive", eAgressive, sword::agressive );
+    attitudes.insert( "calme",     std::auto_ptr< MIL_PopulationAttitude >( new MIL_PopulationAttitude( "calme"    , eCalme    , sword::peaceful  ) ) );
+    attitudes.insert( "agitee",    std::auto_ptr< MIL_PopulationAttitude >( new MIL_PopulationAttitude( "agitee"   , eAgitee   , sword::agitated  ) ) );
+    attitudes.insert( "excitee",   std::auto_ptr< MIL_PopulationAttitude >( new MIL_PopulationAttitude( "excitee"  , eExcitee  , sword::excited   ) ) );
+    attitudes.insert( "agressive", std::auto_ptr< MIL_PopulationAttitude >( new MIL_PopulationAttitude( "agressive", eAgressive, sword::agressive ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,9 +38,7 @@ void MIL_PopulationAttitude::Initialize()
 // -----------------------------------------------------------------------------
 void MIL_PopulationAttitude::Terminate()
 {
-    for( auto it = attitudes_.begin(); it != attitudes_.end(); ++it )
-        delete it->second;
-    attitudes_.clear();
+    attitudes.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -61,12 +63,22 @@ MIL_PopulationAttitude::~MIL_PopulationAttitude()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationAttitude::GetAttitudes
-// Created: NLD 2005-10-20
+// Name: MIL_PopulationAttitude::Size
+// Created: BAX 2014-03-05
 // -----------------------------------------------------------------------------
-const MIL_PopulationAttitude::T_AttitudeMap& MIL_PopulationAttitude::GetAttitudes()
+size_t MIL_PopulationAttitude::Size()
 {
-    return attitudes_;
+    return attitudes.size();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationAttitude::Visit
+// Created: BAX 2014-03-05
+// -----------------------------------------------------------------------------
+void MIL_PopulationAttitude::Visit( const std::function< void( const MIL_PopulationAttitude& ) >& visitor )
+{
+    for( auto it = attitudes.begin(); it != attitudes.end(); ++it )
+        visitor( *it->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,8 +87,8 @@ const MIL_PopulationAttitude::T_AttitudeMap& MIL_PopulationAttitude::GetAttitude
 // -----------------------------------------------------------------------------
 const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( const std::string& strName )
 {
-    CIT_AttitudeMap it = attitudes_.find( strName );
-    return it == attitudes_.end() ? 0 : it->second;
+    auto it = attitudes.find( strName );
+    return it == attitudes.end() ? 0 : it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +97,7 @@ const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( const std::string& s
 // -----------------------------------------------------------------------------
 const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( sword::EnumCrowdAttitude nAsnID )
 {
-    for( auto it = attitudes_.begin(); it != attitudes_.end(); ++it )
+    for( auto it = attitudes.begin(); it != attitudes.end(); ++it )
         if( it->second->GetAsnID() == nAsnID )
             return it->second;
     return 0;
@@ -97,7 +109,7 @@ const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( sword::EnumCrowdAtti
 // -----------------------------------------------------------------------------
 const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( unsigned int nID )
 {
-    for( auto it = attitudes_.begin(); it != attitudes_.end(); ++it )
+    for( auto it = attitudes.begin(); it != attitudes.end(); ++it )
         if( it->second->GetID() == nID )
             return it->second;
     return 0;

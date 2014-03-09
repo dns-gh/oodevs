@@ -197,7 +197,7 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
         ack().set_error_msg( tools::GetExceptionMsg( e ));
     }
     ack.Send( Publisher(), ctx, clientId );
-    magics.Send( magicId );
+    magics.Send( magicId, ack().error_code(), ack().error_msg() );
 }
 
 namespace

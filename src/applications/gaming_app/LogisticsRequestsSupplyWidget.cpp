@@ -120,7 +120,7 @@ void LogisticsRequestsSupplyWidget::OnRequestSelected( const LogisticsConsign_AB
     detailsTable_->Add( tools::translate( "Logistic", "Recipient(s):" ),        GetRecipientsLinks( c, true ) );
     detailsTable_->Add( tools::translate( "Logistic", "Transport provider:"),   GetDisplayName( c.GetProviding() ) );
     detailsTable_->Add( tools::translate( "Logistic", "Conveyor:" ),            GetDisplayName( c.GetConvoy() ) );
-    detailsTable_->Add( tools::translate( "Logistic", "Request date:" ),        c.GetCreationTime() );
+    detailsTable_->Add( tools::translate( "Logistic", "Created:" ), c.GetCreationTime() );
     detailsTable_->Add( tools::translate( "Logistic", "Supplier:" ),            GetDisplayName( c.GetHandler() ) );
     detailsTable_->Add( tools::translate( "Logistic", "State:"),                c.GetStatusDisplay() );
     detailsTable_->Add( tools::translate( "Logistic", "Started:" ),             c.GetCurrentStartedTime() );

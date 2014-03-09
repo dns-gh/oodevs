@@ -23,10 +23,15 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 
-MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
-double MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
-double MIL_PopulationType::rEffectReloadingTimeFactor_  = 0.;
-double MIL_PopulationType::delay_                       = 0u;
+#include <boost/ptr_container/ptr_map.hpp>
+
+namespace
+{
+    boost::ptr_map< std::string, MIL_PopulationType > populations;
+    double effectReloadingTimeDensity = 0;
+    double effectReloadingTimeFactor  = 0;
+    double delay                      = 0;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationType::Initialize
@@ -34,23 +39,23 @@ double MIL_PopulationType::delay_                       = 0u;
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::Initialize( xml::xistream& xis )
 {
-    std::string delay = "1h";
+    std::string textDelay = "1h";
     MT_LOG_INFO_MSG( "Initializing population types" );
     xis >> xml::start( "populations" )
             >> xml::start( "reloading-time-effect" )
-                >> xml::attribute( "population-density", rEffectReloadingTimeDensity_ )
-                >> xml::attribute( "modifier", rEffectReloadingTimeFactor_ )
+                >> xml::attribute( "population-density", effectReloadingTimeDensity )
+                >> xml::attribute( "modifier", effectReloadingTimeFactor )
             >> xml::end
             >> xml::optional
                 >> xml::start( "time-between-nbc-applications" )
-                    >> xml::attribute( "delay", delay )
+                    >> xml::attribute( "delay", textDelay )
                 >> xml::end;
-    tools::DecodeTime( delay, delay_ );
-    delay_ = MIL_Tools::ConvertSecondsToSim( delay_ );
+    tools::DecodeTime( textDelay, delay );
+    delay = MIL_Tools::ConvertSecondsToSim( delay );
 
-    if( rEffectReloadingTimeDensity_ < 0 )
+    if( effectReloadingTimeDensity < 0 )
         throw MASA_EXCEPTION( xis.context() + "reloading-time-effet: population-density < 0" );
-    if( rEffectReloadingTimeFactor_ < 1 )
+    if( effectReloadingTimeFactor < 1 )
         throw MASA_EXCEPTION( xis.context() + "reloading-time-effect: modifier < 1" );
 
     xis >> xml::list( "population", &MIL_PopulationType::ReadPopulation )
@@ -63,11 +68,11 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::ReadPopulation( xml::xistream& xis )
 {
-    std::string strName = xis.attribute< std::string >( "name" );
-    const MIL_PopulationType*& pPopulation = populations_[ strName ];
-    if( pPopulation )
-        throw MASA_EXCEPTION( xis.context() + "Population type already exists" );
-    pPopulation = new MIL_PopulationType( strName, xis );
+    const std::string name = xis.attribute< std::string >( "name" );
+    if( populations.count( name ) )
+        throw MASA_EXCEPTION( xis.context() + "Population type " + name + " already exists" );
+    auto next = std::auto_ptr< MIL_PopulationType >( new MIL_PopulationType( name, xis ));
+    populations.insert( name, next );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,9 +81,7 @@ void MIL_PopulationType::ReadPopulation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::Terminate()
 {
-    for( auto it = populations_.begin(); it != populations_.end(); ++it )
-        delete it->second;
-    populations_.clear();
+    populations.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,17 +90,16 @@ void MIL_PopulationType::Terminate()
 // -----------------------------------------------------------------------------
 MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistream& xis )
     : strName_              ( strName )
-    , rConcentrationDensity_( 0. )
-    , rDefaultFlowDensity_  ( 0. )
-    , rArmedIndividuals_    ( 0. )
-    , rMale_                ( 1. )
-    , rFemale_              ( 0. )
-    , rChildren_            ( 0. )
+    , rConcentrationDensity_( 0 )
+    , rDefaultFlowDensity_  ( 0 )
+    , rArmedIndividuals_    ( 0 )
+    , rMale_                ( 1 )
+    , rFemale_              ( 0 )
+    , rChildren_            ( 0 )
     , pModel_               ( 0 )
-    , slowDownData_         ( MIL_PopulationAttitude::GetAttitudes().size(), T_VolumeSlowDownData( PHY_Volume::GetVolumes().size(), sSlowDownData( 0., 0. ) ) )
-    , attritionData_        ()
+    , slowDownData_         ( MIL_PopulationAttitude::Size(), T_VolumeSlowDownData( PHY_Volume::GetVolumes().size(), sSlowDownData( 0., 0. ) ) )
     , damageData_           ( PHY_RoePopulation::GetRoePopulations().size(), sDamageData( 0., 0. ) )
-    , urbanDestructionData_ ( MIL_PopulationAttitude::GetAttitudes().size(), sUrbanDestructionData( 0.0, 0.0 ) )
+    , urbanDestructionData_ ( MIL_PopulationAttitude::Size(), sUrbanDestructionData( 0.0, 0.0 ) )
     , canCollideWithFlow_   ( false )
 {
     double rMaxSpeed = 0;
@@ -311,10 +313,10 @@ double MIL_PopulationType::GetPionMaxSpeed( const MIL_PopulationAttitude& popula
 // -----------------------------------------------------------------------------
 double MIL_PopulationType::GetPionReloadingTimeFactor( double rPopulationDensity ) const
 {
-    if( rEffectReloadingTimeDensity_ == 0. )
+    if( effectReloadingTimeDensity == 0. )
         return 1.;
 
-    return std::max( 1., rPopulationDensity * rEffectReloadingTimeFactor_ / rEffectReloadingTimeDensity_ );
+    return std::max( 1., rPopulationDensity * effectReloadingTimeFactor / effectReloadingTimeDensity );
 }
 
 // -----------------------------------------------------------------------------
@@ -482,8 +484,8 @@ double MIL_PopulationType::GetPH( const MIL_PopulationAttitude& attitude, double
 // -----------------------------------------------------------------------------
 const MIL_PopulationType* MIL_PopulationType::Find( const std::string& strName )
 {
-    CIT_PopulationMap it = populations_.find( strName );
-    return it == populations_.end() ? 0 :  it->second;
+    auto it = populations.find( strName );
+    return it == populations.end() ? 0 :  it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -492,7 +494,7 @@ const MIL_PopulationType* MIL_PopulationType::Find( const std::string& strName )
 // -----------------------------------------------------------------------------
 const MIL_PopulationType* MIL_PopulationType::Find( unsigned int nID )
 {
-    for( auto it = populations_.begin(); it != populations_.end(); ++it )
+    for( auto it = populations.begin(); it != populations.end(); ++it )
         if( it->second->nID_ == nID )
             return it->second;
     return 0;
@@ -504,7 +506,7 @@ const MIL_PopulationType* MIL_PopulationType::Find( unsigned int nID )
 // -----------------------------------------------------------------------------
 double MIL_PopulationType::GetDelay() const
 {
-    return delay_;
+    return delay;
 }
 
 // -----------------------------------------------------------------------------

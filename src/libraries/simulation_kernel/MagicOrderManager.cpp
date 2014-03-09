@@ -77,11 +77,15 @@ namespace
     }
 }
 
-void MagicOrderManager::Send( uint32_t id )
+void MagicOrderManager::Send( uint32_t id, int32_t code, const std::string& msg )
 {
     auto it = orders_.find( id );
-    if( it != orders_.end() )
-        ::Send( it->second );
+    if( it == orders_.end() )
+        return;
+    it->second.set_error_code( code );
+    if( !msg.empty() )
+        it->second.set_error_msg( msg );
+    ::Send( it->second );
 }
 
 uint32_t MagicOrderManager::Register( const sword::MagicOrder& msg )

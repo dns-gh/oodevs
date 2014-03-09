@@ -35,8 +35,14 @@ using namespace gui;
 // Name: PreferencesDialog constructor
 // Created: SBO 2006-05-03
 // -----------------------------------------------------------------------------
-PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                      const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, GraphicPreferences& preferences )
+PreferencesDialog::PreferencesDialog( QWidget* parent,
+                                      Controllers& controllers,
+                                      LightingProxy& lighting,
+                                      kernel::CoordinateConverter_ABC& coordConverter,
+                                      const Painter_ABC& painter,
+                                      GlSelector& selector,
+                                      Elevation2dLayer& elevation2dLayer,
+                                      GraphicPreferences& preferences )
     : ModalDialog( parent, "PreferencesDialog" )
     , controllers_      ( controllers )
     , painter_          ( painter )
@@ -78,7 +84,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
 
     pGraphicPrefPanel_       = new GraphicsPanel( this, preferences );
     layersPanel_             = new LayersPanel( this, controllers, selector );
-    pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordSystems );
+    pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordConverter );
 
     box = new Q3HBox( this );
     box->setMargin( 5 );

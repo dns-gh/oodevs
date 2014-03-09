@@ -3121,6 +3121,8 @@ message MagicOrder {
     optional ObjectMagicAction    object_magic_action    = 4;
     optional KnowledgeMagicAction knowledge_magic_action = 5;
     optional SetAutomatMode       set_automat_mode       = 6;
+    optional int32                error_code             = 7;
+    optional string               error_msg              = 8;
 }
 
 message MagicOrderDestruction {

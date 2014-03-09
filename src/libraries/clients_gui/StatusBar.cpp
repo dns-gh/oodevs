@@ -16,7 +16,6 @@
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/Tools.h"
 #include "ENT/Ent_Tr.h"
 #include <boost/format.hpp>
@@ -28,6 +27,10 @@ using namespace gui;
 namespace
 {
     const QString statusBarCoordinates = "/Common/StatusBarCoordinates";
+    QString convertFromCoordSystem( E_CoordinateSystem coordSystem )
+    {
+        return QString::fromStdString( ENT_Tr::ConvertFromCoordinateSystem( coordSystem, ENT_Tr::eToSim ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -52,19 +55,19 @@ StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, Terr
 
     QSettings settings( "MASA Group", "SWORD" );
     const QStringList fields = settings.value( statusBarCoordinates, QStringList()
-        << CoordinateSystems::Convert( CoordinateSystems::E_Local )
-        << CoordinateSystems::Convert( CoordinateSystems::E_Mgrs )
-        << CoordinateSystems::Convert( CoordinateSystems::E_Wgs84Dd )
+        << convertFromCoordSystem( eCoordinateSystem_Local )
+        << convertFromCoordSystem( eCoordinateSystem_Mgrs )
+        << convertFromCoordSystem( eCoordinateSystem_Wgs84Dd )
         ).toStringList();
-    const auto addField = [&]( unsigned size, CoordinateSystems::Projection proj ){
-        const bool checked = !!fields.contains( CoordinateSystems::Convert( proj ) );
-        AddField( parent, size, proj, checked );
+    const auto addField = [&]( unsigned size, E_CoordinateSystem coordSystem ){
+        const bool checked = !!fields.contains( convertFromCoordSystem( coordSystem ) );
+        AddField( parent, size, coordSystem, checked );
     };
-    addField( 155, CoordinateSystems::E_Local );
-    addField( 105, CoordinateSystems::E_Mgrs );
-    addField( 105, CoordinateSystems::E_SanC );
-    addField( 155, CoordinateSystems::E_Wgs84Dd );
-    addField( 215, CoordinateSystems::E_Wgs84Dms );
+    addField( 155, eCoordinateSystem_Local );
+    addField( 105, eCoordinateSystem_Mgrs );
+    addField( 105, eCoordinateSystem_SanC );
+    addField( 155, eCoordinateSystem_Wgs84Dd );
+    addField( 215, eCoordinateSystem_Wgs84Dms );
     pMenu_->insertSeparator();
     pElevation_   = AddField( parent, 50, tr( "Elevation" ), true );
     pTerrainType_ = AddField( parent, 150, tr( "Terrain type" ), true );
@@ -110,17 +113,11 @@ QLabel* StatusBar::AddField( QStatusBar* parent, unsigned int size, const QStrin
 // Name: StatusBar::AddField
 // Created: SBO 2010-03-26
 // -----------------------------------------------------------------------------
-QLabel* StatusBar::AddField( QStatusBar* parent, unsigned int size, int id, bool checked )
+QLabel* StatusBar::AddField( QStatusBar* parent, unsigned int size, E_CoordinateSystem coordSystem, bool checked )
 {
-    const CoordinateSystems::T_SpatialReference& systems = converter_.GetCoordSystem().GetSystems();
-    auto it = systems.find( id );
-    if( it != systems.end() )
-    {
-        QLabel* field = AddField( parent, size, it->second, checked );
-        coordinateFields_[ id ] = field;
-        return field;
-    }
-    return 0;
+    auto field = AddField( parent, size, QString::fromStdString( ENT_Tr::ConvertFromCoordinateSystem( coordSystem ) ), checked );
+    coordinateFields_[ coordSystem ] = field;
+    return field;
 }
 
 // -----------------------------------------------------------------------------
@@ -135,12 +132,12 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
     else
     {
         const QString xypos = tr( "y:%L1 x:%L2" ).arg( position.Y(), 4 ).arg( position.X(), 4 );
-        coordinateFields_[ CoordinateSystems::E_Local ]->setText( xypos );
+        coordinateFields_[ eCoordinateSystem_Local ]->setText( xypos );
 
         const QString elev = tr( "h:%L1 " ).arg( detection_.ElevationAt( position ) );
         pElevation_->setText( elev );
 
-        coordinateFields_[ CoordinateSystems::E_Mgrs ]->setText( converter_.ConvertToMgrs( position ).c_str() );
+        coordinateFields_[ eCoordinateSystem_Mgrs ]->setText( converter_.ConvertToMgrs( position ).c_str() );
         auto sad69 = converter_.ConvertTo( position, "SAN-C" );
         try
         {
@@ -150,12 +147,12 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
         {
             sad69 = tr( "invalid" );
         }
-        coordinateFields_[ CoordinateSystems::E_SanC ]->setText( QString::fromStdString( sad69 ) );
+        coordinateFields_[ eCoordinateSystem_SanC ]->setText( QString::fromStdString( sad69 ) );
 
         const geometry::Point2d latLong( converter_.ConvertToGeo( position ) );
         const QString latlongpos = tr( "Lat:%L1 Lon:%L2" ).arg( latLong.Y(), 0, 'g', 6 )
                                                         .arg( latLong.X(), 0, 'g', 6 );
-        coordinateFields_[ CoordinateSystems::E_Wgs84Dd ]->setText( latlongpos );
+        coordinateFields_[ eCoordinateSystem_Wgs84Dd ]->setText( latlongpos );
 
         std::string pos( converter_.ConvertToGeoDms( position ) );
         std::string::size_type loc = pos.find( ":", 0 );
@@ -163,7 +160,7 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
         {
             const std::string latlongdmspos( boost::str( boost::format( "Lat:%s, Lon:%s" )  % pos.substr( 0, loc )
                                                                                             % pos.substr( loc + 1, pos.size() - loc ) ) );
-            coordinateFields_[ CoordinateSystems::E_Wgs84Dms ]->setText( latlongdmspos.c_str() );
+            coordinateFields_[ eCoordinateSystem_Wgs84Dms ]->setText( latlongdmspos.c_str() );
         }
     }
 }
@@ -269,7 +266,7 @@ void StatusBar::SaveSettings()
     for( auto it = coordinateFields_.begin(); it != coordinateFields_.end(); ++it )
         if( it->second->isVisible() )
         {
-            const auto proj = CoordinateSystems::Convert( static_cast< CoordinateSystems::Projection >( it->first ) );
+            const auto proj = convertFromCoordSystem( static_cast< E_CoordinateSystem >( it->first ) );
             if( !proj.isEmpty() )
                 list.push_back( proj );
         }
