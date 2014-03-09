@@ -469,7 +469,10 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	receiver := getSomeAutomatByName(c, data, "Supply Log Automat 1b").Id
 	const resource = 96
 	const transporter = 12
-	c.Assert(data.Units[unit].Installation, Not(Equals), 100)
+
+	// Manual supply mode does not prevent push flow
+	SetManualSupply(c, client, supplier, true)
+	SetManualSupply(c, client, receiver, true)
 
 	// deploy supplier
 	MissionLogDeploy := uint32(8)
@@ -484,9 +487,6 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 				swapi.Point{X: -15.7570, Y: 28.2744}),
 			nil))
 	c.Assert(err, IsNil)
-	client.Model.WaitTicks(2)
-
-	// Waiting for deployment
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Units[unit].Installation == 100
 	})
@@ -576,7 +576,11 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	const resource = 96
 	const transporter = 12
 
-	// deploy receiver
+	// Manual supply mode does not prevent pull flow
+	SetManualSupply(c, client, supplier, true)
+	SetManualSupply(c, client, receiver, true)
+
+	// Deploy receiver
 	MissionLogDeploy := uint32(8)
 	heading := swapi.MakeHeading(0)
 	_, err := client.SendAutomatOrder(receiver, MissionLogDeploy,
@@ -589,8 +593,6 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 				swapi.Point{X: -15.7570, Y: 28.2744}),
 			nil))
 	c.Assert(err, IsNil)
-
-	// Waiting for deployment
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Units[unit].Installation == 100
 	})

@@ -428,8 +428,10 @@ const (
 )
 
 type MagicOrder struct {
-	Id   uint32
-	Kind MagicOrderKind
+	Id      uint32
+	Kind    MagicOrderKind
+	ErrCode int32
+	ErrMsg  string
 }
 
 type MaintenanceHandlingProvider struct {

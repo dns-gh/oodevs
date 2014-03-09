@@ -1681,11 +1681,6 @@ func (c *Client) SelectRepairTeam(handlingId, equipmentId uint32) error {
 
 func (c *Client) RecoverStocks(unitId uint32, resources map[uint32]*ResourceDotation) error {
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId),
-		MakeParameters(
-			MakeNullValue(),
-			MakeNullValue(),
-			MakeNullValue(),
-			MakeNullValue(),
-			MakeStocks(resources)),
+		MakeParameters(nil, nil, nil, nil, MakeStocks(resources)),
 		sword.UnitMagicAction_partial_recovery)
 }

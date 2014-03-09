@@ -254,6 +254,11 @@ func (opts *ClientOpts) FilterPathfinds(filter string) *ClientOpts {
 	return opts
 }
 
+func (opts *ClientOpts) StartPaused() *ClientOpts {
+	opts.Paused = true
+	return opts
+}
+
 type Simulator interface {
 	GetClientAddr() string
 }
