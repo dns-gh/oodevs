@@ -190,7 +190,7 @@ integration.notifyTaskEnded = function( )
     end
 end
 
---- Fill the message parameter : String
+--- Emits a message with a String parameter
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the identifier of the message
@@ -199,7 +199,7 @@ integration.RC_String = function( myself, typeMessage, id, list )
     DEC_RC_String( myself, typeMessage, id, list )
 end
 
---- Fill the message parameter : Object knowledge
+--- Emits a message with an Object knowledge parameter
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the identifier of the message
@@ -208,7 +208,7 @@ integration.RC_ObjectKnowledge = function( myself, typeMessage, id, list )
     DEC_RC_ObjectKnowledge( myself, typeMessage, id, list )
 end
 
---- Fill the message parameter : Agent knowledge
+--- Emits a message with an Agent parameter
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the identifier of the message
@@ -217,7 +217,7 @@ integration.RC_AgentKnowledge = function( myself, typeMessage, id, list )
     DEC_RC_AgentKnowledge( myself, typeMessage, id, list )
 end
 
---- Fill the message parameter : Agent and Automat
+--- Emits a message with an Agent and an Automat parameters
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the identifier of the message
@@ -227,7 +227,7 @@ integration.RC_Pion_Automate = function( myself, typeMessage, id, firstList, sec
     DEC_RC_Pion_Automate( myself, typeMessage, id, firstList, secondList )
 end
 
---- Fill the message parameter : Agent and Agent
+--- Emits a message with an Agent and an Agent parameters
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the number of the message
@@ -237,7 +237,7 @@ integration.RC_Pion_Pion = function( myself, typeMessage, id, firstList, secondL
     DEC_RC_Pion_Pion( myself, typeMessage, id, firstList, secondList )
 end
 
---- Fill the message parameter : Crowd
+--- Emits a message with a Crowd parameters
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the identifier of the message
@@ -246,7 +246,7 @@ integration.RC_Id = function( myself, typeMessage, id, list )
     DEC_RC_Id( myself, typeMessage, id, list )
 end
 
---- Fill the message parameter : Population
+--- Emits a message with a Population parameters
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the identifier of the message
@@ -255,7 +255,7 @@ integration.RC_PopulationKnowledge = function( myself, typeMessage, id, list )
     DEC_RC_PopulationKnowledge( myself, typeMessage, id, list )
 end
 
---- Fill the message parameter : Float
+--- Emits a message with a Float parameters
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the identifier of the message
@@ -264,7 +264,7 @@ integration.RC_Float = function( myself, typeMessage, id, list )
     DEC_RC_Float( myself, typeMessage, id, list )
 end
 
---- Fill the message parameter : Integer and Integer
+--- Emits a message with an Integer and an Integer parameters
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the identifier of the message
@@ -274,7 +274,7 @@ integration.RC_Int_Int = function( myself, typeMessage, id, firstList, secondLis
     DEC_RC_Int_Int( myself, typeMessage, id, firstList, secondList )
 end
 
---- Fill the message parameter : Float and Float
+--- Emits a message with a Float and a Float parameters
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the identifier of the message
@@ -284,7 +284,7 @@ integration.RC_Float_Float = function( myself, typeMessage, id, firstList, secon
     DEC_RC_Float_Float( myself, typeMessage, id, firstList, secondList )
 end
 
---- Fill the message parameter : Stage
+--- Emits a message with a Stage parameters
 -- @param myself the message sender
 -- @param typeMessage the type of the message (type_message; type_rc; type_event; type_warning)
 -- @param id the identifier of the message
