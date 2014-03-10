@@ -48,19 +48,6 @@ MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( const AlgorithmsFact
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
-                                                            MissionController_ABC& controller,
-                                                            MIL_Automate& automate,
-                                                            const std::string& name ) const
-{
-    return new MIL_AgentPionLOGConvoy( *this, algorithmFactories, controller,
-            automate, *MakeAgentPionXml( name, automate ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMedical::RegisterRoles
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in AgentFactory

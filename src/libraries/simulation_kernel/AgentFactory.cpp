@@ -60,10 +60,8 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& /*vPosition*/, const std::string* name, sword::RoleExtender_ABC* ext )
 {
     const std::string unitName = name ? *name : type.GetName();
-    MIL_AgentPion* pPion = type.InstanciatePion( *algorithmsFactories_,
-            missionController_, automate, unitName );
-    type.RegisterRoles( *pPion, ext );
-    return pPion;
+    auto xis = MakeAgentPionXml( unitName, automate );
+    return Create( type, automate, *xis, ext );
 }
 
 // -----------------------------------------------------------------------------
