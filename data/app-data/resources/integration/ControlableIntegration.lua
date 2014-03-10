@@ -2,7 +2,7 @@
 local pointCircleSize = 250 -- meters 
 local pointRecceSpeed = 3
 
---- Start to control an area
+--- Start controlling an area
 -- An action in the simulation is started
 -- This method can only be called by an agent
 -- @param area The DirectIA area to control
@@ -17,7 +17,7 @@ integration.startControlArea = function( area )
     return true
 end
 
---- Stop to control an area
+--- Stop controlling an area
 -- The action in the simulation is stopped
 -- This method can only be called by an agent
 -- @param area, the DirectIA area to stop controlling
