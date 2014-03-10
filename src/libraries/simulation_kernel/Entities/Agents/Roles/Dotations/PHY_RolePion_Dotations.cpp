@@ -486,6 +486,11 @@ void PHY_RolePion_Dotations::ChangeDotation( const PHY_DotationCategory& categor
     pDotations_->ChangeDotation( category, number, threshold );
 }
 
+void PHY_RolePion_Dotations::ChangeDotation( const PHY_DotationCategory& category, double fraction )
+{
+    pDotations_->Supply( category, pDotations_->GetCapacity( category ) * fraction );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::AddFireReservation
 // Created: NLD 2004-10-06

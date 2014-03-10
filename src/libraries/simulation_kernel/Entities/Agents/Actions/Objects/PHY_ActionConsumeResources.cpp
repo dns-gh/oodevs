@@ -6,9 +6,9 @@
 // Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
+
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionConsumeResources.h"
-
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 
@@ -23,16 +23,9 @@ namespace
 
     int GetSteps( double duration, unsigned tickDuration )
     {
+        if( duration == 0 )
+            throw MASA_EXCEPTION( "invalid null duration" );
         return static_cast< int >( floor( duration / tickDuration + 0.5 ) );
-    }
-
-    double GetOffset( const dotation::PHY_RoleInterface_Dotations& dotations,
-                      const PHY_DotationCategory& category,
-                      double value, int steps )
-    {
-        const auto reference = dotations.GetDotationNumber( category );
-        const double target = reference * ( 100 + value ) / 100;
-        return ( reference - target ) / steps;
     }
 }
 
@@ -40,11 +33,10 @@ PHY_ActionConsumeResources::PHY_ActionConsumeResources( MIL_Entity_ABC& unit,
                                                         const PHY_DotationCategory* category,
                                                         double value, double duration,
                                                         unsigned tickDuration )
-    : PHY_Action_ABC()
-    , dotations_    ( unit.GetRole< dotation::PHY_RoleInterface_Dotations >() )
-    , category_     ( GetCategory( category ) )
-    , steps_        ( GetSteps( duration, tickDuration ) )
-    , offset_       ( GetOffset( dotations_, category_, value, steps_ ) )
+    : dotations_( unit.GetRole< dotation::PHY_RoleInterface_Dotations >() )
+    , category_ ( GetCategory( category ) )
+    , steps_    ( GetSteps( duration, tickDuration ) )
+    , fraction_ ( value / steps_ / 100 )
 {
     // NOTHING
 }
@@ -58,9 +50,8 @@ void PHY_ActionConsumeResources::Execute()
 {
     if( !steps_ )
         return;
-    steps_--;
-    const auto next = dotations_.GetDotationNumber( category_ ) - offset_;
-    dotations_.SupplyDotation( category_, next );
+    --steps_;
+    dotations_.ChangeDotation( category_, fraction_ );
 }
 
 void PHY_ActionConsumeResources::ExecuteSuspended()
