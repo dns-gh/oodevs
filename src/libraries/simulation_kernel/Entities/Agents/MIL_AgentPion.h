@@ -34,7 +34,6 @@ namespace xml
 {
     class xostream;
     class xistream;
-    class xistringstream;
 }
 
 class DEC_Decision_ABC;
@@ -268,8 +267,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_AgentPion )
-
-std::auto_ptr< xml::xistringstream > MakeAgentPionXml( const std::string& name,
-       const MIL_Automate& automate );
 
 #endif // __MIL_AgentPion_h_

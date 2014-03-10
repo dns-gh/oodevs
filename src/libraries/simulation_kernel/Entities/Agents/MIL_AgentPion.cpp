@@ -96,19 +96,6 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 
-std::auto_ptr< xml::xistringstream > MakeAgentPionXml( const std::string& name,
-       const MIL_Automate& automate )
-{
-    xml::xostringstream xos;
-    xos << xml::start( "unit" )
-            << xml::attribute( "id", "0" )
-            << xml::attribute( "name" , name );
-    automate.GetColor().WriteODB( xos );
-    auto xis = std::auto_ptr< xml::xistringstream >( new xml::xistringstream( xos.str() ));
-    *xis >> xml::start( "unit" );
-    return xis;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion constructor
 // Created: NLD 2004-08-11

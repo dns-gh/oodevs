@@ -21,8 +21,10 @@
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "Tools/MIL_Color.h"
 #include "Tools/MIL_IDManager.h"
 #include "MIL_AgentServer.h"
 #include "CheckPoints/SerializationTools.h"
@@ -253,11 +255,19 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
     CreateRoles( chainExt );
     MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, xis, &chainExt ) );
     { 
-        std::string strPosition;
-        xis >> xml::attribute( "position", strPosition );
-        MT_Vector2D vPosTmp;
-        world_->MosToSimMgrsCoord( strPosition, vPosTmp );
-        Initialize( pion, vPosTmp );
+        MT_Vector2D vPos;
+        if( xis.has_attribute( "position" ) )
+        {
+            std::string strPosition;
+            xis >> xml::attribute( "position", strPosition );
+            world_->MosToSimMgrsCoord( strPosition, vPos );
+        }
+        else
+        {
+            xis >> xml::attribute( "x", vPos.rX_ );
+            xis >> xml::attribute( "y", vPos.rY_ );
+        }
+        Initialize( pion, vPos );
     }
     pion.ReadOverloading( xis );
     return &pion;
@@ -269,11 +279,19 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string* name, sword::RoleExtender_ABC* ext )
 {
-    SinkRoleExtender chainExt( ext );
-    CreateRoles( chainExt );
-    MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, vPosition, name, &chainExt ) );
-    Initialize( pion, vPosition );
-    return &pion;
+    const auto unitName = name ? *name : type.GetName();
+    xml::xostringstream xos;
+    xos << xml::start( "unit" )
+            << xml::attribute( "id", "0" )
+            << xml::attribute( "name" , unitName )
+            // Coordinates are not serialized to MGRS to avoid the loss of precision
+            // induced by projecting from and to. It was noticeable in gosword.
+            << xml::attribute( "x", vPosition.rX_ )
+            << xml::attribute( "y", vPosition.rY_ );
+    automate.GetColor().WriteODB( xos );
+    xml::xistringstream xis( xos.str() );
+    xis >> xml::start( "unit" );
+    return Create( type, automate, xis, ext );
 }
 
 // -----------------------------------------------------------------------------

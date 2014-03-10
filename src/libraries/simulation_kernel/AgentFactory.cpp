@@ -54,17 +54,6 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
-// Created: MMC 2011-05-27
-// -----------------------------------------------------------------------------
-MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& /*vPosition*/, const std::string* name, sword::RoleExtender_ABC* ext )
-{
-    const std::string unitName = name ? *name : type.GetName();
-    auto xis = MakeAgentPionXml( unitName, automate );
-    return Create( type, automate, *xis, ext );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentFactory::load
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
