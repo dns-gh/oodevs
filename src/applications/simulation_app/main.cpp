@@ -11,6 +11,7 @@
 #include "simulation_terrain/TER_Logger.h"
 #include <license_gui/LicenseDialog.h>
 #include <tools/Path.h>
+#include <tools/StackContext.h>
 #include <tools/win32/FlexLm.h>
 #include <tools/win32/CrashHandler.h>
 #pragma warning( push, 0 )
@@ -22,10 +23,14 @@
 
 namespace
 {
+
+tools::StackContext context;
+
 void CrashHandler( EXCEPTION_POINTERS* exception )
 {
     MT_CrashHandler::ExecuteHandler( exception );
 }
+
 }
 
 //-----------------------------------------------------------------------------

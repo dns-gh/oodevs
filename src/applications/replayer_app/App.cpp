@@ -17,6 +17,7 @@
 #include "tools/IpcWatch.h"
 #include "tools/WaitEvent.h"
 #include "tools/WinArguments.h"
+#include <tools/StackContext.h>
 #include <tools/Exception.h>
 
 #include <boost/bind.hpp>
@@ -25,8 +26,13 @@ using namespace dispatcher;
 
 #define MY_WM_NOTIFYICON WM_USER + 1
 
-static const int NUM_ICON_FOR_ANIMATION = 2;
-static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1};
+namespace
+{
+    tools::StackContext context;
+
+    const int NUM_ICON_FOR_ANIMATION = 2;
+    int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1 };
+}
 
 // -----------------------------------------------------------------------------
 // Name: App constructor

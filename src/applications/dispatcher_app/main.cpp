@@ -17,12 +17,15 @@
 #include <license_gui/LicenseDialog.h>
 #include <tools/Path.h>
 #include <tools/Exception.h>
+#include <tools/StackContext.h>
 #include <tools/win32/CrashHandler.h>
 #include <windows.h>
 #include <boost/smart_ptr.hpp>
 
 namespace
 {
+
+tools::StackContext context;
 
 void CrashHandler( EXCEPTION_POINTERS* exception )
 {
