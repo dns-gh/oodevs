@@ -379,6 +379,7 @@ func testDecStartConsumingResources(c *C, callback func(client *swapi.Client, un
 }
 
 func (s *TestSuite) TestDecStartConsumingResources(c *C) {
+	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-11969")
 	// normal case
 	testDecStartConsumingResources(c, func(client *swapi.Client, unit, action, dotation uint32) {
 		quantities := []int32{9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0}
