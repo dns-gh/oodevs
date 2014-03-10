@@ -58,21 +58,6 @@ MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type,
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGSupply constructor
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type,
-                                                const AlgorithmsFactories& algorithmFactories,
-                                                MissionController_ABC& controller,
-                                                MIL_Automate& automate,
-                                                const std::string& name )
-    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller, automate,
-           *MakeAgentPionXml( name, automate ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOGSupply constructor
 // Created: LDC 2010-03-09
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type,

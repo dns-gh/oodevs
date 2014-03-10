@@ -55,7 +55,8 @@ MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( const AlgorithmsFact
                                                             MIL_Automate& automate,
                                                             const std::string& name ) const
 {
-    return new MIL_AgentPionLOGSupply( *this, algorithmFactories, controller, automate, name );
+    return new MIL_AgentPionLOGSupply( *this, algorithmFactories, controller,
+            automate, *MakeAgentPionXml( name, automate ) );
 }
 
 // -----------------------------------------------------------------------------

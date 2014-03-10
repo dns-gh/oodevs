@@ -38,12 +38,13 @@ MIL_AgentTypePionLOGConvoy::~MIL_AgentTypePionLOGConvoy()
 // Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( const AlgorithmsFactories& /*algorithmFactories*/,
-                                                            MissionController_ABC& /*controller*/,
-                                                            MIL_Automate& /*automate*/,
+MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
+                                                            MissionController_ABC& controller,
+                                                            MIL_Automate& automate,
                                                             xml::xistream& xis ) const
 {
-    throw MASA_EXCEPTION( xis.context() + "Creation of pion of type 'Pion LOG Convoi' not allowed in ODB" );
+    return new MIL_AgentPionLOGConvoy( *this, algorithmFactories, controller,
+            automate, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +56,8 @@ MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( const AlgorithmsFact
                                                             MIL_Automate& automate,
                                                             const std::string& name ) const
 {
-    return new MIL_AgentPionLOGConvoy( *this, algorithmFactories, controller, automate, name );
+    return new MIL_AgentPionLOGConvoy( *this, algorithmFactories, controller,
+            automate, *MakeAgentPionXml( name, automate ) );
 }
 
 // -----------------------------------------------------------------------------

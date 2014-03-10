@@ -59,7 +59,8 @@ MIL_AgentPion* MIL_AgentTypePionLOGTC2::InstanciatePion( const AlgorithmsFactori
                                                          MIL_Automate& automate,
                                                          const std::string& name ) const
 {
-    return new MIL_AgentPionLOGTC2( *this, algorithmFactories, controller, automate, name );
+    return new MIL_AgentPionLOGTC2( *this, algorithmFactories, controller, automate,
+           *MakeAgentPionXml( name, automate ) );
 }
 
 // -----------------------------------------------------------------------------

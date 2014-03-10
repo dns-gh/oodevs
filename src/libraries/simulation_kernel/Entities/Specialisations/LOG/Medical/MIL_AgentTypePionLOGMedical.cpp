@@ -56,7 +56,8 @@ MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( const AlgorithmsFac
                                                              MIL_Automate& automate,
                                                              const std::string& name ) const
 {
-    return new MIL_AgentPionLOGMedical( *this, algorithmFactories, controller, automate, name );
+    return new MIL_AgentPionLOGMedical( *this, algorithmFactories, controller, automate,
+           *MakeAgentPionXml( name, automate ) );
 }
 
 // -----------------------------------------------------------------------------
