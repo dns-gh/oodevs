@@ -783,6 +783,20 @@
     </message>
 </context>
 <context>
+    <name>LogisticQuotaEditor</name>
+    <message>
+        <source>Quotas Edition</source>
+        <translation type="unfinished">Generación de Cuotas</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticStockEditor</name>
+    <message>
+        <source>Stocks Edition</source>
+        <translation type="unfinished">Generación de Stocks</translation>
+    </message>
+</context>
+<context>
     <name>LogisticStocksAndQuotasDialog</name>
     <message>
         <source>Automatic allocation...</source>
@@ -2398,17 +2412,6 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>Quantity</source>
         <translation type="unfinished">Cantidad</translation>
-    </message>
-</context>
-<context>
-    <name>StocksEditionDialog</name>
-    <message>
-        <source>Stocks Edition</source>
-        <translation>Generación de Stocks</translation>
-    </message>
-    <message>
-        <source>Quotas Edition</source>
-        <translation>Generación de Cuotas</translation>
     </message>
 </context>
 <context>

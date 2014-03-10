@@ -38,15 +38,7 @@ signals:
 private:
     //! @name Helpers
     //@{
-    virtual void SupplyHierarchy( const kernel::Entity_ABC& entity, const gui::LogisticHierarchiesBase& logHierarchy );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void FindStocks( const kernel::Entity_ABC& rootEntity , const kernel::Entity_ABC& entity, std::set< const kernel::Agent_ABC* >& entStocks );
-    double DoDotationDistribution( std::set< const kernel::Agent_ABC* >& entStocks, const kernel::DotationType& dotationType, double quantity );
-    void ComputeAvailableCapacity( const kernel::Agent_ABC& entStock, const kernel::DotationType& dotationType, double& weight, double& volume );
+    virtual void SupplyHierarchy( const gui::LogisticHierarchiesBase& logHierarchy );
     //@}
 };
 

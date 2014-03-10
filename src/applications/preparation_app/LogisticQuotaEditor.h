@@ -38,13 +38,7 @@ signals:
 private:
     //! @name Operations
     //@{
-    virtual void SupplyHierarchy( const kernel::Entity_ABC& entity, const gui::LogisticHierarchiesBase& logHierarchy );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void SetQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const T_Requirements& requirements, T_Requirements& generatedQuotas );
+    virtual void SupplyHierarchy( const gui::LogisticHierarchiesBase& logHierarchy );
     //@}
 };
 

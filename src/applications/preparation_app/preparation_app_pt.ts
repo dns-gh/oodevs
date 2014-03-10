@@ -782,6 +782,20 @@
     </message>
 </context>
 <context>
+    <name>LogisticQuotaEditor</name>
+    <message>
+        <source>Quotas Edition</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticStockEditor</name>
+    <message>
+        <source>Stocks Edition</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticStocksAndQuotasDialog</name>
     <message>
         <source>Automatic allocation...</source>
@@ -2394,17 +2408,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>StocksEditionDialog</name>
-    <message>
-        <source>Stocks Edition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quotas Edition</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
