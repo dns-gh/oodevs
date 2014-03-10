@@ -84,8 +84,8 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
     , attritionEffectsOnHumans_ ( PHY_ComposanteState::GetNbrStates(), T_HumanEffect() )
 {
     std::string type = xis.attribute< std::string >( "type" );
-    nType_ = sCaseInsensitiveEqual()( type, "humain" ) ? eHuman :
-             sCaseInsensitiveEqual()( type, "materiel" ) ? eMaterial : eCrowd;
+    nType_ = boost::iequals( type, "humain" ) ? eHuman :
+             boost::iequals( type, "materiel" ) ? eMaterial : eCrowd;
 
     std::string timeString, varianceString;
     xis >> xml::start( "neutralization" )

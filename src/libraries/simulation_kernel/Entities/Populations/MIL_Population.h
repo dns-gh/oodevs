@@ -167,13 +167,6 @@ public:
     bool GetDemonstrationState();
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< MIL_PopulationConcentration* > T_ConcentrationVector;
-    typedef T_ConcentrationVector::iterator            IT_ConcentrationVector;
-    typedef T_ConcentrationVector::const_iterator     CIT_ConcentrationVector;
-    //@}
-
     //! @name Tools
     //@{
     MIL_PopulationFlow& CreateFlow( MIL_PopulationConcentration& concentration );

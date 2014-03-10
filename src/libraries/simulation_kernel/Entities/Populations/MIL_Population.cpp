@@ -1085,7 +1085,7 @@ void MIL_Population::FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_F
 // -----------------------------------------------------------------------------
 void MIL_Population::Attack()
 {
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    for( auto itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         ( **itConcentration ).Attack();
 }
 

@@ -5599,6 +5599,10 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
         <source>LimaFunction</source>
         <translation>Tipo de Línea de fase</translation>
     </message>
+    <message>
+        <source>crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_LocalizedString</name>

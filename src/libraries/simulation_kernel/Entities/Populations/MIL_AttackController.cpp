@@ -43,7 +43,7 @@ void MIL_AttackController::Attack( MIL_PopulationElement_ABC& attacking )
 {
     T_Effects updated;
     TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
-    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( attacking.GetLocation(), concentrations );
+    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( attacking.GetLocation(), concentrations, 10 );
     for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector it = concentrations.begin(); it != concentrations.end(); ++it )
     {
         MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *it );

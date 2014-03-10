@@ -5355,260 +5355,257 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>crowd</source>
         <translation>foule</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Type_Repartition</name>
     <message>
-        <source>Date Time</source>
-        <translation>Date et Heure</translation>
-    </message>
-    <message>
-        <source>Nature Atlas</source>
-        <translation>Nature ATLAS</translation>
-    </message>
-    <message>
-        <source>Agent knowledge</source>
-        <translation>Connaissance d&apos;agent</translation>
-    </message>
-    <message>
-        <source>Object knowledge</source>
-        <translation>Connaissance d&apos;objet</translation>
-    </message>
-    <message>
-        <source>Crowd knowledge</source>
-        <translation>Connaissance de foule</translation>
-    </message>
-    <message>
-        <source>Planned work</source>
-        <translation>Travaux génie</translation>
-    </message>
-    <message>
-        <source>Equipment type</source>
-        <translation>Type d&apos;equipement</translation>
-    </message>
-    <message>
-        <source>Resource type</source>
-        <translation>Type de dotation</translation>
-    </message>
-    <message>
-        <source>Maintenance priorities</source>
-        <translation>Priorités de maintenance</translation>
-    </message>
-    <message>
-        <source>Medical priorities</source>
-        <translation>Priorités médicales</translation>
-    </message>
-    <message>
-        <source>Indirect fire</source>
-        <translation>Tir indirect</translation>
-    </message>
-    <message>
-        <source>Phase line</source>
-        <translation>Lima</translation>
-    </message>
-    <message>
-        <source>Urban knowledge</source>
-        <translation>Connaissance de bloc urbain</translation>
-    </message>
-    <message>
-        <source>Location composite</source>
-        <translation>Localisation composite</translation>
-    </message>
-    <message>
-        <source>Resource network node</source>
-        <translation>Noeud de réseau de ressource</translation>
-    </message>
-    <message>
-        <source>Resource network type</source>
-        <translation>Type de réseau de ressource</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation>Catégories</translation>
-    </message>
-    <message>
-        <source>Symbols</source>
-        <translation>Symboles</translation>
-    </message>
-    <message>
-        <source>Urban</source>
-        <translation>Urbain</translation>
-    </message>
-    <message>
-        <source>Launchers</source>
-        <translation>Lanceurs</translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
-    </message>
-    <message>
-        <source>Fires</source>
-        <translation>Feux</translation>
-    </message>
-    <message>
-        <source>Drawings</source>
-        <translation>Dessins</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Weapon systems</source>
-        <translation>Systèmes d&apos;armes</translation>
-    </message>
-    <message>
-        <source>Active Protections</source>
-        <translation>Protections Actives</translation>
-    </message>
-    <message>
-        <source>Sensors</source>
-        <translation>Capteurs</translation>
-    </message>
-    <message>
-        <source>Breakdowns</source>
-        <translation>Pannes</translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation>Equipements</translation>
-    </message>
-    <message>
-        <source>Resource networks</source>
-        <translation>Réseaux de ressource</translation>
-    </message>
-    <message>
-        <source>Op. indicators</source>
-        <translation>Indicateurs Op</translation>
-    </message>
-    <message>
-        <source>Missions</source>
-        <translation>Missions</translation>
-    </message>
-    <message>
-        <source>Doctrine models</source>
-        <translation>Modèles décisionnels</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Pions</translation>
-    </message>
-    <message>
-        <source>Automata</source>
-        <translation>Automates</translation>
-    </message>
-    <message>
-        <source>Jamming</source>
-        <translation>Brouillage</translation>
-    </message>
-    <message>
-        <source>Human factors</source>
-        <translation>Facteurs humains</translation>
-    </message>
-    <message>
-        <source>Knowledge groups</source>
-        <translation>Groupes de connaissance</translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation>Foules</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
-        <source>Reports</source>
-        <translation>Comptes-rendus</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation>Log</translation>
-    </message>
-    <message>
-        <source>Shapefile input</source>
-        <translation>Données Shapefile</translation>
+        <source>Remote</source>
+        <translation type="unfinished">Distant</translation>
     </message>
     <message>
         <source>Equipment</source>
-        <translation>Equipement</translation>
+        <translation type="unfinished">Equipement</translation>
     </message>
     <message>
         <source>Human</source>
-        <translation>Humain</translation>
+        <translation type="unfinished">Humain</translation>
     </message>
     <message>
-        <source>Monday</source>
-        <translation>Lundi</translation>
+        <source>Date Time</source>
+        <translation type="unfinished">Date et Heure</translation>
     </message>
     <message>
-        <source>Tuesday</source>
-        <translation>Mardi</translation>
+        <source>Nature Atlas</source>
+        <translation type="unfinished">Nature ATLAS</translation>
     </message>
     <message>
-        <source>Wednesday</source>
-        <translation>Mercredi</translation>
+        <source>Agent knowledge</source>
+        <translation type="unfinished">Connaissance d&apos;agent</translation>
     </message>
     <message>
-        <source>Thursday</source>
-        <translation>Jeudi</translation>
+        <source>Object knowledge</source>
+        <translation type="unfinished">Connaissance d&apos;objet</translation>
     </message>
     <message>
-        <source>Friday</source>
-        <translation>Vendredi</translation>
+        <source>Crowd knowledge</source>
+        <translation type="unfinished">Connaissance de foule</translation>
     </message>
     <message>
-        <source>Saturday</source>
-        <translation>Samedi</translation>
+        <source>Planned work</source>
+        <translation type="unfinished">Travaux génie</translation>
     </message>
     <message>
-        <source>Sunday</source>
-        <translation>Dimanche</translation>
+        <source>Equipment type</source>
+        <translation type="unfinished">Type d&apos;equipement</translation>
     </message>
     <message>
-        <source>Disasters</source>
-        <translation>Désastre</translation>
+        <source>Resource type</source>
+        <translation type="unfinished">Type de dotation</translation>
     </message>
     <message>
-        <source>Danger direction</source>
-        <translation>Direction dangereuse</translation>
+        <source>Maintenance priorities</source>
+        <translation type="unfinished">Priorités de maintenance</translation>
     </message>
     <message>
-        <source>Phase lines</source>
-        <translation>Limas</translation>
+        <source>Medical priorities</source>
+        <translation type="unfinished">Priorités médicales</translation>
     </message>
     <message>
-        <source>Limit 1</source>
-        <translation>Limite 1</translation>
+        <source>Indirect fire</source>
+        <translation type="unfinished">Tir indirect</translation>
     </message>
     <message>
-        <source>Limit 2</source>
-        <translation>Limite 2</translation>
+        <source>Phase line</source>
+        <translation type="unfinished">Lima</translation>
     </message>
     <message>
-        <source>Unit</source>
-        <translation>Pion</translation>
+        <source>Urban knowledge</source>
+        <translation type="unfinished">Connaissance de bloc urbain</translation>
     </message>
     <message>
-        <source>Crowd</source>
-        <translation>Foule</translation>
+        <source>Location composite</source>
+        <translation type="unfinished">Localisation composite</translation>
     </message>
     <message>
-        <source>Remote</source>
-        <translation>Distant</translation>
+        <source>Resource network node</source>
+        <translation type="unfinished">Noeud de réseau de ressource</translation>
+    </message>
+    <message>
+        <source>Resource network type</source>
+        <translation type="unfinished">Type de réseau de ressource</translation>
     </message>
     <message>
         <source>Stage</source>
-        <translation>Phase</translation>
-    </message>
-    <message>
-        <source>Languages</source>
-        <translation>Langues</translation>
+        <translation type="unfinished">Phase</translation>
     </message>
     <message>
         <source>LimaFunction</source>
-        <translation>Type de Lima</translation>
+        <translation type="unfinished">Type de Lima</translation>
+    </message>
+    <message>
+        <source>Shapefile input</source>
+        <translation type="unfinished">Données Shapefile</translation>
+    </message>
+    <message>
+        <source>Categories</source>
+        <translation type="unfinished">Catégories</translation>
+    </message>
+    <message>
+        <source>Symbols</source>
+        <translation type="unfinished">Symboles</translation>
+    </message>
+    <message>
+        <source>Urban</source>
+        <translation type="unfinished">Urbain</translation>
+    </message>
+    <message>
+        <source>Launchers</source>
+        <translation type="unfinished">Lanceurs</translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished">Ressources</translation>
+    </message>
+    <message>
+        <source>Fires</source>
+        <translation type="unfinished">Feux</translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished">Dessins</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Objets</translation>
+    </message>
+    <message>
+        <source>Weapon systems</source>
+        <translation type="unfinished">Systèmes d&apos;armes</translation>
+    </message>
+    <message>
+        <source>Active Protections</source>
+        <translation type="unfinished">Protections Actives</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Capteurs</translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation type="unfinished">Pannes</translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished">Equipements</translation>
+    </message>
+    <message>
+        <source>Resource networks</source>
+        <translation type="unfinished">Réseaux de ressource</translation>
+    </message>
+    <message>
+        <source>Op. indicators</source>
+        <translation type="unfinished">Indicateurs Op</translation>
+    </message>
+    <message>
+        <source>Missions</source>
+        <translation type="unfinished">Missions</translation>
+    </message>
+    <message>
+        <source>Doctrine models</source>
+        <translation type="unfinished">Modèles décisionnels</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished">Pions</translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation type="unfinished">Automates</translation>
+    </message>
+    <message>
+        <source>Jamming</source>
+        <translation type="unfinished">Brouillage</translation>
+    </message>
+    <message>
+        <source>Human factors</source>
+        <translation type="unfinished">Facteurs humains</translation>
+    </message>
+    <message>
+        <source>Knowledge groups</source>
+        <translation type="unfinished">Groupes de connaissance</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished">Foules</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished">Populations</translation>
+    </message>
+    <message>
+        <source>Reports</source>
+        <translation type="unfinished">Comptes-rendus</translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation type="unfinished">Log</translation>
+    </message>
+    <message>
+        <source>Disasters</source>
+        <translation type="unfinished">Désastre</translation>
+    </message>
+    <message>
+        <source>Languages</source>
+        <translation type="unfinished">Langues</translation>
+    </message>
+    <message>
+        <source>Monday</source>
+        <translation type="unfinished">Lundi</translation>
+    </message>
+    <message>
+        <source>Tuesday</source>
+        <translation type="unfinished">Mardi</translation>
+    </message>
+    <message>
+        <source>Wednesday</source>
+        <translation type="unfinished">Mercredi</translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation type="unfinished">Jeudi</translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation type="unfinished">Vendredi</translation>
+    </message>
+    <message>
+        <source>Saturday</source>
+        <translation type="unfinished">Samedi</translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation type="unfinished">Dimanche</translation>
+    </message>
+    <message>
+        <source>Danger direction</source>
+        <translation type="unfinished">Direction dangereuse</translation>
+    </message>
+    <message>
+        <source>Phase lines</source>
+        <translation type="unfinished">Limas</translation>
+    </message>
+    <message>
+        <source>Limit 1</source>
+        <translation type="unfinished">Limite 1</translation>
+    </message>
+    <message>
+        <source>Limit 2</source>
+        <translation type="unfinished">Limite 2</translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">Pion</translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation type="unfinished">Foule</translation>
     </message>
 </context>
 <context>
