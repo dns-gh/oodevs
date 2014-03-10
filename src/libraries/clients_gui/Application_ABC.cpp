@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "Application_ABC.h"
+#include "moc_Application_ABC.cpp"
 #include "ApplicationMonitor.h"
 #include "VerticalHeaderTableView.h"
 #include "clients_kernel/Tools.h"
@@ -16,13 +17,18 @@
 #include "tools/Language.h"
 #include "tools/Languages.h"
 #include "tools/VersionHelper.h"
-#include "tools/Win32/BugTrap.h"
-#include "moc_Application_ABC.cpp"
+#include <tools/StackContext.h>
+#include <tools/Win32/BugTrap.h>
 #include <license_gui/LicenseDialog.h>
 
 //#define NO_LICENSE_CHECK
 
 using namespace gui;
+
+namespace
+{
+    tools::StackContext context;
+}
 
 // -----------------------------------------------------------------------------
 // Name: Application_ABC constructor
