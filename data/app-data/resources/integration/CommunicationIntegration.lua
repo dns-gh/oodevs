@@ -528,8 +528,8 @@ end
 --- Returns the decisional state of the given agent
 -- @param agent DirectIA agent
 -- @param Integer, the decisional state of the given agent
--- <ul><li> 0 = eEtatDec_RAS (their is no enemy)</li>
--- <li> 1 = eEtatDec_Continu (their is enemy but)</li>
+-- <ul><li> 0 = eEtatDec_RAS (there is no enemy)</li>
+-- <li> 1 = eEtatDec_Continu (there is enemy but)</li>
 -- <li> 2 = eEtatDec_Sauvegarde (the agent is in bad force ratio and will try to self-protect)</li>
 -- </ul>
 integration.getAgentDecisionalState = function( agent )
@@ -539,8 +539,8 @@ end
 --- Returns the decisional state of the given knowledge agent
 -- @param kAgent DirectIA knowledge agent
 -- @param Integer, the decisional state of the given agent
--- <ul><li> 0 = eEtatDec_RAS (their is no enemy)</li>
--- <li> 1 = eEtatDec_Continu (their is enemy but)</li>
+-- <ul><li> 0 = eEtatDec_RAS (there is no enemy)</li>
+-- <li> 1 = eEtatDec_Continu (there is enemy but)</li>
 -- <li> 2 = eEtatDec_Sauvegarde (the agent is in bad force ratio and will try to self-protect)</li>
 -- </ul>
 integration.getKnowledgeAgentDecisionalState = function( kAgent )
