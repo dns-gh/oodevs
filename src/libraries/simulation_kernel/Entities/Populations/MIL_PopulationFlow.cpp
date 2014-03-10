@@ -379,45 +379,28 @@ void MIL_PopulationFlow::NotifyMovingOnPathPoint( const MT_Vector2D& point )
 // Name: MIL_PopulationFlow::UpdateTailPosition
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
+void MIL_PopulationFlow::UpdateTailPosition()
 {
     bFlowShapeUpdated_ = true;
-    // $$$$ A NETTOYER
-    MT_Vector2D vCur = GetTailPosition();
-    auto itNext = std::next( flowShape_.begin() );
-    MT_Vector2D vNext = itNext->first;
-    MT_Vector2D vDir  = vNext - vCur;
-    double rDist = rWalkedDistance;
-    double rDirLength = vDir.Magnitude();
-    if( rDirLength )
-        vDir /= rDirLength;
-#pragma warning( push, 0 )
-    while( 1 )
-#pragma warning( pop )
+    double density = GetDensity();
+    // if just created (no density yet) and all humans from source concentration are pushed,
+    // we force the flow density to be the same as the source density
+    if( density == 0 && pSourceConcentration_ && pSourceConcentration_->GetAllHumans() == 0 )
+        density = pSourceConcentration_->GetPullingFlowsDensity();
+    double rDist = density ? GetAllHumans() / density : 0;
+    auto itStart = flowShape_.end();
+    auto itEnd = std::prev( itStart );
+    for( double rDirLength = 0;; rDist -= rDirLength )
     {
-        if( rDist < rDirLength )
+        itStart = itEnd;
+        itEnd = std::prev( itStart );
+        MT_Vector2D vDir = itEnd->first - itStart->first;
+        rDirLength = vDir.Magnitude();
+        if( rDist <= rDirLength || itEnd == flowShape_.begin() )
         {
-            vCur = vCur + ( vDir * rDist );
-            flowShape_.erase( std::next( flowShape_.begin() ), itNext );
-            SetTailPosition( vCur );
-            break;
-        }
-        else
-        {
-            rDist -= rDirLength;
-            vCur   = vNext;
-            ++itNext;
-            if( itNext == flowShape_.end() )
-            {
-                flowShape_.erase( std::next( flowShape_.begin() ), std::prev( flowShape_.end() ) );
-                SetTailPosition( GetHeadPosition() );
-                break;
-            }
-            vNext = itNext->first;
-            vDir = vNext - vCur;
-            rDirLength = vDir.Magnitude();
-            if( rDirLength )
-                vDir /= rDirLength;
+            flowShape_.erase( flowShape_.begin(), itEnd );
+            SetTailPosition( itStart->first + rDist * vDir.Normalize() );
+            return;
         }
     }
 }
@@ -456,6 +439,7 @@ MIL_PopulationFlow* MIL_PopulationFlow::Split( const MT_Vector2D& splittingPoint
     UpdateLocation();
     const int nNbrHumans = static_cast< unsigned int >( GetLocation().GetArea() * rDensityBeforeSplit );
     newFlow.PushHumans( PullHumans( GetAllHumans() - nNbrHumans ) );
+    newFlow.UpdateDensity();
     UpdateDensity();
     return &newFlow;
 }
@@ -604,8 +588,8 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         if( rSpeed != 0 || pDestConcentration_ )
             PushHumans( pSourceConcentration_->PullHumans( nNbrHumans ) );
     }
-    else
-        UpdateTailPosition( rWalkedDistance_ );
+    if( !pSourceConcentration_ || pSourceConcentration_->GetAllHumans() == 0 )
+        UpdateTailPosition();
     if( bFlowShapeUpdated_ )
         UpdateLocation();
     if( bFlowShapeUpdated_ || HasHumansChanged() )

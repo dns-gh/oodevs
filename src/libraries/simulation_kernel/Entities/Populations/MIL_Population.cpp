@@ -1016,6 +1016,8 @@ void MIL_Population::SetNewArmedIndividuals( double newArmedIndividuals )
 // -----------------------------------------------------------------------------
 void MIL_Population::Move( const MT_Vector2D& destination )
 {
+    if( bHasDoneMagicMove_ )
+        return;
     for( auto itConcentration = concentrations_.cbegin(); itConcentration != concentrations_.end(); ++itConcentration )
         ( **itConcentration ).Move( destination );
     for( size_t i = 0; i < flows_.size(); ++i ) // $$$$ LDC Do NOT optimize the flow.size() away, flows_ is modified during iteration!!
@@ -1030,6 +1032,8 @@ void MIL_Population::Move( const MT_Vector2D& destination )
 // -----------------------------------------------------------------------------
 void MIL_Population::MoveAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination )
 {
+    if( bHasDoneMagicMove_ )
+        return;
     if( destination.empty() )
         return;
     for( auto itConcentration = concentrations_.cbegin(); itConcentration != concentrations_.end(); ++itConcentration )
