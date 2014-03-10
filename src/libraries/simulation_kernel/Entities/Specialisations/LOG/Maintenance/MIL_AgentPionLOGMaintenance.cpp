@@ -64,7 +64,8 @@ MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePio
                                                           MissionController_ABC& controller,
                                                           MIL_Automate& automate,
                                                           const std::string& name )
-    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller, automate, name )
+    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller, automate,
+           *MakeAgentPionXml( name, automate ) )
 {
 }
 
