@@ -124,7 +124,7 @@ void MIL_FlowCollision::Update()
 {
     if( markedForDestruction_ )
         return;
-    MIL_PopulationFlow* oldGoing = going_;
+    const MIL_PopulationFlow* oldGoing = going_;
     if( IsTimerOver() )
         Split();
     if( oldGoing != going_ )

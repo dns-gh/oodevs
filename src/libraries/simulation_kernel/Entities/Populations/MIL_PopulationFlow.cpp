@@ -383,6 +383,8 @@ void MIL_PopulationFlow::UpdateTailPosition()
 {
     bFlowShapeUpdated_ = true;
     double density = GetDensity();
+    // if just created (no density yet) and all humans from source concentration are pushed,
+    // we force the flow density to be the same as the source density
     if( density == 0 && pSourceConcentration_ && pSourceConcentration_->GetAllHumans() == 0 )
         density = pSourceConcentration_->GetPullingFlowsDensity();
     double rDist = density ? GetAllHumans() / density : 0;
