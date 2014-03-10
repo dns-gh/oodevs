@@ -15,14 +15,6 @@
       </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="protection">
-    <xsl:if test="./@name != 'Foule'">
-      <xsl:copy>
-          <xsl:apply-templates select="node()|@*"/>
-      </xsl:copy>
-    </xsl:if>
-  </xsl:template>
-
   <xsl:template match="node()|@*">
     <xsl:copy>
       <xsl:apply-templates select="node()|@*"/>
