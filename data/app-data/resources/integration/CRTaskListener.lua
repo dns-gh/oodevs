@@ -34,12 +34,6 @@ integration.reportWithSource = function( emitter, id, ... )
     end
 end
 
---- Deprecated : use integration.report
---- Sends a message
--- @see integration.report
--- Any additional parameter will be used as parameters to the report.
-DEC_RC = integration.report
-
 --- Sends a message
 -- @see integration.reportWithSource
 -- Any additional parameter will be used as parameters to the report.
@@ -47,6 +41,12 @@ DEC_RC = integration.report
 integration.report = function( id, ... )
     integration.reportWithSource( myself, id, ... )
 end
+
+--- Deprecated : use integration.report
+--- Sends a message
+-- @see integration.report
+-- Any additional parameter will be used as parameters to the report.
+DEC_RC = integration.report
 
 --- Displays a trace
 -- @param stringMessage, String, the message to display
