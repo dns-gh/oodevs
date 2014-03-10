@@ -440,10 +440,10 @@ bool PHY_Dotation::HasReachedSupplyThreshold() const
 double PHY_Dotation::Supply( double rSupply )
 {
     if( bDotationBlocked_ )
-        return 0.;
-    const double rNewSupply = std::min( rSupply, rCapacity_ - rConsumptionReservation_ - rFireReservation_ );
+        return 0;
+    const double rValue = std::min( rValue_ + rSupply, rCapacity_ - rConsumptionReservation_ - rFireReservation_ );
     const double previous = rValue_;
-    SetValue( std::max( 0., rNewSupply ) );
+    SetValue( std::max( 0., rValue ) );
     return rValue_ - previous;
 }
 
