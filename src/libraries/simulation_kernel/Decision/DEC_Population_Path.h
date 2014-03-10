@@ -54,6 +54,7 @@ public:
     double GetCostOutsideOfChanneling() const;
     const T_PathKnowledgeObjectsByTypes& GetPathKnowledgeObjects() const;
     double GetCostOutsideOfAllObjects() const;
+    double GetMaxSpeed( const TerrainData& terrainData ) const;
     //@}
 
 private:
