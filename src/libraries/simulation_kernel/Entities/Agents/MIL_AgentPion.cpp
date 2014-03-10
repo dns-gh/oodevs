@@ -96,6 +96,19 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 
+std::auto_ptr< xml::xistringstream > MakeAgentPionXml( const std::string& name,
+       const MIL_Automate& automate )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "unit" )
+            << xml::attribute( "id", "0" )
+            << xml::attribute( "name" , name );
+    automate.GetColor().WriteODB( xos );
+    auto xis = std::auto_ptr< xml::xistringstream >( new xml::xistringstream( xos.str() ));
+    *xis >> xml::start( "unit" );
+    return xis;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion constructor
 // Created: NLD 2004-08-11
@@ -133,34 +146,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
     bool bOverridenSymbol = xis.attribute< bool >( "overridden-symbol", false );
     if( bOverridenSymbol && xis.has_attribute( "nature" ) )
         xis >> xml::attribute( "nature", app6Symbol_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion constructor
-// Created: MMC 2011-05-27
-// -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
-                              const AlgorithmsFactories& algorithmFactories,
-                              MissionController_ABC& controller,
-                              MIL_Automate& automate,
-                              const std::string& name )
-    : MIL_Agent_ABC( name )
-    , pType_               ( &type )
-    , bHasChanged_         ( false )
-    , markedForDestruction_( false )
-    , brainDeleted_        ( false )
-    , pAutomate_           ( &automate )
-    , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , pOrderManager_       ( new MIL_PionOrderManager( controller, *this ) )
-    , algorithmFactories_  ( algorithmFactories )
-    , pAffinities_         ( new MIL_AffinitiesMap() )
-    , pExtensions_         ( new MIL_DictionaryExtensions() )
-    , app6Symbol_          ( "" )
-    , level_               ( "" )
-    , teleported_          ( false )
-{
-    pColor_.reset( new MIL_Color( automate.GetColor() ) );
-    automate.RegisterPion( *this );
 }
 
 // -----------------------------------------------------------------------------

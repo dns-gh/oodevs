@@ -326,7 +326,8 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( const AlgorithmsFactories& al
                                                    MIL_Automate& automate,
                                                    const std::string& name ) const
 {
-    return new MIL_AgentPion( *this, algorithmFactories, controller, automate, name );
+    const auto xml = MakeAgentPionXml( name, automate );
+    return InstanciatePion( algorithmFactories, controller, automate, *xml );
 }
 
 // -----------------------------------------------------------------------------

@@ -34,6 +34,7 @@ namespace xml
 {
     class xostream;
     class xistream;
+    class xistringstream;
 }
 
 class DEC_Decision_ABC;
@@ -61,7 +62,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis );
-             MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, const std::string& name );
              MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller );
     virtual ~MIL_AgentPion();
     //@}
@@ -268,5 +268,8 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_AgentPion )
+
+std::auto_ptr< xml::xistringstream > MakeAgentPionXml( const std::string& name,
+       const MIL_Automate& automate );
 
 #endif // __MIL_AgentPion_h_

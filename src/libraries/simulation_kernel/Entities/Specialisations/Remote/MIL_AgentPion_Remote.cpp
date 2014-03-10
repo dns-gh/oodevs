@@ -68,7 +68,8 @@ MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type,
                                             MissionController_ABC& controller,
                                             MIL_Automate& automate,
                                             const std::string& name )
-    : MIL_AgentPion( type, algorithmFactories, controller, automate, name )
+    : MIL_AgentPion( type, algorithmFactories, controller, automate,
+           *MakeAgentPionXml( name, automate ) )
 {
     // NOTHING
 }

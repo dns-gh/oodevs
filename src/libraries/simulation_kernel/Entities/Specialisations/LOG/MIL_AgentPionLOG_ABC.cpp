@@ -43,7 +43,8 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type,
                                             MissionController_ABC& controller,
                                             MIL_Automate& automate,
                                             const std::string& name )
-    : MIL_AgentPion   ( type, algorithmFactories, controller, automate, name )
+    : MIL_AgentPion   ( type, algorithmFactories, controller, automate,
+            *MakeAgentPionXml( name, automate ) )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     this->RegisterAction( pLogisticAction_ );
