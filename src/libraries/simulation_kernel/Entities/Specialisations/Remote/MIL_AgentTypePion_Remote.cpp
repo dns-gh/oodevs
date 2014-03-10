@@ -47,7 +47,8 @@ MIL_AgentPion* MIL_AgentTypePion_Remote::InstanciatePion( const AlgorithmsFactor
                                                           MIL_Automate& automate,
                                                           const std::string& name ) const
 {
-    return new MIL_AgentPion_Remote( *this, algorithmFactories, controller, automate, name );
+    return new MIL_AgentPion_Remote( *this, algorithmFactories, controller, automate,
+           *MakeAgentPionXml( name, automate ) );
 }
 
 namespace
