@@ -357,23 +357,32 @@ func TickOnce(c *C, client *swapi.Client) {
 	c.Assert(done, Equals, true)
 }
 
-func testDecStartConsumingResources(c *C, callback func(client *swapi.Client, unit, action, dotation uint32)) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog).StartPaused())
+func testDecStartConsumingResources(c *C, initial int32, percentage int, callback func(client *swapi.Client, unit, action, dotation uint32)) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Log Unit 3")
 	const dotation = uint32(electrogen_1)
-	c.Assert(d.Units[unit.Id].ResourceDotations[dotation].Quantity, Equals, int32(10))
-	// This unit has 10 electrogen_1 resources.
-	// Try to deplete it completely after 10 steps
-	action := DecConsumeResources(c, client, unit.Id, electrogen_1, -100, 10*10)
+	err := client.ChangeDotation(unit.Id,
+		map[uint32]*swapi.ResourceDotation{
+			dotation: &swapi.ResourceDotation{
+				Quantity:  initial,
+				Threshold: 0,
+			},
+		})
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit.Id].ResourceDotations[dotation].Quantity == initial
+	})
+	client.Pause()
+	action := DecConsumeResources(c, client, unit.Id, electrogen_1, percentage, 10*10)
 	TickOnce(c, client) // need one full tick to apply dec command
 	callback(client, unit.Id, action, dotation)
 }
 
 func (s *TestSuite) TestDecStartConsumingResources(c *C) {
 	// normal case
-	testDecStartConsumingResources(c, func(client *swapi.Client, unit, action, dotation uint32) {
+	testDecStartConsumingResources(c, 10, -100, func(client *swapi.Client, unit, action, dotation uint32) {
 		quantities := []int32{9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0}
 		for _, qty := range quantities {
 			TickOnce(c, client)
@@ -381,8 +390,26 @@ func (s *TestSuite) TestDecStartConsumingResources(c *C) {
 			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
 		}
 	})
+	// non full dotations
+	testDecStartConsumingResources(c, 6, -100, func(client *swapi.Client, unit, action, dotation uint32) {
+		quantities := []int32{5, 4, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0}
+		for _, qty := range quantities {
+			TickOnce(c, client)
+			d := client.Model.GetData()
+			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+		}
+	})
+	// capped percentage
+	testDecStartConsumingResources(c, 10, -200, func(client *swapi.Client, unit, action, dotation uint32) {
+		quantities := []int32{8, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0}
+		for _, qty := range quantities {
+			TickOnce(c, client)
+			d := client.Model.GetData()
+			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+		}
+	})
 	// stop action before end
-	testDecStartConsumingResources(c, func(client *swapi.Client, unit, action, dotation uint32) {
+	testDecStartConsumingResources(c, 10, -100, func(client *swapi.Client, unit, action, dotation uint32) {
 		quantities := []int32{9, 8, 7, 6, 5, 5, 5}
 		for i, qty := range quantities {
 			TickOnce(c, client)
@@ -394,7 +421,7 @@ func (s *TestSuite) TestDecStartConsumingResources(c *C) {
 		}
 	})
 	// suspend action in the middle
-	testDecStartConsumingResources(c, func(client *swapi.Client, unit, action, dotation uint32) {
+	testDecStartConsumingResources(c, 10, -100, func(client *swapi.Client, unit, action, dotation uint32) {
 		quantities := []int32{9, 8, 7, 6, 5, 5, 5, 4, 3, 2, 1, 0, 0, 0}
 		for i, qty := range quantities {
 			TickOnce(c, client)
