@@ -83,16 +83,16 @@ private:
 protected:
     //! @name Member data
     //@{
-    kernel::Controllers&                 controllers_;
-    kernel::Entity_ABC*                  selected_;
-    const kernel::ExtensionTypes&        extensions_;
+    kernel::Controllers& controllers_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    const kernel::ExtensionTypes& extensions_;
     std::auto_ptr< DiffusionListDialog > diffusionDialog_;
-    Q3VBox*                              pMainLayout_;
-    QWidget*                             pExtensionLayout_;
-    RichGroupBox*                        pGroupBox_;
-    QGridLayout*                         pGroupBoxLayout_;
-    T_Widgets                            widgets_;
-    bool                                 updating_;
+    Q3VBox* pMainLayout_;
+    QWidget* pExtensionLayout_;
+    RichGroupBox* pGroupBox_;
+    QGridLayout* pGroupBoxLayout_;
+    T_Widgets widgets_;
+    bool updating_;
     //@}
 };
 

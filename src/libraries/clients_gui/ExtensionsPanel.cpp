@@ -49,7 +49,7 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     , controllers_    ( controllers )
     , extensions_     ( extensions )
     , diffusionDialog_( new DiffusionListDialog( parent, controllers, agents, formations, extensions, "DiffusionListDialog" ) )
-    , selected_       ( 0 )
+    , selected_       ( controllers )
     , pGroupBox_      ( 0 )
     , updating_       ( false )
 {
@@ -395,7 +395,7 @@ void ExtensionsPanel::OnActivationChanged( bool activate )
 {
     if( !selected_ )
         return;
-    DictionaryExtensions* dico = selected_->Retrieve< DictionaryExtensions >();
+    DictionaryExtensions* dico = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
     if( !dico )
         return;
     dico->SetEnabled( activate );
@@ -413,7 +413,7 @@ void ExtensionsPanel::Commit()
 {
     if( updating_ || !selected_ )
         return;
-    DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
+    DictionaryExtensions* ext = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( !ext || !type )
         return;
@@ -486,7 +486,7 @@ void ExtensionsPanel::UpdateDisplay()
 {
     if( !selected_ )
         return;
-    DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
+    const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( !ext || !type )
         return;
@@ -546,7 +546,7 @@ void ExtensionsPanel::UpdateDependencies()
 {
     if( !selected_ )
         return;
-    DictionaryExtensions* dico = selected_->Retrieve< DictionaryExtensions >();
+    const DictionaryExtensions* dico = selected_->Retrieve< DictionaryExtensions >();
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( !dico || !type )
         return;
