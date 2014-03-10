@@ -78,4 +78,3 @@ func (s *TestSuite) TestPathfindRequest(c *C) {
 	c.Assert(from, IsNearby, points[0])
 	c.Assert(from, IsNearby, points[1])
 }
-
