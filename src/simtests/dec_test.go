@@ -358,7 +358,7 @@ func TickOnce(c *C, client *swapi.Client) {
 }
 
 func testDecStartConsumingResources(c *C, initial int32, percentage int, callback func(client *swapi.Client, unit, action, dotation uint32)) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog).StartPaused())
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Log Unit 3")
@@ -371,10 +371,6 @@ func testDecStartConsumingResources(c *C, initial int32, percentage int, callbac
 			},
 		})
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unit.Id].ResourceDotations[dotation].Quantity == initial
-	})
-	client.Pause()
 	action := DecConsumeResources(c, client, unit.Id, electrogen_1, percentage, 10*10)
 	TickOnce(c, client) // need one full tick to apply dec command
 	callback(client, unit.Id, action, dotation)
