@@ -12,7 +12,6 @@
 
 namespace transport
 {
-
 // =============================================================================
 /** @class  TransportStrategy_ABC
     @brief  TransportStrategy_ABC
@@ -51,9 +50,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void AddTransportedWeight(double weight, bool canBeLoaded=false) =0;
-    virtual double TotalTransportedWeight() const =0;
-    virtual double HeaviestTransportedWeight() const =0;
+    virtual void AddTransportedWeight( double weight, bool canBeLoaded ) = 0;
+    virtual double TotalTransportedWeight() const = 0;
+    virtual double HeaviestTransportedWeight() const = 0;
     //@}
 };
 

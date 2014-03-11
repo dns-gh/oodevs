@@ -32,9 +32,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void AddTransportedWeight(double weight, bool canBeLoaded) ;
-    virtual double TotalTransportedWeight() const ;
-    virtual double HeaviestTransportedWeight() const ;
+    virtual void AddTransportedWeight( double weight, bool canBeLoaded );
+    virtual double TotalTransportedWeight() const;
+    virtual double HeaviestTransportedWeight() const;
     //@}
 
 private:

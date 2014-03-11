@@ -11,24 +11,18 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Transport.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
+#include "DefaultTransportWeightComputer.h"
+#include "DefaultTransportCapacityComputer.h"
+#include "DefaultTransportPermissionComputer.h"
 #include "LocationActionNotificationHandler_ABC.h"
-#include "TransportCapacityComputerFactory_ABC.h"
-#include "TransportCapacityComputer_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
-#include "TransportPermissionComputer_ABC.h"
-#include "TransportWeightComputer_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include <boost/serialization/export.hpp>
-#include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Transport )
 
@@ -126,16 +120,16 @@ int PHY_RoleAction_Transport::Load()
 
     if( nState_ == eLoading )
     {
-        std::auto_ptr< TransportCapacityComputer_ABC > comp( owner_->GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() );
-        owner_->Execute( *comp );
+        DefaultTransportCapacityComputer computer;
+        owner_->Execute( computer );
 
-        if( comp->WeightLoadedPerTimeStep() == 0. )
+        if( computer.WeightLoadedPerTimeStep() == 0. )
             return eErrorNoCarriers;
 
-        const double rWeightToLoad = std::min( comp->WeightLoadedPerTimeStep(), comp->WeightCapacity() - rWeightTransported_ );
+        const double rWeightToLoad = std::min( computer.WeightLoadedPerTimeStep(), computer.WeightCapacity() - rWeightTransported_ );
         const double rWeightLoaded = DoLoad( rWeightToLoad );
         rWeightTransported_ += rWeightLoaded;
-        if( rWeightLoaded == 0 || rWeightTransported_ >= comp->WeightCapacity() )
+        if( rWeightLoaded == 0 || rWeightTransported_ >= computer.WeightCapacity() )
         {
             nState_ = eNothing;
             return eFinished;
@@ -177,10 +171,6 @@ double PHY_RoleAction_Transport::DoLoad( const double rWeightToLoad )
     return rWeightLoaded;
 }
 
-// =============================================================================
-// UNLOADING
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::Unload
 // Created: NLD 2004-11-19
@@ -193,12 +183,12 @@ int PHY_RoleAction_Transport::Unload( MT_Vector2D* position )
 
     if( nState_ == eUnloading )
     {
-        std::auto_ptr< TransportCapacityComputer_ABC > comp( owner_->GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() );
-        owner_->Execute( *comp );
-        if( comp->WeightUnloadedPerTimeStep() == 0. )
+        DefaultTransportCapacityComputer computer;
+        owner_->Execute( computer );
+        if( computer.WeightUnloadedPerTimeStep() == 0. )
             return eErrorNoCarriers;
 
-        const double rWeightUnloaded = DoUnload( comp->WeightUnloadedPerTimeStep(), position );
+        const double rWeightUnloaded = DoUnload( computer.WeightUnloadedPerTimeStep(), position );
         rWeightTransported_ -= rWeightUnloaded;
         if( rWeightUnloaded == 0. || rWeightTransported_ <= 0. )
         {
@@ -296,22 +286,25 @@ void PHY_RoleAction_Transport::ApplyContamination()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Transport::CheckConsistency()
 {
-    std::auto_ptr< TransportCapacityComputer_ABC > computer( owner_->GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() );
-    if( owner_->Execute( *computer ).WeightCapacity() == 0. )
+    DefaultTransportCapacityComputer computer;
+    if( owner_->Execute( computer ).WeightCapacity() == 0 )
         Cancel();
 }
-
-// =============================================================================
-// MAIN
-// =============================================================================
 
 namespace
 {
     class LoadableStrategy : public TransportStrategy_ABC
     {
     public:
-        LoadableStrategy( bool bTransportOnlyLoadable ) : bTransportOnlyLoadable_ ( bTransportOnlyLoadable ) {}
-        bool Authorize( bool canBeLoaded ) const { return  !bTransportOnlyLoadable_ || canBeLoaded ; }
+        LoadableStrategy( bool bTransportOnlyLoadable )
+            : bTransportOnlyLoadable_( bTransportOnlyLoadable )
+        {}
+
+        bool Authorize( bool canBeLoaded ) const
+        {
+            return !bTransportOnlyLoadable_ || canBeLoaded;
+        }
+
     private:
         bool bTransportOnlyLoadable_;
     };
@@ -326,22 +319,22 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
            || transportedPions_.find( &transported ) != transportedPions_.end() )
         return false;
 
-    std::auto_ptr< TransportPermissionComputer_ABC > computer( owner_->GetAlgorithms().transportComputerFactory_->CreatePermissionComputer() );
-    if( !transported.Execute( *computer ).CanBeLoaded() )
+    DefaultTransportPermissionComputer permissionComputer;
+    if( !transported.Execute( permissionComputer ).CanBeLoaded() )
         return false;
 
     LoadableStrategy strategy( bTransportOnlyLoadable );
-    std::auto_ptr< TransportWeightComputer_ABC > weightComp(owner_->GetAlgorithms().transportComputerFactory_->CreateWeightComputer( &strategy ) );
-    transported.Execute( *weightComp );
-    if( weightComp->TotalTransportedWeight() <= 0. )
+    DefaultTransportWeightComputer weightComp( &strategy );
+    transported.Execute( weightComp );
+    if( weightComp.TotalTransportedWeight() <= 0. )
         return false;
 
-    std::auto_ptr< TransportCapacityComputer_ABC > capacityComputer( owner_->GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() );
-    if( !bTransportOnlyLoadable && weightComp->HeaviestTransportedWeight() >
-        owner_->Execute( *capacityComputer ).MaxComposanteTransportedWeight() )
+    DefaultTransportCapacityComputer capacityComputer;
+    if( !bTransportOnlyLoadable && weightComp.HeaviestTransportedWeight() >
+        owner_->Execute( capacityComputer ).MaxComposanteTransportedWeight() )
         return false;
 
-    transportedPions_[ &transported ] = sTransportData( weightComp->TotalTransportedWeight(), bTransportOnlyLoadable, false );
+    transportedPions_[ &transported ] = sTransportData( weightComp.TotalTransportedWeight(), bTransportOnlyLoadable, false );
 
     bHasChanged_ = true;
     return true;
@@ -358,16 +351,16 @@ void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
         || transportedPions_.find( &transported ) != transportedPions_.end() )
         return;
 
-    std::auto_ptr< TransportPermissionComputer_ABC > permissionComputer( owner_->GetAlgorithms().transportComputerFactory_->CreatePermissionComputer() );
-    if(!transported.Execute( *permissionComputer ).CanBeLoaded())
+    DefaultTransportPermissionComputer permissionComputer;
+    if(!transported.Execute( permissionComputer ).CanBeLoaded())
          return;
 
     LoadableStrategy strategy( bTransportOnlyLoadable );
-    transported.Apply(&TransportNotificationHandler_ABC::LoadForTransport, *owner_, bTransportOnlyLoadable, bTransportedByAnother );
-    std::auto_ptr< TransportWeightComputer_ABC > weightComputer( owner_->GetAlgorithms().transportComputerFactory_->CreateWeightComputer( &strategy ) );
+    transported.Apply( &TransportNotificationHandler_ABC::LoadForTransport, *owner_, bTransportOnlyLoadable, bTransportedByAnother );
+    DefaultTransportWeightComputer weightComputer( &strategy );
     sTransportData& data = transportedPions_[ &transported ] =
         sTransportData(
-            transported.Execute( *weightComputer ).TotalTransportedWeight(),
+            transported.Execute( weightComputer ).TotalTransportedWeight(),
             bTransportOnlyLoadable, true );
     data.rRemainingWeight_   = 0.;
     data.rTransportedWeight_ = data.rTotalWeight_;
@@ -422,14 +415,15 @@ bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, boo
         return false;
 
     LoadableStrategy strategy( bTransportOnlyLoadable );
-    std::auto_ptr< TransportWeightComputer_ABC > weightComp( owner_->GetAlgorithms().transportComputerFactory_->CreateWeightComputer( &strategy ) );
-    transported.Execute( *weightComp );
-    if( weightComp->TotalTransportedWeight() <= 0. )
+    DefaultTransportWeightComputer weightComp( &strategy );
+    transported.Execute( weightComp );
+    if( weightComp.TotalTransportedWeight() <= 0. )
         return false;
 
-    std::auto_ptr< TransportCapacityComputer_ABC > capacityComp( owner_->GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() );
-    owner_->Execute( *capacityComp );
-    if( capacityComp->WeightLoadedPerTimeStep() == 0 || ( !bTransportOnlyLoadable && weightComp->HeaviestTransportedWeight() > capacityComp->MaxComposanteTransportedWeight() ) )
+    DefaultTransportCapacityComputer capacityComputer;
+    owner_->Execute( capacityComputer );
+    if( capacityComputer.WeightLoadedPerTimeStep() == 0 ||
+        !bTransportOnlyLoadable && weightComp.HeaviestTransportedWeight() > capacityComputer.MaxComposanteTransportedWeight() )
         return false;
 
     return true;
@@ -445,16 +439,16 @@ double PHY_RoleAction_Transport::GetNumberOfRoundTripToTransportPion( MIL_Agent_
         return 0.;
 
     LoadableStrategy strategy( bTransportOnlyLoadable );
-    std::auto_ptr< TransportWeightComputer_ABC > weightComp( owner_->GetAlgorithms().transportComputerFactory_->CreateWeightComputer( &strategy ) );
-    transported.Execute( *weightComp );
+    DefaultTransportWeightComputer weightComp( &strategy );
+    transported.Execute( weightComp );
 
-    if( weightComp->TotalTransportedWeight() <= 0. )
+    if( weightComp.TotalTransportedWeight() <= 0. )
         return 0.;
 
-    std::auto_ptr< TransportCapacityComputer_ABC > capacityComp( owner_->GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() );
-    owner_->Execute( *capacityComp );
+    DefaultTransportCapacityComputer capacityComputer;
+    owner_->Execute( capacityComputer );
 
-    return weightComp->TotalTransportedWeight() / capacityComp->WeightCapacity();
+    return weightComp.TotalTransportedWeight() / capacityComputer.WeightCapacity();
 }
 
 // -----------------------------------------------------------------------------
