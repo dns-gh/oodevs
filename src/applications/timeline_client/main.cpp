@@ -33,13 +33,22 @@ namespace
 std::function< void( const std::string& )> MakeLogger( const tools::Path& path )
 {
     const auto mutex = boost::make_shared< boost::mutex >();
-    const auto output = boost::make_shared< tools::Ofstream >(
+    boost::shared_ptr< tools::Ofstream > output;
+    if( !path.IsEmpty() )
+        output = boost::make_shared< tools::Ofstream >(
             path, std::ios::out | std::ios::binary );
     return [mutex,output]( const std::string& msg )
     {
         boost::lock_guard< boost::mutex > lock( *mutex );
-        *output << bpt::to_simple_string( bpt::second_clock::local_time() )
+        std::stringstream s;
+        s << bpt::to_simple_string( bpt::second_clock::local_time() )
             << " " << msg << std::endl; 
+        std::cerr << s.str();
+        if( output )
+        {
+            *output << s.str();
+            output->flush();
+        }
     };
 }
 
@@ -64,7 +73,8 @@ int main( int argc, char* argv[] )
             ( "uuid",           bpo::value( &cfg.uuid )->required(), "set parent uuid" )
             ( "url",            bpo::value( &cfg.url )->required(), "set url target" )
             ( "log",            bpo::value( &cfg.log ), "optional log file" )
-            ( "debug_port",     bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" );
+            ( "debug_port",     bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" )
+            ( "log_events",     bpo::value( &cfg.log_events )->zero_tokens(), "log events" );
         bpo::variables_map args;
         bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), args );
         if( args.count( "help" ) )
@@ -73,8 +83,8 @@ int main( int argc, char* argv[] )
             return 0;
         }
         bpo::notify( args );
-        if( !cfg.log.empty() )
-            logger = MakeLogger( tools::Path::FromUTF8( cfg.log ) );
+        logger = MakeLogger( tools::Path::FromUTF8( cfg.log ) );
+        logger( "Starting timeline_client" );
 
         return timeline::core::MakeClient( cfg, logger )->Run();
     }

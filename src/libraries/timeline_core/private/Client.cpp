@@ -55,7 +55,10 @@ Client::Client( const Configuration& cfg, const Client::T_Logger& logger )
     , app_    ( new App( cfg, engine_ ) )
     , browser_( Browser::Factory( GetHwnd( cfg_.wid ), cfg_.url ) )
     , quit_   ( false )
+    , logEvents_( cfg.log_events )
 {
+    if( !logger_ )
+        logger_ = []( const std::string& ) {};
     browser_->Start();
 }
 
@@ -75,7 +78,7 @@ int Client::Run()
     try
     {
         controls::T_Logger logger;
-        if( logger_ )
+        if( logEvents_ )
             logger = [&]( const std::string& msg ){ Log( msg, true ); };
         std::vector< uint8_t > buffer( ipc::DEFAULT_MAX_PACKET_SIZE );
         while( !quit_ )
@@ -93,20 +96,19 @@ int Client::Run()
     }
     catch( const std::exception& err )
     {
-        fprintf( stderr, "%s\n", err.what() );
+        logger_( err.what() );
     }
     catch( ... )
     {
-        fprintf( stderr, "unexpected exception\n" );
+        logger_( "unexpected exception" );
     }
     return -1;
 }
 
 void Client::Log( const std::string& msg, bool read )
 {
-    if( !logger_ )
-        return;
-    logger_( ( read ? " read:  " : " write: " ) + msg + "\n" );
+    if( logEvents_ )
+        logger_( ( read ? " read:  " : " write: " ) + msg );
 }
 
 void Client::OnResizeClient()

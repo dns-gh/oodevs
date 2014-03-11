@@ -77,13 +77,14 @@ private:
 
 private:
     const Configuration cfg_;
-    const T_Logger logger_;
+    T_Logger logger_;
     std::unique_ptr< tools::ipc::Device > read_;
     std::unique_ptr< tools::ipc::Device > write_;
     CefRefPtr< Engine > engine_;
     CefRefPtr< App > app_;
     CefRefPtr< Browser > browser_;
     bool quit_;
+    bool logEvents_;
 };
 }
 }

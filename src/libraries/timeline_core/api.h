@@ -29,11 +29,18 @@ namespace core
 
     struct Configuration
     {
+        Configuration()
+            : wid( 0 )
+            , debug_port( 0 )
+            , log_events( false )
+        {}
+
         int wid;
         std::string uuid;
         std::string url;
         std::string log;
         int debug_port;
+        bool log_events;
     };
 
     bool SpawnClient();
