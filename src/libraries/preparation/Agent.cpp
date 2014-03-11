@@ -247,3 +247,12 @@ void Agent::SetNature( const std::string& nature )
 {
     nature_ = nature;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent::IsSymbolOverriden
+// Created: JSR 2014-03-11
+// -----------------------------------------------------------------------------
+bool Agent::IsSymbolOverriden() const
+{
+    return overridenSymbol_;
+}

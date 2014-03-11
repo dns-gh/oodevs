@@ -2484,7 +2484,7 @@ Ces données ne peuvent pas être projetées.</translation>
     <name>SymbolDialog</name>
     <message>
         <source>Symbol and hierarchy level editor</source>
-        <translation>Editeur de symbol et de niveau hiérarchique</translation>
+        <translation>Editeur de symbole et de niveau hiérarchique</translation>
     </message>
     <message>
         <source>Ok</source>
