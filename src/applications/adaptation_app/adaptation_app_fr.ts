@@ -5369,67 +5369,67 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Date Time</source>
-        <translation type="unfinished">Date et Heure</translation>
+        <translation>Date et Heure</translation>
     </message>
     <message>
         <source>Nature Atlas</source>
-        <translation type="unfinished">Nature ATLAS</translation>
+        <translation>Nature ATLAS</translation>
     </message>
     <message>
         <source>Agent knowledge</source>
-        <translation type="unfinished">Connaissance d&apos;agent</translation>
+        <translation>Connaissance d&apos;agent</translation>
     </message>
     <message>
         <source>Object knowledge</source>
-        <translation type="unfinished">Connaissance d&apos;objet</translation>
+        <translation>Connaissance d&apos;objet</translation>
     </message>
     <message>
         <source>Crowd knowledge</source>
-        <translation type="unfinished">Connaissance de foule</translation>
+        <translation>Connaissance de foule</translation>
     </message>
     <message>
         <source>Planned work</source>
-        <translation type="unfinished">Travaux génie</translation>
+        <translation>Travaux génie</translation>
     </message>
     <message>
         <source>Equipment type</source>
-        <translation type="unfinished">Type d&apos;equipement</translation>
+        <translation>Type d&apos;equipement</translation>
     </message>
     <message>
         <source>Resource type</source>
-        <translation type="unfinished">Type de dotation</translation>
+        <translation>Type de dotation</translation>
     </message>
     <message>
         <source>Maintenance priorities</source>
-        <translation type="unfinished">Priorités de maintenance</translation>
+        <translation>Priorités de maintenance</translation>
     </message>
     <message>
         <source>Medical priorities</source>
-        <translation type="unfinished">Priorités médicales</translation>
+        <translation>Priorités médicales</translation>
     </message>
     <message>
         <source>Indirect fire</source>
-        <translation type="unfinished">Tir indirect</translation>
+        <translation>Tir indirect</translation>
     </message>
     <message>
         <source>Phase line</source>
-        <translation type="unfinished">Lima</translation>
+        <translation>Lima</translation>
     </message>
     <message>
         <source>Urban knowledge</source>
-        <translation type="unfinished">Connaissance de bloc urbain</translation>
+        <translation>Connaissance de bloc urbain</translation>
     </message>
     <message>
         <source>Location composite</source>
-        <translation type="unfinished">Localisation composite</translation>
+        <translation>Localisation composite</translation>
     </message>
     <message>
         <source>Resource network node</source>
-        <translation type="unfinished">Noeud de réseau de ressource</translation>
+        <translation>Noeud de réseau de ressource</translation>
     </message>
     <message>
         <source>Resource network type</source>
-        <translation type="unfinished">Type de réseau de ressource</translation>
+        <translation>Type de réseau de ressource</translation>
     </message>
     <message>
         <source>Stage</source>
@@ -5445,107 +5445,107 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Categories</source>
-        <translation type="unfinished">Catégories</translation>
+        <translation>Catégories</translation>
     </message>
     <message>
         <source>Symbols</source>
-        <translation type="unfinished">Symboles</translation>
+        <translation>Symboles</translation>
     </message>
     <message>
         <source>Urban</source>
-        <translation type="unfinished">Urbain</translation>
+        <translation>Urbain</translation>
     </message>
     <message>
         <source>Launchers</source>
-        <translation type="unfinished">Lanceurs</translation>
+        <translation>Lanceurs</translation>
     </message>
     <message>
         <source>Resources</source>
-        <translation type="unfinished">Ressources</translation>
+        <translation>Ressources</translation>
     </message>
     <message>
         <source>Fires</source>
-        <translation type="unfinished">Feux</translation>
+        <translation>Feux</translation>
     </message>
     <message>
         <source>Drawings</source>
-        <translation type="unfinished">Dessins</translation>
+        <translation>Dessins</translation>
     </message>
     <message>
         <source>Objects</source>
-        <translation type="unfinished">Objets</translation>
+        <translation>Objets</translation>
     </message>
     <message>
         <source>Weapon systems</source>
-        <translation type="unfinished">Systèmes d&apos;armes</translation>
+        <translation>Systèmes d&apos;armes</translation>
     </message>
     <message>
         <source>Active Protections</source>
-        <translation type="unfinished">Protections Actives</translation>
+        <translation>Protections Actives</translation>
     </message>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished">Capteurs</translation>
+        <translation>Capteurs</translation>
     </message>
     <message>
         <source>Breakdowns</source>
-        <translation type="unfinished">Pannes</translation>
+        <translation>Pannes</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation type="unfinished">Equipements</translation>
+        <translation>Equipements</translation>
     </message>
     <message>
         <source>Resource networks</source>
-        <translation type="unfinished">Réseaux de ressource</translation>
+        <translation>Réseaux de ressource</translation>
     </message>
     <message>
         <source>Op. indicators</source>
-        <translation type="unfinished">Indicateurs Op</translation>
+        <translation>Indicateurs Op</translation>
     </message>
     <message>
         <source>Missions</source>
-        <translation type="unfinished">Missions</translation>
+        <translation>Missions</translation>
     </message>
     <message>
         <source>Doctrine models</source>
-        <translation type="unfinished">Modèles décisionnels</translation>
+        <translation>Modèles décisionnels</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished">Pions</translation>
+        <translation>Pions</translation>
     </message>
     <message>
         <source>Automata</source>
-        <translation type="unfinished">Automates</translation>
+        <translation>Automates</translation>
     </message>
     <message>
         <source>Jamming</source>
-        <translation type="unfinished">Brouillage</translation>
+        <translation>Brouillage</translation>
     </message>
     <message>
         <source>Human factors</source>
-        <translation type="unfinished">Facteurs humains</translation>
+        <translation>Facteurs humains</translation>
     </message>
     <message>
         <source>Knowledge groups</source>
-        <translation type="unfinished">Groupes de connaissance</translation>
+        <translation>Groupes de connaissance</translation>
     </message>
     <message>
         <source>Crowds</source>
-        <translation type="unfinished">Foules</translation>
+        <translation>Foules</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished">Populations</translation>
+        <translation>Populations</translation>
     </message>
     <message>
         <source>Reports</source>
-        <translation type="unfinished">Comptes-rendus</translation>
+        <translation>Comptes-rendus</translation>
     </message>
     <message>
         <source>Log</source>
-        <translation type="unfinished">Log</translation>
+        <translation>Log</translation>
     </message>
     <message>
         <source>Disasters</source>
@@ -5557,55 +5557,55 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Monday</source>
-        <translation type="unfinished">Lundi</translation>
+        <translation>Lundi</translation>
     </message>
     <message>
         <source>Tuesday</source>
-        <translation type="unfinished">Mardi</translation>
+        <translation>Mardi</translation>
     </message>
     <message>
         <source>Wednesday</source>
-        <translation type="unfinished">Mercredi</translation>
+        <translation>Mercredi</translation>
     </message>
     <message>
         <source>Thursday</source>
-        <translation type="unfinished">Jeudi</translation>
+        <translation>Jeudi</translation>
     </message>
     <message>
         <source>Friday</source>
-        <translation type="unfinished">Vendredi</translation>
+        <translation>Vendredi</translation>
     </message>
     <message>
         <source>Saturday</source>
-        <translation type="unfinished">Samedi</translation>
+        <translation>Samedi</translation>
     </message>
     <message>
         <source>Sunday</source>
-        <translation type="unfinished">Dimanche</translation>
+        <translation>Dimanche</translation>
     </message>
     <message>
         <source>Danger direction</source>
-        <translation type="unfinished">Direction dangereuse</translation>
+        <translation>Direction dangereuse</translation>
     </message>
     <message>
         <source>Phase lines</source>
-        <translation type="unfinished">Limas</translation>
+        <translation>Limas</translation>
     </message>
     <message>
         <source>Limit 1</source>
-        <translation type="unfinished">Limite 1</translation>
+        <translation>Limite 1</translation>
     </message>
     <message>
         <source>Limit 2</source>
-        <translation type="unfinished">Limite 2</translation>
+        <translation>Limite 2</translation>
     </message>
     <message>
         <source>Unit</source>
-        <translation type="unfinished">Pion</translation>
+        <translation>Pion</translation>
     </message>
     <message>
         <source>Crowd</source>
-        <translation type="unfinished">Foule</translation>
+        <translation>Foule</translation>
     </message>
 </context>
 <context>
