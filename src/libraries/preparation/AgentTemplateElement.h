@@ -54,6 +54,8 @@ private:
     //@{
     AgentsModel& agents_;
     const kernel::AgentType& type_;
+    int level_;
+    std::string symbol_;
     const bool cp_;
     //@}
 };

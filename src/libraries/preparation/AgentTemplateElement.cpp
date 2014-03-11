@@ -12,9 +12,9 @@
 #include "AgentsModel.h"
 
 #include "clients_gui/Tools.h"
-#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AgentType.h"
+#include "preparation/Agent.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentTemplateElement constructor
@@ -27,7 +27,10 @@ AgentTemplateElement::AgentTemplateElement( AgentsModel& agents,
     , type_( agent.GetType() )
     , cp_( tools::IsCommandPost( agent ) )
 {
-    // NOTHING
+    const Agent& unit = static_cast< const Agent& >( agent );
+    level_ = static_cast< int >( unit.GetLevel() );
+    if( unit.IsSymbolOverriden() )
+        symbol_ = unit.GetSymbol();
 }
 
 // -----------------------------------------------------------------------------
@@ -41,6 +44,8 @@ AgentTemplateElement::AgentTemplateElement( AgentsModel& agents,
     , agents_( agents )
     , type_( type )
     , cp_( xis.attribute( "commandPost", false ) )
+    , level_( xis.attribute( "level", -1 ) )
+    , symbol_( xis.attribute( "symbol_", "" ) )
 {
     if( name_.isEmpty() )
         name_ = type_.GetLocalizedName().c_str();
@@ -69,6 +74,11 @@ kernel::Entity_ABC* AgentTemplateElement::Instanciate( kernel::Entity_ABC& super
     kernel::Agent_ABC& result = agents_.CreateAgent( *parent, type_, center, cp_, name_ );
     SetColor( result, colorController );
     SetExtensions( result );
+    Agent& agent = static_cast< Agent& >( result );
+    if( level_ != -1 )
+        agent.SetLevel( static_cast< E_NatureLevel >( level_ ) );
+    if( !symbol_.empty() )
+        agent.SetSymbol( symbol_ );
     return &result;
 }
 
@@ -82,6 +92,10 @@ void AgentTemplateElement::Serialize( xml::xostream& xos ) const
     xos << xml::attribute( "type", "agent" )
         << xml::attribute( "agentType", type_.GetKeyName() )
         << xml::attribute( "commandPost", cp_ );
+    if( level_ != -1 )
+        xos << xml::attribute( "level", level_ );
+    if( !symbol_.empty() )
+        xos << xml::attribute( "symbol", symbol_);
 }
 
 // -----------------------------------------------------------------------------
