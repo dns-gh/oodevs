@@ -13,7 +13,7 @@
 #include "PHY_RoleAction_Transport.h"
 #include "TransportWeightComputer_ABC.h"
 #include "DefaultTransportCapacityComputer.h"
-#include "DefaultTransportPermissionComputer.h"
+#include "TransportPermissionComputer_ABC.h"
 #include "LocationActionNotificationHandler_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -314,7 +314,22 @@ namespace
         double totalTransportedWeight_;
         double heaviestTransportedWeight_;
     };
+
+    struct TransportPermissionComputer : transport::TransportPermissionComputer_ABC
+    {
+        TransportPermissionComputer()
+            : allow_( true )
+        {}
+
+        virtual void AllowLoading( bool doAllow )
+        {
+            allow_ &= doAllow;
+        }
+
+        bool allow_;
+    };
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::AddPion
 // Created: NLD 2005-04-18
@@ -325,8 +340,8 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
            || transportedPions_.find( &transported ) != transportedPions_.end() )
         return false;
 
-    DefaultTransportPermissionComputer permissionComputer;
-    if( !transported.Execute( permissionComputer ).CanBeLoaded() )
+    TransportPermissionComputer permissionComputer;
+    if( !transported.Execute( permissionComputer ).allow_ )
         return false;
 
     TransportWeightComputer weightComp( bTransportOnlyLoadable );
@@ -356,8 +371,8 @@ void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
         || transportedPions_.find( &transported ) != transportedPions_.end() )
         return;
 
-    DefaultTransportPermissionComputer permissionComputer;
-    if(!transported.Execute( permissionComputer ).CanBeLoaded())
+    TransportPermissionComputer permissionComputer;
+    if(!transported.Execute( permissionComputer ).allow_)
          return;
 
     transported.Apply( &TransportNotificationHandler_ABC::LoadForTransport, *owner_, bTransportOnlyLoadable, bTransportedByAnother );
