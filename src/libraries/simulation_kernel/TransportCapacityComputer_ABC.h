@@ -12,8 +12,8 @@
 
 class PHY_ComposantePion;
 
-namespace transport {
-
+namespace transport
+{
 // =============================================================================
 /** @class  ConsumptionChangeRequestHandler_ABC
     @brief  ConsumptionChangeRequestHandler_ABC
@@ -32,10 +32,6 @@ public:
     //! @name Operations
     //@{
     virtual void ApplyOnComposante( PHY_ComposantePion& comp ) = 0;
-    virtual double WeightCapacity() const = 0;
-    virtual double WeightLoadedPerTimeStep() const = 0;
-    virtual double WeightUnloadedPerTimeStep() const = 0;
-    virtual double MaxComposanteTransportedWeight() const = 0;
     //@}
 };
 
