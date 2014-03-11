@@ -23,9 +23,9 @@ namespace
 
     int GetSteps( double duration, unsigned tickDuration )
     {
-        if( duration == 0 )
-            throw MASA_EXCEPTION( "invalid null duration" );
-        return static_cast< int >( floor( duration / tickDuration + 0.5 ) );
+        if( duration < 0 )
+            throw MASA_EXCEPTION( "invalid negative duration" );
+        return std::max( 1, static_cast< int >( std::floor( duration / tickDuration + 0.5 ) ) );
     }
 }
 
