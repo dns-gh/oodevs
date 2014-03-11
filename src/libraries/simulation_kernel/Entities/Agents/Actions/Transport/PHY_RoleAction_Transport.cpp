@@ -35,9 +35,9 @@ using namespace transport;
 PHY_RoleAction_Transport::sTransportData::sTransportData()
     : bTransportOnlyLoadable_( false )
     , bMagicLoad_            ( false )
-    , rTotalWeight_          ( 0. )
-    , rRemainingWeight_      ( 0. )
-    , rTransportedWeight_    ( 0. )
+    , rTotalWeight_          ( 0 )
+    , rRemainingWeight_      ( 0 )
+    , rTransportedWeight_    ( 0 )
 {
     // NOTHING
 }
@@ -53,7 +53,7 @@ PHY_RoleAction_Transport::sTransportData::sTransportData( double rTotalWeight,
     , bMagicLoad_            ( bMagicLoad )
     , rTotalWeight_          ( rTotalWeight )
     , rRemainingWeight_      ( rTotalWeight )
-    , rTransportedWeight_    ( 0. )
+    , rTransportedWeight_    ( 0 )
 {
     // NOTHING
 }
@@ -174,7 +174,7 @@ int PHY_RoleAction_Transport::Load()
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Transport::DoLoad( const double rWeightToLoad )
 {
-    double rWeightLoaded = 0.;
+    double rWeightLoaded = 0;
     bool bTransportedByAnother = false;
 
     for( auto it = transportedPions_.begin(); it != transportedPions_.end() && rWeightLoaded < rWeightToLoad; ++it )
@@ -182,12 +182,12 @@ double PHY_RoleAction_Transport::DoLoad( const double rWeightToLoad )
         MIL_Agent_ABC&  pion          = *it->first;
         sTransportData& transportData =  it->second;
 
-        if( it->second.rRemainingWeight_ <= 0. )
+        if( it->second.rRemainingWeight_ <= 0 )
             continue;
 
         pion.Apply(&TransportNotificationHandler_ABC::LoadForTransport, *owner_, transportData.bTransportOnlyLoadable_, bTransportedByAnother );
 
-        if( it->second.rTransportedWeight_ <= 0. && bTransportedByAnother /* TODO && pion.CanBeTransported() */ ) // Filer position embarkedment si bTransportOnlyLoadable_  + transporteur
+        if( it->second.rTransportedWeight_ <= 0 && bTransportedByAnother /* TODO && pion.CanBeTransported() */ ) // Filer position embarkedment si bTransportOnlyLoadable_  + transporteur
             continue; // LoadForTransport fails when the 'pion' is already transported by another unit
 
         const double rTmpWeight = std::min( rWeightToLoad - rWeightLoaded, it->second.rRemainingWeight_ );
@@ -214,14 +214,14 @@ int PHY_RoleAction_Transport::Unload( MT_Vector2D* position )
     {
         TransportCapacityComputer computer;
         owner_->Execute( computer );
-        if( computer.rWeightUnloadedPerTimeStep_ == 0. )
+        if( computer.rWeightUnloadedPerTimeStep_ == 0 )
             return eErrorNoCarriers;
 
         const double rWeightUnloaded = DoUnload( computer.rWeightUnloadedPerTimeStep_, position );
         rWeightTransported_ -= rWeightUnloaded;
-        if( rWeightUnloaded == 0. || rWeightTransported_ <= 0. )
+        if( rWeightUnloaded == 0 || rWeightTransported_ <= 0 )
         {
-            rWeightTransported_ = 0.;
+            rWeightTransported_ = 0;
             nState_ = eNothing;
             return eFinished;
         }
@@ -236,7 +236,7 @@ int PHY_RoleAction_Transport::Unload( MT_Vector2D* position )
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Transport::DoUnload( const double rWeightToUnload, MT_Vector2D* position )
 {
-    double rWeightUnloaded = 0.;
+    double rWeightUnloaded = 0;
     for( auto it = transportedPions_.begin(); it != transportedPions_.end() && rWeightUnloaded < rWeightToUnload; )
     {
         if( it->second.rTransportedWeight_ <= 0 )
@@ -247,7 +247,7 @@ double PHY_RoleAction_Transport::DoUnload( const double rWeightToUnload, MT_Vect
         const double rTmpWeight = std::min( rWeightToUnload - rWeightUnloaded, it->second.rTransportedWeight_ );
         it->second.rTransportedWeight_ -= rTmpWeight;
         rWeightUnloaded                += rTmpWeight;
-        if( it->second.rTransportedWeight_ <= 0. && it->second.rRemainingWeight_ <= 0. )
+        if( it->second.rTransportedWeight_ <= 0 && it->second.rRemainingWeight_ <= 0 )
         {
             bHasChanged_ = true;
             MIL_Agent_ABC& pion = *it->first;
@@ -275,7 +275,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
     if( rWeightDamaged == 0 )
         return;
 
-    for( auto it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0.; ++it )
+    for( auto it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0; ++it )
     {
         if( it->second.rTransportedWeight_ )
         {
@@ -286,7 +286,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
             if( !composante.GetState().IsUsable() )
             {
                 rWeightTransported_           -= rTmpWeight;
-                it->second.rTransportedWeight_ = 0.;
+                it->second.rTransportedWeight_ = 0;
             }
         }
     }
@@ -375,7 +375,7 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
 
     TransportWeightComputer weightComp( bTransportOnlyLoadable );
     transported.Execute( weightComp );
-    if( weightComp.totalTransportedWeight_ <= 0. )
+    if( weightComp.totalTransportedWeight_ <= 0 )
         return false;
 
     TransportCapacityComputer capacityComputer;
@@ -410,7 +410,7 @@ void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
         sTransportData(
             transported.Execute( weightComputer ).totalTransportedWeight_,
             bTransportOnlyLoadable, true );
-    data.rRemainingWeight_   = 0.;
+    data.rRemainingWeight_   = 0;
     data.rTransportedWeight_ = data.rTotalWeight_;
     rWeightTransported_ += data.rTotalWeight_;
 
@@ -449,7 +449,7 @@ void PHY_RoleAction_Transport::Cancel()
             it->first->Apply( &location::LocationActionNotificationHandler_ABC::Follow, *owner_ );
     }
     transportedPions_.clear();
-    rWeightTransported_ = 0.;
+    rWeightTransported_ = 0;
     bHasChanged_        = true;
 }
 
@@ -464,7 +464,7 @@ bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, boo
 
     TransportWeightComputer weightComp( bTransportOnlyLoadable );
     transported.Execute( weightComp );
-    if( weightComp.totalTransportedWeight_ <= 0. )
+    if( weightComp.totalTransportedWeight_ <= 0 )
         return false;
 
     TransportCapacityComputer capacityComputer;
@@ -483,13 +483,13 @@ bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, boo
 double PHY_RoleAction_Transport::GetNumberOfRoundTripToTransportPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const
 {
     if( *owner_ == transported )
-        return 0.;
+        return 0;
 
     TransportWeightComputer weightComp( bTransportOnlyLoadable );
     transported.Execute( weightComp );
 
-    if( weightComp.totalTransportedWeight_ <= 0. )
-        return 0.;
+    if( weightComp.totalTransportedWeight_ <= 0 )
+        return 0;
 
     TransportCapacityComputer capacityComputer;
     owner_->Execute( capacityComputer );
@@ -504,7 +504,7 @@ double PHY_RoleAction_Transport::GetNumberOfRoundTripToTransportPion( MIL_Agent_
 bool PHY_RoleAction_Transport::IsLoaded( const MIL_Agent_ABC& transported ) const
 {
     auto it = transportedPions_.find( const_cast< MIL_Agent_ABC* >( &transported ) );
-    if( it == transportedPions_.end() || it->second.rRemainingWeight_ > 0. )
+    if( it == transportedPions_.end() || it->second.rRemainingWeight_ > 0 )
         return false;
     return true;
 }
@@ -517,7 +517,7 @@ void PHY_RoleAction_Transport::SendFullState( client::UnitAttributes& msg ) cons
 {
     msg().mutable_transported_units(); // Force sending of a list, even if empty
     for( auto it = transportedPions_.begin(); it != transportedPions_.end(); ++it )
-        if( it->second.rTransportedWeight_ > 0. )
+        if( it->second.rTransportedWeight_ > 0 )
             msg().mutable_transported_units()->add_elem()->set_id( (*it->first).GetID() );
 }
 
@@ -620,7 +620,7 @@ bool PHY_RoleAction_Transport::IsFinished() const
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Transport::IsTransporting() const
 {
-    return rWeightTransported_ > 0.;
+    return rWeightTransported_ > 0;
 }
 
 // -----------------------------------------------------------------------------
