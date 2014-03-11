@@ -11,8 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Transport.h"
+#include "OnComponentComputer_ABC.h"
 #include "TransportWeightComputer_ABC.h"
-#include "TransportCapacityComputer_ABC.h"
 #include "TransportPermissionComputer_ABC.h"
 #include "LocationActionNotificationHandler_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
@@ -110,7 +110,7 @@ void PHY_RoleAction_Transport::serialize( Archive& file, const unsigned int )
 
 namespace
 {
-    struct TransportCapacityComputer : TransportCapacityComputer_ABC
+    struct TransportCapacityComputer : OnComponentComputer_ABC
     {
         TransportCapacityComputer()
             : rWeightCapacity_                ( 0 )
@@ -119,7 +119,7 @@ namespace
             , rMaxComposanteTransportedWeight_( 0 )
         {}
 
-        virtual void ApplyOnComposante( PHY_ComposantePion& composante )
+        virtual void ApplyOnComponent( PHY_ComposantePion& composante )
         {
             if( composante.CanTransportPion() )
             {
@@ -344,7 +344,7 @@ namespace
         double heaviestTransportedWeight_;
     };
 
-    struct TransportPermissionComputer : transport::TransportPermissionComputer_ABC
+    struct TransportPermissionComputer : TransportPermissionComputer_ABC
     {
         TransportPermissionComputer()
             : allow_( true )

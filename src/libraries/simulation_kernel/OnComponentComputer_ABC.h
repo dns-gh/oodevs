@@ -13,8 +13,8 @@
 class PHY_ComposantePion;
 
 // =============================================================================
-/** @class  ComponentFunctorcomputer_ABC
-    @brief  ComponentFunctorcomputer_ABC
+/** @class  OnComponentComputer_ABC
+    @brief  OnComponentComputer_ABC
 */
 // Created: MGD 2009-09-15
 // =============================================================================
