@@ -39,10 +39,6 @@ namespace human
 {
     class HealComputerFactory_ABC;
 }
-namespace transport
-{
-    class LoadingComputerFactory_ABC;
-}
 
 namespace urbanLocation
 {
@@ -92,7 +88,6 @@ public:
     std::auto_ptr< OnComponentFunctorComputerFactory_ABC > onComponentFunctorComputerFactory_;
     std::auto_ptr< OnComponentLendedFunctorComputerFactory_ABC > onComponentLendedFunctorComputerFactory_;
     std::auto_ptr< dotation::DotationComputerFactory_ABC > dotationComputerFactory_;
-    std::auto_ptr< transport::LoadingComputerFactory_ABC > loadingComputerFactory_;
     std::auto_ptr< firing::WeaponReloadingComputerFactory_ABC > weaponReloadingComputerFactory_;
     std::auto_ptr< urbanLocation::UrbanLocationComputerFactory_ABC > urbanLocationComputerFactory_;
     //@}
