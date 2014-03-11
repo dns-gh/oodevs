@@ -132,9 +132,9 @@ namespace
     void FillAppearance( std::size_t count, uint8_t status, std::vector< uint32_t >& values )
     {
         rpr::EntityAppearance_Land app;
-        app.appearance_.fields_.damage = status;
+        app.SetDamage(status);
         for( ; count > 0; --count )
-            values.push_back( app.appearance_.value_ );
+            values.push_back( app.value_ );
     }
 }
 // -----------------------------------------------------------------------------

@@ -112,8 +112,8 @@ void FOM_Serializer::ReadSilentEntities( ::hla::Deserializer_ABC& deserializer, 
         for( auto it = entity.entityAppearance_.begin(); it != entity.entityAppearance_.end(); ++it )
         {
             rpr::EntityAppearance_Land app;
-            app.appearance_.value_ = *it;
-            switch( app.appearance_.fields_.damage )
+            app.value_ = *it;
+            switch( app.Damage() )
             {
             case 0:
                 break;
