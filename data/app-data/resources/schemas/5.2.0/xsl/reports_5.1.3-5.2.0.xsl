@@ -521,10 +521,33 @@
               <xsl:when test="@id=509">eRC_ObjetNonDevalorisable</xsl:when>
               <xsl:when test="@id=510">eRC_SurrenderedUnitRecognized</xsl:when>
               <xsl:when test="@id=511">eRC_SurrenderedUnitIdentified</xsl:when>
+              <xsl:when test="@id=512">eRC_TransportRoundTrip</xsl:when>
+              <xsl:when test="@id=513">eRC_LogSuperiorAdded</xsl:when>
+              <xsl:when test="@id=514">eRC_LogSuperiorRemoved</xsl:when>
+              <xsl:when test="@id=515">eRC_startHidingInTheCrowd</xsl:when>
+              <xsl:when test="@id=516">eRC_stopHidingInTheCrowd</xsl:when>
+              <xsl:when test="@id=517">eRC_CloseCrowdDemonstration</xsl:when>
+              <xsl:when test="@id=518">eRC_MilitaryEquipmentPlundered</xsl:when>
+              <xsl:when test="@id=519">eRC_UnitCrossedLimaLIA</xsl:when>
               <xsl:when test="@id=769">eRC_CorpseTransported</xsl:when>
-              <xsl:when test="@id=781">eRC_IdentifiedUnitSurrendered</xsl:when>
-              <xsl:when test="@id=782">eRC_RecognizedUnitSurrendered</xsl:when>
-              <xsl:otherwise/>
+              <xsl:when test="@id=770">eRC_ArmedCiviliansDetected</xsl:when>
+              <xsl:when test="@id=771">eRC_FreeFireImpossible</xsl:when>
+              <xsl:when test="@id=772">eRC_UnitCrossedLimaLR</xsl:when>
+              <xsl:when test="@id=773">eRC_DestinationNonReachable</xsl:when>
+              <xsl:when test="@id=774">eRC_PrisSousTirPAIN</xsl:when>
+              <xsl:when test="@id=775">eRC_ImpossibleActivatePAIN</xsl:when>
+              <xsl:when test="@id=776">eRC_PAINNotReady</xsl:when>
+              <xsl:when test="@id=777">eRC_PAINReadyForFiring</xsl:when>
+              <xsl:when test="@id=778">eRC_ExecutionCoupDeMain</xsl:when>
+              <xsl:when test="@id=779">eRC_UnitNotTransported</xsl:when>
+              <xsl:when test="@id=780">eRC_PAINNotReRC_TransportEndedeady</xsl:when>
+              <xsl:when test="@id=781">eRC_ShootingTemporarilyBlocked</xsl:when>
+              <xsl:when test="@id=782">eRC_FireNotPermittedDueToROE</xsl:when>
+              <xsl:when test="@id=783">eRC_FireNotPermittedDueToForbiddenArea</xsl:when>
+              <xsl:when test="@id=784">eRC_IdentifiedUnitSurrendered</xsl:when>
+              <xsl:when test="@id=785">eRC_RecognizedUnitSurrendered</xsl:when>
+              <xsl:when test="@id=786">eRC_AttenteOrdrePoursuivreOuEscorte</xsl:when>
+              <xsl:when test="@id=787">eRC_IEDHeard</xsl:when>
             </xsl:choose>
           </xsl:attribute>
           <xsl:apply-templates select="node()|@*"/>
