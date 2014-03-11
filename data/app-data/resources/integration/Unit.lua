@@ -12,12 +12,13 @@ integration.canIdentifyIt = function( agent )
     return not agent:isIdentified() and masalife.brain.knowledge.me.body:computeIdentificationCapability( agent, masalife.brain.knowledge.me.body ) ~= 0
 end
 
---- Returns true if the provided agent knowledge is identified, false otherwise
--- @param agent Directia agent knowledge
--- @return Boolean, whether or not the agent knowledge is identified
-integration.isIdentifiedPredicate = function( agent )
-    return agent:identificationLevel() >= 66 and agent:identificationLevel() <= 100
-end
+--- Deprecated
+integration.isIdentifiedPredicate = {
+    dependencies = { self = { "identificationLevel_" } },
+    method = function( self )
+        return self:identificationLevel() >= 66 and self:identificationLevel() <= 100
+    end
+}
 
 --- Sets this entity's decisional state for a given category.
 -- The decisional state is a table of (string, string) which can be used to store information.
@@ -187,12 +188,13 @@ integration.fleePriority = function( agent )
     return math.max( agent:proximityLevel(), 1 ) / 100
 end
 
---- Returns true if the provided agent knowledge is threatening or hostile, false otherwise
--- @param agent Directia agent knowledge
--- @return Boolean, whether or not the agent knowledge is hostile or threatening
-integration.isThreateningOrHostilePredicate = function( self )
-    return self:isHostile() or self:isThreatening()
-end
+--- Deprecated
+integration.isThreateningOrHostilePredicate = {
+     dependencies = "none",
+        method = function( self )
+            return self:isHostile() or self:isThreatening()
+        end
+    }
 
 --- Returns the name of the provided agent knowledge
 -- @param agent Directia agent knowledge
