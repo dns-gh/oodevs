@@ -29,6 +29,7 @@ MOCK_BASE_CLASS( MockLocalAgentResolver, LocalAgentResolver_ABC )
     MOCK_METHOD( Resolve, 1, std::string( unsigned long ), ResolveIdentifier )
     MOCK_METHOD( Resolve, 1, unsigned long( const std::string& ), ResolveName )
     MOCK_METHOD( ParentAutomat, 1 )
+    MOCK_METHOD( AgentType, 1 )
 };
 
 }

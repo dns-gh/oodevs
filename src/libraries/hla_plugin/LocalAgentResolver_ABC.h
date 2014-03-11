@@ -44,6 +44,7 @@ public:
     virtual std::string Resolve( unsigned long simulationIdentifier ) const = 0;
     virtual unsigned long Resolve( const std::string& objectIdentifier ) const = 0;
     virtual unsigned long ParentAutomat( unsigned long simulationIdentifier ) const = 0;
+    virtual unsigned long AgentType( unsigned long simulationIdentifier ) const = 0;
     //@}
 };
 
