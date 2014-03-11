@@ -14,6 +14,7 @@
 #pragma warning( push, 0 )
 #include <cef_base.h>
 #pragma warning( pop )
+#include <functional>
 
 namespace boost
 {
@@ -22,7 +23,6 @@ namespace boost
 
 namespace tools
 {
-    class Ofstream;
 namespace ipc
 {
     class Device;
@@ -47,7 +47,10 @@ class Client : public Client_ABC
              , public controls::ClientHandler_ABC
 {
 public:
-    explicit Client( const Configuration& cfg );
+    typedef std::function< void( const std::string& ) > T_Logger;
+
+    // logger is a thread-safe logging callback or a nul functor.
+             Client( const Configuration& cfg, const T_Logger& logger );
     virtual ~Client();
 
     /// Client_ABC methods
@@ -74,8 +77,7 @@ private:
 
 private:
     const Configuration cfg_;
-    std::unique_ptr< boost::mutex > lock_;
-    std::unique_ptr< tools::Ofstream > log_;
+    const T_Logger logger_;
     std::unique_ptr< tools::ipc::Device > read_;
     std::unique_ptr< tools::ipc::Device > write_;
     CefRefPtr< Engine > engine_;

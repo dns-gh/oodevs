@@ -9,9 +9,10 @@
 #ifndef TIMELINE_CORE_API_H__
 #define TIMELINE_CORE_API_H__
 
+#include <boost/noncopyable.hpp>
+#include <functional>
 #include <string>
 #include <memory>
-#include <boost/noncopyable.hpp>
 
 namespace timeline
 {
@@ -36,7 +37,8 @@ namespace core
     };
 
     bool SpawnClient();
-    std::auto_ptr< Client_ABC > MakeClient( const Configuration& cfg );
+    std::auto_ptr< Client_ABC > MakeClient( const Configuration& cfg,
+           const std::function< void( const std::string& )>& logger );
 }
 }
 
