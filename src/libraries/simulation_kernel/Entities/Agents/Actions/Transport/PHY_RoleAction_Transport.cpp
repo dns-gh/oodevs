@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Transport.h"
-#include "DefaultTransportWeightComputer.h"
+#include "TransportWeightComputer_ABC.h"
 #include "DefaultTransportCapacityComputer.h"
 #include "DefaultTransportPermissionComputer.h"
 #include "LocationActionNotificationHandler_ABC.h"
@@ -293,20 +293,26 @@ void PHY_RoleAction_Transport::CheckConsistency()
 
 namespace
 {
-    class LoadableStrategy : public TransportStrategy_ABC
+    struct TransportWeightComputer : TransportWeightComputer_ABC
     {
-    public:
-        LoadableStrategy( bool bTransportOnlyLoadable )
+        explicit TransportWeightComputer( bool bTransportOnlyLoadable )
             : bTransportOnlyLoadable_( bTransportOnlyLoadable )
+            , totalTransportedWeight_( 0 )
+            , heaviestTransportedWeight_( 0 )
         {}
 
-        bool Authorize( bool canBeLoaded ) const
+        virtual void AddTransportedWeight( double weight, bool canBeLoaded )
         {
-            return !bTransportOnlyLoadable_ || canBeLoaded;
+            if( !bTransportOnlyLoadable_ || canBeLoaded )
+            {
+                totalTransportedWeight_ += weight;
+                heaviestTransportedWeight_ = std::max( heaviestTransportedWeight_, weight );
+            }
         }
 
-    private:
         bool bTransportOnlyLoadable_;
+        double totalTransportedWeight_;
+        double heaviestTransportedWeight_;
     };
 }
 // -----------------------------------------------------------------------------
@@ -323,18 +329,17 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
     if( !transported.Execute( permissionComputer ).CanBeLoaded() )
         return false;
 
-    LoadableStrategy strategy( bTransportOnlyLoadable );
-    DefaultTransportWeightComputer weightComp( &strategy );
+    TransportWeightComputer weightComp( bTransportOnlyLoadable );
     transported.Execute( weightComp );
-    if( weightComp.TotalTransportedWeight() <= 0. )
+    if( weightComp.totalTransportedWeight_ <= 0. )
         return false;
 
     DefaultTransportCapacityComputer capacityComputer;
-    if( !bTransportOnlyLoadable && weightComp.HeaviestTransportedWeight() >
+    if( !bTransportOnlyLoadable && weightComp.heaviestTransportedWeight_ >
         owner_->Execute( capacityComputer ).MaxComposanteTransportedWeight() )
         return false;
 
-    transportedPions_[ &transported ] = sTransportData( weightComp.TotalTransportedWeight(), bTransportOnlyLoadable, false );
+    transportedPions_[ &transported ] = sTransportData( weightComp.totalTransportedWeight_, bTransportOnlyLoadable, false );
 
     bHasChanged_ = true;
     return true;
@@ -355,12 +360,11 @@ void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
     if(!transported.Execute( permissionComputer ).CanBeLoaded())
          return;
 
-    LoadableStrategy strategy( bTransportOnlyLoadable );
     transported.Apply( &TransportNotificationHandler_ABC::LoadForTransport, *owner_, bTransportOnlyLoadable, bTransportedByAnother );
-    DefaultTransportWeightComputer weightComputer( &strategy );
+    TransportWeightComputer weightComputer( bTransportOnlyLoadable );
     sTransportData& data = transportedPions_[ &transported ] =
         sTransportData(
-            transported.Execute( weightComputer ).TotalTransportedWeight(),
+            transported.Execute( weightComputer ).totalTransportedWeight_,
             bTransportOnlyLoadable, true );
     data.rRemainingWeight_   = 0.;
     data.rTransportedWeight_ = data.rTotalWeight_;
@@ -414,16 +418,15 @@ bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, boo
     if( *owner_ == transported || transported.IsMarkedForDestruction() )
         return false;
 
-    LoadableStrategy strategy( bTransportOnlyLoadable );
-    DefaultTransportWeightComputer weightComp( &strategy );
+    TransportWeightComputer weightComp( bTransportOnlyLoadable );
     transported.Execute( weightComp );
-    if( weightComp.TotalTransportedWeight() <= 0. )
+    if( weightComp.totalTransportedWeight_ <= 0. )
         return false;
 
     DefaultTransportCapacityComputer capacityComputer;
     owner_->Execute( capacityComputer );
     if( capacityComputer.WeightLoadedPerTimeStep() == 0 ||
-        !bTransportOnlyLoadable && weightComp.HeaviestTransportedWeight() > capacityComputer.MaxComposanteTransportedWeight() )
+        !bTransportOnlyLoadable && weightComp.heaviestTransportedWeight_ > capacityComputer.MaxComposanteTransportedWeight() )
         return false;
 
     return true;
@@ -438,17 +441,16 @@ double PHY_RoleAction_Transport::GetNumberOfRoundTripToTransportPion( MIL_Agent_
     if( *owner_ == transported )
         return 0.;
 
-    LoadableStrategy strategy( bTransportOnlyLoadable );
-    DefaultTransportWeightComputer weightComp( &strategy );
+    TransportWeightComputer weightComp( bTransportOnlyLoadable );
     transported.Execute( weightComp );
 
-    if( weightComp.TotalTransportedWeight() <= 0. )
+    if( weightComp.totalTransportedWeight_ <= 0. )
         return 0.;
 
     DefaultTransportCapacityComputer capacityComputer;
     owner_->Execute( capacityComputer );
 
-    return weightComp.TotalTransportedWeight() / capacityComputer.WeightCapacity();
+    return weightComp.totalTransportedWeight_ / capacityComputer.WeightCapacity();
 }
 
 // -----------------------------------------------------------------------------
