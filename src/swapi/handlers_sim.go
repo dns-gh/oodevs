@@ -51,27 +51,18 @@ func (model *ModelData) handleControlSendCurrentStateEnd(m *sword.SimToClient_Co
 	return nil
 }
 
-type tickMessage interface {
-	GetDateTime() *sword.DateTime
-	GetCurrentTick() int32
-}
-
-func (model *ModelData) handleTickMessage(m tickMessage) error {
-	t, err := GetTime(m.GetDateTime())
-	if err != nil {
-		return err
-	}
-	model.Time = t
-	model.Tick = m.GetCurrentTick()
-	return nil
-}
-
 func (model *ModelData) handleControlBeginTick(m *sword.SimToClient_Content) error {
 	mm := m.GetControlBeginTick()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.handleTickMessage(mm)
+	t, err := GetTime(mm.GetDateTime())
+	if err != nil {
+		return err
+	}
+	model.Time = t
+	model.Tick = mm.GetCurrentTick()
+	return nil
 }
 
 func (model *ModelData) handleControlEndTick(m *sword.SimToClient_Content) error {
@@ -88,8 +79,19 @@ func (model *ModelData) handleControlInformation(m *sword.SimToClient_Content) e
 	if mm == nil {
 		return ErrSkipHandler
 	}
+	t, err := GetTime(mm.GetDateTime())
+	if err != nil {
+		return err
+	}
+	model.Time = t
 	model.TickDuration = mm.GetTickDuration()
-	return model.handleTickMessage(mm)
+	if !model.Ready {
+		// At least in replayer case, the initial state contains a
+		// ControlInformation which helps initialize the model. But it
+		// indicates the next first tick to be started.
+		model.Tick = mm.GetCurrentTick() - 1
+	}
+	return nil
 }
 
 func (model *ModelData) handlePartyCreation(m *sword.SimToClient_Content) error {
