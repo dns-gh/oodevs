@@ -80,7 +80,10 @@ bool ADN_Connector_ListView_ABC::AddItemPrivate( void *obj )
 {
     if( obj == 0 )
         return false;
-    list_.InsertItem( CreateItem( obj ) );
+    auto item = CreateItem( obj );
+    if( !item )
+        return false;
+    list_.InsertItem( item );
     return true;
 }
 

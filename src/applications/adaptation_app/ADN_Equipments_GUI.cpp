@@ -11,6 +11,7 @@
 #include "ADN_Equipments_GUI.h"
 #include "moc_ADN_Equipments_GUI.cpp"
 #include "ADN_Equipments_Data.h"
+#include "ADN_ComboBoxItem.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_ListView_Equipments.h"
 #include "ADN_Equipments_WeaponsListView.h"
@@ -82,7 +83,12 @@ void ADN_Equipments_GUI::Build()
     // Comments
     builder.AddLocalizedOptionalField( data_.GetEquipments(), pInfoHolder, "comments", tools::translate( "ADN_Equipments_GUI", "Comments" ), vInfosConnectors[ eComments ], optionalWidgets_ );
     // Armors
-    QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "armor-plating", tools::translate( "ADN_Equipments_GUI", "Armor-Plating" ), vInfosConnectors[ eArmor ] );
+    ADN_ComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "armor-plating", tools::translate( "ADN_Equipments_GUI", "Armor-Plating" ), vInfosConnectors[ eArmor ] );
+    for( int i = pCombo->count() - 1; i >= 0; --i )
+        if( static_cast< ADN_Armors_Data::ArmorInfos* >( pCombo->GetItem( i )->GetData() )->nType_ == eProtectionType_Human )
+            pCombo->removeItem( i );
+    if( pCombo->GetItem( 0 ) )
+        pCombo->setCurrentItem( 0 );
     connect( pCombo, SIGNAL( activated( const QString& ) ), this, SLOT( OnProtectionTypeChanged() ) );
     // Size
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "volume", tools::translate( "ADN_Equipments_GUI", "Volume" ), vInfosConnectors[ eSize ]  );
@@ -648,19 +654,6 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
 // -----------------------------------------------------------------------------
 void ADN_Equipments_GUI::OnProtectionTypeChanged()
 {
-//    int index = -1;
-//    for( int i = 0; i < pCombo_->count(); ++i )
-//        if( ADN_ComboBoxItem* item = pCombo_->GetItem( i ) )
-//            if( helpers::ArmorInfos* info = static_cast< helpers::ArmorInfos* >( item->GetData() ) )
-//                if( info->GetType() == eProtectionType_Crowd )
-//                {
-//                    index = i;
-//                    break;
-//                }
-//
-//    if( index != -1 )
-//        pCombo_->removeItem( index );
-
     ADN_Equipments_Data::EquipmentInfos* pInfos = static_cast< ADN_Equipments_Data::EquipmentInfos* >( pListView_->GetCurrentData() );
     if( pInfos == 0 )
         pBreakdownsGroup_->setEnabled( false );
