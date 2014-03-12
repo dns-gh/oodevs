@@ -34,7 +34,6 @@ namespace human
 }
 
 class OnComponentFunctorComputerFactory_ABC;
-class OnComponentLendedFunctorComputerFactory_ABC;
 
 // =============================================================================
 /** @class  AlgorithmsFactories
@@ -72,7 +71,6 @@ public:
     std::auto_ptr< moving::MoveComputerFactory_ABC > moveComputerFactory_;
     std::auto_ptr< human::HealComputerFactory_ABC > healComputerFactory_;
     std::auto_ptr< OnComponentFunctorComputerFactory_ABC > onComponentFunctorComputerFactory_;
-    std::auto_ptr< OnComponentLendedFunctorComputerFactory_ABC > onComponentLendedFunctorComputerFactory_;
     //@}
 };
 

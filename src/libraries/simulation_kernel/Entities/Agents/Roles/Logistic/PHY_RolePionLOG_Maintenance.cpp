@@ -32,8 +32,7 @@
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
-#include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
-#include "simulation_kernel/OnComponentLendedFunctorComputerFactory_ABC.h"
+#include "simulation_kernel/DefaultComponentLendedFunctorComputer.h"
 #include "simulation_kernel/DefaultDotationComputer.h"
 #include "simulation_kernel/ConsumeDotationNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
@@ -138,8 +137,8 @@ double PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePredi
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
     owner_.Execute( *componentComputer );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComponent( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
-    owner_.Execute( *lendedComponent );
+    DefaultComponentLendedFunctorComputer lendedComputer( functorOnLendedComponent );
+    owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
     for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
         nNbrTotal += it->second.nNbrTotal_;
@@ -250,8 +249,8 @@ unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableDiagnosersAllowedToWork
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
     owner_.Execute( *componentComputer );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
-    owner_.Execute( *lendedComputer );
+    DefaultComponentLendedFunctorComputer lendedComputer( functorOnLendedComponent );
+    owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
     unsigned int nNbrAvailableAllowedToWork = 0;
     assert( pWorkRate_ );
     for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -275,8 +274,8 @@ unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork(
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
     owner_.Execute( *componentComputer );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
-    owner_.Execute( *lendedComputer );
+    DefaultComponentLendedFunctorComputer lendedComputer( functorOnLendedComponent );
+    owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
     unsigned int nNbrAvailableAllowedToWork = 0;
     assert( pWorkRate_ );
     for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -532,8 +531,8 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     if( composanteUse.size() == 0 )
         return std::numeric_limits< int >::min();
-    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
-    owner_.Execute( *lendedComputer );
+    DefaultComponentLendedFunctorComputer lendedComputer( functorOnLendedComponent );
+    owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
     unsigned int nNbrHaulersAvailable = 0;
     for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrHaulersAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
@@ -689,8 +688,8 @@ void PHY_RolePionLOG_Maintenance::SendFullState( unsigned int context ) const
         std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
         owner_.Execute( *componentComputer );
         GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-        std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
-        owner_.Execute( *lendedComputer );
+        DefaultComponentLendedFunctorComputer lendedComputer( functorOnLendedComponent );
+        owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
         SendComposanteUse( composanteUse, *asn().mutable_haulers(), 0 );
     }
     {
@@ -700,8 +699,8 @@ void PHY_RolePionLOG_Maintenance::SendFullState( unsigned int context ) const
         std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
         owner_.Execute( *componentComputer );
         GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-        std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
-        owner_.Execute( *lendedComputer );
+        DefaultComponentLendedFunctorComputer lendedComputer( functorOnLendedComponent );
+        owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
         SendComposanteUse( composanteUse, *asn().mutable_repairers(), pWorkRate_ );
     }
     asn.Send( NET_Publisher_ABC::Publisher(), context );
