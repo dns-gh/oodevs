@@ -41,7 +41,6 @@
 #include "MIL_AgentServer.h"
 #include "MIL_Random.h"
 #include "tools/NET_AsnException.h"
-#include "TransportCapacityComputer_ABC.h"
 #include "TransportWeightComputer_ABC.h"
 #include "HumanLoadingTimeComputer_ABC.h"
 #include "LoadedStateConsistencyComputer_ABC.h"
@@ -1611,7 +1610,7 @@ unsigned int PHY_RolePion_Composantes::GetNbrUsableHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute //@TODO MGD use OnComponentComputer hierarchie
+// Name: PHY_RolePion_Composantes::Execute
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const
@@ -1621,17 +1620,7 @@ void PHY_RolePion_Composantes::Execute( firing::WeaponAvailabilityComputer_ABC& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute //@TODO MGD use OnComponentComputer hierarchie
-// Created: AHC 2009-09-23
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::Execute( transport::TransportCapacityComputer_ABC& algorithm ) const
-{
-    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        algorithm.ApplyOnComposante( **it );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute //@TODO MGD use OnComponentComputer hierarchie
+// Name: PHY_RolePion_Composantes::Execute
 // Created: AHC 2009-09-23
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( transport::TransportWeightComputer_ABC& algorithm ) const

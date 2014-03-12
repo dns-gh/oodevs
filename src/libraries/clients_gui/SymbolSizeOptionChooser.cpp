@@ -20,7 +20,7 @@
 namespace
 {
     const float min_ = 1.0f;
-    const float max_ = 6.0f;
+    const float max_ = 24.0f;
     const float default_ = 3.0f;
     const float increment_ = 1.0f;
     const std::string name_( "SymbolSize" );

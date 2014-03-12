@@ -11,11 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Loading.h"
-#include "AlgorithmsFactories.h"
 #include "PostureComputer_ABC.h"
-#include "HumanLoadingTimeComputer_ABC.h"
-#include "LoadedStateConsistencyComputer_ABC.h"
-#include "LoadingComputerFactory_ABC.h"
+#include "DefaultHumanLoadingTimeComputer.h"
+#include "DefaultLoadedStateConsistencyComputer.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "VisionConeNotificationHandler_ABC.h"
 #include "LoadingChangeNotificationHandler_ABC.h"
@@ -26,8 +24,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Loading )
 
-namespace transport
-{
+using namespace transport;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading constructor
@@ -41,7 +38,7 @@ PHY_RoleAction_Loading::PHY_RoleAction_Loading()
     , bHasChanged_    ( true )
     , bHasBeenUpdated_( false )
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -117,11 +114,11 @@ void PHY_RoleAction_Loading::SetUnloadedState()
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Loading::ComputeLoadingTime() const
 {
-    std::auto_ptr< HumanLoadingTimeComputer_ABC > loadingTimeComputer = owner_->GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer();
-    owner_->Execute( *loadingTimeComputer );
-    if( loadingTimeComputer->GetHumansLoadedPerTimeStep() == 0. )
+    DefaultHumanLoadingTimeComputer loadingTimeComputer;
+    owner_->Execute( loadingTimeComputer );
+    if( loadingTimeComputer.GetHumansLoadedPerTimeStep() == 0 )
         return std::numeric_limits< double >::max();
-    return loadingTimeComputer->GetHumansCount() / loadingTimeComputer->GetHumansLoadedPerTimeStep();
+    return loadingTimeComputer.GetHumansCount() / loadingTimeComputer.GetHumansLoadedPerTimeStep();
 }
 
 // -----------------------------------------------------------------------------
@@ -130,11 +127,11 @@ double PHY_RoleAction_Loading::ComputeLoadingTime() const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Loading::ComputeUnloadingTime() const
 {
-    std::auto_ptr< HumanLoadingTimeComputer_ABC > loadingTimeComputer = owner_->GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer();
-    owner_->Execute( *loadingTimeComputer );
-    if( loadingTimeComputer->GetHumansUnloadedPerTimeStep() == 0. )
+    DefaultHumanLoadingTimeComputer loadingTimeComputer;
+    owner_->Execute( loadingTimeComputer );
+    if( loadingTimeComputer.GetHumansUnloadedPerTimeStep() == 0 )
         return std::numeric_limits< double >::max();
-    return loadingTimeComputer->GetHumansCount() / loadingTimeComputer->GetHumansUnloadedPerTimeStep();
+    return loadingTimeComputer.GetHumansCount() / loadingTimeComputer.GetHumansUnloadedPerTimeStep();
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +209,8 @@ int PHY_RoleAction_Loading::Unload()
         if( MIL_Time_ABC::GetTime().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
-            MIL_Report::PostEvent( *owner_, report::eRC_DisembarkmentFinished );            SetUnloadedState();
+            MIL_Report::PostEvent( *owner_, report::eRC_DisembarkmentFinished );
+            SetUnloadedState();
             return eEnd;
         }
         return eRunning;
@@ -226,19 +224,15 @@ int PHY_RoleAction_Loading::Unload()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::CheckConsistency()
 {
-    std::auto_ptr< LoadedStateConsistencyComputer_ABC > comp = owner_->GetAlgorithms().loadingComputerFactory_->CreateLoadedStateConsistencyComputer();
-    owner_->Execute( *comp );
-
+    DefaultLoadedStateConsistencyComputer comp;
+    owner_->Execute( comp );
     if( bIsLoaded_ )
     {
-        if( !comp->HasValidCarrier() && comp->HasValidLoadable() )
+        if( !comp.HasValidCarrier() && comp.HasValidLoadable() )
             SetUnloadedState();
     }
-    else
-    {
-        if( !comp->HasValidLoadable() )
-            SetLoadedState();
-    }
+    else if( !comp.HasValidLoadable() )
+        SetLoadedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -407,7 +401,3 @@ void PHY_RoleAction_Loading::UnloadFromTransport( const MIL_Agent_ABC& /*transpo
 {
     ForceUnloadedState();
 }
-
-} // namespace transport
-
-

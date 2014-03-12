@@ -11,7 +11,6 @@
 #define __PHY_ActionConsumeResources_h__
 
 #include "Entities/Actions/PHY_Action_ABC.h"
-#include <boost/shared_ptr.hpp>
 
 class MIL_Entity_ABC;
 class PHY_DotationCategory;
@@ -42,8 +41,8 @@ public:
 private:
     dotation::PHY_RoleInterface_Dotations& dotations_;
     const PHY_DotationCategory& category_;
-    int steps_; // number of times to apply offset
-    const double offset_; // offset to consume per tick
+    int steps_;
+    const double fraction_;
 };
 
 #endif // __PHY_ActionConsumeResources_h__

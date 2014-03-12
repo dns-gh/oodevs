@@ -83,7 +83,7 @@ bool DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( boost::shared_ptr< DEC_Kno
 {
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return false;
-    return pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().IsImprisoned( *pCampKnowledge->GetObjectKnown() ) ;
+    return pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().IsImprisoned( *pCampKnowledge->GetObjectKnown() );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ bool DEC_ActionFunctions::IsAgentLoaded( DEC_Decision_ABC& callerAgent, DEC_Deci
 {
     if( !pPion )
         return false;
-    return callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().IsLoaded( pPion->GetPion() ) ;
+    return callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().IsLoaded( pPion->GetPion() );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +170,7 @@ bool DEC_ActionFunctions::PrisonnersRefugees_IsLoaded( MIL_AgentPion& callerAgen
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
-    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) ;
+    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() );
 }
 
 // -----------------------------------------------------------------------------
@@ -313,7 +313,7 @@ void DEC_ActionFunctions::Transport_MagicUnloadPions( MIL_AgentPion& callerAgent
 // -----------------------------------------------------------------------------
 bool DEC_ActionFunctions::Transport_IsFinished( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().IsFinished() ;
+    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().IsFinished();
 }
 
 // -----------------------------------------------------------------------------
@@ -332,7 +332,7 @@ void DEC_ActionFunctions::Transport_Cancel( MIL_AgentPion& callerAgent )
 bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
 {
     assert( pPion );
-    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pPion->GetPion(), bTransportOnlyLoadable ) ;
+    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pPion->GetPion(), bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------
@@ -342,7 +342,7 @@ bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, co
 double DEC_ActionFunctions::GetNumberOfRoundTripToTransportPion( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
 {
     assert( pPion );
-    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().GetNumberOfRoundTripToTransportPion( pPion->GetPion(), bTransportOnlyLoadable ) ;
+    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().GetNumberOfRoundTripToTransportPion( pPion->GetPion(), bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------
@@ -354,7 +354,7 @@ bool DEC_ActionFunctions::CanTransportKnowledge( DEC_Decision_ABC& callerAgent, 
     if( !pKnowledge )
         throw MASA_EXCEPTION( "Null knowledge passed to DEC_ActionFunctions::CanTransportKnowledge" );
     MIL_Agent_ABC& pion = pKnowledge->GetAgentKnown();
-    return callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pion, bTransportOnlyLoadable ) ;
+    return callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pion, bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------
@@ -366,7 +366,7 @@ double DEC_ActionFunctions::GetNumberOfRoundTripToTransportKnowledge( DEC_Decisi
     if( !pKnowledge )
         throw std::runtime_error( "Null knowledge passed to DEC_ActionFunctions::GetNumberOfRoundTripToTransportKnowledge" );
     MIL_Agent_ABC& pion = pKnowledge->GetAgentKnown();
-    return callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().GetNumberOfRoundTripToTransportPion( pion, bTransportOnlyLoadable ) ;
+    return callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().GetNumberOfRoundTripToTransportPion( pion, bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------

@@ -53,9 +53,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool bIsDead );
-    virtual void Clean     ();
-    virtual void Execute(moving::MoveComputer_ABC& algorithm) const;
+    virtual void Update( bool bIsDead );
+    virtual void Clean();
+    virtual void Execute( moving::MoveComputer_ABC& computer ) const;
     //@}
 
     //! @name Transport
@@ -64,7 +64,7 @@ public:
     virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable, MT_Vector2D* position );
     virtual void CancelTransport    ( const MIL_Agent_ABC& transporter );
     virtual bool IsTransported      () const;
-    void Execute(TransportPermissionComputer_ABC& alg) const;
+    virtual void Execute( TransportPermissionComputer_ABC& computer ) const;
     //@}
 
     //! @name Human transporters ... $$$
