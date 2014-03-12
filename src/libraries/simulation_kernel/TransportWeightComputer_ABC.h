@@ -12,28 +12,6 @@
 
 namespace transport
 {
-
-// =============================================================================
-/** @class  TransportStrategy_ABC
-    @brief  TransportStrategy_ABC
-*/
-// Created: AHC 2009-10-01
-// =============================================================================
-class TransportStrategy_ABC
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             TransportStrategy_ABC() {}
-    virtual ~TransportStrategy_ABC() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual bool Authorize( bool canBeLoaded ) const = 0;
-    //@}
-};
-
 // =============================================================================
 /** @class  TransportWeightComputer_ABC
     @brief  TransportWeightComputer_ABC
@@ -51,9 +29,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void AddTransportedWeight(double weight, bool canBeLoaded=false) =0;
-    virtual double TotalTransportedWeight() const =0;
-    virtual double HeaviestTransportedWeight() const =0;
+    virtual void AddTransportedWeight( double weight, bool canBeLoaded ) = 0;
     //@}
 };
 

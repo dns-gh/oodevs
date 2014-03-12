@@ -35,21 +35,18 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RolePion_Transported )
 
-namespace transport
-{
-    
+using namespace transport;
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported constructor
 // Created: LDC 2013-01-09
 // -----------------------------------------------------------------------------
 PHY_RolePion_Transported::PHY_RolePion_Transported()
-    : owner_                       ( 0 )
-    , bHasChanged_                 ( true )
-    , pTransporter_                ( 0 )
-    , vLoadingPosition_            ()
-    , vHumanTransporterPosition_   ()
+    : owner_       ( 0 )
+    , bHasChanged_ ( true )
+    , pTransporter_( 0 )
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,11 +54,9 @@ PHY_RolePion_Transported::PHY_RolePion_Transported()
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Transported::PHY_RolePion_Transported( MIL_AgentPion& pion )
-    : owner_                       ( &pion )
-    , bHasChanged_                 ( true )
-    , pTransporter_                ( 0 )
-    , vLoadingPosition_            ()
-    , vHumanTransporterPosition_   ()
+    : owner_       ( &pion )
+    , bHasChanged_ ( true )
+    , pTransporter_( 0 )
 {
     // NOTHING
 }
@@ -123,7 +118,6 @@ void PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable, bool& bTransportedByAnother )
 {
-
     if( pTransporter_ && pTransporter_ == &transporter)
         return ;//true;
     if( pTransporter_ )
@@ -299,17 +293,17 @@ bool PHY_RolePion_Transported::HasHumanTransportersToRecover() const
 // Name: PHY_RolePion_Transported::Execute
 // Created: AHC 2009-09-24
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::Execute(TransportPermissionComputer_ABC& alg) const
+void PHY_RolePion_Transported::Execute( TransportPermissionComputer_ABC& computer ) const
 {
-    alg.AllowLoading(!IsTransported());
+    computer.AllowLoading( !IsTransported() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::Execute
 // Created: AHC 2009-10-02
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::Execute(moving::MoveComputer_ABC& algorithm) const
+void PHY_RolePion_Transported::Execute( moving::MoveComputer_ABC& computer ) const
 {
-    if(IsTransported())
-        algorithm.NotifyTransported();
+    if( IsTransported() )
+        computer.NotifyTransported();
 }
-} // namespace transport

@@ -37,7 +37,6 @@ namespace firing
 
 namespace transport
 {
-    class TransportCapacityComputer_ABC;
     class TransportWeightComputer_ABC;
     class HumanLoadingTimeComputer_ABC;
     class LoadedStateConsistencyComputer_ABC;
@@ -66,7 +65,6 @@ class PHY_MaterialCompositionType;
 // =============================================================================
 class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >
-                               , public tools::AlgorithmModifier_ABC< transport::TransportCapacityComputer_ABC >
                                , public tools::AlgorithmModifier_ABC< transport::TransportWeightComputer_ABC>
                                , public tools::AlgorithmModifier_ABC< OnComponentComputer_ABC >
                                , public tools::AlgorithmModifier_ABC< OnComponentLendedFunctorComputer_ABC >
@@ -101,7 +99,6 @@ public:
     //! @name Operations
     //@{
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
-    virtual void Execute( transport::TransportCapacityComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportWeightComputer_ABC& algorithm ) const;
     virtual void Execute( transport::HumanLoadingTimeComputer_ABC& algorithm ) const;
     virtual void Execute( transport::LoadedStateConsistencyComputer_ABC& algorithm ) const;
