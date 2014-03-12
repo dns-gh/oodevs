@@ -374,11 +374,11 @@ end
 
 --- Tests whether an agent is currently able to load at least one of the
 -- equipments of another agent.
--- @param unit the transporter agent
--- @param target the agent to transport
+-- @param unit simulation agent : the transporter agent
+-- @param target simulation agent : the agent to transport
 -- @param onlyLoadable a boolean specifying if only the components defined as 'loadable'
 -- in the physical database must be considered
 -- @return a boolean indicating if the agent is able to transport part of the target
 integration.canLoad( unit, target, onlyLoadable )
-    return DEC_CanLoad( unit.source, target.source, onlyLoadable )
+    return DEC_CanLoad( unit, target, onlyLoadable )
 end
