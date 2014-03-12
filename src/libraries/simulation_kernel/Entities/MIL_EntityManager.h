@@ -16,6 +16,7 @@
 #include "MIL_EntityManager_ABC.h"
 #include "propagation/ElevationGetter_ABC.h"
 #include <tools/Resolver.h>
+#include <boost/optional.hpp>
 #include <boost/shared_ptr.hpp>
 #include <map>
 
@@ -66,7 +67,7 @@ namespace propagation
     class FloodModel_ABC;
 }
 
-class AgentFactory_ABC;
+class AgentFactory;
 class ArmyFactory_ABC;
 class AutomateFactory_ABC;
 class DEC_PathFind_Manager;
@@ -132,8 +133,7 @@ public:
     MIL_Automate& CreateAutomat( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int nCtx, const MIL_DictionaryExtensions& extensions );
     void CreateIntelligence( xml::xistream& xis, MIL_Formation& formation );
     MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate&  automate , xml::xistream& xis );
-    MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, unsigned int nCtx );
-    MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx, const MIL_DictionaryExtensions& extensions );
+    MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const boost::optional< std::string >& name, unsigned int nCtx, const MIL_DictionaryExtensions* extensions );
     void CreateObject( xml::xistream& xis, MIL_Army_ABC* army );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const std::string& type, const TER_Localisation* pLocalisation, bool activated, unsigned int externalIdentifier = 0u, const std::string& name = std::string(), double density = 0. );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation );
@@ -338,7 +338,7 @@ private:
     std::unique_ptr< MissionController_ABC >       missionController_;  // has to be declared before populationFactory and agentFactory
     std::unique_ptr< PopulationFactory_ABC >       populationFactory_;      // has to be declared before armyFactory
     std::unique_ptr< InhabitantFactory_ABC >       inhabitantFactory_;      // has to be declared before armyFactory
-    std::unique_ptr< AgentFactory_ABC >            agentFactory_;           // has to be declared before Sink
+    std::unique_ptr< AgentFactory >                agentFactory_;           // has to be declared before Sink
     std::unique_ptr< sword::Sink_ABC >             sink_;
     std::unique_ptr< MIL_ObjectManager >           pObjectManager_;
     std::unique_ptr< propagation::FloodModel_ABC > pFloodModel_;

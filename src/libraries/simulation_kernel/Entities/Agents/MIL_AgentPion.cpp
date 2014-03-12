@@ -137,34 +137,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion constructor
-// Created: MMC 2011-05-27
-// -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
-                              const AlgorithmsFactories& algorithmFactories,
-                              MissionController_ABC& controller,
-                              MIL_Automate& automate,
-                              const std::string& name )
-    : MIL_Agent_ABC( name )
-    , pType_               ( &type )
-    , bHasChanged_         ( false )
-    , markedForDestruction_( false )
-    , brainDeleted_        ( false )
-    , pAutomate_           ( &automate )
-    , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , pOrderManager_       ( new MIL_PionOrderManager( controller, *this ) )
-    , algorithmFactories_  ( algorithmFactories )
-    , pAffinities_         ( new MIL_AffinitiesMap() )
-    , pExtensions_         ( new MIL_DictionaryExtensions() )
-    , app6Symbol_          ( "" )
-    , level_               ( "" )
-    , teleported_          ( false )
-{
-    pColor_.reset( new MIL_Color( automate.GetColor() ) );
-    automate.RegisterPion( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion constructor
 // Created: LDC 2010-02-22
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,

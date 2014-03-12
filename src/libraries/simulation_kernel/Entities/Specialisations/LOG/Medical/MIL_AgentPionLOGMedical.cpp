@@ -58,20 +58,6 @@ MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type,
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMedical constructor
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type,
-                                                  const AlgorithmsFactories& algorithmFactories,
-                                                  MissionController_ABC& controller,
-                                                  MIL_Automate& automate,
-                                                  const std::string& name )
-    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller, automate, name )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOGMedical constructor
 // Created: JSR 2010-03-09
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type,

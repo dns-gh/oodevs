@@ -54,8 +54,8 @@ MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type,
                                                 const AlgorithmsFactories& algorithmFactories,
                                                 MissionController_ABC& controller,
                                                 MIL_Automate& automate,
-                                                const std::string& name )
-    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller, automate, name )
+                                                xml::xistream& xis )
+    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller, automate, xis )
 {
     // NOTHING
 }

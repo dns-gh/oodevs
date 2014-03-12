@@ -63,19 +63,6 @@ MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type,
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGTC2 constructor
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type,
-                                          const AlgorithmsFactories& algorithmFactories,
-                                          MissionController_ABC& controller,
-                                          MIL_Automate& automate,
-                                          const std::string& name )
-    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller, automate, name )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOGTC2 constructor
 // Created: JSR 2010-03-09
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type,

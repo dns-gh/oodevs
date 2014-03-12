@@ -58,7 +58,6 @@ public:
     //! @name Instantiation
     //@{
     virtual MIL_AgentPion* InstanciatePion( const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis ) const;
-    virtual MIL_AgentPion* InstanciatePion( const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, const std::string& name ) const;
 
     virtual void RegisterRoles( MIL_AgentPion& pion, sword::RoleExtender_ABC* ext ) const;
     //@}
@@ -133,6 +132,22 @@ private:
     static T_PionTypeMap           pionTypes_;
 };
 
-#include "MIL_AgentTypePion.inl"
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion constructor
+// Created: NLD 2004-08-09
+// -----------------------------------------------------------------------------
+template< typename T >
+MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* )
+    : MIL_AgentType_ABC( strName, xis )
+    , pModel_( 0 )
+    , pUnitType_( new T( xis ) )
+    , rDistanceAvantLimas_( 0. )
+    , rFeedbackTime_( 0. )
+    , pHumanRepartition_( new MIL_HumanRepartition( xis ) )
+{
+    InitializeRapFor              ( xis );
+    InitializeDistancesAvantPoints( xis );
+    InitializeModel               ( xis );
+}
 
 #endif // __MIL_AgentTypePion_h_

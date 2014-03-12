@@ -65,16 +65,6 @@ MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type,
 
 MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type,
                                             const AlgorithmsFactories& algorithmFactories,
-                                            MissionController_ABC& controller,
-                                            MIL_Automate& automate,
-                                            const std::string& name )
-    : MIL_AgentPion( type, algorithmFactories, controller, automate, name )
-{
-    // NOTHING
-}
-
-MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type,
-                                            const AlgorithmsFactories& algorithmFactories,
                                             MissionController_ABC& controller )
     : MIL_AgentPion( type, algorithmFactories, controller )
 {

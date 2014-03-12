@@ -57,19 +57,6 @@ MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePio
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMaintenance constructor
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type,
-                                                          const AlgorithmsFactories& algorithmFactories,
-                                                          MissionController_ABC& controller,
-                                                          MIL_Automate& automate,
-                                                          const std::string& name )
-    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller, automate, name )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOGMaintenance constructor
 // Created: JSR 2010-03-09
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type,

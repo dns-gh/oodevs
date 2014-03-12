@@ -318,18 +318,6 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( const AlgorithmsFactories& al
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePion::InstanciatePion
-// Created: MMC 2011-05-27
-// -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
-                                                   MissionController_ABC& controller,
-                                                   MIL_Automate& automate,
-                                                   const std::string& name ) const
-{
-    return new MIL_AgentPion( *this, algorithmFactories, controller, automate, name );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::RegisterRoles
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in factory
@@ -400,3 +388,70 @@ const MIL_AgentTypePion* MIL_AgentTypePion::Find( unsigned int nID )
             return it->second;
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::GetUnitType
+// Created: NLD 2004-08-12
+// -----------------------------------------------------------------------------
+const PHY_UnitType& MIL_AgentTypePion::GetUnitType() const
+{
+    assert( pUnitType_ );
+    return *pUnitType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::GetModel
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+const DEC_Model_ABC& MIL_AgentTypePion::GetModel() const
+{
+    assert( pModel_ );
+    return *pModel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::GetDistanceAvantPoint
+// Created: NLD 2004-09-06
+// -----------------------------------------------------------------------------
+double MIL_AgentTypePion::GetDistanceAvantPoint( const TerrainData& nType ) const
+{
+    CIT_DistanceAvantPointMap it = distancesAvantPoints_.find( nType );
+    return it == distancesAvantPoints_.end() ? 0. : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::GetDistanceAvantLima
+// Created: JVT 2005-05-10
+// -----------------------------------------------------------------------------
+double MIL_AgentTypePion::GetDistanceAvantLima() const
+{
+    return rDistanceAvantLimas_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::GetFeedbackTime
+// Created: NLD 2004-11-25
+// -----------------------------------------------------------------------------
+double MIL_AgentTypePion::GetFeedbackTime() const
+{
+    return rFeedbackTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::GetHumanRepartition
+// Created: MMC 2011-10-10
+// -----------------------------------------------------------------------------
+const MIL_HumanRepartition& MIL_AgentTypePion::GetHumanRepartition() const
+{
+    return *pHumanRepartition_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::operator==
+// Created: NLD 2005-02-08
+// -----------------------------------------------------------------------------
+bool MIL_AgentTypePion::operator==( const MIL_AgentTypePion& rhs ) const
+{
+    return this == &rhs; //$$ A changer quand IDs
+}
+

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "Sink.h"
+#include "AgentFactory.h"
 #include "Adapters/SinkRoleExtender.h"
 #include "propagation/FloodModel.h"
 #include "propagation/ElevationGetter_ABC.h"
@@ -20,8 +21,11 @@
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "Tools/MIL_Color.h"
+#include "Tools/MIL_IDManager.h"
 #include "MIL_AgentServer.h"
 #include "CheckPoints/SerializationTools.h"
 #include "MT_Tools/MT_FormatString.h"
@@ -59,7 +63,7 @@ namespace legacy
     template< typename Archive >
     void save_construct_data( Archive& archive, const sword::legacy::Sink* sink, const unsigned int /*version*/ )
     {
-        AgentFactory_ABC* factory = &sink->factory_;
+        AgentFactory* factory = &sink->factory_;
         const Sink::T_Elements& elements = sink->elements_;
         bool logEnabled = sink->decLogger_.get() != 0;
         archive << factory
@@ -72,7 +76,7 @@ namespace legacy
     template< typename Archive >
     void load_construct_data( Archive& archive, sword::legacy::Sink* sink, const unsigned int /*version*/ )
     {
-        AgentFactory_ABC* factory;
+        AgentFactory* factory;
         unsigned int gcPause;
         unsigned int gcMult;
         bool logEnabled;
@@ -92,7 +96,7 @@ namespace legacy
 // Name: Sink constructor
 // Created: SLI 2012-01-13
 // -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled, const boost::shared_ptr< const TER_World >& world )
+Sink::Sink( AgentFactory& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled, const boost::shared_ptr< const TER_World >& world )
     : pElevation_( new ElevationGetter() )
     , factory_   ( factory )
     , gcPause_   ( gcPause )
@@ -251,11 +255,19 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
     CreateRoles( chainExt );
     MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, xis, &chainExt ) );
     { 
-        std::string strPosition;
-        xis >> xml::attribute( "position", strPosition );
-        MT_Vector2D vPosTmp;
-        world_->MosToSimMgrsCoord( strPosition, vPosTmp );
-        Initialize( pion, vPosTmp );
+        MT_Vector2D vPos;
+        if( xis.has_attribute( "position" ) )
+        {
+            std::string strPosition;
+            xis >> xml::attribute( "position", strPosition );
+            world_->MosToSimMgrsCoord( strPosition, vPos );
+        }
+        else
+        {
+            xis >> xml::attribute( "x", vPos.rX_ );
+            xis >> xml::attribute( "y", vPos.rY_ );
+        }
+        Initialize( pion, vPos );
     }
     pion.ReadOverloading( xis );
     return &pion;
@@ -265,26 +277,19 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // Name: Sink::Create
 // Created: SLI 2012-02-10
 // -----------------------------------------------------------------------------
-MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, sword::RoleExtender_ABC* ext )
-{
-    SinkRoleExtender chainExt( ext );
-    CreateRoles( chainExt );
-    MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, vPosition, &chainExt ) );
-    Initialize( pion, vPosition );
-    return &pion;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::Create
-// Created: SLI 2012-02-10
-// -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext )
 {
-    SinkRoleExtender chainExt( ext );
-    CreateRoles( chainExt );
-    MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, vPosition, name, &chainExt ) );
-    Initialize( pion, vPosition );
-    return &pion;
+    xml::xobufferstream x;
+    x << xml::start( "unit" )
+        << xml::attribute( "id", "0" )
+        << xml::attribute( "name" , name )
+        // Coordinates are not serialized to MGRS to avoid the loss of precision
+        // induced by projecting from and to. It was noticeable in gosword.
+        << xml::attribute( "x", vPosition.rX_ )
+        << xml::attribute( "y", vPosition.rY_ );
+    automate.GetColor().WriteODB( x );
+    x >> xml::start( "unit" );
+    return Create( type, automate, x, ext );
 }
 
 // -----------------------------------------------------------------------------

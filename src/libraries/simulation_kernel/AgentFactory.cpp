@@ -16,22 +16,9 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Tools/MIL_IDManager.h"
-#include "Tools/MIL_Tools.h"
 #include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
-
-// -----------------------------------------------------------------------------
-// Name: AgentFactory constructor
-// Created: MGD 2009-08-13
-// -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController )
-    : idManager_          ( idManager )
-    , missionController_  ( missionController )
-    , algorithmsFactories_( new AlgorithmsFactories() )
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -42,7 +29,8 @@ AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& mis
     , missionController_  ( missionController )
     , algorithmsFactories_( algorithmsFactories )
 {
-    // NOTHING
+    if( !algorithmsFactories_.get() )
+        algorithmsFactories_.reset( new AlgorithmsFactories() );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,39 +54,17 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
-// Created: MGD 2009-08-13
-// -----------------------------------------------------------------------------
-MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, sword::RoleExtender_ABC* ext )
-{
-    return Create( type, automate, vPosition, type.GetName(), ext );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
-// Created: MMC 2011-05-27
-// -----------------------------------------------------------------------------
-MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& /*vPosition*/, const std::string& name, sword::RoleExtender_ABC* ext )
-{
-    MIL_AgentPion* pPion = type.InstanciatePion( *algorithmsFactories_, missionController_, automate, name );
-    type.RegisterRoles( *pPion, ext );
-    return pPion;
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentFactory::load
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
-void AgentFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
+void AgentFactory::load( MIL_CheckPointInArchive&, const unsigned int )
 {
-    file >> boost::serialization::base_object < AgentFactory_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::save
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
-void AgentFactory::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void AgentFactory::save( MIL_CheckPointOutArchive&, const unsigned int ) const
 {
-    file << boost::serialization::base_object < AgentFactory_ABC >( *this );
 }

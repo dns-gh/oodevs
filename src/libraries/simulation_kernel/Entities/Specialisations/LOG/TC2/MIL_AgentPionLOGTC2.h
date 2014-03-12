@@ -28,7 +28,6 @@ class MIL_AgentPionLOGTC2 : public MIL_AgentPionLOG_ABC
 {
 public:
              MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis );
-             MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, const std::string& name );
              MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller );
     virtual ~MIL_AgentPionLOGTC2();
 
