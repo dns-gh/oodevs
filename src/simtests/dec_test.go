@@ -21,7 +21,6 @@ import (
 	"strconv"
 	"strings"
 	"swapi"
-	"swapi/phy"
 	"swapi/simu"
 	"swtest"
 	"text/template"
@@ -385,17 +384,7 @@ func testDecStartConsumingResources(c *C, client *swapi.Client, unitType uint32,
 func (s *TestSuite) TestDecStartConsumingResources(c *C) {
 	// Find type of unit which resources will be consumed
 	phydb := loadPhysical(c, "test")
-	typeName := "Maintenance Log Unit 3"
-	units, err := phy.ReadUnits(*phydb)
-	c.Assert(err, IsNil)
-	unitType := uint32(0)
-	for _, unit := range units.Units {
-		if unit.Name == typeName {
-			unitType = unit.Id
-			break
-		}
-	}
-	c.Assert(unitType, Greater, uint32(0))
+	unitType := getUnitTypeFromName(c, phydb, "Maintenance Log Unit 3")
 
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog).StartPaused())
 	defer stopSimAndClient(c, sim, client)

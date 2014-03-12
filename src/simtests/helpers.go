@@ -12,6 +12,7 @@ import (
 	. "launchpad.net/gocheck"
 	"strings"
 	"swapi"
+	"swapi/phy"
 )
 
 func getSomeUnit(c *C, data *swapi.ModelData) *swapi.Unit {
@@ -127,4 +128,19 @@ func getSomeParty(c *C, model *swapi.ModelData) *swapi.Party {
 	}
 	c.Fatal("no party found")
 	return nil
+}
+
+func getUnitTypeFromName(c *C, phydb *phy.PhysicalFile, typeName string) uint32 {
+	// Find type of unit which resources will be consumed
+	units, err := phy.ReadUnits(*phydb)
+	c.Assert(err, IsNil)
+	unitType := uint32(0)
+	for _, unit := range units.Units {
+		if unit.Name == typeName {
+			unitType = unit.Id
+			break
+		}
+	}
+	c.Assert(unitType, Greater, uint32(0))
+	return unitType
 }
