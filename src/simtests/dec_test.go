@@ -358,23 +358,10 @@ func TickOnce(c *C, client *swapi.Client) {
 	c.Assert(done, Equals, true)
 }
 
-func testDecStartConsumingResources(c *C, initial int32, percentage, duration float64, callback func(client *swapi.Client, unit, action, dotation uint32)) {
-	// Find type of unit which resources will be consumed
-	phydb := loadPhysical(c, "test")
-	typeName := "Maintenance Log Unit 3"
-	units, err := phy.ReadUnits(*phydb)
-	c.Assert(err, IsNil)
-	unitType := uint32(0)
-	for _, unit := range units.Units {
-		if unit.Name == typeName {
-			unitType = unit.Id
-			break
-		}
-	}
-	c.Assert(unitType, Greater, uint32(0))
+func testDecStartConsumingResources(c *C, client *swapi.Client, unitType uint32,
+	initial int32, percentage, duration float64,
+	callback func(client *swapi.Client, unit, action, dotation uint32)) {
 
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog).StartPaused())
-	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	automat := getSomeAutomatByName(c, d, "Maintenance Log Automat 3")
 	unit, err := client.CreateUnit(automat.Id, unitType, swapi.Point{X: -15.8219, Y: 28.2456})
@@ -396,94 +383,120 @@ func testDecStartConsumingResources(c *C, initial int32, percentage, duration fl
 }
 
 func (s *TestSuite) TestDecStartConsumingResources(c *C) {
+	// Find type of unit which resources will be consumed
+	phydb := loadPhysical(c, "test")
+	typeName := "Maintenance Log Unit 3"
+	units, err := phy.ReadUnits(*phydb)
+	c.Assert(err, IsNil)
+	unitType := uint32(0)
+	for _, unit := range units.Units {
+		if unit.Name == typeName {
+			unitType = unit.Id
+			break
+		}
+	}
+	c.Assert(unitType, Greater, uint32(0))
+
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog).StartPaused())
+	defer stopSimAndClient(c, sim, client)
+
 	// normal case
-	testDecStartConsumingResources(c, 10, -100, 100, func(client *swapi.Client, unit, action, dotation uint32) {
-		quantities := []int32{9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0}
-		for _, qty := range quantities {
-			TickOnce(c, client)
-			d := client.Model.GetData()
-			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
-		}
-	})
+	testDecStartConsumingResources(c, client, unitType, 10, -100, 100,
+		func(client *swapi.Client, unit, action, dotation uint32) {
+			quantities := []int32{9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0}
+			for _, qty := range quantities {
+				TickOnce(c, client)
+				d := client.Model.GetData()
+				c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+			}
+		})
 	// non integer percentage
-	testDecStartConsumingResources(c, 10, -33.334, 100, func(client *swapi.Client, unit, action, dotation uint32) {
-		quantities := []int32{10, 10, 9, 9, 9, 8, 8, 8, 7, 7, 7, 7}
-		for _, qty := range quantities {
-			TickOnce(c, client)
-			d := client.Model.GetData()
-			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
-		}
-	})
+	testDecStartConsumingResources(c, client, unitType, 10, -33.334, 100,
+		func(client *swapi.Client, unit, action, dotation uint32) {
+			quantities := []int32{10, 10, 9, 9, 9, 8, 8, 8, 7, 7, 7, 7}
+			for _, qty := range quantities {
+				TickOnce(c, client)
+				d := client.Model.GetData()
+				c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+			}
+		})
 	// non integer time
-	testDecStartConsumingResources(c, 10, -100, 94.99, func(client *swapi.Client, unit, action, dotation uint32) {
-		quantities := []int32{9, 8, 7, 6, 4, 3, 2, 1, 0, 0, 0, 0}
-		for _, qty := range quantities {
-			TickOnce(c, client)
-			d := client.Model.GetData()
-			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
-		}
-	})
+	testDecStartConsumingResources(c, client, unitType, 10, -100, 94.99,
+		func(client *swapi.Client, unit, action, dotation uint32) {
+			quantities := []int32{9, 8, 7, 6, 4, 3, 2, 1, 0, 0, 0, 0}
+			for _, qty := range quantities {
+				TickOnce(c, client)
+				d := client.Model.GetData()
+				c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+			}
+		})
 	// null duration
-	testDecStartConsumingResources(c, 10, -100, 0, func(client *swapi.Client, unit, action, dotation uint32) {
-		quantities := []int32{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-		for _, qty := range quantities {
-			TickOnce(c, client)
-			d := client.Model.GetData()
-			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
-		}
-	})
+	testDecStartConsumingResources(c, client, unitType, 10, -100, 0,
+		func(client *swapi.Client, unit, action, dotation uint32) {
+			quantities := []int32{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+			for _, qty := range quantities {
+				TickOnce(c, client)
+				d := client.Model.GetData()
+				c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+			}
+		})
 	// non full dotations
-	testDecStartConsumingResources(c, 6, -100, 100, func(client *swapi.Client, unit, action, dotation uint32) {
-		quantities := []int32{5, 4, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0}
-		for _, qty := range quantities {
-			TickOnce(c, client)
-			d := client.Model.GetData()
-			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
-		}
-	})
+	testDecStartConsumingResources(c, client, unitType, 6, -100, 100,
+		func(client *swapi.Client, unit, action, dotation uint32) {
+			quantities := []int32{5, 4, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0}
+			for _, qty := range quantities {
+				TickOnce(c, client)
+				d := client.Model.GetData()
+				c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+			}
+		})
 	// partly increasing dotations
-	testDecStartConsumingResources(c, 2, 50, 100, func(client *swapi.Client, unit, action, dotation uint32) {
-		quantities := []int32{3, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 7}
-		for _, qty := range quantities {
-			TickOnce(c, client)
-			d := client.Model.GetData()
-			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
-		}
-	})
+	testDecStartConsumingResources(c, client, unitType, 2, 50, 100,
+		func(client *swapi.Client, unit, action, dotation uint32) {
+			quantities := []int32{3, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 7}
+			for _, qty := range quantities {
+				TickOnce(c, client)
+				d := client.Model.GetData()
+				c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+			}
+		})
 	// capped percentage
-	testDecStartConsumingResources(c, 10, -200, 100, func(client *swapi.Client, unit, action, dotation uint32) {
-		quantities := []int32{8, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0}
-		for _, qty := range quantities {
-			TickOnce(c, client)
-			d := client.Model.GetData()
-			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
-		}
-	})
+	testDecStartConsumingResources(c, client, unitType, 10, -200, 100,
+		func(client *swapi.Client, unit, action, dotation uint32) {
+			quantities := []int32{8, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0}
+			for _, qty := range quantities {
+				TickOnce(c, client)
+				d := client.Model.GetData()
+				c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
+			}
+		})
 	// stop action before end
-	testDecStartConsumingResources(c, 10, -100, 100, func(client *swapi.Client, unit, action, dotation uint32) {
-		quantities := []int32{9, 8, 7, 6, 5, 5, 5}
-		for i, qty := range quantities {
-			TickOnce(c, client)
-			d := client.Model.GetData()
-			if i == 3 {
-				DecStopAction(c, client, unit, action)
+	testDecStartConsumingResources(c, client, unitType, 10, -100, 100,
+		func(client *swapi.Client, unit, action, dotation uint32) {
+			quantities := []int32{9, 8, 7, 6, 5, 5, 5}
+			for i, qty := range quantities {
+				TickOnce(c, client)
+				d := client.Model.GetData()
+				if i == 3 {
+					DecStopAction(c, client, unit, action)
+				}
+				c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
 			}
-			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
-		}
-	})
+		})
 	// suspend action in the middle
-	testDecStartConsumingResources(c, 10, -100, 100, func(client *swapi.Client, unit, action, dotation uint32) {
-		quantities := []int32{9, 8, 7, 6, 5, 5, 5, 4, 3, 2, 1, 0, 0, 0}
-		for i, qty := range quantities {
-			TickOnce(c, client)
-			d := client.Model.GetData()
-			if i == 3 {
-				DecSuspendAction(c, client, unit, action)
+	testDecStartConsumingResources(c, client, unitType, 10, -100, 100,
+		func(client *swapi.Client, unit, action, dotation uint32) {
+			quantities := []int32{9, 8, 7, 6, 5, 5, 5, 4, 3, 2, 1, 0, 0, 0}
+			for i, qty := range quantities {
+				TickOnce(c, client)
+				d := client.Model.GetData()
+				if i == 3 {
+					DecSuspendAction(c, client, unit, action)
+				}
+				if i == 5 {
+					DecResumeAction(c, client, unit, action)
+				}
+				c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
 			}
-			if i == 5 {
-				DecResumeAction(c, client, unit, action)
-			}
-			c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
-		}
-	})
+		})
 }
