@@ -277,13 +277,12 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // Name: Sink::Create
 // Created: SLI 2012-02-10
 // -----------------------------------------------------------------------------
-MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string* name, sword::RoleExtender_ABC* ext )
+MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext )
 {
-    const auto unitName = name ? *name : type.GetName();
     xml::xobufferstream x;
     x << xml::start( "unit" )
         << xml::attribute( "id", "0" )
-        << xml::attribute( "name" , unitName )
+        << xml::attribute( "name" , name )
         // Coordinates are not serialized to MGRS to avoid the loss of precision
         // induced by projecting from and to. It was noticeable in gosword.
         << xml::attribute( "x", vPosition.rX_ )

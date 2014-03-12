@@ -725,10 +725,11 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 // Name: MIL_EntityManager::CreatePion
 // Created: MMC 2011-05-27
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string* name, unsigned int nCtx,
+MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const boost::optional< std::string >& name, unsigned int nCtx,
     const MIL_DictionaryExtensions* extensions )
 {
-    MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition, name, 0 );
+    const auto& unitName = name ? *name : type.GetName();
+    MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition, unitName, 0 );
     if( !pPion )
         throw MASA_EXCEPTION( "Pion couldn't be created." );
     if( extensions )

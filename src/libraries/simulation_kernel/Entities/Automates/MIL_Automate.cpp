@@ -956,7 +956,7 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitCreationReques
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_unit );
     MT_Vector2D position;
     NET_ASN_Tools::ReadPoint( msg.position(), position );
-    MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, 0, nCtx, 0 ); // Auto-registration
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, boost::none, nCtx, 0 ); // Auto-registration
 }
 
 // -----------------------------------------------------------------------------
@@ -1007,7 +1007,7 @@ unsigned int MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicA
             std::string name = msg.parameters().elem( 2 ).value( 0 ).acharstr();
             // Auto-registration
             pion = &MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion(
-                    *pType, *this, position, &name, nCtx, &extensions );
+                    *pType, *this, position, name, nCtx, &extensions );
             if( msg.parameters().elem_size() >= 4 )
             {
                 bool isPc =  msg.parameters().elem( 3 ).value( 0 ).booleanvalue();
@@ -1018,7 +1018,7 @@ unsigned int MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicA
         {
             // Auto-registration
             pion = &MIL_AgentServer::GetWorkspace().GetEntityManager()
-                .CreatePion( *pType, *this, position, 0, nCtx, 0 );
+                .CreatePion( *pType, *this, position, boost::none, nCtx, 0 );
         }
         const MIL_AutomateLOG* superior = pLogisticHierarchy_->GetPrimarySuperior();
         if( superior && superior->GetPC() )
