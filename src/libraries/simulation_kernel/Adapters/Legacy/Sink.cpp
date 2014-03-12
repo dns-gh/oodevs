@@ -280,18 +280,17 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string* name, sword::RoleExtender_ABC* ext )
 {
     const auto unitName = name ? *name : type.GetName();
-    xml::xostringstream xos;
-    xos << xml::start( "unit" )
-            << xml::attribute( "id", "0" )
-            << xml::attribute( "name" , unitName )
-            // Coordinates are not serialized to MGRS to avoid the loss of precision
-            // induced by projecting from and to. It was noticeable in gosword.
-            << xml::attribute( "x", vPosition.rX_ )
-            << xml::attribute( "y", vPosition.rY_ );
-    automate.GetColor().WriteODB( xos );
-    xml::xistringstream xis( xos.str() );
-    xis >> xml::start( "unit" );
-    return Create( type, automate, xis, ext );
+    xml::xobufferstream x;
+    x << xml::start( "unit" )
+        << xml::attribute( "id", "0" )
+        << xml::attribute( "name" , unitName )
+        // Coordinates are not serialized to MGRS to avoid the loss of precision
+        // induced by projecting from and to. It was noticeable in gosword.
+        << xml::attribute( "x", vPosition.rX_ )
+        << xml::attribute( "y", vPosition.rY_ );
+    automate.GetColor().WriteODB( x );
+    x >> xml::start( "unit" );
+    return Create( type, automate, x, ext );
 }
 
 // -----------------------------------------------------------------------------
