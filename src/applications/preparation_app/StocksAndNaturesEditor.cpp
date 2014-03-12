@@ -28,10 +28,15 @@ StocksAndNaturesEditor::StocksAndNaturesEditor( QWidget* parent, const StaticMod
 
     QVBoxLayout* layout = new QVBoxLayout;
     setLayout( layout );
-    layout->addWidget( stockResourcesTable_ );
-    layout->addWidget( maxStockNaturesTable_ );
-    layout->setStretch( 0, 2 );
-    layout->setStretch( 1, 1 );
+
+    QSplitter* splitter = new QSplitter( Qt::Vertical, this );
+    splitter->setChildrenCollapsible( false );
+    splitter->addWidget( stockResourcesTable_ );
+    splitter->addWidget( maxStockNaturesTable_ );
+    splitter->setStretchFactor( 0, 2 );
+    splitter->setStretchFactor( 1, 1 );
+
+    layout->addWidget( splitter );
 
     connect( stockResourcesTable_, SIGNAL( ResourceValueChanged() ), SLOT( NotifyStocksUserChange() ) );
 }

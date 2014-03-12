@@ -21,13 +21,13 @@
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
 LogisticStocksDialog::LogisticStocksDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel )
-    : QDialog( parent, "StocksEditionDialog", 0, Qt::WStyle_Customize | Qt::WStyle_Title )
+    : QDialog( parent, "StocksEditionDialog" )
     , controllers_( controllers )
     , selected_( controllers )
 {
     setModal( true );
     gui::SubObjectName subObject( "LogisticStocksDialog" );
-    setMinimumSize( 550, 300 );
+    resize( 550, 500 );
 
     stockAndNaturesEditor_ = new StocksAndNaturesEditor( parent, staticModel );
 
