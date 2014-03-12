@@ -82,7 +82,7 @@ end
 
 --- Returns true once the delay given in parameter has passed, false otherwise
 -- @param knowledge Any knowledge
--- @param delay Float, the delay in seconds
+-- @param delay Float, the delay in minutes
 -- @return Boolean, whether the given delay has elapsed or not.
 waitInMin = function( knowledge, delay )
     knowledge[myself] = knowledge[myself] or {}
