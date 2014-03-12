@@ -34,7 +34,7 @@ MOCK_BASE_CLASS( MockSink, sword::Sink_ABC )
     MOCK_METHOD( GetModelCount, 0 );
 
     MOCK_METHOD( Create, 4, MIL_AgentPion*( const MIL_AgentTypePion&, MIL_Automate&, xml::xistream&, sword::RoleExtender_ABC* ), CreateFromXml );
-    MOCK_METHOD( Create, 5, MIL_AgentPion*( const MIL_AgentTypePion&, MIL_Automate&, const MT_Vector2D&, const std::string*, sword::RoleExtender_ABC* ), CreateFromPointAndName );
+    MOCK_METHOD( Create, 5, MIL_AgentPion*( const MIL_AgentTypePion&, MIL_Automate&, const MT_Vector2D&, const std::string&, sword::RoleExtender_ABC* ), CreateFromPointAndName );
 
     MOCK_METHOD( StartCommand, 2 );
     MOCK_METHOD( StopCommand, 1 );
