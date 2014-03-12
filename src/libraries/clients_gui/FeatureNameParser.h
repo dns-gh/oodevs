@@ -20,7 +20,7 @@ namespace kernel
 
 namespace tools
 {
-    class ExerciseConfig;
+    class Path;
 }
 
 namespace gui
@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::ExerciseConfig& config );
+    void Load( const tools::Path& graphicsDir );
     //@}
 
     //! @name LocationParser_ABC methods

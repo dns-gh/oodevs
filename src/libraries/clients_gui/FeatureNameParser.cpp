@@ -94,7 +94,7 @@ std::string FeatureNameParser::GetStringPosition( const geometry::Point2f& ) con
 // Name: FeatureNameParser::Load
 // Created: ABR 2014-03-04
 // -----------------------------------------------------------------------------
-void FeatureNameParser::Load( const tools::ExerciseConfig& config )
+void FeatureNameParser::Load( const tools::Path& graphicsDir )
 {
-    searcher_->Load( config );
+    searcher_->Load( graphicsDir );
 }

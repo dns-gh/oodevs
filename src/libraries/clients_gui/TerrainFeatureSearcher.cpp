@@ -13,7 +13,6 @@
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ApproximativeMap.h"
-#include "tools/ExerciseConfig.h"
 #include <graphics/NoVBOShapeLayer.h>
 #include <graphics/GraphicSetup_ABC.h>
 #pragma warning( disable : 4355 4512 )
@@ -137,15 +136,14 @@ void TerrainFeatureSearcher::LoadFeatures()
 // Name: TerrainFeatureSearcher::Load
 // Created: ABR 2014-03-04
 // -----------------------------------------------------------------------------
-void TerrainFeatureSearcher::Load( const tools::ExerciseConfig& config )
+void TerrainFeatureSearcher::Load( const tools::Path& graphicsDir )
 {
     current_ = 0;
     index_ = 0;
     nameLocations_.reset( new T_NameLocations( 500 ) );
-    const tools::Path& graphicsDirectory = config.GetGraphicsDirectory();
-    if( !graphicsDirectory.IsEmpty() )
+    if( !graphicsDir.IsEmpty() )
     {
-        const tools::Path dump = graphicsDirectory / "shapes.dump";
+        const tools::Path dump = graphicsDir / "shapes.dump";
         if( dump.Exists() )
             pendingSourceFile_ = dump;
     }

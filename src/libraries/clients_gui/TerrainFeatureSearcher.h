@@ -42,7 +42,7 @@ public:
     //@{
     bool Search( const QString& name, geometry::Point2f& point, QString& hint );
     bool FindNext( geometry::Point2f& point, QString& hint );
-    void Load( const tools::ExerciseConfig& config );
+    void Load( const tools::Path& graphicsDir );
     //@}
 
 private:
