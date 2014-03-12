@@ -251,7 +251,7 @@ def cmddump(ui, args):
     fp.write(msg)
     for n in sorted(simids):
         fp.write('%s\t%d\t%s\n' % (n, simids[n],
-            n in cppids and 'sim' or 'notsim'))
+            n in cppids and 'sim' or 'integration'))
     fp.close()
     return 0
 
