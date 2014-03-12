@@ -335,11 +335,11 @@ bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, co
     return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pPion->GetPion(), bTransportOnlyLoadable );
 }
 
-bool DEC_ActionFunctions::CanLoad( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
+bool DEC_ActionFunctions::CanLoad( const DEC_Decision_ABC* pPion, const DEC_Decision_ABC* pTarget, bool bTransportOnlyLoadable )
 {
-    if( !pPion )
+    if( !pPion || !pTarget )
         return false;
-    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().CanLoad( pPion->GetPion(), bTransportOnlyLoadable );
+    return pPion->GetPion().GetRole< transport::PHY_RoleAction_Transport >().CanLoad( pTarget->GetPion(), bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------
