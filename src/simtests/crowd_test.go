@@ -490,7 +490,7 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 		return false
 	})
 
-	phydb := loadWWPhysical(c)
+	phydb := loadPhysical(c, "worldwide")
 	reporter := newReporter(c, crowd.Id, phydb, "Hard to go through")
 	reporter.Start(client.Model)
 

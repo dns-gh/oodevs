@@ -21,6 +21,7 @@ import (
 	"strconv"
 	"strings"
 	"swapi"
+	"swapi/phy"
 	"swapi/simu"
 	"swtest"
 	"text/template"
@@ -358,12 +359,30 @@ func TickOnce(c *C, client *swapi.Client) {
 }
 
 func testDecStartConsumingResources(c *C, initial int32, percentage, duration float64, callback func(client *swapi.Client, unit, action, dotation uint32)) {
+	// Find type of unit which resources will be consumed
+	phydb := loadPhysical(c, "test")
+	typeName := "Maintenance Log Unit 3"
+	units, err := phy.ReadUnits(*phydb)
+	c.Assert(err, IsNil)
+	unitType := uint32(0)
+	for _, unit := range units.Units {
+		if unit.Name == typeName {
+			unitType = unit.Id
+			break
+		}
+	}
+	c.Assert(unitType, Greater, uint32(0))
+
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog).StartPaused())
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	unit := getSomeUnitByName(c, d, "Maintenance Log Unit 3")
+	automat := getSomeAutomatByName(c, d, "Maintenance Log Automat 3")
+	unit, err := client.CreateUnit(automat.Id, unitType, swapi.Point{X: -15.8219, Y: 28.2456})
+	c.Assert(err, IsNil)
+	TickOnce(c, client)
+
 	const dotation = uint32(electrogen_1)
-	err := client.ChangeDotation(unit.Id,
+	err = client.ChangeDotation(unit.Id,
 		map[uint32]*swapi.ResourceDotation{
 			dotation: &swapi.ResourceDotation{
 				Quantity:  initial,
