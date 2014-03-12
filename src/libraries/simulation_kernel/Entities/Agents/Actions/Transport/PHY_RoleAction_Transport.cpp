@@ -328,6 +328,7 @@ namespace
         explicit TransportWeightComputer( bool bTransportOnlyLoadable )
             : bTransportOnlyLoadable_( bTransportOnlyLoadable )
             , totalTransportedWeight_( 0 )
+            , lightestTransportedWeight_( std::numeric_limits< double >::max() )
             , heaviestTransportedWeight_( 0 )
         {}
 
@@ -336,12 +337,14 @@ namespace
             if( !bTransportOnlyLoadable_ || canBeLoaded )
             {
                 totalTransportedWeight_ += weight;
+                lightestTransportedWeight_ = std::min( lightestTransportedWeight_, weight );
                 heaviestTransportedWeight_ = std::max( heaviestTransportedWeight_, weight );
             }
         }
 
         bool bTransportOnlyLoadable_;
         double totalTransportedWeight_;
+        double lightestTransportedWeight_;
         double heaviestTransportedWeight_;
     };
 
@@ -479,6 +482,19 @@ bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, boo
         return false;
 
     return true;
+}
+
+bool PHY_RoleAction_Transport::CanLoad( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const
+{
+    if( *owner_ == transported || transported.IsMarkedForDestruction() )
+        return false;
+    TransportWeightComputer weightComputer( bTransportOnlyLoadable );
+    transported.Execute< TransportWeightComputer_ABC >( weightComputer );
+    if( weightComputer.totalTransportedWeight_ <= 0 )
+        return false;
+    TransportCapacityComputer capacityComputer;
+    owner_->Execute< OnComponentComputer_ABC >( capacityComputer );
+    return capacityComputer.rWeightCapacity_ - rWeightTransported_ >= weightComputer.lightestTransportedWeight_;
 }
 
 // -----------------------------------------------------------------------------

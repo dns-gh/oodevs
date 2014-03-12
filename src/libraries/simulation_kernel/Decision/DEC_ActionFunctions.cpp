@@ -335,6 +335,13 @@ bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, co
     return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pPion->GetPion(), bTransportOnlyLoadable );
 }
 
+bool DEC_ActionFunctions::CanLoad( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
+{
+    if( !pPion )
+        return false;
+    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().CanLoad( pPion->GetPion(), bTransportOnlyLoadable );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::GetNumberOfRoundTripToTransportPion
 // Created: GGE 2013-04-04

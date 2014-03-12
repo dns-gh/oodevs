@@ -713,6 +713,11 @@ void RegisterToolsFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_RandomValue", &DEC_DIAFunctions::GetRandomValue );
 }
 
+void RegisterTransportFunctions( sword::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_CanLoad", &DEC_ActionFunctions::CanLoad );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterCommonUserFunctions
 // Created: LDC 2009-04-22
@@ -744,6 +749,7 @@ void RegisterCommonUserFunctions( sword::Brain& brain, bool isMasalife )
     RegisterTelepathyFunctions( brain );
     RegisterItineraryFunctions( brain );
     RegisterToolsFunctions( brain );
+    RegisterTransportFunctions( brain );
     DEC_CommunicationFunctions::Register( brain );
     DEC_TelepathyFunctions::Register( brain );
     MIL_FragOrder::Register( brain );
