@@ -20,8 +20,6 @@
 #include "OnComponentFunctor_ABC.h"
 #include "OnComponentFunctorComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
-#include "WeaponAvailabilityComputer_ABC.h"
-#include "WeaponAvailabilityComputerFactory_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
