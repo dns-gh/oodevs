@@ -191,6 +191,10 @@
         <source>Enable legacy timeline</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Client log file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>

@@ -82,7 +82,8 @@ void Config::ReadSession()
         xis >> xml::optional >> xml::start( "timeline" )
                 >> xml::attribute( "url", timelineUrl_ )
                 >> xml::optional >> xml::attribute( "debug-port", timelineDebugPort_ )
-                >> xml::optional >> xml::attribute( "enabled", hasTimeline_ );
+                >> xml::optional >> xml::attribute( "enabled", hasTimeline_ )
+                >> xml::optional >> xml::attribute( "client-log", timelineLogFile_ );
     }
     else
     {
@@ -169,6 +170,11 @@ std::string Config::GetTimelineUrl() const
 int Config::GetTimelineDebugPort() const
 {
     return timelineDebugPort_;
+}
+
+tools::Path Config::GetTimelineClientLogFile() const
+{
+    return timelineLogFile_;
 }
 
 bool Config::HasMapnik() const
