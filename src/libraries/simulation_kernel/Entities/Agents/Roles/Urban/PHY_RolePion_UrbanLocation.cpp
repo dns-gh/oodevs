@@ -9,13 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_UrbanLocation.h"
-#include "AlgorithmsFactories.h"
 #include "InsideUrbanBlockPosition.h"
 #include "LocationComputer_ABC.h"
 #include "OutsideUrbanBlockPosition.h"
 #include "SpeedComputer_ABC.h"
-#include "UrbanLocationComputer_ABC.h"
-#include "UrbanLocationComputerFactory_ABC.h"
+#include "DefaultUrbanLocationComputer.h"
 #include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
@@ -170,9 +168,9 @@ bool PHY_RolePion_UrbanLocation::IsInCity() const
 // -----------------------------------------------------------------------------
 double PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > computer( const_cast< MIL_Agent_ABC& >( owner_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    const_cast< MIL_Agent_ABC& >( owner_ ).Execute( *computer );
-    UrbanLocationComputer_ABC::Results& result = computer->Result();
+    DefaultUrbanLocationComputer computer;
+    const_cast< MIL_Agent_ABC& >( owner_ ).Execute< UrbanLocationComputer_ABC >( computer );
+    UrbanLocationComputer_ABC::Results& result = computer.Result();
     return delegate_->ComputeRatioPionInside( result, attritionSurface );
 }
 
@@ -182,9 +180,9 @@ double PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const MT_Ellipse& att
 // -----------------------------------------------------------------------------
 double PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const TER_Polygon& polygon, double modificator ) const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > computer( const_cast< MIL_Agent_ABC& >( owner_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    const_cast< MIL_Agent_ABC& >( owner_ ).Execute( *computer );
-    UrbanLocationComputer_ABC::Results& result = computer->Result();
+    DefaultUrbanLocationComputer computer;
+    const_cast< MIL_Agent_ABC& >( owner_ ).Execute< UrbanLocationComputer_ABC >( computer );
+    UrbanLocationComputer_ABC::Results& result = computer.Result();
     return delegate_->ComputeRatioPionInside( result, polygon, modificator );
 }
 
@@ -212,9 +210,9 @@ MT_Vector2D PHY_RolePion_UrbanLocation::GetFirerPosition( const MT_Vector2D& tar
 // -----------------------------------------------------------------------------
 MT_Vector2D PHY_RolePion_UrbanLocation::GetTargetPosition( MIL_Agent_ABC& firer ) const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > targetComputer( const_cast< MIL_Agent_ABC& >( owner_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    const_cast< MIL_Agent_ABC& >( owner_ ).Execute( *targetComputer );
-    UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
+    DefaultUrbanLocationComputer targetComputer;
+    const_cast< MIL_Agent_ABC& >( owner_ ).Execute< UrbanLocationComputer_ABC >( targetComputer );
+    UrbanLocationComputer_ABC::Results& targetResult = targetComputer.Result();
     return delegate_->GetTargetPosition( firer, targetResult );
 }
 
@@ -224,12 +222,12 @@ MT_Vector2D PHY_RolePion_UrbanLocation::GetTargetPosition( MIL_Agent_ABC& firer 
 // -----------------------------------------------------------------------------
 double PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( owner_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    owner_.Execute( *firerComputer );
-    UrbanLocationComputer_ABC::Results& firerResult = firerComputer->Result();
-    std::auto_ptr< UrbanLocationComputer_ABC > targetComputer( target.GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    target.Execute( *targetComputer );
-    UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
+    DefaultUrbanLocationComputer firerComputer;
+    owner_.Execute< UrbanLocationComputer_ABC >( firerComputer );
+    UrbanLocationComputer_ABC::Results& firerResult = firerComputer.Result();
+    DefaultUrbanLocationComputer targetComputer;
+    target.Execute< UrbanLocationComputer_ABC >( targetComputer );
+    UrbanLocationComputer_ABC::Results& targetResult = targetComputer.Result();
     double distance = firerResult.position_.Distance( targetResult.position_ );
     return urbanObject_ ? distance * ( 1 - firerResult.urbanDeployment_ ) * ( 1 - targetResult.urbanDeployment_ ) : distance;
 }

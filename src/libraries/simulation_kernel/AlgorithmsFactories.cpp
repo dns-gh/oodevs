@@ -17,7 +17,6 @@
 #include "simulation_kernel/OnComponentFunctorComputerFactory.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
 #include "simulation_kernel/DotationComputerFactory.h"
-#include "simulation_kernel/UrbanLocationComputerFactory.h"
 #include "simulation_kernel/WeaponReloadingComputerFactory.h"
 #include <boost/serialization/export.hpp>
 
@@ -37,7 +36,6 @@ AlgorithmsFactories::AlgorithmsFactories()
     , onComponentLendedFunctorComputerFactory_( new OnComponentLendedFunctorComputerFactory() )
     , dotationComputerFactory_                ( new dotation::DotationComputerFactory() )
     , weaponReloadingComputerFactory_         ( new firing::WeaponReloadingComputerFactory() )
-    , urbanLocationComputerFactory_           ( new urbanLocation::UrbanLocationComputerFactory() )
 {
     // NOTHING
 }

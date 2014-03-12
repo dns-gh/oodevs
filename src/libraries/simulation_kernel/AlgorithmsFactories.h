@@ -38,11 +38,6 @@ namespace human
     class HealComputerFactory_ABC;
 }
 
-namespace urbanLocation
-{
-    class UrbanLocationComputerFactory_ABC;
-}
-
 class OnComponentFunctorComputerFactory_ABC;
 class OnComponentLendedFunctorComputerFactory_ABC;
 
@@ -85,7 +80,6 @@ public:
     std::auto_ptr< OnComponentLendedFunctorComputerFactory_ABC > onComponentLendedFunctorComputerFactory_;
     std::auto_ptr< dotation::DotationComputerFactory_ABC > dotationComputerFactory_;
     std::auto_ptr< firing::WeaponReloadingComputerFactory_ABC > weaponReloadingComputerFactory_;
-    std::auto_ptr< urbanLocation::UrbanLocationComputerFactory_ABC > urbanLocationComputerFactory_;
     //@}
 };
 
