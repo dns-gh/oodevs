@@ -23,7 +23,6 @@ namespace posture
 namespace dotation
 {
     class ConsumptionComputerFactory_ABC;
-    class DotationComputerFactory_ABC;
 }
 namespace moving
 {
@@ -74,7 +73,6 @@ public:
     std::auto_ptr< human::HealComputerFactory_ABC > healComputerFactory_;
     std::auto_ptr< OnComponentFunctorComputerFactory_ABC > onComponentFunctorComputerFactory_;
     std::auto_ptr< OnComponentLendedFunctorComputerFactory_ABC > onComponentLendedFunctorComputerFactory_;
-    std::auto_ptr< dotation::DotationComputerFactory_ABC > dotationComputerFactory_;
     //@}
 };
 

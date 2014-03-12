@@ -20,8 +20,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 
 #include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/DotationComputer_ABC.h"
-#include "simulation_kernel/DotationComputerFactory_ABC.h"
+#include "simulation_kernel/DefaultDotationComputer.h"
 
 using namespace firing;
 // -----------------------------------------------------------------------------
@@ -71,10 +70,10 @@ void PHY_MunitionForIndirectFireData::operator()( const PHY_ComposantePion& comp
     if( pChoosenMunition_ && weapon.GetDotationCategory() == *pChoosenMunition_ )
         return;
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer_.GetAlgorithms().dotationComputerFactory_->Create() );
-    firer_.Execute( *dotationComputer );
+    dotation::DefaultDotationComputer dotationComputer;
+    firer_.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( !pChoosenMunition_ || dotationComputer->GetDotationValue( *pChoosenMunition_ ) < dotationComputer->GetDotationValue( weapon.GetDotationCategory() ) )
+    if( !pChoosenMunition_ || dotationComputer.GetDotationValue( *pChoosenMunition_ ) < dotationComputer.GetDotationValue( weapon.GetDotationCategory() ) )
         pChoosenMunition_ = &weapon.GetDotationCategory();
 }
 

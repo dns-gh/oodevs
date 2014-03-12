@@ -16,7 +16,6 @@
 #include "simulation_kernel/HealComputerFactory.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
-#include "simulation_kernel/DotationComputerFactory.h"
 #include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AlgorithmsFactories )
@@ -33,7 +32,6 @@ AlgorithmsFactories::AlgorithmsFactories()
     , healComputerFactory_                    ( new human::HealComputerFactory() )
     , onComponentFunctorComputerFactory_      ( new OnComponentFunctorComputerFactory() )
     , onComponentLendedFunctorComputerFactory_( new OnComponentLendedFunctorComputerFactory() )
-    , dotationComputerFactory_                ( new dotation::DotationComputerFactory() )
 {
     // NOTHING
 }

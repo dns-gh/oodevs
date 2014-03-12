@@ -25,8 +25,7 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/DotationComputer_ABC.h"
-#include "simulation_kernel/DotationComputerFactory_ABC.h"
+#include "simulation_kernel/DefaultDotationComputer.h"
 #include "MT_Tools/MT_Logger.h"
 
 PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;

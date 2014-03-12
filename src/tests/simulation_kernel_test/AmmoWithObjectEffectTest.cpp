@@ -104,8 +104,6 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 
         MOCK_EXPECT( mockPublisher.Send ).at_least( 1 );
 
-        AlgorithmsFactories algorithms;
-        MOCK_EXPECT( pion.GetAlgorithms ).at_least( 1 ).returns( boost::cref( algorithms ) );
         pAction->Execute();
 
         BOOST_CHECK_EQUAL( firing::PHY_RoleAction_IndirectFiring::eFinished, callbackValue );

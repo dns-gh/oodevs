@@ -12,8 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_SmokeData.h"
 #include "AlgorithmsFactories.h"
-#include "DotationComputer_ABC.h"
-#include "DotationComputerFactory_ABC.h"
+#include "DefaultDotationComputer.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -56,9 +55,9 @@ void PHY_SmokeData::operator()( const PHY_ComposantePion& compFirer, PHY_Weapon&
     if( !category.CanBeUsedForIndirectFire() || !category.HasIndirectWeaponCategory( indirectWeaponCategory_ ) )
         return;
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer_.GetAlgorithms().dotationComputerFactory_->Create() );
-    firer_.Execute( *dotationComputer );
-    if( dotationComputer->GetDotationValue( weapon.GetDotationCategory() ) < weapon.GetType().GetNbrAmmoPerBurst() )
+    dotation::DefaultDotationComputer dotationComputer;
+    firer_.Execute< dotation::DotationComputer_ABC >( dotationComputer );
+    if( dotationComputer.GetDotationValue( weapon.GetDotationCategory() ) < weapon.GetType().GetNbrAmmoPerBurst() )
         return;
 
     pWeapon_ = &weapon;

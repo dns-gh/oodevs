@@ -20,8 +20,7 @@
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "MIL_Random.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/DotationComputer_ABC.h"
-#include "simulation_kernel/DotationComputerFactory_ABC.h"
+#include "simulation_kernel/DefaultDotationComputer.h"
 #include "MT_Tools/MT_Logger.h"
 
 using namespace firing;
@@ -149,9 +148,9 @@ void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_W
     if( pAmmoDotationClass_ && ( !weapon.GetDotationCategory().GetAmmoDotationClass() || *weapon.GetDotationCategory().GetAmmoDotationClass() != *pAmmoDotationClass_ ) )
         return;
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer_.GetAlgorithms().dotationComputerFactory_->Create() );
-    firer_.Execute( *dotationComputer );
-    if( !dotationComputer->HasDotation( weapon.GetDotationCategory() ) )
+    dotation::DefaultDotationComputer dotationComputer;
+    firer_.Execute< dotation::DotationComputer_ABC >( dotationComputer );
+    if( !dotationComputer.HasDotation( weapon.GetDotationCategory() ) )
         bHasWeaponsAndNoAmmo_ = true;
     else
     {

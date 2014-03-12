@@ -16,8 +16,7 @@
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
 #include "AlgorithmsFactories.h"
 #include "Decision/DEC_Gen_Object.h"
-#include "DotationComputer_ABC.h"
-#include "DotationComputerFactory_ABC.h"
+#include "DefaultDotationComputer.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
@@ -805,15 +804,15 @@ bool PHY_RoleAction_Objects::EnoughDotationForBuilding( const std::string& objec
     const PHY_DotationCategory* pDotationCategory = capacity->GetDotationCategory();
     if ( pDotationCategory  == 0 )
         return true;
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
-    pion.Execute( *dotationComputer );
+    dotation::DefaultDotationComputer dotationComputer;
+    pion.Execute< dotation::DotationComputer_ABC >( dotationComputer );
     if( bWithLoaded )
     {
         const auto& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
         for( auto itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
             result = result || EnoughDotationForBuilding( objectType, **itReinforcement, bWithLoaded );
     }
-    return result || dotationComputer->GetDotationValue( *pDotationCategory ) > 0;
+    return result || dotationComputer.GetDotationValue( *pDotationCategory ) > 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -824,9 +823,9 @@ double PHY_RoleAction_Objects::GetAgentDotationNumber( MIL_Agent_ABC& pion, cons
 {
     if ( pDotationCategory  == 0 )
         return -1;
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
-    pion.Execute( *dotationComputer );
-    return dotationComputer->GetDotationValue( *pDotationCategory );
+    dotation::DefaultDotationComputer dotationComputer;
+    pion.Execute< dotation::DotationComputer_ABC >( dotationComputer );
+    return dotationComputer.GetDotationValue( *pDotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -844,15 +843,15 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
     if ( pDotationCategory == 0 )
         return std::pair< const PHY_DotationCategory*, double >( pDotationCategory, -1 );
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
-    pion.Execute( *dotationComputer );
+    dotation::DefaultDotationComputer dotationComputer;
+    pion.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
     double number = 0;
     int dotationNumber =  capacity->GetDotationNumber( object->GetLocalisation() );
     if ( dotationNumber != 0 )
-        number = std::max((int) ( dotationNumber - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+        number = std::max((int) ( dotationNumber - dotationComputer.GetDotationValue( *pDotationCategory )), 0);
     else
-        number = std::max((int) ( capacity->GetMaxDotation() - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+        number = std::max((int) ( capacity->GetMaxDotation() - dotationComputer.GetDotationValue( *pDotationCategory )), 0);
     return std::pair< const PHY_DotationCategory*, double >( pDotationCategory, number );
 }
 
@@ -871,15 +870,15 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
     if ( pDotationCategory == 0 )
         return std::pair< const PHY_DotationCategory*, double >( pDotationCategory, -1 );
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
-    pion.Execute( *dotationComputer );
+    dotation::DefaultDotationComputer dotationComputer;
+    pion.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
     double number;
     int dotationNumber =  capacity->GetDotationNumber( pKnowledge->GetLocalisation() );
     if ( dotationNumber != 0 )
-        number = std::max((int) ( dotationNumber - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+        number = std::max((int) ( dotationNumber - dotationComputer.GetDotationValue( *pDotationCategory )), 0);
     else
-        number = std::max((int) ( capacity->GetMaxDotation() - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+        number = std::max((int) ( capacity->GetMaxDotation() - dotationComputer.GetDotationValue( *pDotationCategory )), 0);
     MIL_Object_ABC* object = pKnowledge->GetObjectKnown();
     if( object )
     {
@@ -907,15 +906,15 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
     if ( pDotationCategory == 0 )
         return std::pair< const PHY_DotationCategory*, double >( pDotationCategory, -1 );
 
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
-    pion.Execute( *dotationComputer );
+    dotation::DefaultDotationComputer dotationComputer;
+    pion.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
     double number;
     int dotationNumber =  capacity->GetDotationNumber( pKnowledge->GetLocalisation() );
     if ( dotationNumber != 0 )
-        number = std::max((int) ( dotationNumber - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+        number = std::max((int) ( dotationNumber - dotationComputer.GetDotationValue( *pDotationCategory )), 0);
     else
-        number = std::max((int) ( capacity->GetMaxDotation() - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+        number = std::max((int) ( capacity->GetMaxDotation() - dotationComputer.GetDotationValue( *pDotationCategory )), 0);
     MIL_Object_ABC* object = pKnowledge->GetObjectKnown();
     if( object )
     {
