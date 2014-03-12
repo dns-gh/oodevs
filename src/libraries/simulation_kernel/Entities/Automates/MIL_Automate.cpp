@@ -939,7 +939,7 @@ unsigned int MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicA
         throw MASA_BADPARAM_UNIT( "parameters[0] must be an Identifier" );
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id.value(0).identifier() );
     if( !pType )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_unit );
+        throw MASA_BADPARAM_UNIT( "invalid unit type" );
     const sword::MissionParameter& location = msg.parameters().elem( 1 );
     if( location.value_size() != 1 || !location.value(0).has_point() )
         throw MASA_BADPARAM_UNIT( "parameters[1] must be a Point" );
