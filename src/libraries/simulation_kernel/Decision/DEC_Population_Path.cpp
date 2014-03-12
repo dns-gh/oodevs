@@ -244,6 +244,15 @@ double DEC_Population_Path::GetCostOutsideOfAllObjects() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::GetMaxSpeed
+// Created: JSR 2014-03-10
+// -----------------------------------------------------------------------------
+double DEC_Population_Path::GetMaxSpeed( const TerrainData& terrainData ) const
+{
+    return population_.GetType().GetMaxSpeed( terrainData );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Population_Path::NeedRefine
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
