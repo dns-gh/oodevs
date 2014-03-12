@@ -335,3 +335,6 @@ DEC_Geometrie_PositionAdvanceAlongFuseauAutomat = function( position )
 end
 
 integration.postionAdvanceAlongAOR = integration.positionAdvanceAlongAOR
+
+--- Deprecated
+integration.getPositionAlongDangerDirection = integration.advanceAlongDangerDirection
