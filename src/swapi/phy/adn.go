@@ -26,6 +26,7 @@ type PhysicalFile struct {
 	Components FileHolder `xml:"components"`
 	Reports    FileHolder `xml:"reports"`
 	Resources  FileHolder `xml:"resources"`
+	Automats   FileHolder `xml:"automats"`
 	Units      FileHolder `xml:"units"`
 	BaseDir    string
 }
@@ -98,6 +99,31 @@ type UnitResource struct {
 type Equipment struct {
 	Count uint32 `xml:"count,attr"`
 	Type  string `xml:"type,attr"`
+}
+
+type Automat struct {
+	Id   uint32 `xml:"id,attr"`
+	Name string `xml:"name,attr"`
+}
+
+func (automats *Automats) GetName(id uint32) (string, error) {
+	for _, automat := range automats.Automats {
+		if automat.Id == id {
+			return automat.Name, nil
+		}
+	}
+	return "", errors.New("Unknown automat " + fmt.Sprintf("%d", id))
+}
+
+type Automats struct {
+	XMLName  xml.Name  `xml:"automats"`
+	Automats []Automat `xml:"automat"`
+}
+
+func ReadAutomats(physical PhysicalFile) (*Automats, error) {
+	automats := Automats{}
+	err := readXml(physical.BaseDir, physical.Automats.File, &automats)
+	return &automats, err
 }
 
 type Unit struct {
