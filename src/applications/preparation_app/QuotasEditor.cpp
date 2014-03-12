@@ -67,6 +67,7 @@ void QuotasEditor::Initialize( const kernel::Entity_ABC& entity )
     quotasByEntity_.clear();
     subordinateCombo_->clear();
     quotasTableView_->OnClearItems();
+    quotasTableView_->UpdateAllowedSupplyClasses( entity );
 
     const gui::LogisticHierarchiesBase* pLogHierarchy = entity.Retrieve< gui::LogisticHierarchiesBase >();
     if( !pLogHierarchy )

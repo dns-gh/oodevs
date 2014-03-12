@@ -53,6 +53,7 @@ void StocksAndNaturesEditor::Initialize( const kernel::Entity_ABC& entity )
 {
     stockResourcesTable_->OnClearItems();
     maxStockNaturesTable_->UpdateMaxStocks( entity );
+    stockResourcesTable_->UpdateAllowedSupplyClasses( entity );
     stockResourcesTable_->UpdateInitStocks( entity );
 }
 

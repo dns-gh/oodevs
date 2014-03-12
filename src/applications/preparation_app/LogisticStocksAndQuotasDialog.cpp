@@ -41,7 +41,7 @@ LogisticStocksAndQuotasDialog::LogisticStocksAndQuotasDialog( QWidget* parent, k
     QGridLayout* mainLayout = new QGridLayout( this, 2, 5, 10 );
     mainLayout->addWidget( tabs_, 0, 0, 1, 5 );
 
-    gui::RichPushButton* automaticEditButton = new gui::RichPushButton( "ok", tr( "Automatic allocation..." ), this );
+    gui::RichPushButton* automaticEditButton = new gui::RichPushButton( "auto", tr( "Automatic allocation..." ), this );
     gui::RichPushButton* okButton = new gui::RichPushButton( "ok", tr( "Ok" ), this );
     gui::RichPushButton* cancelButton = new gui::RichPushButton( "cancel", tr( "Cancel" ), this );
 

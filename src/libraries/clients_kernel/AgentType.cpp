@@ -377,6 +377,16 @@ bool AgentType::IsStockCategoryDefined( const LogisticSupplyClass& logClass ) co
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentType::GetAllowedSupplyClasses
+// Created: JSR 2014-03-12
+// -----------------------------------------------------------------------------
+void AgentType::GetAllowedSupplyClasses( std::set< std::string >& allowedSupplyClasses ) const
+{
+    for( auto it = stocks_.begin(); it != stocks_.end(); ++it )
+        allowedSupplyClasses.insert( it->first );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentType::HasStocks
 // Created: ABR 2011-11-08
 // -----------------------------------------------------------------------------

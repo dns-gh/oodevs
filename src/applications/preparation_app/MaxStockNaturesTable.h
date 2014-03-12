@@ -57,8 +57,6 @@ private:
     struct WeightVolume
     {
         WeightVolume() : weight_( 0 ), volume_( 0 ) {}
-        ~WeightVolume() {}
-
         double weight_;
         double volume_;
     };

@@ -20,7 +20,6 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "preparation/Dotation.h"
 #include "preparation/Stocks.h"
@@ -71,40 +70,17 @@ void StockResourcesTable::UpdateLine( int row, int value )
 
 namespace
 {
-    void FindAgentsWithStocks( const kernel::Entity_ABC& entity, std::vector< kernel::Agent_ABC* >& agents )
-    {
-        if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
-        {
-            const kernel::Agent_ABC& agent = static_cast< const kernel::Agent_ABC& >( entity );
-            if( agent.GetType().IsLogisticSupply() && agent.Retrieve< Stocks >() )
-                agents.push_back( const_cast< kernel::Agent_ABC* >( &agent ) );
-            return;
-        }
-        const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
-        if( !pTacticalHierarchies )
-            return;
-        auto children = pTacticalHierarchies->CreateSubordinateIterator();
-        while( children.HasMoreElements() )
-        {
-            const kernel::Entity_ABC& child = children.NextElement();
-            if( !logistic_helpers::IsLogisticBase( child ) )
-                FindAgentsWithStocks( child, agents );
-        }
-    }
-
     void ComputeInitStocks( const kernel::Entity_ABC& entity, std::map< const kernel::DotationType*, unsigned int >& stocks )
     {
-        std::vector< kernel::Agent_ABC* > agents;
-        FindAgentsWithStocks( entity, agents );
-        for( auto it = agents.begin(); it != agents.end(); ++it )
+        logistic_helpers::VisitAgentsWithLogisticSupply( entity, [&]( const kernel::Agent_ABC& agent )
         {
-            auto dotationIt = ( *it )->Get< Stocks >().CreateIterator();
+            auto dotationIt = agent.Get< Stocks >().CreateIterator();
             while( dotationIt.HasMoreElements() )
             {
                 const auto& curDotation = dotationIt.NextElement();
                 stocks[ &curDotation.type_ ] += curDotation.quantity_;
             }
-        }
+        } );
     }
 }
 
@@ -139,6 +115,8 @@ void StockResourcesTable::UpdateStocks( const std::map< const kernel::DotationTy
 // -----------------------------------------------------------------------------
 bool StockResourcesTable::IsStockValid( const kernel::Agent_ABC& agent, const kernel::DotationType& dotation ) const
 {
+    if( agent.Retrieve< Stocks> () == 0 )
+        return false;
     const tools::Resolver< kernel::AgentType >& agentTypes = staticModel_.types_;
     const kernel::AgentType& agentType = agentTypes.Get( agent.GetType().GetId() );
     return agentType.IsStockCategoryDefined( dotation.GetLogisticSupplyClass() );
@@ -207,10 +185,10 @@ void StockResourcesTable::SupplyStocks( kernel::Entity_ABC& entity ) const
     std::map< const kernel::DotationType*, unsigned int > dotations;
     ComputeValueByDotation( dotations );
 
-    std::vector< kernel::Agent_ABC* > allAgents;
-    FindAgentsWithStocks( entity, allAgents );
-    for( auto it = allAgents.begin(); it != allAgents.end(); ++it )
-        ( *it )->Get< Stocks >().DeleteAll();
+    logistic_helpers::VisitAgentsWithLogisticSupply( entity, []( const kernel::Agent_ABC& agent )
+        {
+            const_cast< kernel::Agent_ABC& >( agent ).Get< Stocks >().DeleteAll();
+        } );
 
     for( auto itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
     {
@@ -220,9 +198,11 @@ void StockResourcesTable::SupplyStocks( kernel::Entity_ABC& entity ) const
 
         const kernel::DotationType& dotationType = *itDotation->first;
         std::vector< kernel::Agent_ABC* > validAgents;
-        for( auto it = allAgents.begin(); it != allAgents.end(); ++it )
-            if( IsStockValid( **it, dotationType ) )
-                validAgents.push_back( *it );
+        logistic_helpers::VisitAgentsWithLogisticSupply( entity, [&]( const kernel::Agent_ABC& agent )
+            {
+                if( IsStockValid( agent, dotationType ) )
+                    validAgents.push_back( const_cast< kernel::Agent_ABC* >( &agent ) );
+            } );
 
         const unsigned int nbrAgents = static_cast< unsigned int >( validAgents.size() );
         if( nbrAgents == 0 )

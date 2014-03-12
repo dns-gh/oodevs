@@ -22,6 +22,7 @@ namespace kernel
 {
     class ContextMenu;
     class DotationType;
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -45,6 +46,7 @@ public:
     //! @name Operations
     //@{
     void ComputeValueByDotation( std::map< const kernel::DotationType*, unsigned int >& result ) const;
+    void UpdateAllowedSupplyClasses( const kernel::Entity_ABC& entity );
     //@}
 
 public slots:
@@ -92,6 +94,7 @@ private:
     QStringList headers_;
     QStandardItemModel* dataModel_;
     const kernel::Resolver2< kernel::DotationType >& dotations_;
+    std::set< std::string > allowedSupplyClasses_;
     //@}
 };
 

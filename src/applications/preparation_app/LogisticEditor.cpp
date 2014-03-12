@@ -100,6 +100,12 @@ void LogisticEditor::Show( const kernel::Entity_ABC& entity )
         return;
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
 
+    std::set< std::string > allowedSupplyClasses;
+    logistic_helpers::VisitAgentsWithLogisticSupply( entity, [&]( const kernel::Agent_ABC& agent )
+        {
+            agent.GetType().GetAllowedSupplyClasses( allowedSupplyClasses );
+        } );
+
     dataModel_->clear();
     dataModel_->setHorizontalHeaderLabels( QStringList() << tr( "Category" ) <<  tr( "Days" ) );
     tableView_->horizontalHeader()->setResizeMode( eCategory, QHeaderView::ResizeToContents );
@@ -110,6 +116,8 @@ void LogisticEditor::Show( const kernel::Entity_ABC& entity )
     while( itLogClass.HasMoreElements() )
     {
         const kernel::LogisticSupplyClass& logClass = itLogClass.NextElement();
+        if( allowedSupplyClasses.find( logClass.GetName() ) == allowedSupplyClasses.end() )
+            continue;
         const QString text = logClass.GetName().c_str();
         item = new QStandardItem( text );
         item->setEditable( false );

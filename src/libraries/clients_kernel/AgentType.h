@@ -87,6 +87,7 @@ public:
     bool HasStocks() const;
 
     bool IsStockCategoryDefined( const LogisticSupplyClass& logClass ) const;
+    void GetAllowedSupplyClasses( std::set< std::string >& allowedSupplyClasses ) const;
     //@}
 
 private:

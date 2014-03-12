@@ -11,9 +11,13 @@
 #include "ResourcesEditorTable_ABC.h"
 #include "moc_ResourcesEditorTable_ABC.cpp"
 #include "clients_gui/CommonDelegate.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/SignalAdapter.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentType.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/LogisticSupplyClass.h"
 #include <boost/bind.hpp>
 
 Q_DECLARE_METATYPE( const kernel::DotationType* )
@@ -101,7 +105,8 @@ void ResourcesEditorTable_ABC::contextMenuEvent( QContextMenuEvent* event )
     while( it.HasMoreElements() )
     {
         const auto& dotation = it.NextElement();
-        if( currentDotations.find( &dotation ) == currentDotations.end() )
+        if( currentDotations.find( &dotation ) == currentDotations.end() &&
+            allowedSupplyClasses_.find( dotation.GetLogisticSupplyClass().GetName() ) != allowedSupplyClasses_.end() )
             dotationsByType[ dotation.GetCategoryDisplay() ][ dotation.GetName() ] = &dotation ;
     }
 
@@ -232,6 +237,19 @@ const kernel::DotationType* ResourcesEditorTable_ABC::GetDotation( int row ) con
 {
     QStandardItem* item = dataModel_->item( row );
     return item ? item->data( Qt::UserRole ).value< const kernel::DotationType* >() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesEditorTable_ABC::UpdateAllowedSupplyClasses
+// Created: JSR 2014-03-12
+// -----------------------------------------------------------------------------
+void ResourcesEditorTable_ABC::UpdateAllowedSupplyClasses( const kernel::Entity_ABC& entity )
+{
+    allowedSupplyClasses_.clear();
+    logistic_helpers::VisitAgentsWithLogisticSupply( entity, [&]( const kernel::Agent_ABC& agent )
+        {
+            agent.GetType().GetAllowedSupplyClasses( allowedSupplyClasses_ );
+        } );
 }
 
 // -----------------------------------------------------------------------------
