@@ -321,7 +321,7 @@ func CheckDeployTime(c *C, start, end *sword.DateTime, duration time.Duration) {
 }
 
 func (s *TestSuite) TestLogisticDeployment(c *C) {
-	phydb := loadWWPhysical(c)
+	phydb := loadPhysical(c, "worldwide")
 	opts := NewAdminOpts(ExCrossroadSmallLog)
 	opts.Paused = true
 	sim, client := connectAndWaitModel(c, opts)
