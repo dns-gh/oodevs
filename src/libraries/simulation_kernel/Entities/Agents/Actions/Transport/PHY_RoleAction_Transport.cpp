@@ -150,7 +150,7 @@ int PHY_RoleAction_Transport::Load()
     if( nState_ == eLoading )
     {
         TransportCapacityComputer computer;
-        owner_->Execute( computer );
+        owner_->Execute< OnComponentComputer_ABC >( computer );
 
         if( computer.rWeightLoadedPerTimeStep_ == 0 )
             return eErrorNoCarriers;
@@ -213,7 +213,7 @@ int PHY_RoleAction_Transport::Unload( MT_Vector2D* position )
     if( nState_ == eUnloading )
     {
         TransportCapacityComputer computer;
-        owner_->Execute( computer );
+        owner_->Execute< OnComponentComputer_ABC >( computer );
         if( computer.rWeightUnloadedPerTimeStep_ == 0 )
             return eErrorNoCarriers;
 
@@ -316,7 +316,8 @@ void PHY_RoleAction_Transport::ApplyContamination()
 void PHY_RoleAction_Transport::CheckConsistency()
 {
     TransportCapacityComputer computer;
-    if( owner_->Execute( computer ).rWeightCapacity_ == 0 )
+    owner_->Execute< OnComponentComputer_ABC >( computer );
+    if( computer.rWeightCapacity_ == 0 )
         Cancel();
 }
 
@@ -370,17 +371,19 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
         return false;
 
     TransportPermissionComputer permissionComputer;
-    if( !transported.Execute( permissionComputer ).allow_ )
+    transported.Execute< TransportPermissionComputer_ABC >( permissionComputer );
+    if( !permissionComputer.allow_ )
         return false;
 
     TransportWeightComputer weightComp( bTransportOnlyLoadable );
-    transported.Execute( weightComp );
+    transported.Execute< TransportWeightComputer_ABC >( weightComp );
     if( weightComp.totalTransportedWeight_ <= 0 )
         return false;
 
     TransportCapacityComputer capacityComputer;
-    if( !bTransportOnlyLoadable && weightComp.heaviestTransportedWeight_ >
-        owner_->Execute( capacityComputer ).rMaxComposanteTransportedWeight_ )
+    owner_->Execute< OnComponentComputer_ABC >( capacityComputer );
+    if( !bTransportOnlyLoadable &&
+        weightComp.heaviestTransportedWeight_ > capacityComputer.rMaxComposanteTransportedWeight_ )
         return false;
 
     transportedPions_[ &transported ] = sTransportData( weightComp.totalTransportedWeight_, bTransportOnlyLoadable, false );
@@ -401,14 +404,16 @@ void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
         return;
 
     TransportPermissionComputer permissionComputer;
-    if(!transported.Execute( permissionComputer ).allow_)
+    transported.Execute< TransportPermissionComputer_ABC >( permissionComputer );
+    if( !permissionComputer.allow_ )
          return;
 
     transported.Apply( &TransportNotificationHandler_ABC::LoadForTransport, *owner_, bTransportOnlyLoadable, bTransportedByAnother );
     TransportWeightComputer weightComputer( bTransportOnlyLoadable );
+    transported.Execute< TransportWeightComputer_ABC >( weightComputer );
     sTransportData& data = transportedPions_[ &transported ] =
         sTransportData(
-            transported.Execute( weightComputer ).totalTransportedWeight_,
+            weightComputer.totalTransportedWeight_,
             bTransportOnlyLoadable, true );
     data.rRemainingWeight_   = 0;
     data.rTransportedWeight_ = data.rTotalWeight_;
@@ -463,12 +468,12 @@ bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, boo
         return false;
 
     TransportWeightComputer weightComp( bTransportOnlyLoadable );
-    transported.Execute( weightComp );
+    transported.Execute< TransportWeightComputer_ABC >( weightComp );
     if( weightComp.totalTransportedWeight_ <= 0 )
         return false;
 
     TransportCapacityComputer capacityComputer;
-    owner_->Execute( capacityComputer );
+    owner_->Execute< OnComponentComputer_ABC >( capacityComputer );
     if( capacityComputer.rWeightLoadedPerTimeStep_ == 0 ||
         !bTransportOnlyLoadable && weightComp.heaviestTransportedWeight_ > capacityComputer.rMaxComposanteTransportedWeight_ )
         return false;
@@ -486,13 +491,13 @@ double PHY_RoleAction_Transport::GetNumberOfRoundTripToTransportPion( MIL_Agent_
         return 0;
 
     TransportWeightComputer weightComp( bTransportOnlyLoadable );
-    transported.Execute( weightComp );
+    transported.Execute< TransportWeightComputer_ABC >( weightComp );
 
     if( weightComp.totalTransportedWeight_ <= 0 )
         return 0;
 
     TransportCapacityComputer capacityComputer;
-    owner_->Execute( capacityComputer );
+    owner_->Execute< OnComponentComputer_ABC >( capacityComputer );
 
     return weightComp.totalTransportedWeight_ / capacityComputer.rWeightCapacity_;
 }
