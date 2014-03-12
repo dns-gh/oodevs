@@ -95,7 +95,7 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
 void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< ArmorInfos > wizard( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), this );
+    ADN_Wizard< ArmorInfos > wizard( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorInfosWithoutCrowd(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

@@ -9,7 +9,9 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Armors_Data.h"
+#include "moc_ADN_Armors_Data.cpp"
 #include "ADN_Enums.h"
+#include "ADN_AttritionInfos.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
@@ -160,8 +162,11 @@ ADN_Armors_Data::ArmorInfos* ADN_Armors_Data::ArmorInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 ADN_Armors_Data::ADN_Armors_Data()
     : ADN_Data_ABC( eCategories, eArmors )
+    , vArmorsWithoutCrowd_( true, false )
 {
     vArmors_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
+    connect( &vArmors_, SIGNAL( ItemAdded( void* ) ), this, SLOT( OnItemAdded( void* ) ) );
+    connect( &vArmors_, SIGNAL( ItemRemoved( void* ) ), this, SLOT( OnItemRemoved( void* ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,6 +257,36 @@ void ADN_Armors_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) c
 ADN_Armors_Data::T_ArmorInfos_Vector& ADN_Armors_Data::GetArmorsInfos()
 {
     return vArmors_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Armors_Data::GetArmorInfosWithoutCrowd
+// Created: LDC 2014-03-12
+// -----------------------------------------------------------------------------
+ADN_Armors_Data::T_ArmorInfos_Vector& ADN_Armors_Data::GetArmorInfosWithoutCrowd()
+{
+    return vArmorsWithoutCrowd_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Armors_Data::OnItemAdded
+// Created: LDC 2014-03-12
+// -----------------------------------------------------------------------------
+void ADN_Armors_Data::OnItemAdded( void* pObj )
+{
+    ArmorInfos* info = static_cast< ArmorInfos* >( pObj );
+    if( info && info->nType_ != eProtectionType_Crowd )
+        vArmorsWithoutCrowd_.AddItem( info );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Armors_Data::OnItemRemoved
+// Created: LDC 2014-03-12
+// -----------------------------------------------------------------------------
+void ADN_Armors_Data::OnItemRemoved( void* pObj )
+{
+    ArmorInfos* info = static_cast< ArmorInfos* >( pObj );
+    vArmorsWithoutCrowd_.RemItem( info );
 }
 
 // -----------------------------------------------------------------------------

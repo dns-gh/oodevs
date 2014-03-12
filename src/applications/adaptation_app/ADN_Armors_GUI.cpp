@@ -12,6 +12,7 @@
 #include "moc_ADN_Armors_GUI.cpp"
 #include "ADN_Armors_Data.h"
 #include "ADN_Categories_AttritionEffect_Table.h"
+#include "ADN_ComboBoxItem.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_ListView_Categories_Armor.h"
 
@@ -99,6 +100,13 @@ void ADN_Armors_GUI::Build()
 // -----------------------------------------------------------------------------
 void ADN_Armors_GUI::OnTypeChanged( int index )
 {
+    for( int i = 0; i < pComboType_->count(); ++i )
+        if( pComboType_->GetEnumIndexFromGUI( i ) == eProtectionType_Crowd )
+        {
+            pComboType_->removeItem( i );
+            break;
+        }
+
     if( pComboType_->GetEnumIndexFromGUI( index ) == eProtectionType_Human )
     {
         pArmorBreakdownGroup_->hide();

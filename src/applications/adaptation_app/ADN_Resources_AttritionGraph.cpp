@@ -161,6 +161,9 @@ void ADN_Resources_AttritionGraph::Update()
     if( info == 0 )
         return;
 
+    if( info->nType_ == eProtectionType_Crowd )
+        return;
+
     helpers::ADN_UrbanAttritionInfos* material = ADN_Workspace::GetWorkspace().GetResources().GetGui().GetSelectedMaterial();
     const double urbanProtection = material ? material->rCoeff_.GetData() : 0.;
 

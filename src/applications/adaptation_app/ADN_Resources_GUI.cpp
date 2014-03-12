@@ -421,8 +421,11 @@ void ADN_Resources_GUI::InitializeSimulationCombos()
     if( pArmorCombos_[ currentTab_ ] )
     {
         for( int i = pArmorCombos_[ currentTab_ ]->count() - 1; i >= 0; --i )
-            if( static_cast< ADN_Armors_Data::ArmorInfos* >( pArmorCombos_[ currentTab_ ]->GetItem( i )->GetData() )->nType_ == eProtectionType_Human )
+        {
+            auto& armorType = static_cast< ADN_Armors_Data::ArmorInfos* >( pArmorCombos_[ currentTab_ ]->GetItem( i )->GetData() )->nType_;
+            if( armorType == eProtectionType_Human || armorType == eProtectionType_Crowd )
                 pArmorCombos_[ currentTab_ ]->removeItem( i );
+        }
         if( pArmorCombos_[ currentTab_ ]->GetItem( 0 ) )
             pArmorCombos_[ currentTab_ ]->setCurrentItem( 0 );
     }
@@ -495,7 +498,7 @@ QWidget* ADN_Resources_GUI::CreatePKTable()
     ADN_Table* pTable = new ADN_PK_Table( tr( "PKs" ) );
     // Fill the table.
     ADN_Resources_Data::ResourceInfos& ammo = data_.GetResource( eDotationFamily_Munition );
-    int nRowSize = static_cast< int >( armorInfos.size() );
+    int nRowSize = static_cast< int >( armorInfos.size() ) - 1; // -1 to filter out crowd 'armor'
     int nRow = 0;
     for( auto it = ammo.categories_.begin(); it != ammo.categories_.end(); ++it )
     {
@@ -508,6 +511,8 @@ QWidget* ADN_Resources_GUI::CreatePKTable()
         int nSubRow = 0;
         for( auto it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2 )
         {
+            if( ( *it2 )->GetCrossedElement()->nType_ == eProtectionType_Crowd )
+                continue;
             if( nSubRow > 0 )
                 pTable->AddItem( nRow + nSubRow, 0, *it, &ammoCategory.strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
             pTable->AddItem( nRow + nSubRow, 1, *it, &( *it2 )->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
