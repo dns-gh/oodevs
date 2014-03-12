@@ -15,7 +15,6 @@
 namespace firing
 {
     class WeaponReloadingComputerFactory_ABC;
-    class ComposantesAbleToBeFiredComputerFactory_ABC;
 }
 namespace location
 {
@@ -77,7 +76,6 @@ private:
 public:
     //! @name Attribute
     //@{
-    std::auto_ptr< firing::ComposantesAbleToBeFiredComputerFactory_ABC > composantesAbleToBeFiredComputerFactory_;
     std::auto_ptr< posture::PostureComputerFactory_ABC > postureComputerFactory_;
     std::auto_ptr< location::LocationComputerFactory_ABC > locationComputerFactory_;
     std::auto_ptr< dotation::ConsumptionComputerFactory_ABC > consumptionComputerFactory_;

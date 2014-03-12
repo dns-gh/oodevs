@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/ComposantesAbleToBeFiredComputerFactory.h"
 #include "simulation_kernel/LocationComputerFactory.h"
 #include "simulation_kernel/PostureComputerFactory.h"
 #include "simulation_kernel/ConsumptionComputerFactory.h"
@@ -29,8 +28,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AlgorithmsFactories )
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
 AlgorithmsFactories::AlgorithmsFactories()
-    : composantesAbleToBeFiredComputerFactory_( new firing::ComposantesAbleToBeFiredComputerFactory() )
-    , locationComputerFactory_                ( new location::LocationComputerFactory() )
+    : locationComputerFactory_                ( new location::LocationComputerFactory() )
     , postureComputerFactory_                 ( new posture::PostureComputerFactory() )
     , consumptionComputerFactory_             ( new dotation::ConsumptionComputerFactory() )
     , moveComputerFactory_                    ( new moving::MoveComputerFactory() )

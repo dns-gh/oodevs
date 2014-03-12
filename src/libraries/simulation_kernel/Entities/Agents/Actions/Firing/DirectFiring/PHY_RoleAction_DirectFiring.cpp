@@ -11,8 +11,7 @@
 #include "PHY_RoleAction_DirectFiring.h"
 #include "AlgorithmsFactories.h"
 #include "ConsumeDotationNotificationHandler_ABC.h"
-#include "ComposantesAbleToBeFiredComputer_ABC.h"
-#include "ComposantesAbleToBeFiredComputerFactory_ABC.h"
+#include "DefaultComposantesAbleToBeFiredComputer.h"
 #include "DefaultWeaponAvailabilityComputer.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
@@ -164,9 +163,10 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
     }
     // Targets
     const bool bFireOnlyOnMajorComposantes = ( nComposanteFiredType == PHY_DirectFireData::eFireOnlyOnMajorComposantes );
-    std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > componentAbleToBeFiredComputer = owner_->GetAlgorithms().composantesAbleToBeFiredComputerFactory_->Create( bFireOnlyOnMajorComposantes );
-    pTarget->Execute< OnComponentComputer_ABC >( *componentAbleToBeFiredComputer );
-    PHY_Composante_ABC::T_ComposanteVector& targets = componentAbleToBeFiredComputer->ResultLimited( nNbrWeaponsUsable );
+    DefaultComposantesAbleToBeFiredComputer componentAbleToBeFiredComputer(
+            bFireOnlyOnMajorComposantes );
+    pTarget->Execute< OnComponentComputer_ABC >( componentAbleToBeFiredComputer );
+    PHY_Composante_ABC::T_ComposanteVector& targets = componentAbleToBeFiredComputer.ResultLimited( nNbrWeaponsUsable );
     if( targets.empty() )
         return eEnemyDestroyed;
     owner_->NotifyAttacking ( *pTarget, mustReport );
