@@ -70,6 +70,7 @@ public:
     virtual void ResupplyDotations( bool withLog ) = 0;
     virtual void ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor ) = 0;
     virtual void ResupplyDotations( const PHY_DotationType& type, double rFactor ) = 0;
+    virtual void ChangeDotation( const PHY_DotationCategory& category, double fraction ) = 0;
     //@}
 
     //! @name Consumption management

@@ -24,6 +24,7 @@ MOCK_BASE_CLASS( MockRoleDotations, dotation::PHY_RoleInterface_Dotations )
     MOCK_METHOD( ResupplyDotations, 1, void( bool ), ResupplyDotationsAll );
     MOCK_METHOD( ResupplyDotations, 2, void( const PHY_AmmoDotationClass&, double ), ResupplyDotationsByAmmo );
     MOCK_METHOD( ResupplyDotations, 2, void( const PHY_DotationType&, double ), ResupplyDotationsByType );
+    MOCK_METHOD( ChangeDotation, 2 );
 
     MOCK_METHOD( SetConsumptionMode, 1 );
     MOCK_METHOD( RollbackConsumptionMode, 0 );

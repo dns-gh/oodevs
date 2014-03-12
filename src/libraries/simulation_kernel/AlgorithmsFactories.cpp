@@ -15,12 +15,10 @@
 #include "simulation_kernel/PostureComputerFactory.h"
 #include "simulation_kernel/ConsumptionComputerFactory.h"
 #include "simulation_kernel/MoveComputerFactory.h"
-#include "simulation_kernel/TransportCapacityComputerFactory.h"
 #include "simulation_kernel/HealComputerFactory.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
 #include "simulation_kernel/DotationComputerFactory.h"
-#include "simulation_kernel/LoadingComputerFactory.h"
 #include "simulation_kernel/UrbanLocationComputerFactory.h"
 #include "simulation_kernel/WeaponReloadingComputerFactory.h"
 #include <boost/serialization/export.hpp>
@@ -38,12 +36,10 @@ AlgorithmsFactories::AlgorithmsFactories()
     , postureComputerFactory_                 ( new posture::PostureComputerFactory() )
     , consumptionComputerFactory_             ( new dotation::ConsumptionComputerFactory() )
     , moveComputerFactory_                    ( new moving::MoveComputerFactory() )
-    , transportComputerFactory_               ( new transport::TransportComputerFactory() )
     , healComputerFactory_                    ( new human::HealComputerFactory() )
     , onComponentFunctorComputerFactory_      ( new OnComponentFunctorComputerFactory() )
     , onComponentLendedFunctorComputerFactory_( new OnComponentLendedFunctorComputerFactory() )
     , dotationComputerFactory_                ( new dotation::DotationComputerFactory() )
-    , loadingComputerFactory_                 ( new transport::LoadingComputerFactory() )
     , weaponReloadingComputerFactory_         ( new firing::WeaponReloadingComputerFactory() )
     , urbanLocationComputerFactory_           ( new urbanLocation::UrbanLocationComputerFactory() )
 {

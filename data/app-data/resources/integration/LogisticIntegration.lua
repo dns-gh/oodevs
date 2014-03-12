@@ -235,3 +235,11 @@ integration.modifyHumanWoundPriority = function ( woundedPriorities )
         integration.changeHealthPriority( list )
     end
 end
+
+--- Triggers the decrease over time of resources for the agent.
+-- @param dotation the dotation category
+-- @param value the total fraction of the maximum to decrease
+-- @param duration the duration of the decrease in seconds
+integration.startConsumingResources = function( dotation, value, duration )
+    DEC_StartConsumingResources( myself, category, value, duration )
+end

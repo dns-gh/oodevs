@@ -12,7 +12,6 @@
 
 namespace transport
 {
-
 // =============================================================================
 /** @class  TransportPermissionComputer_ABC
     @brief  TransportPermissionComputer_ABC
@@ -31,7 +30,6 @@ public:
     //! @name Operations
     //@{
     virtual void AllowLoading( bool doAllow ) = 0;
-    virtual bool CanBeLoaded() const = 0;
     //@}
 };
 
