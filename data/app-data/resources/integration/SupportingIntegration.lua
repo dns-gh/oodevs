@@ -152,6 +152,3 @@ integration.computeSupportFriendEfficiency = function( friendToSupport )
         end
     end
 end
-
---- Deprecated
-integration.getPositionAlongDangerDirection = integration.advanceAlongDangerDirection
