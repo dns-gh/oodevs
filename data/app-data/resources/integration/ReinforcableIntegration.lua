@@ -152,3 +152,44 @@ end
 integration.nombreDotationAgent =  function( unit, dotationCategory )
     return DEC_Agent_GetAgentDotation( unit.source, dotationCategory )
 end
+
+--- For a given set of 'kUnit', returns the table of units able to perform the given 'action'onto the given 'kObject'.
+-- This method can only be called by an automat or an agent.
+-- @param kObject, the element to act on.
+-- @param kUnits, the set of agent to perform the work.
+-- @return a table
+integration.unitsAbleToWorkOnObject = function ( kUnits, kObject, action )
+    local localisationObject = kObject:getLocalisation()
+    if not localisationObject then
+        return {}
+    end 
+    local simUnits = {}
+    for i = 1, #kUnits do 
+        simUnits[ i ] = kUnits[ i ].source
+    end
+    if action == "construct" then
+        return DEC_GetAgentsPouvantConstruireAvecLocalisation( simUnits, kObject:getType(), localisationObject )
+    elseif action == "improve" then
+        return DEC_GetAgentsPouvantValoriserAvecLocalisation( simUnits, kObject:getType(), localisationObject )
+    elseif action == "bypass" then
+        return DEC_GetAgentsPouvantDevaloriser( simUnits, kObject:getType() )
+    elseif action == "deconstruct" then
+        return DEC_GetAgentsPouvantDetruireAvecLocalisation( simUnits, kObject:getType(), localisationObject )
+    elseif action == "removeImprovement" then
+        return DEC_GetAgentsPouvantDevaloriserAvecLocalisation( simUnits, kObject:getType(), localisationObject )
+    else
+        return {}
+    end
+end
+
+--- For a given set of 'kUnit', returns the table of units able to perform the given 'action'onto the given 'object'.
+-- This method can only be called by an automat or an agent.
+-- @param kObject, the element to act on.
+-- @param kUnits, the set of agent to perform the work.
+-- @return a table
+integration.agentHasDotationToImprove = function( kUnit, object )
+    local dotations = DEC_GetAgentDotationManquantePourValoriserObjet( kUnit.source, object.source ) -- returns the needed dotation to improve and the number left.
+    if DEC_Agent_GetAgentDotation( kUnit.source, dotations.first ) >= 1 then -- until the agent has at least one dotation it can improve
+        return true
+    end
+end
