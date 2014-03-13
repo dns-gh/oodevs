@@ -29,7 +29,7 @@ func getSomeUnitByName(c *C, data *swapi.ModelData, substring string) *swapi.Uni
 			return a
 		}
 	}
-	c.Fatal("no unit whose name contains'" + substring + "'")
+	c.Fatal("no unit whose name contains '" + substring + "'")
 	return nil
 }
 
@@ -52,7 +52,7 @@ func getSomeAutomatByName(c *C, data *swapi.ModelData, substring string) *swapi.
 			return a
 		}
 	}
-	c.Fatal("no automat whose name contains'" + substring + "'")
+	c.Fatal("no automat whose name contains '" + substring + "'")
 	return nil
 }
 
@@ -70,7 +70,7 @@ func getSomeFormationByName(c *C, data *swapi.ModelData, substring string) *swap
 			return f
 		}
 	}
-	c.Fatal("no formation whose name contains'" + substring + "'")
+	c.Fatal("no formation whose name contains '" + substring + "'")
 	return nil
 }
 
@@ -130,8 +130,21 @@ func getSomeParty(c *C, model *swapi.ModelData) *swapi.Party {
 	return nil
 }
 
+func getAutomatTypeFromName(c *C, phydb *phy.PhysicalFile, typeName string) uint32 {
+	automats, err := phy.ReadAutomats(*phydb)
+	c.Assert(err, IsNil)
+	automatType := uint32(0)
+	for _, automat := range automats.Automats {
+		if automat.Name == typeName {
+			automatType = automat.Id
+			break
+		}
+	}
+	c.Assert(automatType, Greater, uint32(0))
+	return automatType
+}
+
 func getUnitTypeFromName(c *C, phydb *phy.PhysicalFile, typeName string) uint32 {
-	// Find type of unit which resources will be consumed
 	units, err := phy.ReadUnits(*phydb)
 	c.Assert(err, IsNil)
 	unitType := uint32(0)
