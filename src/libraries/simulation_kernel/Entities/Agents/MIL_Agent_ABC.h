@@ -14,7 +14,6 @@
 
 #include "simulation_kernel/Entities/MIL_Entity_ABC.h"
 
-class AlgorithmsFactories;
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_KnowledgeBlackBoard_AgentPion;
@@ -71,8 +70,6 @@ public:
 
     virtual const DEC_Decision_ABC& GetDecision() const = 0;
     virtual       DEC_Decision_ABC& GetDecision() = 0;
-
-    virtual const AlgorithmsFactories& GetAlgorithms() const = 0;
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const = 0;
 

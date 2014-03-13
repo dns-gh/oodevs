@@ -38,13 +38,11 @@ MIL_AgentTypePionLOGConvoy::~MIL_AgentTypePionLOGConvoy()
 // Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
-                                                            MissionController_ABC& controller,
+MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( MissionController_ABC& controller,
                                                             MIL_Automate& automate,
                                                             xml::xistream& xis ) const
 {
-    return new MIL_AgentPionLOGConvoy( *this, algorithmFactories, controller,
-            automate, xis );
+    return new MIL_AgentPionLOGConvoy( *this, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------

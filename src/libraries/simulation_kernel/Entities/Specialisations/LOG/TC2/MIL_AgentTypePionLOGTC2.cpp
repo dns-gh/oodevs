@@ -17,7 +17,6 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Medical.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Supply.h"
 
-#include "simulation_kernel/AlgorithmsFactories.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGTC2 constructor
@@ -42,12 +41,11 @@ MIL_AgentTypePionLOGTC2::~MIL_AgentTypePionLOGTC2()
 // Name: MIL_AgentTypePionLOGTC2::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGTC2::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
-                                                         MissionController_ABC& controller,
+MIL_AgentPion* MIL_AgentTypePionLOGTC2::InstanciatePion( MissionController_ABC& controller,
                                                          MIL_Automate& automate,
                                                          xml::xistream& xis ) const
 {
-    return new MIL_AgentPionLOGTC2( *this, algorithmFactories, controller, automate, xis );
+    return new MIL_AgentPionLOGTC2( *this, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------

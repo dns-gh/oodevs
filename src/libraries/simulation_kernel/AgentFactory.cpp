@@ -10,8 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "AgentFactory.h"
 #include "MissionController_ABC.h"
-#include "AlgorithmsFactories.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Checkpoints/SerializationTools.h"
@@ -24,13 +22,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
 // Name: AgentFactory constructor
 // Created: MCO 2013-02-22
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, std::auto_ptr< AlgorithmsFactories > algorithmsFactories )
+AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController )
     : idManager_          ( idManager )
     , missionController_  ( missionController )
-    , algorithmsFactories_( algorithmsFactories )
 {
-    if( !algorithmsFactories_.get() )
-        algorithmsFactories_.reset( new AlgorithmsFactories() );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +43,7 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, sword::RoleExtender_ABC* ext )
 {
-    MIL_AgentPion* pPion = type.InstanciatePion( *algorithmsFactories_, missionController_, automate, xis );
+    MIL_AgentPion* pPion = type.InstanciatePion( missionController_, automate, xis );
     type.RegisterRoles( *pPion, ext );
     return pPion;
 }

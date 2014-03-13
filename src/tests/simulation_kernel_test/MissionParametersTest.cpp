@@ -107,8 +107,7 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_AgentKnowledgeParameter, Fixture )
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
     DEC_Model model( "test", xis >> xml::start( "main" ), testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) );
     StubMIL_AgentTypePion type( model );
-    AlgorithmsFactories algorithmsFactories;
-    MIL_AgentPion pion( type, algorithmsFactories, controller );
+    MIL_AgentPion pion( type, controller );
     xml::xistringstream xisID( "<root id='35'/>" );
     MockAgent agent( xisID >> xml::start( "root" ) );
     MOCK_EXPECT( manager.FindAgentPion ).once().returns( &pion );

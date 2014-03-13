@@ -13,7 +13,6 @@
 #include "MIL_AgentPionLOGMaintenance.h"
 #include "MissionController_ABC.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Maintenance.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPionLOGMaintenance )
 
@@ -21,10 +20,8 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentPionLOGMaintenance* pion, const unsigned int /*version*/ )
 {
     unsigned int nTypeID = pion->GetType().GetID();
-    const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
     const MissionController_ABC* const controller = &pion->GetController();
     archive << nTypeID
-            << algorithmFactories
             << controller;
 }
 
@@ -32,14 +29,12 @@ template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AgentPionLOGMaintenance* pion, const unsigned int /*version*/ )
 {
     unsigned int nTypeID;
-    AlgorithmsFactories* algorithmFactories = 0;
     MissionController_ABC* controller = 0;
     archive >> nTypeID
-            >> algorithmFactories
             >> controller;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion ) MIL_AgentPionLOGMaintenance( *pType, *algorithmFactories, *controller );
+    ::new( pion ) MIL_AgentPionLOGMaintenance( *pType, *controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,11 +42,10 @@ void load_construct_data( Archive& archive, MIL_AgentPionLOGMaintenance* pion, c
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type,
-                                                          const AlgorithmsFactories& algorithmFactories,
                                                           MissionController_ABC& controller,
                                                           MIL_Automate& automate,
                                                           xml::xistream& xis )
-    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller, automate, xis )
+    : MIL_AgentPionLOG_ABC( type, controller, automate, xis )
 {
 }
 
@@ -60,9 +54,8 @@ MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePio
 // Created: JSR 2010-03-09
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type,
-                                                          const AlgorithmsFactories& algorithmFactories,
                                                           MissionController_ABC& controller )
-    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller )
+    : MIL_AgentPionLOG_ABC( type, controller )
 {
     // NOTHING
 }

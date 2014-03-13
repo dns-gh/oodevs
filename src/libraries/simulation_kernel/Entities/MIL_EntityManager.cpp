@@ -301,7 +301,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
     , missionController_            ( new MissionController() )
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
-    , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_, std::auto_ptr< AlgorithmsFactories >() ) )
+    , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
     , sink_                         ( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled(), world ) )
     , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
     , pFloodModel_                  ( sink_->CreateFloodModel().release() )

@@ -22,7 +22,6 @@
 #include "Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Adapters/RoleAdapterInterface.h"
-#include "AlgorithmsFactories.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Representations.h"
@@ -101,7 +100,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
-                              const AlgorithmsFactories& algorithmFactories,
                               MissionController_ABC& controller,
                               MIL_Automate& automate,
                               xml::xistream& xis )
@@ -113,7 +111,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( controller, *this ) )
-    , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( new MIL_AffinitiesMap( xis ) )
     , pExtensions_         ( new MIL_DictionaryExtensions( xis ) )
     , pColor_              ( new MIL_Color( xis ) )
@@ -140,7 +137,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
 // Created: LDC 2010-02-22
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
-                              const AlgorithmsFactories& algorithmFactories,
                               MissionController_ABC& controller )
     : MIL_Agent_ABC( type.GetName() )
     , pType_               ( &type )
@@ -150,7 +146,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
     , pAutomate_           ( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( controller, *this ) )
-    , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( 0 )
     , pExtensions_         ( 0 )
     , pColor_              ( 0 )
@@ -186,10 +181,8 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int /*version*/ )
 {
     unsigned int nTypeID = pion->GetType().GetID();
-    const AlgorithmsFactories* const algorithmFactories = &pion->algorithmFactories_;
     const MissionController_ABC* const controller = &pion->GetController();
     archive << nTypeID
-            << algorithmFactories
             << controller;
 }
 
@@ -197,14 +190,12 @@ template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int /*version*/ )
 {
     unsigned int nTypeID;
-    AlgorithmsFactories* algorithmFactories = 0;
     MissionController_ABC* controller = 0;
     archive >> nTypeID
-            >> algorithmFactories
             >> controller;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion ) MIL_AgentPion( *pType, *algorithmFactories, *controller );
+    ::new( pion ) MIL_AgentPion( *pType, *controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -1535,15 +1526,6 @@ MIL_PionOrderManager& MIL_AgentPion::GetOrderManager()
 const MIL_PionOrderManager& MIL_AgentPion::GetOrderManager() const
 {
     return *pOrderManager_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::GetAlgorithms
-// Created: MGD 2009-09-30
-// -----------------------------------------------------------------------------
-const AlgorithmsFactories& MIL_AgentPion::GetAlgorithms() const
-{
-    return algorithmFactories_;
 }
 
 // -----------------------------------------------------------------------------

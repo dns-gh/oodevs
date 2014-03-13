@@ -34,12 +34,11 @@ const MIL_AgentTypePion* MIL_AgentTypePion_Remote::Create( const std::string& st
     return new MIL_AgentTypePion_Remote( strName, strType, xis );
 }
 
-MIL_AgentPion* MIL_AgentTypePion_Remote::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
-                                                          MissionController_ABC& controller,
+MIL_AgentPion* MIL_AgentTypePion_Remote::InstanciatePion( MissionController_ABC& controller,
                                                           MIL_Automate& automate,
                                                           xml::xistream& xis ) const
 {
-    return new MIL_AgentPion_Remote( *this, algorithmFactories, controller, automate, xis );
+    return new MIL_AgentPion_Remote( *this, controller, automate, xis );
 }
 
 namespace

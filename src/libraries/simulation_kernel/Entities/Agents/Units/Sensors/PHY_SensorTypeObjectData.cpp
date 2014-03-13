@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_SensorTypeObjectData.h"
-#include "AlgorithmsFactories.h"
 #include "PerceptionDistanceComputer.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"

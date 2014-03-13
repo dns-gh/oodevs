@@ -11,7 +11,6 @@
 #define __AgentFactory_h_
 
 #include "MIL.h"
-#include "AlgorithmsFactories.h"
 #include "MissionController_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <memory>
@@ -38,7 +37,7 @@ class AgentFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, std::auto_ptr< AlgorithmsFactories > algorithmsFactories );
+             AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController );
     virtual ~AgentFactory();
     //@}
 
@@ -67,7 +66,6 @@ private:
     //@{
     MIL_IDManager& idManager_;
     MissionController_ABC& missionController_;
-    std::auto_ptr< AlgorithmsFactories > algorithmsFactories_;
     //@}
 };
 
@@ -79,8 +77,7 @@ void save_construct_data( Archive& archive, const AgentFactory* factory, const u
     const MIL_IDManager* const idManager = &factory->idManager_;
     const MissionController_ABC* const missionController = &factory->missionController_;
     archive << idManager
-            << missionController
-            << factory->algorithmsFactories_;
+            << missionController;
 }
 
 template< typename Archive >
@@ -88,11 +85,9 @@ void load_construct_data( Archive& archive, AgentFactory* factory, const unsigne
 {
     MIL_IDManager* idManager;
     MissionController_ABC* missionController;
-    std::auto_ptr< AlgorithmsFactories > algorithmsFactories;
     archive >> idManager
-            >> missionController
-            >> algorithmsFactories;
-    ::new( factory )AgentFactory( *idManager, *missionController, algorithmsFactories );
+            >> missionController;
+    ::new( factory )AgentFactory( *idManager, *missionController );
 }
 
 #endif // __AgentFactory_h_

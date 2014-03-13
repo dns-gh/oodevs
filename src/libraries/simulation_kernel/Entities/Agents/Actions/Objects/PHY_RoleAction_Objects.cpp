@@ -14,7 +14,6 @@
 #include "MIL_AgentServer.h"
 #include "PHY_RoleAction_Objects_DataComputer.h"
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
-#include "AlgorithmsFactories.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "DefaultDotationComputer.h"
 #include "Entities/MIL_Army.h"

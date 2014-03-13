@@ -19,7 +19,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
-#include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DefaultDotationComputer.h"
 
 using namespace firing;

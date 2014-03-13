@@ -11,7 +11,6 @@
 #include "MockRoleLocation.h"
 #include "StubDEC_Decision.h"
 #include "TestIndirectFireModifier.h"
-#include "AlgorithmsFactories.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_ActionIndirectFire_Position.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"

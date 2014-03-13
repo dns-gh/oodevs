@@ -16,7 +16,6 @@
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Network/NET_RoleInterface_Dotations.h"
 
-#include "AlgorithmsFactories.h"
 #include "MissionController_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -31,10 +30,8 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentPion_Remote* pion, const unsigned int /*version*/ )
 {
     unsigned int nTypeID = pion->GetType().GetID();
-    const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
     const MissionController_ABC* const controller= &pion->GetController();
     archive << nTypeID
-            << algorithmFactories
             << controller;
 }
 
@@ -42,31 +39,27 @@ template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AgentPion_Remote* pion, const unsigned int /*version*/ )
 {
     unsigned int nTypeID;
-    AlgorithmsFactories* algorithmFactories = 0;
     MissionController_ABC* controller = 0;
     std::string name;
     archive >> nTypeID
-            >> algorithmFactories
             >> controller;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion ) MIL_AgentPion_Remote( *pType, *algorithmFactories, *controller );
+    ::new( pion ) MIL_AgentPion_Remote( *pType, *controller );
 }
 
 MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type,
-                                            const AlgorithmsFactories& algorithmFactories,
                                             MissionController_ABC& controller,
                                             MIL_Automate& automate,
                                             xml::xistream& xis )
-    : MIL_AgentPion( type, algorithmFactories, controller, automate, xis )
+    : MIL_AgentPion( type, controller, automate, xis )
 {
     // NOTHING
 }
 
 MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type,
-                                            const AlgorithmsFactories& algorithmFactories,
                                             MissionController_ABC& controller )
-    : MIL_AgentPion( type, algorithmFactories, controller )
+    : MIL_AgentPion( type, controller )
 {
     // NOTHING
 }

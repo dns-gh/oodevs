@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Flying.h"
-#include "AlgorithmsFactories.h"
 #include "FlyListener_ABC.h"
 #include "LocationComputer_ABC.h"
 #include "PostureComputer_ABC.h"

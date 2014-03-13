@@ -15,7 +15,6 @@
 
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Maintenance.h"
 
-#include "simulation_kernel/AlgorithmsFactories.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMaintenance constructor
@@ -40,12 +39,11 @@ MIL_AgentTypePionLOGMaintenance::~MIL_AgentTypePionLOGMaintenance()
 // Name: MIL_AgentTypePionLOGMaintenance::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGMaintenance::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
-                                                                 MissionController_ABC& controller,
+MIL_AgentPion* MIL_AgentTypePionLOGMaintenance::InstanciatePion( MissionController_ABC& controller,
                                                                  MIL_Automate& automate,
                                                                  xml::xistream& xis ) const
 {
-    return new MIL_AgentPionLOGMaintenance( *this, algorithmFactories, controller, automate, xis );
+    return new MIL_AgentPionLOGMaintenance( *this, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------
