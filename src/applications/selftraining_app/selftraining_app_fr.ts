@@ -193,6 +193,10 @@
         <source>Enable legacy timeline</source>
         <translation>Activer l&apos;ancienne timeline</translation>
     </message>
+    <message>
+        <source>Client log file</source>
+        <translation>Fichier de log du client</translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>

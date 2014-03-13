@@ -68,6 +68,7 @@ TimelineWebView::TimelineWebView( QWidget* parent,
     cfg_->external = true;
     if( !cfg_->binary.IsRegularFile() )
         MT_LOG_ERROR_MSG( tr( "Invalid timeline binary '%1'" ).arg( QString::fromStdWString( cfg_->binary.ToUnicode() ) ).toStdString() );
+    cfg_->client_log = config.GetTimelineClientLogFile();
 
     setObjectName( "timeline-webview" );
 

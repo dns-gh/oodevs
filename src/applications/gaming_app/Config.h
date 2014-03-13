@@ -41,6 +41,8 @@ public:
     virtual bool HasTimeline() const;
     virtual std::string GetTimelineUrl() const;
     virtual int GetTimelineDebugPort() const;
+    // Disabled if empty.
+    tools::Path GetTimelineClientLogFile() const;
 
     bool HasMapnik() const;
     //@}
@@ -63,6 +65,7 @@ private:
     bool hasTimeline_;
     std::string timelineUrl_;
     int timelineDebugPort_;
+    tools::Path timelineLogFile_;
     bool mapnik_;
     //@}
 };
