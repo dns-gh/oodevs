@@ -754,7 +754,7 @@ integration.canDestroyObject = function( entity, obstacle )
 end
 
 --- Returns true if another agent is building the same object, false otherwise
--- @param object DirectIA Object
+-- @param object Object knowledge
 -- @param removeIt Boolean, true if we removed the given object from a list
 -- @return Boolean, whether or not another unit is doing something in the same object
 integration.unitBuildSameObstacleAtSameTime = function( object, removeIt )
