@@ -49,7 +49,7 @@ class Client : public Client_ABC
 public:
     typedef std::function< void( const std::string& ) > T_Logger;
 
-    // logger is a thread-safe logging callback or a nul functor.
+    // logger is a thread-safe logging callback or an empty functor.
              Client( const Configuration& cfg, const T_Logger& logger );
     virtual ~Client();
 
