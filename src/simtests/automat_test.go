@@ -160,10 +160,15 @@ func (s *TestSuite) TestCreateAutomatAndUnits(c *C) {
 	_, _, err = client.CreateAutomatAndUnits(formation.Id, InvalidIdentifier, kg0.Id, pos)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
+	client.Pause()
+
 	// Create INF.Infantry company(contains 6 units)
 	automat, units, err := client.CreateAutomatAndUnits(formation.Id, AutomatType, kg0.Id, pos)
 	c.Assert(err, IsNil)
 	c.Assert(automat, NotNil)
 	c.Assert(automat.KnowledgeGroupId, Equals, kg0.Id)
 	c.Assert(len(units), Equals, 6)
+	for _, unit := range units {
+		c.Assert(unit.RawOperationalState, Equals, int32(100))
+	}
 }
