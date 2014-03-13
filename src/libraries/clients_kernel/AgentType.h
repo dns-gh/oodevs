@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
+#include <set>
 #include "ENT/ENT_Tr.h"
 
 namespace xml
