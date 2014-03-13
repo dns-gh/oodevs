@@ -96,22 +96,18 @@ func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 	checkSpeed(c, client, swapi.Point{X: -15.7153, Y: 28.257},
 		swapi.Point{X: -15.7787, Y: 28.2258}, 0)
 
-	found := []string{}
+	found := false
 	pfDir := filepath.Join(sim.Opts.GetSessionDir(), "pf")
 	rePath := regexp.MustCompile(`^pathfind_\d+_\d+$`)
 	err := filepath.Walk(pfDir, func(path string, fi os.FileInfo, err error) error {
 		if err != nil || fi.IsDir() {
 			return err
 		}
-		name := filepath.Base(path)
-		if !rePath.MatchString(name) {
-			return nil
-		}
-		found = append(found, name)
+		found = found || rePath.MatchString(filepath.Base(path))
 		return nil
 	})
 	c.Assert(err, IsNil)
-	c.Assert(len(found), Greater, 0)
+	c.Assert(found, Equals, true)
 }
 
 func (s *TestSuite) TestTerrainSpeedModulation(c *C) {
