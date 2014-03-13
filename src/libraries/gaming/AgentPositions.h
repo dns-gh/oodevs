@@ -11,7 +11,6 @@
 #define __AgentPositions_h_
 
 #include "clients_gui/Drawable_ABC.h"
-#include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Positions.h"
 
@@ -34,7 +33,6 @@ namespace kernel
 // =============================================================================
 class AgentPositions : public kernel::Positions
                      , public kernel::Updatable_ABC< sword::UnitAttributes >
-                     , public kernel::Aggregatable_ABC
                      , public gui::Drawable_ABC
 {
 public:
@@ -54,7 +52,6 @@ public:
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual bool CanAggregate() const;
-    virtual bool IsAggregated() const;
     //@}
 
 private:
@@ -67,7 +64,6 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::UnitAttributes& message );
-    virtual void Aggregate( const bool& );
     //@}
 
 private:
@@ -79,7 +75,6 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     geometry::Point2f position_;
     float height_;
-    bool aggregated_;
     bool dead_;
     //@}
 };

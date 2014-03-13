@@ -59,7 +59,6 @@ public:
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual bool CanAggregate() const;
-    virtual bool IsAggregated() const;
 
     void Serialize( xml::xostream& xos ) const;
     std::string GetSymbol() const;

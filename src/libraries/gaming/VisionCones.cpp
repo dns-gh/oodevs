@@ -13,6 +13,7 @@
 #include "SurfaceFactory.h"
 #include "VisionMap.h"
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Workers.h"
 #include "clients_kernel/WorkerTask_ABC.h"
 #include "protocol/Protocol.h"
@@ -166,6 +167,8 @@ void VisionCones::Update() const
 // -----------------------------------------------------------------------------
 void VisionCones::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
+    if( agent_.IsAggregated() )
+        return;
     if( tools.ShouldDisplay( "VisionCones" ) )
         for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Draw( viewport, tools );

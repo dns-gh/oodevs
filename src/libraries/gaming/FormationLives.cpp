@@ -43,7 +43,7 @@ FormationLives::~FormationLives()
 // -----------------------------------------------------------------------------
 void FormationLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( !IsAggregated( formation_ ) && HasAggregatedSubordinate( formation_ ) && viewport.IsHotpointVisible() )
+    if( !formation_.IsAggregated() && HasAggregatedSubordinate( formation_ ) && viewport.IsHotpointVisible() )
         tools.DrawLife( where, GetLife(), 4.f );
 }
 

@@ -12,7 +12,6 @@
 #include "moc_FormationLayer.cpp"
 #include "AggregatedTools.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -90,7 +89,7 @@ void FormationLayer::NotifyContextMenu( const kernel::Formation_ABC& formation, 
     if( !profile_.IsVisible( formation ) )
         return;
     selected_ = &formation;
-    if( !IsAggregated( formation ) )
+    if( !formation.IsAggregated() )
     {
         if( !HasAggregatedSubordinate( formation )  )
             menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
@@ -117,7 +116,7 @@ void FormationLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const g
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Formation_ABC& formation = static_cast< const Formation_ABC& >( entity );
-    if( !IsAggregated( formation ) && HasAggregatedSubordinate( formation ) )
+    if( !formation.IsAggregated() && HasAggregatedSubordinate( formation ) )
         controllers_.actions_.ContextMenu( formation, entity, point, where );
 }
 
@@ -130,9 +129,8 @@ void FormationLayer::Toggle( const kernel::Entity_ABC& entity, bool aggregate )
     tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
-        const kernel::Entity_ABC& child = it.NextElement();
-        if( IsAggregated( child ) != aggregate )
-            child.GetInterfaces().Apply( &Aggregatable_ABC::Aggregate, aggregate );
+        auto& child = const_cast< kernel::Entity_ABC& >( it.NextElement() );
+        child.Aggregate( aggregate );
         Toggle( child, aggregate );
     }
 }

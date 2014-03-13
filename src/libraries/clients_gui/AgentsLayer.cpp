@@ -53,12 +53,3 @@ void AgentsLayer::Select( const GraphicalEntity_ABC& selectable, bool control, b
     else
         controllers_.actions_.SetSelected( selectable, control );
 }
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::ShouldDisplay
-// Created: LGY 2011-03-08
-// -----------------------------------------------------------------------------
-bool AgentsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
-{
-    return EntityLayer< Agent_ABC >::ShouldDisplay( entity ) && !IsAggregated( entity );
-}

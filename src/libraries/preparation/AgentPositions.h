@@ -11,7 +11,6 @@
 #define __AgentPositions_h_
 
 #include "clients_gui/Drawable_ABC.h"
-#include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
 
@@ -39,7 +38,6 @@ namespace xml
 // Created: AGE 2006-03-16
 // =============================================================================
 class AgentPositions : public kernel::Moveable_ABC
-                     , public kernel::Aggregatable_ABC
                      , public kernel::Serializable_ABC
                      , public gui::Drawable_ABC
 {
@@ -61,7 +59,6 @@ public:
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual bool CanAggregate() const;
-    virtual bool IsAggregated() const;
     //@}
 
     //! @name Operations
@@ -79,7 +76,6 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( gui::PropertiesDictionary& dico );
-    virtual void Aggregate( const bool& );
     //@}
 
 private:
@@ -91,7 +87,6 @@ private:
     kernel::Moveable_ABC* moveable_;
     geometry::Point2f position_;
     float height_;
-    bool aggregated_;
     //@}
 };
 

@@ -12,7 +12,6 @@
 
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Aggregatable_ABC.h"
 #include <boost/function.hpp>
 
 namespace kernel
@@ -27,7 +26,6 @@ namespace kernel
 // Created: AGE 2006-10-06
 // =============================================================================
 class AggregatedPositions : public kernel::Positions
-                          , public kernel::Aggregatable_ABC
                           , public gui::Drawable_ABC
 {
 public:
@@ -46,8 +44,6 @@ public:
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual bool CanAggregate() const;
-    virtual void Aggregate( const bool& );
-    virtual bool IsAggregated() const;
     //@}
 
 private:
@@ -69,7 +65,6 @@ private:
     const kernel::Entity_ABC& entity_;
     float factor_;
     mutable T_PointVector children_;
-    bool aggregated_;
     //@}
 };
 

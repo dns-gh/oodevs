@@ -99,7 +99,7 @@ void AgentDetections::NotifyDeleted( const kernel::Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , gui::GlTools_ABC& tools ) const
 {
-    if( ! tools.ShouldDisplay( "VisionLines" ) || detections_.empty() )
+    if( ! tools.ShouldDisplay( "VisionLines" ) || detections_.empty() || holder_.IsAggregated() )
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     for( auto it = detections_.begin(); it != detections_.end(); ++it )

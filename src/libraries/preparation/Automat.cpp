@@ -65,7 +65,7 @@ Automat::~Automat()
 // -----------------------------------------------------------------------------
 void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( !IsAggregated( *this ) && ::HasAggregatedSubordinate( *this ) && viewport.IsVisible( where ) )
+    if( !IsAggregated() && ::HasAggregatedSubordinate( *this ) && viewport.IsVisible( where ) )
     {
         InitializeSymbol();
         tools.DrawApp6SymbolFixedSize( symbol_, where, -1.5f, 0 );

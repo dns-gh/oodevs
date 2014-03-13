@@ -66,7 +66,7 @@ void CommandPostAttributes::CreateDictionary( gui::PropertiesDictionary& diction
 // -----------------------------------------------------------------------------
 void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( commandPost_ )
+    if( commandPost_ && !entity_.IsAggregated() )
     {
         if( viewport.IsHotpointVisible() )
             tools.DrawApp6SymbolFixedSize( type_.GetHQSymbol(), where, -1.f, 0 );

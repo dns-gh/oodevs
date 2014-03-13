@@ -33,12 +33,6 @@ public:
     virtual ~AgentsLayer();
     //@}
 
-protected:
-    //! @name Operations
-    //@{
-    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
-    //@}
-
 private:
     //! @name Helpers
     //@{

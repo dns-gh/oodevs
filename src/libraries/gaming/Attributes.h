@@ -12,7 +12,6 @@
 
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/AgentExtensions.h"
-#include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/SubTypes.h"
 #include "clients_kernel/Types.h"
@@ -51,7 +50,6 @@ class Attributes : public kernel::Extension_ABC
                  , public kernel::Displayable_ABC
                  , public kernel::Updatable_ABC< sword::UnitAttributes >
                  , public gui::Drawable_ABC
-                 , public kernel::Aggregatable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -82,7 +80,6 @@ private:
     void CreateDictionary( gui::PropertiesDictionary& dico ) const;
     void UpdateHierarchies();
     virtual void DoUpdate( const sword::UnitAttributes& message );
-    virtual void Aggregate( const bool& );
     //@}
 
 private:
@@ -126,7 +123,6 @@ public:
     bool bPrisoner_;
     bool bUnderground_;
     bool bRefugeesManaged_;
-    bool aggregated_;
     bool isPC_;
     const kernel::Team_ABC* surrenderedTo_;
     unsigned int knowledgeGroupJammed_;

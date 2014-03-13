@@ -23,6 +23,7 @@ namespace sword
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -39,7 +40,7 @@ class Speeds : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Speeds();
+    explicit Speeds( const kernel::Entity_ABC& entity );
     virtual ~Speeds();
     //@}
 
@@ -60,6 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::Entity_ABC& entity_;
     geometry::Vector2f direction_;
     float speed_;
     //@}

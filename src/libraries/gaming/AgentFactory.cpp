@@ -153,13 +153,12 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_, result->GetId() ) );
     result->Attach( *new DebugPoints( static_.coordinateConverter_ ) );
     result->Attach( *new ConvexHulls( *result ) );
-    result->Attach( *new DecisionalStates() );
+    result->Attach( *new DecisionalStates( *result ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( message.has_color() )
         result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Update( message );
     result->Polish();
-
     return result;
 }
 
@@ -172,7 +171,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     Agent* result = new Agent( message, controllers_.controller_, static_.types_ );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
-    result->Attach< Lives_ABC >( *new Lives( controllers_.controller_ ) );
+    result->Attach< Lives_ABC >( *new Lives( *result, controllers_.controller_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, message, static_.types_ ) ); // $$$$ LDC Warning: Must be before new Attributes because Attributes uses it without knowing it to paint the headquarters symbol...
     result->Attach( *new Attributes( *result, controllers_.controller_, static_.detection_, static_.coordinateConverter_, dictionary, model_.teams_ ) );
     result->Attach< gui::Decisions_ABC >( *new AgentDecisions( controllers_.controller_, *result, static_.types_.unitModels_ ) );
@@ -199,10 +198,10 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new TroopsCompatibilityVersion( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Contaminations( controllers_.controller_, *result, static_.objectTypes_, dictionary, result->GetType() ) );
     result->Attach< ConvexHulls >( *new AgentConvexHulls( *result, static_.coordinateConverter_ ) );
-    result->Attach( *new DecisionalStates() );
-    result->Attach( *new Speeds() );
+    result->Attach( *new DecisionalStates( *result ) );
+    result->Attach( *new Speeds( *result ) );
     result->Attach( *new Weapons( controllers_, static_.objectTypes_, static_.objectTypes_ ) );
-    result->Attach( *new Affinities( *result,controllers_.controller_, model_.teams_, dictionary ) );
+    result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );
     if( message.has_color() )
         result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
@@ -233,7 +232,7 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
     result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, team ) );
     result->Attach< gui::Decisions_ABC >( *new PopulationDecisions( controllers_.controller_, *result, *type ) );
-    result->Attach( *new DecisionalStates() );
+    result->Attach( *new DecisionalStates( *result ) );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     AttachExtensions( *result );

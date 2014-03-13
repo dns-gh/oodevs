@@ -100,10 +100,17 @@ public:
     virtual void Apply( ExtensionVisitor_ABC& visitor ) const;
     //@}
 
+    //! @name Aggregation
+    //@{
+    void Aggregate( bool aggregate );
+    bool IsAggregated() const;
+    //@}
+
 private:
     //! @name Member data
     //@{
     std::vector< Extension_ABC* > extensions_;
+    bool aggregated_;
     //@}
 };
 

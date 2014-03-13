@@ -46,7 +46,7 @@ Automat::~Automat()
 // -----------------------------------------------------------------------------
 void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( !IsAggregated( *this ) && HasAggregatedSubordinate( *this ) && viewport.IsHotpointVisible() )
+    if( !IsAggregated() && HasAggregatedSubordinate( *this ) && viewport.IsHotpointVisible() )
         drawable_.Draw( *this, where, viewport, tools, -1.5f );
 }
 

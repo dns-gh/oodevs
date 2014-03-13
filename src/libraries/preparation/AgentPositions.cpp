@@ -37,7 +37,6 @@ AgentPositions::AgentPositions( Agent_ABC& agent, const CoordinateConverter_ABC&
     , moveable_  ( new MoveableProxy( *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
     , position_  ( position )
     , height_    ( 0 )
-    , aggregated_( false )
 {
     CreateDictionary( dico );
 }
@@ -62,7 +61,6 @@ AgentPositions::AgentPositions( xml::xistream& xis, Agent_ABC& agent, const Coor
     , moveable_( new MoveableProxy( *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
     , position_( ReadPosition( xis, converter_ ) )
     , height_( 0 )
-    , aggregated_( false )
 {
     CreateDictionary( dico );
 }
@@ -82,7 +80,7 @@ AgentPositions::~AgentPositions()
 // -----------------------------------------------------------------------------
 Point2f AgentPositions::GetPosition( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !agent_.IsAggregated() )
         return position_;
     const kernel::Entity_ABC* superior = agent_.Get< TacticalHierarchies >().GetSuperior();
     return superior->Get< Positions >().GetPosition();
@@ -94,7 +92,7 @@ Point2f AgentPositions::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 float AgentPositions::GetHeight( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !agent_.IsAggregated() )
         return height_;
     const kernel::Entity_ABC* superior = agent_.Get< TacticalHierarchies >().GetSuperior();
     return superior->Get< Positions >().GetHeight();
@@ -139,15 +137,6 @@ void AgentPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewpo
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentPositions::Aggregate
-// Created: AGE 2006-04-11
-// -----------------------------------------------------------------------------
-void AgentPositions::Aggregate( const bool& bDummy )
-{
-    aggregated_ = bDummy;
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentPositions::SerializeAttributes
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
@@ -182,13 +171,4 @@ void AgentPositions::CreateDictionary( gui::PropertiesDictionary& dico )
 bool AgentPositions::CanAggregate() const
 {
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentPositions::IsAggregated
-// Created: LGY 2011-03-04
-// -----------------------------------------------------------------------------
-bool AgentPositions::IsAggregated() const
-{
-    return aggregated_;
 }
