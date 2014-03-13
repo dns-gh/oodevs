@@ -28,10 +28,6 @@ namespace moving
 {
     class MoveComputerFactory_ABC;
 }
-namespace human
-{
-    class HealComputerFactory_ABC;
-}
 
 class OnComponentFunctorComputerFactory_ABC;
 
@@ -69,7 +65,6 @@ public:
     std::auto_ptr< location::LocationComputerFactory_ABC > locationComputerFactory_;
     std::auto_ptr< dotation::ConsumptionComputerFactory_ABC > consumptionComputerFactory_;
     std::auto_ptr< moving::MoveComputerFactory_ABC > moveComputerFactory_;
-    std::auto_ptr< human::HealComputerFactory_ABC > healComputerFactory_;
     std::auto_ptr< OnComponentFunctorComputerFactory_ABC > onComponentFunctorComputerFactory_;
     //@}
 };
