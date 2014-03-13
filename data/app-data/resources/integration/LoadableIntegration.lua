@@ -379,6 +379,7 @@ end
 -- @param onlyLoadable a boolean specifying if only the components defined as 'loadable'
 -- in the physical database must be considered
 -- @return a boolean indicating if the agent is able to transport part of the target
-integration.canLoad( unit, target, onlyLoadable )
+integration.canLoad = function( unit, target, onlyLoadable )
     return DEC_CanLoad( unit, target, onlyLoadable )
 end
+
