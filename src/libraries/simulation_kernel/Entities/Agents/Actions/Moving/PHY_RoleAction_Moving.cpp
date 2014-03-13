@@ -16,8 +16,7 @@
 #include "MaxSlopeComputer_ABC.h"
 #include "MoveComputer_ABC.h"
 #include "MoveComputerFactory_ABC.h"
-#include "ConsumptionComputerFactory_ABC.h"
-#include "ConsumptionModeChangeRequest_ABC.h"
+#include "DefaultConsumptionModeChangeRequest.h"
 #include "ConsumptionChangeRequestHandler_ABC.h"
 #include "ObjectCollisionNotificationHandler_ABC.h"
 #include "AlgorithmsFactories.h"
@@ -428,11 +427,10 @@ bool PHY_RoleAction_Moving::HasResources()
     if( moveComputer->CanMoveOverride() )
         return true;
 
-    std::auto_ptr< dotation::ConsumptionModeChangeRequest_ABC > request =
-            owner_->GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest(PHY_ConsumptionType::moving_);
-    owner_->Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
+    dotation::DefaultConsumptionModeChangeRequest request( PHY_ConsumptionType::moving_ );
+    owner_->Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, request ); // automatic rollback
 
-    return request->AllChanged();
+    return request.AllChanged();
 }
 
 // -----------------------------------------------------------------------------
