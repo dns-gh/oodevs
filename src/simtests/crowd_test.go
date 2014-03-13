@@ -454,8 +454,9 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	c.Assert(object, NotNil)
 
 	// Create Safety police patrol
+	phydb := loadPhysical(c, "worldwide")
 	safetyPolicePatrolId := uint32(185)
-	safetyPoliceUnit := uint32(105)
+	safetyPoliceUnit := getUnitTypeFromName(c, phydb, "SAFETY.Police Unit")
 	automat := createSpecificAutomat(c, client, "party", safetyPolicePatrolId)
 	unitPos := swapi.Point{X: -15.7928, Y: 28.3451}
 	for i := 0; i != 2; i++ {
@@ -490,7 +491,6 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 		return false
 	})
 
-	phydb := loadWWPhysical(c)
 	reporter := newReporter(c, crowd.Id, phydb, "Hard to go through")
 	reporter.Start(client.Model)
 

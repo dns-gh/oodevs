@@ -807,7 +807,7 @@ func (s *TestSuite) TestMaintenanceSuperiorUnableToRepair(c *C) {
 	SetManualMaintenance(c, client, bldId)
 	SetManualMaintenance(c, client, bltId)
 
-	phydb := loadWWPhysical(c)
+	phydb := loadPhysical(c, "worldwide")
 	reporter := newReporter(c, unit.Id, phydb, "Unable to repair")
 	reporter.Start(client.Model)
 

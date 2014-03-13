@@ -400,10 +400,10 @@ func stopSimAndClient(c *C, sim *simu.SimProcess, client *swapi.Client) {
 	stopSim(c, sim, nil)
 }
 
-func loadWWPhysical(c *C) *phy.PhysicalFile {
+func loadPhysical(c *C, name string) *phy.PhysicalFile {
 	wd, err := os.Getwd()
 	c.Assert(err, IsNil)
-	path := filepath.Join(wd, "../../data/data/models/ada/physical/worldwide")
+	path := filepath.Join(wd, "../../data/data/models/ada/physical", name)
 	phydb, err := phy.ReadPhysical(path)
 	c.Assert(err, IsNil)
 	return phydb
