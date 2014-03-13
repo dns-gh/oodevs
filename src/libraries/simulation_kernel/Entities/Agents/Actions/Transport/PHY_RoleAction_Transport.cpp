@@ -495,7 +495,7 @@ bool PHY_RoleAction_Transport::CanLoad( MIL_Agent_ABC& transported, bool bTransp
 {
     if( *owner_ == transported || transported.IsMarkedForDestruction() )
         return false;
-    TransportWeightComputer weightComputer( bTransportOnlyLoadable );
+    TransportWeightComputer weightComputer( bTransportOnlyLoadable, owner_->CanTransportDestroyed() );
     transported.Execute< TransportWeightComputer_ABC >( weightComputer );
     if( weightComputer.totalTransportedWeight_ <= 0 )
         return false;
