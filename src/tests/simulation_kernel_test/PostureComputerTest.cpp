@@ -38,6 +38,7 @@ namespace
         MOCK_METHOD( IsMilitia, 0 )
         MOCK_METHOD( IsRefugee, 0 )
         MOCK_METHOD( IsTerrorist, 0 )
+        MOCK_METHOD( IsNBC, 0 )
         MOCK_METHOD( GetUnitType, 0 )
         MOCK_METHOD( GetFeedbackTime, 0 )
         MOCK_METHOD( RegisterFunctions, 2 )

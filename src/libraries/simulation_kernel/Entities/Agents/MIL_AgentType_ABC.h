@@ -50,6 +50,7 @@ public:
     virtual bool IsMilitia() const;
     virtual bool IsRefugee() const;
     virtual bool IsTerrorist() const;
+    virtual bool IsNBC() const = 0;
     virtual const PHY_UnitType& GetUnitType() const = 0;
     virtual double GetFeedbackTime() const = 0;
     virtual void RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const = 0;

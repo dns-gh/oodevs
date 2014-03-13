@@ -19,11 +19,13 @@
 #include "Tools/MIL_HumanRepartition.h"
 #include "Units/PHY_UnitType.h"
 
+#include "Decision/Brain.h"
+#include "Decision/DEC_AgentFunctions.h"
+#include "Decision/DEC_KnowledgeObjectFunctions.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Workspace.h"
 
-#include "Entities/Specialisations/NBC/MIL_AgentTypePionNBC.h"
 #include "Entities/Specialisations/Circulation/MIL_AgentTypePionCIRCULATION.h"
 #include "Entities/Specialisations/Milice/MIL_AgentTypePionMILICE.h"
 #include "Entities/Specialisations/ASY/MIL_AgentTypePionASY.h"
@@ -120,7 +122,18 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     for( auto it = basicTypes.begin(); it != basicTypes.end(); ++it )
         pionTypeAllocators_[ *it ] = &MIL_AgentTypePion::Create;
 
-    pionTypeAllocators_[ "Pion NBC"                    ] = &MIL_AgentTypePionNBC            ::Create;
+    pionTypeAllocators_[ "Pion NBC" ] =
+        []( const std::string& name, const std::string& type, xml::xistream& xis )
+            -> const MIL_AgentTypePion*
+        {
+            auto t = new MIL_AgentTypePion( name, type, xis );
+            t->SetBrainFunctions( boost::assign::list_of
+                    ( "DEC_DecontaminerZone" )
+                    ( "DEC_Agent_SeDecontaminer" ));
+            t->SetNBC( true );
+            return t;
+        };
+        
     pionTypeAllocators_[ "Pion LOG TC2"                ] = &MIL_AgentTypePionLOGTC2         ::Create;
     pionTypeAllocators_[ "Pion LOG BLD Sante"          ] = &MIL_AgentTypePionLOGMedical     ::Create;
     pionTypeAllocators_[ "Pion LOG BLD Maintenance"    ] = &MIL_AgentTypePionLOGMaintenance ::Create;
@@ -200,6 +213,7 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, const std::str
     , rDistanceAvantLimas_            ( 0. )
     , rFeedbackTime_                  ( std::numeric_limits< double >::infinity() )
     , pHumanRepartition_              ( new MIL_HumanRepartition( xis ) )
+    , isNBC_                          ( false )
 {
     InitializeRapFor              ( xis );
     InitializeDistancesAvantPoints( xis );
@@ -216,6 +230,7 @@ MIL_AgentTypePion::MIL_AgentTypePion( const DEC_Model_ABC* pModel )
     , rDistanceAvantLimas_( 0. )
     , rFeedbackTime_( 0. )
     , pHumanRepartition_( new MIL_HumanRepartition() )
+    , isNBC_( false )
 {
     // NOTHING
 }
@@ -371,13 +386,35 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, sword::RoleExtender_
         ext->RegisterRoles( pion );
 }
 
+namespace
+{
+
+void RegisterFunction( const std::string& name,  sword::Brain& brain,
+        MIL_Agent_ABC& agent )
+{
+    if( name == "DEC_ContaminerZone" )
+        brain.RegisterFunction( name.c_str(),
+            boost::function< void( const TER_Localisation* ) >(
+                boost::bind( &DEC_KnowledgeObjectFunctions::DecontaminateZone,
+                    boost::cref( agent ), _1 ) ) );
+    else if( name == "DEC_Agent_SeDecontaminer" )
+        brain.RegisterFunction( name.c_str(),
+            boost::bind( &DEC_AgentFunctions::SelfDecontaminate, boost::ref( agent ) ) );
+    else
+        throw MASA_EXCEPTION(
+                "cannot register unknown unit decisional method: " + name );
+}
+
+} // namespace
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterFunctions( sword::Brain& /*brain*/, MIL_Agent_ABC& /*agent*/ ) const
+void MIL_AgentTypePion::RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const
 {
-    // NOTHING
+    for( auto it = functions_.begin(); it != functions_.end(); ++it )
+        RegisterFunction( *it, brain, agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -468,3 +505,17 @@ bool MIL_AgentTypePion::operator==( const MIL_AgentTypePion& rhs ) const
     return this == &rhs; //$$ A changer quand IDs
 }
 
+void MIL_AgentTypePion::SetBrainFunctions( const std::vector< std::string >& names )
+{
+    functions_ = names;
+}
+
+void MIL_AgentTypePion::SetNBC( bool isNBC )
+{
+    isNBC_ = isNBC;
+}
+
+bool MIL_AgentTypePion::IsNBC() const
+{
+    return isNBC_;
+}
