@@ -9,9 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "InsideUrbanBlockPosition.h"
-#include "AlgorithmsFactories.h"
-#include "UrbanLocationComputer_ABC.h"
-#include "UrbanLocationComputerFactory_ABC.h"
+#include "DefaultUrbanLocationComputer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Objects/MaterialAttribute.h"
@@ -69,9 +67,9 @@ MT_Vector2D InsideUrbanBlockPosition::GetFirerPosition( const MT_Vector2D& targe
 // -----------------------------------------------------------------------------
 MT_Vector2D InsideUrbanBlockPosition::GetTargetPosition( MIL_Agent_ABC& firer, UrbanLocationComputer_ABC::Results& targetResult ) const
 {
-    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( firer.GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    firer.Execute( *firerComputer );
-    UrbanLocationComputer_ABC::Results& firerResult = firerComputer->Result();
+    DefaultUrbanLocationComputer firerComputer;
+    firer.Execute< UrbanLocationComputer_ABC >( firerComputer );
+    UrbanLocationComputer_ABC::Results& firerResult = firerComputer.Result();
     TER_DistanceLess cmp ( firerResult.position_ );
     T_PointSet collisions( cmp );
     urbanObject_.GetLocalisation().Intersect2D( MT_Line( targetResult.position_, firerResult.position_ ), collisions, 0 );

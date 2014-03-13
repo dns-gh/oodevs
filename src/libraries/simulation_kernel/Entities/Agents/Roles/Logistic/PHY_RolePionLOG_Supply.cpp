@@ -16,8 +16,7 @@
 #include "OnComponentFunctor_ABC.h"
 #include "OnComponentFunctorComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory.h"
-#include "OnComponentLendedFunctorComputer_ABC.h"
-#include "OnComponentLendedFunctorComputerFactory.h"
+#include "DefaultComponentLendedFunctorComputer.h"
 #include "MIL_AgentServer.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "Decision/DEC_ResourceNetwork.h"
@@ -335,8 +334,8 @@ double PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *componentComputer );
     ConvoyLendedTransportersUseFunctor functor2( composanteUse );
-    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
-    owner_.Execute( *lendedComputer );
+    DefaultComponentLendedFunctorComputer lendedComputer( functor2 );
+    owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
 
     for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
@@ -560,8 +559,8 @@ void PHY_RolePionLOG_Supply::SendFullState( unsigned int context ) const
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *componentComputer );
     ConvoyLendedTransportersUseFunctor functor2( composanteUse );
-    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
-    owner_.Execute( *lendedComputer );
+    DefaultComponentLendedFunctorComputer lendedComputer( functor2 );
+    owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
 
     SendComposanteUse( composanteUse, *asn().mutable_transporters()  );
 
@@ -611,8 +610,8 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
         std::auto_ptr< OnComponentComputer_ABC > transportedComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
         owner_.Execute( *transportedComputer );
         ConvoyLendedTransportersUseFunctor functor2( composanteUse );
-        std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
-        owner_.Execute( *lendedComputer );
+        DefaultComponentLendedFunctorComputer lendedComputer( functor2 );
+        owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
 
         SendComposanteUse( composanteUse, *asn().mutable_transporters() );
     }

@@ -12,16 +12,13 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Dotations.h"
 #include "AlgorithmsFactories.h"
-#include "ConsumptionComputer_ABC.h"
-#include "ConsumptionComputerFactory_ABC.h"
 #include "ConsumptionModeChangeRequest_ABC.h"
+#include "DefaultConsumptionComputer.h"
 #include "DotationComputer_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "OnComponentFunctor_ABC.h"
 #include "OnComponentFunctorComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
-#include "WeaponAvailabilityComputer_ABC.h"
-#include "WeaponAvailabilityComputerFactory_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
@@ -381,9 +378,9 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
         return;
 
     assert( pDotations_ );
-    std::auto_ptr< ConsumptionComputer_ABC > consumptionComputer = owner_->GetAlgorithms().consumptionComputerFactory_->CreateConsumptionComputer();
-    owner_->Execute( *consumptionComputer );
-    SetConsumptionMode( consumptionComputer->Result() );
+    dotation::DefaultConsumptionComputer consumptionComputer;
+    owner_->Execute< ConsumptionComputer_ABC >( consumptionComputer );
+    SetConsumptionMode( consumptionComputer.Result() );
 
     pDotations_->ConsumeConsumptionReservations();
     pDotations_->UpdateSupplyNeeded();

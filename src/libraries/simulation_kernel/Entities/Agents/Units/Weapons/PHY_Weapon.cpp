@@ -14,8 +14,7 @@
 #include "PHY_WeaponType.h"
 #include "AlgorithmsFactories.h"
 #include "MIL_Time_ABC.h"
-#include "WeaponReloadingComputerFactory_ABC.h"
-#include "WeaponReloadingComputer_ABC.h"
+#include "DefaultWeaponReloadingComputer.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -164,12 +163,11 @@ double PHY_Weapon::GetMinRangeToIndirectFire() const
 // Name: PHY_Weapon::ModifyReloadingDuration
 // Created: NLD 2004-11-04
 // -----------------------------------------------------------------------------
-inline
 double PHY_Weapon::ModifyReloadingDuration( MIL_Agent_ABC& firer, double rDuration ) const
 {
-    std::auto_ptr< firing::WeaponReloadingComputer_ABC > computer( firer.GetAlgorithms().weaponReloadingComputerFactory_->Create( rDuration ) );
-    firer.Execute( *computer );
-    return computer->GetDuration();
+    firing::DefaultWeaponReloadingComputer computer( rDuration );
+    firer.Execute< firing::WeaponReloadingComputer_ABC >( computer );
+    return computer.GetDuration();
 }
 
 // -----------------------------------------------------------------------------

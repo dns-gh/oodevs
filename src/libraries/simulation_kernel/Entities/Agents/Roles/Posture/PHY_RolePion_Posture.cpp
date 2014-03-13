@@ -9,14 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Posture.h"
-#include "AlgorithmsFactories.h"
 #include "ConsumptionComputer_ABC.h"
 #include "DetectionComputer.h"
 #include "MIL_Random.h"
 #include "MIL_Random_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
-#include "PostureComputer_ABC.h"
-#include "PostureComputerFactory_ABC.h"
+#include "DefaultPostureComputer.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "VisionConeNotificationHandler_ABC.h"
 #include "MoveComputer_ABC.h"
@@ -153,13 +151,12 @@ namespace
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Posture::UpdatePosture( bool bIsDead )
 {
-    std::auto_ptr< PostureComputer_ABC > computer =
-        owner_.GetAlgorithms().postureComputerFactory_->Create(
+    posture::DefaultPostureComputer computer(
             random, owner_.GetType().GetUnitType(), *pLastPosture_, *pCurrentPosture_,
             bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_,
             rStealthFactor_, rTimingFactor_, bIsParkedOnEngineerArea_ );
-    owner_.Execute( *computer );
-    const PostureComputer_ABC::Results& result = computer->Result();
+    owner_.Execute< PostureComputer_ABC >( computer );
+    const PostureComputer_ABC::Results& result = computer.Result();
     bool changed = false;
     changed = ChangePosture( *result.newPosture_ );
     ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );

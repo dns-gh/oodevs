@@ -32,8 +32,7 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
-#include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
-#include "simulation_kernel/OnComponentLendedFunctorComputerFactory_ABC.h"
+#include "simulation_kernel/DefaultComponentLendedFunctorComputer.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/serialization/shared_ptr.hpp>
@@ -450,8 +449,8 @@ void PHY_RolePionLOG_Medical::ExecuteOnComponentsAndLendedComponents( Composante
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
     owner_->Execute( *componentComputer );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_->GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
-    owner_->Execute( *lendedComputer );
+    DefaultComponentLendedFunctorComputer lendedComputer( functorOnLendedComponent );
+    owner_->Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
 }
 
 // -----------------------------------------------------------------------------

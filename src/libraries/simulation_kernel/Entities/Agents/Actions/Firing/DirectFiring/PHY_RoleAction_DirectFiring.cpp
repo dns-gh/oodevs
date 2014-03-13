@@ -11,10 +11,8 @@
 #include "PHY_RoleAction_DirectFiring.h"
 #include "AlgorithmsFactories.h"
 #include "ConsumeDotationNotificationHandler_ABC.h"
-#include "ComposantesAbleToBeFiredComputer_ABC.h"
-#include "ComposantesAbleToBeFiredComputerFactory_ABC.h"
-#include "WeaponAvailabilityComputer_ABC.h"
-#include "WeaponAvailabilityComputerFactory_ABC.h"
+#include "DefaultComposantesAbleToBeFiredComputer.h"
+#include "DefaultWeaponAvailabilityComputer.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
@@ -150,8 +148,8 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
         return eEnemyDestroyed;
     // Firers
     PHY_DirectFireData firerWeapons( *owner_, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, pAmmoDotationClass );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer = owner_->GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons );
-    owner_->Execute( *weaponAvailabilityComputer );
+    DefaultWeaponAvailabilityComputer weaponAvailabilityComputer( firerWeapons );
+    owner_->Execute< WeaponAvailabilityComputer_ABC >( weaponAvailabilityComputer );
     const unsigned int nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )
     {
@@ -165,9 +163,10 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
     }
     // Targets
     const bool bFireOnlyOnMajorComposantes = ( nComposanteFiredType == PHY_DirectFireData::eFireOnlyOnMajorComposantes );
-    std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > componentAbleToBeFiredComputer = owner_->GetAlgorithms().composantesAbleToBeFiredComputerFactory_->Create( bFireOnlyOnMajorComposantes );
-    pTarget->Execute< OnComponentComputer_ABC >( *componentAbleToBeFiredComputer );
-    PHY_Composante_ABC::T_ComposanteVector& targets = componentAbleToBeFiredComputer->ResultLimited( nNbrWeaponsUsable );
+    DefaultComposantesAbleToBeFiredComputer componentAbleToBeFiredComputer(
+            bFireOnlyOnMajorComposantes );
+    pTarget->Execute< OnComponentComputer_ABC >( componentAbleToBeFiredComputer );
+    PHY_Composante_ABC::T_ComposanteVector& targets = componentAbleToBeFiredComputer.ResultLimited( nNbrWeaponsUsable );
     if( targets.empty() )
         return eEnemyDestroyed;
     owner_->NotifyAttacking ( *pTarget, mustReport );
@@ -253,8 +252,8 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_Object_ABC& object, PHY_Fi
     if( capacity )
         capacity->RetrieveTargets( object, targets );
     PHY_DirectFireData firerWeapons( *owner_, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFiringModeNormal );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_->GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
-    owner_->Execute( *weaponAvailabilityComputer );
+    DefaultWeaponAvailabilityComputer weaponAvailabilityComputer( firerWeapons );
+    owner_->Execute< WeaponAvailabilityComputer_ABC >( weaponAvailabilityComputer );
     for( CIT_TargetVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
     {
         MIL_Agent_ABC& target = *itTarget->first;
@@ -286,8 +285,8 @@ int PHY_RoleAction_DirectFiring::FirePopulation( unsigned int nTargetKnowledgeID
         return eEnemyDestroyed;
     // Firers
     PHY_DirectFireData firerWeapons( *owner_, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFiringModeNormal, 1., dotationClass );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_->GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
-    owner_->Execute( *weaponAvailabilityComputer );
+    DefaultWeaponAvailabilityComputer weaponAvailabilityComputer( firerWeapons );
+    owner_->Execute< WeaponAvailabilityComputer_ABC >( weaponAvailabilityComputer );
     const unsigned int nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )
     {

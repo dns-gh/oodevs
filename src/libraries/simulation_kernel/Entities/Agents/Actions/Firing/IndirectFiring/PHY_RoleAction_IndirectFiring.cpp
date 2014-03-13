@@ -11,9 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_IndirectFiring.h"
-#include "AlgorithmsFactories.h"
-#include "WeaponAvailabilityComputer_ABC.h"
-#include "WeaponAvailabilityComputerFactory_ABC.h"
+#include "DefaultWeaponAvailabilityComputer.h"
 #include "PHY_IndirectFireData.h"
 #include "PHY_MunitionForIndirectFireData.h"
 #include "PHY_SmokeData.h"
@@ -86,8 +84,8 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
 
     // Firers
     PHY_IndirectFireData firerWeapons( *owner_, *pEffect );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_->GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
-    owner_->Execute( *weaponAvailabilityComputer );
+    DefaultWeaponAvailabilityComputer weaponAvailabilityComputer( firerWeapons );
+    owner_->Execute< WeaponAvailabilityComputer_ABC >( weaponAvailabilityComputer );
 
     if( !firerWeapons.HasWeaponsReady() )
     {
@@ -136,8 +134,8 @@ void PHY_RoleAction_IndirectFiring::FireSuspended()
 double PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPosition )
 {
     PHY_SmokeData smokeData( *owner_, PHY_IndirectFireDotationClass::fumigene_ );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_->GetAlgorithms().weaponAvailabilityComputerFactory_->Create( smokeData ) );
-    owner_->Execute( *weaponAvailabilityComputer );
+    DefaultWeaponAvailabilityComputer weaponAvailabilityComputer( smokeData );
+    owner_->Execute< WeaponAvailabilityComputer_ABC >( weaponAvailabilityComputer );
 
     PHY_Weapon* pWeapon = smokeData.GetWeapon();
     if( !pWeapon )
@@ -154,8 +152,8 @@ double PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPosi
 const PHY_DotationCategory* PHY_RoleAction_IndirectFiring::GetMunitionForIndirectFire( const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D* vTargetPosition )
 {
     PHY_MunitionForIndirectFireData fireData( *owner_, indirectWeaponCategory, vTargetPosition );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_->GetAlgorithms().weaponAvailabilityComputerFactory_->Create( fireData ) );
-    owner_->Execute( *weaponAvailabilityComputer );
+    DefaultWeaponAvailabilityComputer weaponAvailabilityComputer( fireData );
+    owner_->Execute< WeaponAvailabilityComputer_ABC >( weaponAvailabilityComputer );
 
     return fireData.GetChoosenMunition();
 }

@@ -12,41 +12,12 @@
 
 #include <boost/serialization/export.hpp>
 
-namespace firing
-{
-    class WeaponAvailabilityComputerFactory_ABC;
-    class WeaponReloadingComputerFactory_ABC;
-    class ComposantesAbleToBeFiredComputerFactory_ABC;
-}
-namespace location
-{
-    class LocationComputerFactory_ABC;
-}
-namespace posture
-{
-    class PostureComputerFactory_ABC;
-}
-namespace dotation
-{
-    class ConsumptionComputerFactory_ABC;
-    class DotationComputerFactory_ABC;
-}
 namespace moving
 {
     class MoveComputerFactory_ABC;
 }
-namespace human
-{
-    class HealComputerFactory_ABC;
-}
-
-namespace urbanLocation
-{
-    class UrbanLocationComputerFactory_ABC;
-}
 
 class OnComponentFunctorComputerFactory_ABC;
-class OnComponentLendedFunctorComputerFactory_ABC;
 
 // =============================================================================
 /** @class  AlgorithmsFactories
@@ -78,18 +49,8 @@ private:
 public:
     //! @name Attribute
     //@{
-    std::auto_ptr< firing::WeaponAvailabilityComputerFactory_ABC > weaponAvailabilityComputerFactory_;
-    std::auto_ptr< firing::ComposantesAbleToBeFiredComputerFactory_ABC > composantesAbleToBeFiredComputerFactory_;
-    std::auto_ptr< posture::PostureComputerFactory_ABC > postureComputerFactory_;
-    std::auto_ptr< location::LocationComputerFactory_ABC > locationComputerFactory_;
-    std::auto_ptr< dotation::ConsumptionComputerFactory_ABC > consumptionComputerFactory_;
     std::auto_ptr< moving::MoveComputerFactory_ABC > moveComputerFactory_;
-    std::auto_ptr< human::HealComputerFactory_ABC > healComputerFactory_;
     std::auto_ptr< OnComponentFunctorComputerFactory_ABC > onComponentFunctorComputerFactory_;
-    std::auto_ptr< OnComponentLendedFunctorComputerFactory_ABC > onComponentLendedFunctorComputerFactory_;
-    std::auto_ptr< dotation::DotationComputerFactory_ABC > dotationComputerFactory_;
-    std::auto_ptr< firing::WeaponReloadingComputerFactory_ABC > weaponReloadingComputerFactory_;
-    std::auto_ptr< urbanLocation::UrbanLocationComputerFactory_ABC > urbanLocationComputerFactory_;
     //@}
 };
 

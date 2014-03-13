@@ -128,8 +128,6 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
 
         MOCK_EXPECT( mockPublisher.Send ).at_least( 1 );
 
-        AlgorithmsFactories algorithms;
-        MOCK_EXPECT( pion.GetAlgorithms ).at_least( 1 ).returns( boost::cref( algorithms ) );
         pAction->Execute();
 
         MockPHY_RoleInterface_HumanFactors* humanFactorRole = new MockPHY_RoleInterface_HumanFactors();

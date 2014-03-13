@@ -12,9 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_HumanState.h"
 #include "PHY_RolePion_Humans.h"
-#include "AlgorithmsFactories.h"
-#include "HealComputer_ABC.h"
-#include "HealComputerFactory_ABC.h"
+#include "DefaultHealComputer.h"
 #include "HumansChangedNotificationHandler_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
@@ -302,9 +300,9 @@ void PHY_RolePion_Humans::NotifyHumanChanged( Human_ABC& human, const Human_ABC&
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
-    std::auto_ptr< HealComputer_ABC > healComputer( owner_->GetAlgorithms().healComputerFactory_->Create() );
-    owner_->Execute< OnComponentComputer_ABC >( *healComputer );
-    healComputer->EvacuateWoundedHumans( destinationTC2 );
+    DefaultHealComputer healComputer;
+    owner_->Execute< OnComponentComputer_ABC >( healComputer );
+    healComputer.EvacuateWoundedHumans( destinationTC2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -313,9 +311,9 @@ void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 {
-    std::auto_ptr< HealComputer_ABC > healComputer( owner_->GetAlgorithms().healComputerFactory_->Create() );
-    owner_->Execute< OnComponentComputer_ABC >( *healComputer );
-    return healComputer->HasWoundedHumansToEvacuate();
+    DefaultHealComputer healComputer;
+    owner_->Execute< OnComponentComputer_ABC >( healComputer );
+    return healComputer.HasWoundedHumansToEvacuate();
 }
 
 // -----------------------------------------------------------------------------
@@ -461,13 +459,13 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
     unsigned int nbrOperational = GetNbrOperational( rank );
     nNewNbrFullyAliveHumans = std::min( nNewNbrFullyAliveHumans, GetNbrTotal( rank ) );
 
-    std::auto_ptr< HealComputer_ABC > healComputer( owner_->GetAlgorithms().healComputerFactory_->Create() );
-    owner_->Execute< OnComponentComputer_ABC >( *healComputer );
+    DefaultHealComputer healComputer;
+    owner_->Execute< OnComponentComputer_ABC >( healComputer );
 
     if( nNewNbrFullyAliveHumans > nbrOperational )
-        healComputer->Heal( rank, nNewNbrFullyAliveHumans - nbrOperational );
+        healComputer.Heal( rank, nNewNbrFullyAliveHumans - nbrOperational );
     else if( nNewNbrFullyAliveHumans < nbrOperational )
-        healComputer->Wound( rank, nbrOperational - nNewNbrFullyAliveHumans );
+        healComputer.Wound( rank, nbrOperational - nNewNbrFullyAliveHumans );
 }
 
 // -----------------------------------------------------------------------------
@@ -493,9 +491,9 @@ unsigned int PHY_RolePion_Humans::ReduceHumansAvailability( const PHY_HumanRank&
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::HealAllHumans( bool withLog )
 {
-    std::auto_ptr< HealComputer_ABC > healComputer( owner_->GetAlgorithms().healComputerFactory_->Create() );
-    owner_->Execute< OnComponentComputer_ABC >( *healComputer );
-    healComputer->HealAll( withLog );
+    DefaultHealComputer healComputer;
+    owner_->Execute< OnComponentComputer_ABC >( healComputer );
+    healComputer.HealAll( withLog );
 }
 
 // -----------------------------------------------------------------------------

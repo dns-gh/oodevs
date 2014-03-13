@@ -19,8 +19,7 @@
 #include "Knowledge/DEC_KS_PopulationInteraction.h"
 #include "Network/NET_ASN_Tools.h"
 #include "AlgorithmsFactories.h"
-#include "LocationComputer_ABC.h"
-#include "LocationComputerFactory_ABC.h"
+#include "DefaultLocationComputer.h"
 #include "MoveComputer_ABC.h"
 #include "MoveComputerFactory_ABC.h"
 #include "MovementHandler_ABC.h"
@@ -429,8 +428,8 @@ void PHY_RolePion_Location::Update( bool bIsDead )
     if( bIsDead || !bHasMove_ )
         Move( *pvPosition_, vDirection_, 0. );
 
-    std::auto_ptr< LocationComputer_ABC > computer( owner_->GetAlgorithms().locationComputerFactory_->Create() );
-    SetHeight( owner_->Execute( *computer ).GetHeight() );
+    location::DefaultLocationComputer computer;
+    SetHeight( owner_->Execute< LocationComputer_ABC >( computer ).GetHeight() );
 
     bool locationChanged = HasLocationChanged();
     if( locationChanged || HasSpeedChanged() )

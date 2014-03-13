@@ -16,8 +16,7 @@
 #include "LocationComputer_ABC.h"
 #include "PostureComputer_ABC.h"
 #include "MoveComputer_ABC.h"
-#include "ConsumptionComputerFactory_ABC.h"
-#include "ConsumptionModeChangeRequest_ABC.h"
+#include "DefaultConsumptionModeChangeRequest.h"
 #include "ConsumptionChangeRequestHandler_ABC.h"
 #include "PHY_ActionFly.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -143,11 +142,10 @@ void PHY_RoleAction_Flying::Fly()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Flying::Apply( double rHeight )
 {
-    std::auto_ptr< dotation::ConsumptionModeChangeRequest_ABC > request =
-            owner_->GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest( PHY_ConsumptionType::moving_ );
-    owner_->Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
+    dotation::DefaultConsumptionModeChangeRequest request( PHY_ConsumptionType::moving_ );
+    owner_->Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, request ); // automatic rollback
 
-    if( !request->AllChanged() || rHeight <= 0. )
+    if( !request.AllChanged() || rHeight <= 0. )
         Land();
     else
         rHeight_ = rHeight;

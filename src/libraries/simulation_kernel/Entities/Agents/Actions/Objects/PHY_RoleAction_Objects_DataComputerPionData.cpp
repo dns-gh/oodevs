@@ -13,8 +13,7 @@
 #include "PHY_RoleAction_Objects_DataComputerPionData.h"
 #include "AlgorithmsFactories.h"
 #include "ConsumeDotationNotificationHandler_ABC.h"
-#include "DotationComputer_ABC.h"
-#include "DotationComputerFactory_ABC.h"
+#include "DefaultDotationComputer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -125,10 +124,9 @@ void PHY_RoleAction_Objects_DataComputerPionData::RollbackConsumptionsReservatio
 unsigned int PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( const PHY_DotationCategory& category ) const
 {
     assert( pPion_ );
- //   return ( unsigned int ) pPion_->GetRole< PHY_RoleInterface_Dotations >().GetDotationValue( category );
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pPion_->GetAlgorithms().dotationComputerFactory_->Create() );
-    pPion_->Execute( *dotationComputer );
-    return ( unsigned int ) dotationComputer->GetDotationValue( category );
+    dotation::DefaultDotationComputer dotationComputer;
+    pPion_->Execute< dotation::DotationComputer_ABC >( dotationComputer );
+    return ( unsigned int ) dotationComputer.GetDotationValue( category );
 }
 
 // -----------------------------------------------------------------------------
