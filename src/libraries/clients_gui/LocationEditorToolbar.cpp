@@ -19,6 +19,7 @@
 #include "RichLineEdit.h"
 #include "RichWidget.h"
 #include "resources.h"
+#include "tools/ExerciseConfig.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -195,5 +196,5 @@ void LocationEditorToolbar::NotifyContextMenu( const geometry::Point2f& point, k
 // -----------------------------------------------------------------------------
 void LocationEditorToolbar::NotifyUpdated( const kernel::ModelLoaded& model )
 {
-    featureNameParser_->Load( model.config_ );
+    featureNameParser_->Load( model.config_.GetGraphicsDirectory() );
 }

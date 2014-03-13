@@ -15,6 +15,7 @@
 
 #include "clients_gui/FeatureNameParser.h"
 #include "clients_gui/LocationEditorBox.h"
+#include "tools/ExerciseConfig.h"
 
 using namespace actions::gui;
 
@@ -32,7 +33,7 @@ ParamPoint::ParamPoint( const InterfaceBuilder_ABC& builder,
     locationEditor_ = new ::gui::LocationEditorBox( controllers_, converter_, Qt::Vertical );
     featureNameParser_.reset( new ::gui::FeatureNameParser() );
     locationEditor_->AddParser( featureNameParser_, tr( "Terrain feature" ) );
-    featureNameParser_->Load( builder.GetConfig() );
+    featureNameParser_->Load( builder.GetConfig().GetGraphicsDirectory() );
     locationEditor_->setVisible( false );
     connect( locationEditor_, SIGNAL( DataChanged() ), SLOT( OnEditorDataChanged() ) );
 }
