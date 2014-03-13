@@ -136,10 +136,10 @@ func (s *TestSuite) TestDecUnit(c *C) {
 	automat := createAutomat(c, client)
 	unit := CreateUnit(c, client, automat.Id)
 
-	script := `function TestFunction()
-    return DEC_Agent_MaxSpeed(DEC_GetUnitById({{.unitid}}))
-end
-`
+	script := `
+function TestFunction()
+    return integration.getMaxSpeed({source=DEC_GetUnitById({{.unitid}})})
+end`
 	checkScript(c, client, script, map[string]interface{}{"unitid": 123456},
 		"", ".*null pointer.*")
 	// Result is in m/s
@@ -492,11 +492,13 @@ func (s *TestSuite) TestDecStartConsumingResources(c *C) {
 
 func DecCanLoad(c *C, client *swapi.Client, unitId, targetId uint32, vehicles bool,
 	result string) {
-	script := `function TestFunction()
-		return tostring(DEC_CanLoad(DEC_GetUnitById({{.unitId}}),
-                        DEC_GetUnitById({{.targetId}}),
-			{{.vehicles}}))
-	end`
+	script := `
+function TestFunction()
+	return tostring(integration.canLoad(
+		DEC_GetUnitById({{.unitId}}),
+		DEC_GetUnitById({{.targetId}}),
+		{{.vehicles}}))
+end`
 	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
 		map[string]interface{}{"unitId": unitId,
 			"targetId": targetId,
