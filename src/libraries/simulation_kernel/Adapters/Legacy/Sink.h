@@ -18,10 +18,11 @@ namespace propagation
     class ElevationGetter_ABC;
 }
 
-class AgentFactory;
 class MIL_AgentPion;
 class MIL_AgentTypePion;
 class MIL_Automate;
+class MIL_IDManager;
+class MissionController_ABC;
 
 namespace sword
 {
@@ -42,7 +43,9 @@ class Sink : public Sink_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Sink( AgentFactory& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled, const boost::shared_ptr< const TER_World >& world );
+             Sink( MIL_IDManager& idManager, MissionController_ABC& missionController,
+                unsigned int gcPause, unsigned int gcMult, bool logEnabled,
+                const boost::shared_ptr< const TER_World >& world );
     virtual ~Sink();
     //@}
 
@@ -103,11 +106,12 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< propagation::ElevationGetter_ABC > pElevation_;
-    AgentFactory& factory_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
     std::auto_ptr< sword::DEC_Logger > decLogger_;
     const boost::shared_ptr< const TER_World > world_;
+    MIL_IDManager& idManager_;
+    MissionController_ABC& missionController_;
     //@}
 };
 }
