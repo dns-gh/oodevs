@@ -446,6 +446,8 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	})
 
 	// Create barricade
+	// The test failed when the barricade X coordinate was set to: -15.8045
+	// See http://jira.masagroup.net/browse/SWBUG-11996
 	location := swapi.MakePointLocation(swapi.Point{X: -15.80, Y: 28.3451})
 	party = data.FindPartyByName("party")
 	c.Assert(party, NotNil)
