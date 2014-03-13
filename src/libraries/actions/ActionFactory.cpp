@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "ActionFactory.h"
+#include "Agent.h"
 #include "ActionTasker.h"
 #include "ActionTiming.h"
 #include "DateTime.h"
@@ -957,13 +958,16 @@ Action_ABC* ActionFactory::CreateTransferToLogisticSuperior( unsigned int consig
 
 namespace
 {
-    Action_ABC* CreateMaintenanceSelection( unsigned int consignId, unsigned int equipmentTypeId, kernel::MagicActionType& actionType,
-                                            kernel::Controller& controller, const kernel::Time_ABC& simulation )
+    Action_ABC* CreateMaintenanceSelection( unsigned int consignId, unsigned int equipmentTypeId, boost::optional< unsigned int > destination,
+                                            kernel::MagicActionType& actionType, kernel::Controller& controller,
+                                            const kernel::Time_ABC& simulation, const kernel::EntityResolver_ABC& entities )
     {
         std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller, false ) );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Identifier( it.NextElement(), consignId ) );
         action->AddParameter( *new parameters::Identifier( it.NextElement(), equipmentTypeId ) );
+        if( destination )
+            action->AddParameter( *new parameters::Agent( it.NextElement(), *destination, entities, controller, false ) );
         action->Attach( *new ActionTiming( controller, simulation ) );
         return action.release();
     }
@@ -973,9 +977,9 @@ namespace
 // Name: ActionFactory::CreateSelectMaintenanceTransporter
 // Created: ABR 2014-01-29
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId ) const
+Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId, boost::optional< unsigned int > destination ) const
 {
-    return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_maintenance_transporter" ), controller_, simulation_ );
+    return CreateMaintenanceSelection( consignId, equipmentTypeId, destination, magicActions_.Get( "select_maintenance_transporter" ), controller_, simulation_, entities_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -984,7 +988,7 @@ Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int cons
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId ) const
 {
-    return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_diagnosis_team" ), controller_, simulation_ );
+    return CreateMaintenanceSelection( consignId, equipmentTypeId, boost::none, magicActions_.Get( "select_diagnosis_team" ), controller_, simulation_, entities_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1134,7 +1138,7 @@ Action_ABC* ActionFactory::CreateLocalDestruction( unsigned int weatherId ) cons
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId )
 {
-    return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_repair_team" ), controller_, simulation_ );
+    return CreateMaintenanceSelection( consignId, equipmentTypeId, boost::none, magicActions_.Get( "select_repair_team" ), controller_, simulation_, entities_ );
 }
 
 namespace

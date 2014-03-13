@@ -1736,6 +1736,10 @@ Voulez-vous le remplacer ?</translation>
         <source>Estimated repair duration: %1</source>
         <translation>Durée de réparation estimée : %1</translation>
     </message>
+    <message>
+        <source>Diagnosis / Repair unit</source>
+        <translation>Unité de Diagnostique / Réparation</translation>
+    </message>
 </context>
 <context>
     <name>LogisticStatusWidget</name>

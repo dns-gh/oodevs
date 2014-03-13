@@ -1735,6 +1735,10 @@ Do you want to replace it?</source>
         <source>Estimated repair duration: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Diagnosis / Repair unit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticStatusWidget</name>

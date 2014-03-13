@@ -14,6 +14,7 @@
 #include "clients_kernel/SafePointer.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <boost/optional.hpp>
 
 namespace actions
@@ -29,6 +30,7 @@ namespace kernel
     class Controller;
     class Controllers;
     class Entity_ABC;
+    class Agent_ABC;
     class MaintenanceStates_ABC;
     class Profile_ABC;
 }
@@ -52,6 +54,7 @@ class LogisticMaintenanceSelectionDialog : public LogisticSelectionDialog_ABC
                                          , public tools::Observer_ABC
                                          , public tools::ElementObserver_ABC< kernel::MaintenanceStates_ABC >
                                          , public tools::ElementObserver_ABC< kernel::Profile_ABC >
+                                         , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT
 
@@ -74,6 +77,8 @@ private:
     virtual void NotifyUpdated( const kernel::MaintenanceStates_ABC& a );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
 
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
+
     //! @name Helpers
     //@{
     void Purge();
@@ -89,12 +94,13 @@ private slots:
     virtual void OnSelectionChanged( const QModelIndex&, const QModelIndex& );
     void UpdateDisplay();
     void OnTimeout();
+    void OnDestinationSelected();
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     unsigned int id_;
     int lastContext_;
@@ -111,6 +117,10 @@ private:
     QPushButton* acceptButton_;
     QStackedWidget* stack_;
     MaintenanceHaulersListView* transporters_;
+    QLabel* destinationLabel_;
+    QGroupBox* destinationBox_;
+    const kernel::Agent_ABC* candidateDestination_;
+    const kernel::Agent_ABC* selectedDestination_;
     MaintenanceRepairersListView* repairers_;
     MaintenanceRepairersListView* diagnosers_;
     QLabel* duration_;

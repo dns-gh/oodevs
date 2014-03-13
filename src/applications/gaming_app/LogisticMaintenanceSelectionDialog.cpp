@@ -13,9 +13,9 @@
 #include "MaintenanceHaulersListView.h"
 #include "MaintenanceRepairersListView.h"
 #include "PartsView.h"
-
 #include "actions/ActionsModel.h"
 #include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichGroupBox.h"
 #include "clients_gui/Roles.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/BreakdownType.h"
@@ -69,15 +69,17 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
                                                                         kernel::Controllers& controllers,
                                                                         actions::ActionsModel& actionsModel )
     : LogisticSelectionDialog_ABC( objectName, parent )
-    , controller_( controllers.controller_ )
+    , controllers_( controllers )
     , actionsModel_( actionsModel )
     , id_( 0 )
     , lastContext_( 0 )
     , handler_( controllers )
     , status_( sword::LogMaintenanceHandlingUpdate::finished )
-    , availability_( 0 )
     , componentType_( 0 )
     , breakdownType_( 0 )
+    , availability_( 0 )
+    , candidateDestination_( 0 )
+    , selectedDestination_( 0 )
 {
     resize( 500, 400 );
 
@@ -87,6 +89,8 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     manualButton_ = AddRadioButton( "automated_selection_button_manual", "", this );
 
     // Content
+    auto* transport = new QWidget();
+    auto* transportLayout = new QVBoxLayout( transport );
     transporters_ = AddResourceListView< MaintenanceHaulersListView >( "manual_selection_transporters_listview", controllers, this );
     transporters_->SetFilter( [&] ( const kernel::Availability& availability )
     {
@@ -95,10 +99,21 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
                availability.type_->GetMaintenanceFunctions() &&
                availability.type_->GetMaintenanceFunctions()->CanHaul( *componentType_ );
     } );
+    destinationBox_ = new gui::RichGroupBox( "manual_selection_transporters_groupbox", tr( "Diagnosis / Repair unit" ) );
+    auto* destinationLayout = new QVBoxLayout( destinationBox_ );
+    destinationBox_->setCheckable( true );
+    destinationBox_->setChecked( false );
+    destinationLabel_ = new QLabel( "---" );
+    destinationLabel_->setAlignment( Qt::AlignCenter );
+    destinationLayout->addWidget( destinationLabel_ );
+    destinationBox_->setLayout( destinationLayout );
+    transportLayout->addWidget( transporters_ );
+    transportLayout->addWidget( destinationBox_ );
+
     diagnosers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_diagnosis_team_listview", controllers, this );
 
     auto* repair = new QWidget();
-    auto* layout = new QVBoxLayout( repair );
+    auto* repairLayout = new QVBoxLayout( repair );
     repairers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_repair_team_listview", controllers, this );
     repairers_->SetFilter( [&] ( const kernel::Availability& availability )
     {
@@ -111,9 +126,9 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     duration_->setVisible( false );
     parts_ = new PartsView( controllers, this );
     connect( parts_, SIGNAL( Updated() ), this, SLOT( UpdateDisplay() ) );
-    layout->addWidget( repairers_ );
-    layout->addWidget( duration_ );
-    layout->addWidget( parts_ );
+    repairLayout->addWidget( repairers_ );
+    repairLayout->addWidget( duration_ );
+    repairLayout->addWidget( parts_ );
 
     // Buttons
     QPushButton* cancelButton = new gui::RichPushButton( "automated_selection_button_cancel", tr( "Cancel" ) );
@@ -124,7 +139,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
 
     // Layouts
     stack_ = new QStackedWidget();
-    AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection, transporters_ );
+    AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection, transport );
     AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection, diagnosers_ );
     AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection, repair );
 
@@ -159,7 +174,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
         else
             accept();
     } );
-    controller_.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +183,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
 // -----------------------------------------------------------------------------
 LogisticMaintenanceSelectionDialog::~LogisticMaintenanceSelectionDialog()
 {
-    controller_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +246,10 @@ bool LogisticMaintenanceSelectionDialog::SetCurrentStatus( sword::LogMaintenance
     stack_->setCurrentIndex( it->second );
     setWindowTitle( tr( "Request #%1 - %2" ).arg( id_ ).arg( QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) ) ) );
     if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
+    {
         UpdateView( transporters_, *handler_, manualButton_, tr( "Select tow truck" ) );
+        destinationBox_->setVisible( true );
+    }
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
         UpdateView( diagnosers_, *handler_, manualButton_, tr( "Select diagnosis team" ) );
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
@@ -279,7 +297,12 @@ void LogisticMaintenanceSelectionDialog::OnOkClicked()
         if( !availability_ || !availability_->type_ )
             throw MASA_EXCEPTION( "Not supposed to accept in manual without an availability or its equipment type" );
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-            lastContext_ = actionsModel_.PublishSelectMaintenanceTransporter( id_, availability_->type_->GetId() );
+        {
+            boost::optional< unsigned int > destination = boost::none;
+            if( selectedDestination_ )
+                destination = selectedDestination_->GetId();
+            lastContext_ = actionsModel_.PublishSelectMaintenanceTransporter( id_, availability_->type_->GetId(), destination );
+        }
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
             lastContext_ = actionsModel_.PublishSelectMaintenanceDiagnosisTeam( id_, availability_->type_->GetId() );
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
@@ -304,8 +327,13 @@ void LogisticMaintenanceSelectionDialog::Purge()
     breakdownType_ = 0;
     availability_ = 0;
     lastContext_ = 0;
+    selectedDestination_ = 0;
+    candidateDestination_ = 0;
     status_ = sword::LogMaintenanceHandlingUpdate::finished;
     duration_->setVisible( false );
+    destinationBox_->setVisible( false );
+    destinationBox_->setChecked( false );
+    destinationLabel_->setText( "---" );
     timeout_.stop();
 }
 
@@ -398,4 +426,21 @@ void LogisticMaintenanceSelectionDialog::NotifyUpdated( const kernel::Maintenanc
 void LogisticMaintenanceSelectionDialog::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
     automaticButton_->setVisible( profile.IsSupervision() );
+}
+
+void LogisticMaintenanceSelectionDialog::OnDestinationSelected()
+{
+    selectedDestination_ = candidateDestination_;
+    if( candidateDestination_ )
+        destinationLabel_->setText( candidateDestination_->GetName() );
+    else
+        destinationLabel_->setText( "---" );
+}
+
+void LogisticMaintenanceSelectionDialog::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
+{
+    if( !isVisible() || status_ != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection || !destinationBox_->isChecked() )
+        return;
+    candidateDestination_ = &agent;
+    menu.InsertItem( "Helpers", tr( "Diagnosis / Repair unit" ), this, SLOT( OnDestinationSelected() ) );
 }
