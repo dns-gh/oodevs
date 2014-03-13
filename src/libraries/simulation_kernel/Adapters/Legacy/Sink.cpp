@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "Sink.h"
-#include "AgentFactory.h"
 #include "Adapters/SinkRoleExtender.h"
 #include "propagation/FloodModel.h"
 #include "propagation/ElevationGetter_ABC.h"
@@ -24,6 +23,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "MissionController_ABC.h"
 #include "Tools/MIL_Color.h"
 #include "Tools/MIL_IDManager.h"
 #include "MIL_AgentServer.h"
@@ -63,30 +63,35 @@ namespace legacy
     template< typename Archive >
     void save_construct_data( Archive& archive, const sword::legacy::Sink* sink, const unsigned int /*version*/ )
     {
-        AgentFactory* factory = &sink->factory_;
         const Sink::T_Elements& elements = sink->elements_;
         bool logEnabled = sink->decLogger_.get() != 0;
-        archive << factory
-                << sink->gcPause_
+        const MIL_IDManager* const idManager = &sink->idManager_;
+        const MissionController_ABC* const missionController = &sink->missionController_;
+        archive << sink->gcPause_
                 << sink->gcMult_
                 << logEnabled
-                << elements;
+                << elements
+                << idManager
+                << missionController;
     }
 
     template< typename Archive >
     void load_construct_data( Archive& archive, sword::legacy::Sink* sink, const unsigned int /*version*/ )
     {
-        AgentFactory* factory;
         unsigned int gcPause;
         unsigned int gcMult;
         bool logEnabled;
         Sink::T_Elements elements;
-        archive >> factory
-                >> gcPause
+        MIL_IDManager* idManager;
+        MissionController_ABC* missionController;
+        archive >> gcPause
                 >> gcMult
                 >> logEnabled
-                >> elements;
-        ::new( sink )Sink( *factory, gcPause, gcMult, logEnabled, archive.GetWorld() );
+                >> elements
+                >> idManager
+                >> missionController;
+        ::new( sink )Sink( *idManager, *missionController, gcPause, gcMult,
+                logEnabled, archive.GetWorld() );
         sink->elements_ = elements;
     }
 }
@@ -96,13 +101,16 @@ namespace legacy
 // Name: Sink constructor
 // Created: SLI 2012-01-13
 // -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled, const boost::shared_ptr< const TER_World >& world )
+Sink::Sink( MIL_IDManager& idManager, MissionController_ABC& missionController,
+    unsigned int gcPause, unsigned int gcMult, bool logEnabled,
+    const boost::shared_ptr< const TER_World >& world )
     : pElevation_( new ElevationGetter() )
-    , factory_   ( factory )
     , gcPause_   ( gcPause )
     , gcMult_    ( gcMult )
     , decLogger_ ( logEnabled ? new DEC_Logger( "Pion" ) : 0 )
     , world_     ( world )
+    , idManager_ ( idManager )
+    , missionController_( missionController )
 {
     // NOTHING
 }
@@ -253,7 +261,9 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
         throw MASA_EXCEPTION( MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
     SinkRoleExtender chainExt( ext );
     CreateRoles( chainExt );
-    MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, xis, &chainExt ) );
+    MIL_AgentPion* pPion = type.InstanciatePion( missionController_, automate, xis );
+    type.RegisterRoles( *pPion, &chainExt );
+    MIL_AgentPion& pion = Configure( *pPion );
     { 
         MT_Vector2D vPos;
         if( xis.has_attribute( "position" ) )

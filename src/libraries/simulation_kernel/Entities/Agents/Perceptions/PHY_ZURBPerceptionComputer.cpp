@@ -9,11 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ZURBPerceptionComputer.h"
-#include "AlgorithmsFactories.h"
 #include "MIL_AgentServer.h"
 #include "OnComponentComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory_ABC.h"
 #include "OnComponentFunctor_ABC.h"
+#include "DefaultComponentFunctorComputer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
@@ -173,8 +172,8 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
 
     CollateSensorComponentFunctor dataFunctor( perceiver_ );
-    std::auto_ptr< OnComponentComputer_ABC > dataComputer( perceiver_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
-    const_cast< MIL_Agent_ABC&>( perceiver_ ).Execute( *dataComputer );
+    DefaultComponentFunctorComputer dataComputer( dataFunctor );
+    const_cast< MIL_Agent_ABC&>( perceiver_ ).Execute< OnComponentComputer_ABC >( dataComputer );
 
     double perceiverUrbanBlockHeight = sensorHeight;
     if( perceiverUrbanBlock )

@@ -30,8 +30,8 @@ class MIL_AutomateLOG;
 class MIL_AgentPionLOG_ABC : public MIL_AgentPion
 {
 public:
-             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis );
-             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller );
+             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis );
+             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MissionController_ABC& controller );
     virtual ~MIL_AgentPionLOG_ABC();
 
     //! @name CheckPoints

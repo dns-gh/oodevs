@@ -12,10 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePionLOG_Supply.h"
 #include "PHY_SupplyResourcesAlarms.h"
-#include "AlgorithmsFactories.h"
 #include "OnComponentFunctor_ABC.h"
-#include "OnComponentFunctorComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory.h"
+#include "DefaultComponentFunctorComputer.h"
 #include "DefaultComponentLendedFunctorComputer.h"
 #include "MIL_AgentServer.h"
 #include "NetworkNotificationHandler_ABC.h"
@@ -161,8 +159,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
     if( !bSystemEnabled_ )
         return 0;
     AvailableConvoyFunctor functor( dotationCategory );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_.Execute< OnComponentComputer_ABC >( computer );
     return functor.pSelectedConvoy_;
 }
 
@@ -198,8 +196,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
     if( !bSystemEnabled_ )
         return 0;
     AvailableConvoyTypeFunctor functor( type );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_.Execute< OnComponentComputer_ABC >( computer );
     return functor.pSelectedConvoy_;
 }
 
@@ -331,8 +329,8 @@ double PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
 
     ConvoyTransportersUseFunctor functor( composanteUse );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *componentComputer );
+    DefaultComponentFunctorComputer componentComputer( functor );
+    owner_.Execute< OnComponentComputer_ABC >( componentComputer );
     ConvoyLendedTransportersUseFunctor functor2( composanteUse );
     DefaultComponentLendedFunctorComputer lendedComputer( functor2 );
     owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
@@ -556,8 +554,8 @@ void PHY_RolePionLOG_Supply::SendFullState( unsigned int context ) const
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     ConvoyTransportersUseFunctor functor( composanteUse );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *componentComputer );
+    DefaultComponentFunctorComputer componentComputer( functor );
+    owner_.Execute< OnComponentComputer_ABC >( componentComputer );
     ConvoyLendedTransportersUseFunctor functor2( composanteUse );
     DefaultComponentLendedFunctorComputer lendedComputer( functor2 );
     owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );
@@ -607,8 +605,8 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
 
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         ConvoyTransportersUseFunctor functor( composanteUse );
-        std::auto_ptr< OnComponentComputer_ABC > transportedComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-        owner_.Execute( *transportedComputer );
+        DefaultComponentFunctorComputer transportedComputer( functor );
+        owner_.Execute< OnComponentComputer_ABC >( transportedComputer );
         ConvoyLendedTransportersUseFunctor functor2( composanteUse );
         DefaultComponentLendedFunctorComputer lendedComputer( functor2 );
         owner_.Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );

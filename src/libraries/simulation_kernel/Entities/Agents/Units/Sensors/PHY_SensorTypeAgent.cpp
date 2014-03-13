@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_SensorTypeAgent.h"
 #include "PHY_SensorTypeObjectData.h"
-#include "AlgorithmsFactories.h"
 #include "MIL_AgentServer.h"
 #include "PerceptionDistanceComputer.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"

@@ -19,7 +19,6 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
-#include "AlgorithmsFactories.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/noncopyable.hpp>
 
@@ -42,7 +41,7 @@ struct FixturePion : private boost::noncopyable
         pType_.reset( new StubMIL_AgentTypePion( *pModel_ ) );
         pTypeAutomat_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pTypeAutomat_, controller_ ) );
-        pPion_.reset( new StubMIL_AgentPion( *pType_, algorithmsFactories_, controller_, *pAutomat_, xis ) );
+        pPion_.reset( new StubMIL_AgentPion( *pType_, controller_, *pAutomat_, xis ) );
     }
     ~FixturePion()
     {
@@ -50,7 +49,6 @@ struct FixturePion : private boost::noncopyable
     }
     MissionController_ABC&                 controller_;
     MIL_EffectManager&                     effectManager_;
-    AlgorithmsFactories                    algorithmsFactories_;
     std::auto_ptr< DEC_Model >             pModel_;
     std::auto_ptr< StubMIL_AgentTypePion > pType_;
     std::auto_ptr< StubMIL_AutomateType >  pTypeAutomat_;

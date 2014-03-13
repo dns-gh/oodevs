@@ -12,10 +12,9 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_WeaponDataType_DirectFire.h"
 #include "PHY_WeaponType.h"
-#include "AlgorithmsFactories.h"
 #include "OnComponentComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory_ABC.h"
 #include "OnComponentFunctor_ABC.h"
+#include "DefaultComponentFunctorComputer.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -471,7 +470,7 @@ namespace
 bool PHY_WeaponDataType_DirectFire::IsFirerInsideRecognitionDistance( MIL_Agent_ABC& firer, MIL_Agent_ABC& target ) const
 {
     Functor dataFunctor( target, firer );
-    std::auto_ptr< OnComponentComputer_ABC > dataComputer( target.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
-    target.Execute( *dataComputer );
+    DefaultComponentFunctorComputer dataComputer( dataFunctor );
+    target.Execute< OnComponentComputer_ABC >( dataComputer );
     return dataFunctor.IsInside();
 }

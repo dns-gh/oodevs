@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Objects_DataComputerPionData.h"
-#include "AlgorithmsFactories.h"
 #include "ConsumeDotationNotificationHandler_ABC.h"
 #include "DefaultDotationComputer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"

@@ -18,10 +18,8 @@
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_PopulationInteraction.h"
 #include "Network/NET_ASN_Tools.h"
-#include "AlgorithmsFactories.h"
 #include "DefaultLocationComputer.h"
-#include "MoveComputer_ABC.h"
-#include "MoveComputerFactory_ABC.h"
+#include "DefaultMagicMoveComputer.h"
 #include "MovementHandler_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "VisionConeNotificationHandler_ABC.h"
@@ -253,10 +251,10 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 {
-    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_->GetAlgorithms().moveComputerFactory_->CreateMagicMoveComputer();
-    owner_->Execute( *moveComputer );
+    moving::DefaultMagicMoveComputer moveComputer;
+    owner_->Execute< moving::MoveComputer_ABC >( moveComputer );
 
-    if( !moveComputer->CanMove() && !moveComputer->CanMoveOverride() )
+    if( !moveComputer.CanMove() && !moveComputer.CanMoveOverride() )
         return;
 
     Hide();

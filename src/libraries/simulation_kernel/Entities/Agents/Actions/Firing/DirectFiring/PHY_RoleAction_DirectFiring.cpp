@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_DirectFiring.h"
-#include "AlgorithmsFactories.h"
 #include "ConsumeDotationNotificationHandler_ABC.h"
 #include "DefaultComposantesAbleToBeFiredComputer.h"
 #include "DefaultWeaponAvailabilityComputer.h"

@@ -11,14 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Dotations.h"
-#include "AlgorithmsFactories.h"
 #include "ConsumptionModeChangeRequest_ABC.h"
 #include "DefaultConsumptionComputer.h"
 #include "DotationComputer_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "OnComponentFunctor_ABC.h"
-#include "OnComponentFunctorComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "DefaultComponentFunctorComputer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
@@ -229,8 +227,8 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     bool bIsTransported = transportRole.IsTransported() || transportRole.HasHumanTransportersToRecover();
 
     sConsumptionReservation func( consumptionMode, *pDotations_, bIsTransported );
-    std::auto_ptr< OnComponentComputer_ABC > dotationComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
-    owner_->Execute( *dotationComputer );
+    DefaultComponentFunctorComputer dotationComputer( func );
+    owner_->Execute< OnComponentComputer_ABC >( dotationComputer );
 
     if( func.bReservationOK_ )
     {
@@ -245,8 +243,8 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( pCurrentConsumptionMode_ )
     {
         sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_, bIsTransported );
-        std::auto_ptr< OnComponentComputer_ABC > dotationComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( funcRollback ) );
-        owner_->Execute( *dotationComputer );
+        DefaultComponentFunctorComputer dotationComputer( funcRollback );
+        owner_->Execute< OnComponentComputer_ABC >( dotationComputer );
         assert( funcRollback.bReservationOK_ );
     }
     return false;
@@ -310,8 +308,8 @@ double PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_ConsumptionTy
 {
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
-    std::auto_ptr< OnComponentComputer_ABC > dotationComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
-    owner_->Execute( *dotationComputer );
+    DefaultComponentFunctorComputer dotationComputer( func );
+    owner_->Execute< OnComponentComputer_ABC >( dotationComputer );
     return func.GetNbrTicksForConsumption( *pDotations_ );
 }
 

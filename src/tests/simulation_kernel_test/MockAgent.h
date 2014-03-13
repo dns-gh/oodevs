@@ -46,8 +46,6 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
 //    MOCK_METHOD( GetDecision, 0, const DEC_Decision_ABC&(), GetDecisionConstRef );
     MOCK_METHOD( GetDecision, 0, DEC_Decision_ABC&(), GetDecisionRef );
 
-    MOCK_METHOD( GetAlgorithms, 0 );
-
     MOCK_METHOD( BelongsTo, 1 );
 
 //    MOCK_METHOD( GetOrderManager, 0, const MIL_PionOrderManager&(), GetOrderManagerConstRef );

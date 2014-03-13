@@ -9,13 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Perceiver.h"
-#include "AlgorithmsFactories.h"
 #include "ConsumptionComputer_ABC.h"
 #include "DetectionComputer.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "OnComponentFunctor_ABC.h"
-#include "OnComponentFunctorComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "DefaultComponentFunctorComputer.h"
 #include "PerceptionDistanceComputer.h"
 #include "VisionConeNotificationHandler_ABC.h"
 #include "Entities/MIL_Army.h"
@@ -796,12 +794,12 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
     surfacesObject_.clear();
     rMaxAgentPerceptionDistance_ = 0;
     sPerceptionRotation rotation;
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( rotation ) );
-    owner_->Execute( *componentComputer );
+    DefaultComponentFunctorComputer componentComputer( rotation );
+    owner_->Execute< OnComponentComputer_ABC >( componentComputer );
     sPerceptionDataComposantes dataFunctor( *owner_, surfacesAgent_, surfacesObject_, disasterDetectors_, vMainPerceptionDirection,
                                             rotation.GetAngle() , rMaxAgentPerceptionDistance_, bPerceptionUponRequest_ );
-    std::auto_ptr< OnComponentComputer_ABC > dataComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
-    owner_->Execute( *dataComputer );
+    DefaultComponentFunctorComputer dataComputer( dataFunctor );
+    owner_->Execute< OnComponentComputer_ABC >( dataComputer );
 }
 
 // -----------------------------------------------------------------------------
@@ -814,8 +812,8 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
         return;
     radars_.clear();
     sRadarDataComposantes dataFunctor( *owner_, radars_ );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
-    owner_->Execute( *componentComputer );
+    DefaultComponentFunctorComputer componentComputer( dataFunctor );
+    owner_->Execute< OnComponentComputer_ABC >( componentComputer );
 }
 
 namespace
@@ -1598,8 +1596,8 @@ namespace
 double PHY_RolePion_Perceiver::GetPerception( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
     Functor dataFunctor( *owner_, from, to );
-    std::auto_ptr< OnComponentComputer_ABC > dataComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
-    const_cast< MIL_Agent_ABC& >( *owner_ ).Execute( *dataComputer );
+    DefaultComponentFunctorComputer dataComputer( dataFunctor );
+    const_cast< MIL_Agent_ABC& >( *owner_ ).Execute< OnComponentComputer_ABC >( dataComputer );
     return dataFunctor.GetEnergy();
 }
 

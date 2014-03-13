@@ -24,7 +24,6 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DefaultDotationComputer.h"
 #include "MT_Tools/MT_Logger.h"
 

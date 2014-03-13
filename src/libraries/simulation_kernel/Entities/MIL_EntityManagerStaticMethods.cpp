@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_EntityManagerStaticMethods.h"
-#include "AgentFactory.h"
 #include "ArmyFactory.h"
 #include "AutomateFactory.h"
 #include "FormationFactory.h"

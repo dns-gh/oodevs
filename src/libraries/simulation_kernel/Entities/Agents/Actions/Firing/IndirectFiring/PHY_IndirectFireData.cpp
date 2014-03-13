@@ -16,7 +16,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DefaultDotationComputer.h"
 #include "MT_Tools/MT_Logger.h"
 

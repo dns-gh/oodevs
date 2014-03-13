@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_EntityManager.h"
 
-#include "AgentFactory.h"
 #include "ArmyFactory.h"
 #include "AutomateFactory.h"
 #include "FormationFactory.h"
@@ -301,8 +300,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
     , missionController_            ( new MissionController() )
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
-    , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_, std::auto_ptr< AlgorithmsFactories >() ) )
-    , sink_                         ( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled(), world ) )
+    , sink_                         ( new sword::legacy::Sink( *idManager_, *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled(), world ) )
     , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
     , pFloodModel_                  ( sink_->CreateFloodModel().release() )
     , automateFactory_              ( new AutomateFactory( *idManager_, *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
@@ -2462,7 +2460,6 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> knowledgeGroupFactory_;
     file >> armyFactory_
          >> formationFactory_//@TODO MGD serialize
-         >> agentFactory_
          >> automateFactory_
          >> populationFactory_
          >> inhabitantFactory_
@@ -2505,7 +2502,6 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
     file << knowledgeGroupFactory_; // LTO
     file << armyFactory_
          << formationFactory_
-         << agentFactory_
          << automateFactory_
          << populationFactory_
          << inhabitantFactory_

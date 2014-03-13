@@ -60,8 +60,8 @@ class MIL_AgentPion : public MIL_Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis );
-             MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller );
+             MIL_AgentPion( const MIL_AgentTypePion& type, MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis );
+             MIL_AgentPion( const MIL_AgentTypePion& type, MissionController_ABC& controller );
     virtual ~MIL_AgentPion();
     //@}
 
@@ -87,7 +87,6 @@ public:
     MIL_PionOrderManager& GetOrderManager();
     virtual DEC_Decision_ABC& GetDecision(); //$$$ Dérolifier DEC_Decision_ABC
     virtual const DEC_Decision_ABC& GetDecision() const; //$$$ Dérolifier DEC_Decision_ABC
-    virtual const AlgorithmsFactories& GetAlgorithms() const;
 
     virtual MIL_Army_ABC& GetArmy() const;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
@@ -255,7 +254,6 @@ private:
     std::string                               level_;
     std::string                               criticalIntelligence_;
     MIL_Automate*                             pAutomate_;
-    const AlgorithmsFactories&                algorithmFactories_;
     DEC_KnowledgeBlackBoard_AgentPion*        pKnowledgeBlackBoard_;
     std::auto_ptr< MIL_PionOrderManager >     pOrderManager_;
     std::auto_ptr< MIL_AffinitiesMap >        pAffinities_;

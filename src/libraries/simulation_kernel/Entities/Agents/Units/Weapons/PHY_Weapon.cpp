@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Weapon.h"
 #include "PHY_WeaponType.h"
-#include "AlgorithmsFactories.h"
 #include "MIL_Time_ABC.h"
 #include "DefaultWeaponReloadingComputer.h"
 #include "Entities/Agents/MIL_AgentPion.h"

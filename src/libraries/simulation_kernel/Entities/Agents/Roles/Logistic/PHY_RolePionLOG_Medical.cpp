@@ -29,9 +29,7 @@
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
-#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+#include "simulation_kernel/DefaultComponentFunctorComputer.h"
 #include "simulation_kernel/DefaultComponentLendedFunctorComputer.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "MT_Tools/MT_Logger.h"
@@ -173,8 +171,8 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
             return it->second;
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanEvacuateCasualty, consign.GetHumanState().GetHuman() );
     GetComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_->Execute( *computer );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_->Execute< OnComponentComputer_ABC >( computer );
     PHY_ComposantePion* pCompAmbulance = functor.result_;
     if( !pCompAmbulance )
         return 0;
@@ -197,8 +195,8 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
         return 0;
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
     GetComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_->Execute( *computer );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_->Execute< OnComponentComputer_ABC >( computer );
     PHY_ComposantePion* pCompAmbulance = functor.result_;
     if( !pCompAmbulance )
         return 0;
@@ -217,8 +215,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForDiagnosing() c
 {
     PHY_ComposantePredicate predicate( &PHY_ComposantePion::CanDiagnoseHumans );
     GetComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_->Execute( *computer );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_->Execute< OnComponentComputer_ABC >( computer );
     return functor.result_;
 }
 
@@ -230,8 +228,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForSorting() cons
 {
     PHY_ComposantePredicate predicate( &PHY_ComposantePion::CanSortHumans );
     GetComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_->Execute( *computer );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_->Execute< OnComponentComputer_ABC >( computer );
     return functor.result_;
 }
 
@@ -243,8 +241,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const
 {
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanHealHuman, human );
     GetComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_->Execute( *computer );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_->Execute< OnComponentComputer_ABC >( computer );
     return functor.result_;
 }
 
@@ -256,8 +254,8 @@ bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance( const Human_ABC& hum
 {
     PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
     HasUsableComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_->Execute( *computer );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_->Execute< OnComponentComputer_ABC >( computer );
     return functor.result_;
 }
 
@@ -269,8 +267,8 @@ bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance( const Human_ABC& hum
 {
     PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanCollectCasualty, human );
     HasUsableComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_->Execute( *computer );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_->Execute< OnComponentComputer_ABC >( computer );
     return functor.result_;
 }
 
@@ -282,8 +280,8 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForSorting() const
 {
     PHY_ComposanteTypePredicate predicate( &PHY_ComposanteTypePion::CanSortHumans );
     HasUsableComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_->Execute( *computer );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_->Execute< OnComponentComputer_ABC >( computer );
     return functor.result_;
 }
 
@@ -297,8 +295,8 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const Human_ABC& human,
         return false;
     PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanHealHuman, human );
     HasUsableComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_->Execute( *computer );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_->Execute< OnComponentComputer_ABC >( computer );
     return functor.result_;
 }
 
@@ -446,8 +444,8 @@ bool PHY_RolePionLOG_Medical::HandleHumanForEvacuation( PHY_MedicalHumanState& h
 void PHY_RolePionLOG_Medical::ExecuteOnComponentsAndLendedComponents( ComposanteUsePredicate_ABC& predicate, PHY_Composante_ABC::T_ComposanteUseMap& composanteUse ) const
 {
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
-    owner_->Execute( *componentComputer );
+    DefaultComponentFunctorComputer componentComputer( functorOnComponent );
+    owner_->Execute< OnComponentComputer_ABC >( componentComputer );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     DefaultComponentLendedFunctorComputer lendedComputer( functorOnLendedComponent );
     owner_->Execute< OnComponentLendedFunctorComputer_ABC >( lendedComputer );

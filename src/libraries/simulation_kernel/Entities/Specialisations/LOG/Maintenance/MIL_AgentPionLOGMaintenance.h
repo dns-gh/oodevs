@@ -27,8 +27,8 @@ namespace xml
 class MIL_AgentPionLOGMaintenance : public MIL_AgentPionLOG_ABC
 {
 public:
-             MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis );
-             MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller );
+             MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis );
+             MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, MissionController_ABC& controller );
     virtual ~MIL_AgentPionLOGMaintenance();
 
     //! @name CheckPoints

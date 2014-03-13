@@ -11,7 +11,6 @@
 
 #include "MIL_AgentTypePion.h"
 
-#include "AlgorithmsFactories.h"
 #include "MIL_AgentPion.h"
 #include "MIL_AgentServer.h"
 #include "RoleExtender_ABC.h"
@@ -309,12 +308,11 @@ void MIL_AgentTypePion::InitializeModel( xml::xistream& xis )
 // Name: MIL_AgentTypePion::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
-                                                   MissionController_ABC& controller,
+MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MissionController_ABC& controller,
                                                    MIL_Automate& automate,
                                                    xml::xistream& xis ) const
 {
-    return new MIL_AgentPion( *this, algorithmFactories, controller, automate, xis );
+    return new MIL_AgentPion( *this, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------

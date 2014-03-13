@@ -15,10 +15,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "MIL_Time_ABC.h"
-#include "simulation_kernel/OnComponentFunctor_ABC.h"
-#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
-#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/DefaultComponentFunctorComputer.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_DataComputer constructor
@@ -48,8 +45,8 @@ PHY_RoleAction_Objects_DataComputer::~PHY_RoleAction_Objects_DataComputer()
 void PHY_RoleAction_Objects_DataComputer::CollectData( MIL_Agent_ABC& pion )
 {
     pionsData_.push_back( PHY_RoleAction_Objects_DataComputerPionData( pion, operation_, object_ ) );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( *this ) );
-    pion.Execute( *componentComputer );
+    DefaultComponentFunctorComputer componentComputer( *this );
+    pion.Execute< OnComponentComputer_ABC >( componentComputer );
     const auto& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( auto itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
         CollectData( **itReinforcement );
