@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/PostureComputerFactory.h"
 #include "simulation_kernel/MoveComputerFactory.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory.h"
 #include <boost/serialization/export.hpp>
@@ -21,8 +20,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AlgorithmsFactories )
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
 AlgorithmsFactories::AlgorithmsFactories()
-    : postureComputerFactory_                 ( new posture::PostureComputerFactory() )
-    , moveComputerFactory_                    ( new moving::MoveComputerFactory() )
+    : moveComputerFactory_                    ( new moving::MoveComputerFactory() )
     , onComponentFunctorComputerFactory_      ( new OnComponentFunctorComputerFactory() )
 {
     // NOTHING

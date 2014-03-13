@@ -12,10 +12,6 @@
 
 #include <boost/serialization/export.hpp>
 
-namespace posture
-{
-    class PostureComputerFactory_ABC;
-}
 namespace moving
 {
     class MoveComputerFactory_ABC;
@@ -53,7 +49,6 @@ private:
 public:
     //! @name Attribute
     //@{
-    std::auto_ptr< posture::PostureComputerFactory_ABC > postureComputerFactory_;
     std::auto_ptr< moving::MoveComputerFactory_ABC > moveComputerFactory_;
     std::auto_ptr< OnComponentFunctorComputerFactory_ABC > onComponentFunctorComputerFactory_;
     //@}
