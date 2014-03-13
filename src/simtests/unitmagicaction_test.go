@@ -191,7 +191,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 
 	// Invalid unit type
 	_, err = client.CreateUnit(automat.Id, InvalidIdentifier, pos)
-	c.Assert(err, IsSwordError, "error_invalid_unit")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid unit type")
 
 	// Add unit to automat, automatically becomes PC
 	u, err := client.CreateUnit(automat.Id, unitType, pos)

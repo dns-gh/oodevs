@@ -143,10 +143,10 @@ func (s *TestSuite) TestDecUnit(c *C) {
 	automat := createAutomat(c, client)
 	unit := CreateUnit(c, client, automat.Id)
 
-	script := `function TestFunction()
-    return DEC_Agent_MaxSpeed(DEC_GetUnitById({{.unitid}}))
-end
-`
+	script := `
+function TestFunction()
+    return integration.getMaxSpeed({source=DEC_GetUnitById({{.unitid}})})
+end`
 	checkScript(c, client, script, map[string]interface{}{"unitid": 123456},
 		"", ".*null pointer.*")
 	// Result is in m/s
@@ -495,4 +495,67 @@ func (s *TestSuite) TestDecStartConsumingResources(c *C) {
 				c.Assert(d.Units[unit].ResourceDotations[dotation].Quantity, Equals, qty)
 			}
 		})
+}
+
+func DecCanLoad(c *C, client *swapi.Client, unitId, targetId uint32, vehicles bool,
+	result string) {
+	script := `
+function TestFunction()
+	return tostring(integration.canLoad(
+		DEC_GetUnitById({{.unitId}}),
+		DEC_GetUnitById({{.targetId}}),
+		{{.vehicles}}))
+end`
+	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
+		map[string]interface{}{"unitId": unitId,
+			"targetId": targetId,
+			"vehicles": vehicles}))
+	c.Assert(err, IsNil)
+	c.Assert(output, Equals, result)
+}
+
+func (s *TestSuite) TestDecCanLoad(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
+	defer stopSim(c, sim, DisableLuaChecks())
+	defer client.Close()
+	phydb := loadPhysical(c, "test")
+	d := client.Model.GetData()
+	party := d.FindPartyByName("party1")
+	CreateFormation(c, client, party.Id)
+	automat := createSpecificAutomat(c, client, "party1",
+		getAutomatTypeFromName(c, phydb, "Mobile Infantry Platoon"))
+	from := swapi.Point{X: -15.8193, Y: 28.3456}
+	carrier, err := client.CreateUnit(automat.Id,
+		getUnitTypeFromName(c, phydb, "Carrier"), from)
+	c.Assert(err, IsNil)
+	heavy, err := client.CreateUnit(automat.Id,
+		getUnitTypeFromName(c, phydb, "Log Convoy"), from)
+	c.Assert(err, IsNil)
+	light, err := client.CreateUnit(automat.Id,
+		getUnitTypeFromName(c, phydb, "Mobile Infantry"), from)
+	c.Assert(err, IsNil)
+
+	// invalid target
+	DecCanLoad(c, client, carrier.Id, 1000, false, "false")
+	// carrier cannot load itself
+	DecCanLoad(c, client, carrier.Id, carrier.Id, false, "false")
+	// carrier can load heavy and light units
+	DecCanLoad(c, client, carrier.Id, light.Id, false, "true")
+	DecCanLoad(c, client, carrier.Id, heavy.Id, false, "true")
+
+	// load a light unit
+	err = client.LoadUnit(carrier.Id, light.Id)
+	c.Assert(err, IsNil)
+	// carrier can load heavy and light units
+	DecCanLoad(c, client, carrier.Id, light.Id, false, "true")
+	DecCanLoad(c, client, carrier.Id, heavy.Id, false, "true")
+
+	// load a heavy unit
+	err = client.LoadUnit(carrier.Id, heavy.Id)
+	c.Assert(err, IsNil)
+	// carrier cannot load heavy unit, only light unit
+	DecCanLoad(c, client, carrier.Id, light.Id, false, "true")
+	DecCanLoad(c, client, carrier.Id, heavy.Id, false, "false")
+	// carrier cannot load light unit because it's not "loadable"
+	DecCanLoad(c, client, carrier.Id, light.Id, true, "false")
 }
