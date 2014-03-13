@@ -23,7 +23,6 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Workspace.h"
 
-#include "Entities/Specialisations/RENS/MIL_AgentTypePionRENS.h"
 #include "Entities/Specialisations/NBC/MIL_AgentTypePionNBC.h"
 #include "Entities/Specialisations/Circulation/MIL_AgentTypePionCIRCULATION.h"
 #include "Entities/Specialisations/Milice/MIL_AgentTypePionMILICE.h"
@@ -93,7 +92,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     pionTypeAllocators_[ "Pion INF"                    ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion ASA"                    ] = &MIL_AgentTypePion            ::Create;
     pionTypeAllocators_[ "Pion ALAT"                   ] = &MIL_AgentTypePion           ::Create;
-    pionTypeAllocators_[ "Pion RENS"                   ] = &MIL_AgentTypePionRENS           ::Create;
+    pionTypeAllocators_[ "Pion RENS"                   ] = &MIL_AgentTypePion           ::Create;
     pionTypeAllocators_[ "Pion NBC"                    ] = &MIL_AgentTypePionNBC            ::Create;
     pionTypeAllocators_[ "Pion ABC"                    ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion GEN"                    ] = &MIL_AgentTypePion               ::Create;
