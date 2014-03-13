@@ -752,3 +752,22 @@ end
 integration.canDestroyObject = function( entity, obstacle )
     return DEC_Agent_AgentPeutDetruireObjet( entity, obstacle )
 end
+
+--- Returns true if another agent is building the same object, false otherwise
+-- @param object Object knowledge
+-- @param removeIt Boolean, true if we removed the given object from a list
+-- @return Boolean, whether or not another unit is doing something in the same object
+integration.unitBuildSameObstacleAtSameTime = function( object, removeIt )
+    if myself.buildingByOther then
+        for i = 1, #myself.buildingByOther do
+            if myself.buildingByOther[i].localisation == object:getLocalisation() and
+                myself.buildingByOther[i].objectType == object:getType() then
+                if removeIt then -- clean the obstacle already treated
+                    table.remove( myself.buildingByOther, i )
+                end
+                return true
+            end
+        end
+    end
+    return false
+end
