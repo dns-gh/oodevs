@@ -24,11 +24,7 @@
 #pragma warning( pop )
 #endif
 
-#include <boost/algorithm/string/join.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/format.hpp>
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/lock_guard.hpp>
 
 using namespace timeline::core;
 namespace ipc = tools::ipc;
@@ -50,24 +46,26 @@ namespace
     }
 }
 
-Client::Client( const Configuration& cfg )
-    : cfg_    ( cfg )
-    , lock_   ( new boost::mutex() )
+Client::Client( const Configuration& cfg, const Client::T_Logger& logger )
+    : cfg_    ( cfg ) 
+    , logger_ ( logger )
     , read_   ( new ipc::Device( cfg_.uuid + "_write", false, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
     , write_  ( new ipc::Device( cfg_.uuid + "_read",  false, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
     , engine_ ( new Engine( *write_, cfg_.log.empty() ? controls::T_Logger() : [&]( const std::string& msg ) { Log( msg, false ); } ) )
     , app_    ( new App( cfg, engine_ ) )
     , browser_( Browser::Factory( GetHwnd( cfg_.wid ), cfg_.url ) )
     , quit_   ( false )
+    , logEvents_( cfg.log_events )
 {
-    if( !cfg_.log.empty() )
-        log_.reset( new tools::Ofstream( tools::Path::FromUTF8( cfg_.log ), std::ios::out | std::ios::binary ) );
+    if( !logger_ )
+        logger_ = []( const std::string& ) {};
     browser_->Start();
 }
 
-std::auto_ptr< Client_ABC > timeline::core::MakeClient( const Configuration& cfg )
+std::auto_ptr< Client_ABC > timeline::core::MakeClient( const Configuration& cfg,
+           const std::function< void( const std::string& )>& logger )
 {
-    return std::auto_ptr< Client_ABC >( new Client( cfg ) );
+    return std::auto_ptr< Client_ABC >( new Client( cfg, logger ) );
 }
 
 Client::~Client()
@@ -80,7 +78,7 @@ int Client::Run()
     try
     {
         controls::T_Logger logger;
-        if( log_ )
+        if( logEvents_ )
             logger = [&]( const std::string& msg ){ Log( msg, true ); };
         std::vector< uint8_t > buffer( ipc::DEFAULT_MAX_PACKET_SIZE );
         while( !quit_ )
@@ -98,22 +96,19 @@ int Client::Run()
     }
     catch( const std::exception& err )
     {
-        fprintf( stderr, "%s\n", err.what() );
+        logger_( err.what() );
     }
     catch( ... )
     {
-        fprintf( stderr, "unexpected exception\n" );
+        logger_( "unexpected exception" );
     }
     return -1;
 }
 
 void Client::Log( const std::string& msg, bool read )
 {
-    boost::lock_guard< boost::mutex > lock( *lock_ );
-    if( !log_ )
-        return;
-    *log_ << bpt::to_simple_string( bpt::second_clock::local_time() )
-          << ( read ? " read:  " : " write: " ) << msg << std::endl;
+    if( logEvents_ )
+        logger_( ( read ? " read:  " : " write: " ) + msg );
 }
 
 void Client::OnResizeClient()
