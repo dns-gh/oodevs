@@ -21,9 +21,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
-#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
-#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/DefaultComponentFunctorComputer.h"
 #include "MT_Tools/MT_Logger.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStockContainer )
@@ -306,8 +304,8 @@ void PHY_DotationStockContainer::CheckStockCapacities()
     StockChecker stockChecker;
     assert( pRoleSupply_ );//@TODO MGD stock pion and not role
     MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( pRoleSupply_->GetPion() );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( stockChecker ) );
-    pion.Execute( *componentComputer );
+    DefaultComponentFunctorComputer componentComputer( stockChecker );
+    pion.Execute< OnComponentComputer_ABC >( componentComputer );
 
     for( auto it = stocksByNatures.begin(); it != stocksByNatures.end(); ++it )
     {

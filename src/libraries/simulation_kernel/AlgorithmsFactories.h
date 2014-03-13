@@ -17,8 +17,6 @@ namespace moving
     class MoveComputerFactory_ABC;
 }
 
-class OnComponentFunctorComputerFactory_ABC;
-
 // =============================================================================
 /** @class  AlgorithmsFactories
     @brief  Algorithms factories
@@ -50,7 +48,6 @@ public:
     //! @name Attribute
     //@{
     std::auto_ptr< moving::MoveComputerFactory_ABC > moveComputerFactory_;
-    std::auto_ptr< OnComponentFunctorComputerFactory_ABC > onComponentFunctorComputerFactory_;
     //@}
 };
 

@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/MoveComputerFactory.h"
-#include "simulation_kernel/OnComponentFunctorComputerFactory.h"
 #include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AlgorithmsFactories )
@@ -21,7 +20,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AlgorithmsFactories )
 // -----------------------------------------------------------------------------
 AlgorithmsFactories::AlgorithmsFactories()
     : moveComputerFactory_                    ( new moving::MoveComputerFactory() )
-    , onComponentFunctorComputerFactory_      ( new OnComponentFunctorComputerFactory() )
 {
     // NOTHING
 }

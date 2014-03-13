@@ -11,9 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
-#include "AlgorithmsFactories.h"
-#include "OnComponentFunctorComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "DefaultComponentFunctorComputer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -52,8 +50,8 @@ PHY_RoleAction_Objects_CapabilityComputer::~PHY_RoleAction_Objects_CapabilityCom
 void PHY_RoleAction_Objects_CapabilityComputer::CollectData( const MIL_AgentPion& pion, bool bWithReinforcement )
 {
     MIL_AgentPion& pionT = const_cast< MIL_AgentPion& >( pion );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pionT.GetAlgorithms().onComponentFunctorComputerFactory_->Create( *this ) );
-    pionT.Execute( *componentComputer );
+    DefaultComponentFunctorComputer componentComputer( *this );
+    pionT.Execute< OnComponentComputer_ABC >( componentComputer );
 
     if( bHasCapability_ )
         return;

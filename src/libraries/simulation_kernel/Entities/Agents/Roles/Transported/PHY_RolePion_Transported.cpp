@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Transported.h"
-#include "AlgorithmsFactories.h"
 #include "LocationActionNotificationHandler_ABC.h"
 #include "MoveComputer_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
@@ -20,8 +19,7 @@
 #include "TransportNotificationHandler_ABC.h"
 #include "VisionConeNotificationHandler_ABC.h"
 #include "OnComponentFunctor_ABC.h"
-#include "OnComponentFunctorComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "DefaultComponentFunctorComputer.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -209,8 +207,8 @@ bool PHY_RolePion_Transported::HasHumanTransportersReady() const
 {
 
     sTransporterComposantePresent func;
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
-    owner_->Execute( *computer );
+    DefaultComponentFunctorComputer computer( func );
+    owner_->Execute< OnComponentComputer_ABC >( computer );
 
     return vHumanTransporterPosition_.IsZero() && func.bComposantePresent_;
 }
