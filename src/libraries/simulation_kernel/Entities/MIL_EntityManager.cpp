@@ -2217,13 +2217,19 @@ void MIL_EntityManager::OnReceiveSelectRepairTeam( const sword::MagicAction& mes
 void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::MagicAction& message )
 {
     const auto& params = message.parameters();
-    protocol::CheckCount( params, 2 );
+    const unsigned int count = protocol::CheckCount( params, 2, 3 );
     const auto requestId = protocol::GetIdentifier( params, 0 );
     const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
     protocol::Check( equipment, "invalid equipment type identifier" );
+    const MIL_Agent_ABC* destination = 0;
+    if( count > 2 )
+    {
+        destination = FindAgentPion( protocol::GetAgentId( params, 2 ) );
+        protocol::Check( destination, "invalid destination agent identifier" );
+    }
     ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
     {
-        request.SelectMaintenanceTransporter( *equipment );
+        request.SelectMaintenanceTransporter( *equipment, destination );
     } );
 }
 

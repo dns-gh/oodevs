@@ -30,8 +30,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceDiagnosisConsign )
 // -----------------------------------------------------------------------------
 PHY_MaintenanceDiagnosisConsign::PHY_MaintenanceDiagnosisConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
     : PHY_MaintenanceConsign_ABC( maintenanceAgent, composanteState )
-    , component_                ( 0 )
-    , searchForUpperLevelDone_  ( false )
+    , component_              ( 0 )
+    , searchForUpperLevelDone_( false )
 {
     EnterStateWaitingForDiagnosisTeam();
 }
@@ -150,7 +150,7 @@ void PHY_MaintenanceDiagnosisConsign::TransferToLogisticSuperior()
 // Name: PHY_MaintenanceDiagnosisConsign::SelectMaintenanceTransporter
 // Created: SLI 2014-02-12
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceDiagnosisConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& /*type*/ )
+void PHY_MaintenanceDiagnosisConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& /*type*/, const MIL_Agent_ABC* /*destination*/ )
 {
     throw MASA_EXCEPTION( "cannot select a transporter for a diagnosis consign" );
 }

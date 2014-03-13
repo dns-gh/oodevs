@@ -44,7 +44,7 @@ public:
 
     virtual void SelectNewState();
     virtual void TransferToLogisticSuperior();
-    virtual void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type );
+    virtual void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, const MIL_Agent_ABC* destination );
     virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type );
     virtual void SelectRepairTeam( const PHY_ComposanteTypePion& type );
     //@}
@@ -76,6 +76,7 @@ private:
     //! @name Member data
     //@{
     PHY_ComposantePion* component_;
+    const MIL_Agent_ABC* destination_;
     bool searchForUpperLevelDone_;
     std::function< void() > next_;
     //@}
