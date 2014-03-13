@@ -22,6 +22,31 @@
 
 typedef ADN_Armors_Data::ArmorInfos ArmorInfos;
 
+class ADN_CLV_Categories_Armor : public ADN_Connector_ListView< ArmorInfos >
+{
+public:
+    ADN_CLV_Categories_Armor( ADN_ListView_Categories_Armor& list )
+        : ADN_Connector_ListView< ArmorInfos >( list )
+    {}
+
+    virtual ~ADN_CLV_Categories_Armor()
+    {}
+
+    ADN_StandardItem* CreateItem( void* obj )
+    {
+        ArmorInfos* pInfos = static_cast< ArmorInfos*>( obj );
+        if( pInfos->GetType() == eProtectionType_Crowd )
+            return 0;
+        ADN_StandardItem *pItem = new ADN_StandardItem( obj );
+        pItem->Connect( &pInfos->strName_ );
+        return pItem;
+    }
+
+private:
+    ADN_CLV_Categories_Armor& operator=( const ADN_CLV_Categories_Armor& );
+};
+
+
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Armor constructor
 // Created: JDY 03-08-27
@@ -29,7 +54,7 @@ typedef ADN_Armors_Data::ArmorInfos ArmorInfos;
 ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor( QWidget* parent )
     : ADN_ListView( parent, "ADN_ListView_Categories_Armor", tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ) )
 {
-    pConnector_.reset( new ADN_Connector_ListView< ArmorInfos >( *this ) );
+    pConnector_.reset( new ADN_CLV_Categories_Armor( *this ) );
     SetDeletionEnabled( true, false );
 }
 
@@ -70,7 +95,7 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
 void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< ArmorInfos > wizard( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), this );
+    ADN_Wizard< ArmorInfos > wizard( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorInfosWithoutCrowd(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

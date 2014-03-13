@@ -261,7 +261,7 @@ ADN_Urban_Data::UrbanMaterialInfos* ADN_Urban_Data::UrbanMaterialInfos::CreateCo
 // Created: SLG 2010-07-01
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos( xml::xistream& input )
-    : vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
+    : vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorInfosWithoutCrowd() )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "material-composition-types" ) );
     input >> xml::attribute( "name", *this )
@@ -275,7 +275,7 @@ ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos( xml::xistream& input )
 // Created: HBD 2010-11-17
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos()
-    : vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
+    : vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorInfosWithoutCrowd() )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "material-composition-types" ) );
 }

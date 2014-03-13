@@ -52,6 +52,8 @@ public:
     unsigned int GetTotalLivingHumans() const;
     double GetLivingRatio() const;
     void KillAll();
+    void KillHumans( unsigned int human );
+    void WoundHumans( unsigned int human );
     unsigned int ApplyNumberOfDead( unsigned int dead );
     unsigned int ApplyWounds( unsigned int wounds );
     void ApplyContamination();

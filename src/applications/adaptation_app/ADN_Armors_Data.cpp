@@ -9,7 +9,9 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Armors_Data.h"
+#include "moc_ADN_Armors_Data.cpp"
 #include "ADN_Enums.h"
+#include "ADN_AttritionInfos.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
@@ -68,7 +70,7 @@ void ADN_Armors_Data::ArmorInfos::ReadArchive( xml::xistream& input )
         >> xml::attribute( "variance", neutralizationVariance_ )
         >> xml::end;
 
-    if( nType_ != eProtectionType_Human )
+    if( nType_ != eProtectionType_Human && nType_ != eProtectionType_Crowd )
     {
         input >> xml::start( "random-breakdown-probability" )
             >> xml::attribute( "eva", rBreakdownEVA_ )
@@ -122,7 +124,7 @@ void ADN_Armors_Data::ArmorInfos::WriteArchive( xml::xostream& output ) const
         << xml::attribute( "variance", neutralizationVariance_ )
         << xml::end;
 
-    if( nType_ != eProtectionType_Human )
+    if( nType_ != eProtectionType_Human && nType_ != eProtectionType_Crowd )
     {
         output << xml::start( "random-breakdown-probability" )
             << xml::attribute( "eva", rBreakdownEVA_ )
@@ -160,8 +162,11 @@ ADN_Armors_Data::ArmorInfos* ADN_Armors_Data::ArmorInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 ADN_Armors_Data::ADN_Armors_Data()
     : ADN_Data_ABC( eCategories, eArmors )
+    , vArmorsWithoutCrowd_( true, false )
 {
     vArmors_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
+    connect( &vArmors_, SIGNAL( ItemAdded( void* ) ), this, SLOT( OnItemAdded( void* ) ) );
+    connect( &vArmors_, SIGNAL( ItemRemoved( void* ) ), this, SLOT( OnItemRemoved( void* ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,6 +260,36 @@ ADN_Armors_Data::T_ArmorInfos_Vector& ADN_Armors_Data::GetArmorsInfos()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Armors_Data::GetArmorInfosWithoutCrowd
+// Created: LDC 2014-03-12
+// -----------------------------------------------------------------------------
+ADN_Armors_Data::T_ArmorInfos_Vector& ADN_Armors_Data::GetArmorInfosWithoutCrowd()
+{
+    return vArmorsWithoutCrowd_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Armors_Data::OnItemAdded
+// Created: LDC 2014-03-12
+// -----------------------------------------------------------------------------
+void ADN_Armors_Data::OnItemAdded( void* pObj )
+{
+    ArmorInfos* info = static_cast< ArmorInfos* >( pObj );
+    if( info && info->nType_ != eProtectionType_Crowd )
+        vArmorsWithoutCrowd_.AddItem( info );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Armors_Data::OnItemRemoved
+// Created: LDC 2014-03-12
+// -----------------------------------------------------------------------------
+void ADN_Armors_Data::OnItemRemoved( void* pObj )
+{
+    ArmorInfos* info = static_cast< ArmorInfos* >( pObj );
+    vArmorsWithoutCrowd_.RemItem( info );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Armors_Data::FindArmor
 // Created: ABR 2013-07-11
 // -----------------------------------------------------------------------------
@@ -264,4 +299,13 @@ ADN_Armors_Data::ArmorInfos* ADN_Armors_Data::FindArmor( const std::string& strN
     if( it == vArmors_.end() )
         return 0;
     return *it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Armors_Data::ArmorInfos::GetType
+// Created: LGY 2012-02-15
+// -----------------------------------------------------------------------------
+E_ProtectionType ADN_Armors_Data::ArmorInfos::GetType() const
+{
+    return nType_.GetData();
 }

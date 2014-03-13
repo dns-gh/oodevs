@@ -15,9 +15,8 @@
 #include "ADN_Connector_ABC.h"
 
 class QWidget;
-class ADN_Table;
+class ADN_ComboBox;
 class ADN_Equipments_Data;
-class ADN_ListView_Equipments;
 class ADN_Equipments_Speeds_GUI;
 class ADN_Equipments_RadarsListView;
 class ADN_Equipments_WeaponsListView;
@@ -25,6 +24,8 @@ class ADN_Equipments_ActiveProtectionsListView;
 class ADN_Equipments_Resources_Tables;
 class ADN_Equipments_AviationResourceQuotas_GUI;
 class ADN_GuiBuilder;
+class ADN_ListView_Equipments;
+class ADN_Table;
 
 // =============================================================================
 /** @class  ADN_Equipments_GUI
@@ -210,6 +211,7 @@ private:
     ADN_Equipments_ActiveProtectionsListView* pActiveProtections_;
     ADN_Equipments_Resources_Tables* pResources_;
     ADN_Equipments_AviationResourceQuotas_GUI* pAviationResourceQuotas_;
+    ADN_ComboBox* pCombo_;
     //@}
 };
 

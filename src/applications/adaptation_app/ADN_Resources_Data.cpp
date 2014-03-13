@@ -450,7 +450,7 @@ ADN_Resources_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDot
     , bGuided_              ( false )
     , bMaintainGuidance_    ( false )
     , fGuidanceRange_       ( 0 )
-    , attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
+    , attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorInfosWithoutCrowd() )
     , modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 {
     BindExistenceTo( &( indirectAmmoInfos_.objectType_ ) );
@@ -471,7 +471,7 @@ ADN_Resources_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDot
     , bGuided_              ( false )
     , bMaintainGuidance_    ( false )
     , fGuidanceRange_       ( 0 )
-    , attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
+    , attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorInfosWithoutCrowd() )
     , modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 {
     BindExistenceTo( &( indirectAmmoInfos_.objectType_ ) );

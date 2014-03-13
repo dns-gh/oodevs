@@ -5352,6 +5352,22 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Nuage</translation>
     </message>
     <message>
+        <source>crowd</source>
+        <translation>foule</translation>
+    </message>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished">Distant</translation>
+    </message>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished">Equipement</translation>
+    </message>
+    <message>
+        <source>Human</source>
+        <translation type="unfinished">Humain</translation>
+    </message>
+    <message>
         <source>Date Time</source>
         <translation>Date et Heure</translation>
     </message>
@@ -5414,6 +5430,18 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Resource network type</source>
         <translation>Type de réseau de ressource</translation>
+    </message>
+    <message>
+        <source>Stage</source>
+        <translation type="unfinished">Phase</translation>
+    </message>
+    <message>
+        <source>LimaFunction</source>
+        <translation type="unfinished">Type de Lima</translation>
+    </message>
+    <message>
+        <source>Shapefile input</source>
+        <translation type="unfinished">Données Shapefile</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -5520,16 +5548,12 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Log</translation>
     </message>
     <message>
-        <source>Shapefile input</source>
-        <translation>Données Shapefile</translation>
+        <source>Disasters</source>
+        <translation type="unfinished">Désastre</translation>
     </message>
     <message>
-        <source>Equipment</source>
-        <translation>Equipement</translation>
-    </message>
-    <message>
-        <source>Human</source>
-        <translation>Humain</translation>
+        <source>Languages</source>
+        <translation type="unfinished">Langues</translation>
     </message>
     <message>
         <source>Monday</source>
@@ -5560,10 +5584,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Dimanche</translation>
     </message>
     <message>
-        <source>Disasters</source>
-        <translation>Désastre</translation>
-    </message>
-    <message>
         <source>Danger direction</source>
         <translation>Direction dangereuse</translation>
     </message>
@@ -5586,22 +5606,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Crowd</source>
         <translation>Foule</translation>
-    </message>
-    <message>
-        <source>Remote</source>
-        <translation>Distant</translation>
-    </message>
-    <message>
-        <source>Stage</source>
-        <translation>Phase</translation>
-    </message>
-    <message>
-        <source>Languages</source>
-        <translation>Langues</translation>
-    </message>
-    <message>
-        <source>LimaFunction</source>
-        <translation>Type de Lima</translation>
     </message>
 </context>
 <context>

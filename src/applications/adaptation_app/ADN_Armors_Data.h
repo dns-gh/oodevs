@@ -14,6 +14,11 @@
 #include "ADN_RefWithName.h"
 #include "ADN_AttritionEffectOnHuman.h"
 
+namespace helpers
+{
+    class AttritionInfos;
+}
+
 class ADN_ListView_Categories_Armor;
 
 // =============================================================================
@@ -24,6 +29,8 @@ class ADN_ListView_Categories_Armor;
 // =============================================================================
 class ADN_Armors_Data : public ADN_Data_ABC
 {
+    Q_OBJECT
+
 public:
     //! @name Armors infos
     //@{
@@ -40,6 +47,7 @@ public:
         void FixConsistency();
         void WriteArchive( xml::xostream& ) const;
         void CreateDefaultAttrition();
+        E_ProtectionType GetType() const;
 
     public:
         ADN_Type_Enum< E_ProtectionType, eNbrProtectionType > nType_;
@@ -66,6 +74,7 @@ public:
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     T_ArmorInfos_Vector& GetArmorsInfos();
+    T_ArmorInfos_Vector& GetArmorInfosWithoutCrowd();
     ArmorInfos* FindArmor( const std::string& strName );
     //@}
 
@@ -78,10 +87,17 @@ private:
     void WriteArchive( xml::xostream& output ) const;
     //@}
 
+private slots:
+    //! @name Slots
+    void OnItemAdded( void* pObj );
+    void OnItemRemoved( void* pObj );
+    //@}
+
 private:
     //! @name Member data
     //@{
     T_ArmorInfos_Vector vArmors_;
+    T_ArmorInfos_Vector vArmorsWithoutCrowd_;
     //@}
 };
 

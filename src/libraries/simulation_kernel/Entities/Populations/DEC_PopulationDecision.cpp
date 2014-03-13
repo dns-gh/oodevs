@@ -32,6 +32,7 @@
 #include "Entities/Populations/Actions/PHY_Population_ActionMoveAlong.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
+#include "Entities/Populations/Actions/PHY_Population_ActionBattle.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionUrbanDestruction.h"
 #include "protocol/ClientSenders.h"
 #include <boost/lambda/lambda.hpp>
@@ -166,8 +167,11 @@ void DEC_PopulationDecision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< unsigned int( float, DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, DEC_Decision_ABC* >, boost::ref( GetPopulation() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_DetruireBlocUrbain",
         boost::function< unsigned int( MIL_UrbanObject_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionUrbanDestruction, MIL_UrbanObject_ABC* >, boost::ref( GetPopulation() ), _1 ) ) );
-   brain.RegisterFunction( "DEC_EtatBlocUrbain",
+    brain.RegisterFunction( "DEC_EtatBlocUrbain",
         boost::function< float( MIL_UrbanObject_ABC* )>( boost::bind( &DEC_UrbanObjectFunctions::GetStateUrbanBlock, _1 ) ) );
+    brain.RegisterFunction( "DEC__StartAgresserFoule",
+        boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionBattle >, boost::ref( GetPopulation() ) ) ) );
+
 
     // Self
     brain.RegisterFunction( "DEC_GetPosition",

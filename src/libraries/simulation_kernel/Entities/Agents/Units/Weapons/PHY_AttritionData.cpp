@@ -142,3 +142,30 @@ double PHY_AttritionData::GetScore() const
 {
     return rScore_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_AttritionData::GetDestroyed
+// Created: LGY 2012-02-13
+// -----------------------------------------------------------------------------
+double PHY_AttritionData::GetDestroyed() const
+{
+    return rDestroyed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_AttritionData::GetReparableWithEvacuation
+// Created: LGY 2012-02-13
+// -----------------------------------------------------------------------------
+double PHY_AttritionData::GetReparableWithEvacuation() const
+{
+    return rReparableWithEvacuation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_AttritionData::GetReparableWithoutEvacuation
+// Created: LGY 2012-02-13
+// -----------------------------------------------------------------------------
+double PHY_AttritionData::GetReparableWithoutEvacuation() const
+{
+    return rReparableWithoutEvacuation_;
+}
