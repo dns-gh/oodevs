@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AggregatedPositions.h"
+#include "clients_gui/AggregatedTools.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -65,17 +66,6 @@ namespace
         if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
             return true;
         return HasSubordinate( entity, &IsAgent );
-    }
-    
-    // -----------------------------------------------------------------------------
-    // Name: IsAggregated
-    // Created: LGY 2011-07-18
-    // -----------------------------------------------------------------------------
-    bool IsAggregated( const kernel::Entity_ABC& entity )
-    {
-        if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
-            return positions->IsAggregated();
-        return false;
     }
 }
 
