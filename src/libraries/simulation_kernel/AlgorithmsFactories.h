@@ -12,11 +12,6 @@
 
 #include <boost/serialization/export.hpp>
 
-namespace moving
-{
-    class MoveComputerFactory_ABC;
-}
-
 // =============================================================================
 /** @class  AlgorithmsFactories
     @brief  Algorithms factories
@@ -42,12 +37,6 @@ private:
     //@{
     template< typename Archive > friend void save_construct_data( Archive& archive, const AlgorithmsFactories* factories, const unsigned int /*version*/ );
     template< typename Archive > friend void load_construct_data( Archive& archive, AlgorithmsFactories* factories, const unsigned int /*version*/ );
-    //@}
-
-public:
-    //! @name Attribute
-    //@{
-    std::auto_ptr< moving::MoveComputerFactory_ABC > moveComputerFactory_;
     //@}
 };
 

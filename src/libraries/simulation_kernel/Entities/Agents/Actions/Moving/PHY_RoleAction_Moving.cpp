@@ -12,14 +12,12 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Moving.h"
 #include "PostureComputer_ABC.h"
-#include "SpeedComputer_ABC.h"
-#include "MaxSlopeComputer_ABC.h"
-#include "MoveComputer_ABC.h"
-#include "MoveComputerFactory_ABC.h"
+#include "DefaultSpeedComputer.h"
+#include "DefaultMaxSlopeComputer.h"
+#include "DefaultMoveComputer.h"
 #include "DefaultConsumptionModeChangeRequest.h"
 #include "ConsumptionChangeRequestHandler_ABC.h"
 #include "ObjectCollisionNotificationHandler_ABC.h"
-#include "AlgorithmsFactories.h"
 #include "SlopeDecelerationComputer.h"
 #include "SpeedComputerStrategy.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -134,10 +132,9 @@ void PHY_RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) cons
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::ComputeSpeed( const SpeedStrategy_ABC& strategy ) const
 {
-    std::auto_ptr< moving::SpeedComputer_ABC > computer =
-        owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
-    owner_->Execute( *computer );
-    return computer->GetSpeed();
+    DefaultSpeedComputer computer( strategy );
+    owner_->Execute< moving::SpeedComputer_ABC >( computer );
+    return computer.GetSpeed();
 }
 
 // -----------------------------------------------------------------------------
@@ -211,10 +208,9 @@ double PHY_RoleAction_Moving::GetSpeed( const TerrainData& environment, const MI
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSlope() const
 {
-    std::auto_ptr< moving::MaxSlopeComputer_ABC > computer =
-        owner_->GetAlgorithms().moveComputerFactory_->CreateMaxSlopeComputer();
-    owner_->Execute< OnComponentComputer_ABC >( *computer );
-    return computer->GetMaxSlope();
+    DefaultMaxSlopeComputer computer;
+    owner_->Execute< OnComponentComputer_ABC >( computer );
+    return computer.GetMaxSlope();
 }
 
 // -----------------------------------------------------------------------------
@@ -372,9 +368,9 @@ void PHY_RoleAction_Moving::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::CanMove() const
 {
-    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_->GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
-    owner_->Execute( *moveComputer );
-    return moveComputer->CanMoveOverride() || moveComputer->CanMove();
+    moving::DefaultMoveComputer moveComputer;
+    owner_->Execute< moving::MoveComputer_ABC >( moveComputer );
+    return moveComputer.CanMoveOverride() || moveComputer.CanMove();
 }
 
 // -----------------------------------------------------------------------------
@@ -421,10 +417,10 @@ double PHY_RoleAction_Moving::GetObjectCost( const MIL_ObjectType_ABC& objectTyp
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::HasResources()
 {
-    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_->GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
-    owner_->Execute( *moveComputer );
+    moving::DefaultMoveComputer moveComputer;
+    owner_->Execute< moving::MoveComputer_ABC >( moveComputer );
 
-    if( moveComputer->CanMoveOverride() )
+    if( moveComputer.CanMoveOverride() )
         return true;
 
     dotation::DefaultConsumptionModeChangeRequest request( PHY_ConsumptionType::moving_ );

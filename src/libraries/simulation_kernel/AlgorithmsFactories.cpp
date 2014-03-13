@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/MoveComputerFactory.h"
 #include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AlgorithmsFactories )
@@ -19,7 +18,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AlgorithmsFactories )
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
 AlgorithmsFactories::AlgorithmsFactories()
-    : moveComputerFactory_                    ( new moving::MoveComputerFactory() )
 {
     // NOTHING
 }
