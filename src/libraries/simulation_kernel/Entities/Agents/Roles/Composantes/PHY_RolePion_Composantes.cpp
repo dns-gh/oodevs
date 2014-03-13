@@ -145,6 +145,8 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool in
     {
         owner_->GetType().GetUnitType().InstanciateComposantes( *this );
         DistributeCommanders();
+        UpdateOperationalStates();
+        UpdateMajorComposante();
     }
 }
 
