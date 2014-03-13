@@ -70,8 +70,20 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/assign/list_of.hpp>
+#include <functional>
 
-MIL_AgentTypePion::T_PionTypeAllocatorMap  MIL_AgentTypePion::pionTypeAllocators_;
+namespace
+{
+
+typedef std::function< const MIL_AgentTypePion*(
+        const std::string& strName, const std::string& strType,
+            xml::xistream& xis ) >
+        T_PionTypeAllocator;
+
+std::map< std::string, T_PionTypeAllocator > pionTypeAllocators_;
+
+} // namespace
+
 MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;
 
 // -----------------------------------------------------------------------------
@@ -140,7 +152,7 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
     std::string strType;
     xis >> xml::attribute( "name", strName )
         >> xml::attribute( "type", strType );
-    CIT_PionTypeAllocatorMap itPionAllocator = pionTypeAllocators_.find( strType );
+    const auto itPionAllocator = pionTypeAllocators_.find( strType );
     if( itPionAllocator == pionTypeAllocators_.end() )
         throw MASA_EXCEPTION( xis.context() + "Unknown pion type" );
     const MIL_AgentTypePion*& pType = pionTypes_[ strName ];
@@ -148,7 +160,7 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
         throw MASA_EXCEPTION( xis.context() + "Pion type already defined" );
     try
     {
-        pType = (*itPionAllocator->second)( strName, strType, xis );
+        pType = itPionAllocator->second( strName, strType, xis );
     }
     catch( const std::exception& e )
     {
