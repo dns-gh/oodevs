@@ -40,6 +40,7 @@ public:
     //! @name Accessors
     //@{
     virtual E_NatureLevel GetLevel() const = 0;
+    virtual QString GetBasicName() const;
     //@}
 
     //! @name Operations

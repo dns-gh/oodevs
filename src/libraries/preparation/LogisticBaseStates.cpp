@@ -11,8 +11,6 @@
 #include "LogisticBaseStates.h"
 #include "clients_kernel/Tools.h"
 #include "Dotation.h"
-#include "DotationsItem.h"
-
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHelpers.h"
@@ -24,7 +22,6 @@
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "MT_Tools/MT_Logger.h"
-
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -37,11 +34,10 @@ LogisticBaseStates::LogisticBaseStates( kernel::Controller& controller, kernel::
     , controller_   ( controller )
     , entity_       ( entity )
     , resolver_     ( resolver )
-    , item_         ( 0 )
     , superior_     ( 0 )
     , canHaveQuotas_( canHaveQuotas )
 {
-    CreateDictionary( dico, entity );
+    dico.RegisterExtension( entity, static_cast< const gui::LogisticHierarchiesBase* >( this ), tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetLogisticSuperior );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,20 +47,6 @@ LogisticBaseStates::LogisticBaseStates( kernel::Controller& controller, kernel::
 LogisticBaseStates::~LogisticBaseStates()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticBaseStates::CreateDictionary
-// Created: AHC 2010-09-29
-// -----------------------------------------------------------------------------
-void LogisticBaseStates::CreateDictionary( gui::PropertiesDictionary& dico, kernel::Entity_ABC& entity )
-{
-    dico.RegisterExtension( entity, static_cast< const gui::LogisticHierarchiesBase* >( this ), tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetLogisticSuperior );
-    if( canHaveQuotas_ )
-    {
-        item_ = new DotationsItem( controller_, entity, dico, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), *static_cast< Resolver< Dotation >* >( this ), false );
-        dico.Register( entity, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Edit Quotas" ), item_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -91,8 +73,7 @@ void LogisticBaseStates::Draw( const geometry::Point2f& , const gui::Viewport_AB
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::ClearDotations()
 {
-    item_->Clear();
-    item_->Update();
+    tools::Resolver< Dotation >::DeleteAll();
     controller_.Update( *this );
 }
 
@@ -102,26 +83,17 @@ void LogisticBaseStates::ClearDotations()
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::SetDotation( const kernel::DotationType& type, unsigned int quantity )
 {
-    if( !item_ )
-        return;
-
     Dotation* dotation = tools::Resolver< Dotation >::Find( type.GetId() );
-    if( !dotation )
+    if( quantity == 0 && dotation )
+        tools::Resolver< Dotation >::Remove( type.GetId() );
+    else if( quantity > 0 )
     {
-        if( quantity > 0 )
+        if( dotation )
+            dotation->quantity_ = quantity;
+        else
         {
             dotation = new Dotation( type, quantity );
-            item_->AddDotation( *dotation );
             tools::Resolver< Dotation >::Register( type.GetId(), *dotation );
-        }
-    }
-    else
-    {
-        dotation->quantity_ = quantity;
-        if( quantity == 0 )
-        {
-            item_->RemoveDotation( type );
-            tools::Resolver< Dotation >::Remove( type.GetId() );
         }
     }
     controller_.Update( *this );
@@ -145,10 +117,9 @@ void LogisticBaseStates::Load( xml::xistream& xis, const kernel::Entity_ABC* sup
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::ReadDotation( xml::xistream& xis )
 {
-    if( item_ )
+    if( canHaveQuotas_ )
     {
         Dotation* dotation = new Dotation( xis, resolver_ );
-        item_->AddDotation( *dotation );
         tools::Resolver< Dotation >::Register( dotation->type_.GetId(), *dotation );
         controller_.Update( *this );
     }

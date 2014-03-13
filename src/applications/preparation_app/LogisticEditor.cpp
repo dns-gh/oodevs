@@ -10,13 +10,10 @@
 #include "preparation_app_pch.h"
 #include "LogisticEditor.h"
 #include "moc_LogisticEditor.cpp"
-
 #include "clients_gui/CommonDelegate.h"
-#include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichWidget.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
@@ -27,60 +24,59 @@
 #include "clients_kernel/DotationCapacityType.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/LogisticSupplyClass.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/tools.h"
-#include "preparation/Dotation.h"
-#include "preparation/LogisticBaseStates.h"
 #include "preparation/StaticModel.h"
-#include "preparation/Stocks.h"
 
-using namespace kernel;
+Q_DECLARE_METATYPE( const kernel::LogisticSupplyClass* )
 
 // -----------------------------------------------------------------------------
 // Name: LogisticEditor constructor
 // Created: MMC 2011-07-21
 // -----------------------------------------------------------------------------
-LogisticEditor::LogisticEditor( QWidget* parent, const QString& objectName, Controllers& controllers, const ::StaticModel& staticModel )
+LogisticEditor::LogisticEditor( QWidget* parent, const QString& objectName, kernel::Controllers& controllers, const StaticModel& staticModel )
     : QDialog( parent, "StocksEditionDialog", 0, Qt::WStyle_Customize | Qt::WStyle_Title )
     , staticModel_( staticModel )
     , controllers_( controllers )
     , selected_   ( controllers )
 {
-    setCaption( tools::translate( "StocksEditionDialog", "Stocks Edition" ) );
+    setModal( true );
     gui::SubObjectName subObject( objectName );
     resize( 550, 350 );
-
     dataModel_ = new QStandardItemModel( this );
+    QSortFilterProxyModel* proxyModel = new QSortFilterProxyModel( this );
+    proxyModel->setSourceModel( dataModel_ );
+    proxyModel->setSortRole( Qt::UserRole + 1 );
 
-    delegate_ = new gui::CommonDelegate( this );
-    delegate_->AddDoubleSpinBoxOnColumn( eDays, 0, std::numeric_limits< double >::max() );
+    gui::CommonDelegate* delegate = new gui::CommonDelegate( this );
+    delegate->AddDoubleSpinBoxOnColumn( eDays, 0, std::numeric_limits< double >::max() );
 
     tableView_ = new gui::RichWidget< QTableView >( "tableView", this );
-    tableView_->setModel( dataModel_ );
-    tableView_->setItemDelegate( delegate_ );
+    tableView_->setModel( proxyModel );
+    tableView_->setItemDelegate( delegate );
     tableView_->setSelectionBehavior( QAbstractItemView::SelectRows );
     tableView_->setSelectionMode( QAbstractItemView::SingleSelection );
     tableView_->setAlternatingRowColors( true );
+    tableView_->setSortingEnabled( true );
     tableView_->verticalHeader()->setVisible( false );
 
-    validateButton_ = new gui::RichPushButton( "ok", tr( "Ok" ), this );
-    cancelButton_   = new gui::RichPushButton( "cancel", tr( "Cancel" ), this );
+    gui::RichPushButton* okButton = new gui::RichPushButton( "ok", tr( "Ok" ), this );
+    gui::RichPushButton* cancelButton = new gui::RichPushButton( "cancel", tr( "Cancel" ), this );
 
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     buttonLayout->addStretch( 1 );
-    buttonLayout->addWidget( validateButton_ );
-    buttonLayout->addWidget( cancelButton_ );
+    buttonLayout->addWidget( okButton );
+    buttonLayout->addWidget( cancelButton );
 
     QVBoxLayout* layout = new QVBoxLayout( this );
     layout->addWidget( tableView_ );
     layout->addLayout( buttonLayout );
 
     connect( dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnValueChanged( QStandardItem* ) ) );
-    connect( validateButton_, SIGNAL( clicked() ), SLOT( Validate() ) );
-    connect( cancelButton_, SIGNAL( clicked() ), SLOT( Reject() ) );
+    connect( okButton, SIGNAL( clicked() ), SLOT( Accept() ) );
+    connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
     hide();
     controllers_.Register( *this );
 }
@@ -98,13 +94,20 @@ LogisticEditor::~LogisticEditor()
 // Name: LogisticEditor::Show
 // Created: SLI 2014-02-21
 // -----------------------------------------------------------------------------
-void LogisticEditor::Show()
+void LogisticEditor::Show( const kernel::Entity_ABC& entity )
 {
+    if( entity.GetId() == 0 )
+        return;
+    selected_ = const_cast< kernel::Entity_ABC* >( &entity );
+
+    std::set< std::string > allowedSupplyClasses;
+    logistic_helpers::VisitAgentsWithLogisticSupply( entity, [&]( const kernel::Agent_ABC& agent )
+        {
+            agent.GetType().GetAllowedSupplyClasses( allowedSupplyClasses );
+        } );
+
     dataModel_->clear();
-    QStringList horizontalHeaders;
-    dataModel_->setColumnCount( 2 );
-    horizontalHeaders << tr( "Category" ) <<  tr( "Days" );
-    dataModel_->setHorizontalHeaderLabels( horizontalHeaders );
+    dataModel_->setHorizontalHeaderLabels( QStringList() << tr( "Category" ) <<  tr( "Days" ) );
     tableView_->horizontalHeader()->setResizeMode( eCategory, QHeaderView::ResizeToContents );
     tableView_->horizontalHeader()->setResizeMode( eDays, QHeaderView::Stretch );
     auto itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
@@ -113,17 +116,21 @@ void LogisticEditor::Show()
     while( itLogClass.HasMoreElements() )
     {
         const kernel::LogisticSupplyClass& logClass = itLogClass.NextElement();
-        item = new QStandardItem();
+        if( allowedSupplyClasses.find( logClass.GetName() ) == allowedSupplyClasses.end() )
+            continue;
+        const QString text = logClass.GetName().c_str();
+        item = new QStandardItem( text );
         item->setEditable( false );
         item->setCheckable( true );
+        item->setData( QVariant::fromValue( &logClass ), Qt::UserRole );
+        item->setData( text );
         item->setCheckState( Qt::Checked );
-        item->setText( logClass.GetName().c_str() );
         dataModel_->setItem( row, eCategory, item );
 
         const double defaultValue = 1.;
-        item = new QStandardItem();
+        item = new QStandardItem( locale().toString( defaultValue, 'f', 2 ) );
         item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable );
-        item->setText( locale().toString( defaultValue, 'f', 2 ) );
+        item->setData( defaultValue );
         dataModel_->setItem( row, eDays, item );
         ++row;
     }
@@ -136,19 +143,15 @@ void LogisticEditor::Show()
 // -----------------------------------------------------------------------------
 void LogisticEditor::OnValueChanged( QStandardItem* item )
 {
-    if( item && item->column() == eCategory )
+    if( !item )
+        return;
+    if( item->column() == eCategory )
+    {
         if( QStandardItem* day = dataModel_->item( item->row(), eDays ) )
             day->setEnabled( item->checkState() == Qt::Checked );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEditor::Validate
-// Created: MMC 2011-07-21
-// -----------------------------------------------------------------------------
-void LogisticEditor::Validate()
-{
-    SupplyHierarchy( selected_ );
-    Accept();
+    }
+    else
+        item->setData( item->data( Qt::EditRole ).asDouble() );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,6 +160,7 @@ void LogisticEditor::Validate()
 // -----------------------------------------------------------------------------
 void LogisticEditor::Accept()
 {
+    SupplyHierarchy( selected_ );
     accept();
     selected_ = 0;
 }
@@ -181,59 +185,35 @@ void LogisticEditor::closeEvent( QCloseEvent* /*pEvent*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticEditor::NotifyContextMenu
-// Created: MMC 2011-07-21
-// -----------------------------------------------------------------------------
-void LogisticEditor::NotifyContextMenu( const Automat_ABC& automat, ContextMenu& menu )
-{
-    if( automat.GetId() == 0 || !automat.Get< gui::LogisticBase >().IsBase() )
-        return;
-    selected_ = static_cast< const Entity_ABC* >( &automat );
-    Update( automat, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEditor::NotifyContextMenu
-// Created: MMC 2011-07-21
-// -----------------------------------------------------------------------------
-void LogisticEditor::NotifyContextMenu( const Formation_ABC& formation, ContextMenu& menu )
-{
-    if( formation.GetId() == 0 || !formation.Get< gui::LogisticBase >().IsBase() )
-        return;
-    selected_ = static_cast< const Entity_ABC* >( &formation );
-    Update( formation, menu );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticEditor::EvaluateOneDaySupplyQty
 // Created: MMC 2011-08-10
 // -----------------------------------------------------------------------------
-void LogisticEditor::SupplyHierarchy( SafePointer< Entity_ABC > entity )
+void LogisticEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_ABC > entity )
 {
+    if( !logistic_helpers::IsLogisticBase( *entity ) )
+        return;
     const gui::LogisticHierarchiesBase* pLogHierarchy = entity->Retrieve< gui::LogisticHierarchiesBase >();
     if( !pLogHierarchy )
         return;
-    if( !logistic_helpers::IsLogisticBase( *entity ) )
-        return;
-    SupplyHierarchy( *entity, *pLogHierarchy );
+    SupplyHierarchy( *pLogHierarchy );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticEditor::FillSupplyRequirements
 // Created: MMC 2011-08-31
 // -----------------------------------------------------------------------------
-void LogisticEditor::FillSupplyRequirements( const Entity_ABC& entity, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
+void LogisticEditor::FillSupplyRequirements( const kernel::Entity_ABC& entity, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
 {
-    const Agent_ABC* pAgent = dynamic_cast< const Agent_ABC* >( &entity );
+    const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity );
     if( pAgent )
         ComputeRequirements( *pAgent, logType, requirements );
-    const TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< TacticalHierarchies >();
+    const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
     if( pTacticalHierarchies )
     {
         auto children = pTacticalHierarchies->CreateSubordinateIterator();
         while( children.HasMoreElements() )
         {
-            const Entity_ABC& childrenEntity = children.NextElement();
+            const kernel::Entity_ABC& childrenEntity = children.NextElement();
             FillSupplyRequirements( childrenEntity, logType, requirements );
         }
     }
@@ -243,12 +223,12 @@ void LogisticEditor::FillSupplyRequirements( const Entity_ABC& entity, const ker
 // Name: LogisticEditor::SupplyLogisticBaseStocks
 // Created: MMC 2011-08-31
 // -----------------------------------------------------------------------------
-void LogisticEditor::SupplyLogisticBaseStocks( const Entity_ABC& blLogBase, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
+void LogisticEditor::SupplyLogisticBaseStocks( const kernel::Entity_ABC& blLogBase, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
 {
     auto logChildren = blLogBase.Get< gui::LogisticHierarchiesBase >().CreateSubordinateIterator();
     while( logChildren.HasMoreElements() )
     {
-        const Entity_ABC& entity = logChildren.NextElement();
+        const kernel::Entity_ABC& entity = logChildren.NextElement();
         if( logistic_helpers::IsLogisticBase( entity ) )
         {
             if( blLogBase.GetId() != entity.GetId() )
@@ -257,8 +237,7 @@ void LogisticEditor::SupplyLogisticBaseStocks( const Entity_ABC& blLogBase, cons
         else
             FillSupplyRequirements( entity, logType, requirements );
     }
-    const Automat_ABC* pTC2 = dynamic_cast< const Automat_ABC* >( &blLogBase );
-    if( pTC2 && pTC2->Get< gui::LogisticBase >().IsBase() )
+    if( blLogBase.GetTypeName() == kernel::Automat_ABC::typeName_ && logistic_helpers::IsLogisticBase( blLogBase ) )
         FillSupplyRequirements( blLogBase, logType, requirements );
 }
 
@@ -266,31 +245,39 @@ void LogisticEditor::SupplyLogisticBaseStocks( const Entity_ABC& blLogBase, cons
 // Name: LogisticEditor::ComputeRequirements
 // Created: MMC 2011-08-10
 // -----------------------------------------------------------------------------
-void LogisticEditor::ComputeRequirements( const Agent_ABC& agent, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
+void LogisticEditor::ComputeRequirements( const kernel::Agent_ABC& agent, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
 {
-    AgentType& agentType = staticModel_.types_.tools::Resolver< AgentType >::Get( agent.GetType().GetId() );
+    kernel::AgentType& agentType = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( agent.GetType().GetId() );
     auto agentCompositionIterator = agentType.CreateIterator();
     while( agentCompositionIterator.HasMoreElements() )
     {
-        const AgentComposition& agentComposition = agentCompositionIterator.NextElement();
-        const EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< EquipmentType >::Get( agentComposition.GetType().GetId() );
+        const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
+        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
         auto resourcesIterator = equipmentType.CreateResourcesIterator();
         while( resourcesIterator.HasMoreElements() )
         {
-            const DotationCapacityType& dotationCapacity = resourcesIterator.NextElement();
-            const DotationType& category = staticModel_.objectTypes_.Resolver2< DotationType >::Get( dotationCapacity.GetName() );
+            const kernel::DotationCapacityType& dotationCapacity = resourcesIterator.NextElement();
+            const kernel::DotationType& category = staticModel_.objectTypes_.Resolver2< kernel::DotationType >::Get( dotationCapacity.GetName() );
             if( &category.GetLogisticSupplyClass() == &logType )
-                requirements[ &category ] += agentComposition.GetCount() * dotationCapacity.GetNormalizedConsumption();
+                requirements[ &category ] += static_cast< unsigned int >( agentComposition.GetCount() * dotationCapacity.GetNormalizedConsumption() + 0.5 );
         }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticEditor::GetQuantity
-// Created: SLI 2014-02-19
+// Name: LogisticEditor::GetDaysBySupplyClass
+// Created: JSR 2014-03-10
 // -----------------------------------------------------------------------------
-unsigned int LogisticEditor::GetQuantity( const QStandardItemModel& dataModel, int row, double requirement )
+std::map< const kernel::LogisticSupplyClass*, double > LogisticEditor::GetDaysBySupplyClass() const
 {
-    const double days = dataModel.item( row, 1 )->data( Qt::EditRole ).asDouble();
-    return static_cast< unsigned int >( days * requirement + 0.5 );
+    std::map< const kernel::LogisticSupplyClass*, double > result;
+    for( int row = 0; row < dataModel_->rowCount(); ++row )
+    {
+        if( dataModel_->item( row )->checkState() == Qt::Checked )
+        {
+            auto supplyClass = dataModel_->item( row, eCategory )->data( Qt::UserRole ).value< const kernel::LogisticSupplyClass* >();
+            result[ supplyClass ] = dataModel_->item( row, eDays )->data( Qt::EditRole ).asDouble();
+        }
+    }
+    return result;
 }

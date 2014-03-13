@@ -275,14 +275,6 @@
         <source>Logistic/LogisticBase/Superior</source>
         <translation>Logistics/LogisticsBase/Superior</translation>
     </message>
-    <message>
-        <source>Logistic/LogisticBase/Quotas</source>
-        <translation>Logistics/LogisticsBase/Quotas</translation>
-    </message>
-    <message>
-        <source>Logistic/LogisticBase/Edit Quotas</source>
-        <translation>Logistics/LogisticsBase/Edit Quotas</translation>
-    </message>
 </context>
 <context>
     <name>MineAttribute</name>
@@ -595,17 +587,6 @@
         <source>Score definitions contain errors:
 Reason: %1.</source>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>Stocks</name>
-    <message>
-        <source>Stocks</source>
-        <translation>Stocks</translation>
-    </message>
-    <message>
-        <source>Stocks/Edit Stocks</source>
-        <translation>Stocks/Edit Stocks</translation>
     </message>
 </context>
 <context>

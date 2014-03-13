@@ -269,57 +269,6 @@
     </message>
 </context>
 <context>
-    <name>DotationsEditor</name>
-    <message>
-        <source>Resources editor</source>
-        <translation>Editor de Recursos</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Tipo</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation>Cantidad</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Display information</source>
-        <translation>Mostrar información</translation>
-    </message>
-    <message>
-        <source>Hide information</source>
-        <translation>Ocultar información</translation>
-    </message>
-    <message>
-        <source>Current weight</source>
-        <translation>Peso actual</translation>
-    </message>
-    <message>
-        <source>Maximal weight</source>
-        <translation>Peso máximo</translation>
-    </message>
-    <message>
-        <source>Current volume</source>
-        <translation>Volumen actual</translation>
-    </message>
-    <message>
-        <source>Maximal volume</source>
-        <translation>Volumen máximo</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Limpiar</translation>
-    </message>
-</context>
-<context>
     <name>EditorFactory</name>
     <message>
         <source>NBC agent(s) editor</source>
@@ -809,14 +758,6 @@
         <source>Days</source>
         <translation type="unfinished">Días</translation>
     </message>
-    <message>
-        <source>Edit Stocks</source>
-        <translation type="unfinished">Generar stocks</translation>
-    </message>
-    <message>
-        <source>Edit Quotas</source>
-        <translation type="unfinished">Generar cuotas</translation>
-    </message>
 </context>
 <context>
     <name>LogisticLinksEditor</name>
@@ -844,15 +785,73 @@
 <context>
     <name>LogisticQuotaEditor</name>
     <message>
-        <source>Logistic</source>
-        <translation type="unfinished">Logística</translation>
+        <source>Quotas Edition</source>
+        <translation type="unfinished">Generación de Cuotas</translation>
     </message>
 </context>
 <context>
     <name>LogisticStockEditor</name>
     <message>
+        <source>Stocks Edition</source>
+        <translation type="unfinished">Generación de Stocks</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticStocksAndQuotasDialog</name>
+    <message>
+        <source>Automatic allocation...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
         <source>Logistic</source>
         <translation type="unfinished">Logística</translation>
+    </message>
+    <message>
+        <source>Stocks</source>
+        <translation type="unfinished">Stocks</translation>
+    </message>
+    <message>
+        <source>Quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stocks and Quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit stocks and quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticStocksDialog</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished">Logística</translation>
+    </message>
+    <message>
+        <source>Stocks</source>
+        <translation type="unfinished">Stocks</translation>
+    </message>
+    <message>
+        <source>Edit logistics stocks</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1024,6 +1023,29 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>Resource networks</source>
         <translation>Redes de recursos</translation>
+    </message>
+</context>
+<context>
+    <name>MaxStockNaturesTable</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weight (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max weight (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max volume (m3)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1778,10 +1800,6 @@ Este dato no puede ser proyectado.</translation>
 <context>
     <name>PropertyDisplayer</name>
     <message>
-        <source>&lt;Edit Property Group...&gt;</source>
-        <translation>&lt;Editar Propiedades...&gt;</translation>
-    </message>
-    <message>
         <source>not set</source>
         <translation>no definido</translation>
     </message>
@@ -1792,6 +1810,24 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>&lt;Edit repartition...&gt;</source>
         <translation>&lt;Editar distribución...&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QuotasEditor</name>
+    <message>
+        <source>Logistics subordinate:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuotasResourcesTable</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished">Cantidad</translation>
     </message>
 </context>
 <context>
@@ -1856,6 +1892,21 @@ Este dato no puede ser proyectado.</translation>
  The network automatic generation cannot be computed.</source>
         <translation>Se ha detectado un ciclo en la red de recursos para el bloque %1.
  No se puede continuar con la generación automática de la red.</translation>
+    </message>
+</context>
+<context>
+    <name>ResourcesEditorTable_ABC</name>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished">Borrar recurso</translation>
+    </message>
+    <message>
+        <source>Clear list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished">Agregar recurso</translation>
     </message>
 </context>
 <context>
@@ -2341,14 +2392,26 @@ Este dato no puede ser proyectado.</translation>
     </message>
 </context>
 <context>
-    <name>StocksEditionDialog</name>
+    <name>StockResourcesTable</name>
     <message>
-        <source>Stocks Edition</source>
-        <translation>Generación de Stocks</translation>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Quotas Edition</source>
-        <translation>Generación de Cuotas</translation>
+        <source>Nature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weight (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished">Cantidad</translation>
     </message>
 </context>
 <context>

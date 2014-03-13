@@ -32,7 +32,6 @@ namespace gui
 }
 
 class Dotation;
-class DotationsItem;
 
 // =============================================================================
 /** @class  LogisticBaseStates
@@ -69,7 +68,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void CreateDictionary( gui::PropertiesDictionary& dico, kernel::Entity_ABC& owner );
     virtual void SetSuperiorInternal( kernel::Entity_ABC* superior );
 
     void Load( xml::xistream& xis, const kernel::Entity_ABC* superior );
@@ -87,7 +85,6 @@ private:
     kernel::Controller& controller_;
     kernel::Entity_ABC& entity_;
     const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver_;
-    DotationsItem* item_;
     kernel::LogisticBaseSuperior superior_;
     const bool canHaveQuotas_;
     //@}

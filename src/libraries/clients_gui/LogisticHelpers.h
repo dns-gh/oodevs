@@ -12,6 +12,7 @@
 
 namespace kernel
 {
+    class Agent_ABC;
     class Entity_ABC;
 }
 
@@ -25,6 +26,7 @@ namespace logistic_helpers
 {
     geometry::Point2f GetLogisticPosition( const kernel::Entity_ABC& entity, bool onlySupply = false );
     bool IsLogisticBase( const kernel::Entity_ABC& entity );
+    void VisitAgentsWithLogisticSupply( const kernel::Entity_ABC& entity, const std::function< void( const kernel::Agent_ABC& ) >& func );
 }
 
 #endif // __gui_LogisticHelpers_h_

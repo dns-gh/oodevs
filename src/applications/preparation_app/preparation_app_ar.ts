@@ -269,57 +269,6 @@
     </message>
 </context>
 <context>
-    <name>DotationsEditor</name>
-    <message>
-        <source>Resources editor</source>
-        <translation type="unfinished">محرر الموارد</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished">نوع</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished">الكمية</translation>
-    </message>
-    <message>
-        <source>Current weight</source>
-        <translation type="unfinished">الوزن الحالي</translation>
-    </message>
-    <message>
-        <source>Maximal weight</source>
-        <translation type="unfinished">الوزن الأقصى</translation>
-    </message>
-    <message>
-        <source>Current volume</source>
-        <translation type="unfinished">المجلد الحالي</translation>
-    </message>
-    <message>
-        <source>Maximal volume</source>
-        <translation type="unfinished">أقصى حجم</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="unfinished">واضحة</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">موافق</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء الأمر</translation>
-    </message>
-    <message>
-        <source>Hide information</source>
-        <translation type="unfinished">إخفاء المعلومات</translation>
-    </message>
-    <message>
-        <source>Display information</source>
-        <translation type="unfinished">عرض المعلومات</translation>
-    </message>
-</context>
-<context>
     <name>EditorFactory</name>
     <message>
         <source>NBC agent(s) editor</source>
@@ -808,14 +757,6 @@
         <source>Days</source>
         <translation type="unfinished">أيام</translation>
     </message>
-    <message>
-        <source>Edit Stocks</source>
-        <translation type="unfinished">تحرير الأرصدة</translation>
-    </message>
-    <message>
-        <source>Edit Quotas</source>
-        <translation type="unfinished">تحرير الحصص</translation>
-    </message>
 </context>
 <context>
     <name>LogisticLinksEditor</name>
@@ -843,15 +784,73 @@
 <context>
     <name>LogisticQuotaEditor</name>
     <message>
-        <source>Logistic</source>
-        <translation type="unfinished">السوقي</translation>
+        <source>Quotas Edition</source>
+        <translation type="unfinished">الطبعة الحصص</translation>
     </message>
 </context>
 <context>
     <name>LogisticStockEditor</name>
     <message>
+        <source>Stocks Edition</source>
+        <translation type="unfinished">الطبعة الأرصدة</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticStocksAndQuotasDialog</name>
+    <message>
+        <source>Automatic allocation...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">موافق</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء الأمر</translation>
+    </message>
+    <message>
         <source>Logistic</source>
         <translation type="unfinished">السوقي</translation>
+    </message>
+    <message>
+        <source>Stocks</source>
+        <translation type="unfinished">الأرصدة</translation>
+    </message>
+    <message>
+        <source>Quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stocks and Quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit stocks and quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticStocksDialog</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">موافق</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء الأمر</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished">السوقي</translation>
+    </message>
+    <message>
+        <source>Stocks</source>
+        <translation type="unfinished">الأرصدة</translation>
+    </message>
+    <message>
+        <source>Edit logistics stocks</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1023,6 +1022,29 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Resource networks</source>
         <translation type="unfinished">شبكات للموارد</translation>
+    </message>
+</context>
+<context>
+    <name>MaxStockNaturesTable</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weight (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max weight (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max volume (m3)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1777,10 +1799,6 @@ This data can&apos;t be projected.</source>
 <context>
     <name>PropertyDisplayer</name>
     <message>
-        <source>&lt;Edit Property Group...&gt;</source>
-        <translation type="unfinished">&lt;Edit property=&quot;&quot; group...=&quot;&quot;&gt;&lt;/Edit&gt;</translation>
-    </message>
-    <message>
         <source>not set</source>
         <translation type="unfinished">لم يتم تعيين</translation>
     </message>
@@ -1791,6 +1809,24 @@ This data can&apos;t be projected.</source>
     <message>
         <source>&lt;Edit repartition...&gt;</source>
         <translation type="unfinished">&lt;Edit repartition...=&quot;&quot;&gt;&lt;/Edit&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QuotasEditor</name>
+    <message>
+        <source>Logistics subordinate:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuotasResourcesTable</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished">الكمية</translation>
     </message>
 </context>
 <context>
@@ -1854,6 +1890,21 @@ This data can&apos;t be projected.</source>
         <source>A cycle has been detected in the resource network for the block %1.
  The network automatic generation cannot be computed.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ResourcesEditorTable_ABC</name>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished">إزالة مورد</translation>
+    </message>
+    <message>
+        <source>Clear list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished">إضافة مورد</translation>
     </message>
 </context>
 <context>
@@ -2339,14 +2390,26 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>StocksEditionDialog</name>
+    <name>StockResourcesTable</name>
     <message>
-        <source>Stocks Edition</source>
-        <translation type="unfinished">الطبعة الأرصدة</translation>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Quotas Edition</source>
-        <translation type="unfinished">الطبعة الحصص</translation>
+        <source>Nature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weight (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished">الكمية</translation>
     </message>
 </context>
 <context>

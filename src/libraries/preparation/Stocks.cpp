@@ -10,34 +10,28 @@
 #include "preparation_pch.h"
 #include "Stocks.h"
 #include "Dotation.h"
-#include "DotationsItem.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Controller.h"
-#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Stocks constructor
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-Stocks::Stocks( Controller& controller, Entity_ABC& entity, gui::PropertiesDictionary& dico )
+Stocks::Stocks( kernel::Controller& controller )
     : controller_( controller )
 {
-    CreateDictionary( entity, dico );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Stocks constructor
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, const tools::Resolver_ABC< DotationType, std::string >& resolver, gui::PropertiesDictionary& dico )
+Stocks::Stocks( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver )
     : controller_( controller )
 {
-    invalidDotations_.clear();
-    CreateDictionary( entity, dico );
     xis >> xml::optional >> xml::start( "stocks" )
             >> xml::list( "resource", *this, &Stocks::ReadDotation, resolver )
         >> xml::end;
@@ -49,7 +43,7 @@ Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, 
 // -----------------------------------------------------------------------------
 Stocks::~Stocks()
 {
-    delete item_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +52,6 @@ Stocks::~Stocks()
 // -----------------------------------------------------------------------------
 void Stocks::Clear()
 {
-    item_->Clear();
     DeleteAll();
 }
 
@@ -66,14 +59,13 @@ void Stocks::Clear()
 // Name: Stocks::ReadDotation
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void Stocks::ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< DotationType, std::string >& resolver )
+void Stocks::ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver )
 {
     const std::string dotationName = xis.attribute< std::string >( "name" );
     const kernel::DotationType* pDotationType = resolver.Find( dotationName );
     if( pDotationType )
     {
         Dotation* dotation = new Dotation( xis, resolver );
-        item_->AddDotation( *dotation );
         Register( dotation->type_.GetId(), *dotation );
         controller_.Update( *this );
     }
@@ -87,29 +79,18 @@ void Stocks::ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< Dotati
 // -----------------------------------------------------------------------------
 void Stocks::SetDotation( const kernel::DotationType& type, unsigned int quantity, bool add )
 {
-    if( !item_ )
-        return;
-
     Dotation* pDotation = Find( type.GetId() );
-    if( pDotation )
-    {
-        if( add )
-            pDotation->quantity_ += quantity;
-        else
-        {
-            pDotation->quantity_ = quantity;
-            if( quantity == 0 )
-            {
-                item_->RemoveDotation( type );
-                Remove( type.GetId() );
-            }
-        }
-    }
+    if( quantity == 0 && pDotation && !add )
+        Remove( type.GetId() );
     else if( quantity > 0 )
     {
-        Dotation* pDotation = new Dotation( type, quantity );
-        item_->AddDotation( *pDotation );
-        Register( pDotation->type_.GetId(), *pDotation );
+        if( pDotation )
+            pDotation->quantity_ = quantity + ( add ? pDotation->quantity_ : 0 );
+        else
+        {
+            Dotation* pDotation = new Dotation( type, quantity );
+            Register( pDotation->type_.GetId(), *pDotation );
+        }
     }
     controller_.Update( *this );
 }
@@ -120,7 +101,6 @@ void Stocks::SetDotation( const kernel::DotationType& type, unsigned int quantit
 // -----------------------------------------------------------------------------
 void Stocks::DeleteAll()
 {
-    item_->Clear();
     tools::Resolver< Dotation >::Clear();
     controller_.Update( *this );
 }
@@ -131,7 +111,7 @@ void Stocks::DeleteAll()
 // -----------------------------------------------------------------------------
 void Stocks::SerializeAttributes( xml::xostream& xos ) const
 {
-    const_cast< Stocks* >( this )->clearInvalidDotations();
+    invalidDotations_.clear();
     if( !IsToSerialize() )
         return;
     xos << xml::start( "stocks" );
@@ -146,22 +126,12 @@ void Stocks::SerializeAttributes( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Stocks::CreateDictionary
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void Stocks::CreateDictionary( Entity_ABC& entity, gui::PropertiesDictionary& dico )
-{
-    item_ = new DotationsItem( controller_, entity, dico, tools::translate( "Stocks", "Stocks" ), *static_cast< Resolver< Dotation >* >( this ), true );
-    dico.Register( entity, tools::translate( "Stocks", "Stocks/Edit Stocks" ), item_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Stocks::HasDotations
 // Created: ABR 2011-09-22
 // -----------------------------------------------------------------------------
 bool Stocks::HasDotations() const
 {
-    return ( item_ ) ? item_->CountDotations() != 0 : false;
+    return Count() != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -170,15 +140,12 @@ bool Stocks::HasDotations() const
 // -----------------------------------------------------------------------------
 bool Stocks::HasDotationType( const kernel::DotationType& dotationType ) const
 {
-    if( item_ )
+    auto dotationIt = CreateIterator();
+    while( dotationIt.HasMoreElements() )
     {
-        tools::Iterator< const Dotation& > dotationIt = item_->CreateIterator();
-        while( dotationIt.HasMoreElements() )
-        {
-            const Dotation& dotation = dotationIt.NextElement();
-            if( dotation.type_.GetId() == dotationType.GetId() && dotation.quantity_ > 0 )
-                return true;
-        }
+        const Dotation& dotation = dotationIt.NextElement();
+        if( dotation.type_.GetId() == dotationType.GetId() && dotation.quantity_ > 0 )
+            return true;
     }
     return false;
 }
@@ -187,21 +154,18 @@ bool Stocks::HasDotationType( const kernel::DotationType& dotationType ) const
 // Name: Stocks::ComputeWeightAndVolume
 // Created: JSR 2012-03-08
 // -----------------------------------------------------------------------------
-void Stocks::ComputeWeightAndVolume( const std::string& dotationNature, double& weight, double& volume )
+void Stocks::ComputeWeightAndVolume( const std::string& dotationNature, double& weight, double& volume ) const
 {
     weight = 0;
     volume = 0;
-    if( item_ )
+    auto it = CreateIterator();
+    while( it.HasMoreElements() )
     {
-        tools::Iterator< const Dotation& > it = item_->CreateIterator();
-        while( it.HasMoreElements() )
+        const Dotation& dotation = it.NextElement();
+        if( dotation.type_.GetNature() == dotationNature )
         {
-            const Dotation& dotation = it.NextElement();
-            if( dotation.type_.GetNature() == dotationNature )
-            {
-                weight += dotation.quantity_ * dotation.type_.GetUnitWeight();
-                volume += dotation.quantity_ * dotation.type_.GetUnitVolume();
-            }
+            weight += dotation.quantity_ * dotation.type_.GetUnitWeight();
+            volume += dotation.quantity_ * dotation.type_.GetUnitVolume();
         }
     }
 }
@@ -225,13 +189,4 @@ bool Stocks::IsToSerialize() const
 const std::vector< std::string >& Stocks::GetInvalidDotations() const
 {
     return invalidDotations_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Stocks::clearInvalidDotations
-// Created: MMC 2012-05-31
-// -----------------------------------------------------------------------------
-void Stocks::clearInvalidDotations()
-{
-    invalidDotations_.clear();
 }

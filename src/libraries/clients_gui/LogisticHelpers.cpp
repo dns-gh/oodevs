@@ -11,7 +11,9 @@
 #include "LogisticHelpers.h"
 #include "LogisticBase.h"
 
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AgentType.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -104,5 +106,26 @@ namespace logistic_helpers
         if( const gui::LogisticBase* extension = entity.Retrieve< gui::LogisticBase >() )
             return extension->IsBase();
         return false;
+    }
+
+    void VisitAgentsWithLogisticSupply( const kernel::Entity_ABC& entity, const std::function< void( const kernel::Agent_ABC& ) >& func )
+    {
+        if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
+        {
+            const kernel::Agent_ABC& agent = static_cast< const kernel::Agent_ABC& >( entity );
+            if( agent.GetType().IsLogisticSupply() )
+                func( agent );
+            return;
+        }
+        const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( !pTacticalHierarchies )
+            return;
+        auto children = pTacticalHierarchies->CreateSubordinateIterator();
+        while( children.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& child = children.NextElement();
+            if( !IsLogisticBase( child ) )
+                VisitAgentsWithLogisticSupply( child, func );
+        }
     }
 }

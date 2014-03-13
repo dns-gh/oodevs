@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
+#include <set>
 #include "ENT/ENT_Tr.h"
 
 namespace xml
@@ -87,6 +88,7 @@ public:
     bool HasStocks() const;
 
     bool IsStockCategoryDefined( const LogisticSupplyClass& logClass ) const;
+    void GetAllowedSupplyClasses( std::set< std::string >& allowedSupplyClasses ) const;
     //@}
 
 private:

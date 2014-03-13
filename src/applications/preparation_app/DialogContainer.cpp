@@ -17,9 +17,10 @@
 #include "FileLoaderObserver.h"
 #include "FilterDialogs.h"
 #include "SymbolDialog.h"
-#include "LogisticStockEditor.h"
 #include "LogisticQuotaEditor.h"
 #include "LogisticLinksEditor.h"
+#include "LogisticStocksAndQuotasDialog.h"
+#include "LogisticStocksDialog.h"
 #include "LongNameEditor.h"
 #include "ModelConsistencyDialog.h"
 #include "OrbatPanel.h"
@@ -69,9 +70,10 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     new SymbolEditor( parent, controllers, symbols, config );
     new SymbolDialog( parent, controllers, model.GetSymbolsFactory(), icons, colorStrategy );
     new LogisticLinksEditor( parent, controllers );
-    new LogisticStockEditor( parent, controllers, staticModel );
     new LogisticQuotaEditor( parent, controllers, staticModel );
     new LongNameEditor( parent, controllers, staticModel );
+    new LogisticStocksAndQuotasDialog( parent, controllers, staticModel );
+    new LogisticStocksDialog( parent, controllers, staticModel );
 
     std::vector< std::string > sounds;
     prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateConverter_, painter, selector, elevation2dLayer, preferences );

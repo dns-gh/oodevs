@@ -29,17 +29,16 @@ public:
     virtual ~LogisticQuotaEditor();
     //@}
 
-private:
-    //! @name Operations
+signals:
+    //! @name Signals
     //@{
-    virtual void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    virtual void SupplyHierarchy( const kernel::Entity_ABC& entity, const gui::LogisticHierarchiesBase& logHierarchy );
+    void DotationsQuotasComputed( const std::map< const kernel::Entity_ABC*, std::map< const kernel::DotationType*, unsigned int > >& );
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Operations
     //@{
-    void SetQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const T_Requirements& requirements );
+    virtual void SupplyHierarchy( const gui::LogisticHierarchiesBase& logHierarchy );
     //@}
 };
 

@@ -275,14 +275,6 @@
         <source>Logistic/LogisticBase/Superior</source>
         <translation>Logístico/Base Logística/Superior</translation>
     </message>
-    <message>
-        <source>Logistic/LogisticBase/Quotas</source>
-        <translation>Logístico/Base Logística/Cuotas</translation>
-    </message>
-    <message>
-        <source>Logistic/LogisticBase/Edit Quotas</source>
-        <translation>Logístico/Base Logística/Editar cuotas</translation>
-    </message>
 </context>
 <context>
     <name>MedicalTreatment</name>
@@ -603,17 +595,6 @@
 Reason: %1.</source>
         <translation>La definición contiene errores:
 Detalle: %1.</translation>
-    </message>
-</context>
-<context>
-    <name>Stocks</name>
-    <message>
-        <source>Stocks</source>
-        <translation>Stocks</translation>
-    </message>
-    <message>
-        <source>Stocks/Edit Stocks</source>
-        <translation>Stocks/Editar Stocks</translation>
     </message>
 </context>
 <context>
