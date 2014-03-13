@@ -446,7 +446,7 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	})
 
 	// Create barricade
-	location := swapi.MakePointLocation(swapi.Point{X: -15.8045, Y: 28.3451})
+	location := swapi.MakePointLocation(swapi.Point{X: -15.80, Y: 28.3451})
 	party = data.FindPartyByName("party")
 	c.Assert(party, NotNil)
 	object, err := client.CreateObject("barricade", party.Id, location)
