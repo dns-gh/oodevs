@@ -69,6 +69,7 @@
 #include "tools/Codec.h"
 
 #include <boost/algorithm/string.hpp>
+#include <boost/assign/list_of.hpp>
 
 MIL_AgentTypePion::T_PionTypeAllocatorMap  MIL_AgentTypePion::pionTypeAllocators_;
 MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;
@@ -89,15 +90,25 @@ const MIL_AgentTypePion* MIL_AgentTypePion::Create( const std::string& strName, 
 void MIL_AgentTypePion::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing agent types" );
-    pionTypeAllocators_[ "Pion INF"                    ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion ASA"                    ] = &MIL_AgentTypePion            ::Create;
-    pionTypeAllocators_[ "Pion ALAT"                   ] = &MIL_AgentTypePion           ::Create;
-    pionTypeAllocators_[ "Pion RENS"                   ] = &MIL_AgentTypePion           ::Create;
+    const std::vector< std::string > basicTypes = boost::assign::list_of
+        ( "Pion ABC" )
+        ( "Pion ALAT" )
+        ( "Pion ASA" )
+        ( "Pion ASS" )
+        ( "Pion Civilian" )
+        ( "Pion Emergency" )
+        ( "Pion GEN" )
+        ( "Pion INF" )
+        ( "Pion JOINT" )
+        ( "Pion Journalist" )
+        ( "Pion Notable" )
+        ( "Pion RENS" )
+        ( "Pion TRANS" )
+        ;
+    for( auto it = basicTypes.begin(); it != basicTypes.end(); ++it )
+        pionTypeAllocators_[ *it ] = &MIL_AgentTypePion::Create;
+
     pionTypeAllocators_[ "Pion NBC"                    ] = &MIL_AgentTypePionNBC            ::Create;
-    pionTypeAllocators_[ "Pion ABC"                    ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion GEN"                    ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion ASS"                    ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion TRANS"                  ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion LOG TC2"                ] = &MIL_AgentTypePionLOGTC2         ::Create;
     pionTypeAllocators_[ "Pion LOG BLD Sante"          ] = &MIL_AgentTypePionLOGMedical     ::Create;
     pionTypeAllocators_[ "Pion LOG BLD Maintenance"    ] = &MIL_AgentTypePionLOGMaintenance ::Create;
@@ -107,15 +118,10 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     pionTypeAllocators_[ "Pion LOG BLT Ravitaillement" ] = &MIL_AgentTypePionLOGSupply      ::Create;
     pionTypeAllocators_[ "Pion LOG Convoi"             ] = &MIL_AgentTypePionLOGConvoy      ::Create;
     pionTypeAllocators_[ "Pion CIRCULATION"            ] = &MIL_AgentTypePionCirculation    ::Create;
-    pionTypeAllocators_[ "Pion JOINT"                  ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion MILICE"                 ] = &MIL_AgentTypePionMILICE         ::Create;
     pionTypeAllocators_[ "Pion ASY"                    ] = &MIL_AgentTypePionASY            ::Create;
     pionTypeAllocators_[ "Pion REFUGIE"                ] = &MIL_AgentTypePionREFUGIE        ::Create;
-    pionTypeAllocators_[ "Pion Emergency"              ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion Organization"           ] = &MIL_AgentTypePionLOGTC2         ::Create;
-    pionTypeAllocators_[ "Pion Notable"                ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion Journalist"             ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion Civilian"               ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion Remote"                 ] = &MIL_AgentTypePion_Remote        ::Create;
 
     xis >> xml::start( "units" )
