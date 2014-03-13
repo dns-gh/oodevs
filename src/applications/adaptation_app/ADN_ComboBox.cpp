@@ -171,12 +171,12 @@ void ADN_ComboBox::insertItem( ADN_ComboBoxItem* item, int index )
 void ADN_ComboBox::removeItem ( int index )
 {
     ADN_ComboBoxItem* item = 0;
-    if( index < vItems_.size() )
+    if( index < static_cast< int >( vItems_.size() ) )
     {
         item = vItems_[ index ];
         vItems_.erase( vItems_.begin() + index );
     }
-    if( index < vItemsEnum_.size() )
+    if( index < static_cast< int >( vItemsEnum_.size() ) )
         vItemsEnum_.erase( vItemsEnum_.begin() + index );
     delete item;
     QComboBox::removeItem(index);
