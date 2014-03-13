@@ -25,7 +25,6 @@
 
 #include "Entities/Specialisations/ALAT/MIL_AgentTypePionALAT.h"
 #include "Entities/Specialisations/RENS/MIL_AgentTypePionRENS.h"
-#include "Entities/Specialisations/ASA/MIL_AgentTypePionASA.h"
 #include "Entities/Specialisations/NBC/MIL_AgentTypePionNBC.h"
 #include "Entities/Specialisations/Circulation/MIL_AgentTypePionCIRCULATION.h"
 #include "Entities/Specialisations/Milice/MIL_AgentTypePionMILICE.h"
@@ -93,7 +92,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing agent types" );
     pionTypeAllocators_[ "Pion INF"                    ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion ASA"                    ] = &MIL_AgentTypePionASA            ::Create;
+    pionTypeAllocators_[ "Pion ASA"                    ] = &MIL_AgentTypePion            ::Create;
     pionTypeAllocators_[ "Pion ALAT"                   ] = &MIL_AgentTypePionALAT           ::Create;
     pionTypeAllocators_[ "Pion RENS"                   ] = &MIL_AgentTypePionRENS           ::Create;
     pionTypeAllocators_[ "Pion NBC"                    ] = &MIL_AgentTypePionNBC            ::Create;
