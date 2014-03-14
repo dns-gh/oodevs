@@ -267,12 +267,12 @@ integration.crowdHasFlow = function( crowd )
     return DEC_ConnaissancePopulation_HasFlow( myself, crowd.source )
 end
 
---- Start demonstrating crowd
+--- Start attacking crowd
 integration.startAgressCrowd = function()
     meKnowledge.actionOnCrowd = DEC_StartAgresserFoule()
 end
 
---- Stop demonstrating crowd
+--- Stop attacking crowd
 integration.stopAgressCrowd = function()
     if meKnowledge.actionOnCrowd then
         meKnowledge.actionOnCrowd = DEC__StopAction(meKnowledge.actionOnCrowd)
@@ -280,14 +280,14 @@ integration.stopAgressCrowd = function()
     end
 end
 
---- Start agressing crowd
+--- Start agressing crowds and units
 integration.startAgress = function()
     integration.startAgressCrowd()
     meKnowledge.manifIntensity = S_IntensiteManifestationSurPions()
     meKnowledge.actionSurPions = DEC__StartTirSurPions( meKnowledge.manifIntensity )
 end
 
---- Stop agressing crowd
+--- Stop agressing crowds and units
 integration.stopAgress = function()
     integration.stopAgressCrowd()
     if meKnowledge.actionSurPions then
