@@ -218,7 +218,6 @@ private:
     //! @name Tools
     //@{
     bool HasChanged() const;
-    bool HasRadarStateChanged() const;
     bool CanPerceive() const;
     void PreparePerceptionData();
     void PrepareRadarData();
@@ -265,11 +264,6 @@ private:
     bool bRadarStateHasChanged_;
     bool bFireObserver_;
     bool bPerceptionUponRequest_;
-    //@}
-
-    //! @name Static member data
-    //@{
-    static const unsigned int nNbrStepsBetweenPeriphericalVision_;
     //@}
 };
 
