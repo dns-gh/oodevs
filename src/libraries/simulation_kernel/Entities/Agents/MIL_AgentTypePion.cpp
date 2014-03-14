@@ -26,7 +26,6 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Workspace.h"
 
-#include "Entities/Specialisations/Circulation/MIL_AgentTypePionCIRCULATION.h"
 #include "Entities/Specialisations/Milice/MIL_AgentTypePionMILICE.h"
 #include "Entities/Specialisations/Refugie/MIL_AgentTypePionREFUGIE.h"
 #include "Entities/Specialisations/LOG/TC2/MIL_AgentTypePionLOGTC2.h"
@@ -140,6 +139,16 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
             t->SetTerrorist( true );
             return t;
         };
+    pionTypeAllocators_[ "Pion CIRCULATION" ] = 
+        []( const std::string& name, const std::string& type, xml::xistream& xis )
+            -> const MIL_AgentTypePion*
+        {
+            auto t = new MIL_AgentTypePion( name, type, xis );
+            t->SetBrainFunctions( boost::assign::list_of
+                    ( "DEC_Circulation_EquiperItineraireLogistique" ));
+            return t;
+        };
+
         
     pionTypeAllocators_[ "Pion LOG TC2"                ] = &MIL_AgentTypePionLOGTC2         ::Create;
     pionTypeAllocators_[ "Pion LOG BLD Sante"          ] = &MIL_AgentTypePionLOGMedical     ::Create;
@@ -149,7 +158,6 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     pionTypeAllocators_[ "Pion LOG BLT Maintenance"    ] = &MIL_AgentTypePionLOGMaintenance ::Create;
     pionTypeAllocators_[ "Pion LOG BLT Ravitaillement" ] = &MIL_AgentTypePionLOGSupply      ::Create;
     pionTypeAllocators_[ "Pion LOG Convoi"             ] = &MIL_AgentTypePionLOGConvoy      ::Create;
-    pionTypeAllocators_[ "Pion CIRCULATION"            ] = &MIL_AgentTypePionCirculation    ::Create;
     pionTypeAllocators_[ "Pion MILICE"                 ] = &MIL_AgentTypePionMILICE         ::Create;
     pionTypeAllocators_[ "Pion REFUGIE"                ] = &MIL_AgentTypePionREFUGIE        ::Create;
     pionTypeAllocators_[ "Pion Organization"           ] = &MIL_AgentTypePionLOGTC2         ::Create;
@@ -406,6 +414,9 @@ void RegisterFunction( const std::string& name,  sword::Brain& brain,
     else if( name == "DEC_Agent_SeDecontaminer" )
         brain.RegisterFunction( name.c_str(),
             boost::bind( &DEC_AgentFunctions::SelfDecontaminate, boost::ref( agent ) ) );
+    else if( name == "DEC_Circulation_EquiperItineraireLogistique" ) 
+        brain.RegisterFunction( name.c_str(),
+            &DEC_KnowledgeObjectFunctions::EquipLogisticRoute );
     else
         throw MASA_EXCEPTION(
                 "cannot register unknown unit decisional method: " + name );
