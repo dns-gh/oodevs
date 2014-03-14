@@ -12,7 +12,6 @@
 
 #include "MIL.h"
 #include "MIL_AgentType_ABC.h"
-#include <spatialcontainer/TerrainData.h>
 
 namespace xml
 {
@@ -32,6 +31,7 @@ class PHY_UnitType;
 class MIL_HumanRepartition;
 class MIL_Config;
 class MissionController_ABC;
+class TerrainData;
 
 // =============================================================================
 // @class  MIL_AgentTypePion
