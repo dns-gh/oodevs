@@ -10,6 +10,9 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"os"
+	"path/filepath"
+	"regexp"
 	"swapi"
 )
 
@@ -54,7 +57,9 @@ func checkSpeed(c *C, client *swapi.Client, from, to swapi.Point, expectedSpeed 
 }
 
 func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExGradXYTestEmpty))
+	opts := NewAdminOpts(ExGradXYTestEmpty)
+	opts.DumpPathfinds("pf") // for test coverage
+	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
 
 	lngFrom, lngTo := -15.9384, -15.7028
@@ -90,6 +95,19 @@ func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 	// Downslope can stop the move too
 	checkSpeed(c, client, swapi.Point{X: -15.7153, Y: 28.257},
 		swapi.Point{X: -15.7787, Y: 28.2258}, 0)
+
+	found := false
+	pfDir := filepath.Join(sim.Opts.GetSessionDir(), "pf")
+	rePath := regexp.MustCompile(`^pathfind_\d+_\d+$`)
+	err := filepath.Walk(pfDir, func(path string, fi os.FileInfo, err error) error {
+		if err != nil || fi.IsDir() {
+			return err
+		}
+		found = found || rePath.MatchString(filepath.Base(path))
+		return nil
+	})
+	c.Assert(err, IsNil)
+	c.Assert(found, Equals, true)
 }
 
 func (s *TestSuite) TestTerrainSpeedModulation(c *C) {
