@@ -164,7 +164,7 @@ end
 integration.unitsAbleToWorkOnObject = function ( kUnits, kObject, action )
     local localisationObject = kObject:getLocalisation()
     if not localisationObject then
-        return emptyTable
+        return {}
     end 
     local simUnits = {}
     for i = 1, #kUnits do 
@@ -181,7 +181,7 @@ integration.unitsAbleToWorkOnObject = function ( kUnits, kObject, action )
     elseif action == "removeImprovement" then
         return DEC_GetAgentsPouvantDevaloriserAvecLocalisation( simUnits, kObject:getType(), localisationObject )
     else
-        return emptyTable
+        return {}
     end
 end
 

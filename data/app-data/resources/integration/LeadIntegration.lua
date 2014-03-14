@@ -970,7 +970,7 @@ integration.leadActivate = function( self, findBestsFunction, manageReinforcemen
 
     -- Gestion du soutien
     if self.params.taskForSupporting and self.params.taskForSupporting ~= NIL then
-       Activate( self.skill.links.supportManager, 1, { parameters = self.parameters, PE = pionsPE, SE = pionsSE, taskForSupporting = self.params.taskForSupporting })
+       Activate( self.skill.links.supportManager, 1, { companyTask = self.companyTask, parameters = self.parameters, PE = pionsPE, SE = pionsSE, taskForSupporting = self.params.taskForSupporting })
     end
 
     -- Reinforcement management
