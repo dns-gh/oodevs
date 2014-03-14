@@ -161,11 +161,12 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const MT_Vec
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
+    TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
-        TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
+        perceivableAgents.clear();
         (*itReco)->GetAgentsInside( perceiver_, perceivableAgents );
-        for( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
+        for( auto it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >(**it).GetAgent();
             detection::DetectionComputer detectionComputer( target );

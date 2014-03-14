@@ -187,9 +187,10 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MT_Vec
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
+    TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
-        TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
+        perceivableAgents.clear();
         (*itReco)->GetAgentsInside( perceivableAgents );
         for( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {

@@ -150,9 +150,10 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const DEC_Knowled
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoObjects::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
+    TER_Object_ABC::T_ObjectVector perceivableObjects;
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
-        TER_Object_ABC::T_ObjectVector perceivableObjects;
+        perceivableObjects.clear();
         (*itReco)->GetObjectsInside( perceivableObjects );
         for( TER_Object_ABC::CIT_ObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {

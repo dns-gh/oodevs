@@ -104,9 +104,10 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MT_Vector2D& 
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoPoint::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
+    TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
-        TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
+        perceivableAgents.clear();
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( (*itReco)->vCenter_, (*itReco)->rCurrentSize_, perceivableAgents );
         for( auto it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
@@ -147,9 +148,10 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const DEC_Knowledge
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoPoint::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
+    TER_Object_ABC::T_ObjectVector perceivableObjects;
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
-        TER_Object_ABC::T_ObjectVector perceivableObjects;
+        perceivableObjects.clear();
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( (*itReco)->vCenter_, (*itReco)->rCurrentSize_, perceivableObjects );
         for( auto it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {

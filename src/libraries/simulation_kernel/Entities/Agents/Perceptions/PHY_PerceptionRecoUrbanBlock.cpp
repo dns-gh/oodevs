@@ -134,9 +134,10 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const MT_Vecto
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
+    TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
-        TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
+        perceivableAgents.clear();
         ( *itReco )->GetAgentsInside( perceiver_, perceivableAgents );
         for( auto it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
