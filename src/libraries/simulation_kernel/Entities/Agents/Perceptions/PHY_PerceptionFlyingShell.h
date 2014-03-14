@@ -14,6 +14,9 @@
 
 #include "PHY_Perception_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
+#pragma warning( push, 0 )
+#include <boost/bimap.hpp>
+#pragma warning( pop )
 
 namespace xml
 {
@@ -30,7 +33,7 @@ class MIL_Effect_IndirectFire;
 class PHY_PerceptionFlyingShell : public PHY_Perception_ABC
 {
 public:
-             PHY_PerceptionFlyingShell( PHY_RoleInterface_Perceiver& perceiver );
+    explicit PHY_PerceptionFlyingShell( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionFlyingShell();
 
     static void Initialize( xml::xistream& xis );
@@ -43,14 +46,12 @@ public:
     virtual void Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents );
 
 private:
-    typedef std::vector< const TER_Localisation* > T_ZoneVector;
+    typedef boost::bimap< int, boost::shared_ptr< TER_Localisation > > T_Perceptions;
     typedef std::set< const MIL_Effect_IndirectFire* > T_FlyingShellSet;
-    typedef std::map< int, const TER_Localisation* > T_PerceptionIdMap;
 
 private:
-    T_ZoneVector      zones_;
-    T_FlyingShellSet  lastPerceivedFlyingShells_;
-    T_PerceptionIdMap ids_;
+    T_Perceptions perceptions_;
+    T_FlyingShellSet lastPerceivedFlyingShells_;
 };
 
 #endif // __PHY_PerceptionFlyingShell_h_

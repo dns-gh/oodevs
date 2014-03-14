@@ -18,6 +18,7 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "Tools/MIL_Tools.h"
+#include <boost/range/algorithm_ext/erase.hpp>
 
 namespace
 {
@@ -54,9 +55,7 @@ PHY_PerceptionFlyingShell::PHY_PerceptionFlyingShell( PHY_RoleInterface_Perceive
 // -----------------------------------------------------------------------------
 PHY_PerceptionFlyingShell::~PHY_PerceptionFlyingShell()
 {
-    for( auto it = zones_.begin(); it != zones_.end(); ++it )
-        delete *it;
-    zones_.clear();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -65,10 +64,9 @@ PHY_PerceptionFlyingShell::~PHY_PerceptionFlyingShell()
 // -----------------------------------------------------------------------------
 int PHY_PerceptionFlyingShell::AddLocalisation( const TER_Localisation& localisation )
 {
-    TER_Localisation* pLocalisation = new TER_Localisation( localisation );
-    zones_.push_back( pLocalisation );
+    boost::shared_ptr< TER_Localisation > pLocalisation( new TER_Localisation( localisation ) );
     const int id = PHY_Perception_ABC::GetPerceptionId();
-    ids_[ id ] = pLocalisation;
+    perceptions_.insert( T_Perceptions::value_type( id, pLocalisation ) );
     return id;
 }
 
@@ -78,14 +76,7 @@ int PHY_PerceptionFlyingShell::AddLocalisation( const TER_Localisation& localisa
 // -----------------------------------------------------------------------------
 void PHY_PerceptionFlyingShell::RemoveLocalisation( int id )
 {
-    const TER_Localisation* pLoc = ids_[ id ];
-    auto it = std::find( zones_.begin(), zones_.end(), pLoc );
-    if( it != zones_.end() )
-    {
-        delete pLoc;
-        zones_.erase( it );
-    }
-    ids_.erase( id );
+    perceptions_.left.erase( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,12 +87,12 @@ void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
 {
     const MT_Vector2D& source = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     T_FlyingShellSet perceivedFlyingShells;
-    auto flyingShells = MIL_EffectManager::GetEffectManager().GetFlyingShells();
+    const auto& flyingShells = MIL_EffectManager::GetEffectManager().GetFlyingShells();
     for( auto it = flyingShells.begin(); it != flyingShells.end(); ++it )
     {
         const MIL_Effect_IndirectFire& flyingShell = (**it);
-        for( auto itZone = zones_.begin(); itZone != zones_.end(); ++itZone )
-            if( (**itZone).Intersect2DWithCircle( source, radius ) && flyingShell.IsFlyingThroughLocalisation( **itZone ) )
+        for( auto itZone = perceptions_.right.begin(); itZone != perceptions_.right.end(); ++itZone )
+            if( itZone->first->Intersect2DWithCircle( source, radius ) && flyingShell.IsFlyingThroughLocalisation( *itZone->first ) )
             {
                 perceivedFlyingShells.insert( &flyingShell );
                 if( lastPerceivedFlyingShells_.find( &flyingShell ) == lastPerceivedFlyingShells_.end() )
@@ -117,7 +108,7 @@ void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionFlyingShell::HasLocalisationToHandle() const
 {
-    return !zones_.empty();
+    return !perceptions_.empty();
 }
 
 // -----------------------------------------------------------------------------
