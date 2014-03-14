@@ -97,7 +97,10 @@ void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
                 // use a very advanced technique based on the revolutionary "delete this" idiom...
                 perceivedShells.insert( *it );
                 if( shells_.find( *it ) == shells_.end() )
+                {
                     perceiver_.NotifyPerception( **it );
+                    break;
+                }
             }
     shells_.swap( perceivedShells );
 }
