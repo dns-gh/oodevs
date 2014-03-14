@@ -116,10 +116,11 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     , pPerceptionAlat_               ( 0 )
     , pPerceptionSurveillance_       ( 0 )
     , pPerceptionRecoObjects_        ( 0 )
-    , pPerceptionFlyingShell_        ( 0 )
+    , pPerceptionFlyingShell_        ( new PHY_PerceptionFlyingShell( *this ) )
 {
     ++nNbr;
     activePerceptions_.push_back( pPerceptionView_ );
+    activePerceptions_.push_back( pPerceptionFlyingShell_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,9 +151,10 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     , pPerceptionAlat_               ( 0 )
     , pPerceptionSurveillance_       ( 0 )
     , pPerceptionRecoObjects_        ( 0 )
-    , pPerceptionFlyingShell_        ( 0 )
+    , pPerceptionFlyingShell_        ( new PHY_PerceptionFlyingShell( *this ) )
 {
     activePerceptions_.push_back( pPerceptionView_ );
+    activePerceptions_.push_back( pPerceptionFlyingShell_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -449,7 +451,8 @@ void PHY_RolePion_Perceiver::DisableRecoUrbanBlock( int id )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsUsingActiveRadar() const
 {
-    return pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar() || pPerceptionFlyingShell_ && pPerceptionFlyingShell_->HasLocalisationToHandle();
+    return pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar()
+        || pPerceptionFlyingShell_->HasLocalisationToHandle();
 }
 
 // -----------------------------------------------------------------------------
@@ -458,7 +461,8 @@ bool PHY_RolePion_Perceiver::IsUsingActiveRadar() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const
 {
-    return pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar( radarClass ) || pPerceptionFlyingShell_ && pPerceptionFlyingShell_->HasLocalisationToHandle();
+    return pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar( radarClass )
+        || pPerceptionFlyingShell_->HasLocalisationToHandle();
 }
 
 // -----------------------------------------------------------------------------
@@ -531,12 +535,8 @@ void PHY_RolePion_Perceiver::DisableRadar( const PHY_RadarClass& radarClass )
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableFlyingShellDetection( const TER_Localisation& localisation )
 {
-    if( !pPerceptionFlyingShell_ )
-    {
-        pPerceptionFlyingShell_ = new PHY_PerceptionFlyingShell( *this );
-        activePerceptions_.push_back( pPerceptionFlyingShell_ );
+    if( !pPerceptionFlyingShell_->HasLocalisationToHandle() )
         bRadarStateHasChanged_ = true;
-    }
     return pPerceptionFlyingShell_->AddLocalisation( localisation );
 }
 
@@ -546,15 +546,9 @@ int PHY_RolePion_Perceiver::EnableFlyingShellDetection( const TER_Localisation& 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 {
-    if( !pPerceptionFlyingShell_ )
-        return;
     pPerceptionFlyingShell_->RemoveLocalisation( id );
     if( !pPerceptionFlyingShell_->HasLocalisationToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionFlyingShell_ ) );
-        Reset( pPerceptionFlyingShell_ );
         bRadarStateHasChanged_ = true;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -812,6 +806,7 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
 {
     activePerceptions_.clear();
     activePerceptions_.push_back( pPerceptionView_ );
+    activePerceptions_.push_back( pPerceptionFlyingShell_ );
     Reset( pPerceptionCoupDeSonde_ );
     Reset( pPerceptionRecoPoint_ );
     Reset( pPerceptionRecoLocalisation_ );
@@ -820,7 +815,6 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
     Reset( pPerceptionSurveillance_ );
     Reset( pPerceptionRadar_ );
     Reset( pPerceptionAlat_ );
-    Reset( pPerceptionFlyingShell_ );
 }
 
 namespace
