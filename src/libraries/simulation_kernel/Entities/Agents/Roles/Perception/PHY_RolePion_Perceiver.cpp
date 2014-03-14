@@ -115,7 +115,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     , pPerceptionRadar_              ( 0 )
     , pPerceptionAlat_               ( 0 )
     , pPerceptionSurveillance_       ( 0 )
-    , pPerceptionRecoObjects_        ( 0 )
+    , pPerceptionRecoObjects_        ( new PHY_PerceptionRecoObjects( *this ) )
     , pPerceptionFlyingShell_        ( new PHY_PerceptionFlyingShell( *this ) )
 {
     ++nNbr;
@@ -124,6 +124,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     activePerceptions_.push_back( pPerceptionRecoPoint_ );
     activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
     activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
+    activePerceptions_.push_back( pPerceptionRecoObjects_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +154,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     , pPerceptionRadar_              ( 0 )
     , pPerceptionAlat_               ( 0 )
     , pPerceptionSurveillance_       ( 0 )
-    , pPerceptionRecoObjects_        ( 0 )
+    , pPerceptionRecoObjects_        ( new PHY_PerceptionRecoObjects( *this ) )
     , pPerceptionFlyingShell_        ( new PHY_PerceptionFlyingShell( *this ) )
 {
     activePerceptions_.push_back( pPerceptionView_ );
@@ -161,6 +162,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     activePerceptions_.push_back( pPerceptionRecoPoint_ );
     activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
     activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
+    activePerceptions_.push_back( pPerceptionRecoObjects_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -326,11 +328,6 @@ void PHY_RolePion_Perceiver::DisableRecoPoint( int id )
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent )
 {
-    if( !pPerceptionRecoObjects_ )
-    {
-        pPerceptionRecoObjects_ = new PHY_PerceptionRecoObjects( *this );
-        activePerceptions_.push_back( pPerceptionRecoObjects_ );
-    }
     return  pPerceptionRecoObjects_->AddLocalisation( localisation, vCenter, rSpeed, callerAgent );
 }
 
@@ -340,14 +337,7 @@ int PHY_RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& localisat
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRecoObjects( int id )
 {
-    if( !pPerceptionRecoObjects_ )
-        return;
     pPerceptionRecoObjects_->RemoveLocalisation( id );
-    if( !pPerceptionRecoObjects_->HasLocalisationToHandle() )
-    {
-        boost::remove_erase( activePerceptions_, pPerceptionRecoObjects_ );
-        Reset( pPerceptionRecoObjects_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -769,8 +759,8 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
     activePerceptions_.push_back( pPerceptionRecoPoint_ );
     activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
     activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
+    activePerceptions_.push_back( pPerceptionRecoObjects_ );
     Reset( pPerceptionCoupDeSonde_ );
-    Reset( pPerceptionRecoObjects_ );
     Reset( pPerceptionSurveillance_ );
     Reset( pPerceptionRadar_ );
     Reset( pPerceptionAlat_ );
@@ -925,8 +915,7 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
     lastPerceiverPosition_ = owner_->GetRole< PHY_RoleInterface_Location >().GetPosition();
     pPerceptionRecoPoint_->Update();
     pPerceptionRecoLocalisation_->Update();
-    if( pPerceptionRecoObjects_ )
-        pPerceptionRecoObjects_->Update();
+    pPerceptionRecoObjects_->Update();
     if( HasChanged() )
     {
         if( bRadarStateHasChanged_ )
@@ -1285,7 +1274,7 @@ void PHY_RolePion_Perceiver::Execute( dotation::ConsumptionComputer_ABC& algorit
     if( pPerceptionRecoPoint_->HasPointToHandle()
         || pPerceptionRecoLocalisation_->HasLocalisationToHandle()
         || pPerceptionRecoUrbanBlock_->HasLocalisationToHandle()
-        || pPerceptionRecoObjects_ )
+        || pPerceptionRecoObjects_->HasLocalisationToHandle() )
         algorithm.SetConsumptionMode( PHY_ConsumptionType::moving_ );
 }
 

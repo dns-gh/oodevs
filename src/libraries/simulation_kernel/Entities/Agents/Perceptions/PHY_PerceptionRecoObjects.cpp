@@ -26,12 +26,12 @@
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoObjectsReco::PHY_PerceptionRecoObjectsReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rGrowthSpeed, DEC_Decision_ABC& callerAgent )
-    : vCenter_            ( vCenter )
-    , localisation_       ( localisation )
-    , rCurrentSize_       ( 0. )
-    , rGrowthSpeed_       ( rGrowthSpeed )
-    , callerAgent_        ( callerAgent )
-    , bMaxSizeDone_       ( false )
+    : vCenter_( vCenter )
+    , localisation_( localisation )
+    , rCurrentSize_( 0 )
+    , rGrowthSpeed_( rGrowthSpeed )
+    , callerAgent_( callerAgent )
+    , bMaxSizeDone_( false )
 {
     // NOTHING
 }
@@ -55,7 +55,7 @@ void PHY_PerceptionRecoObjectsReco::UpdateLocalisation()
 
     const T_PointVector& pointLocalisationFinale = localisation_.GetPoints();
     bMaxSizeDone_ = true;
-    for ( CIT_PointVector it = pointLocalisationFinale.begin(); bMaxSizeDone_ && it != pointLocalisationFinale.end(); ++it )
+    for( auto it = pointLocalisationFinale.begin(); bMaxSizeDone_ && it != pointLocalisationFinale.end(); ++it )
         bMaxSizeDone_ = circle_.IsInside( *it );
     if( bMaxSizeDone_ )
         callerAgent_.CallbackPerception( Id() );
@@ -77,8 +77,7 @@ bool PHY_PerceptionRecoObjectsReco::IsInside( const TER_Localisation& localisati
 void PHY_PerceptionRecoObjectsReco::GetObjectsInside( TER_Object_ABC::T_ObjectVector& result ) const
 {
     TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vCenter_, rCurrentSize_, result );
-
-    for ( TER_Object_ABC::IT_ObjectVector it = result.begin(); it != result.end(); )
+    for( auto it = result.begin(); it != result.end(); )
         if( localisation_.IsIntersecting( (*it)->GetLocalisation() ) )
             ++it;
         else
@@ -101,9 +100,8 @@ PHY_PerceptionRecoObjects::PHY_PerceptionRecoObjects( PHY_RoleInterface_Perceive
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoObjects::~PHY_PerceptionRecoObjects()
 {
-    for( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
+    for( auto it = recos_.begin(); it != recos_.end(); ++it )
         delete *it;
-    recos_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,8 +110,7 @@ PHY_PerceptionRecoObjects::~PHY_PerceptionRecoObjects()
 // -----------------------------------------------------------------------------
 int PHY_PerceptionRecoObjects::AddLocalisation( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent )
 {
-    PHY_PerceptionRecoObjectsReco* pNewReco = new PHY_PerceptionRecoObjectsReco( localisation, vCenter, rSpeed, callerAgent );
-    return Add( pNewReco );
+    return Add( new PHY_PerceptionRecoObjectsReco( localisation, vCenter, rSpeed, callerAgent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +128,7 @@ void PHY_PerceptionRecoObjects::RemoveLocalisation( int id )
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoObjects::Update()
 {
-    for ( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
+    for( auto it = recos_.begin(); it != recos_.end(); ++it )
         (*it)->UpdateLocalisation();
 }
 
@@ -141,7 +138,7 @@ void PHY_PerceptionRecoObjects::Update()
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const DEC_Knowledge_Object& knowledge ) const
 {
-    for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
+    for( auto it = recos_.begin(); it != recos_.end(); ++it )
         if( (*it)->IsInside( knowledge.GetLocalisation() ) )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
@@ -153,13 +150,11 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const DEC_Knowled
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoObjects::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
-    TER_Object_ABC::T_ObjectVector perceivableObjects;
-    for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
+    for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
-        perceivableObjects.clear();
+        TER_Object_ABC::T_ObjectVector perceivableObjects;
         (*itReco)->GetObjectsInside( perceivableObjects );
-
-        for ( TER_Object_ABC::CIT_ObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
+        for( TER_Object_ABC::CIT_ObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
             if( object().CanBePerceived() && perceiver_.CanPerceive( object.GetType() ) )
