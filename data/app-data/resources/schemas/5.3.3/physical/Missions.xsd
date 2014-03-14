@@ -261,6 +261,11 @@
 				<xs:documentation xml:lang="en">Defines whether parameter is mandatory.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="indirect-fire-only" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines whether dotation parameter must be restricted to indirect fire types, defaults to false.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 		<xs:attribute name="is-context" type="xs:boolean" use="optional">
 			<xs:annotation>
 				<xs:documentation xml:lang="en">Defines whether parameter is from context.</xs:documentation>

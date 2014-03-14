@@ -24,18 +24,18 @@ namespace actions
     {
 
 // =============================================================================
-/** @class  ParamDotationDType
+/** @class  ParamDotationType
     @brief  Agent's resources only
 */
 // Created: SBO 2006-08-09
 // =============================================================================
-class ParamDotationDType : public ParamComboBox< int >
+class ParamDotationType : public ParamComboBox< int >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationDType( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
-    virtual ~ParamDotationDType();
+             ParamDotationType( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
+    virtual ~ParamDotationType();
     //@}
 
     //! @name Operations

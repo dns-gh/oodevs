@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "actions_gui_pch.h"
-#include "ParamDotationDType.h"
+#include "ParamDotationType.h"
 #include "actions/DotationType.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Dotations_ABC.h"
@@ -22,10 +22,10 @@
 using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
-// Name: ParamDotationDType constructor
+// Name: ParamDotationType constructor
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-ParamDotationDType::ParamDotationDType( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+ParamDotationType::ParamDotationType( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : ParamComboBox< int >( builder, parameter )
     , resolver_( builder.GetStaticModel().objectTypes_ )
 {
@@ -33,19 +33,19 @@ ParamDotationDType::ParamDotationDType( const InterfaceBuilder_ABC& builder, con
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDotationDType destructor
+// Name: ParamDotationType destructor
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-ParamDotationDType::~ParamDotationDType()
+ParamDotationType::~ParamDotationType()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDotationDType::BuildInterface
+// Name: ParamDotationType::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamDotationDType::BuildInterface( const QString& objectName, QWidget* parent )
+QWidget* ParamDotationType::BuildInterface( const QString& objectName, QWidget* parent )
 {
     QWidget* result = ParamComboBox< int >::BuildInterface( objectName, parent );
     group_->setEnabled( false );
@@ -53,10 +53,10 @@ QWidget* ParamDotationDType::BuildInterface( const QString& objectName, QWidget*
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDotationDType::CommitTo
+// Name: ParamDotationType::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ParamDotationDType::CommitTo( actions::ParameterContainer_ABC& action ) const
+void ParamDotationType::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
     if( IsChecked() && GetValue() != 0 )
         action.AddParameter( *new actions::parameters::DotationType( parameter_, GetValue(), resolver_ ) );
@@ -65,19 +65,19 @@ void ParamDotationDType::CommitTo( actions::ParameterContainer_ABC& action ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDotationDType::InternalCheckValidity
+// Name: ParamDotationType::InternalCheckValidity
 // Created: LDC 2011-09-05
 // -----------------------------------------------------------------------------
-bool ParamDotationDType::InternalCheckValidity() const
+bool ParamDotationType::InternalCheckValidity() const
 {
     return GetValue() != 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDotationDType::SetEntity
+// Name: ParamDotationType::SetEntity
 // Created: ABR 2013-06-11
 // -----------------------------------------------------------------------------
-void ParamDotationDType::SetEntity( const kernel::Entity_ABC* entity )
+void ParamDotationType::SetEntity( const kernel::Entity_ABC* entity )
 {
     const kernel::DotationType* current = resolver_.Find( GetValue() );
     if( group_ )
@@ -92,11 +92,12 @@ void ParamDotationDType::SetEntity( const kernel::Entity_ABC* entity )
         while( it.HasMoreElements() )
         {
             const kernel::DotationType& type = it.NextElement();
-            if( type.IsAmmunition() && dotations->Accept( type ) )
+            if( type.IsAmmunition() && dotations->Accept( type ) &&
+                ( !parameter_.IndirectFireOnly() || type.IsIndirectFireAmmunition() ) )
                 AddItem( type.GetName().c_str(), type.GetId() );
         }
     }
-    for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
+    for( auto it = values_.begin(); it != values_.end(); ++it )
         comboBox_->AddItem( it->first, it->second );
 
     if( current )
@@ -108,10 +109,10 @@ void ParamDotationDType::SetEntity( const kernel::Entity_ABC* entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDotationDType::Visit
+// Name: ParamDotationType::Visit
 // Created: ABR 2013-06-13
 // -----------------------------------------------------------------------------
-void ParamDotationDType::Visit( const actions::parameters::DotationType& param )
+void ParamDotationType::Visit( const actions::parameters::DotationType& param )
 {
     InternalVisit( param );
 }

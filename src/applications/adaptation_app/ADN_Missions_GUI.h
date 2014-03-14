@@ -55,6 +55,7 @@ public:
         eCDTBehavior,
         eBehavior,
         eSymbol,
+        eDotations,
         eNbrGuiElements
     };
 
