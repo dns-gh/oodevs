@@ -819,7 +819,7 @@ void ADN_Units_Data::UnitInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& c
     for( auto itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
     {
         if( (*itComposante)->nNbrHumanInCrew_.GetData() == 0 )
-            checker.AddError( eNoCrew, strName_.GetData().c_str(), eUnits, -1, (*itComposante)->GetCrossedElement()->strName_.GetData().c_str() );
+            checker.AddError( eNoCrew, strName_.GetData(), eUnits, -1, (*itComposante)->GetCrossedElement()->strName_.GetData() );
         ( *itComposante )->CheckValidity( checker, strName_.GetData(), eUnits, -1, tools::translate( "ADN_Units_Data", "Equipments" ).toStdString() );
     }
     for( auto it = stocks_.vLogThresholds_.begin(); it != stocks_.vLogThresholds_.end(); ++it )

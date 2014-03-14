@@ -702,10 +702,6 @@ Arrêt moteur allumé</translation>
         <translation>Définition de la chaîne de maintenance incorrecte pour l&apos;équipement &apos;%1&apos;. Au moins un type de panne doit être défini pour chaque gravité.</translation>
     </message>
     <message>
-        <source></source>
-        <translation>L&apos;unité %1 ne possède aucun équipage dans l&apos;équipement &apos;%2&apos;</translation>
-    </message>
-    <message>
         <source>Field &apos;%2&apos; is invalid in &apos;%1&apos;</source>
         <translation>Le champ &apos;%2&apos; est invalide dans &apos;%1&apos;</translation>
     </message>
@@ -724,6 +720,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Invalid scan depth, should be greater than scan width.</source>
         <translation>Profondeur de scan invalide, elle doit être supérieure à la largeur.</translation>
+    </message>
+    <message>
+        <source>Mission parameter %1 should have at least one object: All objects will be selectable instead of none.</source>
+        <translation>Le paramètre de mission %1 devrait avoir au moins un objet : Tous les objets seront sélectionnables plutôt qu&apos;aucun.</translation>
     </message>
 </context>
 <context>
@@ -2989,13 +2989,6 @@ PNG (*.png)
     <message>
         <source>Indirect fire ammunition only</source>
         <translation>Uniquement munition pour tir indirect</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Missions_Parameter</name>
-    <message>
-        <source>&apos;%1&apos; parameter should have at least one object.</source>
-        <translation>Le paramètre &apos;%1&apos; doit avoir au moins un objet.</translation>
     </message>
 </context>
 <context>

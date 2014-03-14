@@ -21,7 +21,6 @@ enum E_ConsistencyCheck
     eMissingSymbols,
     eMissionAttachmentInvalid,
     eMissingRepairType,
-
     eMissingConvoy,
     eMissingConvoyMission,
     eMissingBreakdown,
@@ -31,6 +30,7 @@ enum E_ConsistencyCheck
     eMissingPCOnAutomat,
     eMissingArmor,
     eMissingDisaster,
+    eMissingObjectParameter,
     eMissingMask,
 
     eNoCrew,

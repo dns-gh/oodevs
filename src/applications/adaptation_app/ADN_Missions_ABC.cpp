@@ -103,7 +103,10 @@ void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& chec
 {
     CheckFieldDataConsistency( descriptionContext_.GetValue( language ), checker );
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
+    {
         CheckFieldDataConsistency( (*it)->description_.GetValue( language ), checker );
+        (*it)->CheckDatabaseValidity( checker );
+    }
     CheckFieldDataConsistency( descriptionBehavior_.GetValue( language ), checker );
     CheckFieldDataConsistency( descriptionSpecific_.GetValue( language ), checker );
     CheckFieldDataConsistency( descriptionComment_.GetValue( language ), checker );
