@@ -977,7 +977,7 @@ namespace
 // Name: ActionFactory::CreateSelectMaintenanceTransporter
 // Created: ABR 2014-01-29
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId, boost::optional< unsigned int > destination ) const
+Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId, const boost::optional< unsigned int >& destination ) const
 {
     return CreateMaintenanceSelection( consignId, equipmentTypeId, destination, magicActions_.Get( "select_maintenance_transporter" ), controller_, simulation_, entities_ );
 }

@@ -1738,7 +1738,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Diagnosis / Repair unit</source>
-        <translation>Unité de Diagnostique / Réparation</translation>
+        <translation>Unité de diagnostique / réparation</translation>
     </message>
 </context>
 <context>

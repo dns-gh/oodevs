@@ -298,7 +298,7 @@ void LogisticMaintenanceSelectionDialog::OnOkClicked()
             throw MASA_EXCEPTION( "Not supposed to accept in manual without an availability or its equipment type" );
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         {
-            boost::optional< unsigned int > destination = boost::none;
+            boost::optional< unsigned int > destination;
             if( selectedDestination_ )
                 destination = selectedDestination_->GetId();
             lastContext_ = actionsModel_.PublishSelectMaintenanceTransporter( id_, availability_->type_->GetId(), destination );
@@ -431,10 +431,7 @@ void LogisticMaintenanceSelectionDialog::NotifyUpdated( const kernel::Profile_AB
 void LogisticMaintenanceSelectionDialog::OnDestinationSelected()
 {
     selectedDestination_ = candidateDestination_;
-    if( candidateDestination_ )
-        destinationLabel_->setText( candidateDestination_->GetName() );
-    else
-        destinationLabel_->setText( "---" );
+    destinationLabel_->setText( candidateDestination_ ? candidateDestination_->GetName() : "---" );
 }
 
 void LogisticMaintenanceSelectionDialog::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
