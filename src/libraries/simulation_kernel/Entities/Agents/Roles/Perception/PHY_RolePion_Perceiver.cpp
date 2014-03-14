@@ -449,7 +449,7 @@ void PHY_RolePion_Perceiver::DisableRecoUrbanBlock( int id )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsUsingActiveRadar() const
 {
-    return pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar() || pPerceptionFlyingShell_;
+    return pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar() || pPerceptionFlyingShell_ && pPerceptionFlyingShell_->HasLocalisationToHandle();
 }
 
 // -----------------------------------------------------------------------------
@@ -458,7 +458,7 @@ bool PHY_RolePion_Perceiver::IsUsingActiveRadar() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const
 {
-    return pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar( radarClass ) || pPerceptionFlyingShell_;
+    return pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar( radarClass ) || pPerceptionFlyingShell_ && pPerceptionFlyingShell_->HasLocalisationToHandle();
 }
 
 // -----------------------------------------------------------------------------
