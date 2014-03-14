@@ -1055,12 +1055,12 @@ end
 
 --- Deprecated, use integration.GetBackAmbulances instead
 --- Makes the given supported unit give back the ambulances previously lent to it by this entity.
--- @see integration.StartLendVSRAM
+-- @see integration.GetBackAmbulances
 -- @param supportedUnit Directia agent, the agent giving back the ambulances.
 -- @param nbrAmbulances Integer, the number of ambulances to retrieve.
 -- This method can only be called by an agent.
 integration.StartGetVSRAM = function ( supportedUnit, nbrAmbulances )
-    integration.LendAmbulances( supportedUnit.source, nbrAmbulances )
+    integration.GetBackAmbulances( supportedUnit.source, nbrAmbulances )
 end
 
 --- Deprecated
