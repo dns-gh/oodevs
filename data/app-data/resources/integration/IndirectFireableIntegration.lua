@@ -179,7 +179,7 @@ end
 
 integration.findEnemyToMortarIndirectFire = function( targets )
     if not targets or #targets < 1 then
-        return nil
+        return {}
     else
         local DEC_ConnaissanceAgent_EstUnEnnemi = DEC_ConnaissanceAgent_EstUnEnnemi
         local DEC_ConnaissanceAgent_EstDetruitTactique = DEC_ConnaissanceAgent_EstDetruitTactique
