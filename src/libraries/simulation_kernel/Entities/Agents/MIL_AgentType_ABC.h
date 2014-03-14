@@ -63,6 +63,7 @@ protected:
     MIL_AgentType_ABC();
 
     void SetTerrorist( bool isTerrorist );
+    void SetMilitia( bool isMilitia );
 
 private:
     //! @name Init
@@ -79,6 +80,7 @@ private:
     const PHY_NatureLevel* pNatureLevel_;
     const PHY_NatureAtlas* pNatureAtlas_;
     bool isTerrorist_;
+    bool isMilitia_;
     //@}
 };
 

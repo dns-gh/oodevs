@@ -23,6 +23,7 @@ MIL_AgentType_ABC::MIL_AgentType_ABC( const std::string& strName, const std::str
     , pNatureLevel_( 0 )
     , pNatureAtlas_( 0 )
     , isTerrorist_ ( false )
+    , isMilitia_   ( false )
 {
     xis >> xml::attribute( "id", nID_ );
     InitializeNature( xis );
@@ -37,6 +38,7 @@ MIL_AgentType_ABC::MIL_AgentType_ABC()
     , pNatureLevel_( 0 )
     , pNatureAtlas_( 0 )
     , isTerrorist_ ( false )
+    , isMilitia_   ( false )
 {
     // NOTHING
 }
@@ -123,7 +125,12 @@ const std::string& MIL_AgentType_ABC::GetMilPionType() const
 // -----------------------------------------------------------------------------
 bool MIL_AgentType_ABC::IsMilitia() const
 {
-    return false;
+    return isMilitia_;
+}
+
+void MIL_AgentType_ABC::SetMilitia( bool isMilitia )
+{
+    isMilitia_ = isMilitia;
 }
 
 // -----------------------------------------------------------------------------
