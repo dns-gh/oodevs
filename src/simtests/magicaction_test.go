@@ -338,6 +338,7 @@ func WaitStateLeft(c *C, client *swapi.Client, handlingId uint32,
 
 const (
 	automatLog = 14
+	repairTeam = 19
 )
 
 func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
@@ -347,17 +348,17 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 	defer stopSimAndClient(c, sim, client)
 	const TRANSHeavyEquipmentTransporterSystem = 24
 
-	// error: invalid parameters count, parameters expected
+	// error: invalid parameters count, 2 mandatory parameters expected
 	err := client.SelectMaintenanceTransporterTest(swapi.MakeParameters())
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid number of parameters: want between 2 and 3, got 0")
 
 	// error: first parameter must be an identifier
 	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeEmpty(), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem)))
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[0\\] is missing")
 
 	// error: second parameter must be an identifier
 	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty()))
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[1\\] is missing")
 
 	// error: first parameter must be a valid request identifier
 	err = client.SelectMaintenanceTransporter(1000, TRANSHeavyEquipmentTransporterSystem)
@@ -387,6 +388,48 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 
 	WaitStateLeft(c, client, handlingId,
 		sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection)
+}
+
+func (s *TestSuite) TestSelectMaintenanceTransporterWithAgentAsDestination(c *C) {
+	opts := NewAllUserOpts(ExCrossroadSmallLog)
+	opts.Step = 300
+	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
+	const TRANSHeavyEquipmentTransporterSystem = 24
+
+	// Teleport repair team away
+	err := client.SetAutomatMode(16, false)
+	c.Assert(err, IsNil)
+	to := swapi.Point{X: -15.6967, Y: 28.2224}
+	err = client.Teleport(swapi.MakeUnitTasker(repairTeam), to)
+	c.Assert(err, IsNil)
+
+	SetManualMaintenance(c, client, automatLog)
+	handlingId := TriggerBreakdown(c, client)
+
+	WaitStateEntered(c, client, handlingId,
+		sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection)
+
+	// error: third parameter is an invalid agent identifier
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(handlingId),
+		swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem),
+		swapi.MakeAgent(0)))
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid destination agent identifier")
+
+	// trigger select maintenance transporter with destination
+	endTick := client.Model.GetData().MaintenanceHandlings[handlingId].Provider.EndTick
+	c.Assert(endTick, Equals, int32(0))
+
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(handlingId),
+		swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem),
+		swapi.MakeAgent(repairTeam)))
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		h := data.MaintenanceHandlings[handlingId]
+		return h != nil && h.Provider != nil &&
+			h.Provider.EndTick != endTick
+	})
 }
 
 func (s *TestSuite) TestSelectDiagnosisTeam(c *C) {

@@ -435,8 +435,9 @@ type MagicOrder struct {
 }
 
 type MaintenanceHandlingProvider struct {
-	Id    uint32
-	State sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus
+	Id      uint32
+	State   sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus
+	EndTick int32
 }
 
 type MaintenanceHandling struct {
