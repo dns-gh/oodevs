@@ -112,7 +112,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     , pPerceptionRecoPoint_          ( new PHY_PerceptionRecoPoint( *this ) )
     , pPerceptionRecoLocalisation_   ( new PHY_PerceptionRecoLocalisation( *this ) )
     , pPerceptionRecoUrbanBlock_     ( new PHY_PerceptionRecoUrbanBlock( *this ) )
-    , pPerceptionRadar_              ( 0 )
+    , pPerceptionRadar_              ( new PHY_PerceptionRadar( *this ) )
     , pPerceptionAlat_               ( 0 )
     , pPerceptionSurveillance_       ( new PHY_PerceptionRecoSurveillance( *this ) )
     , pPerceptionRecoObjects_        ( new PHY_PerceptionRecoObjects( *this ) )
@@ -126,6 +126,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
     activePerceptions_.push_back( pPerceptionRecoObjects_ );
     activePerceptions_.push_back( pPerceptionSurveillance_ );
+    activePerceptions_.push_back( pPerceptionRadar_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +153,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     , pPerceptionRecoPoint_          ( new PHY_PerceptionRecoPoint( *this ) )
     , pPerceptionRecoLocalisation_   ( new PHY_PerceptionRecoLocalisation( *this ) )
     , pPerceptionRecoUrbanBlock_     ( new PHY_PerceptionRecoUrbanBlock( *this ) )
-    , pPerceptionRadar_              ( 0 )
+    , pPerceptionRadar_              ( new PHY_PerceptionRadar( *this ) )
     , pPerceptionAlat_               ( 0 )
     , pPerceptionSurveillance_       ( new PHY_PerceptionRecoSurveillance( *this ) )
     , pPerceptionRecoObjects_        ( new PHY_PerceptionRecoObjects( *this ) )
@@ -165,6 +166,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
     activePerceptions_.push_back( pPerceptionRecoObjects_ );
     activePerceptions_.push_back( pPerceptionSurveillance_ );
+    activePerceptions_.push_back( pPerceptionRadar_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -390,7 +392,7 @@ void PHY_RolePion_Perceiver::DisableRecoUrbanBlock( int id )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsUsingActiveRadar() const
 {
-    return pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar()
+    return pPerceptionRadar_->IsUsingActiveRadar()
         || pPerceptionFlyingShell_->HasLocalisationToHandle();
 }
 
@@ -400,7 +402,7 @@ bool PHY_RolePion_Perceiver::IsUsingActiveRadar() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const
 {
-    return pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar( radarClass )
+    return pPerceptionRadar_->IsUsingActiveRadar( radarClass )
         || pPerceptionFlyingShell_->HasLocalisationToHandle();
 }
 
@@ -410,12 +412,8 @@ bool PHY_RolePion_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& radarClas
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableRadarOnLocalisation( const PHY_RadarClass& radarClass, const TER_Localisation& localisation )
 {
-    if( !pPerceptionRadar_ )
-    {
-        pPerceptionRadar_ = new PHY_PerceptionRadar( *this );
-        activePerceptions_.push_back( pPerceptionRadar_ );
+    if( !pPerceptionRadar_->HasRadarToHandle() )
         bRadarStateHasChanged_ = true;
-    }
     return pPerceptionRadar_->EnableRadar( radarClass, localisation );
 }
 
@@ -425,15 +423,9 @@ int PHY_RolePion_Perceiver::EnableRadarOnLocalisation( const PHY_RadarClass& rad
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& radarClass, int id )
 {
-   if( !pPerceptionRadar_ )
-        return;
     pPerceptionRadar_->DisableRadar( radarClass, id );
     if( !pPerceptionRadar_->HasRadarToHandle() )
-    {
-        boost::remove_erase( activePerceptions_, pPerceptionRadar_ );
-        Reset( pPerceptionRadar_ );
         bRadarStateHasChanged_ = true;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -442,12 +434,8 @@ void PHY_RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& r
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::EnableRadar( const PHY_RadarClass& radarClass )
 {
-    if( !pPerceptionRadar_ )
-    {
-        pPerceptionRadar_ = new PHY_PerceptionRadar( *this );
-        activePerceptions_.push_back( pPerceptionRadar_ );
+    if( !pPerceptionRadar_->HasRadarToHandle() )
         bRadarStateHasChanged_ = true;
-    }
     return pPerceptionRadar_->EnableRadar( radarClass );
 }
 
@@ -457,15 +445,9 @@ void PHY_RolePion_Perceiver::EnableRadar( const PHY_RadarClass& radarClass )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRadar( const PHY_RadarClass& radarClass )
 {
-    if( !pPerceptionRadar_ )
-        return;
     pPerceptionRadar_->DisableRadar( radarClass );
     if( !pPerceptionRadar_->HasRadarToHandle() )
-    {
-        boost::remove_erase( activePerceptions_, pPerceptionRadar_ );
-        Reset( pPerceptionRadar_ );
         bRadarStateHasChanged_ = true;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -751,8 +733,8 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
     activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
     activePerceptions_.push_back( pPerceptionRecoObjects_ );
     activePerceptions_.push_back( pPerceptionSurveillance_ );
+    activePerceptions_.push_back( pPerceptionRadar_ );
     Reset( pPerceptionCoupDeSonde_ );
-    Reset( pPerceptionRadar_ );
     Reset( pPerceptionAlat_ );
 }
 
