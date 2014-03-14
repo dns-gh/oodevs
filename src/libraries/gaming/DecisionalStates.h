@@ -14,13 +14,17 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/Aggregatable_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace sword
 {
     class DecisionalState;
     class UnitAttributes;
+}
+
+namespace kernel
+{
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -33,14 +37,13 @@ class DecisionalStates : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< sword::DecisionalState >
                        , public kernel::Updatable_ABC< sword::UnitAttributes >
                        , public kernel::Displayable_ABC
-                       , public kernel::Aggregatable_ABC
                        , public gui::Drawable_ABC
                        , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DecisionalStates();
+    explicit DecisionalStates( const kernel::Entity_ABC& entity );
     virtual ~DecisionalStates();
     //@}
 
@@ -59,20 +62,15 @@ private:
     typedef T_Values::const_iterator   CIT_Values;
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual void Aggregate( const bool& );
-    //@}
-
 private:
     //! @name Member data
     //@{
+    const kernel::Entity_ABC& entity_;
     T_Values values_;
     bool drawSauvegarde_;
     bool draw1stEchelon_;
     bool drawEclairage_;
     bool drawEtatOps_;
-    float ratio_;
     //@}
 };
 

@@ -97,12 +97,3 @@ bool PopulationKnowledgePositions::CanAggregate() const
 {
     return false;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledgePositions::IsAggregated
-// Created: LGY 2011-03-07
-// -----------------------------------------------------------------------------
-bool PopulationKnowledgePositions::IsAggregated() const
-{
-    return false;
-}

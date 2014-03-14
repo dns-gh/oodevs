@@ -70,7 +70,6 @@ Attributes::Attributes( kernel::Entity_ABC& entity, Controller& controller, cons
     , bPrisoner_                        ( false )
     , bUnderground_                     ( false )
     , bRefugeesManaged_                 ( false )
-    , aggregated_                       ( false )
     , isPC_                             ( false )
     , bAmbianceSafety_                  ( false )
     , surrenderedTo_                    ( 0 )
@@ -326,7 +325,7 @@ void Attributes::DisplayInSummary( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( aggregated_
+    if( entity_.IsAggregated()
     || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ || bUnderground_ )
     || ! viewport.IsHotpointVisible() || ! tools.ShouldDisplay( "UnitDetails" ) )
         return;
@@ -344,15 +343,6 @@ void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, 
     if( bUnderground_ )
         tools.DrawIcon( xpm_underground, where, 150.f, gui::GlTools_ABC::pixels );
     glPopAttrib();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Attributes::Aggregate
-// Created: AGE 2006-04-11
-// -----------------------------------------------------------------------------
-void Attributes::Aggregate( const bool& bDoMe )
-{
-    aggregated_ = bDoMe;
 }
 
 // -----------------------------------------------------------------------------

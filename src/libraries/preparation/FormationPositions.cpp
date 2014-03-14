@@ -21,8 +21,7 @@
 // Created: SBO 2009-02-02
 // -----------------------------------------------------------------------------
 FormationPositions::FormationPositions( const kernel::Entity_ABC& formation )
-    : formation_ ( formation )
-    , aggregated_( false )
+    : formation_( formation )
 {
     // NOTHING
 }
@@ -42,7 +41,7 @@ FormationPositions::~FormationPositions()
 // -----------------------------------------------------------------------------
 geometry::Point2f FormationPositions::GetPosition( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !formation_.IsAggregated() )
     {
         geometry::Point2f aggregatedPosition;
         unsigned int count = 0u;
@@ -69,7 +68,7 @@ geometry::Point2f FormationPositions::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 float FormationPositions::GetHeight( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !formation_.IsAggregated() )
     {
         float height = 0;
         unsigned count = 0;
@@ -136,24 +135,6 @@ void FormationPositions::Move( const geometry::Point2f& point )
 bool FormationPositions::CanAggregate() const
 {
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationPositions::IsAggregated
-// Created: LGY 2011-03-04
-// -----------------------------------------------------------------------------
-bool FormationPositions::IsAggregated() const
-{
-    return aggregated_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationPositions::Aggregate
-// Created: LGY 2011-03-04
-// -----------------------------------------------------------------------------
-void FormationPositions::Aggregate( const bool& bDummy )
-{
-    aggregated_ = bDummy;
 }
 
 // -----------------------------------------------------------------------------

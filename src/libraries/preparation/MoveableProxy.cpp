@@ -91,12 +91,3 @@ bool MoveableProxy::CanAggregate() const
 {
     throw MASA_EXCEPTION( "not implemented" );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MoveableProxy::IsAggregated
-// Created: LGY 2012-05-07
-// -----------------------------------------------------------------------------
-bool MoveableProxy::IsAggregated() const
-{
-    throw MASA_EXCEPTION( "not implemented" );
-}

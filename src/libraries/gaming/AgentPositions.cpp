@@ -30,7 +30,6 @@ AgentPositions::AgentPositions( kernel::Controller& controller, const Agent_ABC&
     : controller_( controller )
     , agent_( agent )
     , converter_( converter )
-    , aggregated_( false )
     , height_( 0 )
     , dead_( false )
 {
@@ -52,7 +51,7 @@ AgentPositions::~AgentPositions()
 // -----------------------------------------------------------------------------
 Point2f AgentPositions::GetPosition( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !agent_.IsAggregated() )
         return position_;
     return agent_.Get< TacticalHierarchies >().GetUp().Get< Positions >().GetPosition();
 }
@@ -63,7 +62,7 @@ Point2f AgentPositions::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 float AgentPositions::GetHeight( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !agent_.IsAggregated() )
         return height_;
     return agent_.Get< TacticalHierarchies >().GetUp().Get< Positions >().GetHeight();
 }
@@ -118,17 +117,8 @@ void AgentPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void AgentPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() && tools.ShouldDisplay( "UnitDetails" ) )
+    if( viewport.IsHotpointVisible() && tools.ShouldDisplay( "UnitDetails" ) && !agent_.IsAggregated() )
         tools.DrawCross( where, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentPositions::Aggregate
-// Created: AGE 2006-04-11
-// -----------------------------------------------------------------------------
-void AgentPositions::Aggregate( const bool& value )
-{
-    aggregated_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -147,13 +137,4 @@ void AgentPositions::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 bool AgentPositions::CanAggregate() const
 {
     return !dead_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentPositions::IsAggregated
-// Created: LGY 2011-03-07
-// -----------------------------------------------------------------------------
-bool AgentPositions::IsAggregated() const
-{
-    return aggregated_;
 }
