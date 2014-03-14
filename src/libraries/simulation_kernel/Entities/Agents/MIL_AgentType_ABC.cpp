@@ -24,6 +24,7 @@ MIL_AgentType_ABC::MIL_AgentType_ABC( const std::string& strName, const std::str
     , pNatureAtlas_( 0 )
     , isTerrorist_ ( false )
     , isMilitia_   ( false )
+    , isRefugee_   ( false )
 {
     xis >> xml::attribute( "id", nID_ );
     InitializeNature( xis );
@@ -39,6 +40,7 @@ MIL_AgentType_ABC::MIL_AgentType_ABC()
     , pNatureAtlas_( 0 )
     , isTerrorist_ ( false )
     , isMilitia_   ( false )
+    , isRefugee_   ( false )
 {
     // NOTHING
 }
@@ -153,5 +155,10 @@ void MIL_AgentType_ABC::SetTerrorist( bool isTerrorist )
 // -----------------------------------------------------------------------------
 bool MIL_AgentType_ABC::IsRefugee() const
 {
-    return false;
+    return isRefugee_;
+}
+
+void MIL_AgentType_ABC::SetRefugee( bool isRefugee )
+{
+    isRefugee_ = isRefugee;
 }

@@ -26,7 +26,6 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Workspace.h"
 
-#include "Entities/Specialisations/Refugie/MIL_AgentTypePionREFUGIE.h"
 #include "Entities/Specialisations/LOG/TC2/MIL_AgentTypePionLOGTC2.h"
 #include "Entities/Specialisations/LOG/Medical/MIL_AgentTypePionLOGMedical.h"
 #include "Entities/Specialisations/LOG/Maintenance/MIL_AgentTypePionLOGMaintenance.h"
@@ -155,6 +154,14 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
             t->SetMilitia( true );
             return t;
         };
+    pionTypeAllocators_[ "Pion REFUGIE" ] =
+        []( const std::string& name, const std::string& type, xml::xistream& xis )
+            -> const MIL_AgentTypePion*
+        {
+            auto t = new MIL_AgentTypePion( name, type, xis );
+            t->SetRefugee( true );
+            return t;
+        };
         
     pionTypeAllocators_[ "Pion LOG TC2"                ] = &MIL_AgentTypePionLOGTC2         ::Create;
     pionTypeAllocators_[ "Pion LOG BLD Sante"          ] = &MIL_AgentTypePionLOGMedical     ::Create;
@@ -164,7 +171,6 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     pionTypeAllocators_[ "Pion LOG BLT Maintenance"    ] = &MIL_AgentTypePionLOGMaintenance ::Create;
     pionTypeAllocators_[ "Pion LOG BLT Ravitaillement" ] = &MIL_AgentTypePionLOGSupply      ::Create;
     pionTypeAllocators_[ "Pion LOG Convoi"             ] = &MIL_AgentTypePionLOGConvoy      ::Create;
-    pionTypeAllocators_[ "Pion REFUGIE"                ] = &MIL_AgentTypePionREFUGIE        ::Create;
     pionTypeAllocators_[ "Pion Organization"           ] = &MIL_AgentTypePionLOGTC2         ::Create;
     pionTypeAllocators_[ "Pion Remote"                 ] = &MIL_AgentTypePion_Remote        ::Create;
 

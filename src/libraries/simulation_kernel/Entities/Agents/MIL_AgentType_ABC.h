@@ -64,6 +64,7 @@ protected:
 
     void SetTerrorist( bool isTerrorist );
     void SetMilitia( bool isMilitia );
+    void SetRefugee( bool isRefugee );
 
 private:
     //! @name Init
@@ -81,6 +82,7 @@ private:
     const PHY_NatureAtlas* pNatureAtlas_;
     bool isTerrorist_;
     bool isMilitia_;
+    bool isRefugee_;
     //@}
 };
 
