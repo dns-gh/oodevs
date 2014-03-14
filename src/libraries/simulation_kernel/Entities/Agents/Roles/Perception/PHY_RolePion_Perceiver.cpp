@@ -110,7 +110,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     , bFireObserver_                 ( false )
     , pPerceptionCoupDeSonde_        ( 0 )
     , pPerceptionRecoPoint_          ( new PHY_PerceptionRecoPoint( *this ) )
-    , pPerceptionRecoLocalisation_   ( 0 )
+    , pPerceptionRecoLocalisation_   ( new PHY_PerceptionRecoLocalisation( *this ) )
     , pPerceptionRecoUrbanBlock_     ( 0 )
     , pPerceptionRadar_              ( 0 )
     , pPerceptionAlat_               ( 0 )
@@ -122,6 +122,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     activePerceptions_.push_back( pPerceptionView_ );
     activePerceptions_.push_back( pPerceptionFlyingShell_ );
     activePerceptions_.push_back( pPerceptionRecoPoint_ );
+    activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +147,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     , bPerceptionUponRequest_        ( false )
     , pPerceptionCoupDeSonde_        ( 0 )
     , pPerceptionRecoPoint_          ( new PHY_PerceptionRecoPoint( *this ) )
-    , pPerceptionRecoLocalisation_   ( 0 )
+    , pPerceptionRecoLocalisation_   ( new PHY_PerceptionRecoLocalisation( *this ) )
     , pPerceptionRecoUrbanBlock_     ( 0 )
     , pPerceptionRadar_              ( 0 )
     , pPerceptionAlat_               ( 0 )
@@ -157,6 +158,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     activePerceptions_.push_back( pPerceptionView_ );
     activePerceptions_.push_back( pPerceptionFlyingShell_ );
     activePerceptions_.push_back( pPerceptionRecoPoint_ );
+    activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -347,25 +349,11 @@ void PHY_RolePion_Perceiver::DisableRecoObjects( int id )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::EnsurePerceptionRecoLocalisation
-// Created: LDC 2009-12-04
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::EnsurePerceptionRecoLocalisation()
-{
-    if( !pPerceptionRecoLocalisation_ )
-    {
-        pPerceptionRecoLocalisation_ = new PHY_PerceptionRecoLocalisation( *this );
-        activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
 {
-    EnsurePerceptionRecoLocalisation();
     return pPerceptionRecoLocalisation_->AddLocalisationWithGrowthSpeed( localisation, rGrowthSpeed, callerAgent );
 }
 
@@ -375,8 +363,25 @@ int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& loca
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent )
 {
-    EnsurePerceptionRecoLocalisation();
     return pPerceptionRecoLocalisation_->AddLocalisationWithDefaultGrowthSpeed( localisation, callerAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::EnableControlLocalisation
+// Created: JVT 2004-10-28
+// -----------------------------------------------------------------------------
+int PHY_RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent )
+{
+    return pPerceptionRecoLocalisation_->AddLocalisationWithDefaultGrowthSpeed( localisation, callerAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::DisableRecoLocalisation
+// Created: JVT 2004-10-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::DisableRecoLocalisation( int id )
+{
+    pPerceptionRecoLocalisation_->RemoveLocalisation( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -391,32 +396,6 @@ int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* pUrbanBlo
         activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
     }
     return pPerceptionRecoUrbanBlock_->AddUrbanBlock( pUrbanBlock );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::EnableControlLocalisation
-// Created: JVT 2004-10-28
-// -----------------------------------------------------------------------------
-int PHY_RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent )
-{
-    EnsurePerceptionRecoLocalisation();
-    return pPerceptionRecoLocalisation_->AddLocalisationWithDefaultGrowthSpeed( localisation, callerAgent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::DisableRecoLocalisation
-// Created: JVT 2004-10-22
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::DisableRecoLocalisation( int id )
-{
-    if( !pPerceptionRecoLocalisation_ )
-        return;
-    pPerceptionRecoLocalisation_->RemoveLocalisation( id );
-    if( !pPerceptionRecoLocalisation_->HasLocalisationToHandle() )
-    {
-        boost::remove_erase( activePerceptions_, pPerceptionRecoLocalisation_ );
-        Reset( pPerceptionRecoLocalisation_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -798,8 +777,8 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
     activePerceptions_.push_back( pPerceptionView_ );
     activePerceptions_.push_back( pPerceptionFlyingShell_ );
     activePerceptions_.push_back( pPerceptionRecoPoint_ );
+    activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
     Reset( pPerceptionCoupDeSonde_ );
-    Reset( pPerceptionRecoLocalisation_ );
     Reset( pPerceptionRecoUrbanBlock_ );
     Reset( pPerceptionRecoObjects_ );
     Reset( pPerceptionSurveillance_ );
@@ -955,8 +934,7 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
     PrepareRadarData             ();
     lastPerceiverPosition_ = owner_->GetRole< PHY_RoleInterface_Location >().GetPosition();
     pPerceptionRecoPoint_->Update();
-   if( pPerceptionRecoLocalisation_ )
-        pPerceptionRecoLocalisation_->Update();
+    pPerceptionRecoLocalisation_->Update();
     if( pPerceptionRecoObjects_ )
         pPerceptionRecoObjects_->Update();
     if( HasChanged() )
@@ -1315,7 +1293,8 @@ void PHY_RolePion_Perceiver::Execute( detection::DetectionComputer& algorithm ) 
 void PHY_RolePion_Perceiver::Execute( dotation::ConsumptionComputer_ABC& algorithm ) const
 {
     if( pPerceptionRecoPoint_->HasPointToHandle()
-        || pPerceptionRecoLocalisation_ || pPerceptionRecoUrbanBlock_ || pPerceptionRecoObjects_ )
+        || pPerceptionRecoLocalisation_->HasLocalisationToHandle()
+        || pPerceptionRecoUrbanBlock_ || pPerceptionRecoObjects_ )
         algorithm.SetConsumptionMode( PHY_ConsumptionType::moving_ );
 }
 

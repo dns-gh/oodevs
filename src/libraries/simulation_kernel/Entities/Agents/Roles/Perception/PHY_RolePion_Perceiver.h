@@ -223,7 +223,6 @@ private:
     void PrepareRadarData();
     void UpdatePeriphericalVisionState();
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
-    void EnsurePerceptionRecoLocalisation();
     //@}
 
 private:
