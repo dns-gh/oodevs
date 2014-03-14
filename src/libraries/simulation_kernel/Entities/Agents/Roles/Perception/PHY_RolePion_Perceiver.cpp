@@ -111,7 +111,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     , pPerceptionCoupDeSonde_        ( 0 )
     , pPerceptionRecoPoint_          ( new PHY_PerceptionRecoPoint( *this ) )
     , pPerceptionRecoLocalisation_   ( new PHY_PerceptionRecoLocalisation( *this ) )
-    , pPerceptionRecoUrbanBlock_     ( 0 )
+    , pPerceptionRecoUrbanBlock_     ( new PHY_PerceptionRecoUrbanBlock( *this ) )
     , pPerceptionRadar_              ( 0 )
     , pPerceptionAlat_               ( 0 )
     , pPerceptionSurveillance_       ( 0 )
@@ -123,6 +123,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     activePerceptions_.push_back( pPerceptionFlyingShell_ );
     activePerceptions_.push_back( pPerceptionRecoPoint_ );
     activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
+    activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +149,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     , pPerceptionCoupDeSonde_        ( 0 )
     , pPerceptionRecoPoint_          ( new PHY_PerceptionRecoPoint( *this ) )
     , pPerceptionRecoLocalisation_   ( new PHY_PerceptionRecoLocalisation( *this ) )
-    , pPerceptionRecoUrbanBlock_     ( 0 )
+    , pPerceptionRecoUrbanBlock_     ( new PHY_PerceptionRecoUrbanBlock( *this ) )
     , pPerceptionRadar_              ( 0 )
     , pPerceptionAlat_               ( 0 )
     , pPerceptionSurveillance_       ( 0 )
@@ -159,6 +160,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     activePerceptions_.push_back( pPerceptionFlyingShell_ );
     activePerceptions_.push_back( pPerceptionRecoPoint_ );
     activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
+    activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -390,11 +392,6 @@ void PHY_RolePion_Perceiver::DisableRecoLocalisation( int id )
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* pUrbanBlock )
 {
-    if( !pPerceptionRecoUrbanBlock_ )
-    {
-        pPerceptionRecoUrbanBlock_ = new PHY_PerceptionRecoUrbanBlock( *this );
-        activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
-    }
     return pPerceptionRecoUrbanBlock_->AddUrbanBlock( pUrbanBlock );
 }
 
@@ -404,14 +401,7 @@ int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* pUrbanBlo
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRecoUrbanBlock( int id )
 {
-    if( !pPerceptionRecoUrbanBlock_ )
-        return;
     pPerceptionRecoUrbanBlock_->RemoveUrbanBlock( id );
-    if( !pPerceptionRecoUrbanBlock_->HasLocalisationToHandle() )
-    {
-        boost::remove_erase( activePerceptions_, pPerceptionRecoUrbanBlock_ );
-        Reset( pPerceptionRecoUrbanBlock_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -778,8 +768,8 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
     activePerceptions_.push_back( pPerceptionFlyingShell_ );
     activePerceptions_.push_back( pPerceptionRecoPoint_ );
     activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
+    activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
     Reset( pPerceptionCoupDeSonde_ );
-    Reset( pPerceptionRecoUrbanBlock_ );
     Reset( pPerceptionRecoObjects_ );
     Reset( pPerceptionSurveillance_ );
     Reset( pPerceptionRadar_ );
@@ -1294,7 +1284,8 @@ void PHY_RolePion_Perceiver::Execute( dotation::ConsumptionComputer_ABC& algorit
 {
     if( pPerceptionRecoPoint_->HasPointToHandle()
         || pPerceptionRecoLocalisation_->HasLocalisationToHandle()
-        || pPerceptionRecoUrbanBlock_ || pPerceptionRecoObjects_ )
+        || pPerceptionRecoUrbanBlock_->HasLocalisationToHandle()
+        || pPerceptionRecoObjects_ )
         algorithm.SetConsumptionMode( PHY_ConsumptionType::moving_ );
 }
 
@@ -1538,6 +1529,5 @@ double PHY_RolePion_Perceiver::GetPerception( const MT_Vector2D& from, const MT_
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsReconnoitering( MIL_UrbanObject_ABC* pUrbanBlock ) const
 {
-    return pPerceptionRecoUrbanBlock_ && pPerceptionRecoUrbanBlock_->IsReconnoitering( pUrbanBlock );
+    return pPerceptionRecoUrbanBlock_->IsReconnoitering( pUrbanBlock );
 }
-

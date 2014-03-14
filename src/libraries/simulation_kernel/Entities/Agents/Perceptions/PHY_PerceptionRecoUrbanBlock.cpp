@@ -93,7 +93,6 @@ PHY_PerceptionRecoUrbanBlock::~PHY_PerceptionRecoUrbanBlock()
 {
     for( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
         delete *it;
-    recos_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -102,8 +101,9 @@ PHY_PerceptionRecoUrbanBlock::~PHY_PerceptionRecoUrbanBlock()
 // -----------------------------------------------------------------------------
 int PHY_PerceptionRecoUrbanBlock::AddUrbanBlock( const MIL_UrbanObject_ABC* pUrbanBlock )
 {
-    boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = perceiver_.GetPion().GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanBlock );
-    return Add( new PHY_PerceptionRecoUrbanBlockReco( pUrbanBlock, pKnowledge ) );
+    return Add( new PHY_PerceptionRecoUrbanBlockReco(
+        pUrbanBlock,
+        perceiver_.GetPion().GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanBlock ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,11 +134,11 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const MT_Vecto
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
-    TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-    for( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
+    for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
+        TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
         ( *itReco )->GetAgentsInside( perceiver_, perceivableAgents );
-        for( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
+        for( auto it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
             detection::DetectionComputer detectionComputer( target );
@@ -174,7 +174,7 @@ bool PHY_PerceptionRecoUrbanBlock::HasLocalisationToHandle() const
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRecoUrbanBlock::IsReconnoitering( MIL_UrbanObject_ABC* urbanBlock ) const
 {
-    for ( auto it = recos_.begin(); it != recos_.end(); ++it )
+    for( auto it = recos_.begin(); it != recos_.end(); ++it )
         if ( (*it)->GeturbanBlock() == urbanBlock )
             return true;
     return false;
