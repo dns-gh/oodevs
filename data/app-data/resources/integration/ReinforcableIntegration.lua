@@ -155,13 +155,16 @@ end
 
 --- For a given set of 'kUnit', returns the table of units able to perform the given 'action'onto the given 'kObject'.
 -- This method can only be called by an automat or an agent.
--- @param kObject, the element to act on.
--- @param kUnits, the set of agent to perform the work.
--- @return a table
+-- @param kUnits the set of directia agents to perform the work.
+-- @param kObject the directia object to act on.
+-- @param action the string name of the action to perform. Possible actions are:
+-- "construct", "improve", "bypass", "deconstruct", "removeImprovement". If the provided 
+-- action name is unknown, the method returns an empty table.
+-- @return the table of simulation units able to perform the given action.
 integration.unitsAbleToWorkOnObject = function ( kUnits, kObject, action )
     local localisationObject = kObject:getLocalisation()
     if not localisationObject then
-        return {}
+        return emptyTable
     end 
     local simUnits = {}
     for i = 1, #kUnits do 
@@ -178,18 +181,16 @@ integration.unitsAbleToWorkOnObject = function ( kUnits, kObject, action )
     elseif action == "removeImprovement" then
         return DEC_GetAgentsPouvantDevaloriserAvecLocalisation( simUnits, kObject:getType(), localisationObject )
     else
-        return {}
+        return emptyTable
     end
 end
 
---- For a given set of 'kUnit', returns the table of units able to perform the given 'action'onto the given 'object'.
--- This method can only be called by an automat or an agent.
--- @param kObject, the element to act on.
--- @param kUnits, the set of agent to perform the work.
--- @return a table
-integration.agentHasDotationToImprove = function( kUnit, object )
-    local dotations = DEC_GetAgentDotationManquantePourValoriserObjet( kUnit.source, object.source ) -- returns the needed dotation to improve and the number left.
-    if DEC_Agent_GetAgentDotation( kUnit.source, dotations.first ) >= 1 then -- until the agent has at least one dotation it can improve
-        return true
-    end
+--- Returns 'true' if the provided directia agent (the 'kUnit' parameter) has dotation left to perform the imporvement
+-- of the given directia object. It returns 'false' otherwise.
+-- @param kUnits the directia agent to perform the work
+-- @param kObject the directia object to act on.
+-- @return boolean
+integration.agentHasDotationToImprove = function( kUnit, kObject )
+    local dotations = DEC_GetAgentDotationManquantePourValoriserObjet( kUnit.source, kObject.source ) -- returns the needed dotation to improve and the number left.
+    return DEC_Agent_GetAgentDotation( kUnit.source, dotations.first ) >= 1 -- the agent has at least one dotation to improve
 end
