@@ -631,4 +631,11 @@ func (s *TestSuite) TestUnitTypes(c *C) {
 	HasDecPropertiesOrFunctions(c, client, nbcUnit.Id, unit.Id,
 		[]string{"DEC_Agent_EstAgentNBC"},
 		[]string{"DEC_DecontaminerZone", "DEC_Agent_SeDecontaminer"})
+
+	// Circulation
+	circuUnit, err := client.CreateUnit(automat.Id,
+		getUnitTypeFromName(c, phydb, "VW Combi Type Circulation"), pos)
+	HasDecPropertiesOrFunctions(c, client, circuUnit.Id, unit.Id,
+		nil,
+		[]string{"DEC_Circulation_EquiperItineraireLogistique"})
 }
