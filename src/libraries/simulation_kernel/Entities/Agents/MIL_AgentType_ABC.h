@@ -62,6 +62,8 @@ public:
 protected:
     MIL_AgentType_ABC();
 
+    void SetTerrorist( bool isTerrorist );
+
 private:
     //! @name Init
     //@{
@@ -76,6 +78,7 @@ private:
     const std::string strType_;
     const PHY_NatureLevel* pNatureLevel_;
     const PHY_NatureAtlas* pNatureAtlas_;
+    bool isTerrorist_;
     //@}
 };
 
