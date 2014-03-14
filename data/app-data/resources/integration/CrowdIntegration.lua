@@ -267,34 +267,38 @@ integration.crowdHasFlow = function( crowd )
     return DEC_ConnaissancePopulation_HasFlow( myself, crowd.source )
 end
 
+--- Start demonstrating crowd
+integration.startAgressCrowd = function()
+    meKnowledge.actionOnCrowd = DEC_StartAgresserFoule()
+end
+
+--- Stop demonstrating crowd
+integration.stopAgressCrowd = function()
+    if meKnowledge.actionOnCrowd then
+        meKnowledge.actionOnCrowd = DEC__StopAction(meKnowledge.actionOnCrowd)
+        meKnowledge.actionOnCrowd = nil
+    end
+end
+
+--- Start agressing crowd
+integration.startAgress = function()
+    integration.startAgressCrowd()
+    meKnowledge.manifIntensity = S_IntensiteManifestationSurPions()
+    meKnowledge.actionSurPions = DEC__StartTirSurPions( meKnowledge.manifIntensity )
+end
+
+--- Stop agressing crowd
+integration.stopAgress = function()
+    integration.stopAgressCrowd()
+    if meKnowledge.actionSurPions then
+        meKnowledge.actionSurPions = DEC__StopAction( meKnowledge.actionSurPions )
+        meKnowledge.actionSurPions = nil
+    end
+end
+
 --- Returns true if the given agent is of a civilian type, false otherwise.
 -- @param pion Directia agent
 -- @return Boolean
-integration.startAgressCrowd = function( self )
-    self.actionOnCrowd = DEC_StartAgresserFoule()
-end
-
-integration.stopAgressCrowd = function( self )
-    if self.actionOnCrowd then
-        self.actionOnCrowd = DEC__StopAction(self.actionOnCrowd)
-        self.actionOnCrowd = nil
-    end
-end
-
-integration.startAgress = function( self )
-    integration.startAgressCrowd( self )
-    self.manifIntensity = S_IntensiteManifestationSurPions()
-    self.actionSurPions = DEC__StartTirSurPions( self.manifIntensity )
-end
-
-integration.stopAgress = function( self )
-    integration.stopAgressCrowd( self )
-    if self.actionSurPions then
-        self.actionSurPions = DEC__StopAction( self.actionSurPions )
-        self.actionSurPions = nil
-    end
-end
-
 integration.isCivilian = function( pion )
     local typePion = DEC_ConnaissanceAgent_GetMilPionType( pion.source )
     if typePion == "Pion Civilian"
