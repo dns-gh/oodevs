@@ -203,8 +203,7 @@ void PHY_RolePion_Perceiver::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::EnableSensors()
 {
-    if( pPerceptionView_ )
-        pPerceptionView_->Enable();
+    pPerceptionView_->Enable();
 }
 
 // -----------------------------------------------------------------------------
@@ -213,8 +212,7 @@ void PHY_RolePion_Perceiver::EnableSensors()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableSensors()
 {
-    if( pPerceptionView_ )
-        pPerceptionView_->Disable();
+    pPerceptionView_->Disable();
 }
 
 // -----------------------------------------------------------------------------
@@ -246,8 +244,6 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableCoupDeSonde()
 {
-    if( !pPerceptionCoupDeSonde_ )
-        return;
     boost::remove_erase( activePerceptions_, pPerceptionCoupDeSonde_ );
     Reset( pPerceptionCoupDeSonde_ );
 }
@@ -271,8 +267,6 @@ void PHY_RolePion_Perceiver::EnableRecoAlat( const TER_Localisation& localisatio
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRecoAlat()
 {
-    if( !pPerceptionAlat_ )
-        return;
     boost::remove_erase( activePerceptions_, pPerceptionAlat_ );
     Reset( pPerceptionAlat_ );
     owner_->GetKnowledge().GetKsPerception().MakePerceptionsAvailableTimed();
