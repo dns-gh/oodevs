@@ -19,7 +19,10 @@
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "Tools/MIL_Tools.h"
 
-double PHY_PerceptionFlyingShell::rRadius_ = 0;
+namespace
+{
+    double radius = 0;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionFlyingShell::Initialize
@@ -28,12 +31,11 @@ double PHY_PerceptionFlyingShell::rRadius_ = 0;
 void PHY_PerceptionFlyingShell::Initialize( xml::xistream& xis )
 {
     xis >> xml::start( "cobra-radar" )
-            >> xml::attribute( "action-range", rRadius_ )
+            >> xml::attribute( "action-range", radius )
         >> xml::end;
-
-    if( rRadius_ < 0 )
+    if( radius < 0 )
         throw MASA_EXCEPTION( xis.context() + "cobra-radar: action-range < 0" );
-    rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
+    radius = MIL_Tools::ConvertMeterToSim( radius );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +67,7 @@ int PHY_PerceptionFlyingShell::AddLocalisation( const TER_Localisation& localisa
 {
     TER_Localisation* pLocalisation = new TER_Localisation( localisation );
     zones_.push_back( pLocalisation );
-    int id = PHY_Perception_ABC::GetPerceptionId();
+    const int id = PHY_Perception_ABC::GetPerceptionId();
     ids_[ id ] = pLocalisation;
     return id;
 }
@@ -77,8 +79,7 @@ int PHY_PerceptionFlyingShell::AddLocalisation( const TER_Localisation& localisa
 void PHY_PerceptionFlyingShell::RemoveLocalisation( int id )
 {
     const TER_Localisation* pLoc = ids_[ id ];
-
-    IT_ZoneVector it = std::find( zones_.begin(), zones_.end(), pLoc );
+    auto it = std::find( zones_.begin(), zones_.end(), pLoc );
     if( it != zones_.end() )
     {
         delete pLoc;
@@ -99,8 +100,8 @@ void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
     for( auto it = flyingShells.begin(); it != flyingShells.end(); ++it )
     {
         const MIL_Effect_IndirectFire& flyingShell = (**it);
-        for( CIT_ZoneVector itZone = zones_.begin(); itZone != zones_.end(); ++itZone )
-            if( (**itZone).Intersect2DWithCircle( source, rRadius_ ) && flyingShell.IsFlyingThroughLocalisation( **itZone ) )
+        for( auto itZone = zones_.begin(); itZone != zones_.end(); ++itZone )
+            if( (**itZone).Intersect2DWithCircle( source, radius ) && flyingShell.IsFlyingThroughLocalisation( **itZone ) )
             {
                 perceivedFlyingShells.insert( &flyingShell );
                 if( lastPerceivedFlyingShells_.find( &flyingShell ) == lastPerceivedFlyingShells_.end() )

@@ -286,7 +286,7 @@ void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
 bool PHY_RadarType::CanAcquire( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
-{//@TODO MGD CanAcquire
+{
     const PHY_RoleInterface_Location& roleLocationPerceiver = perceiver.GetRole< PHY_RoleInterface_Location >();
     const PHY_RoleInterface_Location& roleLocationTarget    = target   .GetRole< PHY_RoleInterface_Location >();
 
