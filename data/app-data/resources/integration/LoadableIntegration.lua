@@ -449,12 +449,23 @@ end
 
 --- Returns true if this entity can transport the given agent, false otherwise.
 -- This method can only be called by an agent.
+-- Deprecated @see integration.canUnitTransportUnit
 -- @param unit Directia agent
 -- @param onlyLoadable Boolean, whether or not this method will only take into
 -- account components that are defined as 'loadable' in the physical database.
 -- @return Boolean
 integration.canTransportUnit = function( unit, onlyLoadable )
     return DEC_Agent_PeutTransporterPion( unit.source, onlyLoadable )
+end
+
+--- Returns true if an agent can transport another agent, false otherwise.
+-- @param transporter Simulation agent
+-- @param wouldBeTransported Simulation agent
+-- @param onlyLoadable Boolean, whether or not this method will only take into
+-- account components that are defined as 'loadable' in the physical database.
+-- @return Boolean
+integration.canUnitTransportUnit = function( transporter, wouldBeTransported, onlyLoadable )
+    return DEC_Agent_Agent_PeutTransporterPion( transporter, wouldBeTransported, onlyLoadable )
 end
 
 --- Returns true if this entity can transport the given agent knowledge, false otherwise.
