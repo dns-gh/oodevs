@@ -13,6 +13,7 @@
 #define __PHY_MaintenanceComposanteState_h_
 
 #include "MIL.h"
+#include <boost/optional.hpp>
 
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
@@ -71,7 +72,7 @@ public:
 
     void SelectNewState();
     void TransferToLogisticSuperior();
-    void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, const MIL_Agent_ABC* destination );
+    void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, boost::optional< const MIL_Agent_ABC& > destination );
     void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type );
     void SelectRepairTeam( const PHY_ComposanteTypePion& type );
     //@}

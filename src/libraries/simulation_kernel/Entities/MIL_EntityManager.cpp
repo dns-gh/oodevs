@@ -2221,11 +2221,12 @@ void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::Magi
     const auto requestId = protocol::GetIdentifier( params, 0 );
     const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
     protocol::Check( equipment, "invalid equipment type identifier" );
-    const MIL_Agent_ABC* destination = 0;
+    boost::optional< const MIL_Agent_ABC& > destination;
     if( count > 2 )
     {
-        destination = FindAgentPion( protocol::GetAgentId( params, 2 ) );
-        protocol::Check( destination, "invalid destination agent identifier" );
+        const MIL_Agent_ABC* agent = FindAgentPion( protocol::GetAgentId( params, 2 ) );
+        protocol::Check( agent, "invalid destination agent identifier" );
+        destination = *agent;
     }
     ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
     {

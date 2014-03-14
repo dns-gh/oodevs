@@ -150,7 +150,7 @@ void PHY_MaintenanceDiagnosisConsign::TransferToLogisticSuperior()
 // Name: PHY_MaintenanceDiagnosisConsign::SelectMaintenanceTransporter
 // Created: SLI 2014-02-12
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceDiagnosisConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& /*type*/, const MIL_Agent_ABC* /*destination*/ )
+void PHY_MaintenanceDiagnosisConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& /*type*/, boost::optional< const MIL_Agent_ABC& > /*destination*/ )
 {
     throw MASA_EXCEPTION( "cannot select a transporter for a diagnosis consign" );
 }

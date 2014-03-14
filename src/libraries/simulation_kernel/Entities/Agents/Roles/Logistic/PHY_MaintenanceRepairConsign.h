@@ -40,7 +40,7 @@ public:
     virtual void SelectNewState();
     virtual bool SearchForUpperLevelNotFound() const;
     virtual void TransferToLogisticSuperior();
-    virtual void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, const MIL_Agent_ABC* destination );
+    virtual void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, boost::optional< const MIL_Agent_ABC& > destination );
     virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type );
     virtual void SelectRepairTeam( const PHY_ComposanteTypePion& type );
     //@}
