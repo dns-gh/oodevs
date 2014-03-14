@@ -86,20 +86,17 @@ void PHY_PerceptionFlyingShell::RemoveLocalisation( int id )
 void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     const MT_Vector2D& source = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
-    T_FlyingShellSet perceivedFlyingShells;
-    const auto& flyingShells = MIL_EffectManager::GetEffectManager().GetFlyingShells();
-    for( auto it = flyingShells.begin(); it != flyingShells.end(); ++it )
-    {
-        const MIL_Effect_IndirectFire& flyingShell = (**it);
-        for( auto itZone = perceptions_.right.begin(); itZone != perceptions_.right.end(); ++itZone )
-            if( itZone->first->Intersect2DWithCircle( source, radius ) && flyingShell.IsFlyingThroughLocalisation( *itZone->first ) )
+    T_Shells perceivedShells;
+    const auto& shells = MIL_EffectManager::GetEffectManager().GetFlyingShells();
+    for( auto it = shells.begin(); it != shells.end(); ++it )
+        for( auto it2 = perceptions_.right.begin(); it2 != perceptions_.right.end(); ++it2 )
+            if( it2->first->Intersect2DWithCircle( source, radius ) && (*it)->IsFlyingThroughLocalisation( *it2->first ) )
             {
-                perceivedFlyingShells.insert( &flyingShell );
-                if( lastPerceivedFlyingShells_.find( &flyingShell ) == lastPerceivedFlyingShells_.end() )
-                    perceiver_.NotifyPerception( flyingShell );
+                perceivedShells.insert( *it );
+                if( shells_.find( *it ) == shells_.end() )
+                    perceiver_.NotifyPerception( **it );
             }
-    }
-    lastPerceivedFlyingShells_.swap( perceivedFlyingShells );
+    shells_.swap( perceivedShells );
 }
 
 // -----------------------------------------------------------------------------

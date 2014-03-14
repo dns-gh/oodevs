@@ -47,11 +47,11 @@ public:
 
 private:
     typedef boost::bimap< int, boost::shared_ptr< TER_Localisation > > T_Perceptions;
-    typedef std::set< const MIL_Effect_IndirectFire* > T_FlyingShellSet;
+    typedef std::set< const MIL_Effect_IndirectFire* > T_Shells;
 
 private:
     T_Perceptions perceptions_;
-    T_FlyingShellSet lastPerceivedFlyingShells_;
+    T_Shells shells_;
 };
 
 #endif // __PHY_PerceptionFlyingShell_h_
