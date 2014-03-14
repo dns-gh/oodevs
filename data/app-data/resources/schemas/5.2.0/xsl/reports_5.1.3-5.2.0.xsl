@@ -540,7 +540,7 @@
               <xsl:when test="@id=777">eRC_PAINReadyForFiring</xsl:when>
               <xsl:when test="@id=778">eRC_ExecutionCoupDeMain</xsl:when>
               <xsl:when test="@id=779">eRC_UnitNotTransported</xsl:when>
-              <xsl:when test="@id=780">eRC_PAINNotReRC_TransportEndedeady</xsl:when>
+              <xsl:when test="@id=780">eRC_TransportEnded</xsl:when>
               <xsl:when test="@id=781">eRC_ShootingTemporarilyBlocked</xsl:when>
               <xsl:when test="@id=782">eRC_FireNotPermittedDueToROE</xsl:when>
               <xsl:when test="@id=783">eRC_FireNotPermittedDueToForbiddenArea</xsl:when>
