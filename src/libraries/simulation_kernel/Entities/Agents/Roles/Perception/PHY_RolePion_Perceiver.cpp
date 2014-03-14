@@ -894,8 +894,8 @@ void PHY_RolePion_Perceiver::ExecuteCollisions()
         const MT_Vector2D& position = owner_->GetRole< PHY_RoleInterface_Location >().GetPosition();
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( position, 1., perceivableObjects );
-        for( auto itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).ExecuteCollisions( perceivableObjects );
+        for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
+            (**it).ExecuteCollisions( perceivableObjects );
     }
 }
 
@@ -910,9 +910,9 @@ const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const DEC_
     if( knowledge.GetLocalisation().IsInside( owner_->GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
         return PHY_PerceptionLevel::identified_;
     const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
-    for( auto itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+    for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
     {
-        pBestPerceptionLevel_ = &(**itPerception).Compute( knowledge );
+        pBestPerceptionLevel_ = &(**it).Compute( knowledge );
         if( pBestPerceptionLevel_->IsBestLevel() )
             return *pBestPerceptionLevel_;
     }
@@ -928,9 +928,9 @@ const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const MT_V
     if( !CanPerceive() )
         return PHY_PerceptionLevel::notSeen_;
     const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
-    for( auto itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+    for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
     {
-        pBestPerceptionLevel_ = &(**itPerception).Compute( vPoint );
+        pBestPerceptionLevel_ = &(**it).Compute( vPoint );
         if( pBestPerceptionLevel_->IsBestLevel() )
             return *pBestPerceptionLevel_;
     }
