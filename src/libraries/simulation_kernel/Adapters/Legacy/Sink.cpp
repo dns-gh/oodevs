@@ -67,12 +67,12 @@ namespace legacy
         bool logEnabled = sink->decLogger_.get() != 0;
         const MIL_IDManager* const idManager = &sink->idManager_;
         const MissionController_ABC* const missionController = &sink->missionController_;
-        archive << sink->gcPause_
+        archive << idManager
+                << missionController
+                << sink->gcPause_
                 << sink->gcMult_
                 << logEnabled
-                << elements
-                << idManager
-                << missionController;
+                << elements;
     }
 
     template< typename Archive >
@@ -84,12 +84,12 @@ namespace legacy
         Sink::T_Elements elements;
         MIL_IDManager* idManager;
         MissionController_ABC* missionController;
-        archive >> gcPause
+        archive >> idManager
+                >> missionController
+                >> gcPause
                 >> gcMult
                 >> logEnabled
-                >> elements
-                >> idManager
-                >> missionController;
+                >> elements;
         ::new( sink )Sink( *idManager, *missionController, gcPause, gcMult,
                 logEnabled, archive.GetWorld() );
         sink->elements_ = elements;
