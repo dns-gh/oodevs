@@ -280,14 +280,14 @@ integration.stopAgressCrowd = function()
     end
 end
 
---- Start agressing crowds and units
+--- Start aggressing crowds and units
 integration.startAgress = function()
     integration.startAgressCrowd()
     meKnowledge.manifIntensity = S_IntensiteManifestationSurPions()
     meKnowledge.actionSurPions = DEC__StartTirSurPions( meKnowledge.manifIntensity )
 end
 
---- Stop agressing crowds and units
+--- Stop aggressing crowds and units
 integration.stopAgress = function()
     integration.stopAgressCrowd()
     if meKnowledge.actionSurPions then
