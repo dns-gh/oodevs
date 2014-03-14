@@ -77,10 +77,6 @@ MIL_AgentPionLOGMedical::~MIL_AgentPionLOGMedical()
 void MIL_AgentPionLOGMedical::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
-
-    PHY_RolePionLOG_Medical* pRole;
-    file >> pRole;
-    RegisterRole( *pRole );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +86,4 @@ void MIL_AgentPionLOGMedical::load( MIL_CheckPointInArchive& file, const unsigne
 void MIL_AgentPionLOGMedical::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
-    const PHY_RolePionLOG_Medical* const role = &GetRole< PHY_RolePionLOG_Medical >();
-    file << role;
 }

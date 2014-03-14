@@ -36,7 +36,9 @@ public:
 
     //! @name CheckPoints
     //@{
-    template < typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template < typename Archive > void load( Archive&, const unsigned int );
+    template < typename Archive > void save( Archive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -57,16 +59,6 @@ namespace serialization {
     template<>
     struct is_abstract<const MIL_AgentPionLOG_ABC> : boost::true_type { } ;
 } // namespace serialization
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOG_ABC::serialize
-// Created: JVT 2005-04-14
-// -----------------------------------------------------------------------------
-template < typename Archive >
-inline void MIL_AgentPionLOG_ABC::serialize( Archive& file, const unsigned int )
-{
-    file & boost::serialization::base_object< MIL_AgentPion >( *this );
 }
 
 #endif // __MIL_AgentPionLOG_ABC_h_

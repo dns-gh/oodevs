@@ -93,3 +93,33 @@ void MIL_AgentPionLOG_ABC::CancelAllActions()
     MIL_AgentPion::CancelAllActions();
     this->RegisterAction( pLogisticAction_ );
 }
+
+template < typename Archive >
+void MIL_AgentPionLOG_ABC::load( Archive& file, const unsigned int )
+{
+    file >> boost::serialization::base_object< MIL_AgentPion >( *this );
+    // Only medical role does not auto register
+    PHY_RoleInterface_Maintenance* maintenance;
+    file >> maintenance;
+    PHY_RoleInterface_Medical* medical;
+    file >> medical;
+    if( medical )
+        RegisterRole( *medical );
+    PHY_RoleInterface_Supply* supply;
+    file >> supply;
+}
+
+template < typename Archive >
+void MIL_AgentPionLOG_ABC::save( Archive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_AgentPion >( *this );
+    const auto* const maintenance = RetrieveRole< PHY_RoleInterface_Maintenance >();
+    file << maintenance;
+    const auto* const medical = RetrieveRole< PHY_RoleInterface_Medical >();
+    file << medical;
+    const auto* const supply = RetrieveRole< PHY_RoleInterface_Supply >();
+    file << supply;
+}
+
+template void MIL_AgentPionLOG_ABC::serialize( MIL_CheckPointInArchive&, const unsigned int );
+template void MIL_AgentPionLOG_ABC::serialize( MIL_CheckPointOutArchive&, const unsigned int );

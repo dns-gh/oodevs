@@ -76,9 +76,6 @@ MIL_AgentPionLOGMaintenance::~MIL_AgentPionLOGMaintenance()
 void MIL_AgentPionLOGMaintenance::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
-
-    PHY_RolePionLOG_Maintenance* pRole;
-    file >> pRole;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,6 +85,4 @@ void MIL_AgentPionLOGMaintenance::load( MIL_CheckPointInArchive& file, const uns
 void MIL_AgentPionLOGMaintenance::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
-    const PHY_RolePionLOG_Maintenance* const role = &GetRole< PHY_RolePionLOG_Maintenance >();
-    file << role;
 }
