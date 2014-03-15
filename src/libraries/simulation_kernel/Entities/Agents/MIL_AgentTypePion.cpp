@@ -238,6 +238,7 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, const std::str
     , rDistanceAvantLimas_            ( 0. )
     , rFeedbackTime_                  ( std::numeric_limits< double >::infinity() )
     , pHumanRepartition_              ( new MIL_HumanRepartition( xis ) )
+    , writtenInOdb_                   ( true )
 {
     InitializeRapFor              ( xis );
     InitializeDistancesAvantPoints( xis );
@@ -254,6 +255,7 @@ MIL_AgentTypePion::MIL_AgentTypePion( const DEC_Model_ABC* pModel )
     , rDistanceAvantLimas_( 0. )
     , rFeedbackTime_( 0. )
     , pHumanRepartition_( new MIL_HumanRepartition() )
+    , writtenInOdb_( true )
 {
     // NOTHING
 }
@@ -534,4 +536,15 @@ bool MIL_AgentTypePion::operator==( const MIL_AgentTypePion& rhs ) const
 void MIL_AgentTypePion::SetBrainFunctions( const std::vector< std::string >& names )
 {
     functions_ = names;
+}
+
+
+bool MIL_AgentTypePion::IsWrittenInODB() const
+{
+    return writtenInOdb_;
+}
+
+void MIL_AgentTypePion::SetWrittenInODB( bool written )
+{
+    writtenInOdb_ = written;
 }

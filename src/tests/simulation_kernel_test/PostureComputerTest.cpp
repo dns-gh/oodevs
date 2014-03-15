@@ -45,6 +45,7 @@ namespace
         MOCK_METHOD( GetModel, 0 )
         MOCK_METHOD( GetDistanceAvantPoint, 1 )
         MOCK_METHOD( GetDistanceAvantLima, 0 )
+        MOCK_METHOD( IsWrittenInODB, 0 )
     };
     struct Fixture
     {

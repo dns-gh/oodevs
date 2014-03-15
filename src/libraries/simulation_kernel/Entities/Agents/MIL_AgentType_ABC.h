@@ -59,6 +59,8 @@ public:
     virtual double GetDistanceAvantLima () const = 0;
     // Custom finalizer invoked b y MIL_AgentPion::DeleteUnit.
     virtual void DeleteUnit( MIL_Agent_ABC& unit ) const;
+    // For some reasons, units like convoys are not serialized in ODB backup.
+    virtual bool IsWrittenInODB() const = 0;
     //@}
 
 protected:

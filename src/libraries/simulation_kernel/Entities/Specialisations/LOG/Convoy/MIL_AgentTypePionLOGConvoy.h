@@ -31,7 +31,6 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual MIL_AgentPion* InstanciatePion( MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis ) const;
     virtual void RegisterRoles( MIL_AgentPion& pion, sword::RoleExtender_ABC* ext ) const;
     //@}
 

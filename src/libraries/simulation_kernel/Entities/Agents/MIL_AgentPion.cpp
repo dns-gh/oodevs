@@ -319,7 +319,8 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 {
-    assert( pType_ );
+    if( !GetType().IsWrittenInODB() )
+        return;
     xos << xml::start( "unit" );
     MIL_Entity_ABC::WriteODB( xos ) ;
     xos << xml::attribute( "id", GetID() )

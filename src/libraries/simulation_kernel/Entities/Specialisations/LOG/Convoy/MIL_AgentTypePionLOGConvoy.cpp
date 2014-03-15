@@ -11,12 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentTypePionLOGConvoy.h"
-#include "MIL_AgentPionLOGConvoy.h"
 
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOGConvoy_Supply.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_StockSupplyManager.h"
 #include "Entities/Automates/MIL_DotationSupplyManager.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLog.h"
 
 // -----------------------------------------------------------------------------
@@ -26,6 +26,8 @@
 MIL_AgentTypePionLOGConvoy::MIL_AgentTypePionLOGConvoy( const std::string& strName, const std::string& strType, xml::xistream& xis )
     : MIL_AgentTypePionLOG_ABC( strName, strType, xis )
 {
+    // Don't serialize Convoys
+    SetWrittenInODB( false );
     // $$$ ?? Checker que le type ne contient aucun equipement ?
 }
 
@@ -36,17 +38,6 @@ MIL_AgentTypePionLOGConvoy::MIL_AgentTypePionLOGConvoy( const std::string& strNa
 MIL_AgentTypePionLOGConvoy::~MIL_AgentTypePionLOGConvoy()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( MissionController_ABC& controller,
-                                                            MIL_Automate& automate,
-                                                            xml::xistream& xis ) const
-{
-    return new MIL_AgentPionLOGConvoy( *this, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------
