@@ -12,12 +12,36 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPionLOG_ABC.h"
 #include "MIL_AutomateLOG.h"
+#include "MissionController_ABC.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPionLOG_ABC )
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_AgentPionLOG_ABC* pion, const unsigned int /*version*/ )
+{
+    unsigned int nTypeID = pion->GetType().GetID();
+    const MissionController_ABC* const controller = &pion->GetController();
+    archive << nTypeID
+            << controller;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_AgentPionLOG_ABC* pion, const unsigned int /*version*/ )
+{
+    unsigned int nTypeID;
+    MissionController_ABC* controller = 0;
+    archive >> nTypeID
+            >> controller;
+    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
+    assert( pType );
+    ::new( pion ) MIL_AgentPionLOG_ABC( *pType, *controller );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOG_ABC constructor

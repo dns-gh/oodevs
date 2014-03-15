@@ -39,6 +39,8 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     template < typename Archive > void load( Archive&, const unsigned int );
     template < typename Archive > void save( Archive&, const unsigned int ) const;
+    template< typename Archive > friend void save_construct_data( Archive& archive, const MIL_AgentPionLOG_ABC* pion, const unsigned int version );
+    template< typename Archive > friend void load_construct_data( Archive& archive, MIL_AgentPionLOG_ABC* pion, const unsigned int version );
     //@}
 
     //! @name Operations
@@ -60,5 +62,7 @@ namespace serialization {
     struct is_abstract<const MIL_AgentPionLOG_ABC> : boost::true_type { } ;
 } // namespace serialization
 }
+
+BOOST_CLASS_EXPORT_KEY( MIL_AgentPionLOG_ABC )
 
 #endif // __MIL_AgentPionLOG_ABC_h_

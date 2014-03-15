@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentTypePionLOGSupply.h"
-#include "MIL_AgentPionLOGSupply.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Supply.h"
 
@@ -32,17 +32,6 @@ MIL_AgentTypePionLOGSupply::MIL_AgentTypePionLOGSupply( const std::string& strNa
 MIL_AgentTypePionLOGSupply::~MIL_AgentTypePionLOGSupply()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePionLOGSupply::InstanciatePion
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( MissionController_ABC& controller,
-                                                            MIL_Automate& automate,
-                                                            xml::xistream& xis ) const
-{
-    return new MIL_AgentPionLOGSupply( *this, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------

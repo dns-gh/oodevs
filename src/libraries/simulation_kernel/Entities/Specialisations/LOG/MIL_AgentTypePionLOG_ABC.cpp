@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentTypePionLOG_ABC.h"
+#include "MIL_AgentPionLOG_ABC.h"
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ActionFunctions.h"
 #include "Decision/DEC_KnowledgeObjectFunctions.h"
@@ -34,6 +35,12 @@ MIL_AgentTypePionLOG_ABC::MIL_AgentTypePionLOG_ABC( const std::string& strName, 
 MIL_AgentTypePionLOG_ABC::~MIL_AgentTypePionLOG_ABC()
 {
     // NOTHING
+}
+
+MIL_AgentPion* MIL_AgentTypePionLOG_ABC::InstanciatePion(
+    MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis ) const
+{
+    return new MIL_AgentPionLOG_ABC( *this, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------

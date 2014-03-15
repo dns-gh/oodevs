@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentTypePionLOGMaintenance.h"
-#include "MIL_AgentPionLOGMaintenance.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Maintenance.h"
 
@@ -33,17 +33,6 @@ MIL_AgentTypePionLOGMaintenance::MIL_AgentTypePionLOGMaintenance( const std::str
 MIL_AgentTypePionLOGMaintenance::~MIL_AgentTypePionLOGMaintenance()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePionLOGMaintenance::InstanciatePion
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGMaintenance::InstanciatePion( MissionController_ABC& controller,
-                                                                 MIL_Automate& automate,
-                                                                 xml::xistream& xis ) const
-{
-    return new MIL_AgentPionLOGMaintenance( *this, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------
