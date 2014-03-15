@@ -14,6 +14,10 @@
 #include "MIL_AgentPionLOGConvoy.h"
 
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOGConvoy_Supply.h"
+#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/MIL_StockSupplyManager.h"
+#include "Entities/Automates/MIL_DotationSupplyManager.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLog.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGConvoy constructor
@@ -63,4 +67,13 @@ void MIL_AgentTypePionLOGConvoy::RegisterRoles( MIL_AgentPion& pion, sword::Role
 const MIL_AgentTypePion* MIL_AgentTypePionLOGConvoy::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
     return new MIL_AgentTypePionLOGConvoy( strName, strType, xis );
+}
+
+void MIL_AgentTypePionLOGConvoy::DeleteUnit( MIL_Agent_ABC& unit ) const
+{
+    MIL_AutomateLOG* logBrain = unit.GetAutomate().GetBrainLogistic();
+    if( logBrain )
+        logBrain->ResetConsignsForConvoyPion( unit );
+    unit.GetAutomate().GetStockSupplyManager().ResetConsignsForConvoyPion( unit );
+    unit.GetAutomate().GetDotationSupplyManager().ResetConsignsForConvoyPion( unit );
 }

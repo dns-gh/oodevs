@@ -50,7 +50,7 @@ public:
     virtual ~SupplyRequestContainer();
     //@}
 
-    void ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
+    void ResetConsignsForConvoyPion( const MIL_Agent_ABC& pion );
     void ResetConsignsForProvider( const MIL_Agent_ABC& pion );
     void DeleteRequestsForRequester( const MIL_AgentPion& pion );
     void ResetConsign();

@@ -31,11 +31,13 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual MIL_AgentPion* InstanciatePion( MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis ) const;
     virtual void RegisterRoles( MIL_AgentPion& pion, sword::RoleExtender_ABC* ext ) const;
     //@}
 
     static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
+
+protected:
+    void DeleteUnit( MIL_Agent_ABC& unit ) const;
 };
 
 #endif // __MIL_AgentTypePionLOGTC2_h_

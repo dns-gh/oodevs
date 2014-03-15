@@ -852,15 +852,6 @@ void MIL_AgentPion::OnReceiveDestroyComponent()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::SpecializedDelete
-// Created: JSR 2013-02-06
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::SpecializedDelete()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::DeleteUnit
 // Created: JSR 2013-02-19
 // -----------------------------------------------------------------------------
@@ -872,7 +863,7 @@ void MIL_AgentPion::DeleteUnit( unsigned int nCtx, unsigned int clientId )
     pOrderManager_->StopAllMissions();
     MIL_AgentServer::GetWorkspace().GetPathFindManager().CancelJobForUnit( this );
 
-    SpecializedDelete();
+    GetType().DeleteUnit( *this );
 
     GetRole< PHY_RoleInterface_Location >().RemoveFromPatch();
     GetRole< PHY_RolePion_Composantes >().RetrieveAllLentComposantes();

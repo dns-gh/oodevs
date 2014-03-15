@@ -84,7 +84,7 @@ private:
     //! @name Operations
     //@{
     unsigned int ReturnTimeRemainingForAction( E_Action action );
-    virtual bool HasConvoy( const MIL_AgentPion& pion ) const;
+    virtual bool HasConvoy( const MIL_Agent_ABC& pion ) const;
     virtual bool IsConvoyDestroyed() const;
     //@}
 

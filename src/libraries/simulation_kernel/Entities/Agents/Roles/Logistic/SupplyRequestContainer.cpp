@@ -64,7 +64,7 @@ SupplyRequestContainer::~SupplyRequestContainer()
 // Name: SupplyRequestContainer::ResetConsignsForConvoyPion
 // Created: JSR 2013-02-07
 // -----------------------------------------------------------------------------
-void SupplyRequestContainer::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
+void SupplyRequestContainer::ResetConsignsForConvoyPion( const MIL_Agent_ABC& pion )
 {
     for( auto it = consigns_.begin(); it != consigns_.end(); )
         if( it->second->ResetConsignsForConvoyPion( pion ) )

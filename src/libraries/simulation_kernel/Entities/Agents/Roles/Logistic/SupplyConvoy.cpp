@@ -240,7 +240,7 @@ void SupplyConvoy::Finish(  bool finished /*= true*/ )
 // Name: SupplyConvoy::HasConvoy
 // Created: JSR 2013-02-07
 // -----------------------------------------------------------------------------
-bool SupplyConvoy::HasConvoy( const MIL_AgentPion& /*pion*/ ) const
+bool SupplyConvoy::HasConvoy( const MIL_Agent_ABC& /*pion*/ ) const
 {
     return false;
 }

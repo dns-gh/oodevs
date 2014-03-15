@@ -36,6 +36,9 @@ public:
     //@}
 
     static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
+
+protected:
+    virtual void DeleteUnit( MIL_Agent_ABC& unit ) const;
 };
 
 #endif // __MIL_AgentTypePionLOGConvoy_h_

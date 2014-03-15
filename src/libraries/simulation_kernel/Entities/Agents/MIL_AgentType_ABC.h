@@ -57,6 +57,8 @@ public:
     virtual const DEC_Model_ABC& GetModel() const = 0;
     virtual double GetDistanceAvantPoint ( const TerrainData& nType ) const = 0;
     virtual double GetDistanceAvantLima () const = 0;
+    // Custom finalizer invoked b y MIL_AgentPion::DeleteUnit.
+    virtual void DeleteUnit( MIL_Agent_ABC& unit ) const;
     //@}
 
 protected:

@@ -100,16 +100,3 @@ void MIL_AgentPionLOGConvoy::WriteODB( xml::xostream& /*xos*/ ) const
 {
     // NOTHING : don't serialize Convoys
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOGConvoy::SpecializedDelete
-// Created: JSR 2013-02-06
-// -----------------------------------------------------------------------------
-void MIL_AgentPionLOGConvoy::SpecializedDelete()
-{
-    MIL_AutomateLOG* logBrain = GetAutomate().GetBrainLogistic();
-    if( logBrain )
-        logBrain->ResetConsignsForConvoyPion( *this );
-    GetAutomate().GetStockSupplyManager().ResetConsignsForConvoyPion( *this );
-    GetAutomate().GetDotationSupplyManager().ResetConsignsForConvoyPion( *this );
-}
