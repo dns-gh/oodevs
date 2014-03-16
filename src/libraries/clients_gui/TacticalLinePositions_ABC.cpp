@@ -146,15 +146,6 @@ bool TacticalLinePositions_ABC::CanAggregate() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLinePositions_ABC::IsAggregated
-// Created: LGY 2011-03-04
-// -----------------------------------------------------------------------------
-bool TacticalLinePositions_ABC::IsAggregated() const
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TacticalLinePositions_ABC::Accept
 // Created: SBO 2009-05-25
 // -----------------------------------------------------------------------------

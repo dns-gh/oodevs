@@ -207,12 +207,3 @@ bool LocationPositions::CanAggregate() const
 {
     return false;
 }
-
-// -----------------------------------------------------------------------------
-// Name: LocationPositions::IsAggregated
-// Created: LGY 2011-03-07
-// -----------------------------------------------------------------------------
-bool LocationPositions::IsAggregated() const
-{
-    return false;
-}

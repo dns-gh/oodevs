@@ -113,7 +113,7 @@ void Formation::InitializeSymbol() const
 // -----------------------------------------------------------------------------
 void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( !IsAggregated( *this ) && HasAggregatedSubordinate( *this ) && viewport.IsVisible( where ) )
+    if( !IsAggregated() && HasAggregatedSubordinate( *this ) && viewport.IsVisible( where ) )
     {
         InitializeSymbol();
         tools.DrawApp6SymbolFixedSize( symbolPath_, where, -2.f, 0 );

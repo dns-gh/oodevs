@@ -71,6 +71,7 @@ public:
     unsigned int MaxOccurs() const;
     double MinValue() const;
     double MaxValue() const;
+    double IndirectFireOnly() const;
     bool IsList() const;
     const OrderParameterValue* FindValue( unsigned int id ) const;
     const OrderParameterValue& GetValue( unsigned int id ) const;
@@ -108,6 +109,7 @@ private:
     unsigned int maxOccurs_;
     double minValue_;
     double maxValue_;
+    bool indirectFire_;
     T_OrderParameterValues values_;
     T_Aliases aliases_;
     T_Aliases genObjects_;

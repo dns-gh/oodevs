@@ -3013,6 +3013,14 @@ PNG (*.png)
         <source>Switching off &quot;available without mission&quot; will remove the fragmentary order from all models.</source>
         <translation>Décocher &quot;disponible sans mission&quot; retirera l&apos;ordre de conduite de tous les modèles.</translation>
     </message>
+    <message>
+        <source>Filter</source>
+        <translation>Filtre</translation>
+    </message>
+    <message>
+        <source>Indirect fire ammunition only</source>
+        <translation>Uniquement munition pour tir indirect</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>

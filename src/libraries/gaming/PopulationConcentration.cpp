@@ -278,12 +278,3 @@ bool PopulationConcentration::CanAggregate() const
 {
     return false;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PopulationConcentration::IsAggregated
-// Created: LGY 2011-03-07
-// -----------------------------------------------------------------------------
-bool PopulationConcentration::IsAggregated() const
-{
-    return false;
-}

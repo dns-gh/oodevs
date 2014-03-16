@@ -43,10 +43,10 @@ GhostPositions::GhostPositions( const kernel::Ghost_ABC& ghost, const kernel::Co
     : ghost_     ( ghost )
     , converter_ ( converter )
     , controller_( controller )
+    , entity_    ( entity )
     , moveable_  ( new MoveableProxy( *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
     , position_  ( position )
     , height_    ( 0 )
-    , aggregated_( false )
 {
     CreateDictionary( dictionary, entity );
 }
@@ -60,10 +60,10 @@ GhostPositions::GhostPositions( xml::xistream& xis, const kernel::Ghost_ABC& gho
     : ghost_     ( ghost )
     , converter_ ( converter )
     , controller_( controller )
+    , entity_    ( entity )
     , moveable_  ( new MoveableProxy( *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
     , position_  ( ReadPosition( xis, converter_ ) )
     , height_    ( 0 )
-    , aggregated_( false )
 {
     CreateDictionary( dico, entity );
 }
@@ -83,7 +83,7 @@ GhostPositions::~GhostPositions()
 // -----------------------------------------------------------------------------
 geometry::Point2f GhostPositions::GetPosition( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !entity_.IsAggregated() )
         return position_;
     const kernel::Entity_ABC* superior = ghost_.Get< TacticalHierarchies >().GetSuperior();
     return superior->Get< Positions >().GetPosition();
@@ -95,7 +95,7 @@ geometry::Point2f GhostPositions::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 float GhostPositions::GetHeight( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !entity_.IsAggregated() )
         return height_;
     const kernel::Entity_ABC* superior = ghost_.Get< TacticalHierarchies >().GetSuperior();
     return superior->Get< Positions >().GetHeight();
@@ -158,15 +158,6 @@ bool GhostPositions::CanAggregate() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostPositions::IsAggregated
-// Created: ABR 2011-10-19
-// -----------------------------------------------------------------------------
-bool GhostPositions::IsAggregated() const
-{
-    return aggregated_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: GhostPositions::Move
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
@@ -183,13 +174,4 @@ void GhostPositions::Move( const geometry::Point2f& position )
 void GhostPositions::CreateDictionary( gui::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
 {
     dico.RegisterExtension( entity, this, tools::translate( "GhostPositions", "Info/Position" ), moveable_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GhostPositions::Aggregate
-// Created: ABR 2011-10-19
-// -----------------------------------------------------------------------------
-void GhostPositions::Aggregate( const bool& bDummy )
-{
-    aggregated_ = bDummy;
 }

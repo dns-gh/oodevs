@@ -11,7 +11,6 @@
 #define __GhostPositions_h_
 
 #include "clients_gui/Drawable_ABC.h"
-#include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include <boost/noncopyable.hpp>
@@ -41,7 +40,6 @@ namespace xml
 // Created: ABR 2011-10-19
 // =============================================================================
 class GhostPositions : public kernel::Moveable_ABC
-                     , public kernel::Aggregatable_ABC
                      , public kernel::Serializable_ABC
                      , public gui::Drawable_ABC
                      , public boost::noncopyable
@@ -67,7 +65,6 @@ public:
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual bool CanAggregate() const;
-    virtual bool IsAggregated() const;
     //@}
 
     //! @name Operations
@@ -79,7 +76,6 @@ private:
     //! @name Helpers
     //@{
     virtual void CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
-    virtual void Aggregate( const bool& );
     //@}
 
 private:
@@ -88,10 +84,10 @@ private:
     const kernel::Ghost_ABC& ghost_;
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::Controller& controller_;
+    const kernel::Entity_ABC& entity_;
     kernel::Moveable_ABC* moveable_;
     geometry::Point2f position_;
     float height_;
-    bool aggregated_;
     //@}
 };
 

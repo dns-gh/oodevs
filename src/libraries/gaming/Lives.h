@@ -22,6 +22,7 @@ namespace sword
 namespace kernel
 {
     class Controller;
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -37,7 +38,7 @@ class Lives : public Lives_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Lives( kernel::Controller& controller );
+             Lives( const kernel::Entity_ABC& entity, kernel::Controller& controller );
     virtual ~Lives();
     //@}
 
@@ -59,6 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     float life_;
     //@}

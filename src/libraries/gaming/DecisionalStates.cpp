@@ -18,12 +18,12 @@
 // Name: DecisionalStates constructor
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-DecisionalStates::DecisionalStates()
-    : drawSauvegarde_( false )
+DecisionalStates::DecisionalStates( const kernel::Entity_ABC& entity )
+    : entity_( entity )
+    , drawSauvegarde_( false )
     , draw1stEchelon_( false )
     , drawEclairage_ ( false )
     , drawEtatOps_   ( false )
-    , ratio_         ( 1.f )
 {
     // NOTHING
 }
@@ -77,16 +77,16 @@ void DecisionalStates::DoUpdate( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void DecisionalStates::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() && tools.ShouldDisplay( "DecisionalState" ) )
+    if( viewport.IsHotpointVisible() && tools.ShouldDisplay( "DecisionalState" ) && !entity_.IsAggregated() )
     {
         if( drawSauvegarde_ )
-            tools.DrawSvg( "sauvegarde.svg", where, ratio_ * tools.GetAdaptiveZoomFactor( false ) );
+            tools.DrawSvg( "sauvegarde.svg", where, tools.GetAdaptiveZoomFactor( false ) );
         if( drawEclairage_ )
-            tools.DrawSvg( "eclairage.svg", where, ratio_ * tools.GetAdaptiveZoomFactor( false ) );
+            tools.DrawSvg( "eclairage.svg", where, tools.GetAdaptiveZoomFactor( false ) );
         if( draw1stEchelon_ )
-            tools.DrawSvg( "1stechelon.svg", where, ratio_ * tools.GetAdaptiveZoomFactor( false ) );
+            tools.DrawSvg( "1stechelon.svg", where, tools.GetAdaptiveZoomFactor( false ) );
         if( drawEtatOps_ )
-            tools.DrawSvg( "opstatehs.svg", where, ratio_ * tools.GetAdaptiveZoomFactor( false ) );
+            tools.DrawSvg( "opstatehs.svg", where, tools.GetAdaptiveZoomFactor( false ) );
     }
 }
 
@@ -98,13 +98,4 @@ void DecisionalStates::DisplayInTooltip( kernel::Displayer_ABC& displayer ) cons
 {
     for( auto it = values_.begin(); it != values_.end(); ++it )
         displayer.Display( it->first + ": ", it->second );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DecisionalStates::Aggregate
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-void DecisionalStates::Aggregate( const bool& agg )
-{
-    ratio_ = agg ? 2.f : 1.f;
 }

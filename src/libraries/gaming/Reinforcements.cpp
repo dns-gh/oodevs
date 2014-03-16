@@ -84,5 +84,3 @@ void Reinforcements::Display( Displayer_ABC& displayer ) const
         .Display( tools::translate( "Reinforcements", "Reinforcing:" ), reinforced_ )
         .Display( tools::translate( "Reinforcements", "Reinforced by:" ), reinforcements_ );
 }
-
-// $$$$ AGE 2006-04-06: Draw something ?

@@ -15,9 +15,7 @@
 
 bool IsAggregated( const kernel::Entity_ABC& entity )
 {
-    if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
-        return positions->IsAggregated();
-    return false;
+    return entity.IsAggregated();
 }
 
 bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity, const std::function< bool( const kernel::Entity_ABC& ) >& fun )

@@ -191,6 +191,11 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), knowledgeObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
     }
 
+    ADN_MissionParameter_GroupBox* pFilter = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Filter" ), eMissionParameterTypeDotationType );
+    QWidget* pFilterHolder = builder.AddFieldHolder( pFilter );
+    builder.AddField< ADN_CheckBox >( pFilterHolder, "dotation-filter", tr( "Indirect fire ammunition only" ), vInfosConnectors[ eDotations ] );
+    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pFilter, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+
     builder.PopSubName(); //! parameters
     builder.PopSubName(); //! definition-tab
 
@@ -290,6 +295,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     parameterLayout->addWidget( pChoice );
     parameterLayout->addWidget( pGenObject );
     parameterLayout->addWidget( pKnowledgeObject );
+    parameterLayout->addWidget( pFilter );
 
     // Definition tab layout
     QWidget* pDefinition = new QWidget();

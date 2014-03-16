@@ -27,6 +27,7 @@ void EntityBase_ABC::AddExtension( Extension_ABC& ext )
 // Created: AGE 2006-02-07
 // -----------------------------------------------------------------------------
 Entity_ABC::Entity_ABC()
+    : aggregated_( false )
 {
     // NOTHING
 }
@@ -86,4 +87,14 @@ void Entity_ABC::Apply( ExtensionVisitor_ABC& visitor ) const
 void Entity_ABC::OverFly( ActionController& /*controller*/ ) const
 {
     // NOTHING
+}
+
+void Entity_ABC::Aggregate( bool aggregate )
+{
+    aggregated_ = aggregate;
+}
+
+bool Entity_ABC::IsAggregated() const
+{
+    return aggregated_;
 }

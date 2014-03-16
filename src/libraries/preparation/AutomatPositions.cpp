@@ -10,9 +10,9 @@
 #include "preparation_pch.h"
 #include "AutomatPositions.h"
 #include "AgentPositions.h"
+#include "clients_gui/AggregatedTools.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_gui/AggregatedTools.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -25,8 +25,7 @@ using namespace geometry;
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 AutomatPositions::AutomatPositions( const Entity_ABC& automat )
-    : automat_   ( automat )
-    , aggregated_( false )
+    : automat_( automat )
 {
     // NOTHING
 }
@@ -46,7 +45,7 @@ AutomatPositions::~AutomatPositions()
 // -----------------------------------------------------------------------------
 Point2f AutomatPositions::GetPosition( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !automat_.IsAggregated() )
     {
         Point2f aggregatedPosition;
         unsigned count = 0;
@@ -70,7 +69,7 @@ Point2f AutomatPositions::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 float AutomatPositions::GetHeight( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !automat_.IsAggregated() )
     {
         float height = 0;
         unsigned count = 0;
@@ -122,7 +121,7 @@ void AutomatPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void AutomatPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( !::IsAggregated( automat_ ) && HasAggregatedSubordinate( automat_ ) && viewport.IsVisible( where ) )
+    if( !automat_.IsAggregated() && HasAggregatedSubordinate( automat_ ) && viewport.IsVisible( where ) )
         tools.DrawCross( where, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
 }
 
@@ -143,28 +142,10 @@ void AutomatPositions::Move( const geometry::Point2f& point )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatPositions::Aggregate
-// Created: LGY 2011-03-03
-// -----------------------------------------------------------------------------
-void AutomatPositions::Aggregate( const bool& bDummy )
-{
-    aggregated_ = bDummy;
-}
-
-// -----------------------------------------------------------------------------
 // Name: AutomatPositions::CanAggregate
 // Created: LDC 2010-10-07
 // -----------------------------------------------------------------------------
 bool AutomatPositions::CanAggregate() const
 {
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatPositions::IsAggregated
-// Created: LGY 2011-03-04
-// -----------------------------------------------------------------------------
-bool AutomatPositions::IsAggregated() const
-{
-    return aggregated_;
 }

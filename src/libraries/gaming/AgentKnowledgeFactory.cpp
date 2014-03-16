@@ -54,8 +54,8 @@ AgentKnowledge_ABC* AgentKnowledgeFactory::CreateAgentKnowledge( const Knowledge
     AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, converter_, model_.GetAgentResolver(), model_.GetTeamResolver() );
     result->Attach( *new PerceptionMap( controllers_.controller_, model_.GetAutomatResolver() ) );
     result->Attach< Positions >( *new AgentKnowledgePositions( converter_ ) );
-    result->Attach< Lives_ABC >( *new Lives( controllers_.controller_ ) );
-    result->Attach< Speeds >( *new Speeds() );
+    result->Attach< Lives_ABC >( *new Lives( *result, controllers_.controller_ ) );
+    result->Attach< Speeds >( *new Speeds( *result ) );
     result->Polish();
     return result;
 }

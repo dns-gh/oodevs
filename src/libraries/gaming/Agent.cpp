@@ -77,7 +77,7 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
         kernel::App6Symbol::SetKarma( moveSymbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
         kernel::App6Symbol::SetKarma( staticSymbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
     }
-    if( viewport.IsHotpointVisible() )
+    if( viewport.IsHotpointVisible() && !IsAggregated() )
     {
         bool isMoving = ( Get< Attributes >().nCurrentPosture_ <= eUnitPosture_PostureArret );
         float depth = isMoving? type_.GetLength( !Get< Attributes >().bAmbianceSafety_ ) : type_.GetDepth();

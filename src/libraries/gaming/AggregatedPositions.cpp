@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AggregatedPositions.h"
+#include "clients_gui/AggregatedTools.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -26,9 +27,8 @@ using namespace geometry;
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 AggregatedPositions::AggregatedPositions( const Entity_ABC& entity, float factor )
-    : entity_    ( entity )
-    , factor_    ( factor )
-    , aggregated_( false )
+    : entity_( entity )
+    , factor_( factor )
 {
     // NOTHING
 }
@@ -66,17 +66,6 @@ namespace
             return true;
         return HasSubordinate( entity, &IsAgent );
     }
-    
-    // -----------------------------------------------------------------------------
-    // Name: IsAggregated
-    // Created: LGY 2011-07-18
-    // -----------------------------------------------------------------------------
-    bool IsAggregated( const kernel::Entity_ABC& entity )
-    {
-        if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
-            return positions->IsAggregated();
-        return false;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +74,7 @@ namespace
 // -----------------------------------------------------------------------------
 Point2f AggregatedPositions::GetPosition( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !entity_.IsAggregated() )
     {
         Point2f aggregatedPosition;
         unsigned int count = 0;
@@ -114,7 +103,7 @@ Point2f AggregatedPositions::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 float AggregatedPositions::GetHeight( bool aggregated ) const
 {
-    if( !aggregated || !aggregated_ )
+    if( !aggregated || !entity_.IsAggregated() )
     {
         float height = 0;
         unsigned int count = 0;
@@ -170,7 +159,7 @@ void AggregatedPositions::Accept( LocationVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void AggregatedPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() && !aggregated_ && HasSubordinate( entity_, &::IsAggregated ) )
+    if( viewport.IsHotpointVisible() && !entity_.IsAggregated() && HasSubordinate( entity_, &::IsAggregated ) )
         tools.DrawCross( where, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
 }
 
@@ -188,22 +177,4 @@ bool AggregatedPositions::CanAggregate() const
             return true;
     }
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregatedPositions::Aggregate
-// Created: LGY 2011-03-07
-// -----------------------------------------------------------------------------
-void AggregatedPositions::Aggregate( const bool& value )
-{
-    aggregated_ = value;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregatedPositions::IsAggregated
-// Created: LGY 2011-03-07
-// -----------------------------------------------------------------------------
-bool AggregatedPositions::IsAggregated() const
-{
-    return aggregated_;
 }

@@ -31,6 +31,7 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     , maxOccurs_( 1 )
     , minValue_ ( std::numeric_limits< double >::min() )
     , maxValue_ ( std::numeric_limits< double >::max() )
+    , indirectFire_( false )
 {
     xis >> xml::list( "value", *this, &OrderParameter::ReadValue )
         >> xml::optional >> xml::start( "choice" )
@@ -41,7 +42,8 @@ OrderParameter::OrderParameter( xml::xistream& xis )
             >> xml::end
         >> xml::optional >> xml::attribute( "min-occurs", minOccurs_ )
         >> xml::optional >> xml::attribute( "min-value", minValue_ )
-        >> xml::optional >> xml::attribute( "max-value", maxValue_ );
+        >> xml::optional >> xml::attribute( "max-value", maxValue_ )
+        >> xml::optional >> xml::attribute( "indirect-fire-only", indirectFire_ );
     std::string maxString( "1" );
     xis >> xml::optional >> xml::attribute( "max-occurs", maxString );
     if( maxString == "unbounded" )
@@ -62,6 +64,7 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
     , maxOccurs_( max )
     , minValue_ ( std::numeric_limits< double >::min() )
     , maxValue_ ( std::numeric_limits< double >::max() )
+    , indirectFire_( false )
 {
     // NOTHING
 }
@@ -145,6 +148,11 @@ double OrderParameter::MinValue() const
 double OrderParameter::MaxValue() const
 {
     return maxValue_;
+}
+
+double OrderParameter::IndirectFireOnly() const
+{
+    return indirectFire_;
 }
 
 // -----------------------------------------------------------------------------

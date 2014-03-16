@@ -21,7 +21,7 @@
 #include "ParamCrowd.h"
 #include "ParamDateTime.h"
 #include "ParamDirection.h"
-#include "ParamDotationDType.h"
+#include "ParamDotationType.h"
 #include "ParamDotationTypeList.h"
 #include "ParamEquipmentList.h"
 #include "ParamHumanWoundList.h"
@@ -116,7 +116,7 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers,
     AddFunctor< actions::gui::ParamResourceNetworkNode >( "resourcenetworknode" );
     AddFunctor< actions::gui::ParamResourceNetworkType >( "resourcenetworktype" );
     AddFunctor< actions::gui::ParamObstacle >           ( "plannedwork" );
-    AddFunctor< actions::gui::ParamDotationDType >      ( "resourcetype" );
+    AddFunctor< actions::gui::ParamDotationType >       ( "resourcetype" );
     AddFunctor< actions::gui::ParamDotationTypeList >   ( "allresourcetype" );
     AddFunctor< actions::gui::ParamFireClass >          ( "fireclass" );
 }

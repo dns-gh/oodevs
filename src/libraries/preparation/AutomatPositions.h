@@ -12,7 +12,6 @@
 
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
-#include "clients_kernel/Aggregatable_ABC.h"
 
 namespace kernel
 {
@@ -26,7 +25,6 @@ namespace kernel
 // Created: AGE 2006-10-06
 // =============================================================================
 class AutomatPositions : public kernel::Moveable_ABC
-                       , public kernel::Aggregatable_ABC
                        , public gui::Drawable_ABC
 {
 public:
@@ -44,9 +42,7 @@ public:
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
-    virtual void Aggregate( const bool& );
     virtual bool CanAggregate() const;
-    virtual bool IsAggregated() const;
     virtual void Move( const geometry::Point2f& point );
     //@}
 
@@ -61,7 +57,6 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& automat_;
-    bool aggregated_;
     //@}
 };
 

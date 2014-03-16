@@ -26,6 +26,7 @@ ADN_Missions_Parameter::ADN_Missions_Parameter(E_MissionType type)
     , maxValue_  ( std::numeric_limits< int >::max() )
     , isContext_( false )
     , missionType_( type )
+    , indirectFire_( false )
 {
     std::string context = ENT_Tr::ConvertFromMissionType( type, ENT_Tr::eToSim );
     if( type != eMissionType_FragOrder )
@@ -57,6 +58,7 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
     newParam->minValue_   = minValue_.GetData();
     newParam->maxValue_   = maxValue_.GetData();
     newParam->diaName_    = diaName_.GetData();
+    newParam->indirectFire_ = indirectFire_.GetData();
     newParam->isContext_  = isContext_;
     newParam->values_.reserve( values_.size() );
     for( auto it = values_.begin(); it != values_.end(); ++it )
@@ -102,6 +104,7 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", type )
           >> xml::optional >> xml::attribute( "optional", isOptional_ )
           >> xml::attribute( "dia-name", diaName_ )
+          >> xml::optional >> xml::attribute( "indirect-fire-only", indirectFire_ )
           >> xml::optional >> xml::attribute( "min-occurs", minOccurs_ )
           >> xml::optional >> xml::attribute( "max-occurs", max )
           >> xml::optional >> xml::attribute( "min-value", minValue_ )
@@ -263,6 +266,8 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output ) const
             << xml::attribute( "type", ADN_Tr::ConvertFromMissionParameterType( type_.GetData() ) )
             << xml::attribute( "optional", isOptional_ )
             << xml::attribute( "dia-name", diaName );
+    if( indirectFire_.GetData() )
+        output << xml::attribute( "indirect-fire-only", true );
     if( isContext_ )
         output << xml::attribute( "is-context", isContext_ );
     if( maxOccurs_ != 1 )

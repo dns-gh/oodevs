@@ -2987,6 +2987,14 @@ PNG (*.png)
         <source>Switching off &quot;available without mission&quot; will remove the fragmentary order from all models.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire ammunition only</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
