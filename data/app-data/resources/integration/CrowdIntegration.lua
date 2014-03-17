@@ -363,16 +363,18 @@ end
 -- @param position Simulation point
 -- @param distance Float, the distance between the extraction position and the
 -- periphery of the given crowd (in meters, optional, 50 by default).
--- @return Two return values :
+-- @return Three return values :
 -- <ul> <li> Boolean, whether or not the extraction occurred successfully. </li>
--- <li> Simulation position, the extraction position. </li> </ul>
+-- <li> Simulation position, the extraction position. </li>
+-- <li> Simulation crowd, the id of the newly extracted crowd </li> </ul>
 integration.extractVictimsFromCrowd = function( crowd, position, distance )
     position = position or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
     if not position then
         position = DEC_Agent_Position() -- extract wounded creating a new crowd on my own position
     end
     position = DEC_Geometrie_PositionAleatoireSurCercle( position, distance or 50 )
-    return DEC_Crowd_ExtractWoundedFromCrowd( crowd.source, position ), position
+    local newCrowd = DEC_Crowd_ExtractWoundedFromCrowd( crowd.source, position )
+    return ( newCrowd ~= 0 ), position, newCrowd
 end
 
 --- Extracts dead humans from the given crowd.
@@ -387,16 +389,18 @@ end
 -- @param position Simulation point
 -- @param distance Float, the distance between the extraction position and the
 -- periphery of the given crowd (in meters, optional, 50 by default).
--- @return Two return values :
+-- @return Three return values :
 -- <ul> <li> Boolean, whether or not the extraction occurred successfully. </li>
--- <li> Simulation position, the extraction position. </li> </ul>
+-- <li> Simulation position, the extraction position. </li>
+-- <li> Simulation crowd, the id of the newly extracted crowd </li> </ul>
 integration.extractDeadFromCrowd = function( crowd, position, distance )
     position = position or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
     if not position then
         position = DEC_Agent_Position() -- extract dead creating a new crowd on my own position
     end
     position = DEC_Geometrie_PositionAleatoireSurCercle( position, distance or 50 )
-    return DEC_Crowd_ExtractDeadFromCrowd( crowd.source, position ), position
+    local newCrowd = DEC_Crowd_ExtractDeadFromCrowd( crowd.source, position )
+    return ( newCrowd ~= 0 ), position, newCrowd
 end
 
 --- Returns true if the given crowd has wounded humans, false otherwise.

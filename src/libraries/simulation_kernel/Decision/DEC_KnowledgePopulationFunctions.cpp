@@ -406,16 +406,16 @@ void DEC_KnowledgePopulationFunctions::Unlock( const MIL_AgentPion& callerAgent,
 // Name: DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd
 // Created: JSR 2012-01-18
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const MIL_AgentPion& callerAgent, unsigned int knowledgeId, const MT_Vector2D* position )
+unsigned int DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const MIL_AgentPion& callerAgent, unsigned int knowledgeId, const MT_Vector2D* position )
 {
     if( !position )
         throw MASA_EXCEPTION( "invalid parameter." );
     auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
     if( !bbKg )
-        return false;
+        return 0;
     boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
     if( !pKnowledge )
-        return false;
+        return 0;
 
     MIL_Population& population = pKnowledge->GetPopulationKnown();
     unsigned int wounded = population.GetWoundedHumans();
@@ -425,11 +425,13 @@ bool DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const MIL_AgentP
         MIL_Population* newPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( population.GetType().GetName(), *position, wounded, population.GetName() + " - wounded", population.GetArmy() );
         if( newPopulation )
         {
+            DEC_Knowledge_Population& knowledgePopulation = callerAgent.GetKnowledgeGroup()->GetPopulationKnowledgeToUpdate( *newPopulation );
+            knowledgePopulation.UpdateFromCrowdPerception( newPopulation->GetConcentration( *position ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
             newPopulation->ChangeComposition( 0, wounded, 0, 0 );
-            return true;
+            return newPopulation->GetID();
         }
     }
-    return false;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -508,17 +510,16 @@ bool DEC_KnowledgePopulationFunctions::IsFlowKnown( const DEC_Decision_ABC& call
 // Name: DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd
 // Created: NMI 2013-07-25
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const MIL_AgentPion& caller,
-        unsigned int knowledgeId, const MT_Vector2D* position )
+unsigned int DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const MIL_AgentPion& caller, unsigned int knowledgeId, const MT_Vector2D* position )
 {
     if( !position )
         throw MASA_EXCEPTION( "invalid parameter." );
     auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
     if( !bbKg )
-        return false;
+        return 0;
     boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
     if( !pKnowledge )
-        return false;
+        return 0;
 
     MIL_Population& population = pKnowledge->GetPopulationKnown();
     unsigned int dead = population.GetDeadHumans();
@@ -528,11 +529,13 @@ bool DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const MIL_AgentPion
         MIL_Population* newPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( population.GetType().GetName(), *position, dead, population.GetName() + " - dead", population.GetArmy() );
         if( newPopulation )
         {
+            DEC_Knowledge_Population& knowledgePopulation = caller.GetKnowledgeGroup()->GetPopulationKnowledgeToUpdate( *newPopulation );
+            knowledgePopulation.UpdateFromCrowdPerception( newPopulation->GetConcentration( *position ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
             newPopulation->ChangeComposition( 0, 0, 0, dead );
-            return true;
+            return newPopulation->GetID();
         }
     }
-    return false;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
