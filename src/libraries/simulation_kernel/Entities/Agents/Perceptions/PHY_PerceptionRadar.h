@@ -42,7 +42,7 @@ public:
     //@{
     bool HasRadarToHandle  () const;
     bool IsUsingActiveRadar() const;
-    bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const; // LTO
+    bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const;
     //@}
 
     //! @name Execution

@@ -76,8 +76,7 @@ void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RoleInterfac
     {
         const float rRadius = rRadius_ < 0. ? static_cast< float >( perceiver.GetMaxAgentPerceptionDistance() ) : rRadius_;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), rRadius, result );
-
-        for ( TER_Agent_ABC::IT_AgentPtrVector it = result.begin(); it != result.end(); )
+        for( TER_Agent_ABC::IT_AgentPtrVector it = result.begin(); it != result.end(); )
             if( localisation_.IsInside( (*it)->GetPosition() ) )
                 ++it;
             else
@@ -112,9 +111,8 @@ PHY_PerceptionRecoLocalisation::PHY_PerceptionRecoLocalisation( PHY_RoleInterfac
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoLocalisation::~PHY_PerceptionRecoLocalisation()
 {
-    for( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
+    for( auto it = recos_.begin(); it != recos_.end(); ++it )
         delete *it;
-    recos_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -123,9 +121,7 @@ PHY_PerceptionRecoLocalisation::~PHY_PerceptionRecoLocalisation()
 // -----------------------------------------------------------------------------
 int PHY_PerceptionRecoLocalisation::AddLocalisationWithGrowthSpeed( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
 {
-    PHY_PerceptionRecoLocalisationReco* pNewReco = new PHY_PerceptionRecoLocalisationReco( localisation, rGrowthSpeed, callerAgent );
-    assert( pNewReco );
-    return Add( pNewReco );
+    return Add( new PHY_PerceptionRecoLocalisationReco( localisation, rGrowthSpeed, callerAgent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,9 +130,7 @@ int PHY_PerceptionRecoLocalisation::AddLocalisationWithGrowthSpeed( const TER_Lo
 // -----------------------------------------------------------------------------
 int PHY_PerceptionRecoLocalisation::AddLocalisationWithDefaultGrowthSpeed( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent  )
 {
-    PHY_PerceptionRecoLocalisationReco* pNewReco = new PHY_PerceptionRecoLocalisationReco( localisation, true, callerAgent );
-    assert( pNewReco );
-    return Add( pNewReco );
+    return Add( new PHY_PerceptionRecoLocalisationReco( localisation, true, callerAgent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,12 +149,9 @@ void PHY_PerceptionRecoLocalisation::RemoveLocalisation( int id )
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const MT_Vector2D& vPoint ) const
 {
-    for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-    {
+    for( auto it = recos_.begin(); it != recos_.end(); ++it )
         if( (*it)->IsInside( perceiver_, vPoint ) )
             return PHY_PerceptionLevel::recognized_;
-    }
-
     return PHY_PerceptionLevel::notSeen_;
 }
 
@@ -171,19 +162,16 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const MT_Vec
 void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-
-    for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
+    for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
+        perceivableAgents.clear();
         (*itReco)->GetAgentsInside( perceiver_, perceivableAgents );
-
-        for ( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
+        for( auto it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >(**it).GetAgent();
-
             detection::DetectionComputer detectionComputer( target );
             perceiver_.GetPion().Execute( detectionComputer );
             target.Execute( detectionComputer );
-
             if( detectionComputer.CanBeSeen() )
                 perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
         }
@@ -195,7 +183,7 @@ void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVec
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const MIL_Agent_ABC& agent ) const
-{//@TODO move to  private
+{
     return Compute( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
 }
 
@@ -214,10 +202,9 @@ bool PHY_PerceptionRecoLocalisation::HasLocalisationToHandle() const
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoLocalisation::Update()
 {
-    for ( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
+    for( auto it = recos_.begin(); it != recos_.end(); ++it )
     {
         PHY_PerceptionRecoLocalisationReco& reco = **it;
-
         // Agrandissement de la zone de reconnaissance
         if( reco.rCurrentRadius_ < reco.rRadius_ )
             reco.rCurrentRadius_ += reco.rGrowthSpeed_;

@@ -18,8 +18,12 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "Tools/MIL_Tools.h"
+#include <boost/range/algorithm_ext/erase.hpp>
 
-double PHY_PerceptionFlyingShell::rRadius_ = 0;
+namespace
+{
+    double radius = 0;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionFlyingShell::Initialize
@@ -28,12 +32,11 @@ double PHY_PerceptionFlyingShell::rRadius_ = 0;
 void PHY_PerceptionFlyingShell::Initialize( xml::xistream& xis )
 {
     xis >> xml::start( "cobra-radar" )
-            >> xml::attribute( "action-range", rRadius_ )
+            >> xml::attribute( "action-range", radius )
         >> xml::end;
-
-    if( rRadius_ < 0 )
+    if( radius < 0 )
         throw MASA_EXCEPTION( xis.context() + "cobra-radar: action-range < 0" );
-    rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
+    radius = MIL_Tools::ConvertMeterToSim( radius );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,9 +55,7 @@ PHY_PerceptionFlyingShell::PHY_PerceptionFlyingShell( PHY_RoleInterface_Perceive
 // -----------------------------------------------------------------------------
 PHY_PerceptionFlyingShell::~PHY_PerceptionFlyingShell()
 {
-    for( auto it = zones_.begin(); it != zones_.end(); ++it )
-        delete *it;
-    zones_.clear();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -63,10 +64,9 @@ PHY_PerceptionFlyingShell::~PHY_PerceptionFlyingShell()
 // -----------------------------------------------------------------------------
 int PHY_PerceptionFlyingShell::AddLocalisation( const TER_Localisation& localisation )
 {
-    TER_Localisation* pLocalisation = new TER_Localisation( localisation );
-    zones_.push_back( pLocalisation );
-    int id = PHY_Perception_ABC::GetPerceptionId();
-    ids_[ id ] = pLocalisation;
+    boost::shared_ptr< TER_Localisation > pLocalisation( new TER_Localisation( localisation ) );
+    const int id = PHY_Perception_ABC::GetPerceptionId();
+    perceptions_.insert( T_Perceptions::value_type( id, pLocalisation ) );
     return id;
 }
 
@@ -76,15 +76,7 @@ int PHY_PerceptionFlyingShell::AddLocalisation( const TER_Localisation& localisa
 // -----------------------------------------------------------------------------
 void PHY_PerceptionFlyingShell::RemoveLocalisation( int id )
 {
-    const TER_Localisation* pLoc = ids_[ id ];
-
-    IT_ZoneVector it = std::find( zones_.begin(), zones_.end(), pLoc );
-    if( it != zones_.end() )
-    {
-        delete pLoc;
-        zones_.erase( it );
-    }
-    ids_.erase( id );
+    perceptions_.left.erase( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,20 +86,23 @@ void PHY_PerceptionFlyingShell::RemoveLocalisation( int id )
 void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     const MT_Vector2D& source = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
-    T_FlyingShellSet perceivedFlyingShells;
-    auto flyingShells = MIL_EffectManager::GetEffectManager().GetFlyingShells();
-    for( auto it = flyingShells.begin(); it != flyingShells.end(); ++it )
-    {
-        const MIL_Effect_IndirectFire& flyingShell = (**it);
-        for( CIT_ZoneVector itZone = zones_.begin(); itZone != zones_.end(); ++itZone )
-            if( (**itZone).Intersect2DWithCircle( source, rRadius_ ) && flyingShell.IsFlyingThroughLocalisation( **itZone ) )
+    T_Shells perceivedShells;
+    const auto& shells = MIL_EffectManager::GetEffectManager().GetFlyingShells();
+    for( auto it = shells.begin(); it != shells.end(); ++it )
+        for( auto it2 = perceptions_.right.begin(); it2 != perceptions_.right.end(); ++it2 )
+            if( it2->first->Intersect2DWithCircle( source, radius ) && (*it)->IsFlyingThroughLocalisation( *it2->first ) )
             {
-                perceivedFlyingShells.insert( &flyingShell );
-                if( lastPerceivedFlyingShells_.find( &flyingShell ) == lastPerceivedFlyingShells_.end() )
-                    perceiver_.NotifyPerception( flyingShell );
+                // $$$$ MCO 2014-03-14: naked pointers could point to invalid memory later, or even to
+                // a brand new re-created effect, but we cannot replace with shared/weak_ptr as effects
+                // use a very advanced technique based on the revolutionary "delete this" idiom...
+                perceivedShells.insert( *it );
+                if( shells_.find( *it ) == shells_.end() )
+                {
+                    perceiver_.NotifyPerception( **it );
+                    break;
+                }
             }
-    }
-    lastPerceivedFlyingShells_.swap( perceivedFlyingShells );
+    shells_.swap( perceivedShells );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +111,7 @@ void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionFlyingShell::HasLocalisationToHandle() const
 {
-    return !zones_.empty();
+    return !perceptions_.empty();
 }
 
 // -----------------------------------------------------------------------------

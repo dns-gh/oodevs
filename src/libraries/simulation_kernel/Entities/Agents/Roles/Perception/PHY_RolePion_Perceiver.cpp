@@ -77,16 +77,16 @@
 #include "simulation_terrain/TER_PopulationFlowVisitor_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <boost/serialization/map.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 
 using namespace detection;
 
-const unsigned int PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Perceiver )
 
 namespace
 {
+    const unsigned int nNbrStepsBetweenPeriphericalVision = 12; //$$$ En dur ...
     unsigned int nNbr = 0;
 }
 
@@ -96,7 +96,8 @@ namespace
 // -----------------------------------------------------------------------------
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     : owner_                         ( 0 )
-    , rMaxAgentPerceptionDistance_   ( 0. )
+    , rMaxAgentPerceptionDistance_   ( 0 )
+    , pPerceptionView_               ( new PHY_PerceptionView( *this, false ) ) // false is arbitrary: Doesn't matter on first tick.
     , nSensorMode_                   ( eNormal )
     , bPeriphericalVisionEnabled_    ( false )
     , bRecordModeEnabled_            ( false )
@@ -108,18 +109,24 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     , bRadarStateHasChanged_         ( true )
     , bFireObserver_                 ( false )
     , pPerceptionCoupDeSonde_        ( 0 )
-    , pPerceptionRecoPoint_          ( 0 )
-    , pPerceptionRecoLocalisation_   ( 0 )
-    , pPerceptionRecoUrbanBlock_     ( 0 )
-    , pPerceptionRadar_              ( 0 )
+    , pPerceptionRecoPoint_          ( new PHY_PerceptionRecoPoint( *this ) )
+    , pPerceptionRecoLocalisation_   ( new PHY_PerceptionRecoLocalisation( *this ) )
+    , pPerceptionRecoUrbanBlock_     ( new PHY_PerceptionRecoUrbanBlock( *this ) )
+    , pPerceptionRadar_              ( new PHY_PerceptionRadar( *this ) )
     , pPerceptionAlat_               ( 0 )
-    , pPerceptionSurveillance_       ( 0 )
-    , pPerceptionRecoObjects_        ( 0 )
-    , pPerceptionFlyingShell_        ( 0 )
+    , pPerceptionSurveillance_       ( new PHY_PerceptionRecoSurveillance( *this ) )
+    , pPerceptionRecoObjects_        ( new PHY_PerceptionRecoObjects( *this ) )
+    , pPerceptionFlyingShell_        ( new PHY_PerceptionFlyingShell( *this ) )
 {
     ++nNbr;
-    pPerceptionView_ = new PHY_PerceptionView( *this, false ); // false is arbitrary: Doesn't matter on first tick.
     activePerceptions_.push_back( pPerceptionView_ );
+    activePerceptions_.push_back( pPerceptionFlyingShell_ );
+    activePerceptions_.push_back( pPerceptionRecoPoint_ );
+    activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
+    activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
+    activePerceptions_.push_back( pPerceptionRecoObjects_ );
+    activePerceptions_.push_back( pPerceptionSurveillance_ );
+    activePerceptions_.push_back( pPerceptionRadar_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +135,9 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
 // -----------------------------------------------------------------------------
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     : owner_                         ( &pion )
-    , rMaxAgentPerceptionDistance_   ( 0. )
+    , nNextPeriphericalVisionStep_   ( ++nNbr % nNbrStepsBetweenPeriphericalVision )
+    , rMaxAgentPerceptionDistance_   ( 0 )
+    , pPerceptionView_               ( new PHY_PerceptionView( *this, pion.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() ) )
     , nSensorMode_                   ( eNormal )
     , bPeriphericalVisionEnabled_    ( false )
     , bRecordModeEnabled_            ( false )
@@ -141,18 +150,23 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     , bFireObserver_                 ( false )
     , bPerceptionUponRequest_        ( false )
     , pPerceptionCoupDeSonde_        ( 0 )
-    , pPerceptionRecoPoint_          ( 0 )
-    , pPerceptionRecoLocalisation_   ( 0 )
-    , pPerceptionRecoUrbanBlock_     ( 0 )
-    , pPerceptionRadar_              ( 0 )
+    , pPerceptionRecoPoint_          ( new PHY_PerceptionRecoPoint( *this ) )
+    , pPerceptionRecoLocalisation_   ( new PHY_PerceptionRecoLocalisation( *this ) )
+    , pPerceptionRecoUrbanBlock_     ( new PHY_PerceptionRecoUrbanBlock( *this ) )
+    , pPerceptionRadar_              ( new PHY_PerceptionRadar( *this ) )
     , pPerceptionAlat_               ( 0 )
-    , pPerceptionSurveillance_       ( 0 )
-    , pPerceptionRecoObjects_        ( 0 )
-    , pPerceptionFlyingShell_        ( 0 )
+    , pPerceptionSurveillance_       ( new PHY_PerceptionRecoSurveillance( *this ) )
+    , pPerceptionRecoObjects_        ( new PHY_PerceptionRecoObjects( *this ) )
+    , pPerceptionFlyingShell_        ( new PHY_PerceptionFlyingShell( *this ) )
 {
-    nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
-    pPerceptionView_ = new PHY_PerceptionView( *this, pion.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() );
     activePerceptions_.push_back( pPerceptionView_ );
+    activePerceptions_.push_back( pPerceptionFlyingShell_ );
+    activePerceptions_.push_back( pPerceptionRecoPoint_ );
+    activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
+    activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
+    activePerceptions_.push_back( pPerceptionRecoObjects_ );
+    activePerceptions_.push_back( pPerceptionSurveillance_ );
+    activePerceptions_.push_back( pPerceptionRadar_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +177,6 @@ PHY_RolePion_Perceiver::~PHY_RolePion_Perceiver()
 {
     for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
         delete *it;
-    activePerceptions_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -184,18 +197,13 @@ void PHY_RolePion_Perceiver::serialize( Archive& file, const unsigned int )
     file & bPerceptionUponRequest_;
 }
 
-// =============================================================================
-// PERCEPTIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::EnableSensors
 // Created: JVT 2005-04-28
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::EnableSensors()
 {
-    if( pPerceptionView_ )
-        pPerceptionView_->Enable();
+    pPerceptionView_->Enable();
 }
 
 // -----------------------------------------------------------------------------
@@ -204,8 +212,7 @@ void PHY_RolePion_Perceiver::EnableSensors()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableSensors()
 {
-    if( pPerceptionView_ )
-        pPerceptionView_->Disable();
+    pPerceptionView_->Disable();
 }
 
 // -----------------------------------------------------------------------------
@@ -220,6 +227,16 @@ void PHY_RolePion_Perceiver::EnableCoupDeSonde()
     activePerceptions_.push_back( pPerceptionCoupDeSonde_ );
 }
 
+namespace
+{
+    template< typename T >
+    void Reset( T*& perception )
+    {
+        delete perception;
+        perception = 0;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::DisableCoupDeSonde
 // Created: NLD 2004-10-14
@@ -227,11 +244,8 @@ void PHY_RolePion_Perceiver::EnableCoupDeSonde()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableCoupDeSonde()
 {
-    if( !pPerceptionCoupDeSonde_ )
-        return;
-    activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionCoupDeSonde_ ) );
-    delete pPerceptionCoupDeSonde_;
-    pPerceptionCoupDeSonde_ = 0;
+    boost::remove_erase( activePerceptions_, pPerceptionCoupDeSonde_ );
+    Reset( pPerceptionCoupDeSonde_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,11 +267,8 @@ void PHY_RolePion_Perceiver::EnableRecoAlat( const TER_Localisation& localisatio
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRecoAlat()
 {
-    if( !pPerceptionAlat_ )
-        return;
-    activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionAlat_ ) );
-    delete pPerceptionAlat_;
-    pPerceptionAlat_ = 0;
+    boost::remove_erase( activePerceptions_, pPerceptionAlat_ );
+    Reset( pPerceptionAlat_ );
     owner_->GetKnowledge().GetKsPerception().MakePerceptionsAvailableTimed();
 }
 
@@ -267,11 +278,6 @@ void PHY_RolePion_Perceiver::DisableRecoAlat()
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableSurveillanceLocalisation( const TER_Localisation& localisation )
 {
-    if( !pPerceptionSurveillance_ )
-    {
-        pPerceptionSurveillance_ = new PHY_PerceptionRecoSurveillance( *this );
-        activePerceptions_.push_back( pPerceptionSurveillance_ );
-    }
     return pPerceptionSurveillance_->AddLocalisation( localisation );
 }
 
@@ -281,15 +287,7 @@ int PHY_RolePion_Perceiver::EnableSurveillanceLocalisation( const TER_Localisati
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableSurveillanceLocalisation( int id )
 {
-    if( !pPerceptionSurveillance_ )
-        return;
     pPerceptionSurveillance_->RemoveLocalisation( id );
-    if( !pPerceptionSurveillance_->HasLocalisationToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionSurveillance_ ) );
-        delete pPerceptionSurveillance_;
-        pPerceptionSurveillance_ = 0;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -298,11 +296,6 @@ void PHY_RolePion_Perceiver::DisableSurveillanceLocalisation( int id )
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableRecoPoint( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent )
 {
-    if( !pPerceptionRecoPoint_ )
-    {
-        pPerceptionRecoPoint_ = new PHY_PerceptionRecoPoint( *this );
-        activePerceptions_.push_back( pPerceptionRecoPoint_ );
-    }
     return pPerceptionRecoPoint_->AddPoint( center, rSize, rSpeed, callerAgent );
 }
 
@@ -312,15 +305,7 @@ int PHY_RolePion_Perceiver::EnableRecoPoint( const MT_Vector2D& center, double r
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRecoPoint( int id )
 {
-    if( !pPerceptionRecoPoint_ )
-        return;
     pPerceptionRecoPoint_->RemovePoint( id );
-    if( !pPerceptionRecoPoint_->HasPointToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoPoint_ ) );
-        delete pPerceptionRecoPoint_;
-        pPerceptionRecoPoint_ = 0;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -329,11 +314,6 @@ void PHY_RolePion_Perceiver::DisableRecoPoint( int id )
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent )
 {
-    if( !pPerceptionRecoObjects_ )
-    {
-        pPerceptionRecoObjects_ = new PHY_PerceptionRecoObjects( *this );
-        activePerceptions_.push_back( pPerceptionRecoObjects_ );
-    }
     return  pPerceptionRecoObjects_->AddLocalisation( localisation, vCenter, rSpeed, callerAgent );
 }
 
@@ -343,28 +323,7 @@ int PHY_RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& localisat
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRecoObjects( int id )
 {
-    if( !pPerceptionRecoObjects_ )
-        return;
     pPerceptionRecoObjects_->RemoveLocalisation( id );
-    if( !pPerceptionRecoObjects_->HasLocalisationToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoObjects_ ) );
-        delete pPerceptionRecoObjects_;
-        pPerceptionRecoObjects_ = 0;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::EnsurePerceptionRecoLocalisation
-// Created: LDC 2009-12-04
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::EnsurePerceptionRecoLocalisation()
-{
-    if( !pPerceptionRecoLocalisation_ )
-    {
-        pPerceptionRecoLocalisation_ = new PHY_PerceptionRecoLocalisation( *this );
-        activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -373,7 +332,6 @@ void PHY_RolePion_Perceiver::EnsurePerceptionRecoLocalisation()
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
 {
-    EnsurePerceptionRecoLocalisation();
     return pPerceptionRecoLocalisation_->AddLocalisationWithGrowthSpeed( localisation, rGrowthSpeed, callerAgent );
 }
 
@@ -383,22 +341,7 @@ int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& loca
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent )
 {
-    EnsurePerceptionRecoLocalisation();
     return pPerceptionRecoLocalisation_->AddLocalisationWithDefaultGrowthSpeed( localisation, callerAgent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
-// Created: MGD 2010-02-11
-// -----------------------------------------------------------------------------
-int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* pUrbanBlock )
-{
-    if( !pPerceptionRecoUrbanBlock_ )
-    {
-        pPerceptionRecoUrbanBlock_ = new PHY_PerceptionRecoUrbanBlock( *this );
-        activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
-    }
-    return pPerceptionRecoUrbanBlock_->AddUrbanBlock( pUrbanBlock );
 }
 
 // -----------------------------------------------------------------------------
@@ -407,7 +350,6 @@ int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* pUrbanBlo
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent )
 {
-    EnsurePerceptionRecoLocalisation();
     return pPerceptionRecoLocalisation_->AddLocalisationWithDefaultGrowthSpeed( localisation, callerAgent );
 }
 
@@ -417,15 +359,16 @@ int PHY_RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& l
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRecoLocalisation( int id )
 {
-    if( !pPerceptionRecoLocalisation_ )
-        return;
     pPerceptionRecoLocalisation_->RemoveLocalisation( id );
-    if( !pPerceptionRecoLocalisation_->HasLocalisationToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoLocalisation_ ) );
-        delete pPerceptionRecoLocalisation_;
-        pPerceptionRecoLocalisation_ = 0;
-    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
+// Created: MGD 2010-02-11
+// -----------------------------------------------------------------------------
+int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* pUrbanBlock )
+{
+    return pPerceptionRecoUrbanBlock_->AddUrbanBlock( pUrbanBlock );
 }
 
 // -----------------------------------------------------------------------------
@@ -434,15 +377,7 @@ void PHY_RolePion_Perceiver::DisableRecoLocalisation( int id )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRecoUrbanBlock( int id )
 {
-    if( !pPerceptionRecoUrbanBlock_ )
-        return;
     pPerceptionRecoUrbanBlock_->RemoveUrbanBlock( id );
-    if( !pPerceptionRecoUrbanBlock_->HasLocalisationToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoUrbanBlock_ ) );
-        delete pPerceptionRecoUrbanBlock_;
-        pPerceptionRecoUrbanBlock_ = 0;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -451,17 +386,18 @@ void PHY_RolePion_Perceiver::DisableRecoUrbanBlock( int id )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsUsingActiveRadar() const
 {
-    return ( pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar() ) || pPerceptionFlyingShell_;
+    return pPerceptionRadar_->IsUsingActiveRadar()
+        || pPerceptionFlyingShell_->HasLocalisationToHandle();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::IsUsingActiveRadar
 // Created: JSR 2010-03-18
-// LTO
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const
 {
-    return ( pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar( radarClass ) ) || pPerceptionFlyingShell_;
+    return pPerceptionRadar_->IsUsingActiveRadar( radarClass )
+        || pPerceptionFlyingShell_->HasLocalisationToHandle();
 }
 
 // -----------------------------------------------------------------------------
@@ -470,12 +406,8 @@ bool PHY_RolePion_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& radarClas
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableRadarOnLocalisation( const PHY_RadarClass& radarClass, const TER_Localisation& localisation )
 {
-    if( !pPerceptionRadar_ )
-    {
-        pPerceptionRadar_ = new PHY_PerceptionRadar( *this );
-        activePerceptions_.push_back( pPerceptionRadar_ );
+    if( !pPerceptionRadar_->HasRadarToHandle() )
         bRadarStateHasChanged_ = true;
-    }
     return pPerceptionRadar_->EnableRadar( radarClass, localisation );
 }
 
@@ -485,16 +417,9 @@ int PHY_RolePion_Perceiver::EnableRadarOnLocalisation( const PHY_RadarClass& rad
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& radarClass, int id )
 {
-   if( !pPerceptionRadar_ )
-        return;
     pPerceptionRadar_->DisableRadar( radarClass, id );
     if( !pPerceptionRadar_->HasRadarToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRadar_ ) );
-        delete pPerceptionRadar_;
-        pPerceptionRadar_ = 0;
         bRadarStateHasChanged_ = true;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -503,12 +428,8 @@ void PHY_RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& r
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::EnableRadar( const PHY_RadarClass& radarClass )
 {
-    if( !pPerceptionRadar_ )
-    {
-        pPerceptionRadar_ = new PHY_PerceptionRadar( *this );
-        activePerceptions_.push_back( pPerceptionRadar_ );
+    if( !pPerceptionRadar_->HasRadarToHandle() )
         bRadarStateHasChanged_ = true;
-    }
     return pPerceptionRadar_->EnableRadar( radarClass );
 }
 
@@ -518,16 +439,9 @@ void PHY_RolePion_Perceiver::EnableRadar( const PHY_RadarClass& radarClass )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRadar( const PHY_RadarClass& radarClass )
 {
-    if( !pPerceptionRadar_ )
-        return;
     pPerceptionRadar_->DisableRadar( radarClass );
     if( !pPerceptionRadar_->HasRadarToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRadar_ ) );
-        delete pPerceptionRadar_;
-        pPerceptionRadar_      = 0;
         bRadarStateHasChanged_ = true;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -536,12 +450,8 @@ void PHY_RolePion_Perceiver::DisableRadar( const PHY_RadarClass& radarClass )
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableFlyingShellDetection( const TER_Localisation& localisation )
 {
-    if( !pPerceptionFlyingShell_ )
-    {
-        pPerceptionFlyingShell_ = new PHY_PerceptionFlyingShell( *this );
-        activePerceptions_.push_back( pPerceptionFlyingShell_ );
+    if( !pPerceptionFlyingShell_->HasLocalisationToHandle() )
         bRadarStateHasChanged_ = true;
-    }
     return pPerceptionFlyingShell_->AddLocalisation( localisation );
 }
 
@@ -551,21 +461,10 @@ int PHY_RolePion_Perceiver::EnableFlyingShellDetection( const TER_Localisation& 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 {
-    if( !pPerceptionFlyingShell_ )
-        return;
     pPerceptionFlyingShell_->RemoveLocalisation( id );
     if( !pPerceptionFlyingShell_->HasLocalisationToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionFlyingShell_ ) );
-        delete pPerceptionFlyingShell_;
-        pPerceptionFlyingShell_ = 0;
         bRadarStateHasChanged_ = true;
-    }
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance
@@ -595,9 +494,9 @@ bool PHY_RolePion_Perceiver::CanPerceive() const
     return !owner_->IsDead() && !owner_->GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() && bExternalCanPerceive_;
 }
 
-// =============================================================================
-// UPDATE
-// =============================================================================
+namespace
+{
+
 class sPerceptionRotation : public OnComponentFunctor_ABC
 {
 public:
@@ -621,7 +520,6 @@ private:
     double rAngle_;
 };
 
-// -----------------------------------------------------------------------------
 struct sPerceptionDataSensors : private boost::noncopyable
 {
 public:
@@ -677,7 +575,6 @@ private:
     bool                                         bPerceptionUponRequest_;
 };
 
-// -----------------------------------------------------------------------------
 class sPerceptionDataComposantes : public OnComponentFunctor_ABC
 {
 public:
@@ -727,7 +624,6 @@ private:
     bool                                         bPerceptionUponRequest_;
 };
 
-// -----------------------------------------------------------------------------
 class sRadarDataComposantes : public OnComponentFunctor_ABC
 {
 
@@ -756,11 +652,12 @@ private:
     const transport::PHY_RoleAction_Loading* transport_;
 };
 
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::ComputeMainPerceptionDirection
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-inline
 void PHY_RolePion_Perceiver::ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const
 {
     if( nSensorMode_ == eNormal )
@@ -816,16 +713,6 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
     owner_->Execute( *componentComputer );
 }
 
-namespace
-{
-    template< typename T >
-    void Reset( T*& perception )
-    {
-        delete perception;
-        perception = 0;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::DisableAllPerceptions
 // Created: NLD 2005-04-01
@@ -834,15 +721,15 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
 {
     activePerceptions_.clear();
     activePerceptions_.push_back( pPerceptionView_ );
+    activePerceptions_.push_back( pPerceptionFlyingShell_ );
+    activePerceptions_.push_back( pPerceptionRecoPoint_ );
+    activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
+    activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
+    activePerceptions_.push_back( pPerceptionRecoObjects_ );
+    activePerceptions_.push_back( pPerceptionSurveillance_ );
+    activePerceptions_.push_back( pPerceptionRadar_ );
     Reset( pPerceptionCoupDeSonde_ );
-    Reset( pPerceptionRecoPoint_ );
-    Reset( pPerceptionRecoLocalisation_ );
-    Reset( pPerceptionRecoUrbanBlock_ );
-    Reset( pPerceptionRecoObjects_ );
-    Reset( pPerceptionSurveillance_ );
-    Reset( pPerceptionRadar_ );
     Reset( pPerceptionAlat_ );
-    Reset( pPerceptionFlyingShell_ );
 }
 
 namespace
@@ -922,8 +809,8 @@ void PHY_RolePion_Perceiver::ExecuteCollisions()
         const MT_Vector2D& position = owner_->GetRole< PHY_RoleInterface_Location >().GetPosition();
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( position, 1., perceivableObjects );
-        for( auto itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).ExecuteCollisions( perceivableObjects );
+        for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
+            (**it).ExecuteCollisions( perceivableObjects );
     }
 }
 
@@ -938,9 +825,9 @@ const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const DEC_
     if( knowledge.GetLocalisation().IsInside( owner_->GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
         return PHY_PerceptionLevel::identified_;
     const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
-    for( auto itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+    for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
     {
-        pBestPerceptionLevel_ = &(**itPerception).Compute( knowledge );
+        pBestPerceptionLevel_ = &(**it).Compute( knowledge );
         if( pBestPerceptionLevel_->IsBestLevel() )
             return *pBestPerceptionLevel_;
     }
@@ -956,9 +843,9 @@ const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const MT_V
     if( !CanPerceive() )
         return PHY_PerceptionLevel::notSeen_;
     const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
-    for( auto itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+    for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
     {
-        pBestPerceptionLevel_ = &(**itPerception).Compute( vPoint );
+        pBestPerceptionLevel_ = &(**it).Compute( vPoint );
         if( pBestPerceptionLevel_->IsBestLevel() )
             return *pBestPerceptionLevel_;
     }
@@ -975,7 +862,7 @@ void PHY_RolePion_Perceiver::UpdatePeriphericalVisionState()
     if( nNextPeriphericalVisionStep_ <= nCurrentTime )
     {
         while( nNextPeriphericalVisionStep_ <= nCurrentTime )
-            nNextPeriphericalVisionStep_ += nNbrStepsBetweenPeriphericalVision_;
+            nNextPeriphericalVisionStep_ += nNbrStepsBetweenPeriphericalVision;
         bPeriphericalVisionEnabled_ = true;
         return;
     }
@@ -992,15 +879,12 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
     PreparePerceptionData        ();
     PrepareRadarData             ();
     lastPerceiverPosition_ = owner_->GetRole< PHY_RoleInterface_Location >().GetPosition();
-    if( pPerceptionRecoPoint_ )
-        pPerceptionRecoPoint_->Update();
-   if( pPerceptionRecoLocalisation_ )
-        pPerceptionRecoLocalisation_->Update();
-    if( pPerceptionRecoObjects_ )
-        pPerceptionRecoObjects_->Update();
+    pPerceptionRecoPoint_->Update();
+    pPerceptionRecoLocalisation_->Update();
+    pPerceptionRecoObjects_->Update();
     if( HasChanged() )
     {
-        if( HasRadarStateChanged() )
+        if( bRadarStateHasChanged_ )
             owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         owner_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
@@ -1289,15 +1173,6 @@ void PHY_RolePion_Perceiver::GetMainPerceptionDirection( MT_Vector2D& vDirection
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::HasRadarStateChanged
-// Created: NLD 2005-02-23
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Perceiver::HasRadarStateChanged() const
-{
-    return bRadarStateHasChanged_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::Clean
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
@@ -1362,7 +1237,10 @@ void PHY_RolePion_Perceiver::Execute( detection::DetectionComputer& algorithm ) 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::Execute( dotation::ConsumptionComputer_ABC& algorithm ) const
 {
-    if( pPerceptionRecoPoint_ || pPerceptionRecoLocalisation_ || pPerceptionRecoUrbanBlock_ || pPerceptionRecoObjects_ )
+    if( pPerceptionRecoPoint_->HasPointToHandle()
+        || pPerceptionRecoLocalisation_->HasLocalisationToHandle()
+        || pPerceptionRecoUrbanBlock_->HasLocalisationToHandle()
+        || pPerceptionRecoObjects_->HasLocalisationToHandle() )
         algorithm.SetConsumptionMode( PHY_ConsumptionType::moving_ );
 }
 
@@ -1606,6 +1484,5 @@ double PHY_RolePion_Perceiver::GetPerception( const MT_Vector2D& from, const MT_
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsReconnoitering( MIL_UrbanObject_ABC* pUrbanBlock ) const
 {
-    return pPerceptionRecoUrbanBlock_ && pPerceptionRecoUrbanBlock_->IsReconnoitering( pUrbanBlock );
+    return pPerceptionRecoUrbanBlock_->IsReconnoitering( pUrbanBlock );
 }
-
