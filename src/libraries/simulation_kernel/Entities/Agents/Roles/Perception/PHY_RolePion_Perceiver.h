@@ -205,7 +205,7 @@ private:
         ePoint      // la détection est fixées sur un point précis
     };
 
-    typedef std::vector< PHY_Perception_ABC* > T_PerceptionVector;
+    typedef std::vector< PHY_Perception_ABC* > T_Perceptions;
     //@}
 
 public:
@@ -248,7 +248,7 @@ private:
     PHY_PerceptionRadar*            pPerceptionRadar_;
     PHY_PerceptionAlat*             pPerceptionAlat_;
     PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
-    T_PerceptionVector              activePerceptions_;
+    T_Perceptions                   perceptions_;
 
     E_SensorMode nSensorMode_;
     MT_Vector2D  vSensorInfo_;
