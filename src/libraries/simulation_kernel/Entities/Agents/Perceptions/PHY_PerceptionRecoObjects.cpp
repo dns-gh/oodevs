@@ -100,8 +100,7 @@ PHY_PerceptionRecoObjects::PHY_PerceptionRecoObjects( PHY_RoleInterface_Perceive
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoObjects::~PHY_PerceptionRecoObjects()
 {
-    for( auto it = recos_.begin(); it != recos_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +128,7 @@ void PHY_PerceptionRecoObjects::RemoveLocalisation( int id )
 void PHY_PerceptionRecoObjects::Update()
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
-        (*it)->UpdateLocalisation();
+        it->UpdateLocalisation();
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +138,7 @@ void PHY_PerceptionRecoObjects::Update()
 const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const DEC_Knowledge_Object& knowledge ) const
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
-        if( (*it)->IsInside( knowledge.GetLocalisation() ) )
+        if( it->IsInside( knowledge.GetLocalisation() ) )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -154,8 +153,8 @@ void PHY_PerceptionRecoObjects::Execute( const TER_Object_ABC::T_ObjectVector& /
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         perceivableObjects.clear();
-        (*itReco)->GetObjectsInside( perceivableObjects );
-        for( TER_Object_ABC::CIT_ObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
+        itReco->GetObjectsInside( perceivableObjects );
+        for( auto it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
             if( object().CanBePerceived() && perceiver_.CanPerceive( object.GetType() ) )

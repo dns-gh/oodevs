@@ -1372,7 +1372,7 @@ void DEC_AgentFunctions::IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, co
     TER_Agent_ABC::T_AgentPtrVector agentsDetected;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( *location, agentsDetected );
     PHY_RoleInterface_Perceiver& perceiver = callerAgent.GetRole< PHY_RoleInterface_Perceiver >();
-    for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsDetected.begin(); itAgent != agentsDetected.end(); ++itAgent )
+    for( auto itAgent = agentsDetected.begin(); itAgent != agentsDetected.end(); ++itAgent )
         perceiver.NotifyPerception( static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent(), PHY_PerceptionLevel::identified_ );
 }
 

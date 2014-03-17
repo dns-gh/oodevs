@@ -35,8 +35,8 @@ private:
     const MT_Vector2D      vCenter_;
     const TER_Localisation localisation_;
           TER_Localisation circle_;
-    double               rCurrentSize_;
-    const double         rGrowthSpeed_;
+    double                 rCurrentSize_;
+    const double           rGrowthSpeed_;
     DEC_Decision_ABC&      callerAgent_;
     bool                   bMaxSizeDone_;
 };

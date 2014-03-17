@@ -76,7 +76,7 @@ void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RoleInterfac
     {
         const float rRadius = rRadius_ < 0. ? static_cast< float >( perceiver.GetMaxAgentPerceptionDistance() ) : rRadius_;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), rRadius, result );
-        for( TER_Agent_ABC::IT_AgentPtrVector it = result.begin(); it != result.end(); )
+        for( auto it = result.begin(); it != result.end(); )
             if( localisation_.IsInside( (*it)->GetPosition() ) )
                 ++it;
             else
@@ -111,8 +111,7 @@ PHY_PerceptionRecoLocalisation::PHY_PerceptionRecoLocalisation( PHY_RoleInterfac
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoLocalisation::~PHY_PerceptionRecoLocalisation()
 {
-    for( auto it = recos_.begin(); it != recos_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +149,7 @@ void PHY_PerceptionRecoLocalisation::RemoveLocalisation( int id )
 const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const MT_Vector2D& vPoint ) const
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
-        if( (*it)->IsInside( perceiver_, vPoint ) )
+        if( it->IsInside( perceiver_, vPoint ) )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -165,7 +164,7 @@ void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVec
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         perceivableAgents.clear();
-        (*itReco)->GetAgentsInside( perceiver_, perceivableAgents );
+        itReco->GetAgentsInside( perceiver_, perceivableAgents );
         for( auto it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >(**it).GetAgent();
@@ -204,14 +203,14 @@ void PHY_PerceptionRecoLocalisation::Update()
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
     {
-        PHY_PerceptionRecoLocalisationReco& reco = **it;
+        PHY_PerceptionRecoLocalisationReco& reco = *it;
         // Agrandissement de la zone de reconnaissance
         if( reco.rCurrentRadius_ < reco.rRadius_ )
             reco.rCurrentRadius_ += reco.rGrowthSpeed_;
         if( reco.rCurrentRadius_ >= reco.rRadius_ )
         {
             reco.rCurrentRadius_ = reco.rRadius_;
-            reco.callerAgent_.CallbackPerception( (*it)->Id() );
+            reco.callerAgent_.CallbackPerception( it->Id() );
         }
     }
 }

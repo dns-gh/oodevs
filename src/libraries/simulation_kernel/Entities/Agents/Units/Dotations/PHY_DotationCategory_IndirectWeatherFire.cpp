@@ -87,7 +87,7 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC*
 
     TER_Agent_ABC::T_AgentPtrVector targets;
     TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( effectSurface, targets );
-    for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
+    for( auto itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
         if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )

@@ -91,7 +91,7 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perce
 {
     const MT_Vector2D& perceiverPosition = perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     double perceiverAltitude = perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetHeight();
-    for( TER_Agent_ABC::CIT_AgentPtrVector it = targets.begin(); it != targets.end(); ++it )
+    for( auto it = targets.begin(); it != targets.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
         detection::DetectionComputer detectionComputer( target );

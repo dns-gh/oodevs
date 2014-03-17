@@ -106,7 +106,7 @@ void FloodCapacity::Finalize( MIL_Object_ABC& object )
     const FloodAttribute& flood = object.GetAttribute< FloodAttribute >();
     TER_Agent_ABC::T_AgentPtrVector agentsInsideObject;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( flood.GetLocalisation(), agentsInsideObject );
-    for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsInsideObject.begin(); itAgent != agentsInsideObject.end(); ++itAgent )
+    for( auto itAgent = agentsInsideObject.begin(); itAgent != agentsInsideObject.end(); ++itAgent )
         static_cast< PHY_RoleInterface_Location& >( **itAgent ).NotifyTerrainPutInsideObject( object );
 }
 

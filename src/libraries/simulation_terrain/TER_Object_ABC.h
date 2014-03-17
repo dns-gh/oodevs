@@ -26,10 +26,7 @@ class TER_Object_ABC
 public:
     //! @name Types
     //@{
-    typedef std::vector< TER_Object_ABC* >   T_ObjectVector;
-    typedef T_ObjectVector::iterator        IT_ObjectVector;
-    typedef T_ObjectVector::const_iterator CIT_ObjectVector;
-
+    typedef std::vector< TER_Object_ABC* > T_ObjectVector;
     typedef spatialcontainer::SpatialContainerNode< TER_Object_ABC*, TER_ObjectTraits, double >* T_Hint;
     //@}
 

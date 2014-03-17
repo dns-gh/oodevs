@@ -221,7 +221,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         double distanceEffectForBlocks = rInterventionTypeFired * ( rDispersionX_ + rDispersionY_ );
         AddAgentsInNearbyUrbanBlocks( targets, vTargetPosition, attritionSurface, distanceEffectForBlocks );
 
-        for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
+        for( auto itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
             if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
@@ -237,7 +237,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         DamageObjects( vTargetPosition, rInterventionTypeFired * rDispersionX_, attritionSurface, dotationCategory_, pFirer );
 
         bool bRCSent = false;
-        for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
+        for( auto itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
             if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
@@ -268,7 +268,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                 TER_World::GetWorld().GetAgentManager().GetListWithinCircle ( vTargetPosition, 5000.0, localObservers );
 
                 //RC
-                for( TER_Agent_ABC::CIT_AgentPtrVector itobserver = localObservers.begin(); itobserver != localObservers.end(); ++itobserver )
+                for( auto itobserver = localObservers.begin(); itobserver != localObservers.end(); ++itobserver )
                 {
                     MIL_Agent_ABC& observerAgent = static_cast< PHY_RoleInterface_Location& >( **itobserver ).GetAgent();
                     //only take those observers belonging to same army as firer:

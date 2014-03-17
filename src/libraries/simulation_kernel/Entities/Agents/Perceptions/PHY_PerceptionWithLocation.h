@@ -11,6 +11,7 @@
 #define __PHY_PerceptionWithLocation_h_
 
 #include "PHY_Perception_ABC.h"
+#include <boost/ptr_container/ptr_vector.hpp>
 
 // =============================================================================
 /** @class  PHY_PerceptionWithLocation
@@ -18,7 +19,8 @@
 */
 // Created: LDC 2009-07-29
 // =============================================================================
-template <typename T > class PHY_PerceptionWithLocation : public PHY_Perception_ABC
+template <typename T >
+class PHY_PerceptionWithLocation : public PHY_Perception_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -44,9 +46,7 @@ private:
 protected:
     //! @name Types
     //@{
-    typedef std::vector< T* >                     T_RecoVector;
-    typedef typename T_RecoVector::iterator       IT_RecoVector;
-    typedef typename T_RecoVector::const_iterator CIT_RecoVector;
+    typedef boost::ptr_vector< T > T_RecoVector;
     //@}
 
     //! @name Member data

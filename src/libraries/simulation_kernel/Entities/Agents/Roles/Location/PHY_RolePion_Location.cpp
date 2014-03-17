@@ -225,7 +225,7 @@ void PHY_RolePion_Location::Hide()
 {
     TER_Object_ABC::T_ObjectVector objectsColliding;
     TER_World::GetWorld().GetObjectManager().GetListAt( *pvPosition_, objectsColliding );
-    for( TER_Object_ABC::CIT_ObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
+    for( auto itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyPutOutsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
 
     RemoveFromPatch();
@@ -243,7 +243,7 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 
     TER_Object_ABC::T_ObjectVector objectsColliding;
     TER_World::GetWorld().GetObjectManager().GetListAt( *pvPosition_, objectsColliding );
-    for( TER_Object_ABC::CIT_ObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
+    for( auto itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyPutInsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
     bHasDoneMagicMove_ = true;
 }
