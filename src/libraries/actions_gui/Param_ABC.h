@@ -145,7 +145,7 @@ protected:
     QWidget* CreateSwitchEditor();
     virtual kernel::ContextMenu::T_MenuVariant CreateMenu( kernel::ContextMenu& menu );
     virtual void CreateInternalMenu( kernel::ContextMenu& menu );
-    void CreateListMenu( QTreeView* list, const QStandardItemModel& model, const QPoint& pos, bool createEnabled ); // $$$$ ABR 2012-03-23: Here for translation ... enjoy Qt translation
+    void CreateListMenu( QTreeView* list, const QStandardItemModel& model, const QPoint& pos, bool canCreate ); // $$$$ ABR 2012-03-23: Here for translation ... enjoy Qt translation
     QString GetNextNameAndId( const QStandardItemModel& model ); // $$$$ NPT 2012-10-25: Here for translation ... enjoy Qt translation
     //@}
 

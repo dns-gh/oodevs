@@ -115,7 +115,7 @@ QWidget* ListParameter< ConcreteElement >::BuildInterface( const QString& object
 template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::OnRequestPopup( const QPoint& pos )
 {
-    CreateListMenu( list_, model_, pos, createEnabled_ );
+    CreateListMenu( list_, model_, pos, CanCreate() );
 }
 
 // -----------------------------------------------------------------------------
@@ -421,6 +421,16 @@ template< typename ConcreteElement >
 bool ListParameter< ConcreteElement >::IsPotential( Param_ABC* param ) const
 {
     return param == potential_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::CanCreate
+// Created: ABR 2014-03-17
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+bool ListParameter< ConcreteElement >::CanCreate() const
+{
+    return ( widgets_.empty() || CheckValidity() ) && widgets_.size() <= max_;
 }
 
 // -----------------------------------------------------------------------------

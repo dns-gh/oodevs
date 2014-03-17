@@ -290,7 +290,7 @@ kernel::ContextMenu::T_MenuVariant Param_ABC::CreateMenu( kernel::ContextMenu& m
                 internalMenu_ = ( *menu )->InsertVariant( "", internalMenu_, false, 1 );
                 return internalMenu_;
             }
-            else if( parentList_->IsPotential( this ) )
+            else if( parentList_->IsPotential( this ) && parentList_->CanCreate() )
             {
                 CreateInternalMenu( **menu );
                 ConnectWithParentList();
@@ -397,11 +397,11 @@ bool Param_ABC::IsInParam() const
 // Name: Param_ABC::CreateListMenu
 // Created: ABR 2012-03-23
 // -----------------------------------------------------------------------------
-void Param_ABC::CreateListMenu( QTreeView* list, const QStandardItemModel& model, const QPoint& pos, bool createEnabled )
+void Param_ABC::CreateListMenu( QTreeView* list, const QStandardItemModel& model, const QPoint& pos, bool canCreate )
 {
     kernel::ContextMenu* menu = new kernel::ContextMenu( list );
     connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
-    if( createEnabled )
+    if( canCreate )
         menu->insertItem( tools::translate( "ListParameter", "Add" ), this, SLOT( OnCreate() ) );
 
     const QModelIndex index = list->selectionModel()->currentIndex();
