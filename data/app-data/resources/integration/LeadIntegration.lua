@@ -1141,7 +1141,6 @@ end
 -- @author NMI
 -- @release 2013-07-05
 integration.leadDroneActivate = function( self, findBestsFunction )
-    local Activate = Activate
     local integration = integration
     
     if myself.newTask then
