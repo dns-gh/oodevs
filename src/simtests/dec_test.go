@@ -389,6 +389,7 @@ func testDecStartConsumingResources(c *C, client *swapi.Client, unitType uint32,
 }
 
 func (s *TestSuite) TestDecStartConsumingResources(c *C) {
+	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-11969")
 	// Find type of unit which resources will be consumed
 	phydb := loadPhysical(c, "test")
 	unitType := getUnitTypeFromName(c, phydb, "Maintenance Log Unit 3")
