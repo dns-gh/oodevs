@@ -46,12 +46,12 @@ public:
     void WriteArchive( xml::xostream& output ) const;
     void UpdateObjectsVectors();
     virtual void CheckValidity();
+    void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
 
 private:
     void FillChoices();
 
 public:
-    ADN_Type_String                                                   strMission_;
     ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
     ADN_Type_Bool                                                     isOptional_;
     ADN_Type_Int                                                      minOccurs_;

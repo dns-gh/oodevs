@@ -710,6 +710,10 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Mission parameter %1 should have at least one object: All objects will be selectable instead of none.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>The non-logistic automat &apos;%1&apos; contains one or more logistic units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2994,13 +2998,6 @@ PNG (*.png)
     <message>
         <source>Indirect fire ammunition only</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Missions_Parameter</name>
-    <message>
-        <source>&apos;%1&apos; parameter should have at least one object.</source>
-        <translation type="unfinished">يجب أن تحتوي المعلمة &apos;%1&apos; كائن واحد على الأقل.</translation>
     </message>
 </context>
 <context>

@@ -288,9 +288,6 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output ) const
 
     std::size_t nbGenObject = CountObject( genObjects_ );
     std::size_t nbKnowledgeObject = CountObject( knowledgeObjects_ );
-    if( ( type_.GetData() == eMissionParameterTypeGenObject && nbGenObject == 0 ) ||
-        ( type_.GetData() == eMissionParameterTypeObjectKnowledge && nbKnowledgeObject == 0 ) )
-        throw MASA_EXCEPTION( tools::translate( "ADN_Missions_Parameter", "'%1' parameter should have at least one object." ).arg( strName_.GetData().c_str() ).toStdString() );
     if( type_.GetData() == eMissionParameterTypeGenObject && nbGenObject != genObjects_.size() )
         Write( output, genObjects_, type_.GetData(), eMissionParameterTypeGenObject, "objects" );
     if( type_.GetData() == eMissionParameterTypeObjectKnowledge && nbKnowledgeObject != knowledgeObjects_.size() )
@@ -306,4 +303,17 @@ void ADN_Missions_Parameter::CheckValidity()
 {
     ADN_RefWithLocalizedName::CheckValidity();
     CheckTypeValidity( description_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Parameter::CheckDatabaseValidity
+// Created: LDC 2014-03-14
+// -----------------------------------------------------------------------------
+void ADN_Missions_Parameter::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    std::size_t nbGenObject = CountObject( genObjects_ );
+    std::size_t nbKnowledgeObject = CountObject( knowledgeObjects_ );
+    if( ( type_.GetData() == eMissionParameterTypeGenObject && nbGenObject == 0 ) ||
+        ( type_.GetData() == eMissionParameterTypeObjectKnowledge && nbKnowledgeObject == 0 ) )
+        checker.AddError( eMissingObjectParameter, strName_.GetData(), eMissions );
 }

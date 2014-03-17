@@ -83,6 +83,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingPCOnAutomat ]     = tr( "Automat %1 requires at least one PC" ) + error;
     errorDescriptions_[ eMissingArmor ]           = tr( "At least one armor must be defined" ) + error;
     errorDescriptions_[ eMissingDisaster ]        = tr( "No disaster model for object %1" ) + error;
+    errorDescriptions_[ eMissingObjectParameter ] = tr( "Mission parameter %1 should have at least one object: All objects will be selectable instead of none." );
     errorDescriptions_[ eNoCrew ]                 = tr( "Unit %1 has no crew in equipment '%2'" ) + error;
     errorDescriptions_[ eInvalidPtrInVector ]     = tr( "Field '%2' is invalid in '%1'" ) + error;
     errorDescriptions_[ eInvalidCrossedRef ]      = tr( "'%1' has one unfound field of type '%2', it will be deleted at next save." );
