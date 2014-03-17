@@ -39,7 +39,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_AutomateDecision )
 DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger )
     : DEC_Decision            ( automate, gcMult, gcPause, logger )
     , nRulesOfEngagementState_( eRoeStateFreeFire )
-    , pRoePopulation_         ( PHY_RoePopulation::Find( 0 ) ) // eEmploiForceInterdit
+    , pRoePopulation_         ( PHY_RoePopulation::Default() )
     , nCloseCombatState_      ( eCloseCombatStateNone )
     , nOperationalState_      ( eOpStateOperational )
     , fuseau_                 ( 0 )
