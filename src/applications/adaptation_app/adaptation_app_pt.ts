@@ -709,6 +709,10 @@ Parked engine running</source>
         <source>Invalid scan depth, should be greater than scan width.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mission parameter %1 should have at least one object: All objects will be selectable instead of none.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -2961,13 +2965,6 @@ PNG (*.png)
     </message>
     <message>
         <source>Indirect fire ammunition only</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Missions_Parameter</name>
-    <message>
-        <source>&apos;%1&apos; parameter should have at least one object.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
