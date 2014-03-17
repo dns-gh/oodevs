@@ -123,8 +123,7 @@ bool PHY_PerceptionRecoSurveillanceReco::IsInside( const MT_Vector2D& vPoint ) c
 void PHY_PerceptionRecoSurveillanceReco::GetAgentsInside( TER_Agent_ABC::T_AgentPtrVector& result ) const
 {
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( localisation_, result );
-
-    for ( TER_Agent_ABC::IT_AgentPtrVector it = result.begin(); it != result.end(); )
+    for( auto it = result.begin(); it != result.end(); )
         if( IsInside( (*it)->GetPosition() ) )
             ++it;
         else
@@ -149,7 +148,6 @@ PHY_PerceptionRecoSurveillance::~PHY_PerceptionRecoSurveillance()
 {
     for( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
         delete *it;
-    recos_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -158,9 +156,7 @@ PHY_PerceptionRecoSurveillance::~PHY_PerceptionRecoSurveillance()
 // -----------------------------------------------------------------------------
 int PHY_PerceptionRecoSurveillance::AddLocalisation( const TER_Localisation& localisation )
 {
-    PHY_PerceptionRecoSurveillanceReco* pNewReco = new PHY_PerceptionRecoSurveillanceReco( localisation );
-    assert( pNewReco );
-    return Add( pNewReco );
+    return Add( new PHY_PerceptionRecoSurveillanceReco( localisation ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,12 +175,9 @@ void PHY_PerceptionRecoSurveillance::RemoveLocalisation( int id )
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MT_Vector2D& vPoint ) const
 {
-    for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
-    {
+    for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
         if( (*itReco)->IsInside( vPoint ) )
             return PHY_PerceptionLevel::recognized_;
-    }
-
     return PHY_PerceptionLevel::notSeen_;
 }
 
@@ -195,19 +188,16 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MT_Vec
 void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-
-    for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
+    for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
+        perceivableAgents.clear();
         (*itReco)->GetAgentsInside( perceivableAgents );
-
-        for ( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
+        for( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-
             detection::DetectionComputer detectionComputer( target );
             perceiver_.GetPion().Execute( detectionComputer );
             target.Execute( detectionComputer );
-
             if( detectionComputer.CanBeSeen() )
                 perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
         }

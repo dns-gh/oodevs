@@ -106,38 +106,24 @@ bool PHY_PerceptionRadar::HasRadarToHandle() const
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRadar::IsUsingActiveRadar() const
 {
-    PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses();
-    for( auto itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
-    {
-        if( !itRadarClass->second->IsActive() )
-            continue;
-
-        const PHY_PerceptionRadarData::T_ZoneSet& zones = radarZones_         [ itRadarClass->second->GetID() ];
-        const bool bRadarEnabledOnPerceiverPos          = radarOnUnitPosition_[ itRadarClass->second->GetID() ];
-
-        if( bRadarEnabledOnPerceiverPos || !zones.empty() )
+    auto radarClasses = PHY_RadarClass::GetRadarClasses();
+    for( auto it = radarClasses.begin(); it != radarClasses.end(); ++it )
+        if( IsUsingActiveRadar( *it->second ) )
             return true;
-    }
     return false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadar::IsUsingActiveRadar
 // Created: JSR 2010-03-18
-// LTO
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRadar::IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const
 {
     if( !radarClass.IsActive() )
         return false;
-
     const PHY_PerceptionRadarData::T_ZoneSet& zones = radarZones_         [ radarClass.GetID() ];
     const bool bRadarEnabledOnPerceiverPos          = radarOnUnitPosition_[ radarClass.GetID() ];
-
-    if( bRadarEnabledOnPerceiverPos || !zones.empty() )
-        return true;
-
-    return false;
+    return bRadarEnabledOnPerceiverPos || !zones.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -155,24 +141,21 @@ const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const MIL_Agent_ABC& /*
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
-    PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses(); 
+    const auto radarClasses = PHY_RadarClass::GetRadarClasses(); 
     for( auto itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
     {
         const PHY_PerceptionRadarData::T_ZoneSet& zones = radarZones_         [ itRadarClass->second->GetID() ];
         const bool bRadarEnabledOnPerceiverPos          = radarOnUnitPosition_[ itRadarClass->second->GetID() ];
-
         if( !bRadarEnabledOnPerceiverPos && zones.empty() )
             continue;
-
-        const PHY_RoleInterface_Perceiver::T_RadarMap& radars = perceiver_.GetRadars( *itRadarClass->second );
+        const auto& radars = perceiver_.GetRadars( *itRadarClass->second );
         for( auto itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
         {
             const PHY_RadarType* radarType = itRadar->first;
             double radarHeight = itRadar->second;
-            PHY_PerceptionRadarData radarData( *radarType, radarHeight );
             auto itRadarData = radarData_.find( radarType );
             if( itRadarData == radarData_.end() )
-                radarData_.insert( std::pair< const PHY_RadarType*, PHY_PerceptionRadarData >( radarType,radarData ) );
+                radarData_[ radarType ] = PHY_PerceptionRadarData( *radarType, radarHeight );
             else // Use max height for a given radar type
                 radarData_[ radarType ].SetMinHeight( radarHeight );
             radarData_[ radarType ].Acquire( perceiver_, zones, bRadarEnabledOnPerceiverPos );
