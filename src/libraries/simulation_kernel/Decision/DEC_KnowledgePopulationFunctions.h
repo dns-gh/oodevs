@@ -60,8 +60,8 @@ public:
                            static int GetClosestConcentration( const DEC_Decision_ABC& callerAgent, int knowledgeId, const MT_Vector2D& point, int refDistance );
                            static void Lock( const MIL_AgentPion& callerAgent, int knowledgeId );
                            static void Unlock( const MIL_AgentPion& callerAgent, int knowledgeId );
-                           static bool ExtractWoundedFromCrowd( const MIL_AgentPion& callerPion, unsigned int knowledgeId, const MT_Vector2D* position );
-                           static bool ExtractDeadFromCrowd( const MIL_AgentPion& caller, unsigned int knowledgeId, const MT_Vector2D* position );
+                           static unsigned int ExtractWoundedFromCrowd( const MIL_AgentPion& callerPion, unsigned int knowledgeId, const MT_Vector2D* position );
+                           static unsigned int ExtractDeadFromCrowd( const MIL_AgentPion& caller, unsigned int knowledgeId, const MT_Vector2D* position );
     template< typename T > static std::vector< unsigned int > GetHumansFromAllTypes( const T& caller, int knowledgeId );
                            static bool HealWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
                            static bool CanLoadCrowdConcentration( const DEC_Decision_ABC& callerAgent, int knowledgeId, unsigned int concentrationId );
