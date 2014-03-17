@@ -223,6 +223,8 @@ private:
     void PrepareRadarData();
     void UpdatePeriphericalVisionState();
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
+    template< typename T >
+    void Reset( std::unique_ptr< T >& pointer );
     //@}
 
 private:
@@ -238,17 +240,17 @@ private:
     T_DisasterDetectors disasterDetectors_;
     double rMaxAgentPerceptionDistance_;
 
-    PHY_PerceptionView*             pPerceptionView_;
-    PHY_PerceptionCoupDeSonde*      pPerceptionCoupDeSonde_;
-    PHY_PerceptionRecoPoint*        pPerceptionRecoPoint_;
-    PHY_PerceptionRecoLocalisation* pPerceptionRecoLocalisation_;
-    PHY_PerceptionRecoUrbanBlock*   pPerceptionRecoUrbanBlock_;
-    PHY_PerceptionRecoObjects*      pPerceptionRecoObjects_;
-    PHY_PerceptionRecoSurveillance* pPerceptionSurveillance_;
-    PHY_PerceptionRadar*            pPerceptionRadar_;
-    PHY_PerceptionAlat*             pPerceptionAlat_;
-    PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
-    T_Perceptions                   perceptions_;
+    std::unique_ptr< PHY_PerceptionView >             pPerceptionView_;
+    std::unique_ptr< PHY_PerceptionRecoPoint >        pPerceptionRecoPoint_;
+    std::unique_ptr< PHY_PerceptionRecoLocalisation > pPerceptionRecoLocalisation_;
+    std::unique_ptr< PHY_PerceptionRecoUrbanBlock >   pPerceptionRecoUrbanBlock_;
+    std::unique_ptr< PHY_PerceptionRecoObjects >      pPerceptionRecoObjects_;
+    std::unique_ptr< PHY_PerceptionRecoSurveillance > pPerceptionSurveillance_;
+    std::unique_ptr< PHY_PerceptionRadar >            pPerceptionRadar_;
+    std::unique_ptr< PHY_PerceptionFlyingShell >      pPerceptionFlyingShell_;
+    std::unique_ptr< PHY_PerceptionCoupDeSonde >      pPerceptionCoupDeSonde_;
+    std::unique_ptr< PHY_PerceptionAlat >             pPerceptionAlat_;
+    T_Perceptions                                     perceptions_;
 
     E_SensorMode nSensorMode_;
     MT_Vector2D  vSensorInfo_;

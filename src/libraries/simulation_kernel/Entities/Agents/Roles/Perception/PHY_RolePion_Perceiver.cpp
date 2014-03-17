@@ -97,7 +97,6 @@ namespace
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     : owner_                         ( 0 )
     , rMaxAgentPerceptionDistance_   ( 0 )
-    , pPerceptionView_               ( new PHY_PerceptionView( *this, false ) ) // false is arbitrary: Doesn't matter on first tick.
     , nSensorMode_                   ( eNormal )
     , bPeriphericalVisionEnabled_    ( false )
     , bRecordModeEnabled_            ( false )
@@ -108,25 +107,10 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     , bExternalMustUpdateVisionCones_( false )
     , bRadarStateHasChanged_         ( true )
     , bFireObserver_                 ( false )
-    , pPerceptionCoupDeSonde_        ( 0 )
-    , pPerceptionRecoPoint_          ( new PHY_PerceptionRecoPoint( *this ) )
-    , pPerceptionRecoLocalisation_   ( new PHY_PerceptionRecoLocalisation( *this ) )
-    , pPerceptionRecoUrbanBlock_     ( new PHY_PerceptionRecoUrbanBlock( *this ) )
-    , pPerceptionRadar_              ( new PHY_PerceptionRadar( *this ) )
-    , pPerceptionAlat_               ( 0 )
-    , pPerceptionSurveillance_       ( new PHY_PerceptionRecoSurveillance( *this ) )
-    , pPerceptionRecoObjects_        ( new PHY_PerceptionRecoObjects( *this ) )
-    , pPerceptionFlyingShell_        ( new PHY_PerceptionFlyingShell( *this ) )
+    , pPerceptionView_               ( new PHY_PerceptionView( *this, false ) ) // false is arbitrary: Doesn't matter on first tick.
 {
     ++nNbr;
-    perceptions_.push_back( pPerceptionView_ );
-    perceptions_.push_back( pPerceptionFlyingShell_ );
-    perceptions_.push_back( pPerceptionRecoPoint_ );
-    perceptions_.push_back( pPerceptionRecoLocalisation_ );
-    perceptions_.push_back( pPerceptionRecoUrbanBlock_ );
-    perceptions_.push_back( pPerceptionRecoObjects_ );
-    perceptions_.push_back( pPerceptionSurveillance_ );
-    perceptions_.push_back( pPerceptionRadar_ );
+    DisableAllPerceptions();
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +121,6 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     : owner_                         ( &pion )
     , nNextPeriphericalVisionStep_   ( ++nNbr % nNbrStepsBetweenPeriphericalVision )
     , rMaxAgentPerceptionDistance_   ( 0 )
-    , pPerceptionView_               ( new PHY_PerceptionView( *this, pion.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() ) )
     , nSensorMode_                   ( eNormal )
     , bPeriphericalVisionEnabled_    ( false )
     , bRecordModeEnabled_            ( false )
@@ -149,24 +132,9 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     , bRadarStateHasChanged_         ( true )
     , bFireObserver_                 ( false )
     , bPerceptionUponRequest_        ( false )
-    , pPerceptionCoupDeSonde_        ( 0 )
-    , pPerceptionRecoPoint_          ( new PHY_PerceptionRecoPoint( *this ) )
-    , pPerceptionRecoLocalisation_   ( new PHY_PerceptionRecoLocalisation( *this ) )
-    , pPerceptionRecoUrbanBlock_     ( new PHY_PerceptionRecoUrbanBlock( *this ) )
-    , pPerceptionRadar_              ( new PHY_PerceptionRadar( *this ) )
-    , pPerceptionAlat_               ( 0 )
-    , pPerceptionSurveillance_       ( new PHY_PerceptionRecoSurveillance( *this ) )
-    , pPerceptionRecoObjects_        ( new PHY_PerceptionRecoObjects( *this ) )
-    , pPerceptionFlyingShell_        ( new PHY_PerceptionFlyingShell( *this ) )
+    , pPerceptionView_               ( new PHY_PerceptionView( *this, pion.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() ) )
 {
-    perceptions_.push_back( pPerceptionView_ );
-    perceptions_.push_back( pPerceptionFlyingShell_ );
-    perceptions_.push_back( pPerceptionRecoPoint_ );
-    perceptions_.push_back( pPerceptionRecoLocalisation_ );
-    perceptions_.push_back( pPerceptionRecoUrbanBlock_ );
-    perceptions_.push_back( pPerceptionRecoObjects_ );
-    perceptions_.push_back( pPerceptionSurveillance_ );
-    perceptions_.push_back( pPerceptionRadar_ );
+    DisableAllPerceptions();
 }
 
 // -----------------------------------------------------------------------------
@@ -175,8 +143,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
 // -----------------------------------------------------------------------------
 PHY_RolePion_Perceiver::~PHY_RolePion_Perceiver()
 {
-    for( auto it = perceptions_.begin(); it != perceptions_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -223,18 +190,8 @@ void PHY_RolePion_Perceiver::EnableCoupDeSonde()
 {
     if( pPerceptionCoupDeSonde_ )
         return;
-    pPerceptionCoupDeSonde_ = new PHY_PerceptionCoupDeSonde( *this );
-    perceptions_.push_back( pPerceptionCoupDeSonde_ );
-}
-
-namespace
-{
-    template< typename T >
-    void Reset( T*& perception )
-    {
-        delete perception;
-        perception = 0;
-    }
+    pPerceptionCoupDeSonde_.reset( new PHY_PerceptionCoupDeSonde( *this ) );
+    perceptions_.push_back( pPerceptionCoupDeSonde_.get() );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,8 +201,8 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableCoupDeSonde()
 {
-    boost::remove_erase( perceptions_, pPerceptionCoupDeSonde_ );
-    Reset( pPerceptionCoupDeSonde_ );
+    boost::remove_erase( perceptions_, pPerceptionCoupDeSonde_.get() );
+    pPerceptionCoupDeSonde_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -256,8 +213,8 @@ void PHY_RolePion_Perceiver::EnableRecoAlat( const TER_Localisation& localisatio
 {
     if( pPerceptionAlat_ )
         return;
-    pPerceptionAlat_ = new PHY_PerceptionAlat( *this, localisation );
-    perceptions_.push_back( pPerceptionAlat_ );
+    pPerceptionAlat_.reset( new PHY_PerceptionAlat( *this, localisation ) );
+    perceptions_.push_back( pPerceptionAlat_.get() );
 }
 
 // -----------------------------------------------------------------------------
@@ -267,8 +224,8 @@ void PHY_RolePion_Perceiver::EnableRecoAlat( const TER_Localisation& localisatio
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRecoAlat()
 {
-    boost::remove_erase( perceptions_, pPerceptionAlat_ );
-    Reset( pPerceptionAlat_ );
+    boost::remove_erase( perceptions_, pPerceptionAlat_.get() );
+    pPerceptionAlat_.reset();
     owner_->GetKnowledge().GetKsPerception().MakePerceptionsAvailableTimed();
 }
 
@@ -713,6 +670,13 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
     owner_->Execute( *componentComputer );
 }
 
+template< typename T >
+void PHY_RolePion_Perceiver::Reset( std::unique_ptr< T >& pointer )
+{
+    pointer.reset( new T( *this ) );
+    perceptions_.push_back( pointer.get() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::DisableAllPerceptions
 // Created: NLD 2005-04-01
@@ -720,21 +684,21 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
 void PHY_RolePion_Perceiver::DisableAllPerceptions()
 {
     perceptions_.clear();
-    perceptions_.push_back( pPerceptionView_ );
-    perceptions_.push_back( pPerceptionFlyingShell_ );
-    perceptions_.push_back( pPerceptionRecoPoint_ );
-    perceptions_.push_back( pPerceptionRecoLocalisation_ );
-    perceptions_.push_back( pPerceptionRecoUrbanBlock_ );
-    perceptions_.push_back( pPerceptionRecoObjects_ );
-    perceptions_.push_back( pPerceptionSurveillance_ );
-    perceptions_.push_back( pPerceptionRadar_ );
-    Reset( pPerceptionCoupDeSonde_ );
-    Reset( pPerceptionAlat_ );
+    perceptions_.push_back( pPerceptionView_.get() );
+    Reset( pPerceptionRecoPoint_ );
+    Reset( pPerceptionRecoLocalisation_ );
+    Reset( pPerceptionRecoUrbanBlock_ );
+    Reset( pPerceptionRecoObjects_ );
+    Reset( pPerceptionSurveillance_ );
+    Reset( pPerceptionRadar_ );
+    Reset( pPerceptionFlyingShell_ );
+    pPerceptionCoupDeSonde_.reset();
+    pPerceptionAlat_.reset();
 }
 
 namespace
 {
-    const float maxBlockPerceptionDistance = 100.f; // Distance under which we consider urban blocks for perception.
+    const float maxBlockPerceptionDistance = 100.f; // Distance under which we consider urban blocks for pPerception.
 }
 
 // -----------------------------------------------------------------------------
