@@ -53,7 +53,7 @@ bool MIL_Effect_PopulationFire::Execute()
     if( bCanBePlundered )
     {
         population_.AddArmedHumans( 1 );
-        MIL_Report::PostEvent( target_, MIL_Report::eRC_MilitaryEquipmentPlundered );
+        MIL_Report::PostEvent( target_, report::eRC_MilitaryEquipmentPlundered );
     }
     delete this;
     return false; // Effect must be stopped

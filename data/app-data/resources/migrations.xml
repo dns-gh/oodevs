@@ -188,6 +188,7 @@
     <upgrade schema="schemas/5.2.2/exercise/orbat.xsd" apply="schemas/5.3.0/xsl/orbat_5.2.2-5.3.0.xsl"/>
     <upgrade schema="schemas/5.2.2/physical/Missions.xsd" apply="schemas/5.3.0/xsl/missions_5.2.2-5.3.0.xsl"/>
     <upgrade schema="schemas/5.2.2/physical/Physical.xsd" apply="schemas/5.3.0/xsl/physical_5.2.2-5.3.0.xsl"/>
+    <upgrade schema="schemas/5.2.2/physical/Reports.xsd" apply="schemas/5.3.0/xsl/reports_5.2.2-5.3.0.xsl"/>
   </migration>
   <migration from="5.3.0" to="5.3.1">
     <upgrade schema="schemas/5.3.0/exercise/orders.xsd" apply="schemas/5.3.1/xsl/orders_5.3.0-5.3.1.xsl"/>
