@@ -8,12 +8,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionIllumination.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
-#include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
@@ -22,6 +19,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 
 using namespace firing;
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIllumination constructor
 // Created: MGD 2010-02-12
@@ -52,10 +50,6 @@ void PHY_ActionIllumination::StopAction()
 {
     Callback( role_.GetFinalReturnCode() );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIllumination::Execute

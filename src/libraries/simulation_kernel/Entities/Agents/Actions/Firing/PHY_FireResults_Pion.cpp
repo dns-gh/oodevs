@@ -33,12 +33,12 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
     , nID_   ( idManager_.GetId() )
     , direct_( true )
 {
-    client::StartUnitFire asnMsg;
-    asnMsg().mutable_fire()->set_id( nID_ );
-    asnMsg().mutable_firing_unit()->set_id( firer.GetID() );
-    asnMsg().set_type( sword::StartUnitFire::direct );
-    asnMsg().mutable_target()->mutable_unit()->set_id( target.GetID() );
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    client::StartUnitFire msg;
+    msg().mutable_fire()->set_id( nID_ );
+    msg().mutable_firing_unit()->set_id( firer.GetID() );
+    msg().set_type( sword::StartUnitFire::direct );
+    msg().mutable_target()->mutable_unit()->set_id( target.GetID() );
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,13 +50,13 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
     , nID_   ( idManager_.GetId() )
     , direct_( true )
 {
-    client::StartUnitFire asnMsg;
-    asnMsg().mutable_fire()->set_id( nID_ );
-    asnMsg().mutable_firing_unit()->set_id( firer.GetID() );
-    asnMsg().set_type( sword::StartUnitFire::direct );
-    asnMsg().mutable_target()->mutable_crowd()->set_id( target.GetPopulation().GetID() );
-    asnMsg().mutable_target()->mutable_crowd_element()->set_id( target.GetID() );
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    client::StartUnitFire msg;
+    msg().mutable_fire()->set_id( nID_ );
+    msg().mutable_firing_unit()->set_id( firer.GetID() );
+    msg().set_type( sword::StartUnitFire::direct );
+    msg().mutable_target()->mutable_crowd()->set_id( target.GetPopulation().GetID() );
+    msg().mutable_target()->mutable_crowd_element()->set_id( target.GetID() );
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,13 +68,13 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT
     , nID_   ( idManager_.GetId() )
     , direct_( false )
 {
-    client::StartUnitFire asnMsg;
-    asnMsg().mutable_fire()->set_id( nID_ );
-    asnMsg().mutable_firing_unit()->set_id( firer.GetID() );
-    asnMsg().set_type( sword::StartUnitFire::indirect );
-    asnMsg().mutable_ammunition()->set_id( dotationCategory.GetMosID() );
-    NET_ASN_Tools::WritePoint( targetPosition, *asnMsg().mutable_target()->mutable_position() );
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    client::StartUnitFire msg;
+    msg().mutable_fire()->set_id( nID_ );
+    msg().mutable_firing_unit()->set_id( firer.GetID() );
+    msg().set_type( sword::StartUnitFire::indirect );
+    msg().mutable_ammunition()->set_id( dotationCategory.GetMosID() );
+    NET_ASN_Tools::WritePoint( targetPosition, *msg().mutable_target()->mutable_position() );
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,14 +122,14 @@ void PHY_FireResults_Pion::SendReport( const MSG& msg, bool& rcSent ) const
 PHY_FireResults_Pion::~PHY_FireResults_Pion()
 {
     {
-        client::StopUnitFire asnMsg;
-        asnMsg().mutable_fire()->set_id( nID_ );
-        Serialize( *asnMsg().mutable_units_damages() );
-        Serialize( *asnMsg().mutable_crowds_damages() );
-        asnMsg.Send( NET_Publisher_ABC::Publisher() );
+        client::StopUnitFire msg;
+        msg().mutable_fire()->set_id( nID_ );
+        Serialize( *msg().mutable_units_damages() );
+        Serialize( *msg().mutable_crowds_damages() );
+        msg.Send( NET_Publisher_ABC::Publisher() );
         bool rcSent = false;
-        SendReport( asnMsg().units_damages(), rcSent );
-        SendReport( asnMsg().crowds_damages(), rcSent );
+        SendReport( msg().units_damages(), rcSent );
+        SendReport( msg().crowds_damages(), rcSent );
     }
     SendDamagesPion( firer_, nID_, direct_ );
     // $$$$ Merde pour VABF Popu
