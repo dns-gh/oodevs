@@ -103,7 +103,7 @@ void Param_ABC::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC&, gui:
 // Name: Param_ABC::CheckValidity
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-bool Param_ABC::CheckValidity()
+bool Param_ABC::CheckValidity() const
 {
     return !IsChecked() || InternalCheckValidity();
 }
