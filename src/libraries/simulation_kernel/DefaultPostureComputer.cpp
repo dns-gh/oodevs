@@ -81,7 +81,7 @@ namespace
             : container_( container )
             , result_   ( 1 )
         {
-            pion.Execute( *this );
+            pion.Execute< posture::PostureComputer_ABC >( *this );
             container.push_back( std::make_pair( &pion.GetType().GetUnitType(), result_ ) );
         }
     private:
