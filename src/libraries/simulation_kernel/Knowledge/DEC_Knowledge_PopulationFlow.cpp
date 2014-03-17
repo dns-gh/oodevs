@@ -253,6 +253,12 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPer
             }
         }
     }
+    if( *pPreviousPerceptionLevel_ != PHY_PerceptionLevel::identified_ && *pCurrentPerceptionLevel_ == PHY_PerceptionLevel::identified_ )
+    {
+        unsigned int armedIndividuals = static_cast< unsigned int >( pPopulationKnowledge_->GetPopulationKnown().GetArmedIndividuals() * 100u );
+        if( armedIndividuals > 0u )
+            MIL_Report::PostEvent( perception.GetAgentPerceiving(), report::eRC_ArmedCiviliansDetected, armedIndividuals );
+    }
     if( pPopulationKnowledge_->IsRecon() )
     {
         bReconAttributesValid_ = true;

@@ -88,6 +88,7 @@ public:
     double GetWeight             () const;
     double GetMaxSlope           () const;
     double GetSlopeDeceleration  () const;
+    bool   HasWeaponTypes        () const;
     //@}
 
     //! @name Load/unload - Transport

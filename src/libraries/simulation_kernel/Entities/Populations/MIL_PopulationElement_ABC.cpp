@@ -126,7 +126,7 @@ void MIL_PopulationElement_ABC::FireOnPion( double rIntensity, MIL_Agent_ABC& ta
     if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH * rIntensity ) )
         return;
 
-    MIL_Effect_PopulationFire* pEffect = new MIL_Effect_PopulationFire( GetPopulation().GetType(), GetAttitude(), target, *compTargets.front(), fireResult, GetPopulation().GetArmedIndividuals() );
+    MIL_Effect_PopulationFire* pEffect = new MIL_Effect_PopulationFire( GetPopulation(), GetPopulation().GetType(), GetAttitude(), target, *compTargets.front(), fireResult, GetPopulation().GetArmedIndividuals() );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
 }
 

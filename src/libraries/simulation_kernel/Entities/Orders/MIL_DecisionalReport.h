@@ -48,6 +48,7 @@ namespace report
     extern const MIL_DecisionalReport eRC_AlerteDisponibiliteVecteurs;
     extern const MIL_DecisionalReport eRC_AllocationConsentieBientotEpuisee;
     extern const MIL_DecisionalReport eRC_ANouveauDisponibleApresReparation;
+    extern const MIL_DecisionalReport eRC_ArmedCiviliansDetected;
     extern const MIL_DecisionalReport eRC_AttentatTerroristeDansPopulation;
     extern const MIL_DecisionalReport eRC_AttitudePopulation;
     extern const MIL_DecisionalReport eRC_Bloquee;
@@ -71,6 +72,7 @@ namespace report
     extern const MIL_DecisionalReport eRC_DemandeRavitaillementStocks;
     extern const MIL_DecisionalReport eRC_DepassementCapaciteStockage;
     extern const MIL_DecisionalReport eRC_DestructionPC;
+    extern const MIL_DecisionalReport eRC_DetectedUnit;
     extern const MIL_DecisionalReport eRC_DifficultMovementProgression;
     extern const MIL_DecisionalReport eRC_DisembarkmentFinished;
     extern const MIL_DecisionalReport eRC_DisembarkmentInterrupted;
@@ -79,11 +81,15 @@ namespace report
     extern const MIL_DecisionalReport eRC_EmbarkmentInterrupted;
     extern const MIL_DecisionalReport eRC_EmbarkmentStarted;
     extern const MIL_DecisionalReport eRC_Empoisonne;
+    extern const MIL_DecisionalReport eRC_EnemyUnitIdentified;
+    extern const MIL_DecisionalReport eRC_EnemyUnitRecognized;
     extern const MIL_DecisionalReport eRC_ExplosionSurBouchonMine;
     extern const MIL_DecisionalReport eRC_Filtree;
     extern const MIL_DecisionalReport eRC_FinNeutralisation;
     extern const MIL_DecisionalReport eRC_FireObserver;
     extern const MIL_DecisionalReport eRC_FragOrderReceived;
+    extern const MIL_DecisionalReport eRC_FriendUnitIdentified;
+    extern const MIL_DecisionalReport eRC_FriendUnitRecognized;
     extern const MIL_DecisionalReport eRC_HumainRetourDeSante;
     extern const MIL_DecisionalReport eRC_InfrastructureDamaged;
     extern const MIL_DecisionalReport eRC_LivingAreaDamaged;
@@ -97,9 +103,12 @@ namespace report
     extern const MIL_DecisionalReport eRC_MaterielRendu;
     extern const MIL_DecisionalReport eRC_MaterielRepareSurPlace;
     extern const MIL_DecisionalReport eRC_MaterielRetourDeMaintenance;
+    extern const MIL_DecisionalReport eRC_MilitaryEquipmentPlundered;
     extern const MIL_DecisionalReport eRC_MissionImpossible;
     extern const MIL_DecisionalReport eRC_MunitionAutorise;
     extern const MIL_DecisionalReport eRC_MunitionInterdite;
+    extern const MIL_DecisionalReport eRC_NeutralUnitIdentified;
+    extern const MIL_DecisionalReport eRC_NeutralUnitRecognized;
     extern const MIL_DecisionalReport eRC_NotActivatedUndergroundNetwork;
     extern const MIL_DecisionalReport eRC_ObservationTirIndirect;
     extern const MIL_DecisionalReport eRC_PlusDeCarburant;
@@ -138,6 +147,8 @@ namespace report
     extern const MIL_DecisionalReport eRC_StartDeploy;
     extern const MIL_DecisionalReport eRC_StartUndeploy;
     extern const MIL_DecisionalReport eRC_SupplierUnavailable;
+    extern const MIL_DecisionalReport eRC_SurrenderedUnitIdentified;
+    extern const MIL_DecisionalReport eRC_SurrenderedUnitRecognized;
     extern const MIL_DecisionalReport eRC_TacticallyDestroyed;
     extern const MIL_DecisionalReport eRC_TerrainDifficile;
     extern const MIL_DecisionalReport eRC_TirDansZoneInterdite;

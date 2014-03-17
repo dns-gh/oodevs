@@ -14,13 +14,16 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
+#include "Entities/Populations/MIL_Population.h"
+#include "Entities/Orders/MIL_Report.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_PopulationFire constructor
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-MIL_Effect_PopulationFire::MIL_Effect_PopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, double armedIndividuals )
-    : populationType_    ( populationType )
+MIL_Effect_PopulationFire::MIL_Effect_PopulationFire( MIL_Population& population, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, double armedIndividuals )
+    : population_        ( population )
+    , populationType_    ( populationType )
     , populationAttitude_( populationAttitude )
     , target_            ( target )
     , compTarget_        ( compTarget )
@@ -45,7 +48,13 @@ MIL_Effect_PopulationFire::~MIL_Effect_PopulationFire()
 // -----------------------------------------------------------------------------
 bool MIL_Effect_PopulationFire::Execute()
 {
-    target_.GetRole< PHY_RoleInterface_Composantes >().ApplyPopulationFire( compTarget_, populationType_, populationAttitude_, fireResult_, armedIndividuals_ );
+    bool bCanBePlundered = false;
+    target_.GetRole< PHY_RoleInterface_Composantes >().ApplyPopulationFire( compTarget_, populationType_, populationAttitude_, fireResult_, armedIndividuals_, bCanBePlundered );
+    if( bCanBePlundered )
+    {
+        population_.AddArmedHumans( 1 );
+        MIL_Report::PostEvent( target_, report::eRC_MilitaryEquipmentPlundered );
+    }
     delete this;
     return false; // Effect must be stopped
 }

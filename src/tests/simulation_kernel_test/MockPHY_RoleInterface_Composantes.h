@@ -51,7 +51,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( GetComposantesAbleToBeFired, 2, void( PHY_Composante_ABC::T_ComposanteVector&, bool ), GetComposantesAbleToBeFired2 );
     MOCK_METHOD( GetConvoyTransportersTotal, 0 );
     MOCK_METHOD( Neutralize, 0 );
-    MOCK_METHOD( ApplyPopulationFire, 5 );
+    MOCK_METHOD( ApplyPopulationFire, 6 );
     MOCK_METHOD( ApplyDirectFire, 3 );
     MOCK_METHOD( ApplyIndirectFire, 3 );
     MOCK_METHOD( ApplyDirectFireOnMajorComposantes, 2 );

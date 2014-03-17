@@ -304,10 +304,15 @@ void PHY_ComposantePion::ApplyExplosion( const AttritionCapacity& capacity, PHY_
 // Name: PHY_ComposantePion::ApplyPopulationFire
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyPopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages, double armedIndividuals )
+void PHY_ComposantePion::ApplyPopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude,
+                                              PHY_FireDamages_Agent& fireDamages, double armedIndividuals, bool& bCanBePlundered )
 {
     assert( pType_ );
+    bool wasDead = ( *pState_ == PHY_ComposanteState::dead_ );
+    bool hasWeapon = GetType().HasWeaponTypes();
     ApplyFire( populationType.GetAttritionData( populationAttitude, pType_->GetProtection(), armedIndividuals ), 0, fireDamages );
+    bool isDead = ( *pState_ == PHY_ComposanteState::dead_ );
+    bCanBePlundered = ( !wasDead && isDead && hasWeapon );
 }
 
 // -----------------------------------------------------------------------------

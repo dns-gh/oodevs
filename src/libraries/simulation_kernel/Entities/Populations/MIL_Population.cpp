@@ -971,6 +971,27 @@ void MIL_Population::HealWounded()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::AddArmedHumans
+// Created: MMC 2013-06-04
+// -----------------------------------------------------------------------------
+void MIL_Population::AddArmedHumans( unsigned int armedHumans )
+{
+    double armedIndividuals = GetArmedIndividuals();
+    unsigned int nCanBeArmed = 0;
+    unsigned int allHumans = GetAllHumans();
+    unsigned int healthyHumans = GetHealthyHumans();
+    if( healthyHumans == 0 || allHumans == 0 )
+        return;
+    unsigned int curArmedHumans = static_cast< unsigned int >( armedIndividuals * allHumans );
+    if( healthyHumans > curArmedHumans  )
+        nCanBeArmed = healthyHumans - curArmedHumans;
+    if( nCanBeArmed < armedHumans )
+        armedHumans = nCanBeArmed;
+    double newArmedRatio = static_cast< double > ( curArmedHumans + armedHumans ) / static_cast< double >( allHumans );
+    SetArmedIndividuals( std::min( newArmedRatio, 1. ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetArmedIndividuals
 // Created: MMC 2011-03-28
 // -----------------------------------------------------------------------------
