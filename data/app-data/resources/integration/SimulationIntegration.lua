@@ -2,7 +2,8 @@
 
 require 'debug'
 
-emptyTable = {} -- optimization
+-- optimization
+emptyTable = setmetatable( {}, { __newindex = function( t, k ) error("Assignments to emptyTable global variable are forbidden.") end } )
 
 --- Bind DIA4 event interface to DIA5 interface
 
