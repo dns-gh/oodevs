@@ -423,10 +423,10 @@ unsigned int DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const MI
     {
         population.ChangeComposition( population.GetHealthyHumans(), 0,  population.GetContaminatedHumans(), population.GetDeadHumans() );
         MIL_Population* newPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( population.GetType().GetName(), *position, wounded, population.GetName() + " - wounded", population.GetArmy() );
-        DEC_Knowledge_Population& knowledgePopulation = callerAgent.GetKnowledgeGroup()->GetPopulationKnowledgeToUpdate( *newPopulation );
-        knowledgePopulation.UpdateFromCrowdPerception( newPopulation->GetConcentration( *position ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
         if( newPopulation )
         {
+            DEC_Knowledge_Population& knowledgePopulation = callerAgent.GetKnowledgeGroup()->GetPopulationKnowledgeToUpdate( *newPopulation );
+            knowledgePopulation.UpdateFromCrowdPerception( newPopulation->GetConcentration( *position ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
             newPopulation->ChangeComposition( 0, wounded, 0, 0 );
             return newPopulation->GetID();
         }
@@ -527,10 +527,10 @@ unsigned int DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const MIL_A
     {
         population.ChangeComposition( population.GetHealthyHumans(), population.GetWoundedHumans(),  population.GetContaminatedHumans(), 0 );
         MIL_Population* newPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( population.GetType().GetName(), *position, dead, population.GetName() + " - dead", population.GetArmy() );
-        DEC_Knowledge_Population& knowledgePopulation = caller.GetKnowledgeGroup()->GetPopulationKnowledgeToUpdate( *newPopulation );
-        knowledgePopulation.UpdateFromCrowdPerception( newPopulation->GetConcentration( *position ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
         if( newPopulation )
         {
+            DEC_Knowledge_Population& knowledgePopulation = caller.GetKnowledgeGroup()->GetPopulationKnowledgeToUpdate( *newPopulation );
+            knowledgePopulation.UpdateFromCrowdPerception( newPopulation->GetConcentration( *position ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
             newPopulation->ChangeComposition( 0, 0, 0, dead );
             return newPopulation->GetID();
         }
