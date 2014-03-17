@@ -337,3 +337,8 @@ unsigned int MIL_Effect_IndirectFire::GetNbrAmmoFired() const
 {
     return nNbrAmmoFired_;
 }
+
+const MIL_Agent_ABC& MIL_Effect_IndirectFire::GetFirer() const
+{
+    return firer_;
+}

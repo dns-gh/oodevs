@@ -47,6 +47,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
+#include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -58,6 +59,7 @@
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KS_IndirectFire.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
@@ -928,6 +930,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_UrbanObject_ABC& object ) c
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const
 {
+    owner_->GetKnowledge().GetKsIndirectFire().NotifyAttackedBy( flyingShell.GetFirer() );
     MIL_Report::PostEvent( *owner_, report::eRC_ObservationTirIndirect, flyingShell );
 }
 

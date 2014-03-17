@@ -49,7 +49,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "Knowledge/DEC_KS_Fire.h"
+#include "Knowledge/DEC_KS_DirectFire.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MIL_AgentServer.h"
 #include "MissionController_ABC.h"
@@ -1388,7 +1388,7 @@ void MIL_AgentPion::NotifyAttackedBy( MIL_AgentPion& attacker, bool mustReport )
         else if( GetArmy().IsAnEnemy( attacker.GetArmy() ) == eTristate_True )
             MIL_Report::PostEvent( *this, report::eRC_TireParCampEnnemi );
     }
-    GetKnowledge().GetKsFire().NotifyAttackedBy( attacker );
+    GetKnowledge().GetKsDirectFire().NotifyAttackedBy( attacker );
     GetRole< PHY_RolePion_HumanFactors >().NotifyAttacked();
 }
 
@@ -1398,7 +1398,7 @@ void MIL_AgentPion::NotifyAttackedBy( MIL_AgentPion& attacker, bool mustReport )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::NotifyAttackedBy( MIL_Population& attacker )
 {
-    GetKnowledge().GetKsFire().NotifyAttackedBy( attacker );
+    GetKnowledge().GetKsDirectFire().NotifyAttackedBy( attacker );
     GetRole< PHY_RolePion_HumanFactors >().NotifyAttacked();
 }
 

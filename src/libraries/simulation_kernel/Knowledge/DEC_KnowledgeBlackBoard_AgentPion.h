@@ -24,7 +24,8 @@ class DEC_BlackBoard_CanContainKnowledgeUrbanPerception;
 class DEC_Knowledge_RapForLocal;
 class DEC_KS_ObjectInteraction;
 class DEC_KS_PopulationInteraction;
-class DEC_KS_Fire;
+class DEC_KS_DirectFire;
+class DEC_KS_IndirectFire;
 class DEC_KS_Perception;
 class MIL_Object_ABC;
 class MIL_PopulationConcentration;
@@ -57,7 +58,8 @@ public:
     //@{
     MIL_Agent_ABC& GetPion() const;
 
-    DEC_KS_Fire& GetKsFire() const;
+    DEC_KS_DirectFire& GetKsDirectFire() const;
+    DEC_KS_IndirectFire& GetKsIndirectFire() const;
     DEC_KS_Perception& GetKsPerception() const;
     DEC_KS_ObjectInteraction& GetKsObjectInteraction() const;
     DEC_KS_PopulationInteraction& GetKsPopulationInteraction() const;
@@ -140,7 +142,8 @@ private:
     // Knowledge sources
     DEC_KS_ObjectInteraction* pKsObjectInteraction_;
     DEC_KS_PopulationInteraction* pKsPopulationInteraction_;
-    DEC_KS_Fire* pKsFire_;
+    DEC_KS_DirectFire* pKsDirectFire_;
+    DEC_KS_IndirectFire* pKsIndirectFire_;
     DEC_KS_Perception* pKsPerception_;
 };
 
