@@ -115,7 +115,7 @@ void PHY_RoleAction_Loading::SetUnloadedState()
 double PHY_RoleAction_Loading::ComputeLoadingTime() const
 {
     DefaultHumanLoadingTimeComputer loadingTimeComputer;
-    owner_->Execute( loadingTimeComputer );
+    owner_->Execute< HumanLoadingTimeComputer_ABC >( loadingTimeComputer );
     if( loadingTimeComputer.GetHumansLoadedPerTimeStep() == 0 )
         return std::numeric_limits< double >::max();
     return loadingTimeComputer.GetHumansCount() / loadingTimeComputer.GetHumansLoadedPerTimeStep();
@@ -128,7 +128,7 @@ double PHY_RoleAction_Loading::ComputeLoadingTime() const
 double PHY_RoleAction_Loading::ComputeUnloadingTime() const
 {
     DefaultHumanLoadingTimeComputer loadingTimeComputer;
-    owner_->Execute( loadingTimeComputer );
+    owner_->Execute< HumanLoadingTimeComputer_ABC >( loadingTimeComputer );
     if( loadingTimeComputer.GetHumansUnloadedPerTimeStep() == 0 )
         return std::numeric_limits< double >::max();
     return loadingTimeComputer.GetHumansCount() / loadingTimeComputer.GetHumansUnloadedPerTimeStep();
@@ -225,7 +225,7 @@ int PHY_RoleAction_Loading::Unload()
 void PHY_RoleAction_Loading::CheckConsistency()
 {
     DefaultLoadedStateConsistencyComputer comp;
-    owner_->Execute( comp );
+    owner_->Execute< LoadedStateConsistencyComputer_ABC >( comp );
     if( bIsLoaded_ )
     {
         if( !comp.HasValidCarrier() && comp.HasValidLoadable() )
