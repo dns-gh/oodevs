@@ -342,6 +342,13 @@ integration.canMount = function()
     return DEC_Agent_EstEmbarquable() and DEC_CanMount( myself )
 end
 
+--- Returns true if this entity is underground, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
+integration.isUnderground = function()
+    return DEC_Agent_IsUnderground( myself )
+end
+
 --- Returns true if this entity should dismount, i.e. if it can dismount
 --- and if it is located on a non-trafficable urban position, false otherwise.
 -- This method can only be called by an agent.
