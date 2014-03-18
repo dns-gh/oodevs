@@ -376,6 +376,8 @@ func checkUpdate(state string, provider *sword.Tasker) MaintenanceChecker {
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
+	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-11961")
+
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
