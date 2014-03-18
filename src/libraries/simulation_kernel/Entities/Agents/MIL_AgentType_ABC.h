@@ -47,9 +47,10 @@ public:
     const std::string& GetMilPionType() const;
     const PHY_NatureLevel& GetNatureLevel() const;
     const PHY_NatureAtlas& GetNatureAtlas() const;
-    virtual bool IsMilitia() const;
-    virtual bool IsRefugee() const;
-    virtual bool IsTerrorist() const;
+    bool IsMilitia() const;
+    bool IsRefugee() const;
+    bool IsTerrorist() const;
+    bool IsNBC() const;
     virtual const PHY_UnitType& GetUnitType() const = 0;
     virtual double GetFeedbackTime() const = 0;
     virtual void RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const = 0;
@@ -60,6 +61,11 @@ public:
 
 protected:
     MIL_AgentType_ABC();
+
+    void SetTerrorist( bool isTerrorist );
+    void SetMilitia( bool isMilitia );
+    void SetRefugee( bool isRefugee );
+    void SetNBC( bool isNBC );
 
 private:
     //! @name Init
@@ -75,6 +81,10 @@ private:
     const std::string strType_;
     const PHY_NatureLevel* pNatureLevel_;
     const PHY_NatureAtlas* pNatureAtlas_;
+    bool isTerrorist_;
+    bool isMilitia_;
+    bool isRefugee_;
+    bool isNBC_;
     //@}
 };
 

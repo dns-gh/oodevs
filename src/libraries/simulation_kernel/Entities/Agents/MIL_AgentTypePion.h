@@ -69,6 +69,7 @@ public:
           double                            GetDistanceAvantLima             () const;
           double                            GetFeedbackTime() const;
           const MIL_HumanRepartition&       GetHumanRepartition              () const;
+    void SetBrainFunctions( const std::vector< std::string >& names );
     //@}
 
     //! @name Operators
@@ -95,11 +96,6 @@ private:
     typedef std::map< std::string, const MIL_AgentTypePion* > T_PionTypeMap;
     typedef T_PionTypeMap::const_iterator                   CIT_PionTypeMap;
 
-    typedef const MIL_AgentTypePion* (*T_PionTypeAllocator)( const std::string& strName, const std::string& strType, xml::xistream& xis );
-
-    typedef std::map< std::string, T_PionTypeAllocator > T_PionTypeAllocatorMap;
-    typedef T_PionTypeAllocatorMap::const_iterator     CIT_PionTypeAllocatorMap;
-
     typedef std::map< TerrainData, double >             T_DistanceAvantPointMap;
     typedef T_DistanceAvantPointMap::const_iterator     CIT_DistanceAvantPointMap;
     //@}
@@ -125,9 +121,9 @@ private:
     double                  rDistanceAvantLimas_;
     double                  rFeedbackTime_;
     MIL_HumanRepartition*   pHumanRepartition_;
+    std::vector< std::string > functions_;
 
 private:
-    static T_PionTypeAllocatorMap  pionTypeAllocators_;
     static T_PionTypeMap           pionTypes_;
 };
 
@@ -143,6 +139,7 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream&
     , rDistanceAvantLimas_( 0. )
     , rFeedbackTime_( 0. )
     , pHumanRepartition_( new MIL_HumanRepartition( xis ) )
+    , isNBC_ ( false )
 {
     InitializeRapFor              ( xis );
     InitializeDistancesAvantPoints( xis );

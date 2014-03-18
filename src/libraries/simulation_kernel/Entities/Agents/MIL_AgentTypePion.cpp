@@ -19,18 +19,13 @@
 #include "Tools/MIL_HumanRepartition.h"
 #include "Units/PHY_UnitType.h"
 
+#include "Decision/Brain.h"
+#include "Decision/DEC_AgentFunctions.h"
+#include "Decision/DEC_KnowledgeObjectFunctions.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Workspace.h"
 
-#include "Entities/Specialisations/ALAT/MIL_AgentTypePionALAT.h"
-#include "Entities/Specialisations/RENS/MIL_AgentTypePionRENS.h"
-#include "Entities/Specialisations/ASA/MIL_AgentTypePionASA.h"
-#include "Entities/Specialisations/NBC/MIL_AgentTypePionNBC.h"
-#include "Entities/Specialisations/Circulation/MIL_AgentTypePionCIRCULATION.h"
-#include "Entities/Specialisations/Milice/MIL_AgentTypePionMILICE.h"
-#include "Entities/Specialisations/ASY/MIL_AgentTypePionASY.h"
-#include "Entities/Specialisations/Refugie/MIL_AgentTypePionREFUGIE.h"
 #include "Entities/Specialisations/LOG/TC2/MIL_AgentTypePionLOGTC2.h"
 #include "Entities/Specialisations/LOG/Medical/MIL_AgentTypePionLOGMedical.h"
 #include "Entities/Specialisations/LOG/Maintenance/MIL_AgentTypePionLOGMaintenance.h"
@@ -72,8 +67,21 @@
 #include "tools/Codec.h"
 
 #include <boost/algorithm/string.hpp>
+#include <boost/assign/list_of.hpp>
+#include <functional>
 
-MIL_AgentTypePion::T_PionTypeAllocatorMap  MIL_AgentTypePion::pionTypeAllocators_;
+namespace
+{
+
+typedef std::function< const MIL_AgentTypePion*(
+        const std::string& strName, const std::string& strType,
+            xml::xistream& xis ) >
+        T_PionTypeAllocator;
+
+std::map< std::string, T_PionTypeAllocator > pionTypeAllocators_;
+
+} // namespace
+
 MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;
 
 // -----------------------------------------------------------------------------
@@ -92,15 +100,68 @@ const MIL_AgentTypePion* MIL_AgentTypePion::Create( const std::string& strName, 
 void MIL_AgentTypePion::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing agent types" );
-    pionTypeAllocators_[ "Pion INF"                    ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion ASA"                    ] = &MIL_AgentTypePionASA            ::Create;
-    pionTypeAllocators_[ "Pion ALAT"                   ] = &MIL_AgentTypePionALAT           ::Create;
-    pionTypeAllocators_[ "Pion RENS"                   ] = &MIL_AgentTypePionRENS           ::Create;
-    pionTypeAllocators_[ "Pion NBC"                    ] = &MIL_AgentTypePionNBC            ::Create;
-    pionTypeAllocators_[ "Pion ABC"                    ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion GEN"                    ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion ASS"                    ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion TRANS"                  ] = &MIL_AgentTypePion               ::Create;
+    const std::vector< std::string > basicTypes = boost::assign::list_of
+        ( "Pion ABC" )
+        ( "Pion ALAT" )
+        ( "Pion ASA" )
+        ( "Pion ASS" )
+        ( "Pion Civilian" )
+        ( "Pion Emergency" )
+        ( "Pion GEN" )
+        ( "Pion INF" )
+        ( "Pion JOINT" )
+        ( "Pion Journalist" )
+        ( "Pion Notable" )
+        ( "Pion RENS" )
+        ( "Pion TRANS" );
+    for( auto it = basicTypes.begin(); it != basicTypes.end(); ++it )
+        pionTypeAllocators_[ *it ] = &MIL_AgentTypePion::Create;
+
+    pionTypeAllocators_[ "Pion NBC" ] =
+        []( const std::string& name, const std::string& type, xml::xistream& xis )
+            -> const MIL_AgentTypePion*
+        {
+            auto t = new MIL_AgentTypePion( name, type, xis );
+            t->SetBrainFunctions( boost::assign::list_of
+                    ( "DEC_DecontaminerZone" )
+                    ( "DEC_Agent_SeDecontaminer" ));
+            t->SetNBC( true );
+            return t;
+        };
+    pionTypeAllocators_[ "Pion ASY" ] =
+        []( const std::string& name, const std::string& type, xml::xistream& xis )
+            -> const MIL_AgentTypePion*
+        {
+            auto t = new MIL_AgentTypePion( name, type, xis );
+            t->SetTerrorist( true );
+            return t;
+        };
+    pionTypeAllocators_[ "Pion CIRCULATION" ] = 
+        []( const std::string& name, const std::string& type, xml::xistream& xis )
+            -> const MIL_AgentTypePion*
+        {
+            auto t = new MIL_AgentTypePion( name, type, xis );
+            t->SetBrainFunctions( boost::assign::list_of
+                    ( "DEC_Circulation_EquiperItineraireLogistique" ));
+            return t;
+        };
+    pionTypeAllocators_[ "Pion MILICE" ] =
+        []( const std::string& name, const std::string& type, xml::xistream& xis )
+            -> const MIL_AgentTypePion*
+        {
+            auto t = new MIL_AgentTypePion( name, type, xis );
+            t->SetMilitia( true );
+            return t;
+        };
+    pionTypeAllocators_[ "Pion REFUGIE" ] =
+        []( const std::string& name, const std::string& type, xml::xistream& xis )
+            -> const MIL_AgentTypePion*
+        {
+            auto t = new MIL_AgentTypePion( name, type, xis );
+            t->SetRefugee( true );
+            return t;
+        };
+        
     pionTypeAllocators_[ "Pion LOG TC2"                ] = &MIL_AgentTypePionLOGTC2         ::Create;
     pionTypeAllocators_[ "Pion LOG BLD Sante"          ] = &MIL_AgentTypePionLOGMedical     ::Create;
     pionTypeAllocators_[ "Pion LOG BLD Maintenance"    ] = &MIL_AgentTypePionLOGMaintenance ::Create;
@@ -109,16 +170,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     pionTypeAllocators_[ "Pion LOG BLT Maintenance"    ] = &MIL_AgentTypePionLOGMaintenance ::Create;
     pionTypeAllocators_[ "Pion LOG BLT Ravitaillement" ] = &MIL_AgentTypePionLOGSupply      ::Create;
     pionTypeAllocators_[ "Pion LOG Convoi"             ] = &MIL_AgentTypePionLOGConvoy      ::Create;
-    pionTypeAllocators_[ "Pion CIRCULATION"            ] = &MIL_AgentTypePionCirculation    ::Create;
-    pionTypeAllocators_[ "Pion JOINT"                  ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion MILICE"                 ] = &MIL_AgentTypePionMILICE         ::Create;
-    pionTypeAllocators_[ "Pion ASY"                    ] = &MIL_AgentTypePionASY            ::Create;
-    pionTypeAllocators_[ "Pion REFUGIE"                ] = &MIL_AgentTypePionREFUGIE        ::Create;
-    pionTypeAllocators_[ "Pion Emergency"              ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion Organization"           ] = &MIL_AgentTypePionLOGTC2         ::Create;
-    pionTypeAllocators_[ "Pion Notable"                ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion Journalist"             ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion Civilian"               ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion Remote"                 ] = &MIL_AgentTypePion_Remote        ::Create;
 
     xis >> xml::start( "units" )
@@ -137,7 +189,7 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
     std::string strType;
     xis >> xml::attribute( "name", strName )
         >> xml::attribute( "type", strType );
-    CIT_PionTypeAllocatorMap itPionAllocator = pionTypeAllocators_.find( strType );
+    const auto itPionAllocator = pionTypeAllocators_.find( strType );
     if( itPionAllocator == pionTypeAllocators_.end() )
         throw MASA_EXCEPTION( xis.context() + "Unknown pion type" );
     const MIL_AgentTypePion*& pType = pionTypes_[ strName ];
@@ -145,7 +197,7 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
         throw MASA_EXCEPTION( xis.context() + "Pion type already defined" );
     try
     {
-        pType = (*itPionAllocator->second)( strName, strType, xis );
+        pType = itPionAllocator->second( strName, strType, xis );
     }
     catch( const std::exception& e )
     {
@@ -356,13 +408,38 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, sword::RoleExtender_
         ext->RegisterRoles( pion );
 }
 
+namespace
+{
+
+void RegisterFunction( const std::string& name,  sword::Brain& brain,
+        MIL_Agent_ABC& agent )
+{
+    if( name == "DEC_ContaminerZone" )
+        brain.RegisterFunction( name.c_str(),
+            boost::function< void( const TER_Localisation* ) >(
+                boost::bind( &DEC_KnowledgeObjectFunctions::DecontaminateZone,
+                    boost::cref( agent ), _1 ) ) );
+    else if( name == "DEC_Agent_SeDecontaminer" )
+        brain.RegisterFunction( name.c_str(),
+            boost::bind( &DEC_AgentFunctions::SelfDecontaminate, boost::ref( agent ) ) );
+    else if( name == "DEC_Circulation_EquiperItineraireLogistique" ) 
+        brain.RegisterFunction( name.c_str(),
+            &DEC_KnowledgeObjectFunctions::EquipLogisticRoute );
+    else
+        throw MASA_EXCEPTION(
+                "cannot register unknown unit decisional method: " + name );
+}
+
+} // namespace
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterFunctions( sword::Brain& /*brain*/, MIL_Agent_ABC& /*agent*/ ) const
+void MIL_AgentTypePion::RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const
 {
-    // NOTHING
+    for( auto it = functions_.begin(); it != functions_.end(); ++it )
+        RegisterFunction( *it, brain, agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -453,3 +530,7 @@ bool MIL_AgentTypePion::operator==( const MIL_AgentTypePion& rhs ) const
     return this == &rhs; //$$ A changer quand IDs
 }
 
+void MIL_AgentTypePion::SetBrainFunctions( const std::vector< std::string >& names )
+{
+    functions_ = names;
+}
