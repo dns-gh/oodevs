@@ -264,11 +264,11 @@ func (model *Model) waitCond(timeout time.Duration,
 		},
 	}
 	model.requests <- c
-	timeoutch := make(chan int)
+	timeoutch := make(chan struct{})
 	if timeout.Nanoseconds() > 0 {
 		go func() {
 			time.Sleep(timeout)
-			timeoutch <- 1
+			close(timeoutch)
 		}()
 	}
 	removed := false

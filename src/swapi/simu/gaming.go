@@ -40,8 +40,8 @@ func (o *GamingOpts) Check() error {
 
 type GamingProcess struct {
 	cmd *exec.Cmd
-	// Passed channel will be signalled once the process ends
-	waitqueue chan chan int
+	// Passed channel will be closed once the process ends
+	waitqueue chan chan struct{}
 
 	Opts *GamingOpts
 }
@@ -57,15 +57,15 @@ func (gaming *GamingProcess) Kill() {
 // Return true if gaming stopped before the timeout. Wait indefinitely
 // if the timeout is zero.
 func (gaming *GamingProcess) Wait(d time.Duration) bool {
-	waitch := make(chan int, 1)
+	waitch := make(chan struct{})
 	gaming.waitqueue <- waitch
 
-	timeoutch := make(chan int)
+	timeoutch := make(chan struct{})
 	go func() {
 		// Infinite timeout is duration is zero
 		if d.Nanoseconds() > 0 {
 			time.Sleep(d)
-			timeoutch <- 1
+			close(timeoutch)
 		}
 	}()
 
@@ -101,7 +101,7 @@ func StartGaming(opts *GamingOpts) (*GamingProcess, error) {
 	}
 	gaming := GamingProcess{
 		cmd:       cmd,
-		waitqueue: make(chan chan int, 1),
+		waitqueue: make(chan chan struct{}, 1),
 		Opts:      opts,
 	}
 	err = cmd.Start()
@@ -110,26 +110,25 @@ func StartGaming(opts *GamingOpts) (*GamingProcess, error) {
 	// termination and handle wait requests. Callers wanting to wait for
 	// termination posts a channel which is signalled when it happens.
 	go func() {
-		waitch := make(chan int)
+		waitch := make(chan struct{})
 		go func() {
 			cmd.Wait()
-			waitch <- 1
+			close(waitch)
 		}()
 
-		terminated := false
-		pendings := []chan int{}
+		pendings := []chan struct{}{}
 		for {
 			select {
 			case ch := <-gaming.waitqueue:
-				if terminated {
-					ch <- 1
+				if waitch == nil {
+					close(ch)
 				} else {
 					pendings = append(pendings, ch)
 				}
 			case <-waitch:
-				terminated = true
+				waitch = nil
 				for _, ch := range pendings {
-					ch <- 1
+					close(ch)
 				}
 			}
 		}

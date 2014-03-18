@@ -89,7 +89,7 @@ func createObstacleAttributeParameter(activated bool, activation,
 func watchNextObject(model *swapi.Model,
 	handler func(model *swapi.ModelData, obj *swapi.Object) bool) chan error {
 
-	done := make(chan error)
+	done := make(chan error, 1)
 	objects := model.GetData().Objects
 	objectId := uint32(0)
 	model.RegisterHandler(func(model *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
