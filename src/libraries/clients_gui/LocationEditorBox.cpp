@@ -43,7 +43,7 @@ namespace
 
     void FocusAndSelect( QLineEdit* w )
     {
-        w->setFocus();
+        w->setFocus( Qt::ActiveWindowFocusReason );
         w->selectAll();
     }
 }
