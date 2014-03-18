@@ -67,7 +67,7 @@ public:
     virtual void RemoveFromController();
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
-    virtual bool CheckValidity();
+    virtual bool CheckValidity() const;
     virtual bool IsChecked() const;
     virtual bool InternalCheckValidity() const;
     virtual kernel::ContextMenu::T_MenuVariant CreateMenu( kernel::ContextMenu& menu );

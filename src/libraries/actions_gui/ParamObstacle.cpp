@@ -272,7 +272,7 @@ bool ParamObstacle::IsChecked() const
 // Name: ParamObstacle::CheckValidity
 // Created: ABR 2012-01-10
 // -----------------------------------------------------------------------------
-bool ParamObstacle::CheckValidity()
+bool ParamObstacle::CheckValidity() const
 {
     return Param_ABC::CheckValidity();
 }
