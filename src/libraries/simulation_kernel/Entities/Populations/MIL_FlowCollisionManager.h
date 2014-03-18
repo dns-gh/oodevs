@@ -36,6 +36,7 @@ public:
     bool CanMove( const MIL_PopulationFlow* flow ) const;
     void Update();
     void NotifyFlowDestruction( const MIL_PopulationFlow* flow );
+    bool HasCollision( const MIL_PopulationFlow* flow1, const MIL_PopulationFlow* flow2 ) const;
     //@}
 
 private:

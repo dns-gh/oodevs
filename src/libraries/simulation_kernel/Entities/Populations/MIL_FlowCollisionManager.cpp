@@ -41,7 +41,8 @@ void MIL_FlowCollisionManager::SetCollisions( MIL_PopulationFlow* flow, const st
         const MT_Vector2D& point = itCollision->second;
         for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
         {
-            // todo optimiser
+            if( it->second->MarkedForDestruction())
+                continue;
             if( it->second->HasCollision( flow, itCollision->first ) || it->first.SquareDistance( point ) < 100 ) // 10 metres ?
             {
                 collision = it->second;
@@ -95,4 +96,16 @@ void MIL_FlowCollisionManager::NotifyFlowDestruction( const MIL_PopulationFlow* 
 {
     for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
         it->second->NotifyFlowDestruction( flow );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FlowCollisionManager::HasCollision
+// Created: JSR 2014-03-17
+// -----------------------------------------------------------------------------
+bool MIL_FlowCollisionManager::HasCollision( const MIL_PopulationFlow* flow1, const MIL_PopulationFlow* flow2 ) const
+{
+    for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
+        if( it->second->HasCollision( flow1, flow2 ) )
+            return true;
+    return false;
 }
