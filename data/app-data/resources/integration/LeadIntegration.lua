@@ -921,6 +921,7 @@ end
 --- Generic activate for Lead skills
 -- @param self: The leading skill
 -- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
+-- @param manageReinforcement: defines if the skill should manage reinforcement if one of the subordinate can't perform work on an object (because of dotation or physical restriction).
 -- @author NMI
 -- @release 2013-07-05
 integration.leadActivate = function( self, findBestsFunction, manageReinforcement )
