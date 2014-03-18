@@ -78,8 +78,8 @@ void ExtensionsPanel::NotifySelected( const kernel::Entity_ABC* element )
 // -----------------------------------------------------------------------------
 void ExtensionsPanel::SetReadOnly( bool readOnly ) const
 {
-    validateButton_->setEnabled( !readOnly && validateButton_->isEnabled() );
-    resetButton_->setEnabled( !readOnly && resetButton_->isEnabled() );
+    validateButton_->setVisible( !readOnly );
+    resetButton_->setVisible( !readOnly );
     diffusionDialog_->setEnabled( !readOnly );
     if( pGroupBox_ )
     {
@@ -163,8 +163,10 @@ void ExtensionsPanel::Commit()
 void ExtensionsPanel::ChangeButtonsState( bool state )
 {
     hasChanged_ = state;
-    validateButton_->setEnabled( state && controllers_.GetCurrentMode() != eModes_Replay );
-    resetButton_->setEnabled( state && controllers_.GetCurrentMode() != eModes_Replay );
+    if( IsReadOnly() )
+        return;
+    validateButton_->setEnabled( state );
+    resetButton_->setEnabled( state );
 }
 
 // -----------------------------------------------------------------------------
