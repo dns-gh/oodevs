@@ -113,8 +113,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
         ( "Pion Journalist" )
         ( "Pion Notable" )
         ( "Pion RENS" )
-        ( "Pion TRANS" )
-        ;
+        ( "Pion TRANS" );
     for( auto it = basicTypes.begin(); it != basicTypes.end(); ++it )
         pionTypeAllocators_[ *it ] = &MIL_AgentTypePion::Create;
 
@@ -238,7 +237,6 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, const std::str
     , rDistanceAvantLimas_            ( 0. )
     , rFeedbackTime_                  ( std::numeric_limits< double >::infinity() )
     , pHumanRepartition_              ( new MIL_HumanRepartition( xis ) )
-    , isNBC_                          ( false )
 {
     InitializeRapFor              ( xis );
     InitializeDistancesAvantPoints( xis );
@@ -255,7 +253,6 @@ MIL_AgentTypePion::MIL_AgentTypePion( const DEC_Model_ABC* pModel )
     , rDistanceAvantLimas_( 0. )
     , rFeedbackTime_( 0. )
     , pHumanRepartition_( new MIL_HumanRepartition() )
-    , isNBC_( false )
 {
     // NOTHING
 }
@@ -536,14 +533,4 @@ bool MIL_AgentTypePion::operator==( const MIL_AgentTypePion& rhs ) const
 void MIL_AgentTypePion::SetBrainFunctions( const std::vector< std::string >& names )
 {
     functions_ = names;
-}
-
-void MIL_AgentTypePion::SetNBC( bool isNBC )
-{
-    isNBC_ = isNBC;
-}
-
-bool MIL_AgentTypePion::IsNBC() const
-{
-    return isNBC_;
 }

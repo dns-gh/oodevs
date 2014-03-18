@@ -70,8 +70,6 @@ public:
           double                            GetFeedbackTime() const;
           const MIL_HumanRepartition&       GetHumanRepartition              () const;
     void SetBrainFunctions( const std::vector< std::string >& names );
-    void SetNBC( bool isNBC );
-    virtual bool IsNBC() const;
     //@}
 
     //! @name Operators
@@ -124,7 +122,6 @@ private:
     double                  rFeedbackTime_;
     MIL_HumanRepartition*   pHumanRepartition_;
     std::vector< std::string > functions_;
-    bool                    isNBC_;
 
 private:
     static T_PionTypeMap           pionTypes_;

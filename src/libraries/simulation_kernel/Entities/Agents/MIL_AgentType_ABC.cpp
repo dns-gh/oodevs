@@ -25,6 +25,7 @@ MIL_AgentType_ABC::MIL_AgentType_ABC( const std::string& strName, const std::str
     , isTerrorist_ ( false )
     , isMilitia_   ( false )
     , isRefugee_   ( false )
+    , isNBC_       ( false )
 {
     xis >> xml::attribute( "id", nID_ );
     InitializeNature( xis );
@@ -41,6 +42,7 @@ MIL_AgentType_ABC::MIL_AgentType_ABC()
     , isTerrorist_ ( false )
     , isMilitia_   ( false )
     , isRefugee_   ( false )
+    , isNBC_       ( false )
 {
     // NOTHING
 }
@@ -161,4 +163,14 @@ bool MIL_AgentType_ABC::IsRefugee() const
 void MIL_AgentType_ABC::SetRefugee( bool isRefugee )
 {
     isRefugee_ = isRefugee;
+}
+
+bool MIL_AgentType_ABC::IsNBC() const
+{
+    return isNBC_;
+}
+
+void MIL_AgentType_ABC::SetNBC( bool isNBC )
+{
+    isNBC_ = isNBC;
 }
