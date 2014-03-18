@@ -595,10 +595,9 @@ end`
 }
 
 func HasDecPropertiesOrFunctions(c *C, client *swapi.Client, unitId, refUnitId uint32,
-	properties []string, functions []string) {
+	properties, functions []string) {
 
-	ids := []uint32{unitId, refUnitId}
-	for i, unitId := range ids {
+	for i, unitId := range []uint32{unitId, refUnitId} {
 		has := i == 0
 		for _, property := range properties {
 			HasDecProperty(c, client, unitId, has, property)
