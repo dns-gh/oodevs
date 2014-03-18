@@ -153,6 +153,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions( sword::Brain& brain 
     brain.RegisterFunction( "DEC_Agent_TempsPourTraverserReseauSouterrain", &DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime );
     brain.RegisterFunction( "DEC_Agent_SeDissimulerDansReseauSouterrain", &DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork );
     brain.RegisterFunction( "DEC_Agent_SortirDuReseauSouterrain", &DEC_KnowledgeObjectFunctions::GetOutFromUndergroundNetwork );
+    brain.RegisterFunction( "DEC_Agent_IsUnderground", &DEC_AgentFunctions::IsUnderground );
 
     brain.RegisterFunction( "DEC_Agent_ForcerSilenceRadio", &DEC_KnowledgeAgentFunctions::ForceRadioSilence );
     brain.RegisterFunction( "DEC_Agent_DisableCrowdEffect", &DEC_AgentFunctions::DisableCrowdEffect );
