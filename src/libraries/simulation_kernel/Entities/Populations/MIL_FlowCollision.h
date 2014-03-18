@@ -46,6 +46,7 @@ private:
     bool SplitOnSegment( const MT_Line& line, std::size_t& segmentIndex, double& cumulatedMagnitude );
     void RemovedPassedOverFlows();
     bool IsTimerOver();
+    bool HasFlowPassedOver( const MIL_PopulationFlow* flow ) const;
     //@}
 
 private:
@@ -57,6 +58,7 @@ private:
     bool markedForDestruction_;
     std::size_t movingIndex_;
     double randomThreshold_;
+    unsigned short deadlockTimer_;
     //@}
 };
 
