@@ -921,9 +921,10 @@ end
 --- Generic activate for Lead skills
 -- @param self: The leading skill
 -- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
+-- @param manageReinforcement: defines if the skill should manage reinforcement if one of the subordinate can't perform work on an object (because of dotation or physical restriction).
 -- @author NMI
 -- @release 2013-07-05
-integration.leadActivate = function( self, findBestsFunction )
+integration.leadActivate = function( self, findBestsFunction, manageReinforcement )
     local integration = integration
     local myself = myself
 
@@ -970,7 +971,12 @@ integration.leadActivate = function( self, findBestsFunction )
 
     -- Gestion du soutien
     if self.params.taskForSupporting and self.params.taskForSupporting ~= NIL then
-        Activate( self.skill.links.supportManager, 1, { companyTask = self.companyTask, parameters = self.parameters, PE = pionsPE, SE = pionsSE, taskForSupporting = self.params.taskForSupporting })
+       Activate( self.skill.links.supportManager, 1, { companyTask = self.companyTask, parameters = self.parameters, PE = pionsPE, SE = pionsSE, taskForSupporting = self.params.taskForSupporting })
+    end
+
+    -- Reinforcement management
+    if manageReinforcement and self.params.taskForReinforcement ~= NIL then
+        Activate( self.skill.links.manageReinforcement, 1, { reinforcingUnits = pionsSE, reinforcementMission = self.params.taskForReinforcement } )
     end
 
     if self.params.relieveManager then
