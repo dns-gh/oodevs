@@ -200,7 +200,7 @@ func testCreateAllUnits(c *C, client *swapi.Client, phydb *phy.PhysicalFile,
 	}
 	jobs.Wait()
 	for _, err := range errs {
-		c.Assert(err, IsNil)
+		c.Check(err, IsNil)
 	}
 }
 
@@ -227,11 +227,11 @@ func testCreateAllAutomats(c *C, client *swapi.Client, phydb *phy.PhysicalFile,
 	}
 	jobs.Wait()
 	for _, err := range errs {
-		c.Assert(err, IsNil)
+		c.Check(err, IsNil)
 	}
 }
 
-func testCreateAllTheThings(c *C, exercise, phyName string) {
+func testCreateAllUnitsAndAutomats(c *C, exercise, phyName string) {
 
 	sim, client := connectAndWaitModel(c, NewAdminOpts(exercise))
 	defer stopSimAndClient(c, sim, client)
@@ -248,7 +248,7 @@ func testCreateAllTheThings(c *C, exercise, phyName string) {
 	checkpointCompareAndStop(c, sim, client)
 }
 
-func (s *TestSuite) TestCreateAllTheThings(c *C) {
-	testCreateAllTheThings(c, ExCrossroadSmallOrbat, "worldwide")
-	testCreateAllTheThings(c, ExCrossroadLog, "test")
+func (s *TestSuite) TestCreateAllUnitsAndAutomats(c *C) {
+	testCreateAllUnitsAndAutomats(c, ExCrossroadSmallOrbat, "worldwide")
+	testCreateAllUnitsAndAutomats(c, ExCrossroadLog, "test")
 }
