@@ -25,7 +25,7 @@ MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter, const Simula
     , simulation_( simulation )
     , controller_( controller )
 {
-    // NOTHING
+    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,9 +43,7 @@ MeteoModel::~MeteoModel()
 // -----------------------------------------------------------------------------
 const weather::Meteo* MeteoModel::GetGlobalMeteo() const
 {
-    if( globalMeteo_.get() )
-        return globalMeteo_.get();
-    return 0;
+    return globalMeteo_.get();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,10 +74,7 @@ const weather::MeteoManager_ABC::T_Meteos& MeteoModel::GetLocalMeteos() const
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg )
 {
-    if( globalMeteo_.get() )
-        globalMeteo_->Update( msg.attributes() );
-    else
-        globalMeteo_.reset( new weather::Meteo( msg.weather().id(), msg.attributes(), simulation_.GetTickDuration() ) );
+    globalMeteo_->Update( msg.attributes() );
     controller_.Update( *this );
 }
 
@@ -113,4 +108,13 @@ void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWea
             controller_.Update( *this );
             return;
         }
+}
+
+void MeteoModel::Purge()
+{
+    // Override base Purge to ensure there is always a global weather object
+    MeteoModel_ABC::Purge();
+    // Dummy meteo identifier, not used for global meteo
+    globalMeteo_.reset( new weather::Meteo( 1, simulation_.GetTickDuration() ) );
+    controller_.Update( *this );
 }
