@@ -52,8 +52,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsSelected( Param_ABC* param ) = 0;
-    virtual bool IsPotential( Param_ABC* param ) = 0;
+    virtual bool IsSelected( Param_ABC* param ) const = 0;
+    virtual bool IsPotential( Param_ABC* param ) const = 0;
+    virtual bool CanCreate() const = 0;
     virtual Param_ABC* CreateElement() = 0;
     virtual void AddElement( Param_ABC& param ) = 0;
     virtual void EnableCreation( bool enabled ) = 0;
@@ -96,8 +97,9 @@ public:
     //! @name ListParameterBase implementation
     //@{
     virtual void CreateInternalMenu( kernel::ContextMenu& mainMenu );
-    virtual bool IsSelected( Param_ABC* param );
-    virtual bool IsPotential( Param_ABC* param );
+    virtual bool IsSelected( Param_ABC* param ) const;
+    virtual bool IsPotential( Param_ABC* param ) const;
+    virtual bool CanCreate() const;
     virtual void AddElement( Param_ABC& param );
     //@}
 

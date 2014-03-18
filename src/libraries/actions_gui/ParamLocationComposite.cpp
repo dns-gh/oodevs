@@ -192,7 +192,7 @@ void ParamLocationComposite::InternalBuildInterface()
 // Name: ParamLocationComposite::CheckValidity
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
-bool ParamLocationComposite::CheckValidity()
+bool ParamLocationComposite::CheckValidity() const
 {
     return !IsChecked() || ( selectedParam_ && selectedParam_->CheckValidity() );
 }
