@@ -11,11 +11,9 @@
 #define __PHY_ActionIllumination_h_
 
 #include "MIL.h"
-
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
 
-class PHY_FireResults_Pion;
 class PHY_AmmoDotationClass;
 class MIL_AgentPion;
 class MIL_KnowledgeGroup;
@@ -41,9 +39,9 @@ public:
     //@}
 
 private:
-          firing::PHY_RoleAction_DirectFiring& role_;
-          boost::shared_ptr< DEC_Knowledge_Agent > pEnemy_;
-          boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup_;
+    firing::PHY_RoleAction_DirectFiring& role_;
+    boost::shared_ptr< DEC_Knowledge_Agent > pEnemy_;
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup_;
 };
 
 #endif // __PHY_ActionIllumination_h_

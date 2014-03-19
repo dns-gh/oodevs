@@ -1,43 +1,36 @@
 // *****************************************************************************
 //
-// $Created: NLD 2004-03-11 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Knowledge/DEC_KS_Fire.h $
-// $Author: Jvt $
-// $Modtime: 5/04/05 13:34 $
-// $Revision: 5 $
-// $Workfile: DEC_KS_Fire.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __DEC_KS_Fire_h_
-#define __DEC_KS_Fire_h_
+#ifndef __DEC_KS_IndirectFire_h_
+#define __DEC_KS_IndirectFire_h_
 
 #include "DEC_KnowledgeSource_ABC.h"
 #include <tools/Set.h>
 
 class DEC_KnowledgeBlackBoard_AgentPion;
-class MIL_AgentPion;
-class MIL_Population;
+class MIL_Agent_ABC;
 
 // =============================================================================
-/** @class  DEC_KS_Fire
+/** @class  DEC_KS_IndirectFire
     @brief  This knowledge source (KS) is an 'IN/OUT', which is used to manage
-            the fires relatives knowledges
-                - direct fire   : detection of the attacker
-                - indirect fire : fire information (source / dest) when looking
-                                  at a zone where the flying ammos pass through
-                - explosion     : explosion information (object concerned)
+            the indirect fires relatives knowledges
 */
-// Created: NLD 2004-03-11
+// Created: MCO 2014-03-14
 // =============================================================================
-class DEC_KS_Fire : public DEC_KnowledgeSource_ABC
+class DEC_KS_IndirectFire : public DEC_KnowledgeSource_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_KS_Fire( DEC_KnowledgeBlackBoard_AgentPion& blackBoard );
-             DEC_KS_Fire();
-    virtual ~DEC_KS_Fire();
+    explicit DEC_KS_IndirectFire( DEC_KnowledgeBlackBoard_AgentPion& blackBoard );
+             DEC_KS_IndirectFire();
+    virtual ~DEC_KS_IndirectFire();
     //@}
 
     //! @name Operations
@@ -46,13 +39,11 @@ public:
     virtual void Clean();
     virtual void CleanDeletedAgentKnowledges();
     virtual void Talk( int currentTimeStep );
-    bool IsAttacked() const;
     //@}
 
     //! @name Events
     //@{
-    void NotifyAttackedBy( MIL_AgentPion&  attacker );
-    void NotifyAttackedBy( MIL_Population& attacker );
+    void NotifyAttackedBy( const MIL_Agent_ABC&  attacker );
     //@}
 
     //! @name CheckPoints
@@ -62,21 +53,20 @@ public:
 
 private:
     DEC_KnowledgeBlackBoard_AgentPion* pBlackBoard_;
-    tools::Set< MIL_AgentPion* > pionsAttacking_;
-    tools::Set< MIL_Population* > populationsAttacking_;
+    tools::Set< const MIL_Agent_ABC* > pionsAttacking_;
 };
 
-BOOST_CLASS_EXPORT_KEY( DEC_KS_Fire )
+BOOST_CLASS_EXPORT_KEY( DEC_KS_IndirectFire )
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void DEC_KnowledgeBlackBoard_AgentPion::serialize
+// Name: DEC_KnowledgeBlackBoard_AgentPion::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_KS_Fire::serialize( Archive& archive, const unsigned int )
+void DEC_KS_IndirectFire::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
             & pBlackBoard_;
 }
 
-#endif // __DEC_KS_Fire_h_
+#endif // __DEC_KS_IndirectFire_h_

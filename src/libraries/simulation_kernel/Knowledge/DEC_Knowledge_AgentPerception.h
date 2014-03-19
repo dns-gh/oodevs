@@ -31,7 +31,7 @@ class DEC_Knowledge_AgentPerception : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_AgentPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Agent_ABC& agentPerceived );
+             DEC_Knowledge_AgentPerception( const MIL_Agent_ABC& agentPerceiving, const MIL_Agent_ABC& agentPerceived );
              DEC_Knowledge_AgentPerception();
     virtual ~DEC_Knowledge_AgentPerception();
     //@}
@@ -66,7 +66,7 @@ public:
     //! @name Accessors
     //@{
     unsigned int GetCreationTimeStep() const;
-    MIL_Agent_ABC& GetAgentPerceived() const;
+    const MIL_Agent_ABC& GetAgentPerceived() const;
     const MIL_Agent_ABC&  GetAgentPerceiving() const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     const PHY_PerceptionLevel& GetPreviousPerceptionLevel() const;
@@ -87,7 +87,7 @@ private:
     DEC_Knowledge_AgentPerceptionDataRecognition dataRecognition_;
     DEC_Knowledge_AgentPerceptionDataIdentification dataIdentification_;
     const MIL_Agent_ABC* pAgentPerceiving_;
-    MIL_Agent_ABC* pAgentPerceived_;
+    const MIL_Agent_ABC* pAgentPerceived_;
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
     const PHY_PerceptionLevel* pMaxPerceptionLevel_;
