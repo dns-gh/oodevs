@@ -109,8 +109,6 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
             {
                 pGroupBox_ = new RichGroupBox( "enabledGroupBox", tr( "Enabled" ) );
                 pGroupBoxLayout_ = new QGridLayout( pGroupBox_ );
-                pGroupBox_->setCheckable( controllers_.GetCurrentMode() != eModes_Replay );
-                pGroupBox_->setEnabled( controllers_.GetCurrentMode() != eModes_Replay );
                 int currentRow = 0;
                 for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it, ++currentRow )
                     AddWidget( **it, currentRow );
@@ -126,6 +124,7 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
                     return;
                 pGroupBox_->show();
                 pGroupBox_->setEnabled( !IsReadOnly() );
+                pGroupBox_->setCheckable( !IsReadOnly() );
                 pGroupBox_->setChecked( ext->IsEnabled() );
                 connect( pGroupBox_, SIGNAL( toggled( bool ) ), this, SLOT( OnActivationChanged( bool ) ) );
                 return;
