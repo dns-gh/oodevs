@@ -15,7 +15,6 @@
 #include "MissionController.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
-#include "MockSink.h"
 #include "StubTER_World.h"
 #include <memory>
 
@@ -53,9 +52,8 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
         MissionController controller;
         MIL_EffectManager effectManager;
         FixturePion pion( controller, effectManager );
-        MockSink sink;
         flux >> xml::start( "urban-object" );
-        std::auto_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( sink, flux, 0 ) );
+        std::auto_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( flux, 0 ) );
         flux >> xml::end;
 
         {

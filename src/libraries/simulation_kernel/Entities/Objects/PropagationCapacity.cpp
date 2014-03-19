@@ -10,8 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "PropagationCapacity.h"
 #include "MIL_Object_ABC.h"
-#include "Adapters/Sink_ABC.h"
-#include <core/Model.h>
 
 using namespace sword::capacity;
 
@@ -22,8 +20,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( sword::capacity::PropagationCapacity )
 // Created: LGY 2012-09-21
 // -----------------------------------------------------------------------------
 PropagationCapacity::PropagationCapacity()
-    : pSink_  ( 0 )
-    , command_( 0 )
+{
+    // NOTHING
+}
+
+PropagationCapacity::PropagationCapacity( const PropagationCapacity& )
 {
     // NOTHING
 }
@@ -33,22 +34,8 @@ PropagationCapacity::PropagationCapacity()
 // Created: LGY 2012-09-19
 // -----------------------------------------------------------------------------
 PropagationCapacity::PropagationCapacity( xml::xistream& /*xis*/ )
-    : pSink_  ( 0 )
-    , command_( 0 )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropagationCapacity constructor
-// Created: LGY 2012-09-21
-// -----------------------------------------------------------------------------
-PropagationCapacity::PropagationCapacity( sword::Sink_ABC& sink )
-    : pSink_  ( &sink )
-    , command_( 0 )
-{
-    core::Model parameters;
-    command_ = pSink_->StartCommand( "propagation command", parameters );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,8 +44,7 @@ PropagationCapacity::PropagationCapacity( sword::Sink_ABC& sink )
 // -----------------------------------------------------------------------------
 PropagationCapacity::~PropagationCapacity()
 {
-    if( pSink_ )
-        pSink_->StopCommand( command_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -74,18 +60,9 @@ void PropagationCapacity::Register( MIL_Object_ABC& /*object*/ )
 // Name: PropagationCapacity::Instanciate
 // Created: LGY 2012-09-20
 // -----------------------------------------------------------------------------
-void PropagationCapacity::Instanciate( MIL_Object_ABC& /*object*/ ) const
+void PropagationCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropagationCapacity::Instanciate
-// Created: LGY 2012-09-21
-// -----------------------------------------------------------------------------
-void PropagationCapacity::Instanciate( MIL_Object_ABC& object, sword::Sink_ABC& sink ) const
-{
-    object.AddCapacity( new PropagationCapacity( sink ) );
+    object.AddCapacity( new PropagationCapacity( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,6 +72,5 @@ void PropagationCapacity::Instanciate( MIL_Object_ABC& object, sword::Sink_ABC& 
 template< typename Archive >
 void PropagationCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & pSink_;
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }

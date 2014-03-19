@@ -12,11 +12,6 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace sword
-{
-    class Sink_ABC;
-}
-
 class MIL_ObjectType_ABC;
 class MIL_Object_ABC;
 
@@ -38,7 +33,7 @@ public:
     //! @name Operations
     //@{
     virtual const MIL_ObjectType_ABC& GetType() const = 0;
-    virtual void Build( MIL_Object_ABC& object, sword::Sink_ABC& sink ) const = 0;
+    virtual void Build( MIL_Object_ABC& object ) const = 0;
     //@}
 };
 

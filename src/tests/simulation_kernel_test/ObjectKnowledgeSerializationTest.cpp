@@ -11,7 +11,6 @@
 #include "SingletonTerminator.h"
 #include "MockArmy.h"
 #include "MockBuilder.h"
-#include "MockSink.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockNET_Publisher_ABC.h"
 #include "StubTER_World.h"
@@ -92,13 +91,12 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
     std::auto_ptr< MIL_Object_ABC > pObject;
     {
         MockBuilder builder;
-        MockSink sink;
         MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder.Build ).once();
         MOCK_EXPECT( army.RegisterObject ).once();
         MIL_Color color;
         MOCK_EXPECT( army.GetColor ).once().returns( boost::cref( color ) );
-        pObject.reset( factory.CreateObject( sink, builder, &army ) );
+        pObject.reset( factory.CreateObject( builder, &army ) );
         mock::verify( builder );
         mock::verify( army );
     }

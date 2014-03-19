@@ -42,19 +42,14 @@ public:
     //@{
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
-    virtual void Instanciate( MIL_Object_ABC& object, sword::Sink_ABC& sink ) const;
     //@}
 
 private:
-    //! @name Constructors/Destructor
-    //@{
-    explicit PropagationCapacity( sword::Sink_ABC& sink );
-    //@}
+    PropagationCapacity( const PropagationCapacity& other );
 
 private:
     //! @name Member Data
     //@{
-    sword::Sink_ABC* pSink_;
     std::size_t command_;
     //@}
 };

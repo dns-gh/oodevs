@@ -21,7 +21,7 @@
 MOCK_BASE_CLASS( MockBuilder, MIL_ObjectBuilder_ABC )
 {
     MOCK_METHOD( GetType, 0 );
-    MOCK_METHOD( Build, 2 );
+    MOCK_METHOD( Build, 1 );
 };
 
 #endif // __MockBuilder_h_

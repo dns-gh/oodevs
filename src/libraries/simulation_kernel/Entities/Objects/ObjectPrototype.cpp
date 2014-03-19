@@ -74,9 +74,9 @@ const MIL_ObjectType_ABC& ObjectPrototype::GetType() const
 // Name: ObjectPrototype::Build
 // Created: JCR 2008-05-26
 // -----------------------------------------------------------------------------
-void ObjectPrototype::Build( MIL_Object_ABC& object, sword::Sink_ABC& sink ) const
+void ObjectPrototype::Build( MIL_Object_ABC& object ) const
 {
-    std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ), boost::ref( sink ) ) );
+    std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
 }
 
 // -----------------------------------------------------------------------------

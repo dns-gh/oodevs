@@ -59,7 +59,7 @@ namespace
             return type_;
         }
 
-        virtual void Build( MIL_Object_ABC& object, sword::Sink_ABC& /*sink*/ ) const
+        virtual void Build( MIL_Object_ABC& object ) const
         {
             object.Initialize( location_ );
             object.AddCapacity( new ControlZoneCapacity( pion_ ) );
