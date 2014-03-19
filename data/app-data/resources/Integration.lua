@@ -5,6 +5,7 @@ include "integration/BaseTaskKnowledge.lua"
 
 
 integration = {}
+utilities = {}
 
 include "integration/ToolsFunctions.lua"
 include "integration/TableIntegration.lua"

@@ -2,7 +2,7 @@
 -- @param t Table
 -- @param k Any type, the sought element
 -- @return Boolean
-exists = function( t, k )
+utilities.exists = function( t, k )
     for _, content in pairs( t ) do
         if content == k then
             return true
@@ -16,7 +16,7 @@ end
 -- @param t Table containing only tables as values
 -- @param k Any type, the sought element
 -- @return Boolean
-existsInside = function( t, k )
+utilities.existsInside = function( t, k )
     for _, content in pairs( t ) do
         for _, element in pairs( content ) do
             if element == k then
@@ -31,7 +31,7 @@ end
 -- @param t Table
 -- @param i Any type, the sought index
 -- @return Boolean
-existsIndex = function( t, i )
+utilities.existsIndex = function( t, i )
     return t[i] ~= nil
 end
 
@@ -40,7 +40,7 @@ end
 -- @param table1 First table
 -- @param table2 Second table
 -- @return List
-fusionList = function( table1, table2 )
+utilities.fusionList = function( table1, table2 )
     local res = {}
     for _, elem in pairs( table1 or emptyTable ) do
         res[ #res+1 ] = elem
@@ -62,7 +62,7 @@ end
 -- @return Two return values : 
 -- <ul> <li> List, the provided list without the given value; </li>
 -- <li> Integer, the first index where the value was found, 0 if the value was not found. </li> </ul>
-removeFromList = function( value, list )
+utilities.removeFromList = function( value, list )
     local index = 0
     for i = 1, #list do
         if value == list[i] then
@@ -79,7 +79,7 @@ end
 -- @param values Table of values to remove
 -- @param list List upon which the removal will take place
 -- @return List, the provided list without the given value
-removeListFromList = function( values, list )
+utilities.removeListFromList = function( values, list )
     for _, value in pairs( values ) do
         for i = 1, #list do
             if value == list[i] then
@@ -94,7 +94,7 @@ end
 --- Returns a deep copy of the given table
 -- @param tableFrom Table of elements to copy
 -- @return Table
-copyTable =  function ( tableFrom ) 
+utilities.copyTable =  function ( tableFrom ) 
     local tableTo = {}
     for k, v in pairs( tableFrom or emptyTable ) do
         tableTo[k] = v
@@ -105,7 +105,7 @@ end
 --- Returns the size of the given table
 -- @param table Table
 -- @return Integer, the number of distinct keys in the given table
-function tableSize ( table )
+utilities.tableSize = function( table )
     local cpt = 0
     for k in pairs( table or emptyTable ) do
         cpt = cpt + 1
@@ -116,7 +116,7 @@ end
 
 --- Clears the given table
 -- @param table Table
-function clearTable ( table )
+utilities.clearTable = function( table )
     for k in pairs ( table or emptyTable ) do
         table[ k ] = nil
     end
@@ -127,7 +127,7 @@ end
 -- then the function returns { "a" = { 1, 3 }, "b" = { 2 } }
 -- @param tableFrom Table
 -- @return Table
-integration.inverseTable = function ( tableFrom )
+utilities.inverseTable = function ( tableFrom )
     local tableTo = {}
     for k, v in pairs( tableFrom or emptyTable ) do
         tableTo[ v ] = tableTo[ v ] or {}
@@ -139,7 +139,7 @@ end
 --- Shuffles the provided list using a Fisher-Yates shuffle
 -- @param list List
 -- @return List, a random permutation of the given list
-integration.shuffleList = function( list )
+utilities.shuffleList = function( list )
     for i = #list, 2, -1 do
         local j = getRandomNumber( 1, i )
         local tmp = list[i]
@@ -148,3 +148,29 @@ integration.shuffleList = function( list )
     end
     return list
 end
+
+------------------------------------------------------------------
+--- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
+------------------------------------------------------------------
+
+exists = utilities.exists
+
+existsInside = utilities.existsInside
+
+existsIndex = utilities.existsIndex
+
+fusionList = utilities.fusionList
+
+removeFromList = utilities.removeFromList
+
+removeListFromList = utilities.removeListFromList
+
+copyTable = utilities.copyTable
+
+tableSize = utilities.tableSize
+
+clearTable = utilities.clearTable
+
+integration.inverseTable = utilities.inverseTable
+
+integration.shuffleList = utilities.shuffleList

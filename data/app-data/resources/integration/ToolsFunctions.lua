@@ -16,7 +16,7 @@ require 'debug'
 -- (i.e. the interpolation occurs from [minFrom ; maxFrom] to [maxTo ; minTo]).
 -- @param value Float, the value to interpolate
 -- @return Float, the interpolated value (in [minTo ; maxTo])
-LinearInterpolation = function( minTo, maxTo, minFrom, maxFrom, upslope, value )
+utilities.LinearInterpolation = function( minTo, maxTo, minFrom, maxFrom, upslope, value )
     if( minFrom == maxFrom ) then
         error( "Can't interpolate if minFrom == maxFrom" )
     end
@@ -39,7 +39,7 @@ end
 --- Returns the smallest number in the given table of numeric values.
 -- @param t Table of numeric values
 -- @return Float, the min value
-minValue = function( t )
+utilities.minValue = function( t )
     local minValue = math.huge
     for _, value in pairs( t ) do
         if value < minValue then
@@ -56,7 +56,7 @@ end
 -- @param separator String, the separator.
 -- @param str String, the string to split.
 -- @return List of strings
-explode =  function ( separator, str ) 
+utilities.explode =  function ( separator, str ) 
     if separator == "" then
         error("Can't split a string with an empty separator")
     end
@@ -71,7 +71,7 @@ end
 
 --- Displays a set of localized elements (debug function).
 -- @param elements Table of knowledges defining a "getPosition" method returning a simulation position.
-affichePositions = function( elements )
+utilities.affichePositions = function( elements )
     local simPoints = {}
     for _, element in pairs( elements ) do
         local point = element:getPosition()
@@ -84,7 +84,7 @@ end
 -- @param knowledge Any knowledge
 -- @param delay Float, the delay in minutes
 -- @return Boolean, whether the given delay has elapsed or not.
-waitInMin = function( knowledge, delay )
+utilities.waitInMin = function( knowledge, delay )
     knowledge[myself] = knowledge[myself] or {}
     knowledge[myself].tempsDebut = knowledge[myself].tempsDebut or getSimulationTime()
     return delay * 60 <= getSimulationTime() - knowledge[myself].tempsDebut
@@ -92,7 +92,7 @@ end
 
 --- Returns the current simulation time (in seconds).
 -- @return Float
-getSimulationTime = function()
+utilities.getSimulationTime = function()
     return DEC_TempsSim()
 end
 
@@ -100,13 +100,33 @@ end
 -- @param minValue Integer, the minimum value of the range (included in the range)
 -- @param maxValue Integer, the maximum value of the range (included in the range)
 -- @return Integer
-getRandomNumber = function( minValue, maxValue )
+utilities.getRandomNumber = function( minValue, maxValue )
     return DEC_RandomValue( minValue, maxValue )
 end
 
 --- Returns the current state of the given action
 -- @param idAction Integer, the id of the action
 -- @return Integer, the id of the current state of the action
-getEtatAction = function( idAction )
+utilities.getEtatAction = function( idAction )
     return DEC_EtatAction( idAction )
 end
+
+------------------------------------------------------------------
+--- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
+------------------------------------------------------------------
+
+LinearInterpolation = utilities.LinearInterpolation
+
+minValue = utilities.minValue
+
+explode = utilities.explode
+
+affichePositions = utilities.affichePositions
+
+waitInMin = utilities.waitInMin
+
+getSimulationTime = utilities.getSimulationTime
+
+getRandomNumber = utilities.getRandomNumber
+
+getEtatAction = utilities.getEtatAction
