@@ -146,56 +146,69 @@ func (s *TestSuite) TestChangeKnowledgeGroupType(c *C) {
 }
 
 func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer stopSimAndClient(c, sim, client)
+	model := client.Model.GetData()
 
-	// error: no knowledge group defined
-	data := client.Model.GetData()
-	kgs := data.KnowledgeGroups
-	c.Assert(len(kgs), Greater, 0)
+	// Two automats in different parties and knowledge groups
+	party1 := model.FindPartyByName("party1")
+	formation1 := CreateFormation(c, client, party1.Id)
+	kg1, err := client.CreateKnowledgeGroup(party1.Id, "Standard")
+	c.Assert(err, IsNil)
+	automat1, units1, err := client.CreateAutomatAndUnits(formation1.Id, AutomatType,
+		kg1.Id, swapi.Point{X: -15.9378, Y: 28.2223})
+	c.Assert(err, IsNil)
+	unit1 := units1[0]
 
-	// error: no units defined
-	unit := getSomeUnit(c, data)
-	unitKgId := data.Automats[unit.AutomatId].KnowledgeGroupId
-
-	// error: no second knowledge group
-	var kg *swapi.KnowledgeGroup
-	for _, kg = range kgs {
-		if unitKgId != kg.Id {
-			break
-		}
-	}
-	c.Assert(unitKgId, Not(Equals), kg.Id)
+	party2 := model.FindPartyByName("party2")
+	formation2 := CreateFormation(c, client, party2.Id)
+	kg2, err := client.CreateKnowledgeGroup(party2.Id, "Standard")
+	c.Assert(err, IsNil)
+	_, units2, err := client.CreateAutomatAndUnits(formation2.Id, AutomatType,
+		kg2.Id, swapi.Point{X: -15.6981, Y: 28.4462})
+	c.Assert(err, IsNil)
+	unit2 := units2[0]
 
 	// error: no params
-	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_add_knowledge,
-		swapi.MakeParameters(), kg.Id)
+	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_add_knowledge,
+		swapi.MakeParameters(), kg1.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be an identifier, second a quantity
 	params := swapi.MakeParameters(nil, nil)
 	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_add_knowledge,
-		params, kg.Id)
+		params, kg1.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: invalid perception
-	_, err = client.CreateUnitKnowledge(kg.Id, unit.Id, 42)
+	_, err = client.CreateUnitKnowledge(kg1.Id, unit2.Id, 42)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// add a unit in knowledge group and check
-	unitKnowledge, err := client.CreateUnitKnowledge(kg.Id, unit.Id, 2)
+	const detected = int32(sword.UnitIdentification_detected)
+	const identified = int32(sword.UnitIdentification_identified)
+	unitKnowledge, err := client.CreateUnitKnowledge(kg1.Id, unit2.Id, detected)
 	c.Assert(err, IsNil)
-	c.Assert(unitKnowledge.KnowledgeGroupId, Equals, kg.Id)
-	c.Assert(unitKnowledge.UnitId, Equals, unit.Id)
+	c.Assert(unitKnowledge.KnowledgeGroupId, Equals, kg1.Id)
+	c.Assert(unitKnowledge.UnitId, Equals, unit2.Id)
 
 	// add object in knowledge group
-	location := swapi.MakePointLocation(unit.Position)
-	object, err := client.CreateObject("jamming area", kg.PartyId, location)
+	location := swapi.MakePointLocation(unit2.Position)
+	object, err := client.CreateObject("jamming area", kg2.PartyId, location)
 	c.Assert(err, IsNil)
-	objectKnowledge, err := client.CreateObjectKnowledge(kg.Id, object.Id, 2)
+	objectKnowledge, err := client.CreateObjectKnowledge(kg1.Id, object.Id, detected)
 	c.Assert(err, IsNil)
-	c.Assert(objectKnowledge.KnowledgeGroupId, Equals, kg.Id)
+	c.Assert(objectKnowledge.KnowledgeGroupId, Equals, kg1.Id)
 	c.Assert(objectKnowledge.ObjectId, Equals, object.Id)
+
+	// Teleport unit next to its knowledge, it should identify it
+	err = client.SetAutomatMode(automat1.Id, false)
+	c.Assert(err, IsNil)
+	client.Teleport(swapi.MakeUnitTasker(unit1.Id), unit2.Position)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.UnitKnowledges[unitKnowledge.Id] != nil &&
+			data.UnitKnowledges[unitKnowledge.Id].IdentificationLevel == identified
+	})
 }
 
 func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {

@@ -296,10 +296,11 @@ type KnowledgeGroup struct {
 }
 
 type UnitKnowledge struct {
-	Id               uint32
-	KnowledgeGroupId uint32
-	UnitId           uint32
-	UnitType         uint32
+	Id                  uint32
+	KnowledgeGroupId    uint32
+	UnitId              uint32
+	UnitType            uint32
+	IdentificationLevel int32
 }
 
 type ObjectKnowledge struct {
@@ -988,6 +989,7 @@ var (
 		(*ModelData).handleUnitCreation,
 		(*ModelData).handleUnitDestruction,
 		(*ModelData).handleUnitKnowledgeCreation,
+		(*ModelData).handleUnitKnowledgeUpdate,
 		(*ModelData).handleUnitKnowledgeDestruction,
 		(*ModelData).handleUnitOrder,
 		(*ModelData).handleUnitPathfind,
