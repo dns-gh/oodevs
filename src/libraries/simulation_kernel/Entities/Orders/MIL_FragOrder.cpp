@@ -156,7 +156,7 @@ namespace
                     return static_cast< int >( realResult );
             }
         }
-        throw MASA_EXCEPTION( std::string( "Frag Order " ) + type.GetName() + std::string( " : Unknown parameter: " ) + name );
+        throw MASA_EXCEPTION( "Frag Order " + type.GetName() + " : Unknown parameter: " + name );
     }
 
     std::vector< DEC_Decision_ABC* > GetAutomatListParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
@@ -173,7 +173,7 @@ namespace
                     return std::vector< DEC_Decision_ABC* >();
             }
         }
-        throw MASA_EXCEPTION( std::string( "Frag Order " ) + type.GetName() + std::string( " : Unknown parameter: " ) + name );
+        throw MASA_EXCEPTION( "Frag Order " + type.GetName() + " : Unknown parameter: " + name );
     }
 
     const DEC_Decision_ABC* GetAgentParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
@@ -190,7 +190,7 @@ namespace
                     return 0;
             }
         }
-        throw MASA_EXCEPTION( std::string( "Frag Order " ) + type.GetName() + std::string( " : Unknown parameter: " ) + name );
+        throw MASA_EXCEPTION( "Frag Order " + type.GetName() + " : Unknown parameter: " + name );
     }
 
     boost::shared_ptr< TER_Localisation > GetLocationParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
@@ -207,7 +207,7 @@ namespace
                     return boost::shared_ptr< TER_Localisation >();
             }
         }
-        throw MASA_EXCEPTION( std::string( "Frag Order " ) + type.GetName() + std::string( " : Unknown parameter: " ) + name );
+        throw MASA_EXCEPTION( "Frag Order " + type.GetName() + " : Unknown parameter: " + name );
     }
 
     boost::shared_ptr< MT_Vector2D > GetPointParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
@@ -224,7 +224,7 @@ namespace
                     return boost::shared_ptr< MT_Vector2D >();
             }
         }
-        throw MASA_EXCEPTION( std::string( "Frag Order " ) + type.GetName() + std::string( " : Unknown parameter: " ) + name );
+        throw MASA_EXCEPTION( "Frag Order " + type.GetName() + " : Unknown parameter: " + name );
     }
 }
 
@@ -256,7 +256,7 @@ const PHY_DotationCategory* MIL_FragOrder::GetMunition() const
                 return 0;
         }
     }
-    throw MASA_EXCEPTION( std::string( "Frag Order " ) + type_.GetName() + std::string( " : Unknown parameter munitions_" ) );
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter munitions_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,7 +277,7 @@ std::vector< const PHY_DotationCategory* > MIL_FragOrder::GetMunitions() const
                 return std::vector< const PHY_DotationCategory* >();
         }
     }
-    throw MASA_EXCEPTION( std::string( "Frag Order " ) + type_.GetName() + std::string( " : Unknown parameter munitions_" ) );
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter munitions_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -337,7 +337,7 @@ int MIL_FragOrder::GetOrderConduiteChangerAmbiance() const
 void MIL_FragOrder::SetOrderConduiteChangerAmbiance( int value )
 {
     if( !parameters_.empty() )
-        throw MASA_EXCEPTION( std::string( "Frag Order " ) + type_.GetName() + std::string( " : Can't set parameter already exists" ) );
+        throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Can't set parameter already exists" );
     boost::shared_ptr< MIL_MissionParameter_ABC > parameter( new MIL_EnumerationParameter( value ) );
     parameters_.push_back( parameter );
 }
@@ -390,7 +390,7 @@ MIL_FragOrder::T_MedicalPriorityVector MIL_FragOrder::GetOrderConduiteModifierPr
                 return MIL_FragOrder::T_MedicalPriorityVector();
         }
     }
-    throw MASA_EXCEPTION( std::string( "Frag Order " ) + type_.GetName() + std::string( " : Unknown parameter orderConduiteModifierPrioritesBlesses_" ) );
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter orderConduiteModifierPrioritesBlesses_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -411,7 +411,7 @@ MIL_FragOrder::T_MaintenancePriorityVector MIL_FragOrder::GetOrderConduiteModifi
                 return MIL_FragOrder::T_MaintenancePriorityVector();
         }
     }
-    throw MASA_EXCEPTION( std::string( "Frag Order " ) + type_.GetName() + std::string( " : Unknown parameter orderConduiteModifierPrioritesReparations_" ) );
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter orderConduiteModifierPrioritesReparations_" );
 
 }
 
@@ -545,7 +545,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() cons
                 return boost::shared_ptr< DEC_Knowledge_Agent >();
         }
     }
-    throw MASA_EXCEPTION( std::string( "Frag Order " ) + type_.GetName() + std::string( " : Unknown parameter: " ) + parameterName );
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + parameterName );
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::GetObjectKnowledge
@@ -567,7 +567,7 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Object > > MIL_FragOrder::GetObjec
                 return std::vector< boost::shared_ptr< DEC_Knowledge_Object > >();
         }
     }
-    throw MASA_EXCEPTION( std::string( "Frag Order " ) + type_.GetName() + std::string( " : Unknown parameter: " ) + parameterName );
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + parameterName );
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::GetAgent
@@ -638,7 +638,7 @@ void MIL_FragOrder::Serialize( sword::MissionParameters& message ) const
     // $$$$ _RC_ PHC 2011-01-13: try to merge FragOrder with Mission_ABC
     if( !type_.Copy( parameters_, message, MIL_OrderContext() ) )
     {
-        MT_LOG_ERROR_MSG( std::string( "Frag Order " ) + type_.GetName() + " impossible to serialize parameters" );
+        MT_LOG_ERROR_MSG( "Frag Order " + type_.GetName() + " impossible to serialize parameters" );
         throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
     }
 }
