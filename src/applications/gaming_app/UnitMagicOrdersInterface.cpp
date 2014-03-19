@@ -157,18 +157,15 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
         return;
 
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
-    int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
-    bool bMoveAllowed = false;
+    AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     const gui::Decisions_ABC* decisions = agent.Retrieve< gui::Decisions_ABC >();
     if( decisions )
     {
-        bMoveAllowed = decisions->CanBeOrdered();
         if( decisions->IsDebugActivated() )
             AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
         else
             AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
     }
-    magicMenu->setItemEnabled( moveId, bMoveAllowed );
     AddReloadBrainMenu( magicMenu, static_.types_.automatModels_, decisions ? decisions->GetModelName() : "unknown",
         agent.Get< gui::EntityType< kernel::AutomatType > >().GetType().GetDecisionalModel().GetName() );
     AddSurrenderMenu( magicMenu, agent );
