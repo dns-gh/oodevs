@@ -464,16 +464,16 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 		c.Assert(err, IsNil)
 	}
 
-	limit11 := swapi.Point{X: -15.8241, Y: 28.3241}
-	limit12 := swapi.Point{X: -15.8092, Y: 28.3458}
+	point1 := swapi.Point{X: -15.8241, Y: 28.3241}
+	point2 := swapi.Point{X: -15.8092, Y: 28.3458}
 
 	// Send SAFETY - Operate a checkpoint (filter crowds)
 	operateCheckpoint := uint32(445949258)
 	params := swapi.MakeParameters(
 		swapi.MakeHeading(0),
 		nil,
-		swapi.MakeLimit(limit11, limit11),
-		swapi.MakeLimit(limit12, limit12),
+		swapi.MakeLimit(point1, point1),
+		swapi.MakeLimit(point2, point2),
 		swapi.MakePlannedWork("checkpoint", unitPos),
 		nil,
 		nil,
