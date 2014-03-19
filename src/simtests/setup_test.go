@@ -16,6 +16,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"runtime"
 	"swapi"
 	"swapi/phy"
 	"swapi/simu"
@@ -421,4 +422,5 @@ func (t *TestSuite) SetUpSuite(c *C) {
 	log.Println("run-dir", Cfg.RunDir)
 	log.Println("test-port", Cfg.TestPort)
 	log.Println("platform", Cfg.Platform)
+	log.Println("cpu", runtime.GOMAXPROCS(0))
 }

@@ -7,6 +7,7 @@
     <var name="repositories" value="${repositories},${sword.repository}"/>
     <property name="sword_branch" value="trunk"/>
     <property name="test.port" value="35000"/>
+    <property name="test.cpu" value="1"/>
     <property name="licensepath" value="${run.dir}/license.dat"/>
     <property name="version.version" value="1.0.0.0.${git.revision}.${git.hash}"/>
 
@@ -67,6 +68,7 @@
                 -->
                 <arg value="${go.race}"/>
                 <arg value="-test.parallel=1"/>
+                <arg value="-test.cpu=${test.cpu}"/>
                 <arg value="-test.timeout=30m"/>
                 <arg value="-test.v"/>
                 <arg value="-gocheck.v"/>

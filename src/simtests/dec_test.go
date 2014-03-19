@@ -471,3 +471,82 @@ func (s *TestSuite) TestDecCanLoad(c *C) {
 	// carrier cannot load light unit because it's not "loadable"
 	DecCanLoad(c, client, carrier.Id, light.Id, true, "false")
 }
+
+// Check supplied unit can invoke "property()" or not.
+func HasDecProperty(c *C, client *swapi.Client, unitId uint32, has bool,
+	property string) {
+
+	script := `
+function TestFunction()
+	return tostring({{.property}}())
+end`
+	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
+		map[string]interface{}{"property": property}))
+	c.Assert(err, IsNil)
+	res := output == "true"
+	if res != has {
+		c.Errorf("unexpected property: %s", property)
+	}
+}
+
+// Check the lua symbol "function" is not nil in unitId context.
+func HasDecFunction(c *C, client *swapi.Client, unitId uint32, has bool,
+	function string) {
+
+	script := `
+function TestFunction()
+	return tostring({{.function}} ~= nil)
+end`
+	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
+		map[string]interface{}{"function": function}))
+	c.Assert(err, IsNil)
+	res := output == "true"
+	if res != has {
+		c.Errorf("unexpected function %s", function)
+	}
+}
+
+func HasDecPropertiesOrFunctions(c *C, client *swapi.Client, unitId, refUnitId uint32,
+	properties, functions []string) {
+
+	for i, unitId := range []uint32{unitId, refUnitId} {
+		has := i == 0
+		for _, property := range properties {
+			HasDecProperty(c, client, unitId, has, property)
+		}
+		for _, fn := range functions {
+			HasDecFunction(c, client, unitId, has, fn)
+		}
+	}
+}
+
+// Check units have expected DEC properties and functions depending on their type.
+func (s *TestSuite) TestUnitTypes(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallTest))
+	defer stopSim(c, sim, DisableLuaChecks())
+	phydb := loadPhysical(c, "test")
+	d := client.Model.GetData()
+	party := d.FindPartyByName("party1")
+	CreateFormation(c, client, party.Id)
+	automat := createSpecificAutomat(c, client, "party1",
+		getAutomatTypeFromName(c, phydb, "Mobile Infantry Platoon"))
+	pos := swapi.Point{X: -15.8193, Y: 28.3456}
+
+	unit, err := client.CreateUnit(automat.Id,
+		getUnitTypeFromName(c, phydb, "VW Combi"), pos)
+	c.Assert(err, IsNil)
+
+	// NBC properties
+	nbcUnit, err := client.CreateUnit(automat.Id,
+		getUnitTypeFromName(c, phydb, "VW Combi Type NBC"), pos)
+	HasDecPropertiesOrFunctions(c, client, nbcUnit.Id, unit.Id,
+		[]string{"DEC_Agent_EstAgentNBC"},
+		[]string{"DEC_DecontaminerZone", "DEC_Agent_SeDecontaminer"})
+
+	// Circulation
+	circuUnit, err := client.CreateUnit(automat.Id,
+		getUnitTypeFromName(c, phydb, "VW Combi Type Circulation"), pos)
+	HasDecPropertiesOrFunctions(c, client, circuUnit.Id, unit.Id,
+		nil,
+		[]string{"DEC_Circulation_EquiperItineraireLogistique"})
+}
