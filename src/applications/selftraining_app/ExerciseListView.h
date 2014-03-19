@@ -31,7 +31,6 @@ class Application;
 // =============================================================================
 class ExerciseListView : public QTreeView
 {
-    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
@@ -50,9 +49,6 @@ public:
     void Clear();
     bool Exists( const tools::Path& exercise ) const;
     //@}
-
-private slots:
-    void AdaptColumns( const QModelIndex &, const QModelIndex& );
 
 private:
     //! @name Helpers
