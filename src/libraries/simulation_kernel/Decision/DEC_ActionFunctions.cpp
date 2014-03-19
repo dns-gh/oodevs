@@ -326,13 +326,14 @@ void DEC_ActionFunctions::Transport_Cancel( MIL_AgentPion& callerAgent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::CanTransportPion
-// Created: JVT 2005-01-18
+// Name: DEC_ActionFunctions::AgentCanTransportPion
+// Created: GGE 2013-07-04
 // -----------------------------------------------------------------------------
-bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
+bool DEC_ActionFunctions::AgentCanTransportPion( const DEC_Decision_ABC* agent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
 {
-    assert( pPion );
-    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pPion->GetPion(), bTransportOnlyLoadable );
+    if( !agent || !pPion )
+        return false;
+    return agent->GetPion().GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pPion->GetPion(), bTransportOnlyLoadable );
 }
 
 bool DEC_ActionFunctions::CanLoad( const DEC_Decision_ABC* pPion, const DEC_Decision_ABC* pTarget, bool bTransportOnlyLoadable )
