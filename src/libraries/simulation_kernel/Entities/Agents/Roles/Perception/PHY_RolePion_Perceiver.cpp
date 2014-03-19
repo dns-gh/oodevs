@@ -170,18 +170,9 @@ void PHY_RolePion_Perceiver::serialize( Archive& file, const unsigned int )
 // Name: PHY_RolePion_Perceiver::EnableSensors
 // Created: JVT 2005-04-28
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::EnableSensors()
+void PHY_RolePion_Perceiver::EnableSensors( bool enable )
 {
-    pPerceptionView_->Enable();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::DisableSensors
-// Created: JVT 2005-04-28
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::DisableSensors()
-{
-    pPerceptionView_->Disable();
+    pPerceptionView_->Enable( enable );
 }
 
 // -----------------------------------------------------------------------------

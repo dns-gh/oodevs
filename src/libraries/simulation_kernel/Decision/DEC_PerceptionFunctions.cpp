@@ -362,21 +362,12 @@ void DEC_PerceptionFunctions::DisableFlyingShellDetection( MIL_Agent_ABC& caller
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PerceptionFunctions::DisableSensors
-// Created: JVT 2005-04-28
-// -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableSensors( MIL_Agent_ABC& callerAgent )
-{
-    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableSensors();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::EnableSensors
 // Created: JVT 2005-04-28
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::EnableSensors( MIL_Agent_ABC& callerAgent )
+void DEC_PerceptionFunctions::EnableSensors( MIL_Agent_ABC& callerAgent, bool enable )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableSensors();
+    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableSensors( enable );
 }
 
 // -----------------------------------------------------------------------------

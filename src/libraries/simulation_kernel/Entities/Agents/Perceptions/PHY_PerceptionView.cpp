@@ -390,18 +390,9 @@ void PHY_PerceptionView::Execute( const TER_PopulationConcentration_ABC::T_Const
 // Name: PHY_PerceptionView::Enable
 // Created: JVT 2005-04-29
 // -----------------------------------------------------------------------------
-void PHY_PerceptionView::Enable()
+void PHY_PerceptionView::Enable( bool enable )
 {
-    bIsEnabled_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionView::Disable
-// Created: JVT 2005-04-29
-// -----------------------------------------------------------------------------
-void PHY_PerceptionView::Disable()
-{
-    bIsEnabled_ = false;
+    bIsEnabled_ = enable;
 }
 
 // -----------------------------------------------------------------------------
