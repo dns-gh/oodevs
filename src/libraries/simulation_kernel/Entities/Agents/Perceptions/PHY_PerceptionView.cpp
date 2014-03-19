@@ -128,17 +128,19 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
         if( agent.BelongsTo( *perceiver_.GetKnowledgeGroup() ) )
             continue;
+        if( agent.IsMarkedForDestruction() )
+        {
+            perceiver_.NotifyPerception( agent, PHY_PerceptionLevel::notSeen_ );
+            continue;
+        }
         detection::DetectionComputer detectionComputer( agent );
         perceiver_.GetPion().Execute( detectionComputer );
         agent.Execute( detectionComputer );
-        if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( agent ) )
-        {
-            if( agent.IsMarkedForDestruction() )
-                perceiver_.NotifyPerception( agent, PHY_PerceptionLevel::notSeen_ );
-            else
-                perceiver_.NotifyPerception( agent, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( agent ) );
-        }
-        else if( detectionComputer.CanBeSeen() && perceiver_.NotifyPerception( agent, Compute( agent ) ) )
+        const bool hacked = perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( agent );
+        if( !hacked && !detectionComputer.CanBeSeen() )
+            continue;
+        const auto perceived = perceiver_.NotifyPerception( agent, Compute( agent ) );
+        if( perceived && !hacked )
             civiliansEncountered |= agent.IsCivilian();
     }
     if( civiliansEncountered )
