@@ -39,14 +39,17 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     , hasChanged_     ( false )
     , activatedBackup_( false )
 {
-    Q3HBox* buttons_ = new Q3HBox( pMainLayout_, "ExtensionsPanel_HBox_Buttons" );
-    validateButton_ = new QPushButton( tr( "Validate" ), buttons_, "ExtensionsPanel_Button_Validate" );
-    resetButton_ = new QPushButton( tr( "Reset" ), buttons_, "ExtensionsPanel_Button_Reset" );
+    QHBoxLayout* buttons = new QHBoxLayout;
+    pMainLayout_->addLayout( buttons );
+    validateButton_ = new QPushButton( tr( "Validate" ) );
+    validateButton_->setObjectName( "ExtensionsPanel_Button_Validate" );
+    resetButton_ = new QPushButton( tr( "Reset" ) );
+    resetButton_->setObjectName( "ExtensionsPanel_Button_Reset" );
+    buttons->addWidget( validateButton_ );
+    buttons->addWidget( resetButton_ );
     connect( validateButton_, SIGNAL( clicked() ), SLOT( OnValidate() ) );
     connect( resetButton_, SIGNAL( clicked() ), SLOT( OnReset() ) );
     diffusionDialog_->SetContextMenuEntry( false );
-    QSpacerItem* spacer = new QSpacerItem( 5, 5, QSizePolicy::Minimum, QSizePolicy::Expanding );
-    pMainLayout_->layout()->addItem( spacer );
     ChangeButtonsState( false );
 }
 
