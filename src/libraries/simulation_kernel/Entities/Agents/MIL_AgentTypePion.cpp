@@ -414,7 +414,7 @@ namespace
 void RegisterFunction( const std::string& name,  sword::Brain& brain,
         MIL_Agent_ABC& agent )
 {
-    if( name == "DEC_ContaminerZone" )
+    if( name == "DEC_DecontaminerZone" )
         brain.RegisterFunction( name.c_str(),
             boost::function< void( const TER_Localisation* ) >(
                 boost::bind( &DEC_KnowledgeObjectFunctions::DecontaminateZone,
