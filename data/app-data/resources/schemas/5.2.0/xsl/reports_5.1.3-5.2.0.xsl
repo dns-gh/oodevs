@@ -529,6 +529,13 @@
               <xsl:when test="@id=517">eRC_CloseCrowdDemonstration</xsl:when>
               <xsl:when test="@id=518">eRC_MilitaryEquipmentPlundered</xsl:when>
               <xsl:when test="@id=519">eRC_UnitCrossedLimaLIA</xsl:when>
+              <xsl:when test="@id=520">eRC_RandomCurious</xsl:when>
+              <xsl:when test="@id=521">eRC_RandomFlee</xsl:when>
+              <xsl:when test="@id=522">eRC_RandomStay</xsl:when>
+              <xsl:when test="@id=523">eRC_Convoi_EnConstitution</xsl:when>
+              <xsl:when test="@id=524">eRC_PasTenueNBC</xsl:when>
+              <xsl:when test="@id=525">eRC_TenueProtectionNiveauNRBC</xsl:when>
+              <xsl:when test="@id=526">eRC_UndergroundNetworkExitActivated</xsl:when>
               <xsl:when test="@id=750">eRC_UnitsTryingToControl</xsl:when>
               <xsl:when test="@id=751">eRC_CrowdIsUnderControl</xsl:when>
               <xsl:when test="@id=752">eRC_CannotControlTheCrowd</xsl:when>
