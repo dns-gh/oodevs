@@ -79,7 +79,7 @@ private:
     bool bFired_;
     bool bArrived_;
     double rImpactTimeStep_;
-    PHY_FireResults_Pion* pFireResult_;
+    std::unique_ptr< PHY_FireResults_Pion > pFireResult_;
 };
 
 #endif // __MIL_Effect_IndirectFire_h_
