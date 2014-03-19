@@ -10,9 +10,11 @@
 #include "selftraining_app_pch.h"
 #include "ExerciseListView.h"
 #include "Application.h"
+#include "clients_gui/SignalAdapter.h"
 #include "frontend/Exercise_ABC.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
+#include <QtGui/qheaderview.h>
 #include <xeumeuleu/xml.hpp>
 
 Q_DECLARE_METATYPE( const frontend::Exercise_ABC* )
@@ -65,6 +67,11 @@ ExerciseListView::ExerciseListView( Application& app, const tools::GeneralConfig
     setRootIsDecorated( false );
     setEditTriggers( 0 );
     setFont( QFont( "Calibri", 12, QFont::Bold ) );
+    header()->setStretchLastSection( true );
+    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    gui::connect( model(), SIGNAL( dataChanged( const QModelIndex &, const QModelIndex& ) ), [&]() { resizeColumnToContents( 0 ); } );
+    gui::connect( this, SIGNAL( collapsed ( const QModelIndex & ) ), [&]() { resizeColumnToContents( 0 ); } );
+    gui::connect( this, SIGNAL( expanded ( const QModelIndex &) ), [&]() { resizeColumnToContents( 0 ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,3 +247,4 @@ tools::Path ExerciseListView::GetExerciseName( const QModelIndex& index ) const
     }
     return tools::Path();
 }
+
