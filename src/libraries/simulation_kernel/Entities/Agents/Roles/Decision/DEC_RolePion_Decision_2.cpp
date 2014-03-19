@@ -766,7 +766,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::bind( &DEC_ActionFunctions::Transport_IsTransporting, boost::ref( GetPion() ) ) );
 
     RegisterFunction( "DEC_Agent_PeutTransporterPion",
-        boost::function< bool( const DEC_Decision_ABC*, bool ) >( boost::bind( &DEC_AgentFunctions::AgentCanTransportPion, this, _1, _2 ) ) );
+        boost::function< bool( const DEC_Decision_ABC*, bool ) >( boost::bind( &DEC_ActionFunctions::AgentCanTransportPion, this, _1, _2 ) ) );
     RegisterFunction( "DEC_Agent_TransportNombreAllerRetour",
         boost::function< double( const DEC_Decision_ABC*, bool ) >( boost::bind( &DEC_ActionFunctions::GetNumberOfRoundTripToTransportPion, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Connaissance_TransportNombreAllerRetour",

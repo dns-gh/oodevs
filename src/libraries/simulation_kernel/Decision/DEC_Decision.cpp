@@ -142,7 +142,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Agent_GetTacticalFlyingHeight", &DEC_AgentFunctions::GetTacticalFlyingHeight );
     brain.RegisterFunction( "DEC_Agent_MaxSpeed", &DEC_AgentFunctions::GetMaxSpeed );
     brain.RegisterFunction( "DEC_GetUnitById", &DEC_AgentFunctions::GetUnitById );
-    brain.RegisterFunction( "DEC_Agent_AgentPeutTransporterPion", &DEC_AgentFunctions::AgentCanTransportPion );
+    brain.RegisterFunction( "DEC_Agent_AgentPeutTransporterPion", &DEC_ActionFunctions::AgentCanTransportPion );
 }
 
 // -----------------------------------------------------------------------------
