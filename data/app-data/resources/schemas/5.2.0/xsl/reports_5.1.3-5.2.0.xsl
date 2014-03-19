@@ -529,6 +529,30 @@
               <xsl:when test="@id=517">eRC_CloseCrowdDemonstration</xsl:when>
               <xsl:when test="@id=518">eRC_MilitaryEquipmentPlundered</xsl:when>
               <xsl:when test="@id=519">eRC_UnitCrossedLimaLIA</xsl:when>
+              <xsl:when test="@id=520">eRC_RandomCurious</xsl:when>
+              <xsl:when test="@id=521">eRC_RandomFlee</xsl:when>
+              <xsl:when test="@id=522">eRC_RandomStay</xsl:when>
+              <xsl:when test="@id=523">eRC_Convoi_EnConstitution</xsl:when>
+              <xsl:when test="@id=524">eRC_PasTenueNBC</xsl:when>
+              <xsl:when test="@id=525">eRC_TenueProtectionNiveauNRBC</xsl:when>
+              <xsl:when test="@id=526">eRC_UndergroundNetworkExitActivated</xsl:when>
+              <xsl:when test="@id=750">eRC_UnitsTryingToControl</xsl:when>
+              <xsl:when test="@id=751">eRC_CrowdIsUnderControl</xsl:when>
+              <xsl:when test="@id=752">eRC_CannotControlTheCrowd</xsl:when>
+              <xsl:when test="@id=755">eRC_ElementAlreadyImproved</xsl:when>
+              <xsl:when test="@id=756">eRC_DebutFouilleObjet</xsl:when>
+              <xsl:when test="@id=757">eRC_FinFouilleObjet</xsl:when>
+              <xsl:when test="@id=758">eRC_ObjectCannotDecontaminate</xsl:when>
+              <xsl:when test="@id=759">eRC_FleeCBRN</xsl:when>
+              <xsl:when test="@id=760">eRC_ElementAlreadyDemined</xsl:when>
+              <xsl:when test="@id=761">eRC_UnitAlreadyDecontaminated</xsl:when>
+              <xsl:when test="@id=762">eRC_DecontaminationInProgress</xsl:when>
+              <xsl:when test="@id=763">eRC_FragOrderTooSoon</xsl:when>
+              <xsl:when test="@id=764">eRC_SafePositionReached</xsl:when>
+              <xsl:when test="@id=765">eRC_MedicalUnitIsNotLogistic</xsl:when>
+              <xsl:when test="@id=766">eRC_ImpossibleToBypass</xsl:when>
+              <xsl:when test="@id=767">eRC_AgenCannotBypass</xsl:when>
+              <xsl:when test="@id=768">eRC_AgenCannotRemoveImprovement</xsl:when>
               <xsl:when test="@id=769">eRC_CorpseTransported</xsl:when>
               <xsl:when test="@id=770">eRC_ArmedCiviliansDetected</xsl:when>
               <xsl:when test="@id=771">eRC_FreeFireImpossible</xsl:when>
