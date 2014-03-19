@@ -171,9 +171,9 @@ namespace
     template< typename Sensors, typename Functor >
     const PHY_PerceptionLevel& Compute( PHY_RoleInterface_Perceiver& perceiver,
             const MIL_Object_ABC& object, const Sensors& sensors,
-            const MT_Vector2D& position, bool bIsEnabled, Functor perceptionComputer )
+            const MT_Vector2D& position, Functor perceptionComputer )
     {
-        if( !bIsEnabled || !object().CanBePerceived() )
+        if( !object().CanBePerceived() )
             return PHY_PerceptionLevel::notSeen_;
         if( object.IsUniversal() )
             return PHY_PerceptionLevel::identified_;
@@ -255,7 +255,7 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
         }
         else
             perceiver_.NotifyPerception( object, ::Compute(
-                perceiver_, object, perceiver_.GetSurfacesObject(), position, bIsEnabled_,
+                perceiver_, object, perceiver_.GetSurfacesObject(), position,
                 boost::bind( &ComputeObject, _1, _3, _4 ) ) );
     }
 }
@@ -278,7 +278,7 @@ void PHY_PerceptionView::ExecuteCollisions( const TER_Object_ABC::T_ObjectVector
             continue;
         const PHY_PerceptionLevel& level = ::Compute(
                 perceiver_, object, perceiver_.GetDisasterDetectors(),
-                position, bIsEnabled_, boost::bind( &ComputeDisaster, _1, _2, _3 ) );
+                position, boost::bind( &ComputeDisaster, _1, _2, _3 ) );
         if( level > PHY_PerceptionLevel::notSeen_ )
             perceiver_.NotifyPerception( object, position, location.GetDirection() );
     }
