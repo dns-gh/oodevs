@@ -19,7 +19,8 @@ func (s *TestSuite) TestEnableKnowledgeGroup(c *C) {
 	defer stopSimAndClient(c, sim, client)
 
 	// error: invalid knowledge group
-	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable, swapi.MakeParameters(), 42)
+	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable,
+		swapi.MakeParameters(), 42)
 	c.Assert(err, IsSwordError, "error_invalid_knowledgegroup")
 
 	// error: no knowledge group defined
@@ -27,17 +28,20 @@ func (s *TestSuite) TestEnableKnowledgeGroup(c *C) {
 	kg := getSomeKnowledgeGroup(c, data)
 
 	// error: no params
-	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable, swapi.MakeParameters(), kg.Id)
+	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable,
+		swapi.MakeParameters(), kg.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be an boolean
 	params := swapi.MakeParameters(nil)
-	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable, params, kg.Id)
+	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable,
+		params, kg.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: one parameter only
 	params = swapi.MakeParameters(swapi.MakeBoolean(bool(true)), nil)
-	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable, params, kg.Id)
+	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable,
+		params, kg.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// test: disable knowledge group
@@ -123,12 +127,14 @@ func (s *TestSuite) TestChangeKnowledgeGroupType(c *C) {
 	kg := getSomeKnowledgeGroup(c, data)
 
 	// error: no params
-	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type, swapi.MakeParameters(), kg.Id)
+	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type,
+		swapi.MakeParameters(), kg.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be a string
 	params := swapi.MakeParameters(nil)
-	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type, params, kg.Id)
+	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type,
+		params, kg.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// change parent back to army
@@ -162,12 +168,14 @@ func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 	c.Assert(unitKgId, Not(Equals), kg.Id)
 
 	// error: no params
-	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_add_knowledge, swapi.MakeParameters(), kg.Id)
+	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_add_knowledge,
+		swapi.MakeParameters(), kg.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be an identifier, second a quantity
 	params := swapi.MakeParameters(nil, nil)
-	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_add_knowledge, params, kg.Id)
+	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_add_knowledge,
+		params, kg.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: invalid perception
