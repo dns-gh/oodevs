@@ -43,7 +43,7 @@ func postInvalidTasker(client *swapi.Client, tasker *sword.Tasker) error {
 }
 
 func postInvalidUnitMagicAction(client *swapi.Client, msg *swapi.SwordMessage) error {
-	quit := make(chan error)
+	quit := make(chan error, 1)
 	handler := func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 		if err != nil {
 			quit <- err
@@ -1081,7 +1081,7 @@ func (s *TestSuite) TestDebugBrain(c *C) {
 	c.Assert(err, IsNil)
 
 	// Give a mission and wait for debug reports to be emitted
-	seen := make(chan error)
+	seen := make(chan error, 1)
 	client.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 		if err != nil {
 			seen <- err

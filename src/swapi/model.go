@@ -11,6 +11,7 @@ package swapi
 import (
 	"errors"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -61,7 +62,7 @@ type Model struct {
 	closed       bool
 
 	// State only touched by caller routines
-	condId      int
+	condId      int32
 	WaitTimeout time.Duration
 
 	// Shared state
@@ -253,20 +254,21 @@ func (model *Model) UnregisterHandler(id int32) {
 // timeout. The condition is validated only once.
 func (model *Model) waitCond(timeout time.Duration,
 	cond func(model *Model) bool) bool {
-	model.condId++
+
+	id := atomic.AddInt32(&model.condId, 1)
 	c := &ModelRequest{
 		Cond: &modelCond{
-			id:   model.condId,
+			id:   int(id),
 			done: make(chan int, 1),
 			cond: cond,
 		},
 	}
 	model.requests <- c
-	timeoutch := make(chan int)
+	timeoutch := make(chan struct{})
 	if timeout.Nanoseconds() > 0 {
 		go func() {
 			time.Sleep(timeout)
-			timeoutch <- 1
+			close(timeoutch)
 		}()
 	}
 	removed := false

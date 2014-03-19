@@ -23,7 +23,7 @@ type ServerProcess struct {
 	cmd    *exec.Cmd
 	tailch chan int // terminate tail goroutine
 	// Passed channel will be signalled once the process ends
-	waitqueue chan chan int
+	waitqueue chan chan struct{}
 	quitAll   sync.WaitGroup
 
 	ClientAddr string
@@ -52,15 +52,15 @@ func (s *ServerProcess) Kill() {
 // Return true if the server stopped before the timeout. Wait indefinitely
 // if the timeout is zero.
 func (s *ServerProcess) Wait(d time.Duration) bool {
-	waitch := make(chan int, 1)
+	waitch := make(chan struct{})
 	s.waitqueue <- waitch
 
-	timeoutch := make(chan int)
+	timeoutch := make(chan struct{})
 	go func() {
 		// Infinite timeout is duration is zero
 		if d.Nanoseconds() > 0 {
 			time.Sleep(d)
-			timeoutch <- 1
+			close(timeoutch)
 		}
 	}()
 
@@ -118,7 +118,7 @@ func StartServer(executable, addr, runDir string, args []string, logFiles []stri
 	s := ServerProcess{
 		cmd:        cmd,
 		tailch:     make(chan int, 1),
-		waitqueue:  make(chan chan int, 1),
+		waitqueue:  make(chan chan struct{}, 1),
 		ClientAddr: addr,
 	}
 	err := cmd.Start()
@@ -130,28 +130,27 @@ func StartServer(executable, addr, runDir string, args []string, logFiles []stri
 	// termination and handle wait requests. Callers wanting to wait for
 	// termination posts a channel which is signalled when it happens.
 	go func() {
-		waitch := make(chan int)
+		waitch := make(chan struct{})
 		go func() {
 			cmd.Wait()
 			s.tailch <- 1
 			s.quitAll.Wait()
-			waitch <- 1
+			close(waitch)
 		}()
 
-		terminated := false
-		pendings := []chan int{}
+		pendings := []chan struct{}{}
 		for {
 			select {
 			case ch := <-s.waitqueue:
-				if terminated {
-					ch <- 1
+				if waitch == nil {
+					close(ch)
 				} else {
 					pendings = append(pendings, ch)
 				}
 			case <-waitch:
-				terminated = true
+				waitch = nil
 				for _, ch := range pendings {
-					ch <- 1
+					close(ch)
 				}
 			}
 		}
@@ -177,9 +176,9 @@ func StartServer(executable, addr, runDir string, args []string, logFiles []stri
 
 	// Wait for either the server to terminate, fails to open a server
 	// socket, or succeeds. Fails in the two first cases.
-	netch := make(chan error)
+	netch := make(chan error, 1)
 	go waitForNetwork(netch, addr, connectTimeout, disconnectFn)
-	procch := make(chan int, 1)
+	procch := make(chan struct{})
 	s.waitqueue <- procch
 	select {
 	case err := <-netch:
