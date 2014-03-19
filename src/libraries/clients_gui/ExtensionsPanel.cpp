@@ -121,7 +121,6 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
                 QVBoxLayout* pExtensionLayoutLayout = new QVBoxLayout( pExtensionLayout_ );
                 pExtensionLayoutLayout->addWidget( pGroupBox_ );
                 pExtensionLayoutLayout->setAlignment( Qt::AlignTop );
-                //pExtensionLayoutLayout->addStretch();
                 UpdateDependencies();
                 const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
                 if( !ext )
