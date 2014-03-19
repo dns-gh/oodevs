@@ -37,7 +37,6 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, un
     , rInterventionTypeToFire_( rInterventionTypeToFire )
     , indirectDotationCategory_( indirectDotationCategory )
     , vSourcePosition_( firer.GetRole< PHY_RoleInterface_Location >().GetPosition() )
-    , vTargetPosition_( -1., -1. )
     , nTargetKnowledgeID_( nTargetKnowledgeID )
     , nNbrAmmoFired_( 0 )
     , fireResultId_( 0 )
@@ -46,7 +45,7 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, un
     , bArrived_( false )
     , rImpactTimeStep_( 0 )
 {
-    UpdateTargetPositionFromKnowledge(); /// Update vTargetPosition_
+    UpdateTargetPositionFromKnowledge();
     IncRef();
 }
 
@@ -107,19 +106,13 @@ void MIL_Effect_IndirectFire::UpdateTargetPositionFromKnowledge()
 // -----------------------------------------------------------------------------
 bool MIL_Effect_IndirectFire::CanWeaponBeUsed( const PHY_Weapon& weapon ) const
 {
-    assert( !bIsFlying_ );
-
-    if( !weapon.CanIndirectFire() )
+    if( !weapon.CanIndirectFire()
+        || weapon.GetDotationCategory() != indirectDotationCategory_.GetDotationCategory() 
+        || !vTargetPosition_ )
         return false;
-
-    if( weapon.GetDotationCategory() != indirectDotationCategory_.GetDotationCategory() )
-        return false;
-
-    const double rFlyingDist = vSourcePosition_.Distance( vTargetPosition_ );
-    if( rFlyingDist < weapon.GetMinRangeToIndirectFire() || rFlyingDist > weapon.GetMaxRangeToIndirectFire() )
-        return false;
-
-    return true;
+    const double rFlyingDist = vSourcePosition_.Distance( *vTargetPosition_ );
+    return rFlyingDist >= weapon.GetMinRangeToIndirectFire()
+        && rFlyingDist <= weapon.GetMaxRangeToIndirectFire();
 }
 
 // -----------------------------------------------------------------------------
@@ -128,13 +121,9 @@ bool MIL_Effect_IndirectFire::CanWeaponBeUsed( const PHY_Weapon& weapon ) const
 // -----------------------------------------------------------------------------
 void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_IndirectFire& weaponType, unsigned int nNbrAmmoReserved )
 {
-    assert( !bIsFlying_ );
-
     UpdateTargetPositionFromKnowledge();
-
-    const double rNewTimeBeforeImpact = vSourcePosition_.Distance( vTargetPosition_ ) / weaponType.GetAverageSpeed();
+    const double rNewTimeBeforeImpact = vSourcePosition_.Distance( *vTargetPosition_ ) / weaponType.GetAverageSpeed();
     rImpactTimeStep_ = std::max( rImpactTimeStep_, rNewTimeBeforeImpact + MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
-
     nNbrAmmoFired_ += nNbrAmmoReserved;
     if( indirectDotationCategory_.GetDotationCategory().ConvertToInterventionType( nNbrAmmoFired_ ) >= rInterventionTypeToFire_ )
         StartFlying();
@@ -146,7 +135,7 @@ void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_Indirect
 // -----------------------------------------------------------------------------
 bool MIL_Effect_IndirectFire::Execute()
 {
-    if( !IsTargetValid() || rInterventionTypeToFire_ == 0. )
+    if( !IsTargetValid() || rInterventionTypeToFire_ == 0 )
     {
         StopFlying();
         DecRef();
@@ -173,7 +162,7 @@ bool MIL_Effect_IndirectFire::Execute()
             }
         }
         else
-            indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, vSourcePosition_, vTargetPosition_, nNbrAmmoFired_, *pFireResult_ );
+            indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, vSourcePosition_, *vTargetPosition_, nNbrAmmoFired_, *pFireResult_ );
     }
     bArrived_ = true;
     StopFlying();
@@ -187,9 +176,11 @@ bool MIL_Effect_IndirectFire::Execute()
 // -----------------------------------------------------------------------------
 void MIL_Effect_IndirectFire::StartFlying()
 {
+    if( !vTargetPosition_ )
+        return;
     bFired_ = true;
     if( !pFireResult_ )
-        pFireResult_.reset( new PHY_FireResults_Pion( firer_, vTargetPosition_, indirectDotationCategory_.GetDotationCategory() ) );
+        pFireResult_.reset( new PHY_FireResults_Pion( firer_, *vTargetPosition_, indirectDotationCategory_.GetDotationCategory() ) );
     fireResultId_ = pFireResult_->GetID();
     if( !bIsFlying_ )
     {
@@ -232,9 +223,9 @@ unsigned int MIL_Effect_IndirectFire::GetNbrAmmoToCompleteInterventionType() con
 // -----------------------------------------------------------------------------
 bool MIL_Effect_IndirectFire::IsFlyingThroughLocalisation( const TER_Localisation& localisation ) const
 {
-    if( !bIsFlying_ )
+    if( !bIsFlying_ || !vTargetPosition_ )
         return false;
-    return localisation.Intersect2D( MT_Line( vSourcePosition_, vTargetPosition_ ) );
+    return localisation.Intersect2D( MT_Line( vSourcePosition_, *vTargetPosition_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -275,7 +266,7 @@ bool MIL_Effect_IndirectFire::IsTargetValid() const
             }
         }
     }
-    return vTargetPosition_.rX_ != -1 && vTargetPosition_.rY_ != -1;
+    return vTargetPosition_ != boost::none;
 }
 
 // -----------------------------------------------------------------------------

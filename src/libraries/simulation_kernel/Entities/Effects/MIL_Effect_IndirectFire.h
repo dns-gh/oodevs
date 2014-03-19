@@ -14,6 +14,7 @@
 
 #include "MIL_Effect_ABC.h"
 #include "MT_Tools/MT_Vector2D.h"
+#include <boost/optional.hpp>
 
 class PHY_DotationCategory_IndirectFire_ABC;
 class PHY_WeaponDataType_IndirectFire;
@@ -71,7 +72,7 @@ private:
     const double rInterventionTypeToFire_;
     const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory_;
     const MT_Vector2D vSourcePosition_;
-    MT_Vector2D vTargetPosition_;
+    boost::optional< MT_Vector2D > vTargetPosition_;
     unsigned int nTargetKnowledgeID_;
     unsigned int nNbrAmmoFired_;
     unsigned int fireResultId_;
