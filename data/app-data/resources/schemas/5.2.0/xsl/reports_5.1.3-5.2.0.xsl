@@ -572,6 +572,7 @@
               <xsl:when test="@id=785">eRC_RecognizedUnitSurrendered</xsl:when>
               <xsl:when test="@id=786">eRC_AttenteOrdrePoursuivreOuEscorte</xsl:when>
               <xsl:when test="@id=787">eRC_IEDHeard</xsl:when>
+              <xsl:when test="@id=801">eRC_WaitingConditionToExfiltrate</xsl:when>
             </xsl:choose>
           </xsl:attribute>
           <xsl:apply-templates select="node()|@*"/>
