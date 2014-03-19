@@ -9,10 +9,12 @@
 
 #include "selftraining_app_pch.h"
 #include "ExerciseListView.h"
+#include "moc_ExerciseListView.cpp"
 #include "Application.h"
 #include "frontend/Exercise_ABC.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
+#include <QtGui/qheaderview.h>
 #include <xeumeuleu/xml.hpp>
 
 Q_DECLARE_METATYPE( const frontend::Exercise_ABC* )
@@ -65,6 +67,10 @@ ExerciseListView::ExerciseListView( Application& app, const tools::GeneralConfig
     setRootIsDecorated( false );
     setEditTriggers( 0 );
     setFont( QFont( "Calibri", 12, QFont::Bold ) );
+    header()->setStretchLastSection( true );
+    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    connect( model(), SIGNAL( dataChanged( const QModelIndex &, const QModelIndex& ) ),
+            this, SLOT( AdaptColumns( const QModelIndex &, const QModelIndex& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,4 +245,13 @@ tools::Path ExerciseListView::GetExerciseName( const QModelIndex& index ) const
             return tools::Path::FromUnicode( item->data( FullpathRole ).toString().toStdWString() );
     }
     return tools::Path();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseListView::AdaptColumns
+// Created: LDC 2014-03-19
+// -----------------------------------------------------------------------------
+void ExerciseListView::AdaptColumns( const QModelIndex &, const QModelIndex& )
+{
+    resizeColumnToContents( 0 );
 }
