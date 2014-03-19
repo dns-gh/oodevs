@@ -642,6 +642,16 @@ bool DEC_AgentFunctions::CanMount( DEC_Decision_ABC& callerAgent )
 {
     return callerAgent.GetPion().Get< PHY_RoleInterface_UrbanLocation >().CanMount() && !callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().IsUnderground();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsUnderground
+// Created: NMI 2014-03-18
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsUnderground( DEC_Decision_ABC& callerAgent )
+{
+    return callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().IsUnderground();
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::PionCanFly
 // Created: MIA 2013-06-03
