@@ -869,7 +869,7 @@ namespace
         { &ReadPolygonList,         "polygon" },
         { &ReadUnitKnowledgeList,   "agentknowledge" },
         { &ReadUnitList,            "agent" },
-        { &ReadValues,              "list" },
+        { &ReadPhaseline,           "phaseline" },
     };
 
     const struct { T_Read Read; std::string name; } readers[] = {
@@ -918,7 +918,6 @@ namespace
         { &ReadLocation,           "location" },
         { &ReadLocationComposite,  "locationcomposite" },
         { &ReadPath,               "path" },
-        { &ReadPhaseline,          "phaseline" },
         { &ReadPlannedWork,        "genobject" },
         { &ReadPlannedWork,        "plannedwork" },
         { &ReadPoint,              "point" },
@@ -934,10 +933,14 @@ void protocol::Read( const Reader_ABC& reader, MissionParameter& dst, xml::xistr
     const auto type = TestLowCaseAttribute( xis, "type" );
     if( !type )
         return;
-    for( size_t i = 0; i < COUNT_OF( list_readers ); ++i )
-        if( list_readers[i].name == *type )
-            if( IsList( xis, *type ) )
+    bool isList = IsList( xis, *type );
+    if( isList )
+    {
+        for( size_t i = 0; i < COUNT_OF( list_readers ); ++i )
+            if( list_readers[i].name == *type )
                 return list_readers[i].Read( reader, dst, xis );
+        return ReadValues( reader, dst, xis );
+    }
     if( Apply( readers, COUNT_OF( readers ), *type, dst, xis ) )
         return;
     if( Apply( services, COUNT_OF( services ), *type, reader, dst, xis ) )
