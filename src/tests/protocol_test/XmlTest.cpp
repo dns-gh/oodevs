@@ -379,6 +379,27 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     CheckCycle( input, msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( read_empty_phaseline, Fixture )
+{
+    const std::string input =
+    "<action>"
+    "  <parameter type='phaseline'/>"
+    "</action>";
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+}
+
+BOOST_FIXTURE_TEST_CASE( read_empty_parameter, Fixture )
+{
+    const std::string input =
+    "<action>"
+    "  <parameter/>"
+    "</action>";
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    CheckCycle( input, msg );
+}
+
 BOOST_FIXTURE_TEST_CASE( read_automat_id, Fixture )
 {
     AddParameterValue( xos, "automat", 1337 );
@@ -549,6 +570,22 @@ BOOST_FIXTURE_TEST_CASE( read_resource_type, Fixture )
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).resourcetype().id(), 1337u );
     CheckCycle( msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( read_resource_type_list, Fixture )
+{
+    const std::string input =
+    "<action>"
+    "  <parameter type='resourcetype'>"
+    "    <parameter type='resourcetype' value='100'/>"
+    "    <parameter type='resourcetype' value='20'/>"
+    "  </parameter>"
+    "</action>";
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).resourcetype().id(), 100u );
+    BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 1 ).resourcetype().id(), 20u );
+    CheckCycle( input, msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_acharstr, Fixture )

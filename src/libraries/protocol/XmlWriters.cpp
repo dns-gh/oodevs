@@ -614,17 +614,18 @@ namespace
     std::string GetType( const MissionParameter& src )
     {
         const auto& first = src.value( 0 );
-        if( first.has_phaseline() )                 return "phaseline";
-        if( first.has_plannedwork() )               return "plannedwork";
-        if( first.has_automat() )                   return "automat";
-        if( first.has_objectknowledge() )           return "objectknowledge";
-        if( first.has_agentknowledge() )            return "agentknowledge";
-        if( first.has_agent() )                     return "agent";
-        if( first.list_size() )                     return "list";
-        if( CheckAll( src, &Value::has_location ) ) return "location";
-        if( CheckAll( src, &Value::has_path ) )     return "path";
-        if( CheckAll( src, &Value::has_point ) )    return "point";
-        if( CheckAll( src, &Value::has_area ) )     return "polygon";
+        if( first.has_phaseline() )                     return "phaseline";
+        if( first.has_plannedwork() )                   return "plannedwork";
+        if( first.has_automat() )                       return "automat";
+        if( first.has_objectknowledge() )               return "objectknowledge";
+        if( first.has_agentknowledge() )                return "agentknowledge";
+        if( first.has_agent() )                         return "agent";
+        if( first.list_size() )                         return "list";
+        if( CheckAll( src, &Value::has_location ) )     return "location";
+        if( CheckAll( src, &Value::has_path ) )         return "path";
+        if( CheckAll( src, &Value::has_point ) )        return "point";
+        if( CheckAll( src, &Value::has_area ) )         return "polygon";
+        if( CheckAll( src, &Value::has_resourcetype ) ) return "resourcetype";
         return "locationcomposite";
     }
 }
