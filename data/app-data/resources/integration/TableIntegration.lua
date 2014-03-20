@@ -1,3 +1,5 @@
+utilities = utilities or {}
+
 --- Return true if the provided element is a value of the given table.
 -- @param t Table
 -- @param k Any type, the sought element

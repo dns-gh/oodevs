@@ -1,5 +1,7 @@
 require 'debug'
 
+utilities = utilities or {}
+
 --- Linearly interpolates the given value from the [minFrom ; maxFrom] interval
 --- to the [minTo ; maxTo] interval, and returns the value.
 --- Throws an error if minFrom is equal to maxFrom.
