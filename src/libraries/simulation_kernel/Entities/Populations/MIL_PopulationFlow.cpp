@@ -44,6 +44,7 @@
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationFlow )
 
 MIL_IDManager MIL_PopulationFlow::idManager_;
+const double MIL_PopulationFlow::COLLISION_DELTA = 100;
 
 namespace
 {
@@ -439,8 +440,8 @@ MIL_PopulationFlow* MIL_PopulationFlow::Split( const MT_Vector2D& splittingPoint
     bFlowShapeUpdated_ = true;
     computedFlowShape_.clear();
     UpdateLocation();
-    const int nNbrHumans = static_cast< unsigned int >( GetLocation().GetArea() * rDensityBeforeSplit );
-    newFlow.PushHumans( PullHumans( GetAllHumans() - nNbrHumans ) );
+    const int humans = static_cast< unsigned int >( GetLocation().GetArea() * rDensityBeforeSplit );
+    newFlow.PushHumans( PullHumans( GetAllHumans() - humans ) );
     newFlow.UpdateDensity();
     UpdateDensity();
     return &newFlow;
@@ -485,8 +486,8 @@ bool MIL_PopulationFlow::ManageSplit()
     DetachFromDestConcentration();
     pHeadPath_ = pTailPath_; //$$$ Degueu : destruction de pHeadPath ... (newFlow.pHeadPath_ = pHeadPath_)
     pTailPath_.reset();
-    const int nNbrHumans = static_cast< unsigned int >( GetLocation().GetArea() * rDensityBeforeSplit );
-    newFlow.PushHumans( PullHumans( GetAllHumans() - nNbrHumans ) );
+    const int humans = static_cast< unsigned int >( GetLocation().GetArea() * rDensityBeforeSplit );
+    newFlow.PushHumans( PullHumans( GetAllHumans() - humans ) );
     UpdateDensity();
     return true;
 }
@@ -522,6 +523,19 @@ bool MIL_PopulationFlow::ManageObjectSplit()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::ComputeMovingHumans
+// Created: JSR 2014-03-20
+// -----------------------------------------------------------------------------
+unsigned int MIL_PopulationFlow::ComputeMovingHumans( double speed ) const
+{
+    if( pSourceConcentration_ )
+        return static_cast< unsigned int >( speed * pSourceConcentration_->GetPullingFlowsDensity() + 0.5f );
+    if( const double area = GetLocation().GetArea() )
+        return static_cast< unsigned int >( speed * ( GetAllHumans() / area ) + 0.5f );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::ApplyMove
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
@@ -536,18 +550,10 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
     if( !bHeadMoveFinished_ )
         rWalkedDistance_ = rSpeed/* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
     //$$ TMP
-    unsigned int nNbrHumans = 0;
-    if( pSourceConcentration_ )
-        nNbrHumans = static_cast< unsigned int >( rWalkedDistance_ * pSourceConcentration_->GetPullingFlowsDensity() + 0.5f );
-    else
-    {
-        const double rArea = GetLocation().GetArea();
-        if( rArea )
-            nNbrHumans = static_cast< unsigned int >( rWalkedDistance_ * ( GetAllHumans() / rArea ) + 0.5f );
-        if( nNbrHumans == 0 ) // $$$$ ABR 2011-05-20: to prevent ghost flow
-            nNbrHumans = GetAllHumans();
-    }
-    if( nNbrHumans == 0 )
+    unsigned int humans = ComputeMovingHumans( rWalkedDistance_ );
+    if( humans == 0 && !pSourceConcentration_ ) // $$$$ ABR 2011-05-20: to prevent ghost flow
+        humans = GetAllHumans();
+    if( humans == 0 )
     {
         SetSpeed( 0 );
         return;
@@ -555,7 +561,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
     SetDirection( direction );
     SetSpeed( std::min( rWalkedDistance_, speedLimit_ ) );
     if( pSourceConcentration_ )
-        nNbrHumans = std::min( nNbrHumans, pSourceConcentration_->GetAllHumans() );
+        humans = std::min( humans, pSourceConcentration_->GetAllHumans() );
     // Head management
     if( !pDestConcentration_ )
     {
@@ -575,20 +581,20 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
     {
         if( pDestConcentration_->GetSplittingObject() )
         {
-            personsPassedThroughObject_ += nNbrHumans;
+            personsPassedThroughObject_ += humans;
             double proportion = std::min( 1., static_cast< double >( personsPassedThroughObject_ ) / GetPopulation().GetAllHumans() );
             double newArmed = armedIndividualsBeforeSplit_ * ( 1 - proportion ) +  GetPopulation().GetNewArmedIndividuals() * proportion;
             const AnimatorAttribute* animatorAttribute = pDestConcentration_->GetSplittingObject()->RetrieveAttribute<AnimatorAttribute>();
             if( animatorAttribute && animatorAttribute->GetAnimators().size() > 0 )
                 GetPopulation().SetArmedIndividuals( newArmed );
         }
-        pDestConcentration_->PushHumans( PullHumans( nNbrHumans ) );
+        pDestConcentration_->PushHumans( PullHumans( humans ) );
     }
     // Tail management
     if( pSourceConcentration_ )
     {
         if( rSpeed != 0 || pDestConcentration_ )
-            PushHumans( pSourceConcentration_->PullHumans( nNbrHumans ) );
+            PushHumans( pSourceConcentration_->PullHumans( humans ) );
     }
     if( !pSourceConcentration_ || pSourceConcentration_->GetAllHumans() == 0 )
         UpdateTailPosition();
@@ -636,7 +642,6 @@ void MIL_PopulationFlow::UpdateSpeedLimit()
 
         // If the two crowds are reverse, the speed is not limited
         // We skip the too small segments which are not relevant (can happen at tight turns)
-        //bool reverse = false;
         bool reverse = false;
         if( !GetFlowCollisionManager().HasCollision( this, flow ) )
         {
@@ -671,16 +676,7 @@ void MIL_PopulationFlow::UpdateSpeedLimit()
         if( !reverse )
         {
             speedLimit_ = std::min( speedLimit_, sqrt( squareDistance ) / 2 );
-            unsigned int nNbrHumans = 0;
-            if( pSourceConcentration_ )
-                nNbrHumans = static_cast< unsigned int >( speedLimit_ * pSourceConcentration_->GetPullingFlowsDensity() + 0.5f );
-            else
-            {
-                const double rArea = GetLocation().GetArea();
-                if( rArea )
-                    nNbrHumans = static_cast< unsigned int >( speedLimit_ * ( GetAllHumans() / rArea ) + 0.5f );
-            }
-            if( nNbrHumans == 0 )
+            if( ComputeMovingHumans( speedLimit_ ) == 0 )
                 speedLimit_ = 0;
         }
     }
@@ -712,7 +708,7 @@ bool MIL_PopulationFlow::AddFlowCollision( const MT_Line& line, const MT_Line& f
         if( AreReverse( line, flowSegment ) )
             return false;
 
-        if( intersection.SquareDistance( flowSegment.GetPosEnd() ) < 100 )
+        if( intersection.SquareDistance( flowSegment.GetPosEnd() ) < COLLISION_DELTA )
         {
             auto it = FindPointInShape( flowSegment.GetPosEnd() );
             bool relevantSegment = false;
@@ -726,7 +722,7 @@ bool MIL_PopulationFlow::AddFlowCollision( const MT_Line& line, const MT_Line& f
             }
         }
 
-        if( intersection.SquareDistance( flowSegment.GetPosStart() ) < 100 )
+        if( intersection.SquareDistance( flowSegment.GetPosStart() ) < COLLISION_DELTA )
         {
             auto it = FindPointInShape( flowSegment.GetPosStart() );
             if( it != flowShape_.end() )
@@ -769,8 +765,8 @@ bool MIL_PopulationFlow::CanCollideWith( MIL_PopulationFlow* flow ) const
         return false;
     if( &flow->GetPopulation() == &GetPopulation() )
         return false;
-    return GetHeadPosition().SquareDistance( flow->GetTailPosition() ) > 100
-        && GetTailPosition().SquareDistance( flow->GetHeadPosition() ) > 100;
+    return GetHeadPosition().SquareDistance( flow->GetTailPosition() ) > COLLISION_DELTA
+        && GetTailPosition().SquareDistance( flow->GetHeadPosition() ) > COLLISION_DELTA;
 }
 
 // -----------------------------------------------------------------------------
@@ -1192,10 +1188,32 @@ namespace
     bool HasPassedWaypoint( const MT_Vector2D& start, const MT_Vector2D& end, const MT_Vector2D& waypoint )
     {
         MT_Vector2D result;
-        const MT_Line line( start, end );
-        const double r = line.ProjectPointOnLine( waypoint, result );
-        return waypoint.SquareDistance( line.GetPosStart() ) < 10 || waypoint.SquareDistance( line.GetPosEnd() ) < 10 ||
-            r >= -0.1 && r <= 1.1 && ( result - waypoint ).SquareMagnitude() < 100;
+        const double r = MT_Line( start, end ).ProjectPointOnLine( waypoint, result );
+        return waypoint.SquareDistance( start ) < 10 || waypoint.SquareDistance( end ) < 10 ||
+            r >= -0.1 && r <= 1.1 && ( result - waypoint ).SquareMagnitude() < MIL_PopulationFlow::COLLISION_DELTA;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::UpdateHeadCurrentWaypoint
+// Created: JSR 2014-03-20
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::UpdateHeadCurrentWaypoint( const MT_Vector2D& newHeadPosition )
+{
+    if( !moveAlongPath_.empty() && flowShape_.back().second < moveAlongPath_.size() - 1)
+    {
+        // check if one of the segments between new and old head position has passed a waypoint
+        const MT_Vector2D& waypoint = *moveAlongPath_[ flowShape_.back().second ];
+        MT_Vector2D start = newHeadPosition;
+        bool waypointPassed = false;
+        for( auto it = pointsToInsert_.rbegin(); !waypointPassed && it != pointsToInsert_.rend(); ++it )
+        {
+            waypointPassed = HasPassedWaypoint( start, *it, waypoint );
+            if( !waypointPassed )
+                start = *it;
+        }
+        if( waypointPassed || HasPassedWaypoint( start, flowShape_.back().first, waypoint ) )
+            ++flowShape_.back().second;
     }
 }
 
@@ -1209,20 +1227,7 @@ void MIL_PopulationFlow::SetHeadPosition( const MT_Vector2D& position )
     if( GetHeadPosition() == position )
         return;
 
-    if( !moveAlongPath_.empty() && flowShape_.back().second < moveAlongPath_.size() - 1)
-    {
-        const MT_Vector2D& waypoint = *moveAlongPath_[ flowShape_.back().second ];
-        MT_Vector2D start = position;
-        bool waypointPassed = false;
-        for( auto it = pointsToInsert_.rbegin(); !waypointPassed && it != pointsToInsert_.rend(); ++it )
-        {
-            waypointPassed = HasPassedWaypoint( start, *it, waypoint );
-            if( !waypointPassed )
-                start = *it;
-        }
-        if( waypointPassed || HasPassedWaypoint( start, flowShape_.back().first, waypoint ) )
-            ++flowShape_.back().second;
-    }
+    UpdateHeadCurrentWaypoint( position );
 
     bFlowShapeUpdated_ = true;
     computedFlowShape_.clear();

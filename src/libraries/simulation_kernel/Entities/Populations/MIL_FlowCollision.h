@@ -44,7 +44,7 @@ private:
     //@{
     void Split();
     bool SplitOnSegment( const MT_Line& line, std::size_t& segmentIndex, double& cumulatedMagnitude );
-    void RemovedPassedOverFlows();
+    void RemovePassedOverFlows();
     bool IsTimerOver();
     bool HasFlowPassedOver( const MIL_PopulationFlow* flow ) const;
     //@}

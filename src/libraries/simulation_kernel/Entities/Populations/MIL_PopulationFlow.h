@@ -36,6 +36,11 @@ public:
     virtual ~MIL_PopulationFlow();
     //@}
 
+    //! @name static public members
+    //@{
+    static const double COLLISION_DELTA;
+    //@}
+
     //! @name Operations
     //@{
     bool Update();
@@ -115,6 +120,7 @@ private:
     void UpdateTailPosition();
     const MT_Vector2D& GetHeadPosition() const;
     const MT_Vector2D& GetTailPosition() const;
+    void UpdateHeadCurrentWaypoint( const MT_Vector2D& newHeadPosition );
     void SetHeadPosition( const MT_Vector2D& position );
     void SetTailPosition( const MT_Vector2D& position );
     void SetDirection( const MT_Vector2D& direction );
@@ -146,6 +152,7 @@ private:
     virtual void SendRC( const MIL_DecisionalReport& reportId ) const;
     virtual void SendRC( const MIL_DecisionalReport& reportId, const std::string& name ) const;
     bool ManageObjectSplit();
+    unsigned int ComputeMovingHumans( double speed ) const;
     bool ManageSplit();
     void MoveToAlternateDestination( const MT_Vector2D& destination );
     void ComputePath( const MT_Vector2D& destination );
