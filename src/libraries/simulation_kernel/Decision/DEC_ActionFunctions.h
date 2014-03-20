@@ -67,6 +67,7 @@ public:
     static int GetCapacityToTransportCrowd( DEC_Decision_ABC& callerAgent );
     static bool IsTransportingCrowd       ( DEC_Decision_ABC& callerAgent );
     static bool IsSurrendered             ( DEC_Decision_ABC& callerAgent );
+    static std::vector< DEC_Decision_ABC* > GetTransportedUnits( DEC_Decision_ABC& callerAgent );
 
     static void Prisoners_CaptureAndLoad  ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void Prisoners_Unload          ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

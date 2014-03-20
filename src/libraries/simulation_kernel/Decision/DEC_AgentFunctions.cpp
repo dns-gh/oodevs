@@ -654,15 +654,6 @@ bool DEC_AgentFunctions::IsUnderground( DEC_Decision_ABC& callerAgent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetTransportedUnits
-// Created: NMI 2014-03-20
-// -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetTransportedUnits( DEC_Decision_ABC& callerAgent )
-{
-    return callerAgent.GetPion().Get< transport::PHY_RoleAction_Transport >().GetTransportedUnits();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::PionCanFly
 // Created: MIA 2013-06-03
 // -----------------------------------------------------------------------------
