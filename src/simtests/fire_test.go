@@ -114,18 +114,6 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 		getUnitTypeFromName(c, phydb, "ART.Firefinder radar"),
 		swapi.Point{X: -15.8079, Y: 28.3373})
 	c.Assert(err, IsNil)
-	// deploy firer
-	MissionArtilleryDeploy := uint32(44580)
-	_, err = client.SendUnitOrder(firer.Id, MissionArtilleryDeploy,
-		swapi.MakeParameters(
-			swapi.MakeHeading(0),
-			nil, nil, nil,
-			swapi.MakeLocationParam(from),
-		))
-	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[firer.Id].Installation == 100
-	})
 	// detect indirect fires
 	MissionDetectIndirectFires := uint32(44594906)
 	_, err = client.SendUnitOrder(watcher.Id, MissionDetectIndirectFires,
@@ -139,6 +127,18 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 			)),
 		))
 	c.Assert(err, IsNil)
+	// deploy firer
+	MissionArtilleryDeploy := uint32(44580)
+	_, err = client.SendUnitOrder(firer.Id, MissionArtilleryDeploy,
+		swapi.MakeParameters(
+			swapi.MakeHeading(0),
+			nil, nil, nil,
+			swapi.MakeLocationParam(from),
+		))
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[firer.Id].Installation == 100
+	})
 	// fire
 	c.Assert(client.Model.GetData().UnitKnowledges, HasLen, 0)
 	params := swapi.MakeParameters(
