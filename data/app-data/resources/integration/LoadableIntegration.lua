@@ -692,6 +692,13 @@ integration.canLoad = function( unit, target, onlyLoadable )
     return DEC_CanLoad( unit, target, onlyLoadable )
 end
 
+--- Returns a list of all agents currently transported by the given entity.
+-- @param agent Simulation agent
+-- @return List of simulation agents
+integration.getTransportedUnits = function( agent )
+    return DEC_Agent_GetTransportedUnits( agent )
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------

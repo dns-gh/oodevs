@@ -18,6 +18,7 @@
 #include "Decision/DEC_Gen_Object.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
+#include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
@@ -650,6 +651,15 @@ bool DEC_AgentFunctions::CanMount( DEC_Decision_ABC& callerAgent )
 bool DEC_AgentFunctions::IsUnderground( DEC_Decision_ABC& callerAgent )
 {
     return callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().IsUnderground();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetTransportedUnits
+// Created: NMI 2014-03-20
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetTransportedUnits( DEC_Decision_ABC& callerAgent )
+{
+    return callerAgent.GetPion().Get< transport::PHY_RoleAction_Transport >().GetTransportedUnits();
 }
 
 // -----------------------------------------------------------------------------

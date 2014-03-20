@@ -252,6 +252,9 @@ public:
 
     // Perception
     static void IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, const TER_Localisation* location );
+
+    // Transport
+    static std::vector< DEC_Decision_ABC* > GetTransportedUnits( DEC_Decision_ABC& callerAgent );
     //@}
 };
 
