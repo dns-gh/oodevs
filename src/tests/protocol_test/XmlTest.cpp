@@ -379,6 +379,27 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     CheckCycle( input, msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( read_empty_phaseline, Fixture )
+{
+    const std::string input =
+    "<action>"
+    "  <parameter type='phaseline'/>"
+    "</action>";
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+}
+
+BOOST_FIXTURE_TEST_CASE( read_empty_parameter, Fixture )
+{
+    const std::string input =
+    "<action>"
+    "  <parameter/>"
+    "</action>";
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    CheckCycle( input, msg );
+}
+
 BOOST_FIXTURE_TEST_CASE( read_automat_id, Fixture )
 {
     AddParameterValue( xos, "automat", 1337 );
