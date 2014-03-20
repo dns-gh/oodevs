@@ -122,6 +122,8 @@ bool MIL_Effect_IndirectFire::CanWeaponBeUsed( const PHY_Weapon& weapon ) const
 void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_IndirectFire& weaponType, unsigned int nNbrAmmoReserved )
 {
     UpdateTargetPositionFromKnowledge();
+    if( !vTargetPosition_ )
+        return;
     const double rNewTimeBeforeImpact = vSourcePosition_.Distance( *vTargetPosition_ ) / weaponType.GetAverageSpeed();
     rImpactTimeStep_ = std::max( rImpactTimeStep_, rNewTimeBeforeImpact + MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
     nNbrAmmoFired_ += nNbrAmmoReserved;
