@@ -301,7 +301,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , sink_                         ( new sword::legacy::Sink( *idManager_, *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled(), world ) )
-    , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
+    , pObjectManager_               ( new MIL_ObjectManager( objectFactory ) )
     , pFloodModel_                  ( sink_->CreateFloodModel().release() )
     , automateFactory_              ( new AutomateFactory( *idManager_, *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
@@ -2782,15 +2782,6 @@ double MIL_EntityManager::GetEffectsTime() const
 double MIL_EntityManager::GetStatesTime() const
 {
     return rStatesTime_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::GetModelCount
-// Created: SLI 2012-09-12
-// -----------------------------------------------------------------------------
-unsigned long MIL_EntityManager::GetModelCount() const
-{
-    return sink_->GetModelCount();
 }
 
 // -----------------------------------------------------------------------------

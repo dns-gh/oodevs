@@ -63,12 +63,6 @@ public:
     virtual void LogProfiling();
     //@}
 
-    //! @name Commands
-    //@{
-    virtual std::size_t StartCommand( const std::string& type, const core::Model& parameters );
-    virtual void StopCommand( std::size_t command );
-    //@}
-
     //! @name Factory
     //@{
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, sword::RoleExtender_ABC* ext );
@@ -86,11 +80,6 @@ public:
     }
     template< typename Archive > friend  void save_construct_data( Archive& archive, const sword::legacy::Sink* sink, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, sword::legacy::Sink* sink, const unsigned int /*version*/ );
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual unsigned long GetModelCount() const;
     //@}
 
 private:

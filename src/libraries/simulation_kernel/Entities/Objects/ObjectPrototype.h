@@ -35,7 +35,7 @@ public:
     //@{
     template< typename Capacity >
     void AddCapacity( Capacity* capacity );
-    void Build( MIL_Object_ABC& object, sword::Sink_ABC& sink ) const;
+    void Build( MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Accessors

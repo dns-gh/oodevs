@@ -24,7 +24,6 @@
 #include "Urban/MIL_UrbanObject.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
-#include "MockSink.h"
 #include "MockAgent.h"
 #include "MockRoleInterface_Posture.h"
 #include "MockPHY_Composante_ABC.h"
@@ -50,19 +49,18 @@ namespace
                              "    <object type='urban block'/>"
                              "</objects>" )
         {
-            MockSink sink;
             factory.Initialize( xis );
             xml::xistringstream xisCity( "<urban-object name='city' id='2'/>" );
             xml::xistringstream xisDistrict( "<urban-object name='district' id='1'/>" );
             xml::xistringstream xisBlock( "<urban-object name='test' id='0'/>" );
             xisCity >> xml::start( "urban-object" );
-            city.reset( factory.CreateUrbanObject( sink, xisCity, 0 ) );
+            city.reset( factory.CreateUrbanObject( xisCity, 0 ) );
             xisCity >> xml::end;
             xisDistrict >> xml::start( "urban-object" );
-            district.reset( factory.CreateUrbanObject( sink, xisDistrict, city.get() ) );
+            district.reset( factory.CreateUrbanObject( xisDistrict, city.get() ) );
             xisDistrict >> xml::end;
             xisBlock >> xml::start( "urban-object" );
-            urbanBlock.reset( factory.CreateUrbanObject( sink, xisBlock, district.get() ) );
+            urbanBlock.reset( factory.CreateUrbanObject( xisBlock, district.get() ) );
             xisBlock >> xml::end;
             TER_Localisation localisation( TER_Localisation::ePolygon, vertices );
             urbanBlock->UpdateLocalisation( localisation );

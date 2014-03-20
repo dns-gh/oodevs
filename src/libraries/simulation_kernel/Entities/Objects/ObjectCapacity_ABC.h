@@ -45,10 +45,6 @@ public:
 
     //! @name Capacity creation
     //@{
-    virtual void Instanciate( MIL_Object_ABC& object, sword::Sink_ABC& /*sink*/ ) const
-    {
-        Instanciate( object );
-    }
     virtual void Instanciate( MIL_Object_ABC& object ) const = 0;
     virtual void Finalize( MIL_Object_ABC& /*object*/ ) {}
     virtual void Terminate( MIL_Object_ABC& /*object*/ ) const

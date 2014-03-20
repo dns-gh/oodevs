@@ -10,7 +10,6 @@
 #include "simulation_kernel_test_pch.h"
 #include "SingletonTerminator.h"
 #include "MockAgent.h"
-#include "MockSink.h"
 #include "MockMIL_Time_ABC.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
@@ -112,18 +111,17 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
         BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
     }
     MockAgent firer;
-    MockSink sink;
     xisCity >> xml::start( "urban-object" );
     std::auto_ptr< MIL_UrbanObject_ABC > city;
-    city.reset( factory.CreateUrbanObject( sink, xisCity, 0 ) );
+    city.reset( factory.CreateUrbanObject( xisCity, 0 ) );
     xisCity >> xml::end;
     xisDistrict >> xml::start( "urban-object" );
     std::auto_ptr< MIL_UrbanObject_ABC > district;
-    district.reset( factory.CreateUrbanObject( sink, xisDistrict, city.get() ) );
+    district.reset( factory.CreateUrbanObject( xisDistrict, city.get() ) );
     xisDistrict >> xml::end;
     xisModel >> xml::start( "urban-object" );
     std::auto_ptr< MIL_UrbanObject_ABC > urbanBlock;
-    urbanBlock.reset( factory.CreateUrbanObject( sink, xisModel, district.get() ) );
+    urbanBlock.reset( factory.CreateUrbanObject( xisModel, district.get() ) );
     xisModel >> xml::end;
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( firer );
 

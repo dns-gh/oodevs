@@ -25,7 +25,6 @@ namespace sword
     class MagicAction;
     class ObjectMagicAction;
     enum ObjectMagicActionAck_ErrorCode;
-    class Sink_ABC;
 }
 
 namespace propagation
@@ -52,7 +51,7 @@ class MIL_UrbanObject_ABC;
 class MIL_ObjectManager : private boost::noncopyable
 {
 public:
-             MIL_ObjectManager( MIL_ObjectFactory& factory, sword::Sink_ABC& sink );
+             MIL_ObjectManager( MIL_ObjectFactory& factory );
     virtual ~MIL_ObjectManager();
 
     //! @name CheckPoints
@@ -118,7 +117,6 @@ private:
     //@{
     unsigned int nbObjects_;
     MIL_ObjectFactory& factory_;
-    sword::Sink_ABC& sink_;
     std::map< unsigned int, MIL_Object_ABC* > objects_;
     std::vector< MIL_Object_ABC* > universalObjects_;
     //@}

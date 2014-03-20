@@ -21,11 +21,6 @@ class MIL_ObjectManager;
 class MIL_UrbanCache;
 class MIL_EffectManager;
 
-namespace core
-{
-    class Model;
-}
-
 namespace sword
 {
 class RoleExtender_ABC;
@@ -62,12 +57,6 @@ public:
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext ) = 0;
     //@}
 
-    //! @name Commands
-    //@{
-    virtual std::size_t StartCommand( const std::string& type, const core::Model& parameters ) = 0;
-    virtual void StopCommand( std::size_t command ) = 0;
-    //@}
-
     //! @name CheckPoints
     //@{
     template< typename Archive >
@@ -75,11 +64,6 @@ public:
     {
         archive & boost::serialization::base_object< FloodModelFactory_ABC >( *this );
     }
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual unsigned long GetModelCount() const = 0;
     //@}
 };
 }

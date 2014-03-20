@@ -173,7 +173,6 @@ public:
     double GetActionsTime            () const;
     double GetEffectsTime            () const;
     double GetStatesTime             () const;
-    unsigned long GetModelCount      () const;
     //@}
 
     //! @name Operations

@@ -19,7 +19,6 @@
 #include "SpawnedAttribute.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
-#include "Adapters/Sink_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -46,28 +45,23 @@
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
 
 template< typename Archive >
-void save_construct_data( Archive& archive, const MIL_ObjectManager* manager, const unsigned int /*version*/ )
+void save_construct_data( Archive&, const MIL_ObjectManager*, const unsigned int /*version*/ )
 {
-    const sword::Sink_ABC* sink = &manager->sink_;
-    archive << sink;
 }
 
 template< typename Archive >
-void load_construct_data( Archive& archive, MIL_ObjectManager* manager, const unsigned int /*version*/ )
+void load_construct_data( Archive&, MIL_ObjectManager* manager, const unsigned int /*version*/ )
 {
-    sword::Sink_ABC* sink;
-    archive >> sink;
-    ::new( manager )MIL_ObjectManager( MIL_AgentServer::GetWorkspace().GetObjectFactory(), *sink );
+    ::new( manager )MIL_ObjectManager( MIL_AgentServer::GetWorkspace().GetObjectFactory() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MIL_ObjectManager::MIL_ObjectManager( MIL_ObjectFactory& factory, sword::Sink_ABC& sink )
+MIL_ObjectManager::MIL_ObjectManager( MIL_ObjectFactory& factory )
     : factory_  ( factory )
     , nbObjects_( 0 )
-    , sink_     ( sink )
 {
     // NOTHING
 }
@@ -215,7 +209,7 @@ unsigned long MIL_ObjectManager::Count() const
 // -----------------------------------------------------------------------------
 MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_ABC* army )
 {
-    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, xis, army );
+    MIL_Object_ABC* pObject = factory_.CreateObject( xis, army );
     if( !pObject )
         throw MASA_EXCEPTION( "Unknown object" ); //@TODO MGD propagate reference
     RegisterObject( pObject );
@@ -237,7 +231,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const sword::MissionParameters&
         pArmy = armies.Find( id );
         protocol::Check( pArmy, "invalid party identifier", 3 );
     }
-    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, message, pArmy );
+    MIL_Object_ABC* pObject = factory_.CreateObject( message, pArmy );
     if( pObject )
     {
         if( FloodAttribute* flood = pObject->RetrieveAttribute< FloodAttribute >() )
@@ -267,7 +261,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const sword::MissionParameters&
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation )
 {
-    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, "", type, army, localisation, true, 0u, 0u );
+    MIL_Object_ABC* pObject = factory_.CreateObject( "", type, army, localisation, true, 0u, 0u );
     RegisterObject( pObject );
     return pObject;
 }
@@ -278,7 +272,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation, unsigned int forcedId )
 {
-    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, "", type, army, localisation, true, 0u, forcedId );
+    MIL_Object_ABC* pObject = factory_.CreateObject( "", type, army, localisation, true, 0u, forcedId );
     RegisterObject( pObject );
     return pObject;
 }
@@ -292,7 +286,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const std::
 {
     if( pLocalisation )
     {
-        MIL_Object_ABC* pObject = factory_.CreateObject( sink_, name, type, army, *pLocalisation, activated, externalIdentifier, 0, density );
+        MIL_Object_ABC* pObject = factory_.CreateObject( name, type, army, *pLocalisation, activated, externalIdentifier, 0, density );
         RegisterObject( pObject );
         return pObject;
     }
@@ -305,7 +299,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const std::
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const MIL_ObjectBuilder_ABC& builder )
 {
-    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, builder, army );
+    MIL_Object_ABC* pObject = factory_.CreateObject( builder, army );
     RegisterObject( pObject );
     return pObject;
 }
@@ -316,7 +310,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const MIL_O
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent )
 {
-    MIL_UrbanObject_ABC* pObject = factory_.CreateUrbanObject( sink_, xis, parent );
+    MIL_UrbanObject_ABC* pObject = factory_.CreateUrbanObject( xis, parent );
     if( !pObject )
         MT_LOG_INFO_MSG( "The object type 'urban block' doesn't exist in the physical database" );
     else if( pObject->IsBlock() )

@@ -16,7 +16,6 @@
 namespace sword
 {
     class MissionParameters;
-    class Sink_ABC;
     enum ObjectMagicActionAck_ErrorCode;
 }
 
@@ -55,12 +54,12 @@ public:
     //! @name Operations
     //@{
     void Initialize( xml::xistream& xis );
-    MIL_Object_ABC* CreateObject( sword::Sink_ABC& sink, xml::xistream& xis, MIL_Army_ABC* army ) const;
-    MIL_Object_ABC* CreateObject( sword::Sink_ABC& sink, const sword::MissionParameters& asn, MIL_Army_ABC* army ) const;
-    MIL_Object_ABC* CreateObject( sword::Sink_ABC& sink, const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
+    MIL_Object_ABC* CreateObject( xml::xistream& xis, MIL_Army_ABC* army ) const;
+    MIL_Object_ABC* CreateObject( const sword::MissionParameters& asn, MIL_Army_ABC* army ) const;
+    MIL_Object_ABC* CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
                                   bool activated, unsigned int externalIdentifier, unsigned int forcedId = 0u, double density = 0. ) const;
-    MIL_Object_ABC* CreateObject( sword::Sink_ABC& sink, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army ) const;
-    MIL_UrbanObject_ABC* CreateUrbanObject( sword::Sink_ABC& sink, xml::xistream& xis, MIL_UrbanObject_ABC* parent ) const;
+    MIL_Object_ABC* CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army ) const;
+    MIL_UrbanObject_ABC* CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent ) const;
     void Update( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object ) const;
     //@}
 
