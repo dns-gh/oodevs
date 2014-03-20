@@ -488,6 +488,12 @@ type FireEffect struct {
 	Location Location
 }
 
+type FireDetection struct {
+	Id    uint32
+	Units []uint32
+	Firer uint32
+}
+
 type ReplayInfo struct {
 	FirstTick int32
 	TickCount int32
@@ -514,6 +520,7 @@ type ModelData struct {
 	FuneralHandlings     map[uint32]*FuneralHandling
 	SupplyHandlings      map[uint32]*SupplyHandling
 	FireEffects          map[uint32]*FireEffect
+	FireDetections       map[uint32]*FireDetection
 	LocalWeathers        map[uint32]*LocalWeather
 	GlobalWeather        Weather
 	// Available scores definitions
@@ -553,6 +560,7 @@ func NewModelData() *ModelData {
 		FuneralHandlings:     map[uint32]*FuneralHandling{},
 		SupplyHandlings:      map[uint32]*SupplyHandling{},
 		FireEffects:          map[uint32]*FireEffect{},
+		FireDetections:       map[uint32]*FireDetection{},
 		KnownScores:          map[string]struct{}{},
 		Scores:               map[string]float32{},
 	}
@@ -919,6 +927,22 @@ func (model *ModelData) removeFireEffect(effectId uint32) bool {
 	return size != len(model.FireEffects)
 }
 
+func (model *ModelData) updateFireDetection(perception *FireDetection) {
+	if p, ok := model.FireDetections[perception.Id]; ok {
+		for _, unit := range perception.Units {
+			p.Units = append(p.Units, unit)
+		}
+	} else {
+		model.FireDetections[perception.Id] = perception
+	}
+}
+
+func (model *ModelData) removeFireDetection(id uint32, units []uint32) bool {
+	size := len(model.FireDetections)
+	delete(model.FireDetections, id)
+	return size != len(model.FireDetections)
+}
+
 var (
 	simToClientHandlers = []func(model *ModelData, m *sword.SimToClient_Content) error{
 		(*ModelData).handleAutomatAttributes,
@@ -951,6 +975,8 @@ var (
 		(*ModelData).handleCrowdUpdate,
 		(*ModelData).handleFireEffectCreation,
 		(*ModelData).handleFireEffectDestruction,
+		(*ModelData).handleFireDetectionCreation,
+		(*ModelData).handleFireDetectionDestruction,
 		(*ModelData).handleFormationChangeSuperior,
 		(*ModelData).handleFormationCreation,
 		(*ModelData).handleFormationDestruction,
