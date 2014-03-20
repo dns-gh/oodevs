@@ -109,7 +109,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
 
     const T_PerceptionParameterPair p = GetParameter( target );
     perceptionsBuffer_[ &target ] = std::make_pair( p.first + 1, p.second );
-    PHY_ZURBPerceptionComputer urbanComputer( perceiver_.GetPion(), p.second, p.first );
+    const PHY_ZURBPerceptionComputer urbanComputer( perceiver_.GetPion(), p.second, p.first );
     const PHY_PerceptionLevel& urbanResult = urbanComputer.ComputePerception( target );
     return std::min( result, urbanResult );
 }
