@@ -13,6 +13,8 @@
 #define __PHY_FireResults_Pion_h_
 
 #include "Entities/Actions/PHY_FireResults_ABC.h"
+#include "Tools/Set.h"
+#include <boost/optional.hpp>
 
 class MIL_Agent_ABC;
 class MIL_PopulationElement_ABC;
@@ -30,6 +32,8 @@ public:
              PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_PopulationElement_ABC& target );
              PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory& dotationCategory );
     virtual ~PHY_FireResults_Pion();
+
+    void NotifyDetected( const MIL_Agent_ABC& perceiver );
 
     //! @name Accessors
     //@{
@@ -51,6 +55,8 @@ private:
     const MIL_Agent_ABC& firer_;
     const unsigned int nID_;
     const bool direct_;
+    boost::optional< MT_Vector2D > target_;
+    tools::Set< const MIL_Agent_ABC* > perceivers_;
     //@}
 };
 

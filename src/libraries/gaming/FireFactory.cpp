@@ -61,3 +61,8 @@ Fire_ABC* FireFactory::CreateFire( const sword::StartCrowdFire& message, unsigne
 {
     return new PopulationFire( message, model_.agents_ );
 }
+
+Fire_ABC* FireFactory::CreateFire( const sword::StartUnitFireDetection& message, unsigned long /*id*/ )
+{
+    return new IndirectFire( message, model_.agents_, model_.static_.coordinateConverter_ );
+}

@@ -1297,6 +1297,18 @@ void AgentServerMsgMgr::OnReceiveStopUnitFire( const sword::StopUnitFire& messag
     GetModel().fires_.RemoveFire( message );
 }
 
+void AgentServerMsgMgr::OnReceiveStartUnitFireDetection( const sword::StartUnitFireDetection& message )
+{
+    for( auto it = message.units().begin(); it != message.units().end(); ++it )
+        GetModel().agents_.GetAgent( it->id() ).Update( message );
+}
+
+void AgentServerMsgMgr::OnReceiveStopUnitFireDetection( const sword::StopUnitFireDetection& message )
+{
+    for( auto it = message.units().begin(); it != message.units().end(); ++it )
+        GetModel().agents_.GetAgent( it->id() ).Update( message );
+}
+
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveStartFireEffect
 // Created: JVT 04-03-25
@@ -1859,6 +1871,10 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         OnReceiveStartUnitFire             ( wrapper.message().start_unit_fire() );
     else if( wrapper.message().has_stop_unit_fire() )
         OnReceiveStopUnitFire              ( wrapper.message().stop_unit_fire() );
+    else if( wrapper.message().has_start_unit_fire_detection() )
+        OnReceiveStartUnitFireDetection( wrapper.message().start_unit_fire_detection() );
+    else if( wrapper.message().has_stop_unit_fire_detection() )
+        OnReceiveStopUnitFireDetection( wrapper.message().stop_unit_fire_detection() );
     else if( wrapper.message().has_start_crowd_fire() )
         OnReceiveStartCrowdFire       ( wrapper.message().start_crowd_fire() );
     else if( wrapper.message().has_stop_crowd_fire() )

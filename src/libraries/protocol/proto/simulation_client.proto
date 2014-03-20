@@ -1458,6 +1458,34 @@ message StartUnitFire {
     optional Id             ammunition  = 5;
 }
 
+/** @struct StartUnitFireDetection
+    @brief Notifies of the beginning of a fire detection
+
+    This is only for indirect fires.
+*/
+message StartUnitFireDetection {
+    //! The fire identifier
+    required Id             fire        = 1;
+    //! A list of detecting unit identifiers
+    repeated Id             units       = 2;
+    //! The firing unit identifier
+    required Id             firer       = 3;
+    //! The target position
+    required CoordLatLong   target      = 4;
+}
+
+/** @struct StopUnitFireDetection
+    @brief Notifies of the end of a fire detection
+
+    This is only for indirect fires.
+*/
+message StopUnitFireDetection {
+    //! The fire identifier
+    required Id             fire        = 1;
+    //! A list of detecting unit identifiers
+    repeated Id             units       = 2;
+}
+
 /** @struct UnitHumanFireDamage
     @brief Defines the damage inflicted the humans of a unit
 */
@@ -3450,6 +3478,8 @@ message SimToClient {
         optional ListLogisticRequestsAck list_logistic_requests_ack = 151;
         optional MagicOrder            magic_order = 152;
         optional MagicOrderDestruction magic_order_destruction = 153;
+        optional StartUnitFireDetection start_unit_fire_detection = 154;
+        optional StopUnitFireDetection stop_unit_fire_detection = 155;
     }
     /** @property context
         @brief Identifies the request matching the response

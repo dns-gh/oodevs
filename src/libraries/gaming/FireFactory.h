@@ -16,6 +16,7 @@ namespace sword
 {
     class StartUnitFire;
     class StartCrowdFire;
+    class StartUnitFireDetection;
 }
 
 namespace kernel
@@ -46,6 +47,7 @@ public:
     //@{
     Fire_ABC* CreateFire( const sword::StartUnitFire& message, unsigned long id );
     Fire_ABC* CreateFire( const sword::StartCrowdFire& message, unsigned long id );
+    Fire_ABC* CreateFire( const sword::StartUnitFireDetection& message, unsigned long id );
     //@}
 
 private:

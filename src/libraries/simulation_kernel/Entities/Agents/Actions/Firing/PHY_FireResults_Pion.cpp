@@ -67,6 +67,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT
     : firer_ ( firer )
     , nID_   ( idManager_.GetId() )
     , direct_( false )
+    , target_( targetPosition )
 {
     client::StartUnitFire msg;
     msg().mutable_fire()->set_id( nID_ );
@@ -121,6 +122,14 @@ void PHY_FireResults_Pion::SendReport( const MSG& msg, bool& rcSent ) const
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::~PHY_FireResults_Pion()
 {
+    if( !perceivers_.empty() )
+    {
+        client::StopUnitFireDetection msg;
+        msg().mutable_fire()->set_id( nID_ );
+        for( auto it = perceivers_.begin(); it != perceivers_.end(); ++it )
+            msg().add_units()->set_id( (*it)->GetID() );
+        msg.Send( NET_Publisher_ABC::Publisher() );
+    }
     {
         client::StopUnitFire msg;
         msg().mutable_fire()->set_id( nID_ );
@@ -153,4 +162,19 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
 unsigned int PHY_FireResults_Pion::GetID() const
 {
     return nID_;
+}
+
+void PHY_FireResults_Pion::NotifyDetected( const MIL_Agent_ABC& perceiver )
+{
+    if( direct_ )
+        throw MASA_EXCEPTION( "only an indirect fire can be detected" );
+    if( perceivers_.insert( &perceiver ).second )
+    {
+        client::StartUnitFireDetection msg;
+        msg().mutable_fire()->set_id( nID_ );
+        msg().add_units()->set_id( perceiver.GetID() );
+        msg().mutable_firer()->set_id( firer_.GetID() );
+        NET_ASN_Tools::WritePoint( *target_, *msg().mutable_target() );
+        msg.Send( NET_Publisher_ABC::Publisher() );
+    }
 }

@@ -57,6 +57,8 @@ public:
     void NotifyAmmoFired( const PHY_WeaponDataType_IndirectFire& weaponType, unsigned int nNbrAmmoReserved );
     bool IsFlyingThroughLocalisation( const TER_Localisation& localisation ) const;
     bool CanWeaponBeUsed( const PHY_Weapon& weapon ) const;
+
+    void NotifyDetected( const MIL_Agent_ABC& perceiver ) const;
     //@}
 
 private:

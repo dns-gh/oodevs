@@ -106,6 +106,16 @@ void Fires::DoUpdate( const sword::StopCrowdFire& message )
     DestroyFire( message );
 }
 
+void Fires::DoUpdate( const sword::StartUnitFireDetection& message )
+{
+    CreateFire( message );
+}
+
+void Fires::DoUpdate( const sword::StopUnitFireDetection& message )
+{
+    DestroyFire( message );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Fires::Draw
 // Created: AGE 2006-03-17

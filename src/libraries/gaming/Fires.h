@@ -21,6 +21,8 @@ namespace sword
     class StopCrowdFire;
     class StartUnitFire;
     class StopUnitFire;
+    class StartUnitFireDetection;
+    class StopUnitFireDetection;
 }
 
 namespace kernel
@@ -43,6 +45,8 @@ class Fires : public kernel::Extension_ABC
             , public kernel::Updatable_ABC< sword::StopUnitFire >
             , public kernel::Updatable_ABC< sword::StartCrowdFire >
             , public kernel::Updatable_ABC< sword::StopCrowdFire >
+            , public kernel::Updatable_ABC< sword::StartUnitFireDetection >
+            , public kernel::Updatable_ABC< sword::StopUnitFireDetection >
             , public tools::Resolver< Fire_ABC >
             , public gui::Drawable_ABC
 {
@@ -71,10 +75,13 @@ private:
     void CreateFire( const T& message );
     template< typename T >
     void DestroyFire( const T& message );
+
     virtual void DoUpdate( const sword::StartUnitFire& message );
     virtual void DoUpdate( const sword::StopUnitFire& message );
     virtual void DoUpdate( const sword::StartCrowdFire& message );
     virtual void DoUpdate( const sword::StopCrowdFire& message );
+    virtual void DoUpdate( const sword::StartUnitFireDetection& message );
+    virtual void DoUpdate( const sword::StopUnitFireDetection& message );
     //@}
 
 private:
