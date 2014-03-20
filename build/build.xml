@@ -795,6 +795,7 @@
             <arg value="--exclude=ClientToSim.Content.MagicAction.Type"/>
             <!-- New logistic state introduced by manual mode -->
             <arg value="--exclude=*LogMaintenanceHandlingUpdate.EnumLogMaintenanceHandlingStatus"/>
+            <arg value="--exclude=*EnumPrecipitationType"/>
         </python>
     </target>
 

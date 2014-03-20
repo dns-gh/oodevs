@@ -42,6 +42,7 @@ public:
     unsigned int GetFireID() const;
     unsigned int GetNbrAmmoFired() const;
     unsigned int GetNbrAmmoToCompleteInterventionType() const;
+    const MIL_Agent_ABC& GetFirer() const;
 
     void IncRef();
     void DecRef();

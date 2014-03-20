@@ -341,7 +341,7 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     dataRecognition_.Update( perception.GetRecognitionData() );
     dataIdentification_.Update( perception.GetIdentificationData() );
     UpdatePerceptionSources( perception );
-    MIL_Agent_ABC& agentPerceived = perception.GetAgentPerceived();
+    const MIL_Agent_ABC& agentPerceived = perception.GetAgentPerceived();
     if( bMaxPerceptionLevelUpdated_ && !IsDead() && &perception.GetAgentPerceiving() != &agentPerceived )
     {
         if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ )

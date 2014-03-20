@@ -12,6 +12,7 @@
 
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/Types.h"
 #include <tools/ElementObserver_ABC.h>
 
 #pragma warning( push, 0 )
@@ -70,6 +71,8 @@ public slots:
 private:
     //! @name Helpers
     //@{
+    bool HasTacticalLine() const;
+    bool HasNewLima() const;
     virtual bool InternalCheckValidity() const;
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::TacticalLine_ABC& entity );
@@ -89,6 +92,7 @@ private:
     QLabel* entityLabel_;
     ParamDateTime* schedule_;
     T_Actions actions_;
+    T_PointVector newPoints_;
     //@}
 };
 }

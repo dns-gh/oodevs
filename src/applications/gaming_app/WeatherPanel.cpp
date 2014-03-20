@@ -90,7 +90,6 @@ void WeatherPanel::Commit()
 {
     if( currentType_ == eWeatherGlobal )
     {
-        assert( currentModel_->GetGlobalMeteo() );
         gui::WeatherParameters params = globalWeatherWidget_->CreateParameters();
         actionsModel_.PublishGlobalWeather( params );
         const_cast< weather::Meteo* >( currentModel_->GetGlobalMeteo() )->SetModified( false );

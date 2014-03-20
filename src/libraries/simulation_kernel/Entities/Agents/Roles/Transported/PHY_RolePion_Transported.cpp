@@ -26,7 +26,7 @@
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "Knowledge/DEC_KS_Fire.h"
+#include "Knowledge/DEC_KS_DirectFire.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "protocol/ClientSenders.h"
@@ -102,7 +102,7 @@ void PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter
 {
     if( pTransporter_ != &transporter )
         return ;//false;
-    if( !pTransporter_ || !pTransporter_->GetKnowledge().GetKsFire().IsAttacked() || pTransporter_->GetRole< PHY_RoleAction_Transport >().RemainingWeight( *owner_ ) > 0 )
+    if( !pTransporter_ || !pTransporter_->GetKnowledge().GetKsDirectFire().IsAttacked() || pTransporter_->GetRole< PHY_RoleAction_Transport >().RemainingWeight( *owner_ ) > 0 )
         owner_->Apply( &location::LocationActionNotificationHandler_ABC::Show, vLoadingPosition_ );
     pTransporter_ = 0;
     bHasChanged_ = true;

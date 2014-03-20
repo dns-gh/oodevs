@@ -84,18 +84,17 @@ typedef std::pair< E_WeatherType, WeatherAttributes::EnumPrecipitationType > Pre
 
 const PrecipitationPair precipitations[] =
 {
-    PrecipitationPair( eWeatherType_None     , sword::WeatherAttributes::dry                       ),
-    PrecipitationPair( eWeatherType_SandStorm, sword::WeatherAttributes::sand_storm                ),
-    PrecipitationPair( eWeatherType_Fog      , sword::WeatherAttributes::fog                       ),
-    PrecipitationPair( eWeatherType_Drizzle  , sword::WeatherAttributes::drizzle                   ),
-    PrecipitationPair( eWeatherType_Rain     , sword::WeatherAttributes::rain                      ),
-    PrecipitationPair( eWeatherType_Snow     , sword::WeatherAttributes::snow                      ),
-    PrecipitationPair( eWeatherType_Smoke    , (sword::WeatherAttributes::EnumPrecipitationType) - 1 ), // $$$$ MCO : huhh ?!
+    PrecipitationPair( eWeatherType_None     , sword::WeatherAttributes::dry        ),
+    PrecipitationPair( eWeatherType_SandStorm, sword::WeatherAttributes::sand_storm ),
+    PrecipitationPair( eWeatherType_Fog      , sword::WeatherAttributes::fog        ),
+    PrecipitationPair( eWeatherType_Drizzle  , sword::WeatherAttributes::drizzle    ),
+    PrecipitationPair( eWeatherType_Rain     , sword::WeatherAttributes::rain       ),
+    PrecipitationPair( eWeatherType_Snow     , sword::WeatherAttributes::snow       ),
+    PrecipitationPair( eWeatherType_Smoke    , sword::WeatherAttributes::smoke      ),
 };
 
 const size_t precipitationsSize = COUNT_OF( precipitations );
-// See huhh ?! above for the -1
-BOOST_STATIC_ASSERT( WeatherAttributes::EnumPrecipitationType_ARRAYSIZE == precipitationsSize - 1 );
+BOOST_STATIC_ASSERT( WeatherAttributes::EnumPrecipitationType_ARRAYSIZE == precipitationsSize );
 
 } // namespace
 

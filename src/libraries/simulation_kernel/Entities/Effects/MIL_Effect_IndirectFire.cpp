@@ -199,7 +199,6 @@ void MIL_Effect_IndirectFire::StartFlying()
     if( !pFireResult_ )
         pFireResult_ = new PHY_FireResults_Pion( firer_, vTargetPosition_, indirectDotationCategory_.GetDotationCategory() );
     fireResultId_ = pFireResult_->GetID();
-
     if( !bIsFlying_ )
     {
         bIsFlying_ = true;
@@ -218,7 +217,6 @@ void MIL_Effect_IndirectFire::StopFlying()
         bIsFlying_ = false;
         MIL_EffectManager::GetEffectManager().UnregisterFlyingShell( *this );
     }
-
     delete pFireResult_;
     pFireResult_ = 0;
 }
@@ -338,4 +336,9 @@ void MIL_Effect_IndirectFire::DecRef()
 unsigned int MIL_Effect_IndirectFire::GetNbrAmmoFired() const
 {
     return nNbrAmmoFired_;
+}
+
+const MIL_Agent_ABC& MIL_Effect_IndirectFire::GetFirer() const
+{
+    return firer_;
 }

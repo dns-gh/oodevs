@@ -22,6 +22,10 @@
         <source>Functions</source>
         <translation type="unfinished">وظائف</translation>
     </message>
+    <message>
+        <source>New lima</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LimitParameter</name>

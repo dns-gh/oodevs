@@ -24,17 +24,13 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerception )
 // Name: DEC_Knowledge_AgentPerception constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Agent_ABC& agentPerceived )
-    : DEC_Knowledge_ABC()
-    , nCreationTimeStep_         ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
+DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception( const MIL_Agent_ABC& agentPerceiving, const MIL_Agent_ABC& agentPerceived )
+    : nCreationTimeStep_         ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     , pAgentPerceiving_          ( &agentPerceiving )
     , pAgentPerceived_           ( &agentPerceived )
     , pCurrentPerceptionLevel_   ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_  ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
-    , dataDetection_             ()
-    , dataRecognition_           ()
-    , dataIdentification_        ()
     , nRecordModeDisablingDelay_ ( 0 )
     , bRecordModeEnabled_        ( false )
     , bPreviousRecordModeEnabled_( false )
@@ -48,11 +44,7 @@ DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception( const MIL_Agent_AB
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception()
-    : DEC_Knowledge_ABC()
-    , nCreationTimeStep_         ( 0 )
-    , dataDetection_             ()
-    , dataRecognition_           ()
-    , dataIdentification_        ()
+    : nCreationTimeStep_         ( 0 )
     , pAgentPerceiving_          ( 0 )
     , pAgentPerceived_           ( 0 )
     , pCurrentPerceptionLevel_   ( 0 )
@@ -192,7 +184,7 @@ void DEC_Knowledge_AgentPerception::UpdateOnNetwork() const
 // Name: DEC_Knowledge_AgentPerception::GetAgentPerceived
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-MIL_Agent_ABC& DEC_Knowledge_AgentPerception::GetAgentPerceived() const
+const MIL_Agent_ABC& DEC_Knowledge_AgentPerception::GetAgentPerceived() const
 {
     assert( pAgentPerceived_ );
     return *pAgentPerceived_;

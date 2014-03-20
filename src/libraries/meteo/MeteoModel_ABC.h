@@ -54,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    void Purge();
+    virtual void Purge();
     //@}
 
 protected:

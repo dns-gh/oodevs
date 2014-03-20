@@ -83,6 +83,7 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eAutomata, "automats" ) );
     BindExistenceTo( &ptrModel_ );
+    BindExistenceTo( &ptrUnit_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +99,7 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos( unsigned int id )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eAutomata, "automats" ) );
     BindExistenceTo( &ptrModel_ );
+    BindExistenceTo( &ptrUnit_ );
     ADN_Automata_Data::idManager_.Lock( id );
 }
 

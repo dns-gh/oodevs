@@ -2955,6 +2955,7 @@ message WeatherAttributes {
         drizzle    = 3;
         rain       = 4;
         snow       = 5;
+        smoke      = 6;
     }
 
     enum EnumLightingType {

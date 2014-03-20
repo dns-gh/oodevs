@@ -20,7 +20,8 @@
 #include "DEC_BlackBoard_CanContainKnowledgeUrbanPerception.h"
 #include "DEC_KS_ObjectInteraction.h"
 #include "DEC_KS_PopulationInteraction.h"
-#include "DEC_KS_Fire.h"
+#include "DEC_KS_DirectFire.h"
+#include "DEC_KS_IndirectFire.h"
 #include "DEC_KS_Perception.h"
 #include "DEC_Knowledge_RapForLocal.h"
 #include "DEC_Knowledge_AgentPerception.h"
@@ -57,7 +58,8 @@ DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion( MIL_Agent_
     , pKnowledgeRapForLocal_                  ( new DEC_Knowledge_RapForLocal( pion ) )
     , pKsObjectInteraction_                   ( new DEC_KS_ObjectInteraction    ( *this ) )
     , pKsPopulationInteraction_               ( new DEC_KS_PopulationInteraction( *this ) )
-    , pKsFire_                                ( new DEC_KS_Fire                 ( *this ) )
+    , pKsDirectFire_                          ( new DEC_KS_DirectFire           ( *this ) )
+    , pKsIndirectFire_                        ( new DEC_KS_IndirectFire         ( *this ) )
     , pKsPerception_                          ( new DEC_KS_Perception           ( *this ) )
 {
     // NOTHING
@@ -78,7 +80,8 @@ DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion()
     , pKnowledgeRapForLocal_                  ( 0 )
     , pKsObjectInteraction_                   ( 0 )
     , pKsPopulationInteraction_               ( 0 )
-    , pKsFire_                                ( 0 )
+    , pKsDirectFire_                          ( 0 )
+    , pKsIndirectFire_                        ( 0 )
     , pKsPerception_                          ( 0 )
 {
     // NOTHING
@@ -99,7 +102,8 @@ DEC_KnowledgeBlackBoard_AgentPion::~DEC_KnowledgeBlackBoard_AgentPion()
     delete pKnowledgeRapForLocal_;
     delete pKsObjectInteraction_;
     delete pKsPopulationInteraction_;
-    delete pKsFire_;
+    delete pKsDirectFire_;
+    delete pKsIndirectFire_;
     delete pKsPerception_;
 }
 
@@ -120,7 +124,8 @@ void DEC_KnowledgeBlackBoard_AgentPion::serialize( Archive& archive, const unsig
             & pKnowledgeUrbanPerceptionContainer_
             & pKsObjectInteraction_
             & pKsPopulationInteraction_
-            & pKsFire_
+            & pKsDirectFire_
+            & pKsIndirectFire_
             & pKsPerception_
             & pKnowledgeRapForLocal_;
 }
@@ -735,13 +740,19 @@ DEC_BlackBoard_CanContainKnowledgePopulationCollision& DEC_KnowledgeBlackBoard_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::GetKsFire
+// Name: DEC_KnowledgeBlackBoard_AgentPion::GetKsDirectFire
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-DEC_KS_Fire& DEC_KnowledgeBlackBoard_AgentPion::GetKsFire() const
+DEC_KS_DirectFire& DEC_KnowledgeBlackBoard_AgentPion::GetKsDirectFire() const
 {
-    assert( pKsFire_ );
-    return *pKsFire_;
+    assert( pKsDirectFire_ );
+    return *pKsDirectFire_;
+}
+
+DEC_KS_IndirectFire& DEC_KnowledgeBlackBoard_AgentPion::GetKsIndirectFire() const
+{
+    assert( pKsIndirectFire_ );
+    return *pKsIndirectFire_;
 }
 
 // -----------------------------------------------------------------------------
