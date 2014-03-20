@@ -63,7 +63,7 @@ LimaParameter::~LimaParameter()
 // -----------------------------------------------------------------------------
 bool LimaParameter::InternalCheckValidity() const
 {
-    return selectedLine_ && schedule_ && schedule_->CheckValidity();
+    return ( HasTacticalLine() || HasNewLima() ) && schedule_ && schedule_->CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -100,24 +100,26 @@ QWidget* LimaParameter::BuildInterface( const QString& objectName, QWidget* pare
 // -----------------------------------------------------------------------------
 void LimaParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( selectedLine_ )
-    {
-        glPushAttrib( GL_CURRENT_BIT );
-            glColor4f( 1, 0, 0, 0.5f );
-            selectedLine_->GetInterfaces().Apply( &::gui::Drawable_ABC::Draw, point, viewport, tools ); // $$$$ SBO 2007-05-02:
-            // $$$$ AGE 2007-05-09: pourquoi pas juste Draw ??
-            glColor3f( 0.7f, 0, 0 );
-            QStringList functions;
-            for( int i = 0; i < functions_->count(); ++i )
-                if( functions_->isItemSelected( functions_->item( i ) ) )
-                    functions.append( tools::ToShortString( (E_FuncLimaType)i ) );
-            const geometry::Point2f position = selectedLine_->Get< kernel::Positions >().GetPosition();
-            const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
-            if( ! functions.isEmpty() )
-                tools.Print( functions.join( ", " ).toStdString(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
-            schedule_->Draw( position + lineFeed * 2.f, viewport, tools );
-        glPopAttrib();
-    }
+    if( !HasTacticalLine() && !HasNewLima() )
+        return;
+    glPushAttrib( GL_CURRENT_BIT );
+        glColor4f( 1, 0, 0, 0.5f );
+    if( HasTacticalLine() )
+        selectedLine_->GetInterfaces().Apply( &::gui::Drawable_ABC::Draw, point, viewport, tools ); // $$$$ SBO 2007-05-02:
+    else if( HasNewLima() )
+        tools.DrawLines( newPoints_ );
+    // $$$$ AGE 2007-05-09: pourquoi pas juste Draw ??
+        glColor3f( 0.7f, 0, 0 );
+        QStringList functions;
+        for( int i = 0; i < functions_->count(); ++i )
+            if( functions_->isItemSelected( functions_->item( i ) ) )
+                functions.append( tools::ToShortString( (E_FuncLimaType)i ) );
+        const geometry::Point2f position = selectedLine_ ? selectedLine_->Get< kernel::Positions >().GetPosition() : newPoints_[0];
+        const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
+        if( ! functions.isEmpty() )
+            tools.Print( functions.join( ", " ).toStdString(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
+        schedule_->Draw( position + lineFeed * 2.f, viewport, tools );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -230,11 +232,19 @@ namespace
 // -----------------------------------------------------------------------------
 void LimaParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
-    if( IsChecked() && selectedLine_ )
+    if( IsChecked() && ( HasTacticalLine() || HasNewLima() ) )
     {
         kernel::Lines lines;
-        GeometrySerializer serializer( lines, converter_ );
-        selectedLine_->Get< kernel::Positions >().Accept( serializer );
+        if( HasTacticalLine() )
+        {
+            GeometrySerializer serializer( lines, converter_ );
+            selectedLine_->Get< kernel::Positions >().Accept( serializer );
+        }
+        else
+        {
+            for( auto it = newPoints_.begin(); it != newPoints_.end(); ++it )
+                lines.AddPoint( *it );
+        }
         std::auto_ptr< actions::parameters::Lima > param( new actions::parameters::Lima( kernel::OrderParameter( GetName().toStdString(), "phaseline", false ), converter_, lines ) );
         for( int i = 0; i < functions_->count(); ++i )
             if( functions_->isItemSelected( functions_->item( i ) ) )
@@ -287,8 +297,12 @@ void LimaParameter::Visit( const actions::parameters::Location& param )
         selectedLine_ = clickedLine_;
         entityLabel_->setText( selectedLine_->GetName() );
     }
-    else
-        entityLabel_->setText( "---" );
+    else if( param.GetPoints().size() > 1 )
+    {
+        ActivateOptionalIfNeeded( param );
+        newPoints_ = param.GetPoints();
+        entityLabel_->setText( tools::translate( "LimaParameter", "New lima") );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -298,4 +312,22 @@ void LimaParameter::Visit( const actions::parameters::Location& param )
 void LimaParameter::Visit( const actions::parameters::DateTime& param )
 {
     schedule_->Visit( param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::HasTacticalLine
+// Created: ABR 2013-11-28
+// -----------------------------------------------------------------------------
+bool LimaParameter::HasTacticalLine() const
+{
+    return selectedLine_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::HasNewLima
+// Created: ABR 2013-11-28
+// -----------------------------------------------------------------------------
+bool LimaParameter::HasNewLima() const
+{
+    return newPoints_.size() > 1;
 }

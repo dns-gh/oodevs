@@ -22,6 +22,10 @@
         <source>Functions</source>
         <translation>Fonctions</translation>
     </message>
+    <message>
+        <source>New lima</source>
+        <translation>Nouvelle lima</translation>
+    </message>
 </context>
 <context>
     <name>LimitParameter</name>
