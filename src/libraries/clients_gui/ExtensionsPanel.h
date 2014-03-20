@@ -87,7 +87,7 @@ protected:
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     const kernel::ExtensionTypes& extensions_;
     std::auto_ptr< DiffusionListDialog > diffusionDialog_;
-    Q3VBox* pMainLayout_;
+    QVBoxLayout* pMainLayout_;
     QWidget* pExtensionLayout_;
     RichGroupBox* pGroupBox_;
     QGridLayout* pGroupBoxLayout_;

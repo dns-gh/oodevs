@@ -54,15 +54,19 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     , updating_       ( false )
 {
     SubObjectName subObject( this->objectName() );
-    QScrollArea* area = new QScrollArea();
-    pMainLayout_ = new Q3VBox( area );
+    QScrollArea* area = new QScrollArea;
+    QWidget* mainWidget = new QWidget;
+    area->setWidget( mainWidget );
+    pMainLayout_ = new QVBoxLayout;
+    mainWidget->setLayout( pMainLayout_ );
     pMainLayout_->setMargin( 5 );
     pMainLayout_->setSpacing( 5 );
-    pExtensionLayout_ = new QWidget( pMainLayout_ );
+    pExtensionLayout_ = new QWidget;
+    pMainLayout_->addWidget( pExtensionLayout_ );
+    pMainLayout_->addStretch( 1 );
     area->setWidgetResizable( true );
     area->setAlignment( Qt::AlignTop );
     setWidget( area );
-    area->setWidget( pMainLayout_ );
     controllers_.Update( *this );
 }
 
@@ -117,7 +121,6 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
                 QVBoxLayout* pExtensionLayoutLayout = new QVBoxLayout( pExtensionLayout_ );
                 pExtensionLayoutLayout->addWidget( pGroupBox_ );
                 pExtensionLayoutLayout->setAlignment( Qt::AlignTop );
-                pExtensionLayoutLayout->addStretch();
                 UpdateDependencies();
                 const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
                 if( !ext )
