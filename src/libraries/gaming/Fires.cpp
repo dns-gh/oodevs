@@ -46,10 +46,10 @@ Fires::~Fires()
 template< typename T >
 void Fires::CreateFire( const T& message )
 {
-    if( ! Find( message.fire().id() ) )
+    const auto id = message.fire().id();
+    if( !Find( id ) )
     {
-        Fire_ABC* fire = factory_.CreateFire( message, agentId_ );
-        Register( message.fire().id(), *fire );
+        Register( id, *factory_.CreateFire( message, agentId_ ) );
         controller_.Update( *this );
     }
 }
@@ -61,10 +61,10 @@ void Fires::CreateFire( const T& message )
 template< typename T >
 void Fires::DestroyFire( const T& message )
 {
-    Fire_ABC* fire = Find( message.fire().id() );
-    if( fire )
+    const auto id = message.fire().id();
+    if( const Fire_ABC* fire = Find( id ) )
     {
-        Remove( message.fire().id() );
+        Remove( id );
         delete fire;
         controller_.Update( *this );
     }

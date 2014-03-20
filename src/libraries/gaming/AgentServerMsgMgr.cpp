@@ -1277,8 +1277,7 @@ void AgentServerMsgMgr::OnReceiveObjectDestruction( const sword::ObjectDestructi
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveStartUnitFire( const sword::StartUnitFire& message )
 {
-    Agent_ABC& src = GetModel().agents_.GetAgent( message.firing_unit().id() );
-    src.Update( message );
+    GetModel().agents_.GetAgent( message.firing_unit().id() ).Update( message );
     GetModel().fires_.AddFire( message );
     Entity_ABC* target = GetModel().fires_.FindTarget( message );
     if( target )
@@ -1291,11 +1290,9 @@ void AgentServerMsgMgr::OnReceiveStartUnitFire( const sword::StartUnitFire& mess
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveStopUnitFire( const sword::StopUnitFire& message )
 {
-    Entity_ABC* src = GetModel().fires_.FindFirer( message );
-    if( src )
+    if( Entity_ABC* src = GetModel().fires_.FindFirer( message ) )
         src->Update( message );
-    Entity_ABC* target = GetModel().fires_.FindTarget( message );
-    if( target )
+    if( Entity_ABC* target = GetModel().fires_.FindTarget( message ) )
         target->Update( message );
     GetModel().fires_.RemoveFire( message );
 }
@@ -1800,8 +1797,6 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         OnReceiveControlBeginTick( wrapper.message().control_begin_tick() );
     else if( wrapper.message().has_control_end_tick() )
         OnReceiveControlEndTick( wrapper.message().control_end_tick() );
-    //if( wrapper.message().has_control_stop_ack() )
-
     else if( wrapper.message().has_control_pause_ack() )
         OnReceiveControlPauseAck( wrapper.message().control_pause_ack(), clientId );
     else if( wrapper.message().has_control_resume_ack() )
