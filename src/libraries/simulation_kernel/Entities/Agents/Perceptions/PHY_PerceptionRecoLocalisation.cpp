@@ -120,6 +120,9 @@ PHY_PerceptionRecoLocalisation::~PHY_PerceptionRecoLocalisation()
 // -----------------------------------------------------------------------------
 int PHY_PerceptionRecoLocalisation::AddLocalisationWithGrowthSpeed( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
 {
+    for( auto it = pendingLocalisations_.begin(); it != pendingLocalisations_.end(); ++it )
+        if( it->callerAgent_.GetID() == callerAgent.GetID() && it->rGrowthSpeed_ == rGrowthSpeed && it->localisation_ == localisation )
+            return Add( pendingLocalisations_.release( it ).release() );
     return Add( new PHY_PerceptionRecoLocalisationReco( localisation, rGrowthSpeed, callerAgent ) );
 }
 
@@ -127,8 +130,11 @@ int PHY_PerceptionRecoLocalisation::AddLocalisationWithGrowthSpeed( const TER_Lo
 // Name: PHY_PerceptionRecoLocalisation::AddLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-int PHY_PerceptionRecoLocalisation::AddLocalisationWithDefaultGrowthSpeed( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent  )
+int PHY_PerceptionRecoLocalisation::AddLocalisationWithDefaultGrowthSpeed( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent )
 {
+    for( auto it = pendingLocalisations_.begin(); it != pendingLocalisations_.end(); ++it )
+        if( it->callerAgent_.GetID() == callerAgent.GetID() && it->localisation_ == localisation )
+            return Add( pendingLocalisations_.release( it ).release() );
     return Add( new PHY_PerceptionRecoLocalisationReco( localisation, true, callerAgent ) );
 }
 
@@ -138,7 +144,9 @@ int PHY_PerceptionRecoLocalisation::AddLocalisationWithDefaultGrowthSpeed( const
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoLocalisation::RemoveLocalisation( int id )
 {
-    Remove( id );
+    auto pending = Remove( id );
+    if( pending )
+        pendingLocalisations_.push_back( pending.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -204,13 +212,14 @@ void PHY_PerceptionRecoLocalisation::Update()
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
     {
         PHY_PerceptionRecoLocalisationReco& reco = *it;
+        reco.rCurrentRadius_ = std::min( reco.rRadius_, reco.rCurrentRadius_ + reco.rGrowthSpeed_ );
         // Agrandissement de la zone de reconnaissance
-        if( reco.rCurrentRadius_ < reco.rRadius_ )
-            reco.rCurrentRadius_ += reco.rGrowthSpeed_;
-        if( reco.rCurrentRadius_ >= reco.rRadius_ )
-        {
-            reco.rCurrentRadius_ = reco.rRadius_;
+        if( reco.rCurrentRadius_ == reco.rRadius_ )
             reco.callerAgent_.CallbackPerception( it->Id() );
-        }
     }
+    pendingLocalisations_.erase_if( []( PHY_PerceptionRecoLocalisationReco& reco ) -> bool
+        {
+            reco.rCurrentRadius_ = std::max< float >( 0, reco.rCurrentRadius_ - reco.rGrowthSpeed_ );
+            return reco.rCurrentRadius_ == 0;
+        } );
 }

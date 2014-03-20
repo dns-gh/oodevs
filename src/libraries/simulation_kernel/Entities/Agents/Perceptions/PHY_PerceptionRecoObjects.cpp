@@ -62,6 +62,16 @@ void PHY_PerceptionRecoObjectsReco::UpdateLocalisation()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRecoObjectsReco::DecreaseRadius
+// Created: SLI 2014-03-20
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionRecoObjectsReco::DecreaseRadius()
+{
+    rCurrentSize_ = std::max< double >( 0, rCurrentSize_ - rGrowthSpeed_ );
+    return rCurrentSize_ == 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoObjectsReco::IsInside
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
@@ -109,6 +119,10 @@ PHY_PerceptionRecoObjects::~PHY_PerceptionRecoObjects()
 // -----------------------------------------------------------------------------
 int PHY_PerceptionRecoObjects::AddLocalisation( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent )
 {
+    for( auto it = pendingLocalisations_.begin(); it != pendingLocalisations_.end(); ++it )
+        if( it->callerAgent_.GetID() == callerAgent.GetID() && it->localisation_ == localisation &&
+            it->vCenter_ == vCenter && it->rGrowthSpeed_ == rSpeed )
+            return Add( pendingLocalisations_.release( it ).release() );
     return Add( new PHY_PerceptionRecoObjectsReco( localisation, vCenter, rSpeed, callerAgent ) );
 }
 
@@ -118,7 +132,9 @@ int PHY_PerceptionRecoObjects::AddLocalisation( const TER_Localisation& localisa
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoObjects::RemoveLocalisation( int id )
 {
-    Remove( id );
+    auto pending = Remove( id );
+    if( pending )
+        pendingLocalisations_.push_back( pending.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,6 +145,7 @@ void PHY_PerceptionRecoObjects::Update()
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
         it->UpdateLocalisation();
+    pendingLocalisations_.erase_if( []( PHY_PerceptionRecoObjectsReco& reco ){ return reco.DecreaseRadius(); } );
 }
 
 // -----------------------------------------------------------------------------

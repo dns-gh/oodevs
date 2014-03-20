@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    void Remove( int id );
+    std::unique_ptr< T > Remove( int id );
     int  Add   ( T* pLocation );
     virtual void FinalizePerception();
     //@}

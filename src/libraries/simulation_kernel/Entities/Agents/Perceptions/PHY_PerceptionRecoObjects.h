@@ -23,15 +23,16 @@ class PHY_PerceptionRecoObjectsReco : public PHY_PerceptionLocalisation
 public:
     PHY_PerceptionRecoObjectsReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rGrowthSpeed, DEC_Decision_ABC& callerAgent );
 
-    bool IsInside        ( const TER_Localisation& )                 const;
+    bool IsInside        ( const TER_Localisation& ) const;
     void GetObjectsInside( TER_Object_ABC::T_ObjectVector& ) const;
 
     void UpdateLocalisation();
+    bool DecreaseRadius();
 
 private:
     PHY_PerceptionRecoObjectsReco& operator = ( const PHY_PerceptionRecoObjectsReco& );
 
-private:
+public:
     const MT_Vector2D      vCenter_;
     const TER_Localisation localisation_;
           TER_Localisation circle_;
@@ -48,10 +49,12 @@ private:
 class PHY_PerceptionRecoObjects : public PHY_PerceptionWithLocation< PHY_PerceptionRecoObjectsReco >
 {
 public:
+    //! @name Constructors / Destructor
+    //@{
     explicit PHY_PerceptionRecoObjects( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoObjects();
+    //@}
 
-    void Update();
 
     //! @name Add/Remove Points
     //@{
@@ -63,8 +66,15 @@ public:
 
     //! @name Execution
     //@{
+    void Update();
     virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    T_RecoVector pendingLocalisations_;
     //@}
 };
 

@@ -36,16 +36,12 @@ PHY_PerceptionWithLocation<T>::~PHY_PerceptionWithLocation()
 // Created: LDC 2009-07-29
 // -----------------------------------------------------------------------------
 template< class T >
-void PHY_PerceptionWithLocation<T>::Remove( int id )
+std::unique_ptr< T > PHY_PerceptionWithLocation<T>::Remove( int id )
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
-    {    
         if ( it->Id() == id )
-        {
-            recos_.erase( it );
-            return;
-        }
-    }
+            return std::unique_ptr< T >( recos_.release( it ).release() );
+    return std::unique_ptr< T >();
 }
 
 // -----------------------------------------------------------------------------

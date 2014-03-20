@@ -36,7 +36,6 @@ public:
     float                  rCurrentRadius_;
     float                  rGrowthSpeed_;
     DEC_Decision_ABC&      callerAgent_;
-private:
     const TER_Localisation localisation_;
     const bool             bShouldUseRadius_;
 };
@@ -49,8 +48,11 @@ private:
 class PHY_PerceptionRecoLocalisation : public PHY_PerceptionWithLocation< PHY_PerceptionRecoLocalisationReco >
 {
 public:
+    //! @name Constructors / Destructor
+    //@{
     explicit PHY_PerceptionRecoLocalisation( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoLocalisation();
+    //@}
 
     //! @name Add/Remove Points
     //@{
@@ -68,6 +70,12 @@ public:
     virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents );
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
     void                               Update();
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    T_RecoVector pendingLocalisations_;
     //@}
 };
 
