@@ -89,3 +89,76 @@ func (s *TestSuite) TestFireOrderOnLocationMakesSmoke(c *C) {
 	c.Assert(2*major1, IsClose, major2)
 	c.Assert(2*minor1, IsClose, minor2)
 }
+
+func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSimAndClient(c, sim, client)
+	phydb := loadPhysical(c, "worldwide")
+	d := client.Model.GetData()
+	// create artillery
+	CreateFormation(c, client, d.FindPartyByName("party1").Id)
+	automat1 := createAutomatForParty(c, client, "party1")
+	err := client.SetAutomatMode(automat1.Id, false)
+	c.Assert(err, IsNil)
+	from := swapi.Point{X: -15.716149, Y: 28.429614}
+	firer, err := client.CreateUnit(automat1.Id,
+		getUnitTypeFromName(c, phydb, "ART.Artillery firing platoon"),
+		from)
+	c.Assert(err, IsNil)
+	// create radar
+	CreateFormation(c, client, d.FindPartyByName("party2").Id)
+	automat2 := createAutomatForParty(c, client, "party2")
+	err = client.SetAutomatMode(automat2.Id, false)
+	c.Assert(err, IsNil)
+	watcher, err := client.CreateUnit(automat2.Id,
+		getUnitTypeFromName(c, phydb, "ART.Firefinder radar"),
+		swapi.Point{X: -15.8079, Y: 28.3373})
+	c.Assert(err, IsNil)
+	// deploy firer
+	MissionArtilleryDeploy := uint32(44580)
+	_, err = client.SendUnitOrder(firer.Id, MissionArtilleryDeploy,
+		swapi.MakeParameters(
+			swapi.MakeHeading(0),
+			nil, nil, nil,
+			swapi.MakeLocationParam(from),
+		))
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[firer.Id].Installation == 100
+	})
+	// detect indirect fires
+	MissionDetectIndirectFires := uint32(44594906)
+	_, err = client.SendUnitOrder(watcher.Id, MissionDetectIndirectFires,
+		swapi.MakeParameters(
+			swapi.MakeHeading(0),
+			nil, nil, nil,
+			swapi.MakeLocation(swapi.MakePolygonLocation(
+				swapi.Point{X: -15.8122, Y: 28.3455},
+				swapi.Point{X: -15.8149, Y: 28.3198},
+				swapi.Point{X: -15.7841, Y: 28.3222},
+			)),
+		))
+	c.Assert(err, IsNil)
+	// fire
+	c.Assert(client.Model.GetData().UnitKnowledges, HasLen, 0)
+	params := swapi.MakeParameters(
+		swapi.MakeResourceType(13), // Antitank High Explosive Shell
+		swapi.MakeFloat(1),
+		swapi.MakePointParam(
+			swapi.Point{X: -15.88594, Y: 28.25975},
+		),
+	)
+	_, err = client.SendUnitFragOrder(firer.Id, 368, params) // Fire
+	c.Assert(err, IsNil)
+	// check knowledge created
+	var k *swapi.UnitKnowledge
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, uk := range data.UnitKnowledges {
+			k = uk
+			return true
+		}
+		return false
+	})
+	c.Assert(k.UnitId, Equals, firer.Id)
+	c.Assert(k.KnowledgeGroupId, Equals, automat2.KnowledgeGroupId)
+}
