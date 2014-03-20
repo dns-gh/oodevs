@@ -721,6 +721,23 @@ func (model *ModelData) handleUnitKnowledgeCreation(m *sword.SimToClient_Content
 	return nil
 }
 
+func (model *ModelData) handleUnitKnowledgeUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetUnitKnowledgeUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetKnowledge().GetId()
+	k, ok := model.UnitKnowledges[id]
+	if !ok {
+		return fmt.Errorf("cannot update unit knowledge %d", id)
+	}
+	k.KnowledgeGroupId = mm.KnowledgeGroup.GetId()
+	if mm.IdentificationLevel != nil {
+		k.IdentificationLevel = int32(*mm.IdentificationLevel)
+	}
+	return nil
+}
+
 func (model *ModelData) handleUnitKnowledgeDestruction(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitKnowledgeDestruction()
 	if mm == nil {
