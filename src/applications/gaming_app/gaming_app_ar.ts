@@ -530,6 +530,17 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>DiagnosisUnitView</name>
+    <message>
+        <source>Time to travel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">وحدة</translation>
+    </message>
+</context>
+<context>
     <name>DisconnectDialog</name>
     <message>
         <source>Disconnect</source>
@@ -1734,7 +1745,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Diagnosis / Repair unit</source>
+        <source>Select diagnosis / repair unit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -14,7 +14,6 @@
 #include "clients_kernel/SafePointer.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <boost/optional.hpp>
 
 namespace actions
@@ -24,13 +23,13 @@ namespace actions
 
 namespace kernel
 {
+    class Agent_ABC;
     class Availability;
     class BreakdownType;
     class ComponentType;
     class Controller;
     class Controllers;
     class Entity_ABC;
-    class Agent_ABC;
     class MaintenanceStates_ABC;
     class Profile_ABC;
 }
@@ -40,9 +39,15 @@ namespace sword
     enum LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus;
 }
 
+namespace gui
+{
+    class DisplayExtractor;
+}
+
 class MaintenanceHaulersListView;
 class MaintenanceRepairersListView;
 class PartsView;
+class DiagnosisUnitView;
 
 // =============================================================================
 /** @class  LogisticMaintenanceSelectionDialog
@@ -54,7 +59,6 @@ class LogisticMaintenanceSelectionDialog : public LogisticSelectionDialog_ABC
                                          , public tools::Observer_ABC
                                          , public tools::ElementObserver_ABC< kernel::MaintenanceStates_ABC >
                                          , public tools::ElementObserver_ABC< kernel::Profile_ABC >
-                                         , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT
 
@@ -64,7 +68,8 @@ public:
              LogisticMaintenanceSelectionDialog( const QString& objectName,
                                                  QWidget* parent,
                                                  kernel::Controllers& controllers,
-                                                 actions::ActionsModel& actionsModel );
+                                                 actions::ActionsModel& actionsModel,
+                                                 gui::DisplayExtractor& extractor );
     virtual ~LogisticMaintenanceSelectionDialog();
     //@}
 
@@ -76,9 +81,6 @@ private:
 
     virtual void NotifyUpdated( const kernel::MaintenanceStates_ABC& a );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
-
-    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
-
     //! @name Helpers
     //@{
     void Purge();
@@ -94,7 +96,8 @@ private slots:
     virtual void OnSelectionChanged( const QModelIndex&, const QModelIndex& );
     void UpdateDisplay();
     void OnTimeout();
-    void OnDestinationSelected();
+    void OnDestinationSelected( unsigned int destination );
+    void OnDestinationToggled( bool enabled );
     //@}
 
 private:
@@ -105,6 +108,7 @@ private:
     unsigned int id_;
     int lastContext_;
     kernel::SafePointer< kernel::Entity_ABC > handler_;
+    kernel::SafePointer< kernel::Agent_ABC > consumer_;
     const kernel::ComponentType* componentType_;
     const kernel::BreakdownType* breakdownType_;
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus status_;
@@ -117,14 +121,13 @@ private:
     QPushButton* acceptButton_;
     QStackedWidget* stack_;
     MaintenanceHaulersListView* transporters_;
-    QLabel* destinationLabel_;
     QGroupBox* destinationBox_;
-    const kernel::Agent_ABC* candidateDestination_;
-    const kernel::Agent_ABC* selectedDestination_;
+    boost::optional< unsigned int > selectedDestination_;
     MaintenanceRepairersListView* repairers_;
     MaintenanceRepairersListView* diagnosers_;
     QLabel* duration_;
     PartsView* parts_;
+    DiagnosisUnitView* destinations_;
     QTimer timeout_;
     //@}
 };

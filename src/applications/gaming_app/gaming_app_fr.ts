@@ -532,6 +532,17 @@ Raison: %3
     </message>
 </context>
 <context>
+    <name>DiagnosisUnitView</name>
+    <message>
+        <source>Time to travel</source>
+        <translation>Temps de transport</translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unité</translation>
+    </message>
+</context>
+<context>
     <name>DisconnectDialog</name>
     <message>
         <source>Disconnect</source>
@@ -1737,8 +1748,8 @@ Voulez-vous le remplacer ?</translation>
         <translation>Durée de réparation estimée : %1</translation>
     </message>
     <message>
-        <source>Diagnosis / Repair unit</source>
-        <translation>Unité de diagnostique / réparation</translation>
+        <source>Select diagnosis / repair unit</source>
+        <translation>Sélectionner l'unité de diagnostique / réparation</translation>
     </message>
 </context>
 <context>

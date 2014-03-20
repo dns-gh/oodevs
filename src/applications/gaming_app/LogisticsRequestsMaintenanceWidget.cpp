@@ -32,7 +32,7 @@ LogisticsRequestsMaintenanceWidget::LogisticsRequestsMaintenanceWidget( QWidget*
                                                                         const SimulationController& simulationController, Model& model )
     : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, eMaintenance )
 {
-    selectionDialog_.reset( new LogisticMaintenanceSelectionDialog( "maintenance-selection-dialog", this, controllers, model.actions_ ) );
+    selectionDialog_.reset( new LogisticMaintenanceSelectionDialog( "maintenance-selection-dialog", this, controllers, model.actions_, extractor ) );
 }
 
 // -----------------------------------------------------------------------------

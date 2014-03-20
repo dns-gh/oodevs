@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LogisticMaintenanceSelectionDialog.h"
 #include "moc_LogisticMaintenanceSelectionDialog.cpp"
+#include "DiagnosisUnitView.h"
 #include "MaintenanceHaulersListView.h"
 #include "MaintenanceRepairersListView.h"
 #include "PartsView.h"
@@ -25,6 +26,7 @@
 #include "clients_kernel/MaintenanceStates_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/LogisticsConsign_ABC.h"
@@ -67,19 +69,19 @@ namespace
 LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QString& objectName,
                                                                         QWidget* parent,
                                                                         kernel::Controllers& controllers,
-                                                                        actions::ActionsModel& actionsModel )
+                                                                        actions::ActionsModel& actionsModel,
+                                                                        gui::DisplayExtractor& extractor )
     : LogisticSelectionDialog_ABC( objectName, parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
     , id_( 0 )
     , lastContext_( 0 )
     , handler_( controllers )
+    , consumer_( controllers )
     , status_( sword::LogMaintenanceHandlingUpdate::finished )
     , componentType_( 0 )
     , breakdownType_( 0 )
     , availability_( 0 )
-    , candidateDestination_( 0 )
-    , selectedDestination_( 0 )
 {
     resize( 500, 400 );
 
@@ -99,16 +101,19 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
                availability.type_->GetMaintenanceFunctions() &&
                availability.type_->GetMaintenanceFunctions()->CanHaul( *componentType_ );
     } );
-    destinationBox_ = new gui::RichGroupBox( "manual_selection_transporters_groupbox", tr( "Diagnosis / Repair unit" ) );
+    destinationBox_ = new gui::RichGroupBox( "manual_selection_transporters_groupbox", tr( "Select diagnosis / repair unit" ) );
     auto* destinationLayout = new QVBoxLayout( destinationBox_ );
+    destinations_ = new DiagnosisUnitView( this, extractor );
+    connect( destinations_, SIGNAL( DestinationSelected( unsigned int ) ), SLOT( OnDestinationSelected( unsigned int ) ) );
+    destinationLayout->addWidget( destinations_ );
     destinationBox_->setCheckable( true );
     destinationBox_->setChecked( false );
-    destinationLabel_ = new QLabel( "---" );
-    destinationLabel_->setAlignment( Qt::AlignCenter );
-    destinationLayout->addWidget( destinationLabel_ );
     destinationBox_->setLayout( destinationLayout );
-    transportLayout->addWidget( transporters_ );
-    transportLayout->addWidget( destinationBox_ );
+    QSplitter* split = new QSplitter();
+    split->setOrientation( Qt::Vertical );
+    split->addWidget( transporters_ );
+    split->addWidget( destinationBox_ );
+    transportLayout->addWidget( split );
 
     diagnosers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_diagnosis_team_listview", controllers, this );
 
@@ -174,6 +179,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
         else
             accept();
     } );
+    connect( destinationBox_, SIGNAL( toggled( bool ) ), SLOT( OnDestinationToggled( bool ) ) );
     controllers_.Register( *this );
 }
 
@@ -277,6 +283,7 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
     const LogMaintenanceConsign& maintenanceConsign = static_cast< const LogMaintenanceConsign& >( consign );
     id_ = consign.GetId();
     handler_ = consign.GetHandler();
+    consumer_ = consign.GetConsumer();
     componentType_ = maintenanceConsign.GetEquipment();
     breakdownType_ = maintenanceConsign.GetBreakdown();
     if( !SetCurrentStatus( maintenanceConsign.GetStatus() ) )
@@ -297,12 +304,7 @@ void LogisticMaintenanceSelectionDialog::OnOkClicked()
         if( !availability_ || !availability_->type_ )
             throw MASA_EXCEPTION( "Not supposed to accept in manual without an availability or its equipment type" );
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-        {
-            boost::optional< unsigned int > destination;
-            if( selectedDestination_ )
-                destination = selectedDestination_->GetId();
-            lastContext_ = actionsModel_.PublishSelectMaintenanceTransporter( id_, availability_->type_->GetId(), destination );
-        }
+            lastContext_ = actionsModel_.PublishSelectMaintenanceTransporter( id_, availability_->type_->GetId(), selectedDestination_ );
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
             lastContext_ = actionsModel_.PublishSelectMaintenanceDiagnosisTeam( id_, availability_->type_->GetId() );
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
@@ -327,13 +329,12 @@ void LogisticMaintenanceSelectionDialog::Purge()
     breakdownType_ = 0;
     availability_ = 0;
     lastContext_ = 0;
-    selectedDestination_ = 0;
-    candidateDestination_ = 0;
+    selectedDestination_ = boost::none;
     status_ = sword::LogMaintenanceHandlingUpdate::finished;
     duration_->setVisible( false );
     destinationBox_->setVisible( false );
     destinationBox_->setChecked( false );
-    destinationLabel_->setText( "---" );
+    destinations_->Purge();
     timeout_.stop();
 }
 
@@ -360,6 +361,27 @@ void LogisticMaintenanceSelectionDialog::OnRadioButtonChanged()
     UpdateDisplay();
 }
 
+namespace
+{
+    std::vector< const kernel::Entity_ABC* > GetDestinations( const kernel::Entity_ABC& handler )
+    {
+        std::vector< const kernel::Entity_ABC* > result;
+        if( auto tactical = handler.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            auto it = tactical->CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& child = it.NextElement();
+                if( child.GetTypeName() == kernel::Agent_ABC::typeName_ )
+                    if( const kernel::MaintenanceStates_ABC* state = child.Retrieve< kernel::MaintenanceStates_ABC >() )
+                        if( !state->GetDispoRepairers().empty() )
+                            result.push_back( &child );
+            }
+        }
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticMaintenanceSelectionDialog::OnSelectionChanged
 // Created: ABR 2014-01-27
@@ -369,8 +391,11 @@ void LogisticMaintenanceSelectionDialog::OnSelectionChanged( const QModelIndex& 
     availability_ = 0;
     if( current.isValid() && manualButton_->isChecked() )
     {
-        if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
+        if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection && consumer_ && handler_ )
+        {
             availability_ = transporters_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
+            destinations_->Fill( GetDestinations( *handler_ ), *consumer_, *availability_->type_ );
+        }
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
             availability_ = diagnosers_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
@@ -428,16 +453,23 @@ void LogisticMaintenanceSelectionDialog::NotifyUpdated( const kernel::Profile_AB
     automaticButton_->setVisible( profile.IsSupervision() );
 }
 
-void LogisticMaintenanceSelectionDialog::OnDestinationSelected()
+// -----------------------------------------------------------------------------
+// Name: LogisticMaintenanceSelectionDialog::OnDestinationSelected
+// Created: SLI 2014-03-19
+// -----------------------------------------------------------------------------
+void LogisticMaintenanceSelectionDialog::OnDestinationSelected( unsigned int destination )
 {
-    selectedDestination_ = candidateDestination_;
-    destinationLabel_->setText( candidateDestination_ ? candidateDestination_->GetName() : "---" );
+    selectedDestination_ = destination;
+    acceptButton_->setEnabled( true );
 }
 
-void LogisticMaintenanceSelectionDialog::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
+// -----------------------------------------------------------------------------
+// Name: LogisticMaintenanceSelectionDialog::OnDestinationSelected
+// Created: SLI 2014-03-19
+// -----------------------------------------------------------------------------
+void LogisticMaintenanceSelectionDialog::OnDestinationToggled( bool enabled )
 {
-    if( !isVisible() || status_ != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection || !destinationBox_->isChecked() )
-        return;
-    candidateDestination_ = &agent;
-    menu.InsertItem( "Helpers", tr( "Diagnosis / Repair unit" ), this, SLOT( OnDestinationSelected() ) );
+    acceptButton_->setEnabled( !enabled );
+    if( !enabled )
+        selectedDestination_ = boost::none;
 }
