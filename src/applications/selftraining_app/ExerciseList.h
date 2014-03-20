@@ -32,9 +32,10 @@ namespace tools
 }
 
 class Application;
+class ExerciseContainer;
+class ExerciseListView;
 class ExerciseProperties;
 class ProfileList;
-class ExerciseListView;
 
 // =============================================================================
 /** @class  ExerciseList
@@ -45,6 +46,7 @@ class ExerciseListView;
 class ExerciseList : public gui::WidgetLanguageObserver_ABC< QWidget >
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< frontend::Exercise_ABC >
+                   , public tools::ElementObserver_ABC< ExerciseContainer >
                    , private boost::noncopyable
 {
     Q_OBJECT;
@@ -88,6 +90,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    virtual void NotifyUpdated( const ExerciseContainer& );
     virtual void NotifyCreated( const frontend::Exercise_ABC& exercise );
     virtual void NotifyUpdated( const frontend::Exercise_ABC& exercise );
     virtual void NotifyDeleted( const frontend::Exercise_ABC& exercise );

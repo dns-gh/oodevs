@@ -61,4 +61,5 @@ void ExerciseContainer::Refresh()
     const auto exercises = frontend::commands::ListExercises( config_ );
     for( auto it = exercises.cbegin(); it != exercises.end(); ++it )
         exercises_.push_back( std::make_shared< Exercise >( *it, controller_ ) );
+    controller_.Update( *this );
 }

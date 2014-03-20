@@ -69,7 +69,6 @@ ExerciseListView::ExerciseListView( Application& app, const tools::GeneralConfig
     setFont( QFont( "Calibri", 12, QFont::Bold ) );
     header()->setStretchLastSection( true );
     header()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    gui::connect( model(), SIGNAL( dataChanged( const QModelIndex &, const QModelIndex& ) ), [&]() { resizeColumnToContents( 0 ); } );
     gui::connect( this, SIGNAL( collapsed ( const QModelIndex & ) ), [&]() { resizeColumnToContents( 0 ); } );
     gui::connect( this, SIGNAL( expanded ( const QModelIndex &) ), [&]() { resizeColumnToContents( 0 ); } );
 }
