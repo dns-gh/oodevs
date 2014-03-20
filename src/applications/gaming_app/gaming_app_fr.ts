@@ -541,6 +541,10 @@ Raison: %3
         <source>Unit</source>
         <translation>Unité</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation>N/A</translation>
+    </message>
 </context>
 <context>
     <name>DisconnectDialog</name>
@@ -1749,7 +1753,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Select diagnosis / repair unit</source>
-        <translation>Sélectionner l'unité de diagnostique / réparation</translation>
+        <translation>Sélectionner l&apos;unité de diagnostique / réparation</translation>
     </message>
 </context>
 <context>

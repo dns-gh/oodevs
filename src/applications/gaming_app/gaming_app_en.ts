@@ -539,6 +539,10 @@ Reason: %3
         <source>Unit</source>
         <translation>Unit</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation>N/A</translation>
+    </message>
 </context>
 <context>
     <name>DisconnectDialog</name>

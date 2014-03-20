@@ -236,6 +236,26 @@ namespace
     }
 }
 
+namespace
+{
+    void GetDestinations( const kernel::Entity_ABC& handler, std::vector< const kernel::Entity_ABC* >& destinations )
+    {
+        if( auto tactical = handler.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            auto it = tactical->CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& child = it.NextElement();
+                const kernel::MaintenanceStates_ABC* state = child.Retrieve< kernel::MaintenanceStates_ABC >();
+                if( child.GetTypeName() == kernel::Agent_ABC::typeName_ && state && !state->GetDispoRepairers().empty() )
+                    destinations.push_back( &child );
+                else
+                    GetDestinations( child, destinations );
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticMaintenanceSelectionDialog::SetCurrentStatus
 // Created: ABR 2014-01-29
@@ -256,6 +276,9 @@ bool LogisticMaintenanceSelectionDialog::SetCurrentStatus( sword::LogMaintenance
     if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
     {
         UpdateView( transporters_, *handler_, manualButton_, tr( "Select tow truck" ) );
+        std::vector< const kernel::Entity_ABC* > destinations;
+        GetDestinations( *handler_, destinations );
+        destinations_->Fill( destinations, *consumer_, 0 );
         destinationBox_->setVisible( true );
     }
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
@@ -363,27 +386,6 @@ void LogisticMaintenanceSelectionDialog::OnRadioButtonChanged()
     UpdateDisplay();
 }
 
-namespace
-{
-    std::vector< const kernel::Entity_ABC* > GetDestinations( const kernel::Entity_ABC& handler )
-    {
-        std::vector< const kernel::Entity_ABC* > result;
-        if( auto tactical = handler.Retrieve< kernel::TacticalHierarchies >() )
-        {
-            auto it = tactical->CreateSubordinateIterator();
-            while( it.HasMoreElements() )
-            {
-                const kernel::Entity_ABC& child = it.NextElement();
-                if( child.GetTypeName() == kernel::Agent_ABC::typeName_ )
-                    if( const kernel::MaintenanceStates_ABC* state = child.Retrieve< kernel::MaintenanceStates_ABC >() )
-                        if( !state->GetDispoRepairers().empty() )
-                            result.push_back( &child );
-            }
-        }
-        return result;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogisticMaintenanceSelectionDialog::OnSelectionChanged
 // Created: ABR 2014-01-27
@@ -396,7 +398,9 @@ void LogisticMaintenanceSelectionDialog::OnSelectionChanged( const QModelIndex& 
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection && consumer_ && handler_ )
         {
             availability_ = transporters_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
-            destinations_->Fill( GetDestinations( *handler_ ), *consumer_, *availability_->type_ );
+            std::vector< const kernel::Entity_ABC* > destinations;
+            GetDestinations( *handler_, destinations );
+            destinations_->Fill( destinations, *consumer_, availability_->type_ );
         }
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
             availability_ = diagnosers_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();

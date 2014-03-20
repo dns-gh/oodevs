@@ -84,7 +84,7 @@ namespace
 // Name: DiagnosisUnitView::Fill
 // Created: SLI 2014-03-17
 // -----------------------------------------------------------------------------
-void DiagnosisUnitView::Fill( const std::vector< const kernel::Entity_ABC* >& destinations, const kernel::Agent_ABC& brokenAgent, const kernel::EquipmentType& carrier )
+void DiagnosisUnitView::Fill( const std::vector< const kernel::Entity_ABC* >& destinations, const kernel::Agent_ABC& brokenAgent, const kernel::EquipmentType* carrier )
 {
     Purge();
     int row = 0;
@@ -95,7 +95,7 @@ void DiagnosisUnitView::Fill( const std::vector< const kernel::Entity_ABC* >& de
         item->setData( static_cast< unsigned int >( (*it)->GetId() ), gui::Roles::DataRole );
         item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
         model_->setItem( row, eName, item );
-        item = new QStandardItem( ApproximateTimeTravel( **it, brokenAgent, carrier ) );
+        item = new QStandardItem( carrier ? ApproximateTimeTravel( **it, brokenAgent, *carrier ) : QString( tr( "N/A" ) ) );
         item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
         model_->setItem( row, eTime, item );
         row++;

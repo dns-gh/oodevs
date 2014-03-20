@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    void Fill( const std::vector< const kernel::Entity_ABC* >& destinations, const kernel::Agent_ABC& brokenAgent, const kernel::EquipmentType& carrier );
+    void Fill( const std::vector< const kernel::Entity_ABC* >& destinations, const kernel::Agent_ABC& brokenAgent, const kernel::EquipmentType* carrier );
     void Purge();
     //@}
 
