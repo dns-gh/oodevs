@@ -176,6 +176,15 @@ void ExerciseList::UpdateExerciseEntry( const frontend::Exercise_ABC& exercise )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseList::NotifyUpdated
+// Created: LDC 2014-03-20
+// -----------------------------------------------------------------------------
+void ExerciseList::NotifyUpdated( const ExerciseContainer& )
+{
+    exercises_->resizeColumnToContents( 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseList::Exists
 // Created: SBO 2010-04-15
 // -----------------------------------------------------------------------------
