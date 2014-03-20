@@ -20,8 +20,7 @@ public:
 
     //! @name Tools
     //@{
-    void Enable();
-    void Disable();
+    void Enable( bool enable );
     //@}
 
     //! @name Execution
