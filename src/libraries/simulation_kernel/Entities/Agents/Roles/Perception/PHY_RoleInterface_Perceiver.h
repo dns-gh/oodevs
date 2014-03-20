@@ -97,8 +97,7 @@ public:
 
     //! @name Perceptions
     //@{
-    virtual void EnableSensors() = 0;
-    virtual void DisableSensors() = 0;
+    virtual void EnableSensors( bool enable ) = 0;
 
     virtual bool HasDelayedPerceptions() const = 0;
     virtual void EnableRecoAlat( const TER_Localisation& localisation ) = 0;

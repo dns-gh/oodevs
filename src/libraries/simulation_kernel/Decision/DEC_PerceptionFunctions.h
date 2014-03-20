@@ -61,8 +61,7 @@ public:
     static void DisableSurveillanceLocalisation( MIL_Agent_ABC& callerAgent, int id );
     static int EnableFlyingShellDetection( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation );
     static void DisableFlyingShellDetection( MIL_Agent_ABC& callerAgent, int id );
-    static void DisableSensors( MIL_Agent_ABC& callerAgent );
-    static void EnableSensors( MIL_Agent_ABC& callerAgent );
+    static void EnableSensors( MIL_Agent_ABC& callerAgent, bool enable );
     static double GetPerception( const MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget );
     static void AddReconnoiteredPointBy( DEC_Decision_ABC* pPion, MT_Vector2D& point );
     static bool PointIsReconnoiteredByMeOrNoOne( DEC_Decision_ABC* pPion, MT_Vector2D& point );

@@ -200,8 +200,8 @@ void RolePion_Decision::RegisterPerception()
     RegisterFunction( "DEC_Perception_DesactiverCoupsDeSonde", boost::bind( &DEC_PerceptionFunctions::DisableCoupDeSonde, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Perception_ActiverSenseursSurDecision", boost::bind( &DEC_PerceptionFunctions::EnablePerceptionUponRequest, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Perception_DesactiverSenseursSurDecision", boost::bind( &DEC_PerceptionFunctions::DisablePerceptionUponRequest, boost::ref( GetPion() ) ) );
-    RegisterFunction( "DEC_Perception_ActiverSenseurs", boost::bind( &DEC_PerceptionFunctions::EnableSensors, boost::ref( GetPion() ) ) );
-    RegisterFunction( "DEC_Perception_DesactiverSenseurs", boost::bind( &DEC_PerceptionFunctions::DisableSensors, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Perception_ActiverSenseurs", boost::bind( &DEC_PerceptionFunctions::EnableSensors, boost::ref( GetPion() ), true ) );
+    RegisterFunction( "DEC_Perception_DesactiverSenseurs", boost::bind( &DEC_PerceptionFunctions::EnableSensors, boost::ref( GetPion() ), false ) );
     RegisterFunction( "DEC_Perception_ActiverRadar", boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::EnableRadar, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Perception_DesactiverRadar", boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableRadar, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Perception_ActiverRadarSurLocalisation", boost::function< int( int, const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRadarOnLocalisation, boost::ref( GetPion() ), _1, _2 ) ) );
