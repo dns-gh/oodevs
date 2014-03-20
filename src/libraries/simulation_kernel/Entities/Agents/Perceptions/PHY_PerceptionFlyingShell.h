@@ -23,12 +23,9 @@ namespace xml
     class xistream;
 }
 
-class MIL_Effect_IndirectFire;
-
 // =============================================================================
 // @class  PHY_PerceptionFlyingShell
 // Created: JVT 2004-10-21
-// Modified: JVT 2004-10-28
 // =============================================================================
 class PHY_PerceptionFlyingShell : public PHY_Perception_ABC
 {
@@ -47,11 +44,9 @@ public:
 
 private:
     typedef boost::bimap< int, boost::shared_ptr< TER_Localisation > > T_Perceptions;
-    typedef std::set< const MIL_Effect_IndirectFire* > T_Shells;
 
 private:
     T_Perceptions perceptions_;
-    T_Shells shells_;
 };
 
 #endif // __PHY_PerceptionFlyingShell_h_

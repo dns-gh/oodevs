@@ -33,7 +33,7 @@ public:
              PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory& dotationCategory );
     virtual ~PHY_FireResults_Pion();
 
-    void NotifyDetected( const MIL_Agent_ABC& perceiver );
+    bool NotifyDetected( const MIL_Agent_ABC& perceiver );
 
     //! @name Accessors
     //@{

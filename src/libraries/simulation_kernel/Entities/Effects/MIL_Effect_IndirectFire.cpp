@@ -325,8 +325,7 @@ const MIL_Agent_ABC& MIL_Effect_IndirectFire::GetFirer() const
     return firer_;
 }
 
-void MIL_Effect_IndirectFire::NotifyDetected( const MIL_Agent_ABC& perceiver ) const
+bool MIL_Effect_IndirectFire::NotifyDetected( const MIL_Agent_ABC& perceiver ) const
 {
-    if( pFireResult_ )
-        pFireResult_->NotifyDetected( perceiver );
+    return pFireResult_ && pFireResult_->NotifyDetected( perceiver );
 }

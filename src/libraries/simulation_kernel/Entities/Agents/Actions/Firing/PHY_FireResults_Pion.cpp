@@ -164,7 +164,7 @@ unsigned int PHY_FireResults_Pion::GetID() const
     return nID_;
 }
 
-void PHY_FireResults_Pion::NotifyDetected( const MIL_Agent_ABC& perceiver )
+bool PHY_FireResults_Pion::NotifyDetected( const MIL_Agent_ABC& perceiver )
 {
     if( direct_ )
         throw MASA_EXCEPTION( "only an indirect fire can be detected" );
@@ -176,5 +176,7 @@ void PHY_FireResults_Pion::NotifyDetected( const MIL_Agent_ABC& perceiver )
         msg().mutable_firer()->set_id( firer_.GetID() );
         NET_ASN_Tools::WritePoint( *target_, *msg().mutable_target() );
         msg.Send( NET_Publisher_ABC::Publisher() );
+        return true;
     }
+    return false;
 }

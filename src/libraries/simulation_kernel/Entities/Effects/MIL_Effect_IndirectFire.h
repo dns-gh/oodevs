@@ -58,7 +58,7 @@ public:
     bool IsFlyingThroughLocalisation( const TER_Localisation& localisation ) const;
     bool CanWeaponBeUsed( const PHY_Weapon& weapon ) const;
 
-    void NotifyDetected( const MIL_Agent_ABC& perceiver ) const;
+    bool NotifyDetected( const MIL_Agent_ABC& perceiver ) const;
     //@}
 
 private:
