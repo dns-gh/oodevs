@@ -190,7 +190,7 @@ public:
     class ResourceInfos : public ADN_RefWithName
     {
     public:
-        explicit ResourceInfos( E_DotationFamily nType );
+        explicit ResourceInfos( E_DotationFamily nType, T_CategoryInfos_Vector& networkUsableResources );
         virtual ~ResourceInfos();
 
         T_CategoryInfos_Vector& GetCategories();
@@ -200,10 +200,14 @@ public:
         void WriteArchive( xml::xostream& ) const;
         void Initialize();
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
+        void NotifyDestroyed( CategoryInfo* );
+        void AddUsableInNetwork( CategoryInfo* );
+        void RemoveNetworkUsableResources();
 
     public:
         E_DotationFamily nType_;
         T_CategoryInfos_Vector categories_;
+        T_CategoryInfos_Vector* networkUsableResources_;
     };
 
     class T_ResourceInfos_Vector : public ADN_Type_Vector_ABC< ResourceInfos >

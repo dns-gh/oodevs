@@ -92,7 +92,7 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation, u
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::CategoryInfo::~CategoryInfo()
 {
-    // NOTHING
+    parentResource_.NotifyDestroyed( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,6 +112,8 @@ ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::CategoryInfo::CreateCopy()
     pCopy->strCodeLFRIL_ = strCodeLFRIL_.GetData();
     pCopy->strCodeNNO_ = strCodeNNO_.GetData();
     pCopy->bNetworkUsable_ = bNetworkUsable_.GetData();
+    if( bNetworkUsable_.GetData() )
+        parentResource_.AddUsableInNetwork( pCopy );
     return pCopy;
 }
 
@@ -510,6 +512,8 @@ ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::AmmoCategoryInfo::CreateCo
     pCopy->strCodeLFRIL_  = strCodeLFRIL_.GetData();
     pCopy->strCodeNNO_    = strCodeNNO_.GetData();
     pCopy->bNetworkUsable_ = bNetworkUsable_.GetData();
+    if( bNetworkUsable_.GetData() )
+        parentResource_.AddUsableInNetwork( pCopy );
 
     pCopy->bIlluminating_ = bIlluminating_.GetData();
     pCopy->bMaintainIllumination_ = bMaintainIllumination_.GetData();
@@ -678,10 +682,11 @@ bool ADN_Resources_Data::AmmoCategoryInfo::HasUrbanAttrition() const
 // Name: ResourceInfos::ResourceInfos
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-ADN_Resources_Data::ResourceInfos::ResourceInfos( E_DotationFamily nType )
+ADN_Resources_Data::ResourceInfos::ResourceInfos( E_DotationFamily nType, T_CategoryInfos_Vector& networkUsableResources )
     : ADN_RefWithName( ENT_Tr::ConvertFromDotationFamily( nType ) )
     , nType_( nType )
     , categories_( true )
+    , networkUsableResources_( &networkUsableResources )
 {
     // NOTHING
 }
@@ -752,7 +757,7 @@ void ADN_Resources_Data::ResourceInfos::Initialize()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Resources_Data::CheckDatabaseValidity
+// Name: ResourceInfos::CheckDatabaseValidity
 // Created: JSR 2013-04-18
 // -----------------------------------------------------------------------------
 void ADN_Resources_Data::ResourceInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
@@ -768,6 +773,35 @@ void ADN_Resources_Data::ResourceInfos::CheckDatabaseValidity( ADN_ConsistencyCh
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceInfos::NotifyDestroyed
+// Created: JSR 2014-03-19
+// -----------------------------------------------------------------------------
+void ADN_Resources_Data::ResourceInfos::NotifyDestroyed( CategoryInfo* info )
+{
+    if( networkUsableResources_ )
+        networkUsableResources_->RemItem( info );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceInfos::AddUsableInNetwork
+// Created: JSR 2014-03-19
+// -----------------------------------------------------------------------------
+void ADN_Resources_Data::ResourceInfos::AddUsableInNetwork( CategoryInfo* info )
+{
+    if( networkUsableResources_ )
+        networkUsableResources_->AddItem( info );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceInfos::RemoveNetworkUsableResources
+// Created: JSR 2014-03-19
+// -----------------------------------------------------------------------------
+void ADN_Resources_Data::ResourceInfos::RemoveNetworkUsableResources()
+{
+    networkUsableResources_ = 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Resources_Data constructor
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
@@ -777,7 +811,7 @@ ADN_Resources_Data::ADN_Resources_Data()
     , networkUsableResources_( true, false )
 {
     for( int n = 0; n < eNbrDotationFamily; ++n )
-        resources_.AddItem( new ResourceInfos( (E_DotationFamily)n ) );
+        resources_.AddItem( new ResourceInfos( (E_DotationFamily)n, networkUsableResources_ ) );
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
         ( *it )->categories_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
@@ -788,7 +822,8 @@ ADN_Resources_Data::ADN_Resources_Data()
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::~ADN_Resources_Data()
 {
-    // NOTHING
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
+        ( *it )->RemoveNetworkUsableResources();
 }
 
 // -----------------------------------------------------------------------------
