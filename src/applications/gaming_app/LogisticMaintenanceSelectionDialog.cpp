@@ -109,8 +109,10 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     destinationBox_->setCheckable( true );
     destinationBox_->setChecked( false );
     destinationBox_->setLayout( destinationLayout );
+    destinationBox_->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     QSplitter* split = new QSplitter();
     split->setOrientation( Qt::Vertical );
+    split->setChildrenCollapsible( false );
     split->addWidget( transporters_ );
     split->addWidget( destinationBox_ );
     transportLayout->addWidget( split );

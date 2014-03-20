@@ -44,7 +44,6 @@ DiagnosisUnitView::DiagnosisUnitView( QWidget* parent, gui::DisplayExtractor& ex
     model_->setHorizontalHeaderLabels( headers );
     setRootIsDecorated( false );
     setEditTriggers( 0 );
-    setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     setModel( model_ );
     setSortingEnabled( false );
     setAlternatingRowColors( true );
