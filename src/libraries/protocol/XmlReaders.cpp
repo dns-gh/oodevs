@@ -1042,7 +1042,7 @@ void protocol::Read( const Reader_ABC& reader, UnitMagicAction& dst, xml::xistre
 
 void protocol::Read( const Reader_ABC& reader, ObjectMagicAction& dst, xml::xistream& xis )
 {
-    dst.mutable_object()->set_id( xis.attribute< int32_t >( "target" ) );
+    dst.mutable_object()->set_id( xis.attribute< int32_t >( "target", 0 ) );
     ReadMagic< mapping::MagicObjectAction >( reader, dst, xis );
 }
 
