@@ -806,6 +806,15 @@
         </python>
     </target>
 
+    <target name="generate-lua-reports" description="generate lua reports mappings">
+        <python>
+            <arg value="${root.dir}/build/checkreports.py"/>
+            <arg value="makelua"/>
+            <arg value="${root.dir}"/>
+            <arg value="${data.dir}/app-data/resources/integration/Reports.lua"/>
+        </python>
+    </target>
+
     <target name="checkdec" description="check models are in sync with DEC functions">
         <python>
             <arg value="${root.dir}/build/listdec.py"/>
@@ -896,7 +905,11 @@
         <update name="timeline_ui" package="lib/${platform}"   todir="${lib.dir}"/>
     </target>
 
-    <target name="configure" depends="update,deploy-application-data,generate-license" description="update packages and decisional"/>
+    <target name="configure" description="update packages and decisional"
+        depends="update
+                ,generate-lua-reports
+                ,deploy-application-data
+                ,generate-license"/>
 
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
