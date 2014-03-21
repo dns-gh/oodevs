@@ -101,7 +101,7 @@ ActionFactory::~ActionFactory()
 // Name: ActionFactory::AddTasker
 // Created: ABR 2014-01-14
 // -----------------------------------------------------------------------------
-void ActionFactory::AddTasker( Action_ABC& action, const sword::Tasker& tasker, bool isSimulation /*= true*/ ) const
+boost::optional< const kernel::Entity_ABC& > ActionFactory::AddTasker( Action_ABC& action, const sword::Tasker& tasker, bool isSimulation /*= true*/ ) const
 {
     unsigned int id = 0;
     std::string type;
@@ -143,35 +143,37 @@ void ActionFactory::AddTasker( Action_ABC& action, const sword::Tasker& tasker, 
         type = kernel::Inhabitant_ABC::typeName_;
     }
     if( !entity && id != 0 && !type.empty() )
-        AddTasker( action, id, type, isSimulation );
+        return AddTasker( action, id, type, isSimulation );
     else
-        AddTasker( action, entity, isSimulation );
+        return AddTasker( action, entity, isSimulation );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::AddTasker
 // Created: ABR 2014-01-13
 // -----------------------------------------------------------------------------
-void ActionFactory::AddTasker( Action_ABC& action, unsigned int id, const std::string& type, bool isSimulation /*= true*/ ) const
+boost::optional< const kernel::Entity_ABC& > ActionFactory::AddTasker( Action_ABC& action, unsigned int id, const std::string& type, bool isSimulation /*= true*/ ) const
 {
     if( const kernel::Entity_ABC* entity = entities_.FindEntity( id ) )
-        AddTasker( action, entity, isSimulation );
-    else
-    {
-        action.Attach( *new ActionTasker( controller_, id, type, isSimulation ) );
-        action.Invalidate();
-    }
+        return AddTasker( action, entity, isSimulation );
+    action.Attach( *new ActionTasker( controller_, id, type, isSimulation ) );
+    action.Invalidate();
+    return boost::none;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::AddTasker
 // Created: ABR 2014-01-13
 // -----------------------------------------------------------------------------
-void ActionFactory::AddTasker( Action_ABC& action, const kernel::Entity_ABC* entity, bool isSimulation /*= true*/ ) const
+boost::optional< const kernel::Entity_ABC& > ActionFactory::AddTasker( Action_ABC& action, const kernel::Entity_ABC* entity, bool isSimulation /*= true*/ ) const
 {
     action.Attach( *new ActionTasker( controller_, entity, isSimulation ) );
     if( !entity )
+    {
         action.Invalidate();
+        return boost::none;
+    }
+    return *entity;
 }
 
 // -----------------------------------------------------------------------------
@@ -309,10 +311,10 @@ Action_ABC* ActionFactory::CreateAction( const sword::UnitOrder& message, bool n
     const kernel::MissionType* mission = missions_.Find( message.type().id() );
     std::unique_ptr< Action_ABC > action( new AgentMission( mission, controller_, needRegistration ) );
     AddTiming( *action, message );
-    AddTasker( *action, message.tasker().id(), kernel::Agent_ABC::typeName_ );
+    auto entity = AddTasker( *action, message.tasker().id(), kernel::Agent_ABC::typeName_ );
     action->Polish();
     if( mission )
-        AddParameters( *action, *mission, message.parameters() );
+        AddParameters( *action, *mission, message.parameters(), entity );
     return action.release();
 }
 
@@ -325,10 +327,10 @@ Action_ABC* ActionFactory::CreateAction( const sword::AutomatOrder& message, boo
     const kernel::MissionType* mission = missions_.Find( message.type().id() );
     std::unique_ptr< Action_ABC > action( new AutomatMission( mission, controller_, needRegistration ) );
     AddTiming( *action, message );
-    AddTasker( *action, message.tasker().id(), kernel::Automat_ABC::typeName_ );
+    auto entity = AddTasker( *action, message.tasker().id(), kernel::Automat_ABC::typeName_ );
     action->Polish();
     if( mission )
-        AddParameters( *action, *mission, message.parameters() );
+        AddParameters( *action, *mission, message.parameters(), entity );
     return action.release();
 }
 
@@ -341,10 +343,10 @@ Action_ABC* ActionFactory::CreateAction( const sword::CrowdOrder& message, bool 
     const kernel::MissionType* mission = missions_.Find( message.type().id() );
     std::unique_ptr< Action_ABC > action( new PopulationMission( mission, controller_, needRegistration ) );
     AddTiming( *action, message );
-    AddTasker( *action, message.tasker().id(), kernel::Population_ABC::typeName_ );
+    auto entity = AddTasker( *action, message.tasker().id(), kernel::Population_ABC::typeName_ );
     action->Polish();
     if( mission )
-        AddParameters( *action, *mission, message.parameters() );
+        AddParameters( *action, *mission, message.parameters(), entity );
     return action.release();
 }
 
@@ -357,10 +359,10 @@ Action_ABC* ActionFactory::CreateAction( const sword::FragOrder& message, bool n
     const kernel::FragOrderType* order = fragOrders_.Find( message.type().id() );
     std::unique_ptr< Action_ABC > action( new FragOrder( order, controller_, needRegistration ) );
     AddTiming( *action, message );
-    AddTasker( *action, message.tasker() );
+    auto entity = AddTasker( *action, message.tasker() );
     action->Polish();
     if( order )
-        AddParameters( *action, *order, message.parameters() );
+        AddParameters( *action, *order, message.parameters(), entity );
     return action.release();
 }
 
@@ -408,9 +410,9 @@ Action_ABC* ActionFactory::CreateAction( const sword::UnitMagicAction& message, 
                                                                     controller_,
                                                                     needRegistration ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
-    AddTasker( *action, message.tasker() );
+    auto entity = AddTasker( *action, message.tasker() );
     action->Polish();
-    AddParameters( *action, type, message.parameters() );
+    AddParameters( *action, type, message.parameters(), entity );
     return action.release();
 }
 
@@ -425,9 +427,9 @@ Action_ABC* ActionFactory::CreateAction( const sword::KnowledgeMagicAction& mess
                                                                          controller_,
                                                                          needRegistration ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
-    AddTasker( *action, message.knowledge_group().id(), kernel::KnowledgeGroup_ABC::typeName_ );
+    auto entity = AddTasker( *action, message.knowledge_group().id(), kernel::KnowledgeGroup_ABC::typeName_ );
     action->Polish();
-    AddParameters( *action, type, message.parameters() );
+    AddParameters( *action, type, message.parameters(), entity );
     return action.release();
 }
 
@@ -442,23 +444,9 @@ Action_ABC* ActionFactory::CreateAction( const sword::ObjectMagicAction& message
                                                                  controller_,
                                                                  needRegistration ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
-    AddTasker( *action, message.object().id(), kernel::Object_ABC::typeName_ );
+    auto entity = AddTasker( *action, message.object().id(), kernel::Object_ABC::typeName_ );
     action->Polish();
-    AddParameters( *action, type, message.parameters() );
-    return action.release();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionFactory::CreateObjectMagicAction
-// Created: JCR 2011-01-04
-// -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateObjectMagicAction( const std::string& magicAction, unsigned long targetId ) const
-{
-    kernel::Entity_ABC* target = ( magicAction != "create_object" ) ? entities_.FindObject( targetId ) : 0;
-    std::unique_ptr< Action_ABC > action( new ObjectMagicAction( magicActions_.Get( magicAction ), controller_, true ) );
-    action->Attach( *new ActionTiming( controller_, simulation_ ) );
-    AddTasker( *action, target, false );
-    action->Polish();
+    AddParameters( *action, type, message.parameters(), entity );
     return action.release();
 }
 
@@ -498,7 +486,10 @@ Action_ABC* ActionFactory::CreateObjectDestroyMagicAction( const kernel::Entity_
 // Name: ActionFactory::AddParameters
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-void ActionFactory::AddParameters( Action_ABC& action, const kernel::OrderType& order, const sword::MissionParameters& message ) const
+void ActionFactory::AddParameters( Action_ABC& action,
+                                   const kernel::OrderType& order,
+                                   const sword::MissionParameters& message,
+                                   boost::optional< const kernel::Entity_ABC& > entity /* = boost::none */ ) const
 {
     tools::Iterator< const kernel::OrderParameter& > it = order.CreateIterator();
     if( static_cast< int >( order.Count() ) != message.elem_size() )
@@ -506,11 +497,6 @@ void ActionFactory::AddParameters( Action_ABC& action, const kernel::OrderType& 
     for( int i = 0; it.HasMoreElements() && i < message.elem_size(); ++i )
     {
         const kernel::OrderParameter& orderParam = it.NextElement();
-        const ActionTasker* tasker = action.Retrieve< ActionTasker >();
-        const kernel::Entity_ABC* entityPtr = tasker ? entities_.FindEntity( tasker->GetId() ) : 0;
-        boost::optional< const kernel::Entity_ABC& > entity = boost::none;
-        if( entityPtr )
-            entity = *entityPtr;
         std::unique_ptr< Parameter_ABC > param( factory_.CreateParameter( orderParam,
                                                                           message.elem( i ),
                                                                           entity ) );

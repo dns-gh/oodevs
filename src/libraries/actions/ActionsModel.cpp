@@ -158,16 +158,6 @@ int ActionsModel::PublishInhabitantChangeConfinedStateAction( bool confined, con
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::PublishObjectMagicAction
-// Created: BCI 2011-01-10
-// -----------------------------------------------------------------------------
-int ActionsModel::PublishObjectMagicAction( const std::string& magicAction, unsigned long targetId )
-{
-    std::unique_ptr< Action_ABC > action( factory_.CreateObjectMagicAction( magicAction, targetId ) );
-    return Publish( *action );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishObjectUpdateMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
