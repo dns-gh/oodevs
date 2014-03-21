@@ -2859,7 +2859,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>N/A</source>
-        <translation type="unfinished"></translation>
+        <translation>N/A</translation>
     </message>
 </context>
 <context>

@@ -372,6 +372,8 @@ void LogisticMaintenanceSelectionDialog::UpdateDisplay()
     bool manual = manualButton_->isChecked() && availability_ && availability_->available_ > 0;
     if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
         manual &= parts_->IsValid();
+    else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
+        manual &= destinationBox_->isChecked() && selectedDestination_ || !destinationBox_->isChecked();
     acceptButton_->setEnabled( automaticButton_->isChecked() || manual ||
                                evacuateButton_->isChecked() );
     stack_->setEnabled( manualButton_->isChecked() );
@@ -466,7 +468,7 @@ void LogisticMaintenanceSelectionDialog::NotifyUpdated( const kernel::Profile_AB
 void LogisticMaintenanceSelectionDialog::OnDestinationSelected( unsigned int destination )
 {
     selectedDestination_ = destination;
-    acceptButton_->setEnabled( true );
+    UpdateDisplay();
 }
 
 // -----------------------------------------------------------------------------
@@ -475,7 +477,10 @@ void LogisticMaintenanceSelectionDialog::OnDestinationSelected( unsigned int des
 // -----------------------------------------------------------------------------
 void LogisticMaintenanceSelectionDialog::OnDestinationToggled( bool enabled )
 {
-    acceptButton_->setEnabled( !enabled );
     if( !enabled )
+    {
         selectedDestination_ = boost::none;
+        destinations_->reset();
+    }
+    UpdateDisplay();
 }
