@@ -69,17 +69,16 @@ void PHY_PerceptionRecoPoint::Update()
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
     {
-        PHY_PerceptionRecoPointReco& reco = *it;
-        if( !reco.bProcessed_ )
+        if( !it->bProcessed_ )
         {
             // Agrandissement de la zone de reconnaissance
-            if( reco.rCurrentSize_ < reco.rFinalSize_ )
-                reco.rCurrentSize_ += reco.rGrowthSpeed_;
-            if( reco.rCurrentSize_ >= reco.rFinalSize_ )
+            if( it->rCurrentSize_ < it->rFinalSize_ )
+                it->rCurrentSize_ += it->rGrowthSpeed_;
+            if( it->rCurrentSize_ >= it->rFinalSize_ )
             {
-                reco.rCurrentSize_ = reco.rFinalSize_;
-                reco.callerAgent_.CallbackPerception( it->Id() );
-                reco.bProcessed_ = true;
+                it->rCurrentSize_ = it->rFinalSize_;
+                it->callerAgent_.CallbackPerception( it->Id() );
+                it->bProcessed_ = true;
             }
         }
     }

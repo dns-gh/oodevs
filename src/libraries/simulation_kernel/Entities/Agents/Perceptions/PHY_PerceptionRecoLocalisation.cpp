@@ -133,7 +133,7 @@ int PHY_PerceptionRecoLocalisation::AddLocalisationWithGrowthSpeed( const TER_Lo
 int PHY_PerceptionRecoLocalisation::AddLocalisationWithDefaultGrowthSpeed( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent )
 {
     for( auto it = pendingLocalisations_.begin(); it != pendingLocalisations_.end(); ++it )
-        if( it->callerAgent_.GetID() == callerAgent.GetID() && it->localisation_ == localisation )
+        if( it->callerAgent_.GetID() == callerAgent.GetID() && it->localisation_ == localisation && it->rGrowthSpeed_ == -1 )
             return Add( pendingLocalisations_.release( it ).release() );
     return Add( new PHY_PerceptionRecoLocalisationReco( localisation, true, callerAgent ) );
 }
@@ -211,11 +211,10 @@ void PHY_PerceptionRecoLocalisation::Update()
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
     {
-        PHY_PerceptionRecoLocalisationReco& reco = *it;
-        reco.rCurrentRadius_ = std::min( reco.rRadius_, reco.rCurrentRadius_ + reco.rGrowthSpeed_ );
+        it->rCurrentRadius_ = std::min( it->rRadius_, it->rCurrentRadius_ + it->rGrowthSpeed_ );
         // Agrandissement de la zone de reconnaissance
-        if( reco.rCurrentRadius_ == reco.rRadius_ )
-            reco.callerAgent_.CallbackPerception( it->Id() );
+        if( it->rCurrentRadius_ == it->rRadius_ )
+            it->callerAgent_.CallbackPerception( it->Id() );
     }
     pendingLocalisations_.erase_if( []( PHY_PerceptionRecoLocalisationReco& reco ) -> bool
         {

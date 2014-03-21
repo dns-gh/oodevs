@@ -11,7 +11,10 @@
 #define __PHY_PerceptionWithLocation_h_
 
 #include "PHY_Perception_ABC.h"
+#pragma warning( push )
+#pragma warning( disable: 4100 )
 #include <boost/ptr_container/ptr_vector.hpp>
+#pragma warning( pop )
 
 // =============================================================================
 /** @class  PHY_PerceptionWithLocation
