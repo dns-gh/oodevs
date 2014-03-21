@@ -970,7 +970,7 @@ namespace
     void ReadOrder( const Reader_ABC& reader, T& dst, xml::xistream& xis )
     {
         dst.mutable_type()->set_id( xis.attribute< int32_t >( "id" ) );
-        if( const auto opt = TestAttribute< std::string >( xis, "start_time" ) )
+        if( const auto opt = TestAttribute< std::string >( xis, "time" ) )
             dst.mutable_start_time()->set_data( *opt );
         if( const auto name = TestAttribute< std::string >( xis, "name" ) )
             dst.set_name( *name );

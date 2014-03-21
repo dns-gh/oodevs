@@ -677,7 +677,7 @@ namespace
         if( src.has_name() )
             xos << xml::attribute( "name", src.name() );
         if( src.has_start_time() )
-            xos << xml::attribute( "start_time", src.start_time().data() );
+            xos << xml::attribute( "time", src.start_time().data() );
         if( src.has_parameters() )
             Write( xos, writer, src.parameters() );
     }
