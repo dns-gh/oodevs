@@ -68,6 +68,7 @@ public:
     const std::string& GetProtection() const;
     unsigned long GetId() const;
     float GetWeight() const;
+    double GetMaxSpeed() const;
     tools::Iterator< const BreakdownOriginType& > CreateBreakdownsIterator() const;
     tools::Iterator< const DotationCapacityType& > CreateResourcesIterator() const;
     const CarryingSupplyFunction* GetLogSupplyFunctionCarrying() const;
@@ -101,6 +102,7 @@ private:
     std::unique_ptr< CarryingSupplyFunction > supplyFunction_;
     std::unique_ptr< MaintenanceFunctions > maintenanceFunctions_;
     float weight_;
+    double maxSpeed_;
     //@}
 };
 

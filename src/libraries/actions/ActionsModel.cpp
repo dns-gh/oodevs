@@ -231,9 +231,9 @@ int ActionsModel::PublishTransferToLogisticSuperior( unsigned int consignId )
 // Name: ActionsModel::PublishSelectMaintenanceTransporter
 // Created: ABR 2014-01-29
 // -----------------------------------------------------------------------------
-int ActionsModel::PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId )
+int ActionsModel::PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId, const boost::optional< unsigned int >& destination )
 {
-    std::unique_ptr< Action_ABC > action( factory_.CreateSelectMaintenanceTransporter( consignId, equipmentTypeId ) );
+    std::unique_ptr< Action_ABC > action( factory_.CreateSelectMaintenanceTransporter( consignId, equipmentTypeId, destination ) );
     return Publish( *action );
 }
 

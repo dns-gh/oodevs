@@ -530,6 +530,21 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>DiagnosisUnitView</name>
+    <message>
+        <source>Time to travel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">وحدة</translation>
+    </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DisconnectDialog</name>
     <message>
         <source>Disconnect</source>
@@ -1731,6 +1746,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Estimated repair duration: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select diagnosis / repair unit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

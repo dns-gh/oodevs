@@ -532,6 +532,21 @@ Raison: %3
     </message>
 </context>
 <context>
+    <name>DiagnosisUnitView</name>
+    <message>
+        <source>Time to travel</source>
+        <translation>Temps de transport</translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unité</translation>
+    </message>
+    <message>
+        <source>N/A</source>
+        <translation>N/A</translation>
+    </message>
+</context>
+<context>
     <name>DisconnectDialog</name>
     <message>
         <source>Disconnect</source>
@@ -1736,6 +1751,10 @@ Voulez-vous le remplacer ?</translation>
         <source>Estimated repair duration: %1</source>
         <translation>Durée de réparation estimée : %1</translation>
     </message>
+    <message>
+        <source>Select diagnosis / repair unit</source>
+        <translation>Sélectionner l&apos;unité de diagnostique / réparation</translation>
+    </message>
 </context>
 <context>
     <name>LogisticStatusWidget</name>
@@ -2840,7 +2859,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>N/A</source>
-        <translation type="unfinished"></translation>
+        <translation>N/A</translation>
     </message>
 </context>
 <context>

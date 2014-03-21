@@ -51,6 +51,7 @@ public:
     //@}
 
     //! @name Accessors
+    //@{
     const gui::LinkItemDelegate* GetLinkItemDelegate() const;
     void Add( const QString& title, const QString& value );
     void Set( const QString& title, const QString& value );
