@@ -81,7 +81,7 @@ void ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text,
     else if( tag == "li" )
     {
         text += std::string( level, ' ') + "* ";
-        xis >> xml::start( "line" )
+        xis >> xml::optional >> xml::start( "line" )
             >> xml::list( boost::bind( &ReadXmlLine, _2, _3, boost::ref( text )))
             >> xml::end;
         text += "\n";
