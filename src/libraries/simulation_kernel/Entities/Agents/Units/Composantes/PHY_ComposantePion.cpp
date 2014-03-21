@@ -368,7 +368,7 @@ void PHY_ComposantePion::ApplyNewComposanteState( const PHY_ComposanteState& pNe
 void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages, double ratio )
 {
     assert( pType_ );
-    const PHY_DotationCategory::T_IndirectFireEffects& effects = dotationCategory.GetIndirectFireEffects();
+    const auto& effects = dotationCategory.GetIndirectFireEffects();
     for( auto it = effects.begin(); it != effects.end(); ++it )
         if( (*it)->HasHit( pRole_->GetPion(), ratio ) )
         {
