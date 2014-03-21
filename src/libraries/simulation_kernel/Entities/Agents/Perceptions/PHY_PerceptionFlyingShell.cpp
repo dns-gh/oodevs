@@ -89,8 +89,10 @@ void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
     const auto& shells = MIL_EffectManager::GetEffectManager().GetFlyingShells();
     for( auto it = shells.begin(); it != shells.end(); ++it )
         for( auto it2 = perceptions_.right.begin(); it2 != perceptions_.right.end(); ++it2 )
-            if( it2->first->Intersect2DWithCircle( source, radius ) && (*it)->IsFlyingThroughLocalisation( *it2->first ) )
-                perceiver_.NotifyPerception( **it );
+            if( it2->first->Intersect2DWithCircle( source, radius )
+                && (*it)->IsFlyingThroughLocalisation( *it2->first )
+                && perceiver_.NotifyPerception( **it ) )
+                break;
 }
 
 // -----------------------------------------------------------------------------

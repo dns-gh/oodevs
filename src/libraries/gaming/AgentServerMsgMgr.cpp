@@ -1306,7 +1306,8 @@ void AgentServerMsgMgr::OnReceiveStartUnitFireDetection( const sword::StartUnitF
 void AgentServerMsgMgr::OnReceiveStopUnitFireDetection( const sword::StopUnitFireDetection& message )
 {
     for( auto it = message.units().begin(); it != message.units().end(); ++it )
-        GetModel().agents_.GetAgent( it->id() ).Update( message );
+        if( Entity_ABC* entity = GetModel().agents_.FindAgent( it->id() ) )
+            entity->Update( message );
 }
 
 //-----------------------------------------------------------------------------

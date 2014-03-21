@@ -33,14 +33,12 @@ class MT_Vector2D;
 // =============================================================================
 class PHY_DotationCategory : private boost::noncopyable
 {
+private:
+    typedef std::vector< PHY_DotationCategory_IndirectFire_ABC* > T_IndirectFireEffects;
+
 public:
              PHY_DotationCategory( const PHY_DotationType& type, const std::string& strName, xml::xistream& xis );
     virtual ~PHY_DotationCategory();
-
-    //! @name Types
-    //@{
-    typedef std::vector< PHY_DotationCategory_IndirectFire_ABC* > T_IndirectFireEffects;
-    //@}
 
     //! @name Accessors
     //@{

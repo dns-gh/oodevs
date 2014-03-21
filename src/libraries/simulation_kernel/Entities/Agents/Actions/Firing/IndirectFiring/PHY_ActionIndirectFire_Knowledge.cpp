@@ -23,14 +23,13 @@
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_Knowledge constructor
 // Created: NLD 2004-08-18
-// Modified: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, unsigned int nTargetKnowledgeID )
     : PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
 {
     if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
     {
-        const PHY_DotationCategory::T_IndirectFireEffects& effects = pDotationCategory->GetIndirectFireEffects();
+        const auto& effects = pDotationCategory->GetIndirectFireEffects();
         for( auto it = effects.begin(); it != effects.end(); ++ it )
         {
             MIL_Effect_IndirectFire* pEffect = new MIL_Effect_IndirectFire( pion, nTargetKnowledgeID, **it, rNbInterventionType_ );
@@ -44,14 +43,13 @@ PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPio
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_Knowledge constructor
 // Created: MGD 2010-02-17
-// Modified: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, boost::shared_ptr< DEC_Knowledge_Agent > targetKnowledge )
-: PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
+    : PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
 {
     if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
     {
-        const PHY_DotationCategory::T_IndirectFireEffects& effects = pDotationCategory->GetIndirectFireEffects();
+        const auto& effects = pDotationCategory->GetIndirectFireEffects();
         for( auto it = effects.begin(); it != effects.end(); ++ it )
         {
             MIL_Effect_IndirectFire* pEffect = new MIL_Effect_IndirectFire( pion, targetKnowledge->GetID(), **it, rNbInterventionType_ );
