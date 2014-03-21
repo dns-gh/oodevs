@@ -1,0 +1,148 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) MASA Group
+//
+// This file was generated, do not modify it.
+//
+// *****************************************************************************
+
+import "included.proto";
+
+package test;
+
+/** @file test.proto
+ *  @brief schema doc en
+ *  @{
+ */
+
+/** @struct Complex
+ *  @brief Complex doc en
+ */
+message Complex {
+}
+
+/** @struct ComplexAllElements
+ *  @brief ComplexAllElements doc en
+ */
+message ComplexAllElements {
+    optional SimpleRestriction occurs = 1;
+    required SimpleRestriction simple = 2;
+}
+
+/** @struct ComplexChoiceElements
+ *  @brief ComplexChoiceElements doc en
+ */
+message ComplexChoiceElements {
+    enum Type {
+        CHOICE_occurs = 0;
+        CHOICE_simple = 1;
+    }
+
+    required Type type = 1;
+    repeated SimpleRestriction occurs = 2;
+    optional SimpleRestriction simple = 3;
+}
+
+/** @struct ComplexSequenceElements
+ *  @brief ComplexSequenceElements doc en
+ */
+message ComplexSequenceElements {
+    repeated SimpleRestriction occurs = 1;
+    required SimpleRestriction simple = 2;
+}
+
+/** @struct ComplexWithAttributes
+ *  @brief ComplexWithAttributes doc en
+ */
+message ComplexWithAttributes {
+    //! Attribute A doc en
+    required string A = 1;
+    //! Attribute B doc en
+    optional int32 B = 2;
+    optional string C = 3 [default = "default value"];
+    optional int32 D = 4 [default = 42];
+    optional string E = 5;
+    optional int32 F = 6;
+}
+
+message ComplexWithKeys {
+    required string A = 1;
+    required int32 B = 2;
+}
+
+message ComplexWithKeysConstraints {
+    required ComplexWithKeysList occurs_list = 1;
+}
+
+message ComplexWithKeysList {
+    repeated ComplexWithKeys occurs = 1;
+}
+
+/** @struct SimpleInteger
+ *  @brief SimpleInteger doc en
+ */
+message SimpleInteger {
+    required int32 value = 1;
+}
+
+/** @struct SimpleIntegerEnumeration
+ *  @brief SimpleIntegerEnumeration doc en
+ */
+message SimpleIntegerEnumeration {
+    required int32 value = 1;
+}
+
+/** @struct SimpleList
+ *  @brief SimpleList doc en
+ */
+message SimpleList {
+    repeated bool values = 1;
+}
+
+/** @struct SimpleListOfSimpleType
+ *  @brief SimpleListOfSimpleType doc en
+ */
+message SimpleListOfSimpleType {
+    repeated SimpleRestriction values = 1;
+}
+
+/** @struct SimpleRestriction
+ *  @brief SimpleRestriction doc en
+ */
+message SimpleRestriction {
+    required bool value = 1;
+}
+
+/** @struct SimpleString
+ *  @brief SimpleString doc en
+ */
+message SimpleString {
+    required string value = 1;
+}
+
+/** @struct SimpleStringEnumeration
+ *  @brief SimpleStringEnumeration doc en
+ */
+enum SimpleStringEnumeration {
+    A = 0;
+    B = 1;
+}
+
+/** @struct SimpleUnion
+ *  @brief SimpleUnion doc en
+ */
+message SimpleUnion {
+    enum Type {
+        UNION_string = 0;
+        UNION_int32 = 1;
+    }
+
+    required Type type = 1;
+    optional string string_value = 2;
+    optional int32 int32_value = 3;
+}
+
+/** @}*/

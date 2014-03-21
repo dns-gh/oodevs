@@ -1,0 +1,187 @@
+<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!-- Includes -->
+	<xs:include schemaLocation="included.xsd"/>
+	<!-- Schema annotations -->
+	<xs:annotation>
+		<xs:documentation>schema doc</xs:documentation>
+		<xs:documentation xml:lang="en">schema doc en</xs:documentation>
+		<xs:documentation xml:lang="fr">schema doc fr</xs:documentation>
+	</xs:annotation>
+	<!-- Root node -->
+	<xs:element name="root" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>element doc</xs:documentation>
+			<xs:documentation xml:lang="en">element doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">element doc fr</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!-- Simple types -->
+	<xs:simpleType name="SimpleRestriction">
+		<xs:annotation>
+			<xs:documentation>SimpleRestriction doc</xs:documentation>
+			<xs:documentation xml:lang="en">SimpleRestriction doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">SimpleRestriction doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="SimpleStringEnumeration">
+		<xs:annotation>
+			<xs:documentation>SimpleStringEnumeration doc</xs:documentation>
+			<xs:documentation xml:lang="en">SimpleStringEnumeration doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">SimpleStringEnumeration doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="B"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SimpleIntegerEnumeration">
+		<xs:annotation>
+			<xs:documentation>SimpleIntegerEnumeration doc</xs:documentation>
+			<xs:documentation xml:lang="en">SimpleIntegerEnumeration doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">SimpleIntegerEnumeration doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="42"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SimpleString">
+		<xs:annotation>
+			<xs:documentation>SimpleString doc</xs:documentation>
+			<xs:documentation xml:lang="en">SimpleString doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">SimpleString doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="4"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[A-Z]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SimpleInteger">
+		<xs:annotation>
+			<xs:documentation>SimpleInteger doc</xs:documentation>
+			<xs:documentation xml:lang="en">SimpleInteger doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">SimpleInteger doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="4"/>
+			<xs:maxExclusive value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SimpleUnion">
+		<xs:annotation>
+			<xs:documentation>SimpleUnion doc</xs:documentation>
+			<xs:documentation xml:lang="en">SimpleUnion doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">SimpleUnion doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="xs:string xs:integer"/>
+	</xs:simpleType>
+	<xs:simpleType name="SimpleList">
+		<xs:annotation>
+			<xs:documentation>SimpleList doc</xs:documentation>
+			<xs:documentation xml:lang="en">SimpleList doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">SimpleList doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:list itemType="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="SimpleListOfSimpleType">
+		<xs:annotation>
+			<xs:documentation>SimpleList doc</xs:documentation>
+			<xs:documentation xml:lang="en">SimpleListOfSimpleType doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">SimpleListOfSimpleType doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:list itemType="SimpleRestriction"/>
+	</xs:simpleType>
+	<!-- Complex types -->
+	<xs:complexType name="Complex">
+		<xs:annotation>
+			<xs:documentation>Complex doc</xs:documentation>
+			<xs:documentation xml:lang="en">Complex doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">Complex doc fr</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:complexType name="ComplexWithAttributes">
+		<xs:annotation>
+			<xs:documentation>ComplexWithAttributes doc</xs:documentation>
+			<xs:documentation xml:lang="en">ComplexWithAttributes doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">ComplexWithAttributes doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="A" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Attribute A doc</xs:documentation>
+				<xs:documentation xml:lang="en">Attribute A doc en</xs:documentation>
+				<xs:documentation xml:lang="fr">Attribute A doc fr</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="B" type="xs:integer" use="optional">
+			<xs:annotation>
+				<xs:documentation>Attribute B doc</xs:documentation>
+				<xs:documentation xml:lang="en">Attribute B doc en</xs:documentation>
+				<xs:documentation xml:lang="fr">Attribute B doc fr</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="C" type="xs:string" default="default value"/>
+		<xs:attribute name="D" type="xs:integer" default="42"/>
+		<xs:attribute name="E" type="xs:string" fixed="fixed value"/>
+		<xs:attribute name="F" type="xs:integer" fixed="42"/>
+	</xs:complexType>
+	<xs:complexType name="ComplexSequenceElements">
+		<xs:annotation>
+			<xs:documentation>ComplexSequenceElements doc</xs:documentation>
+			<xs:documentation xml:lang="en">ComplexSequenceElements doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">ComplexSequenceElements doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="simple" type="SimpleRestriction"/>
+			<xs:element name="occurs" type="SimpleRestriction" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ComplexChoiceElements">
+		<xs:annotation>
+			<xs:documentation>ComplexChoiceElements doc</xs:documentation>
+			<xs:documentation xml:lang="en">ComplexChoiceElements doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">ComplexChoiceElements doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="simple" type="SimpleRestriction"/>
+			<xs:element name="occurs" type="SimpleRestriction" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ComplexAllElements">
+		<xs:annotation>
+			<xs:documentation>ComplexAllElements doc</xs:documentation>
+			<xs:documentation xml:lang="en">ComplexAllElements doc en</xs:documentation>
+			<xs:documentation xml:lang="fr">ComplexAllElements doc fr</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="simple" type="SimpleRestriction"/>
+			<xs:element name="occurs" type="SimpleRestriction" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<!-- Constraints -->
+	<xs:complexType name="ComplexWithKeys">
+		<xs:attribute name="A" type="xs:string" use="required"/>
+		<xs:attribute name="B" type="xs:integer" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ComplexWithKeysList">
+		<xs:sequence>
+			<xs:element name="occurs" type="ComplexWithKeys" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ComplexWithKeysConstraints">
+		<xs:all>
+			<xs:element name="occurs-list" type="ComplexWithKeysList">
+				<xs:key name="a-key">
+					<xs:selector xpath="occurs"/>
+					<xs:field xpath="@A"/>
+				</xs:key>
+				<xs:key name="b-key">
+					<xs:selector xpath="occurs"/>
+					<xs:field xpath="@B"/>
+				</xs:key>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>
