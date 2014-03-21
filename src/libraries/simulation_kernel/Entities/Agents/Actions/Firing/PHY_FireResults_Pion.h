@@ -56,7 +56,7 @@ private:
     const unsigned int nID_;
     const bool direct_;
     boost::optional< MT_Vector2D > target_;
-    tools::Set< const MIL_Agent_ABC* > perceivers_;
+    tools::Set< unsigned int > perceivers_;
     //@}
 };
 

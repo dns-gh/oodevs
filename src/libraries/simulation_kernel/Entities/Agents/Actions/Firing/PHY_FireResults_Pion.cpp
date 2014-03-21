@@ -127,7 +127,7 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
         client::StopUnitFireDetection msg;
         msg().mutable_fire()->set_id( nID_ );
         for( auto it = perceivers_.begin(); it != perceivers_.end(); ++it )
-            msg().add_units()->set_id( (*it)->GetID() );
+            msg().add_units()->set_id( *it );
         msg.Send( NET_Publisher_ABC::Publisher() );
     }
     {
@@ -168,7 +168,7 @@ bool PHY_FireResults_Pion::NotifyDetected( const MIL_Agent_ABC& perceiver )
 {
     if( direct_ )
         throw MASA_EXCEPTION( "only an indirect fire can be detected" );
-    if( perceivers_.insert( &perceiver ).second )
+    if( perceivers_.insert( perceiver.GetID() ).second )
     {
         client::StartUnitFireDetection msg;
         msg().mutable_fire()->set_id( nID_ );
