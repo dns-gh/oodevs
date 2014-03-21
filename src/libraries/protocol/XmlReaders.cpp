@@ -812,7 +812,7 @@ namespace
         Read( reader, next, xis );
         if( next.has_null_value() && !next.null_value() )
         {
-            auto& list = dst.value_size() ? *dst.mutable_value( 0 ) : *dst.add_value();
+            auto& list = dst.value_size() ? *dst.mutable_value( dst.value_size() - 1 ) : *dst.add_value();
             *list.add_list() = next.value( 0 );
         }
     }
@@ -865,11 +865,11 @@ namespace
         { &ReadLocationList,        "location" },
         { &ReadObjectKnowledgeList, "objectknowledge" },
         { &ReadPathList,            "path" },
+        { &ReadPhaseline,           "phaseline" },
         { &ReadPointList,           "point" },
         { &ReadPolygonList,         "polygon" },
         { &ReadUnitKnowledgeList,   "agentknowledge" },
         { &ReadUnitList,            "agent" },
-        { &ReadValues,              "list" },
     };
 
     const struct { T_Read Read; std::string name; } readers[] = {
@@ -928,16 +928,19 @@ namespace
     };
 }
 
-void protocol::Read( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis, bool firstLevelParam /* = false */ )
 {
     dst.set_null_value( true );
     const auto type = TestLowCaseAttribute( xis, "type" );
     if( !type )
         return;
-    for( size_t i = 0; i < COUNT_OF( list_readers ); ++i )
-        if( list_readers[i].name == *type )
-            if( IsList( xis, *type ) )
+    if( IsList( xis, *type ) && ( *type != "list" || firstLevelParam ) )
+    {
+        for( size_t i = 0; i < COUNT_OF( list_readers ); ++i )
+            if( list_readers[i].name == *type )
                 return list_readers[i].Read( reader, dst, xis );
+        return ReadValues( reader, dst, xis );
+    }
     if( Apply( readers, COUNT_OF( readers ), *type, dst, xis ) )
         return;
     if( Apply( services, COUNT_OF( services ), *type, reader, dst, xis ) )
@@ -949,7 +952,7 @@ namespace
 {
     void AddParameter( const Reader_ABC& reader, MissionParameters& dst, xml::xistream& xis )
     {
-        Read( reader, *dst.add_elem(), xis );
+        Read( reader, *dst.add_elem(), xis, true );
     }
 
     template< typename T >
