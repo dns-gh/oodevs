@@ -195,7 +195,7 @@ void ResourcesEditorTable_ABC::AddResource( const kernel::DotationType& resource
 void ResourcesEditorTable_ABC::InitHeader()
 {
     dataModel_->setHorizontalHeaderLabels( headers_ );
-    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    horizontalHeader()->setResizeMode( QHeaderView::Interactive );
 }
 
 // -----------------------------------------------------------------------------
