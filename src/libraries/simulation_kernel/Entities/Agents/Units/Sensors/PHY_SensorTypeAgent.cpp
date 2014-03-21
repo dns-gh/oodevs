@@ -403,7 +403,6 @@ double PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator& 
 {
     assert( rVisionNRJ <= rDetectionDist_ );
     assert( rVisionNRJ > 0 );
-    rDistanceModificator *= lightingFactors_[ env.GetLighting().GetID() ];
     rDistanceModificator *= precipitationFactors_ [ env.GetPrecipitation().GetID() ];
     if( !bIsAroundBU )
         rDistanceModificator *= ComputeEnvironmentFactor( env.GetCurrentEnv() );
@@ -423,7 +422,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
 
     if( !list.empty() )
     {
-        for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; ++it )
+        for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ >= 0; ++it )
         {
             const MIL_UrbanObject_ABC& object = **it;
             const UrbanPhysicalCapacity* pPhysical = object.Retrieve< UrbanPhysicalCapacity >();
@@ -517,13 +516,14 @@ const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const M
     const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, MIL_Tools::GetAltitude( vTarget ) );
 
     double rVisionNRJ = rDetectionDist_;
+    rVisionNRJ *= lightingFactors_[ MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData()( vTarget ).GetLighting().GetID() ];
+    PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
     bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ, posted );
 
-    PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
-    if( rVisionNRJ > 0 )
+    if( rVisionNRJ >= 0 )
         rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, 1, rVisionNRJ, bIsAroundBU );
 
-    while( rVisionNRJ > 0 && !(++it).End() )
+    while( rVisionNRJ >= 0 && !(++it).End() )
         rVisionNRJ = ComputeExtinction( it, 1, rVisionNRJ, bIsAroundBU );
 
     return rVisionNRJ;
@@ -542,13 +542,14 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSo
     const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, rTargetAltitude );
 
     double rVisionNRJ = rDetectionDist_;
+    rVisionNRJ *= lightingFactors_[ MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData()( vTarget ).GetLighting().GetID() ];
     bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ, posted );
 
     PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
-    if( rVisionNRJ > 0 )
+    if( rVisionNRJ >= 0 )
         rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
 
-    while( rVisionNRJ > 0 && !(++it).End() )
+    while( rVisionNRJ >= 0 && !(++it).End() )
         rVisionNRJ = ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
 
     return InterpretExtinction( rVisionNRJ );

@@ -157,7 +157,7 @@ E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) 
         line.Increment();
         if( startEnergy == std::numeric_limits< float >::infinity() )
             startEnergy = sensorType_.ComputeExtinction( distanceModificator_,
-                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetEnvironment( line.CurrentPoint() ), meteoModel_.GetMeteo( line.CurrentPoint() ) );
+                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetEnvironment( line.CurrentPoint() ), meteoModel_.GetMeteo( line.CurrentPoint() ), meteoModel_.GetMeteo( point ) );
         else
             startEnergy = sensorType_.ComputeExtinction( distanceModificator_, startEnergy,
                 line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetEnvironment( line.CurrentPoint() ), meteoModel_.GetMeteo( line.CurrentPoint() ) );
