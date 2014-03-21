@@ -119,7 +119,7 @@ BOOST_FIXTURE_TEST_CASE( read_boolean, Fixture )
     AddParameterValue( xos, "boolean", true );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
-    BOOST_CHECK(  msg.elem( 0 ).value( 0 ).booleanvalue() );
+    BOOST_CHECK( msg.elem( 0 ).value( 0 ).booleanvalue() );
     CheckCycle( msg );
 }
 
@@ -1045,6 +1045,50 @@ BOOST_FIXTURE_TEST_CASE( read_client_to_sim, Fixture )
     BOOST_CHECK_EQUAL( msg.automat_order().tasker().id(), 8323u );
     BOOST_CHECK_EQUAL( msg.automat_order().type().id(), 2053u );
     CheckCycle( msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( read_complex_list_of_list, Fixture )
+{
+    const std::string input =
+    "<action>"
+    "  <parameter type='list'>"
+    "    <parameter type='list'>"
+    "      <parameter type='quantity' value='1'/>"
+    "      <parameter type='enumeration' value='1'/>"
+    "      <parameter type='enumeration' value='1'/>"
+    "      <parameter type='list'>"
+    "        <parameter type='list'>"
+    "          <parameter type='identifier' value='1'/>"
+    "          <parameter type='enumeration' value='1'/>"
+    "        </parameter>"
+    "        <parameter type='list'>"
+    "          <parameter type='identifier' value='2'/>"
+    "          <parameter type='enumeration' value='2'/>"
+    "        </parameter>"
+    "      </parameter>"
+    "      <parameter type='boolean' value='false'/>"
+    "      <parameter type='boolean' value='false'/>"
+    "    </parameter>"
+    "    <parameter type='list'>"
+    "      <parameter type='quantity' value='1'/>"
+    "      <parameter type='enumeration' value='1'/>"
+    "      <parameter type='enumeration' value='1'/>"
+    "      <parameter type='list'>"
+    "        <parameter type='list'>"
+    "          <parameter type='identifier' value='0'/>"
+    "          <parameter type='enumeration' value='0'/>"
+    "        </parameter>"
+    "      </parameter>"
+    "      <parameter type='boolean' value='false'/>"
+    "      <parameter type='boolean' value='false'/>"
+    "    </parameter>"
+    "  </parameter>"
+    "</action>";
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    const auto& list = msg.elem( 0 ).value();
+    BOOST_CHECK_EQUAL( list.size(), 2 );
+    CheckCycle( input, msg );
 }
 
 #if 0
