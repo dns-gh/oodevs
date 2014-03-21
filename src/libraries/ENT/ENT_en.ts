@@ -424,7 +424,7 @@
     </message>
     <message>
         <source>lake</source>
-        <translation>lake</translation>
+        <translation>water area</translation>
     </message>
     <message>
         <source>glacier</source>
