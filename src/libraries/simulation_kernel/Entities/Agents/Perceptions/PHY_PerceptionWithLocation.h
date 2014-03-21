@@ -11,8 +11,7 @@
 #define __PHY_PerceptionWithLocation_h_
 
 #include "PHY_Perception_ABC.h"
-#pragma warning( push )
-#pragma warning( disable: 4100 )
+#pragma warning( push, 0 )
 #include <boost/ptr_container/ptr_vector.hpp>
 #pragma warning( pop )
 
@@ -35,7 +34,7 @@ public:
     //! @name Operations
     //@{
     std::unique_ptr< T > Remove( int id );
-    int  Add   ( T* pLocation );
+    int Add( T* pLocation );
     virtual void FinalizePerception();
     //@}
 

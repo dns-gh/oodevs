@@ -72,11 +72,9 @@ void PHY_PerceptionRecoPoint::Update()
         if( !it->bProcessed_ )
         {
             // Agrandissement de la zone de reconnaissance
-            if( it->rCurrentSize_ < it->rFinalSize_ )
-                it->rCurrentSize_ += it->rGrowthSpeed_;
-            if( it->rCurrentSize_ >= it->rFinalSize_ )
+            it->rCurrentSize_ = std::min( it->rFinalSize_, it->rCurrentSize_ + it->rGrowthSpeed_ );
+            if( it->rCurrentSize_ == it->rFinalSize_ )
             {
-                it->rCurrentSize_ = it->rFinalSize_;
                 it->callerAgent_.CallbackPerception( it->Id() );
                 it->bProcessed_ = true;
             }
