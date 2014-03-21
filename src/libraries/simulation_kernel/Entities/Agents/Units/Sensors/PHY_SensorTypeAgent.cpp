@@ -509,13 +509,11 @@ const double PHY_SensorTypeAgent::ReconnoissanceDistance() const
 // -----------------------------------------------------------------------------
 const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const MT_Vector2D& vTarget, double sensorHeight, bool posted ) const
 {
-    return RayTrace( const MT_Vector2D& vSource, sensorHeight + MIL_Tools::GetAltitude( vSource ), vTarget,  MIL_Tools::GetAltitude( vTarget ), 1, posted );
-
     if( vSource.Distance( vTarget ) > GetMaxDistance() )
-        return -1.;
+        return 0.;
 
-    const MT_Vector3D vSource3D( vSource.rX_, vSource.rY_,  );
-    const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, );
+    const MT_Vector3D vSource3D( vSource.rX_, vSource.rY_, sensorHeight + MIL_Tools::GetAltitude( vSource ) );
+    const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, MIL_Tools::GetAltitude( vTarget ) );
 
     double rVisionNRJ = rDetectionDist_;
     rVisionNRJ *= lightingFactors_[ MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData()( vTarget ).GetLighting().GetID() ];
