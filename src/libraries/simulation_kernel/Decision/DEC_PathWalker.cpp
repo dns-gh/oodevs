@@ -185,7 +185,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( lastWaypoint, 100., objects );
         std::string objectName;
         double cost = 0;
-        for( TER_Object_ABC::CIT_ObjectVector itObject = objects.begin(); itObject != objects.end(); ++itObject )
+        for( auto itObject = objects.begin(); itObject != objects.end(); ++itObject )
         {
             const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
             if( IsDifficultToPassThrough( lastWaypoint, object, movingEntity_, environment_ ) )
@@ -277,7 +277,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     moveStepSet.insert( T_MoveStep( vEnd   ) );
     TER_DistanceLess colCmp( vStart );
     T_PointSet collisions( colCmp );
-    for( TER_Object_ABC::CIT_ObjectVector itObject = objects.begin(); itObject != objects.end(); ++itObject )
+    for( auto itObject = objects.begin(); itObject != objects.end(); ++itObject )
     {
         const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
         // Ajout des points de collision dans moveStepSet

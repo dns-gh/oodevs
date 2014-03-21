@@ -110,7 +110,7 @@ void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
     // Notify the agent natively inside the object that they are inside it
     TER_Agent_ABC::T_AgentPtrVector agentsInsideObject;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocalisation(), agentsInsideObject, GetPrecision() );
-    for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsInsideObject.begin(); itAgent != agentsInsideObject.end(); ++itAgent )
+    for( auto itAgent = agentsInsideObject.begin(); itAgent != agentsInsideObject.end(); ++itAgent )
         static_cast< PHY_RoleInterface_Location& >( **itAgent ).NotifyTerrainPutInsideObject( *this );
     // Notify object when population natively inside the object
     TER_PopulationConcentration_ABC::T_PopulationConcentrationVector populationsInsideObject;

@@ -37,10 +37,7 @@ class TER_Agent_ABC : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::vector< TER_Agent_ABC* >      T_AgentPtrVector;
-    typedef T_AgentPtrVector::iterator        IT_AgentPtrVector;
-    typedef T_AgentPtrVector::const_iterator CIT_AgentPtrVector;
-
+    typedef std::vector< TER_Agent_ABC* > T_AgentPtrVector;
     typedef spatialcontainer::SpatialContainerNode< TER_Agent_ABC*, TER_AgentTraits, double >* T_Hint;
     //@}
 

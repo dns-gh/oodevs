@@ -40,8 +40,7 @@ PHY_PerceptionRecoPoint::PHY_PerceptionRecoPoint( PHY_RoleInterface_Perceiver& p
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoPoint::~PHY_PerceptionRecoPoint()
 {
-    for( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -68,19 +67,16 @@ void PHY_PerceptionRecoPoint::RemovePoint( int id )
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoPoint::Update()
 {
-    for( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
+    for( auto it = recos_.begin(); it != recos_.end(); ++it )
     {
-        PHY_PerceptionRecoPointReco& reco = **it;
-        if( !reco.bProcessed_ )
+        if( !it->bProcessed_ )
         {
             // Agrandissement de la zone de reconnaissance
-            if( reco.rCurrentSize_ < reco.rFinalSize_ )
-                reco.rCurrentSize_ += reco.rGrowthSpeed_;
-            if( reco.rCurrentSize_ >= reco.rFinalSize_ )
+            it->rCurrentSize_ = std::min( it->rFinalSize_, it->rCurrentSize_ + it->rGrowthSpeed_ );
+            if( it->rCurrentSize_ == it->rFinalSize_ )
             {
-                reco.rCurrentSize_ = reco.rFinalSize_;
-                reco.callerAgent_.CallbackPerception( (*it)->Id() );
-                reco.bProcessed_ = true;
+                it->callerAgent_.CallbackPerception( it->Id() );
+                it->bProcessed_ = true;
             }
         }
     }
@@ -93,7 +89,7 @@ void PHY_PerceptionRecoPoint::Update()
 const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MT_Vector2D& vPoint ) const
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
-        if( (*it)->vCenter_.SquareDistance( vPoint ) <= (*it)->rCurrentSize_ * (*it)->rCurrentSize_ )
+        if( it->vCenter_.SquareDistance( vPoint ) <= it->rCurrentSize_ * it->rCurrentSize_ )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -108,7 +104,7 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         perceivableAgents.clear();
-        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( (*itReco)->vCenter_, (*itReco)->rCurrentSize_, perceivableAgents );
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( itReco->vCenter_, itReco->rCurrentSize_, perceivableAgents );
         for( auto it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
@@ -137,7 +133,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MIL_Agent_ABC
 const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const DEC_Knowledge_Object& knowledge ) const
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
-        if( knowledge.GetLocalisation().Intersect2DWithCircle( (*it)->vCenter_, (*it)->rCurrentSize_ ) )
+        if( knowledge.GetLocalisation().Intersect2DWithCircle( it->vCenter_, it->rCurrentSize_ ) )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -152,7 +148,7 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Object_ABC::T_ObjectVector& /*p
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         perceivableObjects.clear();
-        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( (*itReco)->vCenter_, (*itReco)->rCurrentSize_, perceivableObjects );
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( itReco->vCenter_, itReco->rCurrentSize_, perceivableObjects );
         for( auto it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );

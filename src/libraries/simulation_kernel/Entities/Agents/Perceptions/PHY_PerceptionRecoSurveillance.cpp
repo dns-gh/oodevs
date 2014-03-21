@@ -146,8 +146,7 @@ PHY_PerceptionRecoSurveillance::PHY_PerceptionRecoSurveillance( PHY_RoleInterfac
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoSurveillance::~PHY_PerceptionRecoSurveillance()
 {
-    for( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +175,7 @@ void PHY_PerceptionRecoSurveillance::RemoveLocalisation( int id )
 const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MT_Vector2D& vPoint ) const
 {
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
-        if( (*itReco)->IsInside( vPoint ) )
+        if( itReco->IsInside( vPoint ) )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -191,8 +190,8 @@ void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVec
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         perceivableAgents.clear();
-        (*itReco)->GetAgentsInside( perceivableAgents );
-        for( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
+        itReco->GetAgentsInside( perceivableAgents );
+        for( auto it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
             detection::DetectionComputer detectionComputer( target );

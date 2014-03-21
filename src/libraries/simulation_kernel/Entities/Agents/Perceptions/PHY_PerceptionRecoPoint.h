@@ -29,12 +29,12 @@ public:
     bool              bProcessed_;
 
     PHY_PerceptionRecoPointReco( const MT_Vector2D& vCenter, double rSize, double rGrowthSpeed, DEC_Decision_ABC& callerAgent )
-        : vCenter_      ( vCenter )
-        , rCurrentSize_ ( 0.f )
-        , rFinalSize_   ( rSize )
-        , rGrowthSpeed_ ( rGrowthSpeed )
-        , callerAgent_  ( callerAgent )
-        , bProcessed_   ( false )
+        : vCenter_     ( vCenter )
+        , rCurrentSize_( 0.f )
+        , rFinalSize_  ( rSize )
+        , rGrowthSpeed_( rGrowthSpeed )
+        , callerAgent_ ( callerAgent )
+        , bProcessed_  ( false )
     {
         assert( rGrowthSpeed_ > 0.f );
         assert( rFinalSize_ > 0.f );

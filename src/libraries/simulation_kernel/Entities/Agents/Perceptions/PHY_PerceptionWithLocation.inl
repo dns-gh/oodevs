@@ -14,9 +14,9 @@
 // Name: PHY_PerceptionWithLocation constructor
 // Created: LDC 2009-07-29
 // -----------------------------------------------------------------------------
-template <class T >
+template< class T >
 PHY_PerceptionWithLocation<T>::PHY_PerceptionWithLocation( PHY_RoleInterface_Perceiver& perceiver )
-: PHY_Perception_ABC( perceiver )
+    : PHY_Perception_ABC( perceiver )
 {
     // NOTHING
 }
@@ -25,7 +25,7 @@ PHY_PerceptionWithLocation<T>::PHY_PerceptionWithLocation( PHY_RoleInterface_Per
 // Name: PHY_PerceptionWithLocation destructor
 // Created: LDC 2009-07-29
 // -----------------------------------------------------------------------------
-template <class T >
+template< class T >
 PHY_PerceptionWithLocation<T>::~PHY_PerceptionWithLocation()
 {
     // NOTHING
@@ -35,25 +35,20 @@ PHY_PerceptionWithLocation<T>::~PHY_PerceptionWithLocation()
 // Name: PHY_PerceptionWithLocation::Remove
 // Created: LDC 2009-07-29
 // -----------------------------------------------------------------------------
-template <class T >
-void PHY_PerceptionWithLocation<T>::Remove( int id )
+template< class T >
+std::unique_ptr< T > PHY_PerceptionWithLocation<T>::Remove( int id )
 {
-    for ( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-    {    
-        if ( (*it)->Id() == id )
-        {
-            delete *it;
-            recos_.erase( it );
-            return;
-        }
-    }
+    for( auto it = recos_.begin(); it != recos_.end(); ++it )
+        if ( it->Id() == id )
+            return std::unique_ptr< T >( recos_.release( it ).release() );
+    return std::unique_ptr< T >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionWithLocation::AddLocation
 // Created: LDC 2009-07-29
 // -----------------------------------------------------------------------------
-template <class T >
+template< class T >
 int PHY_PerceptionWithLocation<T>::Add( T* pLocation )
 {
     recos_.push_back( pLocation );
@@ -64,7 +59,7 @@ int PHY_PerceptionWithLocation<T>::Add( T* pLocation )
 // Name: PHY_PerceptionWithLocation::FinalizePerception
 // Created: LDC 2010-05-05
 // -----------------------------------------------------------------------------
-template <class T >
+template< class T >
 void PHY_PerceptionWithLocation<T>::FinalizePerception()
 {
     // NOTHING

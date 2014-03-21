@@ -91,8 +91,7 @@ PHY_PerceptionRecoUrbanBlock::PHY_PerceptionRecoUrbanBlock( PHY_RoleInterface_Pe
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoUrbanBlock::~PHY_PerceptionRecoUrbanBlock()
 {
-    for( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +122,7 @@ void PHY_PerceptionRecoUrbanBlock::RemoveUrbanBlock( int id )
 const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const MT_Vector2D& vPoint ) const
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
-        if( ( *it )->IsInside( perceiver_, vPoint ) )
+        if( it->IsInside( perceiver_, vPoint ) )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -138,14 +137,14 @@ void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVecto
     for( auto itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         perceivableAgents.clear();
-        ( *itReco )->GetAgentsInside( perceiver_, perceivableAgents );
+        itReco->GetAgentsInside( perceiver_, perceivableAgents );
         for( auto it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
             detection::DetectionComputer detectionComputer( target );
             perceiver_.GetPion().Execute( detectionComputer );
             target.Execute( detectionComputer );
-            if( detectionComputer.CanBeSeen() && ( *itReco )->CanSeeIt() )
+            if( detectionComputer.CanBeSeen() && itReco->CanSeeIt() )
                 perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
         }
     }
@@ -176,7 +175,7 @@ bool PHY_PerceptionRecoUrbanBlock::HasLocalisationToHandle() const
 bool PHY_PerceptionRecoUrbanBlock::IsReconnoitering( MIL_UrbanObject_ABC* urbanBlock ) const
 {
     for( auto it = recos_.begin(); it != recos_.end(); ++it )
-        if ( (*it)->GeturbanBlock() == urbanBlock )
+        if ( it->GeturbanBlock() == urbanBlock )
             return true;
     return false;
 }
