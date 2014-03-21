@@ -14,6 +14,7 @@
 #include "ADN_Languages_Data.h"
 #include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
+#include "MT_Tools/MT_Logger.h"
 #include "tools/Languages.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
@@ -143,13 +144,25 @@ bool ADN_Missions_ABC::IsFileInAttachmentList( const std::string& fileName )
 
 namespace
 {
+    void FromXmlToWikiNoThrow( xml::xistream& xis, std::string& text )
+    {
+        try
+        {
+            FromXmlToWiki( xis, text );
+        }
+        catch( const std::exception& e )
+        {
+            MT_LOG_ERROR_MSG( "xml to wiki conversion failed: " << e.what() );
+        }
+    }
+
     void ReadMissionSheetField( xml::xistream& xis, const std::string& xmltag, ADN_Type_LocalizedString& localizedField, const std::string& language )
     {
         std::string field;
         kernel::E_TranslationType type;
         xis >> xml::optional >> xml::start( xmltag )
             >> type;
-        FromXmlToWiki( xis, field );
+        FromXmlToWikiNoThrow( xis, field );
         xis >> xml::end;
         localizedField.SetValue( language, field );
         localizedField.SetType( language, type );
@@ -167,7 +180,7 @@ void ADN_Missions_ABC::ReadMissionSheetParametersDescriptions( xml::xistream& xi
     std::string parameterName;
     xis >> xml::attribute( "name", parameterName )
         >> type;
-    FromXmlToWiki( xis, parameterData );
+    FromXmlToWikiNoThrow( xis, parameterData );
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         if( (*it)->strName_.GetValue( language ) == parameterName )
         {
