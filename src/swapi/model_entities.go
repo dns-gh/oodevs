@@ -929,9 +929,7 @@ func (model *ModelData) removeFireEffect(effectId uint32) bool {
 
 func (model *ModelData) updateFireDetection(perception *FireDetection) {
 	if p, ok := model.FireDetections[perception.Id]; ok {
-		for _, unit := range perception.Units {
-			p.Units = append(p.Units, unit)
-		}
+		p.Units = append(p.Units, perception.Units...)
 	} else {
 		model.FireDetections[perception.Id] = perception
 	}
