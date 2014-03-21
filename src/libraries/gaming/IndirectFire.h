@@ -16,6 +16,7 @@
 namespace sword
 {
     class StartUnitFire;
+    class StartUnitFireDetection;
 }
 
 namespace kernel
@@ -36,6 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              IndirectFire( const sword::StartUnitFire& message, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::CoordinateConverter_ABC& converter );
+             IndirectFire( const sword::StartUnitFireDetection& message, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::CoordinateConverter_ABC& converter );
     virtual ~IndirectFire();
     //@}
 

@@ -921,8 +921,11 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_UrbanObject_ABC& object ) c
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const
 {
-    owner_->GetKnowledge().GetKsIndirectFire().NotifyAttackedBy( flyingShell.GetFirer() );
-    MIL_Report::PostEvent( *owner_, report::eRC_ObservationTirIndirect, flyingShell );
+    if( flyingShell.NotifyDetected( *owner_ ) )
+    {
+        owner_->GetKnowledge().GetKsIndirectFire().NotifyAttackedBy( flyingShell.GetFirer() );
+        MIL_Report::PostEvent( *owner_, report::eRC_ObservationTirIndirect, flyingShell );
+    }
 }
 
 // -----------------------------------------------------------------------------
