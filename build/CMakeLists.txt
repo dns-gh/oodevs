@@ -51,7 +51,6 @@ masa_set_library( TIMELINE_LIBRARIES
 )
 
 
-masa_set_external_library( CORE_LIBRARIES             core_d core )
 masa_set_external_library( DIRECTIA_LIBRARIES         directia-${platform}-mt-gd-4_6 directia-${platform}-mt-4_6 )
 masa_set_external_library( EXCEL_LIBRARIES            excel_d excel )
 masa_set_external_library( GDAL_I_LIBRARIES           gdal_i_d gdal_i )
@@ -465,7 +464,6 @@ target_link_libraries( simulation_kernel
     propagation
     resource_network
     simulation_terrain
-    ${CORE_LIBRARIES}
     ${GEODATA_LIBRARIES}
     ${TERRAIN_LIBRARIES}
 )
@@ -625,3 +623,42 @@ target_link_libraries( clients_test
 add_target( client_sample_app samples "samples/client_sample_app" OPTIONS protocol executable )
 masa_add_target_include( client_sample_app "${CMAKE_CURRENT_BINARY_DIR}/protocol.out/protocol" )
 target_link_libraries( client_sample_app ws2_32 ${TOOLS_LIBRARIES} )
+
+# core
+add_target( core libraries "libraries/core" )
+target_link_libraries( core
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${XERCES_LIBRARIES}
+    ${Boost_LIBRARIES}
+)
+
+# core_test
+add_target( core_test test "tests/core_test" OPTIONS test )
+target_link_libraries( core_test core )
+
+# xeuseudeu
+add_target( xeuseudeu libraries "libraries/xeuseudeu" )
+target_link_libraries( xeuseudeu core )
+
+# xeuseudeu_test
+add_target( xeuseudeu_test test "tests/xeuseudeu_test" OPTIONS protobuf test )
+target_link_libraries( xeuseudeu_test
+    xeuseudeu
+    ${TOOLS_LIBRARIES}
+)
+
+# model_generator_app
+add_target( model_generator_app applications "applications/model_generator_app" OPTIONS executable )
+target_link_libraries( model_generator_app
+    xeuseudeu
+    ${TOOLS_LIBRARIES}
+)
+
+# model_app
+add_target( model_app applications "applications/model_app" OPTIONS executable )
+target_link_libraries( model_app
+    core
+    ${TOOLS_LIBRARIES}
+    psapi
+)
+

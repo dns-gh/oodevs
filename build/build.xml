@@ -572,6 +572,43 @@
         </check-app>
     </target>
 
+    <macrodef name="generator">
+        <attribute name="input"/>
+        <attribute name="output"/>
+        <attribute name="command"/>
+        <attribute name="expected"/>
+        <element name="args" implicit="true" optional="true"/>
+        <sequential>
+            <exec taskname="model_generator_app" executable="${out.dir}/release/model_generator_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+                <arg value="--@{command}"/>
+                <arg value="--input=@{input}"/>
+                <arg value="--output=@{output}"/>
+                <arg value="--package=test"/>
+                <args/>
+            </exec>
+            <if>
+                <filesmatch file1="@{output}" file2="@{expected}"/>
+                <then>
+                    <echo taskname="model_generator_app" message="Generation succeeded"/>
+                </then>
+                <else>
+                    <fail message="Generation failed, output != expected"/>
+                </else>
+            </if>
+        </sequential>
+    </macrodef>
+
+    <target name="model_generator_test" description="test model generator" unless='is-linux'>
+        <generator command="generate-proto"
+                   input="${data.dir}/tests/model_generator_test/included.xsd"
+                   output="${out.dir}/tmp/model_generator_test/included.proto"
+                   expected="${src.dir}/tests/xeuseudeu_test/proto/included.proto"/>
+        <generator command="generate-proto"
+                   input="${data.dir}/tests/model_generator_test/test.xsd"
+                   output="${out.dir}/tmp/model_generator_test/test.proto"
+                   expected="${src.dir}/tests/xeuseudeu_test/proto/test.proto"/>
+    </target>
+
     <!--
     ============================================================================
     documentation
@@ -840,7 +877,6 @@
         <update name="qt" version="4.7.0.r660"/>
         <update name="spatialite" version="3.1.0.r669"/>
         <update name="sqlite" version="3.7.13.r229"/>
-        <update name="steel"/>
         <update name="sword-proto" package="sword-protobuf" todir="${bin.dir}"/>
         <update name="sword-doc" package="doc" todir="${root.dir}/doc"/>
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
@@ -900,6 +936,7 @@
         ,exercises_test
         ,qt_name_test
         ,scripts_test
+        ,model_generator_test
         " description="build and run all tests"/>
 
     <target name="all" depends="configure,check,cmake.configure,build,test,documentation,package"/>
