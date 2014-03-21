@@ -144,6 +144,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_GetUnitById", &DEC_AgentFunctions::GetUnitById );
     brain.RegisterFunction( "DEC_Agent_AgentPeutTransporterPion", &DEC_ActionFunctions::AgentCanTransportPion );
     brain.RegisterFunction( "DEC_Agent_IsUnderground", &DEC_AgentFunctions::IsUnderground );
+    brain.RegisterFunction( "DEC_Agent_GetTransportedUnits", &DEC_ActionFunctions::GetTransportedUnits );
 }
 
 // -----------------------------------------------------------------------------

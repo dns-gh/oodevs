@@ -378,6 +378,15 @@ double DEC_ActionFunctions::GetNumberOfRoundTripToTransportKnowledge( DEC_Decisi
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::GetTransportedUnits
+// Created: NMI 2014-03-20
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_ActionFunctions::GetTransportedUnits( DEC_Decision_ABC& callerAgent )
+{
+    return callerAgent.GetPion().Get< transport::PHY_RoleAction_Transport >().GetTransportedUnits();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::CanTransportCrowd
 // Created: JSR 2011-08-09
 // -----------------------------------------------------------------------------

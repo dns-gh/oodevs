@@ -27,6 +27,7 @@ class MIL_Agent_ABC;
 class MIL_AgentPion;
 class MT_Vector2D;
 class PHY_ComposantePion;
+class DEC_Decision_ABC;
 
 namespace transport
 {
@@ -95,6 +96,7 @@ public:
     //@{
     int GetInitialReturnCode() const;
     int GetFinalReturnCode  () const;
+    std::vector< DEC_Decision_ABC* > GetTransportedUnits() const;
     //@}
 
     //! @name Event handler

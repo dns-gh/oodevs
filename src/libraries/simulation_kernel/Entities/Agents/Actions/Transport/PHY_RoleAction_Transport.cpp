@@ -20,6 +20,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Decision/DEC_Decision.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include <boost/serialization/export.hpp>
@@ -661,4 +662,19 @@ double PHY_RoleAction_Transport::RemainingWeight( MIL_Agent_ABC& pion ) const
     if( it == transportedPions_.end() )
         return 0;
     return it->second.rRemainingWeight_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::GetTransportedUnits
+// Created: NMI 2014-03-20
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > PHY_RoleAction_Transport::GetTransportedUnits() const
+{
+    std::vector< DEC_Decision_ABC* > v;
+    for( auto it = transportedPions_.begin(); it != transportedPions_.end(); ++it ){
+        MIL_Agent_ABC* agent = it->first;
+        if( agent->RetrieveRole< DEC_Decision_ABC >() )
+                v.push_back( &agent->GetDecision() );
+    }
+    return v;
 }
