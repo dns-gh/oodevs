@@ -38,6 +38,7 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
         void WriteContent( xml::xostream& output ) const;
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
 
     public:
         std::string parentName_;
@@ -112,6 +113,7 @@ private:
     void ReadAgent( xml::xistream& input );
     void ReadArchive( xml::xistream& input );
     void WriteArchive( xml::xostream& output ) const;
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
 
 private:
     T_NbcAgentInfos_Vector vNbcAgent_;

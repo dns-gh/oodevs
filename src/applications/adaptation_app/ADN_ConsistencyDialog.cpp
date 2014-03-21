@@ -32,6 +32,9 @@ namespace
                type == eObjectTypeUniqueness ||
                type == eMissingRepairType ||
                type == eInvalidPtrInVector ||
+               type == eBadBreakdownSum ||
+               type == eInhabitantSchedule ||
+               type == eIndirectFireRange ||
                type == eNoCrew;
     }
 
@@ -90,6 +93,17 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eInvalidIdInVector ]      = tr( "'%1' has the same id. These id will be replaced at next save." );
     errorDescriptions_[ eDuplicateTranslation ]   = tr( "Some translations on tab '%1' have the same key and different translation values. Only one will be used by the simulation." );
     errorDescriptions_[ eInvalidProbe ]           = tr( "Invalid scan depth, should be greater than scan width." );
+    errorDescriptions_[ eBadBreakdownSum ]        = tr( "Equipment '%1' - Invalid breakdown data : sum != 100" ) + error;
+    errorDescriptions_[ eInhabitantSchedule ]     = tr( "%1" );
+    errorDescriptions_[ eInvalidSupplyClass ]     = tr( "Supply class name is empty" );
+    errorDescriptions_[ eInvalidResourceNature ]  = tr( "Resource nature name is empty" );
+    errorDescriptions_[ eInvalidFireInjuries ]    = tr( "Fire '%1' - Injuries data sum > 100" );
+    errorDescriptions_[ eInvalidPoisoningData ]   = tr( "NBC - Agent '%1' - Poisoning effect data sum < 100" );
+    errorDescriptions_[ eBadFloodInjuries ]       = tr( "Object '%1' - Flood - Injuries data sum > 100" );
+    errorDescriptions_[ eInvalidRoof ]            = tr( "RoofShape name is empty" );
+    errorDescriptions_[ eInvalidVolume ]          = tr( "Volume name is empty" );
+    errorDescriptions_[ eIndirectFireRange ]      = tr( "Weapon %1 - Indirect fire - max range < min range" ) + error;
+    errorDescriptions_[ eRepartitionError ]       = tr( "%1" );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );

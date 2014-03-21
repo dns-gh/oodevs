@@ -51,6 +51,7 @@ public:
 
     T_LogisticSupplyClass_Vector& GetLogisticSupplyClasses();
     LogisticSupplyClass* FindLogisticSupplyClass( const std::string& strName );
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     //@}
 
 private:

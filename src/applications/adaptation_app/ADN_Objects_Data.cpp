@@ -575,8 +575,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_Flood::ReadArchive( xml::xistream& xis 
     ADN_TypeCapacity_Infos::ReadArchive( xis );
     xis >> xml::optional >> xml::start( "injuries" )
             >> xml::list( "injury", *this, &ADN_Objects_Data::ADN_CapacityInfos_Flood::ReadInjury );
-    if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw MASA_EXCEPTION( tools::translate( "Object_Data", "Flood - Injuries data sum > 100" ).toStdString() );
     xis >> xml::end;
 }
 
@@ -596,11 +594,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Flood::ReadInjury( xml::xistream& xis )
         wound == "dead" ? &nNbDeadHumans_ :
         0;
     if( pWound )
-    {
         *pWound = static_cast< int >( xis.attribute< double >( "percentage" ) * 100. );
-        if( pWound->GetData() < 0 || pWound->GetData() > 100 )
-            throw MASA_EXCEPTION( tools::translate( "Object_Data", "Flood - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).toStdString() );
-    }
     else
         throw MASA_EXCEPTION( tools::translate( "Object_Data", "Flood - Invalid wound type '%1'" ).arg( wound.c_str() ).toStdString() );
 }
@@ -612,8 +606,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_Flood::ReadInjury( xml::xistream& xis )
 void ADN_Objects_Data::ADN_CapacityInfos_Flood::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "injuries" );
-    if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw MASA_EXCEPTION( tools::translate( "Object_Data", "Flood - Injuries data sum > 100" ).toStdString() );
     xos  << xml::start( "injury" )
                 << xml::attribute( "type", "u1" )
                 << xml::attribute( "percentage", nNbHurtHumans1_.GetData() / 100. )
@@ -635,6 +627,16 @@ void ADN_Objects_Data::ADN_CapacityInfos_Flood::WriteArchive( xml::xostream& xos
                 << xml::attribute( "percentage", nNbDeadHumans_.GetData() / 100. )
             << xml::end
            << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Flood::CheckDatabaseValidity
+// Created: LDC 2014-03-21
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Flood::CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName ) const
+{
+    if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
+        checker.AddError( eBadFloodInjuries, objectName.GetData(), eObjects );
 }
 
 //! @name ADN_CapacityInfos_InteractionHeight

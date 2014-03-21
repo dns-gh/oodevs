@@ -213,6 +213,7 @@ public:
         ADN_CapacityInfos_Flood();
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos ) const;
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName ) const;
 
     private:
         void ReadInjury( xml::xistream& xis );

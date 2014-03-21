@@ -85,11 +85,7 @@ void ADN_NBC_Data::NbcIntoxInfos::ReadArchive( xml::xistream& input )
 {
     input >>  xml::attribute( "affliction", bIntoxPresent_ );
     if( bIntoxPresent_.GetData() )
-    {
         input >> xml::list( "effect", *this, &ADN_NBC_Data::NbcIntoxInfos::ReadEffect );
-        if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
-            throw MASA_EXCEPTION( tools::translate( "NBC_Data","NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( parentName_.c_str() ).toStdString() );
-    }
     input >> xml::optional >> xml::attribute( "contamination", bContaminationPresent_ );
 }
 
@@ -114,8 +110,6 @@ void ADN_NBC_Data::NbcIntoxInfos::WriteContent( xml::xostream& output ) const
 {
     if( bIntoxPresent_.GetData() )
     {
-        if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
-            throw MASA_EXCEPTION( tools::translate( "NBC_Data", "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( parentName_.c_str() ).toStdString() );
         output << xml::attribute( "affliction", "true" )
                << xml::start( "effect" )
                 << xml::attribute( "wound", "healthy" )
@@ -144,6 +138,35 @@ void ADN_NBC_Data::NbcIntoxInfos::WriteContent( xml::xostream& output ) const
     }
     if( bContaminationPresent_.GetData() )
         output << xml::attribute( "contamination", bContaminationPresent_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_NBC_Data::NbcIntoxInfos::CheckDatabaseValidity
+// Created: LDC 2014-03-21
+// -----------------------------------------------------------------------------
+void ADN_NBC_Data::NbcIntoxInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    if( bIntoxPresent_.GetData() )
+    {
+        if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
+            checker.AddError( eInvalidPoisoningData, parentName_, eNBC );
+    }
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_NBC_Data::CheckDatabaseValidity
+// Created: LDC 2014-03-21
+// -----------------------------------------------------------------------------
+void ADN_NBC_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = vNbcAgent_.begin(); it != vNbcAgent_.end(); ++it )
+    {
+        auto agent = (*it );
+        if( agent->bLiquidPresent_.GetData() )
+            agent->liquidInfos_.CheckDatabaseValidity( checker );
+        if( agent->bGazPresent_.GetData() )
+            agent->gazInfos_.intoxInfos_.CheckDatabaseValidity( checker );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -268,6 +291,7 @@ void ADN_NBC_Data::NbcAgentInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", *this )
           >> xml::optional >> xml::attribute( "category", category_ );
     liquidInfos_.parentName_ = strName_.GetData();
+    gazInfos_.intoxInfos_.parentName_ = strName_.GetData();
     input >> xml::list( "effects", *this, &ADN_NBC_Data::NbcAgentInfos::ReadEffect );
     if( category_ == "" )
         category_ = "chemical";

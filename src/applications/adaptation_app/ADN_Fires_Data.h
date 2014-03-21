@@ -39,6 +39,7 @@ public:
         void ReadInjury( xml::xistream& input );
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
 
     public:
         std::string parentName_;
@@ -141,6 +142,7 @@ public:
     ADN_Type_Int& GetCellSize();
     T_FireClassInfosVector& GetFireClassesInfos();
     QStringList GetFireThatUse( ADN_Resources_Data::CategoryInfo& infos );
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     //@}
 
 private:

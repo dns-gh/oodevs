@@ -78,7 +78,7 @@ public:
     private:
         void ReadEvent( xml::xistream& input );
         void ReadConsumption( xml::xistream& input );
-        const std::string CheckErrors() const;
+        void CheckErrors( ADN_ConsistencyChecker& checker ) const;
 
     public:
         ADN_Type_Int nId_;

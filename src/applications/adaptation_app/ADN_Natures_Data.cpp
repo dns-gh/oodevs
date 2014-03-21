@@ -119,14 +119,25 @@ void ADN_Natures_Data::WriteArchive( xml::xostream& output ) const
     output << xml::start( "natures" );
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "ResourceNatures" );
-    for( ADN_Natures_Data::T_NatureInfos_Vector::const_iterator it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
+    for( auto it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
     {
-        if( ( *it )->strName_.GetData().empty() )
-            throw MASA_EXCEPTION( tools::translate( "Categories_Data","Categories - Invalid resource nature" ).toStdString() );
         output << xml::start( "nature" )
                  << xml::attribute( "type", **it )
                  << xml::attribute( "id", ( *it )->nId_ )
                << xml::end;
     }
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Natures_Data::CheckDatabaseValidity
+// Created: LDC 2014-03-21
+// -----------------------------------------------------------------------------
+void ADN_Natures_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
+    {
+        if( ( *it )->strName_.GetData().empty() )
+            checker.AddError( eInvalidResourceNature, std::string(), eCategories );
+    }
 }

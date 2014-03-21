@@ -725,6 +725,46 @@ Arrêt moteur allumé</translation>
         <source>Mission parameter %1 should have at least one object: All objects will be selectable instead of none.</source>
         <translation>Le paramètre de mission %1 devrait avoir au moins un objet : Tous les objets seront sélectionnables plutôt qu&apos;aucun.</translation>
     </message>
+    <message>
+        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
+        <translation>Equipement &apos;%1&apos; - La somme des probabilités de panne doit être égale à 100%</translation>
+    </message>
+    <message>
+        <source>%1</source>
+        <translation>%1</translation>
+    </message>
+    <message>
+        <source>Supply class name is empty</source>
+        <translation>Le nom de la catégorie logistique est vide</translation>
+    </message>
+    <message>
+        <source>Resource nature name is empty</source>
+        <translation>Le nom de la nature de ressources est vide</translation>
+    </message>
+    <message>
+        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
+        <translation>Feu &apos;%1&apos; - La somme des blessures est &gt; 100</translation>
+    </message>
+    <message>
+        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
+        <translation>NBC - Agent &apos;%1&apos; - La somme des effets d&apos;empoisonnement est &lt; 100</translation>
+    </message>
+    <message>
+        <source>Object &apos;%1&apos; - Flood - Injuries data sum &gt; 100</source>
+        <translation>Objet &apos;%1&apos; - Inondation - La somme des blessures est &gt; 100</translation>
+    </message>
+    <message>
+        <source>RoofShape name is empty</source>
+        <translation>Le nom de la forme du toît est vide</translation>
+    </message>
+    <message>
+        <source>Volume name is empty</source>
+        <translation>Le nom du volume est vide</translation>
+    </message>
+    <message>
+        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
+        <translation>Arme %1 - Tir indirect - Portée max &lt; portée min</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -1682,16 +1722,8 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
 <context>
     <name>ADN_Fires_Data</name>
     <message>
-        <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation>Feu - La blessure &apos;%1&apos; ne peut être &lt;0 ou &gt;1</translation>
-    </message>
-    <message>
         <source>Fire - Invalid wound type &apos;%1&apos;</source>
         <translation>Feu - Type de blessure invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
-        <translation>Feu &apos;%1&apos; - La somme des blessures est &gt; 100</translation>
     </message>
     <message>
         <source>Extinguisher agents</source>
@@ -6468,22 +6500,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
 </context>
 <context>
-    <name>Categories_Data</name>
-    <message>
-        <source>Categories - Invalid volume type name</source>
-        <translation>Catégories - Type de volume invalide</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid resource nature</source>
-        <translation>Catégories - Nature de ressource invalide</translation>
-    </message>
-</context>
-<context>
     <name>Equipments_Data</name>
-    <message>
-        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
-        <translation>Equipement &apos;%1&apos; - La somme des probabilités de panne doit être égale à 100%</translation>
-    </message>
     <message>
         <source>Equipment - Invalid activty &apos;%1&apos;</source>
         <translation>Equipement - Activité invalide &apos;%1&apos;</translation>
@@ -6525,10 +6542,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>NBC - Invalid wound type &apos;%1&apos;</source>
         <translation>NBC - Type de blessure invalide &apos;%1&apos;</translation>
     </message>
-    <message>
-        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
-        <translation>NBC - Agent &apos;%1&apos; - La somme des effets d&apos;empoisonnement est &lt; 100</translation>
-    </message>
 </context>
 <context>
     <name>Object_Data</name>
@@ -6539,14 +6552,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Crowd types - Invalid crowd attitude &apos;%1&apos;</source>
         <translation>Types de foules - Attitude de foule invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Flood - Injuries data sum &gt; 100</source>
-        <translation>Inondation - Somme des blessures &gt; 100</translation>
-    </message>
-    <message>
-        <source>Flood - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation>Inondation - Blessure &apos;%1&apos; valeur &lt; 0 or &gt; 1</translation>
     </message>
     <message>
         <source>Flood - Invalid wound type &apos;%1&apos;</source>
@@ -6687,20 +6692,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Unit types - Invalid nbc suit level &apos;%1&apos;</source>
         <translation>Type de pion - Niveau de protection nbc invalide</translation>
-    </message>
-</context>
-<context>
-    <name>Urban_Data</name>
-    <message>
-        <source>RoofShape - Invalid roofShape type name</source>
-        <translation>Type de toit - Nom de type de toit invalide</translation>
-    </message>
-</context>
-<context>
-    <name>Weapons_Data</name>
-    <message>
-        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
-        <translation>Arme %1 - Tir indirect - Portée max &lt; portée min</translation>
     </message>
 </context>
 <context>

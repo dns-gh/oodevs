@@ -783,7 +783,6 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 
     if( bIsCivilian_.GetData() )
     {
-        repartition_.CheckNoError( strName_.GetData().c_str() );
         output << xml::start( "repartition" );
         repartition_.WriteArchive( output );
         output  << xml::end;
@@ -826,6 +825,8 @@ void ADN_Units_Data::UnitInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& c
         ( *it )->CheckValidity( checker, strName_.GetData(), eUnits, -1, tools::translate( "ADN_Units_Data", "Stock" ).toStdString() );
     if( rProbeLength_.GetData() < rProbeWidth_.GetData() )
         checker.AddError( eInvalidProbe, strName_.GetData(), eUnits, -1 );
+    if( bIsCivilian_.GetData() )
+        repartition_.CheckNoError( strName_.GetData().c_str(), checker, eUnits );
 }
 
 // -----------------------------------------------------------------------------

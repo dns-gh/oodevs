@@ -112,6 +112,7 @@ public:
         bool operator==( const std::string& str );
         void WriteRoofShape( xml::xostream& output ) const;
         RoofShapeInfos* CreateCopy() { return new RoofShapeInfos(); }
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     };
 
     typedef ADN_Type_Vector_ABC< RoofShapeInfos > T_RoofShapeInfos_Vector;

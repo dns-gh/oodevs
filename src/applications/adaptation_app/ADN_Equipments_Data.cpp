@@ -674,14 +674,8 @@ void ADN_Equipments_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& input
 // Name: BreakdownGroupInfos::WriteArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output, const std::string& composante ) const
+void ADN_Equipments_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output ) const
 {
-    double rSum = 0.0;
-    for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
-        rSum += ( *it )->rPercentage_.GetData();
-    if( rSum != 100.0 )
-        throw MASA_EXCEPTION( tools::translate( "Equipments_Data", "Equipment '%1' - Invalid breakdown data : sum != 100" ).arg( composante.c_str() ).toStdString() );
-
     for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         ( *it )->WriteArchive( strName_, output );
 }
@@ -1909,8 +1903,25 @@ void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_Consistency
         if( ptrArmor_.GetData() && ptrArmor_.GetData()->nType_.GetData() == eProtectionType_Material )
             checker.AddError( eMissingBreakdown, strName_.GetData(), eEquipments );
     }
+    attritionBreakdowns_.CheckValidity( checker, strName_.GetData() );
+    randomBreakdowns_.CheckValidity( checker, strName_.GetData() );
     if( !logInfos_.IsRepairTypeValid() )
         checker.AddError( eMissingRepairType, strName_.GetData(), eEquipments );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipments_Data::BreakdownGroupInfos::CheckValidity
+// Created: LDC 2014-03-21
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::BreakdownGroupInfos::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& composante ) const
+{
+    if( vBreakdowns_.empty() )
+        return;
+    double rSum = 0.0;
+    for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
+        rSum += ( *it )->rPercentage_.GetData();
+    if( rSum != 100.0 )
+        checker.AddError( eBadBreakdownSum, composante, eEquipments );
 }
 
 // -----------------------------------------------------------------------------
@@ -2024,8 +2035,8 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output ) 
     if( ! attritionBreakdowns_.vBreakdowns_.empty() && !randomBreakdowns_.vBreakdowns_.empty() )
     {
         output << xml::start( "breakdowns" );
-        randomBreakdowns_.WriteArchive( output, strName_.GetData() );
-        attritionBreakdowns_.WriteArchive( output, strName_.GetData() );
+        randomBreakdowns_.WriteArchive( output );
+        attritionBreakdowns_.WriteArchive( output );
         output << xml::end;
     }
     double maxSlope = nMaxSlope_ == 90 ? std::numeric_limits< double >::max() : tan( nMaxSlope_.GetData() * MT_PI / 180 );

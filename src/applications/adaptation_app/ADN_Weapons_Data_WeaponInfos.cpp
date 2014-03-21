@@ -178,9 +178,6 @@ void ADN_Weapons_Data_WeaponInfos::WriteArchive( xml::xostream& output ) const
 
     if( bIndirect_.GetData() )
     {
-        if( rMaxRange_.GetData() < rMinRange_.GetData() )
-            throw MASA_EXCEPTION( tools::translate( "Weapons_Data", "Weapon %1 - Indirect fire - max range < min range" ).arg( strName_.GetData().c_str() ).toStdString() );
-
         output << xml::start( "indirect-fire" )
             << xml::attribute( "average-speed", rAverageSpeed_ )
             << xml::attribute( "min-range",     rMinRange_ )
@@ -189,6 +186,16 @@ void ADN_Weapons_Data_WeaponInfos::WriteArchive( xml::xostream& output ) const
     }
 
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data_WeaponInfos::CheckDatabaseValidity
+// Created: LDC 2014-03-21
+// -----------------------------------------------------------------------------
+void ADN_Weapons_Data_WeaponInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    if( bIndirect_.GetData() && rMaxRange_.GetData() < rMinRange_.GetData() )
+        checker.AddError( eIndirectFireRange, strName_.GetData(), eWeapons );
 }
 
 // -----------------------------------------------------------------------------
