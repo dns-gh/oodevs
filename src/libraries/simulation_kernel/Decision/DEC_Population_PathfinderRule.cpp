@@ -121,7 +121,7 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
     static const unsigned short waterZone = TerrainData::Water().Area() | TerrainData::Swamp().Area();
     static const unsigned short cliff = TerrainData::Cliff().Linear();
 
-    const float rSpeed = static_cast< float >( path_.GetMaxSpeed( terrainBetween ) );
+    const double rSpeed = path_.GetMaxSpeed( terrainBetween );
     if( rSpeed <= 0 )
         return -1.f;
 
@@ -153,6 +153,6 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
         return -1.f;
     rDynamicCost += rObjectsCost;
     const float rDistance = from.Distance( to );
-    const float maxSpeed = static_cast< float >( path_.GetMaxSpeed() );
-    return rDistance * rDynamicCost * ( maxSpeed ? maxSpeed / rSpeed : 1 );
+    const double maxSpeed = path_.GetMaxSpeed();
+    return static_cast< float >( rDistance * rDynamicCost * ( maxSpeed ? maxSpeed / rSpeed : 1 ) );
 }

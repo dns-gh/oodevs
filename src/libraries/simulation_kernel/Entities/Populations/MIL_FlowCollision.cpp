@@ -14,7 +14,11 @@
 #include "MIL_PopulationType.h"
 #include "MIL_Random.h"
 
-#define COLLISION_DELTA MIL_PopulationFlow::COLLISION_DELTA
+namespace
+{
+    const auto tolerance = MIL_PopulationFlow::tolerance_;
+    const auto squareTolerance = MIL_PopulationFlow::squareTolerance_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FlowCollision constructor
@@ -85,7 +89,7 @@ bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow ) const
     const MIL_PopulationFlow* movingFlow = collidingFlows_[ movingIndex_ ];
     // flow can move if it is the moving flow and if going flow is far enough from its head
     return movingFlow == flow &&
-        ( !going_ || going_->GetFlowShape().front().SquareDistance( movingFlow->GetFlowShape().back() ) > COLLISION_DELTA );
+        ( !going_ || going_->GetFlowShape().front().SquareDistance( movingFlow->GetFlowShape().back() ) > squareTolerance );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,8 +122,8 @@ bool MIL_FlowCollision::HasFlowPassedOver( const MIL_PopulationFlow* flow ) cons
     flow->ApplyOnShape( [&]( const MT_Line& line )->bool
     {
         double r = line.ProjectPointOnLine( point_, result );
-        if( point_.SquareDistance( line.GetPosStart() ) < 10 ||  point_.SquareDistance( line.GetPosEnd() ) < 10 ||
-            r >= -0.1 && r <= 1.1 && ( result - point_ ).SquareMagnitude() < COLLISION_DELTA )
+        if( point_.SquareDistance( line.GetPosStart() ) < tolerance ||  point_.SquareDistance( line.GetPosEnd() ) < tolerance ||
+            r >= -0.1 && r <= 1.1 && ( result - point_ ).SquareMagnitude() < squareTolerance )
         {
             hasPassedOver = false;
             return true;
@@ -150,8 +154,8 @@ void MIL_FlowCollision::Update()
         const MIL_PopulationFlow* flow = collidingFlows_[ movingIndex_ ];
         // if, during 5 ticks, the flow that is supposed to move does not move, if its head is still near intersection
         // and if the  going flow is far enough, we change the moving flow to the next one
-        if( flow->GetSpeed() < 1 && flow->GetFlowShape().back().SquareDistance( point_ ) < COLLISION_DELTA &&
-            ( !going_ || going_->GetFlowShape().front().SquareDistance( point_) > COLLISION_DELTA ) )
+        if( flow->GetSpeed() < 1 && flow->GetFlowShape().back().SquareDistance( point_ ) < squareTolerance &&
+            ( !going_ || going_->GetFlowShape().front().SquareDistance( point_) > squareTolerance ) )
             ++deadlockTimer_;
         else
             deadlockTimer_ = 0;
@@ -243,7 +247,7 @@ bool MIL_FlowCollision::SplitOnSegment( const MT_Line& line, std::size_t& segmen
 {
     MT_Vector2D result;
     double r = line.ProjectPointOnLine( point_, result );
-    if( r >= -0.0001 && r <= 1.0001 && result.SquareDistance( point_ ) < COLLISION_DELTA )
+    if( r >= -0.0001 && r <= 1.0001 && result.SquareDistance( point_ ) < squareTolerance )
     {
         cumulatedMagnitude += ( point_ - line.GetPosStart() ).Magnitude();
         MIL_PopulationFlow* flowToSplit = collidingFlows_[ movingIndex_ ];

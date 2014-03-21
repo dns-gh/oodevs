@@ -38,7 +38,8 @@ public:
 
     //! @name static public members
     //@{
-    static const double COLLISION_DELTA;
+    static const double tolerance_;
+    static const double squareTolerance_;
     //@}
 
     //! @name Operations

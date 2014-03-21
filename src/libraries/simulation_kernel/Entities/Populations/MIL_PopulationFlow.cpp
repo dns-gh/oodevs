@@ -44,7 +44,8 @@
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationFlow )
 
 MIL_IDManager MIL_PopulationFlow::idManager_;
-const double MIL_PopulationFlow::COLLISION_DELTA = 100;
+const double MIL_PopulationFlow::tolerance_ = 10;
+const double MIL_PopulationFlow::squareTolerance_ = MIL_PopulationFlow::tolerance_ * MIL_PopulationFlow::tolerance_;
 
 namespace
 {
@@ -686,8 +687,7 @@ namespace
 {
     bool AreNear( const MT_Line& line, const MT_Line& flowSegment, MT_Vector2D& intersection )
     {
-        static const double nearSquareDistance = 10;
-        if( line.GetPosEnd().SquareDistance( flowSegment.GetPosEnd() ) < nearSquareDistance )
+        if( line.GetPosEnd().SquareDistance( flowSegment.GetPosEnd() ) < MIL_PopulationFlow::tolerance_ )
         {
             intersection = flowSegment.GetPosEnd();
             return true;
@@ -708,7 +708,7 @@ bool MIL_PopulationFlow::AddFlowCollision( const MT_Line& line, const MT_Line& f
         if( AreReverse( line, flowSegment ) )
             return false;
 
-        if( intersection.SquareDistance( flowSegment.GetPosEnd() ) < COLLISION_DELTA )
+        if( intersection.SquareDistance( flowSegment.GetPosEnd() ) < squareTolerance_ )
         {
             auto it = FindPointInShape( flowSegment.GetPosEnd() );
             bool relevantSegment = false;
@@ -722,7 +722,7 @@ bool MIL_PopulationFlow::AddFlowCollision( const MT_Line& line, const MT_Line& f
             }
         }
 
-        if( intersection.SquareDistance( flowSegment.GetPosStart() ) < COLLISION_DELTA )
+        if( intersection.SquareDistance( flowSegment.GetPosStart() ) < squareTolerance_ )
         {
             auto it = FindPointInShape( flowSegment.GetPosStart() );
             if( it != flowShape_.end() )
@@ -765,8 +765,8 @@ bool MIL_PopulationFlow::CanCollideWith( MIL_PopulationFlow* flow ) const
         return false;
     if( &flow->GetPopulation() == &GetPopulation() )
         return false;
-    return GetHeadPosition().SquareDistance( flow->GetTailPosition() ) > COLLISION_DELTA
-        && GetTailPosition().SquareDistance( flow->GetHeadPosition() ) > COLLISION_DELTA;
+    return GetHeadPosition().SquareDistance( flow->GetTailPosition() ) > squareTolerance_
+        && GetTailPosition().SquareDistance( flow->GetHeadPosition() ) > squareTolerance_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1189,8 +1189,9 @@ namespace
     {
         MT_Vector2D result;
         const double r = MT_Line( start, end ).ProjectPointOnLine( waypoint, result );
-        return waypoint.SquareDistance( start ) < 10 || waypoint.SquareDistance( end ) < 10 ||
-            r >= -0.1 && r <= 1.1 && ( result - waypoint ).SquareMagnitude() < MIL_PopulationFlow::COLLISION_DELTA;
+        return waypoint.SquareDistance( start ) < MIL_PopulationFlow::tolerance_ ||
+               waypoint.SquareDistance( end ) < MIL_PopulationFlow::tolerance_ ||
+               r >= -0.1 && r <= 1.1 && ( result - waypoint ).SquareMagnitude() < MIL_PopulationFlow::squareTolerance_;
     }
 }
 
