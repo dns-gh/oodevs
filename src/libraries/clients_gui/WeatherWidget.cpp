@@ -196,7 +196,7 @@ void WeatherWidget::CommitTo( weather::Meteo& meteo ) const
     meteo.SetWind( wind );
     meteo.SetCloud( cloud );
     meteo.SetTemperature( temperature_->value() );
-    const weather::PHY_Precipitation* precipitation = weather::PHY_Precipitation::FindPrecipitation( tools::ToString( type_->GetValue() ).toStdString() );
+    const weather::PHY_Precipitation* precipitation = weather::PHY_Precipitation::FindPrecipitation( type_->GetValue() );
     if( !precipitation )
         throw MASA_EXCEPTION( "Unknown precipitation: " + tools::ToString( type_->GetValue() ).toStdString() );
     meteo.SetPrecipitation( *precipitation );
