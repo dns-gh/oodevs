@@ -65,9 +65,7 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& viewport )
 const weather::Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
 {
     assert( currentMeteo_.get() );
-    const weather::Meteo* meteo = meteoModel_.GetMeteo( terrainCoordinates );
-    if( meteo )
-        currentMeteo_->Update( *meteo );
+    currentMeteo_->Update( meteoModel_.GetMeteo( terrainCoordinates ) );
     for( auto it = effects_.begin(); it != effects_.end(); ++it )
         if( (*it)->IsInside( terrainCoordinates ) )
             (*it)->ApplyEffect( *currentMeteo_ );

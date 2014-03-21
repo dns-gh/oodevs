@@ -39,8 +39,8 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const weather::Meteo* GetGlobalMeteo() const;
-    const weather::Meteo* GetMeteo( const geometry::Point2f& point ) const;
+    const weather::Meteo& GetGlobalMeteo() const;
+    const weather::Meteo& GetMeteo( const geometry::Point2f& point ) const;
     const T_Meteos& GetLocalMeteos() const;
     virtual void Purge();
     //@}
