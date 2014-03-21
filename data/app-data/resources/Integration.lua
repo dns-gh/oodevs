@@ -1,3 +1,4 @@
+include "integration/Reports.lua"
 include "integration/SimulationIntegration.lua"
 include "integration/KnowledgeManager.lua"
 include "integration/Types.lua"
