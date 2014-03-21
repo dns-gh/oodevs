@@ -218,7 +218,10 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
             for( auto it = data_.vAutomata_.begin(); it != data_.vAutomata_.end(); ++it )
             {
                 ADN_Automata_Data::AutomatonInfos& automaton = **it;
+                if( automaton.vSubUnits_.empty() )
+                    continue;
                 ADN_Rich_ListViewItem* pAutomatItem = 0;
+                ADN_Automata_Data::UnitInfos* pPC = automaton.ptrUnit_.GetData();
 
                 // Unit
                 uint nUnitInAutomat = 0;
@@ -229,16 +232,16 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
                     ADN_Rich_ListViewItem* pUnitItem = 0;
 
                     uint nUnit = 0;
-                    if( nUnitInAutomat == 0 )
+                    if( nUnitInAutomat == 0 && pPC )
                     {
-                        pUnit = automaton.ptrUnit_.GetData();
+                        pUnit = pPC;
                         ++nUnit;
                     }
                     else
                     {
                         pUnit = *it2;
                         ++it2;
-                        if( pUnit == automaton.ptrUnit_.GetData() )
+                        if( pUnit == pPC )
                             continue;
                         nUnit += pUnit->min_.GetData();
                     }
