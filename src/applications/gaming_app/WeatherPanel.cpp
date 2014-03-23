@@ -78,7 +78,7 @@ void WeatherPanel::Reset()
 void WeatherPanel::NotifyUpdated( const MeteoModel& model )
 {
     currentModel_ = const_cast< MeteoModel* >( &model );
-    globalWeatherWidget_->Update( *currentModel_->GetGlobalMeteo() );
+    globalWeatherWidget_->Update( currentModel_->GetGlobalMeteo() );
     static_cast< WeatherListView* >( localWeathers_ )->Update( *currentModel_ );
 }
 
@@ -92,7 +92,7 @@ void WeatherPanel::Commit()
     {
         gui::WeatherParameters params = globalWeatherWidget_->CreateParameters();
         actionsModel_.PublishGlobalWeather( params );
-        const_cast< weather::Meteo* >( currentModel_->GetGlobalMeteo() )->SetModified( false );
+        const_cast< weather::Meteo& >( currentModel_->GetGlobalMeteo() ).SetModified( false );
         Reset();
     }
     else

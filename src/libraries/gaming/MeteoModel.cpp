@@ -41,20 +41,20 @@ MeteoModel::~MeteoModel()
 // Name: MeteoModel::GetGlobalMeteo
 // Created: ABR 2011-04-28
 // -----------------------------------------------------------------------------
-const weather::Meteo* MeteoModel::GetGlobalMeteo() const
+const weather::Meteo& MeteoModel::GetGlobalMeteo() const
 {
-    return globalMeteo_.get();
+    return *globalMeteo_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel::GetMeteo
 // Created: HBD 2010-03-30
 // -----------------------------------------------------------------------------
-const weather::Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point ) const
+const weather::Meteo& MeteoModel::GetMeteo( const geometry::Point2f& point ) const
 {
     for( T_Meteos::const_reverse_iterator rit = meteos_.rbegin(); rit != meteos_.rend(); ++rit )
         if( ( *rit )->IsInside( point ) )
-            return ( *rit ).get();
+            return **rit;
     return GetGlobalMeteo();
 }
 
@@ -115,6 +115,7 @@ void MeteoModel::Purge()
     // Override base Purge to ensure there is always a global weather object
     MeteoModel_ABC::Purge();
     // Dummy meteo identifier, not used for global meteo
-    globalMeteo_.reset( new weather::Meteo( 1, simulation_.GetTickDuration() ) );
+    const unsigned int dummyId = 1;
+    globalMeteo_.reset( new weather::Meteo( dummyId, simulation_.GetTickDuration() ) );
     controller_.Update( *this );
 }
