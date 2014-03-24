@@ -682,7 +682,7 @@ integration.setSuppliesLoaded = function( unit, bool )
 end
 
 --- Tests whether an agent is currently able to load at least one of the
---- equipments of another agent.
+-- equipments of another agent.
 -- @param unit Simulation agent, the transporter agent
 -- @param target Simulation agent, the agent to transport
 -- @param onlyLoadable Boolean, whether or not this method will only take into
@@ -693,7 +693,7 @@ integration.canLoad = function( unit, target, onlyLoadable )
 end
 
 --- Tests whether an agent is currently able to load at least one of the
---- equipments of another agent knowledge.
+-- equipments of another agent knowledge.
 -- @see integration.canLoad
 -- @param unit Simulation agent, the transporter agent
 -- @param target Simulation agent knowledge, the agent knowledge to transport
