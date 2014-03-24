@@ -141,6 +141,7 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 	})
 	// fire
 	c.Assert(client.Model.GetData().UnitKnowledges, HasLen, 0)
+	c.Assert(client.Model.GetData().FireDetections, HasLen, 0)
 	params := swapi.MakeParameters(
 		swapi.MakeResourceType(13), // Antitank High Explosive Shell
 		swapi.MakeFloat(1),
@@ -150,6 +151,17 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 	)
 	_, err = client.SendUnitFragOrder(firer.Id, 368, params) // Fire
 	c.Assert(err, IsNil)
+	// check fire detection created
+	var p *swapi.FireDetection
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, fp := range data.FireDetections {
+			p = fp
+			return true
+		}
+		return false
+	})
+	c.Assert(p.Firer, Equals, firer.Id)
+	c.Assert(p.Units, DeepEquals, []uint32{watcher.Id})
 	// check knowledge created
 	var k *swapi.UnitKnowledge
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -161,4 +173,8 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 	})
 	c.Assert(k.UnitId, Equals, firer.Id)
 	c.Assert(k.KnowledgeGroupId, Equals, automat2.KnowledgeGroupId)
+	// check fire detection destroyed
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FireDetections) == 0
+	})
 }

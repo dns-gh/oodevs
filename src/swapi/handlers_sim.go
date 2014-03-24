@@ -1454,3 +1454,37 @@ func (model *ModelData) handleMagicOrderDestruction(m *sword.SimToClient_Content
 	}
 	return nil
 }
+
+func (model *ModelData) handleFireDetectionCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetStartUnitFireDetection()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	units := []uint32{}
+	for _, unit := range mm.GetUnits() {
+		units = append(units, unit.GetId())
+	}
+	perception := &FireDetection{
+		Id:    mm.GetFire().GetId(),
+		Units: units,
+		Firer: mm.GetFirer().GetId(),
+	}
+	model.updateFireDetection(perception)
+	return nil
+}
+
+func (model *ModelData) handleFireDetectionDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetStopUnitFireDetection()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetFire().GetId()
+	units := []uint32{}
+	for _, unit := range mm.GetUnits() {
+		units = append(units, unit.GetId())
+	}
+	if !model.removeFireDetection(id, units) {
+		return fmt.Errorf("cannot destroy fire perception %d", id)
+	}
+	return nil
+}
