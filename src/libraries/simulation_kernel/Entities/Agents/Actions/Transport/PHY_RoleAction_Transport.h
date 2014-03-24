@@ -118,6 +118,7 @@ public:
     bool CanTransportPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const;
     bool CanLoad         ( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const;
     double  GetNumberOfRoundTripToTransportPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const;
+    double  GetNumberOfRoundTripsLeftToTransportPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const;
     bool IsLoaded        ( const MIL_Agent_ABC& transported ) const;
 
     int  Load           ();

@@ -60,6 +60,7 @@ public:
     static void Transport_Cancel          ( MIL_AgentPion& callerAgent );
     static bool AgentCanTransportPion     ( const DEC_Decision_ABC* agent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
     static bool CanLoad                   ( const DEC_Decision_ABC* pPion, const DEC_Decision_ABC* pTarget, bool bTransportOnlyLoadable );
+    static double GetNumberOfRoundTripsLeftToTransportPion( const DEC_Decision_ABC* pPion, const DEC_Decision_ABC* pTarget, bool bTransportOnlyLoadable );
     static double GetNumberOfRoundTripToTransportPion( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
     static bool CanTransportKnowledge     ( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool bTransportOnlyLoadable );
     static double GetNumberOfRoundTripToTransportKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool bTransportOnlyLoadable );

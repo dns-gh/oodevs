@@ -344,6 +344,16 @@ bool DEC_ActionFunctions::CanLoad( const DEC_Decision_ABC* pPion, const DEC_Deci
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::GetNumberOfRoundTripsLeftToTransportPion
+// Created: NMI 2014-03-24
+// -----------------------------------------------------------------------------
+double DEC_ActionFunctions::GetNumberOfRoundTripsLeftToTransportPion( const DEC_Decision_ABC* pPion, const DEC_Decision_ABC* pTarget, bool bTransportOnlyLoadable )
+{
+    assert( pPion );
+    return pPion->GetPion().GetRole< transport::PHY_RoleAction_Transport >().GetNumberOfRoundTripsLeftToTransportPion( pTarget->GetPion(), bTransportOnlyLoadable );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::GetNumberOfRoundTripToTransportPion
 // Created: GGE 2013-04-04
 // -----------------------------------------------------------------------------
