@@ -508,7 +508,7 @@ integration.transportKnowledgeRoundTrip = function( unit, onlyLoadable )
     return DEC_Connaissance_TransportNombreAllerRetour( myself, unit.source, onlyLoadable )
 end
 
---- Returns the necessary number of round trips left necessary to transport the given agent,
+--- Returns the necessary number of round trips left to transport the given agent,
 --- taking into account what is already transported.
 -- @param unit Simulation agent, the transporting agent
 -- @param target Simulation agent, the transported agent
@@ -519,7 +519,7 @@ integration.getNumberRoundTripsLeftForAgent = function( unit, target, onlyLoadab
     return DEC_RoundTripsLeftToTransportAgent( unit, target, onlyLoadable )
 end
 
---- Returns the necessary number of round trips left necessary to transport the given agent knowledge,
+--- Returns the necessary number of round trips left to transport the given agent knowledge,
 --- taking into account what is already transported.
 -- @see integration.getNumberRoundTripsLeftForAgent
 -- @param unit Simulation agent, the transporting agent
