@@ -110,7 +110,8 @@ void ChangeLogisticLinksDialog::Show()
     const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
     if( !log )
         return;
-
+    nominalSuperiorCombo_->RemoveItem( selected_ );
+    currentSuperiorCombo_->RemoveItem( selected_ );
     nominalSuperiorCombo_->SetCurrentItem( log->GetNominalSuperior() );
     currentSuperiorCombo_->SetCurrentItem( log->GetCurrentSuperior() );
     show();
@@ -210,6 +211,8 @@ void ChangeLogisticLinksDialog::Validate()
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::Reject()
 {
+    nominalSuperiorCombo_->AddItem( selected_->GetName(), selected_ );
+    currentSuperiorCombo_->AddItem( selected_->GetName(), selected_ );
     selected_ = 0;
     hide();
 }

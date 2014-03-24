@@ -26,12 +26,10 @@ namespace gui
 template< typename T >
 class ValuedComboBox : public QComboBox
 {
-
 private:
     //! @name Types
     //@{
-    typedef std::vector< T >                  T_ValueVector;
-    typedef typename T_ValueVector::iterator IT_ValueVector;
+    typedef std::vector< T > T_ValueVector;
     //@}
 
 public:

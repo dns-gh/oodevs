@@ -94,7 +94,7 @@ void ValuedComboBox<T>::ChangeItem( const QString& label, const T& value )
 template< typename T >
 void ValuedComboBox<T>::RemoveItem( const T& value )
 {
-    IT_ValueVector it = std::find( values_.begin(), values_.end(), value );
+    auto it = std::find( values_.begin(), values_.end(), value );
     if( it == values_.end() )
         return;
     removeItem( static_cast< int >( it - values_.begin() ) );
@@ -121,7 +121,7 @@ void ValuedComboBox<T>::SetCurrentItem( const T& value )
 template< typename T >
 int ValuedComboBox<T>::GetItemIndex( const T& value )
 {
-    IT_ValueVector it = std::find( values_.begin(), values_.end(), value );
+    auto it = std::find( values_.begin(), values_.end(), value );
     if( it == values_.end() )
         return -1;
     return static_cast< int >( it - values_.begin() );
