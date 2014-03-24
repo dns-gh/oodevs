@@ -393,18 +393,17 @@ void Profile::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 bool Profile::Update( const sword::ProfileUpdateRequest& message, const Profile_ABC& requester )
 {
-    strLogin_ = message.profile().login();
-    if( message.profile().has_password() )
-        strPassword_ = message.profile().password();
-    bSupervision_ = message.profile().supervisor() != 0;
     if( message.profile().has_time_control() )
     {
         if( !requester.CheckRights( message, bTimeControl_ ) )
             return false;
         bTimeControl_ = message.profile().time_control();
     }
+    strLogin_ = message.profile().login();
+    if( message.profile().has_password() )
+        strPassword_ = message.profile().password();
+    bSupervision_ = message.profile().supervisor() != 0;
     ReadRights( message.profile() );
-
     authentication::ProfileUpdate updatemessage;
     updatemessage().set_login( message.login() );
     if( !strPassword_.empty() )
