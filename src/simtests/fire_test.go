@@ -114,6 +114,11 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 		getUnitTypeFromName(c, phydb, "ART.Firefinder radar"),
 		swapi.Point{X: -15.8079, Y: 28.3373})
 	c.Assert(err, IsNil)
+	// This wait should not be necessary, created units should be ready to
+	// receive orders. May be related to http://jira.masagroup.net/browse/SWBUG-11903
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[watcher.Id].RawOperationalState > 0
+	})
 	// detect indirect fires
 	MissionDetectIndirectFires := uint32(44594906)
 	_, err = client.SendUnitOrder(watcher.Id, MissionDetectIndirectFires,
@@ -152,10 +157,10 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 	_, err = client.SendUnitFragOrder(firer.Id, 368, params) // Fire
 	c.Assert(err, IsNil)
 	// check fire detection created
-	var p *swapi.FireDetection
+	p := swapi.FireDetection{}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		for _, fp := range data.FireDetections {
-			p = fp
+			swapi.DeepCopy(&p, fp)
 			return true
 		}
 		return false
@@ -163,10 +168,10 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 	c.Assert(p.Firer, Equals, firer.Id)
 	c.Assert(p.Units, DeepEquals, []uint32{watcher.Id})
 	// check knowledge created
-	var k *swapi.UnitKnowledge
+	k := swapi.UnitKnowledge{}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		for _, uk := range data.UnitKnowledges {
-			k = uk
+			swapi.DeepCopy(&k, uk)
 			return true
 		}
 		return false
