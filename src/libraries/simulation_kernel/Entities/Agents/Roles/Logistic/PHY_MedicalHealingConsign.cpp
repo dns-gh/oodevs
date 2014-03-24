@@ -148,8 +148,8 @@ void PHY_MedicalHealingConsign::ChooseStateAfterResting()
         EnterStateSearchingForHealingArea();
     else
     {
-        if( pHumanState_->ShouldGoBackToWar() )
-            DoReturnHuman();
+        if( pHumanState_->GoBackToWar() )
+            pHumanState_ = 0;
         EnterStateFinished();
     }
 }
@@ -211,20 +211,6 @@ bool PHY_MedicalHealingConsign::DoWaitingForCollection()
     }
     return false;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_MedicalHealingConsign::DoReturnHuman
-// Created: JVT 2005-04-28
-// -----------------------------------------------------------------------------
-void PHY_MedicalHealingConsign::DoReturnHuman()
-{
-    if( pHumanState_->GoBackToWar() )
-        pHumanState_ = 0;
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHealingConsign::Update

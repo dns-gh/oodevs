@@ -395,15 +395,6 @@ void PHY_MedicalHumanState::NotifyHumanChanged()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MedicalHumanState::ShouldGoBackToWar
-// Created: JVT 2005-04-28
-// -----------------------------------------------------------------------------
-bool PHY_MedicalHumanState::ShouldGoBackToWar() const
-{
-    return bShouldGoBackToWar_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_MedicalHumanState::EvacuatedByThirdParty
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
