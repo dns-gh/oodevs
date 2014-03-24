@@ -55,6 +55,7 @@ public:
     const T_PathKnowledgeObjectsByTypes& GetPathKnowledgeObjects() const;
     double GetCostOutsideOfAllObjects() const;
     double GetMaxSpeed( const TerrainData& terrainData ) const;
+    double GetMaxSpeed() const;
     //@}
 
 private:

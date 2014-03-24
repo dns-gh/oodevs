@@ -14,6 +14,12 @@
 #include "MIL_PopulationType.h"
 #include "MIL_Random.h"
 
+namespace
+{
+    const auto tolerance = MIL_PopulationFlow::tolerance_;
+    const auto squareTolerance = MIL_PopulationFlow::squareTolerance_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_FlowCollision constructor
 // Created: JSR 2014-01-10
@@ -24,6 +30,7 @@ MIL_FlowCollision::MIL_FlowCollision( const MT_Vector2D& point )
     , movingIndex_( 0 )
     , going_( 0 )
     , randomThreshold_( 0 )
+    , deadlockTimer_( 0 )
 {
     // NOTHING
 }
@@ -49,6 +56,8 @@ void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationF
     bool flow2Found = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow2 ) != collidingFlows_.end();
     if( flow1Found && flow2Found )
         return;
+    if( !flow1Found && HasFlowPassedOver( flow1 ) || !flow2Found && HasFlowPassedOver( flow2 ) )
+        return;
     if( flow1Found )
         collidingFlows_.push_back( flow2 );
     else if( flow2Found )
@@ -72,13 +81,15 @@ void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationF
 // -----------------------------------------------------------------------------
 bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow ) const
 {
-    if( markedForDestruction_ )
+    if( markedForDestruction_ || flow == going_ )
         return true;
     auto flowIt = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow );
-    if( flowIt != collidingFlows_.end() )
-        if( collidingFlows_[ movingIndex_ ] != flow )
-            return false;
-    return true;
+    if( flowIt == collidingFlows_.end() )
+        return true;
+    const MIL_PopulationFlow* movingFlow = collidingFlows_[ movingIndex_ ];
+    // flow can move if it is the moving flow and if going flow is far enough from its head
+    return movingFlow == flow &&
+        ( !going_ || going_->GetFlowShape().front().SquareDistance( movingFlow->GetFlowShape().back() ) > squareTolerance );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,20 +111,26 @@ bool MIL_FlowCollision::MarkedForDestruction() const
     return markedForDestruction_;
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: MIL_FlowCollision::HasFlowPassedOver
+// Created: JSR 2014-03-18
+// -----------------------------------------------------------------------------
+bool MIL_FlowCollision::HasFlowPassedOver( const MIL_PopulationFlow* flow ) const
 {
-    bool HasFlowPassedOver( const MT_Vector2D& point, const MT_Line& line, bool& hasPassedOver )
+    bool hasPassedOver = true;
+    MT_Vector2D result;
+    flow->ApplyOnShape( [&]( const MT_Line& line )->bool
     {
-        MT_Vector2D result;
-        double r = line.ProjectPointOnLine( point, result );
-        if( point.SquareDistance( line.GetPosStart() ) < 10 ||  point.SquareDistance( line.GetPosEnd() ) < 10 ||
-            r >= -0.1 && r <= 1.1 && ( result - point ).SquareMagnitude() < 100 )
+        double r = line.ProjectPointOnLine( point_, result );
+        if( point_.SquareDistance( line.GetPosStart() ) < tolerance ||  point_.SquareDistance( line.GetPosEnd() ) < tolerance ||
+            r >= -0.1 && r <= 1.1 && ( result - point_ ).SquareMagnitude() < squareTolerance )
         {
             hasPassedOver = false;
             return true;
         }
         return false;
-    }
+    });
+    return hasPassedOver;
 }
 
 // -----------------------------------------------------------------------------
@@ -122,33 +139,49 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_FlowCollision::Update()
 {
+    RemovePassedOverFlows();
     if( markedForDestruction_ )
         return;
     const MIL_PopulationFlow* oldGoing = going_;
     if( IsTimerOver() )
-        Split();
-    if( oldGoing != going_ )
     {
+        Split();
+        if( oldGoing != going_)
+            deadlockTimer_ = 0;
+    }
+    else
+    {
+        const MIL_PopulationFlow* flow = collidingFlows_[ movingIndex_ ];
+        // if, during 5 ticks, the flow that is supposed to move does not move, if its head is still near intersection
+        // and if the  going flow is far enough, we change the moving flow to the next one
+        if( flow->GetSpeed() < 1 && flow->GetFlowShape().back().SquareDistance( point_ ) < squareTolerance &&
+            ( !going_ || going_->GetFlowShape().front().SquareDistance( point_) > squareTolerance ) )
+            ++deadlockTimer_;
+        else
+            deadlockTimer_ = 0;
+    }
+    const bool timerExpired = deadlockTimer_ == 5;
+    if( timerExpired || oldGoing != going_ )
+    {
+        if( timerExpired )
+            Split();
         if( ++movingIndex_ >= collidingFlows_.size() )
             movingIndex_ = 0;
+        deadlockTimer_ = 0;
     }
-
-    RemovedPassedOverFlows();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FlowCollision::RemovedPassedOverFlows
+// Name: MIL_FlowCollision::RemovePassedOverFlows
 // Created: JSR 2014-01-15
 // -----------------------------------------------------------------------------
-void MIL_FlowCollision::RemovedPassedOverFlows()
+void MIL_FlowCollision::RemovePassedOverFlows()
 {
     std::size_t nIndex = 0;
     for( auto it = collidingFlows_.begin(); it != collidingFlows_.end(); )
     {
-        bool hasPassedOver = true;
         MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
-        flow->ApplyOnShape( boost::bind( &HasFlowPassedOver, boost::cref( point_ ), _1, boost::ref( hasPassedOver ) ) );
-        if( hasPassedOver )
+        if( flow == going_ || HasFlowPassedOver( flow ) )
         {
             it = collidingFlows_.erase( it );
             if( movingIndex_ > nIndex )
@@ -214,7 +247,7 @@ bool MIL_FlowCollision::SplitOnSegment( const MT_Line& line, std::size_t& segmen
 {
     MT_Vector2D result;
     double r = line.ProjectPointOnLine( point_, result );
-    if( r >= -0.0001 && r <= 1.0001 && result.SquareDistance( point_ ) < 100 )
+    if( r >= -0.0001 && r <= 1.0001 && result.SquareDistance( point_ ) < squareTolerance )
     {
         cumulatedMagnitude += ( point_ - line.GetPosStart() ).Magnitude();
         MIL_PopulationFlow* flowToSplit = collidingFlows_[ movingIndex_ ];

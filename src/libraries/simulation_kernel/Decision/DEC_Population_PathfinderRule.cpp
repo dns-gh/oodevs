@@ -153,5 +153,6 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
         return -1.f;
     rDynamicCost += rObjectsCost;
     const float rDistance = from.Distance( to );
-    return static_cast< float >( rDistance / rSpeed * ( 1 + rDynamicCost ) );
+    const double maxSpeed = path_.GetMaxSpeed();
+    return static_cast< float >( rDistance * rDynamicCost * ( maxSpeed ? maxSpeed / rSpeed : 1 ) );
 }

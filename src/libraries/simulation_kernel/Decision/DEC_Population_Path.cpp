@@ -253,6 +253,15 @@ double DEC_Population_Path::GetMaxSpeed( const TerrainData& terrainData ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::GetMaxSpeed
+// Created: JSR 2014-03-21
+// -----------------------------------------------------------------------------
+double DEC_Population_Path::GetMaxSpeed() const
+{
+    return population_.GetType().GetMaxSpeed();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Population_Path::NeedRefine
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
