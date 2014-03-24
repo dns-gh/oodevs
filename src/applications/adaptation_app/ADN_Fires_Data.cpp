@@ -58,11 +58,7 @@ void ADN_Fires_Data::FireInjuryInfos::ReadInjury( xml::xistream& input )
         wound == "dead"    ? &nNbDeadHumans_ :
         0;
     if( pWound )
-    {
         *pWound = static_cast< int >( input.attribute< double >( "percentage" ) * 100. );
-        if( pWound->GetData() < 0 || pWound->GetData() > 100 )
-            throw MASA_EXCEPTION( tools::translate( "ADN_Fires_Data", "Fire - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).toStdString() );
-    }
     else
         throw MASA_EXCEPTION(tools::translate( "ADN_Fires_Data", "Fire - Invalid wound type '%1'" ).arg( wound.c_str() ).toStdString() );
 }
@@ -74,8 +70,6 @@ void ADN_Fires_Data::FireInjuryInfos::ReadInjury( xml::xistream& input )
 void ADN_Fires_Data::FireInjuryInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::list( "injury", *this, &ADN_Fires_Data::FireInjuryInfos::ReadInjury );
-    if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw MASA_EXCEPTION( tools::translate( "ADN_Fires_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,8 +79,6 @@ void ADN_Fires_Data::FireInjuryInfos::ReadArchive( xml::xistream& input )
 void ADN_Fires_Data::FireInjuryInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "injuries" );
-    if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw MASA_EXCEPTION( tools::translate( "ADN_Fires_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toStdString() );
     output  << xml::start( "injury" )
                 << xml::attribute( "type", "u1" )
                 << xml::attribute( "percentage", nNbHurtHumans1_.GetData() / 100. )
@@ -455,4 +447,24 @@ QStringList ADN_Fires_Data::GetFireThatUse( ADN_Resources_Data::CategoryInfo& in
                 result << ( *it )->strName_.GetData().c_str();
         }
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Fires_Data::CheckDatabaseValidity
+// Created: LDC 2014-03-21
+// -----------------------------------------------------------------------------
+void ADN_Fires_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = fireClasses_.begin(); it != fireClasses_.end(); ++it )
+        ( *it )->injuryInfos_.CheckDatabaseValidity( checker );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Fires_Data::FireInjuryInfos::CheckDatabaseValidity
+// Created: LDC 2014-03-21
+// -----------------------------------------------------------------------------
+void ADN_Fires_Data::FireInjuryInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
+        checker.AddError( eInvalidFireInjuries, parentName_, eFires );
 }

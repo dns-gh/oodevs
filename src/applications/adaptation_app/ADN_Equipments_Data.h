@@ -204,7 +204,8 @@ public:
         void CopyFrom( BreakdownGroupInfos& src );
         void ReadArchive( xml::xistream& input, const std::string& parentName );
         void ReadBreakdown( xml::xistream& input, const std::string& parentName );
-        void WriteArchive( xml::xostream& output, const std::string& composante ) const;
+        void WriteArchive( xml::xostream& output ) const;
+        void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& composante ) const;
 
     public:
         std::string strName_;

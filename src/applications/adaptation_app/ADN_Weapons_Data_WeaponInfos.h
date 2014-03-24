@@ -35,6 +35,7 @@ public:
 
     bool IsValidOnChange( bool bDirect, bool bLauncher ) const;
     void ConnectLauncherAmmunition();
+    void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
 
 public:
     ADN_TypePtr_InVector_ABC< ADN_Launchers_Data::LauncherInfos > ptrLauncher_;

@@ -283,17 +283,18 @@ namespace
 // Name: ADN_Inhabitants_Data::CheckErrors
 // Created: LGY 2011-01-31
 // -----------------------------------------------------------------------------
-const std::string ADN_Inhabitants_Data::InhabitantsInfos::CheckErrors() const
+void ADN_Inhabitants_Data::InhabitantsInfos::CheckErrors( ADN_ConsistencyChecker& checker ) const
 {
     for( auto it1 = schedule_.begin(); it1 != schedule_.end(); ++it1 )
         for( auto it2 = schedule_.begin(); it2 != schedule_.end(); ++it2 )
             if( it1 != it2 && ( *it1 )->day_.GetData() == ( *it2 )->day_.GetData() &&
                 !CheckTime( ( *it1 )->from_.GetData(), ( *it1 )->to_.GetData(), ( *it2 )->from_.GetData(), ( *it2 )->to_.GetData() ) )
-                return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).toStdString() + std::string( "\n" ) +
+                checker.AddError( eInhabitantSchedule, 
+                    tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).toStdString() + std::string( "\n" ) +
                                          "- " + ( *it1 )->day_.Convert( ENT_Tr::eToTr ) + " : " + ( *it1 )->from_.GetData() + " / " + ( *it1 )->to_.GetData() + "\n" +
-                                         "- " + ( *it2 )->day_.Convert( ENT_Tr::eToTr ) + " : " + ( *it2 )->from_.GetData() + " / " + ( *it2 )->to_.GetData() + "\n";
-    repartition_.CheckNoError( strName_.GetData().c_str() );
-    return "";
+                                         "- " + ( *it2 )->day_.Convert( ENT_Tr::eToTr ) + " : " + ( *it2 )->from_.GetData() + " / " + ( *it2 )->to_.GetData() + "\n",
+                    eInhabitants );
+    repartition_.CheckNoError( strName_.GetData().c_str(), checker, eInhabitants );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,9 +303,6 @@ const std::string ADN_Inhabitants_Data::InhabitantsInfos::CheckErrors() const
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output ) const
 {
-    const std::string error = CheckErrors();
-    if( error != "" )
-        throw MASA_EXCEPTION( error );
     output << xml::start( "population" )
             << xml::attribute( "name", *this )
             << xml::attribute( "id", nId_ )
@@ -353,7 +351,8 @@ void ADN_Inhabitants_Data::InhabitantsInfos::ReadEvent( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::InhabitantsInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab /* = -1 */, const std::string& /* optional = "" */ )
 {
-    ptrModel_.CheckValidity( checker, name, tab, subTab, tools::translate( "ADN_Inhabitants_Data", "Associated Crowd").toStdString() );
+    ptrModel_.CheckValidity( checker, name, tab, subTab, tools::translate( "ADN_Inhabitants_Data", "Associated Crowd" ).toStdString() );
+    CheckErrors( checker );
 }
 
 // -----------------------------------------------------------------------------
@@ -492,5 +491,5 @@ void ADN_Inhabitants_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checke
 {
     ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vInhabitants_.begin(); it != vInhabitants_.end(); ++it )
-        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eInhabitants );
+        ( *it )->CheckDatabaseValidity( checker, ( *it )->strName_.GetData(), eInhabitants );
 }

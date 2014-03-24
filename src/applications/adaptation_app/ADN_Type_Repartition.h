@@ -34,7 +34,7 @@ public:
     ADN_Type_Repartition& operator =( ADN_Type_Repartition& copy );
     void ReadArchive( xml::xistream& input );
     void WriteArchive( xml::xostream& output ) const;
-    void CheckNoError( const QString& dataName ) const;
+    void CheckNoError( const QString& dataName, ADN_ConsistencyChecker& checker, int tab ) const;
     //@}
 
     //! @name Members

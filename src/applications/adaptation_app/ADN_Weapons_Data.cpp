@@ -163,5 +163,6 @@ void ADN_Weapons_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) 
     {
         ( *it )->ptrLauncher_.CheckValidity( checker, ( *it )->strName_.GetData(), eWeapons, -1, tools::translate( "ADN_Weapons_Data", "Launcher" ).toStdString() );
         ( *it )->ptrAmmunition_.CheckValidity( checker, ( *it )->strName_.GetData(), eWeapons, -1, tools::translate( "ADN_Weapons_Data", "Ammunition" ).toStdString() );
+        ( *it )->CheckDatabaseValidity( checker );
     }
 }

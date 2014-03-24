@@ -93,13 +93,22 @@ void ADN_Volumes_Data::WriteArchive( xml::xostream& output ) const
     output << xml::start( "volumes" );
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "Volumes" );
-    for( T_VolumeInfos_Vector::const_iterator itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
+    for( auto itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
     {
-        if( ( *itSize )->strName_.GetData().empty() )
-            throw MASA_EXCEPTION( tools::translate( "Categories_Data", "Categories - Invalid volume type name" ).toStdString() );
         output << xml::start( "volume" )
             << xml::attribute( "name", **itSize )
             << xml::end;
     }
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Volumes_Data::CheckDatabaseValidity
+// Created: LDC 2014-03-21
+// -----------------------------------------------------------------------------
+void ADN_Volumes_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = vSizes_.begin(); it != vSizes_.end(); ++it )
+        if( ( *it )->strName_.GetData().empty() )
+            checker.AddError( eInvalidVolume, "", eCategories );
 }

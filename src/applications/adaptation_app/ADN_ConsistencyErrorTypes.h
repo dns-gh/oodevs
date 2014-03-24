@@ -39,6 +39,17 @@ enum E_ConsistencyCheck
     eInvalidIdInVector,
     eDuplicateTranslation,
     eInvalidProbe,
+    eBadBreakdownSum,
+    eInhabitantSchedule,
+    eInvalidSupplyClass,
+    eInvalidResourceNature,
+    eInvalidFireInjuries,
+    eInvalidPoisoningData,
+    eBadFloodInjuries,
+    eInvalidRoof,
+    eInvalidVolume,
+    eIndirectFireRange,
+    eRepartitionError,
     eOthersMask
 };
 

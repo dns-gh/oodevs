@@ -47,6 +47,7 @@ public:
 
     T_VolumeInfos_Vector& GetVolumesInfos();
     VolumeInfos* FindSize( const std::string& strName );
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     //@}
 
 private:
