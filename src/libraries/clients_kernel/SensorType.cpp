@@ -261,7 +261,10 @@ float SensorType::ComputeEnvironmentFactor( bool inForest, bool inTown, bool inG
 // Name: SensorType::ComputeExtinction
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather ) const
+float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ,
+    bool inForest, bool inTown, bool inGround, float distance,
+    const boost::optional< std::string >& material,
+    const weather::Meteo& weather ) const
 {
     bool bIsAroundBU = false;
     bIsAroundBU = ComputeUrbanExtinction( rCurrentNRJ, distance, material, weather );
@@ -278,28 +281,20 @@ float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentN
 // Name: SensorType::GetWeatherModifier
 // Created: LDC 2013-02-22
 // -----------------------------------------------------------------------------
-float SensorType::GetWeatherModifier( const weather::Meteo* weather  ) const
+float SensorType::GetWeatherModifier( const weather::Meteo& weather ) const
 {
-    if( !weather )
-        return 1.f;
-    const weather::PHY_Precipitation& precipitation = weather->GetPrecipitation();
-    auto precipitationFactorIt =  precipitationFactors_.find( precipitation.GetName() );
-    float precipitationFactor = ( precipitationFactorIt != precipitationFactors_.end() ) ? precipitationFactorIt->second : 1.f;
-    return precipitationFactor;
+    auto it = precipitationFactors_.find( weather.GetPrecipitation().GetName() );
+    return it != precipitationFactors_.end() ? it->second : 1;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SensorType::GetLightingFactor
 // Created: LDC 2014-03-20
 // -----------------------------------------------------------------------------
-float SensorType::GetLightingFactor( const weather::Meteo* weather ) const
+float SensorType::GetLightingFactor( const weather::Meteo& weather ) const
 {
-    if( !weather )
-        return 1;
-    const weather::PHY_Lighting& lighting = weather->GetLighting();
-    auto lightingIt = lightingFactors_.find( lighting.GetName() );
-    float lightingFactor = ( lightingIt != lightingFactors_.end() ) ? lightingIt->second : 1.f;
-    return lightingFactor;
+    auto it = lightingFactors_.find( weather.GetLighting().GetName() );
+    return it != lightingFactors_.end() ? it->second : 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -333,7 +328,10 @@ const std::vector< float >& SensorType::GetPostureSourceFactors() const
 // Name: SensorType::ComputeExtinction
 // Created: JVT 2004-09-28
 // -----------------------------------------------------------------------------
-float SensorType::ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather, const weather::Meteo* targetWeather ) const
+float SensorType::ComputeExtinction( float distanceModificator,
+    bool inForest, bool inTown, bool inGround, float distance,
+    const boost::optional< std::string >& material,
+    const weather::Meteo& weather, const weather::Meteo& targetWeather ) const
 {
     float result = ComputeExtinction( distanceModificator, rDetectionDist_, inForest, inTown, inGround, distance, material, weather );
     result *= GetLightingFactor( targetWeather );
@@ -359,7 +357,7 @@ E_PerceptionResult SensorType::InterpreteNRJ( float rNRJ ) const
 // Name: SensorType::ComputeUrbanExtinction
 // Created: SLG 2010-03-10
 // -----------------------------------------------------------------------------
-bool SensorType::ComputeUrbanExtinction( float& rVisionNRJ, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather  ) const
+bool SensorType::ComputeUrbanExtinction( float& rVisionNRJ, float distance, const boost::optional< std::string >& material, const weather::Meteo& weather ) const
 {
     bool bIsAroundBU = false;
     if( material )

@@ -43,8 +43,8 @@ public:
     //! @name Operations
     //@{
     float GetMaxDistance   ( float distanceModificator ) const;
-    float ComputeExtinction( float distanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather = 0 ) const;
-    float ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather = 0, const weather::Meteo* targetWeather = 0 ) const;
+    float ComputeExtinction( float distanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo& weather ) const;
+    float ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo& weather, const weather::Meteo& targetWeather ) const;
 
     E_PerceptionResult InterpreteNRJ( float skyRock ) const;
     //@}
@@ -81,9 +81,9 @@ private:
     void ReadDistance                       ( xml::xistream& xis );
 
     float ComputeEnvironmentFactor          ( bool inForest, bool inTown, bool inGround ) const;
-    bool ComputeUrbanExtinction             ( float& skyRock, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather ) const;
-    float GetWeatherModifier( const weather::Meteo* weather ) const;
-    float GetLightingFactor( const weather::Meteo* weather ) const;
+    bool ComputeUrbanExtinction             ( float& skyRock, float distance, const boost::optional< std::string >& material, const weather::Meteo& weather ) const;
+    float GetWeatherModifier( const weather::Meteo& weather ) const;
+    float GetLightingFactor( const weather::Meteo& weather ) const;
     //@}
 
 private:
