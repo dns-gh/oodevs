@@ -322,7 +322,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     if( eMissionType == eMissionType_FragOrder )
     {
         pSearchListView = builder.AddSearchListView< ADN_ListView_FragOrderTypes >( this, missions, missions, vInfosConnectors, eMissionType_FragOrder );
-        connect( availableState_, SIGNAL( toggled ( bool ) ), this, SLOT( OnToggleAvailableWithoutMission( bool ) ) );
+        connect( availableState_, SIGNAL( clicked ( bool ) ), this, SLOT( OnToggleAvailableWithoutMission( bool ) ) );
         connect( this, SIGNAL( SendAvailableWithoutMission ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
     }
     else
