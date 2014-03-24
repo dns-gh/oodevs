@@ -204,23 +204,15 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
         switch( actionId )
         {
         case ObjectMagicAction::obstacle:
-            CheckAttribteCount( "obstacle", attributes, 5 );
-            CheckBool( attributes, 2 );
-            CheckQuantity( attributes, 3 );
-            CheckQuantity( attributes, 4 );
             object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( attributes );
             break;
         case ObjectMagicAction::mine:
             object.GetAttribute< MineAttribute >() = MineAttribute( attributes );
             break;
         case ObjectMagicAction::time_limit:
-            CheckAttribteCount( "time_limit", attributes, 2 );
-            CheckQuantity( attributes, 1 );
             object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attributes );
             break;
         case ObjectMagicAction::bypass:
-            CheckAttribteCount( "bypass", attributes, 2 );
-            CheckQuantity( attributes, 1 );
             object.GetAttribute< BypassAttribute >() = BypassAttribute( attributes );
             break;
         case ObjectMagicAction::effect_delay:
@@ -257,16 +249,12 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
             object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( object );
             break;
         case ObjectMagicAction::altitude_modifier:
-            CheckAttribteCount( "altitude_modifier", attributes, 2 );
-            CheckQuantity( attributes, 1 );
             object.GetAttribute< AltitudeModifierAttribute >() = AltitudeModifierAttribute( attributes, object.GetLocalisation(), object.GetID() );
             break;
         case ObjectMagicAction::underground:
             object.GetAttribute< UndergroundAttribute >() = UndergroundAttribute( attributes );
             break;
         case ObjectMagicAction::trafficability:
-            CheckAttribteCount( "trafficability", attributes, 2 );
-            protocol::Check( attributes.list( 1 ).has_areal(), "list[1] must have a real" );
             object.GetAttribute< TrafficabilityAttribute >() = TrafficabilityAttribute( attributes );
             break;
         case ObjectMagicAction::disaster:

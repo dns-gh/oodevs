@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "AltitudeModifierAttribute.h"
+#include "ObjectAttributes.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Object_ABC.h"
 #include "Meteo/PHY_MeteoDataManager.h"
@@ -46,8 +47,9 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( const xml::xistream& xis )
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::AltitudeModifierAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& localisation, unsigned int objectId )
-    : height_( attributes.list( 1 ).quantity() )
 {
+    CheckCount( "altitude_modifier", attributes, 2 );
+    height_ = GetQuantity( "altitude_modifier", attributes, 1 );
     ModifyAltitude( localisation, objectId );
 }
 
