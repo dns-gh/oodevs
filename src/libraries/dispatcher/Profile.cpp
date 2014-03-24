@@ -304,6 +304,19 @@ bool Profile::CheckRights( const sword::ChatTarget& source, const sword::ChatTar
     return t.empty() || strLogin_ == t || strLogin_ == s;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Profile::CheckRights
+// Created: SLI 2014-03-21
+// -----------------------------------------------------------------------------
+bool Profile::CheckRights( const sword::ProfileUpdateRequest& msg, bool currentTimeControl ) const
+{
+    if( !msg.has_profile() || !msg.profile().has_time_control() )
+        return true;
+    if( msg.profile().time_control() != currentTimeControl )
+        return bTimeControl_;
+    return true;
+}
+
 namespace
 {
     template< typename List, typename Container >
@@ -378,14 +391,18 @@ void Profile::SendCreation( ClientPublisher_ABC& publisher ) const
 // Name: Profile::Update
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-void Profile::Update( const sword::ProfileUpdateRequest& message )
+bool Profile::Update( const sword::ProfileUpdateRequest& message, const Profile_ABC& requester )
 {
     strLogin_ = message.profile().login();
-    if( message.profile().has_password()  )
+    if( message.profile().has_password() )
         strPassword_ = message.profile().password();
     bSupervision_ = message.profile().supervisor() != 0;
     if( message.profile().has_time_control() )
+    {
+        if( !requester.CheckRights( message, bTimeControl_ ) )
+            return false;
         bTimeControl_ = message.profile().time_control();
+    }
     ReadRights( message.profile() );
 
     authentication::ProfileUpdate updatemessage;
@@ -394,6 +411,7 @@ void Profile::Update( const sword::ProfileUpdateRequest& message )
         updatemessage().mutable_profile()->set_password( strPassword_ );
     Send( *updatemessage().mutable_profile() );
     updatemessage.Send( clients_ );
+    return true;
 }
 
 // -----------------------------------------------------------------------------

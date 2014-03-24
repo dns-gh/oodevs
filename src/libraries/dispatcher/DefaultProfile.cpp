@@ -68,6 +68,15 @@ bool DefaultProfile::CheckRights( const sword::ChatTarget& , const sword::ChatTa
 }
 
 // -----------------------------------------------------------------------------
+// Name: DefaultProfile::CheckRights
+// Created: SLI 2014-03-21
+// -----------------------------------------------------------------------------
+ bool DefaultProfile::CheckRights( const sword::ProfileUpdateRequest&, bool ) const
+ {
+     return false;
+ }
+
+// -----------------------------------------------------------------------------
 // Name: DefaultProfile::GetName
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
