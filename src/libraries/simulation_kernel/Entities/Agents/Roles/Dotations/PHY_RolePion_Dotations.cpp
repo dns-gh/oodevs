@@ -593,11 +593,7 @@ void PHY_RolePion_Dotations::ChangeConsumptionMode(ConsumptionModeChangeRequest_
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::SetForbiddenDotation( const PHY_DotationCategory& category )
 {
-    std::vector< const PHY_DotationCategory* >::iterator it;
-    for( it = forbiddenDotations_.begin(); it != forbiddenDotations_.end(); ++it )
-        if( (*it)->GetName() == category.GetName() )
-            break;
-    if( it == forbiddenDotations_.end() )
+    if( std::find( forbiddenDotations_.begin(), forbiddenDotations_.end(), &category ) == forbiddenDotations_.end() )
     {
         MIL_Report::PostEvent( *owner_, report::eRC_MunitionInterdite, category );
         forbiddenDotations_.push_back( &category );
@@ -609,10 +605,7 @@ void PHY_RolePion_Dotations::SetForbiddenDotation( const PHY_DotationCategory& c
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::RemoveForbiddenDotation( const PHY_DotationCategory& category )
 {
-    std::vector< const PHY_DotationCategory* >::iterator it;
-    for( it = forbiddenDotations_.begin(); it != forbiddenDotations_.end(); ++it )
-        if( (*it)->GetName() == category.GetName() )
-            break;
+    auto it = std::find( forbiddenDotations_.begin(), forbiddenDotations_.end(), &category );
     if( it != forbiddenDotations_.end() )
     {
        MIL_Report::PostEvent( *owner_, report::eRC_MunitionAutorise, category );

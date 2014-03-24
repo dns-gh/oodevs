@@ -59,15 +59,9 @@ void DefaultDotationComputer::SetDotationContainer( PHY_DotationGroupContainer& 
 // -----------------------------------------------------------------------------
 bool DefaultDotationComputer::HasDotation( const PHY_DotationCategory& category ) const
 {
-    if( forbiddenAmmunition_ && !forbiddenAmmunition_->empty() )
-    {
-        std::vector< const PHY_DotationCategory* >::const_iterator it;
-        for( it = forbiddenAmmunition_->begin(); it != forbiddenAmmunition_->end(); ++it )
-            if( (*it)->GetName() == category.GetName() )
-                break;
-        if( it != forbiddenAmmunition_->end() )
-            return false;
-    }
+    if( forbiddenAmmunition_ &&
+        std::find( forbiddenAmmunition_->begin(), forbiddenAmmunition_->end(), &category ) != forbiddenAmmunition_->end() )
+        return false;
     assert( pDotationContainer_ );
     return pDotationContainer_->GetValue( category ) > 0.;
 }
