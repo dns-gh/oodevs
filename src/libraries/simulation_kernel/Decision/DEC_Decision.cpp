@@ -720,6 +720,7 @@ void RegisterToolsFunctions( sword::Brain& brain )
 void RegisterTransportFunctions( sword::Brain& brain )
 {
     brain.RegisterFunction( "DEC_CanLoad", &DEC_ActionFunctions::CanLoad );
+    brain.RegisterFunction( "DEC_RoundTripsLeftToTransportAgent", &DEC_ActionFunctions::GetNumberOfRoundTripsLeftToTransportPion );
 }
 
 // -----------------------------------------------------------------------------

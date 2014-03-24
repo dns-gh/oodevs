@@ -527,6 +527,31 @@ double PHY_RoleAction_Transport::GetNumberOfRoundTripToTransportPion( MIL_Agent_
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::GetNumberOfRoundTripsLeftToTransportPion
+// Created: NMI 2014-03-24
+// -----------------------------------------------------------------------------
+double PHY_RoleAction_Transport::GetNumberOfRoundTripsLeftToTransportPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const
+{
+    if( *owner_ == transported )
+        return 0;
+
+    TransportWeightComputer weightComp( bTransportOnlyLoadable, owner_->CanTransportDestroyed() );
+    transported.Execute< TransportWeightComputer_ABC >( weightComp );
+
+    if( weightComp.totalTransportedWeight_ <= 0 )
+        return 0;
+
+    TransportCapacityComputer capacityComputer;
+    owner_->Execute< OnComponentComputer_ABC >( capacityComputer );
+
+    auto it = transportedPions_.find( &transported );
+    if( it == transportedPions_.end() )
+        return 0;
+
+    return ( weightComp.totalTransportedWeight_ - it->second.rTransportedWeight_ ) / capacityComputer.rWeightCapacity_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::IsLoaded
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
