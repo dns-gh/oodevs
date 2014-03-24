@@ -10,8 +10,9 @@
 #ifndef ADAPTATION_ADN_MISSIONS_DATA_PARAMETERVALUE_H
 #define ADAPTATION_ADN_MISSIONS_DATA_PARAMETERVALUE_H
 
-#include "ADN_Ref_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
+#include "ADN_Type_LocalizedString.h"
 
 namespace xml
 {
@@ -19,10 +20,10 @@ namespace xml
     class xostream;
 }
 
-class ADN_Missions_ParameterValue : public ADN_Ref_ABC
+class ADN_Missions_ParameterValue : public ADN_RefWithLocalizedName
 {
 public:
-             ADN_Missions_ParameterValue();
+    explicit ADN_Missions_ParameterValue( E_MissionType type );
     virtual ~ADN_Missions_ParameterValue();
 
     std::string GetItemName();
@@ -32,8 +33,8 @@ public:
     void WriteArchive( xml::xostream& output ) const;
 
 public:
-    ADN_Type_String name_;
     ADN_Type_Int id_;
+    E_MissionType missionType_;
 };
 
 #endif // ADAPTATION_ADN_MISSIONS_DATA_PARAMETERVALUE_H
