@@ -94,6 +94,15 @@ BOOST_AUTO_TEST_CASE( WikiXmlConverter_roundtrip )
             "</root>\n",
             " * titre 1\n"
             "  * titre 2\n\n",
+        },
+        {
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+            "<root>\n"
+            "  <ul>\n"
+            "    <li/>\n"
+            "  </ul>\n"
+            "</root>\n",
+            " * \n\n",
         }
     };
 

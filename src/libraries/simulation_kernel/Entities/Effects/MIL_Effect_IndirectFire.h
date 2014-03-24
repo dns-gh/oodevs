@@ -14,6 +14,7 @@
 
 #include "MIL_Effect_ABC.h"
 #include "MT_Tools/MT_Vector2D.h"
+#include <boost/optional.hpp>
 
 class PHY_DotationCategory_IndirectFire_ABC;
 class PHY_WeaponDataType_IndirectFire;
@@ -56,6 +57,8 @@ public:
     void NotifyAmmoFired( const PHY_WeaponDataType_IndirectFire& weaponType, unsigned int nNbrAmmoReserved );
     bool IsFlyingThroughLocalisation( const TER_Localisation& localisation ) const;
     bool CanWeaponBeUsed( const PHY_Weapon& weapon ) const;
+
+    bool NotifyDetected( const MIL_Agent_ABC& perceiver ) const;
     //@}
 
 private:
@@ -71,7 +74,7 @@ private:
     const double rInterventionTypeToFire_;
     const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory_;
     const MT_Vector2D vSourcePosition_;
-    MT_Vector2D vTargetPosition_;
+    boost::optional< MT_Vector2D > vTargetPosition_;
     unsigned int nTargetKnowledgeID_;
     unsigned int nNbrAmmoFired_;
     unsigned int fireResultId_;
@@ -79,7 +82,7 @@ private:
     bool bFired_;
     bool bArrived_;
     double rImpactTimeStep_;
-    PHY_FireResults_Pion* pFireResult_;
+    std::unique_ptr< PHY_FireResults_Pion > pFireResult_;
 };
 
 #endif // __MIL_Effect_IndirectFire_h_

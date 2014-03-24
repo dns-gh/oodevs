@@ -27,6 +27,9 @@ EquipmentType::EquipmentType( xml::xistream& xis, const tools::Resolver_ABC< Wea
         >> xml::attribute( "id", id_ )
         >> xml::attribute( "weight", weight_ )
         >> xml::attribute( "protection", protection_ )
+        >> xml::start( "speeds" )
+            >> xml::attribute( "max", maxSpeed_ )
+        >> xml::end
         >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &EquipmentType::ReadWeaponSystem, weapons )
         >> xml::end
@@ -58,6 +61,7 @@ EquipmentType::EquipmentType( xml::xistream& xis, const tools::Resolver_ABC< Wea
                 } )
             >> xml::end
         >> xml::end;
+     maxSpeed_ *= 1000. / 3600.;
 }
 
 // -----------------------------------------------------------------------------
@@ -183,4 +187,13 @@ const EquipmentType::CarryingSupplyFunction* EquipmentType::GetLogSupplyFunction
 const MaintenanceFunctions* EquipmentType::GetMaintenanceFunctions() const
 {
     return maintenanceFunctions_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentType::GetMaxSpeed
+// Created: SLI 2014-03-18
+// -----------------------------------------------------------------------------
+double EquipmentType::GetMaxSpeed() const
+{
+    return maxSpeed_;
 }

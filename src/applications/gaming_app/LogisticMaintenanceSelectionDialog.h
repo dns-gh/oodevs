@@ -23,6 +23,7 @@ namespace actions
 
 namespace kernel
 {
+    class Agent_ABC;
     class Availability;
     class BreakdownType;
     class ComponentType;
@@ -38,9 +39,15 @@ namespace sword
     enum LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus;
 }
 
+namespace gui
+{
+    class DisplayExtractor;
+}
+
 class MaintenanceHaulersListView;
 class MaintenanceRepairersListView;
 class PartsView;
+class DiagnosisUnitView;
 
 // =============================================================================
 /** @class  LogisticMaintenanceSelectionDialog
@@ -61,7 +68,8 @@ public:
              LogisticMaintenanceSelectionDialog( const QString& objectName,
                                                  QWidget* parent,
                                                  kernel::Controllers& controllers,
-                                                 actions::ActionsModel& actionsModel );
+                                                 actions::ActionsModel& actionsModel,
+                                                 gui::DisplayExtractor& extractor );
     virtual ~LogisticMaintenanceSelectionDialog();
     //@}
 
@@ -73,7 +81,6 @@ private:
 
     virtual void NotifyUpdated( const kernel::MaintenanceStates_ABC& a );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
-
     //! @name Helpers
     //@{
     void Purge();
@@ -89,16 +96,19 @@ private slots:
     virtual void OnSelectionChanged( const QModelIndex&, const QModelIndex& );
     void UpdateDisplay();
     void OnTimeout();
+    void OnDestinationSelected( unsigned int destination );
+    void OnDestinationToggled( bool enabled );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     unsigned int id_;
     int lastContext_;
     kernel::SafePointer< kernel::Entity_ABC > handler_;
+    kernel::SafePointer< kernel::Agent_ABC > consumer_;
     const kernel::ComponentType* componentType_;
     const kernel::BreakdownType* breakdownType_;
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus status_;
@@ -111,10 +121,13 @@ private:
     QPushButton* acceptButton_;
     QStackedWidget* stack_;
     MaintenanceHaulersListView* transporters_;
+    QGroupBox* destinationBox_;
+    boost::optional< unsigned int > selectedDestination_;
     MaintenanceRepairersListView* repairers_;
     MaintenanceRepairersListView* diagnosers_;
     QLabel* duration_;
     PartsView* parts_;
+    DiagnosisUnitView* destinations_;
     QTimer timeout_;
     //@}
 };

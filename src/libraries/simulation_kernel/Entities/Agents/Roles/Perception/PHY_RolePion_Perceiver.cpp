@@ -919,12 +919,15 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_UrbanObject_ABC& object ) c
 // Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: NLD 2005-02-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const
+bool PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const
 {    
     if( flyingShell.GetIndirectDotationCategory().GetDotationCategory().IsIED() )
-        return;
+        return true;
+    if( !flyingShell.NotifyDetected( *owner_ ) )
+        return false;
     owner_->GetKnowledge().GetKsIndirectFire().NotifyAttackedBy( flyingShell.GetFirer() );
     MIL_Report::PostEvent( *owner_, report::eRC_ObservationTirIndirect, flyingShell );
+    return true;
 }
 
 // -----------------------------------------------------------------------------

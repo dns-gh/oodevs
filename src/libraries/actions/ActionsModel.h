@@ -121,7 +121,7 @@ public:
     int PublishLogSupplySetManual( const kernel::Entity_ABC& tasker, bool manual );
     int PublishSelectNewLogisticState( unsigned int consignId );
     int PublishTransferToLogisticSuperior( unsigned int consignId );
-    int PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId );
+    int PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId, const boost::optional< unsigned int >& destination );
     int PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId );
     int PublishSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId );
     int PublishChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy );

@@ -263,8 +263,6 @@ float SensorType::ComputeEnvironmentFactor( bool inForest, bool inTown, bool inG
 // -----------------------------------------------------------------------------
 float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather ) const
 {
-    if( rCurrentNRJ == std::numeric_limits< float >::infinity() )
-        rCurrentNRJ = rDetectionDist_;
     bool bIsAroundBU = false;
     bIsAroundBU = ComputeUrbanExtinction( rCurrentNRJ, distance, material, weather );
     if( rCurrentNRJ > 0 && !bIsAroundBU )
@@ -287,10 +285,21 @@ float SensorType::GetWeatherModifier( const weather::Meteo* weather  ) const
     const weather::PHY_Precipitation& precipitation = weather->GetPrecipitation();
     auto precipitationFactorIt =  precipitationFactors_.find( precipitation.GetName() );
     float precipitationFactor = ( precipitationFactorIt != precipitationFactors_.end() ) ? precipitationFactorIt->second : 1.f;
+    return precipitationFactor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorType::GetLightingFactor
+// Created: LDC 2014-03-20
+// -----------------------------------------------------------------------------
+float SensorType::GetLightingFactor( const weather::Meteo* weather ) const
+{
+    if( !weather )
+        return 1;
     const weather::PHY_Lighting& lighting = weather->GetLighting();
     auto lightingIt = lightingFactors_.find( lighting.GetName() );
     float lightingFactor = ( lightingIt != lightingFactors_.end() ) ? lightingIt->second : 1.f;
-    return precipitationFactor * lightingFactor;
+    return lightingFactor;
 }
 
 // -----------------------------------------------------------------------------
@@ -318,6 +327,17 @@ float SensorType::GetAngle() const
 const std::vector< float >& SensorType::GetPostureSourceFactors() const
 {
     return postureSourceFactors_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorType::ComputeExtinction
+// Created: JVT 2004-09-28
+// -----------------------------------------------------------------------------
+float SensorType::ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather, const weather::Meteo* targetWeather ) const
+{
+    float result = ComputeExtinction( distanceModificator, rDetectionDist_, inForest, inTown, inGround, distance, material, weather );
+    result *= GetLightingFactor( targetWeather );
+    return result;
 }
 
 // -----------------------------------------------------------------------------

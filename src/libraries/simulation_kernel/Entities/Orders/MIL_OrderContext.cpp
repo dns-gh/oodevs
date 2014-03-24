@@ -109,8 +109,8 @@ MIL_OrderContext::MIL_OrderContext( const sword::MissionParameters& params,
             "limits parameters 2 and 3 must be both null/empty or different" );
     if( !limit1.empty() )
         fuseau_.Reset( &orientationReference, limit1, limit2,
-                FindLima( MIL_LimaFunction::LDM_ ),
-                FindLima( MIL_LimaFunction::LFM_ ) );
+            FindLima( MIL_LimaFunction::LDM_ ),
+            FindLima( MIL_LimaFunction::LFM_ ) );
 }
 
 // -----------------------------------------------------------------------------

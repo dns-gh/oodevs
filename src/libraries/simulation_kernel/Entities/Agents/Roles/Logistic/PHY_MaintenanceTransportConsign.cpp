@@ -98,7 +98,7 @@ bool PHY_MaintenanceTransportConsign::FindAlternativeTransportUnit( const PHY_Co
             if( type )
             {
                 pComposanteState_->GetConsign()->SetState( GetState(), 0 );
-                pComposanteState_->SelectMaintenanceTransporter( *type );
+                pComposanteState_->SelectMaintenanceTransporter( *type, destination_ );
             }
             EnterStateFinished();
             pComposanteState_ = 0; // Crade
@@ -201,11 +201,10 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingTo()
 {
     assert( pComposanteState_ );
     assert( component_ );
-
+    const MT_Vector2D& position = destination_ ?  destination_->GetRole< PHY_RoleInterface_Location>().GetPosition()
+                                               : pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition();
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply,
-        component_->ApproximateTravelTime(
-            pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(),
-            pComposanteState_->GetComposantePosition() ) );
+              component_->ApproximateTravelTime( position, pComposanteState_->GetComposantePosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,11 +229,10 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingFrom()
 {
     assert( pComposanteState_ );
     assert( component_ );
-
+    const MT_Vector2D& position = destination_ ?  destination_->GetRole< PHY_RoleInterface_Location>().GetPosition()
+                                               : pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition();
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_moving_back,
-        component_->ApproximateTravelTime(
-            pComposanteState_->GetComposantePosition(),
-            pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() ) );
+              component_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), position ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -345,11 +343,12 @@ void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
     next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels, 0 ); };
 }
 
-void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type )
+void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, boost::optional< const MIL_Agent_ABC& > destination )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         throw MASA_EXCEPTION( "transport consign not in a waiting for transporter selection state" );
     component_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType(), &type );
+    destination_ = destination;
     if( component_ )
     {
         GetPionMaintenance().StartUsingForLogistic( *component_ );

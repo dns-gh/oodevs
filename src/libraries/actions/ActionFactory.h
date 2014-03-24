@@ -95,8 +95,9 @@ public:
     virtual Action_ABC* CreateLogSupplySetManual( const kernel::Entity_ABC& tasker, bool manual ) const;
     virtual Action_ABC* CreateSelectNewLogisticState( unsigned int consignId ) const;
     virtual Action_ABC* CreateTransferToLogisticSuperior( unsigned int consignId ) const;
-    virtual Action_ABC* CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId ) const;
+    virtual Action_ABC* CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId, const boost::optional< unsigned int >& destination ) const;
     virtual Action_ABC* CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId ) const;
+    virtual Action_ABC* CreateSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId );
 
     virtual Action_ABC* CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy ) const;
     virtual Action_ABC* CreateKnowledgeGroup( unsigned int id, const std::string& type ) const;
@@ -105,7 +106,6 @@ public:
     virtual Action_ABC* CreateGlobalWeather( const ::gui::WeatherParameters& params ) const;
     virtual Action_ABC* CreateLocalWeather( const ::gui::LocalWeatherParameters& params ) const;
     virtual Action_ABC* CreateLocalDestruction( unsigned int weatherId ) const;
-    virtual Action_ABC* CreateSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId );
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const;
     //@}

@@ -27,13 +27,13 @@ class LogisticHierarchiesBase : public kernel::Hierarchies
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticHierarchiesBase() {};
-    virtual ~LogisticHierarchiesBase() {};
+             LogisticHierarchiesBase() {}
+    virtual ~LogisticHierarchiesBase() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual QString GetLinkType() const { return "logistic-base"; };
+    virtual QString GetLinkType() const { return "logistic-base"; }
     virtual void Load( xml::xistream& xis, const kernel::Entity_ABC* superior ) = 0;
     virtual void SetLogisticSuperior( const kernel::LogisticBaseSuperior& superior ) = 0;
     //@}

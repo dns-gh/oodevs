@@ -162,9 +162,11 @@ namespace sword
     class StartCrowdFire;
     class StartFireEffect;
     class StartUnitFire;
+    class StartUnitFireDetection;
     class StopCrowdFire;
     class StopFireEffect;
     class StopUnitFire;
+    class StopUnitFireDetection;
     class TaskCreationRequestAck;
     class TextMessage;
     class TimeTableRequestAck;
@@ -435,6 +437,8 @@ private:
     // Tirs
     void OnReceiveStartUnitFire         ( const sword::StartUnitFire& message );
     void OnReceiveStopUnitFire          ( const sword::StopUnitFire& message );
+    void OnReceiveStartUnitFireDetection( const sword::StartUnitFireDetection& message );
+    void OnReceiveStopUnitFireDetection ( const sword::StopUnitFireDetection& message );
     void OnReceiveExplosion             ( const sword::Explosion& message );
     void OnReceiveStartFireEffect       ( const sword::StartFireEffect& message );
     void OnReceiveStopFireEffect        ( const sword::StopFireEffect& message );

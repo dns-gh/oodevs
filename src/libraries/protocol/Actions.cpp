@@ -384,6 +384,7 @@ const ActionParam select_maintenance_transporter_params[] =
 {
     { "Request", "identifier", 0 },
     { "EquipmentType", "identifier", 0 },
+    { "Destination", "agent", 0 },
 };
 
 const ActionParam select_diagnosis_team_params[] =

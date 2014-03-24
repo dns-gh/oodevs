@@ -351,9 +351,9 @@ void PHY_MaintenanceComposanteState::TransferToLogisticSuperior()
 // Name: PHY_MaintenanceComposanteState::SelectMaintenanceTransporter
 // Created: SLI 2014-01-30
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceComposanteState::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type )
+void PHY_MaintenanceComposanteState::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, boost::optional< const MIL_Agent_ABC& > destination )
 {
-    pConsign_->SelectMaintenanceTransporter( type );
+    pConsign_->SelectMaintenanceTransporter( type, destination );
 }
 
 void PHY_MaintenanceComposanteState::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )
