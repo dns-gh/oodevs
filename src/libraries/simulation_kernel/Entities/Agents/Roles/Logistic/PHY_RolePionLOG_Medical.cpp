@@ -410,8 +410,8 @@ boost::shared_ptr< PHY_MedicalHumanState > PHY_RolePionLOG_Medical::HandleHumanE
 {
     if( !bSystemEnabled_ )
         return boost::shared_ptr< PHY_MedicalHumanState >();
-    auto humanState = boost::make_shared< PHY_MedicalHumanState >( boost::ref( pion ), boost::ref( human ), true ); // true is for 'evacuated by third party'
-    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( boost::ref( *owner_ ), boost::ref( *humanState ) ) );
+    auto humanState = boost::make_shared< PHY_MedicalHumanState >( pion, human, true ); // true is for 'evacuated by third party'
+    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( *owner_, *humanState ) );
     return humanState;
 }
 
@@ -423,8 +423,8 @@ boost::shared_ptr< PHY_MedicalHumanState > PHY_RolePionLOG_Medical::HandleHumanF
 {
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
         return boost::shared_ptr< PHY_MedicalHumanState >();
-    auto humanState = boost::make_shared< PHY_MedicalHumanState >( boost::ref( pion ), boost::ref( human ) );
-    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( boost::ref( *owner_ ), boost::ref( *humanState ) ) );
+    auto humanState = boost::make_shared< PHY_MedicalHumanState >( pion, human );
+    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( *owner_, *humanState ) );
     return humanState;
 }
 
@@ -436,7 +436,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForEvacuation( PHY_MedicalHumanState& h
 {
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( humanState.GetHuman() ) )
         return false;
-    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( boost::ref( *owner_ ), boost::ref( humanState ) ) );
+    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( *owner_, humanState ) );
     return true;
 }
 
@@ -481,7 +481,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForCollection( PHY_MedicalHumanState& h
 {
     if( !bSystemEnabled_ || !HasUsableCollectionAmbulance( humanState.GetHuman() ) )
         return false;
-    InsertConsign( boost::make_shared< PHY_MedicalCollectionConsign >( boost::ref( *owner_ ), boost::ref( humanState ) ) );
+    InsertConsign( boost::make_shared< PHY_MedicalCollectionConsign >( *owner_, humanState ) );
     return true;
 }
 
@@ -510,7 +510,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::HandleHumanForSorting( PHY_MedicalHumanState& humanState )
 {
-    InsertConsign( boost::make_shared< PHY_MedicalSortingConsign >( boost::ref( *owner_ ), boost::ref( humanState ) ) );
+    InsertConsign( boost::make_shared< PHY_MedicalSortingConsign >( *owner_, humanState ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -543,7 +543,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForHealing( PHY_MedicalHumanState& huma
 {
     if( !bSystemEnabled_ || !bHealingFunctionEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return false;
-    InsertConsign( boost::make_shared< PHY_MedicalHealingConsign >( boost::ref( *owner_ ), boost::ref( humanState ) ) );
+    InsertConsign( boost::make_shared< PHY_MedicalHealingConsign >( *owner_, humanState ) );
     return true;
 }
 

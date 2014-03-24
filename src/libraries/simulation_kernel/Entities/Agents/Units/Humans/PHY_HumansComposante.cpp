@@ -24,6 +24,7 @@
 #include "Entities/Agents/Units/Humans/WoundEffects_ABC.h"
 #include "HumansActionsNotificationHandler_ABC.h"
 #include <boost/serialization/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_HumansComposante )
 
@@ -37,7 +38,7 @@ PHY_HumansComposante::PHY_HumansComposante( const MIL_Time_ABC& time, PHY_Compos
 {
     while( nNbrMdr-- )
     {
-        humans_.push_back( boost::shared_ptr< Human_ABC >( new PHY_Human( time, *this ) ) );
+        humans_.push_back( boost::make_shared< PHY_Human >( time, *this ) );
         NotifyHumanAdded( *humans_.back() );
     }
 }
