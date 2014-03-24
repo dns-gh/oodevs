@@ -23,6 +23,7 @@
 #include <boost/preprocessor/iteration/iterate.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
+#include <boost/utility/result_of.hpp>
 #include <string>
 #include <memory>
 #include <map>
@@ -81,10 +82,11 @@ public:
     {
         (*brain_)[ name ] = ProfilerProxy< Signature >( logger_, name, profilers_[ name ], function, brain_.get() );
     }
+
     template< typename Function >
     void RegisterFunction( const char* const name, const Function& function )
     {
-        RegisterFunction( name, boost::function< Function::result_type() >( function ) );
+        RegisterFunction( name, boost::function< boost::result_of< Function() >::type() >( function ) );
     }
 
     static void ResetProfiling( bool log );
