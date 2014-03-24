@@ -508,6 +508,29 @@ integration.transportKnowledgeRoundTrip = function( unit, onlyLoadable )
     return DEC_Connaissance_TransportNombreAllerRetour( myself, unit.source, onlyLoadable )
 end
 
+--- Returns the necessary number of round trips left necessary to transport the given agent,
+--- taking into account what is already transported.
+-- @param unit Simulation agent, the transporting agent
+-- @param target Simulation agent, the transported agent
+-- @param onlyLoadable Boolean, whether or not this method will only take into
+-- account components that are defined as 'loadable' in the physical database.
+-- @return Float
+integration.getNumberRoundTripsLeftForAgent = function( unit, target, onlyLoadable )
+    return DEC_RoundTripsLeftToTransportAgent( unit, target, onlyLoadable )
+end
+
+--- Returns the necessary number of round trips left necessary to transport the given agent knowledge,
+--- taking into account what is already transported.
+-- @see integration.getNumberRoundTripsLeftForAgent
+-- @param unit Simulation agent, the transporting agent
+-- @param target Simulation agent knowledge, the transported agent knowledge
+-- @param onlyLoadable Boolean, whether or not this method will only take into
+-- account components that are defined as 'loadable' in the physical database.
+-- @return Float
+integration.getNumberRoundTripsLeftForAgentKnowledge = function( unit, target, onlyLoadable )
+    return integration.getNumberRoundTripsLeftForAgent( unit, DEC_ConnaissanceAgent_EnAgent( target ), onlyLoadable )
+end
+
 --- Returns true if this entity can transport crowds, false otherwise.
 -- @return Boolean
 integration.canTransportCrowd = function()
