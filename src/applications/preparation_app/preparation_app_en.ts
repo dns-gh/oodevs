@@ -1030,10 +1030,6 @@ This data can&apos;t be projected.</translation>
 <context>
     <name>MaxStockNaturesTable</name>
     <message>
-        <source>Resource</source>
-        <translation>Resource</translation>
-    </message>
-    <message>
         <source>Weight (T)</source>
         <translation>Weight (T)</translation>
     </message>
@@ -1048,6 +1044,10 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Max volume (m3)</source>
         <translation>Max volume (m3)</translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation>Nature</translation>
     </message>
 </context>
 <context>

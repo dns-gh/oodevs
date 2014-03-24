@@ -58,9 +58,8 @@ MaxStockNaturesTable::~MaxStockNaturesTable()
 // -----------------------------------------------------------------------------
 void MaxStockNaturesTable::InitHeader()
 {
-    dataModel_->setHorizontalHeaderLabels( QStringList() << tr( "Resource" ) << tr( "Weight (T)" ) << tr( "Max weight (T)" ) << tr( "Volume (m3)" ) << tr( "Max volume (m3)" ) );
-    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
-    horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    dataModel_->setHorizontalHeaderLabels( QStringList() << tr( "Nature" ) << tr( "Weight (T)" ) << tr( "Max weight (T)" ) << tr( "Volume (m3)" ) << tr( "Max volume (m3)" ) );
+    horizontalHeader()->setResizeMode( QHeaderView::Interactive );
 }
 
 // -----------------------------------------------------------------------------
