@@ -902,12 +902,12 @@ func (c *Client) ChangeAttitude(crowdId uint32, attitude int32) error {
 		sword.UnitMagicAction_crowd_change_attitude)
 }
 
-func (c *Client) LogisticsChangeLinks(automatId uint32, superiors []uint32) error {
+func (c *Client) LogisticsChangeLinks(tasker *sword.Tasker, superiors []uint32) error {
 	params := []interface{}{}
 	for _, s := range superiors {
 		params = append(params, MakeIdentifier(s))
 	}
-	return c.sendUnitMagicAction(MakeAutomatTasker(automatId),
+	return c.sendUnitMagicAction(tasker,
 		MakeParameters(params...),
 		sword.UnitMagicAction_change_logistic_links)
 }
