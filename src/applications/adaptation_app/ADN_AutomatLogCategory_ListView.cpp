@@ -204,7 +204,11 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
     {
         ADN_Resources_Data::ResourceInfos& dotation = **itDotation;
         ADN_Rich_ListViewItem* pDotationItem = new ADN_Rich_ListViewItem( this, Qt::AlignVCenter | Qt::AlignRight );
-        pDotationItem->setText( eColumnTarget, dotation.strName_.GetData().c_str() );
+        const auto name =
+            ENT_Tr::ConvertFromDotationFamily(
+                ENT_Tr::ConvertToDotationFamily( dotation.strName_.GetData() ),
+                ENT_Tr::eToTr );
+        pDotationItem->setText( eColumnTarget, name.c_str() );
 
         // Dotation category (eg. bouffe)
         ADN_Resources_Data::T_CategoryInfos_Vector& categories = dotation.GetCategories();
