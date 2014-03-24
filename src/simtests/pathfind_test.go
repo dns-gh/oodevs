@@ -55,9 +55,15 @@ func (s *TestSuite) TestPathfindRequest(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	client2 := loginAndWaitModel(c, sim, NewAllUserOpts(ExCrossroadSmallOrbat))
-	client2.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
-		if msg != nil && msg.SimulationToClient != nil {
-			c.Assert(msg.SimulationToClient.GetMessage().GetPathfindRequestAsk(), IsNil)
+	defer client2.Close()
+	seen := false
+	handlerId := client2.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
+		if msg.SimulationToClient == nil || msg.SimulationToClient.GetMessage() == nil {
+			return false
+		}
+		m := msg.SimulationToClient.GetMessage()
+		if reply := m.GetPathfindRequestAsk(); reply != nil {
+			seen = true
 		}
 		return false
 	})
@@ -85,4 +91,8 @@ func (s *TestSuite) TestPathfindRequest(c *C) {
 	c.Assert(len(points), Equals, 2)
 	c.Assert(from, IsNearby, points[0])
 	c.Assert(from, IsNearby, points[1])
+
+	// No other client can receive the acknowledge
+	client2.Unregister(handlerId)
+	c.Assert(seen, Equals, false)
 }
