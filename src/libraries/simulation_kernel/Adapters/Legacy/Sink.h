@@ -85,10 +85,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    MIL_AgentPion& Configure( MIL_AgentPion& pion );
     void CreateRoles( SinkRoleExtender& ext );
-
-    void Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition );
     //@}
 
 private:

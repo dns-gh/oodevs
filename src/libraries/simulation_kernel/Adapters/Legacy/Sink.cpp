@@ -227,16 +227,6 @@ void Sink::LogProfiling()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Sink::Configure
-// Created: SLI 2012-02-10
-// -----------------------------------------------------------------------------
-MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
-{
-    tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );
-    return pion;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Sink::CreateRoles
 // Created: AHC 2013-02-22
 // -----------------------------------------------------------------------------
@@ -263,7 +253,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
     CreateRoles( chainExt );
     MIL_AgentPion* pPion = type.InstanciatePion( missionController_, automate, xis );
     type.RegisterRoles( *pPion, &chainExt );
-    MIL_AgentPion& pion = Configure( *pPion );
+    tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
     { 
         MT_Vector2D vPos;
         if( xis.has_attribute( "position" ) )
@@ -277,10 +267,11 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
             xis >> xml::attribute( "x", vPos.rX_ );
             xis >> xml::attribute( "y", vPos.rY_ );
         }
-        Initialize( pion, vPos );
+        pPion->CallRole( &PHY_RoleInterface_Location::Move, vPos, MT_Vector2D( 0., 1. ), 0. );
+        pPion->CallRole( &PHY_RoleInterface_UrbanLocation::MagicMove, vPos );
     }
-    pion.ReadOverloading( xis );
-    return &pion;
+    pPion->ReadOverloading( xis );
+    return pPion;
 }
 
 // -----------------------------------------------------------------------------
@@ -300,16 +291,6 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
     automate.GetColor().WriteODB( x );
     x >> xml::start( "unit" );
     return Create( type, automate, x, ext );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::Initialize
-// Created: SLG 2010-01-21
-// -----------------------------------------------------------------------------
-void Sink::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition )
-{
-    pion.CallRole( &PHY_RoleInterface_Location::Move, vPosition, MT_Vector2D( 0., 1. ), 0. );
-    pion.CallRole( &PHY_RoleInterface_UrbanLocation::MagicMove, vPosition );
 }
 
 // -----------------------------------------------------------------------------
