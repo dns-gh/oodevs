@@ -260,9 +260,9 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 		Supervisor: false,
 	}
 	adminProfile := &swapi.Profile{
-		Login:      "adminprofile",
-		Password:   "adminpassword",
-		Supervisor: true,
+		Login:       "adminprofile",
+		Password:    "adminpassword",
+		Supervisor:  true,
 		TimeControl: false,
 	}
 	emptyLoginProfile := &swapi.Profile{
