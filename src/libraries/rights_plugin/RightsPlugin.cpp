@@ -126,17 +126,15 @@ void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const
 // Name: RightsPlugin::NotifyClientLeft
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::string& /*link*/, bool /*uncounted*/ )
+void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::string& link, bool /*uncounted*/ )
 {
-    Logout( client );
+    Logout( client, link );
 }
 
-void RightsPlugin::Logout( ClientPublisher_ABC& client )
+void RightsPlugin::Logout( ClientPublisher_ABC& client, const std::string& link )
 {
     for( auto it = authenticated_.begin(); it != authenticated_.end(); ++it )
-    {
-        const std::string link = it->first;
-        if( &resolver_.GetAuthenticatedPublisher( link ) == &client )
+        if( it->first == link )
         {
             authenticated_.erase( it );
             if( silentClients_.erase( link ) == 0 )
@@ -146,7 +144,6 @@ void RightsPlugin::Logout( ClientPublisher_ABC& client )
             MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
             return;
         }
-    }
 }
 namespace
 {
@@ -190,7 +187,7 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
 {
     if( wrapper.message().has_disconnection_request() )
     {
-        Logout( resolver_.GetConnectedPublisher( link ) );
+        Logout( resolver_.GetConnectedPublisher( link ), link );
         MT_LOG_INFO_MSG( "Logged out " + link );
         throw tools::DisconnectionRequest( __FILE__, __FUNCTION__, __LINE__, "disconnection request from " + link );
     }

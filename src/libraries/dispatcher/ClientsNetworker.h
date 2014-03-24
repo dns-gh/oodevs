@@ -80,8 +80,7 @@ private:
     void Broadcast( const sword::SimToClient& message );
 
     void OnNewTick();
-    bool HasAcknowledgeMessage( const sword::SimToClient& message ) const;
-    void SendAcknowledge( const sword::SimToClient& message );
+    void Unicast( const sword::SimToClient& message );
     //@}
 
 private:

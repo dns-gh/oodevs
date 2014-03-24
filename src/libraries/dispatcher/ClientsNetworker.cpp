@@ -51,6 +51,14 @@ void ClientsNetworker::Update()
     ServerNetworker::Update();
 }
 
+namespace
+{
+    bool ShouldUnicast( const sword::SimToClient& message )
+    {
+        return message.has_client_id() && message.message().has_pathfind_request_ask();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::Receive
 // Created: AGE 2007-07-09
@@ -63,19 +71,11 @@ void ClientsNetworker::Receive( const sword::SimToClient& message )
         AllowConnections();
     else if( message.message().has_control_begin_tick() )
         OnNewTick();
-    if( HasAcknowledgeMessage( message ) )
-        SendAcknowledge( message );
+
+    if( ShouldUnicast( message ) )
+        Unicast( message );
     else
         Broadcast( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::HasAcknowledgeMessage
-// Created: LGY 2014-03-06
-// -----------------------------------------------------------------------------
-bool ClientsNetworker::HasAcknowledgeMessage( const sword::SimToClient& message ) const
-{
-    return message.has_client_id() && message.message().has_pathfind_request_ask();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,10 +89,10 @@ void ClientsNetworker::Broadcast( const sword::SimToClient& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::SendAcknowledge
+// Name: ClientsNetworker::Unicast
 // Created: LGY 2014-03-06
 // -----------------------------------------------------------------------------
-void ClientsNetworker::SendAcknowledge( const sword::SimToClient& message )
+void ClientsNetworker::Unicast( const sword::SimToClient& message )
 {
     GetAuthenticatedPublisher( message.client_id() ).Send( message );
 }
