@@ -18,6 +18,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"regexp"
+	"strconv"
 	"strings"
 	"swapi"
 	"swapi/simu"
@@ -549,4 +550,52 @@ func (s *TestSuite) TestUnitTypes(c *C) {
 	HasDecPropertiesOrFunctions(c, client, circuUnit.Id, unit.Id,
 		nil,
 		[]string{"DEC_Circulation_EquiperItineraireLogistique"})
+}
+
+func DecLinearInterpolation(c *C, client *swapi.Client, unitId uint32,
+	minTo, maxTo, minFrom, maxFrom float64, upSlope bool, value float64) (float64, error) {
+
+	script := `function TestFunction()
+    return LinearInterpolation({{.minTo}}, {{.maxTo}}, {{.minFrom}}, {{.maxFrom}},
+        {{.upSlope}}, {{.value}})
+end
+`
+	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
+		map[string]interface{}{
+			"minTo":   minTo,
+			"maxTo":   maxTo,
+			"minFrom": minFrom,
+			"maxFrom": maxFrom,
+			"upSlope": upSlope,
+			"value":   value,
+		}))
+	if err != nil {
+		return 0.0, err
+	}
+	return strconv.ParseFloat(output, 64)
+}
+
+func (s *TestSuite) TestDecLinearInterpolation(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer stopSim(c, sim, DisableLuaChecks())
+	unit := getRandomUnit(c, client)
+
+	tests := []struct {
+		MinTo, MaxTo, MinFrom, MaxFrom float64
+		UpSlope                        bool
+		Value                          float64
+		Expected                       float64
+	}{
+		{0, 1, 0, 1, true, 0.5, 0.5},
+		{0.3, 0.7, 1, 2, true, 0, 0.3},
+		{0.3, 0.7, 1, 2, true, 3, 0.7},
+		{0.3, 0.7, 1, 2, true, 1.25, 0.4},
+		{0.3, 0.7, 1, 2, false, 1.25, 0.6},
+	}
+	for _, t := range tests {
+		res, err := DecLinearInterpolation(c, client, unit.Id, t.MinTo, t.MaxTo,
+			t.MinFrom, t.MaxFrom, t.UpSlope, t.Value)
+		c.Assert(err, IsNil)
+		c.Assert(res, Equals, t.Expected)
+	}
 }
