@@ -181,7 +181,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     {
         updateState_ = !config_.GetPausedAtStartup();
         MIL_CheckPointManager::LoadCheckPoint( config_, *pObjectFactory_, world );
-        pEntityManager_->Synchronize();
     }
     else
     {

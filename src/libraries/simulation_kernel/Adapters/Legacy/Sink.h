@@ -49,22 +49,9 @@ public:
     virtual ~Sink();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Finalize();
-    virtual void Clean();
-    virtual void ExecutePerceptions();
-    virtual void ExecuteCommands();
-    virtual void ApplyEffects();
-    virtual void NotifyEffects();
-    virtual void UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects, const MIL_EffectManager& effects );
-    virtual void UpdateKnowledges();
-    virtual void UpdateUrbanModel( const MIL_UrbanCache& cache );
-    virtual void LogProfiling();
-    //@}
-
     //! @name Factory
     //@{
+    virtual void Clean();
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, sword::RoleExtender_ABC* ext );
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext );
 
