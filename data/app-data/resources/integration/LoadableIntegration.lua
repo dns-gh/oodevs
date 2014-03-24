@@ -682,14 +682,26 @@ integration.setSuppliesLoaded = function( unit, bool )
 end
 
 --- Tests whether an agent is currently able to load at least one of the
--- equipments of another agent.
--- @param unit simulation agent : the transporter agent
--- @param target simulation agent : the agent to transport
--- @param onlyLoadable a boolean specifying if only the components defined as 'loadable'
--- in the physical database must be considered
--- @return a boolean indicating if the agent is able to transport part of the target
+--- equipments of another agent.
+-- @param unit Simulation agent, the transporter agent
+-- @param target Simulation agent, the agent to transport
+-- @param onlyLoadable Boolean, whether or not this method will only take into
+-- account components that are defined as 'loadable' in the physical database.
+-- @return Boolean, whether or not the agent is able to transport part of the target
 integration.canLoad = function( unit, target, onlyLoadable )
     return DEC_CanLoad( unit, target, onlyLoadable )
+end
+
+--- Tests whether an agent is currently able to load at least one of the
+--- equipments of another agent knowledge.
+-- @see integration.canLoad
+-- @param unit Simulation agent, the transporter agent
+-- @param target Simulation agent knowledge, the agent knowledge to transport
+-- @param onlyLoadable Boolean, whether or not this method will only take into
+-- account components that are defined as 'loadable' in the physical database.
+-- @return Boolean, whether or not the agent is able to transport part of the target
+integration.canLoadKnowledge = function( unit, target, onlyLoadable )
+    return integration.canLoad( unit, DEC_ConnaissanceAgent_EnAgent( target ), onlyLoadable )
 end
 
 --- Returns a list of all agents currently transported by the given entity.
