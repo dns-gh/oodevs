@@ -500,14 +500,6 @@ add_dependencies( simulation_app
     dispatcher_dll
 )
 
-# decisional_test
-add_target( decisional_test tests "tests/integration_decisionnal_test" OPTIONS executable )
-target_link_libraries( decisional_test ${DIRECTIA_LIBRARIES} )
-masa_add_test_target( decisional_test decisional_test
-    --temp_directory=${CMAKE_CURRENT_BINARY_DIR}/decisional_test.tmp
-    --data_directory=${MASA_RUN}/resources
-)
-
 # svgl
 add_target( svgl clients "libraries/svgl" OPTIONS qt )
 target_link_libraries( svgl ${XERCES_LIBRARIES} )
