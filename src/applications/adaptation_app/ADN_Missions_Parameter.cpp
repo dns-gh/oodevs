@@ -283,7 +283,7 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output ) const
     if( maxValue_ != std::numeric_limits< int >::max() )
         output << xml::attribute( "max-value", maxValue_ );
     for( unsigned int i = 0; i < values_.size(); ++i )
-        values_[i]->WriteArchive( output, i );
+        values_[i]->WriteArchive( output );
     Write( output, choices_, type_.GetData(), eMissionParameterTypeLocationComposite, "choice" );
 
     std::size_t nbGenObject = CountObject( genObjects_ );

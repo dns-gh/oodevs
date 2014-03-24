@@ -2749,6 +2749,10 @@ PNG (*.png)
         <source>Remove value</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_MissionParameters_Table</name>

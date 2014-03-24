@@ -22,8 +22,12 @@ ADN_MissionParameterValues_Table::ADN_MissionParameterValues_Table( const QStrin
     setShowGrid( false );
     verticalHeader()->setVisible( false );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
-    dataModel_.setHorizontalHeaderLabels( QStringList( tools::translate( "ADN_MissionParameterValues_Table", "Name" ) ) );
+    QStringList labels;
+    labels.push_back( tools::translate( "ADN_MissionParameterValues_Table", "Name" ) );
+    labels.push_back( tools::translate( "ADN_MissionParameterValues_Table", "Value" ) );
+    dataModel_.setHorizontalHeaderLabels( labels );
     delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddSpinBoxOnColumn( 1, 0, std::numeric_limits< int >::max() );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,4 +82,5 @@ void ADN_MissionParameterValues_Table::AddRow( int row, void* data )
     if( !pInfos )
         return;
     AddItem( row, 0, data, &pInfos->name_, ADN_StandardItem::eString, Qt::ItemIsEditable );
+    AddItem( row, 1, data, &pInfos->id_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }

@@ -29,10 +29,11 @@ public:
     ADN_Missions_ParameterValue* CreateCopy();
 
     void ReadArchive ( xml::xistream& input );
-    void WriteArchive( xml::xostream& output, unsigned int id ) const;
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     ADN_Type_String name_;
+    ADN_Type_Int id_;
 };
 
 #endif // ADAPTATION_ADN_MISSIONS_DATA_PARAMETERVALUE_H

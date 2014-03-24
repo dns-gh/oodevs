@@ -2772,6 +2772,10 @@ PNG (*.png)
         <source>Remove value</source>
         <translation>Enlever cette valeur</translation>
     </message>
+    <message>
+        <source>Value</source>
+        <translation>Valeur</translation>
+    </message>
 </context>
 <context>
     <name>ADN_MissionParameters_Table</name>

@@ -34,13 +34,14 @@ ADN_Missions_ParameterValue* ADN_Missions_ParameterValue::CreateCopy()
 
 void ADN_Missions_ParameterValue::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", name_ );
+    input >> xml::attribute( "name", name_ )
+          >> xml::attribute( "id", id_ );
 }
 
-void ADN_Missions_ParameterValue::WriteArchive( xml::xostream& output, unsigned int id ) const
+void ADN_Missions_ParameterValue::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "value" )
-                << xml::attribute( "id", id )
+                << xml::attribute( "id", id_ )
                 << xml::attribute( "name", name_ )
            << xml::end;
 }
