@@ -721,6 +721,46 @@ Parked engine running</source>
         <source>The logistic automat &apos;%1&apos; contains one or more non-logistic units.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
+        <translation type="unfinished">معدات &apos;%1&apos;--البيانات توزيعاً غير صالحة: sum! = 100</translation>
+    </message>
+    <message>
+        <source>%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply class name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource nature name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
+        <translation type="unfinished">النار &apos;%1&apos;--بيانات الإصابات المبلغ &gt; 100</translation>
+    </message>
+    <message>
+        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
+        <translation type="unfinished">أن بي سي--وكيل &apos;%1&apos;-تسمم أثر البيانات المبلغ&lt; 100&gt;&lt;/ 100&gt;</translation>
+    </message>
+    <message>
+        <source>Object &apos;%1&apos; - Flood - Injuries data sum &gt; 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
+        <translation type="unfinished">سلاح %1-النيران غير المباشرة-مجموعة ماكس&lt; min range min=&quot;&quot;&gt;&lt;/ min range&gt;</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -1697,16 +1737,8 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
 <context>
     <name>ADN_Fires_Data</name>
     <message>
-        <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation type="unfinished">النار--الجرح البيانات &apos;%1&apos; &lt; 0=&quot;&quot; or=&quot;&quot;&gt; 1</translation>
-    </message>
-    <message>
         <source>Fire - Invalid wound type &apos;%1&apos;</source>
         <translation type="unfinished">النار-صالح الجرح النوع &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
-        <translation type="unfinished">النار &apos;%1&apos;--بيانات الإصابات المبلغ &gt; 100</translation>
     </message>
     <message>
         <source>Extinguisher agents</source>
@@ -6470,17 +6502,6 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
-    <name>Categories_Data</name>
-    <message>
-        <source>Categories - Invalid volume type name</source>
-        <translation type="unfinished">فئات-اسم نوع وحدة التخزين غير صحيحة</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid resource nature</source>
-        <translation type="unfinished">فئات-طبيعة المورد غير صحيح</translation>
-    </message>
-</context>
-<context>
     <name>Crowds_Data</name>
     <message>
         <source>Crowd - Invalid terrain type &apos;%1&apos;</source>
@@ -6489,10 +6510,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>Equipments_Data</name>
-    <message>
-        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
-        <translation type="unfinished">معدات &apos;%1&apos;--البيانات توزيعاً غير صالحة: sum! = 100</translation>
-    </message>
     <message>
         <source>Equipment - Invalid activty &apos;%1&apos;</source>
         <translation type="unfinished">معدات-المنشأة غير صالح &apos;%1&apos;</translation>
@@ -6534,21 +6551,9 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>NBC - Invalid wound type &apos;%1&apos;</source>
         <translation type="unfinished">أن بي سي--نوع الجرح غير صالح &apos;%1&apos;</translation>
     </message>
-    <message>
-        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
-        <translation type="unfinished">أن بي سي--وكيل &apos;%1&apos;-تسمم أثر البيانات المبلغ&lt; 100&gt;&lt;/ 100&gt;</translation>
-    </message>
 </context>
 <context>
     <name>Object_Data</name>
-    <message>
-        <source>Flood - Injuries data sum &gt; 100</source>
-        <translation type="unfinished">الفيضانات-جمع بيانات الإصابات &gt; 100</translation>
-    </message>
-    <message>
-        <source>Flood - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation type="unfinished">الفيضانات--البيانات &apos;%1&apos; الجرح &lt; 0=&quot;&quot; or=&quot;&quot;&gt; 1</translation>
-    </message>
     <message>
         <source>Flood - Invalid wound type &apos;%1&apos;</source>
         <translation type="unfinished">الفيضانات-صالح الجرح النوع &apos;%1&apos;</translation>
@@ -6696,20 +6701,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Unit types - Invalid nbc suit level &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Urban_Data</name>
-    <message>
-        <source>RoofShape - Invalid roofShape type name</source>
-        <translation type="unfinished">روفشابي-اسم نوع روفشابي غير صالحة</translation>
-    </message>
-</context>
-<context>
-    <name>Weapons_Data</name>
-    <message>
-        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
-        <translation type="unfinished">سلاح %1-النيران غير المباشرة-مجموعة ماكس&lt; min range min=&quot;&quot;&gt;&lt;/ min range&gt;</translation>
     </message>
 </context>
 <context>

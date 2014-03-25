@@ -664,8 +664,6 @@ void ADN_Crowds_Data::CrowdsInfos::ReadUrbanEffect( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output ) const
 {
-    repartition_.CheckNoError( strName_.GetData().c_str() );
-
     output << xml::start( "population" )
             << xml::attribute( "name", *this )
             << xml::attribute( "id", nId_ )
@@ -735,6 +733,7 @@ void ADN_Crowds_Data::CrowdsInfos::CheckValidity( ADN_ConsistencyChecker& checke
         for( auto it2 = infos->vVolumeInfos_.begin(); it2 != infos->vVolumeInfos_.end(); ++it2 )
             ( *it2 )->CheckValidity( checker, name, tab, subTab, tools::translate( "ADN_Crowds_Data", "Speeds" ).toStdString() );
     }
+    repartition_.CheckNoError( strName_.GetData().c_str(), checker, eCrowds );
 }
 
 // -----------------------------------------------------------------------------

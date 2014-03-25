@@ -731,11 +731,19 @@ ADN_Urban_Data::RoofShapeInfos::~RoofShapeInfos()
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output ) const
 {
-    if( strName_.GetKey().empty() )
-        throw MASA_EXCEPTION( tools::translate( "Urban_Data", "RoofShape - Invalid roofShape type name" ).toStdString() );
     output << xml::start( "roof-shape-type" )
                << xml::attribute( "name", *this )
            << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::CheckDatabaseValidity
+// Created: LDC 2014-03-21
+// -----------------------------------------------------------------------------
+void ADN_Urban_Data::RoofShapeInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    if( strName_.GetKey().empty() )
+        checker.AddError( eInvalidRoof, "", eUrban );
 }
 
 // -----------------------------------------------------------------------------
@@ -872,6 +880,8 @@ void ADN_Urban_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) co
     }
     for( auto it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
         ( *it )->pSymbol_.CheckValidity( checker, ( *it )->strName_.GetData(), eUrban, -1, tools::translate( "ADN_Urban_Data", "Infrastructure" ).toStdString() );
+    for( auto it = vRoofShapes_.begin(); it != vRoofShapes_.end(); ++it )
+        ( *it )->CheckDatabaseValidity( checker );
 }
 
 // -----------------------------------------------------------------------------

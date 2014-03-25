@@ -721,6 +721,46 @@ Parked engine running</source>
         <source>The logistic automat &apos;%1&apos; contains one or more non-logistic units.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply class name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource nature name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object &apos;%1&apos; - Flood - Injuries data sum &gt; 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -1696,15 +1736,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
 <context>
     <name>ADN_Fires_Data</name>
     <message>
-        <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fire - Invalid wound type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6466,17 +6498,6 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
-    <name>Categories_Data</name>
-    <message>
-        <source>Categories - Invalid volume type name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Categories - Invalid resource nature</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Crowds_Data</name>
     <message>
         <source>Crowd - Invalid terrain type &apos;%1&apos;</source>
@@ -6485,10 +6506,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>Equipments_Data</name>
-    <message>
-        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Equipment - Invalid activty &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -6530,21 +6547,9 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>NBC - Invalid wound type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Object_Data</name>
-    <message>
-        <source>Flood - Injuries data sum &gt; 100</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flood - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Flood - Invalid wound type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -6691,20 +6696,6 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Unit types - Invalid crossing height &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Urban_Data</name>
-    <message>
-        <source>RoofShape - Invalid roofShape type name</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Weapons_Data</name>
-    <message>
-        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

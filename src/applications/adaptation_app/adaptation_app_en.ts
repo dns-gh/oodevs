@@ -722,16 +722,56 @@ Parked engine running</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mission parameter %1 should have at least one object: All objects will be selectable instead of none.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The non-logistic automat &apos;%1&apos; contains one or more logistic units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The logistic automat &apos;%1&apos; contains one or more non-logistic units.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mission parameter %1 should have at least one object: All objects will be selectable instead of none.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
+        <translation type="unfinished">Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</translation>
+    </message>
+    <message>
+        <source>%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply class name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource nature name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
+        <translation type="unfinished">Fire &apos;%1&apos; - Injuries data sum &gt; 100</translation>
+    </message>
+    <message>
+        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
+        <translation type="unfinished">NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</translation>
+    </message>
+    <message>
+        <source>Object &apos;%1&apos; - Flood - Injuries data sum &gt; 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume name is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
+        <translation type="unfinished">Weapon %1 - Indirect fire - max range &lt; min range</translation>
     </message>
 </context>
 <context>
@@ -1709,16 +1749,8 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
 <context>
     <name>ADN_Fires_Data</name>
     <message>
-        <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</translation>
-    </message>
-    <message>
         <source>Fire - Invalid wound type &apos;%1&apos;</source>
         <translation>Fire - Invalid wound type &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
-        <translation>Fire &apos;%1&apos; - Injuries data sum &gt; 100</translation>
     </message>
     <message>
         <source>Extinguisher agents</source>
@@ -6483,17 +6515,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
 </context>
 <context>
-    <name>Categories_Data</name>
-    <message>
-        <source>Categories - Invalid volume type name</source>
-        <translation>Categories - Invalid volume type name</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid resource nature</source>
-        <translation>Categories - Invalid resource nature</translation>
-    </message>
-</context>
-<context>
     <name>Crowds_Data</name>
     <message>
         <source>Crowd - Invalid terrain type &apos;%1&apos;</source>
@@ -6502,10 +6523,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>Equipments_Data</name>
-    <message>
-        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
-        <translation>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</translation>
-    </message>
     <message>
         <source>Equipment - Invalid activty &apos;%1&apos;</source>
         <translation>Equipment - Invalid activty &apos;%1&apos;</translation>
@@ -6547,21 +6564,9 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>NBC - Invalid wound type &apos;%1&apos;</source>
         <translation>NBC - Invalid wound type &apos;%1&apos;</translation>
     </message>
-    <message>
-        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
-        <translation>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</translation>
-    </message>
 </context>
 <context>
     <name>Object_Data</name>
-    <message>
-        <source>Flood - Injuries data sum &gt; 100</source>
-        <translation>Flood - Injuries data sum &gt; 100</translation>
-    </message>
-    <message>
-        <source>Flood - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation>Flood - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</translation>
-    </message>
     <message>
         <source>Flood - Invalid wound type &apos;%1&apos;</source>
         <translation>Flood - Invalid wound type &apos;%1&apos;</translation>
@@ -6709,20 +6714,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Unit types - Invalid nbc suit level &apos;%1&apos;</source>
         <translation>Unit types - Invalid nbc suit level &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>Urban_Data</name>
-    <message>
-        <source>RoofShape - Invalid roofShape type name</source>
-        <translation>RoofShape - Invalid roofShape type name</translation>
-    </message>
-</context>
-<context>
-    <name>Weapons_Data</name>
-    <message>
-        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
-        <translation>Weapon %1 - Indirect fire - max range &lt; min range</translation>
     </message>
 </context>
 <context>

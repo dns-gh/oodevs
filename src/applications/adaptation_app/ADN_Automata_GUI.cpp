@@ -139,6 +139,8 @@ QWidget* ADN_Automata_GUI::CreateAutomataCompositionsTable()
     for( auto it = automats.begin(); it != automats.end(); ++it )
     {
         ADN_Automata_Data::AutomatonInfos& automaton = **it;
+        if( automaton.vSubUnits_.empty() )
+            continue;
         pTable->setNumRows( std::max( pTable->numRows(), nRow + 1 ) );
         pTable->AddBoldGridRow( nRow );
         int nSubRow = 0;
@@ -149,9 +151,11 @@ QWidget* ADN_Automata_GUI::CreateAutomataCompositionsTable()
         for( auto it2 = automaton.vSubUnits_.begin(); nSubRow == 0 || it2 != automaton.vSubUnits_.end(); )
         {
             ADN_Automata_Data::UnitInfos* pUnit = ( nSubRow == 0 ) ? automaton.ptrUnit_.GetData() : *it2;
-            assert( pUnit && pUnit->GetCrossedElement() != 0 );
             if( !pUnit || !pUnit->GetCrossedElement() )
+            {
+                ++it2;
                 continue;
+            }
             if( nSubRow != 0  && pUnit == automaton.ptrUnit_.GetData() )
             {
                 ++it2;

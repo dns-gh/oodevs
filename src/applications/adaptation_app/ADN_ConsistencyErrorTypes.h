@@ -41,6 +41,17 @@ enum E_ConsistencyCheck
     eInvalidProbe,
     eNonLogUnitInLogAutomat,
     eLogUnitInNonLogAutomat,
+    eBadBreakdownSum,
+    eInhabitantSchedule,
+    eInvalidSupplyClass,
+    eInvalidResourceNature,
+    eInvalidFireInjuries,
+    eInvalidPoisoningData,
+    eBadFloodInjuries,
+    eInvalidRoof,
+    eInvalidVolume,
+    eIndirectFireRange,
+    eRepartitionError,
     eOthersMask
 };
 

@@ -324,23 +324,23 @@
     </message>
     <message>
         <source>No rainfall</source>
-        <translation>no hay lluvias</translation>
+        <translation>No hay lluvias</translation>
     </message>
     <message>
         <source>Sand storm</source>
-        <translation>tormenta de arena</translation>
+        <translation>Tormenta de arena</translation>
     </message>
     <message>
         <source>Fog</source>
-        <translation>niebla</translation>
+        <translation>Niebla</translation>
     </message>
     <message>
         <source>Drizzle</source>
-        <translation>llovizna</translation>
+        <translation>Llovizna</translation>
     </message>
     <message>
         <source>Rain</source>
-        <translation>lluvia</translation>
+        <translation>Lluvia</translation>
     </message>
     <message>
         <source>Snow</source>
@@ -348,7 +348,7 @@
     </message>
     <message>
         <source>Smoke</source>
-        <translation>Humo</translation>
+        <translation>Fumigación</translation>
     </message>
     <message>
         <source>Very sunny day</source>

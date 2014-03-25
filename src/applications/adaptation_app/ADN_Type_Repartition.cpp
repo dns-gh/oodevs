@@ -78,14 +78,14 @@ void ADN_Type_Repartition::WriteArchive( xml::xostream& output ) const
 // Name: ADN_Type_Repartition::WriteArchive
 // Created: MGD 2011-02-22
 //-----------------------------------------------------------------------------
-void ADN_Type_Repartition::CheckNoError( const QString& dataName ) const
+void ADN_Type_Repartition::CheckNoError( const QString& dataName, ADN_ConsistencyChecker& checker, int tab ) const
 {
     double total = male_.GetData() + female_.GetData() + children_.GetData();
     if( total!= 100 )
-        throw MASA_EXCEPTION( tools::translate( "ADN_Type_Repartition", "Invalid repartition on tab \'%1\' -"
+        checker.AddError( eRepartitionError, tools::translate( "ADN_Type_Repartition", "Invalid repartition on tab \'%1\' -"
                                                                         " Males/Females/Children repartition must be 100%."
                                                                         " Current value for \'%2\': %3%." )
                                                                         .arg( parentGuiName_ )
                                                                         .arg( dataName )
-                                                                        .arg( total ).toStdString() );
+                                                                        .arg( total ).toStdString(), tab );
 }

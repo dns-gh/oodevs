@@ -113,14 +113,23 @@ void ADN_LogisticSupplyClasses_Data::WriteArchive( xml::xostream& output ) const
     output << xml::start( "logistic-supply-classes" );
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "LogisticSupplyClasses" );
-    for( ADN_LogisticSupplyClasses_Data::T_LogisticSupplyClass_Vector::const_iterator it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
+    for( auto it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
     {
-        if( ( *it )->strName_.GetData().empty() )
-            throw MASA_EXCEPTION( tools::translate( "Categories_Data","Categories - Invalid resource nature" ).toStdString() );
         output << xml::start( "logistic-supply-class" )
                  << xml::attribute( "type", **it )
                  << xml::attribute( "id", ( *it )->nId_ )
                << xml::end;
     }
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_LogisticSupplyClasses_Data::CheckDatabaseValidity
+// Created: LDC 2014-03-21
+// -----------------------------------------------------------------------------
+void ADN_LogisticSupplyClasses_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
+        if( ( *it )->strName_.GetData().empty() )
+            checker.AddError( eInvalidSupplyClass, std::string(), eCategories );
 }

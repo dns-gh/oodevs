@@ -188,7 +188,11 @@ bool ADN_TypePtr_InVector_ABC< T >::RemItemPrivate( void* item )
     if( item == 0 )
         return false;
     if( pData_ == item )
+    {
         InvalidatePrivate( item );
+        if( pVector_->size() > 0 )
+            SetData( ( *pVector_ )[ 0 ] );
+    }
     ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     return true;
 }

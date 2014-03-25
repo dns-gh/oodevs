@@ -203,7 +203,7 @@
     <name>E_WeatherType</name>
     <message>
         <source>PasDePrecipitation</source>
-        <translation>Sin precipitación</translation>
+        <translation>No hay lluvias</translation>
     </message>
     <message>
         <source>TempeteDeSable</source>

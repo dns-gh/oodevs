@@ -83,7 +83,6 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eAutomata, "automats" ) );
     BindExistenceTo( &ptrModel_ );
-    BindExistenceTo( &ptrUnit_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +98,6 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos( unsigned int id )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eAutomata, "automats" ) );
     BindExistenceTo( &ptrModel_ );
-    BindExistenceTo( &ptrUnit_ );
     ADN_Automata_Data::idManager_.Lock( id );
 }
 
@@ -325,51 +323,19 @@ void ADN_Automata_Data::WriteArchive( xml::xostream& output ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Automata_Data::GetAutomataThatUseForPC
-// Created: ABR 2012-08-01
-// -----------------------------------------------------------------------------
-QStringList ADN_Automata_Data::GetAutomataThatUseForPC( ADN_Units_Data::UnitInfos& unit )
-{
-    QStringList result;
-    for( auto it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
-    {
-        const UnitInfos* infos = ( *it )->ptrUnit_.GetData();
-        if( infos && infos->strName_.GetData() == unit.strName_.GetData() )
-            result << ( *it )->strName_.GetData().c_str();
-    }
-    return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Automata_Data::GetAutomataThatUseForElement
-// Created: ABR 2012-08-01
-// -----------------------------------------------------------------------------
-QStringList ADN_Automata_Data::GetAutomataThatUseForElement( ADN_Units_Data::UnitInfos& unit )
-{
-    QStringList result;
-    for( auto it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
-    {
-        for( auto it2 = ( *it )->vSubUnits_.begin(); it2 != ( *it )->vSubUnits_.end(); ++it2 )
-        {
-            const UnitInfos* infos = ( *it )->ptrUnit_.GetData();
-            if( infos && ( *it2 )->GetCrossedElement() == &unit && infos->strName_.GetData() != ( *it2 )->GetCrossedElement()->strName_.GetData() ) // all units except pc
-            {
-                result << ( *it )->strName_.GetData().c_str();
-                break;
-            }
-        }
-    }
-    return result;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data::GetAutomataThatUse
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
 QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Units_Data::UnitInfos& unit )
 {
     QStringList result;
-    result << GetAutomataThatUseForPC( unit ) << GetAutomataThatUseForElement( unit );
+    for( auto it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
+        for( auto it2 = ( *it )->vSubUnits_.begin(); it2 != ( *it )->vSubUnits_.end(); ++it2 )
+            if( ( *it2 )->GetCrossedElement() == &unit )
+            {
+                result << ( *it )->strName_.GetData().c_str();
+                break;
+            }
     return result;
 }
 

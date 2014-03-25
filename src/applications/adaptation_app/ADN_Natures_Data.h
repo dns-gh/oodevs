@@ -54,6 +54,7 @@ public:
 
     ADN_Natures_Data::T_NatureInfos_Vector& GetNaturesInfos();
     ADN_Natures_Data::NatureInfos*          FindNature( const std::string& strName );
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     //@}
 
 private:

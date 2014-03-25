@@ -81,9 +81,6 @@ public:
     T_AutomatonInfosVector& GetAutomata();
     AutomatonInfos* FindAutomaton( const std::string& strName );
 
-    QStringList GetAutomataThatUseForPC( ADN_Units_Data::UnitInfos& unit );
-    QStringList GetAutomataThatUseForElement( ADN_Units_Data::UnitInfos& unit );
-
     QStringList GetAutomataThatUse( ADN_Units_Data::UnitInfos& unit );
     QStringList GetAutomataThatUse( ADN_Models_Data::ModelInfos& model );
 
