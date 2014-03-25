@@ -61,11 +61,8 @@ func (s *TestSuite) TestPathfindRequest(c *C) {
 		if msg.SimulationToClient == nil || msg.SimulationToClient.GetMessage() == nil {
 			return false
 		}
-		m := msg.SimulationToClient.GetMessage()
-		if reply := m.GetPathfindRequestAsk(); reply != nil {
-			seen = true
-		}
-		return false
+		seen = msg.SimulationToClient.GetMessage().GetPathfindRequestAck() != nil
+		return seen
 	})
 
 	automat := createAutomat(c, client)
