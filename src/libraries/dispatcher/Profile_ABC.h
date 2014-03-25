@@ -18,6 +18,7 @@ namespace sword
     class ClientToAuthentication;
     class ChatTarget;
     class ClientToReplay;
+    class ProfileUpdateRequest;
 }
 
 namespace dispatcher
@@ -43,6 +44,7 @@ public:
     virtual bool CheckRights( const sword::ClientToAuthentication& msg ) const = 0;
     virtual bool CheckRights( const sword::ClientToReplay& msg ) const = 0;
     virtual bool CheckRights( const sword::ChatTarget& source, const sword::ChatTarget& target ) const = 0;
+    virtual bool CheckRights( const sword::ProfileUpdateRequest& msg, bool currentTimeControl ) const = 0;
     //@}
 
     //! @name Accessors

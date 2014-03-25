@@ -40,6 +40,7 @@ namespace xml
 namespace dispatcher
 {
     class Config;
+    class Profile_ABC;
     class Profile;
     class ClientPublisher_ABC;
     class Model;
@@ -71,7 +72,7 @@ public:
     virtual void Receive( const sword::SimToClient& message );
 
     sword::ProfileCreationRequestAck_ErrorCode    Create ( const sword::ProfileCreationRequest&    message );
-    sword::ProfileUpdateRequestAck_ErrorCode      Update ( const sword::ProfileUpdateRequest&      message );
+    sword::ProfileUpdateRequestAck_ErrorCode      Update ( const sword::ProfileUpdateRequest&      message, const Profile_ABC& requester );
     sword::ProfileDestructionRequestAck_ErrorCode Destroy( const sword::ProfileDestructionRequest& message );
     //@}
 

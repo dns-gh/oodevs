@@ -342,7 +342,7 @@ void RightsPlugin::OnReceiveProfileUpdateRequest( const sword::ProfileUpdateRequ
 {
     sword::AuthenticationToClient reply;
     auto ack = reply.mutable_message()->mutable_profile_update_request_ack();
-    ack->set_error_code( profiles_->Update( message ) );
+    ack->set_error_code( profiles_->Update( message, GetProfile( link ) ) );
     ack->set_login( message.login() );
     SendReponse( reply, sender, link );
 }
