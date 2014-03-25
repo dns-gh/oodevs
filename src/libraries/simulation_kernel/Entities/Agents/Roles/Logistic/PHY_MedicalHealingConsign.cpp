@@ -148,9 +148,9 @@ void PHY_MedicalHealingConsign::ChooseStateAfterResting()
         EnterStateSearchingForHealingArea();
     else
     {
+        EnterStateFinished();
         if( pHumanState_->GoBackToWar() )
             pHumanState_ = 0;
-        EnterStateFinished();
     }
 }
 
@@ -205,8 +205,8 @@ bool PHY_MedicalHealingConsign::DoWaitingForCollection()
     MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {
-        pHumanState_ = 0;
         EnterStateFinished();
+        pHumanState_ = 0;
         return true;
     }
     return false;

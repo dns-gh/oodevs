@@ -74,6 +74,7 @@ PHY_MedicalHumanState::PHY_MedicalHumanState()
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::~PHY_MedicalHumanState()
 {
+    SendChangedState();
     SendMsgDestruction();
 }
 
@@ -178,6 +179,7 @@ void PHY_MedicalHumanState::Cancel()
     {
         pConsign_->Cancel();
         pConsign_ = 0;
+        bHasChanged_ = true;
     }
 }
 
