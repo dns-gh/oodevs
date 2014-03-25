@@ -52,7 +52,7 @@
                         <description name="Destruction" lang="fr"><![CDATA[Tente de détruire la fédération en quittant.]]></description>
                     </descriptions>
                 </setting>
-                <setting attribute="@fom" type="string" default="ASI_FOM_v2.0.8_2010.xml">
+                <setting attribute="@fom" type="file_list" default="ASI_FOM_v2.0.8_2010.xml">
                     <descriptions>
                         <description lang="en" name="FOM"><![CDATA[Federation Object Model.]]></description>
                         <description lang="fr" name="FOM"><![CDATA[Federation Object Model.]]></description>
