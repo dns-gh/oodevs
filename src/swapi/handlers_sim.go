@@ -1211,8 +1211,9 @@ func (model *ModelData) handleLogMaintenanceHandlingUpdate(m *sword.SimToClient_
 	id := mm.GetRequest().GetId()
 	if h, ok := model.MaintenanceHandlings[id]; ok {
 		h.Provider = &MaintenanceHandlingProvider{
-			Id:    mm.GetProvider().GetId(),
-			State: mm.GetState(),
+			Id:      mm.GetProvider().GetId(),
+			State:   mm.GetState(),
+			EndTick: mm.GetCurrentStateEndTick(),
 		}
 		return nil
 	}
