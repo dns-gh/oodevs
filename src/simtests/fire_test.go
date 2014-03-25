@@ -184,3 +184,21 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 		return len(data.FireDetections) == 0
 	})
 }
+
+func (s *TestSuite) TestDirectFireOrder(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSimAndClient(c, sim, client)
+	firer, watcher := setupFireTest(c, client)
+	// invalid tasker
+	err := client.CreateDirectFireOrderOnUnit(0, 0)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	// invalid target
+	err = client.CreateDirectFireOrderOnUnit(firer.Id, 0)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	// tasker == target
+	err = client.CreateDirectFireOrderOnUnit(firer.Id, firer.Id)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	// valid
+	err = client.CreateDirectFireOrderOnUnit(firer.Id, watcher.Id)
+	c.Assert(err, IsNil)
+}

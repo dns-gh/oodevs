@@ -1436,6 +1436,12 @@ func (c *Client) CreateFireOrderOnUnit(taskerId uint32, targetKnowledgeId uint32
 		sword.UnitMagicAction_create_fire_order)
 }
 
+func (c *Client) CreateDirectFireOrderOnUnit(taskerId uint32, targetId uint32) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(taskerId),
+		MakeParameters(MakeAgent(targetId)),
+		sword.UnitMagicAction_create_direct_fire_order)
+}
+
 func (c *Client) LoadUnitTest(tasker *sword.Tasker, params *sword.MissionParameters) error {
 	return c.sendUnitMagicAction(tasker, params, sword.UnitMagicAction_load_unit)
 }
