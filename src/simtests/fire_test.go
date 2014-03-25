@@ -90,9 +90,7 @@ func (s *TestSuite) TestFireOrderOnLocationMakesSmoke(c *C) {
 	c.Assert(2*minor1, IsClose, minor2)
 }
 
-func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
-	defer stopSimAndClient(c, sim, client)
+func setupFireTest(c *C, client *swapi.Client) (*swapi.Unit, *swapi.Unit) {
 	phydb := loadPhysical(c, "worldwide")
 	d := client.Model.GetData()
 	// create artillery
@@ -126,9 +124,17 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Units[firer.Id].Installation == 100
 	})
+	return firer, watcher
+}
+
+func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSimAndClient(c, sim, client)
+	firer, watcher := setupFireTest(c, client)
+	automat := client.Model.GetAutomat(watcher.AutomatId)
 	// detect indirect fires
 	MissionDetectIndirectFires := uint32(44594906)
-	_, err = client.SendUnitOrder(watcher.Id, MissionDetectIndirectFires,
+	_, err := client.SendUnitOrder(watcher.Id, MissionDetectIndirectFires,
 		swapi.MakeParameters(
 			swapi.MakeHeading(0),
 			nil, nil, nil,
@@ -172,7 +178,7 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 		return false
 	})
 	c.Assert(k.UnitId, Equals, firer.Id)
-	c.Assert(k.KnowledgeGroupId, Equals, automat2.KnowledgeGroupId)
+	c.Assert(k.KnowledgeGroupId, Equals, automat.KnowledgeGroupId)
 	// check fire detection destroyed
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return len(data.FireDetections) == 0
