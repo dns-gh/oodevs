@@ -12,7 +12,7 @@
 #include "Units.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include "dispatcher/AuthenticatedLinkResolver_ABC.h"
+#include "dispatcher/LinkResolver_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
@@ -22,7 +22,7 @@
 using namespace plugins::vision;
 
 VisionPlugin::VisionPlugin( const dispatcher::Model_ABC& model, tools::MessageDispatcher_ABC& dispatcher,
-                            dispatcher::SimulationPublisher_ABC& simulation, dispatcher::AuthenticatedLinkResolver_ABC& resolver )
+                            dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::LinkResolver_ABC& resolver )
     : model_     ( model )
     , simulation_( simulation )
     , resolver_  ( resolver )
@@ -48,7 +48,7 @@ void VisionPlugin::OnReceive( const std::string& link, const sword::ClientToSim&
 
 void VisionPlugin::Handle( const std::string& link, const sword::ControlEnableVisionCones& message, int context )
 {
-    dispatcher::ClientPublisher_ABC& publisher = resolver_.GetPublisher( link );
+    dispatcher::ClientPublisher_ABC& publisher = resolver_.GetAuthenticatedPublisher( link );
     const unsigned int client = resolver_.GetClientID( link );
     if( ! Validate( publisher, message, context, client ) )
         return;
@@ -63,7 +63,7 @@ void VisionPlugin::Handle( const std::string& link, const sword::ControlEnableVi
 
 void VisionPlugin::Handle( const std::string& link, const sword::ListEnabledVisionCones& message, int context ) const
 {
-    dispatcher::ClientPublisher_ABC& publisher = resolver_.GetPublisher( link );
+    dispatcher::ClientPublisher_ABC& publisher = resolver_.GetAuthenticatedPublisher( link );
     const auto start = message.has_start() ? message.start().id() : 0;
     std::size_t count = message.has_count() ? message.count() : std::numeric_limits< std::size_t >::max();
     client::ListEnabledVisionConesAck ack;

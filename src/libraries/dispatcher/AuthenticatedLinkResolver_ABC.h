@@ -16,7 +16,6 @@
 namespace dispatcher
 {
     class Profile_ABC;
-    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  AuthenticatedLinkResolver_ABC
@@ -36,9 +35,6 @@ public:
     //! @name Operations
     //@{
     virtual Profile_ABC& GetProfile( const std::string& link ) const = 0;
-    virtual ClientPublisher_ABC& GetPublisher( const std::string& link ) const = 0;
-    virtual ClientPublisher_ABC& GetPublisher( unsigned int clientId ) const = 0;
-    virtual unsigned int GetClientID( const std::string& link ) const = 0;
     //@}
 };
 

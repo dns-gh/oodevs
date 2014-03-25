@@ -75,7 +75,7 @@ void MessengerPlugin::Receive( const sword::SimToClient& wrapper )
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
 void MessengerPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& /*link*/,
-                                                 dispatcher::Profile_ABC& profile, bool /*uncounted*/ )
+                                                 dispatcher::Profile_ABC& profile, unsigned int /*clientId*/, bool /*uncounted*/ )
 {
     model_->SendStateToNewClient( client );
     chat_->NotifyClientAuthenticated( client, profile );
@@ -97,7 +97,7 @@ void MessengerPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client,
 void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, const sword::ClientToMessenger& wrapper )
 {
     unsigned int nCtx = wrapper.has_context()? wrapper.context() : 0;
-    dispatcher::ClientPublisher_ABC& publisher = links_.GetPublisher( client );
+    dispatcher::ClientPublisher_ABC& publisher = links_.GetConnectedPublisher( client );
     // Limit
     if( wrapper.message().has_limit_creation_request() )
         model_->tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_creation_request(), nCtx );

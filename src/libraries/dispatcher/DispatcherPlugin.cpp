@@ -63,7 +63,7 @@ void DispatcherPlugin::OnReceive( const std::string& link, sword::ClientToSim& m
 {
     if( resolver_.GetProfile( link ).CheckRights( message ) )
     {
-        if( unsigned int clientID = resolver_.GetClientID( link ) )
+        if( unsigned int clientID = clients_.GetClientID( link ) )
             message.set_client_id( clientID );
         order_.Resolve( message );
         simulation_.Send( message );
@@ -79,7 +79,7 @@ void DispatcherPlugin::OnReceive( const std::string& link, sword::ClientToSim& m
             m->set_error_code( sword::MagicActionAck::error_invalid_parameter );
             m->set_error_msg( "rights check failed" );
         }
-        if( unsigned int clientID = resolver_.GetClientID( link ) )
+        if( unsigned int clientID = clients_.GetClientID( link ) )
             error.set_client_id( clientID );
         clients_.Send( error );
     }

@@ -9,13 +9,13 @@
 
 #include "dispatcher_pch.h"
 #include "CheckpointFilterPlugin.h"
-#include "AuthenticatedLinkResolver_ABC.h"
+#include "LinkResolver_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Simulation.h"
 
 using namespace dispatcher;
 
-CheckpointFilterPlugin::CheckpointFilterPlugin( const AuthenticatedLinkResolver_ABC& resolver )
+CheckpointFilterPlugin::CheckpointFilterPlugin( const LinkResolver_ABC& resolver )
     : resolver_( resolver )
     , checkpointInProgress_( false )
     , client_( 0 )
@@ -40,7 +40,7 @@ bool CheckpointFilterPlugin::ForwardSimToClient( const sword::SimToClient& msg )
             checkpointInProgress_ = true;
         else if( checkpointInProgress_ &&
                 msg.message().has_control_send_current_state_begin() )
-            client_ = &resolver_.GetPublisher( msg.client_id() );
+            client_ = &resolver_.GetAuthenticatedPublisher( msg.client_id() );
     }
 
     if( client_ )

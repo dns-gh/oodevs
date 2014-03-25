@@ -84,7 +84,7 @@ Replayer::Replayer( const Config& config )
     handler_.AddHandler( clientsNetworker_ );
     handler_.Add( rights_ );
     handler_.Add( plugin_ );
-    handler_.Add( boost::make_shared< plugins::aar::AarPlugin >( *clientsNetworker_, *rights_, config ) );
+    handler_.Add( boost::make_shared< plugins::aar::AarPlugin >( *clientsNetworker_, *clientsNetworker_, config ) );
     handler_.Add( boost::make_shared< plugins::score::ScorePlugin >(
                 *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Add( boost::make_shared< plugins::messenger::MessengerPlugin >(
@@ -133,7 +133,7 @@ void Replayer::OnWebControl( xml::xistream& xis )
 void Replayer::ReceiveClientToReplay( const std::string& link,
         const sword::ClientToReplay& msg )
 {
-    dispatcher::UnicastPublisher unicaster( rights_->GetPublisher( link ), link,
-            rights_->GetClientID( link ), msg.context() );
+    dispatcher::UnicastPublisher unicaster( clientsNetworker_->GetAuthenticatedPublisher( link ), link,
+            clientsNetworker_->GetClientID( link ), msg.context() );
     handler_.HandleClientToReplay( msg, unicaster, *clientsNetworker_ );
 }

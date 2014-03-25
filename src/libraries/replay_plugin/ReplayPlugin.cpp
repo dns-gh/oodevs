@@ -93,7 +93,7 @@ void ReplayPlugin::Receive( const sword::SimToClient& )
 // Name: ReplayPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void ReplayPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string&, Profile_ABC&, bool )
+void ReplayPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string&, Profile_ABC&, unsigned int, bool )
 {
     model_.Send( client );
     SendReplayInfo( client );
@@ -110,7 +110,7 @@ void ReplayPlugin::OnTimer()
         bool disconnected = false;
         try
         {
-            ClientPublisher_ABC& client = linkResolver_.GetPublisher( endpoint_ );
+            ClientPublisher_ABC& client = linkResolver_.GetConnectedPublisher( endpoint_ );
             disconnected = !static_cast< dispatcher::Client& >( client ).HasAnsweredSinceLastTick();
         }
         catch( ... )

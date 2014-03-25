@@ -13,7 +13,7 @@
 #include "3a/StaticModel.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/MessageLoader.h"
-#include "dispatcher/AuthenticatedLinkResolver_ABC.h"
+#include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Services.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "protocol/AarSenders.h"
@@ -34,7 +34,7 @@ namespace sword
 // Name: AarPlugin constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AarPlugin::AarPlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::AuthenticatedLinkResolver_ABC& resolver, const dispatcher::Config& config )
+AarPlugin::AarPlugin( tools::MessageDispatcher_ABC& dispatcher, const dispatcher::LinkResolver_ABC& resolver, const dispatcher::Config& config )
     : resolver_( resolver )
     , messages_( new dispatcher::MessageLoader( config.GetRecordDirectory(), true ) )
     , model_   ( new ::aar::StaticModel( config ) )
@@ -74,7 +74,7 @@ void AarPlugin::Register( dispatcher::Services& services )
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
 void AarPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string&,
-                                           dispatcher::Profile_ABC&, bool /*uncounted*/ )
+                                           dispatcher::Profile_ABC&, unsigned int, bool )
 {
     ::aar::AarInformation info;
     const std::string description = "<functions/>"; // $$$$ AGE 2008-08-04:
@@ -115,7 +115,7 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const swor
             lastTick = messages_->FindTickForDate( request.date_time_range().end_date().data() );
         }
         xml::xistringstream xis( request.request() );
-        AarFacade factory( resolver_.GetPublisher( client ), request.identifier(), *model_ );
+        AarFacade factory( resolver_.GetAuthenticatedPublisher( client ), request.identifier(), *model_ );
         xis >> xml::start( "indicator" );
         boost::shared_ptr< Task > task( factory.CreateTask( xis, firstTick, lastTick ) );
         xis >> xml::end;
@@ -127,6 +127,6 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const swor
         message().mutable_values();
         message().set_identifier ( request.identifier() );
         message().set_error( tools::GetExceptionMsg( e ) );
-        message.Send( resolver_.GetPublisher( client ) );
+        message.Send( resolver_.GetAuthenticatedPublisher( client ) );
     }
 }

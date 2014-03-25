@@ -14,6 +14,7 @@
 #include "Plugin_ABC.h"
 #include "Services.h"
 #include "Model_ABC.h"
+#include "NullClientPublisher.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
 
@@ -50,6 +51,14 @@ void ClientsNetworker::Update()
     ServerNetworker::Update();
 }
 
+namespace
+{
+    bool ShouldUnicast( const sword::SimToClient& message )
+    {
+        return message.has_client_id() && message.message().has_pathfind_request_ask();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::Receive
 // Created: AGE 2007-07-09
@@ -62,7 +71,11 @@ void ClientsNetworker::Receive( const sword::SimToClient& message )
         AllowConnections();
     else if( message.message().has_control_begin_tick() )
         OnNewTick();
-    Broadcast( message );
+
+    if( ShouldUnicast( message ) )
+        Unicast( message );
+    else
+        Broadcast( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,11 +84,17 @@ void ClientsNetworker::Receive( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Broadcast( const sword::SimToClient& message )
 {
-    static const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< sword::SimToClient >();
-    tools::Message m;
-    Serialize( message, m );
     for( auto it = internals_.begin(); it != internals_.end(); ++it )
-        it->second->Send( tag, m );
+        it->second->Send( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Unicast
+// Created: LGY 2014-03-06
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Unicast( const sword::SimToClient& message )
+{
+    GetAuthenticatedPublisher( message.client_id() ).Send( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,10 +102,11 @@ void ClientsNetworker::Broadcast( const sword::SimToClient& message )
 // Created: MCO 2011-11-07
 // -----------------------------------------------------------------------------
 void ClientsNetworker::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link,
-                                                  dispatcher::Profile_ABC& /*profile*/, bool uncounted )
+                                                  dispatcher::Profile_ABC& /*profile*/, unsigned int clientId, bool uncounted )
 {
     boost::shared_ptr< Client > pClient = clients_[ link ];
     internals_[ link ] = pClient;
+    clientsId_.insert( T_ClientsId::value_type( link, clientId ) );
     if( uncounted )
         uncountedClients_.insert( link );
     model_.Send( *pClient );
@@ -100,6 +120,7 @@ void ClientsNetworker::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*clie
 {
     uncountedClients_.erase( link );
     internals_.erase( link );
+    clientsId_.left.erase( link );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,15 +286,56 @@ void ClientsNetworker::Send( const sword::DispatcherToClient& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::GetPublisher
+// Name: ClientsNetworker::GetConnectedPublisher
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link ) const
+ClientPublisher_ABC& ClientsNetworker::GetConnectedPublisher( const std::string& link ) const
 {
     auto it = clients_.find( link );
     if( it == clients_.end() || !it->second )
         throw MASA_EXCEPTION( link + " is not a valid client" );
     return *it->second;
+}
+
+namespace
+{
+    NullClientPublisher nullPublisher;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::GetAuthenticatedPublisher
+// Created: LGY 2014-03-05
+// -----------------------------------------------------------------------------
+ClientPublisher_ABC& ClientsNetworker::GetAuthenticatedPublisher( unsigned int clientId ) const
+{
+   auto it = clientsId_.right.find( clientId );
+   if( it != clientsId_.right.end() )
+       return GetConnectedPublisher( it->second );
+   return nullPublisher;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::GetAuthenticatedPublisher
+// Created: LGY 2014-03-05
+// -----------------------------------------------------------------------------
+ClientPublisher_ABC& ClientsNetworker::GetAuthenticatedPublisher( const std::string& link ) const
+{
+    auto it = clientsId_.left.find( link );
+    if( it != clientsId_.left.end() )
+        return GetConnectedPublisher( link );
+    return nullPublisher;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::GetClientID
+// Created: LGY 2013-04-24
+// -----------------------------------------------------------------------------
+unsigned int ClientsNetworker::GetClientID( const std::string& link ) const
+{
+    auto it = clientsId_.left.find( link );
+    if( it != clientsId_.left.end() )
+        return it->second;
+    return 0u;
 }
 
 // -----------------------------------------------------------------------------
