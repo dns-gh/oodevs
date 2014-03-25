@@ -209,26 +209,22 @@ void PHY_MedicalHumanState::SendFullState( unsigned int context ) const
 {
     assert( pHuman_ );
     assert( pPion_ );
-
     SendMsgCreation();
-    client::LogMedicalHandlingUpdate asn;
-    asn().mutable_request()->set_id( nID_ );
-    asn().mutable_unit()->set_id( pPion_->GetID() );
-
+    client::LogMedicalHandlingUpdate update;
+    update().mutable_request()->set_id( nID_ );
+    update().mutable_unit()->set_id( pPion_->GetID() );
     if( pConsign_ )
-        pConsign_->SendFullState( asn );
+        pConsign_->SendFullState( update );
     else
     {
-        asn().mutable_provider()->set_id( 0 );
-        asn().set_state( sword::LogMedicalHandlingUpdate::finished );
+        update().mutable_provider()->set_id( 0 );
+        update().set_state( sword::LogMedicalHandlingUpdate::finished );
     }
-
-    asn().set_wound( pHuman_->GetWound().GetAsnID() );
-    asn().set_mental_wound( pHuman_->IsMentalDiseased() );
-    asn().set_nbc_contaminated( pHuman_->IsContaminated() );
-    asn().set_diagnosed( bDiagnosed_ );
-
-    asn.Send( NET_Publisher_ABC::Publisher(), context );
+    update().set_wound( pHuman_->GetWound().GetAsnID() );
+    update().set_mental_wound( pHuman_->IsMentalDiseased() );
+    update().set_nbc_contaminated( pHuman_->IsContaminated() );
+    update().set_diagnosed( bDiagnosed_ );
+    update.Send( NET_Publisher_ABC::Publisher(), context );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,24 +237,24 @@ void PHY_MedicalHumanState::SendChangedState() const
         return;
     assert( pPion_ );
     assert( pHuman_ );
-    client::LogMedicalHandlingUpdate asn;
-    asn().mutable_request()->set_id( nID_ );
-    asn().mutable_unit()->set_id( pPion_->GetID() );
+    client::LogMedicalHandlingUpdate update;
+    update().mutable_request()->set_id( nID_ );
+    update().mutable_unit()->set_id( pPion_->GetID() );
     if( pConsign_ )
-        pConsign_->SendChangedState( asn );
+        pConsign_->SendChangedState( update );
     else
     {
-        asn().mutable_provider()->set_id( 0 );
-        asn().set_state( sword::LogMedicalHandlingUpdate::finished );
+        update().mutable_provider()->set_id( 0 );
+        update().set_state( sword::LogMedicalHandlingUpdate::finished );
     }
     if( bHumanStateHasChanged_ )
     {
-        asn().set_wound( pHuman_->GetWound().GetAsnID() );
-        asn().set_mental_wound( pHuman_->IsMentalDiseased() );
-        asn().set_nbc_contaminated( pHuman_->IsContaminated() );
+        update().set_wound( pHuman_->GetWound().GetAsnID() );
+        update().set_mental_wound( pHuman_->IsMentalDiseased() );
+        update().set_nbc_contaminated( pHuman_->IsContaminated() );
     }
-    asn().set_diagnosed( bDiagnosed_ );
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    update().set_diagnosed( bDiagnosed_ );
+    update.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
