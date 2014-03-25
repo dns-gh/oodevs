@@ -15,6 +15,7 @@
 #include "hla_plugin/SilentEntity.h"
 #include "hla_plugin/IsPartOfStruct.h"
 #include "rpr/EntityType.h"
+#include "rpr/EntityAppearance.h"
 #include "MockUpdateFunctor.h"
 #include "MockObjectListener.h"
 #include "MockEntityIdentifierResolver.h"
@@ -110,6 +111,77 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_silent_entities_attribute
     mock::sequence s;
     MOCK_EXPECT( listener.EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "1 2 3" ), 42u, 0u, 0u, 0u );
     MOCK_EXPECT( listener.EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "4 5 6" ), 43u, 0u, 0u, 0u );
+    {
+        ::hla::Deserializer deserializer( Deserialize() );
+        aggregate.Deserialize( "SilentEntities", deserializer );
+    }
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_silent_entities_attribute_and_build_aggregated_result, Fixture )
+{
+    const uint16_t numberOfSilentEntities = 3;
+    serializer << numberOfSilentEntities;
+    {
+        ::hla::Deserializer deserializer( Deserialize() );
+        aggregate.Deserialize( "NumberOfSilentEntities", deserializer );
+    }
+    serializer = ::hla::Serializer();
+    const SilentEntity firstSilentEntity( rpr::EntityType( "1 2 3" ), 42 );
+    const SilentEntity secondSilentEntity( rpr::EntityType( "4 5 6" ), 43 );
+    const SilentEntity thirdSilentEntity( rpr::EntityType( "1 2 3" ), 8 );
+    firstSilentEntity.Serialize( serializer );
+    secondSilentEntity.Serialize( serializer );
+    thirdSilentEntity.Serialize( serializer );
+    mock::sequence s;
+    MOCK_EXPECT( listener.EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "1 2 3" ), 50u, 0u, 0u, 0u );
+    MOCK_EXPECT( listener.EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "4 5 6" ), 43u, 0u, 0u, 0u );
+    {
+        ::hla::Deserializer deserializer( Deserialize() );
+        aggregate.Deserialize( "SilentEntities", deserializer );
+    }
+}
+
+namespace
+{
+    void addApperance( SilentEntity& silent, std::size_t count, uint32_t state)
+    {
+        for(;count != 0; --count)
+            silent.entityAppearance_.push_back(state);
+    }
+}
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_silent_entities_attribute_and_build_aggregated_result_with_damages, Fixture )
+{
+    const uint16_t numberOfSilentEntities = 3;
+    serializer << numberOfSilentEntities;
+    {
+        ::hla::Deserializer deserializer( Deserialize() );
+        aggregate.Deserialize( "NumberOfSilentEntities", deserializer );
+    }
+    const rpr::EntityAppearance_Land DEAD( 3 << 3 );
+    const rpr::EntityAppearance_Land LIGHT_DAMAGE( 1 << 3);
+    const rpr::EntityAppearance_Land HEAVY_DAMAGE( 2 << 3);
+
+    serializer = ::hla::Serializer();
+    SilentEntity firstSilentEntity( rpr::EntityType( "1 2 3" ), 42 );
+    addApperance(firstSilentEntity, 9, DEAD.value_);
+    addApperance(firstSilentEntity, 10, LIGHT_DAMAGE.value_);
+    addApperance(firstSilentEntity, 11, HEAVY_DAMAGE.value_);
+    SilentEntity secondSilentEntity( rpr::EntityType( "4 5 6" ), 43 );
+    addApperance(secondSilentEntity, 6, DEAD.value_);
+    addApperance(secondSilentEntity, 7, LIGHT_DAMAGE.value_);
+    addApperance(secondSilentEntity, 8, HEAVY_DAMAGE.value_);
+    SilentEntity thirdSilentEntity( rpr::EntityType( "1 2 3" ), 8 );
+    addApperance(thirdSilentEntity, 1, DEAD.value_);
+    addApperance(firstSilentEntity, 2, LIGHT_DAMAGE.value_);
+    addApperance(firstSilentEntity, 3, HEAVY_DAMAGE.value_);
+    firstSilentEntity.Serialize( serializer );
+    secondSilentEntity.Serialize( serializer );
+    thirdSilentEntity.Serialize( serializer );
+    mock::sequence s;
+    const uint32_t firstCount = 42+8 - (9+1+10+2+11+3);
+    const uint32_t secondCount = 43 - (6+7+8);
+    MOCK_EXPECT( listener.EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "1 2 3" ), firstCount, 9u+1u, 10u+2u, 11u+3u );
+    MOCK_EXPECT( listener.EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "4 5 6" ), secondCount, 6u, 7u, 8u );
     {
         ::hla::Deserializer deserializer( Deserialize() );
         aggregate.Deserialize( "SilentEntities", deserializer );

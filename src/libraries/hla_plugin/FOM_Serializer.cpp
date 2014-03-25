@@ -96,14 +96,14 @@ void FOM_Serializer::ReadNumberOfSilentEntities( ::hla::Deserializer_ABC& deseri
     deserializer >> numberOfSilentEntities;
 }
 
-#pragma warning( push )
-#pragma warning( disable : 4700 ) // uninitialized variable for union
 // -----------------------------------------------------------------------------
 // Name: FOM_Serializer::ReadSilentEntities
 // Created: AHC 2012-09-03
 // -----------------------------------------------------------------------------
 void FOM_Serializer::ReadSilentEntities( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, unsigned int numberOfSilentEntities )
 {
+    typedef std::map< rpr::EntityType, std::vector<unsigned int > > T_States;
+    T_States states;
     for( unsigned int i = 0; i < numberOfSilentEntities; ++i )
     {
         SilentEntity entity;
@@ -131,10 +131,21 @@ void FOM_Serializer::ReadSilentEntities( ::hla::Deserializer_ABC& deserializer, 
                 break;
             }
         }
-        listener.EquipmentUpdated( identifier, entity.entityType_, available, dead, lightDamages, heavyDamages );
+        T_States::iterator it = states.find(entity.entityType_);
+        if( states.end() == it )
+            states[entity.entityType_] = std::vector<unsigned int>(4,0);
+        it = states.find(entity.entityType_);
+        it->second[0]+=available;
+        it->second[1]+=dead;
+        it->second[2]+=lightDamages;
+        it->second[3]+=heavyDamages;
     }
+    std::for_each(states.begin(), states.end(), [&](T_States::const_reference v)
+        {
+            const std::vector<unsigned int >& values = v.second;
+            listener.EquipmentUpdated( identifier, v.first, values[0], values[1], values[2], values[3] );
+        });
 }
-#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: FOM_Serializer::ReadEntityIdentifier

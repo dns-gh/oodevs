@@ -157,7 +157,7 @@ void AggregateEntity::EquipmentChanged( unsigned int type, const rpr::EntityType
     numberOfSilentEntities_ = static_cast< unsigned short >( equipments_.size() );
     attributesUpdater_->Update( "NumberOfSilentEntities", Wrapper< unsigned short >( numberOfSilentEntities_ ) );
     std::vector< SilentEntity > entities;
-    BOOST_FOREACH( const T_Equipment& equipment, equipments_ )
+    std::for_each( equipments_.begin(), equipments_.end(), [&]( const T_Equipment& equipment )
     {
         const uint16_t count = static_cast< uint16_t >( equipment.available_ + equipment.dead_ + equipment.lightDamages_ + equipment.heavyDamages_ );
         SilentEntity silent(equipment.entityType_, count );
@@ -168,7 +168,7 @@ void AggregateEntity::EquipmentChanged( unsigned int type, const rpr::EntityType
             FillAppearance( equipment.heavyDamages_, 2, silent.entityAppearance_ );
         }
         entities.push_back( silent );
-    }
+    });
     attributesUpdater_->Update( "SilentEntities", Wrapper< std::vector< SilentEntity > >( entities ) );
 }
 
@@ -293,8 +293,10 @@ void AggregateEntity::PlatformAdded( const std::string& name, unsigned int /*id*
 void AggregateEntity::ChildrenChanged( const EventListener_ABC::T_ChildrenIds& children )
 {
     subAggregates_.Clear();
-    BOOST_FOREACH( const EventListener_ABC::T_ChildrenIds::value_type& v, children )
-        subAggregates_.Add( v );
+    std::for_each( children.begin(), children.end(), [&](const EventListener_ABC::T_ChildrenIds::value_type& v)
+        {
+            subAggregates_.Add( v );
+        });
     attributesUpdater_->Update( "SubAggregateIdentifiers", subAggregates_ );
 }
 
