@@ -1951,7 +1951,9 @@ message UnitMagicAction {
         //! The new resources are described in a following
         //! UnitAttributes message resource_dotations field.
         change_dotation                   = 47;
-        //! A direct fire order creation magic action
+        //! Create a direct fire order
+        //! The tasker is set to the firing unit.
+        //! parameters[0], AgentId: target unit identifier
         create_direct_fire_order          = 48;
         //! Loads a unit into another unit
         //! The tasker is set to the transporter unit
