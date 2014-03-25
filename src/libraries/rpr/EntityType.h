@@ -94,6 +94,7 @@ public:
     }
 
     bool operator<=( const EntityType& rhs ) const;
+    bool operator<( const EntityType& rhs ) const;
     bool operator==( const EntityType& rhs ) const;
     //@}
 

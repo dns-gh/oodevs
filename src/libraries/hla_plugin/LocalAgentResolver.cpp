@@ -10,6 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "LocalAgentResolver.h"
 #include "dispatcher/Agent_ABC.h"
+#include "clients_kernel/AgentType.h"
 #include "dispatcher/Automat_ABC.h"
 
 
@@ -77,4 +78,12 @@ unsigned long LocalAgentResolver::ParentAutomat( unsigned long simulationIdentif
     if( agents_.end() == it )
         return 0;
     return it->second->GetSuperior().GetId();
+}
+
+unsigned long LocalAgentResolver::AgentType( unsigned long simulationIdentifier ) const
+{
+    T_Agents::const_iterator it = agents_.find( simulationIdentifier );
+    if( agents_.end() == it )
+        return 0;
+    return it->second->GetType().GetId();
 }

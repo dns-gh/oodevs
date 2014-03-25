@@ -17,6 +17,7 @@
 #include "MockComponentTypes.h"
 #include "MockMessageController.h"
 #include "MockEntityTypeResolver.h"
+#include "MockLocalAgentResolver.h"
 #include "MockHlaObject.h"
 #include "MockHlaClass.h"
 #include "MockLogger.h"
@@ -84,12 +85,13 @@ namespace
         tools::MessageHandler_ABC< sword::SimToClient_Content >* unitAttributesHandler;
         sword::ClientToSim message;
         dispatcher::MockLogger logger;
+        MockLocalAgentResolver localAgentResolver;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : updater            ( subject, handler, publisher, factory, resolver, componentTypes, messageController, logger )
+            : updater            ( subject, handler, publisher, factory, resolver, componentTypes, messageController, logger, localAgentResolver )
             , componentEntityType( "1 1 2 0 0 0 0" )
             , componentTypeName  ( "component type name" )
             , unitId             ( 1337 )
@@ -279,7 +281,7 @@ namespace
     {
     public:
         LocalObjectFixture()
-            : updater ( subject, handler, publisher, factory, resolver, componentTypes, messageController, logger )
+            : updater ( subject, handler, publisher, factory, resolver, componentTypes, messageController, logger, localAgentResolver )
             , componentEntityType( "1 1 2 0 0 0 0" )
             , componentTypeName  ( "component type name" )
             , agentTypeId        ( 42 )
@@ -290,7 +292,6 @@ namespace
             BOOST_REQUIRE( remoteClassListener );
             BOOST_REQUIRE( responseObserver );
             BOOST_REQUIRE( unitAttributesHandler );
-            remoteClassListener->LocalCreated( "id_local", hlaClass, object );
         }
         EquipmentUpdater updater;
         const std::string componentEntityType;
@@ -308,8 +309,10 @@ BOOST_FIXTURE_TEST_CASE( divested_local_object_update, LocalObjectFixture )
 {
     const int componentNumber = 10;
 
+    MOCK_EXPECT( localAgentResolver.ResolveName ).with("id_local").returns(unitId);
+    MOCK_EXPECT( localAgentResolver.AgentType ).with(unitId).returns(agentTypeId);
     MOCK_EXPECT( componentTypes.Apply ).once().with( agentTypeId, mock::any ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
-    responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "id_local" );
+    remoteClassListener->LocalCreated( "id_local", hlaClass, object );
 
     MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
     remoteClassListener->Divested( "id_local" );
