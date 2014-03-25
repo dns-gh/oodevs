@@ -36,9 +36,9 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     controllers_.Register( *this );
     std::function< void( const sword::SimToClient& ) > fun = [&]( const sword::SimToClient& message )
         {
-            if( message.message().has_pathfind_request_ask() )
+            if( message.message().has_pathfind_request_ack() )
             {
-                auto request = message.message().pathfind_request_ask();
+                auto request = message.message().pathfind_request_ack();
                 if( request.error_code() != sword::PathfindRequestAck_ErrorCode_no_error )
                     return;
                 const auto& path = request.path();
