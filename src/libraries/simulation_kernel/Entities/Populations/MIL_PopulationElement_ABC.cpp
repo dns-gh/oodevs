@@ -732,7 +732,7 @@ void MIL_PopulationElement_ABC::UpdateCollidingAttackingAgents( MIL_Agent_ABC& t
 
 namespace
 {
-    bool CheckCollidingAttackingAgents( MIL_Agent_ABC* agent, const std::vector< MIL_Agent_ABC* >& collidingAgents )
+    bool CheckCollidingAttackingAgents( const MIL_Agent_ABC* agent, const std::vector< MIL_Agent_ABC* >& collidingAgents )
     {
         return std::find( collidingAgents.begin(), collidingAgents.end(), agent ) == collidingAgents.end();
     }
@@ -769,6 +769,8 @@ void MIL_PopulationElement_ABC::Attack( MIL_PopulationElement_ABC& element )
     if( GetHealthyHumans() != 0u && element.GetHealthyHumans() != 0u )
         if( const PHY_Protection* protection = GetHumanProtection( PHY_Protection::GetProtections() ) )
         {
+            pPopulation_->NotifyAttackedPopulation( element.GetPopulation() );
+
             const double rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
             if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH ) )
                 return;

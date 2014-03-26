@@ -22,6 +22,7 @@
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "MIL_AgentServer.h"
 #include "MIL_PopulationAttitude.h"
 #include "MIL_PopulationConcentration.h"
@@ -514,6 +515,7 @@ void MIL_Population::UpdateState()
         Update( concentrations_, trashedConcentrations_ );
         if( !trashedFlows_.empty() || !trashedConcentrations_.empty() )
             UpdateBarycenter();
+        UpdateAttackedPopulations();
     }
     catch( const std::exception& e )
     {
@@ -1108,6 +1110,26 @@ void MIL_Population::Attack()
 {
     for( auto itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         ( **itConcentration ).Attack();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::NotifyAttackedPopulation
+// Created: JSR 2014-03-24
+// -----------------------------------------------------------------------------
+void MIL_Population::NotifyAttackedPopulation( const MIL_Population& target )
+{
+    if( attackedPopulations_.insert( &target ).second )
+    {
+        auto group = target.GetKnowledgeGroup();
+        if( !group )
+            return;
+        const DEC_KnowledgeBlackBoard_KnowledgeGroup* blackboard = group->GetKnowledge();
+        if( !blackboard )
+            return;
+        boost::shared_ptr< DEC_Knowledge_Population > pKnPopulation = blackboard->ResolveKnowledgePopulation( *this );
+        if( pKnPopulation )
+            MIL_Report::PostEvent( target, report::eRC_PriseAPartieParPopulation, pKnPopulation );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1743,6 +1765,47 @@ bool MIL_Population::HasHumansChanged() const
         if( flow->HasHumansChanged() )
             return true;
     return false;
+}
+
+namespace
+{
+    bool IsCollidingWith( const MIL_PopulationElement_ABC& element, const MIL_Population& population )
+    {
+        auto flows = element.GetCollidingPopulationFlows();
+        for( auto it = flows.begin(); it != flows.end(); ++it )
+            if( &static_cast< const MIL_PopulationFlow* >( *it )->GetPopulation() == &population )
+                return true;
+        auto concentrations = element.GetCollidingPopulationConcentrations();
+        for( auto it = concentrations.begin(); it != concentrations.end(); ++it )
+            if( &static_cast< const MIL_PopulationConcentration* >( *it )->GetPopulation() == &population )
+                return true;
+        return false;
+    }
+
+    template< class T >
+    bool HasElementCollidingWith( const T& elements, const MIL_Population& population )
+    {
+        for( auto it = elements.begin(); it != elements.end(); ++it )
+            if( IsCollidingWith( **it, population ) )
+                return true;
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::UpdateAttackedPopulations
+// Created: JSR 2014-03-24
+// -----------------------------------------------------------------------------
+void MIL_Population::UpdateAttackedPopulations()
+{
+    for( auto itPopulation = attackedPopulations_.begin(); itPopulation != attackedPopulations_.end(); )
+    {
+        const MIL_Population& attacking = **itPopulation;
+        if( HasElementCollidingWith( concentrations_, attacking) || HasElementCollidingWith( flows_, attacking ) )
+            ++itPopulation;
+        else
+            itPopulation = attackedPopulations_.erase( itPopulation );
+    }
 }
 
 // -----------------------------------------------------------------------------

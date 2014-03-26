@@ -151,6 +151,7 @@ public:
     void FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult );
     void FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
     void Attack();
+    void NotifyAttackedPopulation( const MIL_Population& target );
     double GetDangerosity( const MIL_AgentPion& target ) const;
     void SetAttitude( const MIL_PopulationAttitude& attitude );
     void SetBlinded( bool blinded );
@@ -224,6 +225,7 @@ private:
     void GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, double& rMinDistance ) const;
     void UpdateBarycenter();
     bool HasHumansChanged() const;
+    void UpdateAttackedPopulations();
     //@}
 
 private:
@@ -268,6 +270,7 @@ private:
     boost::scoped_ptr< MIL_DictionaryExtensions >   pExtensions_;
     double                                          urbanBlockAngriness_;
     tools::Set< MIL_Agent_ABC* >                    hidden_;
+    std::set< const MIL_Population* >               attackedPopulations_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );
