@@ -483,16 +483,6 @@ void ADN_MainWindow::AddListView( const QString& name, const T_ConsistencyCallBa
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::SetPageVisible
-// Created: ABR 2013-10-18
-// -----------------------------------------------------------------------------
-void ADN_MainWindow::SetPageVisible( E_WorkspaceElements target, bool visible )
-{
-    assert( mainTabWidget_.get() );
-    mainTabWidget_->SetPageVisible( target, visible );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::OnExportHtml
 // Created: APE 2005-04-19
 // -----------------------------------------------------------------------------
