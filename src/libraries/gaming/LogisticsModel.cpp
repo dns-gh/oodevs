@@ -136,8 +136,10 @@ void LogisticsModel::UpdateConsign( const M& message )
             UpdateLogistic< kernel::Entity_ABC, E, C >( handler, entity, *consign );
             handler = entity;
         }
-        consign->Update( message, handler );
-        controller_.Update( *consign );
+        if( consign->Update( message, handler ) )
+            controller_.Update( *consign );
+        else
+            DeleteConsign< C, E >( message.request().id() );
     }
 }
 
