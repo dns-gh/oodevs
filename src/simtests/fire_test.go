@@ -90,9 +90,7 @@ func (s *TestSuite) TestFireOrderOnLocationMakesSmoke(c *C) {
 	c.Assert(2*minor1, IsClose, minor2)
 }
 
-func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
-	defer stopSimAndClient(c, sim, client)
+func setupFireTest(c *C, client *swapi.Client) (*swapi.Unit, *swapi.Unit) {
 	phydb := loadPhysical(c, "worldwide")
 	d := client.Model.GetData()
 	// create artillery
@@ -119,9 +117,17 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Units[watcher.Id].RawOperationalState > 0
 	})
+	return firer, watcher
+}
+
+func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSimAndClient(c, sim, client)
+	firer, watcher := setupFireTest(c, client)
+	automat := client.Model.GetAutomat(watcher.AutomatId)
 	// detect indirect fires
 	MissionDetectIndirectFires := uint32(44594906)
-	_, err = client.SendUnitOrder(watcher.Id, MissionDetectIndirectFires,
+	_, err := client.SendUnitOrder(watcher.Id, MissionDetectIndirectFires,
 		swapi.MakeParameters(
 			swapi.MakeHeading(0),
 			nil, nil, nil,
@@ -138,7 +144,7 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 		swapi.MakeParameters(
 			swapi.MakeHeading(0),
 			nil, nil, nil,
-			swapi.MakeLocationParam(from),
+			swapi.MakeLocationParam(firer.Position),
 		))
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -177,9 +183,27 @@ func (s *TestSuite) TestIndirectFireMakesFlyingShell(c *C) {
 		return false
 	})
 	c.Assert(k.UnitId, Equals, firer.Id)
-	c.Assert(k.KnowledgeGroupId, Equals, automat2.KnowledgeGroupId)
+	c.Assert(k.KnowledgeGroupId, Equals, automat.KnowledgeGroupId)
 	// check fire detection destroyed
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return len(data.FireDetections) == 0
 	})
+}
+
+func (s *TestSuite) TestDirectFireOrder(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSimAndClient(c, sim, client)
+	firer, watcher := setupFireTest(c, client)
+	// invalid tasker
+	err := client.CreateDirectFireOrderOnUnit(0, 0)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	// invalid target
+	err = client.CreateDirectFireOrderOnUnit(firer.Id, 0)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	// tasker == target
+	err = client.CreateDirectFireOrderOnUnit(firer.Id, firer.Id)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	// valid
+	err = client.CreateDirectFireOrderOnUnit(firer.Id, watcher.Id)
+	c.Assert(err, IsNil)
 }
