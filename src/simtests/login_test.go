@@ -260,9 +260,10 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 		Supervisor: false,
 	}
 	adminProfile := &swapi.Profile{
-		Login:      "adminprofile",
-		Password:   "adminpassword",
-		Supervisor: true,
+		Login:       "adminprofile",
+		Password:    "adminpassword",
+		Supervisor:  true,
+		TimeControl: false,
 	}
 	emptyLoginProfile := &swapi.Profile{
 		Login:      "",
@@ -309,6 +310,18 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(profile, NotNil)
 	c.Assert(profile.Password, Equals, userProfile.Password)
+
+	// Supervisor without time control cannot add time control to itself
+	supervisor := connectAndWait(c, sim, "adminprofile", "adminpassword")
+	adminProfile.TimeControl = true
+	profile, err = supervisor.UpdateProfile(adminProfile.Login, adminProfile)
+	c.Assert(err, IsSwordError, "forbidden")
+
+	// But admin can
+	profile, err = admin.UpdateProfile(adminProfile.Login, adminProfile)
+	c.Assert(err, IsNil)
+	c.Assert(profile, NotNil)
+	c.Assert(profile.TimeControl, Equals, adminProfile.TimeControl)
 
 	// Duplicating through update
 	profile, err = admin.UpdateProfile("user1", userProfile)
