@@ -1631,7 +1631,8 @@ message UnitMagicAction {
         cancel_surrender                  = 2;
         //! A recover transporters magic action
         recover_transporters              = 3;
-        //! A destroy component magic action
+        //! Destroy a random equipment
+        //! The tasker must be a unit identifier.
         destroy_component                 = 4;
         //! A recover all magic action
         recover_all                       = 5;
