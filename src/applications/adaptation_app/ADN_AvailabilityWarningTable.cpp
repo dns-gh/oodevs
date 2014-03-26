@@ -28,9 +28,8 @@ ADN_AvailabilityWarningTable::ADN_AvailabilityWarningTable( const QString& objec
     verticalHeader()->setVisible( false );
     delegate_.AddSpinBoxOnColumn( 0, 0, 100 );
     delegate_.AddColorOnColumn( 0, 0, 100. );
-    proxyModel_->setDynamicSortFilter( true );
-    Sort();
     static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).AddItem( 0 );
+    Sort();
 }
 
 // -----------------------------------------------------------------------------
@@ -61,4 +60,14 @@ void ADN_AvailabilityWarningTable::AddRow( int row, void* data )
     if( !warning )
         return;
     AddItem( row, 0, data, &warning->percentage_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_AvailabilityWarningTable::dataChanged
+// Created: LDC 2014-03-26
+// -----------------------------------------------------------------------------
+void ADN_AvailabilityWarningTable::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
+{
+    ADN_Table::dataChanged( topLeft, bottomRight );
+    Sort();
 }

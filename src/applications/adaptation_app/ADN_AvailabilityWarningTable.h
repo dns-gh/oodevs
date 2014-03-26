@@ -32,6 +32,8 @@ public:
     virtual void OnContextMenu( const QPoint& pt );
     virtual void AddRow( int row, void* data );
     //@}
+    
+    virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
 };
 
 #endif // __ADN_AvailabilityWarningTable_h_
