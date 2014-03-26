@@ -1703,7 +1703,7 @@ func (c *Client) PathfindRequest(unitId uint32, position ...Point) ([]Point, err
 	}
 	var points []Point
 	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetPathfindRequestAsk()
+		reply := msg.GetPathfindRequestAck()
 		if reply == nil {
 			return ErrContinue
 		}

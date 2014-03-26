@@ -54,6 +54,17 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 func (s *TestSuite) TestPathfindRequest(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
+	client2 := loginAndWaitModel(c, sim, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer client2.Close()
+	seen := false
+	handlerId := client2.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
+		if msg.SimulationToClient == nil || msg.SimulationToClient.GetMessage() == nil {
+			return false
+		}
+		seen = msg.SimulationToClient.GetMessage().GetPathfindRequestAck() != nil
+		return seen
+	})
+
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
 	to := swapi.Point{X: -15.8193, Y: 28.3456}
@@ -77,4 +88,8 @@ func (s *TestSuite) TestPathfindRequest(c *C) {
 	c.Assert(len(points), Equals, 2)
 	c.Assert(from, IsNearby, points[0])
 	c.Assert(from, IsNearby, points[1])
+
+	// No other client can receive the acknowledge
+	client2.Unregister(handlerId)
+	c.Assert(seen, Equals, false)
 }
