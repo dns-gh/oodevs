@@ -186,7 +186,7 @@ bool LocationEditorBox::GetPosition( geometry::Point2f& result ) const
         if( i < static_cast< int >( fields_.size() ) )
             content << fields_[i].edit->text();
     QStringList hint;
-    return current_->Parse( content, result, hint );
+    return current_->Parse( content, result, hint, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -227,7 +227,7 @@ QValidator::State LocationEditorBox::Complete( QString& input, int idx, Field& f
     geometry::Point2f dummy;
     const auto& sizes = current_->GetDescriptor().sizes;
     int maxSize = idx < sizes.size() ? sizes[idx] : INT_MAX;
-    if( !idx && input.size() > maxSize && current_->Parse( current_->Split( input ), dummy, hint ) )
+    if( !idx && input.size() > maxSize && current_->Parse( current_->Split( input ), dummy, hint, false ) )
     {
         input = hint[0];
         for( int i = 1; i < hint.size(); ++i )
@@ -280,7 +280,7 @@ void LocationEditorBox::UpdateValidity()
             empty &= content.back().size() == 0;
         }
 
-    bool valid = empty || current_->Parse( content, pos, hints );
+    bool valid = empty || current_->Parse( content, pos, hints, false );
     if( valid && !empty )
         lastValidPosition_ = pos;
     SetValid( valid );

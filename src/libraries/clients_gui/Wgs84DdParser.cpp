@@ -13,8 +13,6 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Tools.h"
 
-#include <boost/lexical_cast.hpp>
-
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -39,7 +37,7 @@ Wgs84DdParser::~Wgs84DdParser()
 // Name: Wgs84DdParser::Parse
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
-bool Wgs84DdParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const
+bool Wgs84DdParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint, bool small ) const
 {
     try
     {
@@ -48,10 +46,20 @@ bool Wgs84DdParser::Parse( const QStringList& content, geometry::Point2f& result
         hint.clear();
         for( auto it = content.begin(); it != content.end(); ++it )
             hint << it->stripWhiteSpace();
-        const float y = boost::lexical_cast< float >( hint[0].toStdString() );
-        const float x = boost::lexical_cast< float >( hint[1].toStdString() );
+        bool ok;
+        const float y = content[0].toFloat( &ok );
+        if( !ok )
+            return false;
+        const float x = content[1].toFloat( &ok );
+        if( !ok )
+            return false;
         const geometry::Point2d point( x, y );
         result = converter_.ConvertFromGeo( point );
+        if( small )
+        {
+            hint[0] = QString::number( y, 'f', 4 );
+            hint[1] = QString::number( y, 'f', 4 );
+        }
         return true;
     }
     catch( ... )

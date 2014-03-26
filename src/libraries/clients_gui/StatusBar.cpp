@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "StatusBar.h"
 #include "moc_StatusBar.cpp"
+#include "LocationParser_ABC.h"
+#include "LocationParsers.h"
 #include "RichWidget.h"
 #include "SubObjectName.h"
 #include "TerrainPicker.h"
@@ -18,6 +20,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "ENT/Ent_Tr.h"
+#include <tools/Helpers.h>
 #include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>
 
@@ -31,6 +34,14 @@ namespace
     {
         return QString::fromStdString( ENT_Tr::ConvertFromCoordinateSystem( coordSystem, ENT_Tr::eToSim ) );
     }
+
+    const struct { unsigned size; E_CoordinateSystem value; } coordinates[] = {
+        { 155, eCoordinateSystem_Local },
+        { 105, eCoordinateSystem_Mgrs },
+        { 105, eCoordinateSystem_SanC },
+        { 155, eCoordinateSystem_Wgs84Dd },
+        { 215, eCoordinateSystem_Wgs84Dms },
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -41,6 +52,7 @@ StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, Terr
     : controllers_  ( controllers )
     , detection_    ( detection )
     , converter_    ( converter )
+    , parsers_      ( new LocationParsers( controllers, converter ) )
     , terrainPicker_( picker )
     , parent_       ( parent )
 {
@@ -59,15 +71,11 @@ StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, Terr
         << convertFromCoordSystem( eCoordinateSystem_Mgrs )
         << convertFromCoordSystem( eCoordinateSystem_Wgs84Dd )
         ).toStringList();
-    const auto addField = [&]( unsigned size, E_CoordinateSystem coordSystem ){
-        const bool checked = !!fields.contains( convertFromCoordSystem( coordSystem ) );
-        AddField( parent, size, coordSystem, checked );
-    };
-    addField( 155, eCoordinateSystem_Local );
-    addField( 105, eCoordinateSystem_Mgrs );
-    addField( 105, eCoordinateSystem_SanC );
-    addField( 155, eCoordinateSystem_Wgs84Dd );
-    addField( 215, eCoordinateSystem_Wgs84Dms );
+    for( size_t i = 0; i < COUNT_OF( coordinates ); ++i )
+    {
+        const bool checked = !!fields.contains( convertFromCoordSystem( coordinates[i].value ) );
+        AddField( parent, coordinates[i].size, coordinates[i].value, checked );
+    }
     pMenu_->insertSeparator();
     pElevation_   = AddField( parent, 50, tr( "Elevation" ), true );
     pTerrainType_ = AddField( parent, 150, tr( "Terrain type" ), true );
@@ -131,37 +139,32 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
             (*it)->setText( tr( "---" ) );
     else
     {
-        const QString xypos = tr( "y:%L1 x:%L2" ).arg( position.Y(), 4 ).arg( position.X(), 4 );
-        coordinateFields_[ eCoordinateSystem_Local ]->setText( xypos );
-
+        for( size_t i = 0; i < COUNT_OF( coordinates ); ++i )
+        {
+            const auto coord = coordinates[i].value;
+            const auto& parser = parsers_->GetParser( coord );
+            const auto text = parser->GetStringPosition( position );
+            const auto list = parser->Split( QString::fromStdString( text ) );
+            geometry::Point2f dummy;
+            QStringList hint;
+            if( !parser->Parse( list, dummy, hint, true ) )
+                hint.clear();
+            const auto& labels = parser->GetDescriptor().labels;
+            QStringList field;
+            for( int i = 0; i < hint.size(); ++i )
+            {
+                if( i < labels.size() )
+                    if( !labels[ i ].isEmpty() )
+                        field << labels[ i ];
+                field << hint[ i ];
+            }
+            if( field.isEmpty() )
+                field << tr( "invalid" );
+            const QString split = hint.size() == field.size() ? "" : " ";
+            coordinateFields_[coord]->setText( field.join( split ) );
+        }
         const QString elev = tr( "h:%L1 " ).arg( detection_.ElevationAt( position ) );
         pElevation_->setText( elev );
-
-        coordinateFields_[ eCoordinateSystem_Mgrs ]->setText( converter_.ConvertToMgrs( position ).c_str() );
-        auto sad69 = converter_.ConvertTo( position, "SAN-C" );
-        try
-        {
-            converter_.ConvertFrom( sad69, "SAN-C" );
-        }
-        catch( ... )
-        {
-            sad69 = tr( "invalid" );
-        }
-        coordinateFields_[ eCoordinateSystem_SanC ]->setText( QString::fromStdString( sad69 ) );
-
-        const geometry::Point2d latLong( converter_.ConvertToGeo( position ) );
-        const QString latlongpos = tr( "Lat:%L1 Lon:%L2" ).arg( latLong.Y(), 0, 'g', 6 )
-                                                        .arg( latLong.X(), 0, 'g', 6 );
-        coordinateFields_[ eCoordinateSystem_Wgs84Dd ]->setText( latlongpos );
-
-        std::string pos( converter_.ConvertToGeoDms( position ) );
-        std::string::size_type loc = pos.find( ":", 0 );
-        if( loc != std::string::npos )
-        {
-            const std::string latlongdmspos( boost::str( boost::format( "Lat:%s, Lon:%s" )  % pos.substr( 0, loc )
-                                                                                            % pos.substr( loc + 1, pos.size() - loc ) ) );
-            coordinateFields_[ eCoordinateSystem_Wgs84Dms ]->setText( latlongdmspos.c_str() );
-        }
     }
 }
 
