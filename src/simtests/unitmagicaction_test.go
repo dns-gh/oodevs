@@ -724,7 +724,7 @@ func CreateFormation(c *C, client *swapi.Client, partyId uint32) *swapi.Formatio
 	return formation
 }
 
-func CreateAutomat(c *C, client *swapi.Client, formationId, groupId uint32) *swapi.Automat {
+func CreateAutomatType(c *C, client *swapi.Client, formationId, groupId, automatType uint32) *swapi.Automat {
 	data := client.Model.GetData()
 	if groupId == 0 {
 		groupId = getSomeKnowledgeGroup(c, data).Id
@@ -732,10 +732,14 @@ func CreateAutomat(c *C, client *swapi.Client, formationId, groupId uint32) *swa
 	kg0, ok := data.KnowledgeGroups[groupId]
 	c.Assert(ok, Equals, true)
 	c.Assert(kg0, NotNil)
-	automat, err := client.CreateAutomat(formationId, AutomatType, kg0.Id)
+	automat, err := client.CreateAutomat(formationId, automatType, kg0.Id)
 	c.Assert(err, IsNil)
 	c.Assert(automat.KnowledgeGroupId, Equals, kg0.Id)
 	return automat
+}
+
+func CreateAutomat(c *C, client *swapi.Client, formationId, groupId uint32) *swapi.Automat {
+	return CreateAutomatType(c, client, formationId, groupId, AutomatType)
 }
 
 func CreateUnit(c *C, client *swapi.Client, automatId uint32) *swapi.Unit {
@@ -1914,17 +1918,21 @@ func (s *TestSuite) TestUnitChangeHumanFactors(c *C) {
 func CreateTransportedAndCarrier(c *C, client *swapi.Client) (*swapi.Unit, *swapi.Unit) {
 	pos := swapi.Point{X: -15.9219, Y: 28.3456}
 	formation := CreateFormation(c, client, 1)
-	automat := CreateAutomat(c, client, formation.Id, 0)
+
+	automatDia5 := CreateAutomat(c, client, formation.Id, 0)
+	automatDia4 := CreateAutomatType(c, client, formation.Id, 0, 126)
 
 	// INF.Mechanized infantry platoon with 3 vehicles
-	transported, err := client.CreateUnit(automat.Id, 8, pos)
+	transported, err := client.CreateUnit(automatDia5.Id, 8, pos)
 	c.Assert(err, IsNil)
 
 	// AIR.Transport Helicopter Patrol
-	carrier, err := client.CreateUnit(automat.Id, 7, pos)
+	carrier, err := client.CreateUnit(automatDia4.Id, 7, pos)
 	c.Assert(err, IsNil)
 
-	err = client.SetAutomatMode(automat.Id, false)
+	err = client.SetAutomatMode(automatDia5.Id, false)
+	c.Assert(err, IsNil)
+	err = client.SetAutomatMode(automatDia4.Id, false)
 	c.Assert(err, IsNil)
 
 	return transported, carrier
