@@ -35,7 +35,10 @@ namespace
         return QString::fromStdString( ENT_Tr::ConvertFromCoordinateSystem( coordSystem, ENT_Tr::eToSim ) );
     }
 
-    const struct { unsigned size; E_CoordinateSystem value; } coordinates[] = {
+    const struct {
+        unsigned           size;
+        E_CoordinateSystem value;
+    } coordinates[] = {
         { 155, eCoordinateSystem_Local },
         { 105, eCoordinateSystem_Mgrs },
         { 105, eCoordinateSystem_SanC },
