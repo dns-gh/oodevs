@@ -848,6 +848,8 @@ void MIL_AgentPion::OnReceiveFragOrder( const sword::FragOrder& msg, const std::
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveDestroyComponent()
 {
+    if( markedForDestruction_ )
+        throw MASA_BADUNIT_UNIT( "invalid unit: " << GetID() );
     GetRole< PHY_RolePion_Composantes >().DestroyRandomComposante();
 }
 
