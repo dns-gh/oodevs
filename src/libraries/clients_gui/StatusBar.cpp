@@ -163,8 +163,8 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
             const QString split = hint.size() == field.size() ? "" : " ";
             coordinateFields_[coord]->setText( field.join( split ) );
         }
-        const QString elev = tr( "h:%L1 " ).arg( detection_.ElevationAt( position ) );
-        pElevation_->setText( elev );
+        const QString elevation = tr( "h:%L1 " ).arg( detection_.ElevationAt( position ) );
+        pElevation_->setText( elevation );
     }
 }
 
