@@ -68,9 +68,9 @@ LogisticLinks::~LogisticLinks()
 kernel::Entity_ABC* LogisticLinks::FindLogisticEntity( const sword::ParentEntity& message ) const
 {
     if( message.has_automat() )
-        return (kernel::Entity_ABC*)automatResolver_.Find( message.automat().id() );
+        return automatResolver_.Find( message.automat().id() );
     else if( message.has_formation() )
-        return (kernel::Entity_ABC*)formationResolver_.Find( message.formation().id() );
+        return formationResolver_.Find( message.formation().id() );
     return 0;
 }
 
@@ -101,10 +101,9 @@ LogisticLink* LogisticLinks::FindLogisticLink( const kernel::Entity_ABC& superio
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const sword::LogSupplyQuotas& message )
 {
-    kernel::Entity_ABC* supplier = FindLogisticEntity( message.supplier() );
+    const kernel::Entity_ABC* supplier = FindLogisticEntity( message.supplier() );
     assert( supplier );
-    LogisticLink* link = FindLogisticLink( *supplier );
-    if( link )
+    if( LogisticLink* link = FindLogisticLink( *supplier ) )
         link->Update( message.quotas(), dotationResolver_ );
     controller_.Update( gui::DictionaryUpdated( entity_, property_ ) );
     controller_.Update( *this );
@@ -159,7 +158,7 @@ tools::Iterator< const LogisticLink& > LogisticLinks::CreateSuperiorLinksIterato
 void LogisticLinks::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Logistic", "Logistic links" ) )
-        .Display( "Superiors", superiors_);
+        .Display( "Superiors", superiors_ );
 }
 
 // -----------------------------------------------------------------------------

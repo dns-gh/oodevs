@@ -108,27 +108,26 @@ void SupplyQuotasWidget::UpdateQuotas( const LogisticLinks& links )
     if( dataModel_->rowCount() > 0 )
         dataModel_->removeRows( 0, dataModel_->rowCount() );
     const Entity_ABC* pSuperior = superior_->Count() > 0 ? superior_->GetValue() : 0;
-    if( pSuperior )
+    if( !pSuperior )
+        return;
+    LogisticLink* pLink = links.FindLogisticLink( *pSuperior );
+    if( !pLink )
+        return;
+    const std::vector< Dotation >& dotations = pLink->GetQuotas();
+    std::for_each( dotations.begin(), dotations.end(), [&]( const Dotation& dotation )
     {
-        if( LogisticLink* pLink = links.FindLogisticLink( *pSuperior ) )
-        {
-            const std::vector< Dotation >& dotations = pLink->GetQuotas();
-            for( std::size_t i = 0; i < dotations.size(); ++i )
-            {
-                if( !dotations[ i ].type_ )
-                    continue;
-                QStandardItem* itemName = new QStandardItem();
-                QStandardItem* itemQty = new QStandardItem();
-                itemName->setEditable( false );
-                itemQty->setEditable( false );
-                itemName->setText( QString::fromStdString( dotations[ i ].type_->GetName() ) );
-                itemQty->setText( QString::number( dotations[ i ].quantity_ ) );
-                dataModel_->setItem( row, 0, itemName );
-                dataModel_->setItem( row, 1, itemQty );
-                ++row;
-            }
-        }
-    }
+        if( !dotation.type_ )
+            return;
+        QStandardItem* itemName = new QStandardItem();
+        QStandardItem* itemQty = new QStandardItem();
+        itemName->setEditable( false );
+        itemQty->setEditable( false );
+        itemName->setText( QString::fromStdString( dotation.type_->GetName() ) );
+        itemQty->setText( QString::number( dotation.quantity_ ) );
+        dataModel_->setItem( row, 0, itemName );
+        dataModel_->setItem( row, 1, itemQty );
+        ++row;
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +151,8 @@ void SupplyQuotasWidget::NotifySelected( const Entity_ABC* pEntity )
 {
     pLinks_ = 0;
     if( pEntity && logistic_helpers::IsLogisticBase( *pEntity ) )
+    {
         pLinks_ = pEntity->Retrieve< LogisticLinks >();
-    if( pLinks_ )
         NotifyUpdated( *pLinks_ );
+    }
 }

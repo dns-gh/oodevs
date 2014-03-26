@@ -235,8 +235,8 @@ std::set< const PHY_DotationCategory* > LogisticLink::OnReceiveChangeQuotas( con
     std::set< const PHY_DotationCategory* > quotasTypes;
     for( int i = 0; i < message.value_size(); ++i )
     {
-        unsigned int type = message.value( i ).list( 0 ).identifier();
-        int number = message.value( i ).list( 1 ).quantity();
+        const unsigned int type = message.value( i ).list( 0 ).identifier();
+        const int number = message.value( i ).list( 1 ).quantity();
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type );
         if( pDotationCategory )
         {

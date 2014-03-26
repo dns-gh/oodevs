@@ -41,7 +41,7 @@ class LogisticLink : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLink( const kernel::Entity_ABC& superior );
+    explicit LogisticLink( const kernel::Entity_ABC& superior );
     virtual ~LogisticLink();
     //@}
 
