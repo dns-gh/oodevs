@@ -24,7 +24,6 @@
 #include "clients_kernel/Karma.h"
 #include "rpr/EntityType.h"
 #include <boost/lexical_cast.hpp>
-#include <boost/foreach.hpp>
 #include <algorithm>
 #include <sstream>
 
@@ -78,8 +77,10 @@ void RemoteAgentController::Notify( const sword::AutomatCreation& message, const
 
     logger_.LogInfo( "parties[ " + boost::lexical_cast< std::string >( message.party().id() ) + " ] = " + boost::lexical_cast< std::string >( message.automat().id() ) );
     parties_[ message.party().id() ] = message.automat().id();
-    BOOST_FOREACH( const T_WaitingAutomats::value_type& waiting, waitingAutomats_ )
-        SideChanged( waiting.first, waiting.second );
+    std::for_each( waitingAutomats_.begin(), waitingAutomats_.end(), [&](const T_WaitingAutomats::value_type& waiting )
+            {
+                SideChanged( waiting.first, waiting.second );
+            });
 }
 
 // -----------------------------------------------------------------------------

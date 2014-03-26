@@ -12,7 +12,7 @@
 #include <hla/Serializer.h>
 #include <hla/AttributeIdentifier.h>
 #include <hla/UpdateFunctor_ABC.h>
-#include <boost/foreach.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -52,11 +52,15 @@ namespace
 void AttributesSerializer::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const
 {
     if( updateAll )
-        BOOST_FOREACH( const T_Attribute& attribute, attributes_ )
-            ::Serialize( functor, attribute );
-    else
-        BOOST_FOREACH( const T_Attribute& attribute, attributes_ )
-            if( std::find( updates_.begin(), updates_.end(), attribute.first ) != updates_.end() )
+        std::for_each( attributes_.begin(), attributes_.end(), [&](const T_Attribute& attribute)
+            {
                 ::Serialize( functor, attribute );
+            });
+    else
+        std::for_each( attributes_.begin(), attributes_.end(), [&](const T_Attribute& attribute)
+            {
+                if( std::find( updates_.begin(), updates_.end(), attribute.first ) != updates_.end() )
+                    ::Serialize( functor, attribute );
+            });
     updates_.clear();
 }

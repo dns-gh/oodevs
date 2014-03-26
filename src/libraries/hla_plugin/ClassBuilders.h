@@ -19,7 +19,7 @@
 #include <hla/ClassIdentifier.h>
 #include <hla/FederateIdentifier.h>
 #include <boost/assign.hpp>
-#include <boost/foreach.hpp>
+#include <algorithm>
 
 namespace plugins
 {
@@ -59,8 +59,10 @@ namespace hla
     public:
         virtual void Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass ) const
         {
-            BOOST_FOREACH( const std::string& attribute, attributes_ )
-                hlaClass.Register( ::hla::AttributeIdentifier( attribute ) );
+            std::for_each( attributes_.begin(), attributes_.end(), [&](const std::string& attribute)
+                {
+                    hlaClass.Register( ::hla::AttributeIdentifier( attribute ) );
+                });
             hlaClass.ActivateUpdates( true );
             federate.Register( ::hla::ClassIdentifier( name_ ), hlaClass, publish_, subscribe_ );
         }

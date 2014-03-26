@@ -10,7 +10,6 @@
 #include "hla_plugin_pch.h"
 #include "EventListenerComposite.h"
 #include <algorithm>
-#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -56,8 +55,10 @@ void EventListenerComposite::Unregister( EventListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void EventListenerComposite::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
 {
-    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-        listener->SpatialChanged( latitude, longitude, altitude, speed, direction );
+    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* listener)
+        {
+            listener->SpatialChanged( latitude, longitude, altitude, speed, direction );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -66,8 +67,10 @@ void EventListenerComposite::SpatialChanged( double latitude, double longitude, 
 // -----------------------------------------------------------------------------
 void EventListenerComposite::FormationChanged( bool isOnRoad )
 {
-    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-        listener->FormationChanged( isOnRoad );
+    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* listener)
+        {
+            listener->FormationChanged( isOnRoad );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -77,8 +80,10 @@ void EventListenerComposite::FormationChanged( bool isOnRoad )
 void EventListenerComposite::EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available,
         unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages )
 {
-    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-        listener->EquipmentChanged( type, entityType, available, dead, lightDamages, heavyDamages );
+    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* listener)
+        {
+            listener->EquipmentChanged( type, entityType, available, dead, lightDamages, heavyDamages );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -87,8 +92,10 @@ void EventListenerComposite::EquipmentChanged( unsigned int type, const rpr::Ent
 // -----------------------------------------------------------------------------
 void EventListenerComposite::EmbarkmentChanged( bool mounted )
 {
-    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-        listener->EmbarkmentChanged( mounted );
+    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* listener)
+        {
+            listener->EmbarkmentChanged( mounted );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -97,8 +104,10 @@ void EventListenerComposite::EmbarkmentChanged( bool mounted )
 // -----------------------------------------------------------------------------
 void EventListenerComposite::PlatformAdded( const std::string& name, unsigned int id )
 {
-    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-        listener->PlatformAdded( name, id );
+    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* listener)
+        {
+            listener->PlatformAdded( name, id );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -107,8 +116,10 @@ void EventListenerComposite::PlatformAdded( const std::string& name, unsigned in
 // -----------------------------------------------------------------------------
 void EventListenerComposite::ChildrenChanged( const T_ChildrenIds& children )
 {
-    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-        listener->ChildrenChanged( children );
+    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* listener)
+        {
+            listener->ChildrenChanged( children );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -117,8 +128,10 @@ void EventListenerComposite::ChildrenChanged( const T_ChildrenIds& children )
 // -----------------------------------------------------------------------------
 void EventListenerComposite::ParentChanged( const std::string& parentId )
 {
-    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-        listener->ParentChanged( parentId );
+    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* listener)
+        {
+            listener->ParentChanged( parentId );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -127,6 +140,8 @@ void EventListenerComposite::ParentChanged( const std::string& parentId )
 // -----------------------------------------------------------------------------
 void EventListenerComposite::StateChanged( rpr::DamageState32 state )
 {
-    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-        listener->StateChanged( state );
+    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* listener)
+        {
+            listener->StateChanged( state );
+        });
 }

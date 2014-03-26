@@ -22,10 +22,10 @@
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
 #include <hla/VariableLengthData.h>
-#include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <sstream>
 #include <cassert>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -48,8 +48,10 @@ HlaClass::HlaClass( Federate_ABC& federate, LocalAgentResolver_ABC& resolver, co
     builder->Build( federate, *hlaClass_ );
     std::vector< std::string > temp;
     builder->GetAttributes( temp );
-    BOOST_FOREACH( const std::string& name, temp)
-        attributes_.push_back( ::hla::AttributeIdentifier( name ) );
+    std::for_each( temp.begin(), temp.end(), [&](const std::string& name)
+        {
+            attributes_.push_back( ::hla::AttributeIdentifier( name ) );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -97,13 +99,16 @@ HlaObject_ABC& HlaClass::Create( const ::hla::ObjectIdentifier& objectID, const 
 // -----------------------------------------------------------------------------
 void HlaClass::Destroy( HlaObject_ABC& object )
 {
-    BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
+    for( T_Entities::iterator it = remoteEntities_.begin(); remoteEntities_.end() != it; ++it )
+    {
+        T_Entities::const_reference entity = *it;
         if( entity.second.get() == &object )
         {
             pListeners_->RemoteDestroyed( entity.first );
             remoteEntities_.erase( entity.first );
             return;
         }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -113,10 +118,14 @@ void HlaClass::Destroy( HlaObject_ABC& object )
 void HlaClass::Register( ClassListener_ABC& listener )
 {
     pListeners_->Register( listener );
-    BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
-        listener.RemoteCreated( entity.first, *this, *entity.second );
-    BOOST_FOREACH( const T_Entities::value_type& entity, localEntities_ )
-        listener.LocalCreated( entity.first, *this, *entity.second );
+    std::for_each( remoteEntities_.begin(), remoteEntities_.end(), [&](const T_Entities::value_type& entity)
+        {
+            listener.RemoteCreated( entity.first, *this, *entity.second );
+        });
+    std::for_each( localEntities_.begin(), localEntities_.end(), [&](const T_Entities::value_type& entity)
+        {
+            listener.LocalCreated( entity.first, *this, *entity.second );
+        });
 }
 
 // -----------------------------------------------------------------------------

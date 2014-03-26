@@ -58,8 +58,10 @@ DirectFireSender::~DirectFireSender()
 {
     localAgentSubject_.Unregister( *this );
     remoteAgentSubject_.Unregister( *this );
-    BOOST_FOREACH( T_LocalListeners::const_reference v, listeners_ )
-        v.second.second->Unregister( *v.second.first );
+    std::for_each( listeners_.begin(), listeners_.end(), [&](T_LocalListeners::const_reference v)
+        {
+            v.second.second->Unregister( *v.second.first );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -327,12 +329,13 @@ void DirectFireSender::ComputeChildrenRtiIds( unsigned int parentSimId )
         itTargetListener->second.first.get() != 0 && itTargetListener->second.first->GetPlatforms().size() !=0 )
     {
         std::set< std::string > rtiIDs;
-        BOOST_FOREACH( unsigned int id, itTargetListener->second.first->GetPlatforms() )
+        const std::set< unsigned int >& platforms = itTargetListener->second.first->GetPlatforms();
+        std::for_each( platforms.begin(), platforms.end(), [&](unsigned int id)
         {
             std::string rtiId = localResolver_.Resolve( id );
             if( !rtiId.empty() )
                 rtiIDs.insert( rtiId );
-        }
+        });
         childrenRtiIds_[ parentRtiId ] = rtiIDs;
     }
 }
@@ -398,28 +401,28 @@ void DirectFireSender::DoPlatformsFire( unsigned long fireIdentifier, const std:
         std::generate( targetIdentifiers.begin(), targetIdentifiers.end(), ChildrenDistributor( itTargetChildren->second ) );
         
     std::size_t targetIndex = 0;
-    BOOST_FOREACH( unsigned int chId, firingL->GetPlatforms() )
-    {
-        const Omt13String& childTgtIdentifier = targetIdentifiers[ targetIndex ];
-        std::string chRtiId( localResolver_.Resolve( chId ) );
-        if( !chRtiId.empty() )
+    std::for_each( firingL->GetPlatforms().begin(), firingL->GetPlatforms().end(), [&](unsigned int chId)
         {
-            // WeaponFire
-            fire.firingObjectIdentifier = Omt13String( chRtiId );
-            fire.eventIdentifier.issuingObjectIdentifier = Omt13String( chRtiId );
-            fire.targetObjectIdentifier = childTgtIdentifier;
-            fire.firingLocation = positions_.find( chRtiId ) != positions_.end() ? positions_[ chRtiId ] : positions_[ firingRtiId ];
-            weaponFireSender_.Send( fire );
-            // Munition Detonation
-            childDeto.eventIdentifier.issuingObjectIdentifier = Omt13String( chRtiId );
-            childDeto.firingObjectIdentifier = Omt13String( chRtiId );
-            childDeto.targetObjectIdentifier = childTgtIdentifier;
-            childDeto.detonationLocation = positions_.find( childTgtIdentifier.str() )  != positions_.end() ? 
-                                            positions_[ childTgtIdentifier.str() ] : parentDeto.detonationLocation;
-            interactionSender_.Send( childDeto );
-        }
-        ++targetIndex;
-    }
+            const Omt13String& childTgtIdentifier = targetIdentifiers[ targetIndex ];
+            std::string chRtiId( localResolver_.Resolve( chId ) );
+            if( !chRtiId.empty() )
+            {
+                // WeaponFire
+                fire.firingObjectIdentifier = Omt13String( chRtiId );
+                fire.eventIdentifier.issuingObjectIdentifier = Omt13String( chRtiId );
+                fire.targetObjectIdentifier = childTgtIdentifier;
+                fire.firingLocation = positions_.find( chRtiId ) != positions_.end() ? positions_[ chRtiId ] : positions_[ firingRtiId ];
+                weaponFireSender_.Send( fire );
+                // Munition Detonation
+                childDeto.eventIdentifier.issuingObjectIdentifier = Omt13String( chRtiId );
+                childDeto.firingObjectIdentifier = Omt13String( chRtiId );
+                childDeto.targetObjectIdentifier = childTgtIdentifier;
+                childDeto.detonationLocation = positions_.find( childTgtIdentifier.str() )  != positions_.end() ?
+                                                positions_[ childTgtIdentifier.str() ] : parentDeto.detonationLocation;
+                interactionSender_.Send( childDeto );
+            }
+            ++targetIndex;
+        });
 }
 
 // -----------------------------------------------------------------------------

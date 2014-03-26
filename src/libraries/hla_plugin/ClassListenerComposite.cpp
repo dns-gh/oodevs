@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "ClassListenerComposite.h"
-#include <boost/foreach.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -37,8 +37,10 @@ ClassListenerComposite::~ClassListenerComposite()
 // -----------------------------------------------------------------------------
 void ClassListenerComposite::RemoteCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object)
 {
-    BOOST_FOREACH(ClassListener_ABC* listener, listeners_)
-        listener->RemoteCreated( identifier, hlaClass, object );
+    std::for_each(listeners_.begin(), listeners_.end(), [&](ClassListener_ABC* listener)
+        {
+            listener->RemoteCreated( identifier, hlaClass, object );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -47,8 +49,10 @@ void ClassListenerComposite::RemoteCreated( const std::string& identifier, HlaCl
 // -----------------------------------------------------------------------------
 void ClassListenerComposite::RemoteDestroyed( const std::string& identifier)
 {
-    BOOST_FOREACH(ClassListener_ABC* listener, listeners_)
-        listener->RemoteDestroyed( identifier );
+    std::for_each(listeners_.begin(), listeners_.end(), [&](ClassListener_ABC* listener)
+        {
+            listener->RemoteDestroyed( identifier );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -75,8 +79,10 @@ void ClassListenerComposite::Unregister( ClassListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void ClassListenerComposite::LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object )
 {
-    BOOST_FOREACH(ClassListener_ABC* listener, listeners_)
-        listener->LocalCreated( identifier, hlaClass, object );
+    std::for_each(listeners_.begin(), listeners_.end(), [&](ClassListener_ABC* listener)
+        {
+            listener->LocalCreated( identifier, hlaClass, object );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -85,8 +91,10 @@ void ClassListenerComposite::LocalCreated( const std::string& identifier, HlaCla
 // -----------------------------------------------------------------------------
 void ClassListenerComposite::LocalDestroyed( const std::string& identifier )
 {
-    BOOST_FOREACH(ClassListener_ABC* listener, listeners_)
-        listener->LocalDestroyed( identifier );
+    std::for_each(listeners_.begin(), listeners_.end(), [&](ClassListener_ABC* listener)
+        {
+            listener->LocalDestroyed( identifier );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -95,8 +103,10 @@ void ClassListenerComposite::LocalDestroyed( const std::string& identifier )
 // -----------------------------------------------------------------------------
 void ClassListenerComposite::Divested( const std::string& identifier )
 {
-    BOOST_FOREACH(ClassListener_ABC* listener, listeners_)
-        listener->Divested( identifier );
+    std::for_each(listeners_.begin(), listeners_.end(), [&](ClassListener_ABC* listener)
+        {
+            listener->Divested( identifier );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -105,6 +115,8 @@ void ClassListenerComposite::Divested( const std::string& identifier )
 // -----------------------------------------------------------------------------
 void ClassListenerComposite::Acquired( const std::string& identifier )
 {
-    BOOST_FOREACH(ClassListener_ABC* listener, listeners_)
-        listener->Acquired( identifier );
+    std::for_each(listeners_.begin(), listeners_.end(), [&](ClassListener_ABC* listener)
+        {
+            listener->Acquired( identifier );
+        });
 }

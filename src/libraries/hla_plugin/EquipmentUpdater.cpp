@@ -21,7 +21,7 @@
 #include "rpr/EntityTypeResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "tools/MessageController_ABC.h"
-#include <boost/foreach.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -135,9 +135,11 @@ void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*conte
     {
         const sword::EquipmentDotations::EquipmentDotation& dotation = message.equipment_dotations().elem( i );
         std::string equipmentName;
-        BOOST_FOREACH( const T_StaticComponents::value_type& staticComponent, staticComponents )
-            if( staticComponent.second.first == dotation.type().id() )
-                equipmentName = staticComponent.first;
+        std::for_each( staticComponents.begin(), staticComponents.end(), [&](const T_StaticComponents::value_type& staticComponent)
+            {
+                if( staticComponent.second.first == dotation.type().id() )
+                    equipmentName = staticComponent.first;
+            });
         const T_Components::const_iterator remoteComponent = remoteComponents.find( equipmentName );
         mustSend = mustSend || ( remoteComponent != remoteComponents.end() && 
             static_cast< int >( remoteComponent->second.available_ ) != dotation.available() );
@@ -253,12 +255,12 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
     message().set_type( sword::UnitMagicAction::change_equipment_state );
     sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
-    BOOST_FOREACH( const T_StaticComponents::value_type& component, agentType->second )
+    std::for_each( agentType->second.begin(), agentType->second.end(), [&](const T_StaticComponents::value_type& component)
     {
         const std::string& componentTypeName = component.first;
         const unsigned int componentTypeIdentifier = component.second.first;
         const unsigned int componentStaticNumber = component.second.second;
-        const T_Components::const_iterator remoteComponent = remoteAgent->second.find( componentTypeName );
+        const EquipmentUpdater::T_Components::const_iterator remoteComponent = remoteAgent->second.find( componentTypeName );
         if( remoteComponent != remoteAgent->second.end() && remoteComponent->second.available_ <= componentStaticNumber )
         {
             sword::MissionParameter_Value* componentChanged = parameter.add_value();
@@ -271,7 +273,7 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
             componentChanged->add_list()->set_quantity( 0 );
             componentChanged->add_list()->mutable_list();
         }
-    }
+    });
     if( message().parameters().elem( 0 ).value_size() > 0 )
         message.Send( publisher_, factory_.Create() );
 }

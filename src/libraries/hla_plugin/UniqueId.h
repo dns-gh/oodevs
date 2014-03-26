@@ -12,7 +12,7 @@
 
 #include "SerializationTools.h"
 #include <vector>
-#include <boost/foreach.hpp>
+#include <algorithm>
 #include <boost/shared_ptr.hpp>
 
 namespace plugins
@@ -109,15 +109,19 @@ public:
     template< typename Archive >
     void operator()( const boost::shared_ptr< std::vector< std::vector< char > > >& id, Archive& serializer ) const
     {
-        BOOST_FOREACH( const std::vector< char >& v, *id )
-            Serialize( v, serializer );
+        std::for_each( id->begin(), id->end(), [&](const std::vector< char >& v)
+            {
+                Serialize( v, serializer );
+            });
     }
     template< typename Archive >
     void operator()( const boost::shared_ptr< VariableArray< std::vector< char > > >& id, Archive& serializer ) const
     {
         serializer << static_cast< uint32_t >( id->list.size() );
-        BOOST_FOREACH( const std::vector< char >& v, id->list )
-            Serialize( v, serializer );
+        std::for_each( id->list.begin(), id->list.end(), [&](const std::vector< char >& v)
+            {
+                Serialize( v, serializer );
+            });
     }
 private:
     template< typename Archive>

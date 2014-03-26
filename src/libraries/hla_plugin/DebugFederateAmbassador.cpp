@@ -13,7 +13,7 @@
 #include "dispatcher/Logger_ABC.h"
 #include <hla/Time_ABC.h>
 #include <hla/HLA_Lib.h>
-#include <boost/foreach.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 using namespace hla;
@@ -64,8 +64,10 @@ namespace
     std::string ToString( const T& attributes )
     {
         std::string result;
-        BOOST_FOREACH( const T::value_type& attribute, attributes )
-            result += ( result.empty() ? "" : ", " ) + attribute.first.ToString();
+        std::for_each( attributes.begin(), attributes.end(), [&](const T::value_type& attribute)
+            {
+                result += ( result.empty() ? "" : ", " ) + attribute.first.ToString();
+            });
         return result;
     }
 }

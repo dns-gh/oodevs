@@ -18,7 +18,6 @@
 #include "protocol/Protocol.h"
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
-#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
