@@ -62,6 +62,11 @@ func MakeHandlerRegister(handler MessageHandler, timeout time.Duration) HandlerR
 	}
 }
 
+type HandlerUnregister struct {
+	context int32
+	done    chan struct{}
+}
+
 type HandlerError struct {
 	context int32
 	err     error
@@ -96,7 +101,7 @@ type Client struct {
 	ticker      *time.Ticker
 	posts       chan MessagePost
 	registers   chan HandlerRegister
-	unregisters chan int32
+	unregisters chan HandlerUnregister
 	events      chan SwordMessage
 	commands    chan commandRequest
 	errors      chan HandlerError
@@ -125,7 +130,7 @@ func NewClient(address string) (*Client, error) {
 		ticker:      time.NewTicker(TickPeriod),
 		posts:       make(chan MessagePost, MaxPostMessages),
 		registers:   make(chan HandlerRegister, MaxPostMessages),
-		unregisters: make(chan int32, MaxPostMessages),
+		unregisters: make(chan HandlerUnregister, MaxPostMessages),
 		events:      make(chan SwordMessage, MaxPostMessages),
 		commands:    make(chan commandRequest, MaxPostMessages),
 		errors:      make(chan HandlerError, MaxPostMessages),
@@ -178,6 +183,7 @@ func (c *Client) Close() {
 	// Close all serve() inputs then ask it to terminate
 	c.ticker.Stop()
 	close(c.registers)
+	close(c.unregisters)
 	close(c.commands)
 	c.quit <- true
 	c.serving.Wait()
@@ -266,6 +272,9 @@ func (c *Client) serve() {
 				for data := range c.registers {
 					data.handler(nil, 0, 0, ErrConnectionClosed)
 				}
+				for data := range c.unregisters {
+					close(data.done)
+				}
 			}
 			for context, handler := range c.handlers {
 				handler(nil, c.clientId, context, ErrConnectionClosed)
@@ -282,8 +291,11 @@ func (c *Client) serve() {
 					c.register(data)
 				}
 			}
-		case context := <-c.unregisters:
-			c.remove(context)
+		case data, ok := <-c.unregisters:
+			if ok {
+				c.remove(data.context)
+				close(data.done)
+			}
 		case event := <-c.events:
 			c.apply(&event)
 		case data := <-c.errors:
@@ -353,7 +365,12 @@ func (c *Client) Register(handler MessageHandler) int32 {
 }
 
 func (c *Client) Unregister(context int32) {
-	c.unregisters <- context
+	data := HandlerUnregister{
+		context: context,
+		done:    make(chan struct{}),
+	}
+	c.unregisters <- data
+	<-data.done
 }
 
 func (c *Client) MakeMessage(msg SwordMessage, handler MessageHandler, timeout time.Duration) MessagePost {
