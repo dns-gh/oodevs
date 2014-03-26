@@ -2581,3 +2581,51 @@ func (s *TestSuite) TestSetManualSupply(c *C) {
 		func(a *swapi.Automat) bool { return a.LogSupplyManual },
 	)
 }
+
+func maxi32(a, b int32) int32 {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func mini32(a, b int32) int32 {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func (s *TestSuite) TestDestroyRandomEquipment(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	formation := CreateFormation(c, client, 1)
+	automat := CreateAutomat(c, client, formation.Id, 0)
+	unit := CreateUnit(c, client, automat.Id)
+	model := client.Model
+	data := model.GetData()
+	const id = 11
+	eqs := map[uint32]*swapi.EquipmentDotation{
+		id: {Available: 4},
+	}
+	c.Assert(data.Units[unit.Id].EquipmentDotations, DeepEquals, eqs)
+	// invalid unit
+	err := client.DestroyRandomEquipment(123456)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	// valid unit
+	count := eqs[id].Available
+	for i := int32(0); i < count+1; i++ {
+		err = client.DestroyRandomEquipment(unit.Id)
+		c.Assert(err, IsNil)
+		eqs[id].Available = maxi32(0, eqs[id].Available-1)
+		eqs[id].Unavailable = mini32(count, eqs[id].Unavailable+1)
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			return reflect.DeepEqual(d.Units[unit.Id].EquipmentDotations, eqs)
+		})
+	}
+	// deleted unit
+	err = client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	err = client.DestroyRandomEquipment(unit.Id)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+}
