@@ -75,7 +75,7 @@ type HandlerError struct {
 // A command to execute in the serving goroutine
 type commandRequest struct {
 	cmd  func(c *Client)
-	done chan int
+	done chan struct{}
 }
 
 type Client struct {
@@ -267,7 +267,7 @@ func (c *Client) serve() {
 				// caller (and not by liste()).
 				for cmd := range c.commands {
 					cmd.cmd(c)
-					cmd.done <- 1
+					close(cmd.done)
 				}
 				for data := range c.registers {
 					data.handler(nil, 0, 0, ErrConnectionClosed)
@@ -303,7 +303,7 @@ func (c *Client) serve() {
 		case cmd, ok := <-c.commands:
 			if ok {
 				cmd.cmd(c)
-				cmd.done <- 1
+				close(cmd.done)
 			}
 		case now := <-c.ticker.C:
 			c.timeout(now)
@@ -398,7 +398,7 @@ func (c *Client) Post(msg SwordMessage, handler MessageHandler) int32 {
 func (c *Client) runCommand(cmd func(c *Client)) {
 	rq := commandRequest{
 		cmd:  cmd,
-		done: make(chan int, 1),
+		done: make(chan struct{}),
 	}
 	c.commands <- rq
 	<-rq.done
