@@ -231,7 +231,7 @@ sword::ProfileCreationRequestAck_ErrorCode ProfileManager::Create( const sword::
 // Name: ProfileManager::Update
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-sword::ProfileUpdateRequestAck_ErrorCode ProfileManager::Update( const sword::ProfileUpdateRequest& message )
+sword::ProfileUpdateRequestAck_ErrorCode ProfileManager::Update( const sword::ProfileUpdateRequest& message, const Profile_ABC& requester )
 {
     auto it = profiles_.find( message.login() );
     if( it == profiles_.end() )
@@ -243,7 +243,8 @@ sword::ProfileUpdateRequestAck_ErrorCode ProfileManager::Update( const sword::Pr
         return sword::ProfileUpdateRequestAck::duplicate_login;
     // $$$$ SBO 2007-01-22: check password id needed
     auto pProfile = it->second;
-    pProfile->Update( message );
+    if( !pProfile->Update( message, requester ) )
+        return sword::ProfileUpdateRequestAck::forbidden;
     if( newLogin != message.login() )
     {
         profiles_[ newLogin ] = pProfile;

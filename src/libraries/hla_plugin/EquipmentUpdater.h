@@ -50,6 +50,7 @@ namespace hla
     template< typename ResponseMessage > class ContextHandler_ABC;
     class ContextFactory_ABC;
     class ComponentTypes_ABC;
+    class LocalAgentResolver_ABC;
 
 // =============================================================================
 /** @class  EquipmentUpdater
@@ -69,7 +70,7 @@ public:
                                dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory,
                                const rpr::EntityTypeResolver_ABC& resolver, const ComponentTypes_ABC& componentTypes,
                                tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
-                               dispatcher::Logger_ABC& logger );
+                               dispatcher::Logger_ABC& logger, const LocalAgentResolver_ABC& localAgentResolver );
     virtual ~EquipmentUpdater();
     //@}
 
@@ -139,6 +140,7 @@ private:
     const rpr::EntityTypeResolver_ABC& resolver_;
     const ComponentTypes_ABC& componentTypes_;
     dispatcher::Logger_ABC& logger_;
+    const LocalAgentResolver_ABC& localAgentResolver_;
     T_Identifiers identifiers_;
     T_Agents remoteAgents_;
     T_AgentsTypes agentTypes_;

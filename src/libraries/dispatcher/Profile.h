@@ -68,6 +68,7 @@ public:
     virtual bool CheckRights( const sword::ClientToAuthentication& msg ) const;
     virtual bool CheckRights( const sword::ClientToReplay& msg ) const;
     virtual bool CheckRights( const sword::ChatTarget& source, const sword::ChatTarget& target ) const;
+    virtual bool CheckRights( const sword::ProfileUpdateRequest& msg, bool currentTimeControl ) const;
     //@}
 
     //! @name Accessors
@@ -86,7 +87,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const sword::ProfileUpdateRequest& message );
+    bool Update( const sword::ProfileUpdateRequest& message, const Profile_ABC& requester );
     void SetRight( const kernel::Automat_ABC& entity, bool readonly, bool readwrite );
     virtual void SerializeProfile( xml::xostream& xos ) const;
     //@}

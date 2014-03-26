@@ -15,6 +15,7 @@
 #include "ComponentTypes_ABC.h"
 #include "ComponentTypeVisitor_ABC.h"
 #include "HlaObject_ABC.h"
+#include "LocalAgentResolver_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Logger_ABC.h"
 #include "rpr/EntityTypeResolver_ABC.h"
@@ -56,7 +57,7 @@ EquipmentUpdater::EquipmentUpdater( RemoteAgentSubject_ABC& subject, ContextHand
                                     dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory,
                                     const rpr::EntityTypeResolver_ABC& resolver, const ComponentTypes_ABC& componentTypes,
                                     tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
-                                    dispatcher::Logger_ABC& logger )
+                                    dispatcher::Logger_ABC& logger, const LocalAgentResolver_ABC& localAgentResolver )
     : subject_       ( subject )
     , handler_       ( handler )
     , publisher_     ( publisher )
@@ -64,6 +65,7 @@ EquipmentUpdater::EquipmentUpdater( RemoteAgentSubject_ABC& subject, ContextHand
     , resolver_      ( resolver )
     , componentTypes_( componentTypes )
     , logger_        ( logger )
+    , localAgentResolver_( localAgentResolver )
 {
     subject_.Register( *this );
     handler_.Register( *this );
@@ -281,6 +283,17 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
 void EquipmentUpdater::LocalCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
     hlaObjects_[ identifier ] = &object;
+    const unsigned long simId = localAgentResolver_.Resolve(identifier);
+    if( simId != 0 )
+    {
+        identifiers_.left.insert( T_Identifiers::left_value_type( identifier, simId ) );
+        const unsigned long agentType = localAgentResolver_.AgentType( simId );
+        if( agentType != 0 )
+        {
+            ComponentTypeVisitor< T_AgentsTypes > visitor( identifier, agentTypes_ );
+            componentTypes_.Apply( agentType, visitor );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
