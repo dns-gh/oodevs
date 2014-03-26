@@ -57,6 +57,7 @@
 #include "NetworkNotificationHandler_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/MessageParameters.h"
 #include "Roles/Communications/PHY_RolePion_Communications.h"
 #include "Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Roles/Decision/DEC_RolePion_Decision.h"
@@ -1952,36 +1953,22 @@ void MIL_AgentPion::OnReceiveChangeDotation( const sword::MissionParameters& msg
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveCreateDirectFireOrder( const sword::MissionParameters& msg )
 {
-    // target
-    if( msg.elem_size() < 1 || msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value( 0 ).has_agent() )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
-    if( target == 0 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = target->CreateKnowledge( *GetKnowledgeGroup() ); // $$$$ MCO 2013-07-05: check before deref !
-    // firing mode
-    firing::PHY_DirectFireData::E_FiringMode firingMode = firing::PHY_DirectFireData::eFiringModeNormal;
-    if( msg.elem_size() >= 2 && msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value( 1 ).has_enumeration() )
-        firingMode = static_cast< firing::PHY_DirectFireData::E_FiringMode >( msg.elem( 1 ).value( 1 ).enumeration() );
-    // component percentage to use
-    double percentageToUse = 1.;
-    if( msg.elem_size() >= 3 && msg.elem( 2 ).value_size() == 1 && msg.elem( 2 ).value( 1 ).has_areal() )
-        percentageToUse = msg.elem( 2 ).value( 1 ).areal();
-    // component firing type
-    firing::PHY_DirectFireData::E_ComposanteFiringType firingType = firing::PHY_DirectFireData::eFireUsingAllComposantes;
-    if( msg.elem_size() >= 4 && msg.elem( 3 ).value_size() == 1 && msg.elem( 3 ).value( 1 ).has_enumeration() )
-        firingType = static_cast< firing::PHY_DirectFireData::E_ComposanteFiringType >( msg.elem( 3 ).value( 1 ).enumeration() );
-    // component fired type
-    firing::PHY_DirectFireData::E_ComposanteFiredType firedType = firing::PHY_DirectFireData::eFireOnAllComposantes;
-    if( msg.elem_size() >= 5 && msg.elem( 4 ).value_size() == 1 && msg.elem( 4 ).value( 1 ).has_enumeration() )
-        firedType = static_cast< firing::PHY_DirectFireData::E_ComposanteFiredType >( msg.elem( 4 ).value( 1 ).enumeration() );
-    PHY_FireResults_Pion* results = 0;
-    GetRole< firing::PHY_RoleAction_DirectFiring >().FirePion( pKnowledge, firingMode, percentageToUse, firingType, firedType, results, false );
-    if( results )
-    {
-        results->IncRef();
-        results->DecRef();
-    }
+    const uint32_t id = protocol::GetAgentId( msg, 0 );
+    auto target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( id );
+    protocol::Check( target && target != this, "is an invalid target", 0 );
+    auto kg = GetKnowledgeGroup();
+    protocol::Check( kg, "must have a valid knowledge group" );
+    auto knowledge = target->CreateKnowledge( *kg );
+    auto role = RetrieveRole< firing::PHY_RoleAction_DirectFiring >();
+    protocol::Check( role, "missing direct firing role" );
+    PHY_FireResults_Pion* results = nullptr;
+    role->FirePion( knowledge, firing::PHY_DirectFireData::eFiringModeNormal, 1,
+        firing::PHY_DirectFireData::eFireUsingAllComposantes,
+        firing::PHY_DirectFireData::eFireOnAllComposantes, results, false );
+    if( !results )
+        return;
+    results->IncRef();
+    results->DecRef();
 }
 
 // -----------------------------------------------------------------------------

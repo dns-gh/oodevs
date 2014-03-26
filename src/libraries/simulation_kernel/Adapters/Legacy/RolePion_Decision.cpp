@@ -283,7 +283,8 @@ void RolePion_Decision::RegisterFire()
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetTheoricMaxRangeToIndirectFire, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Tir_PorteeTheoriqueMinTirIndirect",
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetTheoricMinRangeToIndirectFire, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_Tir_LancerFumigeneSurPosition", &DEC_FireFunctions::ThrowSmokeOnPosition );
+    RegisterFunction( "DEC_Tir_LancerFumigeneSurPosition",
+        boost::function< double( const DEC_Decision_ABC&, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_FireFunctions::ThrowSmokeOnPosition, _1, _2 ) ) );
 }
 
 // -----------------------------------------------------------------------------
