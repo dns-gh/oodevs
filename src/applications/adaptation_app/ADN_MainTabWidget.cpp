@@ -101,14 +101,3 @@ void ADN_MainTabWidget::OnChangeTab( E_WorkspaceElements target )
     assert( it != elementIndexMap_.end() );
     setCurrentIndex( it->second );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MainTabWidget::SetPageVisible
-// Created: ABR 2013-10-18
-// -----------------------------------------------------------------------------
-void ADN_MainTabWidget::SetPageVisible( E_WorkspaceElements target, bool visible )
-{
-    auto it = elementIndexMap_.find( target );
-    assert( it != elementIndexMap_.end() );
-    widget( it->second )->setVisible( visible );
-}
