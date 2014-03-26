@@ -56,10 +56,8 @@ void PHY_SmokeData::operator()( const PHY_ComposantePion& compFirer, PHY_Weapon&
 
     dotation::DefaultDotationComputer dotationComputer;
     firer_.Execute< dotation::DotationComputer_ABC >( dotationComputer );
-    if( dotationComputer.GetDotationValue( weapon.GetDotationCategory() ) < weapon.GetType().GetNbrAmmoPerBurst() )
-        return;
-
-    pWeapon_ = &weapon;
+    if( dotationComputer.HasDotation( category ) && dotationComputer.GetDotationValue( category ) >= weapon.GetType().GetNbrAmmoPerBurst() )
+        pWeapon_ = &weapon;
 }
 
 // -----------------------------------------------------------------------------
