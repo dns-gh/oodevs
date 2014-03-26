@@ -62,6 +62,11 @@ func MakeHandlerRegister(handler MessageHandler, timeout time.Duration) HandlerR
 	}
 }
 
+type HandlerUnregister struct {
+	context int32
+	done    chan struct{}
+}
+
 type HandlerError struct {
 	context int32
 	err     error
@@ -70,7 +75,7 @@ type HandlerError struct {
 // A command to execute in the serving goroutine
 type commandRequest struct {
 	cmd  func(c *Client)
-	done chan int
+	done chan struct{}
 }
 
 type Client struct {
@@ -96,7 +101,7 @@ type Client struct {
 	ticker      *time.Ticker
 	posts       chan MessagePost
 	registers   chan HandlerRegister
-	unregisters chan int32
+	unregisters chan HandlerUnregister
 	events      chan SwordMessage
 	commands    chan commandRequest
 	errors      chan HandlerError
@@ -125,7 +130,7 @@ func NewClient(address string) (*Client, error) {
 		ticker:      time.NewTicker(TickPeriod),
 		posts:       make(chan MessagePost, MaxPostMessages),
 		registers:   make(chan HandlerRegister, MaxPostMessages),
-		unregisters: make(chan int32, MaxPostMessages),
+		unregisters: make(chan HandlerUnregister, MaxPostMessages),
 		events:      make(chan SwordMessage, MaxPostMessages),
 		commands:    make(chan commandRequest, MaxPostMessages),
 		errors:      make(chan HandlerError, MaxPostMessages),
@@ -178,6 +183,7 @@ func (c *Client) Close() {
 	// Close all serve() inputs then ask it to terminate
 	c.ticker.Stop()
 	close(c.registers)
+	close(c.unregisters)
 	close(c.commands)
 	c.quit <- true
 	c.serving.Wait()
@@ -261,10 +267,13 @@ func (c *Client) serve() {
 				// caller (and not by liste()).
 				for cmd := range c.commands {
 					cmd.cmd(c)
-					cmd.done <- 1
+					close(cmd.done)
 				}
 				for data := range c.registers {
 					data.handler(nil, 0, 0, ErrConnectionClosed)
+				}
+				for data := range c.unregisters {
+					close(data.done)
 				}
 			}
 			for context, handler := range c.handlers {
@@ -282,8 +291,11 @@ func (c *Client) serve() {
 					c.register(data)
 				}
 			}
-		case context := <-c.unregisters:
-			c.remove(context)
+		case data, ok := <-c.unregisters:
+			if ok {
+				c.remove(data.context)
+				close(data.done)
+			}
 		case event := <-c.events:
 			c.apply(&event)
 		case data := <-c.errors:
@@ -291,7 +303,7 @@ func (c *Client) serve() {
 		case cmd, ok := <-c.commands:
 			if ok {
 				cmd.cmd(c)
-				cmd.done <- 1
+				close(cmd.done)
 			}
 		case now := <-c.ticker.C:
 			c.timeout(now)
@@ -353,7 +365,12 @@ func (c *Client) Register(handler MessageHandler) int32 {
 }
 
 func (c *Client) Unregister(context int32) {
-	c.unregisters <- context
+	data := HandlerUnregister{
+		context: context,
+		done:    make(chan struct{}),
+	}
+	c.unregisters <- data
+	<-data.done
 }
 
 func (c *Client) MakeMessage(msg SwordMessage, handler MessageHandler, timeout time.Duration) MessagePost {
@@ -381,7 +398,7 @@ func (c *Client) Post(msg SwordMessage, handler MessageHandler) int32 {
 func (c *Client) runCommand(cmd func(c *Client)) {
 	rq := commandRequest{
 		cmd:  cmd,
-		done: make(chan int, 1),
+		done: make(chan struct{}),
 	}
 	c.commands <- rq
 	<-rq.done
