@@ -122,7 +122,7 @@ void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
     {
         const kernel::Entity_ABC* superior = FindLogisticEntity( parentEntity );
         assert( superior );
-        boost::shared_ptr< LogisticLink > link = ::FindLogisticLink( oldLinks, *superior );
+        auto link = ::FindLogisticLink( oldLinks, *superior );
         if( !link )
             superiorLinks_.push_back( boost::make_shared< LogisticLink >( *superior ) );
         else
