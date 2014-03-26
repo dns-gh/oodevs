@@ -153,9 +153,8 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
             QStringList field;
             for( int i = 0; i < hint.size(); ++i )
             {
-                if( i < labels.size() )
-                    if( !labels[ i ].isEmpty() )
-                        field << labels[ i ];
+                if( i < labels.size() && !labels[ i ].isEmpty() )
+                    field << labels[ i ];
                 field << hint[ i ];
             }
             if( field.isEmpty() )
