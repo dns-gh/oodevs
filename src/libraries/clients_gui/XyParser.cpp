@@ -64,32 +64,25 @@ bool XyParser::Parse( const QString& content, geometry::Point2f& result, QString
 // -----------------------------------------------------------------------------
 bool XyParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint, bool small ) const
 {
-    try
-    {
-        if( content.size() != 2 )
-            return false;
-        hint.clear();
-        for( auto it = content.begin(); it != content.end(); ++it )
-            hint << it->stripWhiteSpace();
-        bool ok;
-        const float y = content[0].toFloat( &ok );
-        if( !ok )
-            return false;
-        const float x = content[1].toFloat( &ok );
-        if( !ok )
-            return false;
-        result.Set( x, y );
-        if( small )
-        {
-            hint[0] = QString::number( y, 'f', 2 );
-            hint[1] = QString::number( x, 'f', 2 );
-        }
-        return true;
-    }
-    catch( ... )
-    {
+    if( content.size() != 2 )
         return false;
+    hint.clear();
+    for( auto it = content.begin(); it != content.end(); ++it )
+        hint << it->stripWhiteSpace();
+    bool ok;
+    const float y = content[0].toFloat( &ok );
+    if( !ok )
+        return false;
+    const float x = content[1].toFloat( &ok );
+    if( !ok )
+        return false;
+    result.Set( x, y );
+    if( small )
+    {
+        hint[0] = QString::number( y, 'f', 2 );
+        hint[1] = QString::number( x, 'f', 2 );
     }
+    return true;
 }
 
 // -----------------------------------------------------------------------------
