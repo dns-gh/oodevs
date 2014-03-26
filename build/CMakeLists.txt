@@ -15,10 +15,12 @@ add_definitions(
     -DWINVER=0x501
 )
 if( MSVC )
-    # disable msvc non-portable warnings
     add_definitions(
+        # disable msvc non-portable warnings
         -D_CRT_SECURE_NO_WARNINGS
         -D_SCL_SECURE_NO_WARNINGS
+        # disable #define small char from rpcndr.h
+        -DWIN32_LEAN_AND_MEAN
     )
 endif()
 
