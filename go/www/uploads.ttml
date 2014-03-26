@@ -84,10 +84,10 @@
                     <td class="checksum">{{#if checksum.length}}0x{{checksum}}{{/if}}</td>
                     <td class="action" data-rel="{{id}}">
                         {{#equal action "add"}}
-                        <a class="btn add" data-toggle="button"><i class="icon-plus"></i> Add </a>
+                        <a class="btn btn_check add" data-toggle="button"> <i></i> Add </a>
                         {{/equal}}
                         {{#equal action "update"}}
-                        <a class="btn update" data-toggle="button"><i class="icon-retweet"></i> Replace </a>
+                        <a class="btn btn_check update" data-toggle="button"> <i></i> Replace </a>
                         {{/equal}}
                         [[ if eq .type "exercise" ]]
                         <a class="btn more" data-toggle="button"><i class="icon-th-list"></i> More <span class="caret"></span></a>
