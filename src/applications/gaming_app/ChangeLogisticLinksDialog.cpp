@@ -45,7 +45,7 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     , controllers_( controllers )
     , actionsModel_( actionsModel )
     , static_( staticModel )
-    , simulation_( simulation)
+    , simulation_( simulation )
     , profile_( profile )
     , selected_( controllers )
 {
@@ -188,7 +188,9 @@ namespace
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::Validate()
 {
-    if( selected_ )
+    auto selected = selected_;
+    Reject();
+    if( selected )
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_logistic_links" );
@@ -199,10 +201,9 @@ void ChangeLogisticLinksDialog::Validate()
         action->AddParameter( Serialize( *currentSuperiorCombo_, it.NextElement() ) );
 
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new ActionTasker( controllers_.controller_, selected_, false ) );
+        action->Attach( *new ActionTasker( controllers_.controller_, selected, false ) );
         actionsModel_.Publish( *action );
     }
-    Reject();
 }
 
 // -----------------------------------------------------------------------------
