@@ -93,6 +93,16 @@ public:
     //@}
 };
 
+namespace
+{
+    template< typename ActionType >
+    unsigned int RegisterAction( typename ActionType::ActorType& caller, const boost::shared_ptr< ActionType >& action )
+    {
+        caller.RegisterAction( action );
+        return action->GetId();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: template< typename ActionType > static ActionType* DEC_ActionFunctions::StartAction
 // Created: LDC 2009-06-26
@@ -100,9 +110,7 @@ public:
 template< typename ActionType >
 unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller )
 {
-    auto action = boost::make_shared< ActionType >( caller );
-    caller.RegisterAction( action );
-    return action->GetId();
+    return RegisterAction( caller, boost::make_shared< ActionType >( caller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,9 +120,7 @@ unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& c
 template< typename ActionType, typename T >
 unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T arg )
 {
-    auto action = boost::make_shared< ActionType >( caller, arg );
-    caller.RegisterAction( action );
-    return action->GetId();
+    return RegisterAction( caller, boost::make_shared< ActionType >( caller, arg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,9 +130,7 @@ unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& c
 template< typename ActionType, typename T1, typename T2 >
 unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2 )
 {
-    auto action = boost::make_shared< ActionType >( caller, arg1, arg2 );
-    caller.RegisterAction( action );
-    return action->GetId();
+    return RegisterAction( caller, boost::make_shared< ActionType >( caller, arg1, arg2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,9 +140,7 @@ unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& c
 template< typename ActionType, typename T1, typename T2, typename T3 >
 unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3 )
 {
-    auto action = boost::make_shared< ActionType >( caller, arg1, arg2, arg3 );
-    caller.RegisterAction( action );
-    return action->GetId();
+    return RegisterAction( caller, boost::make_shared< ActionType >( caller, arg1, arg2, arg3 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,9 +150,7 @@ unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& c
 template< typename ActionType, typename T1, typename T2, typename T3, typename T4 >
 unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4 )
 {
-    auto action = boost::make_shared< ActionType >( caller, arg1, arg2, arg3, arg4 );
-    caller.RegisterAction( action );
-    return action->GetId();
+    return RegisterAction( caller, boost::make_shared< ActionType >( caller, arg1, arg2, arg3, arg4 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,9 +160,7 @@ unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& c
 template< typename ActionType, typename T1, typename T2, typename T3, typename T4, typename T5 >
 unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5 )
 {
-    auto action = boost::make_shared< ActionType >( caller, arg1, arg2, arg3, arg4, arg5 );
-    caller.RegisterAction( action );
-    return action->GetId();
+    return RegisterAction( caller, boost::make_shared< ActionType >( caller, arg1, arg2, arg3, arg4, arg5 ) );
 }
 
 // -----------------------------------------------------------------------------

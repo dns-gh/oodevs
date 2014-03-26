@@ -189,6 +189,7 @@ protected:
     {
         pBrain_->RegisterFunction( name, function );
     }
+
     template< typename MethodType >
     void RegisterMethod( const char* name, MethodType function )
     {

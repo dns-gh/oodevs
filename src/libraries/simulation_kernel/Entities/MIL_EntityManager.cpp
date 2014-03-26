@@ -1751,6 +1751,7 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& message )
 {
+    const boost::optional< uint32_t > tasker = protocol::TryGetTasker( message.tasker() );
     logistic::LogisticHierarchy_ABC* pSubordinate = TaskerToLogisticHierarchy( *this, message.tasker() );
     if( !pSubordinate )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid subordinate automate" );
@@ -1764,6 +1765,8 @@ void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& messa
             MIL_AutomateLOG* pSuperior = FindBrainLogistic( parameterSuperior.value( 0 ) );
             if( !pSuperior )
                 throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid supply automat" );
+            if( tasker && *tasker == pSuperior->GetLogisticId() )
+                throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "cannot set itself as its own logistic superior" );
             superiors.push_back( pSuperior );
         }
     }
