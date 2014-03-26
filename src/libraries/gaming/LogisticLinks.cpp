@@ -74,18 +74,25 @@ kernel::Entity_ABC* LogisticLinks::FindLogisticEntity( const sword::ParentEntity
     return 0;
 }
 
+namespace
+{
+    template< typename T >
+    boost::shared_ptr< LogisticLink > FindLogisticLink( const T& links, const kernel::Entity_ABC& superior )
+    {
+        BOOST_FOREACH( const boost::shared_ptr< LogisticLink >& link, links )
+            if( &link->GetSuperior() == &superior )
+                return link;
+        return boost::shared_ptr< LogisticLink >();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticHierarchy::FindLogisticLink
 // Created: NLD 2011-01-17
 // -----------------------------------------------------------------------------
 LogisticLink* LogisticLinks::FindLogisticLink( const kernel::Entity_ABC& superior ) const
 {
-    BOOST_FOREACH( boost::shared_ptr< LogisticLink > link, superiorLinks_ )
-    {
-        if( &link->GetSuperior() == &superior )
-            return link.get();
-    }
-    return 0;
+    return ::FindLogisticLink( superiorLinks_, superior ).get();
 }
 
 // -----------------------------------------------------------------------------
@@ -109,13 +116,18 @@ void LogisticLinks::DoUpdate( const sword::LogSupplyQuotas& message )
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
 {
+    T_SuperiorLinks oldLinks = superiorLinks_;
     superiorLinks_.clear();
     superiors_.clear();
     BOOST_FOREACH( const sword::ParentEntity& parentEntity, message.superior() )
     {
         const kernel::Entity_ABC* superior = FindLogisticEntity( parentEntity );
         assert( superior );
-        superiorLinks_.push_back( boost::make_shared< LogisticLink >( *superior ) );
+        boost::shared_ptr< LogisticLink > link = ::FindLogisticLink( oldLinks, *superior );
+        if( !link )
+            superiorLinks_.push_back( boost::make_shared< LogisticLink >( *superior ) );
+        else
+            superiorLinks_.push_back( link );
         superiors_.push_back( superior );
     }
     controller_.Update( gui::DictionaryUpdated( entity_, property_ ) );
