@@ -46,6 +46,7 @@ public:
     virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const = 0;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
+    virtual bool IsActivated() const;
     virtual void Save() const;
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     virtual bool FixConsistency();

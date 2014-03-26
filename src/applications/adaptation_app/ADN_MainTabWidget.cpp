@@ -32,7 +32,7 @@ ADN_MainTabWidget::~ADN_MainTabWidget()
 {
     clear();
     history_.clear();
-    elementIndexMap_.clear();
+    elementWidgetMap_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +41,8 @@ ADN_MainTabWidget::~ADN_MainTabWidget()
 // -----------------------------------------------------------------------------
 void ADN_MainTabWidget::AddPage( E_WorkspaceElements element, QWidget& page, const QString& title )
 {
-    elementIndexMap_[ element ] = addTab( &page, title );
+    if( indexOf( &page ) == -1 )
+        elementWidgetMap_[ element ] = widget( addTab( &page, title ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +98,20 @@ void ADN_MainTabWidget::OnCurrentChanged( int index )
 // -----------------------------------------------------------------------------
 void ADN_MainTabWidget::OnChangeTab( E_WorkspaceElements target )
 {
-    auto it = elementIndexMap_.find( target );
-    assert( it != elementIndexMap_.end() );
-    setCurrentIndex( it->second );
+    auto it = elementWidgetMap_.find( target );
+    assert( it != elementWidgetMap_.end() );
+    setCurrentWidget( it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MainTabWidget::RemovePage
+// Created: JSR 2014-03-26
+// -----------------------------------------------------------------------------
+void ADN_MainTabWidget::RemovePage( E_WorkspaceElements target )
+{
+    auto it = elementWidgetMap_.find( target );
+    assert( it != elementWidgetMap_.end() );
+    int index = indexOf( it->second );
+    if( index != -1 )
+        removeTab( index );
 }
