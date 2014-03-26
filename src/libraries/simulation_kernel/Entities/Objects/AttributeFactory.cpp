@@ -173,22 +173,6 @@ void AttributeFactory::Initialize( Object& object ) const
     object.GetAttribute< OccupantAttribute >();     // $$$$ LDC: All physical objects have an occupant attribute.
 }
 
-namespace
-{
-    void CheckAttribteCount( const std::string& name, const sword::MissionParameter_Value& value, int count )
-    {
-        protocol::Check( value.list_size() == count, STR( name << " attribute must have " << count  << " parameters" ) );
-    }
-    void CheckQuantity( const sword::MissionParameter_Value& value, unsigned int index )
-    {
-        protocol::Check( value.list( index ).has_quantity(), STR( "list[" << index << "] must have a quantity" ) );
-    }
-    void CheckBool( const sword::MissionParameter_Value& value, unsigned int index )
-    {
-        protocol::Check( value.list( index ).has_booleanvalue(), STR( "list[" << index << "] must have a boolean value" ) );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: AttributeFactory::Create
 // Created: JCR 2008-06-18

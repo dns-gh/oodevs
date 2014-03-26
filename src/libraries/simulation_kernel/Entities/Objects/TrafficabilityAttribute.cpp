@@ -30,7 +30,7 @@ TrafficabilityAttribute::TrafficabilityAttribute()
 }
 
 TrafficabilityAttribute::TrafficabilityAttribute( const sword::MissionParameter_Value& attributes )
-    : max_( attributes.list( 1 ).areal() )
+    : max_( 0. )
 {
     CheckCount( "trafficability", attributes, 2 );
     max_ = GetReal( "trafficability", attributes, 1 );
