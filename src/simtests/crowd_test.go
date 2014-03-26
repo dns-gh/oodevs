@@ -422,7 +422,8 @@ func newReporter(c *C, source uint32, db *phy.PhysicalFile, patterns ...string) 
 }
 
 func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
-	// This test is to verify that the crowd doesn't stay blocked by obstacles and inactive checkpoints.
+	// This test is to verify that the crowd doesn't stay blocked by obstacles
+	// and inactive checkpoints.
 	// Description:
 	// A crows demonstrates. It finds a barricade on its way but doesn't get stuck inside.
 	// A police Automat creates a checkpoint on the road of a crowd.
@@ -446,9 +447,7 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	})
 
 	// Create barricade
-	// The test failed when the barricade X coordinate was set to: -15.8045
-	// See http://jira.masagroup.net/browse/SWBUG-11996
-	location := swapi.MakePointLocation(swapi.Point{X: -15.80, Y: 28.3451})
+	location := swapi.MakePointLocation(swapi.Point{X: -15.8045, Y: 28.3451})
 	party = data.FindPartyByName("party")
 	c.Assert(party, NotNil)
 	object, err := client.CreateObject("barricade", party.Id, location)
