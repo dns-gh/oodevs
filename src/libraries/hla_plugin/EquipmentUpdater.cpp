@@ -130,15 +130,19 @@ void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*conte
     bool mustSend = false;
     const std::string& identifier = it->second;
     const T_Components& remoteComponents = remoteAgents_[ identifier ];
-    const T_StaticComponents& staticComponents = agentTypes_[ identifier ];
+    T_StaticComponents& staticComponents = agentTypes_[ identifier ];
     for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
     {
         const sword::EquipmentDotations::EquipmentDotation& dotation = message.equipment_dotations().elem( i );
         std::string equipmentName;
-        std::for_each( staticComponents.begin(), staticComponents.end(), [&](const T_StaticComponents::value_type& staticComponent)
+        std::for_each( staticComponents.begin(), staticComponents.end(), [&](T_StaticComponents::value_type& staticComponent)
             {
                 if( staticComponent.second.first == dotation.type().id() )
+                {
                     equipmentName = staticComponent.first;
+                    staticComponent.second.second = dotation.available() + dotation.unavailable() + dotation.repairable() +
+                            dotation.on_site_fixable() + dotation.repairing() + dotation.captured();
+                }
             });
         const T_Components::const_iterator remoteComponent = remoteComponents.find( equipmentName );
         mustSend = mustSend || ( remoteComponent != remoteComponents.end() && 
@@ -263,10 +267,14 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
         const EquipmentUpdater::T_Components::const_iterator remoteComponent = remoteAgent->second.find( componentTypeName );
         if( remoteComponent != remoteAgent->second.end() && remoteComponent->second.available_ <= componentStaticNumber )
         {
+            auto deads = remoteComponent->second.dead_;
+            if( (remoteComponent->second.available_ + remoteComponent->second.dead_ + 
+                remoteComponent->second.heavyDamages_ + remoteComponent->second.lightDamages_) != componentStaticNumber )
+                deads = componentStaticNumber - (remoteComponent->second.available_+remoteComponent->second.heavyDamages_ + remoteComponent->second.lightDamages_);
             sword::MissionParameter_Value* componentChanged = parameter.add_value();
             componentChanged->add_list()->set_identifier( componentTypeIdentifier );
             componentChanged->add_list()->set_quantity( remoteComponent->second.available_ );
-            componentChanged->add_list()->set_quantity( remoteComponent->second.dead_ );
+            componentChanged->add_list()->set_quantity( deads );
             componentChanged->add_list()->set_quantity( remoteComponent->second.heavyDamages_ );
             componentChanged->add_list()->set_quantity( remoteComponent->second.lightDamages_ );
             componentChanged->add_list()->set_quantity( 0 );
