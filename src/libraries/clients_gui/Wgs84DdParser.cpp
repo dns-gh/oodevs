@@ -58,7 +58,7 @@ bool Wgs84DdParser::Parse( const QStringList& content, geometry::Point2f& result
         if( small )
         {
             hint[0] = QString::number( y, 'f', 4 );
-            hint[1] = QString::number( y, 'f', 4 );
+            hint[1] = QString::number( x, 'f', 4 );
         }
         return true;
     }
