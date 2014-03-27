@@ -10,9 +10,13 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_ParameterValue.h"
 
-ADN_Missions_ParameterValue::ADN_Missions_ParameterValue()
+ADN_Missions_ParameterValue::ADN_Missions_ParameterValue( E_MissionType type )
+    : missionType_( type )
 {
-    // NOTHING
+    std::string context = ENT_Tr::ConvertFromMissionType( type, ENT_Tr::eToSim );
+    if( type != eMissionType_FragOrder )
+        context += "-missions";
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context + "-parameters" ) );
 }
 
 ADN_Missions_ParameterValue::~ADN_Missions_ParameterValue()
@@ -22,25 +26,26 @@ ADN_Missions_ParameterValue::~ADN_Missions_ParameterValue()
 
 std::string ADN_Missions_ParameterValue::GetItemName()
 {
-    return name_.GetData();
+    return strName_.GetData();
 }
 
 ADN_Missions_ParameterValue* ADN_Missions_ParameterValue::CreateCopy()
 {
-    ADN_Missions_ParameterValue* newValue = new ADN_Missions_ParameterValue();
-    newValue->name_ = name_.GetData();
+    ADN_Missions_ParameterValue* newValue = new ADN_Missions_ParameterValue( missionType_ );
+    newValue->strName_ = strName_.GetData();
     return newValue;
 }
 
 void ADN_Missions_ParameterValue::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", name_ );
+    input >> xml::attribute( "name", *this )
+          >> xml::attribute( "id", id_ );
 }
 
-void ADN_Missions_ParameterValue::WriteArchive( xml::xostream& output, unsigned int id ) const
+void ADN_Missions_ParameterValue::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "value" )
-                << xml::attribute( "id", id )
-                << xml::attribute( "name", name_ )
+                << xml::attribute( "id", id_ )
+                << xml::attribute( "name", *this )
            << xml::end;
 }

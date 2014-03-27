@@ -156,7 +156,7 @@ void ADN_Missions_Parameter::FillChoices()
 
 void ADN_Missions_Parameter::ReadValue( xml::xistream& input )
 {
-    std::auto_ptr< ADN_Missions_ParameterValue > spNew( new ADN_Missions_ParameterValue() );
+    std::auto_ptr< ADN_Missions_ParameterValue > spNew( new ADN_Missions_ParameterValue( missionType_ ) );
     spNew->ReadArchive( input );
     values_.AddItem( spNew.release() );
 }
@@ -283,7 +283,7 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output ) const
     if( maxValue_ != std::numeric_limits< int >::max() )
         output << xml::attribute( "max-value", maxValue_ );
     for( unsigned int i = 0; i < values_.size(); ++i )
-        values_[i]->WriteArchive( output, i );
+        values_[i]->WriteArchive( output );
     Write( output, choices_, type_.GetData(), eMissionParameterTypeLocationComposite, "choice" );
 
     std::size_t nbGenObject = CountObject( genObjects_ );
@@ -303,6 +303,8 @@ void ADN_Missions_Parameter::CheckValidity()
 {
     ADN_RefWithLocalizedName::CheckValidity();
     CheckTypeValidity( description_ );
+    for( auto it = values_.begin(); it != values_.end(); ++it )
+        ( *it )->CheckValidity();
 }
 
 // -----------------------------------------------------------------------------

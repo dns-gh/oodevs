@@ -155,6 +155,7 @@
     <upgrade schema="schemas/4.3.3/exercise/orbat.xsd" apply="schemas/4.3.4/xsl/orbat_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/exercise/exercise.xsd" apply="schemas/4.3.4/xsl/exercise_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/exercise/settings.xsd" apply="schemas/4.3.4/xsl/settings_4.3.3-4.3.4.xsl"/>
+    <upgrade schema="schemas/4.3.3/exercise/orders.xsd" apply="schemas/4.3.4/xsl/orders_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/physical/Missions.xsd" apply="schemas/4.3.4/xsl/missions_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/physical/Armors.xsd" apply="schemas/4.3.4/xsl/armors_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/physical/DrawingTemplates.xsd" apply="schemas/4.3.4/xsl/drawingTemplates_4.3.3-4.3.4.xsl"/>

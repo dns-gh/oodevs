@@ -15,4 +15,25 @@
         </xsl:copy>
     </xsl:template>
 
+    <xsl:template match="value[@name='emploi_force_interdit']">
+        <xsl:copy>
+            <xsl:apply-templates select="node()|@*"/>
+            <xsl:attribute name="id">1</xsl:attribute>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="value[@name='emploi_armes_non_letales_autorisees']">
+        <xsl:copy>
+            <xsl:apply-templates select="node()|@*"/>
+            <xsl:attribute name="id">2</xsl:attribute>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="value[@name='emploi_armes_letales_autorisees']">
+        <xsl:copy>
+            <xsl:apply-templates select="node()|@*"/>
+            <xsl:attribute name="id">3</xsl:attribute>
+        </xsl:copy>
+    </xsl:template>
+
 </xsl:stylesheet>
