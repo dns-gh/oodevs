@@ -90,6 +90,7 @@ private:
     //! @name Types
     //@{
     typedef boost::shared_ptr< HlaObject_ABC > T_Entity;
+    typedef std::set< boost::shared_ptr< HlaObject_ABC  > > T_EntitySet;
     typedef std::map< std::string, T_Entity > T_Entities;
     typedef std::map< std::string, unsigned long > T_HlaIdentifiers;
     typedef std::set< unsigned long > T_IdentifierSet;
@@ -106,6 +107,7 @@ private:
     OwnershipStrategy_ABC& ownershipStrategy_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;
+    T_EntitySet garbageRemotes_;
     std::auto_ptr< ClassListenerComposite > pListeners_;
     std::auto_ptr< ::hla::Class< HlaObject_ABC > > hlaClass_;
     T_AttributeIdentifiers attributes_;

@@ -118,3 +118,25 @@ BOOST_FIXTURE_TEST_CASE( hla_class_destroys_remote_instances, RegisteredFixture 
     MOCK_EXPECT( remoteListener.RemoteDestroyed ).once().with( "name" );
     hlaObjectClass->Destroy( 42u );
 }
+
+BOOST_FIXTURE_TEST_CASE( hla_class_creates_duplicate_remote_instances, RegisteredFixture )
+{
+    hlaClass.Register( remoteListener );
+    HlaObject_ABC* obj1 = new NUllObject();
+    MOCK_EXPECT( remoteFactory->Create ).once().with( "name" ).returns( obj1 );
+    MOCK_EXPECT( remoteListener.RemoteCreated ).once().with( "name", mock::any, mock::any );
+    hlaObjectClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
+    mock::verify();
+
+    HlaObject_ABC* obj2 = new NUllObject();
+    MOCK_EXPECT( remoteFactory->Create ).once().with( "name" ).returns( obj2 );
+    MOCK_EXPECT( remoteListener.RemoteCreated ).once().with( "name", mock::any, mock::any );
+    hlaObjectClass->Create( ::hla::ObjectIdentifier( 43u ), "name" );
+    mock::verify();
+
+    obj1->GetIdentifier();
+    obj2->GetIdentifier();
+    MOCK_EXPECT( remoteListener.RemoteDestroyed ).once().with( "name" );
+    hlaObjectClass->Destroy( 42u );
+    hlaObjectClass->Destroy( 43u );
+}

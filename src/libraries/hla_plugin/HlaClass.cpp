@@ -87,6 +87,9 @@ void HlaClass::Created( Agent_ABC& agent, unsigned long identifier, const std::s
 HlaObject_ABC& HlaClass::Create( const ::hla::ObjectIdentifier& objectID, const std::string& objectName )
 {
     T_Entity& entity = remoteEntities_[ objectName ];
+    if( entity )
+        garbageRemotes_.insert( entity );
+
     hlaIdentifiers_[ objectName ] = objectID.ToLong();
     entity.reset( remoteFactory_->Create( objectName ).release() );
     pListeners_->RemoteCreated( objectName, *this, *entity );
@@ -99,7 +102,15 @@ HlaObject_ABC& HlaClass::Create( const ::hla::ObjectIdentifier& objectID, const 
 // -----------------------------------------------------------------------------
 void HlaClass::Destroy( HlaObject_ABC& object )
 {
-    for( T_Entities::iterator it = remoteEntities_.begin(); remoteEntities_.end() != it; ++it )
+    for( auto itG = garbageRemotes_.begin(); garbageRemotes_.end() != itG; ++itG )
+    {
+        if( itG->get() == &object )
+        {
+            garbageRemotes_.erase( itG );
+            return;
+        }
+    }
+    for( auto it = remoteEntities_.begin(); remoteEntities_.end() != it; ++it )
     {
         T_Entities::const_reference entity = *it;
         if( entity.second.get() == &object )
