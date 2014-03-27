@@ -61,11 +61,11 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::eDistDetection]->Connect( &pInfos->rDistDetection_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eDistReco]->Connect( &pInfos->rDistReco_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eDistIdent]->Connect( &pInfos->rDistIdent_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::eModifSizes]->Connect( &pInfos->vModifSizes_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::eModifWeather]->Connect( &pInfos->vModifWeather_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::eModifIllumination]->Connect( &pInfos->vModifIlluminations_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::eModifEnvironment]->Connect( &pInfos->vModifEnvironments_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::eModifUrbanBlockMaterial]->Connect( &pInfos->vModifUrbanBlocks_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::eModifSizes]->Connect( &pInfos->modificators_->vModifSizes_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::eModifWeather]->Connect( &pInfos->modificators_->vModifWeather_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::eModifIllumination]->Connect( &pInfos->modificators_->vModifIlluminations_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::eModifEnvironment]->Connect( &pInfos->modificators_->vModifEnvironments_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::eModifUrbanBlockMaterial]->Connect( &pInfos->modificators_->vModifUrbanBlocks_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifStances]->Connect( &pInfos->vModifStance_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifTargetStances]->Connect( &pInfos->vModifTargetStance_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eTargets]->Connect( &pInfos->vTargets_, bConnect );
@@ -81,11 +81,11 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::eCanDetectAgents]->Connect( &pInfos->bCanDetectAgents_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eCanDetectObjects]->Connect( &pInfos->bCanDetectObjects_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eCanDetectDiasters]->Connect( &pInfos->bCanDetectDisasters_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifSizes]->Connect( &pInfos->vModifSizes_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifWeather]->Connect( &pInfos->vModifWeather_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifIllumination]->Connect( &pInfos->vModifIlluminations_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifEnvironment]->Connect( &pInfos->vModifEnvironments_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifUrbanBlockMaterial]->Connect( &pInfos->vModifUrbanBlocks_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifSizes]->Connect( &pInfos->modificators_->vModifSizes_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifWeather]->Connect( &pInfos->modificators_->vModifWeather_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifIllumination]->Connect( &pInfos->modificators_->vModifIlluminations_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifEnvironment]->Connect( &pInfos->modificators_->vModifEnvironments_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifUrbanBlockMaterial]->Connect( &pInfos->modificators_->vModifUrbanBlocks_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifStances]->Connect( &pInfos->vModifStance_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifTargetStances]->Connect( &pInfos->vModifTargetStance_, bConnect );
 }

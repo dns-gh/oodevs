@@ -38,7 +38,7 @@ ADN_Sensors_Meteos_GUI::~ADN_Sensors_Meteos_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Meteos_GUI::InternalEmit()
 {
-    if( ModificatorMeteoInfos* data = static_cast< ModificatorMeteoInfos* >( GetSelectedData() ) )
+    if( ADN_Sensors_Modificators::MeteoInfos* data = static_cast< ADN_Sensors_Modificators::MeteoInfos* >( GetSelectedData() ) )
         emit ContentChanged( ADN_Tr::ConvertFromSensorWeatherModifiers( data->eType_, ENT_Tr::eToTr ), data->rCoeff_.GetData() );
 }
 
@@ -48,7 +48,7 @@ void ADN_Sensors_Meteos_GUI::InternalEmit()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Meteos_GUI::AddRow( int row, void* data )
 {
-    ModificatorMeteoInfos* pInfos = static_cast< ModificatorMeteoInfos* >( data );
+    ADN_Sensors_Modificators::MeteoInfos* pInfos = static_cast< ADN_Sensors_Modificators::MeteoInfos* >( data );
     if( !pInfos )
         return;
 

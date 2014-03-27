@@ -37,7 +37,7 @@ ADN_Sensors_UrbanBlockMaterial_GUI::~ADN_Sensors_UrbanBlockMaterial_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_UrbanBlockMaterial_GUI::InternalEmit()
 {
-    if( ModificatorUrbanBlockInfos* data = static_cast< ModificatorUrbanBlockInfos* >( GetSelectedData() ) )
+    if( ADN_Sensors_Modificators::UrbanBlockInfos* data = static_cast< ADN_Sensors_Modificators::UrbanBlockInfos* >( GetSelectedData() ) )
         if( data  && data->GetCrossedElement() )
             emit ContentChanged( data->GetCrossedElement()->strName_.GetData(), data->rCoeff_.GetData() );
 }
@@ -48,7 +48,7 @@ void ADN_Sensors_UrbanBlockMaterial_GUI::InternalEmit()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_UrbanBlockMaterial_GUI::AddRow( int row, void* data )
 {
-    ModificatorUrbanBlockInfos* pInfos = static_cast< ModificatorUrbanBlockInfos* >( data );
+    ADN_Sensors_Modificators::UrbanBlockInfos* pInfos = static_cast< ADN_Sensors_Modificators::UrbanBlockInfos* >( data );
     if( !pInfos )
         return;
     AddItem( row, 0, data, &pInfos->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );

@@ -38,7 +38,7 @@ ADN_Sensors_Environments_GUI::~ADN_Sensors_Environments_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Environments_GUI::InternalEmit()
 {
-    if( ModificatorEnvironmentInfos* data = static_cast< ModificatorEnvironmentInfos* >( GetSelectedData() ) )
+    if( ADN_Sensors_Modificators::EnvironmentInfos* data = static_cast< ADN_Sensors_Modificators::EnvironmentInfos* >( GetSelectedData() ) )
         emit ContentChanged( ADN_Tr::ConvertFromVisionObject( data->eType_, ENT_Tr::eToTr ), data->rCoeff_.GetData() );
 }
 
@@ -48,7 +48,7 @@ void ADN_Sensors_Environments_GUI::InternalEmit()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Environments_GUI::AddRow( int row, void* data )
 {
-    ModificatorEnvironmentInfos* pInfos = static_cast< ModificatorEnvironmentInfos* >( data );
+    ADN_Sensors_Modificators::EnvironmentInfos* pInfos = static_cast< ADN_Sensors_Modificators::EnvironmentInfos* >( data );
     if( !pInfos )
         return;
     Qt::ItemFlags flags = Qt::ItemIsEditable;

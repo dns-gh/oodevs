@@ -19,6 +19,7 @@
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Disasters_Data.h"
 #include "ADN_Sensors_Modificators.h"
+#include <boost/scoped_ptr.hpp>
 
 class ADN_Radars_Data;
 
@@ -149,13 +150,8 @@ public:
         void ReadObjectDetection( xml::xistream& input );
         void ReadDisasterDetection( xml::xistream& input );
         void ReadUnitDetection( xml::xistream& input );
-        void ReadSize( xml::xistream& input );
-        void ReadPrecipitation( xml::xistream& input );
-        void ReadVisibility( xml::xistream& input );
         void ReadSourcePosture( xml::xistream& input );
         void ReadTargetPosture( xml::xistream& input );
-        void ReadTerrain( xml::xistream& input );
-        void ReadUrbanBlockMaterial( xml::xistream& input );
         void ReadItem( const std::string& name, xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
@@ -173,13 +169,9 @@ public:
         ADN_Type_Time                           detectionDelay_;
         ADN_Type_Bool                           activatedOnRequest_;
         T_LimitedToSensorsInfos_Vector          vLimitedToSensorsInfos_; // LTO
-        T_ModificatorSizeInfos_Vector           vModifSizes_;
-        T_ModificatorMeteoInfos_Vector          vModifWeather_;
-        T_ModificatorIlluminationInfos_Vector   vModifIlluminations_;
+        boost::scoped_ptr< ADN_Sensors_Modificators > modificators_;
         T_ModificatorPostureInfos_Vector        vModifStance_;
         T_ModificatorPostureInfos_Vector        vModifTargetStance_;
-        T_ModificatorEnvironmentInfos_Vector    vModifEnvironments_;
-        T_ModificatorUrbanBlockInfos_Vector     vModifUrbanBlocks_;
         PopulationInfos                         populationInfos_;
 
         ADN_Type_Bool                           bCanDetectObjects_;

@@ -37,7 +37,7 @@ ADN_Sensors_Sizes_GUI::~ADN_Sensors_Sizes_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Sizes_GUI::InternalEmit()
 {
-    ModificatorSizeInfos* data = static_cast< ModificatorSizeInfos* >( GetSelectedData() );
+    ADN_Sensors_Modificators::SizeInfos* data = static_cast< ADN_Sensors_Modificators::SizeInfos* >( GetSelectedData() );
     if( data  && data->GetCrossedElement() )
         emit ContentChanged( data->GetCrossedElement()->strName_.GetData(), data->rCoeff_.GetData() );
 }
@@ -48,7 +48,7 @@ void ADN_Sensors_Sizes_GUI::InternalEmit()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Sizes_GUI::AddRow( int row, void* data )
 {
-    ModificatorSizeInfos* pInfos = static_cast< ModificatorSizeInfos* >( data );
+    ADN_Sensors_Modificators::SizeInfos* pInfos = static_cast< ADN_Sensors_Modificators::SizeInfos* >( data );
     if( !pInfos )
         return;
     AddItem( row, 0, data, &pInfos->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
