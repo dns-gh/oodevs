@@ -93,7 +93,8 @@ void ReplayPlugin::Receive( const sword::SimToClient& )
 // Name: ReplayPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void ReplayPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string&, Profile_ABC&, bool )
+void ReplayPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string&, Profile_ABC&,
+                                              unsigned int, bool )
 {
     model_.Send( client );
     SendReplayInfo( client );

@@ -129,7 +129,7 @@ void ScriptPlugin::Receive( const sword::AarToClient& wrapper )
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
 void ScriptPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& /*client*/, const std::string& link,
-                                              Profile_ABC& profile, bool uncounted )
+                                              Profile_ABC& profile, unsigned int /*clientId*/, bool uncounted )
 {
     if( uncounted )
         return;
