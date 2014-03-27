@@ -81,7 +81,7 @@ integration.startRemoveIt = function( object )
     object[myself] = object[myself] or {} 
     object[myself].actionRemove = DEC_StartDetruireObjet( object.source )
     actionCallbacks[ object[myself].actionRemove ] = function( arg ) object[myself].actionRemoveState = arg end
-    reportFunction(eRC_DebutTravauxObjet, object.source )
+    reportFunction(eRC_DebutDegagement, object.source )
 end
 
 integration.updateRemoveIt = function( object )
