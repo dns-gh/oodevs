@@ -73,5 +73,5 @@ void FireClass::Accept( ParameterVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 std::string FireClass::SerializeType() const
 {
-    return "FireClass";
+    return "fireclass";
 }

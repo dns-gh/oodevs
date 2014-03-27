@@ -429,10 +429,9 @@ namespace
 
     void ReadObstacleType( PlannedWork& dst, xml::xistream& xis )
     {
-        ObstacleType::DemolitionTargetType value;
-        if( const auto obstacle = TestAttribute< std::string >( xis, "value" ) )
-            if( ObstacleType::DemolitionTargetType_Parse( *obstacle, &value ) )
-                dst.set_type_obstacle( value );
+        if( const auto obstacle = TestAttribute< int32_t >( xis, "value" ) )
+            if( ObstacleType::DemolitionTargetType_IsValid( *obstacle ) )
+                dst.set_type_obstacle( static_cast< ObstacleType::DemolitionTargetType >( *obstacle ) );
     }
 
     void ReadDensity( PlannedWork& dst, xml::xistream& xis )
@@ -441,13 +440,13 @@ namespace
             dst.set_density( *opt );
     }
 
-    void ReadAutomat( PlannedWork& dst, xml::xistream& xis )
+    void ReadTC2( PlannedWork& dst, xml::xistream& xis )
     {
         if( const auto opt = TestAttribute< uint32_t >( xis, "value" ) )
             dst.mutable_combat_train()->set_id( *opt );
     }
 
-    void ReadString( PlannedWork& dst, xml::xistream& xis )
+    void ReadName( PlannedWork& dst, xml::xistream& xis )
     {
         if( const auto opt = TestAttribute< std::string >( xis, "value" ) )
             dst.set_name( *opt );
@@ -489,21 +488,32 @@ namespace
             dst.set_mining( *opt );
     }
 
+    void ReadFireClass( PlannedWork& dst, xml::xistream& xis )
+    {
+        if( const auto opt = TestAttribute< std::string >( xis, "value" ) )
+            dst.set_fire_class( *opt );
+    }
+
+    void ReadMaxCombustion( PlannedWork& dst, xml::xistream& xis )
+    {
+        if( const auto opt = TestAttribute< int32_t >( xis, "value" ) )
+            dst.set_max_combustion( *opt );
+    }
+
     namespace plannedwork
     {
         typedef void (*T_Read)( PlannedWork&, xml::xistream& );
-        const struct { T_Read Read; std::string name; } readers_[] = {
-            { &ReadAutomat,      "automat" },
-            { &ReadDensity,      "density" },
-            { &ReadObstacleType, "obstacletype" },
-            { &ReadString,       "string" },
-        };
-
         const struct { T_Read Read; std::string name; } identifiers_[] = {
+            { &ReadTC2,              "tc2" },
+            { &ReadObstacleType,     "obstacletype" },
             { &ReadActivationTime,   "activationtime" },
             { &ReadActivityTime,     "activitytime" },
             { &ReadAltitudeModifier, "altitude_modifier" },
+            { &ReadDensity,          "density" },
+            { &ReadName,             "name" },
+            { &ReadFireClass,        "fire_class" },
             { &ReadLodging,          "lodging" },
+            { &ReadMaxCombustion,    "max_combustion_energy" },
             { &ReadMining,           "obstacle_mining" },
             { &ReadTimeLimit,        "time_limit" },
         };
@@ -523,9 +533,7 @@ namespace
     {
         const auto type = TestLowCaseAttribute( xis, "type" );
         if( type )
-            if( Apply( plannedwork::readers_, COUNT_OF( plannedwork::readers_ ), *type, dst, xis ) )
-                return;
-            else if( Apply( plannedwork::services_, COUNT_OF( plannedwork::services_ ), *type, reader, dst, xis ) )
+            if( Apply( plannedwork::services_, COUNT_OF( plannedwork::services_ ), *type, reader, dst, xis ) )
                 return;
         const auto identifier = TestLowCaseAttribute( xis, "identifier" );
         if( identifier )

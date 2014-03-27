@@ -21,7 +21,7 @@ using namespace parameters;
 // Created: ABR 2011-11-17
 // -----------------------------------------------------------------------------
 Quantity::Quantity( const kernel::OrderParameter& parameter )
-    : Parameter< int >( parameter )
+    : Parameter< int >( parameter, 0 )
 {
     // NOTHING
 }

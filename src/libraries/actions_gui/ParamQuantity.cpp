@@ -72,7 +72,7 @@ bool ParamQuantity::InternalCheckValidity() const
 // -----------------------------------------------------------------------------
 void ParamQuantity::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
-    if( IsChecked() )
+    if( IsChecked() && spinBox_->isEnabled() )
         parameter.AddParameter( *new actions::parameters::Quantity( parameter_, modifier_ ) );
     else
         parameter.AddParameter( *new actions::parameters::Quantity( parameter_ ) );

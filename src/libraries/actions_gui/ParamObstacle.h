@@ -79,6 +79,7 @@ public:
 
     virtual void Visit( const actions::parameters::Automat& param );
     virtual void Visit( const actions::parameters::Bool& param );
+    virtual void Visit( const actions::parameters::FireClass& param );
     virtual void Visit( const actions::parameters::Location& param );
     virtual void Visit( const actions::parameters::Numeric& param );
     virtual void Visit( const actions::parameters::ObstacleType& param );
@@ -116,8 +117,8 @@ private:
     ParamLocation*                                      location_;
     ParamNumericField< float >*                         density_;
     ParamAutomat*                                       tc2_;
-    ParamNumericField< int >*                           activityTime_;
-    ParamNumericField< int >*                           activationTime_;
+    ParamQuantity*                                      activityTime_;
+    ParamQuantity*                                      activationTime_;
     ParamStringField*                                   name_;
     ParamQuantity*                                      altitudeModifier_;
     ParamTime*                                          timeLimit_;

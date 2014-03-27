@@ -65,30 +65,30 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 {
     SetValue( type_->GetType() );
     AddParam( *new Location(         OrderParameter( tools::translate( "ActionParameter", "Construction location" ).toStdString(), "location", false ), converter, message.position() ), "location" );
-    if( message.combat_train().id() != 0 )
-        AddParam( *new Automat(      OrderParameter( tools::translate( "ActionParameter", "Obstacle tc2" ).toStdString(), "tc2", false ), message.combat_train().id(), entities, controller ), "tc2" );
     if( message.has_type_obstacle() )
         AddParam( *new ObstacleType( OrderParameter( tools::translate( "ActionParameter", "Activation" ).toStdString(), "obstacletype", false ), static_cast< unsigned int >( message.type_obstacle() ) ), "obstacletype" );
+    if( message.density() != 0.f )
+        AddParam( *new Numeric(      OrderParameter( tools::translate( "ActionParameter", "Density" ).toStdString(), "float", false ), message.density() ), "density" );
+    if( message.combat_train().id() != 0 )
+        AddParam( *new Automat(      OrderParameter( tools::translate( "ActionParameter", "Obstacle tc2" ).toStdString(), "automat", false ), message.combat_train().id(), entities, controller ), "tc2" );
+    if( message.activity_time() != 0 )
+        AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Activity time:" ).toStdString(), "quantity", true ), message.activity_time() ), "activitytime" );
+    if( message.activation_time() != 0 )
+        AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Activation time:" ).toStdString(), "quantity", true ), message.activation_time() ), "activationtime" );
     if( message.has_name() && !message.name().empty() )
         AddParam( *new String(       OrderParameter( tools::translate( "ActionParameter", "Name" ).toStdString(), "string", true ), message.name() ), "name" );
-    if( message.mining() != false )
-        AddParam( *new Bool(         OrderParameter( tools::translate( "ActionParameter", "Obstacle mining" ).toStdString(), "boolean", false ), message.mining() ), "obstacle_mining" );
-    if( message.density() != 0 )
-        AddParam( *new Numeric(      OrderParameter( tools::translate( "ActionParameter", "Density" ).toStdString(), "float", false ), message.density() ), "density" );
-    if( message.has_activation_time() )
-        AddParam( *new Numeric(      OrderParameter( tools::translate( "ActionParameter", "Activation time:" ).toStdString(), "integer", true ), static_cast< float >( message.activation_time() ) ), "activationtime" );
-    if( message.has_activity_time() )
-        AddParam( *new Numeric(      OrderParameter( tools::translate( "ActionParameter", "Activity time:" ).toStdString(), "integer", true ), static_cast< float >( message.activity_time() ) ), "activitytime" );
-    if( message.time_limit() > 0 )
-        AddParam( *new Numeric(      OrderParameter( tools::translate( "ActionParameter", "Time limit" ).toStdString(), "integer", false ), static_cast< float >( message.time_limit() ) ), "time_limit" );
     if( message.altitude_modifier() != 0 )
-        AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Altitude modifier" ).toStdString(), "integer", false ), message.altitude_modifier() ), "altitude_modifier" );
+        AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Altitude modifier" ).toStdString(), "quantity", false ), message.altitude_modifier() ), "altitude_modifier" );
+    if( message.time_limit() > 0 )
+        AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Time limit" ).toStdString(), "quantity", false ), message.time_limit() ), "time_limit" );
+    if( message.mining() )
+        AddParam( *new Bool(         OrderParameter( tools::translate( "ActionParameter", "Obstacle mining" ).toStdString(), "boolean", false ), message.mining() ), "obstacle_mining" );
     if( message.lodging() > 0 )
-        AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Lodging" ).toStdString(), "integer", false ), message.lodging() ), "lodging" );
+        AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Lodging" ).toStdString(), "quantity", false ), message.lodging() ), "lodging" );
     if( message.has_fire_class() && !message.fire_class().empty() )
-        AddParam( *new FireClass( OrderParameter( tools::translate( "ActionParameter", "Fire class:" ).toStdString(), "fireclass", false ), message.fire_class(), resolver ), "fire_class" );
+        AddParam( *new FireClass(    OrderParameter( tools::translate( "ActionParameter", "Fire class:" ).toStdString(), "fireclass", false ), message.fire_class(), resolver ), "fire_class" );
     if( message.max_combustion() > 0 )
-        AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Max combustion energy:" ).toStdString(), "integer", false ), message.max_combustion() ), "max_combustion_energy" );
+        AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Max combustion energy:" ).toStdString(), "quantity", false ), message.max_combustion() ), "max_combustion_energy" );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,8 +117,6 @@ void EngineerConstruction::AddParam( Parameter_ABC& parameter, const std::string
 void EngineerConstruction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     Parameter< std::string >::Draw( where, viewport, tools );
-//    if( const kernel::Location_ABC* location = GetLocation() && type_ ) // $$$$ SBO 2009-06-05: TODO
-//        tools.DrawTacticalGraphics( type_->GetSymbol(), *location, tools.ShouldDisplay() );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,37 +162,36 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         const std::string keyName = boost::algorithm::to_lower_copy( it->second->GetKeyName() );
-        const std::string type = boost::algorithm::to_lower_copy( it->second->GetType() );
-
-        if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
+        if( keyName == "location" )
             static_cast< const Location* >( it->second )->CommitTo( *message.mutable_position() );
-        else if( type == "obstacletype" )
+        else if( keyName == "obstacletype" )
             static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_type_obstacle, boost::ref( message ), _1 ) );
-        else if( keyName == "density" && type == "float" )
+        else if( keyName == "density" )
             static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_density, boost::ref( message ), _1 ) );
-        else if( type == "tc2" || type == "automat" || type == "automate" )
+        else if( keyName == "tc2" )
             message.mutable_combat_train()->set_id( static_cast< const Automat* >( it->second )->GetValue()->GetId() );
-        else if( type == "string" )
+        else if( keyName == "name" )
             static_cast< const String* >( it->second )->CommitTo( *message.mutable_name() );
-        else if( type == "integer" || type == "quantity" )
-        {
-            if( keyName == "activitytime" )
-                message.set_activity_time( static_cast< int >( static_cast< const Numeric* >( it->second )->GetValue() ) );
-            else if( keyName == "activationtime" )
-                message.set_activation_time( static_cast< int >( static_cast< const Numeric* >( it->second )->GetValue() ) );
-            else if( keyName == "altitude_modifier" )
-                static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_altitude_modifier, boost::ref( message ), _1 ) );
-            else if( keyName == "lodging" )
-                static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_lodging, boost::ref( message ), _1 ) );
-            else if( keyName == "max_combustion_energy" )
-                static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_max_combustion, boost::ref( message ), _1 ) );
-        }
-        else if( keyName == "obstacle_mining" && type == "boolean" )
+        else if( keyName == "obstacle_mining" )
             static_cast< const Bool* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_mining, boost::ref( message ), _1 ) );
-        else if( keyName == "time_limit" && type == "time" )
-            static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_time_limit, boost::ref( message ), _1 )  );
-        else if( type == "fireclass" )
+        else if( keyName == "fire_class" )
             message.set_fire_class( static_cast< const FireClass* >( it->second )->GetValue() );
+        else
+        {
+            const Quantity& quantity = static_cast< const Quantity& >( *it->second );
+            if( keyName == "activitytime" )
+                message.set_activity_time( quantity.GetValue() );
+            else if( keyName == "activationtime" )
+                message.set_activation_time( quantity.GetValue() );
+            else if( keyName == "altitude_modifier" )
+                message.set_altitude_modifier( quantity.GetValue() );
+            else if( keyName == "lodging" )
+                message.set_lodging( quantity.GetValue() );
+            else if( keyName == "max_combustion_energy" )
+                message.set_max_combustion( quantity.GetValue() );
+            else if( keyName == "time_limit" )
+                message.set_time_limit( quantity.GetValue() );
+        }
     }
 }
 

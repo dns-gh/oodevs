@@ -481,7 +481,7 @@ namespace
         BOOST_CHECK_EQUAL( work.type(), "barricade" );
         CheckLocation( work.position(), Location::polygon, 3 );
         BOOST_CHECK_EQUAL( work.type_obstacle(), ObstacleType::reserved );
-        BOOST_CHECK_EQUAL( work.density(), 4.7f );
+        BOOST_CHECK_EQUAL( work.density(), 4.2f );
         BOOST_CHECK_EQUAL( work.combat_train().id(), 5169u );
         BOOST_CHECK_EQUAL( work.activity_time(), 38 );
         BOOST_CHECK_EQUAL( work.activation_time(), 39 );
@@ -504,16 +504,18 @@ BOOST_FIXTURE_TEST_CASE( read_planned_work, Fixture )
     "        <point coordinates='dummy'/>"
     "      </location>"
     "    </parameter>"
-    "    <parameter type='obstacletype' value='reserved'/>"
-    "    <parameter type='density' value='4.7'/>"
-    "    <parameter type='automat' value='5169'/>"
-    "    <parameter type='integer' identifier='activitytime' value='38'/>"
-    "    <parameter type='integer' identifier='activationtime' value='39'/>"
-    "    <parameter type='string' value='gyhjkf'/>"
-    "    <parameter identifier='altitude_modifier' type='integer' value='40'/>"
-    "    <parameter identifier='time_limit' type='integer' value='41'/>"
+    "    <parameter identifier='obstacletype' type='obstacletype' value='1'/>"
+    "    <parameter identifier='density' type='numeric' value='4.2'/>"
+    "    <parameter identifier='tc2' type='automat' value='5169'/>"
+    "    <parameter identifier='activitytime' type='quantity' value='38'/>"
+    "    <parameter identifier='activationtime' type='quantity' value='39'/>"
+    "    <parameter identifier='name' type='string' value='gyhjkf'/>"
+    "    <parameter identifier='altitude_modifier' type='quantity' value='40'/>"
+    "    <parameter identifier='time_limit' type='quantity' value='41'/>"
     "    <parameter identifier='obstacle_mining' type='bool' value='true'/>"
     "    <parameter identifier='lodging' type='quantity' value='98'/>"
+    "    <parameter identifier='fire_class' type='fireclass' value='some fire'/>"
+    "    <parameter identifier='max_combustion_energy' type='quantity' value='42'/>"
     "  </parameter>";
     const std::string input =
     "<action>"
