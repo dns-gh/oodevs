@@ -386,21 +386,26 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 	defer stopSimAndClient(c, sim, client)
 
 	// error: invalid automat id
-	err := client.LogisticsChangeLinks(10, []uint32{})
+	err := client.LogisticsChangeLinks(swapi.MakeAutomatTasker(10), []uint32{})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// valid automat id with no link
-	err = client.LogisticsChangeLinks(9, []uint32{})
+	err = client.LogisticsChangeLinks(swapi.MakeAutomatTasker(9), []uint32{})
 	c.Assert(err, IsNil)
 
 	// error : 42 is an invalid superior id
 	newSuperiors := []uint32{23, 42}
-	err = client.LogisticsChangeLinks(9, newSuperiors)
+	err = client.LogisticsChangeLinks(swapi.MakeAutomatTasker(9), newSuperiors)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error : cannot set itself as its own logistic superior
+	newSuperiors = []uint32{25, 25}
+	err = client.LogisticsChangeLinks(swapi.MakeFormationTasker(25), newSuperiors)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: cannot set itself as its own logistic superior")
 
 	// valid superiors id
 	newSuperiors = []uint32{25, 31}
-	err = client.LogisticsChangeLinks(9, newSuperiors)
+	err = client.LogisticsChangeLinks(swapi.MakeAutomatTasker(9), newSuperiors)
 	c.Assert(err, IsNil)
 
 	// logistics links model updated

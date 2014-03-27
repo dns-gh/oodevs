@@ -186,7 +186,7 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	supplier2Id := getSomeFormationByName(c, d, "Supply F2").Id
 	supplier2 := swapi.MakeFormationTasker(supplier2Id)
 	// change links to have different superiors e.g. a 'nominal' and a 'current'
-	err := client.LogisticsChangeLinks(automat.Id, []uint32{supplierId, supplier2Id})
+	err := client.LogisticsChangeLinks(swapi.MakeAutomatTasker(automat.Id), []uint32{supplierId, supplier2Id})
 	c.Assert(err, IsNil)
 	removeElectrogen_2 := func() {
 		err := client.ChangeDotation(unit.Id,
@@ -232,7 +232,7 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
 	supplier2Id := getSomeFormationByName(c, d, "Supply F4").Id
 	supplier2 := swapi.MakeFormationTasker(supplier2Id)
 	// change links to have different superiors e.g. a 'nominal' and a 'current'
-	err = client.LogisticsChangeLinks(automat.Id, []uint32{supplierId, supplier2Id})
+	err = client.LogisticsChangeLinks(provider, []uint32{supplierId, supplier2Id})
 	c.Assert(err, IsNil)
 	err = client.LogisticsSupplyChangeQuotas(supplierId, provider, quotas)
 	c.Assert(err, IsNil)
