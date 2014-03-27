@@ -240,7 +240,7 @@ func (s *TestSuite) TestMedicalHandlings(c *C) {
 		&MedicalUpdateChecker{"evacuation_ambulance_unloading", tc2},
 		&MedicalUpdateChecker{"diagnosing", tc2},
 		&MedicalUpdateChecker{"waiting_for_collection", tc2},
-		&MedicalUpdateChecker{"waiting_for_collection", tc2}, // $$$$ twice, looks like a bug
+		&MedicalUpdateChecker{"waiting_for_collection", tc2}, // http://jira.masagroup.net/browse/SWBUG-12119
 		&MedicalUpdateChecker{"collection_ambulance_loading", tc2},
 		&MedicalUpdateChecker{"looking_for_triage", tc2},
 		&MedicalUpdateChecker{"collection_ambulance_moving_in", tc2},
@@ -262,7 +262,7 @@ func (s *TestSuite) TestMedicalHandlings(c *C) {
 		&MedicalUpdateChecker{"evacuation_ambulance_unloading", tc2},
 		&MedicalUpdateChecker{"diagnosing", tc2},
 		&MedicalUpdateChecker{"waiting_for_collection", tc2},
-		&MedicalUpdateChecker{"waiting_for_collection", tc2}, // $$$$ twice, looks like a bug
+		&MedicalUpdateChecker{"waiting_for_collection", tc2}, // http://jira.masagroup.net/browse/SWBUG-12119
 		&MedicalUpdateChecker{"collection_ambulance_loading", tc2},
 		&MedicalUpdateChecker{"looking_for_triage", tc2},
 		&MedicalUpdateChecker{"collection_ambulance_moving_in", tc2},
@@ -287,7 +287,7 @@ func (s *TestSuite) TestMedicalHandlings(c *C) {
 		&MedicalUpdateChecker{"evacuation_ambulance_unloading", tc2},
 		&MedicalUpdateChecker{"diagnosing", tc2},
 		&MedicalUpdateChecker{"waiting_for_collection", tc2},
-		&MedicalUpdateChecker{"waiting_for_collection", tc2}, // $$$$ twice, looks like a bug
+		&MedicalUpdateChecker{"waiting_for_collection", tc2}, // http://jira.masagroup.net/browse/SWBUG-12119
 		&MedicalUpdateChecker{"collection_ambulance_loading", tc2},
 		&MedicalUpdateChecker{"looking_for_triage", tc2},
 		&MedicalUpdateChecker{"collection_ambulance_moving_in", tc2},
