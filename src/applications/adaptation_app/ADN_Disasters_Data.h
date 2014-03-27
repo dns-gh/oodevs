@@ -160,6 +160,7 @@ public:
 public:
     //! @name Operations
     //@{
+    virtual bool IsActivated() const;
     virtual void FilesNeeded(tools::Path::T_Paths& l) const;
     //@}
 
@@ -182,6 +183,7 @@ private:
     //! @name Member Data
     //@{
     T_DisasterInfos_Vector vDisasters_;
+    bool activated_;
     //@}
 };
 

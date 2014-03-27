@@ -397,6 +397,7 @@ void ADN_Workspace::New( const tools::Path& filename, bool loadGui )
     if( loadGui )
     {
         mainWindow_.LoadStatusChanged( true );
+        mainWindow_.RemovePage( eDisasters );
         SetMainWindowModified( true );
     }
 }
@@ -427,6 +428,10 @@ void ADN_Workspace::Load( const tools::Path& filename, bool loadGui )
     if( loadGui )
     {
         mainWindow_.LoadStatusChanged( true );
+        if( elements_[ eDisasters ]->GetDataABC().IsActivated() )
+            AddPage( eDisasters );
+        else
+            mainWindow_.RemovePage( eDisasters );
         SetMainWindowModified( false );
     }
 }

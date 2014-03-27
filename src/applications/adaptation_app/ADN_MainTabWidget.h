@@ -34,6 +34,7 @@ public:
     //! @name Operations
     //@{
     void AddPage( E_WorkspaceElements target, QWidget& page, const QString& title );
+    void RemovePage( E_WorkspaceElements target );
     //@}
 
 signals:
@@ -55,13 +56,13 @@ public slots:
 private:
     //! @name Types
     //@{
-    typedef std::map< E_WorkspaceElements, int > T_ElementIndexMap;
+    typedef std::map< E_WorkspaceElements, QWidget* > T_ElementWidgetMap;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_ElementIndexMap  elementIndexMap_;
+    T_ElementWidgetMap elementWidgetMap_;
     std::vector< int > history_;
     int                currentHistoryIndex_; // where we are in the history vector
     bool               navigating_;

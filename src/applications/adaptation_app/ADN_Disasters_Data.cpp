@@ -354,6 +354,7 @@ void ADN_Disasters_Data::DisasterInfos::WriteArchive( xml::xostream& output ) co
 //-----------------------------------------------------------------------------
 ADN_Disasters_Data::ADN_Disasters_Data()
     : ADN_Data_ABC( eDisasters )
+    , activated_( false )
 {
     vDisasters_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
@@ -365,6 +366,15 @@ ADN_Disasters_Data::ADN_Disasters_Data()
 ADN_Disasters_Data::~ADN_Disasters_Data()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Disasters_Data::IsActivated
+// Created: JSR 2014-03-26
+// -----------------------------------------------------------------------------
+bool ADN_Disasters_Data::IsActivated() const
+{
+    return activated_;
 }
 
 //-----------------------------------------------------------------------------
@@ -383,6 +393,7 @@ void ADN_Disasters_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Disasters_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "disasters" )
+              >> xml::optional >> xml::attribute( "activated", activated_ )
               >> xml::list( "disaster", *this, &ADN_Disasters_Data::ReadDisaster )
           >> xml::end;
     vDisasters_.CheckValidity();
@@ -409,6 +420,8 @@ void ADN_Disasters_Data::WriteArchive( xml::xostream& output ) const
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "disasters" );
+    if( activated_ )
+        output << xml::attribute( "activated", true );
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "Disasters" );
     for( auto it = vDisasters_.begin(); it != vDisasters_.end(); ++it )

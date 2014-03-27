@@ -58,6 +58,7 @@
 				</xs:element>
 			</xs:sequence>
 			<xs:attribute name="model-version" type="T_Version"/>
+			<xs:attribute name="activated" type="xs:boolean" use="optional"/>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

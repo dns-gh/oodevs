@@ -483,6 +483,16 @@ void ADN_MainWindow::AddListView( const QString& name, const T_ConsistencyCallBa
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::RemovePage
+// Created: JSR 2014-03-26
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::RemovePage( E_WorkspaceElements target )
+{
+    assert( mainTabWidget_.get() );
+    mainTabWidget_->RemovePage( target );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::OnExportHtml
 // Created: APE 2005-04-19
 // -----------------------------------------------------------------------------
