@@ -17,8 +17,10 @@
 #include "RichWidget.h"
 #include "RichPushButton.h"
 
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ContextMenu.h"
+#include "clients_kernel/Options.h"
 #include "ENT/ENT_Tr.h"
 
 using namespace gui;
@@ -46,6 +48,8 @@ namespace
         w->setFocus( Qt::ActiveWindowFocusReason );
         w->selectAll();
     }
+
+    const std::string optionName = "BookmarkCoordSystem";
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +59,9 @@ namespace
 LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers,
                                       const kernel::CoordinateConverter_ABC& converter,
                                       Qt::Orientation orientation /* = Qt::Horizontal */ )
-    : converter_( converter )
+    : controllers_( controllers )
+    , converter_( converter )
+    , options_( controllers.options_ )
     , parsers_( new LocationParsers( controllers, converter ) )
     , lastValidPosition_( boost::none )
 {
@@ -68,7 +74,7 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers,
     combo_->setFixedWidth( 150 );
     for( int i = 0; i < eNbrCoordinateSystem; ++i )
         menu_->insertItem( QString::fromStdString( ENT_Tr::ConvertFromCoordinateSystem( static_cast< E_CoordinateSystem >( i ) ) ), i );
-    connect( menu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );
+    connect( menu_, SIGNAL( activated( int ) ), SLOT( OnActivated( int ) ) );
 
     auto box = new QWidget();
     auto coordLayout = new QHBoxLayout( box );
@@ -93,6 +99,7 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers,
     layout->addWidget( box );
 
     SelectParser( converter.GetDefaultCoordinateSystem() );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +108,7 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 LocationEditorBox::~LocationEditorBox()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,6 +134,18 @@ void LocationEditorBox::SelectParser( int index )
     else if( lastValidPosition_ )
         UpdateField( *lastValidPosition_ );
     emit DataChanged();
+}
+
+void LocationEditorBox::OnActivated( int index )
+{
+    SelectParser( index );
+    options_.Change( optionName, index );
+}
+
+void LocationEditorBox::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == optionName )
+        SelectParser( value.To< int >() );
 }
 
 // -----------------------------------------------------------------------------
