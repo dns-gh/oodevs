@@ -16,8 +16,7 @@
 #include <tools/Exception.h>
 #include "web_control_plugin/WebPlugin.h"
 #include <xeumeuleu/xml.hpp>
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#include <windows.h>
 
 // -----------------------------------------------------------------------------
 // Name: CreateInstance
