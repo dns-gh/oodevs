@@ -356,35 +356,6 @@ bool OrderParameter::IsList() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderParameter::IsCompatible
-// Created: PHC 2010-10-18
-// -----------------------------------------------------------------------------
-std::string OrderParameter::CompatibleType( const std::string& type ) const
-{
-    if( type == type_ )
-        return type;
-    if( std::find( aliases_.begin(), aliases_.end(), type ) != aliases_.end() )
-        return type;
-    if( type_ == "phaseline" || type == "phaselinelist" )
-        return "phaseline";
-    if( type == "direction" )
-        return "heading";
-    if( type == "location" && type_ == "polygon" )
-        return "polygon";
-    if( type == "numeric" && type_ == "integer" )
-        return "integer";
-    if( type == "list" || type == "string" )
-        return type_;
-    if( type == "location" && type_ == "locationcomposite")
-        return type;
-    if( type == "quantity" && type_ == "enumeration" )
-        return "quantity";
-    if( type == "urbanblock" )
-        return "urbanknowledge";
-    return "";
-}
-
-// -----------------------------------------------------------------------------
 // Name: OrderParameter::HasGenObject
 // Created: LGY 2012-04-20
 // -----------------------------------------------------------------------------
