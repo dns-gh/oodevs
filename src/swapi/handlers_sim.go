@@ -1174,6 +1174,9 @@ func (model *ModelData) handleObjectUpdate(m *sword.SimToClient_Content) error {
 		if construction := attributes.GetConstruction(); construction != nil {
 			object.Construction = construction.GetPercentage()
 		}
+		if trafficability := attributes.GetTrafficability(); trafficability != nil {
+			object.Trafficability = trafficability.GetValue()
+		}
 	}
 	return nil
 }

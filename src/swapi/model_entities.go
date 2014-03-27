@@ -143,14 +143,15 @@ func NewCrowd(id, partyId uint32, name string) *Crowd {
 }
 
 type Object struct {
-	Id           uint32
-	ObjectType   string
-	Name         string
-	PartyId      uint32
-	Activated    bool
-	Bypass       int32
-	Altitude     int32
-	Construction int32
+	Id             uint32
+	ObjectType     string
+	Name           string
+	PartyId        uint32
+	Activated      bool
+	Bypass         int32
+	Altitude       int32
+	Construction   int32
+	Trafficability float32
 }
 
 func NewObject(id, partyId uint32, objectType, name string) *Object {
