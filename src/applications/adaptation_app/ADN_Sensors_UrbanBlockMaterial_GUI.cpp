@@ -10,7 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_UrbanBlockMaterial_GUI.h"
-#include "ADN_Sensors_Data.h"
+#include "ADN_Sensors_Modificators.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_UrbanBlockMaterial_GUI constructor
@@ -37,7 +37,7 @@ ADN_Sensors_UrbanBlockMaterial_GUI::~ADN_Sensors_UrbanBlockMaterial_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_UrbanBlockMaterial_GUI::InternalEmit()
 {
-    if( ADN_Sensors_Data::ModificatorUrbanBlockInfos* data = static_cast< ADN_Sensors_Data::ModificatorUrbanBlockInfos* >( GetSelectedData() ) )
+    if( ModificatorUrbanBlockInfos* data = static_cast< ModificatorUrbanBlockInfos* >( GetSelectedData() ) )
         if( data  && data->GetCrossedElement() )
             emit ContentChanged( data->GetCrossedElement()->strName_.GetData(), data->rCoeff_.GetData() );
 }
@@ -48,7 +48,7 @@ void ADN_Sensors_UrbanBlockMaterial_GUI::InternalEmit()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_UrbanBlockMaterial_GUI::AddRow( int row, void* data )
 {
-    ADN_Sensors_Data::ModificatorUrbanBlockInfos* pInfos = static_cast< ADN_Sensors_Data::ModificatorUrbanBlockInfos* >( data );
+    ModificatorUrbanBlockInfos* pInfos = static_cast< ModificatorUrbanBlockInfos* >( data );
     if( !pInfos )
         return;
     AddItem( row, 0, data, &pInfos->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );

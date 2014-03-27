@@ -10,7 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Environments_GUI.h"
-#include "ADN_Sensors_Data.h"
+#include "ADN_Sensors_Modificators.h"
 #include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ ADN_Sensors_Environments_GUI::~ADN_Sensors_Environments_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Environments_GUI::InternalEmit()
 {
-    if( ADN_Sensors_Data::ModificatorEnvironmentInfos* data = static_cast< ADN_Sensors_Data::ModificatorEnvironmentInfos* >( GetSelectedData() ) )
+    if( ModificatorEnvironmentInfos* data = static_cast< ModificatorEnvironmentInfos* >( GetSelectedData() ) )
         emit ContentChanged( ADN_Tr::ConvertFromVisionObject( data->eType_, ENT_Tr::eToTr ), data->rCoeff_.GetData() );
 }
 
@@ -48,7 +48,7 @@ void ADN_Sensors_Environments_GUI::InternalEmit()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Environments_GUI::AddRow( int row, void* data )
 {
-    ADN_Sensors_Data::ModificatorEnvironmentInfos* pInfos = static_cast< ADN_Sensors_Data::ModificatorEnvironmentInfos* >( data );
+    ModificatorEnvironmentInfos* pInfos = static_cast< ModificatorEnvironmentInfos* >( data );
     if( !pInfos )
         return;
     Qt::ItemFlags flags = Qt::ItemIsEditable;

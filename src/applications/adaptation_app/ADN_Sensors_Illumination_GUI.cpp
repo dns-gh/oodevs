@@ -10,7 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Illumination_GUI.h"
-#include "ADN_Sensors_Data.h"
+#include "ADN_Sensors_Modificators.h"
 #include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ ADN_Sensors_Illumination_GUI::~ADN_Sensors_Illumination_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Illumination_GUI::InternalEmit()
 {
-    if( ADN_Sensors_Data::ModificatorIlluminationInfos* data = static_cast< ADN_Sensors_Data::ModificatorIlluminationInfos* >( GetSelectedData() ) )
+    if( ModificatorIlluminationInfos* data = static_cast< ModificatorIlluminationInfos* >( GetSelectedData() ) )
         emit ContentChanged( ENT_Tr::ConvertFromLightingType( data->eType_, ENT_Tr::eToTr ), data->rCoeff_.GetData() );
 }
 
@@ -48,7 +48,7 @@ void ADN_Sensors_Illumination_GUI::InternalEmit()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Illumination_GUI::AddRow( int row, void* data )
 {
-    ADN_Sensors_Data::ModificatorIlluminationInfos* pInfos = static_cast< ADN_Sensors_Data::ModificatorIlluminationInfos* >( data );
+    ModificatorIlluminationInfos* pInfos = static_cast< ModificatorIlluminationInfos* >( data );
     if( !pInfos )
         return;
 

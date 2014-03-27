@@ -10,7 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Sizes_GUI.h"
-#include "ADN_Sensors_Data.h"
+#include "ADN_Sensors_Modificators.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Sizes_GUI constructor
@@ -37,7 +37,7 @@ ADN_Sensors_Sizes_GUI::~ADN_Sensors_Sizes_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Sizes_GUI::InternalEmit()
 {
-    ADN_Sensors_Data::ModificatorSizeInfos* data = static_cast< ADN_Sensors_Data::ModificatorSizeInfos* >( GetSelectedData() );
+    ModificatorSizeInfos* data = static_cast< ModificatorSizeInfos* >( GetSelectedData() );
     if( data  && data->GetCrossedElement() )
         emit ContentChanged( data->GetCrossedElement()->strName_.GetData(), data->rCoeff_.GetData() );
 }
@@ -48,7 +48,7 @@ void ADN_Sensors_Sizes_GUI::InternalEmit()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Sizes_GUI::AddRow( int row, void* data )
 {
-    ADN_Sensors_Data::ModificatorSizeInfos* pInfos = static_cast< ADN_Sensors_Data::ModificatorSizeInfos* >( data );
+    ModificatorSizeInfos* pInfos = static_cast< ModificatorSizeInfos* >( data );
     if( !pInfos )
         return;
     AddItem( row, 0, data, &pInfos->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );

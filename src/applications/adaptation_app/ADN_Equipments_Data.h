@@ -23,6 +23,7 @@
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_Natures_Data.h"
 #include "ADN_Breakdowns_Data.h"
+#include "ADN_Radars_Data.h"
 #include "ADN_Tr.h"
 
 // =============================================================================
