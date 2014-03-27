@@ -35,7 +35,7 @@ public:
     virtual void Register( dispatcher::Services& services );
 
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client,
-            const std::string& link, Profile_ABC& profile, unsigned int clientId, bool uncounted );
+            const std::string& link, Profile_ABC& profile, bool uncounted );
     virtual void NotifyClientLeft( ClientPublisher_ABC& client,
             const std::string& link, bool uncounted );
     virtual void NotifySimulationLeft();

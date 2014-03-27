@@ -32,7 +32,7 @@ namespace dispatcher
 {
     class Model_ABC;
     class SimulationPublisher_ABC;
-    class LinkResolver_ABC;
+    class AuthenticatedLinkResolver_ABC;
 }
 
 namespace client
@@ -61,7 +61,7 @@ class VisionPlugin : public dispatcher::PluginContainer
 {
 public:
              VisionPlugin( const dispatcher::Model_ABC& model, tools::MessageDispatcher_ABC& dispatcher,
-                           dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::LinkResolver_ABC& resolver );
+                           dispatcher::SimulationPublisher_ABC& simulation, dispatcher::AuthenticatedLinkResolver_ABC& resolver );
     virtual ~VisionPlugin();
 
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher, const std::string& link, bool uncounted );
@@ -84,7 +84,7 @@ private:
 private:
     const dispatcher::Model_ABC& model_;
     dispatcher::SimulationPublisher_ABC& simulation_;
-    const dispatcher::LinkResolver_ABC& resolver_;
+    dispatcher::AuthenticatedLinkResolver_ABC& resolver_;
     std::map< unsigned int, sword::SimToClient > cones_;
     boost::scoped_ptr< Clients > clients_;
     boost::scoped_ptr< Units > units_;

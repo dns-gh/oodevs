@@ -10,7 +10,7 @@
 #include "script_plugin_pch.h"
 #include "ClientCommands.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "dispatcher/LinkResolver_ABC.h"
+#include "dispatcher/AuthenticatedLinkResolver_ABC.h"
 #include "protocol/MessengerSenders.h"
 #include <directia/brain/Brain.h>
 
@@ -20,7 +20,7 @@ using namespace plugins::script;
 // Name: ClientCommands constructor
 // Created: AGE 2008-06-24
 // -----------------------------------------------------------------------------
-ClientCommands::ClientCommands( dispatcher::ClientPublisher_ABC& clients, const dispatcher::LinkResolver_ABC& resolver )
+ClientCommands::ClientCommands( dispatcher::ClientPublisher_ABC& clients, dispatcher::AuthenticatedLinkResolver_ABC& resolver )
     : clients_( clients )
     , resolver_( resolver )
 {

@@ -70,7 +70,7 @@ public:
     virtual void Receive( const sword::SimToClient& message );
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& link,
-                                            dispatcher::Profile_ABC& profile, unsigned int clientId, bool uncounted );
+                                            dispatcher::Profile_ABC& profile, bool uncounted );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client, const std::string& link, bool uncounted );
 
     virtual void Register( dispatcher::Services& services );

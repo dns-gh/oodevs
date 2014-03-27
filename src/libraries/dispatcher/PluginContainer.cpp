@@ -49,10 +49,10 @@ void PluginContainer::Register( dispatcher::Services& services )
 }
 
 void PluginContainer::NotifyClientAuthenticated( ClientPublisher_ABC& client,
-        const std::string& link, Profile_ABC& profile, unsigned int clientId, bool uncounted )
+        const std::string& link, Profile_ABC& profile, bool uncounted )
 {
     for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
-        (*it)->NotifyClientAuthenticated( client, link, profile, clientId, uncounted );
+        (*it)->NotifyClientAuthenticated( client, link, profile, uncounted );
 }
 
 void PluginContainer::NotifyClientLeft( ClientPublisher_ABC& client,

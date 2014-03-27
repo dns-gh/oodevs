@@ -52,7 +52,7 @@ ScriptPlugin::ScriptPlugin( Model_ABC& model,
                             SimulationPublisher_ABC& publisher,
                             tools::MessageDispatcher_ABC& dispatcher,
                             ClientPublisher_ABC& clients,
-                            const dispatcher::LinkResolver_ABC& resolver,
+                            AuthenticatedLinkResolver_ABC& resolver,
                             CompositeRegistrable& registrables )
     : model_       ( model )
     , config_      ( config )
@@ -129,7 +129,7 @@ void ScriptPlugin::Receive( const sword::AarToClient& wrapper )
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
 void ScriptPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& /*client*/, const std::string& link,
-                                              Profile_ABC& profile, unsigned int /*clientId*/, bool uncounted )
+                                              Profile_ABC& profile, bool uncounted )
 {
     if( uncounted )
         return;

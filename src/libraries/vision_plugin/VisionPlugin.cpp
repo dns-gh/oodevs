@@ -12,7 +12,7 @@
 #include "Units.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include "dispatcher/LinkResolver_ABC.h"
+#include "dispatcher/AuthenticatedLinkResolver_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
@@ -22,7 +22,7 @@
 using namespace plugins::vision;
 
 VisionPlugin::VisionPlugin( const dispatcher::Model_ABC& model, tools::MessageDispatcher_ABC& dispatcher,
-                            dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::LinkResolver_ABC& resolver )
+                            dispatcher::SimulationPublisher_ABC& simulation, dispatcher::AuthenticatedLinkResolver_ABC& resolver )
     : model_     ( model )
     , simulation_( simulation )
     , resolver_  ( resolver )

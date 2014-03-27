@@ -70,12 +70,15 @@ public:
     virtual void Receive( const sword::SimToClient& message );
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& link,
-                                            dispatcher::Profile_ABC& profile, unsigned int, bool uncounted );
+                                            dispatcher::Profile_ABC& profile, bool uncounted );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client, const std::string& link, bool uncounted );
 
     virtual void Register( dispatcher::Services& services );
 
     virtual dispatcher::Profile_ABC& GetProfile( const std::string& link ) const;
+    virtual dispatcher::ClientPublisher_ABC& GetAuthenticatedPublisher( const std::string& link ) const;
+    virtual dispatcher::ClientPublisher_ABC& GetAuthenticatedPublisher( unsigned int clientId ) const;
+    virtual unsigned int GetClientID( const std::string& link ) const;
     //@}
 
 private:
@@ -89,7 +92,7 @@ private:
     void OnReceiveConnectedProfilesRequest(const sword::ConnectedProfilesRequest& message, AuthenticationSender& sender, const std::string& link );
 
     bool IsAuthenticated( const std::string& login ) const;
-    void Logout( dispatcher::ClientPublisher_ABC& client, const std::string& link );
+    void Logout( dispatcher::ClientPublisher_ABC& client );
     void SendProfiles( AuthenticationSender& sender ) const;
     void SendReponse( sword::AuthenticationToClient& reply, AuthenticationSender& sender, const std::string& link ) const;
     //@}
@@ -99,6 +102,7 @@ private:
     //@{
     typedef std::map< std::string, boost::shared_ptr< dispatcher::Profile > > T_Profiles;
 
+    typedef std::map< std::string, unsigned int > T_ClientsID;
     typedef std::map< std::string, std::string >  T_AuthenticationKeys;
     typedef std::set< std::string >               T_SilentClients;
     //@}
@@ -114,6 +118,8 @@ private:
     T_Profiles                                  authenticated_;
     int                                         maxConnections_;
     int                                         currentConnections_;
+    T_ClientsID                                 clientsID_;
+    std::map< unsigned int, std::string >       ids_;
     unsigned int                                countID_;
     T_AuthenticationKeys                        authenticationKeys_;
     T_SilentClients                             silentClients_;

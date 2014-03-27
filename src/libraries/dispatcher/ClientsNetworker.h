@@ -16,9 +16,6 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <map>
-#pragma warning( push, 0 )
-#include <boost/bimap.hpp>
-#pragma warning( pop )
 
 namespace dispatcher
 {
@@ -56,12 +53,9 @@ public:
     virtual void Send( const sword::DispatcherToClient& msg );
 
     virtual ClientPublisher_ABC& GetConnectedPublisher( const std::string& link ) const;
-    virtual ClientPublisher_ABC& GetAuthenticatedPublisher( unsigned int clientId ) const;
-    virtual ClientPublisher_ABC& GetAuthenticatedPublisher( const std::string& link ) const;
-    virtual unsigned int GetClientID( const std::string& link ) const;
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& link,
-                                            dispatcher::Profile_ABC& profile, unsigned int clientId, bool uncounted );
+                                            dispatcher::Profile_ABC& profile, bool uncounted );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client, const std::string& link, bool uncounted );
 
     virtual void Update();
@@ -80,14 +74,12 @@ private:
     void Broadcast( const sword::SimToClient& message );
 
     void OnNewTick();
-    void Unicast( const sword::SimToClient& message );
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< std::string, boost::shared_ptr< Client > > T_Clients;
-    typedef boost::bimap< std::string, unsigned int >            T_ClientsId;
     //@}
 
 private:
@@ -98,7 +90,6 @@ private:
     const Model_ABC& model_;
     T_Clients clients_;
     T_Clients internals_;
-    T_ClientsId clientsId_;
     std::set< std::string > uncountedClients_;
     //@}
 };
