@@ -47,7 +47,7 @@ UtmParser::~UtmParser()
 // Name: UtmParser::Parse
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-bool UtmParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const
+bool UtmParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint, bool /*small*/ ) const
 {
     // "31 NEA 00000 00000"
     try

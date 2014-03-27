@@ -38,7 +38,7 @@ Wgs84DmsParser::~Wgs84DmsParser()
 // Name: Wgs84DmsParser::Parse
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
-bool Wgs84DmsParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const
+bool Wgs84DmsParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint, bool /*small*/ ) const
 {
     try
     {

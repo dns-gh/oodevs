@@ -36,7 +36,7 @@ FeatureNameParser::~FeatureNameParser()
 // Name: FeatureNameParser::Parse
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-bool FeatureNameParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const
+bool FeatureNameParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint, bool /*small*/ ) const
 {
     try
     {
