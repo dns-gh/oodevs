@@ -61,6 +61,7 @@ private:
     //! @name Member data
     //@{
     kernel::SafePointer< UserProfile > selectedProfile_;
+    const kernel::Profile_ABC& profile_;
     std::auto_ptr< UserProfile > editedProfile_;
     UserProfileRights_ABC* unitRights_;
     UserProfileRights_ABC* populationRights_;
