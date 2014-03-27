@@ -58,6 +58,7 @@ public:
     static void ReportEquipmentType      ( DEC_Decision_ABC& caller, int type, const std::string& reportId, const PHY_ComposanteTypePion* equipmentType );
     static void ReportFloat              ( DEC_Decision_ABC& caller, int type, const std::string& reportId, float param );
     static void ReportIntInt             ( DEC_Decision_ABC& caller, int type, const std::string& reportId, int param1, int param2 );
+    static void ReportAgentKnowledgeInt  ( DEC_Decision_ABC& caller, int type, const std::string& reportId, boost::shared_ptr< DEC_Knowledge_Agent > param1, int param2 );
     static void ReportFloatFloat         ( DEC_Decision_ABC& caller, int type, const std::string& reportId, float param1, float param2 );
     static void ReportId                 ( DEC_Decision_ABC& caller, int type, const std::string& reportId, int id );
     static void ReportObjectKnoweldge    ( DEC_Decision_ABC& caller, int type, const std::string& reportId, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
