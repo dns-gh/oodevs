@@ -106,6 +106,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eInvalidVolume ]          = tr( "Volume name is empty" );
     errorDescriptions_[ eIndirectFireRange ]      = tr( "Weapon %1 - Indirect fire - max range < min range" ) + error;
     errorDescriptions_[ eRepartitionError ]       = tr( "%1" );
+    errorDescriptions_[ eDuplicateEnumeration ]   = tr( "Mission parameter %1 defines duplicate enumeration values." );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );

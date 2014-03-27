@@ -318,4 +318,13 @@ void ADN_Missions_Parameter::CheckDatabaseValidity( ADN_ConsistencyChecker& chec
     if( ( type_.GetData() == eMissionParameterTypeGenObject && nbGenObject == 0 ) ||
         ( type_.GetData() == eMissionParameterTypeObjectKnowledge && nbKnowledgeObject == 0 ) )
         checker.AddError( eMissingObjectParameter, strName_.GetData(), eMissions );
+    std::set< int > ids;
+    for( auto it = values_.begin(); it != values_.end(); ++it )
+    {
+        if( !ids.insert( (*it)->id_.GetData() ).second )
+        {
+            checker.AddError( eDuplicateEnumeration, strName_.GetData(), eMissions );
+            break;
+        }
+    }
 }

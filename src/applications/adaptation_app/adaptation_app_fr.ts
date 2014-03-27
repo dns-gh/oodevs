@@ -773,6 +773,10 @@ Arrêt moteur allumé</translation>
         <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
         <translation>Arme %1 - Tir indirect - Portée max &lt; portée min</translation>
     </message>
+    <message>
+        <source>Mission parameter %1 defines duplicate enumeration values.</source>
+        <translation>Le paramètre de mission %1 définit plusieurs fois la même valeur d&apos;énuméré.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

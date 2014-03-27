@@ -52,6 +52,7 @@ enum E_ConsistencyCheck
     eInvalidVolume,
     eIndirectFireRange,
     eRepartitionError,
+    eDuplicateEnumeration,
     eOthersMask
 };
 
