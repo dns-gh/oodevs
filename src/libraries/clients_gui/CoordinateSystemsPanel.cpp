@@ -30,8 +30,8 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent,
                                                 kernel::CoordinateConverter_ABC& coordConverter )
     : PreferencePanel_ABC( parent, "CoordinateSystemsPanel" )
     , controllers_( controllers )
-    , options_( controllers.options_ )
     , coordConverter_( coordConverter )
+    , options_( controllers.options_ )
     , previousCoordinateSystem_( coordConverter.GetDefaultCoordinateSystem() )
 {
     QLabel* coordinateLabel = new QLabel( tr( "Select current coordinate system:" ) );
