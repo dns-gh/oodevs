@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "KnowledgeGroupMagicAction.h"
 #include "ActionTasker.h"
+#include "ActionTiming.h"
 
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
@@ -74,6 +75,7 @@ void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher, int context )
         ( sword::KnowledgeMagicAction_Type ) GetType()->GetId();
     simulation::KnowledgeMagicAction message;
     message().mutable_knowledge_group()->set_id( Get< ActionTasker >().GetId() );
+    message().mutable_start_time()->set_data( Get< ActionTiming >().GetIsoTime() );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

@@ -40,6 +40,7 @@ void EntityMission< T >::Publish( Publisher_ABC& publisher, int context ) const
     T message;
     message().mutable_tasker()->set_id( Get< ActionTasker >().GetId() );
     message().mutable_type()->set_id( GetType() ? GetType()->GetId() : 0 );
+    message().mutable_start_time()->set_data( Get< ActionTiming >().GetIsoTime() );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );
     message.Send( publisher, context );

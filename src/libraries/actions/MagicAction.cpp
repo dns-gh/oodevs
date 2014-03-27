@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "MagicAction.h"
+#include "ActionTiming.h"
 
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
@@ -72,6 +73,7 @@ void MagicAction::Publish( Publisher_ABC& publisher, int context ) const
     sword::MagicAction_Type type = ( sword::MagicAction_Type ) GetType()->GetId();
     simulation::MagicAction message;
     message().set_type( type );
+    message().mutable_start_time()->set_data( Get< ActionTiming >().GetIsoTime() );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );
     message.Send( publisher, context );

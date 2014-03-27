@@ -970,13 +970,21 @@ void protocol::Read( const Reader_ABC& reader, MissionParameters& dst, xml::xist
 namespace
 {
     template< typename T >
+    void ReadTime( T& dst, xml::xistream& xis )
+    {
+        if( const auto opt = TestAttribute< std::string >( xis, "time" ) )
+            dst.mutable_start_time()->set_data( *opt );
+        else if( const auto opt = TestAttribute< std::string >( xis, "start_time" ) )
+            dst.mutable_start_time()->set_data( *opt );
+    }
+
+    template< typename T >
     void ReadOrder( const Reader_ABC& reader, T& dst, xml::xistream& xis )
     {
         dst.mutable_type()->set_id( xis.attribute< int32_t >( "id" ) );
-        if( const auto opt = TestAttribute< std::string >( xis, "time" ) )
-            dst.mutable_start_time()->set_data( *opt );
         if( const auto name = TestAttribute< std::string >( xis, "name" ) )
             dst.set_name( *name );
+        ReadTime( dst, xis );
         TryAddParameters< T >( reader, dst, xis );
     }
 
@@ -990,6 +998,7 @@ namespace
         dst.set_type( *type );
         if( const auto name = TestAttribute< std::string >( xis, "name" ) )
             dst.set_name( *name );
+        ReadTime( dst, xis );
         TryAddParameters< U >( reader, dst, xis );
     }
 

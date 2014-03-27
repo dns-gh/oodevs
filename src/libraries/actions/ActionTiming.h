@@ -64,6 +64,7 @@ public:
     //@{
     bool IsEnabled() const;
     QDateTime GetTime() const;
+    std::string GetIsoTime() const;
     void SetTime( const QDateTime& time );
     //@}
 

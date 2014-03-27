@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "ObjectMagicAction.h"
 #include "ActionTasker.h"
+#include "ActionTiming.h"
 
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
@@ -74,6 +75,7 @@ void ObjectMagicAction::Publish( Publisher_ABC& publisher, int context ) const
     sword::ObjectMagicAction_Type type = ( sword::ObjectMagicAction_Type ) GetType()->GetId();
     simulation::ObjectMagicAction message;
     message().mutable_object()->set_id( Get< ActionTasker >().GetId() );
+    message().mutable_start_time()->set_data( Get< ActionTiming >().GetIsoTime() );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

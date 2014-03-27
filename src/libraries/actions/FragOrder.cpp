@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "FragOrder.h"
 #include "ActionTasker.h"
+#include "ActionTiming.h"
 
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -85,6 +86,7 @@ void FragOrder::Publish( Publisher_ABC& publisher, int context ) const
     else if( typeName == kernel::Population_ABC::typeName_ )
         message().mutable_tasker()->mutable_crowd()->set_id( id );
     message().mutable_type()->set_id( GetType() ? GetType()->GetId() : 0 );
+    message().mutable_start_time()->set_data( Get< ActionTiming >().GetIsoTime() );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );
     message.Send( publisher, context );

@@ -38,9 +38,10 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const kernel::Time_A
     : controller_( controller )
     , simulation_( simulation )
     , enabled_( true )
-    , time_( tools::GDHStringToQDateTime( datetime ) )
+    , time_( tools::IsoStringToQDateTime( datetime ) )
 {
-    // NOTHING
+    if( !time_.isValid() || time_.isNull() )
+        time_ = QDateTime::fromString( QString::fromStdString( datetime ), Qt::ISODate );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,4 +130,13 @@ void ActionTiming::Shift( long secs )
     if( time_ < simulation_.GetInitialDateTime() )
         time_ = simulation_.GetInitialDateTime();
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionTiming::GetIsoTime
+// Created: ABR 2014-03-24
+// -----------------------------------------------------------------------------
+std::string ActionTiming::GetIsoTime() const
+{
+    return time_.toString( "yyyyMMddThhmmss" ).toStdString();
 }

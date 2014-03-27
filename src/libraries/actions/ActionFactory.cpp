@@ -240,6 +240,7 @@ Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC* target, E_Mis
     else
         throw MASA_EXCEPTION( "Invalid mission type" );
     AddTasker( *action, target, false );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
     action->Rename( target ? target->GetName() : tools::translate( "ActionFactory", "Incomplete order" ) );
     action->Invalidate();
     action->Polish();
@@ -376,7 +377,7 @@ Action_ABC* ActionFactory::CreateAction( const sword::SetAutomatMode& message, b
                                                                         controller_,
                                                                         message.mode() == sword::engaged,
                                                                         needRegistration ) );
-    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTiming( *action, message );
     AddTasker( *action, message.automate().id(), kernel::Automat_ABC::typeName_ );
     action->Polish();
     return action.release();
@@ -393,7 +394,7 @@ Action_ABC* ActionFactory::CreateAction( const sword::MagicAction& message, bool
     std::unique_ptr< MagicAction > action( new MagicAction( orderType,
                                                             controller_,
                                                             needRegistration ) );
-    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTiming( *action, message );
     action->Polish();
     AddParameters( *action, orderType, message.parameters() );
     return action.release();
@@ -409,7 +410,7 @@ Action_ABC* ActionFactory::CreateAction( const sword::UnitMagicAction& message, 
     std::unique_ptr< UnitMagicAction > action( new UnitMagicAction( type,
                                                                     controller_,
                                                                     needRegistration ) );
-    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTiming( *action, message );
     auto entity = AddTasker( *action, message.tasker() );
     action->Polish();
     AddParameters( *action, type, message.parameters(), entity );
@@ -426,7 +427,7 @@ Action_ABC* ActionFactory::CreateAction( const sword::KnowledgeMagicAction& mess
     std::unique_ptr< Action_ABC > action( new KnowledgeGroupMagicAction( type,
                                                                          controller_,
                                                                          needRegistration ) );
-    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTiming( *action, message );
     auto entity = AddTasker( *action, message.knowledge_group().id(), kernel::KnowledgeGroup_ABC::typeName_ );
     action->Polish();
     AddParameters( *action, type, message.parameters(), entity );
@@ -443,7 +444,7 @@ Action_ABC* ActionFactory::CreateAction( const sword::ObjectMagicAction& message
     std::unique_ptr< Action_ABC > action( new ObjectMagicAction( type,
                                                                  controller_,
                                                                  needRegistration ) );
-    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTiming( *action, message );
     auto entity = AddTasker( *action, message.object().id(), kernel::Object_ABC::typeName_ );
     action->Polish();
     AddParameters( *action, type, message.parameters(), entity );

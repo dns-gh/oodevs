@@ -1609,6 +1609,8 @@ message MagicAction {
     //! The action name is mostly used as a label by third-party systems
     //! listening and displaying simulation events.
     optional string            name       = 3;
+    //! The start date and time
+    optional DateTime          start_time = 4;
 }
 
 //! Perform magic actions on units, automats or crowds.
@@ -2029,6 +2031,8 @@ message UnitMagicAction {
     required MissionParameters parameters = 3;
     //! optional name
     optional string            name       = 4;
+    //! The start date and time
+    optional DateTime          start_time = 5;
 }
 
 /** @struct ObjectMagicAction
@@ -2105,6 +2109,8 @@ message ObjectMagicAction {
     required MissionParameters parameters = 3;
     //! optional name
     optional string            name       = 4;
+    //! The start date and time
+    optional DateTime          start_time = 5;
 }
 
 message KnowledgeMagicAction {
@@ -2144,6 +2150,8 @@ message KnowledgeMagicAction {
     required Type              type            = 2;
     required MissionParameters parameters      = 3;
     optional string            name            = 4;
+    //! The start date and time
+    optional DateTime          start_time      = 5;
 }
 
 //! Engage or disengage an automat.
@@ -2154,6 +2162,8 @@ message SetAutomatMode {
     required Id              automate = 1;
     required EnumAutomatMode mode     = 2;
     optional string          name     = 3;
+    //! The start date and time
+    optional DateTime        start_time = 4;
 }
 
 enum EnumHumanRank {

@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "EngageMagicAction.h"
 #include "ActionTasker.h"
+#include "ActionTiming.h"
 
 #include "protocol/SimulationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -81,6 +82,7 @@ void EngageMagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
     simulation::SetAutomatMode message;
     message().mutable_automate()->set_id( Get< ActionTasker >().GetId() );
+    message().mutable_start_time()->set_data( Get< ActionTiming >().GetIsoTime() );
     message().set_mode( engaged_ ? sword::engaged : sword::disengaged );
     message().set_name( GetName().toStdString() );
     message.Send( publisher, context );
