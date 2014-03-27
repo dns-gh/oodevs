@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ObstacleAttribute.h"
+#include "ObjectAttributes.h"
 #include "MIL_Time_ABC.h"
 #include "Object.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
@@ -60,12 +61,12 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attributes )
-    : bActivated_    ( attributes.list( 2 ).booleanvalue() ) // first parameter is deprecated preliminary/reserved type. Kept for compatibility
-    , activationTime_( attributes.list( 3 ).quantity() )
-    , activityTime_  ( attributes.list( 4 ).quantity() )
-    , creationTime_  ( MIL_Time_ABC::GetTime().GetRealTime() )
 {
-    // NOTHING
+    CheckCount( "obstacle", attributes, 5 );
+    bActivated_ = GetBool( "obstacle", attributes, 2 ); // first parameter is deprecated preliminary/reserved type. Kept for compatibility
+    activationTime_ = GetQuantity( "obstacle", attributes, 3 );
+    activityTime_ = GetQuantity( "obstacle", attributes, 4 );
+    creationTime_ = MIL_Time_ABC::GetTime().GetRealTime();
 }
 
 // -----------------------------------------------------------------------------

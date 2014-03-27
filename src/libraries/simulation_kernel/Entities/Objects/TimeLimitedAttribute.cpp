@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "TimeLimitedAttribute.h"
+#include "ObjectAttributes.h"
 #include "Object.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/Protocol.h"
@@ -58,10 +59,10 @@ TimeLimitedAttribute::TimeLimitedAttribute()
 // Created: RPD 2009-10-19
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( const sword::MissionParameter_Value& attributes )
-    : nLifeTime_     ( attributes.list( 1 ).quantity() )
-    , nDeathTimeStep_( 0 )
+    : nDeathTimeStep_( 0 )
 {
-    // NOTHING
+    CheckCount( "time_limit", attributes, 2 );
+    nLifeTime_ = GetQuantity( "time_limit", attributes, 1 );
 }
 
 // -----------------------------------------------------------------------------

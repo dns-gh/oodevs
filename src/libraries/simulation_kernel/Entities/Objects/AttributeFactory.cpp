@@ -36,6 +36,7 @@
 #include "ImprovableCapacity.h"
 #include "TrafficabilityAttribute.h"
 #include "protocol/Protocol.h"
+#include "protocol/MessageParameters.h"
 
 using namespace sword;
 
@@ -178,93 +179,87 @@ void AttributeFactory::Initialize( Object& object ) const
 // -----------------------------------------------------------------------------
 void AttributeFactory::Create( Object& object, const sword::MissionParameter& parameter ) const
 {
-    Initialize( object );
     for( int i = 0; i < parameter.value_size(); ++i )
     {
-        const sword::MissionParameter_Value& attributes = parameter.value( i );
-        if( attributes.list_size() > 0 )
+        const auto& attributes = parameter.value( i );
+        protocol::Check( attributes.list_size() > 0, "invalid empty parameter" );
+        protocol::Check( attributes.list( 0 ).has_identifier(), "first element must be an identifier" );
+        const unsigned int actionId = attributes.list( 0 ).identifier();
+        switch( actionId )
         {
-            const sword::MissionParameter_Value& attribute = attributes.list( 0 );
-            unsigned int actionId = attribute.identifier(); // first element is the type
-            switch( actionId )
+        case ObjectMagicAction::obstacle:
+            object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( attributes );
+            break;
+        case ObjectMagicAction::mine:
+            object.GetAttribute< MineAttribute >() = MineAttribute( attributes );
+            break;
+        case ObjectMagicAction::time_limit:
+            object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attributes );
+            break;
+        case ObjectMagicAction::bypass:
+            object.GetAttribute< BypassAttribute >() = BypassAttribute( attributes );
+            break;
+        case ObjectMagicAction::effect_delay:
+            object.GetAttribute< DelayAttribute >() = DelayAttribute( attributes );
+            break;
+        case ObjectMagicAction::lodging:
+            object.GetAttribute< LodgingAttribute >() = LodgingAttribute( attributes );
+            break;
+        case ObjectMagicAction::logistic:
+            object.GetAttribute< LogisticAttribute >() = LogisticAttribute( attributes );
+            break;
+        case ObjectMagicAction::nbc:
+            object.GetAttribute< NBCAttribute >() = NBCAttribute( attributes );
+            break;
+        case ObjectMagicAction::crossing_site:
+            object.GetAttribute< CrossingSiteAttribute >() = CrossingSiteAttribute( attributes );
+            break;
+        case ObjectMagicAction::supply_route:
+            object.GetAttribute< SupplyRouteAttribute >() = SupplyRouteAttribute( attributes );
+            break;
+        case ObjectMagicAction::fire:
+            object.GetAttribute< FireAttribute >() = FireAttribute( attributes );
+            break;
+        case ObjectMagicAction::interaction_height:
+            object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( attributes );
+            break;
+        case ObjectMagicAction::stock:
+            object.GetAttribute< StockAttribute >() = StockAttribute( attributes );
+            break;
+        case ObjectMagicAction::flood:
+            object.GetAttribute< FloodAttribute >() = FloodAttribute( attributes, object.GetLocalisation() );
+            break;
+        case ObjectMagicAction::resource_network:
+            object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( object );
+            break;
+        case ObjectMagicAction::altitude_modifier:
+            object.GetAttribute< AltitudeModifierAttribute >() = AltitudeModifierAttribute( attributes, object.GetLocalisation(), object.GetID() );
+            break;
+        case ObjectMagicAction::underground:
+            object.GetAttribute< UndergroundAttribute >() = UndergroundAttribute( attributes );
+            break;
+        case ObjectMagicAction::trafficability:
+            object.GetAttribute< TrafficabilityAttribute >() = TrafficabilityAttribute( attributes );
+            break;
+        case ObjectMagicAction::disaster:
+            object.GetAttribute< DisasterAttribute >() = DisasterAttribute( attributes );
+            break;
+        case ObjectMagicAction::density:
+        {
+            if( attributes.list_size() > 1 && attributes.list( 1 ).has_areal() )
             {
-            case ObjectMagicAction::obstacle:
-                object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( attributes );
-                break;
-            case ObjectMagicAction::mine:
-                object.GetAttribute< MineAttribute >() = MineAttribute( attributes );
-                break;
-            case ObjectMagicAction::time_limit:
-                object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attributes );
-                break;
-            case ObjectMagicAction::bypass:
-                object.GetAttribute< BypassAttribute >() = BypassAttribute( attributes );
-                break;
-            case ObjectMagicAction::effect_delay:
-                object.GetAttribute< DelayAttribute >() = DelayAttribute( attributes );
-                break;
-            case ObjectMagicAction::lodging:
-                object.GetAttribute< LodgingAttribute >() = LodgingAttribute( attributes );
-                break;
-            case ObjectMagicAction::logistic:
-                object.GetAttribute< LogisticAttribute >() = LogisticAttribute( attributes );
-                break;
-            case ObjectMagicAction::nbc:
-                object.GetAttribute< NBCAttribute >() = NBCAttribute( attributes );
-                break;
-            case ObjectMagicAction::crossing_site:
-                object.GetAttribute< CrossingSiteAttribute >() = CrossingSiteAttribute( attributes );
-                break;
-            case ObjectMagicAction::supply_route:
-                object.GetAttribute< SupplyRouteAttribute >() = SupplyRouteAttribute( attributes );
-                break;
-            /*case ObjectMagicAction::toxic_cloud:
-                object.GetAttribute< ??? >() = ???( attributes );
-                break;*/
-            case ObjectMagicAction::fire:
-                object.GetAttribute< FireAttribute >() = FireAttribute( attributes );
-                break;
-            case ObjectMagicAction::interaction_height:
-                object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( attributes );
-                break;
-            case ObjectMagicAction::stock:
-                object.GetAttribute< StockAttribute >() = StockAttribute( attributes );
-                break;
-            case ObjectMagicAction::flood:
-                object.GetAttribute< FloodAttribute >() = FloodAttribute( attributes, object.GetLocalisation() );
-                break;
-            case ObjectMagicAction::resource_network:
-                object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( object );
-                break;
-            case ObjectMagicAction::altitude_modifier:
-                object.GetAttribute< AltitudeModifierAttribute >() = AltitudeModifierAttribute( attributes, object.GetLocalisation(), object.GetID() );
-                break;
-            case ObjectMagicAction::underground:
-                object.GetAttribute< UndergroundAttribute >() = UndergroundAttribute( attributes );
-                break;
-            case ObjectMagicAction::trafficability:
-                object.GetAttribute< TrafficabilityAttribute >() = TrafficabilityAttribute( attributes );
-                break;
-            case ObjectMagicAction::disaster:
-                object.GetAttribute< DisasterAttribute >() = DisasterAttribute( attributes );
-                break;
-            case ObjectMagicAction::density:
-            {
-                if( attributes.list_size() > 1 && attributes.list( 1 ).has_areal() )
-                {
-                    double density = attributes.list( 1 ).areal();
-                    BuildableCapacity* capacity = object.Retrieve< BuildableCapacity >();
-                    if( capacity )
-                        capacity->SetDensity( density );
-                    ConstructionAttribute* attribute = object.RetrieveAttribute< ConstructionAttribute >();
-                    if( attribute )
-                        attribute->SetDensity( density );
-                }
-                break;
+                double density = attributes.list( 1 ).areal();
+                BuildableCapacity* capacity = object.Retrieve< BuildableCapacity >();
+                if( capacity )
+                    capacity->SetDensity( density );
+                ConstructionAttribute* attribute = object.RetrieveAttribute< ConstructionAttribute >();
+                if( attribute )
+                    attribute->SetDensity( density );
             }
-            default:
-                break;
-            }
+            break;
+        }
+        default:
+            break;
         }
     }
 }

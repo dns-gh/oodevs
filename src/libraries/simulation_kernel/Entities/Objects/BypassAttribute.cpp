@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "BypassAttribute.h"
+#include "ObjectAttributes.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
@@ -43,9 +44,10 @@ BypassAttribute::BypassAttribute( const xml::xistream& xis )
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
 BypassAttribute::BypassAttribute( const sword::MissionParameter_Value& attributes )
-    : bypassPercentage_( attributes.list( 1 ).quantity() / 100., 0.05, 0., 1.)
+    : bypassPercentage_( 0., 0.05, 0., 1.)
 {
-    // NOTHING
+    CheckCount( "bypass", attributes, 2 );
+    bypassPercentage_.Set( GetQuantity( "bypass", attributes, 1 ) / 100. );
 }
 
 // -----------------------------------------------------------------------------
