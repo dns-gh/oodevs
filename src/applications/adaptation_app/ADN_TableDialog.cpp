@@ -22,6 +22,7 @@
 #include "ADN_Table.h"
 #include "ADN_MainWindow.h"
 #include "clients_gui/FileDialog.h"
+#include <shellapi.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableDialog constructor
