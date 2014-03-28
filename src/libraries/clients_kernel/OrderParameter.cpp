@@ -399,3 +399,12 @@ void OrderParameter::SetUnion( bool isUnion )
 {
     union_ = isUnion;
 }
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::IsList
+// Created: ABR 2014-03-28
+// -----------------------------------------------------------------------------
+bool OrderParameter::IsList() const
+{
+    return Count() == 1 && !IsStructure() && !IsUnion();
+}

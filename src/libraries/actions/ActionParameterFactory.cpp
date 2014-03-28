@@ -190,7 +190,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         return ( nullValue ) ? new parameters::PushFlowParameters( parameter, converter_, false ) : new parameters::PushFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, message.push_flow_parameters() );
     if( message.has_pull_flow_parameters() )
         return ( nullValue ) ? new parameters::PullFlowParameters( parameter, converter_ ) : new parameters::PullFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, message.pull_flow_parameters() );
-    if( message.list_size() || ( !parameter.IsStructure() && !parameter.IsUnion() && parameter.Count() > 0 ) ) // parameter is a list
+    if( message.list_size() || parameter.IsList() )
         return new parameters::ParameterList( parameter, message.list(), *this, entity );
     return 0;
 }

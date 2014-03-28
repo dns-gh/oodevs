@@ -74,9 +74,17 @@ public:
     double MinValue() const;
     double MaxValue() const;
     double IndirectFireOnly() const;
+    // a repeated is a dynamic list of "this" parameter.
     bool IsRepeated() const;
+    // a list is a dynamic list of a certain type of parameter.
+    // this parameter is registered within "this".
+    bool IsList() const;
+    // a structure is a list with a fixed size of parameters
+    // theses parameters are registered within "this".
     bool IsStructure() const;
     void SetStructure( bool );
+    // a union is a list of possible structure
+    // these structures are registered within "this".
     bool IsUnion() const;
     void SetUnion( bool );
     const OrderParameterValue* FindValue( unsigned int id ) const;
@@ -110,8 +118,8 @@ private:
     std::string type_;
     std::string keyName_;
     bool optional_;
-    bool structure_;    // a structure is a list with a fixed size of parameter
-    bool union_;        // a union is a list of possible structure
+    bool structure_;
+    bool union_;
     unsigned int minOccurs_;
     unsigned int maxOccurs_;
     double minValue_;
