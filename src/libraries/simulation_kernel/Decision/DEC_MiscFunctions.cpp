@@ -386,6 +386,23 @@ void DEC_MiscFunctions::ReportIntInt( DEC_Decision_ABC& caller, int type, const 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::ReportAgentKnowledgeInt
+// Created: NMI 2013-03-27
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportAgentKnowledgeInt( DEC_Decision_ABC& caller, int type, const std::string& reportId, boost::shared_ptr< DEC_Knowledge_Agent > param1, int param2 )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam1( MIL_MissionParameterFactory::CreateAgentKnowledge( param1 ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam2( MIL_MissionParameterFactory::CreateInteger( param2 ) );
+        params.push_back( missionParam1 );
+        params.push_back( missionParam2 );
+        pReport->Send( caller, static_cast< MIL_Report::E_Type >( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::ReportFloatFloat
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------

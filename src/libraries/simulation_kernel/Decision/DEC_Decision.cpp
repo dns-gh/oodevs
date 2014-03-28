@@ -630,6 +630,8 @@ void RegisterReportFunctions( sword::Brain& brain )
         boost::function< void ( DEC_Decision_ABC&, int, const std::string&, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloat, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_Int_Int",
         boost::function< void ( DEC_Decision_ABC&, int, const std::string&, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportIntInt, _1, _2, _3, _4, _5 ) ) );
+    brain.RegisterFunction( "DEC_RC_AgentKnowledge_Int",
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, boost::shared_ptr< DEC_Knowledge_Agent >, int ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledgeInt, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_Float_Float",
         boost::function< void ( DEC_Decision_ABC&, int, const std::string&, float, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloatFloat, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_Id",
