@@ -184,13 +184,13 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         return ( nullValue ) ? new parameters::ResourceNetworkNode( parameter, controller_ ): new parameters::ResourceNetworkNode( parameter, message.resourcenetworknode(), entities_, controller_ );
     if( message.has_resourcenetworktype() )
         return ( nullValue ) ? new parameters::ResourceNetworkType( parameter )             : new parameters::ResourceNetworkType( parameter, message.resourcenetworktype().name(), staticModel_.objectTypes_ );
-    if( message.list_size() )
-        return new parameters::ParameterList( parameter, message.list(), *this, entity );
     if( message.has_extensionlist() )
         return ( nullValue ) ? new parameters::ExtensionList( parameter )                   : new parameters::ExtensionList( parameter, message.extensionlist() );
     if( message.has_push_flow_parameters() )
         return ( nullValue ) ? new parameters::PushFlowParameters( parameter, converter_, false ) : new parameters::PushFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, message.push_flow_parameters() );
     if( message.has_pull_flow_parameters() )
         return ( nullValue ) ? new parameters::PullFlowParameters( parameter, converter_ ) : new parameters::PullFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, message.pull_flow_parameters() );
+    if( message.list_size() || ( !parameter.IsStructure() && !parameter.IsUnion() && parameter.Count() > 0 ) ) // parameter is a list
+        return new parameters::ParameterList( parameter, message.list(), *this, entity );
     return 0;
 }

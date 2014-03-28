@@ -818,11 +818,10 @@ namespace
     {
         MissionParameter next;
         Read( reader, next, xis );
+        auto& list = dst.value_size() ? *dst.mutable_value( dst.value_size() - 1 ) : *dst.add_value();
+        auto& value = *list.add_list();
         if( next.has_null_value() && !next.null_value() )
-        {
-            auto& list = dst.value_size() ? *dst.mutable_value( dst.value_size() - 1 ) : *dst.add_value();
-            *list.add_list() = next.value( 0 );
-        }
+            value = next.value( 0 );
     }
 
     void ReadList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
