@@ -81,14 +81,19 @@ void PathfindLayer::Paint( gui::Viewport_ABC& )
     if( !path_.empty() )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
-        glColor4f( COLOR_PATH );
-        glLineWidth( 3 );
-        glEnable( GL_LINE_STIPPLE );
-        glLineStipple( 1, tools_.StipplePattern() );
-        tools_.DrawLines( path_ );
-        glDisable( GL_LINE_STIPPLE );
+        DrawLines( 5, 34, 105, 187 );
+        DrawLines( 3, 0, 179, 253 );
         glPopAttrib();
     }
+}
+
+void PathfindLayer::DrawLines( float width, uint8_t r, uint8_t g, uint8_t b ) const
+{
+    glLineWidth( width );
+    glColor3ub( r, g, b );
+    tools_.DrawLines( path_ );
+    for( auto it = path_.begin(); it != path_.end(); ++it )
+        tools_.DrawDisc( *it, width / 2, gui::GlTools_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------
