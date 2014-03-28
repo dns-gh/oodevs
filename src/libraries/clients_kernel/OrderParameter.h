@@ -74,7 +74,7 @@ public:
     double MinValue() const;
     double MaxValue() const;
     double IndirectFireOnly() const;
-    bool IsList() const;
+    bool IsRepeated() const;
     bool IsStructure() const;
     void SetStructure( bool );
     bool IsUnion() const;

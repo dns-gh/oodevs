@@ -350,7 +350,7 @@ void OrderParameter::AddChoice( const std::string& choice )
 // Name: OrderParameter::IsList
 // Created: LDC 2010-09-14
 // -----------------------------------------------------------------------------
-bool OrderParameter::IsList() const
+bool OrderParameter::IsRepeated() const
 {
     return ( maxOccurs_ != 1 || minOccurs_ != 1 );
 }

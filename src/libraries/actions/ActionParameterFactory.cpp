@@ -97,7 +97,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
                                                         const sword::MissionParameter& message,
                                                         boost::optional< const kernel::Entity_ABC& > entity ) const
 {
-    if( !parameter.IsList() && message.value_size() == 1 && parameter.GetType() != "list" )
+    if( !parameter.IsRepeated() && message.value_size() == 1 && parameter.GetType() != "list" )
         return CreateParameter( parameter, message.value( 0 ), entity, message.null_value() );
     return new parameters::ParameterList( parameter, message.value(), *this, entity );
 }

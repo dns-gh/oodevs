@@ -147,7 +147,7 @@ void InterfaceBuilder::AddFunctor( const std::string& typeName )
 template< typename Element >
 actions::gui::Param_ABC& InterfaceBuilder::BuildElement( const kernel::OrderParameter& parameter ) const
 {
-    if( parameter.IsList() )
+    if( parameter.IsRepeated() )
         return *new actions::gui::ListParameter< Element >( *this, parameter );
     return *new Element( *this, parameter );
 }
