@@ -76,8 +76,12 @@ namespace
 // -----------------------------------------------------------------------------
 void PathfindLayer::Paint( gui::Viewport_ABC& )
 {
-    DrawCross( from_, tools_ );
-    DrawCross( to_, tools_ );
+    for( auto it = positions_.begin(); it != positions_.end(); ++it )
+    {
+        glColor4f( COLOR_BLACK );
+        tools_.DrawCross( *it, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
+    }
+
     if( !path_.empty() )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
@@ -124,8 +128,7 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
     {
         point_ = point;
         kernel::ContextMenu* subMenu = menu.SubMenu( "Interface", tools::translate( "LocationEditorToolbar", "Pathfind" ) );
-        subMenu->InsertItem( "Interface", tools::translate( "LocationEditorToolbar", "Directions from here" ), this, SLOT( SelectFromPosition() ) );
-        subMenu->InsertItem( "Interface", tools::translate( "LocationEditorToolbar", "Directions to here" ), this, SLOT( SelectToPostion() ) );
+        subMenu->InsertItem( "Interface", tools::translate( "LocationEditorToolbar", "Add position" ), this, SLOT( AddPosition() ) );
         subMenu->InsertItem( "Interface", tools::translate( "LocationEditorToolbar", "Clear positions" ), this, SLOT( ClearPositions() ) );
     }
 }
@@ -136,27 +139,16 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
 // -----------------------------------------------------------------------------
 void PathfindLayer::ClearPositions()
 {
-    from_ = boost::none;
-    to_ = boost::none;
+    positions_.clear();
     path_.clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PathfindLayer::SelectToPostion
+// Name: PathfindLayer::AddPosition
 // -----------------------------------------------------------------------------
-void PathfindLayer::SelectToPostion()
+void PathfindLayer::AddPosition()
 {
-    to_ = point_;
-    SendRequest();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PathfindLayer::SelectFromPosition
-// Created: LGY 2014-02-28
-// -----------------------------------------------------------------------------
-void PathfindLayer::SelectFromPosition()
-{
-    from_ = point_;
+    positions_.push_back( point_ );
     SendRequest();
 }
 
@@ -166,15 +158,14 @@ void PathfindLayer::SelectFromPosition()
 // -----------------------------------------------------------------------------
 void PathfindLayer::SendRequest()
 {
-    path_.clear();
-    if( element_ && to_ && from_ )
+    if( element_ && positions_.size() > 1 )
     {
         sword::ClientToSim msg;
         auto request = msg.mutable_message()->mutable_pathfind_request();
         request->mutable_unit()->set_id( element_->GetId() );
         auto* positions = request->mutable_positions();
-        coordinateConverter_.ConvertToGeo( *from_, *positions->Add() );
-        coordinateConverter_.ConvertToGeo( *to_, *positions->Add() );
+        for( auto it = positions_.begin(); it != positions_.end(); ++it )
+            coordinateConverter_.ConvertToGeo( *it, *positions->Add() );
         publisher_.Send( msg );
     }
 }

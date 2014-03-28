@@ -1465,15 +1465,11 @@ Do you want to replace it?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Directions from here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Directions to here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear positions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add position</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
