@@ -145,6 +145,8 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
         for( size_t i = 0; i < COUNT_OF( coordinates ); ++i )
         {
             const auto coord = coordinates[i].value;
+            if( !coordinateFields_[coord]->isVisible() )
+                continue;
             const auto& parser = parsers_->GetParser( coord );
             const auto text = parser->GetStringPosition( position );
             const auto list = parser->Split( QString::fromStdString( text ) );
