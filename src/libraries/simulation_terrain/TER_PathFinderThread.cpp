@@ -16,6 +16,7 @@
 #include "TER_Pathfinder_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
+#include <pathfind/PathfindFileDumper.h>
 #include <pathfind/TerrainPathfinder.h>
 #include <boost/interprocess/detail/atomic.hpp>
 #include <boost/lexical_cast.hpp>
@@ -167,7 +168,10 @@ namespace
         {
             const bool dump = !dump_.IsEmpty() && ( filter_.empty() || filter_.count( id_ ) );
             if( dump )
-                return root_.ComputePath( from, to, rule, handler, GetFilename() );
+            {
+                PathfindFileDumper dumper( GetFilename() );
+                return root_.ComputePath( from, to, rule, handler, &dumper );
+            }
             return root_.ComputePath( from, to, rule, handler );
         }
     private:

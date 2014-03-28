@@ -237,50 +237,36 @@ double DEC_Agent_PathfinderRule::GetAltitudeCost( double rAltitudeTo ) const
     return 0.;
 }
 
-//#define DEBUG_IMPOSSIBLE_PATHFIND
-
-#ifdef DEBUG_IMPOSSIBLE_PATHFIND
-
-#include "MT_Tools/MT_Logger.h"
-
-namespace
-{
-    double LogImpossible( const MT_Vector2D& from, const MT_Vector2D& to, const char* reason )
-    {
-        MT_LOG_INFO_MSG( "Impossible from " << from << " to " << to << " : " << reason );
-        return -1.;
-    }
-
-    double LogImpossible( const MT_Vector2D& at, const char* reason )
-    {
-        MT_LOG_INFO_MSG( "Impossible at " << at << " : " << reason );
-        return -1.;
-    }
-}
-
-#   define IMPOSSIBLE_DESTINATION( reason ) LogImpossible( to, reason )
-#   define IMPOSSIBLE_WAY( reason )         LogImpossible( from, to, reason )
-#else // DEBUG_IMPOSSIBLE_PATHFIND
-#   define IMPOSSIBLE_DESTINATION( reason ) -1.
-#   define IMPOSSIBLE_WAY( reason )         -1.
-#endif // DEBUG_IMPOSSIBLE_PATHFIND
+#define LOG_REASON( logger, reason )                    \
+    if( logger )                                        \
+        *logger << reason << std::endl;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::GetCost
 // Created: AGE 2005-03-08
 // -----------------------------------------------------------------------------
-double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType )
+double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, std::ostream* reason )
 {
     if( ! world_.IsValidPosition( to ) )
-        return IMPOSSIBLE_DESTINATION( "Out of world" );
+    {
+        LOG_REASON( reason, "no way: out of world" );
+        return -1;
+    }
 
     // speed
     double rSpeed = path_.GetUnitSpeeds().GetMaxSpeed( nLinkTerrainType );
     if( rSpeed <= 0 )
-        return IMPOSSIBLE_WAY( "Speeds on terrain" );
+    {
+        LOG_REASON( reason, "no way: speed on " << nLinkTerrainType.DumpToString()
+                << " == " << rSpeed );
+        return -1;
+    }
 
     if( ! path_.GetUnitSpeeds().IsPassable( nToTerrainType ) )
-        return IMPOSSIBLE_DESTINATION( "Terrain type" );
+    {
+        LOG_REASON( reason, "no way: cannot cross terrain" );
+        return -1;
+    }
 
     if( SplitOnMajorGridLines( static_cast< int32_t >( altitudeData_.GetCellSize() ), from, to,
         [&]( MT_Vector2D from, MT_Vector2D to ) -> bool
@@ -290,7 +276,10 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
             // becomes positive and prevent vehicule to take a segment with a downslope superior than maxSquareSlope
             return delta * delta > from.SquareDistance( to ) * rMaxSlope_ * rMaxSlope_;
         } ) )
-        return IMPOSSIBLE_WAY( "Slope" );
+    {
+        LOG_REASON( reason, "no way: slope is too steep" );
+        return -1;
+    }
 
     if( rSlopeDeceleration_ != 0 )
     {
@@ -302,7 +291,10 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
             } );
         modifier.ModifySpeed( rSpeed, rSlopeDeceleration_, rMaxSlope_, to );
         if( rSpeed == 0 )
-            return IMPOSSIBLE_WAY( "Speed on slope == 0" );
+        {
+            LOG_REASON( reason, "no way: speed on slope is null" );
+            return -1;
+        }
     }
 
     // Cost computation taken various dynamic terrain items into account
@@ -314,7 +306,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     rDynamicCost += rAltitudeCost;
 
     // Fuseaux
-    const double rFuseauxCost = GetFuseauxCost( from, to );
+    const double rFuseauxCost = GetFuseauxCost( from, to, reason );
     if( rFuseauxCost < 0. )
         return -1.;
     rDynamicCost += rFuseauxCost;
@@ -330,25 +322,37 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     //urban blocks
     const double rUrbanBlockCost = GetUrbanBlockCost( from, to );
     if( rUrbanBlockCost < 0. )
-        return IMPOSSIBLE_WAY( "Urban" );
+    {
+        LOG_REASON( reason, "no way: urban block cost" );
+        return -1;
+    }
     rDynamicCost += rUrbanBlockCost;
 
     // objects
     const double rObjectsCost = GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType, rSpeed );
     if( rObjectsCost < 0 || rSpeed <= 0. )
-        return IMPOSSIBLE_WAY( "Objects" );
+    {
+        LOG_REASON( reason, "no way: objects cost" );
+        return -1;
+    }
     rDynamicCost += rObjectsCost;
 
     // enemies
     const double rEnemiesCost = GetEnemiesCost( from, to );
     if( rEnemiesCost < 0 )
-        return IMPOSSIBLE_WAY( "Enemies" );
+    {
+        LOG_REASON( reason, "no way: enemies cost" );
+        return -1;
+    }
     rDynamicCost += rEnemiesCost;
 
     // populations
     const double rPopulationsCost = GetPopulationsCost( to );
     if( rPopulationsCost < 0 )
-        return IMPOSSIBLE_WAY( "Populations" );
+    {
+        LOG_REASON( reason, "no way: populations cost" );
+        return -1;
+    }
     rDynamicCost += rPopulationsCost;
 
     const double rDistance = from.Distance( to );
@@ -360,21 +364,28 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
 // Name: DEC_Agent_PathfinderRule::GetFuseauxCost
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
-double DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
+double DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to,
+       std::ostream* reason ) const
 {
     double rCost = 0.;
     // Vérification si le link est dans le fuseau de l'agent
     {
         const double rFuseauCost = pFuseau_ ? pFuseau_->GetCost( from, to, rMaximumFuseauDistance_, rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_ ) : 0;
         if( rFuseauCost < 0 )
-            return IMPOSSIBLE_WAY( "Fuseau agent" );
+        {
+            LOG_REASON( reason, "not way: unit limits" );
+            return -1;
+        }
         rCost += rFuseauCost;
     }
     // $$$$ AGE 2005-06-24: Going out of the automate fuseau is a no-no. Avoid precision issues
     {
         const double rAutomateFuseauCost = pAutomateFuseau_ ? pAutomateFuseau_->GetCost( from, to, rMaximumAutomataFuseauDistance_, rAutomataFuseauCostPerMeterOut_, 0, 0 ) : 0;
         if( rAutomateFuseauCost < 0 )
-            return IMPOSSIBLE_WAY( "Fuseau automate" );
+        {
+            LOG_REASON( reason, "no way: automat limits" );
+            return -1;
+        }
         rCost += rAutomateFuseauCost;
     }
     return rCost;
@@ -396,10 +407,11 @@ float DEC_Agent_PathfinderRule::EvaluateCost( const geometry::Point2f& from, con
 // Name: DEC_Agent_PathfinderRule::GetCost
 // Created: AGE 2005-03-08
 // -----------------------------------------------------------------------------
-float DEC_Agent_PathfinderRule::GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween )
+float DEC_Agent_PathfinderRule::GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween, std::ostream* reason )
 {
     return float( GetCost( MT_Vector2D( from.X(), from.Y() ),
                            MT_Vector2D( to.X(), to.Y() ),
                            terrainTo,
-                           terrainBetween ) );
+                           terrainBetween,
+                           reason ) );
 }
