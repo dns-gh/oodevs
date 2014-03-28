@@ -44,6 +44,15 @@ void ADN_Sensors_Modificators::SizeInfos::WriteArchive( xml::xostream& output ) 
            << xml::end;
 }
 
+// -----------------------------------------------------------------------------
+// Name: SizeInfos::NeedsSaving
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+bool ADN_Sensors_Modificators::SizeInfos::NeedsSaving() const
+{
+    return rCoeff_ != 0;
+}
+
 //-----------------------------------------------------------------------------
 // Name: IlluminationInfos::IlluminationInfos
 // Created: JDY 03-07-24
@@ -74,6 +83,15 @@ void ADN_Sensors_Modificators::IlluminationInfos::WriteArchive( xml::xostream& o
             << xml::attribute( "type", ENT_Tr::ConvertFromLightingType( eType_ ) )
             << xml::attribute( "value", rCoeff_ )
            << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IlluminationInfos::NeedsSaving
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+bool ADN_Sensors_Modificators::IlluminationInfos::NeedsSaving() const
+{
+    return rCoeff_ != 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -108,6 +126,15 @@ void ADN_Sensors_Modificators::MeteoInfos::WriteArchive( xml::xostream& output )
            << xml::end;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MeteoInfos::NeedsSaving
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+bool ADN_Sensors_Modificators::MeteoInfos::NeedsSaving() const
+{
+    return rCoeff_ != 0;
+}
+
 //-----------------------------------------------------------------------------
 // Name: EnvironmentInfos::EnvironmentInfos
 // Created: JDY 03-07-24
@@ -140,6 +167,15 @@ void ADN_Sensors_Modificators::EnvironmentInfos::WriteArchive( xml::xostream& ou
            << xml::end;
 }
 
+// -----------------------------------------------------------------------------
+// Name: EnvironmentInfos::NeedsSaving
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+bool ADN_Sensors_Modificators::EnvironmentInfos::NeedsSaving() const
+{
+    return rCoeff_ != ( eType_ == eVisionEmpty ? 1 : 0 );
+}
+
 //-----------------------------------------------------------------------------
 // Name: EnvironmentInfos::UrbanBlockInfos
 // Created: SLG 2010-03-02
@@ -170,6 +206,15 @@ void ADN_Sensors_Modificators::UrbanBlockInfos::WriteArchive( xml::xostream& out
              << xml::attribute( "type", *this )
              << xml::attribute( "value", rCoeff_ )
            << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanBlockInfos::NeedsSaving
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+bool ADN_Sensors_Modificators::UrbanBlockInfos::NeedsSaving() const
+{
+    return rCoeff_ != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -366,6 +411,28 @@ void ADN_Sensors_Modificators::WriteEnvironmentModifiers( xml::xostream& xos ) c
 void ADN_Sensors_Modificators::WriteUrbanBlocksModifiers( xml::xostream& xos ) const
 {
     Write( xos, "urbanBlock-material-modifiers", vModifUrbanBlocks_ );
+}
+
+namespace
+{
+    template< typename T >
+    bool SavingNeeded( const T& modificators )
+    {
+        for( auto it = modificators.begin(); it != modificators.end(); ++it )
+            if( ( *it )->NeedsSaving() )
+                return true;
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Modificators::NeedsSaving
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+bool ADN_Sensors_Modificators::NeedsSaving() const
+{
+    return SavingNeeded( vModifSizes_ ) || SavingNeeded( vModifWeather_ ) || SavingNeeded( vModifIlluminations_ )
+        || SavingNeeded( vModifEnvironments_ ) || SavingNeeded( vModifUrbanBlocks_ );
 }
 
 // -----------------------------------------------------------------------------

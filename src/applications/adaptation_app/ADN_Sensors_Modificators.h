@@ -39,6 +39,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
+        bool NeedsSaving() const;
 
     public:
         ADN_Type_Double rCoeff_;
@@ -90,6 +91,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
+        bool NeedsSaving() const;
 
     public:
         E_LightingType eType_;
@@ -125,6 +127,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
+        bool NeedsSaving() const;
 
     public:
         E_SensorWeatherModifiers eType_;
@@ -160,6 +163,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
+        bool NeedsSaving() const;
 
     public:
         E_VisionObject eType_;
@@ -196,6 +200,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
+        bool NeedsSaving() const;
 
     public:
         ADN_Type_Double rCoeff_;
@@ -251,6 +256,7 @@ public:
     void WriteEnvironmentModifiers( xml::xostream& xos ) const;
     void WriteUrbanBlocksModifiers( xml::xostream& xos ) const;
 
+    bool NeedsSaving() const;
     void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const std::string& name ) const;
 
 private:
