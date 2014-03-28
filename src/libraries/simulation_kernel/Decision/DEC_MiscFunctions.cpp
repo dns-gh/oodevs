@@ -398,7 +398,7 @@ void DEC_MiscFunctions::ReportAgentKnowledgeInt( DEC_Decision_ABC& caller, int t
         boost::shared_ptr< MIL_MissionParameter_ABC > missionParam2( MIL_MissionParameterFactory::CreateInteger( param2 ) );
         params.push_back( missionParam1 );
         params.push_back( missionParam2 );
-        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+        pReport->Send( caller, static_cast< MIL_Report::E_Type >( type ), params );
     }
 }
 
