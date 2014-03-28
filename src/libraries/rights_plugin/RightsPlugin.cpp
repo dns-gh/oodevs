@@ -116,7 +116,8 @@ void RightsPlugin::Receive( const sword::SimToClient& message )
 // Name: RightsPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& /*link*/, Profile_ABC& /*profile*/, bool /*uncounted*/ )
+void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& /*link*/, Profile_ABC& /*profile*/,
+                                              unsigned int /*clientId*/, bool /*uncounted*/ )
 {
     profiles_->Send( client );
 }
@@ -313,7 +314,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         else
             ++currentConnections_;
         SendProfiles( sender );
-        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, keyAuthenticated );
+        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, countID_, keyAuthenticated );
         ++countID_;
         if( !countID_ )
             ++countID_;
