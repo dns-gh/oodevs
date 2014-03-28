@@ -19,7 +19,7 @@
 							<xs:element name="injury" minOccurs="0" maxOccurs="unbounded">
 								<xs:complexType>
 									<xs:attribute name="category" type="xs:string" use="required"/>
-									<xs:attribute name="life-expectancy" type="T_Time" use="optional"/>
+									<xs:attribute name="life-expectancy" type="T_PositiveTime" use="optional"/>
 									<xs:attribute name="percentage" type="xs:nonNegativeInteger" use="optional"/>
 									<xs:attribute name="resting-time" type="T_Time" use="required"/>
 									<xs:attribute name="caring-time" type="T_Time" use="required"/>
