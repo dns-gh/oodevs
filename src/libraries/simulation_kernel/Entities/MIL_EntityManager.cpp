@@ -130,6 +130,7 @@
 #include "Urban/PHY_RoofShapeType.h"
 #include "simulation_terrain/TER_World.h"
 
+#include <boost/make_shared.hpp>
 #include <boost/lexical_cast.hpp>
 #include <tuple>
 
@@ -2072,8 +2073,6 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
     ack.mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
 }
 
-
-
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnPathfindRequest
 // Created: LGY 2014-02-28
@@ -2081,18 +2080,21 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
 void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId )
 {
     const auto& positions = message.positions();
-    protocol::Check( positions.size() == 2, "must have two points" );
-    MT_Vector2D start;
-    const auto& p0 = positions.Get( 0 );
-    world_->MosToSimMgrsCoord( p0.latitude(), p0.longitude(), start );
-    MT_Vector2D end;
-    const auto& p1 = positions.Get( 1 );
-    world_->MosToSimMgrsCoord( p1.latitude(), p1.longitude(), end );
+    protocol::Check( positions.size() > 1, "must must have at least two points" );
+    std::vector< boost::shared_ptr< MT_Vector2D > > points;
+    for( auto i = 0; i < positions.size(); ++i )
+    {
+        auto point = boost::make_shared< MT_Vector2D >();
+        const auto& position= positions.Get( i );
+        world_->MosToSimMgrsCoord( position.latitude(), position.longitude(), *point );
+        points.push_back( point );
+    }
+
     const unsigned int id = message.unit().id();
     if( MIL_AgentPion* pPion = FindAgentPion( id ) )
-        pathfindComputer_->Compute( *pPion, start, end, nCtx, clientId );
+        pathfindComputer_->Compute( *pPion, points, nCtx, clientId );
     else if( MIL_Population* pPopulation = FindPopulation( id ) )
-        pathfindComputer_->Compute( *pPopulation, start, end, nCtx, clientId );
+        pathfindComputer_->Compute( *pPopulation, points, nCtx, clientId );
     else
     {
         client::PathfindRequestAck ack;

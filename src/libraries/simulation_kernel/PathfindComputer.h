@@ -35,9 +35,9 @@ public:
 
     //! @name Operations
     //@{
-    void Compute( MIL_AgentPion& pion, const MT_Vector2D& start, const MT_Vector2D& end,
+    void Compute( MIL_AgentPion& pion, const std::vector< boost::shared_ptr< MT_Vector2D > >& positions,
                   unsigned int nCtx, unsigned int clientId );
-    void Compute( const MIL_Population& population, const MT_Vector2D& start, const MT_Vector2D& end,
+    void Compute( const MIL_Population& population, const std::vector< boost::shared_ptr< MT_Vector2D > >& positions,
                   unsigned int nCtx, unsigned int clientId );
     void Update();
     //@}

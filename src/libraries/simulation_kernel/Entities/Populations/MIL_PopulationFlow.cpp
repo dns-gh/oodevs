@@ -196,6 +196,17 @@ void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
     ComputePathAlong( vDestination, vDestination );
 }
 
+namespace
+{
+    std::vector< boost::shared_ptr< MT_Vector2D > > CreatePositions( const MT_Vector2D& start,
+        const std::vector< boost::shared_ptr< MT_Vector2D > >& positions )
+    {
+        auto result = positions;
+        result.insert( result.begin(), boost::make_shared< MT_Vector2D >( start ) );
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::ComputePathAlong
 // Created: JSR 2014-01-16
@@ -209,10 +220,10 @@ void MIL_PopulationFlow::ComputePathAlong( const std::vector< boost::shared_ptr<
         pTailPath_->DecRef();
         pTailPath_.reset();
     }
-    pHeadPath_.reset( new DEC_Population_Path( GetPopulation(), GetHeadPosition(), headDestination ) );
+    pHeadPath_.reset( new DEC_Population_Path( GetPopulation(), CreatePositions( GetHeadPosition(), headDestination ) ) );
     pHeadPath_->AddRef();
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pHeadPath_ );
-    pTailPath_.reset( new DEC_Population_Path( GetPopulation(), GetTailPosition(), tailDestination ) );
+    pTailPath_.reset( new DEC_Population_Path( GetPopulation(), CreatePositions( GetTailPosition(), tailDestination ) ) );
     pTailPath_->AddRef();
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pTailPath_ );
 }

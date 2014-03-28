@@ -58,21 +58,20 @@ void PathfindComputer::Update()
 // Name: PathfindComputer::Compute
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-void PathfindComputer::Compute( MIL_AgentPion& pion, const MT_Vector2D& start, const MT_Vector2D& end,
+void PathfindComputer::Compute( MIL_AgentPion& pion, const std::vector< boost::shared_ptr< MT_Vector2D > >& positions,
                                 unsigned int nCtx, unsigned int clientId )
 {
-    Compute( boost::make_shared< DEC_Agent_Path >( pion, start, end, DEC_PathType::movement_ ), nCtx, clientId );
+    Compute( boost::make_shared< DEC_Agent_Path >( pion, positions, DEC_PathType::movement_ ), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PathfindComputer::Compute
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-void PathfindComputer::Compute( const MIL_Population& population, const MT_Vector2D& start, const MT_Vector2D& end,
+void PathfindComputer::Compute( const MIL_Population& population, const std::vector< boost::shared_ptr< MT_Vector2D > >& positions,
                                 unsigned int nCtx, unsigned int clientId )
 {
-    Compute( boost::make_shared< DEC_Population_Path >( population, start,
-        boost::assign::list_of( boost::make_shared< MT_Vector2D >( end ) ) ), nCtx, clientId );
+   Compute( boost::make_shared< DEC_Population_Path >( population, positions ), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
