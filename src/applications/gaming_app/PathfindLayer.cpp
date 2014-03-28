@@ -13,13 +13,11 @@
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
-#include <boost/assign.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer constructor
@@ -34,18 +32,19 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     , coordinateConverter_( coordinateConverter )
 {
     controllers_.Register( *this );
-    std::function< void( const sword::SimToClient& ) > fun = [&]( const sword::SimToClient& message )
+    std::function< void( const sword::SimToClient& ) > fun =
+        [&]( const sword::SimToClient& message )
         {
-            if( message.message().has_pathfind_request_ack() )
-            {
-                auto request = message.message().pathfind_request_ack();
-                if( request.error_code() != sword::PathfindRequestAck_ErrorCode_no_error )
-                    return;
-                const auto& path = request.path();
-                path_.clear();
-                for( int i = 0; i < path.location().coordinates().elem_size(); ++i )
-                    path_.push_back( coordinateConverter_.ConvertToXY( path.location().coordinates().elem( i ) ) );
-            }
+            if( !message.message().has_pathfind_request_ack() )
+                return;
+            const auto& request = message.message().pathfind_request_ack();
+            if( request.error_code() != sword::PathfindRequestAck_ErrorCode_no_error )
+                return;
+            const auto& path = request.path();
+            path_.clear();
+            const auto& elements = path.location().coordinates().elem();
+            for( auto it = elements.begin(); it != elements.end(); ++it )
+                path_.push_back( coordinateConverter_.ConvertToXY( *it ) );
         };
     publisher_.Register( fun );
 }
@@ -79,7 +78,6 @@ void PathfindLayer::Paint( gui::Viewport_ABC& )
 {
     DrawCross( from_, tools_ );
     DrawCross( to_, tools_ );
-
     if( !path_.empty() )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
