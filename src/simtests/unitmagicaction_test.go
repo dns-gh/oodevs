@@ -389,17 +389,17 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 	err := client.LogisticsChangeLinks(swapi.MakeAutomatTasker(10), []uint32{})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
-	// valid automat id with no link
-	err = client.LogisticsChangeLinks(swapi.MakeAutomatTasker(9), []uint32{})
-	c.Assert(err, IsNil)
-
 	// error : 42 is an invalid superior id
 	newSuperiors := []uint32{23, 42}
 	err = client.LogisticsChangeLinks(swapi.MakeAutomatTasker(9), newSuperiors)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
+	// valid automat id with no link
+	err = client.LogisticsChangeLinks(swapi.MakeAutomatTasker(9), []uint32{})
+	c.Assert(err, IsNil)
+
 	// error : cannot set itself as its own logistic superior
-	newSuperiors = []uint32{25, 25}
+	newSuperiors = []uint32{25}
 	err = client.LogisticsChangeLinks(swapi.MakeFormationTasker(25), newSuperiors)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: cannot set itself as its own logistic superior")
 
@@ -413,8 +413,36 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 		a, ok := data.Automats[9]
 		return ok && len(a.LogSuperiors) > 1
 	})
-	automat := client.Model.GetData().Automats[9]
-	c.Assert(automat.LogSuperiors, DeepEquals, newSuperiors)
+	c.Assert(client.Model.GetAutomat(9).LogSuperiors, DeepEquals, newSuperiors)
+
+	// add quotas on link
+	c.Assert(len(client.Model.GetAutomat(9).SuperiorQuotas), Equals, 0)
+	quotas := map[uint32]int32{1: 100}
+	err = client.LogisticsSupplyChangeQuotas(25, swapi.MakeAutomatTasker(9), quotas)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		a, ok := data.Automats[9]
+		return ok && len(a.SuperiorQuotas) > 0
+	})
+	c.Assert(client.Model.GetAutomat(9).SuperiorQuotas, DeepEquals, quotas)
+
+	// valid unchange link does nothing, quotas are not reset
+	oldSuperiors := client.Model.GetAutomat(9).LogSuperiors
+	err = client.LogisticsChangeLinks(swapi.MakeAutomatTasker(9), newSuperiors)
+	c.Assert(err, IsNil)
+	client.Model.WaitTicks(2)
+	c.Assert(client.Model.GetAutomat(9).LogSuperiors, DeepEquals, oldSuperiors)
+	c.Assert(client.Model.GetAutomat(9).SuperiorQuotas, DeepEquals, quotas)
+
+	// removing one superior do not reset quotas on the other superior
+	newSuperiors = []uint32{25}
+	err = client.LogisticsChangeLinks(swapi.MakeAutomatTasker(9), newSuperiors)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		a, ok := data.Automats[9]
+		return ok && len(a.LogSuperiors) == 1
+	})
+	c.Assert(client.Model.GetAutomat(9).SuperiorQuotas, DeepEquals, quotas)
 }
 
 func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
