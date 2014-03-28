@@ -25,7 +25,7 @@ end
 -- @return true
 integration.stopControlArea  = function( area )
     DEC_Perception_DesactiverReconnaissanceLocalisation( area.perceptionID )
-    reportFunction(eRC_FinControleZone )
+    reportFunction( eRC_FinControleZone )
     perceptionReconnaissanceCallbacks[ area.perceptionID ] = nil
     return true
 end
@@ -79,4 +79,28 @@ integration.stopControlPoint = function( point )
     reportFunction(eRC_FinControlPoint )
     perceptionReconnaissanceCallbacks[ point.perceptionID ] = nil
     return true
+end
+
+--- Start controlling an object
+-- An action in the simulation is started
+-- This method can only be called by an agent
+-- @param object The DirectIA object to control
+-- @return true
+integration.startControlObject = function( object )
+    object.perceptionID = DEC_Perception_ActivateLocationProgressiveRecce( object:getLocalisation(), 3 )
+    object.bActionFinished = false
+    perceptionReconnaissanceCallbacks[ object.perceptionID ] = function( arg )
+        object.bActionFinished = true
+    end
+    reportFunction( eRC_DebutControleZone )
+    return true
+end
+
+--- Stop controlling an object
+-- The action in the simulation is stopped
+-- This method can only be called by an agent
+-- @param object, the DirectIA object to stop controlling
+-- @return true the result of integration.stopControlArea
+integration.stopControlObject = function( object )
+    return integration.stopControlArea( object )
 end
