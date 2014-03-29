@@ -45,7 +45,7 @@ void SupplyConsignData::WriteConsign( ConsignWriter& output ) const
             output << requestId_
                 << tick_
                 << simTime_
-                << it->second
+                << it->second 
                 << provider_
                 << transportProvider_
                 << conveyor_
@@ -118,10 +118,10 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& m
 {
     if( msg.has_current_state_end_tick() )
     {
-        int endTick = msg.current_state_end_tick();
-        if( endTick > 0 )
-            stateEndTick_ = boost::lexical_cast< std::string >( endTick );
-        if( endTick <= GetTick() )
+        int entTick = msg.current_state_end_tick();
+        if( entTick > 0 )
+            stateEndTick_ = boost::lexical_cast< std::string >( entTick );
+        if( entTick <= GetTick() )
             stateEndTick_.clear();
     }
     if( msg.has_convoyer() )

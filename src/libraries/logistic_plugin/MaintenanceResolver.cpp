@@ -37,7 +37,7 @@ void MaintenanceConsignData::WriteConsign( ConsignWriter& output ) const
 // Name: MaintenanceConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg,
+bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, 
         const NameResolver_ABC& nameResolver )
 {
     if( msg.has_tick() )
@@ -66,15 +66,15 @@ bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
 // Name: MaintenanceConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg,
+bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, 
         const NameResolver_ABC& nameResolver )
 {
     if( msg.has_current_state_end_tick() )
     {
-        int endTick = msg.current_state_end_tick();
-        if( endTick > 0 )
-            stateEndTick_ = boost::lexical_cast< std::string >( endTick );
-        if( endTick <= GetTick() )
+        int entTick = msg.current_state_end_tick();
+        if( entTick > 0 )
+            stateEndTick_ = boost::lexical_cast< std::string >( entTick );
+        if( entTick <= GetTick() )
             stateEndTick_.clear();
     }
     if( msg.has_unit() )
