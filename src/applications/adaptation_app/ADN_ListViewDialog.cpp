@@ -14,6 +14,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_MainWindow.h"
 #include "clients_gui/FileDialog.h"
+#include <shellapi.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListViewDialog constructor

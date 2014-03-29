@@ -68,10 +68,22 @@ LogisticLinks::~LogisticLinks()
 kernel::Entity_ABC* LogisticLinks::FindLogisticEntity( const sword::ParentEntity& message ) const
 {
     if( message.has_automat() )
-        return (kernel::Entity_ABC*)automatResolver_.Find( message.automat().id() );
+        return automatResolver_.Find( message.automat().id() );
     else if( message.has_formation() )
-        return (kernel::Entity_ABC*)formationResolver_.Find( message.formation().id() );
+        return formationResolver_.Find( message.formation().id() );
     return 0;
+}
+
+namespace
+{
+    template< typename T >
+    boost::shared_ptr< LogisticLink > FindLogisticLink( const T& links, const kernel::Entity_ABC& superior )
+    {
+        BOOST_FOREACH( const boost::shared_ptr< LogisticLink >& link, links )
+            if( &link->GetSuperior() == &superior )
+                return link;
+        return boost::shared_ptr< LogisticLink >();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -80,12 +92,7 @@ kernel::Entity_ABC* LogisticLinks::FindLogisticEntity( const sword::ParentEntity
 // -----------------------------------------------------------------------------
 LogisticLink* LogisticLinks::FindLogisticLink( const kernel::Entity_ABC& superior ) const
 {
-    BOOST_FOREACH( boost::shared_ptr< LogisticLink > link, superiorLinks_ )
-    {
-        if( &link->GetSuperior() == &superior )
-            return link.get();
-    }
-    return 0;
+    return ::FindLogisticLink( superiorLinks_, superior ).get();
 }
 
 // -----------------------------------------------------------------------------
@@ -94,10 +101,9 @@ LogisticLink* LogisticLinks::FindLogisticLink( const kernel::Entity_ABC& superio
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const sword::LogSupplyQuotas& message )
 {
-    kernel::Entity_ABC* supplier = FindLogisticEntity( message.supplier() );
+    const kernel::Entity_ABC* supplier = FindLogisticEntity( message.supplier() );
     assert( supplier );
-    LogisticLink* link = FindLogisticLink( *supplier );
-    if( link )
+    if( LogisticLink* link = FindLogisticLink( *supplier ) )
         link->Update( message.quotas(), dotationResolver_ );
     controller_.Update( gui::DictionaryUpdated( entity_, property_ ) );
     controller_.Update( *this );
@@ -109,13 +115,18 @@ void LogisticLinks::DoUpdate( const sword::LogSupplyQuotas& message )
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
 {
+    T_SuperiorLinks oldLinks = superiorLinks_;
     superiorLinks_.clear();
     superiors_.clear();
     BOOST_FOREACH( const sword::ParentEntity& parentEntity, message.superior() )
     {
         const kernel::Entity_ABC* superior = FindLogisticEntity( parentEntity );
         assert( superior );
-        superiorLinks_.push_back( boost::make_shared< LogisticLink >( *superior ) );
+        auto link = ::FindLogisticLink( oldLinks, *superior );
+        if( !link )
+            superiorLinks_.push_back( boost::make_shared< LogisticLink >( *superior ) );
+        else
+            superiorLinks_.push_back( link );
         superiors_.push_back( superior );
     }
     controller_.Update( gui::DictionaryUpdated( entity_, property_ ) );
@@ -147,7 +158,7 @@ tools::Iterator< const LogisticLink& > LogisticLinks::CreateSuperiorLinksIterato
 void LogisticLinks::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Logistic", "Logistic links" ) )
-        .Display( "Superiors", superiors_);
+        .Display( "Superiors", superiors_ );
 }
 
 // -----------------------------------------------------------------------------

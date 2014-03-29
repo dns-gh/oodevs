@@ -1849,16 +1849,8 @@ Do you want to remove it?</source>
         <translation type="unfinished">---</translation>
     </message>
     <message>
-        <source>y:%L1 x:%L2</source>
-        <translation type="unfinished">y: % x: L1 L2</translation>
-    </message>
-    <message>
         <source>h:%L1 </source>
         <translation type="unfinished">h: % L1</translation>
-    </message>
-    <message>
-        <source>Lat:%L1 Lon:%L2</source>
-        <translation type="unfinished">Lat:% L1 Lon:% L2</translation>
     </message>
     <message>
         <source>invalid</source>

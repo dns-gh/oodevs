@@ -22,8 +22,13 @@ namespace kernel
 
 namespace gui
 {
+    class LocationParsers;
+    class LocationParser_ABC;
     class TerrainPicker;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  StatusBar
     @brief  Status bar
@@ -87,6 +92,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::DetectionMap& detection_;
     const kernel::CoordinateConverter_ABC& converter_;
+    std::unique_ptr< LocationParsers > parsers_;
     TerrainPicker& terrainPicker_;
 
     T_CoordinateFields coordinateFields_;

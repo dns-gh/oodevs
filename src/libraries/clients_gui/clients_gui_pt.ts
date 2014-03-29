@@ -1845,15 +1845,7 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>y:%L1 x:%L2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>h:%L1 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lat:%L1 Lon:%L2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

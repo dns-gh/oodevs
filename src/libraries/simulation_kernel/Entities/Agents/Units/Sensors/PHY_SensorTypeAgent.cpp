@@ -401,7 +401,7 @@ namespace
 double PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator& env, double rDistanceModificator, double rVisionNRJ, bool bIsAroundBU ) const
 {
     assert( rVisionNRJ <= rDetectionDist_ );
-    assert( rVisionNRJ > 0 );
+    assert( rVisionNRJ >= 0 );
     rDistanceModificator *= precipitationFactors_ [ env.GetPrecipitation().GetID() ];
     if( !bIsAroundBU )
         rDistanceModificator *= ComputeEnvironmentFactor( env.GetCurrentEnv() );

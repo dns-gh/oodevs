@@ -22,6 +22,7 @@
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
+#include <boost/foreach.hpp>
 
 using namespace actions;
 
@@ -125,11 +126,16 @@ void MissionParameters::DoUpdate( const sword::FragOrder& message )
 void MissionParameters::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( !elements_.empty() && tools.ShouldDisplay( "MissionParameters" ) )
-    {
-        Action_ABC* action = ( --elements_.end() )->second;
-        if( action )
-            action->Draw( where, viewport, tools );
-    }
+        BOOST_REVERSE_FOREACH( const auto& content, elements_ )
+            if( const Action_ABC* action = content.second )
+            {
+                const auto& orderType = action->GetType();
+                if( orderType && orderType->GetType() != eMissionType_FragOrder )
+                {
+                    action->Draw( where, viewport, tools );
+                    return;
+                }
+            }
 }
 
 // -----------------------------------------------------------------------------

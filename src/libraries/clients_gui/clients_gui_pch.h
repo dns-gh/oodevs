@@ -12,7 +12,6 @@
 
 #pragma warning( disable : 4231 4290 4702 4355 )
 
-#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #undef min
 #undef max

@@ -21,6 +21,7 @@
 UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : QTabWidget( parent, "UserProfileWidget" )
     , selectedProfile_( controllers )
+    , profile_( profile )
 {
     Q3VBox* box = new Q3VBox( this );
     box->setSpacing( 5 );
@@ -76,6 +77,7 @@ void UserProfileWidget::Display( const UserProfile& profile )
     password_->setText( editedProfile_->GetPassword() );
     supervisor_->setChecked( editedProfile_->IsSupervision() );
     timeControl_->setChecked( editedProfile_->HasTimeControl() );
+    timeControl_->setEnabled( profile_.HasTimeControl() );
     unitRights_->Display( *editedProfile_ );
     populationRights_->Display( *editedProfile_ );
     selectedProfile_ = &profile;

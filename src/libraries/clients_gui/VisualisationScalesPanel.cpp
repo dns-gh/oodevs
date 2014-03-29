@@ -40,7 +40,8 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     , controllers_( controllers )
 {
     SubObjectName subObject( "VisualisationScalesPanel" );
-    QVBoxLayout* mainLayout = new QVBoxLayout( this );
+    QWidget* container = new QWidget( this );
+    QVBoxLayout* mainLayout = new QVBoxLayout( container );
     RichGroupBox* box = new RichGroupBox( "visuScales", tr( "Visualisation scales" ) );
     QGridLayout* boxLayout = new QGridLayout( box );
 
@@ -95,7 +96,7 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     box->setMinimumHeight( 500 );
     mainLayout->addWidget( box );
     mainLayout->addStretch( 1 );
-    setLayout( mainLayout );
+    setWidget( container );
     controllers_.Register( *this );
 }
 

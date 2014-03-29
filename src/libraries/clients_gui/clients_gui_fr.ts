@@ -1850,14 +1850,6 @@ Voulez-vous le supprimer?</translation>
         <translation>Infos objets</translation>
     </message>
     <message>
-        <source>y:%L1 x:%L2</source>
-        <translation>y:%L1 x:%L2</translation>
-    </message>
-    <message>
-        <source>Lat:%L1 Lon:%L2</source>
-        <translation>Lat:%L1 Lon:%L2</translation>
-    </message>
-    <message>
         <source>h:%L1 </source>
         <translation>h:%L1 </translation>
     </message>

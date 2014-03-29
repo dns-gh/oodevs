@@ -15,7 +15,6 @@
 #pragma warning( disable: 4355 ) // 'this' : used in base member initializer list
 #pragma warning( disable: 4503 ) // decorated name length exceeded, name was truncated
 
-#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #undef min
 #undef max

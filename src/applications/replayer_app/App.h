@@ -12,6 +12,7 @@
 
 #include <string>
 #include <windows.h>
+#include <shellapi.h>
 #pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )

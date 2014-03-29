@@ -10,15 +10,17 @@
 #ifndef __LocationEditorBox_h_
 #define __LocationEditorBox_h_
 
+#include "clients_kernel/OptionsObserver_ABC.h"
+#include <QtGui/QValidator>
 #include <boost/optional.hpp>
 #include <vector>
-#include <QtGui/QValidator>
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
     class Controllers;
     class ContextMenu;
+    class Options;
 }
 
 namespace gui
@@ -45,6 +47,8 @@ struct Field
 // Created: AME 2010-03-12
 // =============================================================================
 class LocationEditorBox : public QWidget
+                        , public tools::Observer_ABC
+                        , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 public:
@@ -75,7 +79,7 @@ signals:
 public slots:
     //! @name Slots
     //@{
-    void SelectParser( int index );
+    void OnActivated( int index );
     void UpdateValidity();
     //@}
 
@@ -87,16 +91,21 @@ private slots:
     //@}
 
 private:
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+
     //! @name Helpers
     //@{
     void ResetFields();
     void SetValid( bool valid );
+    void SelectParser( int index );
     //@}
 
 private:
     //! @name Member data
     //@{
+     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
+     kernel::Options& options_;
     std::unique_ptr< LocationParsers > parsers_;
     std::shared_ptr< const LocationParser_ABC > current_;
     QPushButton* combo_;
