@@ -16,6 +16,8 @@
     <property name="version.major" value="5.4.0"/>
     <property name="version.version" value="${version.major}.${git.revision}.${git.hash}"/>
     <property name="unicode.extension" value=" ゑ"/>
+    <!-- Maximum number of concurrently running simulations in data_migrations_test -->
+    <property name="migrations.jobs" value="4"/>
 
     <propertyregex property="platform32" input="${platform}" regexp="(\w+)_x64" select="\1" defaultvalue="${platform}"/>
 
@@ -436,49 +438,24 @@
         -->
     </target>
 
-    <macrodef name="test-data-migration">
-        <attribute name="exercise"/>
-        <attribute name="old-version"/>
-        <attribute name="session" default="default"/>
-        <attribute name="temporary-name" default="test-data-migration"/>
-        <sequential>
-            <echo>Testing automatic migration from version @{old-version} using exercise '@{exercise}'</echo>
-            <!-- Copy physical database -->
-            <delete dir="${data.dir}/data/models/ada/physical/@{temporary-name}" failonerror="false"/>
-            <copy todir="${data.dir}/data/models/ada/physical/@{temporary-name}">
-                <fileset dir="${data.dir}/tests/test_data_migration/@{old-version}/physical"/>
-            </copy>
-            <!-- ADN -->
-            <delete dir="${out.dir}/@{temporary-name}"/>
-            <run-adaptation dir="${data.dir}/data/models/ada/physical/@{temporary-name}" todir="${out.dir}/@{temporary-name}"/>
-            <!-- Copy exercise -->
-            <delete dir="${data.dir}/exercises/@{temporary-name}" failonerror="false"/>
-            <copy todir="${data.dir}/exercises/@{temporary-name}">
-                <fileset dir="${data.dir}/tests/test_data_migration/@{old-version}/exercises/@{exercise}"/>
-                <filterset>
-                    <filter token="DATASET" value="ada"/>
-                    <filter token="PHYSICAL" value="@{temporary-name}"/>
-                </filterset>
-            </copy>
-            <!-- SIM -->
-            <run-simulation exercise="@{temporary-name}" session="@{session}"/>
-            <!-- cleanup -->
-            <delete dir="${out.dir}/@{temporary-name}"/>
-            <delete dir="${data.dir}/data/models/ada/physical/@{temporary-name}"/>
-            <delete dir="${data.dir}/exercises/@{temporary-name}"/>
-        </sequential>
-    </macrodef>
-
     <target name="data_migrations_test">
-        <test-data-migration old-version="3.0" exercise="CabourgOld"/>
-        <test-data-migration old-version="4.2.0" exercise="Cabourg"/>
-        <test-data-migration old-version="4.2.1" exercise="Cabourg"/>
-        <test-data-migration old-version="4.2.2" exercise="Cabourg"/>
-        <test-data-migration old-version="4.3.0" exercise="Cabourg"/>
-        <test-data-migration old-version="4.3.4embraer" exercise="Egypt"/>
-        <test-data-migration old-version="4.3.0cae" exercise="Paris"/>
-        <test-data-migration old-version="5.0.0" exercise="Egypt"/>
-        <test-data-migration old-version="5.2.2" exercise="Egypt"/>
+        <exec executable="${root.dir}/bin/migrations_test.exe" failonerror="true">
+            <arg value="${root.dir}"/>
+            <arg value="${data.dir}"/>
+            <arg value="${out.dir}"/>
+            <arg value="${run.dir}"/>
+            <arg value="${test.portnumber}"/>
+            <arg value="${migrations.jobs}"/>
+            <arg value="CabourgOld,3.0"/>
+            <arg value="Cabourg,4.2.0"/>
+            <arg value="Cabourg,4.2.1"/>
+            <arg value="Cabourg,4.2.2"/>
+            <arg value="Cabourg,4.3.0"/>
+            <arg value="Egypt,4.3.4embraer"/>
+            <arg value="Paris,4.3.0cae"/>
+            <arg value="Egypt,5.0.0"/>
+            <arg value="Egypt,5.2.2"/>
+        </exec>
     </target>
 
     <macrodef name="check-gui">
@@ -865,6 +842,7 @@
         <update name="gdal" version="1.9.1.r671"/>
         <update name="geos" version="3.3.7.r662"/>
         <update name="glew" version="1.9.0"/>
+        <update name="golang" version="1.2.1"/>
         <update name="hla" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
         <update name="hla" package="federation_app" todir="${bin.dir}"/>
         <update name="hla" package="include" todir="${include.dir}"/>
@@ -939,6 +917,10 @@
         <cmake_test/>
     </target>
 
+    <target name="go.build" description="build go applications">
+        <go_build/>
+    </target>
+
     <target name="test" depends="unit_test
         ,adaptation_test
         ,app_test
@@ -951,7 +933,7 @@
         ,model_generator_test
         " description="build and run all tests"/>
 
-    <target name="all" depends="configure,check,cmake.configure,build,test,documentation,package"/>
+    <target name="all" depends="configure,check,cmake.configure,build,go.build,test,documentation,package"/>
 
     <target name="format">
         <update name="llvm" version="r192445"/>
