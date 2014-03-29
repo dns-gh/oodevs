@@ -379,3 +379,41 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 	//	CheckDeployTime(c, startingReports[i].Time, endingReports[i].Time, 1*time.Minute)
 	//}
 }
+
+func (s *TestSuite) TestLogisticUpdates(c *C) {
+	c.Skip("simulation part was temporarily reverted. See http://jira.masagroup.net/browse/SWBUG-12091")
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	SetManualMaintenance(c, client, tc2Id)
+	handlingId := uint32(0)
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
+			func(ctx *MaintenanceCheckContext) error {
+				handlingId = ctx.handlingId
+				return client.SelectNewLogisticState(ctx.handlingId)
+			}),
+		checkUpdate("waiting_for_transporter", tc2),
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		&MaintenanceStrictUpdateChecker{
+			MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2},
+		},
+	)
+	entries, err := client.GetLogisticHistory(handlingId)
+	c.Assert(err, IsNil)
+	// unloading entry has current state end tick defined
+	unloading := entries[len(entries)-2].GetMaintenance().GetUpdate()
+	c.Assert(unloading.GetState(), Equals, sword.LogMaintenanceHandlingUpdate_transporter_unloading)
+	c.Assert(unloading.CurrentStateEndTick, NotNil)
+	// waiting entry has current state end tick undefined again
+	waiting := entries[len(entries)-1].GetMaintenance().GetUpdate()
+	c.Assert(waiting.GetState(), Equals, sword.LogMaintenanceHandlingUpdate_waiting_for_diagnosis_team_selection)
+	c.Assert(waiting.CurrentStateEndTick, IsNil)
+}
