@@ -2509,21 +2509,6 @@ PNG (*.png)
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Orders</name>
-    <message>
-        <source>Frag orders</source>
-        <translation>Frag orders</translation>
-    </message>
-    <message>
-        <source>Add frag order</source>
-        <translation>Add frag order</translation>
-    </message>
-    <message>
-        <source>Remove frag order</source>
-        <translation>Remove frag order</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ListView_RoofShapes</name>
     <message>
         <source>RoofShape</source>
@@ -3093,10 +3078,6 @@ PNG (*.png)
     <message>
         <source>Missions</source>
         <translation>Missions</translation>
-    </message>
-    <message>
-        <source>FragOrders</source>
-        <translation>FragOrders</translation>
     </message>
     <message>
         <source>DIA5</source>

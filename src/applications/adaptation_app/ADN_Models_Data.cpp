@@ -39,8 +39,8 @@ namespace
 // Name: OrderInfos::OrderInfos
 // Created: AGN 2004-05-18
 // -----------------------------------------------------------------------------
-ADN_Models_Data::OrderInfos::OrderInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ), 0, true )
+ADN_Models_Data::OrderInfos::OrderInfos( const ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_ABC* mission /* = 0 */ )
+    : ADN_CrossedRef< ADN_Missions_ABC >( missions, mission, true )
 {
     // NOTHING
 }
@@ -77,10 +77,7 @@ void ADN_Models_Data::OrderInfos::WriteArchive( xml::xostream& output ) const
 // -----------------------------------------------------------------------------
 ADN_Models_Data::OrderInfos* ADN_Models_Data::OrderInfos::CreateCopy()
 {
-    OrderInfos* result = new OrderInfos();
-    result->SetCrossedElement( GetCrossedElement() );
-    result->strName_ = strName_.GetData();
-    return result;
+    return new OrderInfos( GetVector(), GetCrossedElement() );
 }
 
 // =============================================================================
@@ -115,13 +112,8 @@ ADN_Models_Data::MissionInfos* ADN_Models_Data::MissionInfos::CreateCopy()
     MissionInfos* pMission = new MissionInfos( GetVector(), GetCrossedElement() );
 
     pMission->vOrders_.reserve( vOrders_.size() );
-    for( T_OrderInfos_Vector::iterator it = vOrders_.begin(); it != vOrders_.end(); ++it )
-    {
-        OrderInfos* pOrder = new OrderInfos();
-        pOrder->SetCrossedElement( ( *it )->GetCrossedElement() );
-        pOrder->strName_ = (*it)->strName_.GetData();
-        pMission->vOrders_.AddItem( pOrder );
-    }
+    for( auto it = vOrders_.begin(); it != vOrders_.end(); ++it )
+        pMission->vOrders_.AddItem( ( *it )->CreateCopy() );
     return pMission;
 }
 
@@ -131,7 +123,7 @@ ADN_Models_Data::MissionInfos* ADN_Models_Data::MissionInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::MissionInfos::ReadFragOrder( xml::xistream& input )
 {
-    std::auto_ptr< OrderInfos > spNew( new OrderInfos() );
+    std::auto_ptr< OrderInfos > spNew( new OrderInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ) ) );
     spNew->ReadArchive( input );
     vOrders_.AddItem( spNew.release() );
 }
@@ -167,18 +159,12 @@ void ADN_Models_Data::MissionInfos::WriteArchive( xml::xostream& output ) const
 //
 // =============================================================================
 
-namespace
-{
-    ADN_Missions_Data::T_Mission_Vector dummy;
-}
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_Data::ModelInfos
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
 ADN_Models_Data::ModelInfos::ModelInfos()
-    : missions_ ( dummy )
-    , isMasalife_( false )
+    : isMasalife_( false )
     , type_( eNbrEntityType )
 {
     assert( false ); // $$$$ ABR 2013-08-23: useless constructor, needed by ADN_Wizard...
@@ -189,8 +175,7 @@ ADN_Models_Data::ModelInfos::ModelInfos()
 // Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
 ADN_Models_Data::ModelInfos::ModelInfos( E_EntityType type )
-    : missions_ ( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( ADN_Tools::ConvertEntityTypeToMissionType( type ) ) )
-    , isMasalife_( false )
+    : isMasalife_( false )
     , type_( type )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eModels, MakePluralFromEntityType( type ) ) );
@@ -242,16 +227,10 @@ ADN_Models_Data::ModelInfos* ADN_Models_Data::ModelInfos::CreateCopy()
 
     pNewInfo->vMissions_.reserve( vMissions_.size() );
     for( T_MissionInfos_Vector::iterator itMission = vMissions_.begin(); itMission != vMissions_.end(); ++itMission )
-    {
-        MissionInfos* pNewMission = (*itMission)->CreateCopy();
-        pNewInfo->vMissions_.AddItem( pNewMission );
-    }
+        pNewInfo->vMissions_.AddItem( (*itMission)->CreateCopy() );
     pNewInfo->vFragOrders_.reserve( vFragOrders_.size() );
     for( T_OrderInfos_Vector::iterator itOrder = vFragOrders_.begin(); itOrder != vFragOrders_.end(); ++itOrder )
-    {
-        OrderInfos* pNewOrder = (*itOrder)->CreateCopy();
-        pNewInfo->vFragOrders_.AddItem( pNewOrder );
-    }
+        pNewInfo->vFragOrders_.AddItem( (*itOrder)->CreateCopy() );
     return pNewInfo;
 }
 
@@ -261,7 +240,7 @@ ADN_Models_Data::ModelInfos* ADN_Models_Data::ModelInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ModelInfos::ReadMission( xml::xistream& input )
 {
-    std::auto_ptr<MissionInfos> spNew( new MissionInfos( missions_ ) );
+    std::auto_ptr<MissionInfos> spNew( new MissionInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( ADN_Tools::ConvertEntityTypeToMissionType( type_ ) ) ) );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vMissions_.AddItem( spNew.release() );
@@ -275,7 +254,7 @@ void ADN_Models_Data::ModelInfos::ReadMission( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ModelInfos::ReadOrder( xml::xistream& input )
 {
-    std::auto_ptr<OrderInfos> spNew( new OrderInfos() );
+    std::auto_ptr<OrderInfos> spNew( new OrderInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ) ) );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vFragOrders_.AddItem( spNew.release() );

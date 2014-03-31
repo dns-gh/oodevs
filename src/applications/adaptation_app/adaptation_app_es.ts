@@ -2518,21 +2518,6 @@ PNG (*.png)</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Orders</name>
-    <message>
-        <source>Frag orders</source>
-        <translation>Orden parcial</translation>
-    </message>
-    <message>
-        <source>Add frag order</source>
-        <translation>Agregar orden parcial</translation>
-    </message>
-    <message>
-        <source>Remove frag order</source>
-        <translation>Borrar orden parcial</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ListView_RoofShapes</name>
     <message>
         <source>RoofShape</source>
@@ -3098,10 +3083,6 @@ PNG (*.png)</translation>
     <message>
         <source>Missions</source>
         <translation>Misión</translation>
-    </message>
-    <message>
-        <source>FragOrders</source>
-        <translation>Orden parcial</translation>
     </message>
     <message>
         <source>Crowds models</source>

@@ -19,9 +19,7 @@
 #ifndef __ADN_ListView_Orders_h_
 #define __ADN_ListView_Orders_h_
 
-#include "ADN_Types.h"
 #include "ADN_ListView.h"
-#include <map>
 
 // =============================================================================
 /** @class  ADN_ListView_Orders
@@ -41,28 +39,6 @@ public:
     //! @name Operations
     //@{
     virtual void OnContextMenu( const QPoint& pt );
-    bool Contains( const std::string& strComposanteName ) const;
-
-    void CreateNewItem( int n );
-    void RemoveCurrentItem();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void ConnectItem( bool bConnect );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< int, std::string > T_FragOrders;
-    //@}
-
-private:
-    //! @name data
-    //@{
-    T_FragOrders fragOrders_;
     //@}
 };
 
