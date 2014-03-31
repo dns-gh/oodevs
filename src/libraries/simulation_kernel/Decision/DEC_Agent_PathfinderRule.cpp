@@ -323,7 +323,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rUrbanBlockCost = GetUrbanBlockCost( from, to );
     if( rUrbanBlockCost < 0. )
     {
-        LOG_REASON( "no path: urban block cost" );
+        LOG_REASON( "no path: urban block cost: " << rUrbanBlockCost );
         return -1;
     }
     rDynamicCost += rUrbanBlockCost;
@@ -332,7 +332,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rObjectsCost = GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType, rSpeed );
     if( rObjectsCost < 0 || rSpeed <= 0. )
     {
-        LOG_REASON( "no path: objects cost" );
+        LOG_REASON( "no path: objects cost: " << rObjectsCost << ", speed: " << rSpeed );
         return -1;
     }
     rDynamicCost += rObjectsCost;
@@ -341,7 +341,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rEnemiesCost = GetEnemiesCost( from, to );
     if( rEnemiesCost < 0 )
     {
-        LOG_REASON( "no path: enemies cost" );
+        LOG_REASON( "no path: enemies cost: " << rEnemiesCost );
         return -1;
     }
     rDynamicCost += rEnemiesCost;
@@ -350,7 +350,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rPopulationsCost = GetPopulationsCost( to );
     if( rPopulationsCost < 0 )
     {
-        LOG_REASON( "no path: populations cost" );
+        LOG_REASON( "no path: populations cost: " << rPopulationsCost );
         return -1;
     }
     rDynamicCost += rPopulationsCost;

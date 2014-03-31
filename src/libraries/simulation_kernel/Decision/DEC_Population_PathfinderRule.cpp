@@ -129,7 +129,7 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
     if( rSpeed <= 0 )
     {
         LOG_REASON( "no path: speed on " << terrainBetween.DumpToString()
-                << " == " << rSpeed )
+                << " = " << rSpeed )
         return -1.f;
     }
 
@@ -155,7 +155,7 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
     const float rTerrainCost = GetTerrainCost( terrainTo, terrainBetween );
     if( rTerrainCost < 0 )
     {
-        LOG_REASON( "no path: terrain cost" );
+        LOG_REASON( "no path: terrain cost: " << rTerrainCost );
         return -1.f;
     }
     rDynamicCost += rTerrainCost;
@@ -168,7 +168,7 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
     const float rObjectsCost = GetObjectsCost( vFrom, vTo, terrainTo, terrainBetween );
     if( rObjectsCost < 0 )
     {
-        LOG_REASON( "no path: objects cost" );
+        LOG_REASON( "no path: objects cost: " << rObjectsCost );
         return -1.f;
     }
     rDynamicCost += rObjectsCost;
