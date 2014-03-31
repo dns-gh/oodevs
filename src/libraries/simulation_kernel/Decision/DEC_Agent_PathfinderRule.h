@@ -36,7 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual float EvaluateCost( const geometry::Point2f& from, const geometry::Point2f& to );
-    virtual float GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween );
+    virtual float GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween, std::ostream* reason );
     //@}
 
 private:
@@ -54,11 +54,12 @@ private:
 
     //! @name Helpers
     //@{
-    double GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType );
+    double GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, std::ostream* reason );
     double GetTerrainCost( const TerrainData& data ) const;
     double GetDangerDirectionCost( const MT_Vector2D& to ) const;
     double GetAltitudeCost( double rAltitudeTo ) const;
-    double GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    double GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to,
+            std::ostream* reason ) const;
     double GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     double GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double& rSpeed ) const;
     double GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;

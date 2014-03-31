@@ -144,8 +144,9 @@ void DEC_Path::Execute( TER_Pathfinder_ABC& pathfind )
     {
         DoExecute( pathfind );
     }
-    catch( const std::exception& )
+    catch( const std::exception& e )
     {
+        MT_LOG_ERROR_MSG( "DEC_Path::Execute failed: " << e.what() );
         bJobCanceled_ = true;
         nState_ = eCanceled;
     }

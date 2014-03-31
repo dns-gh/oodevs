@@ -39,7 +39,7 @@ private:
     //! @name Helpers
     //@{
     virtual float EvaluateCost( const geometry::Point2f& from, const geometry::Point2f& to );
-    virtual float GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween );
+    virtual float GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween, std::ostream* reason );
     //@}
 
     //! @name Helpers

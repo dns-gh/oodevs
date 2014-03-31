@@ -111,11 +111,15 @@ float DEC_Population_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, co
     return (float) rObjectCost;
 }
 
+#define LOG_REASON( logger, reason )                    \
+    if( logger )                                        \
+        *logger << reason << std::endl;
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_PathfinderRule::GetCost
 // Created: AGE 2005-03-08
 // -----------------------------------------------------------------------------
-float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween )
+float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween, std::ostream* reason )
 {
     static const unsigned short river = TerrainData::SmallRiver().Linear() | TerrainData::MediumRiver().Linear() | TerrainData::LargeRiver().Linear();
     static const unsigned short waterZone = TerrainData::Water().Area() | TerrainData::Swamp().Area();
@@ -123,16 +127,26 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
 
     const double rSpeed = path_.GetMaxSpeed( terrainBetween );
     if( rSpeed <= 0 )
+    {
+        LOG_REASON( reason, "no way: speed on " << terrainBetween.DumpToString()
+                << " == " << rSpeed )
         return -1.f;
+    }
 
     MT_Vector2D vFrom( from.X(), from.Y() );
     MT_Vector2D vTo( to.X(), to.Y() );
 
     if( !world_.IsValidPosition( vTo ) )
+    {
+        LOG_REASON( reason, "no way: out of world" );
         return -1.f;
+    }
 
     if( ( ( terrainTo.Linear() & river ) || ( terrainTo.Area() & waterZone ) || ( terrainTo.Linear() & cliff ) ) && !terrainBetween.IsRoad() )
+    {
+        LOG_REASON( reason, "no way: cannot cross terrain" );
         return -1.f;
+    }
 
     // Cost computation taken various dynamic terrain items into account
     float rDynamicCost = 0.;
@@ -140,7 +154,10 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
     // terrain type
     const float rTerrainCost = GetTerrainCost( terrainTo, terrainBetween );
     if( rTerrainCost < 0 )
+    {
+        LOG_REASON( reason, "no way: terrain cost" );
         return -1.f;
+    }
     rDynamicCost += rTerrainCost;
 
     // population channel
@@ -150,7 +167,10 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
     // objects
     const float rObjectsCost = GetObjectsCost( vFrom, vTo, terrainTo, terrainBetween );
     if( rObjectsCost < 0 )
+    {
+        LOG_REASON( reason, "no way: objects cost" );
         return -1.f;
+    }
     rDynamicCost += rObjectsCost;
     const float rDistance = from.Distance( to );
     const double maxSpeed = path_.GetMaxSpeed();
