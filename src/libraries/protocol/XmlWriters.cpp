@@ -733,6 +733,8 @@ namespace
         if( src.has_type() )
             if( const auto opt = FindType< T >( src.type() ) )
                 xos << xml::attribute( "id", *opt );
+        if( src.has_start_time() )
+            xos << xml::attribute( "time", src.start_time().data() );
         if( src.has_parameters() )
             protocol::Write( xos, writer, src.parameters() );
     }
@@ -772,6 +774,8 @@ void protocol::Write( xml::xostream& xos, const Writer_ABC&, const SetAutomatMod
         xos << xml::attribute( "target", src.automate().id() );
     if( src.has_mode() )
         xos << xml::attribute( "engaged", src.mode() == engaged );
+    if( src.has_start_time() )
+        xos << xml::attribute( "time", src.start_time().data() );
 }
 
 void protocol::Write( xml::xostream& xos, const Writer_ABC& writer, const ClientToSim_Content& src )

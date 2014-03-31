@@ -1084,6 +1084,7 @@ void protocol::Read( const Reader_ABC&, SetAutomatMode& dst, xml::xistream& xis 
 {
     dst.mutable_automate()->set_id( xis.attribute< int32_t >( "target" ) );
     dst.set_mode( ReadAutomatMode( xis ) );
+    ReadTime( dst, xis );
     if( const auto name = TestAttribute< std::string >( xis, "name" ) )
         dst.set_name( *name );
 }

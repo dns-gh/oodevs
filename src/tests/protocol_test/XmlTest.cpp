@@ -937,12 +937,14 @@ namespace
     {
         fix.xos << xml::attribute( "target", 27u )
                 << xml::attribute( "id", 17 )
-                << xml::attribute( "type", "mission" );
+                << xml::attribute( "type", "mission" )
+                << xml::attribute( "time", "2011-04-08T10:01:36" );
         const auto msg = fix.Read< T >();
         BOOST_CHECK_EQUAL( msg.tasker().id(), 27u );
         BOOST_CHECK_EQUAL( msg.type().id(), 17u );
         BOOST_CHECK( msg.has_parameters() );
         BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+        BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
         fix.CheckCycle( msg );
     }
 }
@@ -966,24 +968,28 @@ BOOST_FIXTURE_TEST_CASE( read_frag_order, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "id", 1 )
-        << xml::attribute( "type", "fragorder" );
+        << xml::attribute( "type", "fragorder" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     MOCK_EXPECT( reader.Resolve ).once().with( 27u ).returns( Reader_ABC::PARTY );
     const auto msg = Read< FragOrder >();
     BOOST_CHECK_EQUAL( msg.tasker().party().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type().id(), 1u );
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_magic_action, Fixture )
 {
     xos << xml::attribute( "id", mapping::MagicAction::data_[1].name )
-        << xml::attribute( "type", "magic" );
+        << xml::attribute( "type", "magic" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     const auto msg = Read< MagicAction >();
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicAction::data_[1].type );
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
@@ -991,13 +997,15 @@ BOOST_FIXTURE_TEST_CASE( read_unit_magic_action, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "id", mapping::MagicUnitAction::data_[10].name )
-        << xml::attribute( "type", "magicunit" );
+        << xml::attribute( "type", "magicunit" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     MOCK_EXPECT( reader.Resolve ).once().with( 27u ).returns( Reader_ABC::PARTY );
     const auto msg = Read< UnitMagicAction >();
     BOOST_CHECK_EQUAL( msg.tasker().party().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicUnitAction::data_[10].type );
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
@@ -1005,12 +1013,14 @@ BOOST_FIXTURE_TEST_CASE( read_object_magic_action, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "id", mapping::MagicObjectAction::data_[0].name )
-        << xml::attribute( "type", "magicobject" );
+        << xml::attribute( "type", "magicobject" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     const auto msg = Read< ObjectMagicAction >();
     BOOST_CHECK_EQUAL( msg.object().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicObjectAction::data_[0].type );
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
@@ -1018,12 +1028,14 @@ BOOST_FIXTURE_TEST_CASE( read_knowledge_magic_action, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "id", mapping::MagicKnowledgeAction::data_[0].name )
-        << xml::attribute( "type", "magicknowledge" );
+        << xml::attribute( "type", "magicknowledge" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     const auto msg = Read< KnowledgeMagicAction >();
     BOOST_CHECK_EQUAL( msg.knowledge_group().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicKnowledgeAction::data_[0].type );
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
@@ -1031,10 +1043,12 @@ BOOST_FIXTURE_TEST_CASE( read_set_automat_mode, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "engaged", true )
-        << xml::attribute( "type", "change_mode" );
+        << xml::attribute( "type", "change_mode" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     const auto msg = Read< SetAutomatMode >();
     BOOST_CHECK_EQUAL( msg.automate().id(), 27u );
     BOOST_CHECK_EQUAL( msg.mode(), engaged );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
