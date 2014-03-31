@@ -61,7 +61,7 @@ func runAdn(exePath, runDir, srcDir, dstDir string) error {
 	cmd.Dir = runDir
 	output, err := cmd.Output()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "adaptation failed:\n%s\n", string(output))
+		fmt.Fprintf(os.Stderr, "adaptation failed:\n%s\n", output)
 	}
 	return err
 }
