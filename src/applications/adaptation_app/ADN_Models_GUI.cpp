@@ -96,7 +96,7 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
     pListOrders->SetGoToOnDoubleClick( ::eMissions, 3 ); // Frag orders tabulation
 
     // Frag order
-    Q3GroupBox* pFragOdersGroup = new Q3HGroupBox( tr( "FragOrders" ) );
+    Q3GroupBox* pFragOdersGroup = new Q3HGroupBox( QString::fromStdString( ENT_Tr::ConvertFromMissionType( eMissionType_FragOrder ) ) );
     ADN_ListView_Orders* pListFragOrders = builder.AddWidget< ADN_ListView_Orders >( "fragorders-list", false , pFragOdersGroup );
     vInfosConnectors[ eFragOrders ] = &pListFragOrders->GetConnector();
     pListFragOrders->SetGoToOnDoubleClick( ::eMissions, 3 ); // Frag orders tabulation

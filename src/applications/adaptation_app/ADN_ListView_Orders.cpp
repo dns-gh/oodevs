@@ -35,7 +35,9 @@ typedef ADN_Models_Data::OrderInfos OrderInfos;
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
 ADN_ListView_Orders::ADN_ListView_Orders( bool usedWithMission, QWidget* parent )
-    : ADN_ListView( parent, "ADN_ListView_Orders" + usedWithMission, tools::translate( "ADN_ListView_Orders", "Frag orders") )
+    : ADN_ListView( parent,
+                    "ADN_ListView_Orders" + usedWithMission,
+                    QString::fromStdString( ENT_Tr::ConvertFromMissionType( eMissionType_FragOrder ) ) )
     , usedWithMission_ ( usedWithMission )
 {
     pConnector_.reset( new ADN_Connector_ListView< OrderInfos >( *this ) );
