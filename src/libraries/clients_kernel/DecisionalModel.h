@@ -12,6 +12,8 @@
 
 #include <tools/Resolver.h>
 
+#include <boost/noncopyable.hpp>
+
 namespace xml { class xistream; };
 
 namespace kernel
@@ -29,16 +31,20 @@ namespace kernel
 // =============================================================================
 class DecisionalModel : public tools::Resolver< Mission >
                       , public tools::Resolver< FragOrder >
+                      , private boost::noncopyable
 {
 public:
     //! @name Types
     //@{
-    typedef Mission* (MissionFactory::*T_Resolver)( const std::string& );
+    typedef Mission* (MissionFactory::*T_Resolver)( const std::string& ) const;
     //@}
 public:
     //! @name Constructors/Destructor
     //@{
-             DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const tools::Resolver_ABC< FragOrderType >& fragOrders );
+             DecisionalModel( xml::xistream& xis,
+                              const MissionFactory& factory,
+                              const T_Resolver& missionResolver,
+                              const tools::StringResolver< FragOrderType >& fragOrders );
     virtual ~DecisionalModel();
     //@}
 
@@ -48,18 +54,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DecisionalModel( const DecisionalModel& );            //!< Copy constructor
-    DecisionalModel& operator=( const DecisionalModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void ReadMission( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver );
-    void ReadFragOrder( xml::xistream& xis, Mission& mission, MissionFactory& factory );
-    void ReadDefaultFragOrder( xml::xistream& xis, MissionFactory& factory, const tools::Resolver_ABC< FragOrderType >& fragorders );
-    void RegisterFragOrder( MissionFactory& factory, const FragOrderType& type );
+    void ReadMission( xml::xistream& xis, const MissionFactory& factory, const T_Resolver& missionResolver );
+    void ReadFragOrder( xml::xistream& xis, const MissionFactory& factory, const tools::StringResolver< FragOrderType >& fragOrders );
     //@}
 
 private:

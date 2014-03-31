@@ -221,7 +221,7 @@ void AgentTypes::ReadModels( xml::xistream& xis )
 void AgentTypes::ReadModel( xml::xistream& xis, const T_Resolver& missionResolver, tools::Resolver< DecisionalModel, std::string >& models )
 {
     MissionFactory factory( missions_[ eMissionType_Pawn ], missions_[ eMissionType_Automat ], missions_[ eMissionType_Population ], *this );
-    DecisionalModel* model = new DecisionalModel( xis, factory, missionResolver, (Resolver< FragOrderType >&)*this );
+    DecisionalModel* model = new DecisionalModel( xis, factory, missionResolver, *this );
     models.Register( model->GetName(), *model );
 }
 

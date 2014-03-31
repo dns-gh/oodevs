@@ -26,14 +26,13 @@ using namespace dispatcher_test;
 
 boost::shared_ptr< kernel::DecisionalModel > StaticModel::MakeDecisionalModel()
 {
-    const tools::Resolver< kernel::FragOrderType, std::string > fragOrdersResolver;
-    const tools::Resolver< kernel::MissionType, std::string > missionResolver;
+    const tools::StringResolver< kernel::FragOrderType > fragOrdersResolver;
+    const tools::StringResolver< kernel::MissionType > missionResolver;
     kernel::MissionFactory factory( missionResolver, missionResolver, missionResolver, fragOrdersResolver );
-    const tools::Resolver< kernel::FragOrderType > fragOrders;
     const std::string xml( "<model name='my_model'/>" );
     xml::xistringstream xis( xml );
     xis >> xml::start( "model" );
-    return boost::shared_ptr< kernel::DecisionalModel >( new kernel::DecisionalModel( xis, factory, &kernel::MissionFactory::CreateAgentMission, fragOrders ) );
+    return boost::shared_ptr< kernel::DecisionalModel >( new kernel::DecisionalModel( xis, factory, &kernel::MissionFactory::CreateAgentMission, fragOrdersResolver ) );
 }
 
 boost::shared_ptr< kernel::AgentType > StaticModel::MakeAgentType()

@@ -20,8 +20,10 @@ using namespace kernel;
 // Name: MissionFactory constructor
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-MissionFactory::MissionFactory( const tools::Resolver_ABC< MissionType, std::string >& unitMissions, const tools::Resolver_ABC< MissionType, std::string >& automatMissions
-                              , const tools::Resolver_ABC< MissionType, std::string >& populationMissions, const tools::Resolver_ABC< FragOrderType, std::string >& fragOrders )
+MissionFactory::MissionFactory( const tools::Resolver_ABC< MissionType, std::string >& unitMissions,
+                                const tools::Resolver_ABC< MissionType, std::string >& automatMissions,
+                                const tools::Resolver_ABC< MissionType, std::string >& populationMissions,
+                                const tools::Resolver_ABC< FragOrderType, std::string >& fragOrders )
     : unitMissions_( unitMissions )
     , automatMissions_( automatMissions )
     , populationMissions_( populationMissions )
@@ -43,7 +45,7 @@ MissionFactory::~MissionFactory()
 // Name: MissionFactory::CreateAgentMission
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Mission* MissionFactory::CreateAgentMission( const std::string& name )
+Mission* MissionFactory::CreateAgentMission( const std::string& name ) const
 {
     MissionType* type = unitMissions_.Find( name );
     if( !type )
@@ -55,7 +57,7 @@ Mission* MissionFactory::CreateAgentMission( const std::string& name )
 // Name: MissionFactory::CreateAutomatMission
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Mission* MissionFactory::CreateAutomatMission( const std::string& name )
+Mission* MissionFactory::CreateAutomatMission( const std::string& name ) const
 {
     MissionType* type = automatMissions_.Find( name );
     if( !type )
@@ -67,7 +69,7 @@ Mission* MissionFactory::CreateAutomatMission( const std::string& name )
 // Name: MissionFactory::CreatePopulationMission
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Mission* MissionFactory::CreatePopulationMission( const std::string& name )
+Mission* MissionFactory::CreatePopulationMission( const std::string& name ) const
 {
     MissionType* type = populationMissions_.Find( name );
     if( !type )
@@ -79,7 +81,7 @@ Mission* MissionFactory::CreatePopulationMission( const std::string& name )
 // Name: MissionFactory::CreateFragOrder
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-FragOrder* MissionFactory::CreateFragOrder( const std::string& name )
+FragOrder* MissionFactory::CreateFragOrder( const std::string& name ) const
 {
     FragOrderType* type = fragOrders_.Find( name );
     if( !type )
