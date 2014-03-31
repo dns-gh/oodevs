@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -12,6 +13,28 @@ import (
 	"strings"
 	"sync"
 )
+
+func copyFile(srcPath, dstPath string) error {
+	src, err := os.Open(srcPath)
+	if err != nil {
+		return err
+	}
+	dst, err := os.Create(dstPath)
+	if err != nil {
+		src.Close()
+		return err
+	}
+	_, err = io.Copy(dst, src)
+	err1 := src.Close()
+	err2 := dst.Close()
+	if err != nil {
+		return err
+	}
+	if err1 != nil {
+		return err1
+	}
+	return err2
+}
 
 func copyDir(srcDir, dstDir string) error {
 	// Copy old physical database
@@ -38,11 +61,7 @@ func copyDir(srcDir, dstDir string) error {
 				err = nil
 			}
 		} else {
-			data, err := ioutil.ReadFile(path)
-			if err != nil {
-				return err
-			}
-			err = ioutil.WriteFile(destPath, data, 0644)
+			err = copyFile(path, destPath)
 		}
 		return err
 	})
