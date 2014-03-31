@@ -81,7 +81,7 @@ integration.updateApplyFireOnPoint = function( point )
     else
         if point[myself].eIndirectFireState == eIndirectFireState_Finished then
             if point[myself].firstTime then -- in this case the firing is finished at the first tick: send report
-                meKnowledge:RC( eRC_PremierCoupParti )
+                reportFunction( eRC_PremierCoupParti )
                 point[myself].firstTime = false
             end
             return true
