@@ -994,6 +994,8 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveResupplyHumans( bool withLog )
 {
+    if( markedForDestruction_ )
+        throw MASA_BADUNIT_UNIT( "invalid unit: " << GetID() );
     GetRole< human::PHY_RolePion_Humans >().HealAllHumans( withLog );
 }
 
