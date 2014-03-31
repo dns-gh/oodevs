@@ -490,6 +490,8 @@ namespace
         BOOST_CHECK_EQUAL( work.time_limit(), 41 );
         BOOST_CHECK_EQUAL( work.mining(), true );
         BOOST_CHECK_EQUAL( work.lodging(), 98 );
+        BOOST_CHECK_EQUAL( work.fire_class(), "some fire" );
+        BOOST_CHECK_EQUAL( work.max_combustion(), 42 );
     }
 }
 

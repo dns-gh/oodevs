@@ -1385,6 +1385,32 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_resource_type_list, Fixture )
                     boost::assign::list_of( "42" )( "1337" )( "42" ), checker );
 }
 
+BOOST_FIXTURE_TEST_CASE( serializes_parameter_nature_atlas, Fixture )
+{
+    auto checker = []( const sword::MissionParameter& msg ){
+        BOOST_REQUIRE_EQUAL( msg.value_size(), 1 );
+        BOOST_REQUIRE( msg.value( 0 ).has_nature() );
+        BOOST_REQUIRE_EQUAL( msg.value( 0 ).nature().flags(), 42 );
+    };
+    CheckParameter( "NatureAtlas", "natureatlas",
+                    boost::assign::list_of( "42" ), checker );
+}
+
+BOOST_FIXTURE_TEST_CASE( serializes_parameter_nature_atlas_list, Fixture )
+{
+    auto checker = []( const sword::MissionParameter& msg ){
+        BOOST_REQUIRE_EQUAL( msg.value_size(), 3 );
+        BOOST_REQUIRE( msg.value( 0 ).has_nature() );
+        BOOST_REQUIRE_EQUAL( msg.value( 0 ).nature().flags(), 42 );
+        BOOST_REQUIRE( msg.value( 1 ).has_nature() );
+        BOOST_REQUIRE_EQUAL( msg.value( 1 ).nature().flags(), 1337 );
+        BOOST_REQUIRE( msg.value( 2 ).has_nature() );
+        BOOST_REQUIRE_EQUAL( msg.value( 2 ).nature().flags(), 42 );
+    };
+    CheckParameter( "NatureAtlas", "natureatlas",
+                    boost::assign::list_of( "42" )( "1337" )( "42" ), checker );
+}
+
 BOOST_FIXTURE_TEST_CASE( serializes_parameter_resource_network_nodeype, Fixture )
 {
     auto checker = []( const sword::MissionParameter& msg ){
@@ -1584,11 +1610,8 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_planned_work_list, Fixture )
 
 
 // =============================================================================
-// Reports or obsoletes types: DotationType, NatureAtlas, ResourceNetworkType, Stage
+// Reports types: ResourceNetworkType, Stage
 // =============================================================================
 
-// DotationType, ResourceNetworkType and stage are not used by missions, only by
-// reports, so they're not serialized in order files, nor manipulated by the actions
-// library.
-
-// NatureAtlas seems obsolete: not used by missions anymore, and probably not by reports.
+// ResourceNetworkType and Stage are not used by missions, only by reports, so
+// they're not serialized in order files, nor manipulated by the actions library.
