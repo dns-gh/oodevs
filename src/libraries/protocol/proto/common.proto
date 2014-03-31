@@ -1640,6 +1640,7 @@ message UnitMagicAction {
         //! The tasker must be a unit identifier.
         recover_troops                    = 6;
         //! A recover equiments magic action
+        //! The tasker must be a unit identifier.
         recover_equipments                = 7;
         //! A recover resources magic action
         recover_resources                 = 8;
