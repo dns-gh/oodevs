@@ -1,0 +1,81 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMMON - Move using an underground network</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMMON - Move using an underground network</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To move to an objective using an underground network such as a sewer, metro...</i>
+<br>In Sword moving through a given underground network is simulated with a period of time (the movement is not a visible behavior). This action is specific: to simulate the movement, the agent goes from one underground network gateway  (a Sword object) to another one within a certain time limit. Once the limit is over, the agent teleports itself to the exit gateway. <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Underground entrance</h3>Entrance to the underground network.<br>
+<h3>Underground exit</h3>Exit from the underground.<br>
+<h3>Objective</h3>Final objective to reach.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the given underground entrance. If it is not reachable (the object is located inside an urban block within which the agent cannot move), the agent moves as close as possible. Average speed depends on the physical capabilities while taking into account terrain properties.<br>
+</li>
+<li>Upon reaching the underground entrance, the agent dismounts (if needed) enters the network and starts to activate the "move through underground" action. While moving through the network, a report informing the user how much time the movement will take is displayed ("arrival in 20minute(s)" for instance). A specific drawing is also displayed on the agent's symbol (see screenshot below).<br>
+</li>
+<li>Upon delay termination, the agent is automatically teleported onto the Underground exit object, gets outside and then moves (normal movement) to the final objective.<br>
+</li>
+</ul>
+
+<img alt="COMMON - Move using an underground network.png" src="./Images/COMMON - Move using an underground network/COMMON - Move using an underground network.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>The agent won't be able to move through the underground network if:<br>
+<ul>
+<li>the agent is a mounted agent and if it cannot dismount (the vehicle cannot go through the underground network): the message "the agent cannot use underground network because it cannot dismount" should display. In this case, the mission terminates with a 'failed' status.<br>
+</li>
+<li>the underground entrance is not activated: in this case the agent waits for the entrance to be activated and displays the report "underground network issue is not operational (state inactivated) or the unit is already underground". If the entrance becomes activated (magic frag order on the object for instance) the missions can be performed normally. <br>
+</li>
+</ul>While moving through an underground network, the agent won't be able to EXIT if:<br>
+<ul>
+<li>the underground exit is deactivated. In this case the agent waits for the exit to be activated. Once it is done (with a magic frag order on the object for instance) the agents gets out and finishes the mission in a normal way.<br>
+</li>
+<li>all the gateways of the network are destroyed (the objects disappear): in this case the agent is TRAPPED underground and the mission failed. To get the agent out a new object belonging to the native network should be contructed and issued  as parameter for a new "exit from underground network" mission.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends once the objective is reached. <br>
+</td>
+</tr>
+</table>
+</body>
+</html>

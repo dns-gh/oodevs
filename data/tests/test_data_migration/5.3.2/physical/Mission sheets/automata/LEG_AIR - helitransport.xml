@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="LEG_AIR - helitransport">
+  <context/>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="false"/>
+    <parameter name="Limit 2" optional="false"/>
+    <parameter name="Units to helitransport" optional="false"/>
+    <parameter name="Disembarking point" optional="false"/>
+    <parameter name="Embarking point" optional="false"/>
+    <parameter name="Meeting point" optional="false"/>
+    <parameter name="Replenishment sites" optional="true"/>
+    <parameter name="With equipments" optional="false"/>
+    <parameter name="Portee Action" optional="false"/>
+  </parameters>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

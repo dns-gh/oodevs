@@ -1,0 +1,89 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>OOTW - Operate a checkpoint (filtrate crowds)</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          OOTW - Operate a checkpoint (filtrate crowds)</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To operate a checkpoint in order to filter crowds and detect infiltrating terrorists</i>.<br>In SWORD, operating a checkpoint (a Sword object can have the ability to filter crowds) allows the agent to detect terrorists, disarm and control movements of encountered crowds.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Checkpoint position</h3>The location at which the agent will create the checkpoint.<br>
+<h3>Safety position</h3>The position to reach when the agent cannot stand in front of uncontrolled crowds.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Body search strength</h3>The intensity of the body search at the checkpoint. <br>A value of 100% means that all armed persons in the crowd will be disarmed. The stronger this is, the harder it is for the crowd to cross the checkpoint.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves to the work location and creates (magically) a checkpoint (the report "control point established" should be displayed). <br>
+</li>
+<li>Then the agent moves to the center of the checkpoint in order to operate it (the report "element [object name] is being operated should be displayed).<br>
+</li>
+</ul>
+
+<img alt="OOTW - Operate a checkpoint.png" src="./Images/OOTW - Operate a checkpoint (filtrate crowds)/OOTW - Operate a checkpoint.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>If the work location is not reachable, the agent moves as close as possible, otherwise it moves to a close position (the position closest to the center of the future object) and the agent builds the object. In this case, it is possible that the object is not built at the exact location.<br>
+</li>
+<li>If encountered crowds cannot be controlled (see specific reports) the checkpoint may be destroyed and the agent may protect itself by moving to the given safety position. <br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>This mission has a few different effects:<br>
+<ul>
+<li>encountered crowds are <u>disarmed</u> with a ratio depending on the given 'body search strength' parameter<br>
+</li>
+<li>encountered crowds are <u>controlled</u> by the agent. If not, the agent protects itself and <u>the checkpoint is destroyed</u>.<br>
+</li>
+<li>the filtration intensity depends on the ratio of persons to disarm (if the "body search strength" is 0, the filtration intensity will be low, if the "body search strength" is high, the filtration will be high).<br>
+</li>
+<li>if terrorists hide in an encountered crowd, the agent may <u>capture</u> them.<br>
+</li>
+</ul>Note that terrrorists are captured only if they <u>cross the effective area of the checkpoint</u>. They cannot be detected with normal sensors. Here only the checkpoint (see 'Objects' capacity in the authoring tool) is able to ensure the detection and capture of a terrorist by the agent. <br>1) the agent is filtering a quiet crowd:<br>
+
+<img alt="OOTW - Operate a checkpoint2.png" src="./Images/OOTW - Operate a checkpoint (filtrate crowds)/OOTW - Operate a checkpoint2.png"/><br>2) A terrorist is detected:<br>
+
+<img alt="OOTW - Operate a checkpoint3.png" src="./Images/OOTW - Operate a checkpoint (filtrate crowds)/OOTW - Operate a checkpoint3.png"/><br>3) The terrorist is captured:<br>
+
+<img alt="OOTW - Operate a checkpoint4.png" src="./Images/OOTW - Operate a checkpoint (filtrate crowds)/OOTW - Operate a checkpoint4.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The agent remains at the checkpoint until mission termination.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

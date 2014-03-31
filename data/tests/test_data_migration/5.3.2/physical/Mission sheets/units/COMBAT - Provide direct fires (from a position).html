@@ -1,0 +1,89 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Provide direct fires (from a position)</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Provide direct fires (from a position)</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action.</i>
+<br>
+<ul>
+<li>A unit which helps another unit in battle. Aviation, artillery, or naval gunfire may be used as a support for infantry.<br>
+</li>
+<li>A part of any unit held back at the beginning of an attack as a reserve.<br>
+</li>
+<li>An element of a command which assists, protects, or supplies other forces in combat.<i></i>
+<br>
+</li>
+</ul>In this Sword mission, to move toward the provided position observe the given objective and shoot at all enemies in range with DIRECT fires.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Objective</h3>The objective to face<br>
+<h3>Position</h3>The position from which the agent observe the objective and fires at enemies.<br>
+<h3>Friends</h3>The friend units to support.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the given position. If it is not reachable (a urban block inside which the agent cannot move for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed of movement depends on the physical capabilities regarding the terrain properties.<br>
+</li>
+<li>Upon reaching the position, the agent faces the given objective.<br>
+</li>
+<li>While observing the objective, the agent will engage all known and perceived enemies in range (not only those nearby the objective).<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>To make the agent engage enemies upon order, the user may set the "ROE (Rules Of Engagement) on "fire upon order". <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>
+<ul>
+<li>The agents won't open fires if:<br>
+</li>
+<ul>
+<li>known enemies are out of range regarding the weapon systems and remaining dotations,<br>
+</li>
+<li>known enemies are not in sight (a enemies may be known but not perceived) regarding sensors and terrain.<br>
+</li>
+</ul>
+<li>Ensure that the given position is chosen with care, regarding the perception capability of the agent and the given objective.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>This mission continues until another one is issued.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

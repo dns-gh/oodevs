@@ -1,0 +1,81 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Patrol within area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Patrol within area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>Patrols are missions to gather information or to control rescue operations.Patrolling could ensure law, order and check crime in a given district.</i>
+<br>In SWORD, patrolling consist of moving along a path defined by waypoints, indefinitely, allowing the agent to gather informations. Here, waypoints are all reachable elements the agent can fin inside a given area<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Area</h3>The area inside which the reachable elements need to be visited.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward all elements that iare totally inside the specified area (the order of traversal is randomly defined). If a visited element is not reachable, the agent moves as close as possible (the agents can move within it), the agent moves to the center, else it moves to a close position (the closest position from the center).<br>
+</li>
+<li>Upon reaching an element, the agent get posted on its position (the report <i>installation in progress" is displayed). Once it is done, the agent displays the report "installation completed" and moves to the next one.</i>
+<br>
+</li>
+<li>Upon reaching the last element, the agent moves back to the first one and starts again. <br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>If there is no reachable element within the area, the mission ends and the report "no key position within area" is displayed.<br>
+</li>
+<li>If the performing agent is flying (helicopters), it doesn't stop onto each position before moving to another one. The report "deployment in progress" and "installation completed" are not displayed.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>Reachable elements are:<br>
+<ul>
+<li>crossroads (point),<br>
+</li>
+<li>intersections between roads and the area limits,<br>
+</li>
+<li>urban blocks (those which are totally inside the specified area).<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission continues until another one is issued.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

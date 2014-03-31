@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Disperse crowd (with projectile)">
+  <context>
+    <line>
+      <italic>
+        <text>To control, disperse, and arrest civilians who are involved in a riot, demonstration, or protest. Riot squads have long used less lethal weapons such as tear gas to disperse crowds and detain rioters.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, a mission in which the agent launches a dispersion grenade that creates a specific object (a time limited object such as a crowd dispersion smoke object). Such an object is used to decreasethe number of healthy humans within the given crowd.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Crowd" optional="false">
+      <line>
+        <text>The crowd to be dispersed.</text>
+      </line>
+    </parameter>
+    <parameter name="Projectile" optional="false">
+      <line>
+        <text>The type of resource (grenade) to use. </text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="true">
+      <line>
+        <text>The position from which the agent launches the grenade.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent will try to launch the specified quantity of projectiles at the given crowd, from the issued position. If a position is not issued (default value), the agent moves toward the center of the crowd until it is at a good distance to launch the given projectile (the launching distance is defined by the distance between the agent's position and the center of the target crowd).</text>
+    </line>
+    <line>
+      <text>Upon reaching the position, the agent launches the projectile at the crowd. The mission then ends.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The agent may not be able to launch the projectile at the target crowd. Causes could be:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the agent doesn't have the physical capability (no suitable launcher with regard to dotation type): the report "No launcher with capacity to use specified munition" is displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the agent does not have enough dotation: the report "no more shells" is displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the selected resource type cannot allow the agent to perform indirect fire: the report "Impossible indirect fire" is displayed.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Harass enemies in area">
+  <context>
+    <line>
+      <italic>
+        <text>Mission to destroy or at least to neutralize the enemy hidden elements, infiltrated or during infiltration and exfiltration in a given area.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to observe an area and to occupy positions in order to engage identified units in this area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area into which the agent will shoot the enemies.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Meeting position to reach upon mission completion.</text>
+      </line>
+    </parameter>
+    <parameter name="Positions" optional="true">
+      <line>
+        <text>Positions the agent will occupy to shoot the enemies.</text>
+      </line>
+    </parameter>
+    <parameter name="Permanent" optional="true">
+      <line>
+        <text>Whether or not the agent will stop the mission when all the positions have been occupied.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent reaches a position (selected automatically by the agent among the given positions) to observe the area. The agent will therefore observe this objective so that it will engage the enemies: any identified enemy that passes inside the area will, if possible, be destroyed. Every time the agent fires, it will move to a  previously unoccupied position, until all the positions have been occupied. The agent then starts over from the first position, or ends his mission by going to the meeting position, depending on the value of the boolean "Permanent" (by default, the agent will go the meeting position).</text>
+    </line>
+    <line>
+      <link>
+        <text>harassArea1.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <line>
+      <text>The positions may or may not be inside the area. An example of a case where the positions are outside the area:</text>
+    </line>
+    <line>
+      <link>
+        <text>harassArea2.png</text>
+      </link>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>If the boolean "Permanent" is set to </text>
+      <bold>
+        <text>False</text>
+      </bold>
+      <text> (value by default), the mission will end once all the positions have been occupied. Otherwise, the mission continues until another mission is given.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="harassArea1.png"/>
+    <attachment name="harassArea2.png"/>
+  </attachments>
+</mission-sheet>

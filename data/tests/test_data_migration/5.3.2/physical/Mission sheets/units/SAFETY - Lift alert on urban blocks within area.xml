@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Lift alert on urban blocks within area">
+  <context>
+    <line>
+      <italic>
+        <text>To protect population from danger. Lifting an alert on a population is to inform it about the end of an impending danger.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, a population is alerted via the urban block it populates. This mission is the reverse of the "Alert urban blocks within area" mission. Its goal is to lift an alert on a set of urban blocks within a specified zone.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area inside which urban blocks must be visited.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each urban block which is totally inside the specified area (the order of traversal is defined randomly). The agent stops at the border of the urban block.</text>
+    </line>
+    <line>
+      <text>Upon reaching an urban block, the agent lifts the alert on it before moving to the next unvisited urban block. The alert may not be lifted on the urban block if it cannot be populated (the report "no population in the urban block" is displayed).</text>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When there are no more urban blocks to visit, the agent stays next to the last visited block and the mission ends.</text>
+    </line>
+    <line>
+      <text>If there are no urban blocks within the area, the mission ends and the report "no urban blocks within area" is displayed.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

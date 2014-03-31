@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Ensure victims evacuation">
+  <context>
+    <line>
+      <italic>
+        <text>To ensure evacuation of victims, with suitable device.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to evacuate victim units (such as refugee units, for instance), using a specified evacuation unit (a medical unit linked to the medical chain).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Victim units" optional="false">
+      <line>
+        <text>The team-mate agents inside which victims must be evacuated with the medical unit.</text>
+      </line>
+    </parameter>
+    <parameter name="Medical unit (log)" optional="false">
+      <line>
+        <text>The team-mate agent linked to the medical chain.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each 'Victim unit' (the agent that has wounded humans) in the list. The order of the elements in the 'Victim units' list defines the visit order. If a visited 'Victim unit' is not reachable (the unit is posted in an unreachable urban block for instance), it moves to a close position (the position closest to the 'Victim unit').</text>
+    </line>
+    <line>
+      <text>Upon reaching a 'Victim unit', the agent sends a request to the specified 'Medical Unit' to evacuate the 'Victim unit' (the report "victims evacuated" should be displayed). Wounded humans status comes from "on the battle field" to "in medical chain", meaning that wounded have been evacuated through the medical chain of the issued medical unit.</text>
+    </line>
+    <line>
+      <text>Note that the agent won't follow a moving 'Victim unit'.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The agent may not be able to ensure the wounded are evacuated. Causes could be:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the agent doesn't have the physical capability (the agent IS NOT defined as a medical unit)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the medical chain is not activated for the 'Medical unit'</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the visited 'Victims unit' does not contain wounded humans</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the visited 'Victims unit' has moved or the agent cannot reach it</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>If those cases are encountered, the agent moves to the next 'Victim unit', and the report "victims cannot be evacuated" should be displayed.</text>
+    </line>
+    <line>
+      <text>If the medical unit is not a logistic unit, the victim will not be evacuated, and the report "The medical unit is not a logistic unit" should be displayed.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When there are no more 'Victim units' to visit, the agent stays next to the last visited unit and the mission ends (even if a few of them haven't been evacuated).</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

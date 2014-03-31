@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Perform construction works">
+  <context>
+    <line>
+      <italic>
+        <text>To construct something.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to know how to create and build a set of planned objects that may be acted upon later on, or that may have an effect on the world. Thus, it is usually a mission preliminary to others.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Works" optional="false">
+      <line>
+        <text>the works to perform,</text>
+      </line>
+    </parameter>
+    <parameter name="Wait for reinforcement (default value is FALSE)" optional="true">
+      <line>
+        <text>defines if the agent needs to wait for potential reinforcement in case it cannot do a work.</text>
+      </line>
+    </parameter>
+    <parameter name="Instantaneously (default value is FALSE)" optional="true">
+      <line>
+        <text>define if agent will build issued elements (objects or urban blocks) instantaneously (magically).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each planned work to create (the order of traversal is defined by user). The positions reached to create each object are automatically determinated by the agent.</text>
+    </line>
+    <line>
+      <text>Upon reaching a construction position, the agent starts to create and construct the corresponding object (the "work just started" report should be displayed). Upon construction termination (the report "work completed for object [object name]" should be displayed), the agent moves to the next work to do (next construction position for the next objet to create).</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If the parameter "Instantaneously" is set to TRUE, the agents creates and build each issued work magically. In that specific case, the object construction do not depends on the agent's physical capabilities or the object definition.</text>
+    </line>
+    <line>
+      <text>A work may not be created. The possible causes are:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the agent doesn't have the physical capability or if it hasn't enough resources to do it.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the planned work cannot be created because it is not designed for (see object capacity "construction" in authoring tool),</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>If that specific case, the agent behaves in two ways depending on the 'waitForReinforcement" parameter:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>if it is set to false, the report 'Impossible work' is displayed, and the agent moves to the next work to create;</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>if it is set to 'true', agent will stay nearby the planned object and ask for reinforcement. It won't move to the next work until it is created.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>If needed, the agent dismounts to build an object.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission is done when all works have been visited (even if some of the objects couldn't be built).</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

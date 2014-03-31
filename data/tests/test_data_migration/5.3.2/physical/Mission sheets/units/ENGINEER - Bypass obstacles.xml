@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Bypass obstacles">
+  <context>
+    <line>
+      <italic>
+        <text>To reduce or negate the effects of existing or reinforcing obstacles. The objective is to maintain freedom of movement for maneuver units, weapons systems and critical supplies.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to bypass a set of sword objects. Bypassing an obstacle means to make it trafficable. Agents of the simulation becomes able to move through a bypassed obstacle with limited speed of movement.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Obstacles" optional="false">
+      <line>
+        <text>Objects to bypass.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach upon works termination.</text>
+      </line>
+    </parameter>
+    <parameter name="Wait for reinforcement" optional="true">
+      <line>
+        <text>Defines if agent should wait for reinforcement in case it cannot perform the bypassing action on an obstacle.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each obstacle to bypass.  It acts on each obstacle by following the order of the elements in the 'Obstacles' list. The position to bypass each obstacle is automatically determinated by the agent.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching an obstacle, the agent starts to remove mines if the obstacle is improved by them (the report "demining the object [object name]" should be displayed). Then, three possibilities:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the obstacle can be bypassed: the agent starts to bypass it (the report "work just started"  should be displayed).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the obstacle can be bypassed but the agent has no capacity to perform the action: the report "the agent cannot bypass the object" should displayed.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the obstacle cannot be bypassed: the agent starts to remove it (the report "work just started"  should be also displayed). If the obstacle cannot be removed either (if the agent doesn't have the physical capability or it hasn't enough resources to do it), the report 'Impossible work' is displayed. In this case the agent waits to be reinforced.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+    <ul>
+      <li>
+        <line>
+          <text>Upon work termination (the report "work completed for object [object name]" is displayed) the agent goes to next obstacle.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts to perform the work.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When all obstacles have been bypassed, the agent moves to the meeting position.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>Note that the bypassing delay can be very long (it can depend on the type and  shape of the obstacle).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the "wait for reinforcement" parameter is set to "true" (default vlaue is 'FALSE') the agent waits for reinforcement before visiting the next obstacle to bypass.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>At any times, the user can order the agent to visit the next obstacle by issuing the </text>
+          <bold>
+            <text>"Go to next objective</text>
+          </bold>
+          <text>" fragmentary order . If this order is issued when the agent is working on the last obstacle, the agent moves to the meeting position.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The meeting position is reached.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

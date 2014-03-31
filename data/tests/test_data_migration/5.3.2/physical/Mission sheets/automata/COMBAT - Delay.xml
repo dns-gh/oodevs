@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Delay">
+  <context>
+    <line>
+      <italic>
+        <text>To delay enemy advance from successive positions</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to occupy successively a set of destroying positions in order to engage encountered enemies.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Obstacles" optional="true">
+      <line>
+        <text>Set of obstacles ot errect by engineer units (no obstacle by default).</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach by the command post and engineer units after performing their mission.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Foward echelon units:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "Delay" mission to the teeth arm platoons, with the blocking positions as parameters,</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>The scouting platoons receive the "Disengage" mission with the meeting position as parameter,</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>The engineer units receive the "Perform construction works" mission if obstacles have to be errected (otherwise they receive the "follow" mission) </text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Rear echelon units:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>Other units (reserve and non adapted units) receive the "Disengage" mission with blocking positions as parameters.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>In case of an attack by an enemy, combat units of the rear echelon may receive the "combat support" mission(the enemy may be engaged).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>In case of a first echelon unit destruction, combat units of the rear echelon may releive this unit.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Subordinate units performing the "Delay" mission disengage:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>if the user issue an explicit order ("Disengage")</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>if the enemy has been engaged and if the force ratio is low</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>All the agent share the same issued area of responsability but receive different blocking positions.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Whenever a unit is tactically destroyed, it receives the "Disengage" mission with the meeting position as parameter</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <line>
+      <text>In order for the mission to go smoothly, it is strongly recommended to provide a Start Mission Line (SML) and an END Mission Line (EML).</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends when all the subordinate agents have finished their mission.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

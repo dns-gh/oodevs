@@ -1,0 +1,57 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>TRAFIC - Support unit movement</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          TRAFIC - Support unit movement</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>All actions performed by the units in traffic control to support the projection by land forces and movements according to the priorities set by the command. </i>
+<br>A unit which helps another unit to perform movement.<i></i>
+<br>In SWORD, to perform the movement of unit by supporting it. The agent follows friend unit to support. The friend support unit speed increases to the maximum speed of the slowest equipment depends of the terrain if the support unit wasn't in this speed : in cover mode or inside town.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>
+<h3>Friend</h3>Friend unit to support.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent moves toward the friend unit. The agent follows the friend unit. Average speed depends on the physical capabilities regarding to terrain properties.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

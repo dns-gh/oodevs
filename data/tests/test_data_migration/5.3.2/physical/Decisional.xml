@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<decisional model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Decisional.xsd">
+  <dangerosity-modifiers max-accuracy="20" max-neutralized-state="80" max-operational-state="20"/>
+  <operational-state-weights component="0.3" crew="0.25" major-component="0.7" threshold="0.1"/>
+  <force-ratio default-feedback-time="600s"/>
+  <urban-combat hit-factor="100"/>
+  <critical-intelligence-delay maximum-affinity="300s" minimum-affinity="1200s" neutral-affinity="300s"/>
+  <wound-effects-modificators available="1" captured="0" repairable="0.5" repairing="0.8" unavailable="0"/>
+</decisional>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Escort prisoners to jail">
+  <context>
+    <line>
+      <italic>
+        <text>A member of the Armed Forces assigned to accompany, assist, or guide an individual or group. </text>
+      </italic>
+    </line>
+    <line>
+      <text>An armed guard that accompanies a convoy, a train, prisoners, etc.</text>
+      <italic/>
+    </line>
+    <line>
+      <text>In SWORD, to accompany surrendered units toward a specific location (a position or a cam, for instance).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Camp" optional="false">
+      <line>
+        <text>Camp into which the agent has to accompany the surrendered units.</text>
+      </line>
+    </parameter>
+    <parameter name="Surrendered units" optional="false">
+      <line>
+        <text>Surrendered units to be transported to the given camp. </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each of the given surrendered units, from the nearest to the furthest.  If a unit position is not reachable (the unit is located inside an urban block inside which the agent cannot move, for instance), the agent moves as close as possible. Average speed depends on the physical capabilities regarding the terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a surrendered unit, the agent loads it (magic tranportation).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Once all units have been loaded, they are transported to the given camp.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the camp (the agent moves to the center of it), all surrendered units are unloaded into the camp. They become prisoners and are taken into account by the logistics unit of the camp.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>Note that if the issued object is not a camp (regarding the object's capacities in authoring tool), the mission ends with a failed status (the report "no camp available").</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>A prisoner unit may not be transported if it is not surrendered to the agent's side. In this case, the report "The unit is not surrendered" is displayed. If none of the issued agents is surrendered, the mission ends with a 'failed' status, displaying the report "No valid parameter".</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends once all the surrendered units have been jailed the camp.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

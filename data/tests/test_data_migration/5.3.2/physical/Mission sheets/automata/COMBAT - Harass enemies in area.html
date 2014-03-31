@@ -1,0 +1,117 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Harass enemies in area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Harass enemies in area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>Mission to destroy or at least to neutralize the enemy hidden elements, infiltrated or during infiltration and exfiltration in a given area.</i>
+<br>In SWORD, to observe an area and to occupy positions in order to engage identified units in this area.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>the right and left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>the right and left boundaries inside which the agent perform the mission.<br>
+<h3>Area</h3>The area inside which the subordinates harass encountered enemies.<br>
+<h3>Meeting position</h3>The position to be reached by rear echelon units (such as the command post unit)<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Positions</h3>The positions from which the subordinate units harass encountered enemies.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>Foward echelon units:<br>
+</li>
+<ul>
+<ul>
+<ul>
+<li>First case: positions are issued.<br>
+</li>
+<ul>
+<li>The commander agent issues the "Harass enemies in area" mission to the armor platoons, with the area and positions as parameters. Positions are fairly shared between platoons.<br>
+</li>
+</ul>
+<li>Second case: no position issued.<br>
+</li>
+<ul>
+<li>The commander agent computes sub-area into the provided area and issues the "Harass enemies in area" mission to the armor platoons, with a sub-area as parameters (one sub area per subordinate unit).<br>
+</li>
+</ul>
+</ul>
+</ul>
+</ul>
+<li>Rear echelon units:<br>
+</li>
+<li>Other units (reserve and non adapted units) receive the "moveTo" mission with the with the meeting position as parameter.<br>
+</li>
+<ul>
+<ul>
+<li>Units able to perform indirect fires (such as mortar troops) receive the "Provide indirect fires (dynamic)" mission with harassing units as parameter.<br>
+</li>
+</ul>
+</ul>
+<li>All the agents share the same issued area of responsability.<br>
+</li>
+</ul>
+<ul>
+<li>harass enemies in area without position:<br>
+</li>
+</ul>
+
+<img alt="COMBAT - Harass enemies in area with position.png" src="./Images/COMBAT - Harass enemies in area/COMBAT - Harass enemies in area with position.png"/><br>
+<ul>
+<li>harass enemies in area with positions:<br>
+</li>
+</ul>
+
+<img alt="COMBAT - Harass enemies in area without position.png" src="./Images/COMBAT - Harass enemies in area/COMBAT - Harass enemies in area without position.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>
+<ul>
+<li>If no position issued, the subordinate units tries to retreive key positions inside the area. Key positions are defined by:<br>
+</li>
+<ul>
+<li>crossroads<br>
+</li>
+<li>roads intersections with the company area<br>
+</li>
+<li>urban blocks.<br>
+</li>
+</ul>
+</ul>Beware before issuing this mission to choose carefully the area. If area is located in open terrain without many roads inside, the mission won't be performed in a good way if user don't designate the positions.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission terminates when all subordinate units have reached the meeting position.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="LOG - Convey (with frago)">
+  <context>
+    <line>
+      <text>In Sword, for a logistics agent (see type of agent in the authoring tool), to automatically supply recipients that have asked for resources. It is automatically issued by the Sword simulation when convoys are created if units ask to be re-supplied.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The visible behavior that is performed by the agent is described as follows:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the agent waits for its vehicle to be set up (another agent provides vehicles to create the convoy). The report "convoy is being prepared" is displayed.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>Then, the agent moves to the supplier, and loads supplies (the reports "moving to supplier" and then "convoy: loading" are displayed).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>Once it has finished, it moves to the recipient and unloads supplies (the reports "moving toward unloading point" and then "convoy: unloading" are displayed).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>It then moves to the vehicle provider (the agent that set up the convoy) and the mission ends and terminates.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+    <line>
+      <bold>
+        <text>Before each movement, the user should issue the fragmentary order "resume convoy movement" </text>
+      </bold>
+      <text>. If it doesn't, the agent waits for that fragorder to be issued. This allow the user to issue a "protect" or an "escort" mission to other units. with the convoy as parameter.</text>
+    </line>
+    <line>
+      <link>
+        <text>LOG - Convey.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>In case of pushed flux, it possible for the convey to move and suplliy several recipients. In that case, the agent moves to the first one, unloads supplies, then moves to the second one and so on... </text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>When the mission terminates, the created convoy "disappears" from the orbat (the vehicles return inside provider, and the convoy no longer exists).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The user can terminate the mission by issuing another mission or a fragmentary order. The user can then reissue the mission (by left-clicking on the unit) and the agent will be able to continue the resupply action.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>For more information about the stages of the supply actions, you can open the the supply system window (see screenshot). From here you will be able to follow the processing consigns (by double-clicking on each consign).</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>LOG - Processing consigns.png</text>
+      </link>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>When the convoy has returned back the vehicle provider (the unit which has created the convoy).</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="LOG - Convey.png"/>
+    <attachment name="LOG - Processing consigns.png"/>
+  </attachments>
+</mission-sheet>

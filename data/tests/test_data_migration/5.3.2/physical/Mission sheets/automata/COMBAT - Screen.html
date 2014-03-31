@@ -1,0 +1,89 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Screen</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Screen</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>Combat action which is to inform the ongoing progress of a running enemy in front of him with mobile elements which, without engage or identify, seize any opportunity to clarify the information to the enemy</i>
+<br>In sword, to move from one position to another in order to monitor appoaching enemies.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected ennemy direction.<br>
+<h3>Phase lines</h3>the lines onto which the surbordinate coordinate to stay aligned<br>
+<h3>Limit 1</h3>the right and left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>the right and left boundaries inside which the agent perform the mission.<br>
+<h3>Meeting position</h3>Position to reach after the crossing of the last line.<br>
+<h2>Optional</h2>
+<h3>Echelon number</h3>define if the maneuver is organized into one or two echelons (default value is '2')<br>
+<h3>Obstacles</h3>Set of obstacles to build.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>Forward echelon units:<br>
+</li>
+<ul>
+<li>The commander agent issues the "screen" mission to the subordinate platoons.<br>
+</li>
+</ul>
+<li>Rear echelon units:<br>
+</li>
+<ul>
+<li>Support units (like mortars) receive one of the support missions: "support indirect fire", "support direct fire" or "support movement" depending on their abilities;<br>
+</li>
+<li>Other units (non adapted units) and the CP receive the "disengage" mission with the meeting point as parameter.<br>
+</li>
+</ul>
+<li>The commander assigns the given lines as observing positions for the subordinates. The forward echelon units move and stand on the line. They are distributed such a way that the units occupy the all width of the area of responsability on the line.<br>
+</li>
+<li>When enemies are approaching, if the  force ratio of the company is low (or if the user issues the "disengage" fragmentary order), the commander agent orders its forward echelon to disengage and move to the next unoccupy positions.<br>
+</li>
+<li>This continues until the last line is reached.<br>
+</li>
+<li>Upon crossing the last line, all the subordinates are ordered to move to the end of the responsability of area. <br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>
+<ul>
+<li>Upon issuing the mission, the commander agent coordinates its subordinate units in order to keep them aligned.<br>
+</li>
+<li>Before issuing the mission, be sure that the entire company is located before the first line.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another one is issued by user (or "the cancel maneuver" fragmantary order).<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

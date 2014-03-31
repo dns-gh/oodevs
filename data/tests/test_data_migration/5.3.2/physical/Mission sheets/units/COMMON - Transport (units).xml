@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Transport (units)">
+  <context>
+    <line>
+      <italic>
+        <text>To provide general transport service in the movement of personnel and cargo.</text>
+      </italic>
+    </line>
+    <line>
+      <text>For a Sword agent, to transport personnel and/or cargo (components of units) over short or medium distances.  In Sword, the transportation of cargo/troops is managed within a specific simulation module. To transport components of another unit, the agent makes as many round trips it is necessary, depending on its transportation capabilities (see the authoring tool, the 'Cargo transport' data in 'Equipment ' section).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Units" optional="false">
+      <line>
+        <text>Units to transport.</text>
+      </line>
+    </parameter>
+    <parameter name="Embarkation area" optional="false">
+      <line>
+        <text>The area to reach to load the troops.</text>
+      </line>
+    </parameter>
+    <parameter name="Route" optional="false">
+      <line>
+        <text>The route through which the agent must transport the crowd, and at the end of which the unloading will take place.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach after the troops transportation.</text>
+      </line>
+    </parameter>
+    <parameter name="Vehicles transportation" optional="true"/>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given 'embarkation area'.  If it is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, otherwise it moves to the center of the area. Average speed depends on the physical capabilities taking into account terrain properties. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the embarkation area, the agent loads components of issued units and starts round trips between the position and the route.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Once all the units have been unloaded at the end of the route, the agent moves to the meeting position.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>To get transported the units must:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>be INSIDE the embarkation area,</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>perform the "GetTransported" misssion.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <underlined>
+        <text>A unit may not be transported</text>
+      </underlined>
+      <text> if the agent does not have the capability to transport it.</text>
+    </line>
+    <line>
+      <text>If not, the agent displays the message "waiting the units to get ready"</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>A flying agent receiving this mission will firstly take off, then move towards the objective the embarkation area (just like a regular agent), then will land upon arrival. The agent will take off again when transporting the troops, and land at the meeting point.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission terminates when the meeting position is reached.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

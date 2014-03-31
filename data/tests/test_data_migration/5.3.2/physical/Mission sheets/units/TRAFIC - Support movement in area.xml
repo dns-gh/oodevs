@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="TRAFIC - Support movement in area">
+  <context>
+    <line>
+      <italic>
+        <text>All actions performed by the units in traffic control to support the projection by land forces and movements according to the priorities set by the command in an area.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to create a movement enhanced area (an object) where friend agents move at their maximum speed inside it.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>the right and left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>the right and left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Movement enhanced area" optional="false">
+      <line>
+        <text>(planned object): the movement enhanced area object to perform.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the movement forbidden area to perform. The position reached to perform it is automatically determinated by the agent. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a construction position, the agent constructs instantaneously the object. The report "work just started" should be displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>At the end of the mission, the movement enhanced area is instantaneously removed.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <line>
+      <text>The speed of any friend agent which moves inside the movement enhanced area will be increased at his maximum.  </text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission continues until another mission.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

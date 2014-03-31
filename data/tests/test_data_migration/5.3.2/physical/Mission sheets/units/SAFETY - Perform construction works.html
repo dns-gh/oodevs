@@ -1,0 +1,72 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Perform construction works</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Perform construction works</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To construct something.</i>
+<br>In SWORD, to know how to create and build a set of planned objects that may be acted upon later on, or that may have an effect on the world. Thus, it is usually a mission preliminary to others.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Works</h3>the works to perform,<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Wait for reinforcement (default value is FALSE)</h3>defines if the agent needs to wait for potential reinforcement in case it cannot do a work.<br>
+<h3>Instantaneously (default value is FALSE)</h3>define if agent will build issued elements (objects or urban blocks) instantaneously (magically).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent moves toward each planned work to create (the order of traversal is defined by user). The positions reached to create each object are automatically determinated by the agent.<br>Upon reaching a construction position, the agent starts to create and construct the corresponding object (the "work just started" report should be displayed). Upon construction termination (the report "work completed for object [object name]" should be displayed), the agent moves to the next work to do (next construction position for the next objet to create).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>If the parameter "Instantaneously" is set to TRUE, the agents creates and build each issued work magically. In that specific case, the object construction do not depends on the agent's physical capabilities or the object definition.<br>A work may not be created. The possible causes are:<br>
+<ul>
+<li>the agent doesn't have the physical capability or if it hasn't enough resources to do it.<br>
+</li>
+<li>the planned work cannot be created because it is not designed for (see object capacity "construction" in authoring tool),<br>
+</li>
+</ul>If that specific case, the agent behaves in two ways depending on the 'waitForReinforcement" parameter:<br>
+<ul>
+<li>if it is set to false, the report 'Impossible work' is displayed, and the agent moves to the next work to create;<br>
+</li>
+<li>if it is set to 'true', agent will stay nearby the planned object and ask for reinforcement. It won't move to the next work until it is created.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>If needed, the agent dismounts to build an object.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission is done when all works have been visited (even if some of the objects couldn't be built).<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

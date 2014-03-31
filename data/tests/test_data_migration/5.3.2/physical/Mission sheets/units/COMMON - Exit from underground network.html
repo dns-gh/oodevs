@@ -1,0 +1,72 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMMON - Exit from underground network</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMMON - Exit from underground network</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To exit from underground network (such as sewer, metro...) toward a given objective.</i>
+<br>In Sword, to make the agent exit an underground network. <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Objective</h3>Final objective to reach.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent simply gets out of the network (from its current occupied gateway) and then moves toward the given objective. If it is not reachable (the object is located inside an urban block withing which the agent cannot move), the agent moves as close as possible. Average speed depends on the physical capabilities while taking into account terrain properties.<br>
+</li>
+<li>Upon reaching the objective the mission terminates.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>The agent won't be able to EXIT if:<br>
+<ul>
+<li>the current underground exit is deactivated. In this case the agent waits until the exit is activated. Once this is done (with a magic frag order on the object, for instance) the agents gets out and finishes the mission in a normal way.<br>
+</li>
+<li>the current occupied gateway is destroyed (the object has disapeared): to get the agent out another gateway belonging to the network should be reached via the "Move within an underground network" mission. The a new mission "Exit from underground network" should then be issued.<br>
+</li>
+</ul>
+
+<img alt="COMMON - Exit from underground network.png" src="./Images/COMMON - Exit from underground network/COMMON - Exit from underground network.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>For the agent, to exit from an underground network. This skill doesn't take an exit gateway as parameter. It only makes the agent go from the underground world to the outside world by moving toward a simple reachable objective.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends once the objective is reached.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Change ROE">
+  <context>
+    <line>
+      <text>To order the agent to change its rules of engagement. </text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="ROE type" optional="false">
+      <ul>
+        <li>
+          <line>
+            <bold>
+              <text>Free fire</text>
+            </bold>
+            <text>: the agent is free to open fire to any enemi unit, depending on its mission. This rule doesn't mean that the agent automatically open fire when an enemy is in range. This should happen only through the mission the agent is performing (attack or recce in force for instance).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <bold>
+              <text>Retaliation only</text>
+            </bold>
+            <text>: the agent can only fire back to units that have previously open fire on it. </text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <bold>
+              <text>Fire upon orde</text>
+            </bold>
+            <text>r: the agent never open fire, even if it is attacked.</text>
+          </line>
+        </li>
+      </ul>
+    </parameter>
+  </parameters>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

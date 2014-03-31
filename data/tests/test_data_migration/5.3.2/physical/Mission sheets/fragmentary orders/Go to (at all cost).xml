@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Go to (at all cost)">
+  <context>
+    <line>
+      <text>For the agent to reach a given destination at ALL COST. This order will make tha agent moves to the destination even if it is performing a mission. </text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Objective" optional="false">
+      <line>
+        <text>Objective to reach at all cost.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>This order is not permanent: upon reaching the objective, the task terminates and the agent moves on with its current mission.</text>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

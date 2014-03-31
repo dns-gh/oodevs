@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Heal victims within crowds">
+  <context>
+    <line>
+      <italic>
+        <text>To bring immediate assistance and first aid on the spot in disasters.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to heal on the spot wounded victims within a set of crowds.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Crowds" optional="false">
+      <line>
+        <text>The set of crowds to heal.</text>
+      </line>
+    </parameter>
+    <parameter name="Rally point" optional="false">
+      <line>
+        <text>Position to reach after performing the mission.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues a "Heal victims within crowds" order to each capable agent. Every one of them is given a single crowd to heal victims from (the closest one to them), and whenever a subordinate has finished to process a crowd, another crowd is given to him, for as long as there are crowds left to process. When there are no longer such crowds, the subordinates are given a *Move To" order to the rally point instead.</text>
+        </line>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <line>
+          <text>The other units receive a *Move To* order to the rally point.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>Victims from a visited crowd may not be healed if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the visited Crowd does not contain wounded humans ( the report "no wounded victims" and "Wounded cannot be healed" should be displayed)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the visited Crowd has moved (the agent won't follow the crowd) or the agent cannot reach it .</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this case, the agent decides to act on the next crowd.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all the subordinate agents have reached the rally point.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

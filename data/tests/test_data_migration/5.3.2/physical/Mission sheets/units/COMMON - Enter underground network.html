@@ -1,0 +1,71 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMMON - Enter underground network</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMMON - Enter underground network</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To get into an underground network such as sewer, metro...</i>
+<br>In Sword, to move toward a network entrance (a sowrd knowledge object) in order to get in underground network. This mission is priliminary to the mission "move within an underground network. <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Entrance</h3>Entrance to get in the underground network.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the given underground entrance. If it is not reachable (the object is located inside a urban block which the agent cannot move within), the agent moves as close as possible. Average speed depends on the physical capabilities regarding the terrain properties.<br>
+</li>
+<li>Upon reaching the underground entrance, the agent dismounts (if needed,) and enters the network.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>While moving through an underground network entrance, the agent won't be able to ENTER if:<br>
+<ul>
+<li>the underground entrance is deactivated. In this case the agent waits for the entrance to be activated. Once it is done (with a magic frag order on the object, for instance) the agents gets out and finishes the mission in a normal way.<br>
+</li>
+<li>the underground entrance is destroyed (the object disappears): in this case the agent moves to the entrance position and the mission has failed.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends once the unit is in the underground entrance.<br>
+
+<img alt="COMMON - Enter underground network.png" src="./Images/COMMON - Enter underground network/COMMON - Enter underground network.png"/><br>
+</td>
+</tr>
+</table>
+</body>
+</html>

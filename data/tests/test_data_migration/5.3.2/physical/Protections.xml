@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<protections model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Armors.xsd">
+  <protection name="HeavyTank" type="materiel">
+    <neutralization average-time="300s" variance="60s"/>
+    <random-breakdown-probability eva="8" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="MediumTank" type="materiel">
+    <neutralization average-time="600s" variance="180s"/>
+    <random-breakdown-probability eva="8" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="LightTank" type="materiel">
+    <neutralization average-time="900s" variance="180s"/>
+    <random-breakdown-probability eva="4" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="ArmouredCarrier" type="materiel">
+    <neutralization average-time="1200s" variance="600s"/>
+    <random-breakdown-probability eva="4" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="Aircraft" type="materiel">
+    <neutralization average-time="900s" variance="180s"/>
+    <random-breakdown-probability eva="4" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="UnarmouredVehicle" type="materiel">
+    <neutralization average-time="1200s" variance="600s"/>
+    <random-breakdown-probability eva="4" neva="0"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="15" equipment-state="ReparableAvecEvacuation" injured-percentage="60"/>
+      <attrition-effect dead-percentage="10" equipment-state="ReparableSurPlace" injured-percentage="40"/>
+      <attrition-effect dead-percentage="15" equipment-state="Detruit" injured-percentage="75"/>
+    </attrition-effects>
+  </protection>
+  <protection name="Combatant" type="humain">
+    <neutralization average-time="300s" variance="420s"/>
+  </protection>
+  <protection name="Individual" type="humain">
+    <neutralization average-time="300s" variance="420s"/>
+  </protection>
+</protections>

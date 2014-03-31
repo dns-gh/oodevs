@@ -1,0 +1,64 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Harass enemies in area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Harass enemies in area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>Mission to destroy or at least to neutralize the enemy hidden elements, infiltrated or during infiltration and exfiltration in a given area.</i>
+<br>In SWORD, to observe an area and to occupy positions in order to engage identified units in this area.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Area</h3>The area into which the agent will shoot the enemies.<br>
+<h3>Meeting position</h3>Meeting position to reach upon mission completion.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Positions</h3>Positions the agent will occupy to shoot the enemies.<br>
+<h3>Permanent</h3>Whether or not the agent will stop the mission when all the positions have been occupied.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent reaches a position (selected automatically by the agent among the given positions) to observe the area. The agent will therefore observe this objective so that it will engage the enemies: any identified enemy that passes inside the area will, if possible, be destroyed. Every time the agent fires, it will move to a  previously unoccupied position, until all the positions have been occupied. The agent then starts over from the first position, or ends his mission by going to the meeting position, depending on the value of the boolean "Permanent" (by default, the agent will go the meeting position).<br>
+
+<img alt="harassArea1.png" src="./Images/COMBAT - Harass enemies in area/harassArea1.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>The positions may or may not be inside the area. An example of a case where the positions are outside the area:<br>
+
+<img alt="harassArea2.png" src="./Images/COMBAT - Harass enemies in area/harassArea2.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>If the boolean "Permanent" is set to <b>False</b> (value by default), the mission will end once all the positions have been occupied. Otherwise, the mission continues until another mission is given.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

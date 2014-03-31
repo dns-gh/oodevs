@@ -1,0 +1,65 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Transport a crowd</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Transport a crowd</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To ensure evacuation of victims, with adapted device toward adapted structure. e.g. to transport victims to an Hospital or to a place to care for victims.</i>
+<br>In SWORD, transporting crowds allows to move them to a given location with appropriate means. Thus, the victims extracted from a Crowd could be transported to a given position to receive care.<br>Because the agent can only transports crowds' concentrations, this mission needs a loading position to indicate which concentration to transport. Indeed, a crowd can be compouded with several separated concentrations and only one concentration can be transported at a time. The agent will transport the nearest concentration from the "loadingPoint" parameter.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Crowd</h3>the crowd to transport,<br>
+<h3>Target destination</h3>the location to unload the transported crowd.<br>
+<h3>Loading position</h3>the loading position, used to designate the concentration to transport,<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent moves toward the crowd's concentration position, loads as many humans as possible from the issued crowd (the concentration position must be located onto of the concentration of the issued crowd). The report ("transport:embarking" is displayed). When it is over, the agent moves toward the target destination, and then unloads the previously loaded humans (the report "transport:disembarking" is displayed), by creating a new crowd concentration (the crowd has now two concentrations).<br>Depending on its crowd transport capacity, the agent will make as many round trips as necessary between the 'crowd concentration position' and the 'target destination'.<br>The mission continues until there is no more crowd concentration left nearby the loading position.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>The crowd may not be transported if:<br>
+<ul>
+<li>the agent cannot load crowd's concentration due to non-adapted physical capabilities (see "crowd transport" option, "equipements" section in authoring tool),<br>
+</li>
+<li>the crowd's "concentration position" parameter is not located on the crowd to transport. <br>
+</li>
+</ul>In that specific case, the trace "no crowd's concentration on loading position" is displayed, and the mission ends.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>If the target destination is not reachable, the agent moves as close as possible and then unloads the crowd on the target position anyway.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td></td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,2 @@
+<?xml version="1.0" ?>
+<svg style="stroke-linecap:square;stroke:rgb(0,0,0);stroke-width:2"><polyline points="200,373 373,200 200,27 27,200 200,373" class="border"/><g transform="translate(90 43) scale(0.55 0.5)"><path d="M190 126 L200 100 L210 126 z" style="fill:none;"/><line style="fill:none;" x1="200" x2="200" y1="100" y2="280"/><ellipse cx="200" cy="295" rx="13" ry="13" style="fill:none;"/></g><g transform="translate(20 132) scale(0.9 0.5)"><path d="M140 140 C80 140 80 260 140 260 L260 260 C320 260 320 140 260 140 z" style="fill:none;"/></g></svg>

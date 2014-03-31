@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Clean area from obstacles">
+  <context>
+    <line>
+      <italic>
+        <text>To reduce or negate the effects of existing or reinforcing obstacles. The objective is to maintain freedom of movement for maneuver units, weapons systems and critical supplies.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to remove a set of given obstacles (such as mines, barricades etc.) in a given area. </text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>Area to clean.</text>
+      </line>
+    </parameter>
+    <parameter name="Wait for reinforcement" optional="true">
+      <line>
+        <text>Defines if agent should wait for reinforcement in case it cannot perform the cleairing action on an obstacle.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the area and reconnoiters it. This stage should allow the agent to discover objects within the area. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reconnaissance termination, the agent moves toward each obstacle to remove (all objects may not be considered 'obstacles').  Note that order of visit is randomly determined. The position from which to remove each obstacle is automatically determined by the agent. If an obstacle is improved with mines, the agent needs to remove mines before starting to deconstruct it (and therefore causes more delays).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching an obstacle, the agent starts to remove it (the report "work just started"  should be displayed). Upon work termination (the report "work completed for object [object name]" is displayed) and the agent goes to next obstacle.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>An obstacle may not be removed if the agent doesn't have the physical capability or it hasn't enough resources. In this specific case, the report 'Impossible work' is displayed, and the agent reaches the next obstacle to remove.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts to remove the obstacle.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When all obstacles have been removed, the agent moves to the center of the area and the missions ends.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If the "wait for reinforcement" parameter is set to "true" (default vlaue is 'FALSE') the agent waits for reinforcement before visiting the next obstacle to remove.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>At any times, the user can order the agent to visit the next obstacle by issuing the </text>
+          <bold>
+            <text>"Go to next objective</text>
+          </bold>
+          <text>" fragmentary order . If this order is issued when the agent is working on the last obstacle, the agent moves to the center of the area and the mission terminates.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>Use case: the area has been reconnoitered (end of the first mission stage):</text>
+    </line>
+    <line>
+      <link>
+        <text>ENGINEER - Clean area from obstacles 1.png</text>
+      </link>
+    </line>
+    <line>
+      <text>Use case: the area has been cleaned:</text>
+    </line>
+    <line>
+      <link>
+        <text>ENGINEER - Clean area from obstacles 2.png</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>'Obstacles' are "buildable", "removable" objects, such as defined in the authoring tool ('objects' tab, 'capacities' session).</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>When all known obstacles has been visited (and may be removed or not) into the provided area.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="ENGINEER - Clean area from obstacles 1.png"/>
+    <attachment name="ENGINEER - Clean area from obstacles 2.png"/>
+  </attachments>
+</mission-sheet>

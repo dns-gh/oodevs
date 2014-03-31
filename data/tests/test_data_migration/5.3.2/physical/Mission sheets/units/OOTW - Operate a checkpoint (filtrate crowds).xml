@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="OOTW - Operate a checkpoint (filtrate crowds)">
+  <context>
+    <line>
+      <italic>
+        <text>To operate a checkpoint in order to filter crowds and detect infiltrating terrorists</text>
+      </italic>
+      <text>.</text>
+    </line>
+    <line>
+      <text>In SWORD, operating a checkpoint (a Sword object can have the ability to filter crowds) allows the agent to detect terrorists, disarm and control movements of encountered crowds.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Checkpoint position" optional="false">
+      <line>
+        <text>The location at which the agent will create the checkpoint.</text>
+      </line>
+    </parameter>
+    <parameter name="Body search strength" optional="true">
+      <line>
+        <text>The intensity of the body search at the checkpoint. </text>
+      </line>
+      <line>
+        <text>A value of 100% means that all armed persons in the crowd will be disarmed. The stronger this is, the harder it is for the crowd to cross the checkpoint.</text>
+      </line>
+    </parameter>
+    <parameter name="Safety position" optional="false">
+      <line>
+        <text>The position to reach when the agent cannot stand in front of uncontrolled crowds.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the work location and creates (magically) a checkpoint (the report "control point established" should be displayed). </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Then the agent moves to the center of the checkpoint in order to operate it (the report "element [object name] is being operated should be displayed).</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>OOTW - Operate a checkpoint.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If the work location is not reachable, the agent moves as close as possible, otherwise it moves to a close position (the position closest to the center of the future object) and the agent builds the object. In this case, it is possible that the object is not built at the exact location.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If encountered crowds cannot be controlled (see specific reports) the checkpoint may be destroyed and the agent may protect itself by moving to the given safety position. </text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>This mission has a few different effects:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>encountered crowds are </text>
+          <underlined>
+            <text>disarmed</text>
+          </underlined>
+          <text> with a ratio depending on the given 'body search strength' parameter</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>encountered crowds are </text>
+          <underlined>
+            <text>controlled</text>
+          </underlined>
+          <text> by the agent. If not, the agent protects itself and </text>
+          <underlined>
+            <text>the checkpoint is destroyed</text>
+          </underlined>
+          <text>.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the filtration intensity depends on the ratio of persons to disarm (if the "body search strength" is 0, the filtration intensity will be low, if the "body search strength" is high, the filtration will be high).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>if terrorists hide in an encountered crowd, the agent may </text>
+          <underlined>
+            <text>capture</text>
+          </underlined>
+          <text> them.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>Note that terrrorists are captured only if they </text>
+      <underlined>
+        <text>cross the effective area of the checkpoint</text>
+      </underlined>
+      <text>. They cannot be detected with normal sensors. Here only the checkpoint (see 'Objects' capacity in the authoring tool) is able to ensure the detection and capture of a terrorist by the agent. </text>
+    </line>
+    <line>
+      <text>1) the agent is filtering a quiet crowd:</text>
+    </line>
+    <line>
+      <link>
+        <text>OOTW - Operate a checkpoint2.png</text>
+      </link>
+    </line>
+    <line>
+      <text>2) A terrorist is detected:</text>
+    </line>
+    <line>
+      <link>
+        <text>OOTW - Operate a checkpoint3.png</text>
+      </link>
+    </line>
+    <line>
+      <text>3) The terrorist is captured:</text>
+    </line>
+    <line>
+      <link>
+        <text>OOTW - Operate a checkpoint4.png</text>
+      </link>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The agent remains at the checkpoint until mission termination.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="OOTW - Operate a checkpoint.png"/>
+    <attachment name="OOTW - Operate a checkpoint2.png"/>
+    <attachment name="OOTW - Operate a checkpoint3.png"/>
+    <attachment name="OOTW - Operate a checkpoint4.png"/>
+  </attachments>
+</mission-sheet>

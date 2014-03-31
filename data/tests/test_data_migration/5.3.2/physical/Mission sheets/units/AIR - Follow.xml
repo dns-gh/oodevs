@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="AIR - Follow">
+  <context>
+    <line>
+      <italic>
+        <text>To follow an aircraft.</text>
+      </italic>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Aircraft" optional="false">
+      <line>
+        <text>Aircraft to follow.</text>
+      </line>
+    </parameter>
+    <parameter name="Height" optional="true">
+      <line>
+        <text>Height to reach (in meters, default is 2000m).</text>
+      </line>
+    </parameter>
+    <parameter name="Distance" optional="true">
+      <line>
+        <text>The minimum distance between the agent and the aircraft to follow (in meters, default value is 500 meters).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent takes off and then flies behind the given aicraft.</text>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

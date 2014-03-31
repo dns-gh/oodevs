@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="AAVN - Air lift">
+  <context>
+    <line>
+      <italic>
+        <text>To provide general transport service in the movement of personnel and cargo.</text>
+      </italic>
+    </line>
+    <line>
+      <text>For a Sword agent, to perform the carriage of personnel and/or cargo (components of units) over short or medium distances.  In sword, the transportation of cargo/troops is managed within a specific simulation module. To transport components of another unit, the agent makes as many round trips it is necessary regarding to its transportation capabilities  (see authoring tool, the 'Cargo transport' data in 'Equipements ' section)..</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Units" optional="false">
+      <line>
+        <text>Units to transport.</text>
+      </line>
+    </parameter>
+    <parameter name="Embarkation area" optional="false">
+      <line>
+        <text>The area to reach to load the troops.</text>
+      </line>
+    </parameter>
+    <parameter name="Route" optional="false">
+      <line>
+        <text>The route through which the agent must transport the crowd, and at the end of which the unloading will take place.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach after the troops transportation.</text>
+      </line>
+    </parameter>
+    <parameter name="Vehicles transportation" optional="true"/>
+    <parameter name="Synchronized transport" optional="false">
+      <line>
+        <text>Whether the subordinates should wait for each other every time they leave the embarking/disembarking point or not.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Transport" mission to subordinate units (the number of subordinate to perform the transportation mission depends on the number of units to transport and the number of subordinates able to perform the 'Transport' mission). Normally, the commander agent uses the same number of subordinates as there are units to transport.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the "Synchronized transport" parameter is set to "Wait for other subordinates", every subordinate will wait for all the other transporting subordinates before leaving the embarking/disembarking position, so that they all leave together.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Subordinate units that cannot perform the transportation (due to incompatible physical capability) move directly to the meeting position.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <underlined>
+        <text>A unit may not be transported</text>
+      </underlined>
+      <text> if one of the subordinate units has not the capability to transport it.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>Units to transport need to perform the "Get transported" mission. </text>
+    </line>
+    <line>
+      <text>They also need to be </text>
+      <underlined>
+        <text>located inside the "embarkation area"</text>
+      </underlined>
+      <text>. If not, the subordirnates agents waits for specified units to be located into the 'embarkation area' and then the transportation begins.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends when all first echelon units have reached their objective.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

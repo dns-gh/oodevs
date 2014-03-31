@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Crowd - Move to">
+  <context>
+    <line>
+      <italic>
+        <text>To move to an objective.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, a moving crowd is modeled as a flux with a constant flow, which can be altered by terrain and obstacles.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="WayPoints" optional="false">
+      <line>
+        <text>Objective to reach.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the objective, following a computed route. If an obstacle is encountered on the way to the objective, the crowd stops and a new temporary concentration is created. The mission is suspended until the obstacle is removed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The agent is considered as entirely moved when the tail of the flux has reached the given objective.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>Upon movement termination, the mission terminates.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

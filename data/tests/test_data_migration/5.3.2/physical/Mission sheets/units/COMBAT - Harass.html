@@ -1,0 +1,92 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Harass</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Harass</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>Mission to destroy or at least to neutralize enemy hidden elements, infiltrated or during infiltration and exfiltration in a given area.</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>
+<h3>Objective</h3>Position where you want to harass enemies.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Entities to harass</h3>Enemies agents to harass.<br>
+<h3>Destroying positions</h3>Positions for observing objective where begin to harass enemies.<br>
+<h3>Obstacles</h3>Obstacles to build.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent reaches a position (selected automatically by the agent) to observe the objective. The report 'zone control: started' should be displayed. The agent will therefore observe this objective to be able to engage the identified enemy elements. Any identified enemy that passes inside the objective (area or urban block) will, if possible, be destroyed. If some destroying positions are given, the agent moves between them. When the agent stops to observe the objective, the report 'zone control: stopped' should be displayed.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>destroying positions:   <br>
+</li>
+<ul>
+<li>If no destroying positions are given:<br>
+</li>
+<ul>
+<li>the agent reaches the center of the objective if possible;<br>
+</li>
+<li>otherwise, the agent reaches the nearest postion that it can reach in the objective.<br>
+</li>
+</ul>
+<li>If at least one destroying position is given as parameter:<br>
+</li>
+<ul>
+<li>the agent reaches one of the destroying positions and observes the objective. The choice of the destroying position is automatically computed by the agent.<br>
+</li>
+<li>If an enemy could be engaged, the agent could move from the destroying position to other destroying positions in order to find the best position to apply direct fire and engage the enemy.<br>
+</li>
+</ul>
+</ul>
+<li>If obstacles are given as parameters:<br>
+</li>
+<ul>
+<li>the agent will construct them at the beginning of the mission if the agent has the capacity and the dotation to build them.<br>
+</li>
+<li>if withImprovement parameter is true, the obstacles will be improved (mining) by the agent if the agent has the capacity and the dotation to mine it.<br>
+</li>
+</ul>
+<li>If enemy agents are given as parameters, engage them, otherwise engage any enemy located inside the objective.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission continues until another mission is issued.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

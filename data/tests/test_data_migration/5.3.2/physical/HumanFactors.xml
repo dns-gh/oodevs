@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<humans-factors model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/HumanFactors.xsd">
+  <experience-factor>
+    <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Veteran"/>
+    <modifier loading-time="1.2" max-speed="0.9" ph="0.9" posture-setup-time="1.5" sensor-distance="0.9" state="Experimente"/>
+    <modifier loading-time="3" max-speed="0.6" ph="0.6" posture-setup-time="3" sensor-distance="0.8" state="Conscrit"/>
+  </experience-factor>
+  <tiredness-factor>
+    <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Normal"/>
+    <modifier loading-time="2" max-speed="0.8" ph="0.8" posture-setup-time="2" sensor-distance="0.8" state="Fatigue"/>
+    <modifier loading-time="4" max-speed="0.6" ph="0.6" posture-setup-time="4" sensor-distance="0.6" state="Epuise"/>
+  </tiredness-factor>
+  <stress-factor>
+    <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Calm"/>
+    <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Worried"/>
+    <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Stressed"/>
+  </stress-factor>
+  <automatic-evolution>
+    <tiredness-evolution engine-running="0" engine-stopped="-10" first-threshold="100" moving="10" second-threshold="200" working="20"/>
+    <stress-evolution dec-per-hour="-20" first-threshold="10" inc-per-shot="10" second-threshold="50"/>
+  </automatic-evolution>
+</humans-factors>

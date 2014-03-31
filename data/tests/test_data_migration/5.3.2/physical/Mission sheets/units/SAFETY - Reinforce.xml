@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Reinforce">
+  <context>
+    <line>
+      <text>In SWORD, a mission in which one unit augments the capability of another unit.</text>
+    </line>
+    <line>
+      <text>This mission requires the following parameter:</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Target unit" optional="false">
+      <line>
+        <text>the agent to reinforce.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent will moves to the target unit. Once it is reached, it reinforces it (no specific report is displayed here).</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The target unit may not be reinforced if cannot be reached (the agent won't follow the target unit). In that case, the report "Cannot reach objective" will be displayed and the mission ends.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

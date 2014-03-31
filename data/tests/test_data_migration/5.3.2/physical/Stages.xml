@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<stages model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Stages.xsd">
+  <stage key="activating NBC protection" value=""/>
+  <stage key="activating safety attitude" value=""/>
+  <stage key="advancing toward the objective" value=""/>
+  <stage key="Alert" value=""/>
+  <stage key="alert urban blocks" value=""/>
+  <stage key="Alerting of urban blocks" value=""/>
+  <stage key="area cleaned" value=""/>
+  <stage key="attacking units in the area" value=""/>
+  <stage key="Block off areas" value=""/>
+  <stage key="Blocking a road" value=""/>
+  <stage key="bridge contruction" value=""/>
+  <stage key="bypassing obstacles" value=""/>
+  <stage key="CBRN reconnoiter" value=""/>
+  <stage key="CommitSuicideAttack" value=""/>
+  <stage key="Confinement" value=""/>
+  <stage key="Confinement of urban blocks" value=""/>
+  <stage key="Convoyer" value=""/>
+  <stage key="CreateResourceNetWorkLinks" value=""/>
+  <stage key="CreateThenFilter" value=""/>
+  <stage key="CreateThenOperate" value=""/>
+  <stage key="Crowd transport" value=""/>
+  <stage key="Crowd transportation begins" value=""/>
+  <stage key="damage object" value=""/>
+  <stage key="damage urban blocks" value=""/>
+  <stage key="deconstruction skill test" value=""/>
+  <stage key="DecontaminateArea" value=""/>
+  <stage key="Decontamination" value=""/>
+  <stage key="defending the objective" value=""/>
+  <stage key="defending the objectives" value=""/>
+  <stage key="deploying" value=""/>
+  <stage key="deploying on position" value=""/>
+  <stage key="deploying on positions" value=""/>
+  <stage key="deployment on objectives" value=""/>
+  <stage key="deployment on positions" value=""/>
+  <stage key="Disable" value=""/>
+  <stage key="disengagement" value=""/>
+  <stage key="Dismount" value=""/>
+  <stage key="dismounting" value=""/>
+  <stage key="Enable" value=""/>
+  <stage key="escort refugees toward the objective" value=""/>
+  <stage key="escort surrendered units to prisoners camp" value=""/>
+  <stage key="escort surrendered units toward the objective" value=""/>
+  <stage key="escort the refugees units toward the camp." value=""/>
+  <stage key="escorting units" value=""/>
+  <stage key="escorting units to destination" value=""/>
+  <stage key="Evacuation" value=""/>
+  <stage key="Evacuation of urban blocks" value=""/>
+  <stage key="Extinguish mission test starts" value=""/>
+  <stage key="Extracting victims from crowds" value=""/>
+  <stage key="Filter" value=""/>
+  <stage key="fires creation" value=""/>
+  <stage key="flying along route" value=""/>
+  <stage key="flying along the route" value=""/>
+  <stage key="flying behind the objective" value=""/>
+  <stage key="flying to garage position" value=""/>
+  <stage key="Follow" value=""/>
+  <stage key="Follow" value=""/>
+  <stage key="Follow and reinforce" value=""/>
+  <stage key="following agents" value=""/>
+  <stage key="following the objective" value=""/>
+  <stage key="following units" value=""/>
+  <stage key="Harass an objective" value=""/>
+  <stage key="Heal" value=""/>
+  <stage key="Healing of the victims" value=""/>
+  <stage key="issue move to order" value=""/>
+  <stage key="issue perform work order" value=""/>
+  <stage key="landing" value=""/>
+  <stage key="launch projectile on crowd" value=""/>
+  <stage key="launch projectile on urban blocks" value=""/>
+  <stage key="LaunchProjectile" value=""/>
+  <stage key="LaunchProjectileOnTargets" value=""/>
+  <stage key="lift alert on urban blocks" value=""/>
+  <stage key="Lift urban blocks evacuation" value=""/>
+  <stage key="Link creation between nodes" value=""/>
+  <stage key="mounting" value=""/>
+  <stage key="move to decontamination plot" value=""/>
+  <stage key="Move to destination" value=""/>
+  <stage key="Move to destination" value=""/>
+  <stage key="move to destination in column formation" value=""/>
+  <stage key="move to garage position" value=""/>
+  <stage key="Move to head of the crowd" value=""/>
+  <stage key="move to loading position" value=""/>
+  <stage key="Move to location" value=""/>
+  <stage key="move to meeting point" value=""/>
+  <stage key="move to positions" value=""/>
+  <stage key="move toward ressource node" value=""/>
+  <stage key="Move toward victims" value=""/>
+  <stage key="MoveAlong" value=""/>
+  <stage key="movement toward deployment positions" value=""/>
+  <stage key="MoveToward" value=""/>
+  <stage key="moving" value=""/>
+  <stage key="moving along path" value=""/>
+  <stage key="moving along route" value=""/>
+  <stage key="moving along routes" value=""/>
+  <stage key="moving along the path" value=""/>
+  <stage key="moving along the route" value=""/>
+  <stage key="Moving along waypoints toward destination" value=""/>
+  <stage key="moving and building roadblock" value=""/>
+  <stage key="moving on the axis" value=""/>
+  <stage key="moving oustside underground network" value=""/>
+  <stage key="moving through the underground network" value=""/>
+  <stage key="moving through underground network" value=""/>
+  <stage key="moving to area" value=""/>
+  <stage key="moving to areas to decontaminate" value=""/>
+  <stage key="moving to attack the unit" value=""/>
+  <stage key="moving to camp" value=""/>
+  <stage key="moving to covering positions" value=""/>
+  <stage key="moving to crossing site" value=""/>
+  <stage key="moving to crowd" value=""/>
+  <stage key="moving to decontamination plot" value=""/>
+  <stage key="moving to decontamination site" value=""/>
+  <stage key="moving to deployment position" value=""/>
+  <stage key="moving to destination" value=""/>
+  <stage key="moving to destroying positions" value=""/>
+  <stage key="Moving to disabled resource node" value=""/>
+  <stage key="moving to dismounting position" value=""/>
+  <stage key="moving to elements to activate" value=""/>
+  <stage key="moving to elements to build" value=""/>
+  <stage key="moving to embarkation position" value=""/>
+  <stage key="moving to enemies" value=""/>
+  <stage key="moving to entities" value=""/>
+  <stage key="moving to entity" value=""/>
+  <stage key="Moving to extract victims from crowds" value=""/>
+  <stage key="moving to firing positions" value=""/>
+  <stage key="moving to heal victims" value=""/>
+  <stage key="moving to IED emplacement" value=""/>
+  <stage key="moving to jamming position" value=""/>
+  <stage key="moving to loading point" value=""/>
+  <stage key="moving to meeting point" value=""/>
+  <stage key="moving to meeting position" value=""/>
+  <stage key="moving to objective" value=""/>
+  <stage key="moving to objectives" value=""/>
+  <stage key="moving to observing position" value=""/>
+  <stage key="moving to observing positions" value=""/>
+  <stage key="moving to obstacles" value=""/>
+  <stage key="moving to position" value=""/>
+  <stage key="Moving to positions" value=""/>
+  <stage key="Moving to positions" value=""/>
+  <stage key="Moving to rally point" value=""/>
+  <stage key="moving to reconnoiter crossing sites" value=""/>
+  <stage key="moving to reconnoiter the objectives" value=""/>
+  <stage key="moving to release point" value=""/>
+  <stage key="moving to resource network node" value=""/>
+  <stage key="moving to scout the objectives" value=""/>
+  <stage key="moving to site" value=""/>
+  <stage key="moving to support the company" value=""/>
+  <stage key="moving to the area" value=""/>
+  <stage key="moving to the crossing site" value=""/>
+  <stage key="moving to the meeting point" value=""/>
+  <stage key="moving to the objectives" value=""/>
+  <stage key="moving to the rally point" value=""/>
+  <stage key="moving to the target" value=""/>
+  <stage key="moving to underground entrance" value=""/>
+  <stage key="moving to unit" value=""/>
+  <stage key="moving to units to capture" value=""/>
+  <stage key="moving to work location" value=""/>
+  <stage key="moving to works" value=""/>
+  <stage key="moving toward camp" value=""/>
+  <stage key="Moving toward fire" value=""/>
+  <stage key="Moving toward fires" value=""/>
+  <stage key="Moving toward garage position" value=""/>
+  <stage key="moving toward meeting position" value=""/>
+  <stage key="moving toward observing position" value=""/>
+  <stage key="Moving toward rally point" value=""/>
+  <stage key="moving toward refugees units" value=""/>
+  <stage key="Moving toward resource node" value=""/>
+  <stage key="moving toward surrendered units" value=""/>
+  <stage key="moving toward works location" value=""/>
+  <stage key="object creation" value=""/>
+  <stage key="observe and engage enmies" value=""/>
+  <stage key="observing and engaging enemies" value=""/>
+  <stage key="observing the target" value=""/>
+  <stage key="occupying positions" value=""/>
+  <stage key="Operate" value=""/>
+  <stage key="Operate a checkpoint" value=""/>
+  <stage key="Operate a roadblock" value=""/>
+  <stage key="Operate a system" value=""/>
+  <stage key="operating unit" value=""/>
+  <stage key="Patrol" value=""/>
+  <stage key="Patroling" value=""/>
+  <stage key="Patroling and evacuate civilians" value=""/>
+  <stage key="Patroling and evacuate wounded" value=""/>
+  <stage key="Patrolling" value=""/>
+  <stage key="Patrolling" value=""/>
+  <stage key="prepare obstacles plan" value=""/>
+  <stage key="preparing obstacles plan" value=""/>
+  <stage key="production is on the way" value=""/>
+  <stage key="protecting the unit" value=""/>
+  <stage key="Reach the area and confine" value=""/>
+  <stage key="Reach the meeting point" value=""/>
+  <stage key="Reinforce" value=""/>
+  <stage key="Reinforce and follow" value=""/>
+  <stage key="removing obstacles" value=""/>
+  <stage key="resupplying" value=""/>
+  <stage key="Return back to launcher" value=""/>
+  <stage key="returning to standard posture" value=""/>
+  <stage key="searching for crowds to control" value=""/>
+  <stage key="starting to activate resource nodes" value=""/>
+  <stage key="starting to convey" value=""/>
+  <stage key="Starting to evacuate victims from units" value=""/>
+  <stage key="starting to make agents follow" value=""/>
+  <stage key="starting transportation" value=""/>
+  <stage key="Starting works" value=""/>
+  <stage key="Starting works" value=""/>
+  <stage key="StayClose starts" value=""/>
+  <stage key="Support unit movement" value=""/>
+  <stage key="supporting movement in area" value=""/>
+  <stage key="supporting movement in areas" value=""/>
+  <stage key="supporting unit" value=""/>
+  <stage key="supporting units" value=""/>
+  <stage key="switching the radar off" value=""/>
+  <stage key="switching the radar on" value=""/>
+  <stage key="switching the radio off" value=""/>
+  <stage key="switching the radio on" value=""/>
+  <stage key="take off" value=""/>
+  <stage key="taking off" value=""/>
+  <stage key="test observe starts" value=""/>
+  <stage key="test skill load start" value=""/>
+  <stage key="Toxic evaluation" value=""/>
+  <stage key="Transfert units into the decontamination site" value=""/>
+  <stage key="transport Crowd test starts" value=""/>
+  <stage key="Transport mission" value=""/>
+  <stage key="Transport skill test start" value=""/>
+  <stage key="Undo alert of urban blocks" value=""/>
+  <stage key="Undo Confinement" value=""/>
+  <stage key="Undo confinement of urban blocks" value=""/>
+  <stage key="Undo Evacuation" value=""/>
+  <stage key="Undo evacuation of urban blocks" value=""/>
+  <stage key="UndoAlert" value=""/>
+  <stage key="Unload crowd" value=""/>
+  <stage key="unload skill test" value=""/>
+  <stage key="Unload the crowd" value=""/>
+  <stage key="Unload transported element" value=""/>
+  <stage key="unloading units" value=""/>
+  <stage key="Urban blocks evacuation" value=""/>
+  <stage key="Victims evacuation" value=""/>
+  <stage key="waiting" value=""/>
+  <stage key="waiting order deploy firing units" value=""/>
+  <stage key="works creation" value=""/>
+  <stage key="works deconstruction" value=""/>
+</stages>

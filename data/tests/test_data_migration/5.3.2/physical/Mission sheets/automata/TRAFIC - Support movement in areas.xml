@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="TRAFIC - Support movement in areas">
+  <context>
+    <line>
+      <italic>
+        <text>All actions performed by the platoons in trafic control to block off areas for friend agents.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to create movement enhanced areas where friend agents move inside it at their maximum speed.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>the right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>the right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Movement enhanced areas" optional="false">
+      <line>
+        <text>Set of movement enhanced area objects to perform.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "support movement in area" mission to the subordinate platoons, with the given movement enhanced area as parameter.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Other platoons are ordered to reinforce or follow.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If more movement enhanced areas are given than subordinate platoons, some of movement enhanced areas will not given as parameter to subordinate platoons.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If less movement enhanced areas are given than subordinate platoons, some subordinates platoons which can perform the "support movement in area" mission will received reinforce or follow.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>Each platoon is given only one movement enhanced area.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The movement enhanced area is randomly chosen by the commander agent).</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

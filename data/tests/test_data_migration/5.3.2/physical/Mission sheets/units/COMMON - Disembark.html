@@ -1,0 +1,78 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMMON - Disembark</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMMON - Disembark</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To disembark units on a position when transporting them.</i>
+<br>In Sword, to disembark units in an area, regardless of the physical capacities of the carrier (magic transportation).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Units to disembark</h3>The units to disembark (units already being transported by the agent).<br>
+<h3>Disembarking position</h3>The position where the disembarking will take place.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the given disembarking position (if no disembarking position is provided, then the agent will stay put). If it is not reachable (a urban block inside which the agent cannot move for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed depends on the physical capabilities regarding the terrain properties. <br>
+</li>
+<li>Upon reaching the position :<br>
+</li>
+<ul>
+<li>If the units to disembark have been manually provided, then only these units will be disembarked.<br>
+</li>
+<li>Otherwise, all the currently transported units will be disembarked.<br>
+</li>
+</ul>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>
+
+<img alt="disembark1.png" src="./Images/COMMON - Disembark/disembark1.png"/><br>
+<i>The agent moves to the disembarking position.</i>
+<br>
+
+<img alt="disembark2.png" src="./Images/COMMON - Disembark/disembark2.png"/><br>
+<i>At the end of the mission, the unit has been disembarked by the agent (here, the agent has been given a *Move to* mission right after the end of the *Disembark* mission to show that the transported unit has been disembarked)."</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends once all the units that were supposed to be disembarked are disembarked.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

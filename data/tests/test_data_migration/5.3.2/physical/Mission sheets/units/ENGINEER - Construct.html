@@ -1,0 +1,77 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ENGINEER - Construct</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ENGINEER - Construct</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To construct something.</i>
+<br>In SWORD, to create and build a set of planned objects that may be acted on later on, or that may have an effect on the world. Thus, it is usually a mission preliminary to others.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Works</h3>Works to perform.<br>
+<h3>Meeting position</h3>Position to reach upon action termination.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Wait for reinforcement</h3>Define if agent needs to wait for reinforcement when it is not able to perform work (false by default). <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward each work to construct. The order of visit is from the nearest to the furthest. The positions reached to construct each object are automatically determined by the agent.<br>
+</li>
+<li>Upon reaching a construction position, the agent starts to construct the object (the "work just started" report should be displayed). Upon construction termination (the report "work completed for object[object name]" should be displayed), the agent moves to the next work to do (next construction position for the next objet to construct).<br>
+</li>
+<li>In obstacle contruction, if the parameter "Improve with mines" is set to TRUE, the agent improves (or completes the improvement of) each obstacle with mines.<br>
+</li>
+<li>If needed, the agent dismounts to construct an object.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>A work may not be constructed, if the agent doesn't have the physical capability or hasn't enough resources. In this case, the agent behaves in two ways depending on the "waitForReinforcement" parameter: <br>
+<ul>
+<li>if it is set to FALSE, (default value) the report 'Impossible work' is displayed, and the agent moves to the next work to construct;<br>
+</li>
+<li>if it is set to TRUE, the agent will stay nearby the object and ask for reinforcements. It won't move to the next work until it is totally constructed.<br>
+</li>
+<li>At any times, the user can order the agent to visit the next obstacle by issuing the <b>"Go to next objective</b>" fragmentary order . If this order is issued when the agent is working on the last work, the agent moves to the meeting position.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission is complete when all works have been visited; the agent then moves to the meeting position and the mission terminates.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

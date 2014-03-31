@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ASY - Emplace and set up an IED">
+  <context>
+    <line>
+      <italic>
+        <text>A surprise attack involving the deliberate use of violence against civilians in the hope of attaining political or religious aims. </text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to use an agent's indirect fire capabilities in order to simulate an IED emplacement mission (performed by terrorists).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected ennemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Emplacement" optional="false">
+      <line>
+        <text>Location onto which the agent emplace the IED.</text>
+      </line>
+    </parameter>
+    <parameter name="Hiding position" optional="false">
+      <line>
+        <text>Position from which the agent activates the IED.</text>
+      </line>
+    </parameter>
+    <parameter name="Automatic activation" optional="true">
+      <line>
+        <text>Defines if the agent automatically activates the IED (if it needs explicit fragmentary order or not)(default value is false).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the emplacement. If it is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, else it moves to the center of the objective. Average speed depends on the physical capabilities with respect to terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the emplacement, the agent moves to the hiding position.  Once it is reached, the agent is ready to activate the IED (the report "ready to activate IED" should be displayed) . At this stage, two possibilities:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the parameter 'Automatic activation' is set to 'true': the agent activates the IED.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the parameter 'Automatic activation' is set to 'false': the agent waits for the fragmentary order "Activate IED" to be issued.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Because the  IED bomb is simulated with an indirect fire, the explosion can be delayed regarding the bomb activation. Because the explosion is resulting from an indirect fire, the reports "under artillery fire" and "friendly indirect fire" should be displayed too.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon bomb activation, all units around should be affected by the bomb. This terminates the mission.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The IED activation may fail if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the distance between the hiding position and the IED emplacement is greater than the max range distance defined by the weapon systems (see authoring tool, weapon systems tab, "Hand and homemade bomb") . In this case the report "Cannot activate IED (target is out of range)" is displayed. This distance is usually set between 0 and 200 meters.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the agent doesn't have the adapted ammunition type or it hasn't enough of them (the report "no more shells" is displayed).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the fragmentary order is issued before the agent has reached the hiding position (the report "Cannot activate IED (IED has not been emplaced yet)" is displayed).</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

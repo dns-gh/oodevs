@@ -1,0 +1,80 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>OOTW - Control crowds within area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          OOTW - Control crowds within area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To prevent the outbreak of disorder and prevention of possible riot.</i>
+<br>In Sword, to move to a given area, and try to control entering crowd(s).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>area</h3>The area in which to control the crowd(s).<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves to the nearest crowd.<br>
+</li>
+<li>Upon reaching the chosen crowd, it tries to control it. Then there are two possibilities:<br>
+</li>
+<ul>
+<li>The crowd is under control and the agent stays next to the crowd (until it is located in the area)<br>
+</li>
+<li>The agent fails to control the crowd and moves to the next one.<br>
+</li>
+</ul>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>If no crowd is known in the given area, the agent moves to the center of it (this is the default behavior of this task). If new crowds enter in the area, the agent will try to control each new crowd.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>
+<ul>
+<li>Note that crowds are considered inside the area if only a small part of their surface intersects the polygon.<br>
+</li>
+</ul>
+
+<img alt="ControlCrowds.png" src="./Images/OOTW - Control crowds within area/ControlCrowds.png"/><br>
+<ul>
+<li>The agent cannot control several crowds at the same time. For all known crowds in the area, the agent tries to control the nearest by moving to it. If the control fails, the agent moves to the next one and tries again. If no there is no crowd in the area, or if the agents fail to control all the known crowds, it moves to the center waiting for new crowds to enter.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission continues until a new one is issued.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

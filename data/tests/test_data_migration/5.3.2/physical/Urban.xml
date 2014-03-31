@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<urban model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/UrbanTypes.xsd">
+  <urban-block-types>
+    <material-composition-types>
+      <material-composition-type name="Wood">
+        <attritions>
+          <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Concrete">
+        <attritions>
+          <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Brick">
+        <attritions>
+          <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Metal">
+        <attritions>
+          <attrition destruction="0.05" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Cob">
+        <attritions>
+          <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Prefab">
+        <attritions>
+          <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+      <material-composition-type name="Vegetation">
+        <attritions>
+          <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </attritions>
+      </material-composition-type>
+    </material-composition-types>
+    <roof-shape-types>
+      <roof-shape-type name="Flat"/>
+      <roof-shape-type name="Pitched"/>
+      <roof-shape-type name="None"/>
+    </roof-shape-types>
+  </urban-block-types>
+  <accommodations>
+    <accommodation max-capacity="1" nominal-capacity="0.1" role="default"/>
+    <accommodation max-capacity="0.7" nominal-capacity="0.5" role="Leisure"/>
+    <accommodation max-capacity="0.07" nominal-capacity="0.03" role="Home"/>
+    <accommodation max-capacity="0.3" nominal-capacity="0.2" role="Office"/>
+  </accommodations>
+  <infrastructures>
+    <infrastructure name="Water Resources" symbol="resource-water"/>
+    <infrastructure name="Electricity Resources" symbol="resource-electricity"/>
+    <infrastructure name="Gaz resources" symbol="resource-gas"/>
+    <infrastructure name="Food resources" symbol="resource-food"/>
+    <infrastructure name="Sports" symbol="sports"/>
+    <infrastructure name="Transport" symbol="transportation"/>
+    <infrastructure name="Air Transport" symbol="transportation-air"/>
+    <infrastructure medical="true" name="Hospital" symbol="hospital"/>
+    <infrastructure name="Industrie" symbol="industry"/>
+    <infrastructure name="Housing" symbol="housing"/>
+    <infrastructure name="Media" symbol="media"/>
+    <infrastructure name="Landmark" symbol="landmark"/>
+    <infrastructure name="Office" symbol="office"/>
+    <infrastructure name="Barrack" symbol="barrack"/>
+    <infrastructure name="Military Barrack" symbol="military-barrack"/>
+    <infrastructure name="Fire station" symbol="fire-station"/>
+    <infrastructure name="Shops" symbol="shops"/>
+    <infrastructure name="Religious" symbol="religious"/>
+    <infrastructure name="Education" symbol="education"/>
+    <infrastructure name="Warehouse" symbol="warehouse"/>
+    <infrastructure name="Naval Transport" symbol="transportation-naval"/>
+    <infrastructure name="Administration" symbol="administration"/>
+  </infrastructures>
+</urban>

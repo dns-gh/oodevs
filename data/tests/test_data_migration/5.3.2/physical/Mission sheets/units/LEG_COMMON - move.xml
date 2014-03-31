@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="LEG_COMMON - move">
+  <context/>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="true"/>
+    <parameter name="Limit 2" optional="true"/>
+    <parameter name="Route" optional="false"/>
+  </parameters>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

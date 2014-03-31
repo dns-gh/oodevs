@@ -1,0 +1,58 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Crowd - Follow</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          Crowd - Follow</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To follow a unit.</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Unit</h3>Entity to follow.<br>
+<h2>Optional</h2>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The crowd agent moves to the position of the issued agent. If the agent is moving, the crowd agent updates its computed path in order the reach the new position of the unit.<br>
+</li>
+<li>If an obstacle is encountered on the way to the objective, the crowd stops and a new temporary concentration is created. The movement is suspended until the obstacle is removed or the objective moves.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

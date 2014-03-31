@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Stay or hide within a crowd">
+  <context>
+    <line>
+      <text>In SWORD, a mission in which one unit stays within a given crowd. This mission may be used by an agent to hide (terrorists), to monitor or to escort a crowd (police).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Crowd" optional="false">
+      <line>
+        <text>the crowd inside which the agent must stay.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent will moves to the center of the issued crowd. Once it is reached, it stops. If the crowd is moving, the agent will follow the head of the crowd (this mission doesn't ensure the agent to stay in the crowd while it is moving. Staying in the crowd depends on the computed path).</text>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission continue until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

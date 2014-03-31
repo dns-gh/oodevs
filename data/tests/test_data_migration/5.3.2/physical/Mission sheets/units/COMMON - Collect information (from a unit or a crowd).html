@@ -1,0 +1,70 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMMON - Collect information (from a unit or a crowd)</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMMON - Collect information (from a unit or a crowd)</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To gather important information about a specific situation; units may interrogate prisoners or collect information from </i>
+<br>civilians and local authorities.<i></i>
+<br>In SWORD, to get a specific message information from a unit or a crowd. An interrogated unit or crowd display a message written by trainers, in order to provide indication(s) to trainees about the situation. The interrogated unit can represent a local authority, a journalist etc.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Entity (crowd or unit)</h3>Unit or crowd to get the information from.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves to the entity and gets the required  information after a defined period of time. For the unit that is being interrogated the report "being interrogated" should be displayed.<br>
+</li>
+<li>If the agent tries to interrogate an enemy unit, the force ratio must be high in order to get the information. Else, the report "impossible to collect information: force is low" should be displayed.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>Gathering information from a unit takes time. How long it takes depends on:<br>
+<ul>
+<li>the affinity of the interrogated unit with regards to the agent's camp: the more the interrogated unit has affinity with the agent, the faster it acquires information (see delays in authoring tool).<br>
+</li>
+<li>the diplomacy matrix: an enemy cannot be interrogated if the force ratio of the agent (the interrogator) is low.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends once the unit gets the information.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

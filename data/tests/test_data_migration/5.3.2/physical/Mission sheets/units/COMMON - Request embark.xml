@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Request embark">
+  <context>
+    <line>
+      <italic>
+        <text>To be embarked on a position to be transported by other unit(s)</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to request the embarking of an agent by units on an embarking position. This mission is used to coordinate the troops and vehicules transportation (see transportation capabilities in authoring tool), when SWORD is connected to other simulations through an HLA federation.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true"/>
+    <parameter name="Limit 2" optional="true"/>
+    <parameter name="Embarking position" optional="false"/>
+    <parameter name="Embarking time" optional="false"/>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given position. If it is not reachable (a urban block inside which the agent cannot move for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed depends on the physical capabilities regarding the terrain properties. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the position, the agent is ready to be embarked (the report "waiting for carriers" is displayed). </text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends once the unit has been embarked by a carrier.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

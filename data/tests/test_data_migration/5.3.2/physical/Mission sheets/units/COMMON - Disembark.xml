@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Disembark">
+  <context>
+    <line>
+      <italic>
+        <text>To disembark units on a position when transporting them.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to disembark units in an area, regardless of the physical capacities of the carrier (magic transportation).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Units to disembark" optional="true">
+      <line>
+        <text>The units to disembark (units already being transported by the agent).</text>
+      </line>
+    </parameter>
+    <parameter name="Disembarking position" optional="true">
+      <line>
+        <text>The position where the disembarking will take place.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given disembarking position (if no disembarking position is provided, then the agent will stay put). If it is not reachable (a urban block inside which the agent cannot move for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed depends on the physical capabilities regarding the terrain properties. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the position :</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>If the units to disembark have been manually provided, then only these units will be disembarked.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>Otherwise, all the currently transported units will be disembarked.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <line>
+      <link>
+        <text>disembark1.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The agent moves to the disembarking position.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>disembark2.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>At the end of the mission, the unit has been disembarked by the agent (here, the agent has been given a *Move to* mission right after the end of the *Disembark* mission to show that the transported unit has been disembarked)."</text>
+      </italic>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends once all the units that were supposed to be disembarked are disembarked.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="disembark1.png"/>
+    <attachment name="disembark2.png"/>
+  </attachments>
+</mission-sheet>

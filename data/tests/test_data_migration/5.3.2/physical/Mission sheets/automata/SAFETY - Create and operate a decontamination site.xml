@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Create and operate a decontamination site">
+  <context>
+    <line>
+      <text>To operate an NBC decontamination site in order to ensure units decontamination.</text>
+    </line>
+    <line>
+      <text>In SWORD, to build and operate a decontamination site object. Operating a decontamination site allows the agent to complete decontamination missions using that site. It decontaminates contaminated units (contaminated units may be issued the "Get decontaminated" mission).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Decontamination site location" optional="false">
+      <line>
+        <text>The NBC decontamination site to build and operate.</text>
+      </line>
+    </parameter>
+    <parameter name="Remove installation (default value is TRUE)" optional="true">
+      <line>
+        <text>Remove decontamination site at the end of the mission.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Create and Operate" mission to one of platoon (decontamination platoons), with the planned site as parameter.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Support units receive the "Follow and reinforce" mission with the NBC platoon as parameter.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The other units receive the "Move to" mission with the planned object as parameter.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When the site construction is completed, the NBC units move to the center of the objet and start to operate it. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Other units move to the center of the object and operate it if they have the capabilities.  </text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>The decontamination site may not be created if subordinate units do not have the capacity to build it regarding their physical capability and dotations. In that specific case, the report "work impossible, no capacity" is displayed by subordinate units.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The decontamination site may not be operated if it cannot be operated (see object capacity "workable" in authoring tool), In that specific case, the report "element cannot be operated" is displayed by subordinate units.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Note that no specific capabilities are requeried for the subordinates units to operate a decontamination site.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Subordinates units cannot be contaminated by other units while operating a decontamination site.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>This mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

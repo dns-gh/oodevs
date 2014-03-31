@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Clear a route">
+  <context>
+    <line>
+      <italic>
+        <text>To reduce or negate the effects of existing or reinforcing obstacles. The objectives are to maintain freedom of movement for maneuver units, weapons systems and critical supplies.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to move along a computed path and remove obstacles that collide with it. Here, 'obstacles' are sword 'objects' that have the capacity "avoidable" and/or "constuctor".</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Waypoints" optional="false">
+      <line>
+        <text>Set of waypoints defining the route to follow (the path will be computed taking into account those waypoints)</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Open a route" mission to the engineer platoons, with a set of waypoints as parameter.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Because few subordinate agents can perform the same works, opening a route with a engineer company can be very efficient (in term of delays).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When the last waypoints have been reached, the mission terminates.To reduce or negate the effects of existing or reinforcing obstacles. The objectives are to maintain freedom of movement for maneuver units, weapons systems and critical supplies.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>Bypassing an obstacle means to make it trafficable. Agents of the simulation becomes able to move through a bypassed obstacle with a limited speed of movement.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission terminates when all subordinates has finished their mission.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,69 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Escort</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Escort</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>A member of the Armed Forces assigned to accompany, assist, or guide an individual or group. An armed guard that accompanies a convoy, a train, prisoners, etc.</i>
+<br>In SWORD, to accompany a unit toward a specific location in order to protect it against potenital enemies or other dangers. The agent transports the unit to bring it to the given destination. No round trips here. The transportation is done by a magic action. The agent does not need specific physical capabilities.<br>
+<u>This mission is offensive. While escorting the unit, the agent that performs the mission will engage all perceived enemies in range</u>.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Unit</h3>The unit to escort along the route.<br>
+<h3>Route</h3>The route to move along. The last waypoint of the route defines the final objective.<br>
+<h3>Meeting position</h3>The position to reach upon escort termination.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the given unit. If it is not reachable (the unit is located inside an urban block inside which the agent cannot move, for instance), the agent moves as close as possible. Average speed depends on the physical capabilities regarding the terrain properties.<br>
+</li>
+<li>Upon reaching the unit to escort, the agent loads it ("magic/irrealistic" tranportation).<br>
+</li>
+<li>Once the unit has been loaded, it is accompanied to the given destination.<br>
+</li>
+<li>Upon reaching the given destination, the transported unit is unloaded at the destination and the agent moves to the meeting position and the mission terminates.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>When the agents reaches the meeting position.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

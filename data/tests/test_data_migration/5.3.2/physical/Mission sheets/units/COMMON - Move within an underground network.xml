@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Move within an underground network">
+  <context>
+    <line>
+      <italic>
+        <text>To move inside an underground network such as a sewer, metro...</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword moving through a given underground network, the agent goes from one underground network gateway (a sword knowledge object) to another using a time period. Once the period is over, the agent teleports itself to the exit gateway. In this mission, the agent doesn't exit from the underground.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Gateway" optional="false">
+      <line>
+        <text>Next network station to reach.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>While moving through the network, a report informing the user how much time the movement will take is displayed ("arrival in 20minute(s)" for instance). A specific drawing is also displayed on the agent's symbol (see screenshot below).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon delay termination, the agent is automatically teleported onto the Underground exit object, gets outside and then moves (normal movement) to the final objective.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>COMMON - Move using an underground network1.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The agent won't be able to move through the underground network if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the next gateway to reach is destroyed (the knowledge object disappears)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the given gateway to reach does not belong to the same network as the one the agent is currently using ( the report "underground network issue is not operational (state inactivated) or the unit is already underground" is displayed).</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end/>
+  <attachments>
+    <attachment name="COMMON - Move using an underground network1.png"/>
+  </attachments>
+</mission-sheet>

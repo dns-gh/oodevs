@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="TRAFIC - Support unit movement">
+  <context>
+    <line>
+      <italic>
+        <text>All actions performed by the units in traffic control to support the projection by land forces and movements according to the priorities set by the command. </text>
+      </italic>
+    </line>
+    <line>
+      <text>A unit which helps another unit to perform movement.</text>
+      <italic/>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Units or companies to support" optional="false">
+      <line>
+        <text>Set of agents or companies to support.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Support unit movement" mission to the subordinate platoons, with the given agents or companies as parameter. Each platoon is given an agent to follow (the agent is randomly chosen by the commander agent).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Other units are ordered to reinforce or follow.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

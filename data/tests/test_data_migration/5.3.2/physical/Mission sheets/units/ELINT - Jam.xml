@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ELINT - Jam">
+  <context>
+    <line>
+      <italic>
+        <text>The deliberate radiation, reradiation, or reflection of electromagnetic energy to prevent or degrade the receipt of information by a receiver.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to move toward an area and build a "jamming object" that fits with the area location (see definition of jamming effects in the authoring tool; 'Objects' tab, 'Capacities').</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Jamming object" optional="false">
+      <line>
+        <text>Planned work to build by the agent.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach on "Disengage" fragOrder. </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent deploys to its own position. The time required for deployment depends on the data defined in the authoring tool (see "Units" tab, "Deployment" section).  Upon deployment termination the report  "section deployed" should be displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon deployment termination, the agent activates the jamming by creating a "jamming area" object.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If the "disengage" order is issued, the agent moves to the meeting position (the jamming object is destroyed) and the mission ends.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the "End mission" order is issued, the agent simply ends the mission (the jamming object is destroyed).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If another mission is issued, the agent performs the new mission and the jamming object is destroyed.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

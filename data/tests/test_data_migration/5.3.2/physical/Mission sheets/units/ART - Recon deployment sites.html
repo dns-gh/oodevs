@@ -1,0 +1,58 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ART - Recon deployment sites</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ART - Recon deployment sites</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>The acquisition and processing of information concerning the enemy, the terrain, and the meteorological conditions; this information is necessary to make sure of the performance of combat activities of rocket troops and artillery.</i>
+<br>In SWORD, to know how to reconnoiter positions and build a set of planned objects that may be used by ARTY firing units to get deployed. Thus, it is usually a mission preliminary to the artillery "deploy" mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected ennemy direction.<br>
+<h3>Positions</h3>Set of position to build (positions are OBJECTS here).<br>
+<h3>Meeting position</h3>Meeting point to reach upon the reconnaissance is done.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent moves toward each position to construct. The order of visit is user defined. The positions reached to build each position are automatically determined by the agent.<br>Upon reaching a position, the agent starts to reconnoiter it (it takes time) and then starts to construct the object position  (the "work just started" report should be displayed). <br>Upon construction termination (the report "work completed for object[object name]" should be displayed), the agent moves to the next position.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>Work may not be completed if the agent doesn't have the physical capability or lacks resources. In that case, the report 'work impossible, no capacity' is displayed, and the agent moves to the next position.<br>If needed, the agent dismounts to construct an position.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission is finished when all positions have been visited. The agent then moves to the meeting position and the mission terminates.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

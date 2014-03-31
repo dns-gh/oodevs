@@ -1,0 +1,77 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMMON - Transport (units)</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMMON - Transport (units)</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To provide general transport service in the movement of personnel and cargo.</i>
+<br>For a Sword agent, to transport personnel and/or cargo (components of units) over short or medium distances.  In Sword, the transportation of cargo/troops is managed within a specific simulation module. To transport components of another unit, the agent makes as many round trips it is necessary, depending on its transportation capabilities (see the authoring tool, the 'Cargo transport' data in 'Equipment ' section).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Units</h3>Units to transport.<br>
+<h3>Embarkation area</h3>The area to reach to load the troops.<br>
+<h3>Route</h3>The route through which the agent must transport the crowd, and at the end of which the unloading will take place.<br>
+<h3>Meeting position</h3>Position to reach after the troops transportation.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Vehicles transportation</h3>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the given 'embarkation area'.  If it is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, otherwise it moves to the center of the area. Average speed depends on the physical capabilities taking into account terrain properties. <br>
+</li>
+<li>Upon reaching the embarkation area, the agent loads components of issued units and starts round trips between the position and the route.<br>
+</li>
+<li>Once all the units have been unloaded at the end of the route, the agent moves to the meeting position.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>To get transported the units must:<br>
+<ul>
+<li>be INSIDE the embarkation area,<br>
+</li>
+<li>perform the "GetTransported" misssion.<br>
+</li>
+</ul>
+<u>A unit may not be transported</u> if the agent does not have the capability to transport it.<br>If not, the agent displays the message "waiting the units to get ready"<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>A flying agent receiving this mission will firstly take off, then move towards the objective the embarkation area (just like a regular agent), then will land upon arrival. The agent will take off again when transporting the troops, and land at the meeting point.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission terminates when the meeting position is reached.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMMON - Move along in column formation</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMMON - Move along in column formation</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To move to an objective in order to reach it.</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected ennemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Route</h3>Path to move along.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Distance</h3>The minimum distance to respect between agents.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent computes the smallest maximal speed among all the units in the company. The commander agent then issues a *Move To* order to every subordinate (except the CP unit) towards positions around the CP unit at a certain distance (this distance matches the distance that a unit can cover when going at the previously computed speed). <br>
+</li>
+<li>Once every subordinate is on its assigned position, the commander agent will issue a "Move To" order to the CP agent with the provided waypoints, and then at each time step, another subordinate will receive *Move To" order with the provided waypoints but starting with the initial position of the CP agent.<br>
+</li>
+</ul>
+
+<img alt="moveAlongColumnX1.png" src="./Images/COMMON - Move along in column formation/moveAlongColumnX1.png"/><br>
+<i>The company agent computes the initial positions.</i>
+<br>
+
+<img alt="moveAlongColumnX2.png" src="./Images/COMMON - Move along in column formation/moveAlongColumnX2.png"/><br>
+<i>The subordinates reach these positions.</i>
+<br>
+
+<img alt="moveAlongColumnX3.png" src="./Images/COMMON - Move along in column formation/moveAlongColumnX3.png"/><br>
+<i>The CP agent starts its movement.</i>
+<br>
+
+<img alt="moveAlongColumnX4.png" src="./Images/COMMON - Move along in column formation/moveAlongColumnX4.png"/><br>
+<i>A subordinate will receive the *Move To* order, then another one, and so on.</i>
+<br>
+
+<img alt="moveAlongColumnX5.png" src="./Images/COMMON - Move along in column formation/moveAlongColumnX5.png"/><br>
+<i>The company moves along the path in a column formation.</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>A flying agent receiving this mission will take off at the beginning of the mission, and will land upon arrival at the final objective.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

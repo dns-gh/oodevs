@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<maintenance model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Maintenance.xsd">
+  <working-schemes>
+    <working-scheme type="Regime1" working-time="8"/>
+    <working-scheme time-before-warning="48h" type="Regime2" working-time="16"/>
+    <working-scheme time-before-warning="36h" type="Regime3" working-time="20"/>
+    <working-scheme time-before-warning="24h" type="Regime4" working-time="24"/>
+  </working-schemes>
+  <resource-availability-alerts>
+    <resource-availability-alert availability-threshold="0" resource="AlerteDisponibiliteReparateurs"/>
+    <resource-availability-alert availability-threshold="25" resource="AlerteDisponibiliteRemorqueurs"/>
+    <resource-availability-alert availability-threshold="0" resource="AlerteDisponibiliteRemorqueurs"/>
+  </resource-availability-alerts>
+</maintenance>

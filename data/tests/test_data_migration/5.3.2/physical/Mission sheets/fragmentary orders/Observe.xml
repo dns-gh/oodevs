@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Observe">
+  <context>
+    <line>
+      <text>For the agent to simply look toward the issued target. </text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Target" optional="false"/>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Sensors of the agent orientate toward the target position in order to monitor it. This order is not ensuring that the agent will perceive the target. It can be used when ponctually, the user estimate that an agent is not monitoring </text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The observation lasts until a mission is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

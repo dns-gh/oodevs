@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="AAVN - Reconnoiter a route">
+  <context>
+    <line>
+      <italic>
+        <text>A mission undertaken to obtain information by visual observation, or other detection methods, about the activities and resources of an enemy, or about the meteorological, hydrographic, or geographic characteristics of a particular area.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to move along a route and to engage all enemies in range.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Route" optional="false">
+      <line>
+        <text>The set of objectives to reach.</text>
+      </line>
+    </parameter>
+    <parameter name="Permanent" optional="true">
+      <line>
+        <text>Whether or not the mission is permanent. False by default.</text>
+      </line>
+    </parameter>
+    <parameter name="Aviation range" optional="true">
+      <line>
+        <text>The aviation range enforced during the supplying.</text>
+      </line>
+    </parameter>
+    <parameter name="Rally point" optional="true">
+      <line>
+        <text>The rally point to go to when the last position of the route has been reached (if the mission is not permanent) or if the mission ends.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the first objective the. If it is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, else it moves to the center of the objective. Average speed depends on the physical capabilities and terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>While moving toward the objective, the agent engages all enemies it encounters.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the first objective the agent moves to the next one with the same behavior, until the last one is reached. Then :</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>If the mission parameter "Permanent" is set to false (default value), then :</text>
+          </line>
+        </li>
+        <ul>
+          <li>
+            <line>
+              <text>If a rally point is provided, then the agent moves to the rally point and ends its mission.</text>
+            </line>
+          </li>
+          <li>
+            <line>
+              <text>Otherwise, the agent ends its mission.</text>
+            </line>
+          </li>
+        </ul>
+        <li>
+          <line>
+            <text>Otherwise, the agent stays at the last waypoint and does not end its mission.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+    <line>
+      <link>
+        <text>reconnoiterARouteX1.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The agent receives a set of points to reconnoiter as parameters. These points usually are keypoints to reconnoiter, such as crossroads, factories, etc.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>reconnoiterARouteX2.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The agent has detected several enemies, and has engaged some of them.</text>
+      </italic>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <line>
+      <text>If an "End mission" fragmentary order is given, then the agent will end its mission and move to the rally point. If the mission is permanent, then this is the only use of the "rally point" parameter in this mission.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>If the mission parameter "Permanent" is set to false (default value), then the mission ends when the agent reaches the rally point (or the final waypoint of the route if no rally point was provided). Otherwise, the mission never ends.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="reconnoiterARouteX1.png"/>
+    <attachment name="reconnoiterARouteX2.png"/>
+  </attachments>
+</mission-sheet>

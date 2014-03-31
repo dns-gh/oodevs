@@ -1,0 +1,75 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>AAVN - Attack</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          AAVN - Attack</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>An offensive action characterized by movement supported by fire.</i>
+<br>In SWORD, moving along a route defined by waypoints and engage all enemies in a provided area.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Route</h3>The set of objectives to reach.<br>
+<h3>Area</h3>The area inside of which the perceived enemies will be engaged.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Rally point</h3>The rally point to go to when the last position of the route has been reached. If this parameter is not provided, then the agent will go to its initial position instead.<br>
+<h3>Aviation range</h3>The aviation range enforced during the supplying.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the first objective. If it is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, else it moves to the center of the objective. Average speed depends on the physical capabilities and terrain properties.<br>
+</li>
+<li>While moving toward the objective, the agent engages all enemies within the provided area it can.<br>
+</li>
+<li>Upon reaching the first objective the agent moves to the next one with the same behavior, until the last one is reached. Then, the agent will either move to the rally point if it is provided or move to its initial position.<br>
+</li>
+</ul>
+
+<img alt="airAttack1.png" src="./Images/AAVN - Attack/airAttack1.png"/><br>
+<i>The agent follows its itinerary, ignores the enemy outside the area, attacks the enemies inside the area, and goes back to its initial position (since no rally point was provided to the mission).</i>
+<br>
+
+<img alt="airAttack2.png" src="./Images/AAVN - Attack/airAttack2.png"/><br>
+<i>The agent follows its itinerary, attacks the enemies inside the area, and goes to the rally point.</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when the rally point or the initial position of the agent is reached<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

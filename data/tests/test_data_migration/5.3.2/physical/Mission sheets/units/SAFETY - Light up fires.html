@@ -1,0 +1,66 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Light up fires</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Light up fires</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>Arsonists or pyromaniacs may start fires in order to attack installation or induce terror on populations.</i>
+<br>In SWORD, to create a set of planned fires at different locations. Thus, it is usually a mission performed by terrorists, arsonists or pyromaniacs.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Fires locations</h3>the planned fire to create,<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Instantaneously (default value is FALSE)</h3>defines if the agent can create fires instantaneously (magically) without any physical capabilities consideration<br>
+<h3>Rally point</h3>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent moves toward each fire location. The positions reached to create each fire are automatically determinated by the agent. The order of the elements into the 'Fires locations' list defines the order of visit.<br>Upon reaching a position, the agent starts to create the corresponding object ('arson' or 'fire' object). The "work just started" report should be displayed. Upon creation termination (the report "work completed for object [object name]" should be displayed), the agent moves to the next fire to start.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>A fire may not be created. The possible causes are:<br>
+<ul>
+<li>the agent doesn't have the physical capability or if it hasn't enough resources to do it( if the 'Instantaneously' paramteter is set to FALSE).<br>
+</li>
+<li>the planned fire cannot be created because it is not designed for (see object capacities "construction" and "burn" in authoring tool),<br>
+</li>
+</ul>If that specific case, the report 'Impossible work' is displayed, and the agent moves to the next fire to create.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>If needed, the agent dismounts to build an object.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission is done when all fire have been visited (even if some of the objects couldn't be built).<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

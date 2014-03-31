@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Flank guard">
+  <context>
+    <line>
+      <text>"The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action."</text>
+    </line>
+    <line>
+      <text>In this Sword mission, to move toward the provided positions and shoot at all enemies in range with direct fires.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Positions" optional="false">
+      <line>
+        <text>Positions the agent will occupy to flank guard friends.</text>
+      </line>
+    </parameter>
+    <parameter name="Friends" optional="false">
+      <line>
+        <text>Friends unit to flank guard</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given positions. When there are several positions, the agent choses the closest to the friends units.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The agent will engage all known and perceived enemies in range.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>* Initial position</text>
+    </line>
+    <line>
+      <link>
+        <text>FlankGuardPlatoon1.png</text>
+      </link>
+    </line>
+    <line>
+      <text>* Agent moves to first position</text>
+    </line>
+    <line>
+      <link>
+        <text>FlankGuardPlatoon2.png</text>
+      </link>
+    </line>
+    <line>
+      <text>* Agent is reaching the closest position between him and the friend to flank guard  </text>
+    </line>
+    <line>
+      <link>
+        <text>FlankGuardPlatoon3.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>To make the agent engage enemies upon order, the user may set the "ROE (Rules Of Engagement) on "fire upon order". </text>
+    </line>
+  </specific-cases>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>The agents won't open fires if:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>known enemies are out of range regarding the weapon systems and remaining dotations,</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>known enemies are not in sight (a enemies may be known but not perceived) regarding sensors and terrain.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Ensure that the given position is chosen with care, regarding the perception capability of the agent and the given objective.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>This mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="FlankGuardPlatoon1.png"/>
+    <attachment name="FlankGuardPlatoon2.png"/>
+    <attachment name="FlankGuardPlatoon3.png"/>
+  </attachments>
+</mission-sheet>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Harass enemies in area">
+  <context>
+    <line>
+      <italic>
+        <text>Mission to destroy or at least to neutralize the enemy hidden elements, infiltrated or during infiltration and exfiltration in a given area.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to observe an area and to occupy positions in order to engage identified units in this area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>the right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>the right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area inside which the subordinates harass encountered enemies.</text>
+      </line>
+    </parameter>
+    <parameter name="Positions" optional="true">
+      <line>
+        <text>The positions from which the subordinate units harass encountered enemies.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>The position to be reached by rear echelon units (such as the command post unit)</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Foward echelon units:</text>
+        </line>
+      </li>
+      <ul>
+        <ul>
+          <ul>
+            <li>
+              <line>
+                <text>First case: positions are issued.</text>
+              </line>
+            </li>
+            <ul>
+              <li>
+                <line>
+                  <text>The commander agent issues the "Harass enemies in area" mission to the armor platoons, with the area and positions as parameters. Positions are fairly shared between platoons.</text>
+                </line>
+              </li>
+            </ul>
+            <li>
+              <line>
+                <text>Second case: no position issued.</text>
+              </line>
+            </li>
+            <ul>
+              <li>
+                <line>
+                  <text>The commander agent computes sub-area into the provided area and issues the "Harass enemies in area" mission to the armor platoons, with a sub-area as parameters (one sub area per subordinate unit).</text>
+                </line>
+              </li>
+            </ul>
+          </ul>
+        </ul>
+      </ul>
+      <li>
+        <line>
+          <text>Rear echelon units:</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Other units (reserve and non adapted units) receive the "moveTo" mission with the with the meeting position as parameter.</text>
+        </line>
+      </li>
+      <ul>
+        <ul>
+          <li>
+            <line>
+              <text>Units able to perform indirect fires (such as mortar troops) receive the "Provide indirect fires (dynamic)" mission with harassing units as parameter.</text>
+            </line>
+          </li>
+        </ul>
+      </ul>
+      <li>
+        <line>
+          <text>All the agents share the same issued area of responsability.</text>
+        </line>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <line>
+          <text>harass enemies in area without position:</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>COMBAT - Harass enemies in area with position.png</text>
+      </link>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>harass enemies in area with positions:</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>COMBAT - Harass enemies in area without position.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>If no position issued, the subordinate units tries to retreive key positions inside the area. Key positions are defined by:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>crossroads</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>roads intersections with the company area</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>urban blocks.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+    <line>
+      <text>Beware before issuing this mission to choose carefully the area. If area is located in open terrain without many roads inside, the mission won't be performed in a good way if user don't designate the positions.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission terminates when all subordinate units have reached the meeting position.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="COMBAT - Harass enemies in area with position.png"/>
+    <attachment name="COMBAT - Harass enemies in area without position.png"/>
+  </attachments>
+</mission-sheet>

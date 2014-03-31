@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Follow">
+  <context>
+    <line>
+      <text>To follow a set of mobile agents (unit or crowd).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Units" optional="false">
+      <line>
+        <text>the set of entities to follow,</text>
+      </line>
+    </parameter>
+    <parameter name="Positions" optional="true">
+      <line>
+        <text>the set of positions from which the agent stays as close as possible from entities.</text>
+      </line>
+    </parameter>
+    <parameter name="Minimum distance" optional="true">
+      <line>
+        <text>The minimum distance at which the agent must stay from the entity to follow.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent will follow the nearest target, trying to find a position to stay as close as possible to the followed entity.</text>
+    </line>
+    <line>
+      <text>If the positions are issued, agents will choose the position as close as possible to the chosen target (the nearest).</text>
+    </line>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

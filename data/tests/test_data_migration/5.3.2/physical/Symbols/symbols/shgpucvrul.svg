@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<svg style="stroke-linecap:square;stroke:rgb(0,0,0);stroke-width:2">
+    <polyline points="200,373 373,200 200,27 27,200 200,373" class="border"/>
+    <polyline points="200,200 110,150 110,250 200,200 290,150 290,250 200,200"/>
+    <text style="text-anchor:middle;font-weight:bold;font-size:65;font-family:Arial" x="200" y="307">L</text>
+    <text transform="translate(100 30) scale(0.5 0.5)" style="fill:rgb(0,0,0);text-anchor:middle;font-weight:bold;font-size:150;font-family:Arial" x="200" y="230">U</text>
+</svg>

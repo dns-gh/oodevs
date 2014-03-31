@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Go get decontaminated">
+  <context>
+    <line>
+      <italic>
+        <text>Units may be contaminated during an NBC incident. To avoid NBC contamination and intoxication of other units (contamination spreads and contaminates other units), contaminated units should be decontaminated with appropriate means.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, an agent must go through a decontamination site object to get decontaminated. The decontamination process is effective if the decontamination site is operated by other units.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Decontamination site" optional="false">
+      <line>
+        <text>The decontamination site to use to get decontaminated.</text>
+      </line>
+    </parameter>
+    <parameter name="Garage position" optional="false">
+      <line>
+        <text>the position to reach after being decontaminated.	</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward the issued decontamination site. Once there, the agent requests decontamination. The report "request for decontamination" should be displayed. The agents then get decontaminated within a period of time depending on:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the number of units that are operating the site (if the site is not operated, the agent stays next to it until the decontamination site is operated or another mission is issued),</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the number of units asking to get decontaminated on the site (the agent needs to queue to get decontaminated; if the agent asked first, it should be the first to get decontaminated).</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>Once the agent gets decontaminated (the report "unit decontaminated" should be displayed), it moves toward the garage position and the mission ends.</text>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

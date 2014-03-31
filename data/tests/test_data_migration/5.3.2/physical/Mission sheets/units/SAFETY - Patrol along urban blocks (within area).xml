@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Patrol along urban blocks (within area)">
+  <context>
+    <line>
+      <italic>
+        <text>Patrols are missions to gather information or to control rescue operations. Patrolling could ensure law, order and check crime in a given district.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, patrolling consist of moving along a path defined by waypoints, indefinitely, allowing the agent to gather informations. Here, waypoints are urban blocks inside a given area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area inside which the urban blocks are visited.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each urban block which is totally inside the specified area (the order of traversal is randomly defined). If a visited urban block is not reachable, the agent moves as close as possible (the agents can move within it), the agent moves to the center, else it moves to a close position (the closest position from the center).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a urban block, the agent get posted on its position (the report "deployment in progress" is displayed). Once it is done, the agent displays the report "installation completed" and moves to the next one.</text>
+          <italic/>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the last urban block, the agent moves back to the first one and it starts the all behavior again.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If there is no urban block within the area, the mission ends and the report "no urban blocks within area" is displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the performing agent is flying (helicopters), it doesn't stop onto each position before moving to another one. The report "deployment in progress" and "installation completed" are not displayed.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text> The mission is permanent. It continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

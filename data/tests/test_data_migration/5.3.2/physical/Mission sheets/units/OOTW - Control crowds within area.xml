@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="OOTW - Control crowds within area">
+  <context>
+    <line>
+      <italic>
+        <text>To prevent the outbreak of disorder and prevention of possible riot.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to move to a given area, and try to control entering crowd(s).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="area" optional="false">
+      <line>
+        <text>The area in which to control the crowd(s).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the nearest crowd.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the chosen crowd, it tries to control it. Then there are two possibilities:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The crowd is under control and the agent stays next to the crowd (until it is located in the area)</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>The agent fails to control the crowd and moves to the next one.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If no crowd is known in the given area, the agent moves to the center of it (this is the default behavior of this task). If new crowds enter in the area, the agent will try to control each new crowd.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>Note that crowds are considered inside the area if only a small part of their surface intersects the polygon.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>ControlCrowds.png</text>
+      </link>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>The agent cannot control several crowds at the same time. For all known crowds in the area, the agent tries to control the nearest by moving to it. If the control fails, the agent moves to the next one and tries again. If no there is no crowd in the area, or if the agents fail to control all the known crowds, it moves to the center waiting for new crowds to enter.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission continues until a new one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="ControlCrowds.png"/>
+  </attachments>
+</mission-sheet>

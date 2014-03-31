@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Light up fires">
+  <context>
+    <line>
+      <italic>
+        <text>Arsonists or pyromaniacs may start fires in order to attack installation or induce terror on populations.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to create a set of planned fires at different locations. Thus, it is usually a mission performed by terrorists, arsonists or pyromaniacs.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Fires locations" optional="false">
+      <line>
+        <text>the planned fire to create,</text>
+      </line>
+    </parameter>
+    <parameter name="Instantaneously (default value is FALSE)" optional="true">
+      <line>
+        <text>defines if the agent can create fires instantaneously (magically) without any physical capabilities consideration</text>
+      </line>
+    </parameter>
+    <parameter name="Rally point" optional="true"/>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each fire location. The positions reached to create each fire are automatically determinated by the agent. The order of the elements into the 'Fires locations' list defines the order of visit.</text>
+    </line>
+    <line>
+      <text>Upon reaching a position, the agent starts to create the corresponding object ('arson' or 'fire' object). The "work just started" report should be displayed. Upon creation termination (the report "work completed for object [object name]" should be displayed), the agent moves to the next fire to start.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>A fire may not be created. The possible causes are:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the agent doesn't have the physical capability or if it hasn't enough resources to do it( if the 'Instantaneously' paramteter is set to FALSE).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the planned fire cannot be created because it is not designed for (see object capacities "construction" and "burn" in authoring tool),</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>If that specific case, the report 'Impossible work' is displayed, and the agent moves to the next fire to create.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>If needed, the agent dismounts to build an object.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission is done when all fire have been visited (even if some of the objects couldn't be built).</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

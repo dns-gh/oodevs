@@ -1,0 +1,95 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Flank guard</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Flank guard</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td>"The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action."<br>In this Sword mission, to move toward the provided positions and shoot at all enemies in range with direct fires.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>The right and left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>The right and left boundaries inside which the agent perform the mission.<br>
+<h3>Positions</h3>Positions the agent will occupy to flank guard friends.<br>
+<h3>Company</h3>Company to flank guard.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>Foward echelon units: <br>
+</li>
+<ul>
+<li>The commander agent issues the "Flank guard" mission, with friends and positions as parameters, (each of those parameters are shared between platoons). <br>
+</li>
+</ul>
+<li>Rear echelon units: <br>
+</li>
+<ul>
+<li>Other units (reserve and non adapted units) receive the "follow" mission with the first echelon units as parameter.<br>
+</li>
+<li>Combat units of the rear line may receive the "combat support" mission (the enemy may be engaged). <br>
+</li>
+</ul>
+<li>During the mission, the agents will move to position from position to stay close with the company to flank guard.<br>
+</li>
+</ul>* Initial positions<br>
+
+<img alt="FlankGuardCompany1.png" src="./Images/COMBAT - Flank guard/FlankGuardCompany1.png"/><br>* One agent moves to a better position close to the company<br>
+
+<img alt="FlankGuardCompany2.png" src="./Images/COMBAT - Flank guard/FlankGuardCompany2.png"/><br>* The agent arrives at a best position<br>
+
+<img alt="FlankGuardCompany3.png" src="./Images/COMBAT - Flank guard/FlankGuardCompany3.png"/><br>* Another agent moves to a closest position<br>
+
+<img alt="FlankGuardCompany4.png" src="./Images/COMBAT - Flank guard/FlankGuardCompany4.png"/><br>* New positions for agents<br>
+
+<img alt="FlankGuardCompany5.png" src="./Images/COMBAT - Flank guard/FlankGuardCompany5.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>The positions given as parameters are ordered according to their location along the area of responsability. The commander dispatchs it platoon by platoon, so the first position is given at the first platoon, the second to the second,... <br>
+</li>
+<ul>
+<li>If there are less positions than platoons, some positions will be shared with several platoons.<br>
+</li>
+<li>If there are more postions than platoons, each platoon could received several positions, each position is given at only one platoon.<br>
+</li>
+</ul>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

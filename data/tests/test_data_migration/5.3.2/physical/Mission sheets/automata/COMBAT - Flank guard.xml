@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Flank guard">
+  <context>
+    <line>
+      <text>"The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action."</text>
+    </line>
+    <line>
+      <text>In this Sword mission, to move toward the provided positions and shoot at all enemies in range with direct fires.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>The right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>The right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Positions" optional="false">
+      <line>
+        <text>Positions the agent will occupy to flank guard friends.</text>
+      </line>
+    </parameter>
+    <parameter name="Company" optional="false">
+      <line>
+        <text>Company to flank guard.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Foward echelon units: </text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "Flank guard" mission, with friends and positions as parameters, (each of those parameters are shared between platoons). </text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Rear echelon units: </text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>Other units (reserve and non adapted units) receive the "follow" mission with the first echelon units as parameter.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>Combat units of the rear line may receive the "combat support" mission (the enemy may be engaged). </text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>During the mission, the agents will move to position from position to stay close with the company to flank guard.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>* Initial positions</text>
+    </line>
+    <line>
+      <link>
+        <text>FlankGuardCompany1.png</text>
+      </link>
+    </line>
+    <line>
+      <text>* One agent moves to a better position close to the company</text>
+    </line>
+    <line>
+      <link>
+        <text>FlankGuardCompany2.png</text>
+      </link>
+    </line>
+    <line>
+      <text>* The agent arrives at a best position</text>
+    </line>
+    <line>
+      <link>
+        <text>FlankGuardCompany3.png</text>
+      </link>
+    </line>
+    <line>
+      <text>* Another agent moves to a closest position</text>
+    </line>
+    <line>
+      <link>
+        <text>FlankGuardCompany4.png</text>
+      </link>
+    </line>
+    <line>
+      <text>* New positions for agents</text>
+    </line>
+    <line>
+      <link>
+        <text>FlankGuardCompany5.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>The positions given as parameters are ordered according to their location along the area of responsability. The commander dispatchs it platoon by platoon, so the first position is given at the first platoon, the second to the second,... </text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>If there are less positions than platoons, some positions will be shared with several platoons.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>If there are more postions than platoons, each platoon could received several positions, each position is given at only one platoon.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="FlankGuardCompany5.png"/>
+    <attachment name="FlankGuardCompany2.png"/>
+    <attachment name="FlankGuardCompany1.png"/>
+    <attachment name="FlankGuardCompany4.png"/>
+    <attachment name="FlankGuardCompany3.png"/>
+  </attachments>
+</mission-sheet>

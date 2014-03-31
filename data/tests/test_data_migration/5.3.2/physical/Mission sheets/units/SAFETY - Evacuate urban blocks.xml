@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Evacuate urban blocks">
+  <context>
+    <line>
+      <italic>
+        <text>Emergency evacuation: removal of persons from a dangerous place due to a disaster or impending war.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, acting on urban blocks to remove inhabitants.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Urban blocks" optional="false">
+      <line>
+        <text>An ordered list of populated areas in which a population can be confined.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each provided urban block. The agent stops at the border of the urban block.</text>
+    </line>
+    <line>
+      <text>Upon reaching a urban block, the agent evacuates it before moving to the next unvisited urban block.</text>
+    </line>
+    <line>
+      <text>When all the urban blocks have been visited, the unit goes to the rally point.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>An urban block may not be evacuated if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the urban block cannot be inhabited (the report "urban block cannot be inhabited" is displayed)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the urban block has already been evacuated (the trace "the urban block is already evacuated" is displayed)</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this case, the agent decides to act on the next one.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When the rally point is reached, the mission ends.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

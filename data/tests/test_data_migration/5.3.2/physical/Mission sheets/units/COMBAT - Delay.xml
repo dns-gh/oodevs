@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Delay">
+  <context>
+    <line>
+      <italic>
+        <text>To delay enemy advance from successive positions</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to occupy successively a set of destroying positions in order to engage encountered enemies.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Positions" optional="false">
+      <line>
+        <text>Ordered position to occupy.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent reaches and occupies each of the issued positions. If a visited position is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, else it moves to the center of the position. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Average speed depends on the physical capabilities regarding the terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a position, the agent starts to observe and wait for enemies to come.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If enemies are detected, the agent engages them from the position it occupies. If the local force ratio is weak, the agent disengages and reaches the next position.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when the agent reaches the last position.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

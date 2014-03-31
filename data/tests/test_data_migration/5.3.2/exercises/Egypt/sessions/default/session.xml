@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<session>
+  <config>
+    <dispatcher>
+      <network client="localhost:10000" server="10001"/>
+      <plugins>
+        <recorder fragmentfreq="200" keyframesfreq="100"/>
+      </plugins>
+    </dispatcher>
+    <gaming>
+      <network server="localhost:10001"/>
+    </gaming>
+    <simulation>
+      <checkpoint frequency="100000h" keep="1" usecrc="true"/>
+      <debug decisional="false" diadebugger="false" diadebuggerport="15000" networklogger="true" networkloggerport="20000" pathfind="false"/>
+      <decisional useonlybinaries="false"/>
+      <dispatcher embedded="true"/>
+      <network port="10000"/>
+      <orbat checkcomposition="false"/>
+      <pathfinder threads="1"/>
+      <profiling enabled="false"/>
+      <time factor="10" step="10"/>
+    </simulation>
+  </config>
+  <meta>
+    <comment/>
+    <date>20101109T141911</date>
+    <name>default</name>
+  </meta>
+</session>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Screen">
+  <context>
+    <line>
+      <italic>
+        <text>Combat action which is to inform the ongoing progress of a running enemy in front of him with mobile elements which, without engaging or identifying, seizes any opportunity to clarify the information on the enemy</text>
+      </italic>
+      <text>.</text>
+    </line>
+    <line>
+      <text>In sword, to move from one position to another in order to monitor appoaching enemies.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right and left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Positions" optional="false">
+      <line>
+        <text>The positions from which the agent monitors the approaching enemies.</text>
+      </line>
+    </parameter>
+    <parameter name="Stay on position at mission start" optional="true">
+      <line>
+        <text>Defines if at the beginning of the mission, the agent may stay at its current position or if it may move directly to the first one.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to each position to monitor approaching enemies. If a visited position is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, otherwise it moves to the center of the position.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a position,the agent waits for enemies to come.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <bold>
+            <text>The agent decides to move to the next one if its ratio of forces is low and if it has been detected by at least one enemy</text>
+          </bold>
+          <text>.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <bold>
+            <text>If the "disengage" fragmentary order is issued by user, the unit moves to the next position</text>
+          </bold>
+          <text>.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text> If the "Stay on position at mission start" is set to 'FALSE', the agent starts the mission by reaching the first position in the "positions" list.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>The agent reaches the positions in the order of the 'positions' list.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends if the agent reaches the last position or if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

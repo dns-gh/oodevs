@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Bridge">
+  <context>
+    <line>
+      <italic>
+        <text>The purpose of any river crossing is to project combat power across a water obstacle to accomplish a mission. The challenge is to minimize the river's impact on the commander's ability to maneuver.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to use a crossing site object to construct a "bridge" object in order to allow friendly units to cross a water obstacle.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Crossing site" optional="false">
+      <line>
+        <text>Crossing site (object) to bridge.</text>
+      </line>
+    </parameter>
+    <parameter name="Bridge system" optional="false">
+      <line>
+        <text>Define if the bridging system must be discontinuous or continuous (float bridging or fixed bridging).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>To bridge a water obstacle the crossing site object must have been reconnoitered. If this is not the case the report "crossing site needs to be recon first" is displayed and the mission terminates.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the crossing has been reconnoitered, the agent moves to it and builds a "bridge" object on it (the constructed bridge has the same shape as the crossing site). </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Note that the agent may receive reinforcements in order to build the bridge. The bridge becomes operational once the report "bridge is operational" displays.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

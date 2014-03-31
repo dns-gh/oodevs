@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Search and destroy">
+  <context>
+    <line>
+      <italic>
+        <text>An offensive action characterized by movement supported by fire.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to reconnoiter key points in the area in order to find enemies. All enemies in range will be engaged.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area within which the agent searches for enemies.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>* The agent moves to each keypoint inside the given aera. If an element is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible. Average speed depends on the physical capabilities while taking into account terrain properties.</text>
+    </line>
+    <line>
+      <text>* While moving inside the area, the agent engages all enemies in range.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text> Only enemies located inside the area are engaged.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text> If no position is found in the area the agent reconnoiters the area.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text> The agent may move toward an encountered enemy to destroy, when it is located in the area.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

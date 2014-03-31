@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Crowd - Damage">
+  <context>
+    <line>
+      <italic>
+        <text>Riots typically involve vandalism and the destruction of private and public property. The specific property to be targeted varies depending on the riot and the inclinations of those involved. Targets can include shops, cars, restaurants, state-owned institutions, and religious buildings.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to use crowds agent in order to make the structural state of installations (urban blocks or objects) decreases with a given quantity (% of current structural state). </text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Objective" optional="false">
+      <line>
+        <text>Objective to damage.</text>
+      </line>
+    </parameter>
+    <parameter name="Quantity (%)" optional="true">
+      <line>
+        <text>Quantity of damage to apply on the objective (default value is 10%).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the objective, following a computed route. If an obstacle is encountered on the way to the objective, the crowd stops and a new temporary concentration is created. The movement is suspended until the obstacle is removed. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The agent's attitude is automatically set to "agressive" but it can be changed at any time by user (by issuing the "change attitude" order).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Once the head of the crowd reaches the objective (once the crowd takes contact with the objective),  the agent starts to damage it (the report "critical site under attack" is displayed).</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If the objective is an object that can filter crowds, the movement will be interrupted and the object won't be damaged (the message "The objective has the capacity to filter the crowd" should be displayed).</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>Use case1: a crowd damaging an object:</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+    <line>
+      <link>
+        <text>Crowd - Damage.png</text>
+      </link>
+    </line>
+    <line>
+      <link>
+        <text>Crowd - Damage2.png</text>
+      </link>
+    </line>
+    <ul>
+      <ul>
+        <li>
+          <line>
+            <text>Use case 2: the objective is a urban block</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+    <line>
+      <link>
+        <text>Crowd - Damage3.png</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>For urban blocks, the delays and efficiency of the "damage" action depends on the crowd capabilities (see authoring tool, "Crowds" then "urban area destruction" section). </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>For other Sword object, the construction level is decreased with the issued quantity. It is independent of the agent physical capabilities.  A damaged object may disappear if it is entirely destroyed.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission terminates when the issued quantity of damaged have been applied AND the entirely crowd has reached the objective.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="Crowd - Damage.png"/>
+    <attachment name="Crowd - Damage2.png"/>
+    <attachment name="Crowd - Damage3.png"/>
+  </attachments>
+</mission-sheet>

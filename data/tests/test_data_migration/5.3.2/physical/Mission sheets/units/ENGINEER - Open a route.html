@@ -1,0 +1,87 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ENGINEER - Open a route</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ENGINEER - Open a route</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To reduce or negate the effects of existing or reinforcing obstacles. The objective are to maintain freedom of movement for maneuver units, weapons systems and critical supplies.</i>
+<br>In Sword, to move along a computed path and bypass obstacles that collide with the path. Here, 'obstacles' are sword 'objects' that have the capacity "avoidable" and/or "constuctor".<br>Bypassing an obstacle means to make it trafficable. Agents of the simulation becomes able to move through a bypassed obstacle with a limited speed of movement.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Waypoints</h3>Waypoints defining the route to follow (the path will be computed taking into account these waypoints).<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves along the computed path. If an 'obstacle' obstructs the path, the agent tries to reaches it.<br>
+</li>
+<li>Upon reaching an obstacle, the agent tries to bypass it:<br>
+</li>
+<ul>
+<li>the obstacle can be bypassed: the agent starts to bypass it (the report "work just started"  should be displayed),<br>
+</li>
+<li>the obstacle can be bypassed but the agent has no capacity to perform the action: the report "the agent cannot bypass the object" should displayed and the agent waits for reinforcement.<br>
+</li>
+<li>the obstacle cannot be bypassed: the report "the object cannot be bypassed" should display.<br>
+</li>
+</ul>
+<li>In the last case, the agent tries to remove the object: if an obstacle is improved with mines, the agent needs to remove mines before starting to deconstruct the obstacle, then the agent starts to remove it (the report "work just started"  should be displayed). Upon work termination (the report "work completed for object [object name]" is displayed) the agent continues to move along the path. <br>
+</li>
+<li>If the obstacle cannot be removed either (if the agent doesn't have the physical capability or it hasn't enough resources), the report 'Impossible work' is displayed. In that case the agent waits for reinforcement.<br>
+</li>
+<li>Upon work termination (the report "work completed for object [object name]" is displayed) the agent continues to move along the path.<br>
+</li>
+<li>If needed, the agent dismounts to perform the works.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>Note that the wait can be very long (it can depend on the type and the shape of the obstacle).<br>
+</li>
+</ul>Use case 1/2 with different kinds of obstacles:<br>
+
+<img alt="ENGINEER - Open a route.png" src="./Images/ENGINEER - Open a route/ENGINEER - Open a route.png"/><br>Use case 2/2 with different kinds of obstacles:<br>
+
+<img alt="ENGINEER - Open a route2.png" src="./Images/ENGINEER - Open a route/ENGINEER - Open a route2.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>When the last waypoints have been reached, the mission terminates.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

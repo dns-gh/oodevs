@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Order to follow">
+  <context>
+    <line>
+      <text>To visit a set of units and order them to follow</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Units" optional="false">
+      <line>
+        <text>the set of teammate units to be asked to follow.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each target unit.</text>
+    </line>
+    <line>
+      <text>Upon reaching a unit, the agent asks it to follow. The report "Entity is requested to follow" should be displayed. The unit should start the "follow" mission and display the usual "follow" mission reports. If there is no more agent to visit, subject remains next to the last one visited.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>A target unit may not follow the agent if it can't perform the "Follow" mission (the mission hasn't been set for the agent). The report should display the "Entity cannot follow (it can't perform the mission)". In that case the agent will go to next target.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>Followers will follow the agent until they receive another mission.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

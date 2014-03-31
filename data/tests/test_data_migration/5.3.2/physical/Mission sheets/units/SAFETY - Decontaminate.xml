@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Decontaminate">
+  <context>
+    <line>
+      <italic>
+        <text>To depollute or decontaminate in order to rehabilitate a site or a soil that has been polluted by industrial activities. The decontamination of a site reduces the risk of pollution to acceptable levels or make it disappear.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, decontaminating a site ("contaminated site") prevents units from being contaminated. It prevents the creation and the dispersion of a contaminated cloud that can cause injuries in units. A "decontaminated site" in SWORD is defined by a surface delimited by a polygon. All contamination objects (such as "contaminated area") that intersect with the decontaminated surface lose their contamination capacity.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Sites to decontaminate" optional="false">
+      <line>
+        <text>Areas (polygons) or urban blocks to decontaminate.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each element to decontaminate (an area or a urban block) (the order of traversal is defined by user). If a visited element is reachable (the agents can enter it), the agent moves to the center, otherwise it moves to a close position (the position closest to the center).</text>
+    </line>
+    <line>
+      <text>Upon reaching an element (an area or an urban block), the agent decontaminates it before moving to the next unvisited element.</text>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When there are no more elements to decontaminate, the agent stays next to the last visited element and the mission ends.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

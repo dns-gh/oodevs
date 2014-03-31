@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="End mission">
+  <context>
+    <line>
+      <text>This order may be used to end the current mission (the mission ends, and another one should be issued). If the current mission has a "Rally point" or "Meeting point" parameter, then the agent will move towards it.</text>
+    </line>
+  </context>
+  <parameters/>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

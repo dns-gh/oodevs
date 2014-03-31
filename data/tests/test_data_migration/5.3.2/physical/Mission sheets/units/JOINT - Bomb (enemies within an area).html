@@ -1,0 +1,79 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>JOINT - Bomb (enemies within an area)</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          JOINT - Bomb (enemies within an area)</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>For an aircraft to fly over targets within an area in order to destroy or neutralize them.</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected ennemy direction.<br>
+<h3>Route</h3>The path to move along.<br>
+<h3>Area</h3>Area inside which targets must be found.<br>
+<h3>Ammunition</h3>Type of ammunition to use.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Quantity</h3>Quantity of projectiles to use for each shot (default value is 100).<br>
+<h3>Fly height</h3>Height to reach while flying along the route (in meters, default value is 2000 meters).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent takes off at the specified height and moves toward each waypoint defining the route.<br>
+</li>
+<li>Upon moving nearby the area, the agent tries to launch the specified quantity of projectiles on each encountered enemy found within it.<br>
+</li>
+<li>Upon executing an indirect fire on a target, the report "Indirect fire completed on target [target name]" is displayed.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>A target won't be shot if:<br>
+<ul>
+<li>it is not at a good firing distance regarding the selected ammunition: the message "target out of range" is displayed.<br>
+</li>
+<li>it is not within the specified area,<br>
+</li>
+<li>the agent doesn't have the physical capability (no suitable launcher for the dotation type): the message "no Launcher" is displayed.<br>
+</li>
+<li>the agent does not have enough dotation: the message "no ammo" is displayed.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>When there are no more waypoints to visit, the agent reaches the aircraft carrier (the agent's altitude is 0 meters) and the mission ends.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

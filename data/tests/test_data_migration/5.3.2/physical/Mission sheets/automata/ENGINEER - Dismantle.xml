@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Dismantle">
+  <context>
+    <line>
+      <italic>
+        <text>To totally eliminate or neutralise a set of obstacles. A task that is usually performed by follow-on engineers and is not done under fire.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to remove a set of given Sword objects such as obstacles or human made infrastructure.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Objectives" optional="false">
+      <line>
+        <text>Set of 'obstacle' objects to remove.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach  by surbordinate units upon works termination.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Dismantle" mission to the engineer platoons, with a set of objectives as parameter. Objectives are fairly shared between engineer platoons.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Other units are ordered to reach the meeting position (if the number of engineer platoons is greater than the number of objectives, non used platoons are ordered to reach the meeting position).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>An object may not be removed if one of the subordinate units doesn't have the physical capability or it hasn't enough resources to do it. In that case the company should be reinforced with adapted device.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When all objects have been removed, the engineer units move to the meeting position and the mission ends.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If an object is valorized with mines and if a subordinate unit that is performing the "Dismantle" mission cannot devalorize it (regarding its physical capacity), the commander agent will automatically reinforce it with another subordinate. If no subordinate unit can devalorize the obstacle, the commander agent waits to be reinforced with adapted devices.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission terminates when all subordinates have finished their mission.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

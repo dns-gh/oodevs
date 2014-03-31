@@ -1,0 +1,66 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Lift evacuation on urban blocks within area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Lift evacuation on urban blocks within area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>Emergency evacuation: removal of persons from a dangerous place due to a disaster or impending war.</i>
+<br>In SWORD, a population is evacuated from the urban block it populates. This mission is the reverse of the "Lift evacuation from urban blocks within area" mission. Its goal is to lift an evacuation on a set of urban blocks within a specified zone.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Area</h3>The area containing the urban blocks to lift evacuation on.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Rally point</h3>Position to reach after performing the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues a "Lift evacuation on urban blocks" order to each capable agent. Every one of them is given a single urban block to lift evacuation on (the closest one to them), and whenever a subordinate has finished to lift evacuation on a urban block, another urban block to lift evacuation on is given to him, for as long as there are urban blocks left to lift evacuation on. When there are no longer such urban blocks, the subordinates are given a *Move To" order to the rally point instead (if there is no rally point, then the subordinates remain at their current position).<br>
+</li>
+</ul>
+<ul>
+<li>The other units receive a *Move To* order to the rally point (if there is no rally point, then they remain at their current position).<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>The evacuation status may not be lifted if the urban block cannot be populated (the report "urban block cannot be inhabited" is displayed) . In that specific case, the agent in charge of this urban block will pursue his mission with his other assigned urban blocks, and the commander mission continues.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when all the subordinate agents have reached the rally point (or, if there is no rally point, when they have finished to act on all the urban blocks).<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

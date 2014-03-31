@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<logistic-supply-classes model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/LogisticSupplyClasses.xsd">
+  <logistic-supply-class id="18" type="Class IIIa - Aviation fuel and lubricants"/>
+  <logistic-supply-class id="17" type="Class IV - Fortification and construction materials, and additional items"/>
+  <logistic-supply-class id="11" type="Class III - Petroleum, oil and lubricants"/>
+  <logistic-supply-class id="10" type="Class I - Items of subsistence (food and forage)"/>
+  <logistic-supply-class id="9" type="Class V.D - Ground to ground artillery shells"/>
+  <logistic-supply-class id="8" type="Class V - Ammunition, explosives, and chemical agents of all types"/>
+  <logistic-supply-class id="7" type="Class II - Spare parts"/>
+</logistic-supply-classes>

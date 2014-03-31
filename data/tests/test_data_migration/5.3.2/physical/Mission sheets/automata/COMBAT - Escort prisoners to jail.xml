@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Escort prisoners to jail">
+  <context>
+    <line>
+      <italic>
+        <text>A member of the Armed Forces assigned to accompany, assist, or guide an individual or group. An armed guard that accompanies a convoy, a train, prisoners, etc.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to accompany a refugees or surrendered units toward a specific location (a position or a camp for instance).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Camp" optional="false">
+      <line>
+        <text>Camp into which the agent has to accompany the surrendered units.</text>
+      </line>
+    </parameter>
+    <parameter name="Surrendered units" optional="false">
+      <line>
+        <text>Surrendered units to be transported to the given camp. </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Forward echelon units </text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "EscortPrisonersToCamp" mission to each of the first echelon units,</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>The number of first echelon units depends on the number of surrendered units to escort (one surrendered unit corresponds  to one surbodinate unit).</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Rear echelon units</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "follow" mission with the first echelon units as parameter.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>In case of an attack by an enemy or bad force ratio, combat units of the second echelon may receive the "combat support" mission (the enemy may be engaged).</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all surrendered units have been jailed into the camp.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

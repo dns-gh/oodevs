@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Reinforce">
+  <context>
+    <line>
+      <text>In SWORD, a mission in which one unit augments the capability of another unit.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Unit" optional="false">
+      <line>
+        <text>The element to reinforce (a unit or a company).</text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="true">
+      <line>
+        <text>The position from which the agent will reinforce the objective (optional).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the objective. If the position is not reachable (the objective is in a urban block inside which the agent cannot move, for instance), the agent moves as close as possible. Average speed depends on the physical capabilities with respect to terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the objective, the agent reinforces it, only if the distance between the agent and the objective is less than 100 meters. The report "unit [ agentName ] has successfully reinforced [obectiveName ]" should be displayed.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If the parameter is an automat, the agent moves to the command post and becomes subordinated to the new company</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If a position is issued, the agent moves to the position (not directly to the given agent or company). In that case it waits for the objective to be nearby before reinforcing it. The minimum distance should be less than 100 meters.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

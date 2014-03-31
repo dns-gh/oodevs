@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Improve (with mines)">
+  <context>
+    <line>
+      <italic>
+        <text>To improve natural or man made obstacles.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to improve a set of sword objects with mines (to add mines tp the object). An improved object (an engineer obstacle for instance) is harder to remove because agents of the simulation need to remove mines before deconstructing the object. Remove mines improvement takes delays.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Objectives" optional="false">
+      <line>
+        <text>Objects to improve with mines.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach upon works termination.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each obstacle to improve.  It acts on each obstacle by following the order of the elements in the 'Objectives' list. The position of each obstacle to improve is automatically determined by the agent.</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>Upon reaching an object, the agent starts to add mines (the report "Valorization started for object: [object name]"  should be displayed). Upon work termination (the report "Improved completed for object: [object name]" should be displayed) and the agent goes to next object.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>An object may not be improved if the agent doesn't have the physical capability or it hasn't enough resources. In this case, the report 'Impossible work' is displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>In this case the agent waits to be reinforced.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts to improve the obstacle.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When all obstacles have been improved, the agent moves to the meeting position.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The meeting position is reached.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

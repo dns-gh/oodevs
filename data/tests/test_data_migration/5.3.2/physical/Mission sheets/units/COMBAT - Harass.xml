@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Harass">
+  <context>
+    <line>
+      <italic>
+        <text>Mission to destroy or at least to neutralize enemy hidden elements, infiltrated or during infiltration and exfiltration in a given area.</text>
+      </italic>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Entities to harass" optional="true">
+      <line>
+        <text>Enemies agents to harass.</text>
+      </line>
+    </parameter>
+    <parameter name="Objective" optional="false">
+      <line>
+        <text>Position where you want to harass enemies.</text>
+      </line>
+    </parameter>
+    <parameter name="Destroying positions" optional="true">
+      <line>
+        <text>Positions for observing objective where begin to harass enemies.</text>
+      </line>
+    </parameter>
+    <parameter name="Obstacles" optional="true">
+      <line>
+        <text>Obstacles to build.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent reaches a position (selected automatically by the agent) to observe the objective. The report 'zone control: started' should be displayed. The agent will therefore observe this objective to be able to engage the identified enemy elements. Any identified enemy that passes inside the objective (area or urban block) will, if possible, be destroyed. If some destroying positions are given, the agent moves between them. When the agent stops to observe the objective, the report 'zone control: stopped' should be displayed.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>destroying positions:   </text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>If no destroying positions are given:</text>
+          </line>
+        </li>
+        <ul>
+          <li>
+            <line>
+              <text>the agent reaches the center of the objective if possible;</text>
+            </line>
+          </li>
+          <li>
+            <line>
+              <text>otherwise, the agent reaches the nearest postion that it can reach in the objective.</text>
+            </line>
+          </li>
+        </ul>
+        <li>
+          <line>
+            <text>If at least one destroying position is given as parameter:</text>
+          </line>
+        </li>
+        <ul>
+          <li>
+            <line>
+              <text>the agent reaches one of the destroying positions and observes the objective. The choice of the destroying position is automatically computed by the agent.</text>
+            </line>
+          </li>
+          <li>
+            <line>
+              <text>If an enemy could be engaged, the agent could move from the destroying position to other destroying positions in order to find the best position to apply direct fire and engage the enemy.</text>
+            </line>
+          </li>
+        </ul>
+      </ul>
+      <li>
+        <line>
+          <text>If obstacles are given as parameters:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the agent will construct them at the beginning of the mission if the agent has the capacity and the dotation to build them.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>if withImprovement parameter is true, the obstacles will be improved (mining) by the agent if the agent has the capacity and the dotation to mine it.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>If enemy agents are given as parameters, engage them, otherwise engage any enemy located inside the objective.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission continues until another mission is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

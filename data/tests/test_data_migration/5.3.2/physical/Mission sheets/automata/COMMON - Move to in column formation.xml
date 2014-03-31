@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Move to in column formation">
+  <context>
+    <line>
+      <italic>
+        <text>To move to an objective in order to reach it.</text>
+      </italic>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected ennemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Destination" optional="false">
+      <line>
+        <text>Destination to reach.</text>
+      </line>
+    </parameter>
+    <parameter name="Distance" optional="false">
+      <line>
+        <text>The minimum distance to respect between agents.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>* The commander agent issues a "moveTo" order to the CP agent.</text>
+    </line>
+    <line>
+      <text>* The commander agent issues a "follow" order to each subordinate with a différent agent to follow.</text>
+    </line>
+    <line>
+      <text>* The minimal distance is respected between each agent.</text>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

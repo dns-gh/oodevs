@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Escort refugees to position">
+  <context>
+    <line>
+      <italic>
+        <text>A member of the Armed Forces assigned to accompany, assist, or guide an individual or group. </text>
+      </italic>
+    </line>
+    <line>
+      <text>An armed guard that accompanies a convoy, a train, prisoners, etc.</text>
+      <italic/>
+    </line>
+    <line>
+      <text>In SWORD, to accompany a refugees or surrendered units toward a specific location (a position or a camp for instance).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Location" optional="false">
+      <line>
+        <text>Location into which the agent has to accompany the refugees units.</text>
+      </line>
+    </parameter>
+    <parameter name="Refugees" optional="false">
+      <line>
+        <text>Refugees units to be transported to the given location. </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Forward echelon units </text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "EscortRefugeesToPosition" mission to one unit, with all refugees as parameters (only one first echelon unit in this mission).</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Rear echelon units</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the commander agent issues the "follow" mission with the first echelon units as parameter.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>in case of an attack by an enemy or bad force ratio, combat units of the second echelon may receive the "combat support" mission (the enemy may be engaged in return).</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all refugees units have been unloaded into the camp.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,57 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Connect urban block with resource nodes</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Connect urban block with resource nodes</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td>In SWORD, connecting urban blocks with resources nodes allows an agent to create links from a distributing urban block to one or more receiving urban blocks for a given resource.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Urban block (producer)</h3>The producer of the resource network to establish.<br>
+<h3>Resource nodes (receivers)</h3>The list of the receivers of the resource network to establish, each item defined by a resource and the support of the node (object or urban block). <br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent moves toward each receivers in the order given by the operator. When the agent reaches a receiver, it establishes a resource network link from the producer to this receiver.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>If the traficability of one of the receiving urban blocks is too low for the agent, it will report "Cannot reach objective" and skip the connection for this resource node.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when all of the receivers have been connected to the producer.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

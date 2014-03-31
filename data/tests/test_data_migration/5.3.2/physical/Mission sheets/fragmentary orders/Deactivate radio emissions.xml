@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Deactivate radio emissions">
+  <context>
+    <line>
+      <text>For the agent, to switch the radio communication off. </text>
+    </line>
+  </context>
+  <parameters/>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Once the agent has switch off the radio, it cannot transmit information to teammates agents. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>It means that collected informations such as enemies knowledge won't be shared with teammate units of the agent's knowledge group (actually, the agent with a "radio silence" status has its own knowledge group).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The speed of movement is slowed down too.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

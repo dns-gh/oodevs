@@ -1,0 +1,2 @@
+<?xml version="1.0" ?>
+<svg style="stroke:black;stroke-width:2"><path d="M115 285 C115 400 285 400 285 285 C400 285 400 115 285 115 C285 0 115 0 115 115 C0     115 0 285 115 285 z" class="border"/><path d="M200 200 L145 175 C90 150 90 250 145 225 L200 200 L255 175 C310 150 310 250 255 225     L200 200" style="fill:rgb(0,0,0);"/><g transform="translate(100 40) scale(0.5 0.5)"><text style="fill:rgb(0,0,0);text-anchor:middle;font-weight:bold;font-size:150;font-family:Arial" x="200" y="230">R</text></g></svg>

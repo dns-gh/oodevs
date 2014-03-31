@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Send carriers">
+  <context>
+    <line>
+      <text>TODO</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Beneficiary" optional="false"/>
+    <parameter name="Carriers number" optional="false"/>
+  </parameters>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,89 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Extract victims from crowd within area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Extract victims from crowd within area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>'To ensure evacuation of crowd victims, with suitable device.</i>'<br>In SWORD, extracting victims from crowds allow the user to prepare the evacuation operation. In this mission, the subordinates extract wounded and/or dead victims from all crowds located inside an area.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Area</h3>The area inside which crowds must be visited.<br>
+<h3>Goal of the mission</h3>Whether the goal of the mission is to extract wounded victims, or dead victims, or both.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Reach crowds to extract victims</h3>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>If there are crowds with victims to extract in the area at the beginning of the mission, then the commander agent issues a *Extract victims from crowds* order to each capable agent (the others will not receive any order). Every one of them is given a single crowd to extract victims from, and whenever a subordinate has finished its task, another crowd will be provided to him, for as long as there are still crowds to process. When there are no longer such crowds, the units will wait for further orders.<br>
+</li>
+</ul>
+
+<img alt="extractVictims2.png" src="./Images/SAFETY - Extract victims from crowd within area/extractVictims2.png"/><br>
+<i>The units have extracted victims from crowds.</i>
+<br>
+<ul>
+<li>As soon as new crowds come in the area, or as new victims appear in the known crowds (victims relevant to the goal of the mission), the commander agent will issue a *Extract victims from crowds* order to capable agents in order to process these new crowds. When there are no longer such crowds, the units will wait for further orders.<br>
+</li>
+</ul>
+
+<img alt="extractVictims3.png" src="./Images/SAFETY - Extract victims from crowd within area/extractVictims3.png"/><br>
+<i>The units will extract the new victims that have just appeared.</i>
+<br>
+<ul>
+<li>If there are no crowd in the area at the beginning of the mission, each subordinate will move to a sub-division of the area. As soon as crowds will come in the area, they will be processed.<br>
+</li>
+</ul>
+
+<img alt="extractVictims4.png" src="./Images/SAFETY - Extract victims from crowd within area/extractVictims4.png"/><br>
+<i>The units spread in the area, to get ready to process new crowds.</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>Victims of a visited crowd may not be extracted if:<br>
+<ul>
+<li>the visited Crowd does not contain wounded humans ( the report "no wounded victims" and "victims cannot be evacuated" should be displayed)<br>
+</li>
+<li>the visited Crowd has moved (the agent won't follow the crowd) or the agent cannot reach it ( the report "no wounded victims" and "victims cannot be evacuated" should be displayed) .<br>
+</li>
+</ul>In this case, the agent decides to act on the next crowd.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>The type of victims that will be extracted from the crowds depends on the "Goal of the mission" parameter : it can either be wounded victims, dead victims, or both.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission never ends so that new crowds can be processed dynamically.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

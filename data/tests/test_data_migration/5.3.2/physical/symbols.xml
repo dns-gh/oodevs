@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<app6>
+  <symbols base="symbols/s*gpu">
+    <choice name="category">
+      <case name="combat" symbol="c">
+        <choice name="weapon">
+          <case name="air defense" symbol="d">
+            <choice name="capacity">
+              <case name="composite" symbol="c"/>
+              <case name="gun unit" symbol="g"/>
+              <case name="h_mad" symbol="h">
+                <choice name="specialization">
+                  <case name="hawk" symbol="h"/>
+                  <case name="patriot" symbol="p"/>
+                </choice>
+              </case>
+              <case name="missile" symbol="m">
+                <choice name="qualifier">
+                  <case name="heavy" symbol="h"/>
+                  <case name="light" symbol="l">
+                    <choice name="specialization">
+                      <case name="motorized avenger" symbol="a"/>
+                    </choice>
+                  </case>
+                  <case name="medium" symbol="m"/>
+                </choice>
+              </case>
+              <case name="short range" symbol="s">
+                <choice name="specialization">
+                  <case name="chaparral" symbol="c"/>
+                  <case name="stinger" symbol="s"/>
+                  <case name="vulcan" symbol="v"/>
+                </choice>
+              </case>
+              <case name="targeting unit" symbol="t"/>
+              <case name="theater missile defense unit" symbol="c"/>
+            </choice>
+          </case>
+          <case name="anti armor" symbol="aa">
+            <choice name="mobility">
+              <case name="air assault" symbol="s"/>
+              <case name="airborne" symbol="m"/>
+              <case name="arctic" symbol="c"/>
+              <case name="armored" symbol="a">
+                <choice name="mobility">
+                  <case name="air assault" symbol="s"/>
+                  <case name="tracked" symbol="t"/>
+                  <case name="wheeled" symbol="w"/>
+                </choice>
+              </case>
+              <case name="dismounted" symbol="d"/>
+              <case name="light" symbol="l"/>
+              <case name="motorized" symbol="o">
+                <choice name="mobility">
+                  <case name="air assault" symbol="s"/>
+                </choice>
+              </case>
+              <case name="mountain" symbol="u"/>
+            </choice>
+          </case>
+          <case name="armor" symbol="a">
+            <choice name="mobility">
+              <case name="track" symbol="t">
+                <choice name="mobility">
+                  <case name="airborne" symbol="a"/>
+                  <case name="amphibious" symbol="w">
+                    <choice name="capacity">
+                      <case name="recovery" symbol="r"/>
+                    </choice>
+                  </case>
+                  <case name="heavy" symbol="h"/>
+                  <case name="light" symbol="l"/>
+                  <case name="medium" symbol="m"/>
+                  <case name="recovery" symbol="r"/>
+                </choice>
+              </case>
+              <case name="wheeled" symbol="w">
+                <choice name="mobility">
+                  <case name="air_assault" symbol="s"/>
+                  <case name="airborne" symbol="a"/>
+                  <case name="amphibious" symbol="w">
+                    <choice name="capacity">
+                      <case name="recovery" symbol="r"/>
+                    </choice>
+                  </case>
+                  <case name="heavy" symbol="h"/>
+                  <case name="light" symbol="l"/>
+                  <case name="medium" symbol="m"/>
+                  <case name="recovery" symbol="r"/>
+                </choice>
+              </case>
+            </choice>
+          </case>
+          <case name="aviation" symbol="v">
+            <choice name="mobility">
+              <case name="composite" symbol="c"/>
+              <case name="fixed wing" symbol="f">
+                <choice name="capacity">
+                  <case name="attack" symbol="a"/>
+                  <case name="recon" symbol="r"/>
+                  <case name="utility" symbol="u"/>
+                </choice>
+              </case>
+              <case name="rotary wing" symbol="r">
+                <choice name="capacity">
+                  <case name="antisubmarine warfare" symbol="w"/>
+                  <case name="attack" symbol="a"/>
+                  <case name="c2" symbol="uc"/>
+                  <case name="medevac" symbol="ue"/>
+                  <case name="mine countermeasure" symbol="m"/>
+                  <case name="scout" symbol="s"/>
+                  <case name="utility" symbol="u">
+                    <choice name="qualifier">
+                      <case name="heavy" symbol="h"/>
+                      <case name="light" symbol="l"/>
+                      <case name="medium" symbol="m"/>
+                    </choice>
+                  </case>
+                </choice>
+              </case>
+              <case name="search and rescue" symbol="s"/>
+              <case name="unmanned aerial vehicle" symbol="u">
+                <choice name="mobility">
+                  <case name="fixed_wing" symbol="f"/>
+                  <case name="rotary_wing" symbol="r"/>
+                </choice>
+              </case>
+              <case name="vertical short takeoff and landing" symbol="v"/>
+            </choice>
+          </case>
+          <case name="engineer" symbol="e">
+            <choice name="capacity">
+              <case name="combat" symbol="c">
+                <choice name="mobility">
+                  <case name="air assault" symbol="s"/>
+                  <case name="airborne" symbol="a"/>
+                  <case name="arctic" symbol="c"/>
+                  <case name="heavy" symbol="h"/>
+                  <case name="light" symbol="l"/>
+                  <case name="mechanized" symbol="t"/>
+                  <case name="medium" symbol="m"/>
+                  <case name="motorized" symbol="w"/>
+                  <case name="mountain" symbol="o"/>
+                  <case name="recon" symbol="r"/>
+                </choice>
+              </case>
+              <case name="capacity" symbol="n">
+                <choice name="specialization">
+                  <case name="naval" symbol="n"/>
+                </choice>
+              </case>
+            </choice>
+          </case>
+          <case name="field artillery" symbol="f">
+            <choice name="capacity">
+              <case name="artillery survey" symbol="s">
+                <choice name="mobility">
+                  <case name="air assault" symbol="s"/>
+                  <case name="airborne" symbol="a"/>
+                  <case name="light" symbol="l"/>
+                  <case name="mountain" symbol="o"/>
+                </choice>
+              </case>
+              <case name="howiltzer gun" symbol="h">
+                <choice name="mobility">
+                  <case name="air assault" symbol="s"/>
+                  <case name="airborne" symbol="a"/>
+                  <case name="amphibious" symbol="x"/>
+                  <case name="arctic" symbol="c"/>
+                  <case name="heavy" symbol="h"/>
+                  <case name="light" symbol="l"/>
+                  <case name="medium" symbol="m"/>
+                  <case name="mountain" symbol="o"/>
+                  <case name="self-propelled" symbol="e"/>
+                </choice>
+              </case>
+              <case name="meteorological" symbol="o">
+                <choice name="mobility">
+                  <case name="air assault" symbol="s"/>
+                  <case name="airborne" symbol="a"/>
+                  <case name="light" symbol="l"/>
+                  <case name="mountain" symbol="o"/>
+                </choice>
+              </case>
+              <case name="mortar" symbol="m">
+                <choice name="mobility">
+                  <case name="amphibious" symbol="l"/>
+                  <case name="self-propelled tracked" symbol="s"/>
+                  <case name="self-propelled wheeled" symbol="w"/>
+                  <case name="towed" symbol="t">
+                    <choice name="mobility">
+                      <case name="air assault" symbol="s"/>
+                      <case name="airborne" symbol="a"/>
+                      <case name="arctic" symbol="c"/>
+                      <case name="mountain" symbol="o"/>
+                    </choice>
+                  </case>
+                </choice>
+              </case>
+              <case name="rocket" symbol="r">
+                <choice name="capacity">
+                  <case name="multi rocket launcher" symbol="m">
+                    <choice name="mobility">
+                      <case name="self-propelled" symbol="s"/>
+                      <case name="towed" symbol="t"/>
+                      <case name="truck" symbol="r"/>
+                    </choice>
+                  </case>
+                  <case name="single rocket launcher" symbol="s">
+                    <choice name="mobility">
+                      <case name="self-propelled" symbol="s"/>
+                      <case name="towed" symbol="t"/>
+                      <case name="truck" symbol="r"/>
+                    </choice>
+                  </case>
+                </choice>
+              </case>
+              <case name="target acquisition" symbol="t">
+                <choice name="specialization">
+                  <case name="anglico" symbol="a"/>
+                  <case name="colt fist" symbol="c">
+                    <choice name="mobility">
+                      <case name="dismounted" symbol="d"/>
+                      <case name="tracked" symbol="m"/>
+                    </choice>
+                  </case>
+                  <case name="flash" symbol="f"/>
+                  <case name="radar" symbol="r"/>
+                  <case name="sound" symbol="s"/>
+                </choice>
+              </case>
+            </choice>
+          </case>
+          <case name="infantry" symbol="i">
+            <choice name="mobility">
+              <case name="air assault" symbol="s"/>
+              <case name="airborne" symbol="a"/>
+              <case name="arctic" symbol="c"/>
+              <case name="infantry fighting vehicle" symbol="i"/>
+              <case name="light" symbol="l"/>
+              <case name="mechanized" symbol="z"/>
+              <case name="motorized" symbol="m"/>
+              <case name="mountain" symbol="o"/>
+              <case name="naval" symbol="n"/>
+            </choice>
+          </case>
+          <case name="internal security forces" symbol="s">
+            <choice name="capacity">
+              <case name="aviation" symbol="a"/>
+              <case name="ground" symbol="g">
+                <choice name="mobility">
+                  <case name="dismounted" symbol="d"/>
+                  <case name="mechanized" symbol="a"/>
+                  <case name="motorized" symbol="m"/>
+                </choice>
+              </case>
+              <case name="railroad" symbol="r"/>
+              <case name="riverine" symbol="w"/>
+              <case name="wheeled mechanized" symbol="m"/>
+            </choice>
+          </case>
+          <case name="missile" symbol="m">
+            <choice name="capacity">
+              <case name="strategic" symbol="s"/>
+              <case name="tactical" symbol="t"/>
+            </choice>
+          </case>
+          <case name="reconnaissance" symbol="r">
+            <choice name="mobility">
+              <case name="air assault" symbol="s"/>
+              <case name="airborne" symbol="a"/>
+              <case name="arctic" symbol="c"/>
+              <case name="cavalry" symbol="v">
+                <choice name="mobility">
+                  <case name="air" symbol="o"/>
+                  <case name="armored" symbol="a"/>
+                  <case name="ground" symbol="g"/>
+                  <case name="motorized" symbol="m"/>
+                </choice>
+              </case>
+              <case name="horse" symbol="h"/>
+              <case name="light" symbol="l"/>
+              <case name="long range surveillance" symbol="x"/>
+              <case name="marine" symbol="r">
+                <choice name="specialization">
+                  <case name="division" symbol="d"/>
+                  <case name="force" symbol="f"/>
+                  <case name="light armored reconnaissance" symbol="l"/>
+                </choice>
+              </case>
+              <case name="mountain" symbol="o"/>
+            </choice>
+          </case>
+        </choice>
+      </case>
+      <case name="combat service support" symbol="s">
+        <choice name="weapon">
+          <!-- Weapon ? -->
+          <case name="administrative" symbol="a">
+            <choice name="level">
+              <case name="corps" symbol="c"/>
+              <case name="finance" symbol="f">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="judge advocate general" symbol="j">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="labor" symbol="l">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="morale welfare recreation" symbol="w">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="mortuary graves registry" symbol="m">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="personnel services" symbol="s">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="postal" symbol="o">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="public affairs" symbol="p">
+                <choice name="level">
+                  <case name="broadcast" symbol="b">
+                    <choice name="level">
+                      <case name="corps" symbol="c"/>
+                      <case name="theater" symbol="t"/>
+                    </choice>
+                  </case>
+                  <case name="corps" symbol="c"/>
+                  <case name="joint information bureau" symbol="b">
+                    <choice name="level">
+                      <case name="corps" symbol="c"/>
+                      <case name="theater" symbol="t"/>
+                    </choice>
+                  </case>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="quartermaster" symbol="q">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="religious chaplain" symbol="r">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="replacement holding unit" symbol="x">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="theater" symbol="t"/>
+            </choice>
+          </case>
+          <case name="maintenance" symbol="x">
+            <choice name="level">
+              <case name="corps" symbol="c"/>
+              <case name="electro-optical" symbol="e">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="heavy" symbol="h">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="ordnance" symbol="o">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                  <case name="missile" symbol="m">
+                    <choice name="level">
+                      <case name="corps" symbol="c"/>
+                      <case name="theater" symbol="t"/>
+                    </choice>
+                  </case>
+                </choice>
+              </case>
+              <case name="recovery" symbol="r">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="theater" symbol="t"/>
+            </choice>
+          </case>
+          <case name="medical" symbol="m">
+            <choice name="level">
+              <case name="corps" symbol="c"/>
+              <case name="dental" symbol="d">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="medical treatment facility" symbol="m">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="psychological" symbol="p">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="theater" symbol="t"/>
+              <case name="veterinary" symbol="v">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+            </choice>
+          </case>
+          <case name="supply" symbol="s">
+            <choice name="level">
+              <case name="class i" symbol="1">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="class ii" symbol="2">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="class iii" symbol="3">
+                <choice name="level">
+                  <case name="aviation" symbol="a">
+                    <choice name="level">
+                      <case name="corps" symbol="c"/>
+                      <case name="theater" symbol="t"/>
+                    </choice>
+                  </case>
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="class iv" symbol="4">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="class v" symbol="5">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="class vi" symbol="6">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="class vii" symbol="7">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="class viii" symbol="8">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="class ix" symbol="9">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="class x" symbol="x">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="corps" symbol="c"/>
+              <case name="laundry bath" symbol="l">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="theater" symbol="t"/>
+              <case name="water" symbol="w">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="purification" symbol="p">
+                    <choice name="level">
+                      <case name="corps" symbol="c"/>
+                      <case name="theater" symbol="t"/>
+                    </choice>
+                  </case>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+            </choice>
+          </case>
+          <case name="transportation" symbol="t">
+            <choice name="level">
+              <case name="apod apoe" symbol="a">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="corps" symbol="c"/>
+              <case name="missile" symbol="i">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="movement control center" symbol="m">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="railhead" symbol="r">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="spod spoe" symbol="s">
+                <choice name="level">
+                  <case name="corps" symbol="c"/>
+                  <case name="theater" symbol="t"/>
+                </choice>
+              </case>
+              <case name="theater" symbol="t"/>
+            </choice>
+          </case>
+        </choice>
+      </case>
+      <case name="combat support" symbol="u">
+        <choice name="weapon">
+          <!-- Weapon ? -->
+          <case name="explosive ordinance disposal" symbol="e"/>
+          <case name="information warfare unit" symbol="i"/>
+          <case name="landing support" symbol="p"/>
+          <case name="law enforcement unit" symbol="l">
+            <choice name="category">
+              <case name="central intelligence division" symbol="d"/>
+              <case name="civilian law enforcement" symbol="c"/>
+              <case name="military police" symbol="m"/>
+              <case name="security police" symbol="f"/>
+              <case name="shore patrol" symbol="s"/>
+            </choice>
+          </case>
+          <case name="military intelligence" symbol="m">
+            <choice name="category">
+              <case name="aerial exploitation" symbol="a"/>
+              <case name="counter intelligence" symbol="c"/>
+              <case name="interrogation" symbol="q"/>
+              <case name="joint intelligence center" symbol="j"/>
+              <case name="operations" symbol="o"/>
+              <case name="signal intelligence" symbol="s">
+                <choice name="category">
+                  <case name="electronic warfare" symbol="e">
+                    <choice name="level">
+                      <case name="armored wheeled vehicle" symbol="a"/>
+                      <case name="corps" symbol="c"/>
+                      <case name="direction finding" symbol="d"/>
+                      <case name="intercept" symbol="i"/>
+                      <case name="jamming" symbol="j"/>
+                      <case name="theater" symbol="t"/>
+                    </choice>
+                  </case>
+                </choice>
+              </case>
+              <case name="surveillance" symbol="r">
+                <choice name="category">
+                  <case name="ground station module" symbol="x"/>
+                  <case name="ground surveillance radar" symbol="g"/>
+                  <case name="meteorological" symbol="o"/>
+                  <case name="sensor" symbol="s">
+                    <choice name="category">
+                      <case name="scm" symbol="s"/>
+                    </choice>
+                  </case>
+                </choice>
+              </case>
+              <case name="tactical exploit" symbol="t"/>
+            </choice>
+          </case>
+          <case name="nbc" symbol="a">
+            <choice name="agent">
+              <case name="biological" symbol="b">
+                <choice name="category">
+                  <case name="recon equipped" symbol="r"/>
+                </choice>
+              </case>
+              <case name="chemical" symbol="c">
+                <choice name="category">
+                  <case name="recon" symbol="r">
+                    <choice name="mobility">
+                      <case name="wheeled armored vehicle" symbol="w"/>
+                      <case name="wheeled armored vehicle surveillance" symbol="s"/>
+                    </choice>
+                  </case>
+                  <case name="smoke" symbol="s">
+                    <choice name="mobility">
+                      <case name="armor" symbol="a"/>
+                      <case name="motorized" symbol="m"/>
+                    </choice>
+                  </case>
+                  <case name="smoke decon" symbol="c">
+                    <choice name="mobility">
+                      <case name="mechanized" symbol="k"/>
+                      <case name="motorized" symbol="m"/>
+                    </choice>
+                  </case>
+                </choice>
+              </case>
+              <case name="decontamination" symbol="d"/>
+              <case name="nuclear" symbol="n"/>
+            </choice>
+          </case>
+          <case name="signal unit" symbol="s">
+            <choice name="category">
+              <case name="area" symbol="a"/>
+              <case name="command operations" symbol="o"/>
+              <case name="communication configured package" symbol="c">
+                <choice name="category">
+                  <case name="large communication configured package" symbol="l"/>
+                </choice>
+              </case>
+              <case name="electronic ranging" symbol="x"/>
+              <case name="forward communications" symbol="f"/>
+              <case name="multiple subscriber element" symbol="m">
+                <choice name="type">
+                  <case name="large extension node" symbol="l"/>
+                  <case name="node center" symbol="n"/>
+                  <case name="small extension node" symbol="s"/>
+                </choice>
+              </case>
+              <case name="radio unit" symbol="r">
+                <choice name="type">
+                  <case name="relay" symbol="w"/>
+                  <case name="tactical satellite" symbol="s"/>
+                  <case name="teletype center" symbol="t"/>
+                </choice>
+              </case>
+              <case name="signal support" symbol="s"/>
+              <case name="telephone switch" symbol="w"/>
+            </choice>
+          </case>
+        </choice>
+      </case>
+      <case name="special c2 headquarters component" symbol="h"/>
+      <case name="emergency" symbol="e">
+        <choice name="services">
+          <case name="medical" symbol="m">
+            <choice name="capacity">
+              <case name="hospital" symbol="h"/>
+              <case name="evacuation" symbol="e">
+                <choice name="specialization">
+                  <case name="ambulance" symbol="a"/>
+                  <case name="helicopter" symbol="h"/>
+                </choice>
+              </case>
+              <case name="operation" symbol="o"/>
+            </choice>
+          </case>
+          <case name="firefighter" symbol="f">
+            <choice name="capacity">
+              <case name="fire station" symbol="s"/>
+              <case name="fire hydrant" symbol="h"/>
+              <case name="operation" symbol="o">
+                <choice name="specialization">
+                  <case name="fire suppression" symbol="s"/>
+                </choice>
+              </case>
+            </choice>
+          </case>
+          <case name="police" symbol="p">
+            <choice name="capacity">
+              <case name="law enforcement" symbol="e"/>
+              <case name="operation" symbol="o">
+                <choice name="specialization">
+                  <case name="police" symbol="p"/>
+                  <case name="border patrol" symbol="b"/>
+                  <case name="fbi" symbol="f"/>
+                </choice>
+              </case>
+            </choice>
+          </case>
+          <case name="nbc" symbol="n">
+            <choice name="agent">
+              <case name="biological" symbol="b">
+                <choice name="category">
+                  <case name="recon equipped" symbol="r"/>
+                </choice>
+              </case>
+              <case name="chemical" symbol="c">
+                <choice name="category">
+                  <case name="recon" symbol="r">
+                    <choice name="mobility">
+                      <case name="wheeled armored vehicle" symbol="w"/>
+                      <case name="wheeled armored vehicle surveillance" symbol="s"/>
+                    </choice>
+                  </case>
+                  <case name="smoke" symbol="s">
+                    <choice name="mobility">
+                      <case name="armor" symbol="a"/>
+                      <case name="motorized" symbol="m"/>
+                    </choice>
+                  </case>
+                  <case name="smoke decon" symbol="c">
+                    <choice name="mobility">
+                      <case name="mechanized" symbol="k"/>
+                      <case name="motorized" symbol="m"/>
+                    </choice>
+                  </case>
+                </choice>
+              </case>
+              <case name="decontamination" symbol="d"/>
+              <case name="nuclear" symbol="n"/>
+              <case name="radiological" symbol="r"/>
+            </choice>
+          </case>
+          <case name="public safety" symbol="s">
+            <choice name="capacity">
+              <case name="operation" symbol="o">
+                <choice name="structure">
+                  <case name="operation center" symbol="c"/>
+                  <case name="shelter" symbol="s"/>
+                  <case name="staging area" symbol="a"/>
+                  <case name="incident command center" symbol="i"/>
+                </choice>
+              </case>
+              <case name="teams" symbol="t"/>
+            </choice>
+          </case>
+        </choice>
+      </case>
+    </choice>
+  </symbols>
+  <levels base="levels/">
+    <choice name="level">
+      <case name="o" symbol="o"/>
+      <case name="oo" symbol="oo"/>
+      <case name="ooo" symbol="ooo"/>
+      <case name="i" symbol="i"/>
+      <case name="ii" symbol="ii"/>
+      <case name="iii" symbol="iii"/>
+      <case name="x" symbol="x"/>
+      <case name="xx" symbol="xx"/>
+      <case name="xxx" symbol="xxx"/>
+      <case name="xxxx" symbol="xxxx"/>
+      <case name="xxxxx" symbol="xxxxx"/>
+    </choice>
+  </levels>
+  <automats base="headquarter"/>
+  <infrastructures base="infrastructures/">
+    <choice name="administration"/>
+    <choice name="barrack"/>
+    <choice name="education"/>
+    <choice name="fire-station"/>
+    <choice name="hospital"/>
+    <choice name="housing"/>
+    <choice name="industry"/>
+    <choice name="landmark"/>
+    <choice name="media"/>
+    <choice name="military-barrack"/>
+    <choice name="office"/>
+    <choice name="police-station"/>
+    <choice name="religious"/>
+    <choice name="resource-electricity"/>
+    <choice name="resource-food"/>
+    <choice name="resource-gas"/>
+    <choice name="resource-water"/>
+    <choice name="shops"/>
+    <choice name="sports"/>
+    <choice name="transportation-air"/>
+    <choice name="transportation-naval"/>
+    <choice name="transportation"/>
+    <choice name="warehouse"/>
+  </infrastructures>
+</app6>

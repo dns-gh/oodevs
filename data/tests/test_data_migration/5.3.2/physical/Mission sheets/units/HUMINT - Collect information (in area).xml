@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="HUMINT - Collect information (in area)">
+  <context>
+    <line>
+      <italic>
+        <text>The systematic observation of aerospace, surface or subsurface areas, places, persons, or things, by visual, aural, electronic, photographic, or other means. To provide continuous view, and the potential for reports on the activity of an objective</text>
+      </italic>
+    </line>
+    <line>
+      <text>In this Sword mission, to move to a position and get information about the presence of units within it. It is used to simulate the capability of human intelligence units to gather information, by applying a magic effect in the area. This effects allows the agent to detect (quickly) other units in the area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>the right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>the right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area from which to retrieve information.</text>
+      </line>
+    </parameter>
+    <parameter name="Infiltration mode" optional="true">
+      <line>
+        <text>Boolean, defaut value is FALSE. Defines if the agent uses infiltration to reach the barycenter of the area.</text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="true">
+      <line>
+        <text>(location composite, defeult is NIL) The position from which the agent detect units within the area.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the position. If no position is issued, the agent moves directly within the area (it moves to the center of the area if it is reachable, otherwise it moves to a close position (the closest position to the center)).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the area, the agent starts to detect units by magically reconnoitering the area (the report "reconnaissance started" is displayed, meaning that the agent is able to detect units in the area).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the 'Infiltration mode' parameter is set to 'true', the agent becomes stealthy to simulate the fact that it is able to infiltrate through the enemies positions and hide in the area. Agents of the simulation won't be able to detect it  unless the position is searched by specific units (with the 'Reconnoiter' mission for instance). When this parameter is set to 'true', a specific report is displayed "infiltrating" meaning that the agent is no longer visible to other agents.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <line>
+      <text>Note that the agent is no longer invisible if the mission terminates with, for instance, an 'End mission' fragmentary order. </text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

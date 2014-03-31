@@ -1,0 +1,88 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>AAVN - Reconnoiter a route</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          AAVN - Reconnoiter a route</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>A mission undertaken to obtain information by visual observation, or other detection methods, about the activities and resources of an enemy, or about the meteorological, hydrographic, or geographic characteristics of a particular area.</i>
+<br>In SWORD, to move along a route and to engage all enemies in range.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Route</h3>The set of objectives to reach.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Permanent</h3>Whether or not the mission is permanent. False by default.<br>
+<h3>Aviation range</h3>The aviation range enforced during the supplying.<br>
+<h3>Rally point</h3>The rally point to go to when the last position of the route has been reached (if the mission is not permanent) or if the mission ends.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the first objective the. If it is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, else it moves to the center of the objective. Average speed depends on the physical capabilities and terrain properties.<br>
+</li>
+<li>While moving toward the objective, the agent engages all enemies it encounters.<br>
+</li>
+<li>Upon reaching the first objective the agent moves to the next one with the same behavior, until the last one is reached. Then :<br>
+</li>
+<ul>
+<li>If the mission parameter "Permanent" is set to false (default value), then :<br>
+</li>
+<ul>
+<li>If a rally point is provided, then the agent moves to the rally point and ends its mission.<br>
+</li>
+<li>Otherwise, the agent ends its mission.<br>
+</li>
+</ul>
+<li>Otherwise, the agent stays at the last waypoint and does not end its mission.<br>
+</li>
+</ul>
+</ul>
+
+<img alt="reconnoiterARouteX1.png" src="./Images/AAVN - Reconnoiter a route/reconnoiterARouteX1.png"/><br>
+<i>The agent receives a set of points to reconnoiter as parameters. These points usually are keypoints to reconnoiter, such as crossroads, factories, etc.</i>
+<br>
+
+<img alt="reconnoiterARouteX2.png" src="./Images/AAVN - Reconnoiter a route/reconnoiterARouteX2.png"/><br>
+<i>The agent has detected several enemies, and has engaged some of them.</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>If an "End mission" fragmentary order is given, then the agent will end its mission and move to the rally point. If the mission is permanent, then this is the only use of the "rally point" parameter in this mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>If the mission parameter "Permanent" is set to false (default value), then the mission ends when the agent reaches the rally point (or the final waypoint of the route if no rally point was provided). Otherwise, the mission never ends.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

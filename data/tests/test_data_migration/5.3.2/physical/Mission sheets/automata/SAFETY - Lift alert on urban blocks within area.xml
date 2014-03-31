@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Lift alert on urban blocks within area">
+  <context>
+    <line>
+      <italic>
+        <text>To protect population from danger. Lifting an alert on a population is to inform it about the end of an impending danger.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, a population is alerted via the urban block it populates. This mission is the reverse of the "Alert urban blocks within area" mission. Its goal is to lift an alert on a set of urban blocks within a specified zone.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area containing the urban blocks to lift alert on.</text>
+      </line>
+    </parameter>
+    <parameter name="Rally point" optional="true">
+      <line>
+        <text>Position to reach after performing the mission.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues a "Lift alert on urban blocks" order to each capable agent. Every one of them is given a single urban block to lift alert on (the closest one to them), and whenever a subordinate has finished to lift alert on a urban block, another urban block to lift alert on is given to him, for as long as there are urban blocks left to lift alert on. When there are no longer such urban blocks, the subordinates are given a *Move To" order to the rally point instead (if there is no rally point, then the subordinates remain at their current position).</text>
+        </line>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <line>
+          <text>The other units receive a *Move To* order to the rally point (if there is no rally point, then they remain at their current position).</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all the subordinate agents have reached the rally point (or, if there is no rally point, when they have finished to act on all the urban blocks).</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

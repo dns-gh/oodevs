@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Close underground network">
+  <context>
+    <line>
+      <italic>
+        <text>To move to an underground entrance and close it...</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to reach an 'underground exit' object and deactivate it in order to prevent agents of simulation from using it (the agents won't be able to enter or exit the underground network  using the supplied exit object).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Underground exit" optional="false">
+      <line>
+        <text>'Underground exit' object to close.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach upon action termination.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given underground exit. If it is not reachable (the object is located inside an urban block within which the agent cannot move), the agent moves as close as possible. Average speed depends on the physical capabilities, taking into account terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the underground exit, the agent simply deactivates it. The report "the underground exit has been deactivated" is displayed. The object status should switch from "activated: Yes" to "Activated: No" (see screenshot below).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon action termination, the agent moves to the meeting position.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>ENGINEER - Close underground network.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The meeting position is reached.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="ENGINEER - Close underground network.png"/>
+  </attachments>
+</mission-sheet>

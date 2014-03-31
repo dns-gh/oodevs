@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="LEG_AIR - resupply">
+  <context/>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="false"/>
+    <parameter name="Limit 2" optional="false"/>
+    <parameter name="Replenishment sites" optional="true"/>
+    <parameter name="Portee Action" optional="false"/>
+    <parameter name="Ambiance Mission" optional="false"/>
+  </parameters>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

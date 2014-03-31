@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<svg style="stroke:rgb(0,0,0);stroke-width:2;fill:currentColor">
+    <polyline class="border" points="200,373 373,200 200,27 27,200 200,373"/>
+    <line x1="200" x2="96" y1="27" y2="270"/>
+    <line x1="200" x2="304" y1="27" y2="270"/>
+    <path d="M140 140 C80 140 80 260 140 260 L260 260 C320 260 320 140 260 140 z" style="fill:none;"/>
+</svg>

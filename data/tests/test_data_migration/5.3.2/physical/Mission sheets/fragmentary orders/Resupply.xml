@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Resupply">
+  <context>
+    <line>
+      <text>"To provide with fresh supplies, as of weapons and ammunition."</text>
+    </line>
+    <line>
+      <text>In SWORD, to make a flying agent go to a combat trains unit or to a supply point in order to get resources.</text>
+    </line>
+  </context>
+  <parameters/>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the closest supply point (or combat trains unit) inside its area of responsibility if he has one. Upon arrival, the agent will display a "Arrived on supply point" message.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The agent then starts the resupplying with respect to the current mission range (the agent will display a "Supplying" message). Once the supplying is over, a "Supplied" message is displayed.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>resupplyFrago1.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The agent moves to the closest supply point.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>resupplyFrago2.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The agent is resupplying.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>resupplyFrago3.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The agent has finished its supplying. No mission range was provided, so the agent has been fully resupplied.</text>
+      </italic>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If there is no curent mission range, then the agent uses the range of his previous mission instead. If the agent never had a mission with a range, then the agent resupplies fully all of its resources.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The fragmentary order ends once the resupply has finished.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="resupplyFrago1.png"/>
+    <attachment name="resupplyFrago2.png"/>
+    <attachment name="resupplyFrago3.png"/>
+  </attachments>
+</mission-sheet>

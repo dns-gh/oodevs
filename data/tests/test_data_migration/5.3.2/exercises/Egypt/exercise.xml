@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<exercise model-version="4.8.2" valid="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.0/exercise/exercise.xsd">
+  <meta>
+    <briefing>
+      <text lang="en"><![CDATA[
+        <h1>Egypt</h1>
+        <p>This scenario takes place in North Egypt, with an opposition between a blue force, a local red asymetric force and a neutral population.</p>
+        <p>Some scores are calculated and allow the player to follow the mean operational state of the red units, the blue units and the combattant blue units.</p>
+        <h2>Profiles</h2>
+            <li><b>Supervisor:</b> scripted actions allow you to demonstrate the scenario and the use of scores</li>
+            <li><b>Blue:</b> to actually play the scenario</li>
+        <h2>Objectives</h2>
+    	<ul>
+    		<li>Destroy the red forces</li>
+            <li>Protect the population</li>
+    	</ul>
+    ]]></text>
+    </briefing>
+    <resources>
+      <resource file="scripts/resources/briefing.html" name="Briefing"/>
+      <resource file="docs/Global situation.html" name="Global situation"/>
+    </resources>
+  </meta>
+  <profiles file="profiles.xml"/>
+  <orbat file="orbat.xml"/>
+  <weather file="weather.xml"/>
+  <model dataset="ada" physical="worldwide"/>
+  <urban file="urban.xml"/>
+  <settings file="settings.xml"/>
+  <terrain name="Nord egypt"/>
+  <drawings file="drawings.xml"/>
+</exercise>

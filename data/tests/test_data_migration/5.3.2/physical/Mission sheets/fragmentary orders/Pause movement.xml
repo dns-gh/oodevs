@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Pause movement">
+  <context>
+    <line>
+      <text>This order may be used to make the agent waits on its current position (the mission is NOT ended, to make the agent continue its mission, issue the order "Resume maneuver").</text>
+    </line>
+  </context>
+  <parameters/>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Open a route">
+  <context>
+    <line>
+      <italic>
+        <text>To reduce or negate the effects of existing or reinforcing obstacles. The objective are to maintain freedom of movement for maneuver units, weapons systems and critical supplies.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to move along a computed path and bypass obstacles that collide with the path. Here, 'obstacles' are sword 'objects' that have the capacity "avoidable" and/or "constuctor".</text>
+    </line>
+    <line>
+      <text>Bypassing an obstacle means to make it trafficable. Agents of the simulation becomes able to move through a bypassed obstacle with a limited speed of movement.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Waypoints" optional="false">
+      <line>
+        <text>Waypoints defining the route to follow (the path will be computed taking into account these waypoints).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves along the computed path. If an 'obstacle' obstructs the path, the agent tries to reaches it.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching an obstacle, the agent tries to bypass it:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the obstacle can be bypassed: the agent starts to bypass it (the report "work just started"  should be displayed),</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the obstacle can be bypassed but the agent has no capacity to perform the action: the report "the agent cannot bypass the object" should displayed and the agent waits for reinforcement.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the obstacle cannot be bypassed: the report "the object cannot be bypassed" should display.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>In the last case, the agent tries to remove the object: if an obstacle is improved with mines, the agent needs to remove mines before starting to deconstruct the obstacle, then the agent starts to remove it (the report "work just started"  should be displayed). Upon work termination (the report "work completed for object [object name]" is displayed) the agent continues to move along the path. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the obstacle cannot be removed either (if the agent doesn't have the physical capability or it hasn't enough resources), the report 'Impossible work' is displayed. In that case the agent waits for reinforcement.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon work termination (the report "work completed for object [object name]" is displayed) the agent continues to move along the path.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts to perform the works.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>Note that the wait can be very long (it can depend on the type and the shape of the obstacle).</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>Use case 1/2 with different kinds of obstacles:</text>
+    </line>
+    <line>
+      <link>
+        <text>ENGINEER - Open a route.png</text>
+      </link>
+    </line>
+    <line>
+      <text>Use case 2/2 with different kinds of obstacles:</text>
+    </line>
+    <line>
+      <link>
+        <text>ENGINEER - Open a route2.png</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When the last waypoints have been reached, the mission terminates.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="ENGINEER - Open a route.png"/>
+    <attachment name="ENGINEER - Open a route2.png"/>
+  </attachments>
+</mission-sheet>

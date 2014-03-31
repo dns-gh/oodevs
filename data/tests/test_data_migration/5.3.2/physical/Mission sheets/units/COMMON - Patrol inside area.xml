@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Patrol inside area">
+  <context>
+    <line>
+      <italic>
+        <text>Patrols are missions to gather information or to control rescue operations. Patrolling could ensure law, order and check crime in a given district.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, patrolling consists of moving along a path defined by waypoints, indefinitely, allowing the agent to gather information. Here, waypoints are automatically found inside the given area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area in which the agent has to patrol.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each waypoint. The order of visit is randomly defined. If a visited waypoint is not reachable, the agent moves as close as possible (the agents can move within it), the agent moves to the center, otherwise it moves to a close position (the closest position to the center).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the last waypoint, the agent moves back to the first oneencountered and starts again.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If no position is found in the area (no road, no urban block), the agent moves to the center of the area.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>Waypoints can be:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>crossroads</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>urban blocks</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>points that intersect with the given area</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

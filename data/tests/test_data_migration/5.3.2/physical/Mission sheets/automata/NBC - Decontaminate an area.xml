@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="NBC - Decontaminate an area">
+  <context>
+    <line>
+      <italic>
+        <text>To depollute or decontaminate in order to rehabilitate a site or a soil that has been polluted by industrial activities. The decontamination of a site reduces the risk of pollution to acceptable levels or make it disappear.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, decontaminating a site ("contaminated site") prevents units from being contaminated. It prevents the creation and the dispersion of a contaminated cloud that can cause injuries in units. A "decontaminated site" in SWORD is defined by a surface delimited by a polygon. All contamination objects (such as "contaminated area") that intersect with the decontaminated surface lose their contamination capacity.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>Area (polygon) to decontaminate.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues a "Decontaminate an area" order to each capable agent. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The area will be fairly splitted in sub-areas (number of sub-areas depensd of the number of subordinates) and be provided to the units at the beginning of the mission. Each unit will receive one sub-area to decontaminate.</text>
+        </line>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <line>
+          <text>The other units will reinforce or follow the capable agents.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>CBRN Decontaminate an area.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all the agents which received "decontaminate an area" finished to decontaminate their sub-area.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="CBRN Decontaminate an area.png"/>
+  </attachments>
+</mission-sheet>

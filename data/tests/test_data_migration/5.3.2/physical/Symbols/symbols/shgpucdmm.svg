@@ -1,0 +1,2 @@
+<?xml version="1.0" ?>
+<svg style="stroke-linecap:square;stroke:rgb(0,0,0);stroke-width:2"><polyline points="200,373 373,200 200,27 27,200 200,373" class="border"/><path d="M170 260 L170 128 C170 103 230 103 230 128 L230 260" style="fill:none;"/><line style="fill:none;" x1="170" x2="230" y1="145" y2="145"/><line style="fill:none;" x1="170" x2="230" y1="165" y2="165"/><path d="M77 250 C100 180 300 180 323 250 L200 373 L77 250" style="fill:currentColor"/></svg>

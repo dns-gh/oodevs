@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="TRAFIC - Support unit movement">
+  <context>
+    <line>
+      <italic>
+        <text>All actions performed by the units in traffic control to support the projection by land forces and movements according to the priorities set by the command. </text>
+      </italic>
+    </line>
+    <line>
+      <text>A unit which helps another unit to perform movement.</text>
+      <italic/>
+    </line>
+    <line>
+      <text>In SWORD, to perform the movement of unit by supporting it. The agent follows friend unit to support. The friend support unit speed increases to the maximum speed of the slowest equipment depends of the terrain if the support unit wasn't in this speed : in cover mode or inside town.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Friend" optional="false">
+      <line>
+        <text>Friend unit to support.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward the friend unit. The agent follows the friend unit. Average speed depends on the physical capabilities regarding to terrain properties.</text>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

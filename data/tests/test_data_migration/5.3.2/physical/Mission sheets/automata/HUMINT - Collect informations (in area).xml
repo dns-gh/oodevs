@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="HUMINT - Collect informations (in area)">
+  <context>
+    <line>
+      <italic>
+        <text>The systematic observation of aerospace, surface or subsurface areas, places, persons, or things, by visual, aural, electronic, photographic, or other means.</text>
+      </italic>
+    </line>
+    <line>
+      <text>To provide continuous view, and the potential for reports on the activity of an objective.</text>
+      <italic/>
+    </line>
+    <line>
+      <text>In this Sword mission, to move to an area and get information about the presence of units within it. It is used to simulate the capability of human intelligence units to gather informations,  by applying a magic effect in the area. This effects allows the subordinate units to detect (quickly) others units in the area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>Area to get the informations from.</text>
+      </line>
+    </parameter>
+    <parameter name="Infiltration mode" optional="true">
+      <line>
+        <text>Defines if the agent uses infiltration to reach the barycenter of the area (defaut value is FALSE).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Foward echelon units: the commander agent issues the "Collect informations (in area)" mission to all subordinate units able to perform the mission., with the objectives as parameters.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Rear echelon units: other units (non adapted units) receive the "follow" mission with the first echelon units as parameter.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Command post: in this mission, the command post unit stays on its own postion. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>All the agent share the same issued area of responsability.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>Use case of the mission performed by LRS troops:</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>ML_HUMINT - Collect informations (in area).png</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="ML_HUMINT - Collect informations (in area).png"/>
+  </attachments>
+</mission-sheet>

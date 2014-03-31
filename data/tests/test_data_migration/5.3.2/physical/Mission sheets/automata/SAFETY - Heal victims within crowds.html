@@ -1,0 +1,72 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Heal victims within crowds</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Heal victims within crowds</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To bring immediate assistance and first aid on the spot in disasters.</i>
+<br>In SWORD, to heal on the spot wounded victims within a set of crowds.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Crowds</h3>The set of crowds to heal.<br>
+<h3>Rally point</h3>Position to reach after performing the mission.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues a "Heal victims within crowds" order to each capable agent. Every one of them is given a single crowd to heal victims from (the closest one to them), and whenever a subordinate has finished to process a crowd, another crowd is given to him, for as long as there are crowds left to process. When there are no longer such crowds, the subordinates are given a *Move To" order to the rally point instead.<br>
+</li>
+</ul>
+<ul>
+<li>The other units receive a *Move To* order to the rally point.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>Victims from a visited crowd may not be healed if:<br>
+<ul>
+<li>the visited Crowd does not contain wounded humans ( the report "no wounded victims" and "Wounded cannot be healed" should be displayed)<br>
+</li>
+<li>the visited Crowd has moved (the agent won't follow the crowd) or the agent cannot reach it .<br>
+</li>
+</ul>In this case, the agent decides to act on the next crowd.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when all the subordinate agents have reached the rally point.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

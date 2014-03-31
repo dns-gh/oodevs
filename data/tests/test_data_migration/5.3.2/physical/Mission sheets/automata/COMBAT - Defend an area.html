@@ -1,0 +1,83 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Defend an area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Defend an area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To hold a defined object against an enemy attack to halt or ward off an attack in order to defeat or destroy the enemy.</i>
+<br>In Sword, to move and occupy an objective and engage approaching enemies.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Area</h3>Objective to defend.<br>
+<h3>Meeting position</h3>Position to reach by the command post and engineer units after performing their mission.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Obstacles</h3>Set of obstacles ot errect by engineer units (no obstacle by default).<br>
+<h3>Echelon number</h3>Define if the maneuver is organized into one or two echelons (default value is "2").<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>Foward echelon units:<br>
+</li>
+<ul>
+<li>The commander agent issues the "Defend" mission to the teeth arm platoons, with the objective as parameter,<br>
+</li>
+<li>The scouting platoons receive the "Patrol with in area" mission with objective as parameter,<br>
+</li>
+<li>The engineer units receive the "Perform construction works" mission if obstacles have to be errected (otherwise they receive the "follow" mission) <br>
+</li>
+</ul>
+<li>Rear echelon units:<br>
+</li>
+<ul>
+<li>Other units (reserve and non adapted units) receive the "follow" mission with the first echelon units as parameter.<br>
+</li>
+<li>In case of an attack by an enemy, combat units of the rear echelon may receive the "combat support" mission (the enemy may be engaged).<br>
+</li>
+<li>In case of a first echelon unit destruction, combat units of the rear echelon may relieve this unit.<br>
+</li>
+</ul>
+<li>All the agents share the same issued area of responsability.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

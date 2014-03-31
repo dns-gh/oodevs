@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="LOG - Deploy (on a position)">
+  <context>
+    <line>
+      <italic>
+        <text>Set-up adopted by a unit for immediate ore later action.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to know how to order subordinate units to deploy onto a given deployment position. Once the subordinate agents get deployed, they activate their logistic chains.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Deployment position" optional="true">
+      <line>
+        <text>Set of positions to use to self deploy (default value is 'EMPTY').</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Deploy (on a position)" mission to the subordinate platoons, with the given position as parameter. Each platoon is given a position (the position is randomly chosen by the commander agent, in a circle around the given location).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the given Deployment position is a ploygon, the commander agent splits the area into sub-areas and issues each of them to subordinate platoons that perform the "Deploy (on a position)" mission. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Other units are ordered to follow.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

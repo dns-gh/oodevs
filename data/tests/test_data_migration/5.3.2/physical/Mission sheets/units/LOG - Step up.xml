@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="LOG - Step up">
+  <context>
+    <line>
+      <italic>
+        <text>Set-up adopted by a unit for immediate or delayed action.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In sword, to provide new logistic devices to another logisitic company by reinforce it (the agent reinforces the company, meaning that the agent becomes subordinate to the new logistic base).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Company" optional="false">
+      <line>
+        <text>The company to reinforce.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the company (it moves to the command post of the company). If it is not reachable (the command post is located into a urban block inside which the agent cannot move, for instance), the agent moves as close as possible. Average speed depends on the physical capabilities with respect to terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the command post, the agent reinforces the company. As a consequence it becomes subordinate to the new company. The report "unit [ agentName ] has successfully reinforced [obectiveName ]" should be displayed.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If the company to renforce has moved, the agent won't follow it. To be reinforced, the agent needs to be nearby the command post (the interaction distance between the agent and the command post should be less than </text>
+          <bold>
+            <text>100 METERS</text>
+          </bold>
+          <text>).</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The terminates when the agent becomes subordinate to the provided company.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

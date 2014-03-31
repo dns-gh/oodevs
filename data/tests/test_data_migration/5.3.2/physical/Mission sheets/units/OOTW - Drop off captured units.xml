@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="OOTW - Drop off captured units">
+  <context>
+    <line>
+      <italic>
+        <text>A mission to drop off captured units in a position.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to reach a position and to drop off the required units. Units may be transported by the agent.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="false">
+      <line>
+        <text>The location at which the agent has to unload the given units.</text>
+      </line>
+    </parameter>
+    <parameter name="Captured units" optional="true">
+      <line>
+        <text>The units to be unloaded at the given location. If parameter is not filled, the agent will drop off all captured units.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the given position. If the position is not reachable (an urban block the agent enter, for instance), the agent moves as close as possible, otherwise it moves to the center of the position. Average speed depends on the physical capabilities with regard to terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The agent moves to the position given by user. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Then, the agent unloads the "captured units" given by user otherwise the agent unloads all captured units.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The selected units are not being transported by the agent. In that case, the agent emits the report "the selected unit is already unloaded" should be displayed.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>This mission is not intended to liberate prisoners : if the provided units are prisoners, they will be dropped off as usual, but they still won't be able to communicate.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends when all captured units have been unloaded at the position.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

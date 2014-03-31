@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Get decontaminated">
+  <context>
+    <line>
+      <italic>
+        <text>Units may be contaminated during an NBC incident. To avoid an NBC contamination and intoxication of other units (contamination can spread around and contaminate other units), contaminated units should be decontaminated with appropriate means.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, an agent must go through a decontamination site object to get decontaminated. The decontamination process is effective if the decontamination site is operated by other units.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Decontamination site" optional="false">
+      <line>
+        <text>Decontamination site to use to get decontaminated.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting point" optional="false">
+      <line>
+        <text>Position to reach after being decontaminated.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "get decontaminated" mission to all its surbordinates.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If subordinate units can't perform the mission, they receive the "follow" mission with the other units as parameter.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all first echelon units have reached their objective.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

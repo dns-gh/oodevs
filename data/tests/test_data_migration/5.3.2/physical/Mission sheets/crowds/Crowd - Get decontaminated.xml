@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Crowd - Get decontaminated">
+  <context>
+    <line>
+      <italic>
+        <text>People may be contaminated during a NBC incident. To avoid casulaties and deads, contaminated people should be decontaminated with appropriate means.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, a crowd must go through a decontamination site object to get decontaminated. The decontamination process is effective if the decontamination site is operated by other units.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Decontamination site" optional="false">
+      <line>
+        <text>Decontamination site to use to get decontaminated.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach after being decontaminated.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the issued decontamination site. If an obstacle is encountered on the way to the objective, the crowd stops and a new temporary concentration is created. The movement is suspended until the obstacle is removed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the decontamination site, the agent requests for decontamination. The report "request for decontamination" should be displayed. Then, the agents get decontaminated with a delay depending on:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the number of units that are operating the site (if the site is not operated, the agent stays next to it until the decontamination site get operated or another mission is issued), </text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the number of units asking for being decontaminated on the site (the agent needs to queue to get decontaminated; if the  agent asked first for being decontaminated, it should be the first to get decontaminated).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the number of individuals to decontaminate: they are decontaminated one by one (delay can be very long, verify datas set in authoring tool)</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>The crowd agent may not get decontaminated if the issued decontamination site cannot decontaminate (see objects capacities). In that case, the crowd agent displays the message "Impossible to get decontaminated by issued decontamaintion plot" and the mission ends.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Once the agent gets decontaminated (the report "unit decontaminated" should be displayed), it moves toward the garage position and the mission ends.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

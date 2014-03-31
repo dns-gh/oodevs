@@ -1,0 +1,74 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>LOG - Sort wounded</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          LOG - Sort wounded</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td>In SWORD, for logistics agents, to know how to move toward a deployment position and self-deploy onto it. A deployed logistics agent enables its medical chains to sort wounded.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Deployment position</h3>The position to reach.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent self deploys onto its own position (the report "starting to deploy" then "section deployed" should be displayed). The deployment may take delays (see "Deployment" section in "Units" tab).<br>
+</li>
+<li>Upon deployment termination, the agent the activates its logistic sorting system.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td><u>A deployment position is provided:</u>
+<br>
+<ul>
+<li>The agent moves to the position. If the objective is not reachable, the agent moves as close as possible (the agent can move within it), the agent moves to the center, or to the closest position to the center). Average speed depends on physical capabilities, taking into accout terrain properties.<br>
+</li>
+<li>When the position has been reached, the agent deploys onto it (or nearby if it is not reachable) and activate the logistic sorting system.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>
+<ul>
+<li>If needed, the agent dismounts.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>This mission continues until another one is issued.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

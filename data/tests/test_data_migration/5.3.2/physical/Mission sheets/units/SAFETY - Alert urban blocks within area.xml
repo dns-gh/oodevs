@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Alert urban blocks within area">
+  <context>
+    <line>
+      <italic>
+        <text>To protect population from danger.</text>
+      </italic>
+    </line>
+    <line>
+      <italic>
+        <text>Alerting is to inform inhabitants about an impending danger, allowing the population to shelter from it. The final goal is to minimize the number of victims and minimize subsequent evacuation time.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, a population is alerted via the urban block it populates. An urban block cannot be alerted if it is not populated. An urban block has an "alerted" status (it is either "alerted" or "not alerted"). After being "alerted", the population may be "evacuated" faster.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area inside which urban blocks must be alerted.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each urban block which is totally inside the specified area (the order of traversal is defined randomly). The agent stops at the border of the urban block.</text>
+    </line>
+    <line>
+      <text>Upon reaching an urban block, the agent alerts it before moving to the next unvisited urban block.</text>
+    </line>
+    <line>
+      <text>When there are no more urban blocks to visit, the agent stays next to the last visited block and the mission ends.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>An urban block may not be alerted if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>The urban block cannot be inhabited (the report "urban block cannot be inhabited" is displayed)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The urban block is already alerted (the trace "the urban block is already alerted" is displayed)</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this specific case, the agent decides to act on the next one.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When there are no more urban blocks to visit, the agent stays next to the last one visited and the mission ends.</text>
+    </line>
+    <line>
+      <text>If there are no urban blocks within the area, the mission ends and the report "no urban blocks within area" is displayed.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<knowledge-groups model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/KnowledgeGroups.xsd">
+  <knowledge-group communication-delay="600s" name="Standard">
+    <unit-knowledge max-lifetime="3h" max-unit-to-knowledge-distance="60000"/>
+    <population-knowledge max-lifetime="30m"/>
+  </knowledge-group>
+  <knowledge-group name="Intel">
+    <unit-knowledge interpolation-time="120s" max-lifetime="12h"/>
+    <population-knowledge max-lifetime="1800s"/>
+  </knowledge-group>
+  <knowledge-group name="Aac">
+    <unit-knowledge interpolation-time="600s" max-lifetime="7200s" max-unit-to-knowledge-distance="60000"/>
+    <population-knowledge max-lifetime="1800s"/>
+  </knowledge-group>
+  <knowledge-group name="Battalion">
+    <unit-knowledge max-lifetime="03h" max-unit-to-knowledge-distance="60000"/>
+    <population-knowledge max-lifetime="30m"/>
+  </knowledge-group>
+</knowledge-groups>

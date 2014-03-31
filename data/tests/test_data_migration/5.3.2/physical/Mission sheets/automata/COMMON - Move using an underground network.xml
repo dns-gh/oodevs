@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Move using an underground network">
+  <context>
+    <line>
+      <italic>
+        <text>To move to an objective using an underground network such as sewer, metro...</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword moving through a given underground network is simulated with a delay (the movement is not a visible behavior). This action is specific: to simulate the movement, the agent goes from one underground network gateaway  (a sword object) to another one using a delay. Once the delay is over, the agent teleports itself on the exit gateway. </text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Underground entrance" optional="false">
+      <line>
+        <text>Entrance to get in the underground network.</text>
+      </line>
+    </parameter>
+    <parameter name="Underground exit" optional="false">
+      <line>
+        <text>Exit to get out from the underground.</text>
+      </line>
+    </parameter>
+    <parameter name="Objective" optional="false">
+      <line>
+        <text>Final objective to reach.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the " Move using an underground network" mission to all subordinate units.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon delay termination, the subordinates are automatically teleported onto the Underground exit object, and then moves (normal movement) to the final objective.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>No coordination is used in this mission. The subordinate units reach the objective at their own pace.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If at least one subordinate cannot do the "Move using an underground network" mission, then a report will be displayed ("All subordinates must be able to do the main tasks for this mission"), and the mission will end immediately.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all units that perform the mission has reached the objective.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

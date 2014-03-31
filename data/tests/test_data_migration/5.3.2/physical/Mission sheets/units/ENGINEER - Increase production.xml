@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Increase production">
+  <context>
+    <line>
+      <italic>
+        <text>To increase production of a resource network node.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to increase production of a resource network node.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Resource network" optional="false">
+      <line>
+        <text>Resource network node whose production is to be increased  (several kinds of resource network node could be located in the same place: production can be increased for only one of them during the mission).</text>
+      </line>
+    </parameter>
+    <parameter name="Quantity (default value is 100)" optional="true"/>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the resource network node to increase production. The position of the resource network node is automatically determined by the agent.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts to reach the resource network node.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The agent tries to enter in the urban block, if the agent cannot reach the resource network node beacause of the trafficability of the urban block. The agent moves toward the border of the urban block.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the resource network node or the border of the urban block, the agent increases the production of the resource network node (the report "Setting up production for the resources network" should be displayed)</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

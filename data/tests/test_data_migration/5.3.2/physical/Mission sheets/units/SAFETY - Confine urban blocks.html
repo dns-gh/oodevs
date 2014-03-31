@@ -1,0 +1,63 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Confine urban blocks</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Confine urban blocks</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>In the event of an exterior threat (a fire, for instance), populations may be prevented from leaving the buildings they occupy.</i>
+<br>In SWORD, confining a urban block prevents the population from leaving or entering it. A urban block cannot be confined if it cannot be inhabited. An urban block has a "confined" status ("Yes" or "No").<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Urban blocks</h3>An ordered list of populated areas in which a population can be confined.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent moves toward each provided urban block. The agent stops at the border of the urban block.<br>Upon reaching a urban block, the agent confines it before moving to the next unvisited urban block.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>An urban block may not be confined if:<br>
+<ul>
+<li>the urban block cannot be inhabited (the report "urban block cannot be inhabited" is displayed) ,<br>
+</li>
+<li>the urban block is already confined (the trace "the urban block is already confined" is displayed).<br>
+</li>
+</ul>In this case, the agent decides to act on the next one.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>When there are no more urban blocks to visit, the agent stays next to the last block visited and the mission ends.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

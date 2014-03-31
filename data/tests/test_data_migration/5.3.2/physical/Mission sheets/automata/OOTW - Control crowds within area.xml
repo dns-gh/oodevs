@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="OOTW - Control crowds within area">
+  <context>
+    <line>
+      <italic>
+        <text>To prevent the outbreak of disorder and prevention of possible riot.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to wait for crowds to enter in a given area in order to keep them under control.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area into which the subordinate control the entering crowds.</text>
+      </line>
+    </parameter>
+    <parameter name="Do not split area" optional="true">
+      <line>
+        <text>Defines if the commander should not split the area into sub-areas. If it is set to 'TRUE' (default value is 'FALSE'), the agent issue the given area as the objective for subordinates missions.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Control crowds in area" mission to the subordinate units.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The area is splitted into sub-areas. Each of the subordinate unit receives a sub-area as mission objective.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The commander agent receive the "MoveTo" mission to reach the center of the area.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>1) The agents occupy the subdivided area waiting for crowds to come :</text>
+    </line>
+    <line>
+      <link>
+        <text>ML_OOTW - Control crowds within area.png</text>
+      </link>
+    </line>
+    <line>
+      <text>2)Crowds start to enter the area:</text>
+    </line>
+    <line>
+      <link>
+        <text>ML_OOTW - Control crowds within area with crowds.png</text>
+      </link>
+    </line>
+    <line>
+      <text>3) Crowds exit the area, the agent returns in the center of their respective area :</text>
+    </line>
+    <line>
+      <link>
+        <text>ML_OOTW - Control crowds within area with crowds 2.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If the "doNotSplitArea" is set to 'TRUE', the commander agent issues the entire 'Area' to its subordinates. In that case the subordinate units occupy the same area and may interact with encountered crowds together. </text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>ML_OOTW - Control crowds within area no split.png</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="ML_OOTW - Control crowds within area.png"/>
+    <attachment name="ML_OOTW - Control crowds within area with crowds.png"/>
+    <attachment name="ML_OOTW - Control crowds within area with crowds 2.png"/>
+    <attachment name="ML_OOTW - Control crowds within area no split.png"/>
+  </attachments>
+</mission-sheet>

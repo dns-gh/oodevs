@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Operate a decontamination site">
+  <context>
+    <line>
+      <italic>
+        <text>To operate an NBC decontamination site in order to ensure units decontamination.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, operating a decontamination site allows the agent to complete decontamination missions using that site. It decontaminates contaminated units (contaminated units may be issued the "go get decontaminated" mission).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Decontamination site" optional="false">
+      <line>
+        <text>the decontamination site object to be operated.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves to the center of the object and starts to operate it (the report "Element is being operated" should be displayed).</text>
+    </line>
+    <line>
+      <text>The agent remains there until mission termination.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The decontamination site may not be operated if it cannot be operated (see object capacity "workable" in authoring tool), In that specific case, the report "element cannot be operated" is displayed and the mission ends.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>Note that no specific capabilities are requeried for the agent to operate a decontamination site.</text>
+    </line>
+  </comments>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - MoveTo">
+  <context>
+    <line>
+      <text>To move to an objective using a defined route.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Waypoints" optional="false">
+      <line>
+        <text>The waypoints to reach.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues a "moveTo" order to each subordinate with the waypoints as parameter.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>moveTo1.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>Every agent moves to the waypoints.</text>
+      </italic>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If one of the waypoints is outside of the limits, the subordinates will move to the closest position inside the limits, then move on to the next waypoint (except if it the last waypoint, in which case the mission ends).</text>
+    </line>
+    <line>
+      <link>
+        <text>moveTo2.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The agents will go to the position inside the limits the nearest of the first waypoint.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>moveTo3.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The agents will then go to the next waypoint as usual.</text>
+      </italic>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all the subordinate agents have finished their mission.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="moveTo1.png"/>
+    <attachment name="moveTo2.png"/>
+    <attachment name="moveTo3.png"/>
+  </attachments>
+</mission-sheet>

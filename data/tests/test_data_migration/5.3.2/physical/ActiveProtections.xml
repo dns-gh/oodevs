@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<protections model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/ActiveProtections.xsd">
+  <protection coefficient="0" hard-kill="true" name="Active Protection">
+    <resource name="Countermeasure" usage="1"/>
+    <weapon coefficient="1" name="155-mm Antitank High Explosive Shell"/>
+    <weapon coefficient="1" name="120-mm Hight Explosive Shell"/>
+    <weapon coefficient="1" name="105-mm High Explosive Shell"/>
+    <weapon coefficient="1" name="152-mm High Explosive Shell"/>
+    <weapon coefficient="1" name="81-mm High Explosive Shell"/>
+    <weapon coefficient="1" name="152-mm High Explosive MPA Shell"/>
+    <weapon coefficient="1" name="155-mm High Explosive Shell Rear Skirt"/>
+    <weapon coefficient="1" name="125-mm High Explosive Shell"/>
+  </protection>
+</protections>

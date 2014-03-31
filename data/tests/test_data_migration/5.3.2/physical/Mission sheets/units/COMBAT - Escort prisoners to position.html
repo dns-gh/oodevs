@@ -1,0 +1,73 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Escort prisoners to position</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Escort prisoners to position</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>A member of the Armed Forces assigned to accompany, assist, or guide an individual or group. </i>
+<br>An armed guard that accompanies a convoy, a train, prisoners, etc.<i></i>
+<br>In SWORD, to accompany surrendered units toward a specific location (a position or a camp for instance).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Position</h3>Location into which the agent has to accompany the surrendered units.<br>
+<h3>Surrendered units</h3>Units to be transported to the given location. <br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward each given surrendered unit, from the nearest to the furthest. If a surrendered unit position is not reachable (the unit is located inside an urban block inside which the agent cannot move, for instance), the agent moves as close as possible. Average speed depends on the physical capabilities regarding the terrain properties.<br>
+</li>
+<li>Upon reaching a surrendered unit, the agent loads it ("magic/irrealistic" transportation).<br>
+</li>
+<li>Once all units have been loaded, they are transported to the given location.<br>
+</li>
+<li>Upon reaching the given position, all transported units are unloaded.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>A prisoner unit may not be transported if it is not surrendered to the agent's side. In that case, the report "The unit is not surrendered" is displayed. If none of the issued agents is surrendered, the mission ends with a 'failed' status, displaying the report "No valid parameter".<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends once all the units have been transported to the given location.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

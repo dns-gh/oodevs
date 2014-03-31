@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<breakdowns model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Breakdowns.xsd">
+  <diagnosis time="600s"/>
+  <category name="NTI1">
+    <breakdown average-repairing-time="1h" id="1" name="MOB Breakdown 1" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="2" name="MOB Breakdown 2" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="3" name="MOB Breakdown 2 Evac" type="M" variance="30m">
+      <part quantity="2" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="4" name="MOB Breakdown 3" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="5" name="MOB Breakdown 3 Evac" type="M" variance="30m">
+      <part quantity="2" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="6" name="MOB Breakdown 4" type="EA" variance="30m">
+      <part quantity="3" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="7" name="MOB Breakdown 4 Evac" type="M" variance="30m">
+      <part quantity="3" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="8" name="MOB Breakdown 10 Evac" type="M" variance="1h">
+      <part quantity="6" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="9" name="MOB Breakdown 12 Evac" type="M" variance="1h">
+      <part quantity="6" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="10" name="MOB Breakdown 16 Evac" type="M" variance="3h">
+      <part quantity="6" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="11" name="MOB Breakdown 1 EB" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="12" name="MOB Breakdown 2 EB" type="EA" variance="30m">
+      <part quantity="3" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="13" name="MOB Breakdown 2 EB Evac" type="M" variance="30m">
+      <part quantity="3" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="14" name="MOB Breakdown 3 EB" type="EA" variance="30m">
+      <part quantity="3" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="15" name="MOB Breakdown 3 EB Evac" type="M" variance="30m">
+      <part quantity="3" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="16" name="MOB Breakdown 4 EB" type="EA" variance="30m">
+      <part quantity="4" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="17" name="MOB Breakdown 4 EB Evac" type="M" variance="30m">
+      <part quantity="4" resource="UR NTI1 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="18" name="MOB Breakdown 10 EB Evac" type="M" variance="1h">
+      <part quantity="8" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="19" name="MOB Breakdown 12 EB Evac" type="M" variance="1h">
+      <part quantity="8" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="20" name="MOB Breakdown 16 EB Evac" type="M" variance="3h">
+      <part quantity="8" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="21" name="TCT Breakdown 1" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="22" name="TCT Breakdown 2" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="23" name="TCT Breakdown 3" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="24" name="TCT Breakdown 4" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="25" name="TRS Breakdown 1" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="26" name="TRS Breakdown 2" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="27" name="TRS Breakdown 3" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="28" name="TRS Breakdown 4" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="29" name="DEM Breakdown 1" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="30" name="DEM Breakdown 2" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="31" name="DEM Breakdown 3" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="32" name="DEM Breakdown 4" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="33" name="COTAC Breakdown 1" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="34" name="COTAC Breakdown 2" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="35" name="COTAC Breakdown 3" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="36" name="COTAC Breakdown 4" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI1 EA"/>
+    </breakdown>
+    <breakdown average-repairing-time="1h" id="37" name="AAC Breakdown 1" type="EA" variance="30m">
+      <part quantity="1" resource="UR AAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="2h" id="38" name="AAC Breakdown 2" type="EA" variance="30m">
+      <part quantity="1" resource="UR AAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="3h" id="39" name="AAC Breakdown 3" type="EA" variance="30m">
+      <part quantity="1" resource="UR AAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="4h" id="40" name="AAC Breakdown 4" type="EA" variance="30m">
+      <part quantity="1" resource="UR AAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="30m" id="41" name="Flat Tire" type="M" variance="5m">
+      <part quantity="1" resource="Tire"/>
+    </breakdown>
+    <breakdown average-repairing-time="15m" id="42" name="Oil leak" type="M" variance="1m"/>
+  </category>
+  <category name="NTI2">
+    <breakdown average-repairing-time="5h" id="43" name="MOB Breakdown 5" type="EA" variance="30m">
+      <part quantity="4" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="44" name="MOB Breakdown 5 Evac" type="M" variance="30m">
+      <part quantity="4" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="45" name="MOB Breakdown 6" type="EA" variance="30m">
+      <part quantity="4" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="46" name="MOB Breakdown 6 Evac" type="M" variance="30m">
+      <part quantity="4" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="47" name="MOB Breakdown 7" type="EA" variance="30m">
+      <part quantity="5" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="48" name="MOB Breakdown 7 Evac" type="M" variance="30m">
+      <part quantity="5" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="49" name="MOB Breakdown 8 Evac" type="M" variance="30m">
+      <part quantity="6" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="50" name="MOB Breakdown 5 EB" type="EA" variance="30m">
+      <part quantity="5" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="51" name="MOB Breakdown 5 EB Evac" type="M" variance="30m">
+      <part quantity="5" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="52" name="MOB Breakdown 6 EB" type="EA" variance="30m">
+      <part quantity="5" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="53" name="MOB Breakdown 6 EB Evac" type="M" variance="30m">
+      <part quantity="5" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="54" name="MOB Breakdown 7 EB" type="EA" variance="30m">
+      <part quantity="6" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="55" name="MOB Breakdown 7 EB Evac" type="M" variance="30m">
+      <part quantity="6" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="56" name="MOB Breakdown 8 EB Evac" type="M" variance="30m">
+      <part quantity="8" resource="UR NTI2 MOB"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="57" name="TCT Breakdown 5" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="58" name="TCT Breakdown 6" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="59" name="TCT Breakdown 7" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="60" name="TCT Breakdown 8" type="EA" variance="30m">
+      <part quantity="3" resource="UR NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="61" name="TCT Breakdown 10" type="EA" variance="1h">
+      <part quantity="3" resource="UR NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="62" name="TCT Breakdown 12" type="EA" variance="1h">
+      <part quantity="4" resource="UR NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="63" name="TCT Breakdown 16" type="EA" variance="3h">
+      <part quantity="4" resource="UR NTI2 TCT"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="64" name="TRS Breakdown 5" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="65" name="TRS Breakdown 6" type="EA" variance="30m">
+      <part quantity="1" resource="UR NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="66" name="TRS Breakdown 7" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="67" name="TRS Breakdown 8" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="68" name="TRS Breakdown 10" type="EA" variance="1h">
+      <part quantity="2" resource="UR NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="69" name="TRS Breakdown 12" type="EA" variance="1h">
+      <part quantity="2" resource="UR NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="70" name="TRS Breakdown 16" type="EA" variance="3h">
+      <part quantity="4" resource="UR NTI2 TRS"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="71" name="DEM Breakdown 5" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="72" name="DEM Breakdown 6" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="73" name="DEM Breakdown 7" type="EA" variance="30m">
+      <part quantity="3" resource="UR NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="74" name="DEM Breakdown 8" type="EA" variance="30m">
+      <part quantity="3" resource="UR NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="75" name="DEM Breakdown 10" type="EA" variance="1h">
+      <part quantity="3" resource="UR NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="76" name="DEM Breakdown 12" type="EA" variance="1h">
+      <part quantity="4" resource="UR NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="77" name="DEM Breakdown 16" type="EA" variance="3h">
+      <part quantity="4" resource="UR NTI2 DEM"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="78" name="COTAC Breakdown 5" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="79" name="COTAC Breakdown 6" type="EA" variance="30m">
+      <part quantity="2" resource="UR NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="80" name="COTAC Breakdown 7" type="EA" variance="30m">
+      <part quantity="3" resource="UR NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="81" name="COTAC Breakdown 8" type="EA" variance="30m">
+      <part quantity="3" resource="UR NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="82" name="COTAC Breakdown 10" type="EA" variance="1h">
+      <part quantity="3" resource="UR NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="83" name="COTAC Breakdown 12" type="EA" variance="1h">
+      <part quantity="4" resource="UR NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="84" name="COTAC Breakdown 16" type="EA" variance="3h">
+      <part quantity="4" resource="UR NTI2 COTAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="5h" id="85" name="AAC Breakdown 5" type="EA" variance="30m">
+      <part quantity="4" resource="UR AAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="6h" id="86" name="AAC Breakdown 6" type="EA" variance="30m">
+      <part quantity="4" resource="UR AAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="7h" id="87" name="AAC Breakdown 7" type="EA" variance="30m">
+      <part quantity="5" resource="UR AAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="8h" id="88" name="AAC Breakdown 8" type="EA" variance="30m">
+      <part quantity="6" resource="UR AAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="10h" id="89" name="AAC Breakdown 10" type="EA" variance="1h">
+      <part quantity="6" resource="UR AAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="90" name="AAC Breakdown 12" type="EA" variance="1h">
+      <part quantity="6" resource="UR AAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="16h" id="91" name="AAC Breakdown 16" type="EA" variance="3h">
+      <part quantity="6" resource="UR AAC"/>
+    </breakdown>
+    <breakdown average-repairing-time="12h" id="92" name="Warning or blinker failure" type="EA" variance="1h"/>
+    <breakdown average-repairing-time="0s" id="93" name="Wing failure" type="M" variance="0s"/>
+  </category>
+  <category name="NTI3">
+    <breakdown average-repairing-time="150h" id="94" name="MOB Breakdown NTI3 Evac" type="M" variance="0m">
+      <part quantity="1" resource="UR NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="95" name="MOB Breakdown NTI3 EB Evac" type="M" variance="0m">
+      <part quantity="1" resource="UR NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="96" name="TCT Breakdown NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="UR NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="97" name="TRS Breakdown NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="UR NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="98" name="DEM Breakdown NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="UR NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="99" name="COTAC Breakdown NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="UR NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="100" name="DIV Breakdown NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="UR NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="150h" id="101" name="AAC Breakdown NTI3" type="EA" variance="0m">
+      <part quantity="1" resource="UR NTI3"/>
+    </breakdown>
+    <breakdown average-repairing-time="18h" id="102" name="Heater failure" type="M" variance="3h"/>
+    <breakdown average-repairing-time="18h" id="103" name="Universal joint failure" type="M" variance="3h"/>
+    <breakdown average-repairing-time="18h" id="104" name="Cylinder head gasket failure" type="M" variance="3h"/>
+    <breakdown average-repairing-time="18h" id="105" name="Gear failure" type="M" variance="3h"/>
+    <breakdown average-repairing-time="24h" id="106" name="Radar failure" type="EA" variance="4h"/>
+  </category>
+</breakdowns>

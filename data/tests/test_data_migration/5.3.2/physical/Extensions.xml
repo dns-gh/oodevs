@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<extensions model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Extensions.xsd">
+  <dictionaries/>
+  <orbat-attributes>
+    <attribute extends="unit;formation;automat;crowd;population" name="Id64" type="string">
+      <labels>
+        <label language="fr" text="Id 64 bits"/>
+      </labels>
+    </attribute>
+    <attribute extends="population" name="PopNationalite" type="string">
+      <labels>
+        <label language="fr" text="Nationalite"/>
+      </labels>
+    </attribute>
+    <attribute extends="unit;population;crowd" name="Ethnie" type="string">
+      <labels>
+        <label language="fr" text="Ethnie"/>
+      </labels>
+    </attribute>
+    <attribute extends="unit;population;crowd" name="Religion" type="string">
+      <labels>
+        <label language="fr" text="Religion"/>
+      </labels>
+    </attribute>
+    <attribute extends="unit;crowd" name="Information" type="string">
+      <labels>
+        <label language="fr" text="Information"/>
+      </labels>
+    </attribute>
+  </orbat-attributes>
+  <profile-attributes/>
+</extensions>

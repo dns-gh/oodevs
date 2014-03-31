@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<svg style="stroke-linecap:square;stroke:rgb(0,0,0);stroke-width:2">
+    <polyline points="200,373 373,200 200,27 27,200 200,373" class="border"/>
+    <path d="M200 200 L145 175 C90 150 90 250 145 225 L200 200 L255 175 C310 150 310 250 255 225     L200 200" style="fill:rgb(0,0,0);"/>
+</svg>

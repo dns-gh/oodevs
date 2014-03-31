@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="NBC - Operate a decontamination site">
+  <context>
+    <line>
+      <text>To operate an NBC decontamination site in order to ensure units decontamination.</text>
+    </line>
+    <line>
+      <text>Operating a decontamination site allows the agent to complete decontamination missions using that site. It decontaminates contaminated units (contaminated units may be issued the "Get decontaminated" mission).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Decontamination site" optional="false">
+      <line>
+        <text>The decontamination site</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Operate" mission to the NBC platoons, with the site as parameter.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>All the NBC units are ordered to move to the center of the objet and start to operate it.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Support unites receive the "Provide direct fires (dynaminc support)" mission with the NBC platoons has parameters.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>The decontamination site may not be operated if it cannot be operated (see object capacity "workable" in authoring tool), In that specific case, the report "element cannot be operated" is displayed by subordinate units.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Note that no specific capabilities are requeried for the subordinates units to operate a decontamination site.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Subordinates units cannot be contaminated by other units while operating a decontamination site.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

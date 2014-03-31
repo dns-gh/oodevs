@@ -1,0 +1,60 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ART - Target acquisition - Collect intelligence (for another unit)</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ART - Target acquisition - Collect intelligence (for another unit)</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>The systematic observation of aerospace, surface or subsurface areas, places, persons, or things, by visual, aural, electronic, photographic, or other means. To provide continuous view, and the potential for reports on the activity of an objective</i>
+<br>In this Sword mission, to follow a unit (a company or platoon, for instance) and get information about the presence of units within the given area (by applying a magic effect).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected ennemy direction.<br>
+<h3>Area</h3>Area into which the agent detects units.<br>
+<h3>Unit</h3>The entity to support (a platoon or a company).<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Distance</h3>The distance between the follower (the agent) and the followed (the supported company or unit) ( in meters, default value is 100 meters).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent follows the given unit, staying at a defined distance (100 meters by default) while detecting units in the given area.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>An entity may not be followed if it is not operational (for units). In this case, the report "The followed unit is destroyed" is displayed. If none of the issued agents can be followed, the mission ends with a 'failed' status, displaying the report "No valid parameter". If this is the case the mission terminates.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>If a company (automaton) is issued, the agent follows the command post, at the defined distance.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

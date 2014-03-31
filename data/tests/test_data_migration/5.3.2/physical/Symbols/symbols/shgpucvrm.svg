@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<svg style="stroke-linecap:square;stroke-width:2;stroke:rgb(0,0,0)">
+    <polyline points="200,373 373,200 200,27 27,200 200,373" class="border"/>
+    <g transform="translate(0 10)">
+        <polyline points="200,200 110,150 110,250 200,200 290,150 290,250 200,200"/>
+    </g>
+    <g transform="translate(70 0) scale(0.65 0.65)">
+        <text style="text-anchor:middle;font-weight:bold;font-size:90;font-family:Arial" x="200" y="232">MCM</text>
+    </g>
+</svg>

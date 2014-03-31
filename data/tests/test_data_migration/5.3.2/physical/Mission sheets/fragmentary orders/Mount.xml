@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Mount">
+  <context>
+    <line>
+      <text>To order the unit to mount in case it is dismounted. </text>
+    </line>
+  </context>
+  <parameters/>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>A mounted agent may have some movements contraints within urban terrain (some urban block may not be reachable). </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Overall, average speed increases (the agent is not moving by foot any more) and computed paths may be affected.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

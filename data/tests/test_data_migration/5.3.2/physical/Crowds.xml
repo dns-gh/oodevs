@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<populations model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Crowds.xsd">
+  <reloading-time-effect modifier="1" population-density="1"/>
+  <time-between-nbc-applications delay="1h"/>
+  <population armed-individuals="0.1" concentration-density="0.05" decisional-model="Standard" id="0" moving-base-density="0.8" moving-speed="4" name="Standard Crowd">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme">
+        <unit max-speed="30" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agitee">
+        <unit max-speed="15" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="excitee">
+        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agressive">
+        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+    </slowing-effects>
+    <attrition-effects>
+      <attrition-effect intensity="1" population-attitude="calme" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agitee" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.01"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.01"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="excitee" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.04"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.04"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.01" repairable-without-evacuation="0"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.01" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0.08" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+          <armed destruction="0.08" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.5"/>
+          <armed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.5"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agressive" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+          <armed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+          <armed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.2"/>
+          <armed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.2"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0.15" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+          <armed destruction="0.15" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0.02" repairable-with-evacuation="0.02" repairable-without-evacuation="0"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.02" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0.15" repairable-with-evacuation="0.3" repairable-without-evacuation="0.35"/>
+          <armed destruction="0.15" repairable-with-evacuation="0.3" repairable-without-evacuation="0.35"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0.2" repairable-with-evacuation="0.25" repairable-without-evacuation="0.4"/>
+          <armed destruction="0.2" repairable-with-evacuation="0.25" repairable-without-evacuation="0.4"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+    </attrition-effects>
+    <unit-fire-effects>
+      <unit attrition-surface="5" ph="0" rule-of-engagment="maintien a distance par moyens non letaux"/>
+      <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
+    </unit-fire-effects>
+    <urban-destruction-effects>
+      <urban-destruction-effect attitude="calme" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agitee" density="0" time="0s"/>
+      <urban-destruction-effect attitude="excitee" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
+    </urban-destruction-effects>
+    <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
+  </population>
+  <population armed-individuals="0" concentration-density="1.5" decisional-model="Standard" id="1" moving-base-density="0.1" moving-speed="5" name="Fan Crowd">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme">
+        <unit max-speed="30" population-density="0.1" unit-size="Heavy"/>
+        <unit max-speed="30" population-density="0.1" unit-size="Medium"/>
+        <unit max-speed="30" population-density="0.1" unit-size="Small"/>
+        <unit max-speed="30" population-density="0.1" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agitee">
+        <unit max-speed="15" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="excitee">
+        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agressive">
+        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+    </slowing-effects>
+    <attrition-effects>
+      <attrition-effect intensity="1" population-attitude="calme" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agitee" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.01"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.01"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="excitee" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.04"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.04"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.01" repairable-without-evacuation="0"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.01" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0.08" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+          <armed destruction="0.08" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.5"/>
+          <armed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.5"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agressive" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+          <armed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+          <armed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.2"/>
+          <armed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.2"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0.15" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+          <armed destruction="0.15" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0.02" repairable-with-evacuation="0.02" repairable-without-evacuation="0"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.02" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0.15" repairable-with-evacuation="0.3" repairable-without-evacuation="0.35"/>
+          <armed destruction="0.15" repairable-with-evacuation="0.3" repairable-without-evacuation="0.35"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0.2" repairable-with-evacuation="0.25" repairable-without-evacuation="0.4"/>
+          <armed destruction="0.2" repairable-with-evacuation="0.25" repairable-without-evacuation="0.4"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+    </attrition-effects>
+    <unit-fire-effects>
+      <unit attrition-surface="5" ph="0" rule-of-engagment="maintien a distance par moyens non letaux"/>
+      <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
+    </unit-fire-effects>
+    <urban-destruction-effects>
+      <urban-destruction-effect attitude="calme" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agitee" density="0" time="0s"/>
+      <urban-destruction-effect attitude="excitee" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
+    </urban-destruction-effects>
+    <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
+  </population>
+  <population armed-individuals="0" concentration-density="0.5" decisional-model="Rioters" id="4" moving-base-density="0.6" moving-speed="8" name="Rioters">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme">
+        <unit max-speed="30" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agitee">
+        <unit max-speed="15" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="excitee">
+        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agressive">
+        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+    </slowing-effects>
+    <attrition-effects>
+      <attrition-effect intensity="1" population-attitude="calme" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agitee" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.01"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.01"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="excitee" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.04"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.04"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.01" repairable-without-evacuation="0"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.01" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0.08" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+          <armed destruction="0.08" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.5"/>
+          <armed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.5"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agressive" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+          <armed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+          <armed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.2"/>
+          <armed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.2"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0.15" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+          <armed destruction="0.15" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0.02" repairable-with-evacuation="0.02" repairable-without-evacuation="0"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.02" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0.15" repairable-with-evacuation="0.3" repairable-without-evacuation="0.35"/>
+          <armed destruction="0.15" repairable-with-evacuation="0.3" repairable-without-evacuation="0.35"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0.2" repairable-with-evacuation="0.25" repairable-without-evacuation="0.4"/>
+          <armed destruction="0.2" repairable-with-evacuation="0.25" repairable-without-evacuation="0.4"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+    </attrition-effects>
+    <unit-fire-effects>
+      <unit attrition-surface="5" ph="0" rule-of-engagment="maintien a distance par moyens non letaux"/>
+      <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
+    </unit-fire-effects>
+    <urban-destruction-effects>
+      <urban-destruction-effect attitude="calme" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agitee" density="0" time="0h"/>
+      <urban-destruction-effect attitude="excitee" density="0.3" time="5h"/>
+      <urban-destruction-effect attitude="agressive" density="0.5" time="1h"/>
+    </urban-destruction-effects>
+    <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
+  </population>
+  <population armed-individuals="0" concentration-density="0.05" decisional-model="Standard" id="5" moving-base-density="1" moving-speed="15" name="Motorized Crowd">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme">
+        <unit max-speed="30" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agitee">
+        <unit max-speed="15" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="30" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="15" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="excitee">
+        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agressive">
+        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
+        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
+        <unit max-speed="5" population-density="0.5" unit-size="Personal"/>
+      </slowing-effect>
+    </slowing-effects>
+    <attrition-effects>
+      <attrition-effect intensity="1" population-attitude="calme" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agitee" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.01"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0.01"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="excitee" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.04"/>
+          <armed destruction="0" repairable-with-evacuation="0.02" repairable-without-evacuation="0.04"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.08"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.01" repairable-without-evacuation="0"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.01" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0.08" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+          <armed destruction="0.08" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.5"/>
+          <armed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.5"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agressive" population-density="0.05">
+        <protection name="HeavyTank">
+          <unarmed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+          <armed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
+        </protection>
+        <protection name="MediumTank">
+          <unarmed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+          <armed destruction="0.05" repairable-with-evacuation="0.1" repairable-without-evacuation="0.2"/>
+        </protection>
+        <protection name="LightTank">
+          <unarmed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.2"/>
+          <armed destruction="0.1" repairable-with-evacuation="0.15" repairable-without-evacuation="0.2"/>
+        </protection>
+        <protection name="ArmouredCarrier">
+          <unarmed destruction="0.15" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+          <armed destruction="0.15" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+        </protection>
+        <protection name="Aircraft">
+          <unarmed destruction="0.02" repairable-with-evacuation="0.02" repairable-without-evacuation="0"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.02" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="UnarmouredVehicle">
+          <unarmed destruction="0.15" repairable-with-evacuation="0.3" repairable-without-evacuation="0.35"/>
+          <armed destruction="0.15" repairable-with-evacuation="0.3" repairable-without-evacuation="0.35"/>
+        </protection>
+        <protection name="Combatant">
+          <unarmed destruction="0.2" repairable-with-evacuation="0.25" repairable-without-evacuation="0.4"/>
+          <armed destruction="0.2" repairable-with-evacuation="0.25" repairable-without-evacuation="0.4"/>
+        </protection>
+        <protection name="Individual">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+    </attrition-effects>
+    <unit-fire-effects>
+      <unit attrition-surface="5" ph="0" rule-of-engagment="maintien a distance par moyens non letaux"/>
+      <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
+    </unit-fire-effects>
+    <urban-destruction-effects>
+      <urban-destruction-effect attitude="calme" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agitee" density="0" time="0s"/>
+      <urban-destruction-effect attitude="excitee" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
+    </urban-destruction-effects>
+    <repartition children="0.2" female="0.4" male="0.4"/>
+    <nbc decontaminationDelay="300s"/>
+  </population>
+</populations>

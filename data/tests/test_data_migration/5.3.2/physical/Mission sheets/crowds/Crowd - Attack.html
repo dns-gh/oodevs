@@ -1,0 +1,75 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Crowd - Attack</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          Crowd - Attack</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>A riot is a form of civil disorder characterized often by what is thought of as disorganized groups lashing out in a sudden and intense rash of violence against authority, property or people.</i>
+<br>In Sword, to attack a given unit by inflicting maximum losses. <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Unit</h3>Entity to attack.<br>
+<h2>Optional</h2>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The crowd agent moves to the position of the issued agent. If an obstacle is encountered on the way to the objective, the crowd stops and a new temporary concentration is created. The movement is suspended until the obstacle is removed or the objective moves.<br>
+</li>
+<li>If the agent is moving, the crowd agent updates its computed path in order the reach the new position of the unit. <br>
+</li>
+<li>The <u>agent's attitude is automatically set to "agressive"</u> but it can be changed at any time by user (by issuing the "change attitude" magic order).<br>
+</li>
+<li>Once the head of the crowd reaches the unit (once the crowd takes contact with the unit), the agent starts to attack it.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>A crowd attacking a unit:<br>
+</li>
+</ul>
+
+<img alt="Crowd - Attack.png" src="./Images/Crowd - Attack/Crowd - Attack.png"/><br>
+<ul>
+<li>The assaulted unit emits a specific report when attacked by a crowd:<br>
+</li>
+</ul>
+
+<img alt="Crowd - Attack2.png" src="./Images/Crowd - Attack/Crowd - Attack2.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when both the unit is neutralized (or destroyed) AND the entire crowd has arrived on the target position.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

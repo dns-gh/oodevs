@@ -1,0 +1,68 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>NBC - Decontaminate an area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          NBC - Decontaminate an area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To depollute or decontaminate in order to rehabilitate a site or a soil that has been polluted by industrial activities. The decontamination of a site reduces the risk of pollution to acceptable levels or make it disappear.</i>
+<br>In SWORD, decontaminating a site ("contaminated site") prevents units from being contaminated. It prevents the creation and the dispersion of a contaminated cloud that can cause injuries in units. A "decontaminated site" in SWORD is defined by a surface delimited by a polygon. All contamination objects (such as "contaminated area") that intersect with the decontaminated surface lose their contamination capacity.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Area</h3>Area (polygon) to decontaminate.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues a "Decontaminate an area" order to each capable agent. <br>
+</li>
+<li>The area will be fairly splitted in sub-areas (number of sub-areas depensd of the number of subordinates) and be provided to the units at the beginning of the mission. Each unit will receive one sub-area to decontaminate.<br>
+</li>
+</ul>
+<ul>
+<li>The other units will reinforce or follow the capable agents.<br>
+</li>
+</ul>
+
+<img alt="CBRN Decontaminate an area.png" src="./Images/NBC - Decontaminate an area/CBRN Decontaminate an area.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when all the agents which received "decontaminate an area" finished to decontaminate their sub-area.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

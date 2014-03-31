@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.0/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Local militia" type="enemy">
+      <objects>
+        <object id="205" name="Mine Cluster [205]" type="mines">
+          <shape type="point">
+            <points>
+              <point>35RPQ7959308288</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="206" name="Mine Cluster [206]" type="mines">
+          <shape type="point">
+            <points>
+              <point>35RPQ8055008240</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="207" name="Mine Cluster [207]" type="mines">
+          <shape type="point">
+            <points>
+              <point>35RPQ7685708235</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="208" name="Abatis [208]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>35RPQ7650209313</point>
+              <point>35RPQ7863609421</point>
+              <point>35RPQ7903109694</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true"/>
+          </attributes>
+        </object>
+        <object id="209" name="Anti-tank Ditch [209]" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>35RPQ8573308341</point>
+              <point>35RPQ8743808750</point>
+              <point>35RPQ8920308386</point>
+              <point>35RPQ8798308185</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="210" name="Mined Area (linear) [210]" type="mined area (linear)">
+          <shape type="polygone">
+            <points>
+              <point>35RPQ8134608499</point>
+              <point>35RPQ8290908220</point>
+              <point>35RPQ8303108842</point>
+              <point>35RPQ8062608950</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="216" name="Mine Cluster [216]" type="mines">
+          <shape type="point">
+            <points>
+              <point>35RPQ8011107969</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="5" level="ii" name="Militia" symbol="symbols/shgpucawm">
+          <automat engaged="true" id="127" knowledge-group="2" name="Militia Armored Squadron" symbol="symbols/shgpucawm" type="ARMOR.Light armored squadron">
+            <unit command-post="false" id="120" name="Infantry platoon" position="35RPQ8503708131" type="INF.Infantry platoon"/>
+            <unit command-post="false" id="123" name="Light armored platoon" position="35RPQ8237409241" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="124" name="Infantry platoon" position="35RPQ8365008665" type="INF.Infantry platoon"/>
+            <unit command-post="true" id="128" name="Armored squadron CP" position="35RPQ8420709996" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="129" name="Light armored platoon" position="35RPQ8226906583" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="130" name="Light armored platoon" position="35RPQ8340205902" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="132" name="Light armored platoon" position="35RPQ8299207161" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="228" name="ARMOR.Light armored platoon" position="35RPQ8507307038" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="229" name="ARMOR.Light armored platoon" position="35RPQ8108307499" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="230" name="ARMOR.Light armored platoon" position="35RPQ8008709259" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="231" name="ARMOR.Light armored platoon" position="35RPQ7905710464" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="232" name="ARMOR.Light armored platoon" position="35RPQ8692006341" type="ARMOR.Light armored platoon"/>
+          </automat>
+          <automat engaged="false" id="158" knowledge-group="2" name="Militias" symbol="symbols/shgpuc" type="ASY.Militias">
+            <unit command-post="true" id="159" name="Militia" position="35RPQ8711812754" type="ASY.Militia"/>
+            <unit command-post="false" id="160" name="Militia" position="35RPQ8602612301" type="ASY.Militia"/>
+            <unit command-post="false" id="161" name="Militia" position="35RPQ8613711739" type="ASY.Militia"/>
+            <unit command-post="false" id="162" name="Militia" position="35RPQ8753411998" type="ASY.Militia"/>
+            <unit command-post="false" id="163" name="Militia" position="35RPQ8785011174" type="ASY.Militia"/>
+          </automat>
+          <limit name="Limit 197">
+            <point>35RPQ7291805239</point>
+            <point>35RPQ7842114013</point>
+            <point>35RPQ8721124545</point>
+          </limit>
+          <limit name="Limit 198">
+            <point>35RPQ9886920637</point>
+            <point>35RPQ8989809022</point>
+            <point>35RPQ8710300864</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Knowledge group [2]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="3" name="Friend forces" type="friend">
+      <objects>
+        <object id="24" name="gun artillery deployment area [24]" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>35RPP6909593430</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="25" name="gun artillery deployment area [25]" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>35RPP7520992380</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="26" name="gun artillery deployment area [26]" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>35RPP7169192338</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="211" name="Anti-tank Ditch [211]" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>35RPP7400988654</point>
+              <point>35RPP7593288160</point>
+              <point>35RPP7699884837</point>
+              <point>35RPP7910185365</point>
+              <point>35RPP7767787662</point>
+              <point>35RPP7775789302</point>
+              <point>35RPP7628489539</point>
+              <point>35RPP7516989651</point>
+              <point>35RPP7343589595</point>
+              <point>35RPP7326489215</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="212" name="Checkpoint [212]" type="checkpoint">
+          <shape type="point">
+            <points>
+              <point>35RPP7170990292</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="222" name="Refugee Holding Area [222]" type="refugees camp">
+          <shape type="polygone">
+            <points>
+              <point>35RPP7127887173</point>
+              <point>35RPP7474387305</point>
+              <point>35RPP7520385491</point>
+              <point>35RPP7571384492</point>
+              <point>35RPP7328784770</point>
+              <point>35RPP7160885324</point>
+              <point>35RPP7070686283</point>
+            </points>
+          </shape>
+          <attributes>
+            <logistic-base id="12"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="6" level="ii" name="Battalion" symbol="symbols/sfgpucath">
+          <automat engaged="true" id="12" knowledge-group="4" logistic-level="logistic-base" name="battalion combat train [12]" symbol="symbols/sfgpuss" type="LOG.Armored battalion combat train">
+            <unit command-post="true" id="13" name="Battalion CT" position="35RPP6441187828" type="LOG.Teeth arms battalion CT"/>
+          </automat>
+          <automat engaged="true" id="54" knowledge-group="4" name="Infantry company [54]" symbol="symbols/sfgpucim" type="INF.Infantry company">
+            <unit command-post="true" id="55" name="Infantry company CP" position="35RPP6800694392" type="INF.Infantry company CP"/>
+            <unit command-post="false" id="56" name="Infantry platoon" position="35RPP6848895153" type="INF.Infantry platoon"/>
+            <unit command-post="false" id="58" name="Mortar troop" position="35RPP6848895153" type="INF.Mortar troop"/>
+            <unit command-post="false" id="59" name="Light armored platoon" position="35RPP6851193951" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="60" name="Infantry platoon" position="35RPP6891994625" type="INF.Infantry platoon"/>
+            <unit command-post="false" id="61" name="Infantry platoon" position="35RPP6953594408" type="INF.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="62" knowledge-group="4" name="MBT squadron [62]" symbol="symbols/sfgpucath" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="63" name="Armored squadron CP" position="35RPP7802392462" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="66" name="MBT platoon" position="35RPP7793093159" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="67" name="MBT platoon" position="35RPP7756192927" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="68" name="MBT platoon" position="35RPP7832893088" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="69" name="MBT platoon" position="35RPP7850592708" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="70" knowledge-group="4" name="Artillery firing battery [70]" symbol="symbols/sfgpucfhe" type="ART.Artillery firing battery">
+            <unit command-post="true" id="71" name="Battery CP" position="35RPP6643589511" type="ART.Battery CP"/>
+            <unit command-post="false" id="74" name="Artillery firing platoon" position="35RPP6998289995" type="ART.Artillery firing platoon"/>
+            <unit command-post="false" id="75" name="Artillery firing platoon" position="35RPP6907789330" type="ART.Artillery firing platoon"/>
+            <unit command-post="false" id="76" name="Artillery firing platoon" position="35RPP6630090571" type="ART.Artillery firing platoon"/>
+          </automat>
+          <automat engaged="true" id="77" knowledge-group="4" name="Light armored squadron [77]" symbol="symbols/sfgpucawm" type="ARMOR.Light armored squadron">
+            <unit command-post="true" id="78" name="Armored squadron CP" position="35RPP7231891746" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="79" name="Light armored platoon" position="35RPP7249292155" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="80" name="Light armored platoon" position="35RPP7231892489" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="81" name="Light armored platoon" position="35RPP7302592154" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="82" name="Light armored platoon" position="35RPP7305491805" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="197" name="Scout patrol" position="35RPP7389991998" type="ARMOR.Scout patrol"/>
+            <unit command-post="false" id="198" name="Scout patrol" position="35RPP7257393268" type="ARMOR.Scout patrol"/>
+            <unit command-post="false" id="199" name="Antitank patrol" position="35RPP7145892250" type="ARMOR.Antitank patrol"/>
+          </automat>
+          <automat engaged="true" id="146" knowledge-group="4" name="MBT squadron [146]" symbol="symbols/sfgpucath" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="147" name="Armored squadron CP" position="35RPP7147595631" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="148" name="MBT platoon" position="35RPP7198595143" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="149" name="MBT platoon" position="35RPP7149494635" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="150" name="MBT platoon" position="35RPP7098495123" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="151" name="MBT platoon" position="35RPP7197595640" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="172" knowledge-group="4" name="Scout platoon [172]" symbol="symbols/sfgpucr" type="ARMOR.Scout platoon">
+            <unit command-post="false" id="173" name="Antitank patrol" position="35RPP7355499417" type="ARMOR.Antitank patrol"/>
+            <unit command-post="true" id="174" name="Scout patrol" position="35RPP7543294501" type="ARMOR.Scout patrol"/>
+            <unit command-post="false" id="175" name="Scout patrol" position="35RPP7405398091" type="ARMOR.Scout patrol"/>
+            <unit command-post="false" id="176" name="Scout patrol" position="35RPP7696297196" type="ARMOR.Scout patrol"/>
+            <unit command-post="false" id="177" name="Scout patrol" position="35RPP8015595464" type="ARMOR.Scout patrol"/>
+            <unit command-post="false" id="178" name="Scout patrol" position="35RPP7899996571" type="ARMOR.Scout patrol"/>
+          </automat>
+          <automat engaged="true" id="223" knowledge-group="4" name="Countermobility company [89]" symbol="symbols/sfgpucect" type="ENG.Engineer company">
+            <unit command-post="true" id="224" name="Countermobility platoon" position="35RPP7169188477" type="ENG.Engineer platoon"/>
+            <unit command-post="false" id="225" name="Countermobility platoon" position="35RPP7246888729" type="ENG.Engineer platoon"/>
+            <unit command-post="false" id="226" name="Countermobility platoon" position="35RPP7110189075" type="ENG.Engineer platoon"/>
+            <unit command-post="false" id="227" name="Countermobility platoon" position="35RPP7170088900" type="ENG.Bridging troop"/>
+          </automat>
+          <lima name="Phase line 171">
+            <point>35RPQ6950304847</point>
+            <point>35RPQ8068503037</point>
+            <point>35RPP9061397052</point>
+          </lima>
+          <limit name="Limit 7">
+            <point>35RPQ8575923576</point>
+            <point>35RPQ7887113720</point>
+            <point>35RPP6184187366</point>
+          </limit>
+          <limit name="Limit 8">
+            <point>35RPP8069481729</point>
+            <point>35RPP8314686845</point>
+            <point>35RPP8371391882</point>
+            <point>35RPP8544295359</point>
+            <point>35RPP8718499209</point>
+            <point>35RPQ8782801674</point>
+            <point>35RPQ8782004873</point>
+            <point>35RPQ8778806528</point>
+            <point>35RPQ9771016525</point>
+          </limit>
+          <limit name="Limit 10">
+            <point>35RPP6394786088</point>
+            <point>35RPP6487285725</point>
+            <point>35RPP6589686202</point>
+            <point>35RPP6614787044</point>
+            <point>35RPP6609687690</point>
+            <point>35RPP6562688289</point>
+            <point>35RPP6493188619</point>
+            <point>35RPP6393988485</point>
+            <point>35RPP6330387750</point>
+            <point>35RPP6331986951</point>
+            <point>35RPP6379186275</point>
+          </limit>
+          <limit name="Limit 11">
+            <point>35RPP6177387792</point>
+            <point>35RPP6417885042</point>
+            <point>35RPP7040583392</point>
+            <point>35RPP7444182385</point>
+            <point>35RPP7417484321</point>
+            <point>35RPP7915581848</point>
+            <point>35RPP8275482659</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="4" name="Knowledge group [4]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="35" name="Population" type="neutral">
+      <objects/>
+      <tactical/>
+      <communication>
+        <knowledge-group id="36" name="Knowledge group [36]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="37" name="Population standard [37]" position="35RPQ9407811091" type="Motorized Crowd">
+          <composition contaminated="0" dead="0" healthy="10001" wounded="0"/>
+          <armed-individuals value="0.1"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="35" value="0"/>
+            <adhesion party="38" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="38" name="Local refugees" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="40" level="i" name="Refugees" symbol="symbols/sfgpue">
+          <automat engaged="false" id="41" knowledge-group="39" name="Refugees [41]" symbol="symbols/sfgpue" type="OOTW.Refugees">
+            <unit command-post="true" id="42" name="Refugee" position="35RPP6489687931" type="OOTW.Refugee"/>
+            <unit command-post="false" id="43" name="Refugee" position="35RPQ7892506123" type="OOTW.Refugee"/>
+            <unit command-post="false" id="44" name="Refugee" position="35RPQ7982105303" type="OOTW.Refugee"/>
+            <unit command-post="false" id="45" name="Refugee" position="35RPQ8521303352" type="OOTW.Refugee"/>
+            <unit command-post="false" id="46" name="Refugee" position="35RPQ7946402023" type="OOTW.Refugee"/>
+            <unit command-post="false" id="47" name="Refugee" position="35RPQ8273201135" type="OOTW.Refugee"/>
+            <unit command-post="false" id="48" name="Refugee" position="35RPP8173199517" type="OOTW.Refugee"/>
+            <unit command-post="false" id="49" name="Refugee" position="35RPP7699998931" type="OOTW.Refugee"/>
+            <unit command-post="false" id="50" name="Refugee" position="35RPP7586896131" type="OOTW.Refugee"/>
+            <unit command-post="false" id="51" name="Refugee" position="35RPP7746598560" type="OOTW.Refugee"/>
+            <unit command-post="false" id="52" name="Refugee" position="35RPP8039398115" type="OOTW.Refugee"/>
+            <unit command-post="false" id="53" name="Refugee" position="35RPQ8031705351" type="OOTW.Refugee"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="39" name="Knowledge group [39]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="3"/>
+      <relationship diplomacy="enemy" party="35"/>
+      <relationship diplomacy="enemy" party="38"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="35"/>
+      <relationship diplomacy="friend" party="38"/>
+    </party>
+    <party id="35">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="3"/>
+      <relationship diplomacy="neutral" party="38"/>
+    </party>
+    <party id="38">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="friend" party="3"/>
+      <relationship diplomacy="neutral" party="35"/>
+    </party>
+  </diplomacy>
+</orbat>

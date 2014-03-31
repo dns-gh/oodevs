@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Fire">
+  <context>
+    <line>
+      <italic>
+        <text>To apply indirect fire(s) on a selected target. </text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, a fragmentary order in which the agent launches a  projectile to deliver indirect fire.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Ammunitions" optional="false">
+      <line>
+        <text>Type of ammunitions to use.</text>
+      </line>
+    </parameter>
+    <parameter name="Shells number" optional="false">
+      <line>
+        <text>Quantity of projectile to use (empty by default).</text>
+      </line>
+    </parameter>
+    <parameter name="Target" optional="false">
+      <line>
+        <text>Location onto which the projectile must be launched.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior/>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>The agent won't be able to open fire if :</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the agent doesn't have the physical capability (no adapted launcher regarding to dotation type).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the agent does not have enough dotation.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the selected resource type cannot allow the agent to perform an indirect fire.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

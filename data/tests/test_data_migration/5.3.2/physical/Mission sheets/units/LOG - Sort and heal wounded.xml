@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="LOG - Sort and heal wounded">
+  <context>
+    <line>
+      <text>In SWORD, for logistics agents, to know how to move toward a deployment position and self-deploy to it. A deployed logistics agent enables its medical chains to sort and heal wounded.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Deployment position" optional="true">
+      <line>
+        <text>The position to reach.</text>
+      </line>
+    </parameter>
+    <parameter name="Wounds priorities" optional="true">
+      <line>
+        <text>List of the wounds priorities to heal (medical priorities: U1, U2, U3, UE).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent self-deploys onto its own position (the report "starting to deploy" then "section deployed" should be displayed). The deployment may take delays (see "Deployment" section in "Units" tab).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon deployment termination, the agent the activates its medical chains.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the 'Wounds priorities' parameter is not issued, the agent heals wounds with a priority depending on the severity (UE, U3, U2, U1). </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the 'Wounds priorities' parameter is issued, the agent heals wounds with a priority depending on the order of the elements into the 'Wounds priorities' list.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <underlined>
+        <text>A deployment position is provided:</text>
+      </underlined>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the position. If the objective is not reachable, the agent moves as close as possible (the agent can move within it), the agent moves to the center, or to the closest position to the center). Average speed depends on physical capabilities, taking into accout terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon movement termination, the agent self deploys and activates its medical chains.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

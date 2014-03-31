@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Bypass obstacles">
+  <context>
+    <line>
+      <italic>
+        <text>To reduce or negate the effects of existing or reinforcing obstacles. The objectives are to maintain freedom of movement for maneuver units, weapons systems and critical supplies.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to bypass a set of sword objects. Bypassing an obstacle means to make it trafficable. Agents of the simulation becomes able to move through a bypassed obstacle with a limited speed of movement.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Obstacles" optional="false">
+      <line>
+        <text>Set of 'obstacle' objects to bypass.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach upon works termination.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Bypass obstacles" mission to the engineer platoons, with a set of obstacles as parameter. Obstacles are fairly shared between engineer platoons.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Other units are ordered to reach the meeting position (if the number of engineer platoons is greater than the number of obstacles, non used platoons are ordered to reach the meeting position).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When all obstacles have been bypassed, the engineer units move to the meeting position and the mission terminates.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all the subordinate agents have finished their mission.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>
