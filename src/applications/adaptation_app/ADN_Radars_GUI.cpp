@@ -12,9 +12,14 @@
 #include "moc_ADN_Radars_GUI.cpp"
 #include "ADN_GuiBuilder.h"
 #include "ADN_CommonGfx.h"
+#include "ADN_GroupBox.h"
 #include "ADN_Radars_Data.h"
 #include "ADN_Radars_ListView.h"
-#include "ADN_GroupBox.h"
+#include "ADN_Sensors_Environments_GUI.h"
+#include "ADN_Sensors_Illumination_GUI.h"
+#include "ADN_Sensors_Meteos_GUI.h"
+#include "ADN_Sensors_Sizes_GUI.h"
+#include "ADN_Sensors_UrbanBlockMaterial_GUI.h"
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
 
@@ -72,19 +77,42 @@ void ADN_Radars_GUI::Build()
     }
 
     // Detect times
-    ADN_GroupBox* pDetectTimesGroup = builder.AddGroupBox( 0, "durations", tr( "Durations" ), vConnectors[ eHasDetectionTimes ], 3 );
-    builder.AddCheckableField< ADN_TimeField >( pDetectTimesGroup, "detection-duration", tr( "Detection duration" ), vConnectors[ eHasDetectionTime ], vConnectors[ eDetectionTime ] );
-    builder.AddCheckableField< ADN_TimeField >( pDetectTimesGroup, "recognition-duration", tr( "Recognition duration" ), vConnectors[ eHasRecoTime ], vConnectors[ eRecoTime ] );
-    builder.AddCheckableField< ADN_TimeField >( pDetectTimesGroup, "identification-duration", tr( "Identification duration" ), vConnectors[ eHasIdentificationTime ], vConnectors[ eIdentificationTime ] );
+    ADN_GroupBox* pDetectTimesGroup = builder.AddGroupBox( 0, "durations", tr( "Durations" ), vConnectors[ eHasDetectionTimes ], 2 );
+    QWidget* pHolder = new QWidget( pDetectTimesGroup );
+    Q3GridLayout* pTimesLayout = new Q3GridLayout( pHolder, 0, 2, 5, 10 );
+    pTimesLayout->setColStretch( 1, 10 );
 
-    ADN_GroupBox* pHQDetectTimesGroup = builder.AddGroupBox( pDetectTimesGroup, "cp-durations", tr( "CP durations" ), vConnectors[ eHasHQDetectionTimes ], 3 );
+    QWidget* pTimesGroup = builder.AddFieldHolder( pDetectTimesGroup );
+    builder.AddCheckableField< ADN_TimeField >( pTimesGroup, "detection-duration", tr( "Detection duration" ), vConnectors[ eHasDetectionTime ], vConnectors[ eDetectionTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pTimesGroup, "recognition-duration", tr( "Recognition duration" ), vConnectors[ eHasRecoTime ], vConnectors[ eRecoTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pTimesGroup, "identification-duration", tr( "Identification duration" ), vConnectors[ eHasIdentificationTime ], vConnectors[ eIdentificationTime ] );
+
+    ADN_GroupBox* pHQDetectTimesGroup = builder.AddGroupBox( pHolder, "cp-durations", tr( "CP durations" ), vConnectors[ eHasHQDetectionTimes ], 3 );
     builder.AddCheckableField< ADN_TimeField >( pHQDetectTimesGroup, "detection-duration", tr( "Detection duration" ), vConnectors[ eHasHQDetectionTime ], vConnectors[ eHQDetectionTime ] );
     builder.AddCheckableField< ADN_TimeField >( pHQDetectTimesGroup, "recognition-duration", tr( "Recognition duration" ), vConnectors[ eHasHQRecoTime ], vConnectors[ eHQRecoTime ] );
     builder.AddCheckableField< ADN_TimeField >( pHQDetectTimesGroup, "identification-duration", tr( "Identification duration" ), vConnectors[ eHasHQIdentificationTime ], vConnectors[ eHQIdentificationTime ] );
 
-    QLabel* pLabel = new QLabel( pDetectTimesGroup );
-    pLabel->setText( tr( "When 'Durations' is unchecked, units are recognized instantly.\n"
-                         "When 'HQ Durations' is unchecked, the detection times for HQs are the same as the others." ) );
+    pTimesLayout->addWidget( pTimesGroup, 0, 0 );
+    pTimesLayout->addWidget( pHQDetectTimesGroup, 0, 1 );
+
+    QGridLayout* pLayout = new QGridLayout();
+    pLayout->setSpacing( 5 );
+    pLayout->setAlignment( Qt::AlignTop );
+    pLayout->setColumnStretch( 0, 2 );
+    pLayout->setColumnStretch( 1, 1 );
+    pLayout->setColumnStretch( 2, 2 );
+    pLayout->addWidget( pInfoHolder, 0, 0 );
+    pLayout->addWidget( pDetectableActivitiesGroup, 0, 1 );
+    pLayout->addWidget( pDetectTimesGroup, 0, 2 );
+
+    QGroupBox* pTerrainModifiersGroup = new gui::RichGroupBox( "terrain-modifiers", tools::translate( "ADN_Sensors_GUI", "Terrain modifiers" ) );
+    QHBoxLayout* terrainModifiersLayout = new QHBoxLayout;
+    pTerrainModifiersGroup->setLayout( terrainModifiersLayout );
+    terrainModifiersLayout->addWidget( new ADN_Sensors_Sizes_GUI( builder.GetChildName( "size-modifiers" ), vConnectors[ eModifSizes ], pTerrainModifiersGroup ) );
+    terrainModifiersLayout->addWidget( new ADN_Sensors_Meteos_GUI( builder.GetChildName( "weather-modifiers" ), vConnectors[ eModifWeather ], pTerrainModifiersGroup ) );
+    terrainModifiersLayout->addWidget( new ADN_Sensors_Illumination_GUI( builder.GetChildName( "illu-modifiers" ), vConnectors[ eModifIllumination ], pTerrainModifiersGroup ) );
+    terrainModifiersLayout->addWidget( new ADN_Sensors_Environments_GUI( builder.GetChildName( "env-modifiers" ), vConnectors[ eModifEnvironment ], pTerrainModifiersGroup ) );
+    terrainModifiersLayout->addWidget( new ADN_Sensors_UrbanBlockMaterial_GUI( builder.GetChildName( "material-modifiers" ), vConnectors[ eModifUrbanBlockMaterial ], pTerrainModifiersGroup ) );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -95,9 +123,8 @@ void ADN_Radars_GUI::Build()
     pContentLayout->setMargin( 10 );
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
-    pContentLayout->addWidget( pInfoHolder );
-    pContentLayout->addWidget( pDetectableActivitiesGroup );
-    pContentLayout->addWidget( pDetectTimesGroup );
+    pContentLayout->addLayout( pLayout );
+    pContentLayout->addWidget( pTerrainModifiersGroup );
 
     // List view
     QWidget* pSearchListView = builder.AddSearchListView< ADN_Radars_ListView >( this, data_.vRadars_, vConnectors );

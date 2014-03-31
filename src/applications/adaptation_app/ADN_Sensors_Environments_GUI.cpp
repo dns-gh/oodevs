@@ -51,12 +51,7 @@ void ADN_Sensors_Environments_GUI::AddRow( int row, void* data )
     ADN_Sensors_Modificators::EnvironmentInfos* pInfos = static_cast< ADN_Sensors_Modificators::EnvironmentInfos* >( data );
     if( !pInfos )
         return;
-    Qt::ItemFlags flags = Qt::ItemIsEditable;
-    if( pInfos->eType_ == eVisionEmpty )
-    {
-        pInfos->rCoeff_ = 1;
-        flags = 0;
-    }
+    Qt::ItemFlags flags = pInfos->eType_ == eVisionEmpty ? 0 : Qt::ItemIsEditable;
     AddItem( row, 0, data, ADN_Tr::ConvertFromVisionObject( pInfos->eType_, ENT_Tr::eToTr ).c_str(), Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pInfos->rCoeff_, ADN_StandardItem::eDouble, flags );
 }

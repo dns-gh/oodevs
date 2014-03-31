@@ -3804,11 +3804,6 @@ PNG (*.png)
         <source>CP durations</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>When &apos;Durations&apos; is unchecked, units are recognized instantly.
-When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Radars_ListView</name>

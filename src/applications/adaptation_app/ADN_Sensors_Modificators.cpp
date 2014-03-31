@@ -173,7 +173,7 @@ void ADN_Sensors_Modificators::PostureInfos::WriteArchive( xml::xostream& output
 //-----------------------------------------------------------------------------
 ADN_Sensors_Modificators::EnvironmentInfos::EnvironmentInfos( const E_VisionObject& e )
     : eType_( e )
-    , rCoeff_( 0 )
+    , rCoeff_( e == eVisionEmpty ? 1 : 0 )
 {
     // NOTHING
 }
@@ -518,7 +518,7 @@ void ADN_Sensors_Modificators::WriteIlluminationModifiers( xml::xostream& xos ) 
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Modificators::WriteSourcePostureModifiers( xml::xostream& xos ) const
 {
-    Write( xos, "source-posture-modifiers", vModifIlluminations_ );
+    Write( xos, "source-posture-modifiers", vModifStance_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -527,7 +527,7 @@ void ADN_Sensors_Modificators::WriteSourcePostureModifiers( xml::xostream& xos )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Modificators::WriteTargetPostureModifiers( xml::xostream& xos ) const
 {
-    Write( xos, "target-posture-modifiers", vModifIlluminations_ );
+    Write( xos, "target-posture-modifiers", vModifTargetStance_ );
 }
 
 // -----------------------------------------------------------------------------
