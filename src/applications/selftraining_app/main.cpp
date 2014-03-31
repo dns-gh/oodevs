@@ -15,6 +15,7 @@
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/filesystem.hpp>
 #include <boost/scoped_ptr.hpp>
 
 int appMain( int argc, char** argv )

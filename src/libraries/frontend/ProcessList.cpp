@@ -12,6 +12,7 @@
 #include <windows.h>
 #include <tlhelp32.h>
 #include <boost/bind.hpp>
+#include <boost/noncopyable.hpp>
 
 using namespace frontend;
 

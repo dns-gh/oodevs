@@ -8,11 +8,11 @@
 // *****************************************************************************
 
 #include "frontend_pch.h"
+// warning C4503: decorated name length exceeded, name was truncated
+#pragma warning( disable: 4503 )
 #include "ConfigurationManipulator.h"
 #include "StartTimeline.h"
 
-// warning C4503: decorated name length exceeded, name was truncated
-#pragma warning( disable: 4503 )
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/regex.hpp>

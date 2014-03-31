@@ -11,6 +11,7 @@
 #define __EventTaskWidget_h_
 
 #include "EventWidget_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace gui
 {

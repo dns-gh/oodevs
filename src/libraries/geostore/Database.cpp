@@ -16,6 +16,7 @@
 #pragma warning ( push, 0 )
 #include <boost/locale.hpp>
 #pragma warning ( pop )
+#include <boost/filesystem.hpp>
 
 using namespace geostore;
 
