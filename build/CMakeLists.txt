@@ -619,7 +619,7 @@ masa_add_target_include( client_sample_app "${CMAKE_CURRENT_BINARY_DIR}/protocol
 target_link_libraries( client_sample_app ws2_32 ${TOOLS_LIBRARIES} )
 
 # core
-add_target( core libraries "libraries/core" )
+add_target( core common "libraries/core" )
 target_link_libraries( core
     ${CMAKE_THREAD_LIBS_INIT}
     ${XERCES_LIBRARIES}
@@ -627,15 +627,15 @@ target_link_libraries( core
 )
 
 # core_test
-add_target( core_test test "tests/core_test" OPTIONS test )
+add_target( core_test tests "tests/core_test" OPTIONS test )
 target_link_libraries( core_test core )
 
 # xeuseudeu
-add_target( xeuseudeu libraries "libraries/xeuseudeu" )
+add_target( xeuseudeu common "libraries/xeuseudeu" )
 target_link_libraries( xeuseudeu core )
 
 # xeuseudeu_test
-add_target( xeuseudeu_test test "tests/xeuseudeu_test" OPTIONS protobuf test )
+add_target( xeuseudeu_test tests "tests/xeuseudeu_test" OPTIONS protobuf test )
 target_link_libraries( xeuseudeu_test
     xeuseudeu
     ${TOOLS_LIBRARIES}
