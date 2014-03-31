@@ -95,3 +95,40 @@ func (s *TestSuite) TestPathfindRequest(c *C) {
 	// client2.Unregister(handlerId)
 	// c.Assert(seen, Equals, false)
 }
+
+func CheckPointOrder(objectives, points []swapi.Point) bool {
+	index := 0
+	for _, value1 := range objectives {
+		content := points[index:len(points)]
+		found := false
+		for k, value2 := range content {
+			if isNearby(value1, value2) {
+				index = k + 1
+				found = true
+				break
+			}
+		}
+		if !found {
+			return false
+		}
+	}
+	return true
+}
+
+func (s *TestSuite) TestOrderPoints(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+
+	automat := createAutomat(c, client)
+	positions := []swapi.Point{swapi.Point{X: -15.9296, Y: 28.3601},
+		swapi.Point{X: -15.8423, Y: 28.4106},
+		swapi.Point{X: -15.9339, Y: 28.3316},
+		swapi.Point{X: -15.7327, Y: 28.251}}
+
+	unit, err := client.CreateUnit(automat.Id, UnitType, positions[0])
+	c.Assert(err, IsNil)
+
+	points, err := client.PathfindRequest(unit.Id, positions...)
+	c.Assert(err, IsNil)
+	c.Assert(CheckPointOrder(positions, points), Equals, true)
+}
