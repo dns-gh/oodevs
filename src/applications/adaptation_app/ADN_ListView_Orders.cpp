@@ -34,11 +34,10 @@ typedef ADN_Models_Data::OrderInfos OrderInfos;
 // Name: ADN_ListView_Orders constructor
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
-ADN_ListView_Orders::ADN_ListView_Orders( bool usedWithMission, QWidget* parent )
+ADN_ListView_Orders::ADN_ListView_Orders( QWidget* parent )
     : ADN_ListView( parent,
-                    "ADN_ListView_Orders" + usedWithMission,
+                    "ADN_ListView_Orders",
                     QString::fromStdString( ENT_Tr::ConvertFromMissionType( eMissionType_FragOrder ) ) )
-    , usedWithMission_ ( usedWithMission )
 {
     pConnector_.reset( new ADN_Connector_ListView< OrderInfos >( *this ) );
     SetDeletionEnabled( true );
@@ -70,17 +69,15 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
     for( auto it = fragOrders.begin(); it != fragOrders.end(); ++it )
     {
         ADN_Missions_FragOrder* fragOrder = static_cast< ADN_Missions_FragOrder* >(*it);
-        if( usedWithMission_ || fragOrder->isAvailableWithoutMission_.GetData() )
-        {
-            std::string strOrderName = fragOrder->strName_.GetData();
-            const int id = pTargetMenu->insertItem( strOrderName.c_str(), 2 + n );
-            const bool added = Contains( strOrderName );
-            pTargetMenu->setItemEnabled( id, !added );
-            pTargetMenu->setItemChecked( id, added );
-            bDisplayAdd |= !added;
-            fragOrders_[ n ] = strOrderName;
-            ++n;
-        }
+
+        std::string strOrderName = fragOrder->strName_.GetData();
+        const int id = pTargetMenu->insertItem( strOrderName.c_str(), 2 + n );
+        const bool added = Contains( strOrderName );
+        pTargetMenu->setItemEnabled( id, !added );
+        pTargetMenu->setItemChecked( id, added );
+        bDisplayAdd |= !added;
+        fragOrders_[ n ] = strOrderName;
+        ++n;
     }
     if( ! bDisplayAdd && !bDisplayRem )
         return;

@@ -34,7 +34,7 @@ class ADN_ListView_Orders : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_Orders( bool usedWithMission, QWidget* parent );
+             ADN_ListView_Orders( QWidget* parent );
     virtual ~ADN_ListView_Orders();
     //@}
 
@@ -62,7 +62,6 @@ private:
 private:
     //! @name data
     //@{
-    bool usedWithMission_;
     T_FragOrders fragOrders_;
     //@}
 };
