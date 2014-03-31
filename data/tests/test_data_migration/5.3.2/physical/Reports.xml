@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<reports model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Reports.xsd">
+  <report category="operational" id="0" key="eRC_RAS" message="NTR"/>
+  <report category="operational" id="1" key="eRC_EnPosteFaceAObstacle" message="blocked by obstacle %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="2" key="eRC_EnContournementObstacle" message="bypassing obstacle"/>
+  <report category="exceptional" id="3" key="eRC_MissionImpossible" message="mission impossible, operational context inconsistent"/>
+  <report category="operational" id="4" key="eRC_ProgressionSurAxe" message="advancing"/>
+  <report category="operational" id="5" key="eRC_ProgressionVersPosition" message="advancing towards deployment area"/>
+  <report category="operational" id="6" key="eRC_ArriveSurPosition" message="posted"/>
+  <report category="operational" id="7" key="eRC_ReconnaissancePoint" message="reconnoitering position"/>
+  <report category="operational" id="8" key="eRC_EnPosteFaceADirectionDangereuse" message="posted, observing towards direction of the enemy"/>
+  <report category="operational" id="9" key="eRC_EnJalonnement" message="screening"/>
+  <report category="operational" id="10" key="eRC_PreparationMission" message="preparing mission">
+    <parameter type="Integer"/>
+  </report>
+  <report category="operational" id="11" key="eRC_DebutMission" message="mission started"/>
+  <report category="operational" id="12" key="eRC_FinMission" message="mission completed"/>
+  <report category="operational" id="13" key="eRC_DispositifInstalle" message="deployed"/>
+  <report category="operational" id="14" key="eRC_EnPosition" message="posted"/>
+  <report category="operational" id="15" key="eRC_ObjectifAtteint" message="target reached"/>
+  <report category="operational" id="16" key="eRC_Debouche" message="crossing the line of departure"/>
+  <report category="operational" id="17" key="eRC_RejointUnite" message="joining unit"/>
+  <report category="operational" id="18" key="eRC_EscorteUnite" message="guarding unit"/>
+  <report category="operational" id="19" key="eRC_EnFreinage" message="delaying"/>
+  <report category="operational" id="20" key="eRC_Assaut" message="assault"/>
+  <report category="operational" id="21" key="eRC_EnCouverture" message="covering"/>
+  <report category="operational" id="22" key="eRC_EnEclairage" message="scouting"/>
+  <report category="operational" id="23" key="eRC_EnManoeuvreRavitaillement" message="replenishing"/>
+  <report category="operational" id="24" key="eRC_SurPIA" message="unit %1 on checkpoint">
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="25" key="eRC_PassageSurPIA" message="checkpoint passed"/>
+  <report category="operational" id="26" key="eRC_UniteRecueillie" message="rearward passage assistance of unit %1 done">
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="27" key="eRC_EnCoursDeFranchissement" message="crossing"/>
+  <report category="operational" id="28" key="eRC_AttenteOrdrePoursuivre" message="waiting for FRAGO to continue"/>
+  <report category="operational" id="29" key="eRC_AttenteOrdreDeboucher" message="waiting for FRAGO to cross the line of departure"/>
+  <report category="operational" id="30" key="eRC_Fixe" message="fixed"/>
+  <report category="operational" id="31" key="eRC_EnEsquive" message="withdrawing"/>
+  <report category="operational" id="32" key="eRC_PriseContact" message="gaining contact"/>
+  <report category="operational" id="33" key="eRC_RuptureContact" message="breaking contact"/>
+  <report category="operational" id="34" key="eRC_PrecisionContact" message="identifying contact with unit %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="35" key="eRC_EnnemiDetruit" message="enemy unit %1 destroyed">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="36" key="eRC_PrisAPartieParTirDirect" message="under fire"/>
+  <report category="operational" id="37" key="eRC_PrisSousTirArtillerie" message="under artillery fire"/>
+  <report category="operational" id="38" key="eRC_PointTenuParEni" message="position hold by enemy unit %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="39" key="eRC_ProgressionVersEni" message="advancing towards enemy unit %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="40" key="eRC_Decroche" message="breaking contact"/>
+  <report category="operational" id="41" key="eRC_EniSurObjectif" message="enemy unit %1 spotted on objective">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="42" key="eRC_Riposte" message="retaliating"/>
+  <report category="operational" id="43" key="eRC_PretPourEngagementSurEnnemi" message="ready for engagement"/>
+  <report category="operational" id="44" key="eRC_DebutControleZone" message="zone control: started"/>
+  <report category="operational" id="45" key="eRC_FinControleZone" message="zone control: stopped"/>
+  <report category="operational" id="46" key="eRC_DebutSurveillance" message="monitoring: started"/>
+  <report category="operational" id="47" key="eRC_FinSurveillance" message="monitoring: stopped"/>
+  <report category="operational" id="48" key="eRC_EnInfiltration" message="infiltrating"/>
+  <report category="operational" id="49" key="eRC_EnExfiltration" message="exfiltrating"/>
+  <report category="operational" id="50" key="eRC_AttenteConditionFavorablePourInfiltration" message="waiting for favorable conditions to infiltrate"/>
+  <report category="operational" id="51" key="eRC_DroneLance" message="aircraft launched"/>
+  <report category="operational" id="52" key="eRC_DroneEnExploitation" message="aircraft flying"/>
+  <report category="operational" id="53" key="eRC_DroneExploite" message="aircraft back"/>
+  <report category="operational" id="54" key="eRC_DroneDisponible" message="aircraft ready"/>
+  <report category="operational" id="55" key="eRC_DebutMiseEnOeuvreDrone" message="aircaft exploitation: started"/>
+  <report category="operational" id="56" key="eRC_FinMiseEnOeuvreDrone" message="aircraft exploitation: completed"/>
+  <report category="operational" id="57" key="eRC_ActivationBrouillage" message="jamming system activated"/>
+  <report category="operational" id="58" key="eRC_DesactivationBrouillage" message="jamming system deactivated"/>
+  <report category="operational" id="59" key="eRC_ActivationSystemeEcoute" message="listening system activated"/>
+  <report category="operational" id="60" key="eRC_DesactivationSystemeEcoute" message="listening system deactivated"/>
+  <report category="operational" id="61" key="eRC_ActivationSystemeEcouteRadar" message="radar listening system activated"/>
+  <report category="operational" id="62" key="eRC_DesactivationSystemeEcouteRadar" message="radar listening system deactivated"/>
+  <report category="operational" id="63" key="eRC_DebutLiaison" message="liaison started"/>
+  <report category="operational" id="64" key="eRC_FinLiaison" message="liaison completed"/>
+  <report category="operational" id="65" key="eRC_EtablissementLiaisonImpossible" message="cannot establish liaison"/>
+  <report category="operational" id="66" key="eRC_UniteTropDistante" message="unit %1 too far">
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="67" key="eRC_EnregistrementDonnes" message="data recorded"/>
+  <report category="operational" id="68" key="eRC_ExploitationDonnees" message="data exploited"/>
+  <report category="operational" id="69" key="eRC_ExtractionDonnes" message="data retrieved"/>
+  <report category="operational" id="70" key="eRC_Releve" message="relieving unit %1">
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="71" key="eRC_SuitUnite" message="following unit"/>
+  <report category="operational" id="72" key="eRC_PasseEnAppui" message="ready to support"/>
+  <report category="operational" id="73" key="eRC_EnAppui" message="supporting"/>
+  <report category="operational" id="74" key="eRC_NonOperationnel" message="non operational"/>
+  <report category="operational" id="75" key="eRC_Operationnel" message="operational"/>
+  <report category="operational" id="76" key="eRC_AmbianceVitesse" message="standard posture enabled"/>
+  <report category="operational" id="77" key="eRC_AmbianceSurete" message="safety posture enabled"/>
+  <report category="operational" id="78" key="eRC_SurLima" message="on phase line. Type: %1">
+    <parameter type="Enumeration">
+      <value id="0" name="departure line"/>
+      <value id="1" name="change of posture line"/>
+      <value id="2" name="coordination line"/>
+      <value id="3" name="deny line"/>
+      <value id="4" name="objective line"/>
+      <value id="5" name="blocking line"/>
+      <value id="6" name="rearward passage line"/>
+      <value id="7" name="mission: start line"/>
+      <value id="8" name="mission: complete line"/>
+      <value id="9" name="checkpoint line"/>
+    </parameter>
+  </report>
+  <report category="operational" id="79" key="eRC_DebutTravaux" message="work just started"/>
+  <report category="operational" id="80" key="eRC_FinTravaux" message="work finished"/>
+  <report category="operational" id="81" key="eRC_ObstacleDegage" message="obstacle cleared"/>
+  <report category="operational" id="82" key="eRC_OrganisationChantier" message="setting up work site"/>
+  <report category="operational" id="83" key="eRC_DesorganisationChantier" message="dismantling work site"/>
+  <report category="operational" id="84" key="eRC_ReconnaissancePositionObstacle" message="obstacle position reconnaissance"/>
+  <report category="operational" id="85" key="eRC_ContournementRealise" message="obstacle bypassed"/>
+  <report category="operational" id="86" key="eRC_AttenteRenforcement" message="waiting for reinforcement"/>
+  <report category="operational" id="87" key="eRC_DebutExploitationSiteFranchissement" message="crossing site operational"/>
+  <report category="operational" id="88" key="eRC_FinExploitationSiteFranchissement" message="crossing site closed"/>
+  <report category="operational" id="89" key="eRC_ReussiteRenforcement" message="unit %1 has successfully reinforced unit %2">
+    <parameter type="Agent"/>
+    <parameter type="Automat"/>
+  </report>
+  <report category="operational" id="90" key="eRC_EchecRenforcement" message="cannot reinforce target unit">
+    <parameter type="Agent"/>
+    <parameter type="Automat"/>
+  </report>
+  <report category="operational" id="91" key="eRC_ObstacleEnAttenteActivation" message="obstacle %1 ready for activation">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="92" key="eRC_DebutAmenagementBerges" message="improving banks"/>
+  <report category="operational" id="93" key="eRC_FinAmenagementBerges" message="banks improved"/>
+  <report category="operational" id="94" key="eRC_RegimeMaintenanceDelaiDepasse" message="maintenance work time: period exceeded"/>
+  <report category="operational" id="95" key="eRC_SectionDeployee" message="section deployed"/>
+  <report category="operational" id="96" key="eRC_ANouveauDisponibleApresReparation" message="reparation successful, ready to work"/>
+  <report category="operational" id="97" key="eRC_MaterielRetourDeMaintenance" message="equipment %1 back from maintenance chain">
+    <parameter type="EquipmentType"/>
+  </report>
+  <report category="operational" id="98" key="eRC_MaterielRepareSurPlace" message="equipment %1 fixed on site">
+    <parameter type="EquipmentType"/>
+  </report>
+  <report category="operational" id="99" key="eRC_DemandeRavitaillementDotations" message="request for basic loads replenishment"/>
+  <report category="operational" id="100" key="eRC_DemandeRavitaillementStocks" message="request for stock replenishment"/>
+  <report category="operational" id="101" key="eRC_DemandeEvacuationSanitaire" message="request for wounded evacuation"/>
+  <report category="operational" id="102" key="eRC_DemandeEvacuationMateriel" message="request for equipment towage"/>
+  <report category="operational" id="103" key="eRC_AllocationConsentieBientotEpuisee" message="%1 stock quota almost consumed">
+    <parameter type="ResourceType"/>
+  </report>
+  <report category="operational" id="104" key="eRC_DepassementCapaciteStockage" message="stock capacity exceeded"/>
+  <report category="operational" id="105" key="eRC_SeuilLogistiqueDotationDepasse" message="%1 load supply threshold exceeded">
+    <parameter type="ResourceType"/>
+  </report>
+  <report category="operational" id="106" key="eRC_SeuilLogistiqueStockDepasse" message="%1 stock supply threshold exceeded">
+    <parameter type="ResourceType"/>
+  </report>
+  <report category="operational" id="107" key="eRC_RavitaillementDotationsEffectue" message="basic loads replenishment done"/>
+  <report category="operational" id="108" key="eRC_RavitaillementStockEffectue" message="stocks replenishment done"/>
+  <report category="operational" id="109" key="eRC_RavitaillementDotationsAnnule" message="basic loads replenishment cancelled"/>
+  <report category="operational" id="110" key="eRC_RavitaillementStockAnnule" message="stocks replenishment cancelled"/>
+  <report category="operational" id="111" key="eRC_HumainRetourDeSante" message="wounded back from medical system"/>
+  <report category="operational" id="112" key="eRC_AlerteDisponibiliteMoyensReleve" message="alert: almost out of evacuation ambulances"/>
+  <report category="operational" id="113" key="eRC_AlerteDisponibiliteMoyensRamassage" message="alert: almost out of collection ambulances"/>
+  <report category="operational" id="114" key="eRC_AlerteDisponibiliteMedecins" message="alert: almost out of doctors"/>
+  <report category="operational" id="115" key="eRC_AlerteDisponibiliteRemorqueurs" message="alert: almost out of towage trucks"/>
+  <report category="operational" id="116" key="eRC_AlerteDisponibiliteReparateurs" message="alert: almost out of repairers"/>
+  <report category="operational" id="117" key="eRC_AlerteDisponibiliteVecteurs" message="alert: almost out of conveyers"/>
+  <report category="operational" id="118" key="eRC_PretMaterielEnCours" message="equipment lent"/>
+  <report category="operational" id="119" key="eRC_PretMaterielAnnule" message="equipment lending cancelled"/>
+  <report category="operational" id="120" key="eRC_PretMaterielEffectue" message="equipment lending done"/>
+  <report category="operational" id="121" key="eRC_PretMaterielImpossible" message="equipment lending impossible"/>
+  <report category="operational" id="122" key="eRC_PretMaterielPartiellementEffectue" message="equipment lending partially done"/>
+  <report category="operational" id="123" key="eRC_RecuperationMaterielPreteImpossible" message="impossible to take lent equipment back"/>
+  <report category="operational" id="124" key="eRC_RecuperationMaterielPreteEffectuee" message="lent equipment reclaimed"/>
+  <report category="operational" id="125" key="eRC_RecuperationMaterielPretePartiellementEffectuee" message="lent equipment partially reclaimed"/>
+  <report category="operational" id="126" key="eRC_MaterielPrete" message="equipment lent"/>
+  <report category="operational" id="127" key="eRC_MaterielRendu" message="lent equipment reclaimed"/>
+  <report category="operational" id="128" key="eRC_Convoi_DeplacementVersPointChargement" message="convoy: moving towards loading point"/>
+  <report category="operational" id="129" key="eRC_Convoi_ChargementEnCours" message="convoy: loading"/>
+  <report category="operational" id="130" key="eRC_Convoi_ChargementEffectue" message="convoy: loading complete"/>
+  <report category="operational" id="131" key="eRC_Convoi_DeplacementVersPointDechargement" message="convoy: moving towards unloading point"/>
+  <report category="operational" id="132" key="eRC_Convoi_DechargementEnCours" message="convoy: unloading"/>
+  <report category="operational" id="133" key="eRC_Convoi_DechargementEffectue" message="convoy: unloading complete"/>
+  <report category="operational" id="134" key="eRC_Convoi_Retour" message="convoy: moving back to supply base"/>
+  <report category="operational" id="135" key="eRC_EnCoursRavitaillement" message="replenishing"/>
+  <report category="operational" id="136" key="eRC_RavitaillementTermine" message="replenishment complete"/>
+  <report category="operational" id="137" key="eRC_HelicoptereEnObservation" message="helicopter observing"/>
+  <report category="operational" id="138" key="eRC_PerteInfoGuidage" message="target lost"/>
+  <report category="operational" id="139" key="eRC_TransportUnitePasPrete" message="transport: unit %1 not ready">
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="140" key="eRC_TransportUnitePrete" message="transport: unit %1 ready">
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="141" key="eRC_TransportEnCours" message="agent is being transported"/>
+  <report category="operational" id="142" key="eRC_TransportEmbarquement" message="transport: embarking"/>
+  <report category="operational" id="143" key="eRC_TransportDebarquement" message="transport: disembarking"/>
+  <report category="operational" id="144" key="eRC_TransportImpossiblePasDeMoyens" message="transport: no carrier available"/>
+  <report category="operational" id="145" key="eRC_VehiculeLaisseSurPosition" message="equipment left on position"/>
+  <report category="operational" id="146" key="eRC_RejointPositionEmbarquement" message="moving towards embarkment position"/>
+  <report category="operational" id="147" key="eRC_EnAttenteTransporteurs" message="waiting for carriers"/>
+  <report category="operational" id="148" key="eRC_ContamineNBC" message="CBRN contaminated"/>
+  <report category="operational" id="149" key="eRC_DecontamineNBC" message="CBRN decontaminated"/>
+  <report category="operational" id="150" key="eRC_TenueProtectionNBCMise" message="CBRN suit put on"/>
+  <report category="operational" id="151" key="eRC_TenueProtectionNBCEnlevee" message="CBRN suit put off"/>
+  <report category="operational" id="152" key="eRC_AlerteNBCNiveau4" message="alert: CBRN level 4"/>
+  <report category="operational" id="153" key="eRC_FinAlerteNBCNiveau4" message="CBRN level 4 alert off"/>
+  <report category="operational" id="154" key="eRC_SiteDecontaminationAnime" message="decontamination site operated"/>
+  <report category="operational" id="155" key="eRC_SiteDecontaminationDesactive" message="decontamination site dismantled"/>
+  <report category="operational" id="156" key="eRC_DemandeDecontamination" message="request for decontamination"/>
+  <report category="operational" id="157" key="eRC_ZoneReconnue" message="area reconnoitered"/>
+  <report category="operational" id="158" key="eRC_ZoneDecontaminee" message="area decontaminated"/>
+  <report category="operational" id="159" key="eRC_SiteROTAReconnu" message="rota site reconnoitered"/>
+  <report category="operational" id="160" key="eRC_IncidentNBCTermine" message="CBRN incident over"/>
+  <report category="operational" id="161" key="eRC_UniteDecontaminee" message="unit decontaminated"/>
+  <report category="operational" id="162" key="eRC_SiteSature" message="decontamination site saturated"/>
+  <report category="operational" id="163" key="eRC_DebutMesure" message="CBRN monitoring in progress"/>
+  <report category="operational" id="164" key="eRC_FinMesure" message="CBRN monitoring done"/>
+  <report category="operational" id="165" key="eRC_ReconnaissanceTerminee" message="reconnaissance complete"/>
+  <report category="operational" id="166" key="eRC_ReconnaissanceInitialeTerminee" message="initial reconnaissance complete"/>
+  <report category="operational" id="167" key="eRC_RejointPlotRavitaillement" message="moving towards replenishment site"/>
+  <report category="operational" id="168" key="eRC_PremierCoupParti" message="first shell shot"/>
+  <report category="operational" id="169" key="eRC_TirExecute" message="fire complete"/>
+  <report category="operational" id="170" key="eRC_TirHorsDePortee" message="target out of range"/>
+  <report category="operational" id="171" key="eRC_TirImpossiblePlusDeMunitions" message="no more shells"/>
+  <report category="operational" id="172" key="eRC_TirAnnule" message="fire cancelled"/>
+  <report category="operational" id="173" key="eRC_ChangementDePosition" message="switching position"/>
+  <report category="operational" id="174" key="eRC_DebutInstallation" message="deployment in progress"/>
+  <report category="operational" id="175" key="eRC_FinInstallation" message="deployment complete"/>
+  <report category="operational" id="176" key="eRC_PretPourConduiteTir" message="ready to fire"/>
+  <report category="operational" id="177" key="eRC_ObservationTirIndirect" message="indirect fire %1 spotted">
+    <parameter type="IndirectFire"/>
+  </report>
+  <report category="operational" id="178" key="eRC_ZoneImplantationOccupee" message="deployment area already used"/>
+  <report category="operational" id="179" key="eRC_InstallationSurZoneImplantation" message="deployment on dedicated area"/>
+  <report category="operational" id="180" key="eRC_ReceptionOrdreDeFeu" message="fire request received"/>
+  <report category="operational" id="181" key="eRC_PretAuTir" message="ready to execute fire"/>
+  <report category="operational" id="182" key="eRC_PresencePopulation" message="crowd nearby"/>
+  <report category="operational" id="183" key="eRC_OrientationPopulationVersCampRefugies" message="sending refugees to camp"/>
+  <report category="operational" id="184" key="eRC_PasDeCampRefugiesDisponible" message="no refugee camp available"/>
+  <report category="operational" id="185" key="eRC_PresenceEnnemiRendu" message="surrendered enemy detected"/>
+  <report category="operational" id="186" key="eRC_OrientationEnnemiRenduVersCampPrisonniers" message="sending prisoners to camp"/>
+  <report category="operational" id="187" key="eRC_PasDeCampPrisonniersDisponible" message="no prisoner camp available"/>
+  <report category="operational" id="188" key="eRC_Rendu" message="surrendered"/>
+  <report category="operational" id="189" key="eRC_RedditionAnnulee" message="surrender cancelled"/>
+  <report category="operational" id="190" key="eRC_TirDansZoneInterdite" message="fire in forbidden area"/>
+  <report category="operational" id="191" key="eRC_TirSurCampAmi" message="friendly fire"/>
+  <report category="operational" id="192" key="eRC_TireParCampAmi" message="sustaining friendly fire"/>
+  <report category="operational" id="193" key="eRC_TirSurCampNeutre" message="engaging neutral units"/>
+  <report category="operational" id="194" key="eRC_TireParCampNeutre" message="sustaining neutral units fire"/>
+  <report category="operational" id="195" key="eRC_TirSurCivil" message="civilian engaged"/>
+  <report category="operational" id="196" key="eRC_TireParCivil" message="sustaining civilian fire"/>
+  <report category="operational" id="197" key="eRC_TirIndirectFratricide" message="friendly indirect fire"/>
+  <report category="operational" id="198" key="eRC_TirIndirectSurPopulation" message="indirect fire on crowd"/>
+  <report category="operational" id="199" key="eRC_DestructionPC" message="CP destroyed"/>
+  <report category="operational" id="200" key="eRC_DecesBlesse" message="wounded just died"/>
+  <report category="operational" id="201" key="eRC_DecesBlessePendantTransport" message="wounded dead during transportation"/>
+  <report category="operational" id="202" key="eRC_DecesBlessePendantHospitalisation" message="wounded dead during hospitalization"/>
+  <report category="exceptional" id="203" key="eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles" message="mission impossible: subordinated units not operational"/>
+  <report category="exceptional" id="204" key="eRC_MissionImpossibleLimaInvalide" message="mission impossible: invalid phase line"/>
+  <report category="exceptional" id="205" key="eRC_MissionImpossibleZoneHorsFuseau" message="mission impossible: objective outside boundaries"/>
+  <report category="operational" id="206" key="eRC_RapportDeForceDefavorable" message="very low force ratio"/>
+  <report category="operational" id="207" key="eRC_TerrainDifficile" message="impossible to go through this!"/>
+  <report category="operational" id="208" key="eRC_PlusDeCarburant" message="out of oil"/>
+  <report category="operational" id="209" key="eRC_DispositifDisperse" message="dismantled system"/>
+  <report category="operational" id="210" key="eRC_DebutNeutralisation" message="neutralized"/>
+  <report category="operational" id="211" key="eRC_FinNeutralisation" message="just recovered from neutralization"/>
+  <report category="operational" id="212" key="eRC_DebutSilenceRadio" message="radio silence"/>
+  <report category="operational" id="213" key="eRC_FinSilenceRadio" message="radio silence lifted"/>
+  <report category="operational" id="214" key="eRC_DebutSilenceRadar" message="radar silence"/>
+  <report category="operational" id="215" key="eRC_FinSilenceRadar" message="radar silence lifted"/>
+  <report category="operational" id="216" key="eRC_TirRestreint" message="retaliation only"/>
+  <report category="operational" id="217" key="eRC_TirInterdit" message="upon order fire"/>
+  <report category="operational" id="218" key="eRC_TirLibre" message="free fire"/>
+  <report category="operational" id="219" key="eRC_Trace" message="message: %1">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="220" key="eRC_TraceID" message="message id: %1">
+    <parameter type="Integer"/>
+  </report>
+  <report category="operational" id="221" key="eRC_EmploiForceInterdit" message="use of force forbidden"/>
+  <report category="operational" id="222" key="eRC_MaintienADistanceParMoyensNonLetaux" message="holding civilians in position by usage of non lethal means"/>
+  <report category="operational" id="223" key="eRC_ArmesLetalesAutorisees" message="lethal weapons authorized for use"/>
+  <report category="operational" id="224" key="eRC_PopulationDetectee" message="crowd %1 detected">
+    <parameter type="CrowdKnowledge"/>
+  </report>
+  <report category="operational" id="225" key="eRC_PriseAPartieParPopulation" message="assaulted by crowd %1">
+    <parameter type="CrowdKnowledge"/>
+  </report>
+  <report category="operational" id="226" key="eRC_RiposteContrePopulation" message="intervention on crowd %1">
+    <parameter type="CrowdKnowledge"/>
+  </report>
+  <report category="operational" id="227" key="eRC_PopulationDangereuseAProximite" message="threatening crowd nearby"/>
+  <report category="operational" id="228" key="eRC_EsquiveFaceAPopulation" message="breaking contact with crowd"/>
+  <report category="operational" id="229" key="eRC_DecrochageFaceAPopulation" message="withdrawing from crowd"/>
+  <report category="operational" id="230" key="eRC_MiseEnPlaceControleDeFoule" message="trying to control the crowd"/>
+  <report category="operational" id="231" key="eRC_MiseEnPlaceFiltrage" message="re-orienting crowd"/>
+  <report category="operational" id="232" key="eRC_AnimationBarrage" message="blocking crowd"/>
+  <report category="operational" id="233" key="eRC_AnimationCanalisation" message="channeling crowd"/>
+  <report category="operational" id="234" key="eRC_CollecteRenseignementsSurPopulations" message="monitoring crowd"/>
+  <report category="operational" id="235" key="eRC_PopulationReconnue" message="crowd recognized"/>
+  <report category="operational" id="236" key="eRC_SituationDifficilementTenableFaceAPopulation" message="almost impossible to hold before crowd"/>
+  <report category="operational" id="237" key="eRC_UtilisationArmesNonLetalesFaceAPopulation" message="engaging crowd with non lethal weapons"/>
+  <report category="operational" id="238" key="eRC_UtilisationArmementsFaceAPopulation" message="engaging crowd with lethal weapons"/>
+  <report category="operational" id="239" key="eRC_DebutInterventionFaceAPopulation" message="dealing with a %1 crowd">
+    <parameter type="Enumeration">
+      <value id="0" name="quiet"/>
+      <value id="1" name="turbulent"/>
+      <value id="2" name="agitated"/>
+      <value id="3" name="agressive"/>
+    </parameter>
+  </report>
+  <report category="operational" id="240" key="eRC_PopulationVictimeAffrontements" message="%1 civilians killed during engagement, %2 wounded, %3 scattered">
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
+  </report>
+  <report category="operational" id="241" key="eRC_AttitudePopulation" message="crowd is: %1">
+    <parameter type="Enumeration">
+      <value id="0" name="quiet"/>
+      <value id="1" name="turbulent"/>
+      <value id="2" name="agitated"/>
+      <value id="3" name="aggressive"/>
+    </parameter>
+  </report>
+  <report category="operational" id="242" key="eRC_AggravationAttitude" message="escalation of violence"/>
+  <report category="operational" id="243" key="eRC_AffrontementAvecForcesEnnemies" message="engaging enemy forces"/>
+  <report category="operational" id="244" key="eRC_PopulationTemporairementControlee" message="crowd temporarily brought under control"/>
+  <report category="operational" id="245" key="eRC_PopulationTemporairementRepoussee" message="crowd temporarily driven back"/>
+  <report category="operational" id="246" key="eRC_RepriseDesAffrontements" message="clashes resume"/>
+  <report category="operational" id="247" key="eRC_AgressionDePopulation" message="crowd %1 is being assaulted">
+    <parameter type="CrowdKnowledge"/>
+  </report>
+  <report category="operational" id="248" key="eRC_AgressionParPopulation" message="sustaining assault from crowd %1">
+    <parameter type="CrowdKnowledge"/>
+  </report>
+  <report category="operational" id="249" key="eRC_RiposteContreAgressionParPopulation" message="retaliating to crowd %1 assault">
+    <parameter type="CrowdKnowledge"/>
+  </report>
+  <report category="operational" id="250" key="eRC_AttaqueInstallation" message="critical site under attack"/>
+  <report category="operational" id="251" key="eRC_EnStationnement" message="parking"/>
+  <report category="operational" id="252" key="eRC_Bloquee" message="blocked"/>
+  <report category="operational" id="253" key="eRC_Filtree" message="checked"/>
+  <report category="operational" id="254" key="eRC_AttentatTerroristeDansPopulation" message="terrorist bombing in crowd"/>
+  <report category="operational" id="255" key="eRC_PopulationVictimeExplosionMines" message="%1 civilians killed by mine explosion, %2 wounded">
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
+  </report>
+  <report category="operational" id="256" key="eRC_ExecutionAttentat" message="attack is being executed"/>
+  <report category="operational" id="257" key="eRC_BM_DebutMission" message="mission started : %1">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="258" key="eRC_BM_FinMission" message="mission completed : %1">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="259" key="eRC_BM_DebutPhase" message="phase started : %1">
+    <parameter type="Stage"/>
+  </report>
+  <report category="operational" id="260" key="eRC_BM_FinPhase" message="phase completed : %1">
+    <parameter type="Stage"/>
+  </report>
+  <report category="operational" id="261" key="eRC_ActivationObstacleDeManoeuvre" message="reserved obstacle activated : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="262" key="eRC_DebutAnimationObjet" message="element %1 is being operated">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="263" key="eRC_TirDirectSurCible" message="direct fire on target : %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="264" key="eRC_FinAnimationObjet" message="element %1 is no longer operated">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="265" key="eRC_IllumineCible" message="target illumination"/>
+  <report category="operational" id="266" key="eRC_DebutDegagement" message="destruction work started for %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="267" key="eRC_FinDegagement" message="work destruction completed"/>
+  <report category="operational" id="268" key="eRC_TirDirectImpossible" message="impossible direct fire"/>
+  <report category="operational" id="269" key="eRC_TirIndirectSurCible" message="indirect fire on target : %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="270" key="eRC_TirSansCapacite" message="no fire capacity"/>
+  <report category="operational" id="271" key="eRC_TirIndirectMunitionInvalide" message="unvalid ammunition type"/>
+  <report category="operational" id="272" key="eRC_TirIndirectImpossible" message="Cannot launch projectile (no launcher or target out of range)"/>
+  <report category="operational" id="273" key="eRC_CibleNonPercue" message="Target not detected"/>
+  <report category="operational" id="274" key="eRC_EnnemiTactiquementDetruit" message="Target tactically destroyed : %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="275" key="eRC_VisionRadarVerrouilleeSur" message="Locked vision and active radar"/>
+  <report category="operational" id="276" key="eRC_DebutReconnaissanceBlocUrbain" message="Urban block reconnaissance started"/>
+  <report category="operational" id="277" key="eRC_FinReconnaissanceBlocUrbain" message="Urban block reconnaissance completed"/>
+  <report category="operational" id="278" key="eRC_DebutReconnaissancePoint" message="Position reconnaissance started"/>
+  <report category="operational" id="279" key="eRC_FinReconnaissancePoint" message="Position reconnaissance completed"/>
+  <report category="operational" id="280" key="eRC_FinTirDirectSurCible" message="Direct fire completed on target : %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="281" key="eRC_DebutTravauxObjet" message="Work started for object : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="282" key="eRC_FinTravauxObjet" message="Work completed for object : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="283" key="eRC_FinTirIndirectSurCible" message="Indirect fire completed on target : %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="284" key="eRC_DebutNeutralisationCible" message="Neutralization started on target : %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="285" key="eRC_FinNeutralisationCible" message="Neutralization completed on target : %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="286" key="eRC_VisionVerrouilleeSur" message="Vision locked"/>
+  <report category="operational" id="287" key="eRC_DebutConstructionObjet" message="Work construction started"/>
+  <report category="operational" id="288" key="eRC_ObjetDejaOccupe" message="Object %1 already occupied">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="289" key="eRC_DebutSilencePartielRadio" message="Partial radio silence"/>
+  <report category="operational" id="290" key="eRC_DebutReconnaissanceZone" message="Area reconnaissance started"/>
+  <report category="operational" id="291" key="eRC_FinReconnaissanceZone" message="Area reconnaissance completed"/>
+  <report category="operational" id="292" key="eRC_ConstructionObjetImpossible" message="Work impossible : no capacity"/>
+  <report category="operational" id="293" key="eRC_PasDotationConstructionObjet" message="Work impossible : no dotation"/>
+  <report category="operational" id="294" key="eRC_Embarquement" message="Embarkment started"/>
+  <report category="operational" id="295" key="eRC_Debarquement" message="Disembarkment started"/>
+  <report category="operational" id="296" key="eRC_DebutFouilleBlocUrbain" message="Urban block sweeping started"/>
+  <report category="operational" id="297" key="eRC_FinFouilleBlocUrbain" message="Urban block sweeping completed"/>
+  <report category="operational" id="298" key="eRC_DebutFouilleZone" message="Area sweeping started"/>
+  <report category="operational" id="299" key="eRC_FinFouilleZone" message="Area sweeping completed"/>
+  <report category="operational" id="300" key="eRC_MunitionInterdite" message="Forbidden ammunition : %1">
+    <parameter type="ResourceType"/>
+  </report>
+  <report category="operational" id="301" key="eRC_MunitionAutorise" message="Authorized ammunition : %1">
+    <parameter type="ResourceType"/>
+  </report>
+  <report category="operational" id="302" key="eRC_DebutBouclageZone" message="Area cordoning off started"/>
+  <report category="operational" id="303" key="eRC_FinBouclageZone" message="Area cordoning off completed"/>
+  <report category="operational" id="304" key="eRC_DebutAppui" message="Supporting"/>
+  <report category="operational" id="305" key="eRC_FinAppui" message="While moving, the support is not ensured"/>
+  <report category="operational" id="306" key="eRC_ObjetNonContournable" message="%1 is an unavoidable object">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="307" key="eRC_ObjetNonSupprimable" message="Work impossible : no destrution capacity"/>
+  <report category="operational" id="308" key="eRC_TirIndirectTargetNotIlluminated" message="Target unilluminated"/>
+  <report category="operational" id="309" key="eRC_TirIndirectForbiddenAmmo" message="Impossible fire : Forbidden ammunition"/>
+  <report category="operational" id="310" key="eRC_MissionImpossibleReason" message="%1">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="311" key="eRC_CouvertureActive" message="cover posture enabled"/>
+  <report category="operational" id="312" key="eRC_CouvertureDesactive" message="cover posture disabled"/>
+  <report category="operational" id="313" key="eRC_DebutControleBlocUrbain" message="Urban block control started"/>
+  <report category="operational" id="314" key="eRC_FinControleBlocUrbain" message="Urban block control finished"/>
+  <report category="operational" id="315" key="eRC_DebutControlPoint" message="Point control started"/>
+  <report category="operational" id="316" key="eRC_FinControlPoint" message="Point control finished"/>
+  <report category="operational" id="317" key="eRC_TirIndirectNoCapacity" message="No launcher with capacity to use specify munition"/>
+  <report category="operational" id="318" key="eRC_DebutSilenceRadioPartiel" message="Partial radio silence"/>
+  <report category="operational" id="319" key="eRC_EmbarkmentStarted" message="Embarkment - started"/>
+  <report category="operational" id="320" key="eRC_EmbarkmentInterrupted" message="Embarkment - interrupted"/>
+  <report category="operational" id="321" key="eRC_EmbarkmentResumed" message="Embarkment - resumed"/>
+  <report category="operational" id="322" key="eRC_EmbarkmentFinished" message="Embarkment - finished"/>
+  <report category="operational" id="323" key="eRC_DisembarkmentStarted" message="Disembarkment - started"/>
+  <report category="operational" id="324" key="eRC_DisembarkmentInterrupted" message="Disembarkment - interrupted"/>
+  <report category="operational" id="325" key="eRC_DisembarkmentResumed" message="Disembarkment - resumed"/>
+  <report category="operational" id="326" key="eRC_DisembarkmentFinished" message="Disembarkment - finished"/>
+  <report category="operational" id="327" key="eRC_ProtectionActiveReussie" message="Active protection successful"/>
+  <report category="operational" id="328" key="eRC_ProtectionActiveHardKillReussie" message="Hard-kill active protection successful"/>
+  <report category="operational" id="329" key="eRC_Empoisonne" message="Poisoned"/>
+  <report category="operational" id="330" key="eRC_Contamine" message="Contaminated"/>
+  <report category="operational" id="331" key="eRC_TirSurCampEnnemi" message="enemy fire"/>
+  <report category="operational" id="332" key="eRC_TireParCampEnnemi" message="sustaining enemy fire"/>
+  <report category="operational" id="333" key="eRC_DroneDoitEtreMisEnOeuvre" message="The agent needs to be operated first"/>
+  <report category="operational" id="334" key="eRC_ReussiteRenforcementPion" message="Reinforcement successfull : %1 on %2">
+    <parameter type="Agent"/>
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="335" key="eRC_EchecRenforcementPion" message="Reinforcement impossible: %1 on %2">
+    <parameter type="Agent"/>
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="336" key="eRC_LeaveLima" message="Coordination end on phase line. Type: %1">
+    <parameter type="Enumeration">
+      <value id="0" name="departure line"/>
+      <value id="1" name="change of posture line"/>
+      <value id="2" name="coordination line"/>
+      <value id="3" name="deny line"/>
+      <value id="4" name="objective line"/>
+      <value id="5" name="blocking line"/>
+      <value id="6" name="rearward passage line"/>
+      <value id="7" name="mission: start line"/>
+      <value id="8" name="mission: complete line"/>
+      <value id="9" name="checkpoint line"/>
+    </parameter>
+  </report>
+  <report category="operational" id="337" key="eRC_ArrivedOnExtinguishableObject" message="Arrived on site"/>
+  <report category="operational" id="338" key="eRC_ObjectExtinguished" message="Fire extinguished"/>
+  <report category="operational" id="339" key="eRC_ArrivedOnAlertZone" message="Arrived on zone"/>
+  <report category="operational" id="340" key="eRC_ZoneAlerted" message="End of alert"/>
+  <report category="operational" id="341" key="eRC_ArrivedOnGaragePosition" message="Arrived on garage position"/>
+  <report category="operational" id="342" key="eRC_ExtractFromStock_Arrived" message="Arrived on site"/>
+  <report category="operational" id="343" key="eRC_ExtractFromStock_Extracted" message="Extracted"/>
+  <report category="operational" id="344" key="eRC_SupplyStock_Supplied" message="Supplied"/>
+  <report category="operational" id="345" key="eRC_SupplyStock_Arrived" message="Arrived on supply point"/>
+  <report category="operational" id="346" key="eRC_SupplyStock_Distributed" message="Distributed"/>
+  <report category="operational" id="347" key="eRC_ZoneConfined" message="Confined"/>
+  <report category="operational" id="348" key="eRC_ArrivedOnConfinedZone" message="Arrived in confinement zone"/>
+  <report category="operational" id="349" key="eRC_PasDeDroneDisponible" message="No more drone available"/>
+  <report category="operational" id="350" key="eRC_FirstTourOfZoneConfinementDone" message="First tour of zone confinement done"/>
+  <report category="operational" id="351" key="eRC_ZoneConfinementInProgress" message="Zone confinement in progress"/>
+  <report category="operational" id="352" key="eRC_ZoneEvacuated" message="Zone evacuated"/>
+  <report category="operational" id="353" key="eRC_ArrivedOnEvacuateZone" message="Arrived in evacuation zone"/>
+  <report category="operational" id="354" key="eRC_ZoneEvacuationInProgress" message="Evacuation in progress"/>
+  <report category="operational" id="355" key="eRC_DebutValorisation" message="Valorization started for object : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="356" key="eRC_FinValorisation" message="Valorization completed for object : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="357" key="eRC_EchecRelever" message="Cannot relieve an automat without mission"/>
+  <report category="operational" id="358" key="eRC_criticalIntelligence" message="Critical intelligence : %1">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="359" key="eRC_criticalIntelligenceNone" message="No critical intelligence"/>
+  <report category="operational" id="360" key="eRC_FinTravauxBlocUrbain" message="Works on urban block ended"/>
+  <report category="operational" id="361" key="eRC_BUNonTraficable" message="Urban block is not trafficable"/>
+  <report category="operational" id="362" key="eRC_StartDeploy" message="Starting deploy"/>
+  <report category="operational" id="363" key="eRC_DebutFouillePoint" message="Location search started"/>
+  <report category="operational" id="364" key="eRC_FinFouillePoint" message="Location search completed"/>
+  <report category="operational" id="365" key="eRC_NotDeployedIndirectFireImpossible" message="Impossible to open fire : the shooter is not deployed"/>
+  <report category="operational" id="366" key="eRC_AgressionImpossible" message="Crowd is currently under control, attack impossible"/>
+  <report category="operational" id="367" key="eRC_NoLogisticSuperior" message="Missing mandatory logistic superior"/>
+  <report category="operational" id="368" key="eRC_CrossingSiteNotRecon" message="Crossing site needs to be recon first"/>
+  <report category="operational" id="369" key="eRC_InvalidObject" message="Invalid object"/>
+  <report category="operational" id="370" key="eRC_TerroristCaptured" message="Terrorist neutralized %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="371" key="eRC_MiseEnPlaceProducePoint" message="Setting up production for the resources network"/>
+  <report category="operational" id="372" key="eRC_ProduceImpossible" message="Cannot reach the network resources"/>
+  <report category="operational" id="373" key="eRC_FinProducePoint" message="End of production for the network resources"/>
+  <report category="operational" id="374" key="eRC_TimeInUndergroundNetwork" message="Arrival in %1 minute(s)">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="375" key="eRC_BadUndergroundNetwork" message="Invalid underground network issue"/>
+  <report category="operational" id="376" key="eRC_NotActivatedUndergroundNetwork" message="Underground network issue is not operationnal(state inactivated) or the unit is already underground"/>
+  <report category="operational" id="377" key="eRC_ImpossibleAtteindreObjectif" message="Cannot reach objective"/>
+  <report category="operational" id="378" key="eRC_ExplosionSurBouchonMine" message="Explosion on %1">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="379" key="eRC_PathfindWarning" message="Pathfind - Warning"/>
+  <report category="operational" id="380" key="eRC_DotationIndisponible" message="Unavailable resource"/>
+  <report category="operational" id="381" key="eRC_ObservationEffetTirIndirect" message="Indirect fire effect observation"/>
+  <report category="exceptional" id="382" key="eRC_DamagesCausedToNeutralSide" message="Damages inflicted to neutral side"/>
+  <report category="exceptional" id="383" key="eRC_DamagesCausedByNeutralSide" message="Damages inflicted by neutral side"/>
+  <report category="exceptional" id="384" key="eRC_InfrastructureDamaged" message="Infrastructure damaged"/>
+  <report category="exceptional" id="385" key="eRC_LivingAreaDamaged" message="Living area damaged"/>
+  <report category="exceptional" id="386" key="eRC_BorderCrossed" message="Border crossed"/>
+  <report category="exceptional" id="387" key="eRC_TacticallyDestroyed" message="Tactically destroyed"/>
+  <report category="exceptional" id="388" key="eRC_CiviliansEncountered" message="Civilians or refugees encountered"/>
+  <report category="exceptional" id="389" key="eRC_PrisonersUnsupplied" message="DPREs or prisoners unsupplied"/>
+  <report category="exceptional" id="390" key="eRC_PrisonersCampFull" message="Camp capacity exceeded"/>
+  <report category="operational" id="391" key="eRC_NoPositionsToDestroyTargets" message="No positions found to destroy targets"/>
+  <report category="operational" id="392" key="eRC_NoPositionsToNeutralizeTargets" message="No positions found to neutralize targets"/>
+  <report category="operational" id="393" key="eRC_NoPositionsToGetCoverFromEntities" message="No positions found to get cover from entities"/>
+  <report category="operational" id="394" key="eRC_NoPositionsToObserveTargets" message="No positions found to observe targets"/>
+  <report category="operational" id="395" key="eRC_NoPositionsToReachTargets" message="No positions found to reach targets"/>
+  <report category="operational" id="396" key="eRC_TheTargetCannotBeReconnoitre" message="The target cannot be reconnoitred because it is not accessible)"/>
+  <report category="operational" id="397" key="eRC_TargetIsNotAccessible" message="The target is not accessible"/>
+  <report category="operational" id="398" key="eRC_NoKeyPositionsFoundInArea" message="No key positions found in area"/>
+  <report category="operational" id="399" key="eRC_Engaged" message="Engaged"/>
+  <report category="operational" id="400" key="eRC_Disengaged" message="Disengaged"/>
+  <report category="operational" id="401" key="eRC_AlreadyEngaged" message="Already engaged"/>
+  <report category="operational" id="402" key="eRC_AlreadyDisengaged" message="Already disengaged"/>
+  <report category="operational" id="403" key="eRC_NoPEInAutomat" message="No platoon can do the main effect or a platoon is in a jamming area"/>
+  <report category="operational" id="404" key="eRC_SectionUndeployed" message="Section undeployed"/>
+  <report category="operational" id="405" key="eRC_StartUndeploy" message="Starting undeploy"/>
+  <report category="operational" id="406" key="eRC_DifficultMovementProgression" message="Hard to go through %1">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="407" key="eRC_LimaParameterNotPresent" message="Phase line of type %1 is not filled">
+    <parameter type="Enumeration">
+      <value id="0" name="departure line"/>
+      <value id="1" name="change of posture line"/>
+      <value id="2" name="coordination line"/>
+      <value id="3" name="deny line"/>
+      <value id="4" name="objective line"/>
+      <value id="5" name="blocking line"/>
+      <value id="6" name="rearward passage line"/>
+      <value id="7" name="mission: start line"/>
+      <value id="8" name="mission: complete line"/>
+      <value id="9" name="checkpoint line"/>
+    </parameter>
+  </report>
+  <report category="operational" id="408" key="eRC_UrbanCollisionStarted" message="Speed limited due to population"/>
+  <report category="operational" id="409" key="eRC_UrbanCollisionStopped" message="End of speed limitation"/>
+  <report category="operational" id="410" key="eRC_DecrochageFaceAIncendie" message="Withdrawing from fire"/>
+  <report category="operational" id="411" key="eRC_Capture" message="agent has been captured"/>
+  <report category="operational" id="412" key="eRC_TakeHostage" message="agent has captured %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="413" key="eRC_AttenteOrdrePoursuivreConvoiOuEscorte" message="Waiting for an escort or a frag order"/>
+  <report category="operational" id="414" key="eRC_DebutDevalorisation" message="Beginning of demining for the object : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="415" key="eRC_FinDevalorisation" message="Ending of demining for the object : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="416" key="eRC_TrafficablePositionFindingInZone" message="No trafficable position in zone"/>
+  <report category="operational" id="417" key="eRC_PrisSousTirIED" message="Under IED fire"/>
+  <report category="operational" id="418" key="eRC_NotInSameUndergroundNetwork" message="Entry and exit are not in the same underground network"/>
+  <report category="operational" id="419" key="eRC_TerroristDropped" message="%1 dropped">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="420" key="eRC_Questionning" message="Being interrogated"/>
+  <report category="operational" id="421" key="eRC_criticalIntelligenceImpossible" message="Impossible to obtain critical intelligence : force ratio too weak"/>
+  <report category="operational" id="422" key="eRC_InvalidTarget" message="The target is no longer valid"/>
+  <report category="operational" id="423" key="eRC_FragOrderReceived" message="%1 fragmentary order received">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="424" key="eRC_FurtifModeOn" message="Stealth mode on"/>
+  <report category="operational" id="425" key="eRC_FurtifModeOff" message="Stealth mode off"/>
+  <report category="operational" id="426" key="eRC_ObstacleNonActivable" message="Obstacle %1 cannot be activated">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="427" key="eRC_FireObserver" message="Artillery fire on unit %1, equipment %2 ( %3 fixable with evacuation, %4 fixable without evacuation, %5 destroyed )">
+    <parameter type="Integer"/>
+    <parameter type="String"/>
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
+  </report>
+  <report category="operational" id="428" key="eRC_ImpossibleActivateIED" message="Impossible to activate IED : out of range"/>
+  <report category="operational" id="429" key="eRC_Jammed" message="Jammed"/>
+  <report category="operational" id="430" key="eRC_PCJammed" message="Command Post is jammed or is in radio silence"/>
+  <report category="operational" id="431" key="eRC_IEDNotReady" message="Firing of IED impossible: not yet in place"/>
+  <report category="operational" id="432" key="eRC_IEDReadyForFiring" message="IED ready for firing"/>
+  <report category="operational" id="433" key="eRC_FollowingUnitIsDead" message="Followed unit %1 is destroyed">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="434" key="eRC_CombatSupportUnitIsDead" message="Supported unit %1 is destroyed">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="435" key="eRC_NoUnitsInParameter" message="All units passed as parameters are destroyed"/>
+  <report category="operational" id="436" key="eRC_DetectedUnit" message="Unit detected"/>
+  <report category="operational" id="437" key="eRC_FriendUnitRecognized" message="Friendly unit detected"/>
+  <report category="operational" id="438" key="eRC_FriendUnitIdentified" message="Friendly unit identified"/>
+  <report category="operational" id="439" key="eRC_EnemyUnitRecognized" message="Enemy unit recognised"/>
+  <report category="operational" id="440" key="eRC_EnemyUnitIdentified" message="Enemy unit identified"/>
+  <report category="operational" id="441" key="eRC_NeutralUnitRecognized" message="Neutral unit recognised"/>
+  <report category="operational" id="442" key="eRC_NeutralUnitIdentified" message="Neutral unit identified"/>
+  <report category="operational" id="443" key="eRC_CaptureEnd" message="Freed"/>
+  <report category="operational" id="444" key="eRC_PrisSousTirEclairant" message="Under lighting fire"/>
+  <report category="operational" id="445" key="eRC_PrisSousTirFumigene" message="Under smoke fire"/>
+  <report category="operational" id="446" key="eRC_DetectedObject" message="Object detected : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="447" key="eRC_OfficersKilled" message="The unit officers suffered an attack"/>
+  <report category="operational" id="448" key="eRC_UnitNotCaptured" message="The unit is not surrendered"/>
+  <report category="operational" id="449" key="eRC_RepairEvacuationNoMeans" message="Unable to repair %1">
+    <parameter type="EquipmentType"/>
+  </report>
+  <report category="operational" id="450" key="eRC_SupplierUnavailable" message="Supplier is unavailable"/>
+  <report category="operational" id="451" key="eRC_LogQuotaExceeded" message="%1 stock supply quota exceeded">
+    <parameter type="ResourceType"/>
+  </report>
+  <report category="operational" id="452" key="eRC_LogQuotaExceededForAgent" message="%1 stock supply quota exceeded for %2">
+    <parameter type="ResourceType"/>
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="453" key="eRC_TransportedUnitCannotReceiveOrder" message="Impossible to receive a mission while transported"/>
+  <report category="operational" id="454" key="eRC_LogNoSuperior" message="No logistic superior found"/>
+  <report category="operational" id="455" key="eRC_LogNoStock" message="No stock available at logistic superior for %1">
+    <parameter type="ResourceType"/>
+  </report>
+  <report category="operational" id="456" key="eRC_ResourceNodeDisabled" message="Resource node disabled"/>
+  <report category="operational" id="457" key="eRC_ObjectiveIsNoLongerAlerted" message="Objective is no longer alerted"/>
+  <report category="operational" id="458" key="eRC_ObjectiveConfined" message="Objective confined"/>
+  <report category="operational" id="459" key="eRC_FireIsBeingExtinguished" message="Fire is being extinguished"/>
+  <report category="operational" id="460" key="eRC_ImpossibleToOperateObject" message="Object cannot be operated"/>
+  <report category="operational" id="461" key="eRC_NoUrbanBlocksWithinArea" message="no urban blocks within area"/>
+  <report category="operational" id="462" key="eRC_VictimsExtracted" message="victims extracted"/>
+  <report category="operational" id="463" key="eRC_ResourceReductionStopped" message="Stop decreasing resource production"/>
+  <report category="operational" id="464" key="eRC_EntityCannotFollow" message="Entity cannot follow"/>
+  <report category="operational" id="465" key="eRC_CannotDismount" message="The unit cannot dismount"/>
+  <report category="operational" id="466" key="eRC_ObjectiveAlerted" message="Objective alerted"/>
+  <report category="operational" id="467" key="eRC_ObjectiveIsNoLongerConfined" message="Objective is no longer confined"/>
+  <report category="operational" id="468" key="eRC_ObjectiveEvacuated" message="Objective evacuated"/>
+  <report category="operational" id="469" key="eRC_ObjectiveIsNoLongerEvacuated" message="Objective is no longer evacuated"/>
+  <report category="operational" id="470" key="eRC_StartingToProduceResource" message="Starting to produce resource"/>
+  <report category="operational" id="471" key="eRC_ResourceProductionStopped" message="Resource production stopped"/>
+  <report category="operational" id="472" key="eRC_ResourceNodeProductionEnhanced" message="Resource node production enhanced"/>
+  <report category="operational" id="473" key="eRC_ResourceNodeProductionDamaged" message="Resource node production damaged"/>
+  <report category="operational" id="474" key="eRC_ResourceNodeEnabled" message="Resource node enabled"/>
+  <report category="operational" id="475" key="eRC_NoResourceNodesWithinArea" message="no resource node within area"/>
+  <report category="operational" id="476" key="eRC_NoCrowdsWithinArea" message="no crowds within area"/>
+  <report category="operational" id="477" key="eRC_VictimsEvacuated" message="victims evacuated"/>
+  <report category="operational" id="478" key="eRC_VictimsCannotBeEvacuated" message="victims cannot be evacuated"/>
+  <report category="operational" id="479" key="eRC_VictimsCannotBeExtracted" message="victims cannot be extracted"/>
+  <report category="operational" id="480" key="eRC_StartingToReduceResourceProduction" message="Starting to decrease resource production"/>
+  <report category="operational" id="481" key="eRC_NoWoundedVictims" message="No wounded victims"/>
+  <report category="operational" id="482" key="eRC_ElementCannotBeLoaded" message="Unit cannot be loaded"/>
+  <report category="operational" id="483" key="eRC_ElementCannotBeUnloaded" message="Unit cannot be unloaded"/>
+  <report category="operational" id="484" key="eRC_ElementLoaded" message="Unit is loaded"/>
+  <report category="operational" id="485" key="eRC_ElementUnloaded" message="Unit is unloaded"/>
+  <report category="operational" id="486" key="eRC_NoPopulationInUrbanBlock" message="Urban block cannot be inhabited"/>
+  <report category="operational" id="487" key="eRC_ImpossibleToExtinguishFire" message="Fire cannot be extinguished"/>
+  <report category="operational" id="488" key="eRC_NoFiresWithinArea" message="No fires within area"/>
+  <report category="operational" id="489" key="eRC_StartingToDecontaminate" message="Starting to decontaminate"/>
+  <report category="operational" id="490" key="eRC_DecontaminationDone" message="Decontamination done"/>
+  <report category="operational" id="491" key="eRC_StartingToHealCrowd" message="Starting to heal the crowd"/>
+  <report category="operational" id="492" key="eRC_WoundedPersonsHealed" message="Wounded persons healed"/>
+  <report category="operational" id="493" key="eRC_StartingToExtractVictimsFromCrowd" message="Starting to extract victims"/>
+  <report category="operational" id="494" key="eRC_WoundedCannotBeHealed" message="Wounded cannot be healed"/>
+  <report category="operational" id="495" key="eRC_ControlPointEstablished" message="Checkpoint established"/>
+  <report category="operational" id="496" key="eRC_SystemIsBeingOperated" message="System is being operated"/>
+  <report category="operational" id="497" key="eRC_EntityHasBeenOrderedToFollow" message="Entity is requested to follow"/>
+  <report category="operational" id="498" key="eRC_StartingToCreateResourceLink" message="Starting to create resource link"/>
+  <report category="operational" id="499" key="eRC_ResouceLinkCreated" message="Resource link created"/>
+  <report category="operational" id="503" key="eRC_AttenteOrdrePoursuivreConvoi" message="Waiting for a frag order"/>
+  <report category="operational" id="504" key="eRC_TirIndirectLessInterventionType" message="Not enough ammunition : only %1 interventions will be processed">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="506" key="eRC_CloseCrowdAttitudeChanged" message="Crowd: %1 is becoming %2">
+    <parameter type="CrowdKnowledge"/>
+    <parameter type="Enumeration">
+      <value id="0" name="calm"/>
+      <value id="1" name="agitated"/>
+      <value id="2" name="excited"/>
+      <value id="3" name="agressive"/>
+    </parameter>
+  </report>
+  <report category="operational" id="507" key="eRC_CloseCrowdUrbanDestruction" message="Urban block damaged by crowd : %1">
+    <parameter type="CrowdKnowledge"/>
+  </report>
+  <report category="operational" id="511" key="eRC_PasTenueNBC" message="The unit doesn't have any CBRN protection"/>
+  <report category="operational" id="512" key="eRC_TenueProtectionNiveauNRBC" message="Level %1 of CBRN protection put on">
+    <parameter type="Integer"/>
+  </report>
+  <report category="operational" id="513" key="eRC_UndergroundNetworkExitActivated" message="Underground exit has been activated"/>
+  <report category="operational" id="514" key="eRC_UndergroundNetworkExitDeactivated" message="Underground exit has been deactivated"/>
+  <report category="operational" id="515" key="eRC_ObjectCannotDecontaminate" message="This object cannot decontaminate"/>
+  <report category="operational" id="516" key="eRC_FleeCBRN" message="Flee CBRN cloud"/>
+  <report category="operational" id="517" key="eRC_SafePositionReached" message="Safe position reached"/>
+  <report category="operational" id="518" key="eRC_FleeBecauseContamination" message="Flee because of contamination"/>
+  <report category="operational" id="519" key="eRC_FleeBecauseSafetyPerimeter" message="Flee safety perimeter"/>
+  <report category="operational" id="520" key="eRC_RandomCurious" message="Curious unit"/>
+  <report category="operational" id="521" key="eRC_RandomFlee" message="Fugitive unit"/>
+  <report category="operational" id="522" key="eRC_RandomStay" message="Shocked unit"/>
+  <report category="operational" id="523" key="eRC_AgentNeutralizedIndirectFireImpossible" message="Impossible Indirect Fire : unit neutralized"/>
+  <report category="operational" id="524" key="eRC_Convoi_EnConstitution" message="convoy is being prepared"/>
+  <report category="operational" id="525" key="eRC_ObjetNonDevalorisable" message="Work impossible : the object has not the capacity to be improved"/>
+  <report category="operational" id="526" key="eRC_SurrenderedUnitRecognized" message="Surrendered unit recognized"/>
+  <report category="operational" id="527" key="eRC_SurrenderedUnitIdentified" message="Surrendered unit identified"/>
+  <report category="operational" id="528" key="eRC_TransportRoundTrip" message="%1 of %2 shuttle(s) betwween loading and unloading">
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
+  </report>
+  <report category="operational" id="750" key="eRC_UnitsTryingToControl" message="interacting with controlling units"/>
+  <report category="operational" id="751" key="eRC_CrowdIsUnderControl" message="crowd is under control"/>
+  <report category="operational" id="752" key="eRC_CannotControlTheCrowd" message="failling to control the crowd"/>
+  <report category="operational" id="753" key="eRC_LogSuperiorAdded" message="added logistic link to %1">
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="754" key="eRC_LogSuperiorRemoved" message="removed logistic link to %1">
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="755" key="eRC_ElementAlreadyImproved" message="the object is already improved"/>
+  <report category="operational" id="756" key="eRC_DebutFouilleObjet" message="Object sweeping started"/>
+  <report category="operational" id="757" key="eRC_FinFouilleObjet" message="Object sweeping completed"/>
+  <report category="operational" id="758" key="eRC_startHidingInTheCrowd" message="Agent is hiding in the crowd"/>
+  <report category="operational" id="759" key="eRC_stopHidingInTheCrowd" message="Agent is no more hidden in the crowd "/>
+  <report category="operational" id="760" key="eRC_ElementAlreadyDemined" message="The object is already demined"/>
+  <report category="operational" id="761" key="eRC_UnitAlreadyDecontaminated" message="Unit not contaminated"/>
+  <report category="operational" id="762" key="eRC_DecontaminationInProgress" message="Decontamination in progress"/>
+  <report category="operational" id="763" key="eRC_FragOrderTooSoon" message="Fragmentary order sent too soon - ignored"/>
+  <report category="operational" id="764" key="eRC_CloseCrowdDemonstration" message="The crowd %1 is demonstrating">
+    <parameter type="CrowdKnowledge"/>
+  </report>
+  <report category="operational" id="765" key="eRC_MedicalUnitIsNotLogistic" message="The medical unit is not a logistic unit"/>
+  <report category="operational" id="766" key="eRC_ImpossibleToBypass" message="the object cannot be bypassed"/>
+  <report category="operational" id="767" key="eRC_AgenCannotBypass" message="the agent cannot bypass the object"/>
+  <report category="operational" id="768" key="eRC_AgenCannotRemoveImprovement" message="the agent cannot remove mines from the object"/>
+  <report category="operational" id="769" key="eRC_CorpseTransported" message="Evacuating %1">
+    <parameter type="ResourceType"/>
+  </report>
+  <report category="operational" id="770" key="eRC_CrossedLima" message="%1 crossed by unit : %2">
+    <parameter type="LimaFunction"/>
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="771" key="eRC_NoCapturedUnit" message="The agent has no captured unit"/>
+  <report category="operational" id="772" key="eRC_SupplyStock_Supplying" message="Supplying"/>
+  <report category="operational" id="773" key="eRC_TransportFinished" message="agent is no longer transported"/>
+  <report category="operational" id="774" key="eRC_ShootingTemporarilyBlocked" message="Firing temporarily blocked in urban area : search a better line of sight"/>
+  <report category="operational" id="775" key="eRC_EveryoneMustBeAble" message="All subordinates must be able to do the main tasks for this mission."/>
+</reports>

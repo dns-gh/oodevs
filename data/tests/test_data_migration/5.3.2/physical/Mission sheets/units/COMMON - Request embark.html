@@ -1,0 +1,63 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMMON - Request embark</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMMON - Request embark</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To be embarked on a position to be transported by other unit(s)</i>
+<br>In Sword, to request the embarking of an agent by units on an embarking position. This mission is used to coordinate the troops and vehicules transportation (see transportation capabilities in authoring tool), when SWORD is connected to other simulations through an HLA federation.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>
+<h3>Embarking position</h3>
+<h3>Embarking time</h3>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>
+<h3>Limit 2</h3>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the given position. If it is not reachable (a urban block inside which the agent cannot move for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed depends on the physical capabilities regarding the terrain properties. <br>
+</li>
+<li>Upon reaching the position, the agent is ready to be embarked (the report "waiting for carriers" is displayed). <br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends once the unit has been embarked by a carrier.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

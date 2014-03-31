@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<funeral model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Funeral.xsd">
+  <fake-transporter speed="60"/>
+  <packagings>
+    <packaging process-duration="20m" resource="Body Bag" terminal="false"/>
+    <packaging process-duration="1h" resource="Coffin" terminal="true"/>
+  </packagings>
+</funeral>

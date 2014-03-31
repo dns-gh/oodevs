@@ -1,0 +1,69 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ENGINEER - Reinforce</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ENGINEER - Reinforce</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td>In SWORD, a mission in which one unit augments the capability of another unit.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Unit</h3>The element to reinforce (a unit or a company).<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Position</h3>The position from which the agent will reinforce the objective (optional).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves to the objective. If the position is not reachable (the objective is in a urban block inside which the agent cannot move, for instance), the agent moves as close as possible. Average speed depends on the physical capabilities with respect to terrain properties.<br>
+</li>
+<li>Upon reaching the objective, the agent reinforces it, only if the distance between the agent and the objective is less than 100 meters. The report "unit [ agentName ] has successfully reinforced [obectiveName ]" should be displayed.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>If the parameter is an automat, the agent moves to the command post and becomes subordinated to the new company<br>
+</li>
+<li>If a position is issued, the agent moves to the position (not directly to the given agent or company). In that case it waits for the objective to be nearby before reinforcing it. The minimum distance should be less than 100 meters.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

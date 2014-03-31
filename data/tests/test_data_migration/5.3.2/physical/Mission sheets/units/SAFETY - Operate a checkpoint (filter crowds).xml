@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Operate a checkpoint (filter crowds)">
+  <context>
+    <line>
+      <text>In SWORD, checkpoints are object that can filter crowds. Using such an object allows the agent to filter crowds in order to detect hidden units (terrorist or other characters) and prevents them from going into restricted areas.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Checkpoint" optional="false">
+      <line>
+        <text>the object to be used to filter crowds,</text>
+      </line>
+    </parameter>
+    <parameter name="Intensity (%, 100 by default)" optional="true">
+      <line>
+        <text>the intensity to apply to filter crowds, 100% by default.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves to the center of the object. Then, filtration starts with the given intensity (the trace "check point established" should be displayed). An intensity value of 100% means that agent will filter with the max intensity regarding to properties defined on the "check point " object (see the "population/density" capacity in authoring tool). For instance, a "Density" value of "0 " means that a filtration of 100% will block all crowds trying to go through the checkpoint. An intensity value of 50% means that the density of crossing crowds will be devided by two.</text>
+    </line>
+    <line>
+      <text>The agent remains there until another mission is issued.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The object may not filter crowds if its properties are not well defined (see the object capacity "population" in authoring tool). In that specific case, no specific report is displayed.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When there is no more waypoints to visit, the agent stays next to the last one and the mission ends.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

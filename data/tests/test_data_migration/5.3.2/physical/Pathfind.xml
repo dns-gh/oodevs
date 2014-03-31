@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<pathfind model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Pathfind.xsd">
+  <configuration distance-threshold="15000" max-calculation-time="15s" max-end-connections="8"/>
+  <unit-rules>
+    <rule autonomous="false" flying="false" type="base">
+      <optimisation shortest="false"/>
+      <preferred-altitude value="0"/>
+      <preferred-terrains/>
+      <avoided-terrains strength="7"/>
+      <zone>
+        <outter-tolerance cost-per-meter="1" with-automat="10000" without-automat="1000"/>
+        <inner-comfort cost-per-meter="0.002" distance="500"/>
+      </zone>
+      <automat-zone>
+        <outter-tolerance cost-per-meter="0" distance="0"/>
+      </automat-zone>
+      <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
+      <enemies cost-at-security-range="0" cost-on-contact="0"/>
+      <population-costs maximum="100" security-range="50">
+        <population-cost attitude="calme" contact-cost="10"/>
+        <population-cost attitude="agitee" contact-cost="10"/>
+        <population-cost attitude="excitee" contact-cost="50"/>
+        <population-cost attitude="agressive" contact-cost="50"/>
+      </population-costs>
+      <object-costs avoid="true" threshold="10000">
+        <object-cost type="anti tank obstacle" value="10000"/>
+        <object-cost type="abattis" value="10000"/>
+        <object-cost type="barricade" value="10000"/>
+        <object-cost type="mines" value="10000"/>
+        <object-cost type="mined area (linear)" value="10000"/>
+        <object-cost type="mined area (scattered)" value="10000"/>
+        <object-cost type="mined area (linear and destructible)" value="10000"/>
+        <object-cost type="landslide" value="10000"/>
+        <object-cost type="road destruction" value="10000"/>
+        <object-cost type="bridge destruction" value="10000"/>
+        <object-cost type="continuous pontoon bridge" value="0"/>
+        <object-cost type="discontinuous pontoon bridge" value="0"/>
+        <object-cost type="firing post" value="0"/>
+        <object-cost type="safe zone" value="0"/>
+        <object-cost type="gun artillery deployment area" value="10"/>
+        <object-cost type="cobra deployment area" value="10"/>
+        <object-cost type="mrls deployment area" value="10"/>
+        <object-cost type="crossing site" value="10"/>
+        <object-cost type="nbc cloud" value="9000"/>
+        <object-cost type="decontamination site" value="10"/>
+        <object-cost type="logistic support area" value="10"/>
+        <object-cost type="jamming area" value="9000"/>
+        <object-cost type="full jamming area" value="9000"/>
+        <object-cost type="rota area" value="9000"/>
+        <object-cost type="nbc zone" value="9000"/>
+        <object-cost type="landing area" value="10"/>
+        <object-cost type="trail" value="-5"/>
+        <object-cost type="platform" value="10"/>
+        <object-cost type="mobility enhanced area" value="0"/>
+        <object-cost type="landing area (helicopter)" value="10"/>
+        <object-cost type="logistic area" value="10"/>
+        <object-cost type="prisoners camp" value="10"/>
+        <object-cost type="refugees camp" value="10"/>
+        <object-cost type="logistic route" value="-10"/>
+        <object-cost type="checkpoint" value="-5"/>
+        <object-cost type="dropping area" value="10"/>
+        <object-cost type="fire forbidden area" value="10"/>
+        <object-cost type="movement forbidden area" value="10000"/>
+        <object-cost type="general obstacle zone" value="10000"/>
+        <object-cost type="mortar deployment area" value="10"/>
+        <object-cost type="installation" value="0"/>
+      </object-costs>
+    </rule>
+    <rule autonomous="false" flying="false" inherits="base" type="movement">
+      <preferred-terrains>
+        <preferred-terrain type="country road"/>
+        <preferred-terrain type="secondary road"/>
+        <preferred-terrain type="main road"/>
+        <preferred-terrain type="highway"/>
+      </preferred-terrains>
+    </rule>
+    <rule autonomous="false" flying="false" inherits="base" type="recon">
+      <preferred-altitude value="0.001"/>
+      <preferred-terrains>
+        <preferred-terrain type="forest edge"/>
+        <preferred-terrain type="country road"/>
+        <preferred-terrain type="secondary road"/>
+        <preferred-terrain type="main road"/>
+        <preferred-terrain type="highway"/>
+      </preferred-terrains>
+    </rule>
+    <rule autonomous="false" flying="false" inherits="base" type="infiltration">
+      <preferred-altitude value="-0.001"/>
+      <preferred-terrains strength="50">
+        <preferred-terrain type="forest"/>
+        <preferred-terrain type="urban area"/>
+      </preferred-terrains>
+      <avoided-terrains strength="50">
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
+      </avoided-terrains>
+      <object-costs avoid="true" threshold="10000">
+        <object-cost type="checkpoint" value="10000"/>
+      </object-costs>
+      <enemies cost-at-security-range="25" cost-on-contact="10"/>
+      <population-costs maximum="100" outside-of-population="100" security-range="50">
+        <population-cost attitude="calme" contact-cost="0"/>
+        <population-cost attitude="agitee" contact-cost="0"/>
+        <population-cost attitude="excitee" contact-cost="0"/>
+        <population-cost attitude="agressive" contact-cost="0"/>
+      </population-costs>
+    </rule>
+    <rule autonomous="false" flying="false" inherits="base" type="assault">
+      <optimisation shortest="true"/>
+      <avoided-terrains strength="5">
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
+      </avoided-terrains>
+      <zone>
+        <inner-comfort cost-per-meter="0.8" distance="1000"/>
+      </zone>
+    </rule>
+    <rule autonomous="false" flying="false" inherits="base" type="retreat">
+      <optimisation shortest="false"/>
+      <zone>
+        <outter-tolerance with-automat="0" without-automat="0"/>
+      </zone>
+      <automat-zone>
+        <outter-tolerance cost-per-meter="1" distance="100000000"/>
+      </automat-zone>
+      <danger-direction base-cost-beyond="5" cost-per-meter="0.01"/>
+      <enemies cost-at-security-range="25" cost-on-contact="10"/>
+    </rule>
+    <rule autonomous="false" flying="false" inherits="base" type="backup">
+      <optimisation shortest="true"/>
+      <danger-direction base-cost-beyond="5" cost-per-meter="0.01"/>
+      <avoided-terrains>
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
+      </avoided-terrains>
+      <enemies cost-at-security-range="25" cost-on-contact="10"/>
+    </rule>
+    <rule autonomous="false" flying="false" inherits="movement" type="minesweep">
+      <object-costs avoid="false" threshold="10000"/>
+    </rule>
+    <rule autonomous="false" flying="false" inherits="movement" type="logistic">
+      <automat-zone>
+        <outter-tolerance cost-per-meter="0" distance="1000000"/>
+      </automat-zone>
+    </rule>
+    <rule autonomous="false" flying="false" inherits="base" type="criminal">
+      <preferred-altitude value="-0.001"/>
+      <preferred-terrains strength="50">
+        <preferred-terrain type="forest"/>
+        <preferred-terrain type="urban area"/>
+      </preferred-terrains>
+      <avoided-terrains strength="50">
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
+      </avoided-terrains>
+      <object-costs avoid="true" threshold="10000">
+        <object-cost type="checkpoint" value="10000"/>
+      </object-costs>
+      <population-costs maximum="100" outside-of-population="100" security-range="50">
+        <population-cost attitude="calme" contact-cost="0"/>
+        <population-cost attitude="agitee" contact-cost="0"/>
+        <population-cost attitude="excitee" contact-cost="0"/>
+        <population-cost attitude="agressive" contact-cost="0"/>
+      </population-costs>
+    </rule>
+    <rule autonomous="false" flying="true" type="base">
+      <optimisation shortest="false"/>
+      <preferred-altitude value="0"/>
+      <preferred-terrains/>
+      <avoided-terrains strength="7">
+        <avoided-terrain type="forest"/>
+        <avoided-terrain type="urban area"/>
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
+      </avoided-terrains>
+      <automat-zone>
+        <outter-tolerance cost-per-meter="0" distance="1000000000"/>
+      </automat-zone>
+      <zone>
+        <outter-tolerance cost-per-meter="0" with-automat="100000000" without-automat="100000000"/>
+        <inner-comfort cost-per-meter="0" distance="0"/>
+      </zone>
+      <danger-direction base-cost-beyond="0" cost-per-meter="0"/>
+      <enemies cost-at-security-range="0" cost-on-contact="0"/>
+      <object-costs avoid="true" threshold="0">
+        <object-cost type="anti tank obstacle" value="10000"/>
+        <object-cost type="abattis" value="10000"/>
+        <object-cost type="barricade" value="10000"/>
+        <object-cost type="mines" value="10000"/>
+        <object-cost type="mined area (linear)" value="10000"/>
+        <object-cost type="mined area (scattered)" value="10000"/>
+        <object-cost type="mined area (linear and destructible)" value="10000"/>
+        <object-cost type="landslide" value="10000"/>
+        <object-cost type="road destruction" value="10000"/>
+        <object-cost type="bridge destruction" value="10000"/>
+        <object-cost type="continuous pontoon bridge" value="0"/>
+        <object-cost type="discontinuous pontoon bridge" value="0"/>
+        <object-cost type="firing post" value="0"/>
+        <object-cost type="safe zone" value="0"/>
+        <object-cost type="gun artillery deployment area" value="10"/>
+        <object-cost type="cobra deployment area" value="10"/>
+        <object-cost type="mrls deployment area" value="10"/>
+        <object-cost type="crossing site" value="10"/>
+        <object-cost type="nbc cloud" value="9000"/>
+        <object-cost type="decontamination site" value="10"/>
+        <object-cost type="logistic support area" value="10"/>
+        <object-cost type="jamming area" value="9000"/>
+        <object-cost type="full jamming area" value="9000"/>
+        <object-cost type="rota area" value="9000"/>
+        <object-cost type="nbc zone" value="9000"/>
+        <object-cost type="landing area" value="10"/>
+        <object-cost type="trail" value="-5"/>
+        <object-cost type="platform" value="10"/>
+        <object-cost type="mobility enhanced area" value="10"/>
+        <object-cost type="landing area (helicopter)" value="10"/>
+        <object-cost type="logistic area" value="10"/>
+        <object-cost type="prisoners camp" value="10"/>
+        <object-cost type="refugees camp" value="10"/>
+        <object-cost type="logistic route" value="-10"/>
+        <object-cost type="checkpoint" value="-5"/>
+        <object-cost type="dropping area" value="10"/>
+        <object-cost type="fire forbidden area" value="10"/>
+        <object-cost type="movement forbidden area" value="10000"/>
+        <object-cost type="general obstacle zone" value="10000"/>
+        <object-cost type="mortar deployment area" value="10"/>
+        <object-cost type="installation" value="0"/>
+      </object-costs>
+    </rule>
+    <rule autonomous="false" flying="true" inherits="base" type="movement"/>
+    <rule autonomous="false" flying="true" inherits="base" type="recon">
+      <automat-zone>
+        <outter-tolerance cost-per-meter="1" distance="1000000000"/>
+      </automat-zone>
+      <zone>
+        <outter-tolerance cost-per-meter="1" with-automat="1000000000" without-automat="100000000"/>
+        <inner-comfort cost-per-meter="0.002" distance="500"/>
+      </zone>
+      <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
+      <enemies cost-at-security-range="25" cost-on-contact="10"/>
+    </rule>
+    <rule autonomous="false" flying="true" inherits="base" type="infiltration">
+      <preferred-altitude value="-0.001"/>
+      <automat-zone>
+        <outter-tolerance cost-per-meter="0" distance="1000000000"/>
+      </automat-zone>
+      <zone>
+        <outter-tolerance cost-per-meter="0.1" with-automat="1000000000" without-automat="100000000"/>
+        <inner-comfort cost-per-meter="0.002" distance="500"/>
+      </zone>
+      <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
+      <enemies cost-at-security-range="25" cost-on-contact="10"/>
+    </rule>
+    <rule autonomous="false" flying="true" inherits="base" type="assault">
+      <preferred-altitude value="-0.001"/>
+      <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
+      <enemies cost-at-security-range="25" cost-on-contact="10"/>
+    </rule>
+    <rule autonomous="false" flying="true" inherits="base" type="retreat">
+      <automat-zone>
+        <outter-tolerance cost-per-meter="1" distance="1000000000"/>
+      </automat-zone>
+      <zone>
+        <outter-tolerance cost-per-meter="1" with-automat="1000000000" without-automat="100000000"/>
+        <inner-comfort cost-per-meter="0.002" distance="500"/>
+      </zone>
+      <danger-direction base-cost-beyond="5" cost-per-meter="0.01"/>
+      <enemies cost-at-security-range="25" cost-on-contact="10"/>
+    </rule>
+    <rule autonomous="false" flying="true" inherits="base" type="backup">
+      <automat-zone>
+        <outter-tolerance cost-per-meter="1" distance="1000000000"/>
+      </automat-zone>
+      <zone>
+        <outter-tolerance cost-per-meter="1" with-automat="1000000000" without-automat="100000000"/>
+        <inner-comfort cost-per-meter="0.002" distance="500"/>
+      </zone>
+      <danger-direction base-cost-beyond="5" cost-per-meter="0.01"/>
+      <enemies cost-at-security-range="25" cost-on-contact="10"/>
+    </rule>
+    <rule autonomous="false" flying="true" inherits="base" type="minesweep">
+      <object-costs avoid="false" threshold="0"/>
+    </rule>
+    <rule autonomous="false" flying="true" inherits="base" type="logistic"/>
+    <rule autonomous="true" flying="false" type="base">
+      <optimisation shortest="true"/>
+      <preferred-terrains/>
+      <avoided-terrains strength="7"/>
+      <zone>
+        <outter-tolerance cost-per-meter="0" with-automat="10000000" without-automat="10000000"/>
+        <inner-comfort cost-per-meter="0" distance="0"/>
+      </zone>
+      <automat-zone>
+        <outter-tolerance cost-per-meter="0" distance="1000000000"/>
+      </automat-zone>
+      <danger-direction base-cost-beyond="0" cost-per-meter="0"/>
+      <enemies cost-at-security-range="0" cost-on-contact="0"/>
+    </rule>
+    <rule autonomous="true" flying="true" type="base">
+      <preferred-terrains/>
+      <avoided-terrains strength="7"/>
+      <zone>
+        <outter-tolerance cost-per-meter="0" with-automat="10000000" without-automat="10000000"/>
+        <inner-comfort cost-per-meter="0" distance="0"/>
+      </zone>
+      <automat-zone>
+        <outter-tolerance cost-per-meter="0" distance="1000000000"/>
+      </automat-zone>
+      <danger-direction base-cost-beyond="0" cost-per-meter="0"/>
+      <enemies cost-at-security-range="0" cost-on-contact="0"/>
+      <object-costs avoid="true" threshold="10000">
+        <object-cost type="nbc cloud" value="0"/>
+        <object-cost type="jamming area" value="0"/>
+        <object-cost type="full jamming area" value="0"/>
+      </object-costs>
+    </rule>
+    <rule autonomous="false" flying="true" inherits="base" type="criminal"/>
+    <rule autonomous="false" flying="false" type="nbc">
+      <optimisation shortest="false"/>
+      <preferred-altitude value="0"/>
+      <preferred-terrains strength="50">
+        <preferred-terrain type="nbc zone"/>
+        <preferred-terrain type="nbc cloud"/>
+        <preferred-terrain type="rota area"/>
+      </preferred-terrains>
+      <avoided-terrains strength="7"/>
+      <zone>
+        <outter-tolerance cost-per-meter="1" with-automat="10000" without-automat="1000"/>
+        <inner-comfort cost-per-meter="0.002" distance="500"/>
+      </zone>
+      <automat-zone>
+        <outter-tolerance cost-per-meter="0" distance="0"/>
+      </automat-zone>
+      <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
+      <enemies cost-at-security-range="0" cost-on-contact="0"/>
+      <population-costs maximum="100" security-range="50">
+        <population-cost attitude="calme" contact-cost="10"/>
+        <population-cost attitude="agitee" contact-cost="10"/>
+        <population-cost attitude="excitee" contact-cost="50"/>
+        <population-cost attitude="agressive" contact-cost="50"/>
+      </population-costs>
+      <object-costs avoid="true" threshold="10000">
+        <object-cost type="anti tank obstacle" value="10000"/>
+        <object-cost type="abattis" value="10000"/>
+        <object-cost type="barricade" value="10000"/>
+        <object-cost type="mines" value="10000"/>
+        <object-cost type="mined area (linear)" value="10000"/>
+        <object-cost type="mined area (scattered)" value="10000"/>
+        <object-cost type="landslide" value="10000"/>
+        <object-cost type="road destruction" value="10000"/>
+        <object-cost type="bridge destruction" value="10000"/>
+        <object-cost type="continuous pontoon bridge" value="0"/>
+        <object-cost type="discontinuous pontoon bridge" value="0"/>
+        <object-cost type="firing post" value="0"/>
+        <object-cost type="safe zone" value="0"/>
+        <object-cost type="gun artillery deployment area" value="10"/>
+        <object-cost type="cobra deployment area" value="10"/>
+        <object-cost type="mrls deployment area" value="10"/>
+        <object-cost type="crossing site" value="10"/>
+        <object-cost type="decontamination site" value="10"/>
+        <object-cost type="logistic support area" value="10"/>
+        <object-cost type="jamming area" value="9000"/>
+        <object-cost type="full jamming area" value="9000"/>
+        <object-cost type="rota area" value="0"/>
+        <object-cost type="landing area" value="10"/>
+        <object-cost type="trail" value="-5"/>
+        <object-cost type="platform" value="10"/>
+        <object-cost type="mobility enhanced area" value="10"/>
+        <object-cost type="landing area (helicopter)" value="10"/>
+        <object-cost type="logistic area" value="10"/>
+        <object-cost type="prisoners camp" value="10"/>
+        <object-cost type="refugees camp" value="10"/>
+        <object-cost type="checkpoint" value="-5"/>
+        <object-cost type="dropping area" value="10"/>
+        <object-cost type="movement forbidden area" value="10000"/>
+        <object-cost type="general obstacle zone" value="10000"/>
+        <object-cost type="mortar deployment area" value="10"/>
+        <object-cost type="installation" value="0"/>
+        <object-cost type="urban block" value="10000"/>
+        <object-cost type="nbc zone" value="0"/>
+        <object-cost type="nbc cloud" value="0"/>
+      </object-costs>
+    </rule>
+    <rule autonomous="false" flying="true" inherits="base" type="nbc"/>
+    <rule autonomous="true" flying="false" inherits="base" type="nbc"/>
+    <rule autonomous="true" flying="true" inherits="base" type="nbc"/>
+    <rule autonomous="true" flying="false" inherits="base" type="movement"/>
+    <rule autonomous="true" flying="true" inherits="base" type="movement"/>
+    <rule autonomous="true" flying="false" inherits="base" type="recon"/>
+    <rule autonomous="true" flying="true" inherits="base" type="recon"/>
+    <rule autonomous="true" flying="false" inherits="base" type="infiltration"/>
+    <rule autonomous="true" flying="true" inherits="base" type="infiltration"/>
+    <rule autonomous="true" flying="false" inherits="base" type="assault"/>
+    <rule autonomous="true" flying="true" inherits="base" type="assault"/>
+    <rule autonomous="true" flying="false" inherits="base" type="retreat"/>
+    <rule autonomous="true" flying="true" inherits="base" type="retreat"/>
+    <rule autonomous="true" flying="false" inherits="base" type="backup"/>
+    <rule autonomous="true" flying="true" inherits="base" type="backup"/>
+    <rule autonomous="true" flying="false" inherits="base" type="minesweep"/>
+    <rule autonomous="true" flying="true" inherits="base" type="minesweep"/>
+    <rule autonomous="true" flying="false" inherits="base" type="logistic"/>
+    <rule autonomous="true" flying="true" inherits="base" type="logistic"/>
+    <rule autonomous="true" flying="false" inherits="base" type="criminal"/>
+    <rule autonomous="true" flying="true" inherits="base" type="criminal"/>
+  </unit-rules>
+  <population-rules>
+    <rule channeling-range="1000" cost-out-of-channeling="50" type="base">
+      <object-costs avoid="true" threshold="10000">
+        <object-cost type="jamming area" value="9000"/>
+        <object-cost type="full jamming area" value="9000"/>
+      </object-costs>
+    </rule>
+  </population-rules>
+</pathfind>

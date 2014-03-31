@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Request landing">
+  <context>
+    <line>
+      <italic>
+        <text>To land on a position while being transported by other unit(s)</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to request the landing of the units currently transporting the agent. This mission is used to coordinate the aircrafts, when SWORD is connected to other simulations through an HLA federation.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Landing point" optional="false"/>
+    <parameter name="Landing time" optional="false"/>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The transporting units move toward the given position. If it is not reachable (a urban block inside which the units cannot move for instance), the units move as close as possible, otherwise they move to the center of the position. Average speed depends on the physical capabilities regarding the terrain properties. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the position, the agent is ready to be land.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends once the unit has landed.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

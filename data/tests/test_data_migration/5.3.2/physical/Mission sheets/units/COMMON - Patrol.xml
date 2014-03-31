@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Patrol">
+  <context>
+    <line>
+      <italic>
+        <text>Patrols are missions to gather information or to control rescue operations. Patrolling could ensure law, order and check crime in a given district.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, patrolling consist of moving along a path defined by waypoints, indefinitely, allowing the agent to gather information.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Waypoints" optional="false">
+      <line>
+        <text>Path to move along.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each waypoint. The order of the elements in the 'Waypoints' list defines the order of visit. If a visited waypoint is not reachable, the agent moves as close as possible (the agents can move within it), the agent moves to the center, else it moves to a close position (the closest position from the center).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the last waypoints, the agent moves back to the first one and starts again.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

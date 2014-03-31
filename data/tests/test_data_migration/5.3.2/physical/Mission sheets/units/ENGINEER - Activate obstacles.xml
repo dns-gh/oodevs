@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Activate obstacles">
+  <context>
+    <line>
+      <italic>
+        <text>To activate a set of reserved obstacles.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to activate a set of given objects representing engineer reserved obstacles.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Obstacles" optional="false">
+      <line>
+        <text>Objects to activate.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach when task is finished.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each obstacle to activate.  It acts on each obstacle by following the order of the elements in the 'Obstacles' list. The position to activate each obstacle is automatically determinated by the agent.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching an obstacle, the agent starts to activate it. Upon work termination (the report "reserved obstacle activated [object name]" is displayed) the agent goes to the next one.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When all obstacles have been visited (even if a few of them couldn't be activated), the agent moves to the meeting position and the missions terminates.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>An obstacle may not be activated. In this specific case, the report 'Obstacle [object name] cannot be activated' is displayed and the agent goes to the next obstacle to activate.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

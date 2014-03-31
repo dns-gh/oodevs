@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Resume movement">
+  <context>
+    <line>
+      <text>This order may be used to make the agent continue its current mission after the "Pause maneuver" has been issued.</text>
+    </line>
+    <line>
+      <text>This order is NOT efficient to make then moves while it is fixed by enemies.</text>
+    </line>
+  </context>
+  <parameters/>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,82 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Flank guard</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Flank guard</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td>"The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action."<br>In this Sword mission, to move toward the provided positions and shoot at all enemies in range with direct fires.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Positions</h3>Positions the agent will occupy to flank guard friends.<br>
+<h3>Friends</h3>Friends unit to flank guard<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the given positions. When there are several positions, the agent choses the closest to the friends units.<br>
+</li>
+<li>The agent will engage all known and perceived enemies in range.<br>
+</li>
+</ul>* Initial position<br>
+
+<img alt="FlankGuardPlatoon1.png" src="./Images/COMBAT - Flank guard/FlankGuardPlatoon1.png"/><br>* Agent moves to first position<br>
+
+<img alt="FlankGuardPlatoon2.png" src="./Images/COMBAT - Flank guard/FlankGuardPlatoon2.png"/><br>* Agent is reaching the closest position between him and the friend to flank guard  <br>
+
+<img alt="FlankGuardPlatoon3.png" src="./Images/COMBAT - Flank guard/FlankGuardPlatoon3.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>To make the agent engage enemies upon order, the user may set the "ROE (Rules Of Engagement) on "fire upon order". <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>
+<ul>
+<li>The agents won't open fires if:<br>
+</li>
+<ul>
+<li>known enemies are out of range regarding the weapon systems and remaining dotations,<br>
+</li>
+<li>known enemies are not in sight (a enemies may be known but not perceived) regarding sensors and terrain.<br>
+</li>
+</ul>
+<li>Ensure that the given position is chosen with care, regarding the perception capability of the agent and the given objective.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>This mission continues until another one is issued.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

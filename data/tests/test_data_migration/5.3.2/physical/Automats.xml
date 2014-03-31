@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<automats model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Automats.xsd">
+  <automat decisional-model="Firefinder reconnaissance battery" id="120" name="ART.Firefinder reconnaissance battery" type="Automate ASS">
+    <unit command-post="true" max-occurs="3" min-occurs="3" type="ART.Firefinder reconnaissance platoon"/>
+  </automat>
+  <automat decisional-model="Firefinder radar battery" id="121" name="ART.Firefinder radar battery" type="Automate ASS">
+    <unit command-post="true" max-occurs="3" min-occurs="3" type="ART.Firefinder radar"/>
+  </automat>
+  <automat decisional-model="Short Range Surface To Air Battery" id="122" name="AAA.Surface To Air Battery" type="Automate ASA">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="AAA.Surface To Air Battery CP"/>
+    <unit max-occurs="4" min-occurs="4" type="AAA.Surface To Air Defense Troop"/>
+  </automat>
+  <automat decisional-model="Infantry company" id="123" name="INF.Infantry company" type="Automate INF">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF.Infantry company CP"/>
+    <unit min-occurs="1" type="INF.Mechanized infantry platoon"/>
+    <unit type="INF.MRA troop"/>
+    <unit type="INF.Mortar troop"/>
+    <unit type="ARMOR.Light armored platoon"/>
+    <unit type="INF.Infantry platoon"/>
+  </automat>
+  <automat decisional-model="Artillery FIST" id="124" name="ART.Artillery FIST" type="Automate ASS">
+    <unit command-post="true" max-occurs="3" min-occurs="3" type="ART.Artillery SD"/>
+  </automat>
+  <automat decisional-model="Artillery FIST" id="125" name="ART.Artillery LR FIST" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART.Artillery LRSD"/>
+  </automat>
+  <automat decisional-model="LEG_Transport Helicopter Squadron" id="126" name="AIR.Transport helicopter squadron" type="Automate ALAT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="AIR.AAC CP"/>
+    <unit max-occurs="2" type="AIR.Antitank Helicopter Patrol"/>
+    <unit max-occurs="3" type="AIR.Light Escort and Close Support Helicopter Patrol"/>
+    <unit max-occurs="3" type="AIR.Transport Helicopter Patrol"/>
+    <unit max-occurs="3" type="AIR.Heavy Escort and Close Support Helicopter Patrol"/>
+    <unit max-occurs="2" type="AIR.General Purpose Helicopter Patrol"/>
+  </automat>
+  <automat decisional-model="Armored transport squadron" id="127" name="TRANS.Transportation squadron" type="Automate CIRCULATION">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS.Transportation platoon"/>
+    <unit max-occurs="1" min-occurs="1" type="TRANS.Medium transportation platoon"/>
+    <unit max-occurs="1" min-occurs="1" type="TRANS.Heavy transportation platoon"/>
+  </automat>
+  <automat decisional-model="Marine Squadron" id="128" name="JOINT.Marine squadron" type="Automate JOINT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT.Marine CP"/>
+    <unit max-occurs="8" min-occurs="8" type="JOINT.Landing Crafts"/>
+  </automat>
+  <automat decisional-model="Militias" id="129" name="ASY.Militias" type="Automate MILICE">
+    <unit command-post="true" max-occurs="4" min-occurs="1" type="ASY.Militia"/>
+  </automat>
+  <automat decisional-model="Major units CP" id="130" name="CP.Battle group CP" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="CP.Battle group command post"/>
+  </automat>
+  <automat decisional-model="Major units CP" id="131" name="CP.Major units CP" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="CP.Major units command post"/>
+  </automat>
+  <automat decisional-model="Commando platoon" id="132" name="INF.Commandos platoon" type="Automate INF">
+    <unit command-post="true" max-occurs="3" min-occurs="3" type="INF.Commando troop"/>
+  </automat>
+  <automat decisional-model="Artillery locating radar platoon" id="133" name="ART.Artillery locating radar platoon" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART.Artillery locating radar group"/>
+  </automat>
+  <automat decisional-model="TC2" id="134" name="LOG.Armored battalion combat train" type="Automate LOG TC2">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Teeth arms battalion CT"/>
+  </automat>
+  <automat decisional-model="TC2" id="135" name="LOG.Combined arms battalion combat train" type="Automate LOG TC2">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Combined arms battalion CT"/>
+  </automat>
+  <automat decisional-model="TC2" id="136" name="LOG.Logistic combat train" type="Automate LOG TC2">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Logistic CT"/>
+  </automat>
+  <automat decisional-model="TC2" id="137" name="LOG.Brigade combat train" type="Automate LOG TC2">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Battalion CT"/>
+  </automat>
+  <automat decisional-model="Logistic CP" id="138" name="LOG.Maintenance logistic area (division)" type="Automate LOG BLD Maintenance">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Maintenance CP  (division)"/>
+    <unit type="LOG.Maintenance evacuation group"/>
+    <unit type="LOG.Mobility repairs section (division)"/>
+    <unit type="LOG.Repairs section (division)"/>
+    <unit type="LOG.Firing mobility repairs section  (division)"/>
+  </automat>
+  <automat decisional-model="Logistic CP" id="139" name="LOG.Maintenance logistic area (corps)" type="Automate LOG BLT Maintenance">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Maintenance CP  (division)"/>
+    <unit type="LOG.Maintenance evacuation group"/>
+    <unit type="LOG.Repairs section (corps)"/>
+    <unit type="LOG.Mobility repairs section (corps)"/>
+    <unit type="LOG.Firing mobility repairs section (corps)"/>
+  </automat>
+  <automat decisional-model="Logistic CP" id="140" name="LOG.Supply logistic area  (division)" type="Automate LOG BLD Ravitaillement">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Supply CP (division)"/>
+    <unit type="LOG.Water supply group"/>
+    <unit type="LOG.Ammo supply group"/>
+    <unit type="LOG.Supply Transportation platoon (PT)"/>
+    <unit type="LOG.Supply platoon (PR)"/>
+    <unit type="LOG.Supply group 60m3"/>
+    <unit type="LOG.Magazin section CAP"/>
+    <unit type="LOG.Supply Transportation platoon"/>
+    <unit type="LOG.Supply group 35m3"/>
+    <unit type="LOG.Supply group180m3"/>
+  </automat>
+  <automat decisional-model="Logistic CP" id="141" name="LOG.Supply logistic area  (corps)" type="Automate LOG BLT Ravitaillement">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Supply CP (division)"/>
+    <unit type="LOG.Water supply group"/>
+    <unit min-occurs="4" type="LOG.Ammo supply group"/>
+    <unit type="LOG.Supply Transportation platoon (PT)"/>
+    <unit type="LOG.Supply platoon (PR)"/>
+    <unit type="LOG.Supply group 60m3"/>
+    <unit type="LOG.Magazin section CAP"/>
+    <unit type="LOG.Supply Transportation platoon"/>
+    <unit type="LOG.Supply group 35m3"/>
+    <unit type="LOG.Supply group180m3"/>
+  </automat>
+  <automat decisional-model="Logistic CP" id="142" name="LOG.Medical logistic area (division)" type="Automate LOG BLD Sante">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Medical CP (division)"/>
+    <unit type="LOG.Medical group VAB"/>
+    <unit type="LOG.Casualty evacuation group"/>
+    <unit type="LOG.Logistic decontamination section"/>
+    <unit type="LOG.Psychological section"/>
+    <unit type="LOG.Medical section"/>
+    <unit type="LOG.Surgical section (modular)"/>
+    <unit type="LOG.Surgical section HMC"/>
+    <unit type="LOG.Casualty assessment section"/>
+  </automat>
+  <automat decisional-model="Logistic CP" id="143" name="LOG.Medical logistic area (corps)" type="Automate LOG BLT Sante">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Medical CP (division)"/>
+    <unit type="LOG.Medical group VAB"/>
+    <unit type="LOG.Casualty evacuation group"/>
+    <unit type="LOG.Logistic decontamination section"/>
+    <unit type="LOG.Psychological section"/>
+    <unit type="LOG.Medical section"/>
+    <unit type="LOG.Surgical section (modular)"/>
+    <unit type="LOG.Surgical section HMC"/>
+    <unit type="LOG.Casualty assessment section"/>
+  </automat>
+  <automat decisional-model="Terrorists" id="144" name="ASY.Terrorists" type="Automate ASY">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASY.Terrorist"/>
+    <unit min-occurs="1" type="ASY.Terrorist Bombmaker"/>
+    <unit min-occurs="1" type="ASY.Sniper"/>
+  </automat>
+  <automat decisional-model="Refugees" id="145" name="OOTW.Refugees" type="Automate REFUGIE">
+    <unit command-post="true" min-occurs="1" type="OOTW.Refugee"/>
+  </automat>
+  <automat decisional-model="Armored squadron" id="146" name="ARMOR.MBT squadron" type="Automate ABC">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ARMOR.Armored squadron CP"/>
+    <unit max-occurs="4" min-occurs="4" type="ARMOR.MBT platoon"/>
+  </automat>
+  <automat decisional-model="Armored squadron" id="147" name="ARMOR.Light armored squadron" type="Automate ABC">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ARMOR.Armored squadron CP"/>
+    <unit max-occurs="4" min-occurs="4" type="ARMOR.Light armored platoon"/>
+    <unit max-occurs="1" min-occurs="1" type="ARMOR.Armored RASIT Group"/>
+    <unit max-occurs="1" min-occurs="1" type="ARMOR.Armored direct support group"/>
+  </automat>
+  <automat decisional-model="Scout platoon" id="148" name="ARMOR.Scout platoon" type="Automate ABC">
+    <unit max-occurs="1" min-occurs="1" type="ARMOR.Antitank patrol"/>
+    <unit command-post="true" max-occurs="2" min-occurs="2" type="ARMOR.Scout patrol"/>
+  </automat>
+  <automat decisional-model="Combat engineer company" id="150" name="ENG.Engineer company" type="Automate GEN">
+    <unit command-post="true" max-occurs="3" min-occurs="3" type="ENG.Engineer platoon"/>
+    <unit max-occurs="1" min-occurs="1" type="ENG.Bridging troop"/>
+  </automat>
+  <automat decisional-model="LRS units" id="153" name="ARMOR.LRS units" type="Automate RENS">
+    <unit command-post="true" max-occurs="7" min-occurs="7" type="ARMOR.LRS troop"/>
+  </automat>
+  <automat decisional-model="Drone station" id="154" name="INT.UAV station" type="Automate RENS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INT.UAV station"/>
+    <unit max-occurs="5" min-occurs="5" type="INT.UAV"/>
+  </automat>
+  <automat decisional-model="Listening station" id="155" name="INT.Listening station" type="Automate RENS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INT.Listening station"/>
+  </automat>
+  <automat decisional-model="Jamming station" id="156" name="INT.Jamming station" type="Automate RENS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INT.Jamming station"/>
+  </automat>
+  <automat decisional-model="Radar detection station" id="157" name="INT.Radar detection station" type="Automate RENS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INT.Radar detection station"/>
+  </automat>
+  <automat decisional-model="Ground Surveillance Radar" id="158" name="INT.Ground surveillance radar" type="Automate RENS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INT.Ground surveillance radar"/>
+  </automat>
+  <automat decisional-model="NBC reconnaissance platoon" id="159" name="NBC.Reconnaissance platoon" type="Automate NBC">
+    <unit command-post="true" max-occurs="3" min-occurs="3" type="NBC.Reconnaissance troop"/>
+  </automat>
+  <automat decisional-model="NBC decontamination platoon" id="160" name="NBC.Decontamination platoon" type="Automate NBC">
+    <unit command-post="true" max-occurs="2" min-occurs="2" type="NBC.Decontamination troop"/>
+  </automat>
+  <automat decisional-model="NBC ROTA  platoon" id="161" name="NBC.ROTA platoon" type="Automate NBC">
+    <unit command-post="true" max-occurs="5" min-occurs="5" type="NBC.ROTA troop"/>
+  </automat>
+  <automat decisional-model="Field battery" id="162" name="ART.Artillery firing battery" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART.Battery CP"/>
+    <unit max-occurs="2" min-occurs="2" type="ART.Artillery firing platoon"/>
+  </automat>
+  <automat decisional-model="Recconnaissance battery" id="163" name="ART.Artillery reconnaissance battery" type="Automate ASS">
+    <unit command-post="true" max-occurs="3" min-occurs="3" type="ART.Artillery reconnaissance platoon"/>
+  </automat>
+  <automat decisional-model="Recconnaissance battery" id="164" name="ART.MLRS reconnaissance battery" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART.Battery CP"/>
+    <unit max-occurs="4" min-occurs="4" type="ART.MLRS reconnaissance platoon"/>
+  </automat>
+  <automat decisional-model="Field battery" id="165" name="ART.MLRS firing battery" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART.Battery CP"/>
+    <unit max-occurs="2" min-occurs="2" type="ART.MLRS firing platoon"/>
+  </automat>
+  <automat decisional-model="Recconnaissance battery" id="166" name="ART.Mortar reconnaissance battery" type="Automate ASS">
+    <unit command-post="true" max-occurs="3" min-occurs="3" type="ART.Mortar reconnaissance platoon"/>
+  </automat>
+  <automat decisional-model="Field battery" id="167" name="ART.Mortar firing battery" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART.Battery CP"/>
+    <unit max-occurs="2" min-occurs="2" type="ART.Mortar firing platoon"/>
+  </automat>
+  <automat decisional-model="LRA infantry company" id="168" name="INF.LRA infantry company" type="Automate INF">
+    <unit command-post="true" max-occurs="3" min-occurs="3" type="INF.LRA infantry platoon"/>
+  </automat>
+  <automat decisional-model="LEG_Attack Helicopter Squadron" id="169" name="AIR.Attack Helicopter squadron" type="Automate ALAT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="AIR.AAC CP"/>
+    <unit max-occurs="3" type="AIR.Antitank Helicopter Patrol"/>
+    <unit max-occurs="3" type="AIR.Light Escort and Close Support Helicopter Patrol"/>
+    <unit max-occurs="3" type="AIR.Heavy Escort and Close Support Helicopter Patrol"/>
+    <unit max-occurs="2" type="AIR.General Purpose Helicopter Patrol"/>
+    <unit max-occurs="2" type="AIR.Air Defence Helicopter Patrol"/>
+  </automat>
+  <automat decisional-model="Strategic Bomber Squadron" id="170" name="JOINT.Strategic Bomber Squadron" type="Automate JOINT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="AIR.Air CP"/>
+    <unit max-occurs="3" min-occurs="3" type="JOINT.Strategic Bomber Patrol"/>
+  </automat>
+  <automat decisional-model="Strategic Bomber Squadron" id="172" name="AIR.Air Support" type="Automate JOINT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="AIR.Air CP"/>
+  </automat>
+  <automat decisional-model="TC2" id="173" name="LOG.Brigade Support BN" type="Automate LOG TC2">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Brigade Support Battalion CT"/>
+  </automat>
+  <automat decisional-model="Marine Squadron" id="174" name="JOINT.Destroyer squadron" type="Automate ASS">
+    <unit command-post="true" max-occurs="2" min-occurs="2" type="JOINT.Destroyer"/>
+  </automat>
+  <automat decisional-model="Marine Squadron" id="175" name="JOINT.Aircraft Carrier" type="Automate JOINT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT.Aircraft Carrier"/>
+    <unit max-occurs="8" min-occurs="8" type="JOINT.Strategic Bomber Patrol"/>
+  </automat>
+  <automat decisional-model="Journalists" id="176" name="OOTW.Journalists" type="Automate Journalist">
+    <unit command-post="true" min-occurs="3" type="OOTW.Journalist"/>
+  </automat>
+  <automat decisional-model="Circulation Platoon" id="177" name="TRANS.Circulation platoon" type="Automate CIRCULATION">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS.Transportation platoon"/>
+    <unit max-occurs="1" min-occurs="1" type="TRANS.Medium transportation platoon"/>
+    <unit max-occurs="1" min-occurs="1" type="TRANS.Heavy transportation platoon"/>
+  </automat>
+  <automat decisional-model="Safety.Automat" id="178" name="SAFETY.Civil Protection" type="Automate Emergency">
+    <unit type="SAFETY.Militia"/>
+    <unit type="SAFETY.Buses"/>
+    <unit type="SAFETY.Firefigthers"/>
+    <unit type="SAFETY.Public Works Vehicles"/>
+    <unit type="SAFETY.Rescue Boats"/>
+    <unit type="SAFETY.Decontamination Team"/>
+    <unit type="SAFETY.Ambulance"/>
+    <unit command-post="true" min-occurs="1" type="SAFETY.Police Unit"/>
+    <unit type="SAFETY.Medical advanced post"/>
+    <unit type="SAFETY.Rescue Helicopters"/>
+  </automat>
+  <automat decisional-model="TC2" id="179" name="SAFETY.Medical station (log)" type="Automate LOG TC2">
+    <unit command-post="true" min-occurs="1" type="SAFETY.Medical station (log)"/>
+  </automat>
+  <automat decisional-model="TC2" id="180" name="SAFETY.Operation center" type="Automate LOG TC2">
+    <unit command-post="true" min-occurs="1" type="SAFETY.Operation Center"/>
+  </automat>
+  <automat decisional-model="Safety.Automat" id="181" name="SAFETY.Terrorists" type="Automate Emergency">
+    <unit command-post="true" min-occurs="1" type="SAFETY.Terrorists"/>
+  </automat>
+  <automat decisional-model="Safety.Public works company" id="182" name="SAFETY.Public works company" type="Automate Emergency">
+    <unit command-post="true" max-occurs="4" min-occurs="1" type="SAFETY.Public Works Vehicles"/>
+  </automat>
+  <automat decisional-model="Reconnaissance and deployment battery" id="183" name="ART.Artillery recce and firing battery" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART.Battery CP"/>
+    <unit max-occurs="2" min-occurs="2" type="ART.Artillery firing platoon"/>
+    <unit max-occurs="2" min-occurs="2" type="ART.Artillery reconnaissance platoon"/>
+  </automat>
+  <automat decisional-model="Safety.Firefighters squad" id="184" name="SAFETY.Firefighters squad" type="Automate Emergency">
+    <unit command-post="true" min-occurs="4" type="SAFETY.Firefigthers"/>
+  </automat>
+  <automat decisional-model="Safety.Police patrol" id="185" name="SAFETY.Police patrol" type="Automate Emergency">
+    <unit command-post="true" min-occurs="4" type="SAFETY.Police Unit"/>
+  </automat>
+  <automat decisional-model="Army aviation helicopter company" id="186" name="AAVN.Attack helicopters company" type="Automate ALAT">
+    <unit command-post="true" min-occurs="1" type="AAVN.Helicopter HQ"/>
+    <unit min-occurs="4" type="AAVN.Attack helicopters patrol"/>
+  </automat>
+  <automat decisional-model="Army aviation helicopter company" id="187" name="AAVN.Cargo helicopters company" type="Automate ALAT">
+    <unit command-post="true" min-occurs="1" type="AAVN.Helicopter HQ"/>
+    <unit min-occurs="4" type="AAVN.Cargo helicopters patrol"/>
+  </automat>
+  <automat decisional-model="Army aviation helicopter company" id="188" name="AAVN.Reconnaissance company" type="Automate ALAT">
+    <unit command-post="true" min-occurs="1" type="AAVN.Helicopter HQ"/>
+    <unit min-occurs="4" type="AAVN.Reconnaissance helicopters patrol"/>
+  </automat>
+</automats>

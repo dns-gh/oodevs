@@ -1,0 +1,72 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>LOG - Step up</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          LOG - Step up</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>Set-up adopted by a unit for immediate or delayed action.</i>
+<br>In sword, to provide new logistic devices to another logisitic company by reinforce it (the agent reinforces the company, meaning that the agent becomes subordinate to the new logistic base).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Company</h3>The company to reinforce.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves to the company (it moves to the command post of the company). If it is not reachable (the command post is located into a urban block inside which the agent cannot move, for instance), the agent moves as close as possible. Average speed depends on the physical capabilities with respect to terrain properties.<br>
+</li>
+<li>Upon reaching the command post, the agent reinforces the company. As a consequence it becomes subordinate to the new company. The report "unit [ agentName ] has successfully reinforced [obectiveName ]" should be displayed.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>If the company to renforce has moved, the agent won't follow it. To be reinforced, the agent needs to be nearby the command post (the interaction distance between the agent and the command post should be less than <b>100 METERS</b>).<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>
+<ul>
+<li>If needed, the agent dismounts.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The terminates when the agent becomes subordinate to the provided company.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

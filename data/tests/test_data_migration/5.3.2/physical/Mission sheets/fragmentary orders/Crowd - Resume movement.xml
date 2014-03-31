@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Crowd - Resume movement">
+  <context>
+    <line>
+      <text>This order may be used to make the crowd resume its movement if the order "Crowd - Pause movement" has been priviously issued.</text>
+    </line>
+  </context>
+  <parameters/>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

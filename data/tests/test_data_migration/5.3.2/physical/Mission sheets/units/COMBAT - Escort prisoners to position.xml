@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Escort prisoners to position">
+  <context>
+    <line>
+      <italic>
+        <text>A member of the Armed Forces assigned to accompany, assist, or guide an individual or group. </text>
+      </italic>
+    </line>
+    <line>
+      <text>An armed guard that accompanies a convoy, a train, prisoners, etc.</text>
+      <italic/>
+    </line>
+    <line>
+      <text>In SWORD, to accompany surrendered units toward a specific location (a position or a camp for instance).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="false">
+      <line>
+        <text>Location into which the agent has to accompany the surrendered units.</text>
+      </line>
+    </parameter>
+    <parameter name="Surrendered units" optional="false">
+      <line>
+        <text>Units to be transported to the given location. </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each given surrendered unit, from the nearest to the furthest. If a surrendered unit position is not reachable (the unit is located inside an urban block inside which the agent cannot move, for instance), the agent moves as close as possible. Average speed depends on the physical capabilities regarding the terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a surrendered unit, the agent loads it ("magic/irrealistic" transportation).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Once all units have been loaded, they are transported to the given location.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the given position, all transported units are unloaded.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>A prisoner unit may not be transported if it is not surrendered to the agent's side. In that case, the report "The unit is not surrendered" is displayed. If none of the issued agents is surrendered, the mission ends with a 'failed' status, displaying the report "No valid parameter".</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends once all the units have been transported to the given location.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,81 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>OOTW - Prevent crowds from crossing</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          OOTW - Prevent crowds from crossing</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td>To operate a checkpoint in order to deny the crossing of crowds.<br>In SWORD, to operate a checkpoint (a Sword object can have the ability to filter crowds) with a high blocking strength (all encountered crowds are stopped).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Checkpoint position</h3>The position at which the agent creates the checkpoint.<br>
+<h3>SafetyPosition</h3>The position to reach when the agent cannot stand in front of uncontrolled crowds.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves to the work location and creates (magically) a checkpoint (the report "control point established" should be displayed)<br>
+</li>
+<li>The agent then moves to the center of the checkpoint in order to operate it (the report "element [object name] is being operated should be displayed).<br>
+</li>
+</ul>
+
+<img alt="OOTW - Prevent crowds from crossing3.png" src="./Images/OOTW - Prevent crowds from crossing/OOTW - Prevent crowds from crossing3.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li> If the work location is not reachable, the agent moves as close as possible, otherwise it moves to a close position (the closest position from the center of the future object) and the agent builds the object. In this case, it is possible that the object will not be built at the exact location.<br>
+</li>
+<li>If encountered crowds cannot be controlled (see specific reports) the checkpoint may be destroyed and the agent may protect itself by moving to the given safety position:<br>
+</li>
+</ul>1) The agent tries to deny the crowd from crossing the crossroad:<br>
+
+<img alt="OOTW - Prevent crowds from crossing1.png" src="./Images/OOTW - Prevent crowds from crossing/OOTW - Prevent crowds from crossing1.png"/><br>2) The agent cannot stand in front of the crowd:<br>
+
+<img alt="OOTW - Prevent crowds from crossing2.png" src="./Images/OOTW - Prevent crowds from crossing/OOTW - Prevent crowds from crossing2.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>This mission can end in two ways: <br>
+<ul>
+<li>encountered crowds can be kept under control. In this case the agent remains at the checkpoint until mission termination.<br>
+</li>
+<li>an encountered crowd could not be kept under control. In this case the agent reaches the safety position and the mission terminates.<br>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+</body>
+</html>

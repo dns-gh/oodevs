@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Extract victims from crowds within area">
+  <context>
+    <line>
+      <italic>
+        <text>'To ensure evacuation of crowd victims, with suitable device.</text>
+      </italic>
+      <text>'</text>
+    </line>
+    <line>
+      <text>In SWORD, extracting victims from crowds allow the user to prepare the evacuation operation. In this mission, the agent extracts wounded and/or dead victims from all crowds located inside an area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area inside which crowds must be visited.</text>
+      </line>
+    </parameter>
+    <parameter name="Reach crowds to extract victims" optional="true"/>
+    <parameter name="Goal of the mission" optional="false"/>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each crowd which is totally inside the specified area (the order of traversal is randomly defined).</text>
+    </line>
+    <line>
+      <text>Upon reaching a crowd, if it contains victims (wounded humans), the agent acts to extract victims (the report "starting to extract victims" is displayed). Once has finished (the report "victims extracted" should be displayed), a new crowd is created next to the initial crowd (with all wounded humans from initial Crowd). Note that the position of the newly created crowd is randomly determinated on the edge of the initial crowd. In consequence, the initial crowd no longer contains wounded humans.</text>
+    </line>
+    <line>
+      <text>The time taken for extraction does not depends on crowd size or the number of victims. Extracting victims takes a few minutes (defined in decisional models).</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>Victims of a visited crowd may not be extracted if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the visited Crowd does not contain victims ( the report "no wounded victims" and "victims cannot be evacuated" should be displayed)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the visited Crowd has moved (the agent won't follow the crowd) or the agent cannot reach it ( the report "no wounded victims" and "victims cannot be evacuated" should be displayed)</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this case, the agent decides to act on the next crowd.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>The type of victims that will be extracted from the crowds depends on the "Goal of the mission" parameter : it can either be wounded victims, dead victims, or both.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>If there is no crowd within the area, the mission ends and the report "no crowd within area" is displayed.</text>
+    </line>
+    <line>
+      <text>If there are no more crowsd to visit, the mission ends.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

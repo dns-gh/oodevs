@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="NBC - Reconnoiter">
+  <context>
+    <line>
+      <italic>
+        <text>A mission undertaken to obtain information by visual observation, or other detection methods, about the activities and resources of an enemy, or about the meteorological, hydrographic, or geographic characteristics of a particular area.</text>
+      </italic>
+    </line>
+    <line>
+      <text>For NBC reconnaisssance units, to predict and warn of hazard areas from NBC attacks and from ROTA (release other than attack). It allows evaluation of NBC information and the influence of NBC incidents on operations.</text>
+      <italic/>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Objectives" optional="false">
+      <line>
+        <text>Set of objects to build.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "NBC Reconnaissance" mission to the subordinate units, with a set of objectives as parameter. Objectives are fairly shared between subordinates.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>NBC Reconnaissance use case 1: different types of objectives</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>ML_NBC - Reconnoiter.png</text>
+      </link>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>NBC Reconnaissance use case 2: one area objective </text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>ML_NBC - Reconnoiter2.png</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When all objectives has been reconnoitered the mission ends.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="ML_NBC - Reconnoiter.png"/>
+    <attachment name="ML_NBC - Reconnoiter2.png"/>
+  </attachments>
+</mission-sheet>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Disengage">
+  <context>
+    <line>
+      <italic>
+        <text>To disengage from enemies, breaking contact with the enemy and moving to a point where the enemy can neither observe nor engage the unit by direct fire.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, disengaging from enemies or a threat is to move toward a given position, with a very high priority. In this mission the agent tries to reach the issued position at all cost. The position is chosen and issued by the user.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="false">
+      <line>
+        <text>Position to reach.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

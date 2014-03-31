@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Support Company (dynamic)">
+  <context>
+    <line>
+      <italic>
+        <text>The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action. </text>
+      </italic>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>A unit which helps another unit in battle. Aviation, artillery, or naval gunfire may be used as a support for infantry.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>A part of any unit held back at the beginning of an attack as a reserve.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>An element of a command which assists, protects, or supplies other forces in combat.</text>
+          <italic/>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In SWORD, supporting a friend is to provide intelligence and direct fires, in order to destroy or neutralize dangerous enemies, by moving from one supporting position to another.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Company" optional="false">
+      <line>
+        <text>Friend company to support.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Forward echelon subordinates units:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the commander agent issues the "Support (dynamic)" mission to its forward echelon units  with the forward echelon units of the supported company as paramters.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Rear echelon subordinates units:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the commander agent issues the "mobility support" mission to the engineer units, with the forward echelon units as parameters.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>other units (reserve and non adapted units receive the "follow" mission with the forward echelon units as parameter.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>in case of an attack by an enemy, combat units of the second echelon may receive the "combat support" mission (the enemy may be engaged)</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Upon issuing the mission, the commander agent coordinates its subordinate units.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

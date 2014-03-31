@@ -1,0 +1,71 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMMON - Transport (units)</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMMON - Transport (units)</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To provide general transport service in the movement of personnel and cargo.</i>
+<br>For a Sword agent, to perform the carriage of personnel and/or cargo (components of units) over short or medium distances.  In sword, the transportation of cargo/troops is managed within a specific simulation module. To transport components of another unit, the agent makes as many round trips it is necessary regarding to its transportation capabilities  (see authoring tool, the 'Cargo transport' data in 'Equipements ' section)..<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Units</h3>Units to transport.<br>
+<h3>Embarkation area</h3>The area to reach to load the troops.<br>
+<h3>Route</h3>The route through which the agent must transport the crowd, and at the end of which the unloading will take place.<br>
+<h3>Meeting position</h3>Position to reach after the troops transportation.<br>
+<h3>Synchronized transport</h3>Whether the subordinates should wait for each other every time they leave the embarking/disembarking point or not.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Vehicles transportation</h3>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues the "Transport" mission to subordinate units (the number of subordinate to perform the transportation mission depends on the number of units to transport and the number of subordinates able to perform the 'Transport' mission). Normally, the commander agent uses the same number of subordinates as there are units to transport.<br>
+</li>
+<li>If the "Synchronized transport" parameter is set to "Wait for other subordinates", every subordinate will wait for all the other transporting subordinates before leaving the embarking/disembarking position, so that they all leave together.<br>
+</li>
+<li>Subordinate units that cannot perform the transportation (due to incompatible physical capability) move directly to the meeting position.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td><u>A unit may not be transported</u> if one of the subordinate units has not the capability to transport it.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>Units to transport need to perform the "Get transported" mission. <br>They also need to be <u>located inside the "embarkation area"</u>. If not, the subordirnates agents waits for specified units to be located into the 'embarkation area' and then the transportation begins.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when all first echelon units have reached their objective.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMMON - Follow</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMMON - Follow</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To follow a set of mobile agents (units or crowds).</i>
+<br>In this  mission, the agent will follow only operational agents (for units) or crowds (alive).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Entities</h3>Entities to follow.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Distance</h3>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent chooses and moves to a position in order to stay as close as possible to the given set of agents. If the position is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, otherwise it moves to the center of the position. Average speed depends on the physical capabilities, taking into account terrain properties.<br>
+</li>
+<li>The chosen position changes when one of these two conditions is met :<br>
+</li>
+<ul>
+<li>The agent has reached the position<br>
+</li>
+<li>The followed unit has covered a distance greater than the distance that the agent can cover in forty seconds at its maximum speed.<br>
+</li>
+</ul>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>If no entities can be followed (none of them are operational or alive), the mission ends with a 'failed' status.<br>
+</li>
+<li>An entity may not be followed if it is not operational (for units) or alive (for crowds). In this case, the report "The followed unit is destroyed" is displayed. If none of the issued agents can be followed, the mission ends with a 'failed' status, displaying the report "No valid parameter".<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

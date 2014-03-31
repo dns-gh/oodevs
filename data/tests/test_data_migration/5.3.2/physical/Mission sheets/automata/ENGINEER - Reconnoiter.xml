@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Reconnoiter">
+  <context>
+    <line>
+      <italic>
+        <text>A mission undertaken to obtain information by visual observation, or other detection methods, about the activities and resources of an enemy, or about the meteorological, hydrographic, or geographic characteristics of a particular area.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword to reach a set of ordered terrain objectives in order to search for specific objects (such as mines and various obstacles) by activating a specific "reconnaissance" action. Agents of the simulation are able to reconnoiter objects, specific location and urban blocks. The delay of reconnaissance depends on the type of the objective to reconnoiter. The bigger the objective, the longer the reconnaissance is.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Objectives" optional="false">
+      <line>
+        <text>Objectives to reconnoiter.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Forward echelon units:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "Reconnoiter" mission to each of the forward echelon units,</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>The agent allocates an sub-area of responsability to each of the foward echelon units. Each subordinate unit reconnoiter objectives inside the its area of responsability (sub objectives can be computed by the company to keep te units aligned).</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Rear echelon units:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "mobility support" mission to the engineer units, with the front units as parameters.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>Other units (reserve and non adapted units) receive the "follow" mission with the front units as parameter.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>In case of an attack by an enemy, combat units of the rear line may receive the "combat support" mission (the enemy may be engaged),</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>In case of a front line unit destruction, combat units of the rear line may releive this unit.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon issuing the mission, the commander agent coordinates its subordinate units. The agent keeps the forward echelon units aligned.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>Note that the forward echelon units stay aligned with the furthest issued objectives (as described in the mission "OffensiveReconnaissance")</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>ML_COMBAT - Reconnoiter (offensive)1.bmp</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all issued objectives has been reconnoitered. </text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="ML_COMBAT - Reconnoiter (offensive)1.bmp"/>
+  </attachments>
+</mission-sheet>

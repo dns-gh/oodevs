@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Reconnoiter a crossing site">
+  <context>
+    <line>
+      <italic>
+        <text>A mission undertaken to obtain information by visual observation, or other detection methods, about the activities and resources of an enemy, or about the meteorological, hydrographic, or geographic characteristics of a particular area.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to move to a crossing site and reconnoiter it. Upon action termination, the agent gets information about the object (information is available through the knowledge of the crossing site object, such as water velocity, depth, width).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Crossing site" optional="false">
+      <line>
+        <text>The crossing site to reconnoiter.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>* The agent moves to the crossing site. If the crossing site is not reachable, the agent will move to the closest reachable position.</text>
+    </line>
+    <line>
+      <link>
+        <text>reconnoiterCrossing3.png</text>
+      </link>
+    </line>
+    <line>
+      <text>* Upon reaching the crossing site, the agent will start reconnoitering it (the report "Position reconnaissance started" should be displayed). After a delay depending on the size of the objective, the reconnaissance ends (the report "Position reconnaissance completed" should be displayed).</text>
+    </line>
+    <line>
+      <link>
+        <text>reconnoiterCrossing2.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If the crossing site is not reachable, the agent will move to the closest reachable position. In this case, the agent will only reconnoiter it if it is close enough. If not, it will fail to reconnoiter, and the mission will end.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when the crossing site is reconnoitered, or if the agent finds that he cannot reconnoiter it.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="reconnoiterCrossing2.png"/>
+    <attachment name="reconnoiterCrossing3.png"/>
+  </attachments>
+</mission-sheet>

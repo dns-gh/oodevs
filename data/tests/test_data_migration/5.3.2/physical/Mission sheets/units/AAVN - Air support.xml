@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="AAVN - Air support">
+  <context>
+    <line>
+      <italic>
+        <text>The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action.</text>
+      </italic>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>A unit which helps another unit in battle. Aviation, artillery, or naval gunfire may be used as support for infantry.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>A part of any unit held back at the beginning of an attack as a reserve.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>An element of a command which assists, protects, or supplies other forces in combat.</text>
+          <italic/>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In SWORD, supporting a unit is to provide intelligence and DIRECT FIRES, in order to destroy or neutralize dangerous enemies, by moving from one supporting position to another.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Units" optional="false">
+      <line>
+        <text>Friendly units to support.</text>
+      </line>
+    </parameter>
+    <parameter name="Aviation range" optional="true">
+      <line>
+        <text>The aviation range enforced during the supplying.</text>
+      </line>
+    </parameter>
+    <parameter name="Rally point" optional="true">
+      <line>
+        <text>The rally point of the mission.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent chooses and moves toward a supporting position to get ready to provide fire to supported units. If the chosen position is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed depends on the physical capabilities while taking into account terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The chosen position can change dynamically if the supported agents moves. In that case, the agent moves from one position to another.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a supporting position, the agent fires at enemies that engage supported friends.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <line>
+      <text>If an "End mission" fragmentary order is given, then the agent will end its mission and move to the rally point. This is the only use of the "rally point" parameter in this mission.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

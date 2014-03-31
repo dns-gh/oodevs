@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="IMINT - Collect informations (with UAV)">
+  <context>
+    <line>
+      <italic>
+        <text>The systematic observation of aerospace, surface or subsurface areas, places, persons, or things, by visual, aural, electronic, photographic, or other means.</text>
+      </italic>
+    </line>
+    <line>
+      <text>To provide continuous view, and the potential for reports on the activity of an objective.</text>
+      <italic/>
+    </line>
+    <line>
+      <text>In this Sword mission, to fly along a given route in order to collect a maximum of informations. Collected informations (agent and object kowledge) depend on the given route  and the physical capabilities of the agent performing the mission (here a UAV).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="UAV Routes" optional="false">
+      <line>
+        <text>Routes to be followed by the UAV agents.</text>
+      </line>
+    </parameter>
+    <parameter name="Deployment position" optional="true">
+      <line>
+        <text>Position onto which the agent operate the drone (empty by default).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Collect informations (with UAV)" mission to the drone station. The drone station self-deploys on the deployment position (its position by default) and operates one or more (depends of the number of routes) of its transported UAV agent (the UAV should emit the "UAV ready" report to notify that it has just been operated).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon deployment termination, operted UAV units are automatically launched and follow each given route. Then, it returns back to the drone station and it is automatically loaded.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the user give more routes than drones, some drones will fly twice in order to collect information in all routes.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

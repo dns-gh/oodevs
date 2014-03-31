@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<supply model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Supply.xsd">
+  <convoys mission="LOG - Convey" unit-type="LOG.Convoy">
+    <type>
+      <dotation-supply type="real"/>
+      <stock-supply type="real"/>
+    </type>
+    <constitution-times>
+      <unit-time time="10m" truck-count="1"/>
+      <unit-time time="10m" truck-count="10"/>
+      <unit-time time="20m" truck-count="20"/>
+      <unit-time time="30m" truck-count="30"/>
+      <unit-time time="30m" truck-count="5000"/>
+    </constitution-times>
+    <loading-times>
+      <unit-time time="30m" truck-count="1"/>
+      <unit-time time="110m" truck-count="10"/>
+    </loading-times>
+    <unloading-times>
+      <unit-time time="15m" truck-count="1"/>
+      <unit-time time="30m" truck-count="10"/>
+      <unit-time time="120m" truck-count="40"/>
+    </unloading-times>
+    <speed-modifiers>
+      <speed-modifier truck-count="1" value="1"/>
+      <speed-modifier truck-count="100" value="1"/>
+    </speed-modifiers>
+  </convoys>
+  <resource-availability-alerts>
+    <resource-availability-alert availability-threshold="0"/>
+  </resource-availability-alerts>
+</supply>

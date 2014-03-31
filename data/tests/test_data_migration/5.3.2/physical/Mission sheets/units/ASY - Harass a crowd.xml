@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ASY - Harass a crowd">
+  <context>
+    <line>
+      <text>In this Sword mission, to move to the given crowd and attack it in order to provoke people injuries.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Crowd" optional="false">
+      <line>
+        <text>The 'Crowd' knowledge to attack.</text>
+      </line>
+    </parameter>
+    <parameter name="Static attack" optional="true">
+      <line>
+        <text>Defines if the agent needs to move onto random positions while attacking the provided crowd.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent chooses a random position inside the nearest crowd's conentrations and moves to it. If the crowd's concentration is not reachable, the agent moves as close as possible (the agent cannot move within it).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon movement termination, the agent engages the crowd with lethal weapons systems.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When the agent has just engage the crowd, it chooses another position and starts again.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>harass concentration.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>The crowd is moving:</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>harass flow.png</text>
+      </link>
+    </line>
+    <ul>
+      <ul>
+        <li>
+          <line>
+            <text>The agent follows the head of the flow and contiunes to intervene on the crowd.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <bold>
+            <text>The 'static' parameter is set to 'TRUE'</text>
+          </bold>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the agent moves in the center of the crowd and stays here during confrontation.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>If the target crowd is lost (the crowd knowledge becomes invalid) </text>
+          <underlined>
+            <text>the mission terminates</text>
+          </underlined>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The agent may self protect (against indirect fires or strong enemies) and stop temporarily the confrontation with the crowd.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <italic>
+        <text>Note that if the mission is performed by terrorists or militian , they won't selfprotect agaisnt strong enemies.</text>
+      </italic>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>The crowd attacks the agent:</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>Selfprotection1.png</text>
+      </link>
+    </line>
+    <ul>
+      <ul>
+        <li>
+          <line>
+            <text>Crowds can attack agents of the simulation (e.g "Demonstrate mission with agressive attitude). In that case the agent selfprotect by moving a position outside the crowd.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>User can issue the "stop safeguarding" fragmentary order to the agent. In that case, the agent keeps on harassing the crowd, even if it is assaulted. The agent may be injured.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </specific-cases>
+  <comments>
+    <line>
+      <underlined>
+        <text>The agent automatically sets its ROE against crowd with "lethal weapons authorized"</text>
+      </underlined>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="harass concentration.png"/>
+    <attachment name="harass flow.png"/>
+    <attachment name="Selfprotection1.png"/>
+  </attachments>
+</mission-sheet>

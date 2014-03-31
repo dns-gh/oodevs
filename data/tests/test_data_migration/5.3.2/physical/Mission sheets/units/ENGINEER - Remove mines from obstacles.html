@@ -1,0 +1,57 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ENGINEER - Remove mines from obstacles</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ENGINEER - Remove mines from obstacles</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td>"The technique of clearing mines using either mechanical sweeping to remove, disturb, or otherwise neutralize the mine; explosive sweeping to cause sympathetic detonations, damage, or displace the mine; or influence sweeping to produce either the acoustic or magnetic influence required to detonate the mine."<br>In sword, removing mines improvement is to make the "mining" attribute of object goes from 100% to 0%. By loosing mines improvement, an obstacle looses its attrition power in case a unit collides with it.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Obstacles</h3>The obstacles to remove the mines from.<br>
+<h3>Meeting position</h3>Position to reach upon action termination.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>* The agent moves towards each obstacle, and remove mines imprevement from it.<br>* When the agent has swept all the obstacles, it moves to the meeting position.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>If some of the obstacles were already cleared, they will not be considered (the report "The object is already demined" should be displayed).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when all the obstacles have been cleared and the agent has reached the meeting position.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

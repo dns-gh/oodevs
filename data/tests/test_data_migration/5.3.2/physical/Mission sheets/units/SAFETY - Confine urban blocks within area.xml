@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Confine urban blocks within area">
+  <context>
+    <line>
+      <italic>
+        <text>In the event of an exterior threat (a fire, for instance), populations may be prevented from leaving the buildings they occupy.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, confining a urban block prevents the population from leaving or entering it. A urban block cannot be confined if it cannot be inhabited. An urban block has a "confined" status ("Yes" or "No").</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area inside which urban blocks must be confined.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each urban block which is totally inside the specified area (the order of traversal is randomly defined). The agent stops at the border of the urban block.</text>
+    </line>
+    <line>
+      <text>Upon reaching a urban block, the agent confines it before moving to the next unvisited urban block.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>An urban block may not be confined if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the urban block cannot be inhabited (the report "urban block cannot be inhabited" is displayed) ,</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the urban block is already confined (the trace "the urban block is already confined" is displayed).</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this case, the agent decides to act on the next one.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When there are no more urban blocks to visit, the agent stays next to the last block visited and the mission ends.</text>
+    </line>
+    <line>
+      <text>If there are no urban blocks within the area, the mission ends and the report "no urban blocks within area" is displayed.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

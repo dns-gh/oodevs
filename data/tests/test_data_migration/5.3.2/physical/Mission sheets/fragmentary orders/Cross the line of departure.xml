@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Cross the line of departure">
+  <context>
+    <line>
+      <text>To order the agent to cross the line of departure. </text>
+    </line>
+  </context>
+  <parameters/>
+  <behavior>
+    <line>
+      <text>This order should be use in the "Attack" mission when a departure line is issued (in that case the agent stays on the departure line awaiting an order to continue)</text>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

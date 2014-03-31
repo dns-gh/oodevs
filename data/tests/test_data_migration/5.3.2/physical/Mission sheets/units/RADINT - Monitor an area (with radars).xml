@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="RADINT - Monitor an area (with radars)">
+  <context>
+    <line>
+      <italic>
+        <text>The systematic observation of aerospace, surface or subsurface areas, places, persons, or things, by visual, aural, electronic, photographic, or other means.</text>
+      </italic>
+    </line>
+    <line>
+      <text>To provide continuous view, and the potential for reports on the activity of an objective.</text>
+      <italic/>
+    </line>
+    <line>
+      <text>In this mission, to observe an area with radar in order to detect movement of unknown enemies. The agent simply activates its radar sensors within the given area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>Objective to observe.</text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="true">
+      <line>
+        <text>Position from which the agent observes the objective (empty by default). </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given position. If the position is not reachable (an urban block the agent cannot enter, for instance), the agent moves as close as possible, otherwise it moves to the center of the position. Average speed depends on the physical capabilities with regard to terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If not issued, the agent stays at its own position.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the position, the agent deploys to it. The time required for deployment depends on the data defined in the authoring tool (see "Units" tab, "Deployment" section).  Upon deployment termination the report  "section deployed" should be displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon deployment termination, the agent activates its radars and starts to monitor the area (the reports "radar silence lifted" and "monitoring: started" are displayed). Every movement of units within the area should be detected. Note that this mission does not allow the agent to recognize moving units. Other specific units should be used to determine the exact nature of the detected units.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

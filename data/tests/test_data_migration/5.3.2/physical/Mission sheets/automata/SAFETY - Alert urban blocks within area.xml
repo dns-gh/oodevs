@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Alert urban blocks within area">
+  <context>
+    <line>
+      <italic>
+        <text>To protect population from danger.</text>
+      </italic>
+    </line>
+    <line>
+      <italic>
+        <text>Alerting is to inform inhabitants about an impending danger, allowing the population to shelter from it. The final goal is to minimize the number of victims and minimize subsequent evacuation time.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, a population is alerted via the urban block it populates. An urban block cannot be alerted if it is not populated. An urban block has an "alerted" status (it is either "alerted" or "not alerted"). After being "alerted", the population may be "evacuated" faster.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area containing the urban blocks to alert.</text>
+      </line>
+    </parameter>
+    <parameter name="Rally point" optional="true"/>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues a "Alert urban blocks" order to each capable agent. Every one of them is given a single urban block to alert (the closest one to them), and whenever a subordinate has finished to alert a urban block, another urban block to alert is given to him, for as long as there are urban blocks left to alert. When there are no longer such urban blocks, the subordinates are given a *Move To" order to the rally point instead (if there is no rally point, then the subordinates remain at their current position).</text>
+        </line>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <line>
+          <text>The other units receive a *Move To* order to the rally point (if there is no rally point, then they remain at their current position).</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>An urban block may not be alerted if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>The urban block cannot be inhabited (the report "urban block cannot be inhabited" is displayed)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The urban block is already alerted (the trace "the urban block is already alerted" is displayed)</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this case, the agent in charge of this urban block will pursue his mission with his other assigned urban blocks, and the commander mission continues.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all the subordinate agents have reached the rally point (or, if there is no rally point, when they have finished to act on all the urban blocks).</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

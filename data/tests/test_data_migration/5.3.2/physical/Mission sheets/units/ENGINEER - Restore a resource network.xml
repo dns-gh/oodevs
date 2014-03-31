@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Restore a resource network">
+  <context>
+    <line>
+      <italic>
+        <text>To restore a resource network node.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to restore a resource network node.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Resource network" optional="false">
+      <line>
+        <text>Resource network node to restore (several kinds of resource network node could be located in the same place: only one of them could be restore during the mission).</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach once the resource network node has been restored.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the resource network node to restore. The position in which to restore the resource network node is automatically determined by the agent.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts to reach the resource network node.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The agent tries to enter an urban block, if the agent cannot reach the resource network node beacause of the trafficability of the urban block. The agent moves toward the border of the urban block.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the resource network node or the border of the urban block, the agent restores the resource network node (the report "Resource node enabled" should be displayed)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When the resource network node has been restored, the agent moves to the meeting position.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The meeting position is reached.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

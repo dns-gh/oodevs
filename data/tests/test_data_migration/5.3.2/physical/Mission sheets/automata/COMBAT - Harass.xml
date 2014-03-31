@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Harass">
+  <context>
+    <line>
+      <italic>
+        <text>Mission to destroy or at least to neutralize the enemy hidden elements, infiltrated or during infiltration and exfiltration in a given area.</text>
+      </italic>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>the right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>the right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Echelon number" optional="true"/>
+    <parameter name="Objective" optional="false">
+      <line>
+        <text>Objective where enemies will be engaged if they are inside</text>
+      </line>
+    </parameter>
+    <parameter name="Destroying positions" optional="true">
+      <line>
+        <text>Positions for observing objective where begin to harass enemies.</text>
+      </line>
+    </parameter>
+    <parameter name="Obstacles" optional="true">
+      <line>
+        <text>Set of obstacles to build. Optional parameter.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The commander agent issues the "Harass" mission to the platoons, with objective as objective.</text>
+    </line>
+    <line>
+      <text>Rear echelon units: other units (non adapted units) receive the "follow" mission with the first echelon units as parameter. Some others units (like mortars) receive one of the support missions: "suppor indirect fire", "support direct fire" or "support movement" depending of their abilities.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If "obstacles" are given as parameter, the subordinates with "harass" mission will be begining by : </text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the subordinates will build obstacles if they have capacity and dotation.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>if "valorise obstacles" is true, the subordinates will valorise the obstacles if they have capacity and dotation.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>"Destroying positions" for subordinates with "harass" mission:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>if given, the subordinates will move between two of these positions and uses it like an observating position.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>otherwise, two positions inside the objective will be given as parameter for each subordinate   </text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Confine urban blocks within area">
+  <context>
+    <line>
+      <italic>
+        <text>In the event of an exterior threat (a fire, for instance), populations may be prevented from leaving the buildings they occupy.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, confining a urban block prevents the population from leaving or entering it. A urban block cannot be confined if it cannot be inhabited. An urban block has a "confined" status ("Yes" or "No").</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area containing the urban blocks to confine.</text>
+      </line>
+    </parameter>
+    <parameter name="Rally point" optional="true">
+      <line>
+        <text>Position to reach after performing the mission.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues a "Confine urban blocks" order to each capable agent. Every one of them is given a single urban block to confine (the closest one to them), and whenever a subordinate has finished to confine a urban block, another urban block to confine is given to him, for as long as there are urban blocks left to confine. When there are no longer such urban blocks, the subordinates are given a *Move To" order to the rally point instead (if there is no rally point, then the subordinates remain at their current position).</text>
+        </line>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <line>
+          <text>The other units receive a *Move To* order to the rally point (if there is no rally point, then they remain at their current position).</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>An urban block may not be confined if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the urban block cannot be inhabited (the report "urban block cannot be inhabited" is displayed) ,</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the urban block is already confined (the trace "the urban block is already confined" is displayed).</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this case, the agent in charge of this urban block will pursue his mission with his other assigned urban blocks, and the commander mission continues.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all the subordinate agents have reached the rally point (or, if there is no rally point, when they have finished to act on all the urban blocks).</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

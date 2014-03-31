@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Realign">
+  <context>
+    <line>
+      <text>This order may be used to make the subordinates of a company realign. The most advanced unit along the area of responsibility will pause movement, and the others will pause movement too once they are as advanced as the most advanced unit.</text>
+    </line>
+  </context>
+  <parameters/>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

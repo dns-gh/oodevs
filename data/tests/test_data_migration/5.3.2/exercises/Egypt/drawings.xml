@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<shapes model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.0/exercise/drawings.xsd">
+  <shape category="Tactical lines" color="#000000" template="-- x --" type="line">
+    <point latitude="30.6697" longitude="28.8313"/>
+    <point latitude="30.6869" longitude="28.8485"/>
+  </shape>
+  <shape category="Tactical lines" color="#000000" template="-- x --" type="line">
+    <point latitude="30.7617" longitude="28.8615"/>
+    <point latitude="30.7837" longitude="28.8824"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Coordinating point" type="point">
+    <point latitude="30.6672" longitude="28.8272"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Coordinating point" type="point">
+    <point latitude="30.7585" longitude="28.8564"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Coordinating point" type="point">
+    <point latitude="30.7282" longitude="28.9238"/>
+  </shape>
+  <shape category="Shapes" color="#000000" template="Bold arrow" type="line">
+    <point latitude="30.6941" longitude="28.8078"/>
+    <point latitude="30.7455" longitude="28.8464"/>
+  </shape>
+  <shape category="Shapes" color="#000000" template="Bold arrow" type="line">
+    <point latitude="30.6688" longitude="28.861"/>
+    <point latitude="30.7174" longitude="28.9158"/>
+  </shape>
+  <shape category="Shapes" color="#000000" template="Bold arrow" type="line">
+    <point latitude="30.843" longitude="28.9147"/>
+    <point latitude="30.8328" longitude="28.9471"/>
+    <point latitude="30.8098" longitude="28.9344"/>
+  </shape>
+  <shape category="Tactical lines" color="#000000" template="-- x --" type="line">
+    <point latitude="30.7369" longitude="28.9251"/>
+    <point latitude="30.7659" longitude="28.9312"/>
+  </shape>
+  <shape category="Tactical lines" color="#000000" template="-- x --" type="line">
+    <point latitude="30.6955" longitude="28.8363"/>
+    <point latitude="30.6802" longitude="28.8598"/>
+  </shape>
+  <shape category="Tactical lines" color="#000000" template="-- x --" type="line">
+    <point latitude="30.7912" longitude="28.8717"/>
+    <point latitude="30.7762" longitude="28.8915"/>
+  </shape>
+  <shape category="Tactical lines" color="#000000" template="-- x --" type="line">
+    <point latitude="30.7668" longitude="28.9184"/>
+    <point latitude="30.7641" longitude="28.9442"/>
+  </shape>
+  <shape category="Shapes" color="#000000" template="Bold arrow" type="line">
+    <point latitude="30.8109" longitude="29.0218"/>
+    <point latitude="30.8191" longitude="28.9719"/>
+    <point latitude="30.7885" longitude="28.9412"/>
+  </shape>
+  <shape category="Tasks" color="#000000" template="Support" type="line">
+    <point latitude="30.6394" longitude="28.7956"/>
+    <point latitude="30.6527" longitude="28.8091"/>
+  </shape>
+</shapes>

@@ -1,0 +1,85 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>OOTW - Control a crowd</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          OOTW - Control a crowd</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To prevent the outbreak of disorder and prevention of possible riot.</i>
+<br>In Sword, to move to a crowd and try to control it by activating a control action. The action to control a crowd can be long and can require the help of others units.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Crowd</h3>The crowd to control.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves to the crowd.  If it is not reachable (the crowd is inside a urban block inside which the agent cannot move for instance), the agent moves as close as possible, otherwise it moves to the center of the crowd. Average speed depends on the physical capabilities with regard to terrain properties and crowd properties.<br>
+</li>
+<li>Upon reaching the crowd, the agent starts to activate the control action (the report "trying to control the crowd" should be displayed). After a delay depending on the size of the properties of the crowd, the agent should control the crowd (the report "crowd is under control" should be displayed). If it cannot succeed in controlling the crowd, the agent emits a report (almost impossible to hold crowd) to inform the user of the situation. This report indicates that the agent won't be able to control the crowd if nothing is done (add friendly units to control the crowd or change rules of engagement). <br>
+</li>
+</ul>
+
+<img alt="control succeed.png" src="./Images/OOTW - Control a crowd/control succeed.png"/><br>When a crowd is interacting with units trying to control it, and when it is under control, the crowd agent should emit the reports displayed on the under screenshot:<br>
+
+<img alt="crowd reports.png" src="./Images/OOTW - Control a crowd/crowd reports.png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>The agent may fail to control the crowd if it is not efficient enough to control it with regard to crowd properties and behaviors (see descriptions in 'Comments' section):<br>
+</li>
+</ul>
+
+<img alt="control failed.png" src="./Images/OOTW - Control a crowd/control failed.png"/><br>
+<b>In this case, the agent withdraws from the crowd and reaches a safety position automatically computed on the edge of the crowd. Once it is reached, the mission terminates .</b>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td><b>Note that a controlled crowd won't be able to perform the "Attack" or "Damage" mission.</b>
+<br>The success factor depends on the ratio of forces between the crowd and units trying to control it. The more units try to control the crowd, the faster the agents can control (or keep under control) the crowd.<br>The agent's ability to control a crowd depends on:<br>
+<ul>
+<li>the rules of engagement regarding the given crowd (see fragmentary order "change ROE on crowds"): the harder the rules are (use of lethal weapons for instance), the easier the control is (but the agent can kill or wound humans in the crowd)<br>
+</li>
+<li>the number of people in the crowds: the bigger the crowd is, the harder control is (and it takes more time)<br>
+</li>
+<li>the number of (friendly) units trying to control the crowd<br>
+</li>
+</ul>The task can be customized by changing some parameters for the skill it is using (the 'controlCrowd' skill).<br>The 'periodicity' parameter is used by the agent to measure the ratio of forces evolution. 'Periodicity' is a time defined in minutes. Each time this period passes, the agent checks the evolution of the ratio of forces. If it has decreased with a bigger value defined  by the 'decreaseRate' (in %) parameter, the agent estimates that it is efficient to control the crowd and it continues. If not (the decrease rate is smaller than the given 'decreaseRate' parameter value), the agent emits a report to alert the user that it is not efficient enough to control the crowd. Then it tries another once more. If the decrease rate is still not sufficient, the agent decides to withdraw from the crowd by reaching a safety position. The safety position is automatically computed on the edge of the crowd, with a distance defined by the "safetyDistance" parameter. <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission terminates if the agent fails to control the crowd.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

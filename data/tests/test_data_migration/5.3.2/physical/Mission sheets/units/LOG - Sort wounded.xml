@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="LOG - Sort wounded">
+  <context>
+    <line>
+      <text>In SWORD, for logistics agents, to know how to move toward a deployment position and self-deploy onto it. A deployed logistics agent enables its medical chains to sort wounded.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Deployment position" optional="true">
+      <line>
+        <text>The position to reach.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent self deploys onto its own position (the report "starting to deploy" then "section deployed" should be displayed). The deployment may take delays (see "Deployment" section in "Units" tab).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon deployment termination, the agent the activates its logistic sorting system.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <underlined>
+        <text>A deployment position is provided:</text>
+      </underlined>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the position. If the objective is not reachable, the agent moves as close as possible (the agent can move within it), the agent moves to the center, or to the closest position to the center). Average speed depends on physical capabilities, taking into accout terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When the position has been reached, the agent deploys onto it (or nearby if it is not reachable) and activate the logistic sorting system.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>This mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

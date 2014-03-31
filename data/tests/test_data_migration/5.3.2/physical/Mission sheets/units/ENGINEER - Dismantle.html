@@ -1,0 +1,79 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ENGINEER - Dismantle</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ENGINEER - Dismantle</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To totally eliminate or neutralise a set of obstacles. A task that is usually performed by follow-on engineers and is not done under fire.</i>
+<br>In SWORD, to remove a set of given Sword objects such as obstacles or human made infrastructure.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Objectives</h3>Objects to remove.<br>
+<h3>Meeting position</h3>Position to reach upon works termination.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Wait for reinforcement</h3>Defines if agent should wait for reinforcement in case it cannot remove an obstacle.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward each objective to dismantle.  It acts on each objective by following the order of the elements in the 'Objectives' list. The position to remove each objective is automatically determined by the agent.<br>
+</li>
+<li>If an object is improved with mines, the agent needs to remove mines before starting to deconstruct it.<br>
+</li>
+<li>Upon reaching an objective, the agent starts to remove it (the report "work just started"  should be displayed). Upon work termination (the report "work completed for object [object name]" is displayed) the agent goes to the next objective.<br>
+</li>
+<li>An object may not be removed if the agent doesn't have the physical capability or it hasn't enough resources. In this case, the report 'Impossible work' is displayed, and the mission ends. In this case the agent waits to be reinforced.<br>
+</li>
+<li>If needed, the agent dismounts to remove the object.<br>
+</li>
+<li>When all objects have been visited, the agent moves to the meeting position.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>If the "wait for reinforcement" parameter is set to "true" (default vlaue is 'FALSE') the agent waits for reinforcement before visiting the next objective.<br>
+</li>
+<li>At any times, the user can order the agent to visit the next objective by issuing the <b>"Go to next objective</b>" fragmentary order . If this order is issued when the agent is working on the last objective, the agent moves to the meeting position.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The meeting point is attained.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>IMINT - Operate drones</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          IMINT - Operate drones</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>The systematic observation of aerospace, surface or subsurface areas, places, persons, or things, by visual, aural, electronic, photographic, or other means.</i>
+<br>To provide continuous view, and the potential for reports on the activity of an objective.<i></i>
+<br>In this Sword mission, to move to a given position and operate a drone (UAV). Thus, it is usually a mission preliminary to the UAV "IMINT Collect informations" mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Position</h3>Position onto which the agent operate the drone (empty by default).<br>
+<h3>Number of UAV to operate</h3>Number of UAV to operate, 1 by default. It will not operate more drones that it have.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves to the issued position. If it is not reachable (a urban block inside which the agent cannot move for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed depends on the physical capabilities regarding to terrain properties.<br>
+</li>
+<li>If no position issued, the agent stays on its own position.<br>
+</li>
+<li>Upon reaching position, the agent deploys onto it in order to operate as many drones as the optional parameter (by default, it deploys only one)  ( the reports "starting deploy" and then "section deployed" should be displayed; for the drone "aircraft is being operated" and" aircraft has been operated" ). The delay of deployment depends on the data defined in authoring tool (see "units" tab, "deployment" section). <br>
+</li>
+<li>Note that the agent chooses a drone among one that are available to be operated. The corresponding drones are the one that have not been already operated, or the one that  are not already performing a mission. If the agent cannot operate a drones, the report "no drone available" is displayed. In that case the mission terminates.<br>
+</li>
+<li>Upon deployment termination, the agent has operated a drone (UAV) that will be ready to be launched. To verify that an UAV agent can be launched, the UAV agent should display "aircraft ready".<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>Once a drone has been operated, the mission ends. The agent can continue to operate other drones using that mission.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

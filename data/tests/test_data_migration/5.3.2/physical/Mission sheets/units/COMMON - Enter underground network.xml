@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Enter underground network">
+  <context>
+    <line>
+      <italic>
+        <text>To get into an underground network such as sewer, metro...</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to move toward a network entrance (a sowrd knowledge object) in order to get in underground network. This mission is priliminary to the mission "move within an underground network. </text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Entrance" optional="false">
+      <line>
+        <text>Entrance to get in the underground network.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given underground entrance. If it is not reachable (the object is located inside a urban block which the agent cannot move within), the agent moves as close as possible. Average speed depends on the physical capabilities regarding the terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the underground entrance, the agent dismounts (if needed,) and enters the network.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>While moving through an underground network entrance, the agent won't be able to ENTER if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the underground entrance is deactivated. In this case the agent waits for the entrance to be activated. Once it is done (with a magic frag order on the object, for instance) the agents gets out and finishes the mission in a normal way.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the underground entrance is destroyed (the object disappears): in this case the agent moves to the entrance position and the mission has failed.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends once the unit is in the underground entrance.</text>
+    </line>
+    <line>
+      <link>
+        <text>COMMON - Enter underground network.png</text>
+      </link>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="COMMON - Enter underground network.png"/>
+  </attachments>
+</mission-sheet>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Create and operate a checkpoint (filter crowds)">
+  <context>
+    <line>
+      <italic>
+        <text>To operate a checkpoint in order to control and filter movements of any kind of entity.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, creating and operating a Checkpoint allows the agent to filter crowds. Filtering crowds allows the agent to detect hidden units (terrorist or other characters).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Checkpoint location" optional="false">
+      <line>
+        <text>The location at which the agent creates the checkpoint.</text>
+      </line>
+    </parameter>
+    <parameter name="Intensity (%, default is 100%)" optional="true">
+      <line>
+        <text>The strength that is used to filter crowds. A value of '0' means "no filtering at all". A value of '100' means "totally blocked" (the crowds that interact with the checkpoint cannot go through it)</text>
+      </line>
+    </parameter>
+    <parameter name="Remove installation (default value is TRUE) " optional="true">
+      <line>
+        <text>Determines whether the agent should deconstruct the checkpoint when the mission ends.	</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves to a position that allows the construction of the checkpoint (a close position on the edge of the object to create) and starts to construct it ("work just started" reports should be displayed). Upon construction termination (the report "work completed for object [object name]" should be displayed), the agent moves toward the center of the created checkpoint and uses it to filter ("Element is being operated" report should be displayed) the crowd.</text>
+    </line>
+    <line>
+      <text>It remains there until mission termination.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The checkpoint may not be constructed if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the agent does not have the capability to create the object (no physical capability or insufficient resources),</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the checkpoint object definition is wrong (the object capacity "construction" for the 'checkpoint' object is not set in the authoring tool).</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this specific case, the mission ends with the report "work impossible, no construction capacity" displayed.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

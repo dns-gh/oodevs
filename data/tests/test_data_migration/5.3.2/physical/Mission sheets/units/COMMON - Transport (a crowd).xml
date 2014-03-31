@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Transport (a crowd)">
+  <context>
+    <line>
+      <italic>
+        <text>To provide general transport service in the movement of personnel and cargo.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, transporting crowds allows agents to move them to a given location with the appropriate means. Because the agent can only transport crowd concentrations, this mission needs a loading position to indicate which concentration to transport. Indeed, a crowd can be compounded with several separated concentrations and only one concentration can be transported at a time. The agent will transport the nearest concentration from the "loadingPoint" parameter.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Crowd" optional="false">
+      <line>
+        <text>Crowd to transport.</text>
+      </line>
+    </parameter>
+    <parameter name="Loading position" optional="false">
+      <line>
+        <text>Loading position, used to designate the concentration to transport.</text>
+      </line>
+    </parameter>
+    <parameter name="Route" optional="false">
+      <line>
+        <text>The route through which the agent must transport the crowd.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach upon crowd transportation.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the crowd's concentration position, loads a maximum number of people from issued crowd (the loading position must be located at the concentration opint of the issued crowd). The report ("transport:embarking" is displayed). Having finished loading, the agent moves along the route, and then unloads transported humans previously loaded (the report "transport:disembarking" is displayed), by creating a new crowd concentration (the crowd has now two concentrations).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Depending on its crowd transport capacity, the agent will make as many round trips as necessary between the 'crowd concentration position' and the route</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The mission continues until no more members of the crowd concencration are  left nearby the loading position.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When the entire crowd's concentration nearby the "Loading position" has been transported, the agent moves to the "Meeting position" and the mission terminates.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The crowd may not be transported if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the agent cannot load the crowd's concentration due to unsuitable physical capabilities (see "crowd transport" option, "equipment" section  in the authoring tool)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the crowd's "concentration position" parameter is not located on the crowd to transport. </text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this specific case, the message "the agent cannot load the crowd (no crowd concentration at loading position )" is displayed, the agents moves to the meeting position and the mission terminates.</text>
+    </line>
+    <line>
+      <text>If the target destination is not reachable, the agent moves as close as possible and then unloads the crowd on the target position.</text>
+    </line>
+    <line>
+      <link>
+        <text>COMMON - Transport (a crowd).bmp</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end/>
+  <attachments>
+    <attachment name="COMMON - Transport (a crowd).bmp"/>
+  </attachments>
+</mission-sheet>

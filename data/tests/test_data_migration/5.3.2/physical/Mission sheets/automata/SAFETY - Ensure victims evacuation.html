@@ -1,0 +1,79 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Ensure victims evacuation</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Ensure victims evacuation</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To ensure evacuation of victims, with suitable device.</i>
+<br>In SWORD, to evacuate victim units (such as refugee units, for instance), using a specified evacuation unit (a medical unit linked to the medical chain).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Victim units</h3>The team-mate agents inside which victims must be evacuated with the medical unit.<br>
+<h3>Medical unit (log)</h3>The team-mate agent linked to the medical chain.<br>
+<h3>Rally point</h3>Position to reach after performing the mission.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues a "Ensure victims evacuation" order to each capable agent. Every one of them is given a single unit to evacuate (the closest one to them), and whenever a subordinate has finished to evacuate a unit, another unit to evacuate is given to him, for as long as there are units left to evacuate. When there are no longer such units, the subordinates are given a *Move To* order to the rally point instead.<br>
+</li>
+</ul>
+
+<img alt="ensureVictimsEvacuation1.png" src="./Images/SAFETY - Ensure victims evacuation/ensureVictimsEvacuation1.png"/><br>
+<ul>
+<li>The other units receive a *Move To* order to the rally point.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>The agent may not be able to ensure the wounded are evacuated. Causes could be:<br>
+<ul>
+<li>the agent doesn't have the physical capability (the agent IS NOT defined as a medical unit)<br>
+</li>
+<li>the medical chain is not activated for the 'Medical unit'<br>
+</li>
+<li>the visited 'Victims unit' does not contain wounded humans<br>
+</li>
+<li>the visited 'Victims unit' has moved or the agent cannot reach it<br>
+</li>
+</ul>If those cases are encountered, the agent moves to the next 'Victim unit', and the report "victims cannot be evacuated" should be displayed.<br>If the medical unit is not a logistic unit, the victim will not be evacuated, and the report "The medical unit is not a logistic unit" should be displayed.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when all the subordinate agents have reached the rally point.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

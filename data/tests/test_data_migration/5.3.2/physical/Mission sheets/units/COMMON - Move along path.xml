@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Move along path">
+  <context>
+    <line>
+      <italic>
+        <text>To move to an objective using a defined route.</text>
+      </italic>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Route" optional="false">
+      <line>
+        <text>Path to move along.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each waypoint defining the route. If a visited waypoint is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, otherwise it moves to the center of the position.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Average speed depends on the physical capabilities taking into account terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a waypoint, the agent moves to the next one and so on, until the final waypoint is reached.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>A flying agent receiving this mission will firstly take off, then move toward each waypoint (just like a regular agent), then will land upon arrival to the final objective.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When there are no more waypoints to visit, the agent stays next to the last one and the mission ends.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

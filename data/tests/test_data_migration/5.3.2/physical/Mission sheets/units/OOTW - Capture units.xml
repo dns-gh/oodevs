@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="OOTW - Capture units">
+  <context>
+    <line>
+      <text>In Sword, to follow a set of entities and capture them.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Units" optional="false">
+      <line>
+        <text>The units to capture.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent follows the set of entities to capture. If the position of a unit is not reachable (the unit is inside an urban block the agent cannot enter, for instance), the agent moves as close as possible, and waits for the unit to be reachable. Average speed depends on the physical capabilities with regard to terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text> Upon reaching one, the agent captures it. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text> The agent continues to the next one until no more units can be captured.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission terminates when all units have been captured.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

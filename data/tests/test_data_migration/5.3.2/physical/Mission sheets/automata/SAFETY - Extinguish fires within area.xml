@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Extinguish fires within area">
+  <context>
+    <line>
+      <italic>
+        <text>To fix, control and extinguish a fire that threatens populations or structures.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, extinguishing a fire can avoid alerting or evacuating populations from urban blocks. Only occasional fires are used to render the effect of arsons and local fires, to stimulate the intervention of firefighters. They cannot propagate, but can be extinguished by specific units. When an occasional fire is extinguished, it disappears.</text>
+    </line>
+    <line>
+      <text>A fire decreases depending on the decrease rate. When a fire reaches the '0' value, it is extinguished. Extinguishing a fire with specific units applies additional decrease rates on a fire.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area into which fires must be extinguished.</text>
+      </line>
+    </parameter>
+    <parameter name="Garage position" optional="false">
+      <line>
+        <text>The position to reach upon fire extinction.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues a "Extinguish a fire" mission to each capable agent. There are two cases :</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>if there are strictly more fires to extinguish than capable units, all the units will be provided one fire to extinguish. As soon as a unit has finished to extinguish a fire, another fire will be assigned to him, unless there is no more fire left to extinguish, in which case he will receive a *Move to* order to the garage position;</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>  Number of fires to extinguish is smaller than capable units: fires will be fairly distributed among capable subordinate units. Several units can extinguish a fire at the same time.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>The other units (non capable units) are given a "Move To" order to the garage position.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>Extinguish 1.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>As soon as new fires come in the area, the commander agent will issue the "Extinguish a fire" order to capable agents. All known fires will be extinguished successively, from the nearest to the fursthest.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>Extinguish 1-2.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>When there are no longer known fires, the capable units will move to the garage position, waiting for new orders in case new fires appear into the area</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>Extinguish 2.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>When number fires are smaller than the capable units, the fires are shared between units.</text>
+      </italic>
+    </line>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If there is no known fire into the given area, all subordinate units are ordered to move to the garage position, until new fires appears.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>Capable units are those which can perform the "Extinguish a fire" mission.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text> When a fire is being extinguished by several agents, the extinction delay is enhanced.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission never ends so that new fires can be extinguished dynamically.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="Extinguish 1.png"/>
+    <attachment name="Extinguish 2.png"/>
+    <attachment name="Extinguish 1-2.png"/>
+  </attachments>
+</mission-sheet>

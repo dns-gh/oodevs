@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ART - Target acquisition - Monitor an area (with radars)">
+  <context>
+    <line>
+      <italic>
+        <text>The systematic observation of aerospace, surface or subsurface areas, places, persons, or things, by visual, aural, electronic, photographic, or other means.</text>
+      </italic>
+    </line>
+    <line>
+      <text>To provide continuous view, and the potential for reports on the activity of an objective. In this mission, to observe an area with radar in order to detect movement of unknown enemies. The agent simply activates its radar sensors within the given area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected ennemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>Area  to monitor.</text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="true">
+      <line>
+        <text>Position from which the agent observes the objective (empty by default).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given position. If the position is not reachable (an urban block inside which the agent cannot move for instance), the agent moves as close as possible, otherwise it moves to the center of the position. Average speed depends on physical capabilities and takes into account terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the position, the agent deploys to it. The delay of deployment depends on the data defined inthe  authoring tool (see "Units" tab, "Deployment" section).  Upon deployment termination the report  "section deployed" should be displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon deployment termination, the agent activates its radars and starts to monitor the area (the reports "radar silence lifted" and "monitoring: started" are displayed). Every movement of units within the area should be detected. </text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If no position is issued the agent stays at its current position.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>Note that this mission does not allow the agent to recognize or identify moving units. Other specific units should be used to determine the exact nature of the detected units.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

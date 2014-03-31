@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Screen">
+  <context>
+    <line>
+      <italic>
+        <text>Combat action which is to inform the ongoing progress of a running enemy in front of him with mobile elements which, without engage or identify, seize any opportunity to clarify the information to the enemy</text>
+      </italic>
+    </line>
+    <line>
+      <text>In sword, to move from one position to another in order to monitor appoaching enemies.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected ennemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="false">
+      <line>
+        <text>the lines onto which the surbordinate coordinate to stay aligned</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>the right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>the right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Echelon number" optional="true">
+      <line>
+        <text>define if the maneuver is organized into one or two echelons (default value is '2')</text>
+      </line>
+    </parameter>
+    <parameter name="Obstacles" optional="true">
+      <line>
+        <text>Set of obstacles to build.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach after the crossing of the last line.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Forward echelon units:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "screen" mission to the subordinate platoons.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Rear echelon units:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>Support units (like mortars) receive one of the support missions: "support indirect fire", "support direct fire" or "support movement" depending on their abilities;</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>Other units (non adapted units) and the CP receive the "disengage" mission with the meeting point as parameter.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>The commander assigns the given lines as observing positions for the subordinates. The forward echelon units move and stand on the line. They are distributed such a way that the units occupy the all width of the area of responsability on the line.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When enemies are approaching, if the  force ratio of the company is low (or if the user issues the "disengage" fragmentary order), the commander agent orders its forward echelon to disengage and move to the next unoccupy positions.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>This continues until the last line is reached.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon crossing the last line, all the subordinates are ordered to move to the end of the responsability of area. </text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>Upon issuing the mission, the commander agent coordinates its subordinate units in order to keep them aligned.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Before issuing the mission, be sure that the entire company is located before the first line.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends if another one is issued by user (or "the cancel maneuver" fragmantary order).</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

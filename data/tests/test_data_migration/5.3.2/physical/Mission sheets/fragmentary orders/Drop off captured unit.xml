@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Drop off captured unit">
+  <context>
+    <line>
+      <text>TODO</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Position" optional="false"/>
+    <parameter name="Captured unit" optional="false"/>
+  </parameters>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

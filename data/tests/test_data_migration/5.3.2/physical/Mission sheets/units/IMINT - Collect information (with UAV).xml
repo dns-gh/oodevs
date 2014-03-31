@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="IMINT - Collect information (with UAV)">
+  <context>
+    <line>
+      <italic>
+        <text>The systematic observation of aerospace, surface or subsurface areas, places, persons, or things, by visual, aural, electronic, photographic, or other means.</text>
+      </italic>
+    </line>
+    <line>
+      <text>To provide continuous view, and the potential for reports on the activity of an objective.</text>
+      <italic/>
+    </line>
+    <line>
+      <text>In this Sword mission, to fly along a given route in order to collect a maximum amount of information. Collected information (agent and object knowledge) depend on the given route  and the physical capabilities of the agent performing the mission.</text>
+    </line>
+    <line>
+      <text>This mission can only be issued if the UAV agent has been operated (by a drone station for instance, via the mission "Operate a drone").</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Route" optional="false">
+      <line>
+        <text>Route to be followed by the UAV agent.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent takes off, and flies along the route. It should be retreived by the drone station if it has not moved too far away (if another mission has been issued for instance) and the lands. Once the agent has been retrieved (it is loaded onto the drone station) it can be operated again.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the order "Return back to CP" is issued during the mission, the agent interrupts its movement and goes straight to the CP of its company.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

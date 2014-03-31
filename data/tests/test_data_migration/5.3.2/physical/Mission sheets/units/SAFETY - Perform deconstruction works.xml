@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Perform deconstruction works">
+  <context>
+    <line>
+      <italic>
+        <text>To deconstruct and remove works or installations.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, elements to remove a set of objects. They can be: building collapses, human constructions, mines etc. Removing elements is often required to restore access. When an object is totally decontructed, it disappears.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Works" optional="false">
+      <line>
+        <text>the objects (works) to deconstruct,</text>
+      </line>
+    </parameter>
+    <parameter name="Wait for reinforcement (default value is FALSE)" optional="true">
+      <line>
+        <text>defines if the agent needs to wait for potential reinforcement in case it cannot do a work (deconstruct an object).</text>
+      </line>
+    </parameter>
+    <parameter name="Instantaneously (default value is FALSE)" optional="true">
+      <line>
+        <text>defines if the agent can remove objects instantaneously (magically) without any physical capabilities consideration.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each element to deconstruct (the order of traversal is defined by user). The positions reached to deconstruct each object are automatically determinated by the agent.</text>
+    </line>
+    <line>
+      <text>Upon reaching a deconstruction position, the agent starts to deconstruct the object (the report "work started for object[object name]" should be displayed). Upon deconstruction termination (the report "work destruction completed" should be displayed), the agent moves to the next element to deconstruct.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>An object may not be deconstructed if the agent doesn't have the physical capability or if it hasn't enough resources to do it.</text>
+    </line>
+    <line>
+      <text>If that specific case, the agent behaves in two ways depending on the 'waitForReinforcement" parameter:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>if it is set to FALSE, the report 'Impossible work' is displayed, and the agent moves to the next work to deconstruct;</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>if it is set to TRUE, agent will stay nearby the object and ask for reinforcement. It won't move to the next object until it is totally deconstructed.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>If "instantaneously" parameter is set to 'true', each visited object are instantaneously and magically deconstructed without any physical capability consideration. If this parameter is set to 'true', any object of the world can be removed.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>If needed, the agent dismounts to deconstruct an object.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission is done when all works have been visited (even if some of the objects couldn't be removed).</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

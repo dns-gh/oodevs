@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Follow">
+  <context>
+    <line>
+      <italic>
+        <text>To follow a set of mobile agents (units or crowds).</text>
+      </italic>
+    </line>
+    <line>
+      <text>In this  mission, the agent will follow only operational agents (for units) or crowds (alive).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Entities" optional="false">
+      <line>
+        <text>Entities to follow.</text>
+      </line>
+    </parameter>
+    <parameter name="Distance" optional="true"/>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent chooses and moves to a position in order to stay as close as possible to the given set of agents. If the position is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, otherwise it moves to the center of the position. Average speed depends on the physical capabilities, taking into account terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The chosen position changes when one of these two conditions is met :</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The agent has reached the position</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>The followed unit has covered a distance greater than the distance that the agent can cover in forty seconds at its maximum speed.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If no entities can be followed (none of them are operational or alive), the mission ends with a 'failed' status.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>An entity may not be followed if it is not operational (for units) or alive (for crowds). In this case, the report "The followed unit is destroyed" is displayed. If none of the issued agents can be followed, the mission ends with a 'failed' status, displaying the report "No valid parameter".</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

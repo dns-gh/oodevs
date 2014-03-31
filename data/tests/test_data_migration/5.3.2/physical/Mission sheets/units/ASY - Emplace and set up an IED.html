@@ -1,0 +1,82 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ASY - Emplace and set up an IED</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ASY - Emplace and set up an IED</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>A surprise attack involving the deliberate use of violence against civilians in the hope of attaining political or religious aims. </i>
+<br>In Sword, to use an agent's indirect fire capabilities in order to simulate an IED emplacement mission (performed by terrorists).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected ennemy direction.<br>
+<h3>Emplacement</h3>Location onto which the agent emplace the IED.<br>
+<h3>Hiding position</h3>Position from which the agent activates the IED.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Automatic activation</h3>Defines if the agent automatically activates the IED (if it needs explicit fragmentary order or not)(default value is false).<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the emplacement. If it is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, else it moves to the center of the objective. Average speed depends on the physical capabilities with respect to terrain properties.<br>
+</li>
+<li>Upon reaching the emplacement, the agent moves to the hiding position.  Once it is reached, the agent is ready to activate the IED (the report "ready to activate IED" should be displayed) . At this stage, two possibilities:<br>
+</li>
+<ul>
+<li>the parameter 'Automatic activation' is set to 'true': the agent activates the IED.<br>
+</li>
+<li>the parameter 'Automatic activation' is set to 'false': the agent waits for the fragmentary order "Activate IED" to be issued.<br>
+</li>
+</ul>
+<li>Because the  IED bomb is simulated with an indirect fire, the explosion can be delayed regarding the bomb activation. Because the explosion is resulting from an indirect fire, the reports "under artillery fire" and "friendly indirect fire" should be displayed too.<br>
+</li>
+<li>Upon bomb activation, all units around should be affected by the bomb. This terminates the mission.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>The IED activation may fail if:<br>
+<ul>
+<li>the distance between the hiding position and the IED emplacement is greater than the max range distance defined by the weapon systems (see authoring tool, weapon systems tab, "Hand and homemade bomb") . In this case the report "Cannot activate IED (target is out of range)" is displayed. This distance is usually set between 0 and 200 meters.<br>
+</li>
+<li>the agent doesn't have the adapted ammunition type or it hasn't enough of them (the report "no more shells" is displayed).<br>
+</li>
+<li>the fragmentary order is issued before the agent has reached the hiding position (the report "Cannot activate IED (IED has not been emplaced yet)" is displayed).<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td></td>
+</tr>
+</table>
+</body>
+</html>

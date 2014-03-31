@@ -1,0 +1,77 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ENGINEER - Construct</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ENGINEER - Construct</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To construct something.</i>
+<br>In SWORD, to know how to create and build a set of planned objects that may be acted upon later on, or that may have an effect on the world. Thus, it is usually a mission preliminary to others.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Works</h3>Set of objects to build.<br>
+<h3>Meeting position</h3>Position to reach by the command post and units that don't participate to the bridging operation.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Wait for reinforcement</h3>Define if the subordinate units need to wait for reinforcement when a work cannot be built (default value is FALSE). <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues the "Construct" mission to the engineer platoons, with a set of works as parameter. Works are fairly shared between engineer platoons.<br>
+</li>
+<li>Other units are ordered to reach the meeting position (if the number of engineer platoons is greater than the number of obstacles, non used platoons are ordered to reach the meeting position).<br>
+</li>
+<li>When all works have been completed, the engineer units move to the meeting position and the mission ends.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>A work may not be built if one of the subordinate units doesn't have the physical capability or it hasn't enough resources to do it. In that case, two possibilities:<br>
+</li>
+<ul>
+<li>the mission parameter "Wait for reinforcement" is set to TRUE : a subordinate unit receive the "Contruct" mission with the object as parameter and wait to be reinforced (the company should be reinforced with adapted device),<br>
+</li>
+<li>the mission parameter "Wait for reinforcement" is set to FALSE (default value): the object is ignored.<br>
+</li>
+</ul>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission terminates when all subordinates has finished their mission.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

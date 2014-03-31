@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Build a firebreak">
+  <context>
+    <line>
+      <italic>
+        <text>To construct a firebreak to protect sites from fires.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to know how to create and build a firebreak object that may prevent areas or sites from spreading fires.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Firebreak location" optional="false">
+      <line>
+        <text>The work location for the firebreak.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward a construction position to create the firebreak. The position to create the firebreak is automatically determined by the agent (on the edge of the work location).</text>
+    </line>
+    <line>
+      <text>Upon reaching the construction position, the agent starts to create and construct the firebreak (the report "work just started" should be displayed). Upon construction termination (the report "work completed for object [object name]" is displayed) the mission ends.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The firebreak may not be created. Possible causes are:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the agent doesn't have the physical capability or it hasn't enough resources.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the firebreak object definition is wrong (the object capacity "construction" for the 'firebreak' object is not set in the authoring tool).</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>If this case, the report 'Impossible work' is displayed, and the mission ends.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>If needed, the agent dismounts to build the firebreak.</text>
+    </line>
+  </comments>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

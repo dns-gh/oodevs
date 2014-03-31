@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Construct">
+  <context>
+    <line>
+      <italic>
+        <text>To construct something.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to create and build a set of planned objects that may be acted on later on, or that may have an effect on the world. Thus, it is usually a mission preliminary to others.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Works" optional="false">
+      <line>
+        <text>Works to perform.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach upon action termination.</text>
+      </line>
+    </parameter>
+    <parameter name="Wait for reinforcement" optional="true">
+      <line>
+        <text>Define if agent needs to wait for reinforcement when it is not able to perform work (false by default). </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each work to construct. The order of visit is from the nearest to the furthest. The positions reached to construct each object are automatically determined by the agent.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a construction position, the agent starts to construct the object (the "work just started" report should be displayed). Upon construction termination (the report "work completed for object[object name]" should be displayed), the agent moves to the next work to do (next construction position for the next objet to construct).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>In obstacle contruction, if the parameter "Improve with mines" is set to TRUE, the agent improves (or completes the improvement of) each obstacle with mines.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts to construct an object.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>A work may not be constructed, if the agent doesn't have the physical capability or hasn't enough resources. In this case, the agent behaves in two ways depending on the "waitForReinforcement" parameter: </text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>if it is set to FALSE, (default value) the report 'Impossible work' is displayed, and the agent moves to the next work to construct;</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>if it is set to TRUE, the agent will stay nearby the object and ask for reinforcements. It won't move to the next work until it is totally constructed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>At any times, the user can order the agent to visit the next obstacle by issuing the </text>
+          <bold>
+            <text>"Go to next objective</text>
+          </bold>
+          <text>" fragmentary order . If this order is issued when the agent is working on the last work, the agent moves to the meeting position.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission is complete when all works have been visited; the agent then moves to the meeting position and the mission terminates.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

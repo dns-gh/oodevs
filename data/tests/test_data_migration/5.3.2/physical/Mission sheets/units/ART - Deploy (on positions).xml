@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ART - Deploy (on positions)">
+  <context>
+    <line>
+      <italic>
+        <text>Set-up adopted by a unit for immediate or later action.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to know how to move toward a deployment position (an object knowledge built by specific units or designated terrain location) and self deploy onto it. Once the agent gets deployed, it is ready to apply indirect fire (see fragmentary order "fire"). If a set of positions is issued, the agent can change its position after each fire execution.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected ennemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Deployment positions" optional="true">
+      <line>
+        <text>Set of positions to use to self deploy (default value is EMPTY).</text>
+      </line>
+    </parameter>
+    <parameter name="Change position automatically" optional="true">
+      <line>
+        <text>Define if the agent needs to move automatically to next position after each fire orders.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>If the deployment positions are not issued the agent deploys on its own position. </text>
+    </line>
+    <line>
+      <text>If positions are issued, the agent randomly chooses a position, moves toward it and self deploys onto it (the report "starting to deploy" then "section deployed" should be displayed). The deployment may take some time (see "deployment" section on "units" tab).</text>
+    </line>
+    <line>
+      <text>Upon deployment termination, the agent is ready to receive the fragmentary order "FIRE" to apply indirect fire (the report "ready to fire" is displayed).</text>
+    </line>
+    <line>
+      <text>Upon receiving the order to fire, the reports "Fire fragmentary order received" and "fire request received" are displayed and the agent launches the selected projectile. </text>
+    </line>
+    <line>
+      <text>If it cannot be possible (the agent has no more ammo for instance), the report "no ammo" is displayed.</text>
+    </line>
+    <line>
+      <text>In all cases, if the Change position automatically parameter is set to 'TRUE' (default value), the agent moves to a next position to avoid counter battery</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The agent won't be able to open fire if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the fragmentary order "FIRE" is issued while the agent is moving (from one position to another, for instance). The agent can receive the order only if it is deployed. If not the report "impossible to open fire, the shooter is not deployed" is displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the agent doesn't have the physical capability (no suitable launcher for the dotation type): the report "No launcher with capacity to use specified ammunition" is displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the agent does not have enough dotation: the report "no more shells" is displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the selected resource type cannot allow the agent to perform an indirect fire : the report "Impossible indirect fire" is displayed.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>If needed, the agent dismounts to deploy on each position.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

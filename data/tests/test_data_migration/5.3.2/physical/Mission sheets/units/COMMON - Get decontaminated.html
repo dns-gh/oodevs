@@ -1,0 +1,66 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMMON - Get decontaminated</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMMON - Get decontaminated</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>Units may be contaminated during an NBC incident. To avoid an NBC contamination and intoxication of other units (contamination can spread around and contaminate other units), contaminated units should be decontaminated with appropriate means.</i>
+<br>In SWORD, an agent must go through a decontamination site object to get decontaminated. The decontamination process is effective if the decontamination site is operated by other units.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Decontamination site</h3>Decontamination site to use to get decontaminated.<br>
+<h3>Meeting position</h3>Position to reach after being decontaminated.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Optional movement to plot</h3>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the issued decontamination site. Once it is done, the agent requests decontamination.  The report "request for decontamination" should be displayed. Then, the agents is decontaminated within a time period depending on:<br>
+</li>
+</ul> ** the number of units that are operating the site (if the site is not operated, the agent stays next to it until the decontamination site gets operated or another mission is issued), <br> ** the number of units asking to be decontaminated on the site (the agent needs to queue to get decontaminated; if the agent asked first to be decontaminated, it should be the first to get decontaminated).<br>
+<ul>
+<li>Once the agent is decontaminated (the report "unit decontaminated" should be displayed), it moves toward the meeting position.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends once the meeting point is reached.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

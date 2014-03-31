@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Disable resource nodes">
+  <context>
+    <line>
+      <italic>
+        <text>To stop  supplying the population with essential resources in order to prevent a disaster (avoid pollution) or provoke a disaster (terrorist attack).</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, disabling an enabled node deactivates the transfer of resources between nodes. It can be used to simulate a terrorist attack ("destruction" of a node) or a preventive deactivation by authorities (water pollution for instance).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Resource nodes" optional="false">
+      <line>
+        <text>The set of resource nodes to disable.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each of the resource nodes (a resource node is located within its corresponding urban block). If the urban block containing the resource node to deactivate is reachable (the agent can enter it), the agent moves to the center, otherwise it moves to a close position (the position closest to the center). The order of the elements in the 'Resource nodes' list defines the order of visit.</text>
+    </line>
+    <line>
+      <text>Upon reaching a resource node (the urban block containing it), the agent deactivates it, displaying the report "Resource node disabled". The agent then decides to act on the next one.</text>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When there are no more resource nodes to disable, the agent stays next to the last visited node and the mission ends.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

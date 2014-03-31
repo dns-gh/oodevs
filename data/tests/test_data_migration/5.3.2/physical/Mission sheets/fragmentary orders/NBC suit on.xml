@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="NBC suit on">
+  <context>
+    <line>
+      <italic>
+        <text>Units may be contaminated during an NBC incident. To avoid an NBC contamination and intoxication of other units (contamination can spread around and contaminate other units), contaminated units should be decontaminated with appropriate means.</text>
+      </italic>
+    </line>
+    <line>
+      <text>For the agent, to avoid possible intoxication by activating its NBC protection (but the agent can still be contaminated).  Once the agent is NBC protected, its speed of movement is slowed down and its ability to use weapons systems is affected.</text>
+    </line>
+  </context>
+  <parameters/>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

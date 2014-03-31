@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Provide indirect fires (dynamic support)">
+  <context>
+    <line>
+      <italic>
+        <text>The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action.</text>
+      </italic>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>A unit which helps another unit in battle. Aviation, artillery, or naval gunfire may be used as a support for infantry.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>A part of any unit held back at the beginning of an attack as a reserve.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>An element of a command which assists, protects, or supplies other forces in combat.</text>
+          <italic/>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In SWORD, supporting a unit is to provide intelligence and INDIRECT fires, in order to destroy or neutralize dangerous enemies.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Units" optional="false">
+      <line>
+        <text>Friendly units to support.</text>
+      </line>
+    </parameter>
+    <parameter name="Retrograde context" optional="true">
+      <line>
+        <text>Defines if the mission is performed in a retrograde context (default value is 'false').</text>
+      </line>
+    </parameter>
+    <parameter name="Support only when units self-protect" optional="true">
+      <line>
+        <text>Defines if the agent will support the provided units only if they self-protect. False by default.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent chooses and moves toward a supporting position to get ready to provide fire for supported units. If the chosen position is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed depends on the physical capabilities, taking into account terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The chosen position can change dynamically if the supported agents move. In that case, the agent moves from one position to another, trying to stay at a good range to provide indirect fire.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The agents only delivers indirect fire upon receiving an explicit 'fire' order from user. If such an order is issued (see 'fire' fragmentary order) the agent dismounts and launches the issued projectiles of chosen types.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>In this mission, the agent does not need to self-deploy. It only needs to dismount (unlike an artillery mission).</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>Note that when the mission is performed by an agent which is subordinated to a commander agent (the company or squadron is ENGAGED), the targets are automatically retreived by the commander agent (they are agents that threaten forward units of the company) and the order to fire is automatically given once a unis is under enemy fire. The agent will move backwards, in the opposite direction as defined for the danger direction of the unit to support. </text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

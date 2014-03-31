@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Crowd - Attack">
+  <context>
+    <line>
+      <italic>
+        <text>A riot is a form of civil disorder characterized often by what is thought of as disorganized groups lashing out in a sudden and intense rash of violence against authority, property or people.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to attack a given unit by inflicting maximum losses. </text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Unit" optional="false">
+      <line>
+        <text>Entity to attack.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The crowd agent moves to the position of the issued agent. If an obstacle is encountered on the way to the objective, the crowd stops and a new temporary concentration is created. The movement is suspended until the obstacle is removed or the objective moves.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If the agent is moving, the crowd agent updates its computed path in order the reach the new position of the unit. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The </text>
+          <underlined>
+            <text>agent's attitude is automatically set to "agressive"</text>
+          </underlined>
+          <text> but it can be changed at any time by user (by issuing the "change attitude" magic order).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Once the head of the crowd reaches the unit (once the crowd takes contact with the unit), the agent starts to attack it.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>A crowd attacking a unit:</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>Crowd - Attack.png</text>
+      </link>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>The assaulted unit emits a specific report when attacked by a crowd:</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>Crowd - Attack2.png</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when both the unit is neutralized (or destroyed) AND the entire crowd has arrived on the target position.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="Crowd - Attack.png"/>
+    <attachment name="Crowd - Attack2.png"/>
+  </attachments>
+</mission-sheet>

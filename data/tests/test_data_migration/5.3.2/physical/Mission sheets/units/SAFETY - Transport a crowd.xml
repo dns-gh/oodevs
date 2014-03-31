@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Transport a crowd">
+  <context>
+    <line>
+      <italic>
+        <text>To ensure evacuation of victims, with adapted device toward adapted structure. e.g. to transport victims to an Hospital or to a place to care for victims.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, transporting crowds allows to move them to a given location with appropriate means. Thus, the victims extracted from a Crowd could be transported to a given position to receive care.</text>
+    </line>
+    <line>
+      <text>Because the agent can only transports crowds' concentrations, this mission needs a loading position to indicate which concentration to transport. Indeed, a crowd can be compouded with several separated concentrations and only one concentration can be transported at a time. The agent will transport the nearest concentration from the "loadingPoint" parameter.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Crowd" optional="false">
+      <line>
+        <text>the crowd to transport,</text>
+      </line>
+    </parameter>
+    <parameter name="Target destination" optional="false">
+      <line>
+        <text>the location to unload the transported crowd.</text>
+      </line>
+    </parameter>
+    <parameter name="Loading position" optional="false">
+      <line>
+        <text>the loading position, used to designate the concentration to transport,</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward the crowd's concentration position, loads as many humans as possible from the issued crowd (the concentration position must be located onto of the concentration of the issued crowd). The report ("transport:embarking" is displayed). When it is over, the agent moves toward the target destination, and then unloads the previously loaded humans (the report "transport:disembarking" is displayed), by creating a new crowd concentration (the crowd has now two concentrations).</text>
+    </line>
+    <line>
+      <text>Depending on its crowd transport capacity, the agent will make as many round trips as necessary between the 'crowd concentration position' and the 'target destination'.</text>
+    </line>
+    <line>
+      <text>The mission continues until there is no more crowd concentration left nearby the loading position.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The crowd may not be transported if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the agent cannot load crowd's concentration due to non-adapted physical capabilities (see "crowd transport" option, "equipements" section in authoring tool),</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the crowd's "concentration position" parameter is not located on the crowd to transport. </text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In that specific case, the trace "no crowd's concentration on loading position" is displayed, and the mission ends.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>If the target destination is not reachable, the agent moves as close as possible and then unloads the crowd on the target position anyway.</text>
+    </line>
+  </comments>
+  <mission-end/>
+  <attachments>
+    <attachment name="SAFETY - Transport (a crowd).bmp"/>
+  </attachments>
+</mission-sheet>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Build">
+  <context>
+    <line>
+      <italic>
+        <text>To construct something.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to know how to create and build a set of planned objects that may be acted upon later on, or that may have an effect on the world. Thus, it is usually a mission preliminary to others.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Works" optional="false">
+      <line>
+        <text>Set of objects to build.</text>
+      </line>
+    </parameter>
+    <parameter name="Instantaneously" optional="true">
+      <line>
+        <text>Defines if the subordinates will perform the works instantaneously (magically).</text>
+      </line>
+    </parameter>
+    <parameter name="Rally point" optional="false">
+      <line>
+        <text>Position to reach after performing the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Wait for reinforcement" optional="true">
+      <line>
+        <text>Defines if the subordinate units need to wait for reinforcement when a work cannot be built (default value is FALSE). </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues a "Perform Works" order to each capable agent. There are two cases :</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>If there are strictly more works to perform than capable units, all the units will be provided one obstacle. As soon as a unit has finished to build an obstacle, another obstacle will be assigned to him, unless there is no more obstacle left to build, in which case he will receive a *Move to* order to the rally point, or will help with other works if he can.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+    <line>
+      <link>
+        <text>build1.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>Assigning the first obstacles.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>build2.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>One subordinate will build the last obstacle, and the other subordinates will reinforce him.</text>
+      </italic>
+    </line>
+    <ul>
+      <ul>
+        <li>
+          <line>
+            <text>Otherwise, the obstacles will all be provided to the units at the beginning of the mission. They will be fairly distributed among them. Multiple units can work on the same obstacle to work faster. Once a unit has finished its assigned work, he may help with other works if he can.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+    <line>
+      <link>
+        <text>build3.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>One subordinate will go build the first checkpoint, and the other two subordinates will build the second checkpoint.</text>
+      </italic>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>When all works have been completed, the engineer units move to the meeting position and the mission ends</text>
+        </line>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <line>
+          <text>The other units are given a "Move To" order to the rally point.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>A work may not be built if one of the subordinate units doesn't have the physical capability or it hasn't enough resources to do it. In that case, two possibilities:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the mission parameter "Wait for reinforcement" is set to TRUE : a subordinate unit receive the "Contruct" mission with the object as parameter and wait to be reinforced (the company should be reinforced with adapted device),</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the mission parameter "Wait for reinforcement" is set to FALSE (default value): the object is ignored.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission terminates when all subordinates has finished their mission.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="build1.png"/>
+    <attachment name="build2.png"/>
+    <attachment name="build3.png"/>
+  </attachments>
+</mission-sheet>

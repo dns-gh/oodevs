@@ -1,0 +1,72 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - MoveTo</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - MoveTo</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td>To move to an objective using a defined route.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Waypoints</h3>The waypoints to reach.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues a "moveTo" order to each subordinate with the waypoints as parameter.<br>
+</li>
+</ul>
+
+<img alt="moveTo1.png" src="./Images/SAFETY - MoveTo/moveTo1.png"/><br>
+<i>Every agent moves to the waypoints.</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>If one of the waypoints is outside of the limits, the subordinates will move to the closest position inside the limits, then move on to the next waypoint (except if it the last waypoint, in which case the mission ends).<br>
+
+<img alt="moveTo2.png" src="./Images/SAFETY - MoveTo/moveTo2.png"/><br>
+<i>The agents will go to the position inside the limits the nearest of the first waypoint.</i>
+<br>
+
+<img alt="moveTo3.png" src="./Images/SAFETY - MoveTo/moveTo3.png"/><br>
+<i>The agents will then go to the next waypoint as usual.</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when all the subordinate agents have finished their mission.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

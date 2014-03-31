@@ -1,0 +1,72 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ELINT - Jam</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ELINT - Jam</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>The deliberate radiation, reradiation, or reflection of electromagnetic energy to prevent or degrade the receipt of information by a receiver.</i>
+<br>In Sword, to move toward an area and build a "jamming object" that fits with the area location (see definition of jamming effects in the authoring tool; 'Objects' tab, 'Capacities').<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Jamming object</h3>Planned work to build by the agent.<br>
+<h3>Meeting position</h3>Position to reach on "Disengage" fragOrder. <br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent deploys to its own position. The time required for deployment depends on the data defined in the authoring tool (see "Units" tab, "Deployment" section).  Upon deployment termination the report  "section deployed" should be displayed.<br>
+</li>
+<li>Upon deployment termination, the agent activates the jamming by creating a "jamming area" object.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>If the "disengage" order is issued, the agent moves to the meeting position (the jamming object is destroyed) and the mission ends.<br>
+</li>
+<li>If the "End mission" order is issued, the agent simply ends the mission (the jamming object is destroyed).<br>
+</li>
+<li>If another mission is issued, the agent performs the new mission and the jamming object is destroyed.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

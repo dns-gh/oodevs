@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<scores model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.0/exercise/scores.xsd">
+  <score name="Blue Direct Fire Unit">
+    <formula><![CDATA[integrate( count( filter( is-one-of(direct-fire-unit(),$Blue_unit ), direct-fire-unit() ) ) )]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$Blue_unit" type="unit list" value="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="direct-fire-unit" id="1"/>
+        <transform function="is-one-of" id="2" input="1" select="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66" type="bool"/>
+        <extract function="direct-fire-unit" id="3"/>
+        <transform function="filter" id="4" input="2,3" type="unsigned long"/>
+        <reduce function="count" id="5" input="4" type="unsigned long"/>
+        <transform function="integrate" id="6" input="5" type="unsigned long"/>
+        <result function="indicator" input="6" name="Blue Direct Fire Unit" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Blue MBT Total Damages">
+    <formula><![CDATA[sum(integrate(domain(fire-component-damage( $MBT,$equipstates ,$firetypes,  $fratricide ), $Blue_MBT) ))]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$Blue_MBT" type="unit list" value="147,69,148,149,150,151,63,66,67,68"/>
+      <constant id="$MBT" type="equipment list" value=""/>
+      <constant id="$equipstates" type="equipment states" value="repairing,unavailable,repairable"/>
+      <constant id="$firetypes" type="fire types" value="direct,indirect"/>
+      <constant id="$fratricide" type="fratricide" value="true,false"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract components="" fire-types="direct,indirect" fratricide="true,false" function="fire-component-damage" id="1" states="repairing,unavailable,repairable"/>
+        <transform function="domain" id="2" input="1" select="147,69,148,149,150,151,63,66,67,68" type="float"/>
+        <transform function="integrate" id="3" input="2" type="float"/>
+        <reduce function="sum" id="4" input="3" type="float"/>
+        <result function="indicator" input="4" name="Blue MBT Total Damages" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Blue Maintenance">
+    <formula><![CDATA[count( filter( is-one-of( maintenance-handling-unit(), $Blues ), maintenance-handling-unit() ) )]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$Blues" type="unit list" value="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="maintenance-handling-unit" id="1"/>
+        <transform function="is-one-of" id="2" input="1" select="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66" type="bool"/>
+        <extract function="maintenance-handling-unit" id="3"/>
+        <transform function="filter" id="4" input="2,3" type="unsigned long"/>
+        <reduce function="count" id="5" input="4" type="unsigned long"/>
+        <result function="indicator" input="5" name="Blue Maintenance" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Dead Blue">
+    <formula><![CDATA[sum( domain( humans( $ranks, $dead ) , $Units))]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$Units" type="unit list" value="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66"/>
+      <constant id="$dead" type="human states" value="dead"/>
+      <constant id="$ranks" type="human ranks" value="officer,troopers,sub-officer"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="humans" id="1" ranks="officer,troopers,sub-officer" states="dead"/>
+        <transform function="domain" id="2" input="1" select="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66" type="unsigned long"/>
+        <reduce function="sum" id="3" input="2" type="unsigned long"/>
+        <result function="indicator" input="3" name="Dead Blue" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Dead Red">
+    <formula><![CDATA[sum( domain( humans( $Ranks, $dead ) , $Units))]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$Ranks" type="human ranks" value="officer,troopers,sub-officer"/>
+      <constant id="$Units" type="unit list" value="119,160,161,162,163,120,123,124,128,129,130,132,159"/>
+      <constant id="$dead" type="human states" value="dead"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="humans" id="1" ranks="officer,troopers,sub-officer" states="dead"/>
+        <transform function="domain" id="2" input="1" select="119,160,161,162,163,120,123,124,128,129,130,132,159" type="unsigned long"/>
+        <reduce function="sum" id="3" input="2" type="unsigned long"/>
+        <result function="indicator" input="3" name="Dead Red" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Direct Fire Power Blue">
+    <formula><![CDATA[sum( domain( direct-fire-power(), $blue ) )]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$blue" type="unit list" value="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="direct-fire-power" id="1"/>
+        <transform function="domain" id="2" input="1" select="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66" type="float"/>
+        <reduce function="sum" id="3" input="2" type="float"/>
+        <result function="indicator" input="3" name="Direct Fire Power Blue" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Direct Fire Power Red">
+    <formula><![CDATA[sum( domain( direct-fire-power(), $red ) )]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$red" type="unit list" value="119,160,161,162,163,120,123,124,128,129,130,132,159"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="direct-fire-power" id="1"/>
+        <transform function="domain" id="2" input="1" select="119,160,161,162,163,120,123,124,128,129,130,132,159" type="float"/>
+        <reduce function="sum" id="3" input="2" type="float"/>
+        <result function="indicator" input="3" name="Direct Fire Power Red" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Distance Blue CT - Blue MBT">
+    <formula><![CDATA[distance( select(position(),$Blue_CT), select(position(),$Blue_lead_MBT) )]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$Blue_CT" type="unit" value="13"/>
+      <constant id="$Blue_lead_MBT" type="unit" value="151"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="position" id="1"/>
+        <reduce function="select" id="2" input="1" key="13" type="position"/>
+        <extract function="position" id="3"/>
+        <reduce function="select" id="4" input="3" key="151" type="position"/>
+        <transform function="distance" id="5" input="2,4" type="float"/>
+        <result function="indicator" input="5" name="Distance Blue CT - Blue MBT" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Mean Blue MBT Gasoil Resources">
+    <formula><![CDATA[sum( domain( resources( $gasoil ), $Units ) )]]></formula>
+    <gauge type="Smileys">
+      <interval key="0" max="44000" min="40000"/>
+      <interval key="0.25" max="48000" min="44000"/>
+      <interval key="0.5" max="52000" min="48000"/>
+      <interval key="0.75" max="56000" min="52000"/>
+      <interval key="1" max="60000" min="56000"/>
+    </gauge>
+    <constants>
+      <constant id="$Units" type="unit list" value="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66"/>
+      <constant id="$gasoil" type="dotation list" value="51,52"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="resources" id="1" resources="51,52"/>
+        <transform function="domain" id="2" input="1" select="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66" type="int"/>
+        <reduce function="sum" id="3" input="2" type="int"/>
+        <result function="indicator" input="3" name="Mean Blue MBT Gasoil Resources" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Opstate All Blue">
+    <formula><![CDATA[mean(domain( operational-state(), $Blues ))]]></formula>
+    <gauge type="Smileys">
+      <interval key="0" max="0.2" min="0"/>
+      <interval key="0.25" max="0.4" min="0.2"/>
+      <interval key="0.5" max="0.6" min="0.4"/>
+      <interval key="0.75" max="0.8" min="0.6"/>
+      <interval key="1" max="1" min="0.8"/>
+    </gauge>
+    <constants>
+      <constant id="$Blues" type="unit list" value="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="operational-state" id="1"/>
+        <transform function="domain" id="2" input="1" select="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66" type="float"/>
+        <reduce function="mean" id="3" input="2" type="float"/>
+        <result function="indicator" input="3" name="Opstate All Blue" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Opstate Combat Blue">
+    <formula><![CDATA[mean(domain( operational-state(), $Combat_blue ))]]></formula>
+    <gauge type="Smileys">
+      <interval key="0" max="0.2" min="0"/>
+      <interval key="0.25" max="0.4" min="0.2"/>
+      <interval key="0.5" max="0.6" min="0.4"/>
+      <interval key="0.75" max="0.8" min="0.6"/>
+      <interval key="1" max="1" min="0.8"/>
+    </gauge>
+    <constants>
+      <constant id="$Combat_blue" type="unit list" value="147,69,148,149,150,151,63,66,67,68"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="operational-state" id="1"/>
+        <transform function="domain" id="2" input="1" select="147,69,148,149,150,151,63,66,67,68" type="float"/>
+        <reduce function="mean" id="3" input="2" type="float"/>
+        <result function="indicator" input="3" name="Opstate Combat Blue" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Opstate Red">
+    <formula><![CDATA[mean( domain( operational-state(), $reds ))]]></formula>
+    <gauge type="Smileys">
+      <interval key="1" max="0.2" min="0"/>
+      <interval key="0.75" max="0.4" min="0.2"/>
+      <interval key="0.5" max="0.6" min="0.4"/>
+      <interval key="0.25" max="0.8" min="0.6"/>
+      <interval key="0" max="1" min="0.8"/>
+    </gauge>
+    <constants>
+      <constant id="$reds" type="unit list" value="119,160,161,162,163,120,123,124,128,129,130,132,159"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="operational-state" id="1"/>
+        <transform function="domain" id="2" input="1" select="119,160,161,162,163,120,123,124,128,129,130,132,159" type="float"/>
+        <reduce function="mean" id="3" input="2" type="float"/>
+        <result function="indicator" input="3" name="Opstate Red" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Wounded Blue">
+    <formula><![CDATA[sum( domain( humans( $Ranks, $wounded ) , $Units))]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$Ranks" type="human ranks" value="officer,troopers,sub-officer"/>
+      <constant id="$Units" type="unit list" value="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66"/>
+      <constant id="$wounded" type="human states" value="wounded"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="humans" id="1" ranks="officer,troopers,sub-officer" states="wounded"/>
+        <transform function="domain" id="2" input="1" select="13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66" type="unsigned long"/>
+        <reduce function="sum" id="3" input="2" type="unsigned long"/>
+        <result function="indicator" input="3" name="Wounded Blue" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Wounded Red">
+    <formula><![CDATA[sum( domain( humans( $Ranks, $wounded ) , $Units))]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$Ranks" type="human ranks" value="officer,troopers,sub-officer"/>
+      <constant id="$Units" type="unit list" value="119,160,161,162,163,120,123,124,128,129,130,132,159"/>
+      <constant id="$wounded" type="human states" value="wounded"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="humans" id="1" ranks="officer,troopers,sub-officer" states="wounded"/>
+        <transform function="domain" id="2" input="1" select="119,160,161,162,163,120,123,124,128,129,130,132,159" type="unsigned long"/>
+        <reduce function="sum" id="3" input="2" type="unsigned long"/>
+        <result function="indicator" input="3" name="Wounded Red" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+</scores>

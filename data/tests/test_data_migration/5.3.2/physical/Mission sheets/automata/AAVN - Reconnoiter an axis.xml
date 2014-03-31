@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="AAVN - Reconnoiter an axis">
+  <context>
+    <line>
+      <italic>
+        <text>A mission undertaken to obtain information by visual observation, or other detection methods, about the activities and resources of an enemy, or about the meteorological, hydrographic, or geographic characteristics of a particular area.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to move along an area of responsibility and to engage all enemies in range.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Permanent" optional="true">
+      <line>
+        <text>Whether or not the mission is permanent. False by default.</text>
+      </line>
+    </parameter>
+    <parameter name="Rally point" optional="true">
+      <line>
+        <text>The rally point to go to when the last position of the route has been reached (if the mission is not permanent) or if the mission ends.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>* The commander agent issues the "Reconnoiter a route" mission to the first echelon, with points along the center of the area of responsiblity as the route to reconnoiter (the number of points and the distance between the points depends on the parameter "AOR splitting length").</text>
+    </line>
+    <line>
+      <text>* The second echelon receives a support mission (with units from the first echelon as parameters).</text>
+    </line>
+    <line>
+      <link>
+        <text>reconnoiterAnAxisX1.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>A company with 5 subordinates : 3 in the first echelon (with the reconnoitering mission), and 2 in the second echelon (with the supporting mission). The company will reconnoiter the area of responsibility by flying through it.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>reconnoiterAnAxisX2.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The company has reached the end of the area of responsibility, and has detected several enemies (and has engaged them).</text>
+      </italic>
+    </line>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <line>
+      <text>The number of units in the first echelon equals the number of agents able to do the Reconnoiter mission, without exceeding half of the total number of agents in the company.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends when the first echelon's Reconnoiter mission ends (note that if the parameter "Permanent" is set to false, the mission never ends).</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="reconnoiterAnAxisX1.png"/>
+    <attachment name="reconnoiterAnAxisX2.png"/>
+  </attachments>
+</mission-sheet>

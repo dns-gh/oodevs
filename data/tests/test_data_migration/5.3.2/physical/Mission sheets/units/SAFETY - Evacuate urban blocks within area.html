@@ -1,0 +1,63 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Evacuate urban blocks within area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Evacuate urban blocks within area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>Emergency evacuation: removal of persons from a dangerous place due to a disaster or impending war.</i>
+<br>In SWORD, acting on urban blocks to remove inhabitants.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Area</h3>The area within which urban blocks must be evacuated.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent moves toward each urban block which is totally inside the specified area (the order of traversal is randomly defined). The agent stops at the border of the urban block.<br>Upon reaching an urban block, the agent evacuates it before moving to the next unvisited urban block.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>An urban block may not be evacuated if:<br>
+<ul>
+<li>the urban block cannot be inhabited (the report "urban block cannot be inhabited" is displayed)<br>
+</li>
+<li>the urban block has already been evacuated (the trace "the urban block is already evacuated" is displayed)<br>
+</li>
+</ul>In this case, the agent decides to act on the next one.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>When there are no more urban blocks to visit, the agent stays next to the last visited block and the mission ends.<br>If there are no urban blocks within the area, the mission ends and the report "no urban blocks within area" is displayed.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

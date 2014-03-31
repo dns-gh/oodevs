@@ -1,0 +1,65 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>TRAFIC - Support movement in area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          TRAFIC - Support movement in area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>All actions performed by the units in traffic control to support the projection by land forces and movements according to the priorities set by the command in an area.</i>
+<br>In SWORD, to create a movement enhanced area (an object) where friend agents move at their maximum speed inside it.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>
+<h3>Movement enhanced area</h3>(planned object): the movement enhanced area object to perform.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>
+<h3>Limit 1</h3>the right and left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>the right and left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the movement forbidden area to perform. The position reached to perform it is automatically determinated by the agent. <br>
+</li>
+<li>Upon reaching a construction position, the agent constructs instantaneously the object. The report "work just started" should be displayed.<br>
+</li>
+<li>At the end of the mission, the movement enhanced area is instantaneously removed.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>The speed of any friend agent which moves inside the movement enhanced area will be increased at his maximum.  <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission continues until another mission.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

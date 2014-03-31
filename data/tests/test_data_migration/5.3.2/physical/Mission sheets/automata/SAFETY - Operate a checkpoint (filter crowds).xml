@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Operate a checkpoint (filter crowds)">
+  <context>
+    <line>
+      <text>In SWORD, checkpoints are object that can filter crowds. Using such an object allows the agent to filter crowds in order to detect hidden units (terrorist or other characters) and prevents them from going into restricted areas.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Checkpoint" optional="false">
+      <line>
+        <text>The object to be used to filter crowds.</text>
+      </line>
+    </parameter>
+    <parameter name="Intensity (%, 100 by default)" optional="true">
+      <line>
+        <text>The intensity to apply to filter crowds, 100% by default.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Operate" mission to the platoons, with the checkpoint as parameter.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>All the units are ordered to move to the center of the objet and start to operate it if they can.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>Note that no specific capabilities are requeried for the subordinates units to operate a checkpoint.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>This mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

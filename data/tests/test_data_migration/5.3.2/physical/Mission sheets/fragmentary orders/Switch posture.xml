@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Switch posture">
+  <context>
+    <line>
+      <italic>
+        <text>To take all safety precautions in order to selfprotect. This order is usualy used when enemy contact is likely to make the agent more prepared and efficient to enemy contact. </text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, a "safety" attitude is issued in order to prepare the agent to enemy contact. In that case the agent dismounts and increases its perception capabilities (flank and rear observation are better), but it moves slower. A "standard" attitude is issued when speed is desired and contact with the enemy is considered to be unlikely.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Attitude" optional="false">
+      <line>
+        <text>Attitude to adopt (</text>
+        <bold>
+          <text>Safety</text>
+        </bold>
+        <text> or </text>
+        <bold>
+          <text>Standard</text>
+        </bold>
+        <text>)</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

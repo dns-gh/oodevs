@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Connect urban block with resource nodes">
+  <context>
+    <line>
+      <text>In SWORD, connecting urban blocks with resources nodes allows an agent to create links from a distributing urban block to one or more receiving urban blocks for a given resource.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Urban block (producer)" optional="false">
+      <line>
+        <text>The producer of the resource network to establish.</text>
+      </line>
+    </parameter>
+    <parameter name="Resource nodes (receivers)" optional="false">
+      <line>
+        <text>The list of the receivers of the resource network to establish, each item defined by a resource and the support of the node (object or urban block). </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each receivers in the order given by the operator. When the agent reaches a receiver, it establishes a resource network link from the producer to this receiver.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If the traficability of one of the receiving urban blocks is too low for the agent, it will report "Cannot reach objective" and skip the connection for this resource node.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all of the receivers have been connected to the producer.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

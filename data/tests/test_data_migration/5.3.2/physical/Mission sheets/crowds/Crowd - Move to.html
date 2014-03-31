@@ -1,0 +1,58 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Crowd - Move to</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          Crowd - Move to</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To move to an objective.</i>
+<br>In SWORD, a moving crowd is modeled as a flux with a constant flow, which can be altered by terrain and obstacles.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>WayPoints</h3>Objective to reach.<br>
+<h2>Optional</h2>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward the objective, following a computed route. If an obstacle is encountered on the way to the objective, the crowd stops and a new temporary concentration is created. The mission is suspended until the obstacle is removed.<br>
+</li>
+<li>The agent is considered as entirely moved when the tail of the flux has reached the given objective.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>Upon movement termination, the mission terminates.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

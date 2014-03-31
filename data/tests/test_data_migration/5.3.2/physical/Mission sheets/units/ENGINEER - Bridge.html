@@ -1,0 +1,65 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ENGINEER - Bridge</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ENGINEER - Bridge</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>The purpose of any river crossing is to project combat power across a water obstacle to accomplish a mission. The challenge is to minimize the river's impact on the commander's ability to maneuver.</i>
+<br>In Sword, to use a crossing site object to construct a "bridge" object in order to allow friendly units to cross a water obstacle.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Crossing site</h3>Crossing site (object) to bridge.<br>
+<h3>Bridge system</h3>Define if the bridging system must be discontinuous or continuous (float bridging or fixed bridging).<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>To bridge a water obstacle the crossing site object must have been reconnoitered. If this is not the case the report "crossing site needs to be recon first" is displayed and the mission terminates.<br>
+</li>
+<li>If the crossing has been reconnoitered, the agent moves to it and builds a "bridge" object on it (the constructed bridge has the same shape as the crossing site). <br>
+</li>
+<li>Note that the agent may receive reinforcements in order to build the bridge. The bridge becomes operational once the report "bridge is operational" displays.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

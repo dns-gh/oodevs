@@ -1,0 +1,2 @@
+<?xml version="1.0" ?>
+<svg style="stroke:rgb(0,0,0);stroke-width:2"><rect height="240" class="border" width="360" x="20" y="80"/><polyline points="20,80 200,220 200,180 380,320" style="fill:none;"/><line style="fill:none;" x1="200" x2="200" y1="110" y2="305"/><line style="fill:none;" x1="135" x2="265" y1="115" y2="115"/><line style="fill:none;" x1="155" x2="245" y1="140" y2="140"/><g transform="translate(80 160) scale(0.6 0.6)"><text style="fill:rgb(0,0,0);text-anchor:middle;font-weight:bold;font-size:150;font-family:Arial" x="200" y="230">C</text></g></svg>

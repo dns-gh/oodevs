@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Clear a route">
+  <context>
+    <line>
+      <italic>
+        <text>To reduce or negate the effects of existing or reinforcing obstacles. The objective is to maintain freedom of movement for maneuver units, weapons systems and critical supplies.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to move along a computed path and remove obstacles that obstruct the path. Here, 'obstacles' are Sword 'objects' that have the capacity "avoidable" and/or "constructor".</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Waypoints" optional="false">
+      <line>
+        <text>Waypoints defining the route to follow (the path will be computed taking into account those waypoints).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves along the computed path. If a non-bypassed 'obstacle' obstructs the path, the agent tries to reaches it.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching an obstacle, the tries to remove the obstacle. Before removing the obstacle, if it is improved with mines, the agent tries to remove the improvement. If it fails (the agent has not the capacity to do it), the report "the agent cannot remove mines from the object" should be displayed. If the agent has the capacity, it starts to remove mines from it (the report "demining the object [object name]" should be displayed). Then, two possibilities:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the obstacle can be removed: the agent starts to remove it (the report "work just started"  should be displayed).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the obstacle cannot be removed (if the agent doesn't have the physical capability or it hasn't enough resources), the report 'Impossible work' is displayed. In this case the agent waits for reinforcement. </text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Upon work termination (the report "work completed for object [object name]" is displayed) and the agent continues to move along the path.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If required, the agent dismounts to perform the work.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>Note that the delay can be very long (it can depend on the type and the shape of the obstacle).</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When the last waypoint has been reached, the mission terminates.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

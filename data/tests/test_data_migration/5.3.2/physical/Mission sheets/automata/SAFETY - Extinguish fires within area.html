@@ -1,0 +1,93 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Extinguish fires within area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Extinguish fires within area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To fix, control and extinguish a fire that threatens populations or structures.</i>
+<br>In SWORD, extinguishing a fire can avoid alerting or evacuating populations from urban blocks. Only occasional fires are used to render the effect of arsons and local fires, to stimulate the intervention of firefighters. They cannot propagate, but can be extinguished by specific units. When an occasional fire is extinguished, it disappears.<br>A fire decreases depending on the decrease rate. When a fire reaches the '0' value, it is extinguished. Extinguishing a fire with specific units applies additional decrease rates on a fire.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Area</h3>The area into which fires must be extinguished.<br>
+<h3>Garage position</h3>The position to reach upon fire extinction.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues a "Extinguish a fire" mission to each capable agent. There are two cases :<br>
+</li>
+<ul>
+<li>if there are strictly more fires to extinguish than capable units, all the units will be provided one fire to extinguish. As soon as a unit has finished to extinguish a fire, another fire will be assigned to him, unless there is no more fire left to extinguish, in which case he will receive a *Move to* order to the garage position;<br>
+</li>
+<li>  Number of fires to extinguish is smaller than capable units: fires will be fairly distributed among capable subordinate units. Several units can extinguish a fire at the same time.<br>
+</li>
+</ul>
+<li>The other units (non capable units) are given a "Move To" order to the garage position.<br>
+</li>
+</ul>
+
+<img alt="Extinguish 1.png" src="./Images/SAFETY - Extinguish fires within area/Extinguish 1.png"/><br>
+<i>As soon as new fires come in the area, the commander agent will issue the "Extinguish a fire" order to capable agents. All known fires will be extinguished successively, from the nearest to the fursthest.</i>
+<br>
+
+<img alt="Extinguish 1-2.png" src="./Images/SAFETY - Extinguish fires within area/Extinguish 1-2.png"/><br>
+<i>When there are no longer known fires, the capable units will move to the garage position, waiting for new orders in case new fires appear into the area</i>
+<br>
+
+<img alt="Extinguish 2.png" src="./Images/SAFETY - Extinguish fires within area/Extinguish 2.png"/><br>
+<i>When number fires are smaller than the capable units, the fires are shared between units.</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>If there is no known fire into the given area, all subordinate units are ordered to move to the garage position, until new fires appears.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>
+<ul>
+<li>Capable units are those which can perform the "Extinguish a fire" mission.<br>
+</li>
+<li> When a fire is being extinguished by several agents, the extinction delay is enhanced.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission never ends so that new fires can be extinguished dynamically.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Enable resource nodes</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Enable resource nodes</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To provide basic needs and resources for populations, where production is insufficient to give an entire population a comfortable standard of living.</i>
+<br>In SWORD, enabling a disabled node reactivates the transfer of resources between nodes. It can be used to help populations of urban blocks to be resupplied with resources after a terrorist attack (destruction of the node) or a preventive deactivation by authorities.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Resource nodes</h3>The set of resource nodes to enable.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent moves toward each of the resource nodes (a resource node is located within its corresponding urban block). If the urban block containing the resource node to enable is reachable (the agent can enter it), the agent moves to the center, otherwise it moves to a close position (the position closest to the center). The order of the elements the 'Resource nodes' list defines the order of visit.<br>Upon reaching a resource node (the urban block containing it), the agent enables it, displaying the report "Resource node enabled". The agent then decides to act on the next one.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>When there are no more resource nodes to enable, the agent stays next to the last visited node and the mission ends.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

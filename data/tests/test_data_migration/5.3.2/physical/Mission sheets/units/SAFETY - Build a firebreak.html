@@ -1,0 +1,63 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Build a firebreak</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Build a firebreak</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To construct a firebreak to protect sites from fires.</i>
+<br>In SWORD, to know how to create and build a firebreak object that may prevent areas or sites from spreading fires.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Firebreak location</h3>The work location for the firebreak.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>The agent moves toward a construction position to create the firebreak. The position to create the firebreak is automatically determined by the agent (on the edge of the work location).<br>Upon reaching the construction position, the agent starts to create and construct the firebreak (the report "work just started" should be displayed). Upon construction termination (the report "work completed for object [object name]" is displayed) the mission ends.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>The firebreak may not be created. Possible causes are:<br>
+<ul>
+<li>the agent doesn't have the physical capability or it hasn't enough resources.<br>
+</li>
+<li>the firebreak object definition is wrong (the object capacity "construction" for the 'firebreak' object is not set in the authoring tool).<br>
+</li>
+</ul>If this case, the report 'Impossible work' is displayed, and the mission ends.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>If needed, the agent dismounts to build the firebreak.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td></td>
+</tr>
+</table>
+</body>
+</html>

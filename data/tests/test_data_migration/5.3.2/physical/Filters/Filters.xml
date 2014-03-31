@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<sections model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schemas/4.3.3/physical/Filters.xsd">
+  <section id="export">
+    <descriptions>
+      <description name="Export..." xml:lang="en"/>
+      <description name="Exporter..." xml:lang="fr"/>
+    </descriptions>
+    <filters>
+      <filter output="html" target="exercise" xsl="htmlBriefing">
+        <descriptions>
+          <description name="Scenario extractor" xml:lang="en"><![CDATA[Extracts briefing, terrain and model information from exercise meta data.<br>Outputs an HTML file.]]></description>
+          <description name="Export de scénario" xml:lang="fr"><![CDATA[Extrait les informations de briefing, terrain et modèle à partir de l'exercice.<br>Le résultat est un fichier HTML.]]></description>
+        </descriptions>
+      </filter>
+      <filter output="xml" target="orbat" xsl="simpleOrbat">
+        <descriptions>
+          <description name="Simplified orbat export" xml:lang="en"><![CDATA[Extracts teams, automats, units, populations and objects from orbat.<br>Outputs an XML file.]]></description>
+          <description name="Export d'OdB simplifié" xml:lang="fr"><![CDATA[Extrait les camps, automates, unités, populations et objets de l'OdB.<br>Le résultat est un fichier XML.]]></description>
+        </descriptions>
+      </filter>
+    </filters>
+  </section>
+</sections>

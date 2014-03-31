@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="TRAFIC - Block off an area">
+  <context>
+    <line>
+      <italic>
+        <text>All actions performed by the units in traffic control to block off an area for friend agents.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to create a movement forbidden area where friend agents cannot enter or move inside it.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>the right and left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>the right and left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Block off area" optional="false">
+      <line>
+        <text>In SWORD, to create a movement forbidden area (an object) where friend agents cannot enter or move inside it.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the movement forbidden area to perform. The position reached to perform it is automatically determinated by the agent.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a construction position, the agent constructs instantaneously the object.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>At the end of the mission, the movement forbidden area is instantaneously removed.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <line>
+      <text>The friend agents cannot enter or move inside the movement forbidden area.  </text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission continues until another mission.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

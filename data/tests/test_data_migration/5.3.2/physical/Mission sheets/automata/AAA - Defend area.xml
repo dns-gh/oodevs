@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="AAA - Defend area">
+  <context>
+    <line>
+      <italic>
+        <text>To defend Army ground forces against attack by enemy aircraft.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to move to and occupy an observation position in order to detect and engage flying enemies within the given area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area to defend against enemies aircrafts.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>The position to be reached by the CP.</text>
+      </line>
+    </parameter>
+    <parameter name="Positions" optional="true">
+      <line>
+        <text>The positions from which the surbordinate units observe the area.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Defend area" mission to the subordinate platoons, with a position as parameter. Each platoon is given a position. If no position issued, the commander spilts the area into subareas. Each sub-area is given to a  subbordinate unit as an observing position.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The command post unit moves to the meeting position.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Other units are ordered to follow.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>Here some examples of possible deployments. The behaviors is the same for the "AAA- Monitor area" (used screenshots are taken from this mission).</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>Use cases 1 : no positions issued, open terrain. The commander agent splits the area into sub-areas. Each subordinate units occupies a sub-area facing the main area barycenter.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>ML_AAA - Monitor area - open terrain_no positions.png</text>
+      </link>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>Use cases 2 : urban blocks have been issued as positions to occupy. Each subordinate units occupies a urban block, facing the area to monitor.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>ML_AAA - Monitor area - urban terrain_issued positions (UB) 2.png</text>
+      </link>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>Use cases 3 : urban blocks have been issued as positions to occupy. Each subordinate units occupies a urban block, facing the area to monitor.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>ML_AAA - Monitor area - urban terrain_issued positions (UB).png</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="ML_AAA - Monitor area - urban terrain_issued positions (UB).png"/>
+    <attachment name="ML_AAA - Monitor area - open terrain_no positions.png"/>
+    <attachment name="ML_AAA - Monitor area - urban terrain_issued positions (UB) 2.png"/>
+  </attachments>
+</mission-sheet>

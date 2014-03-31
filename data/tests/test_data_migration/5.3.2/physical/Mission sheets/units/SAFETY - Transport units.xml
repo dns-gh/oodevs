@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Transport units">
+  <context>
+    <line>
+      <italic>
+        <text>To ensure evacuation of victims, with adapted device toward adapted structure. e.g. to transport victims to an Hospital or to a place to care for victims.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to magically transport a set of units toward a specified destination. Transporting units allows to move them to a given location. Thus, a set of given victim units could be transported to a given position to receive care.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Units" optional="false">
+      <line>
+        <text>the set of units to transport.</text>
+      </line>
+    </parameter>
+    <parameter name="Target destination" optional="false">
+      <line>
+        <text>the location to unload transported entities</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each entities to load (it moves to the exact position of the unit), by following the order of the user's choice to select the entities through the interface.</text>
+    </line>
+    <line>
+      <text>Upon reaching a unit, the agent loads it. The report "unit is loaded" should be displayed. Once all the units have been loaded, the agent moves to the target destination with the loaded units.</text>
+    </line>
+    <line>
+      <text>Upon reaching the target destination, the agent unloads one by one the transported units (for each of the unloaded unit, the report "unit is unloaded" is displayed).</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>A unit may not be loaded if :</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>it cannot be reached or if it has moved from its initial position ,</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>visited unit is already loaded or it is beeing transported.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In that specific case, the report "unit cannot be loaded" should be displayed.</text>
+    </line>
+    <line>
+      <text>If the destination location is not reachable, the agent moves as close as possible.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all loaded units have been unloaded on the destination.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

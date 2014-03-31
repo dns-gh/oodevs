@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Protect">
+  <context>
+    <line>
+      <italic>
+        <text>To protect a unit in combat or a humanitarian convoy</text>
+      </italic>
+      <text>.</text>
+    </line>
+    <line>
+      <text>In SWORD, a mission in which the unit augments the capability of the given unit. This mission is modeled with the reinforcement of a unit by another unit. A combatant agent augments the capability of another agent with its firing capabilities.</text>
+    </line>
+    <line>
+      <underlined>
+        <text>This mission is offensive. While protecting the unit, the agent that performs the mission will engage all perceived enemies in range</text>
+      </underlined>
+      <text>.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Unit" optional="false">
+      <line>
+        <text>The unit to reinforce with weapon capabilities.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the unit (if it moves, the agent should follow it). If the position of the unit is not reachable (the unit is in a urban block inside which the agent cannot move, for instance), the agent moves as close as possible. The unit will be reinforced only when the distance between the agent and the unit is less than 100 meters). Average speed depends on the physical capabilities, taking into account terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the unit, the agent reinforces it. The  report "unit [ agentName ] has successfully reinforced [obectiveName ]" should be displayed. At this point the target unit is considered to be protected.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The agent cannot reach the unit: in this case the agent waits for the target unit to be reachable.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission continues until another is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

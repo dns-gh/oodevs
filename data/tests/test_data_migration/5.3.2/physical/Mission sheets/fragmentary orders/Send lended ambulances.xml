@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Send lended ambulances">
+  <context>
+    <line>
+      <text>TODO</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Previous beneficiary" optional="false"/>
+    <parameter name="New beneficiary" optional="false"/>
+    <parameter name="Ambulances number" optional="false"/>
+  </parameters>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,66 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>AAVN - Reconnoiter an axis</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          AAVN - Reconnoiter an axis</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>A mission undertaken to obtain information by visual observation, or other detection methods, about the activities and resources of an enemy, or about the meteorological, hydrographic, or geographic characteristics of a particular area.</i>
+<br>In SWORD, to move along an area of responsibility and to engage all enemies in range.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Permanent</h3>Whether or not the mission is permanent. False by default.<br>
+<h3>Rally point</h3>The rally point to go to when the last position of the route has been reached (if the mission is not permanent) or if the mission ends.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>* The commander agent issues the "Reconnoiter a route" mission to the first echelon, with points along the center of the area of responsiblity as the route to reconnoiter (the number of points and the distance between the points depends on the parameter "AOR splitting length").<br>* The second echelon receives a support mission (with units from the first echelon as parameters).<br>
+
+<img alt="reconnoiterAnAxisX1.png" src="./Images/AAVN - Reconnoiter an axis/reconnoiterAnAxisX1.png"/><br>
+<i>A company with 5 subordinates : 3 in the first echelon (with the reconnoitering mission), and 2 in the second echelon (with the supporting mission). The company will reconnoiter the area of responsibility by flying through it.</i>
+<br>
+
+<img alt="reconnoiterAnAxisX2.png" src="./Images/AAVN - Reconnoiter an axis/reconnoiterAnAxisX2.png"/><br>
+<i>The company has reached the end of the area of responsibility, and has detected several enemies (and has engaged them).</i>
+<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>The number of units in the first echelon equals the number of agents able to do the Reconnoiter mission, without exceeding half of the total number of agents in the company.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when the first echelon's Reconnoiter mission ends (note that if the parameter "Permanent" is set to false, the mission never ends).<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

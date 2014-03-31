@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Cross">
+  <context>
+    <line>
+      <italic>
+        <text>The purpose of any river crossing is to project combat power across a water obstacle to accomplish a mission. The challenge is to minimize the river's impact on the commander's ability to maneuver.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to use given prepared crossing sites object to cross a water obstacle.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Bridge" optional="false">
+      <line>
+        <text>Bridge object to use to cross the water obstacle.</text>
+      </line>
+    </parameter>
+    <parameter name="Destination" optional="false">
+      <line>
+        <text>Final position to reach.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Cross" mission to all its subordinate units, with the 'bridge' and the 'destination' as parameters.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the crossing site, the subordinate units  move to the given destination and the mission terminates.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The mission may fail if the bridge object is not trafficable. If the bridge is built by engineer units onto a crossing site object, beware of issuing the bridge object, not the crossing site object ( crossing site may not be trafficable).</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

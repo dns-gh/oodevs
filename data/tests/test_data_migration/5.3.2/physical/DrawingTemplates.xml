@@ -1,0 +1,864 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<templates model-version="4.8.2">
+  <category name="Tactical lines">
+    <description>Tactical lines</description>
+    <template name="-- oo --" type="line">
+      <description>Section level line</description>
+      <segment>
+        <line stroke="currentColor" stroke-width="3px" x1="0.02" x2="0.98"/>
+      </segment>
+      <marker-mid unit="px">
+        <g fill="currentColor" stroke="none">
+          <circle cy="-4" r="3"/>
+          <circle cy=" 4" r="3"/>
+        </g>
+      </marker-mid>
+    </template>
+    <template name="-- ooo --" type="line">
+      <description>Platoon level line</description>
+      <segment>
+        <line stroke="currentColor" stroke-width="3px" x1="0.02" x2="0.98"/>
+      </segment>
+      <marker-mid unit="px">
+        <g fill="currentColor" stroke="none">
+          <circle cy="-6" r="3"/>
+          <circle cy=" 0" r="3"/>
+          <circle cy=" 6" r="3"/>
+        </g>
+      </marker-mid>
+    </template>
+    <template name="-- i --" type="line">
+      <description>Company level line</description>
+      <segment>
+        <line stroke="currentColor" stroke-width="3px" x1="0.02" x2="0.98"/>
+      </segment>
+      <marker-mid unit="px">
+        <line stroke="currentColor" stroke-width="2px" x1="5" x2="-5"/>
+      </marker-mid>
+    </template>
+    <template name="-- ii --" type="line">
+      <description>Bataillon level line</description>
+      <segment>
+        <line stroke="currentColor" stroke-width="3px" x1="0.02" x2="0.98"/>
+      </segment>
+      <marker-mid unit="px">
+        <g stroke="currentColor" stroke-width="2px">
+          <line x1="5" x2="-5" y1="-4" y2="-4"/>
+          <line x1="5" x2="-5" y1=" 4" y2=" 4"/>
+        </g>
+      </marker-mid>
+    </template>
+    <template name="-- iii --" type="line">
+      <description>Regiment level line</description>
+      <segment>
+        <line stroke="currentColor" stroke-width="3px" x1="0.02" x2="0.98"/>
+      </segment>
+      <marker-mid unit="px">
+        <g stroke="currentColor" stroke-width="2px">
+          <line x1="5" x2="-5" y1="-6" y2="-6"/>
+          <line x1="5" x2="-5" y1=" 0" y2=" 0"/>
+          <line x1="5" x2="-5" y1=" 6" y2=" 6"/>
+        </g>
+      </marker-mid>
+    </template>
+    <template name="-- x --" type="line">
+      <description>Brigade level line</description>
+      <segment>
+        <line stroke="currentColor" stroke-width="3px" x1="0.02" x2="0.98"/>
+      </segment>
+      <marker-mid unit="px">
+        <g stroke-width="2px">
+          <line stroke="currentColor" x1="-5" x2="5" y1=" 5" y2="-5"/>
+          <line stroke="currentColor" x1="-5" x2="5" y1="-5" y2=" 5"/>
+        </g>
+      </marker-mid>
+    </template>
+    <template name="-- xx --" type="line">
+      <description>Division level line</description>
+      <segment>
+        <line stroke="currentColor" stroke-width="3px" x1="0.02" x2="0.98"/>
+      </segment>
+      <marker-mid unit="px">
+        <g stroke-width="2px">
+          <g transform="translate(0,-6)">
+            <line stroke="currentColor" x1="-5" x2="5" y1=" 5" y2="-5"/>
+            <line stroke="currentColor" x1="-5" x2="5" y1="-5" y2=" 5"/>
+          </g>
+          <g transform="translate(0,6)">
+            <line stroke="currentColor" x1="-5" x2="5" y1=" 5" y2="-5"/>
+            <line stroke="currentColor" x1="-5" x2="5" y1="-5" y2=" 5"/>
+          </g>
+        </g>
+      </marker-mid>
+    </template>
+  </category>
+  <category id="tasks" name="Tasks">
+    <template name="Reckon" type="line">
+      <segment unit="%">
+        <path d="M0,0 L0.55,0.1 L0.45,-0.1 L1,0" fill="none" stroke="currentColor" stroke-width="4px"/>
+      </segment>
+      <marker-end unit="px">
+        <path d="M-3,8 L15,0 -3,-8 0,0 z" fill="currentColor" stroke="none"/>
+      </marker-end>
+    </template>
+    <template name="Delay" type="line">
+      <marker-start unit="px">
+        <path d="M0,-20 A11,10 0 0 0 0,0" fill="none" stroke="currentColor" stroke-width="3px"/>
+      </marker-start>
+      <segment>
+        <line stroke="currentColor" stroke-width="4px" x2="1"/>
+      </segment>
+      <marker-end unit="px">
+        <path d="M-3,8 L15,0 -3,-8 0,0 z" fill="currentColor" stroke="none"/>
+      </marker-end>
+    </template>
+    <template name="Follow" type="line">
+      <marker-start unit="px">
+        <path d="M0,8 V-8 H20 L28,0 20,8 H0z" fill="currentColor" stroke="none"/>
+      </marker-start>
+      <segment>
+        <line stroke="currentColor" stroke-width="4px" x2="1"/>
+      </segment>
+      <marker-end unit="px">
+        <path d="M-3,8 L15,0 -3,-8 0,0 z" fill="currentColor" stroke="none"/>
+      </marker-end>
+    </template>
+    <template name="Support" type="line">
+      <marker-start unit="px">
+        <path d="M8,0 L0,-8 H20 L28,0 20,8 H0z" fill="currentColor" stroke="none"/>
+      </marker-start>
+      <segment>
+        <line stroke="currentColor" stroke-width="4px" x2="1"/>
+      </segment>
+      <marker-end unit="px">
+        <path d="M-3,8 L15,0 -3,-8 0,0 z" fill="currentColor" stroke="none"/>
+      </marker-end>
+    </template>
+    <template name="Primary Attack" type="line">
+      <marker-start unit="px">
+        <g fill="none" stroke="currentColor" stroke-width="3px">
+          <path d="M-20,-30 A20,20 0 0 0 0,-10"/>
+          <path d="M-20, 30 A20,20 0 0 1 0, 10"/>
+        </g>
+      </marker-start>
+      <segment unit="px">
+        <g stroke="currentColor" stroke-width="4px">
+          <line x2="1" y1="-10" y2="-10"/>
+          <line x2="1" y1=" 10" y2=" 10"/>
+        </g>
+      </segment>
+      <marker-end unit="px">
+        <g>
+          <g fill="none" stroke="currentColor" stroke-width="3px">
+            <path d="M0,-10 L-10,-20 L30,0"/>
+            <path d="M0, 10 L-10, 20 L30,0"/>
+          </g>
+          <path d="M10,0 L-10,-20 30,0 -10,20z" fill="currentColor"/>
+        </g>
+      </marker-end>
+    </template>
+    <template name="Secondary Attack" type="line">
+      <marker-start unit="px">
+        <g fill="none" stroke="currentColor" stroke-width="3px">
+          <path d="M-20,-30 A20,20 0 0 0 0,-10"/>
+          <path d="M-20, 30 A20,20 0 0 1 0, 10"/>
+        </g>
+      </marker-start>
+      <segment unit="px">
+        <g stroke="currentColor" stroke-width="4px">
+          <line x2="1" y1="-10" y2="-10"/>
+          <line x2="1" y1=" 10" y2=" 10"/>
+        </g>
+      </segment>
+      <marker-end unit="px">
+        <g fill="none" stroke="currentColor" stroke-width="3px">
+          <path d="M0,-10 l-10,-10 L30,0"/>
+          <path d="M0, 10 l-10, 10 L30,0"/>
+        </g>
+      </marker-end>
+    </template>
+  </category>
+  <category name="Markers">
+    <description>Markers</description>
+    <template name="Point" type="point">
+      <segment/>
+      <marker-start>
+        <g stroke="currentColor" stroke-width="3px">
+          <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
+          <line x1="-250" x2="250" y1="300" y2="300"/>
+        </g>
+      </marker-start>
+    </template>
+    <template name="Coordinating point" type="point">
+      <segment/>
+      <marker-start>
+        <g stroke="currentColor" stroke-width="3px">
+          <circle cx="0" cy="0" fill="none" r="500"/>
+          <line x1="-350" x2="350" y1="-350" y2=" 350"/>
+          <line x1="-350" x2="350" y1=" 350" y2="-350"/>
+        </g>
+      </marker-start>
+    </template>
+    <template name="Flag" type="point">
+      <segment/>
+      <marker-start>
+        <path d="M0,0 l 0,300 l 300,150 l -300,150 z" fill="white" fill-opacity="0.7" stroke="currentColor" stroke-width="3px"/>
+      </marker-start>
+    </template>
+  </category>
+  <category name="Misc.">
+    <description>Misc. symbols</description>
+    <template name="Disaggregation area" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="3px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.08">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.28" y="-0.02">DISAGGREGATION</text>
+            <text x="-0.08" y="0.07">AREA</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+  </category>
+  <category id="graphics" name="Objects">
+    <description>Objects and obstacles</description>
+    <template code="G*MPOS----****X" name="Abatis" type="polygon">
+      <marker-start unit="%">
+        <g stroke="currentColor" stroke-width="4px">
+          <line x1="-0.30" x2="-0.15" y1="0" y2="0.15"/>
+          <line x1="-0.15" x2="0" y1="0.15" y2="0"/>
+        </g>
+      </marker-start>
+      <segment>
+        <line stroke="currentColor" stroke-width="4px" x2="1"/>
+      </segment>
+    </template>
+    <template code="G*SPAR----****X" name="Forward Arming and Refueling Point" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="3px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.2">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.2" y="0.1">FARP</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="G*GPGAL---****X" name="Landing Zone" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="3px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.25">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.1" y="0.1">LZ</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="G*MPORP---****X" name="Roadblock I (planned)" type="point">
+      <marker-start>
+        <g stroke="currentColor" stroke-dasharray="200,200" stroke-width="4px">
+          <line x1="-400" x2="400" y1="-80" y2="-80"/>
+          <line x1="-400" x2="400" y1="80" y2="80"/>
+        </g>
+      </marker-start>
+      <!-- Line Version -->
+      <!--marker-start unit="%">
+                <g stroke="currentColor" stroke-width="3px" stroke-dasharray="1,1" transform="translate(-0.5,0)">
+                    <line x1="0" x2="1" y1="-0.1" y2="-0.1"/>
+                    <line x1="0" x2="1" y1="0.1" y2="0.1"/>
+                </g>
+            </marker-start-->
+      <segment/>
+    </template>
+    <template code="G*MPORS---****X" name="Roadblock II (safe)" type="point">
+      <marker-start>
+        <g stroke="currentColor" stroke-width="4px">
+          <line stroke-dasharray="200,200" x1="-400" x2="400" y1="-80" y2="-80"/>
+          <line x1="-400" x2="400" y1="80" y2="80"/>
+        </g>
+      </marker-start>
+      <!-- Line Version -->
+      <!--marker-start unit="%">
+                <g stroke="currentColor" stroke-width="3px" transform="translate(-0.5,0)">
+                    <line x1="0" x2="1" y1="-0.1" y2="-0.1" stroke-dasharray="1,1"/>
+                    <line x1="0" x2="1" y1="0.1" y2="0.1"/>
+                </g>
+            </marker-start-->
+      <segment/>
+    </template>
+    <template code="G*MPORA---****X" name="Roadblock III (armed but passable)" type="point">
+      <marker-start>
+        <g stroke="currentColor" stroke-width="4px">
+          <line x1="-400" x2="400" y1="-80" y2="-80"/>
+          <line x1="-400" x2="400" y1="80" y2="80"/>
+        </g>
+      </marker-start>
+      <!-- Line Version -->
+      <!--marker-start unit="%">
+                <g stroke="currentColor" stroke-width="3px" transform="translate(-0.5,0)">
+                    <line x1="0" x2="1" y1="-0.1" y2="-0.1"/>
+                    <line x1="0" x2="1" y1="0.1" y2="0.1"/>
+                </g>
+            </marker-start-->
+      <segment/>
+    </template>
+    <template code="G*MPORC---****X" name="Roadblock IV (complete)" type="point">
+      <marker-start>
+        <g stroke="currentColor" stroke-width="4px">
+          <line x1="-400" x2="400" y1="160" y2="-120"/>
+          <line x1="-400" x2="400" y1="120" y2="-160"/>
+          <line x1="-400" x2="400" y1="-160" y2="120"/>
+          <line x1="-400" x2="400" y1="-120" y2="160"/>
+        </g>
+      </marker-start>
+      <!-- Line Version -->
+      <!--marker-start unit="%">
+                <g stroke="currentColor" stroke-width="3px" transform="translate(-0.5,0)">
+                    <line x1="0" x2="1" y1="0.3" y2="-0.2"/>
+                    <line x1="0" x2="1" y1="0.2" y2="-0.3"/>
+                    <line x1="0" x2="1" y1="-0.3" y2="0.2"/>
+                    <line x1="0" x2="1" y1="-0.2" y2="0.3"/>
+                </g>
+            </marker-start-->
+      <segment/>
+    </template>
+    <template code="G*MPO-----****X" name="Bridge Destruction" type="point">
+      <marker-start>
+        <g stroke="currentColor" stroke-width="4px" transform="scale(0.2)">
+          <line x1="-400" x2="400" y1="160" y2="-120"/>
+          <line x1="-400" x2="400" y1="120" y2="-160"/>
+          <line x1="-400" x2="400" y1="-160" y2="120"/>
+          <line x1="-400" x2="400" y1="-120" y2="160"/>
+        </g>
+      </marker-start>
+      <segment/>
+    </template>
+    <template code="G*MPOMC---****X" name="Mine Cluster" type="point">
+      <marker-start unit="m">
+        <g fill="none" stroke="currentColor" stroke-width="4px" transform="translate(-300,0)">
+          <path d="M0,0 A300,300 0 0 0 600,0 z" stroke-dasharray="5px,3px"/>
+        </g>
+      </marker-start>
+      <segment/>
+    </template>
+    <template code="G*SPAD----****X" name="Detainee Holding Area" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="3px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.08">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.2" y="-0.02">DETAINEE</text>
+            <text x="-0.28" y="0.07">HOLDING AREA</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="G*SPAH----****X" name="Refugee Holding Area" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="3px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.08">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.19" y="-0.02">REFUGEE</text>
+            <text x="-0.28" y="0.07">HOLDING AREA</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="G*MPOADU--****X" name="Anti-tank ditch (under construction)" type="polygon">
+      <segment unit="%">
+        <g fill="none" stroke="currentColor" stroke-width="3px">
+          <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
+        </g>
+      </segment>
+    </template>
+    <template code="G*MPOADC--****X" name="Anti-tank ditch (complete)" type="polygon">
+      <segment unit="%">
+        <g fill="currentColor">
+          <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
+        </g>
+      </segment>
+    </template>
+    <template code="G*MPOAR---****X" name="Anti-tank ditch (reinforced with mines)" type="polygon">
+      <segment unit="%">
+        <g fill="currentColor">
+          <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
+          <circle cx="0" cy="0.15" r="0.05"/>
+          <circle cx="0.33" cy="0.15" r="0.05"/>
+          <circle cx="0.66" cy="0.15" r="0.05"/>
+        </g>
+      </segment>
+    </template>
+    <template code="G*SPLRM---****X" name="Supply route" type="line">
+      <segment unit="%">
+        <g stroke="currentColor" stroke-width="3px">
+          <line x2="1"/>
+          <g fill="currentColor" font-family="Arial" font-size="0.08">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="0.4" y="-0.02">SR</text>
+            </g>
+          </g>
+        </g>
+      </segment>
+    </template>
+    <template code="G*MPNL----****X" name="NBC cloud" type="polygon">
+      <segment unit="%">
+        <g stroke="currentColor" stroke-width="4px">
+          <line x2="1"/>
+          <line x1="0.02" x2="0.98" y1="0.02" y2="0.02"/>
+        </g>
+      </segment>
+    </template>
+    <template code="G*GPGAZ---****X" name="Airfield zone" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="3px" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g stroke="currentColor" stroke-width="4px">
+          <line x1="-0.25" x2="0.25"/>
+          <line x1="-0.15" x2="0.15" y1="-0.1" y2="0.1"/>
+        </g>
+      </marker>
+    </template>
+    <template code="G*SPPR----****X" name="Rearm, Refuel and Resupply Point (R3P)" type="point">
+      <segment/>
+      <marker-start>
+        <g stroke="currentColor" stroke-width="3px">
+          <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
+          <line x1="-250" x2="250" y1="300" y2="300"/>
+          <g fill="currentColor" font-family="Arial" font-size="220">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="-200" y="-800">R3P</text>
+            </g>
+          </g>
+        </g>
+      </marker-start>
+    </template>
+    <template code="G*GPGPPK--****X" name="Checkpoint" type="point">
+      <segment/>
+      <marker-start>
+        <g stroke="currentColor" stroke-width="3px">
+          <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
+          <line x1="-250" x2="250" y1="300" y2="300"/>
+          <g fill="currentColor" font-family="Arial" font-size="220">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="-200" y="-800">CKP</text>
+            </g>
+          </g>
+        </g>
+      </marker-start>
+    </template>
+    <template code="G*PLATFORM*****" name="Platform" type="point">
+      <segment/>
+      <marker-start>
+        <g stroke="currentColor" stroke-width="3px">
+          <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
+          <line x1="-250" x2="250" y1="300" y2="300"/>
+          <g fill="currentColor" font-family="Arial" font-size="220">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="-200" y="-800">PLT</text>
+            </g>
+          </g>
+        </g>
+      </marker-start>
+    </template>
+    <template code="G*MPNDP---****X" name="Decontamination Point" type="polygon">
+      <segment>
+        <line stroke="currentColor" stroke-width="4px" x2="1"/>
+      </segment>
+      <marker-start>
+        <g stroke="currentColor" stroke-width="3px">
+          <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
+          <line x1="-250" x2="250" y1="300" y2="300"/>
+          <g fill="currentColor" font-family="Arial" font-size="220">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="-200" y="-800">DCN</text>
+            </g>
+          </g>
+        </g>
+      </marker-start>
+    </template>
+    <template code="G*ROTA*********" name="ROTA Point" type="point">
+      <segment/>
+      <marker-start>
+        <g stroke="currentColor" stroke-width="3px">
+          <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
+          <line x1="-250" x2="250" y1="300" y2="300"/>
+          <g fill="currentColor" font-family="Arial" font-size="180">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="-230" y="-800">ROTA</text>
+            </g>
+          </g>
+        </g>
+      </marker-start>
+    </template>
+    <template code="G*MPBCL---****X" name="Crossing Site" type="line">
+      <marker-start unit="%">
+        <g stroke="currentColor" stroke-width="4px">
+          <line x1="-0.15" x2="0" y1="-0.15" y2="0"/>
+          <line x1="-0.15" x2="0" y1="0.15" y2="0"/>
+        </g>
+      </marker-start>
+      <segment>
+        <line stroke="currentColor" stroke-width="4px" x2="1"/>
+      </segment>
+      <marker-end unit="%">
+        <g stroke="currentColor" stroke-width="4px">
+          <line x1="0" x2="0.15" y1="0" y2="-0.15"/>
+          <line x1="0" x2="0.15" y1="0" y2="0.15"/>
+        </g>
+      </marker-end>
+    </template>
+    <template code="G*GPGAD---****X" name="Drop Zone (DZ)" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="3px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.25">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.1" y="0.1">DZ</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="G*MPOGZ---****X" name="General obstacle zone" type="polygon">
+      <segment unit="%">
+        <g fill="none" stroke="currentColor" stroke-width="4px">
+          <path d="M0,0 L0.05,0 L0.1,-0.05 L0.15,0 L0.25,0 L0.3,-0.05 L0.35,0 L0.45,0 L0.5,-0.05 L0.55,0 L0.65,0 L0.7,-0.05 L0.75,0 L0.85,0 L0.9,-0.05 L0.95,0 L1,0"/>
+        </g>
+      </segment>
+    </template>
+    <template code="G*MPSP----****X" name="Obstacle free area" type="polygon">
+      <segment unit="%">
+        <g fill="none" stroke="currentColor" stroke-width="4px">
+          <path d="M0,0 L0.05,0 L0.1,0.05 L0.15,0 L0.25,0 L0.3,0.05 L0.35,0 L0.45,0 L0.5,0.05 L0.55,0 L0.65,0 L0.7,0.05 L0.75,0 L0.85,0 L0.9,0.05 L0.95,0 L1,0"/>
+        </g>
+      </segment>
+    </template>
+    <template code="G*FPAN----****X" name="No-Fire Area" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="4px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.25">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.15" y="0.1">NFA</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="G*MPOFA---****X" name="Mined Area" type="polygon">
+      <segment unit="%">
+        <g stroke="currentColor" stroke-width="4px">
+          <line x1="0" x2="0.45"/>
+          <line x1="0.55" x2="1"/>
+          <g fill="currentColor" font-family="Arial" font-size="0.1">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="0.46" y="0.03">M</text>
+            </g>
+          </g>
+        </g>
+      </segment>
+    </template>
+    <template code="G*MPNR----****X" name="NBC Area" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="4px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.25">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.15" y="0.1">NBC</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="G*EW***********" name="Jamming Area" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="4px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.25">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.15" y="0.1">EW</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="G*ZP***********" name="Paralyzing Area" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="4px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.25">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.15" y="0.1">PA</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="G*ZA***********" name="Blinding Area" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="4px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.25">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.15" y="0.1">BA</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="G*ZD***********" name="Scattering Area" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="4px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.25">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.15" y="0.1">SA</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="O*VPA-----*****" name="Arson/Fire" type="point">
+      <segment/>
+      <marker-start unit="m">
+        <g fill="none" stroke="currentColor" stroke-width="4px" transform="scale(0.7)">
+          <path d="M0,0 L-300,300 L0,600 L300,300 z" fill="#ffffff" fill-opacity="0.5"/>
+          <g fill="currentColor" font-family="Arial" font-size="200">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="-210" y="-250">FIRE</text>
+            </g>
+          </g>
+        </g>
+      </marker-start>
+    </template>
+    <template code="O*VPF-----*****" name="Flood" type="point">
+      <segment/>
+      <marker-start unit="m">
+        <g fill="none" stroke="currentColor" stroke-width="4px" transform="scale(0.5)">
+          <path d="M 0,0 -300,300 0,600 300,300 z" fill="#ffffff" fill-opacity="0.5"/>
+          <g fill="currentColor" font-family="Arial" font-size="150">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="-210" y="-250">FLOOD</text>
+            </g>
+          </g>
+        </g>
+      </marker-start>
+    </template>
+    <template code="S*GPEVEB--*****" name="Bridge" type="line">
+      <marker-start unit="m">
+        <g fill="none" stroke="currentColor">
+          <path d="M0,0 L-300,300 L0,600 L300,300 z" fill="#ffffff" fill-opacity="0.5" stroke-width="4px"/>
+          <g stroke-width="3px">
+            <path d="M-90,120 L-50,140 L-50,460 L-90,480"/>
+            <path d="M90,120 L50,140 L50,460 L90,480"/>
+          </g>
+        </g>
+      </marker-start>
+      <segment>
+        <line stroke="currentColor" stroke-width="4px" x2="1"/>
+      </segment>
+      <marker-mid unit="px">
+        <g stroke-width="2px">
+          <line stroke="currentColor" x1="-5" x2="5" y1=" 5" y2="-5"/>
+          <line stroke="currentColor" x1="-5" x2="5" y1="-5" y2=" 5"/>
+        </g>
+      </marker-mid>
+      <marker-end unit="m">
+        <g fill="none" stroke="currentColor">
+          <path d="M0,0 L-300,300 L0,600 L300,300 z" fill="#ffffff" fill-opacity="0.5" stroke-width="4px"/>
+          <g stroke-width="3px">
+            <path d="M-90,120 L-50,140 L-50,460 L-90,480"/>
+            <path d="M90,120 L50,140 L50,460 L90,480"/>
+          </g>
+        </g>
+      </marker-end>
+    </template>
+    <template code="S*GPEVED--*****" name="Bridge discontinuous" type="line">
+      <marker-start unit="m">
+        <g fill="none" stroke="currentColor">
+          <path d="M0,0 L-300,300 L0,600 L300,300 z" fill="#ffffff" fill-opacity="0.5" stroke-width="4px"/>
+          <g stroke-width="3px">
+            <path d="M-90,120 L-50,140 L-50,460 L-90,480"/>
+            <path d="M90,120 L50,140 L50,460 L90,480"/>
+          </g>
+        </g>
+      </marker-start>
+      <segment>
+        <line stroke="currentColor" stroke-width="4px" x2="1"/>
+      </segment>
+      <marker-mid unit="px">
+        <g stroke-width="2px">
+          <line stroke="currentColor" x1="-5" x2="5" y1=" 5" y2="-5"/>
+          <line stroke="currentColor" x1="-5" x2="5" y1="-5" y2=" 5"/>
+        </g>
+      </marker-mid>
+    </template>
+    <template code="S*GPI-----*****" name="Installation" type="point">
+      <segment/>
+      <marker-start unit="m">
+        <g fill="none" stroke="currentColor" stroke-width="4px">
+          <path d="M0,0 L-300,300 L0,600 L300,300 z" fill="#ffffff" fill-opacity="0.5"/>
+          <g fill="currentColor" font-family="Arial" font-size="180">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="-180" y="-250">INST</text>
+            </g>
+          </g>
+        </g>
+      </marker-start>
+    </template>
+    <template code="G*MPSF----****X" name="Safe point" type="point">
+      <segment/>
+      <marker-start unit="m">
+        <g fill="#ffffff" fill-opacity="0.5" stroke="currentColor" stroke-width="4px" transform="translate(-200,-200)">
+          <path d="M0,0 L-100,-100 L0,0 L0,200 L-100,300 L0,200 L200,200 L300,300 L200,200 L200,0 L300,-100 L200,0 z"/>
+        </g>
+      </marker-start>
+    </template>
+    <template code="G*FPAP----****X" name="Position Area for Artillery (PAA)" type="point">
+      <segment/>
+      <marker-start>
+        <g stroke="currentColor" stroke-width="3px">
+          <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
+          <line x1="-250" x2="250" y1="300" y2="300"/>
+          <g fill="currentColor" font-family="Arial" font-size="220">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="-200" y="-800">PAA</text>
+            </g>
+          </g>
+        </g>
+      </marker-start>
+    </template>
+    <template code="G*GEHOSP--****X" name="Hospital" type="point">
+      <segment/>
+      <marker-start unit="m">
+        <g fill="currentColor" fill-opacity="0.75" stroke="currentColor" stroke-width="1px">
+          <g transform="matrix(0.23,0,0,-0.23,0,0)">
+            <g transform="translate(-574 -860)">
+              <polygon fill="#ffffff" fill-opacity="0.75" points="1149,859 1149,0 0,0 0,859"/>
+              <path d="m 273.94463,269.89129 0,447.99998 c 0,6.6667 2.33333,12.3334 7,17 4.66667,4.6667 10,7 16,7 l 555,0 c 6.66667,0 12,-2.3333 16,-7 4,-4.6666 6.33333,-10.3333 7,-17 l 0,-577.99998 c 0,-6.66667 -2,-12.33333 -6,-17 -4,-4.66667 -9.66667,-7 -17,-7 l -555,0 c -6,0 -11.33333,2.33333 -16,7 -4.66667,4.66667 -7,10.33333 -7,17 l 0,130 z m 374,403.99998 0,-188.99998 -157,0 0,188.99998 -110,0 0,-488.99998 110,0 0,205 157,0 0,-205 111,0 0,488.99998 -111,0 z"/>
+              <path d="M 1149,859 V -1 H 0 v 860 h 1149 z m -25,-22 H 25 V 21 h 1099 v 816 z"/>
+            </g>
+          </g>
+        </g>
+      </marker-start>
+    </template>
+    <template code="G*DIKE********P" name="Dike-P" type="polygon">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="4px" x1="0" x2="1"/>
+      </segment>
+      <marker unit="%">
+        <g fill="currentColor" font-family="Arial" font-size="0.25">
+          <g transform="matrix( 1 0 0 -1 0 0 )">
+            <text x="-0.07" y="0.1">D</text>
+          </g>
+        </g>
+      </marker>
+    </template>
+    <template code="G*DIKE********L" name="Dike-L" type="line">
+      <marker-start unit="%">
+        <g stroke="currentColor" stroke-width="4px">
+          <line x1="-0.05" x2="0.05" y1="-0.05" y2="0.05"/>
+          <line x1="-0.05" x2="0.05" y1="0.05" y2="-0.05"/>
+        </g>
+      </marker-start>
+      <segment unit="%">
+        <g stroke="currentColor" stroke-width="3px">
+          <line x2="1"/>
+          <g fill="currentColor" font-family="Arial" font-size="0.08">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="0.4" y="-0.02">DIKE</text>
+            </g>
+          </g>
+        </g>
+      </segment>
+      <marker-mid unit="%">
+        <g stroke="currentColor" stroke-width="4px">
+          <line x1="-0.05" x2="0.05" y1="-0.05" y2="0.05"/>
+          <line x1="-0.05" x2="0.05" y1="0.05" y2="-0.05"/>
+        </g>
+      </marker-mid>
+      <marker-end unit="%">
+        <g stroke="currentColor" stroke-width="4px">
+          <line x1="-0.05" x2="0.05" y1="-0.05" y2="0.05"/>
+          <line x1="-0.05" x2="0.05" y1="0.05" y2="-0.05"/>
+        </g>
+      </marker-end>
+    </template>
+    <template code="G*EXIT*********" name="Underground exit" type="point">
+      <segment/>
+      <marker-start>
+        <g stroke="currentColor" stroke-width="3px">
+          <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
+          <line x1="-250" x2="250" y1="300" y2="300"/>
+          <g fill="currentColor" font-family="Arial" font-size="180">
+            <g transform="matrix( 1 0 0 -1 0 0 )">
+              <text x="-180" y="-800">EXIT</text>
+            </g>
+          </g>
+        </g>
+      </marker-start>
+    </template>
+    <template name="Road" type="line">
+      <segment unit="%">
+        <g stroke="currentColor" stroke-width="3px">
+          <line x2="1"/>
+        </g>
+      </segment>
+    </template>
+  </category>
+  <category name="Shapes">
+    <template name="Curve arrow" type="curve">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="3px" x1="0" x2="1"/>
+      </segment>
+      <marker-end unit="px">
+        <path d="M-3,8 L15,0 -3,-8 0,0 z" fill="currentColor" stroke="none"/>
+      </marker-end>
+    </template>
+    <template name="Curve" type="curve">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="3px" x1="0" x2="1"/>
+      </segment>
+    </template>
+    <template name="Circle" type="circle">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="3px" x1="0" x2="1"/>
+      </segment>
+    </template>
+    <template name="Polygon" type="polygon">
+      <segment>
+        <line stroke="currentColor" stroke-width="3px" x1="0" x2="1"/>
+      </segment>
+    </template>
+    <template name="Line" type="line">
+      <segment unit="%">
+        <line stroke="currentColor" stroke-width="3px" x1="0" x2="1"/>
+      </segment>
+    </template>
+    <template name="Simple arrow" type="line">
+      <segment>
+        <line stroke="currentColor" x2="1"/>
+      </segment>
+      <marker-end unit="px">
+        <path d="M-3,8 L15,0 -3,-8 0,0 z" fill="currentColor" stroke="none"/>
+      </marker-end>
+    </template>
+    <template name="Bold arrow" type="line">
+      <segment>
+        <line stroke="currentColor" stroke-width="4px" x2="1"/>
+      </segment>
+      <marker-end unit="px">
+        <path d="M-3,8 L15,0 -3,-8 0,0 z" fill="currentColor" stroke="none"/>
+      </marker-end>
+    </template>
+  </category>
+</templates>

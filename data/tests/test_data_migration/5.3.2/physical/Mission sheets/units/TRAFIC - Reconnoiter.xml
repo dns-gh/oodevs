@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="TRAFIC - Reconnoiter">
+  <context>
+    <line>
+      <italic>
+        <text>A mission undertaken to obtain information by visual observation, or other detection methods, about the activities and resources of an enemy, or about the meteorological, hydrographic, or geographic characteristics of a particular area.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to reach a set of ordered terrain objectives in order to search for specific objects (such as mines and various obstacles) by activating a specific "reconnaissance" action. Agents of the simulation are able to reconnoiter objects, specific location and urban blocks. The delay of reconnaissance depends on the type of the objective to reconnoiter. The bigger is the objective, the more the reconnaissance takes time.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>the right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>the right and left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Objectives" optional="false">
+      <line>
+        <text>(point, polygon, urbanKnowledge, objectKnowledge): the set of objectives to reconnoiter.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each of the objective following the order of the elements in the list.  If one of them is not reachable (a urban block inside which the agent cannot move for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed depends on the physical capabilities regarding to terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching an objective, the agent starts the reconnaissance (the report "Position reconnaissance started" should be displayed). After a delay depending on the size of the objective, the reconnaissance ends (the report "Position reconnaissance completed" should be displayed), and the agent starts to move to the next objective.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>Once all the objectives has been reconnoitered, the agent stays on its last position and the mission ends.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

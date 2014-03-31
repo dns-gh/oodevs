@@ -1,0 +1,75 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ENGINEER - Mobility support</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ENGINEER - Mobility support</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action. </i>
+<br>
+<ul>
+<li>A unit which helps another unit in battle. Aviation, artillery, or naval gunfire may be used as a support for infantry.<br>
+</li>
+<li>A part of any unit held back at the beginning of an attack as a reserve.<br>
+</li>
+<li>An element of a command which assists, protects, or supplies other forces in combat.<i></i>
+<br>
+</li>
+</ul>In SWORD, to perform engineer support in order to clear or bypass obstacles. The agent follows friend units to support, and remove blocking obstacles on demand.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Units</h3>Friendly units to support.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent follows friendly units (it follows the nearest unit) at a minimum distance (100 meters). If a chosen following position is not reachable (a followed agent stays in an urban block inside which the agent cannot move, for instance), the agent moves as close as possible (the agent may stay at a distance greater than 100 meters). Average speed depends on the physical capabilities with respect to terrain properties.<br>
+</li>
+<li>Upon reaching a supporting position, the agent is ready to intervene.<br>
+</li>
+<li>If followed units encounter obstacles on their computed path, they ask the agent to intevene. In this case, the agent moves to the obstacles and removes them. The first obstacle to be removed is the one that is the nearest to the unit.<br>
+</li>
+<li>If the supported unit can avoid the encountered obstacle by itself, a new path is computed and the unit continues on to the next waypoint using the new route, while the agent removes the obstacle.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

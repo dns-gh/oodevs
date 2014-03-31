@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Crowd - Follow">
+  <context>
+    <line>
+      <italic>
+        <text>To follow a unit.</text>
+      </italic>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Unit" optional="false">
+      <line>
+        <text>Entity to follow.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The crowd agent moves to the position of the issued agent. If the agent is moving, the crowd agent updates its computed path in order the reach the new position of the unit.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If an obstacle is encountered on the way to the objective, the crowd stops and a new temporary concentration is created. The movement is suspended until the obstacle is removed or the objective moves.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="JOINT - Bomb (enemies within an area)">
+  <context>
+    <line>
+      <italic>
+        <text>For an aircraft to fly over targets within an area in order to destroy or neutralize them.</text>
+      </italic>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected ennemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Route" optional="false">
+      <line>
+        <text>The path to move along.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>Area inside which targets must be found.</text>
+      </line>
+    </parameter>
+    <parameter name="Ammunition" optional="false">
+      <line>
+        <text>Type of ammunition to use.</text>
+      </line>
+    </parameter>
+    <parameter name="Quantity" optional="true">
+      <line>
+        <text>Quantity of projectiles to use for each shot (default value is 100).</text>
+      </line>
+    </parameter>
+    <parameter name="Fly height" optional="true">
+      <line>
+        <text>Height to reach while flying along the route (in meters, default value is 2000 meters).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent takes off at the specified height and moves toward each waypoint defining the route.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon moving nearby the area, the agent tries to launch the specified quantity of projectiles on each encountered enemy found within it.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon executing an indirect fire on a target, the report "Indirect fire completed on target [target name]" is displayed.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>A target won't be shot if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>it is not at a good firing distance regarding the selected ammunition: the message "target out of range" is displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>it is not within the specified area,</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the agent doesn't have the physical capability (no suitable launcher for the dotation type): the message "no Launcher" is displayed.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the agent does not have enough dotation: the message "no ammo" is displayed.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When there are no more waypoints to visit, the agent reaches the aircraft carrier (the agent's altitude is 0 meters) and the mission ends.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

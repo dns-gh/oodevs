@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="OOTW - Control a crowd">
+  <context>
+    <line>
+      <italic>
+        <text>To prevent the outbreak of disorder and prevention of possible riot.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to move to a crowd and try to control it by activating a control action. The action to control a crowd can be long and can require the help of others units.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Crowd" optional="false">
+      <line>
+        <text>The crowd to control.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the crowd.  If it is not reachable (the crowd is inside a urban block inside which the agent cannot move for instance), the agent moves as close as possible, otherwise it moves to the center of the crowd. Average speed depends on the physical capabilities with regard to terrain properties and crowd properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the crowd, the agent starts to activate the control action (the report "trying to control the crowd" should be displayed). After a delay depending on the size of the properties of the crowd, the agent should control the crowd (the report "crowd is under control" should be displayed). If it cannot succeed in controlling the crowd, the agent emits a report (almost impossible to hold crowd) to inform the user of the situation. This report indicates that the agent won't be able to control the crowd if nothing is done (add friendly units to control the crowd or change rules of engagement). </text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>control succeed.png</text>
+      </link>
+    </line>
+    <line>
+      <text>When a crowd is interacting with units trying to control it, and when it is under control, the crowd agent should emit the reports displayed on the under screenshot:</text>
+    </line>
+    <line>
+      <link>
+        <text>crowd reports.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>The agent may fail to control the crowd if it is not efficient enough to control it with regard to crowd properties and behaviors (see descriptions in 'Comments' section):</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>control failed.png</text>
+      </link>
+    </line>
+    <line>
+      <bold>
+        <text>In this case, the agent withdraws from the crowd and reaches a safety position automatically computed on the edge of the crowd. Once it is reached, the mission terminates .</text>
+      </bold>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <bold>
+        <text>Note that a controlled crowd won't be able to perform the "Attack" or "Damage" mission.</text>
+      </bold>
+    </line>
+    <line>
+      <text>The success factor depends on the ratio of forces between the crowd and units trying to control it. The more units try to control the crowd, the faster the agents can control (or keep under control) the crowd.</text>
+    </line>
+    <line>
+      <text>The agent's ability to control a crowd depends on:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the rules of engagement regarding the given crowd (see fragmentary order "change ROE on crowds"): the harder the rules are (use of lethal weapons for instance), the easier the control is (but the agent can kill or wound humans in the crowd)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the number of people in the crowds: the bigger the crowd is, the harder control is (and it takes more time)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the number of (friendly) units trying to control the crowd</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>The task can be customized by changing some parameters for the skill it is using (the 'controlCrowd' skill).</text>
+    </line>
+    <line>
+      <text>The 'periodicity' parameter is used by the agent to measure the ratio of forces evolution. 'Periodicity' is a time defined in minutes. Each time this period passes, the agent checks the evolution of the ratio of forces. If it has decreased with a bigger value defined  by the 'decreaseRate' (in %) parameter, the agent estimates that it is efficient to control the crowd and it continues. If not (the decrease rate is smaller than the given 'decreaseRate' parameter value), the agent emits a report to alert the user that it is not efficient enough to control the crowd. Then it tries another once more. If the decrease rate is still not sufficient, the agent decides to withdraw from the crowd by reaching a safety position. The safety position is automatically computed on the edge of the crowd, with a distance defined by the "safetyDistance" parameter. </text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission terminates if the agent fails to control the crowd.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="control failed.png"/>
+    <attachment name="control succeed.png"/>
+    <attachment name="crowd reports.png"/>
+  </attachments>
+</mission-sheet>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Damage urban blocks within area">
+  <context>
+    <line>
+      <italic>
+        <text>To damage installations.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to damage a set of urban blocks within a zone, by decreasing their structural state. Damages here are intended to mean minor destruction (deconstruction) of urban blocks. This mission may be used to model terrorist attacks, violent demonstrations or riots. A damaged urban block has the effect of making resource nodes less efficient (production decreases, for instance).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area inside which urban blocks must be damaged. </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each urban block which is totally inside the specified area (the order of traversal is randomly defined). If a visited urban block is reachable (the agent can enter it), the agent moves to the center, otherwise it moves to a close position (the position closest to the center).</text>
+    </line>
+    <line>
+      <text>Upon reaching an urban block, the agent starts to deconstruct it during a limited time. The deconstruction time depends on the time required for agent installation (see the authoring tool in "Stances" section, "Time to activate" ). The report "deployment in progress" and "work just started" should be displayed, meaning that the agent is damaging the target. Once the report "deployment complete" is displayed, the time has come for the agent to visit the next urban block.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>An urban block may not be damaged if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the agent doesn't have the physical capacity to deconstruct urban blocks,</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the agent's stances defined in the authoring tool doesn't permit enough time for the agent to damage its target.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this case, the agent decides to act on the next one.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When there are no more urban blocks to visit, the agent stays next to the last visited block and the mission ends.</text>
+    </line>
+    <line>
+      <text>If there are no urban blocks within the area, the mission ends and the report "no urban blocks within area" is displayed.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

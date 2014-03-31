@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/ObjectNames.xsd">
+  <object id="0" type="mines"/>
+  <object id="1" type="safe zone"/>
+  <object id="2" type="jamming area"/>
+  <object id="3" type="full jamming area"/>
+  <object id="4" type="nbc zone (external model)"/>
+  <object id="5" type="nbc cloud (external model)"/>
+  <object id="6" type="nbc zone"/>
+  <object id="7" type="nbc cloud"/>
+  <object id="8" type="fire"/>
+  <object id="9" type="surface fire"/>
+  <object id="10" type="decontamination site"/>
+  <object id="11" type="logistic route"/>
+  <object id="12" type="crossing site"/>
+  <object id="13" type="rota area"/>
+  <object id="14" type="abattis"/>
+  <object id="15" type="anti tank obstacle"/>
+  <object id="16" type="barricade"/>
+  <object id="17" type="mined area (linear)"/>
+  <object id="18" type="mined area (scattered)"/>
+  <object id="19" type="landslide"/>
+  <object id="20" type="road destruction"/>
+  <object id="21" type="bridge destruction"/>
+  <object id="22" type="continuous pontoon bridge"/>
+  <object id="23" type="discontinuous pontoon bridge"/>
+  <object id="24" type="firing post"/>
+  <object id="25" type="gun artillery deployment area"/>
+  <object id="26" type="cobra deployment area"/>
+  <object id="27" type="mrls deployment area"/>
+  <object id="28" type="mortar deployment area"/>
+  <object id="29" type="logistic support area"/>
+  <object id="30" type="landing area"/>
+  <object id="31" type="trail"/>
+  <object id="32" type="platform"/>
+  <object id="33" type="mobility enhanced area"/>
+  <object id="34" type="landing area (helicopter)"/>
+  <object id="35" type="logistic area"/>
+  <object id="36" type="prisoners camp"/>
+  <object id="37" type="refugees camp"/>
+  <object id="38" type="checkpoint"/>
+  <object id="39" type="dropping area"/>
+  <object id="40" type="fire forbidden area"/>
+  <object id="41" type="general obstacle zone"/>
+  <object id="42" type="installation"/>
+  <object id="43" type="distribution point"/>
+  <object id="44" type="sensorsDetectionZone"/>
+  <object id="45" type="sensors"/>
+  <object id="46" type="supply point"/>
+  <object id="47" type="urban block"/>
+  <object id="48" type="dirty bomb"/>
+  <object id="49" type="hospital"/>
+  <object id="50" type="weapon cache"/>
+  <object id="51" type="emergency shelter"/>
+  <object id="52" type="emergency meeting place"/>
+  <object id="53" type="victim discovery zone"/>
+  <object id="54" type="stock"/>
+  <object id="55" type="flood"/>
+  <object id="56" type="population moving"/>
+  <object id="57" type="secured area"/>
+  <object id="58" type="firebreak area"/>
+  <object id="59" type="mined area (linear and destructible)"/>
+  <object id="60" type="dyke"/>
+  <object id="61" type="underground exit"/>
+  <object id="62" type="Country road"/>
+  <object id="63" type="Highway"/>
+  <object id="64" type="Main road"/>
+  <object id="65" type="Secondary road"/>
+  <object id="66" type="Wet terrain"/>
+  <object id="67" type="Snowed terrain"/>
+  <object id="68" type="Iced terrain"/>
+  <object id="69" type="Border"/>
+  <object id="70" type="ressource node"/>
+  <object id="71" type="Arson"/>
+  <object id="72" type="Destruction Bomb"/>
+  <object id="73" type="Medical camp"/>
+  <object id="74" type="Emergency services HQ"/>
+  <object id="75" type="Scaterring grenade"/>
+  <object id="76" type="movement forbidden area"/>
+</objects>

@@ -1,0 +1,85 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>AAA - Defend area</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          AAA - Defend area</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To defend Army ground forces against attack by enemy aircraft.</i>
+<br>In Sword, to move to and occupy an observation position in order to detect and engage flying enemies within the given area.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Area</h3>The area to defend against enemies aircrafts.<br>
+<h3>Meeting position</h3>The position to be reached by the CP.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Positions</h3>The positions from which the surbordinate units observe the area.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues the "Defend area" mission to the subordinate platoons, with a position as parameter. Each platoon is given a position. If no position issued, the commander spilts the area into subareas. Each sub-area is given to a  subbordinate unit as an observing position.<br>
+</li>
+<li>The command post unit moves to the meeting position.<br>
+</li>
+<li>Other units are ordered to follow.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>Here some examples of possible deployments. The behaviors is the same for the "AAA- Monitor area" (used screenshots are taken from this mission).<br>
+<ul>
+<li>Use cases 1 : no positions issued, open terrain. The commander agent splits the area into sub-areas. Each subordinate units occupies a sub-area facing the main area barycenter.<br>
+</li>
+</ul>
+
+<img alt="ML_AAA - Monitor area - open terrain_no positions.png" src="./Images/AAA - Defend area/ML_AAA - Monitor area - open terrain_no positions.png"/><br>
+<ul>
+<li>Use cases 2 : urban blocks have been issued as positions to occupy. Each subordinate units occupies a urban block, facing the area to monitor.<br>
+</li>
+</ul>
+
+<img alt="ML_AAA - Monitor area - urban terrain_issued positions (UB) 2.png" src="./Images/AAA - Defend area/ML_AAA - Monitor area - urban terrain_issued positions (UB) 2.png"/><br>
+<ul>
+<li>Use cases 3 : urban blocks have been issued as positions to occupy. Each subordinate units occupies a urban block, facing the area to monitor.<br>
+</li>
+</ul>
+
+<img alt="ML_AAA - Monitor area - urban terrain_issued positions (UB).png" src="./Images/AAA - Defend area/ML_AAA - Monitor area - urban terrain_issued positions (UB).png"/><br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission continues until another one is issued.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

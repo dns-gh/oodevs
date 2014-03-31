@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Construct">
+  <context>
+    <line>
+      <italic>
+        <text>To construct something.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to know how to create and build a set of planned objects that may be acted upon later on, or that may have an effect on the world. Thus, it is usually a mission preliminary to others.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Works" optional="false">
+      <line>
+        <text>Set of objects to build.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach by the command post and units that don't participate to the bridging operation.</text>
+      </line>
+    </parameter>
+    <parameter name="Wait for reinforcement" optional="true">
+      <line>
+        <text>Define if the subordinate units need to wait for reinforcement when a work cannot be built (default value is FALSE). </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Construct" mission to the engineer platoons, with a set of works as parameter. Works are fairly shared between engineer platoons.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Other units are ordered to reach the meeting position (if the number of engineer platoons is greater than the number of obstacles, non used platoons are ordered to reach the meeting position).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>When all works have been completed, the engineer units move to the meeting position and the mission ends.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>A work may not be built if one of the subordinate units doesn't have the physical capability or it hasn't enough resources to do it. In that case, two possibilities:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the mission parameter "Wait for reinforcement" is set to TRUE : a subordinate unit receive the "Contruct" mission with the object as parameter and wait to be reinforced (the company should be reinforced with adapted device),</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the mission parameter "Wait for reinforcement" is set to FALSE (default value): the object is ignored.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission terminates when all subordinates has finished their mission.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

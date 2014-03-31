@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ART - Target acquisition - Collect intelligence in area">
+  <context>
+    <line>
+      <italic>
+        <text>The systematic observation of aerospace, surface or subsurface areas, places, persons, or things, by visual, aural, electronic, photographic, or other means. To provide continuous view, and the potential for reports on the activity of an objective</text>
+      </italic>
+      <text>.</text>
+    </line>
+    <line>
+      <text>In this sword mission, to move to a dismounting position, and then infiltrate (the agent  leaves embarkation vehicles) to the given 'position' in order to get information about the presence of units within the given area. It is used to simulate the capability of human intelligence units to gather informations,  by applying a magic effect in the area. This effects allows the agent to detect (quickly) others units in the area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected ennemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>Area to get the information from.</text>
+      </line>
+    </parameter>
+    <parameter name="Dismounting position" optional="false">
+      <line>
+        <text>Position onto which the agent dismount to leave the vehicles.</text>
+      </line>
+    </parameter>
+    <parameter name="Observing position" optional="false">
+      <line>
+        <text>Position from which the agent detects units within the area (default value is EMPTY).</text>
+      </line>
+    </parameter>
+    <parameter name="Infiltration mode" optional="true">
+      <line>
+        <text>Defines if the agent uses infiltration to reach the barycenter of the area (defaut value is false).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the dismounting position. If it is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, otherwise it moves to the center of the position. Average speed depends on physical capabilities with respect to terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching this position, the agent leaves the vehicles and moves to the observation position.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the observation position (if it is not reachable, the agent moves as close as possible, otherwise it moves to the center of the objective), the agent starts to apply the detection effect within the area.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If the 'Infiltration mode' parameter is set to 'true' (default value is FALSE), the agent becomes stealthy to simulate the fact that it is able to infiltrate enemy positions and hide in the area. Agents of the simulation won't be able to detect it unless the position is searched by specific units (with the 'Reconnoiter' mission, for instance). When this parameter is set to 'true', a specific report is displayed "infiltrating" meaning that the agent is no longer visible to other agents.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>Note that the agent is no longer invisible (if the 'infiltration mode' parameter is set to 'TRUE')  if the mission terminates with, for instance, an 'End mission' fragmentary order. </text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

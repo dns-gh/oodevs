@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Escort refugees to camp">
+  <context>
+    <line>
+      <italic>
+        <text>A member of the Armed Forces assigned to accompany, assist, or guide an individual or group. </text>
+      </italic>
+    </line>
+    <line>
+      <text>An armed guard that accompanies a convoy, a train, prisoners, etc.</text>
+      <italic/>
+    </line>
+    <line>
+      <text>In SWORD, to accompany refugee units toward a specific location (a position or a camp, for instance).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Camp" optional="false">
+      <line>
+        <text>Camp into which the agent has to accompany the refugee units.</text>
+      </line>
+    </parameter>
+    <parameter name="Refugees" optional="false">
+      <line>
+        <text>Refugee units to be transported to the given camp. </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each given refugee unit, from the nearest to the furthest. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Average speed depends on the physical capabilities regarding the terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a refugee unit, the agent loads it (magic tranportation).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Once all units have been loaded, they are tranported to the given camp. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the camp (the agent moves to the center of it), all transported refugees are unloaded. They are taken into account by the logistics unit of the camp.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If a refugee unit is not reachable (the unit is located inside an urban block inside which the agent cannot move, for instance), the agent moves as close as possible.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If a refugee unit is moving the agent will follow it until it is reached.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Note that if the issued object is not a camp (regarding the objects capacities in authoring tool), the mission ends with a failed status (the report "no camp available")</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends once all the refugee units have been transported on the given camp.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

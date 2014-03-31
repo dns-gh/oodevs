@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Attack objective">
+  <context>
+    <line>
+      <italic>
+        <text>An offensive action characterized by movement supported by fire.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, moving toward the provided objective and engage all enemies in range. The main goal of the mission is to reach (and occupy)  the objective. Enemies should be destroyed or at least driven out from the objective.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Objective" optional="false">
+      <line>
+        <text>The objective to attack.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the first objective. If it is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, else it moves to the center of the objective. Average speed depends on the physical capabilities and terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>While moving toward the objective, the agent engages all enemies within a distance that is sufficient regarding the weapon systems.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>If the provided objective is a 'knowledge agent' unit, the agent will follow and engage the target until its position has been reached. In that case, the mission ends if:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the target objective is lost,</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the target objective is tactically destroyed,</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the target objective is reached. </text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+    <ul>
+      <li>
+        <line>
+          <text>The agent is attacking a 'knowledge agent': the target is not seen (no direct perception regarding the line of sight) and could be lost or have run away.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>COMBAT - Attack an objective.png</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission terminates when the agent has just reached the objective.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="COMBAT - Attack an objective.png"/>
+  </attachments>
+</mission-sheet>

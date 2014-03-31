@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="OOTW - Prevent crowds from crossing">
+  <context>
+    <line>
+      <text>To operate a checkpoint in order to deny the crossing of crowds.</text>
+    </line>
+    <line>
+      <text>In SWORD, to operate a checkpoint (a Sword object can have the ability to filter crowds) with a high blocking strength (all encountered crowds are stopped).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Checkpoint position" optional="false">
+      <line>
+        <text>The position at which the agent creates the checkpoint.</text>
+      </line>
+    </parameter>
+    <parameter name="SafetyPosition" optional="false">
+      <line>
+        <text>The position to reach when the agent cannot stand in front of uncontrolled crowds.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the work location and creates (magically) a checkpoint (the report "control point established" should be displayed)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The agent then moves to the center of the checkpoint in order to operate it (the report "element [object name] is being operated should be displayed).</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>OOTW - Prevent crowds from crossing3.png</text>
+      </link>
+    </line>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text> If the work location is not reachable, the agent moves as close as possible, otherwise it moves to a close position (the closest position from the center of the future object) and the agent builds the object. In this case, it is possible that the object will not be built at the exact location.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If encountered crowds cannot be controlled (see specific reports) the checkpoint may be destroyed and the agent may protect itself by moving to the given safety position:</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>1) The agent tries to deny the crowd from crossing the crossroad:</text>
+    </line>
+    <line>
+      <link>
+        <text>OOTW - Prevent crowds from crossing1.png</text>
+      </link>
+    </line>
+    <line>
+      <text>2) The agent cannot stand in front of the crowd:</text>
+    </line>
+    <line>
+      <link>
+        <text>OOTW - Prevent crowds from crossing2.png</text>
+      </link>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>This mission can end in two ways: </text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>encountered crowds can be kept under control. In this case the agent remains at the checkpoint until mission termination.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>an encountered crowd could not be kept under control. In this case the agent reaches the safety position and the mission terminates.</text>
+        </line>
+      </li>
+    </ul>
+  </mission-end>
+  <attachments>
+    <attachment name="OOTW - Prevent crowds from crossing2.png"/>
+    <attachment name="OOTW - Prevent crowds from crossing3.png"/>
+    <attachment name="OOTW - Prevent crowds from crossing1.png"/>
+  </attachments>
+</mission-sheet>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<health model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Medical.xsd">
+  <times diagnosis-life-expectancy-factor="2" diagnosis-time="1800s" sorting-time="1800s"/>
+  <injuries>
+    <injury back-to-war="false" caring-time="2h" category="UE" life-expectancy="2h" percentage="4" resting-time="48h"/>
+    <injury back-to-war="false" caring-time="1h" category="U1" life-expectancy="6h" percentage="30" resting-time="24h"/>
+    <injury back-to-war="false" caring-time="1h" category="U2" life-expectancy="24h" percentage="34" resting-time="12h"/>
+    <injury back-to-war="false" caring-time="1h" category="U3" life-expectancy="72h" percentage="32" resting-time="2h"/>
+    <injury back-to-war="true" caring-time="96h" category="mental" percentage="20" resting-time="20m"/>
+    <injury back-to-war="false" caring-time="30m" category="contaminated" resting-time="20m"/>
+  </injuries>
+  <resource-availability-alerts>
+    <resource-availability-alert availability-threshold="0" resource="relieve"/>
+    <resource-availability-alert availability-threshold="25" resource="collection"/>
+    <resource-availability-alert availability-threshold="0" resource="collection"/>
+    <resource-availability-alert availability-threshold="0" resource="doctor"/>
+  </resource-availability-alerts>
+</health>

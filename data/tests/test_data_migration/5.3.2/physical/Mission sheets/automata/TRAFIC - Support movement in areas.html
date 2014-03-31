@@ -1,0 +1,76 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>TRAFIC - Support movement in areas</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          TRAFIC - Support movement in areas</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>All actions performed by the platoons in trafic control to block off areas for friend agents.</i>
+<br>In SWORD, to create movement enhanced areas where friend agents move inside it at their maximum speed.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>the right and left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>the right and left boundaries inside which the agent perform the mission.<br>
+<h3>Movement enhanced areas</h3>Set of movement enhanced area objects to perform.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues the "support movement in area" mission to the subordinate platoons, with the given movement enhanced area as parameter.<br>
+</li>
+<li>Other platoons are ordered to reinforce or follow.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>If more movement enhanced areas are given than subordinate platoons, some of movement enhanced areas will not given as parameter to subordinate platoons.<br>
+</li>
+<li>If less movement enhanced areas are given than subordinate platoons, some subordinates platoons which can perform the "support movement in area" mission will received reinforce or follow.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>
+<ul>
+<li>Each platoon is given only one movement enhanced area.<br>
+</li>
+<li>The movement enhanced area is randomly chosen by the commander agent).<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission continues until another one is issued.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

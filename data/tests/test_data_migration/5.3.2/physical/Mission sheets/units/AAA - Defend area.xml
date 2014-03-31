@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="AAA - Defend area">
+  <context>
+    <line>
+      <italic>
+        <text>To defend Army ground forces against attack by enemy aircraft.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to move to and occupy an observation position in order to detect and engage flying enemies within the given area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area to defend against enemies aircrafts.</text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="true">
+      <line>
+        <text>The position from which the agent observe the area.</text>
+      </line>
+    </parameter>
+    <parameter name="ProbabilityToHit" optional="true">
+      <line>
+        <text>The probability to hit (PH) used by the agent to engage enemies entering into the area (a low PH allows the agent to engage far enemies with less attrition, a high PH allows the agent to engage nearby enemies with high attrition). </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given position. If it is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible; otherwise it moves to the center of the position. Average speed depends on the physical capabilities regarding the terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If not issued, the agent stays at its own position.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the position, the agent starts to observe and wait for enemies to come.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>While observing the area, the agent engage all flying enemies that enter the area. </text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <ul>
+      <li>
+        <line>
+          <text>During the mission, if the </text>
+          <italic>
+            <text>position</text>
+          </italic>
+          <text> parameter has not be issued, user may change the observation position of the agent by issued the 'GoTo'  fragmentary order.</text>
+        </line>
+      </li>
+    </ul>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>*  </text>
+      <bold>
+        <text>The agents engage only flying enemies</text>
+      </bold>
+      <text>,</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>The agents won't open fires if:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>known enemies are out of range regarding the weapon systems and remaining dotations,</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>known enemies are not in sight (a enemies may be known but not perceived) regarding sensors and terrain.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>known enemies are not flying </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Ensure that the given position is chosen with care, regarding the perception capability of the agent and the given objective.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

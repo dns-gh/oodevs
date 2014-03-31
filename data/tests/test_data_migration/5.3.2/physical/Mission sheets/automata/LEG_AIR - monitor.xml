@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="LEG_AIR - monitor">
+  <context/>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="false"/>
+    <parameter name="Limit 2" optional="false"/>
+    <parameter name="Area" optional="false"/>
+    <parameter name="Meeting point" optional="false"/>
+    <parameter name="Replenishment sites" optional="true"/>
+    <parameter name="Point logistique" optional="false"/>
+    <parameter name="Portee Action" optional="false"/>
+    <parameter name="Ambiance Mission" optional="false"/>
+  </parameters>
+  <behavior/>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

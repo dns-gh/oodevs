@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="LOG - Deploy (on a position)">
+  <context>
+    <line>
+      <italic>
+        <text>Set-up adopted by a unit for immediate or delayed action.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, for logistics agents, to move toward a deployment position and self-deploy to it. A deployed logistics agent enables its logistics chains.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Deployment position" optional="true">
+      <line>
+        <text>Position to reach to deploy onto it (empty by default).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>If the 'Deployment position' is not issued the agent deploys on its own position. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If a position is issued, the agent moves toward it and self-deploys to it (the report "starting to deploy" then section deployed" should be displayed). The deployment may take some time (see "Deployment" section in "Units" tab).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon deployment termination, the agent activates its logistics chains.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

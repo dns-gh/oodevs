@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Unload transported entities">
+  <context>
+    <line>
+      <text>In SWORD, unloading a crowd or units allows to empty the transportation vehicles of an agent so that agent can be used at its full capacity for carrying out another transportation mission. If a transportation mission was in progress, it is canceled when the "Unload transported crowd" mission is given.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Target destination" optional="true">
+      <line>
+        <text>the location to unload transported element</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward the destination if specified. Once the destination is reached, the agent unloads all transported elements. If the destination is not specified, the agent unloads transported elements on its positions.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If the agent is not transporting any elemement when the mission is given, the agent reports "transport: no crowd to unload". In this case, the agent won't go to the destination if it has been specified.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends whentransported element by the agent have been unloaded.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

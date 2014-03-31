@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Extinguish a fire">
+  <context>
+    <line>
+      <italic>
+        <text>To fix, control and extinguish a fire that threatens populations or structures.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, extinguishing a fire can avoid alerting or evacuating populations from urban blocks. Only occasional fires are used to render the effect of arsons and local fires, to stimulate the intervention of firefighters. They cannot propagate, but can be extinguished by specific units. When an occasional fire is extinguished, it disappears.</text>
+    </line>
+    <line>
+      <text>A fire decreases depending on the decrease rate. When a fire reaches the '0' value, it is extinguished. Extinguishing a fire with specific units applies additional decrease rates on a fire.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Fire" optional="false">
+      <line>
+        <text>the fire to be extinguished</text>
+      </line>
+    </parameter>
+    <parameter name="Garage position" optional="false">
+      <line>
+        <text>The position to reach upon fire extinction.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent detects an extinguishing position and moves toward it. Once it is reached, the agent acts to extinguish the fire (the trace "fire is being extinguished" should be displayed). Once the energy of the fire reaches the '0' value, the fire is extinguished and disappears.</text>
+    </line>
+    <line>
+      <text>Once the fire is extinguished, the agent moves toward the garage position and the mission ends.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>Upon reaching the fire, the agent may not be able to extinguish it. Causes could be:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the fire is already extinguished (the fire goes out while the agent moves toward it)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the agent doesn't have the physical capability (no dotations or no suitable extinguisher, for instance).</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this case, the agent decides to move toward the garage position, displaying the report "fire cannot be extinguished".</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>The time taken to extinguish a fire depends on:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the number of units acting to extinguish the fire and their physical capabilities</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the weather (rain)</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>Note that the time required can be very long if the agent does not have sufficient "capability" to extinguish a fire. In this case, reinforcements should be ordered.</text>
+    </line>
+  </comments>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

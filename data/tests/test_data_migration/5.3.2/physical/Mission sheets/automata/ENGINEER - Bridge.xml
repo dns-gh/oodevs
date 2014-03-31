@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Bridge">
+  <context>
+    <line>
+      <italic>
+        <text>The purpose of any river crossing is to project combat power across a water obstacle to accomplish a mission. The challenge is to minimize the river's impact on the commander's ability to maneuver.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to use given crossing sites object to construct a set of "bridge" objects in order to allow friend units to cross a water obstacle.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach by the command post and units that don't paracipate to the bridging operation.</text>
+      </line>
+    </parameter>
+    <parameter name="Crossing sites" optional="false">
+      <line>
+        <text>Set of objectives to defend.</text>
+      </line>
+    </parameter>
+    <parameter name="Bridge system" optional="false">
+      <line>
+        <text>Define if the bridge system is continuous or discontinuous.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>First stage: crossing sites reconnaissance.</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "Reconnoiter a crossing site" mission to the engineer platoons, with a crossing site as parameter (one platoon per crossing site to reconnoiter).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>Other units are ordered to follow.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Second stage :  the commander agent issues the "Bridge" mission to the engineer platoons, with a crossing site as parameter (one platoon per crossing site to bridge),</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>Other units stays on the meeting position.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>Once the "bridge" objects are constructed, friends units should be able to cross the water obstacle.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>For the commander agent, to order subordinates units to bridge in order to make friend units cross a water obstacle. The mission execution defines two stages: first one is the reconnaissance of the crossing sites, the second one is the bridging of the crossing sites.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Note that only engineer units work for that mission. Other units reach the meeting position.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

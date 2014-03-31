@@ -1,0 +1,1445 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<weapons model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/WeaponSystems.xsd">
+  <weapon-system launcher="20-mm Helicopter Chain Gun" munition="20-mm Shell">
+    <burst duration="5s" munition="4"/>
+    <reloading duration="30s" munition="240"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.9"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.8"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.7"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Air To Air Missile Launcher" munition="Very Short Range Surface To Air Missile">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="4"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="3000" percentage="0.91"/>
+        <hit-probability distance="4000" percentage="0.92"/>
+        <hit-probability distance="5000" percentage="0.85"/>
+        <hit-probability distance="6500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="3000" percentage="0.9"/>
+        <hit-probability distance="4000" percentage="0.9"/>
+        <hit-probability distance="5000" percentage="0.8"/>
+        <hit-probability distance="6500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="3000" percentage="0.82"/>
+        <hit-probability distance="4000" percentage="0.85"/>
+        <hit-probability distance="5000" percentage="0.75"/>
+        <hit-probability distance="6500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal"/>
+    </direct-fire>
+    <indirect-fire average-speed="0" max-range="0" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Very Short Range Surface To Air Launcher" munition="Very Short Range Surface To Air Missile">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="4"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="12.7-mm Machine Gun" munition="12,7-mm Bullet">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.9"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1300" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="14.5-mm Machine Gun" munition="14,5-mm Bullet">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.9"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="5.56-mm Assault Rifle" munition="5.56-mm Bullet">
+    <burst duration="5s" munition="3"/>
+    <reloading duration="20s" munition="25"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="1"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.95"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.85"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="5.56-mm Pistol" munition="5.56-mm Bullet">
+    <burst duration="5s" munition="3"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.95"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.85"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="7.62-mm Sniper Rifle" munition="7.62-mm Bullet">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.95"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.9"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="600" percentage="0.7"/>
+        <hit-probability distance="650" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="68-mm Rocket Launcher" munition="68-mm Rocket">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="0.95"/>
+        <hit-probability distance="250" percentage="0.9"/>
+        <hit-probability distance="260" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="0.95"/>
+        <hit-probability distance="250" percentage="0.9"/>
+        <hit-probability distance="260" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="0.95"/>
+        <hit-probability distance="250" percentage="0.9"/>
+        <hit-probability distance="260" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal"/>
+    </direct-fire>
+    <indirect-fire average-speed="0" max-range="0" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Antitank Missile Launcher" munition="Antitank Missile">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="30s" munition="2"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="3600" percentage="0.9"/>
+        <hit-probability distance="4000" percentage="0.85"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="3200" percentage="0.85"/>
+        <hit-probability distance="3800" percentage="0.75"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="3200" percentage="0.8"/>
+        <hit-probability distance="3600" percentage="0.7"/>
+        <hit-probability distance="4000" percentage="0.4"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal"/>
+    </direct-fire>
+    <indirect-fire average-speed="0" max-range="4000" min-range="800"/>
+  </weapon-system>
+  <weapon-system launcher="81-mm Mortar" munition="81-mm High Explosive Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="300" max-range="5000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="155-mm Gun" munition="155-mm High Explosive Shell Rear Skirt">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="32000" min-range="2500"/>
+  </weapon-system>
+  <weapon-system launcher="155-mm Gun" munition="155-mm Sub-Munition Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="28500" min-range="2500"/>
+  </weapon-system>
+  <weapon-system launcher="155-mm Gun" munition="155-mm Antitank High Explosive Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="26900" min-range="2500"/>
+  </weapon-system>
+  <weapon-system launcher="155-mm Gun" munition="155-mm Illumination Round">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="21500" min-range="2500"/>
+  </weapon-system>
+  <weapon-system launcher="155-mm Gun" munition="155-mm Smoke Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="23300" min-range="2500"/>
+  </weapon-system>
+  <weapon-system launcher="277-mm Multiple Rocket Launcher" munition="277-mm Sub-Munition Rocket">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1000" max-range="32000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="7.62-mm Machine Gun" munition="7.62-mm Bullet">
+    <burst duration="2s" munition="5"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="900" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="900" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="900" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="900" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="120-mm Stabilized Gun" munition="120-mm Shaped Charge">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.9"/>
+        <hit-probability distance="1600" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.7"/>
+        <hit-probability distance="2400" percentage="0.6"/>
+        <hit-probability distance="2800" percentage="0.5"/>
+        <hit-probability distance="3200" percentage="0.3"/>
+        <hit-probability distance="3500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.95"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.75"/>
+        <hit-probability distance="2000" percentage="0.65"/>
+        <hit-probability distance="2400" percentage="0.5"/>
+        <hit-probability distance="2800" percentage="0.2"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.5"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2600" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="20-mm Gun" munition="20-mm Shell">
+    <burst duration="10s" munition="3"/>
+    <reloading duration="30s" munition="15"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="1800" percentage="0.2"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1400" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0.3"/>
+        <hit-probability distance="1200" percentage="0.1"/>
+        <hit-probability distance="1400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="12.7-mm Coaxial Machine Gun" munition="12,7-mm Bullet">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="120s" munition="150"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.65"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.25"/>
+        <hit-probability distance="1600" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="7.62-mm Coaxial Machine Gun" munition="7.62-mm Bullet">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="120s" munition="150"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.75"/>
+        <hit-probability distance="800" percentage="0.35"/>
+        <hit-probability distance="1050" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.7"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="7.62-mm Cupola Machine Gun" munition="7.62-mm Bullet">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="120s" munition="150"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="600" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="200" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="600" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="800" percentage="0.75"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="600" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="200" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="600" percentage="0.8"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="12.7-mm Cupola Machine Gun" munition="12,7-mm Bullet">
+    <burst duration="5s" munition="5"/>
+    <reloading duration="120s" munition="150"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1100" percentage="0.4"/>
+        <hit-probability distance="1200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1050" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="400" percentage="0.75"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="9.00-mm Pistol" munition="9.00-mm Bullet">
+    <burst duration="10s" munition="10"/>
+    <reloading duration="10s" munition="10"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.6"/>
+        <hit-probability distance="50" percentage="0"/>
+        <hit-probability distance="45" percentage="0.2"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.55"/>
+        <hit-probability distance="45" percentage="0.15"/>
+        <hit-probability distance="50" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.5"/>
+        <hit-probability distance="45" percentage="0.08"/>
+        <hit-probability distance="50" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.4"/>
+        <hit-probability distance="45" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="120-mm Mortar" munition="120-mm Hight Explosive Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="7500" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="68-mm Helicopter Rocket Launcher" munition="68-mm Rocket">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+        <hit-probability distance="100" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="5000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="30-mm Helicopter Chain Gun" munition="30-mm Shell">
+    <burst duration="15s" munition="6"/>
+    <reloading duration="40s" munition="6"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1600" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Theater High Altitude Aera Defense Launcher" munition="Theater High Altitude Aera Defense Missile">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="900s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="3000" percentage="1"/>
+        <hit-probability distance="38000" percentage="1"/>
+        <hit-probability distance="39000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="3000" percentage="1"/>
+        <hit-probability distance="38000" percentage="1"/>
+        <hit-probability distance="39000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="3000" percentage="1"/>
+        <hit-probability distance="38000" percentage="1"/>
+        <hit-probability distance="39000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="56-mm Grenade Launcher" munition="56-mm Explosive Grenade">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <indirect-fire average-speed="0" max-range="0" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="56-mm Armoured Vehicle Close Defense Multiple Launcher" munition="56-mm Smoke Grenade">
+    <burst duration="30s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <indirect-fire average-speed="100" max-range="100" min-range="20"/>
+  </weapon-system>
+  <weapon-system launcher="105-mm Gun" munition="105-mm armour-piercing shell">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.9"/>
+        <hit-probability distance="1600" percentage="0.75"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.85"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.95"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.1"/>
+        <hit-probability distance="500" percentage="0.1"/>
+        <hit-probability distance="800" percentage="0.05"/>
+        <hit-probability distance="1200" percentage="0.04"/>
+        <hit-probability distance="1500" percentage="0.03"/>
+        <hit-probability distance="1800" percentage="0.02"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="105-mm Gun" munition="105-mm Shaped Charge">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0.2"/>
+        <hit-probability distance="2800" percentage="0.1"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2400" percentage="0.1"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="0.5"/>
+        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="800" percentage="0.1"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="105-mm Gun" munition="105-mm High Explosive Shell">
+    <burst duration="15s" munition="1"/>
+    <reloading duration="15s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.85"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1600" percentage="0.2"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="1600" percentage="0.05"/>
+        <hit-probability distance="1700" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="500" percentage="0.7"/>
+        <hit-probability distance="1300" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="120-mm Stabilized Gun" munition="120-mm armour-piercing shell">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="1"/>
+        <hit-probability distance="1600" percentage="0.95"/>
+        <hit-probability distance="2000" percentage="0.9"/>
+        <hit-probability distance="2400" percentage="0.8"/>
+        <hit-probability distance="2800" percentage="0.7"/>
+        <hit-probability distance="3200" percentage="0.6"/>
+        <hit-probability distance="3600" percentage="0.4"/>
+        <hit-probability distance="4000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.95"/>
+        <hit-probability distance="1600" percentage="0.9"/>
+        <hit-probability distance="2000" percentage="0.85"/>
+        <hit-probability distance="2400" percentage="0.75"/>
+        <hit-probability distance="2800" percentage="0.65"/>
+        <hit-probability distance="3200" percentage="0.5"/>
+        <hit-probability distance="3600" percentage="0.2"/>
+        <hit-probability distance="3800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.7"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.4"/>
+        <hit-probability distance="2800" percentage="0.2"/>
+        <hit-probability distance="3000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="0.4"/>
+        <hit-probability distance="600" percentage="0.1"/>
+        <hit-probability distance="1800" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="56-mm Grenade Launcher" munition="56-mm Smoke Grenade">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <indirect-fire average-speed="200" max-range="2000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="56-mm Grenade Launcher" munition="56-mm Light Grenade">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <indirect-fire average-speed="0" max-range="0" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="81-mm Mortar" munition="81-mm Smoke Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="300" max-range="5000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="120-mm Mortar" munition="120-mm Smoke Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="7500" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="81-mm Mortar" munition="81-mm Illumination Round">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="300" max-range="5000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="120-mm Mortar" munition="120-mm Illumination Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="7500" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Air To Ground Missile Launcher" munition="Antitank Missile">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="300s" munition="4"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="500" percentage="0"/>
+        <hit-probability distance="550" percentage="1"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="4200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="4200" percentage="0"/>
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="550" percentage="1"/>
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="4000" percentage="1"/>
+        <hit-probability distance="4200" percentage="0"/>
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="500" percentage="0"/>
+        <hit-probability distance="550" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal"/>
+    </direct-fire>
+    <indirect-fire average-speed="0" max-range="0" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Short Range Surface To Air Launcher" munition="Short Range Surface To Air Missile">
+    <burst duration="20s" munition="1"/>
+    <reloading duration="30s" munition="2"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+        <hit-probability distance="0" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="6000" percentage="0"/>
+        <hit-probability distance="450" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Bomber Launcher" munition="Air Bomb">
+    <burst duration="10s" munition="5"/>
+    <reloading duration="10s" munition="5"/>
+    <indirect-fire average-speed="200" max-range="5000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="25-mm Chain Gun" munition="25-mm Shell">
+    <burst duration="5s" munition="4"/>
+    <reloading duration="30s" munition="230"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.9"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.8"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.7"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="227-mm Multiple Rocket Launcher" munition="227-mm Sub-Munition Rocket">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="2"/>
+    <indirect-fire average-speed="1000" max-range="32000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="30-mm Gatling Gun" munition="30-mm Shell">
+    <burst duration="1s" munition="60"/>
+    <reloading duration="1h" munition="1174"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.2"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="122-mm Multiple Rocket Launcher" munition="122-mm Rocket">
+    <burst duration="20s" munition="40"/>
+    <reloading duration="10m" munition="40"/>
+    <indirect-fire average-speed="700" max-range="20380" min-range="500"/>
+  </weapon-system>
+  <weapon-system launcher="152-mm Gun" munition="152-mm Antitank Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="18500" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="152-mm Gun" munition="152-mm High Explosive Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="18500" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="152-mm Gun" munition="152-mm High Explosive MPA Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="24000" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="125-mm Stabilized Gun" munition="125-mm Antitank Shell">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.95"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.15"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.25"/>
+        <hit-probability distance="2100" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="100" percentage="0.9"/>
+        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="0" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="125-mm Stabilized Gun" munition="125-mm Armour Piercing Shell">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="1"/>
+        <hit-probability distance="1600" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="2400" percentage="0.3"/>
+        <hit-probability distance="2800" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.85"/>
+        <hit-probability distance="1600" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.55"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2200" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="500" percentage="0.95"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="125-mm Stabilized Gun" munition="125-mm High Explosive Shell">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="3"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1400" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.8"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.55"/>
+        <hit-probability distance="1600" percentage="0.35"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1600" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.55"/>
+        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="900" percentage="0.3"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="MANPAD Missile Launcher" munition="MANPAD Missile">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4100" percentage="1"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4100" percentage="1"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="350" percentage="1"/>
+        <hit-probability distance="4100" percentage="1"/>
+        <hit-probability distance="4300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="152-mm Gun" munition="152-mm Smoke Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="18500" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="20-mm Gatling Gun" munition="20-mm Shell">
+    <burst duration="1s" munition="100"/>
+    <reloading duration="1h" munition="511"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.8"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.2"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="2000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="155-mm Gun" munition="155-mm FASCAM Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="28500" min-range="2500"/>
+  </weapon-system>
+  <weapon-system launcher="152-mm Gun" munition="152-mm Chemical Shell">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="400" max-range="18500" min-range="1000"/>
+  </weapon-system>
+  <weapon-system launcher="SA-8 Launcher" munition="SA-8 Missile">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10m" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="1"/>
+        <hit-probability distance="12000" percentage="1"/>
+        <hit-probability distance="15000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="1"/>
+        <hit-probability distance="12000" percentage="1"/>
+        <hit-probability distance="15000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="1"/>
+        <hit-probability distance="12000" percentage="1"/>
+        <hit-probability distance="15000" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="10" percentage="1"/>
+        <hit-probability distance="12000" percentage="1"/>
+        <hit-probability distance="15000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Sig-Sauer SP 2022" munition="9.00-mm Bullet">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="10s" munition="10"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.6"/>
+        <hit-probability distance="50" percentage="0"/>
+        <hit-probability distance="45" percentage="0.2"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.55"/>
+        <hit-probability distance="45" percentage="0.15"/>
+        <hit-probability distance="50" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.5"/>
+        <hit-probability distance="45" percentage="0.08"/>
+        <hit-probability distance="50" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="35" percentage="0.4"/>
+        <hit-probability distance="45" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="7.62-mm Assault Rifle" munition="7.62-mm Bullet">
+    <burst duration="5s" munition="3"/>
+    <reloading duration="20s" munition="30"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.95"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.85"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="100" percentage="1"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="400" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="30-mm Gun" munition="30-mm Shell">
+    <burst duration="15s" munition="6"/>
+    <reloading duration="40s" munition="6"/>
+    <direct-fire>
+      <hit-probabilities target="Stealth"/>
+      <hit-probabilities target="Heavy">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.9"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.2"/>
+        <hit-probability distance="2500" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Medium">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2300" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Small">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="400" percentage="1"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="1900" percentage="0"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personal">
+        <hit-probability distance="0" percentage="0.9"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="1000" percentage="0"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Hand" munition="Homemade bomb">
+    <burst duration="20s" munition="1"/>
+    <reloading duration="20s" munition="1"/>
+    <indirect-fire average-speed="30" max-range="200" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Bomber Launcher" munition="Antitank Air Bomb">
+    <burst duration="10s" munition="5"/>
+    <reloading duration="10s" munition="5"/>
+    <indirect-fire average-speed="200" max-range="5000" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Hand" munition="56-mm Explosive Grenade">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <indirect-fire average-speed="30" max-range="200" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="Hand" munition="Dispersion grenade">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <indirect-fire average-speed="30" max-range="200" min-range="0"/>
+  </weapon-system>
+</weapons>

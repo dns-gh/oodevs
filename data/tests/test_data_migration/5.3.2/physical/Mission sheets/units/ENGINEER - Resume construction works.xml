@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ENGINEER - Resume construction works">
+  <context>
+    <line>
+      <italic>
+        <text>To resume construction of something.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to continue building a set of existing objects. This mission can be used to complete the construction of unfinished works. It could be used to model the repairing of damaged installations, urban blocks. It can be also used to complete the contruction and improvement of engineering obstacles (counter mobility support missions).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Works" optional="false"/>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach when resumed work has terminated.</text>
+      </line>
+    </parameter>
+    <parameter name="Wait for reinforcement" optional="true">
+      <line>
+        <text>Define if agent needs to wait for reinforcements when it is not able to carry out work (false by default). </text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward each work to construct. The order of visit is from the nearest to the furthest. The positions reached to construct each object are automatically determined by the agent.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a construction position, the agent starts to construct the object (the "work just started" report should be displayed). Upon construction termination (the report "work completed for object[object name]" should be displayed), the agent moves to the next work to do (next construction position for the next object to construct).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>In obstacle contruction, if the parameter "Improve with mines" is set to TRUE, the agents improves (or completes the improvement of) each obstacle with mines.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Work may not be completed. If the agent doesn't have the physical capability or if it hasn't enough resources. In this specific case, the agent behaves in two ways depending on the "waitForReinforcement" parameter: </text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>if it is set to FALSE, (default value) the report 'Impossible work' is displayed, and the agent moves to the next work to construct;</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>if it is set to TRUE, the agent will stay nearby the object and ask for reinforcements. It won't move to the next work until it is totally constructed.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts to construct an object.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission is completed when all works have been visited; the agent moves to the meeting position and the mission terminates.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

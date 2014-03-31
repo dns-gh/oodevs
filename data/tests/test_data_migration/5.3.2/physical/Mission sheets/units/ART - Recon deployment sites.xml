@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ART - Recon deployment sites">
+  <context>
+    <line>
+      <italic>
+        <text>The acquisition and processing of information concerning the enemy, the terrain, and the meteorological conditions; this information is necessary to make sure of the performance of combat activities of rocket troops and artillery.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to know how to reconnoiter positions and build a set of planned objects that may be used by ARTY firing units to get deployed. Thus, it is usually a mission preliminary to the artillery "deploy" mission.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected ennemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Positions" optional="false">
+      <line>
+        <text>Set of position to build (positions are OBJECTS here).</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Meeting point to reach upon the reconnaissance is done.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves toward each position to construct. The order of visit is user defined. The positions reached to build each position are automatically determined by the agent.</text>
+    </line>
+    <line>
+      <text>Upon reaching a position, the agent starts to reconnoiter it (it takes time) and then starts to construct the object position  (the "work just started" report should be displayed). </text>
+    </line>
+    <line>
+      <text>Upon construction termination (the report "work completed for object[object name]" should be displayed), the agent moves to the next position.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>Work may not be completed if the agent doesn't have the physical capability or lacks resources. In that case, the report 'work impossible, no capacity' is displayed, and the agent moves to the next position.</text>
+    </line>
+    <line>
+      <text>If needed, the agent dismounts to construct an position.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission is finished when all positions have been visited. The agent then moves to the meeting position and the mission terminates.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

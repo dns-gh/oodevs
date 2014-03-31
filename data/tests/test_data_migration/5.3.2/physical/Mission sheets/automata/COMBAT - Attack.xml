@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Attack">
+  <context>
+    <line>
+      <italic>
+        <text>An offensive action characterized by movement supported by fire.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, moving toward an objective aggressively. Here, the objective of the mission is the line defined by the end  of the area of responsability.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Echelon number" optional="true">
+      <line>
+        <text>Define if the maneuver is organized into one or two echelons (default value is "2").</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Forward echelon units :</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "Attack" mission to each of the first echelon units, </text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>The agent allocates an sub-area of responsability,and an sub-objective defined by the position at the end of their area of responsability.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Rear echelon units</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "mobility support" mission to the engineer units, with the first echelon units as parameters.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>Other units (reserve and non adapted units) receive the "follow" mission with the first echelon units as a parameter.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>In case of an attack by an enemy, combat units of the second echelon may receive the "combat support" mission (the enemy may be engaged).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>In case of a first echelon unit destruction, combat units of the second echelon may releive this unit.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Upon issuing the mission, the commander agent coordinates its subordinate units.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a coordination ligne or the departure line (if issued), the commander agent waits for the "continue maneuver" FRAGO to go on. In that cas, the report "waiting for frag to cross the line of departure" is displayed.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when all the subordinate agents have finished their mission.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

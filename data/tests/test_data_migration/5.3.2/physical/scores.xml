@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<scores model-version="4.8.2">
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <score name="Number of dead">
+      <formula><![CDATA[sum(domain( humans( $ranks, $dead ), $party))]]></formula>
+      <gauge type="Default"/>
+      <constants>
+        <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+        <constant id="$dead" type="human states" value="dead"/>
+        <constant id="$ranks" type="human ranks" value="officer,troopers,sub-officer"/>
+      </constants>
+      <indicators>
+        <indicator>
+          <extract function="humans" id="1" ranks="officer,troopers,sub-officer" states="dead"/>
+          <transform function="domain" id="2" input="1" select="$$UNIT_LIST$$" type="unsigned long"/>
+          <reduce function="sum" id="3" input="2" type="unsigned long"/>
+          <result function="indicator" input="3" name="Number of dead" type="unsigned long"/>
+        </indicator>
+      </indicators>
+    </score>
+  </foreach>
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <score name="Number of wounded">
+      <formula><![CDATA[sum(domain( humans( $ranks, $wounded ), $party))]]></formula>
+      <gauge type="Default"/>
+      <constants>
+        <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+        <constant id="$wounded" type="human states" value="wounded,in-maintenance,in-treatment,mental,nbc"/>
+        <constant id="$ranks" type="human ranks" value="officer,troopers,sub-officer"/>
+      </constants>
+      <indicators>
+        <indicator>
+          <extract function="humans" id="1" ranks="officer,troopers,sub-officer" states="dead"/>
+          <transform function="domain" id="2" input="1" select="$$UNIT_LIST$$" type="unsigned long"/>
+          <reduce function="sum" id="3" input="2" type="unsigned long"/>
+          <result function="indicator" input="3" name="Number of wounded" type="unsigned long"/>
+        </indicator>
+      </indicators>
+    </score>
+  </foreach>
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <foreach source="ammunition" variable="$$TYPE$$">
+      <score name="Ammunition left">
+        <formula><![CDATA[sum( domain( resources( $ammunition ), $party ) )]]></formula>
+        <gauge type="Default"/>
+        <constants>
+          <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+          <constant id="$ammunition" type="dotation list" value="$$TYPE$$"/>
+        </constants>
+        <indicators>
+          <indicator>
+            <extract dotations="$$TYPE$$" function="resources" id="1"/>
+            <transform function="domain" id="2" input="1" select="$$UNIT_LIST$$" type="int"/>
+            <reduce function="sum" id="3" input="2" type="int"/>
+            <result function="indicator" input="3" name="Ammunition left" type="int"/>
+          </indicator>
+        </indicators>
+      </score>
+    </foreach>
+  </foreach>
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <foreach source="equipment" variable="$$TYPE$$">
+      <score name="Equipments left">
+        <formula><![CDATA[sum( domain( equipments( $equipment, $states ), $party ) )]]></formula>
+        <gauge type="Default"/>
+        <constants>
+          <constant id="$equipment" type="equipment list" value="$$TYPE$$"/>
+          <constant id="$states" type="equipment states" value="available"/>
+          <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+        </constants>
+        <indicators>
+          <indicator>
+            <extract equipments="2" function="equipments" id="1" states="available"/>
+            <transform function="domain" id="2" input="1" select="$$UNIT_LIST$$" type="unsigned long"/>
+            <reduce function="sum" id="3" input="2" type="unsigned long"/>
+            <result function="indicator" input="3" name="Equipments left" type="unsigned long"/>
+          </indicator>
+        </indicators>
+      </score>
+    </foreach>
+  </foreach>
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <score name="Direct fire power">
+      <formula><![CDATA[sum( domain( direct-fire-power(), $party ) )]]></formula>
+      <gauge type="Default"/>
+      <constants>
+        <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+      </constants>
+      <indicators>
+        <indicator>
+          <extract function="direct-fire-power" id="1"/>
+          <transform function="domain" id="2" input="1" select="$$UNIT_LIST$$" type="float"/>
+          <reduce function="sum" id="3" input="2" type="float"/>
+          <result function="indicator" input="3" name="Direct fire power" type="float"/>
+        </indicator>
+      </indicators>
+    </score>
+  </foreach>
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <score name="Indirect fire power">
+      <formula><![CDATA[sum( domain( indirect-fire-power(), $party ) )]]></formula>
+      <gauge type="Default"/>
+      <constants>
+        <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+      </constants>
+      <indicators>
+        <indicator>
+          <extract function="indirect-fire-power" id="1"/>
+          <transform function="domain" id="2" input="1" select="$$UNIT_LIST$$" type="float"/>
+          <reduce function="sum" id="3" input="2" type="float"/>
+          <result function="indicator" input="3" name="Indirect fire power" type="float"/>
+        </indicator>
+      </indicators>
+    </score>
+  </foreach>
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <score name="Close combat power">
+      <formula><![CDATA[sum( domain( close-combat-power(), $party ) )]]></formula>
+      <gauge type="Default"/>
+      <constants>
+        <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+      </constants>
+      <indicators>
+        <indicator>
+          <extract function="close-combat-power" id="1"/>
+          <transform function="domain" id="2" input="1" select="$$UNIT_LIST$$" type="float"/>
+          <reduce function="sum" id="3" input="2" type="float"/>
+          <result function="indicator" input="3" name="Close combat power" type="float"/>
+        </indicator>
+      </indicators>
+    </score>
+  </foreach>
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <score name="Engineering power">
+      <formula><![CDATA[sum( domain( engineering-power(), $party ) )]]></formula>
+      <gauge type="Default"/>
+      <constants>
+        <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+      </constants>
+      <indicators>
+        <indicator>
+          <extract function="engineering-power" id="1"/>
+          <transform function="domain" id="2" input="1" select="$$UNIT_LIST$$" type="float"/>
+          <reduce function="sum" id="3" input="2" type="float"/>
+          <result function="indicator" input="3" name="Engineering power" type="float"/>
+        </indicator>
+      </indicators>
+    </score>
+  </foreach>
+</scores>

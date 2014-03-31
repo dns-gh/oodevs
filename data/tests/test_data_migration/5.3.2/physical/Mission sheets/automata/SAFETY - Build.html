@@ -1,0 +1,104 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SAFETY - Build</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          SAFETY - Build</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>To construct something.</i>
+<br>In SWORD, to know how to create and build a set of planned objects that may be acted upon later on, or that may have an effect on the world. Thus, it is usually a mission preliminary to others.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Works</h3>Set of objects to build.<br>
+<h3>Rally point</h3>Position to reach after performing the mission.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Instantaneously</h3>Defines if the subordinates will perform the works instantaneously (magically).<br>
+<h3>Wait for reinforcement</h3>Defines if the subordinate units need to wait for reinforcement when a work cannot be built (default value is FALSE). <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues a "Perform Works" order to each capable agent. There are two cases :<br>
+</li>
+<ul>
+<li>If there are strictly more works to perform than capable units, all the units will be provided one obstacle. As soon as a unit has finished to build an obstacle, another obstacle will be assigned to him, unless there is no more obstacle left to build, in which case he will receive a *Move to* order to the rally point, or will help with other works if he can.<br>
+</li>
+</ul>
+</ul>
+
+<img alt="build1.png" src="./Images/SAFETY - Build/build1.png"/><br>
+<i>Assigning the first obstacles.</i>
+<br>
+
+<img alt="build2.png" src="./Images/SAFETY - Build/build2.png"/><br>
+<i>One subordinate will build the last obstacle, and the other subordinates will reinforce him.</i>
+<br>
+<ul>
+<ul>
+<li>Otherwise, the obstacles will all be provided to the units at the beginning of the mission. They will be fairly distributed among them. Multiple units can work on the same obstacle to work faster. Once a unit has finished its assigned work, he may help with other works if he can.<br>
+</li>
+</ul>
+</ul>
+
+<img alt="build3.png" src="./Images/SAFETY - Build/build3.png"/><br>
+<i>One subordinate will go build the first checkpoint, and the other two subordinates will build the second checkpoint.</i>
+<br>
+<ul>
+<li>When all works have been completed, the engineer units move to the meeting position and the mission ends<br>
+</li>
+</ul>
+<ul>
+<li>The other units are given a "Move To" order to the rally point.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>A work may not be built if one of the subordinate units doesn't have the physical capability or it hasn't enough resources to do it. In that case, two possibilities:<br>
+</li>
+<ul>
+<li>the mission parameter "Wait for reinforcement" is set to TRUE : a subordinate unit receive the "Contruct" mission with the object as parameter and wait to be reinforced (the company should be reinforced with adapted device),<br>
+</li>
+<li>the mission parameter "Wait for reinforcement" is set to FALSE (default value): the object is ignored.<br>
+</li>
+</ul>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission terminates when all subordinates has finished their mission.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

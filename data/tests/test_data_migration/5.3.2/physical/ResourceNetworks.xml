@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<resource-networks model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/ResourceNetworks.xsd">
+  <resource-network name="Electricity">
+    <resource id="91"/>
+    <color rgb="0xffff7f"/>
+    <defaults production="0"/>
+  </resource-network>
+  <resource-network name="Natural Gas">
+    <resource id="93"/>
+    <color rgb="0x00aaff"/>
+    <defaults production="0"/>
+  </resource-network>
+  <resource-network name="Running Water">
+    <resource id="92"/>
+    <color rgb="0xaaaa7f"/>
+    <defaults production="0"/>
+  </resource-network>
+</resource-networks>

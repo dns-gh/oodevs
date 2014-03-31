@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Attack">
+  <context>
+    <line>
+      <italic>
+        <text>An offensive action characterized by movement supported by fire.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, moving along a route defined by waypoints and engage all enemies in range. </text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Route" optional="false">
+      <line>
+        <text>The set of objectives to reach.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the first objective. If it is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, else it moves to the center of the objective. Average speed depends on the physical capabilities and terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>While moving toward the objective, the agent engages all enemies within a distance that is sufficient regarding the weapon systems.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the first objective the agent moves to the next one with the same behavior, until the last one is reached.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When the last objective has been reached.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

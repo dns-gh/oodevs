@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="ASY - Hide">
+  <context>
+    <line>
+      <italic>
+        <text>To hide in a given objective.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, for asymmetric threats (such as terrorists) to simply move to an objective trying to be invisible (the agent goes undetected). </text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Objective" optional="false">
+      <line>
+        <text>Objective to hide into</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the objective. If the objective is not reachable, the agent moves as close as possible (the agent can move within it), the agent moves to the center, else it moves to a close position (the  position closest to the center).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Average speed depends on physical capabilities with respect to terrain properties.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>Upon reaching the objective the mission terminates.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

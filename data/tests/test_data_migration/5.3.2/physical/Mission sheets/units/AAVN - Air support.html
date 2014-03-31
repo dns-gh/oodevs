@@ -1,0 +1,76 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>AAVN - Air support</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          AAVN - Air support</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action.</i>
+<br>
+<ul>
+<li>A unit which helps another unit in battle. Aviation, artillery, or naval gunfire may be used as support for infantry.<br>
+</li>
+<li>A part of any unit held back at the beginning of an attack as a reserve.<br>
+</li>
+<li>An element of a command which assists, protects, or supplies other forces in combat.<i></i>
+<br>
+</li>
+</ul>In SWORD, supporting a unit is to provide intelligence and DIRECT FIRES, in order to destroy or neutralize dangerous enemies, by moving from one supporting position to another.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Units</h3>Friendly units to support.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Aviation range</h3>The aviation range enforced during the supplying.<br>
+<h3>Rally point</h3>The rally point of the mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent chooses and moves toward a supporting position to get ready to provide fire to supported units. If the chosen position is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed depends on the physical capabilities while taking into account terrain properties.<br>
+</li>
+<li>The chosen position can change dynamically if the supported agents moves. In that case, the agent moves from one position to another.<br>
+</li>
+<li>Upon reaching a supporting position, the agent fires at enemies that engage supported friends.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>If an "End mission" fragmentary order is given, then the agent will end its mission and move to the rally point. This is the only use of the "rally point" parameter in this mission.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

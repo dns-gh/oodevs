@@ -1,0 +1,64 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Scout</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Scout</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>A mission undertaken to obtain information by visual observation, or other detection methods, about the activities and resources of an enemy, or about the meteorological, hydrographic, or geographic characteristics of a particular area.</i>
+<br>In Sword, to reach a set of ordered terrain objectives in order to search for enemies, or specific objects (such as mines and various obstacles) by activating a specific "reconnaissance" action. Agents of the simulation are able to reconnoiter objects, specific locations and urban blocks. The delay of reconnaissance depends on the type of the objective to reconnoiter. The bigger the objective is, the more the reconnaissance takes time.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Objectives</h3>Objectives to reconnoiter.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Search objectives</h3>Defines if the agent needs to search the objectives. <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves toward each of the objective following the order of the elements in the list.  If one of them is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, otherwise it moves to the center of the position. Average speed depends on the physical capabilities, taking into account terrain properties. <br>
+</li>
+<li>Upon reaching an objective, the agent starts the reconnaissance (the report "Position reconnaissance started" should be displayed). After a delay depending on the size of the objective, the reconnaissance ends (the report "Position reconnaissance completed" should be displayed), and the agent starts to move to the next objective.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>Specific units such as terrorists (those units go undetected) can hide in key terrain positions. Searching the objectives allows the agent to find them, but it can takes some time...If the "search objectives" parameter is set to 'TRUE', the agent starts to search an objective upon reconnaissance termination, before moving to the next one. <br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>Once all the objectives has been reconnoitered, the agent stays at its last position and the mission ends.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

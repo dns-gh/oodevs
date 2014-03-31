@@ -1,0 +1,67 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>OOTW - Drop off captured units</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          OOTW - Drop off captured units</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>A mission to drop off captured units in a position.</i>
+<br>In Sword, to reach a position and to drop off the required units. Units may be transported by the agent.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Position</h3>The location at which the agent has to unload the given units.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent performs the mission.<br>
+<h3>Captured units</h3>The units to be unloaded at the given location. If parameter is not filled, the agent will drop off all captured units.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves to the given position. If the position is not reachable (an urban block the agent enter, for instance), the agent moves as close as possible, otherwise it moves to the center of the position. Average speed depends on the physical capabilities with regard to terrain properties.<br>
+</li>
+<li>The agent moves to the position given by user. <br>
+</li>
+<li>Then, the agent unloads the "captured units" given by user otherwise the agent unloads all captured units.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>The selected units are not being transported by the agent. In that case, the agent emits the report "the selected unit is already unloaded" should be displayed.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>This mission is not intended to liberate prisoners : if the provided units are prisoners, they will be dropped off as usual, but they still won't be able to communicate.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends when all captured units have been unloaded at the position.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

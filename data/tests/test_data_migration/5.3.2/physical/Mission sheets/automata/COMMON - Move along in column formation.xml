@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Move along in column formation">
+  <context>
+    <line>
+      <italic>
+        <text>To move to an objective in order to reach it.</text>
+      </italic>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected ennemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Route" optional="false">
+      <line>
+        <text>Path to move along.</text>
+      </line>
+    </parameter>
+    <parameter name="Distance" optional="true">
+      <line>
+        <text>The minimum distance to respect between agents.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent computes the smallest maximal speed among all the units in the company. The commander agent then issues a *Move To* order to every subordinate (except the CP unit) towards positions around the CP unit at a certain distance (this distance matches the distance that a unit can cover when going at the previously computed speed). </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Once every subordinate is on its assigned position, the commander agent will issue a "Move To" order to the CP agent with the provided waypoints, and then at each time step, another subordinate will receive *Move To" order with the provided waypoints but starting with the initial position of the CP agent.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>moveAlongColumnX1.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The company agent computes the initial positions.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>moveAlongColumnX2.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The subordinates reach these positions.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>moveAlongColumnX3.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The CP agent starts its movement.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>moveAlongColumnX4.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>A subordinate will receive the *Move To* order, then another one, and so on.</text>
+      </italic>
+    </line>
+    <line>
+      <link>
+        <text>moveAlongColumnX5.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The company moves along the path in a column formation.</text>
+      </italic>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>A flying agent receiving this mission will take off at the beginning of the mission, and will land upon arrival at the final objective.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="moveAlongColumnX1.png"/>
+    <attachment name="moveAlongColumnX2.png"/>
+    <attachment name="moveAlongColumnX3.png"/>
+    <attachment name="moveAlongColumnX4.png"/>
+    <attachment name="moveAlongColumnX5.png"/>
+  </attachments>
+</mission-sheet>

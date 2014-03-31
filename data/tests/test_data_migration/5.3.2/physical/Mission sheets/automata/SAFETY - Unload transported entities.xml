@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Unload transported entities">
+  <context>
+    <line>
+      <italic>
+        <text>To provide general transport service in the movement of personnel and cargo.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, transporting crowds or units allows to move them to a given location with appropriate means. Because the agent can only transports crowds' concentrations, this mission needs a loading position to indicate which concentration to transport. Indeed, a crowd can be composed of several separated concentrations and only one concentration can be transported at a time. The agent will transport the nearest concentration from the "loadingPoint" parameter.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Destination position" optional="false">
+      <line>
+        <text>Destination where the element will be unloaded.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Unload transported element" mission to all subordinate units able to perform it.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Subordinate units that cannot perform the transportation mission follow others units.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Units move to the destination position and unloaded the transported crowd.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends when the transported element is unloaded.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

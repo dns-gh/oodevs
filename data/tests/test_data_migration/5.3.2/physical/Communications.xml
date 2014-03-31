@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<communications model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/Communications.xsd">
+  <communication-breakdown reloading-time-modifier="1.5" speed-modifier="0.8"/>
+</communications>

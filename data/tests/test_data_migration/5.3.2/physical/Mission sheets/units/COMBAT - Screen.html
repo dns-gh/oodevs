@@ -1,0 +1,74 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>COMBAT - Screen</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          COMBAT - Screen</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>Combat action which is to inform the ongoing progress of a running enemy in front of him with mobile elements which, without engaging or identifying, seizes any opportunity to clarify the information on the enemy</i>.<br>In sword, to move from one position to another in order to monitor appoaching enemies.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Positions</h3>The positions from which the agent monitors the approaching enemies.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Limit 1</h3>Right and left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right and left boundaries inside which the agent performs the mission.<br>
+<h3>Stay on position at mission start</h3>Defines if at the beginning of the mission, the agent may stay at its current position or if it may move directly to the first one.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The agent moves to each position to monitor approaching enemies. If a visited position is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, otherwise it moves to the center of the position.<br>
+</li>
+<li>Upon reaching a position,the agent waits for enemies to come.<br>
+</li>
+<li>
+<b>The agent decides to move to the next one if its ratio of forces is low and if it has been detected by at least one enemy</b>.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td>
+<ul>
+<li>
+<b>If the "disengage" fragmentary order is issued by user, the unit moves to the next position</b>.<br>
+</li>
+<li> If the "Stay on position at mission start" is set to 'FALSE', the agent starts the mission by reaching the first position in the "positions" list.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>The agent reaches the positions in the order of the 'positions' list.<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td>The mission ends if the agent reaches the last position or if another mission (or "the cancel maneuver" fragmentary order) is issued by user.<br>
+</td>
+</tr>
+</table>
+</body>
+</html>

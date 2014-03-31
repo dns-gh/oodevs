@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<natures model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/ResourceNatures.xsd">
+  <nature id="13" type="Gaseous"/>
+  <nature id="12" type="Liquid"/>
+  <nature id="11" type="Electricity"/>
+  <nature id="1" type="Kerosene"/>
+  <nature id="2" type="Diesel"/>
+  <nature id="3" type="Solid"/>
+  <nature id="5" type="Sprayed water"/>
+  <nature id="6" type="Fire Retardant Foam"/>
+  <nature id="7" type="Powder"/>
+  <nature id="8" type="CO2"/>
+  <nature id="9" type="Sand"/>
+  <nature id="10" type="Halocarbon"/>
+  <nature id="14" type="Water"/>
+  <nature id="15" type="Gasoil"/>
+</natures>

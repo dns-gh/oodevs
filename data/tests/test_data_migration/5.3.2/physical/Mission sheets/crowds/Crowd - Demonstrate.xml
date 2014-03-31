@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Crowd - Demonstrate">
+  <context>
+    <line>
+      <italic>
+        <text>A demonstration or street protest is action by a mass group or collection of groups of people in favor of a political or other cause; it normally consists of walking in a mass march formation and either beginning with or meeting at a designated endpoint, or rally, to hear speakers.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, the "demonstrate" action used in this mission is represented by interactions with nearby agents. This attitude (see magic order "change attitude" on crowds agent) is used to measure its aggressiveness, which balance the intensity of the "demonstrate" action:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text> calm or agitated: low intensity </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text> excited or agressive : high intensity</text>
+        </line>
+      </li>
+    </ul>
+  </context>
+  <parameters>
+    <parameter name="Destination" optional="false">
+      <line>
+        <text>Objective to reach.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the objective, following a computed route. If an obstacle is encountered on the way to the objective, the crowd stops and a new temporary concentration is created. The movement is suspended until the obstacle is removed. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>The agent is considered as entirely moved when the tail of the flux has reached the given objective.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Interacting agents encountered along the way to the objective suffer casualties depending on the crowd's attitude (set by the user).</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <line>
+      <text>A demonstrating crowd with an agressive attitude can inflict  casualties to encountered agents.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMMON - Collect information">
+  <context>
+    <line>
+      <italic>
+        <text>To gather important information about a specific situation, units may interrogate prisoners or collect information from civilians and local authorities.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to get a specific message information from a unit or a crowd. An interrogated unit or crowd display a message writen by trainers, in order to provide indication(s) to trainees about the situation. The interrogated unit can represent a local authority, a journalist etc.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Entity (crowd or unit)" optional="false">
+      <line>
+        <text>Unit or crowd to get the information from.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The commander agent issues the "Collect information" mission to one of its surbordinates. Other units receive the "follow" mission with the other units as parameter.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>Gather information from a unit takes time. This delay depends on:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>the affinity of the interrogated unit regarding to the agent's camp: the more the interrogated unit has affinity with the agent, the shortest it is to get the information (see delays in authoring tool).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>the diplomacy matrix: an enemy cannot be interrogated if the force ratio of the agent (the interrogator) is low.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends when the interrogator unit (the one that has received the mission) get the wanted information.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

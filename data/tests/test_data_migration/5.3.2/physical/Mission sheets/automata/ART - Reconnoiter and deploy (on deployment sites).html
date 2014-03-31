@@ -1,0 +1,76 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ART - Reconnoiter and deploy (on deployment sites)</title>
+<link href="./../missionSheets.css" rel="stylesheet">
+<h1 align="center">Mission : 
+                  
+          ART - Reconnoiter and deploy (on deployment sites)</h1>
+</head>
+<body>
+<table align="center" border="1" cellpadding="5" width="100%">
+<tr>
+<td border="thin solid #6495ed" padding="2px 10px" text-align="left" width="100">
+<h2>Context</h2>
+</td><td><i>The acquisition and processing of information concerning the enemy, the terrain, and the meteorological conditions; this information is necessary to make sure of the performance of combat activities of rocket troops and artillery.</i>
+<br>In SWORD, to order subordinate reconnaissance units to  build a set of planned objects (that represent "reconnoitered artillery positions") and then to order firing subordinate units to deploy onto them (to get ready to provide indirect fires)<br>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Parameters</h2>
+</td><td>
+<h2>Mandatory</h2>
+<h3>Danger direction</h3>Expected enemy direction.<br>
+<h3>Limit 1</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Limit 2</h3>Right or left boundaries inside which the agent perform the mission.<br>
+<h3>Positions</h3>Set of 'position' objects to reconnoiter and to build (positions are specific objects to build in order to be used by ARTY firing units) .<br>
+<h3>Meeting position</h3>Position to reach by the command post and units that don't paracipate to the bridging operation.<br>
+<h2>Optional</h2>
+<h3>Phase lines</h3>Lines used by units to adapt their behavior when they reach or cross them.<br>
+<h3>Change positions automatically</h3>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Behavior</h2>
+</td><td>
+<ul>
+<li>The commander agent issues the "ReconnoiterDeploymentSites" mission to the reconnaissance platoons, with the set of positions as parameter. Upon reconnaissance termination the 'position' objects are created. Each positions are fairly shared between reconnaissance platoons.<br>
+</li>
+<li>Other units are ordered to reach the meeting position.<br>
+</li>
+<li>A position may not be built if the subordinate reconnaissance platoon doesn't have the physical capability or it hasn't enough resources to do it. In that case, the unit goes to next position.<br>
+</li>
+<li>When all positions have been reconnoitered and built, the reconnaissance units move to the meeting position and the commander waits the order "continue mission" to be issued by user (the report "waiting order deploy firing units" is displayed).<br>
+</li>
+<li>Once the fragmentary order is issued, the commander order firing subordinate units to deploy onto created 'position' objects. One units for one position.<br>
+</li>
+<li>Other units are ordered to reach the meeting position.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>Specific cases</h2>
+</td><td></td>
+</tr>
+<tr>
+<td width="200">
+<h2>Comments</h2>
+</td><td>
+<ul>
+<li>To order deployed units to apply fire on chosen target, the user should disengage the commander agent and issues fragmentary order to each deployed unit.<br>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td width="200">
+<h2>End of mission</h2>
+</td><td></td>
+</tr>
+</table>
+</body>
+</html>

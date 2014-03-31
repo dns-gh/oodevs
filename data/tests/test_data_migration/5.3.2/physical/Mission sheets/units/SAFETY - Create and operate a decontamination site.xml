@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Create and operate a decontamination site">
+  <context>
+    <line>
+      <italic>
+        <text>To operate an NBC decontamination site in order to ensure unit decontamination.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, operating a decontamination site allows the agent to complete decontamination missions. It decontaminates contaminated units (contaminated units may be issued the "go get decontaminated" mission).</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Decontamination site location" optional="false">
+      <line>
+        <text>The location at which the agent creates the decontamination site.</text>
+      </line>
+    </parameter>
+    <parameter name="Remove installation (default value is TRUE)" optional="true">
+      <line>
+        <text>Determines whether the agent should deconstruct the decontamination site when the mission ends.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <line>
+      <text>The agent moves to a position that allows the construction of the decontamination site (a close position on the edge of the planned object) and starts to construct it ("work just started" reports should be displayed). Upon construction termination (the report "work completed for object [object name]" should be displayed), the agent moves toward the center of the decontamination site and operates it ("Element is being operated" report should be displayed).</text>
+    </line>
+    <line>
+      <text>It remains there until mission termination.</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The decontamination site may not be constructed if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the agent does not have the capability to create the object (no physical capability or insufficient resources)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the decontamination site object definition is wrong (the object capacity "construction" for the 'decontamination site' object is not set in the authoring tool)</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this case, the mission ends with the report "work impossible, no construction capacity".</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission continues until another mission.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

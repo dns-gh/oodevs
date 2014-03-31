@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Defend">
+  <context>
+    <line>
+      <italic>
+        <text>To hold a defined object against an enemy attack to halt or ward off an attack in order to defeat or destroy the enemy.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to move and occupy an objective (or a set of objectives) and engage approaching enemies.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Objectives" optional="false">
+      <line>
+        <text>Set of objectives to defend.</text>
+      </line>
+    </parameter>
+    <parameter name="Obstacles" optional="true">
+      <line>
+        <text>Set of obstacles ot errect by engineer units (no obstacle by default).</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>Position to reach by the command post and engineer units after performing their mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Echelon number" optional="true">
+      <line>
+        <text>Define if the maneuver is organized into one or two echelons (default value is "2").</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Foward echelon units:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>The commander agent issues the "Defend" mission to the teeth arm platoons, with the objectives as parameters,</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>The scouting platoons receive the "Monitor" mission with objectives and the main direction as parameters,</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>The engineer units receive the "Construct" mission if obstacles have to be erected (otherwise they receive the "follow" mission) </text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Rear echelon units:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>Other units (reserve and non adapted units) receive the "follow" mission with the first echelon units as parameter.</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>In case of an attack by an enemy, combat units of the rear echelon may receive the "combat support" mission (the enemy may be engaged).</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>In case of a first echelon unit destruction, combat units of the rear echelon may relieve this unit.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>All the agents share the same issued area of responsability.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>If there are no engineer units, the teeth arm platoons will build the obstacles to be erected. Otherwise, only the engineer units will build the obstacles - unless some obstacles can not be built by the engineers, in which case the teeth arm platoons will try to build the remaining obstacles. In any case, the entities to build will be assigned equitably to the units.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <link>
+        <text>defend3.png</text>
+      </link>
+    </line>
+    <line>
+      <text>The platoon is defending the objectives. There are no engineer units, therefore it is up to the teeth arm platoons to build the barricades.</text>
+    </line>
+    <line>
+      <link>
+        <text>defend4.png</text>
+      </link>
+    </line>
+    <line>
+      <text>Engineers construct the barricades, the mortars provide indirect fires to support all the other units.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="defend3.png"/>
+    <attachment name="defend4.png"/>
+  </attachments>
+</mission-sheet>

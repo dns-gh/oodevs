@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Provide direct fires (from a position)">
+  <context>
+    <line>
+      <italic>
+        <text>The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action.</text>
+      </italic>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>A unit which helps another unit in battle. Aviation, artillery, or naval gunfire may be used as a support for infantry.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>A part of any unit held back at the beginning of an attack as a reserve.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>An element of a command which assists, protects, or supplies other forces in combat.</text>
+          <italic/>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this Sword mission, to move toward the provided position observe the given objective and shoot at all enemies in range with DIRECT fires.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Objective" optional="false">
+      <line>
+        <text>The objective to face</text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="false">
+      <line>
+        <text>The position from which the agent observe the objective and fires at enemies.</text>
+      </line>
+    </parameter>
+    <parameter name="Friends" optional="false">
+      <line>
+        <text>The friend units to support.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given position. If it is not reachable (a urban block inside which the agent cannot move for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed of movement depends on the physical capabilities regarding the terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the position, the agent faces the given objective.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>While observing the objective, the agent will engage all known and perceived enemies in range (not only those nearby the objective).</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>To make the agent engage enemies upon order, the user may set the "ROE (Rules Of Engagement) on "fire upon order". </text>
+    </line>
+  </specific-cases>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>The agents won't open fires if:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>known enemies are out of range regarding the weapon systems and remaining dotations,</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>known enemies are not in sight (a enemies may be known but not perceived) regarding sensors and terrain.</text>
+          </line>
+        </li>
+      </ul>
+      <li>
+        <line>
+          <text>Ensure that the given position is chosen with care, regarding the perception capability of the agent and the given objective.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>This mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

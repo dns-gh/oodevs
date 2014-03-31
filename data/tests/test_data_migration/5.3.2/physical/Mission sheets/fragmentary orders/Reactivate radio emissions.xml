@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Reactivate radio emissions">
+  <context>
+    <line>
+      <text>For the agent, to switch the radio communication on. </text>
+    </line>
+  </context>
+  <parameters/>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>Once the agent has switch on the radio, it can transmit information to teammates agents of its knowledge group. It means that collected informations such as enemies knowledge are automatically shared with teammate units of the agent's knowledge group.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end/>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="SAFETY - Extract victims from crowd within area">
+  <context>
+    <line>
+      <italic>
+        <text>'To ensure evacuation of crowd victims, with suitable device.</text>
+      </italic>
+      <text>'</text>
+    </line>
+    <line>
+      <text>In SWORD, extracting victims from crowds allow the user to prepare the evacuation operation. In this mission, the subordinates extract wounded and/or dead victims from all crowds located inside an area.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="false">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Area" optional="false">
+      <line>
+        <text>The area inside which crowds must be visited.</text>
+      </line>
+    </parameter>
+    <parameter name="Reach crowds to extract victims" optional="true"/>
+    <parameter name="Goal of the mission" optional="false">
+      <line>
+        <text>Whether the goal of the mission is to extract wounded victims, or dead victims, or both.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>If there are crowds with victims to extract in the area at the beginning of the mission, then the commander agent issues a *Extract victims from crowds* order to each capable agent (the others will not receive any order). Every one of them is given a single crowd to extract victims from, and whenever a subordinate has finished its task, another crowd will be provided to him, for as long as there are still crowds to process. When there are no longer such crowds, the units will wait for further orders.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>extractVictims2.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The units have extracted victims from crowds.</text>
+      </italic>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>As soon as new crowds come in the area, or as new victims appear in the known crowds (victims relevant to the goal of the mission), the commander agent will issue a *Extract victims from crowds* order to capable agents in order to process these new crowds. When there are no longer such crowds, the units will wait for further orders.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>extractVictims3.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The units will extract the new victims that have just appeared.</text>
+      </italic>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>If there are no crowd in the area at the beginning of the mission, each subordinate will move to a sub-division of the area. As soon as crowds will come in the area, they will be processed.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <link>
+        <text>extractVictims4.png</text>
+      </link>
+    </line>
+    <line>
+      <italic>
+        <text>The units spread in the area, to get ready to process new crowds.</text>
+      </italic>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>Victims of a visited crowd may not be extracted if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the visited Crowd does not contain wounded humans ( the report "no wounded victims" and "victims cannot be evacuated" should be displayed)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the visited Crowd has moved (the agent won't follow the crowd) or the agent cannot reach it ( the report "no wounded victims" and "victims cannot be evacuated" should be displayed) .</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this case, the agent decides to act on the next crowd.</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>The type of victims that will be extracted from the crowds depends on the "Goal of the mission" parameter : it can either be wounded victims, dead victims, or both.</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission never ends so that new crowds can be processed dynamically.</text>
+    </line>
+  </mission-end>
+  <attachments>
+    <attachment name="extractVictims2.png"/>
+    <attachment name="extractVictims3.png"/>
+    <attachment name="extractVictims4.png"/>
+  </attachments>
+</mission-sheet>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="LOG - Activate repair system">
+  <context>
+    <line>
+      <italic>
+        <text>Activating maintenance chain for repairing equipment.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, for logistics agents, to move toward a deployment position and self-deploy to it. A deployed logistics agent enables its logistics repair chains.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true"/>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Deployment position" optional="true">
+      <line>
+        <text>Position to reach to deploy to it (empty by default).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>If the Deployment position is not issued the agent deploys to its own position. </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If a position is issued, the agent moves toward it and self-deploys to it (the report "starting to deploy" then "section deployed" should be displayed). The deployment may take some time (see "Deployment" section in "Units" tab).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon deployment termination, the agent activates its repair system chains.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments>
+    <ul>
+      <li>
+        <line>
+          <text>If needed, the agent dismounts.</text>
+        </line>
+      </li>
+    </ul>
+  </comments>
+  <mission-end>
+    <line>
+      <text>The mission continues until another one is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Cover (by fire)">
+  <context>
+    <line>
+      <italic>
+        <text>Actions to conceal actual friendly intentions, capabilities, operations, and other activities by providing a plausible yet erroneous explanation of the observable.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In Sword, to cover a set of friendly entities by fire. The agent observes the given threat and awaits approaching enemies.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent perform the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Threat" optional="false">
+      <line>
+        <text>Objective to monitor.</text>
+      </line>
+    </parameter>
+    <parameter name="Positions" optional="false">
+      <line>
+        <text>Positions from which the subordinates observe the given objective.</text>
+      </line>
+    </parameter>
+    <parameter name="Entities" optional="false">
+      <line>
+        <text>Entities to follow.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent chooses the best position to monitor the given threat. If one of the positions is not reachable (an urban block inside which the agent cannot move, for instance), the agent moves as close as possible, otherwise it moves to the center of the position. Average speed depends on the physical capabilities regarding the terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching a position, the agent starts to observe the threat and wait for enemies to come. All enemies in range will be engaged.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If enemies are detected, the agent engages them from the position. Note that the agent may change its position while engaging the enemies.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission (or "the cancel maneuver" fragmentary order) is issued by a user.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

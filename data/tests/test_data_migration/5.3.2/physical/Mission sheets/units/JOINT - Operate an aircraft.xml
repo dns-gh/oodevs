@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="JOINT - Operate an aircraft">
+  <context>
+    <line>
+      <text>In this Sword mission, to move to a given position and operate an aircraft. Thus, it is usually a mission preliminary to the UAV "JOINT - Bomb (enemies within an area)" mission.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="true">
+      <line>
+        <text>Position at which the agent operates an aircraft (empty by default).</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves to the issued position.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>If no position issued, the agent stays at its own position.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the position, the agent self deploys in order to operate one of its aircraft ( the reports "starting deploy" and then "section deployed" should be displayed; for the drone "aircraft is being operated" and" aircraft has been operated" ). The time required for deployment depends on the data defined in the authoring tool (see "Units" tab, "Deployment" section). </text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Note that the agent chooses an aircraft among those that are available to be operated. The corresponding aircrafts are the those that have not been already operated, or the those that are not already performing a mission. If the agent cannot operate an aircraft, the report "no aircraft available" is displayed. In that case the mission terminates.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon deployment termination, the agent has operated an aircraft that will be ready to receive a mission. To verify that an aircraft agent can perform a mission, the aircraft agent should display "aircraft ready".</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>Once an aircraft has been operated, the mission ends. The agent can continue to operate other aircraft using this mission.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

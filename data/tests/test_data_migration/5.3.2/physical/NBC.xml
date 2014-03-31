@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<nbc model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/physical/NBC.xsd">
+  <propagation contamination-distance="100" contamination-quantity-given="0.5" wind-speed-limit="5"/>
+  <nbc-suit max-speed-modifier="0.4" reloading-time-modifier="1.5"/>
+  <agents>
+    <agent category="biological" id="1" name="Biological">
+      <effects affliction="true" type="liquid">
+        <effect percentage="0" wound="healthy"/>
+        <effect percentage="0.2" wound="u1"/>
+        <effect percentage="0.15" wound="u2"/>
+        <effect percentage="0.25" wound="u3"/>
+        <effect percentage="0.2" wound="ue"/>
+        <effect percentage="0.2" wound="dead"/>
+      </effects>
+    </agent>
+    <agent category="chemical" id="2" name="Chemical">
+      <effects affliction="true" contamination="true" type="liquid">
+        <effect percentage="0" wound="healthy"/>
+        <effect percentage="0.2" wound="u1"/>
+        <effect percentage="0.15" wound="u2"/>
+        <effect percentage="0.25" wound="u3"/>
+        <effect percentage="0.2" wound="ue"/>
+        <effect percentage="0.2" wound="dead"/>
+      </effects>
+      <effects affliction="true" life-time="6h" propagation="20" type="gaseous">
+        <effect percentage="0" wound="healthy"/>
+        <effect percentage="0.2" wound="u1"/>
+        <effect percentage="0.15" wound="u2"/>
+        <effect percentage="0.25" wound="u3"/>
+        <effect percentage="0.2" wound="ue"/>
+        <effect percentage="0.2" wound="dead"/>
+      </effects>
+    </agent>
+    <agent category="nuclear" id="3" name="Nuclear">
+      <effects affliction="true" contamination="true" type="liquid">
+        <effect percentage="0" wound="healthy"/>
+        <effect percentage="0.2" wound="u1"/>
+        <effect percentage="0.15" wound="u2"/>
+        <effect percentage="0.25" wound="u3"/>
+        <effect percentage="0.2" wound="ue"/>
+        <effect percentage="0.2" wound="dead"/>
+      </effects>
+      <effects affliction="true" contamination="true" life-time="6h" propagation="30" type="gaseous">
+        <effect percentage="0" wound="healthy"/>
+        <effect percentage="0.2" wound="u1"/>
+        <effect percentage="0.15" wound="u2"/>
+        <effect percentage="0.25" wound="u3"/>
+        <effect percentage="0.2" wound="ue"/>
+        <effect percentage="0.2" wound="dead"/>
+      </effects>
+    </agent>
+  </agents>
+</nbc>

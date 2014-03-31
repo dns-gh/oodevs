@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<svg style="stroke:rgb(0,0,0);stroke-width:2;fill:currentColor">
+    <polyline class="border" points="200,373 373,200 200,27 27,200 200,373"/>
+	<line style="fill:none;" x1="100" x2="300" y1="200" y2="200"/>
+	<line style="fill:none;" x1="230" x2="300" y1="130" y2="200"/>
+	<line style="fill:none;" x1="300" x2="230" y1="200" y2="270"/>
+</svg>

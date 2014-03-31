@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Escort">
+  <context>
+    <line>
+      <italic>
+        <text>A member of the Armed Forces assigned to accompany, assist, or guide an individual or group. An armed guard that accompanies a convoy, a train, prisoners, etc.</text>
+      </italic>
+    </line>
+    <line>
+      <text>In SWORD, to accompany a unit toward a specific location in order to protect it against potenital enemies or other dangers. The agent transports the unit to bring it to the given destination. No round trips here. The transportation is done by a magic action. The agent does not need specific physical capabilities.</text>
+    </line>
+    <line>
+      <underlined>
+        <text>This mission is offensive. While escorting the unit, the agent that performs the mission will engage all perceived enemies in range</text>
+      </underlined>
+      <text>.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false">
+      <line>
+        <text>Expected enemy direction.</text>
+      </line>
+    </parameter>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Unit" optional="false">
+      <line>
+        <text>The unit to escort along the route.</text>
+      </line>
+    </parameter>
+    <parameter name="Route" optional="false">
+      <line>
+        <text>The route to move along. The last waypoint of the route defines the final objective.</text>
+      </line>
+    </parameter>
+    <parameter name="Meeting position" optional="false">
+      <line>
+        <text>The position to reach upon escort termination.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given unit. If it is not reachable (the unit is located inside an urban block inside which the agent cannot move, for instance), the agent moves as close as possible. Average speed depends on the physical capabilities regarding the terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the unit to escort, the agent loads it ("magic/irrealistic" tranportation).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Once the unit has been loaded, it is accompanied to the given destination.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the given destination, the transported unit is unloaded at the destination and the agent moves to the meeting position and the mission terminates.</text>
+        </line>
+      </li>
+    </ul>
+  </behavior>
+  <specific-cases/>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>When the agents reaches the meeting position.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="COMBAT - Provide indirect fires (from a position)">
+  <context>
+    <line>
+      <italic>
+        <text>The action of a force which aids, protects, complements, or sustains another force in accordance with a directive requiring such action.</text>
+      </italic>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>A unit which helps another unit in battle. Aviation, artillery, or naval gunfire may be used as a support for infantry.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>A part of any unit held back at the beginning of an attack as a reserve.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>An element of a command which assists, protects, or supplies other forces in combat.</text>
+          <italic/>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In this mission, to provide INDIRECT FIRES to a set of units, in order to destroy or neutralize dangerous enemies.</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="Danger direction" optional="false"/>
+    <parameter name="Phase lines" optional="true">
+      <line>
+        <text>Lines used by units to adapt their behavior when they reach or cross them.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 1" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Limit 2" optional="true">
+      <line>
+        <text>Right or left boundaries inside which the agent performs the mission.</text>
+      </line>
+    </parameter>
+    <parameter name="Position" optional="false">
+      <line>
+        <text>Supporting position from which the agent provides indirect fire.</text>
+      </line>
+    </parameter>
+    <parameter name="Friends" optional="false">
+      <line>
+        <text>Friendly units to support.</text>
+      </line>
+    </parameter>
+  </parameters>
+  <behavior>
+    <ul>
+      <li>
+        <line>
+          <text>The agent moves toward the given position. If it is not reachable (a urban block inside which the agent cannot move for instance), the agent moves as close as possible, else it moves to the center of the position. Average speed depends on the physical capabilities regarding the terrain properties.</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>Upon reaching the position, the agent starts provide indirect fires if:</text>
+        </line>
+      </li>
+      <ul>
+        <li>
+          <line>
+            <text>a specific fragmentary order is given (FIRE)</text>
+          </line>
+        </li>
+        <li>
+          <line>
+            <text>if the supported units encounter enemies around.</text>
+          </line>
+        </li>
+      </ul>
+    </ul>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>The agent may failed to deliver fires if:</text>
+    </line>
+    <ul>
+      <li>
+        <line>
+          <text>the "Fire" order is given onto an objective to far from the the agent (regarding its physical capabilities)</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the suported units are too far from the agent and enemies around are also (for the same reasons).</text>
+        </line>
+      </li>
+      <li>
+        <line>
+          <text>the agent doesn't have enough ammo.</text>
+        </line>
+      </li>
+    </ul>
+    <line>
+      <text>In that case a specific report is displayed.</text>
+    </line>
+  </specific-cases>
+  <comments/>
+  <mission-end>
+    <line>
+      <text>The mission ends if another mission is issued.</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>
