@@ -59,6 +59,7 @@ ExerciseListView::ExerciseListView( Application& app, const tools::GeneralConfig
     , fileLoader_( fileLoader )
     , proxy_( new CustomSortFilterProxyModel( model_ ) )
 {
+    model_.setColumnCount( 1 );
     proxy_->setSourceModel( &model_ );
     setModel( proxy_ );
     setSortingEnabled( true );

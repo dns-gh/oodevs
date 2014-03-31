@@ -67,6 +67,8 @@ private:
     virtual void Select( const kernel::Population_ABC& element );
     virtual void BeforeSelection();
     virtual void AfterSelection();
+
+    void DrawLines( float width, uint8_t r, uint8_t g, uint8_t b ) const;
     //@}
 
 private slots:
