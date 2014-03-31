@@ -199,11 +199,10 @@ void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
 namespace
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > CreatePositions( const MT_Vector2D& start,
-        const std::vector< boost::shared_ptr< MT_Vector2D > >& positions )
+        std::vector< boost::shared_ptr< MT_Vector2D > > positions )
     {
-        auto result = positions;
-        result.insert( result.begin(), boost::make_shared< MT_Vector2D >( start ) );
-        return result;
+        positions.insert( positions.begin(), boost::make_shared< MT_Vector2D >( start ) );
+        return positions;
     }
 }
 

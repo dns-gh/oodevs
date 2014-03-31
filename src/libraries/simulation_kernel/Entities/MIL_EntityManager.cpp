@@ -2080,7 +2080,7 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
 void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId )
 {
     const auto& positions = message.positions();
-    protocol::Check( positions.size() > 1, "must must have at least two points" );
+    protocol::Check( positions.size() > 1, "must have at least two points" );
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     for( auto i = 0; i < positions.size(); ++i )
     {
