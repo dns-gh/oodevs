@@ -15,8 +15,9 @@
 #include "Quantity.h"
 #include "String.h"
 #include "ParameterFactory_ABC.h"
-#include "clients_kernel/OrderParameter.h"
 
+#include "clients_kernel/OrderParameter.h"
+#include "MT_Tools/MT_FormatString.h"
 #include "protocol/Protocol.h"
 
 #include <boost/lexical_cast.hpp>
@@ -46,9 +47,13 @@ namespace
                             const boost::optional< const kernel::Entity_ABC& >& entity )
     {
         if( !parameter.IsStructure() )
-            throw MASA_EXCEPTION( "Parameter should be a structure" );
+            throw MASA_EXCEPTION( MT_FormatString( "Parameter %s should be a structure",
+                                                   parameter.GetName() ) );
         if( static_cast< int >( parameter.Count() ) != list.size() )
-            throw MASA_EXCEPTION( "Mismatched size between structure parameter and the protobuf list associated for param " + parameter.GetName() );
+            throw MASA_EXCEPTION( MT_FormatString( "Expecting %d parameters, got %d on parameter %s",
+                                                   parameter.Count(),
+                                                   list.size(),
+                                                   parameter.GetName() ) );
         for( unsigned int i = 0; i < parameter.Count(); ++i )
         {
             std::unique_ptr< Parameter_ABC > param( factory.CreateParameter( parameter.Get( i ), list.Get( i ), entity ) );
@@ -77,14 +82,16 @@ ParameterList::ParameterList( const kernel::OrderParameter& parameter,
     else if( parameter.IsUnion() )
     {
         if( list.size() < 1 )
-            throw MASA_EXCEPTION( "UnionList should be defined by the first element of the list" );
+            throw MASA_EXCEPTION( "Expecting at least one parameter on union parameter " + parameter.GetName() );
         auto& idParameter = list.Get( 0 );
         if( !idParameter.has_identifier() )
-            throw MASA_EXCEPTION( "First parameter of UnionList should be an identifier" );
+            throw MASA_EXCEPTION( "Expecting an identifier as first parameter on union parameter " + parameter.GetName() );
         auto id = idParameter.identifier();
         auto subParam = parameter.Find( id );
         if( !subParam )
-            throw MASA_EXCEPTION( "No parameter found for UnionList's parameter " + boost::lexical_cast< std::string >( id ) );
+            throw MASA_EXCEPTION( MT_FormatString( "No parameter found for id %d on union parameter %s",
+                                                    id,
+                                                    parameter.GetName() ) );
         RegisterStructure( *this, *subParam, list, factory, entity );
         SetName( QString::fromStdString( subParam->GetName() ) );
     }
