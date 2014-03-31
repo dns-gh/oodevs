@@ -1637,6 +1637,7 @@ message UnitMagicAction {
         //! A recover all magic action
         recover_all                       = 5;
         //! A recover troops magic action
+        //! The tasker must be a unit identifier.
         recover_troops                    = 6;
         //! A recover equiments magic action
         recover_equipments                = 7;
