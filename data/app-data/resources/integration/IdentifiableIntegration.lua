@@ -1,7 +1,3 @@
-local eRadarType_Radar = 0
-local eRadarType_Ecoute = 1
-local eRadarType_EcouteRadar = 2
-
 -- getAgentIdentificationLevel
 -- @param knowledge of a unit
 -- @author LMT -- modif MIA

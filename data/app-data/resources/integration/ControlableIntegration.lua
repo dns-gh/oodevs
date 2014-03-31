@@ -1,14 +1,13 @@
 -- Controlable Implementation
-local pointCircleSize = 250 -- meters 
-local pointRecceSpeed = 3
 
 --- Start controlling an area
 -- An action in the simulation is started
 -- This method can only be called by an agent
 -- @param area The DirectIA area to control
+-- @param pointRecceSpeed Float, the reconnaissance speed in km/h
 -- @return true
-integration.startControlArea = function( area )
-    area.perceptionID = DEC_Perception_ActivateLocationProgressiveRecce( area.source, 3 )
+integration.startControlArea = function( area, pointRecceSpeed )
+    area.perceptionID = DEC_Perception_ActivateLocationProgressiveRecce( area.source, pointRecceSpeed or 3 )
     area.bActionFinished = false
     perceptionReconnaissanceCallbacks[ area.perceptionID ] = function( arg )
         area.bActionFinished = true
@@ -51,13 +50,15 @@ integration.stopControlUrbanBlock  = function( urbanBlock )
     return true
 end
 
---- Start controlling a point
+--- Start controlling a circle around the given point.
 -- An action in the simulation is started
 -- This method can only be called by an agent
 -- @param point The DirectIA point to control
+-- @param pointCircleSize Float, the radius of the circle to control
+-- @param pointRecceSpeed Float, the reconnaissance speed in km/h
 -- @return true
-integration.startControlPoint = function( point )
-    point.perceptionID = DEC_Perception_ActiverReconnaissancePoint( point.source, pointCircleSize, pointRecceSpeed )
+integration.startControlPoint = function( point, pointCircleSize, pointRecceSpeed )
+    point.perceptionID = DEC_Perception_ActiverReconnaissancePoint( point.source, pointCircleSize or 250, pointRecceSpeed or 3 )
     point.bActionFinished = false
     perceptionReconnaissanceCallbacks[ point.perceptionID ] = function( arg )
         point.bActionFinished = true

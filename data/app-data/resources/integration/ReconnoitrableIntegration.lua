@@ -1,5 +1,6 @@
 local pointRecceSpeed = 2
 local pointSearchSpeed = 1
+local buRecceSpeed = 0.5
 local buSearchSpeed = 0.5
 local areaRecceSpeed = 2
 local areaSearchSpeed = 1
@@ -21,13 +22,13 @@ integration.getUrbanBlockReconnaissanceState = function( urbanBlock )
 end
 --- Start reconnoitering an urban block knowledge and emits a report
 -- @param urbanBlock Urban block knowledge
--- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, buSearhSpeed = 0.5
+-- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, buRecceSpeed = 0.5
 -- @return true
 integration.startRecceUrbanBlock = function( urbanBlock, recceSpeed )
     urbanBlock.area = urbanBlock.area or DEC_PolygoneBlocUrbain( urbanBlock.source )
     urbanBlock.recceAction = 
         DEC_Perception_ActiverReconnaissanceDansBlocUrbain( urbanBlock.source )
-    urbanBlock.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( urbanBlock.area, urbanBlock:getPosition(), recceSpeed or buSearchSpeed )
+    urbanBlock.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( urbanBlock.area, urbanBlock:getPosition(), recceSpeed or buRecceSpeed )
     reportFunction(eRC_DebutReconnaissanceBlocUrbain )
     return true
 end
@@ -53,7 +54,7 @@ end
 
 --- Start searching an urban block
 -- @param urbanBlock Urban block knowledge
--- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, buSearhSpeed = 0.5
+-- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, buSearchSpeed = 0.5
 -- @return true
 integration.startSearchUrbanBlock = function( urbanBlock, recceSpeed )
     urbanBlock.area = urbanBlock.area or DEC_PolygoneBlocUrbain( urbanBlock.source )
