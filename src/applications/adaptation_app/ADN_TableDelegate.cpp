@@ -118,28 +118,20 @@ const std::pair< double, double >* ADN_TableDelegate::GetColorType( int row, int
 // Name: ADN_TableDelegate::AddDelayEditorOnRow
 // Created: ABR 2012-11-05
 // -----------------------------------------------------------------------------
-unsigned int ADN_TableDelegate::AddDelayEditOnRow( int row )
+unsigned int ADN_TableDelegate::AddDelayEditOnRow( int row, unsigned int min )
 {
-    return AddDelayEdit( row, row, -1, -1 );
+    return AddDelayEdit( row, row, -1, -1, min );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableDelegate::AddDelayEditorOnColumn
 // Created: ABR 2012-11-05
 // -----------------------------------------------------------------------------
-unsigned int ADN_TableDelegate::AddDelayEditOnColumn( int col )
+unsigned int ADN_TableDelegate::AddDelayEditOnColumn( int col, unsigned int min )
 {
-    return AddDelayEdit( -1, -1, col, col );
+    return AddDelayEdit( -1, -1, col, col, min );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_TableDelegate::AddDelayEditor
-// Created: ABR 2012-11-05
-// -----------------------------------------------------------------------------
-unsigned int ADN_TableDelegate::AddDelayEdit( int fromRow, int toRow, int fromCol, int toCol )
-{
-    return AddSimpleWidget( fromRow, toRow, fromCol, toCol, delayEdits_ );
-}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableDelegate::AddTimeEditorOnRow
@@ -364,9 +356,10 @@ QWidget* ADN_TableDelegate::createEditor( QWidget* parent, const QStyleOptionVie
     {
         return 0;
     }
-    else if( std::find( delayEdits_.begin(), delayEdits_.end(), position->id_ ) != delayEdits_.end() )
+    else if( const unsigned int* element = Find( delayEdits_, position->id_ ) )
     {
         ADN_TimeField* editor = new ADN_TimeField( parent );
+        editor->SetMinimumValueInSecond( *element );
         editor->GetConnector().Connect( data );
         return editor;
     }
@@ -427,7 +420,7 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
         guiConnector = &static_cast< ADN_ComboBox_Vector* >( editor )->GetConnector();
     else if( const QString* element = Find( lineEdits_, position->id_ ) )
         guiConnector = &static_cast< ADN_EditLine_String* >( editor )->GetConnector();
-    else if( std::find( delayEdits_.begin(), delayEdits_.end(), position->id_ ) != delayEdits_.end() )
+    else if( const unsigned int* element = Find( delayEdits_, position->id_ ) )
         guiConnector = &static_cast< ADN_TimeField* >( editor )->GetConnector();
     else if( std::find( timeEdits_.begin(), timeEdits_.end(), position->id_ ) != timeEdits_.end() )
         guiConnector = &static_cast< ADN_TimeEdit* >( editor )->GetConnector();

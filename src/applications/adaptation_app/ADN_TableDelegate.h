@@ -52,9 +52,8 @@ public:
 
     //! @name Delay
     //@{
-    unsigned int AddDelayEditOnRow( int row );
-    unsigned int AddDelayEditOnColumn( int column );
-    unsigned int AddDelayEdit( int fromRow, int toRow, int fromCol, int toCol );
+    unsigned int AddDelayEditOnRow( int row, unsigned int min = 0u );
+    unsigned int AddDelayEditOnColumn( int column, unsigned int min = 0u );
     //@}
 
     //! @name Time
@@ -102,7 +101,6 @@ private:
     //@{
     T_Positions colorPositions_;
     T_Colors colors_;
-    T_SimpleWidget delayEdits_;
     T_SimpleWidget timeEdits_;
     T_SimpleWidget comboPtrInVectors_;
     T_SimpleWidget colorEdits_;

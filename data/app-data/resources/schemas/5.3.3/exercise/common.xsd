@@ -8,6 +8,11 @@
 			<xs:pattern value="[\-]?[0-9]*\.?[0-9]+[smhdj]"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="T_PositiveTime">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(0\.\d*[1-9]\d*|[1-9]\d*(\.\d+)?)+[smhdj]"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="T_ShortIsoDate">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">ISO 8601 date time short format (YYYYMMDDTHHmmSS).</xs:documentation>

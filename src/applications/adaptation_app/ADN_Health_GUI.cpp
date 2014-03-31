@@ -50,7 +50,7 @@ public:
         delegate_.AddDelayEditOnRow( 0 );
         delegate_.AddDelayEditOnRow( 1 );
         delegate_.AddDoubleSpinBoxOnRow( 2, 0, 100 );
-        delegate_.AddDelayEditOnRow( 3 );
+        delegate_.AddDelayEditOnRow( 3, 100u );
         delegate_.AddCheckBoxOnRow( 4 );
 
         ADN_Health_Data* health = static_cast< ADN_Health_Data* >( data );
