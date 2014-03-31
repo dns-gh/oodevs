@@ -267,6 +267,8 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogMedicalHandlingUpdate* medic = m.mutable_message()->mutable_log_medical_handling_update();
             medic->mutable_request()->set_id( 7 );
+            medic->mutable_unit()->set_id( 8 );
+            medic->mutable_provider()->set_id( 12 );
             medic->set_state( static_cast< sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus >( 1 ) );
             medic->set_current_state_end_tick( 400 );
             plugin->Receive( m, day2 );
@@ -277,6 +279,8 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogMedicalHandlingUpdate* medic = m.mutable_message()->mutable_log_medical_handling_update();
             medic->mutable_request()->set_id( 7 );
+            medic->mutable_unit()->set_id( 8 );
+            medic->mutable_provider()->set_id( 12 );
             medic->set_state( static_cast< sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus >( 2 ) );
             medic->set_current_state_end_tick( 500 );
             plugin->Receive( m, day3 );
