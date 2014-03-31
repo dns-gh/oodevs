@@ -16,7 +16,7 @@
 #include "protocol/SimulationSenders.h"
 #include <map>
 #include <vector>
-#include <boost/foreach.hpp>
+#include <algorithm>
 
 namespace tools
 {
@@ -85,8 +85,10 @@ public:
     {
         if( contexts_.find( context ) != contexts_.end() )
         {
-            BOOST_FOREACH( ResponseObserver_ABC< MessageResponse >* observer, observers_ )
-                observer->Notify( message, contexts_[ context ] );
+            std::for_each( observers_.begin(), observers_.end(), [&](ResponseObserver_ABC< MessageResponse >* observer)
+                {
+                    observer->Notify( message, contexts_[ context ] );
+                });
             contexts_.erase( context );
         }
     }

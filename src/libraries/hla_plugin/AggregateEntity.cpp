@@ -26,7 +26,6 @@
 #include <hla/AttributeIdentifier.h>
 #include <hla/Deserializer_ABC.h>
 #include <boost/bind.hpp>
-#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -37,10 +36,11 @@ namespace
     {
         var.Deserialize( deserializer );
         std::set< std::string > s;
-        BOOST_FOREACH( const Omt13String& v, var.GetValues() )
+        const std::vector< Omt13String >& values = var.GetValues();
+        std::for_each( values.begin(), values.end(), [&](const Omt13String& v)
         {
             s.insert( v.str() );
-        }
+        });
         (listener.*callback)( identifier, s );
     }
 }

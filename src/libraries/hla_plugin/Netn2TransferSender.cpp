@@ -18,7 +18,6 @@
 #include "InteractionSender.h"
 #include <hla/Interaction.h>
 #include <hla/AttributeIdentifier.h>
-#include <boost/foreach.hpp>
 #include <cassert>
 #include <algorithm>
 

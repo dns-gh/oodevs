@@ -20,7 +20,7 @@
 #include "protocol/SimulationSenders.h"
 #include "rpr/EntityType.h"
 #include <tools/Resolver_ABC.h>
-#include <boost/foreach.hpp>
+#include <algorithm>
 #include <set>
 
 using namespace plugins::hla;
@@ -235,8 +235,10 @@ void RemoteOrbatShaper::Notify( const sword::FormationCreation& message, const s
         MoveChild( identifier );
         std::set< std::string > pendings;
         it->second->GetPendingChildren( pendings );
-        BOOST_FOREACH( const std::string& v, pendings )
-            MoveChild( v );
+        std::for_each( pendings.begin(), pendings.end(), [&](const std::string& v)
+            {
+                MoveChild( v );
+            });
     }
 }
 
@@ -258,8 +260,10 @@ void RemoteOrbatShaper::Notify( const sword::AutomatCreation& message, const std
     MoveChild( identifier );
     std::set< std::string > pendings;
     it->second->GetPendingChildren( pendings );
-    BOOST_FOREACH( const std::string& v, pendings )
-        MoveChild( v );
+    std::for_each( pendings.begin(), pendings.end(), [&](const std::string& v)
+        {
+            MoveChild( v );
+        });
 }
 
 // -----------------------------------------------------------------------------

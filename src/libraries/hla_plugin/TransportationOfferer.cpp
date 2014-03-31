@@ -26,7 +26,7 @@
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
-#include <boost/foreach.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 namespace bpt = boost::posix_time;
@@ -346,16 +346,22 @@ void TransportationOfferer::Receive( interactions::NetnAcceptOffer& accept )
     switch( static_cast<NetnTransportStruct::ConvoyType>(offer.transportData.convoyType) )
     {
     case NetnTransportStruct::E_Transport:
-        BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, offer.transportData.dataTransport.objectToManage )
+        std::for_each( offer.transportData.dataTransport.objectToManage.begin(), offer.transportData.dataTransport.objectToManage.end(), [&](const NetnObjectDefinitionStruct& unit)
+        {
             remainingTransported_[ serviceId ].insert( callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId ) );
+        });
         break;
     case NetnTransportStruct::E_Embarkment:
-        BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, offer.transportData.dataEmbarkment.objectToManage )
+        std::for_each( offer.transportData.dataEmbarkment.objectToManage.begin(), offer.transportData.dataEmbarkment.objectToManage.end(), [&](const NetnObjectDefinitionStruct& unit)
+        {
             remainingTransported_[ serviceId ].insert( callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId ) );
+        });
         break;
     case NetnTransportStruct::E_Disembarkment:
-        BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, offer.transportData.dataDisembarkment.objectToManage )
+        std::for_each( offer.transportData.dataDisembarkment.objectToManage.begin(), offer.transportData.dataDisembarkment.objectToManage.end(), [&](const NetnObjectDefinitionStruct& unit)
+        {
             remainingTransported_[ serviceId ].insert( callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId ) );
+        });
         break;
     }
     Transfer( offeredOffers_, acceptedOffers_, serviceId );
@@ -434,14 +440,18 @@ void TransportationOfferer::HandleTransporterDeath( const sword::UnitAttributes&
         destruction.consumer = offer.consumer;
         destruction.provider = offer.provider;
         destruction.serviceType = offer.serviceType;
-        BOOST_FOREACH( const unsigned int transported, transported_[ message.unit().id() ] )
-            destruction.listOfEmbarkedObjectDestroyed.list.push_back( NetnObjectDefinitionStruct(
+        std::for_each( transported_[ message.unit().id() ].begin(), transported_[ message.unit().id() ].end(), [&](const unsigned int transported)
+            {
+                destruction.listOfEmbarkedObjectDestroyed.list.push_back( NetnObjectDefinitionStruct(
                                                                         callsignResolver_.ResolveCallsign( transported ),
                                                                         callsignResolver_.ResolveUniqueId( transported ), NetnObjectFeatureStruct() ) );
-        BOOST_FOREACH( const unsigned int transported, droppedThisTick_[ message.unit().id() ] )
-            destruction.listOfEmbarkedObjectDestroyed.list.push_back( NetnObjectDefinitionStruct(
+            });
+        std::for_each( droppedThisTick_[ message.unit().id() ].begin(), droppedThisTick_[ message.unit().id() ].end(), [&](const unsigned int transported)
+            {
+                destruction.listOfEmbarkedObjectDestroyed.list.push_back( NetnObjectDefinitionStruct(
                                                                         callsignResolver_.ResolveCallsign( transported ),
                                                                         callsignResolver_.ResolveUniqueId( transported ), NetnObjectFeatureStruct() ) );
+            });
         convoyDestroyedEntitiesSender_.Send( destruction );
     }
 }
@@ -661,8 +671,10 @@ void TransportationOfferer::Cleanup( T_Offers& container, const std::string& ser
     {
         Cancel( transporter->second );
         transporters_.right.erase( serviceId );
-        BOOST_FOREACH( const unsigned int transported, transported_[transporter->second] )
-            transportedBy_.erase( transported );
+        std::for_each( transported_[transporter->second].begin(), transported_[transporter->second].end(), [&](const unsigned int transported)
+            {
+                transportedBy_.erase( transported );
+            });
         transported_.erase( transporter->second );
     }
     remainingTransported_.erase( serviceId );

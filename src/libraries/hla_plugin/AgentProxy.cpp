@@ -22,7 +22,6 @@
 #include "rpr/EntityTypeResolver_ABC.h"
 #include <spatialcontainer/TerrainData.h> // $$$$ _RC_ SLI 2011-02-07: dependency on pathfind!!!
 #include <algorithm>
-#include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 
 using namespace plugins::hla;

@@ -9,9 +9,9 @@
 #include "hla_plugin_pch.h"
 #include "ObjectListenerComposite.h"
 #include "rpr/Coordinates.h"
-#include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <vector>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -22,8 +22,10 @@ namespace
     void copyAndApply(const std::set<ObjectListener_ABC*>& listeners, const T& ftor )
     {
         std::vector<ObjectListener_ABC*> tmp( listeners.begin(), listeners.end() );
-        BOOST_FOREACH( ObjectListener_ABC* listener, tmp )
-            ftor( listener );
+        std::for_each( tmp.begin(), tmp.end(), [&](ObjectListener_ABC* listener)
+            {
+                ftor( listener );
+            });
     }
 }
 

@@ -21,7 +21,7 @@
 #include "rpr/EntityTypeResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "tools/MessageController_ABC.h"
-#include <boost/foreach.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -130,14 +130,20 @@ void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*conte
     bool mustSend = false;
     const std::string& identifier = it->second;
     const T_Components& remoteComponents = remoteAgents_[ identifier ];
-    const T_StaticComponents& staticComponents = agentTypes_[ identifier ];
+    T_StaticComponents& staticComponents = agentTypes_[ identifier ];
     for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
     {
         const sword::EquipmentDotations::EquipmentDotation& dotation = message.equipment_dotations().elem( i );
         std::string equipmentName;
-        BOOST_FOREACH( const T_StaticComponents::value_type& staticComponent, staticComponents )
-            if( staticComponent.second.first == dotation.type().id() )
-                equipmentName = staticComponent.first;
+        std::for_each( staticComponents.begin(), staticComponents.end(), [&](T_StaticComponents::value_type& staticComponent)
+            {
+                if( staticComponent.second.first == dotation.type().id() )
+                {
+                    equipmentName = staticComponent.first;
+                    staticComponent.second.second = dotation.available() + dotation.unavailable() + dotation.repairable() +
+                            dotation.on_site_fixable() + dotation.repairing() + dotation.captured();
+                }
+            });
         const T_Components::const_iterator remoteComponent = remoteComponents.find( equipmentName );
         mustSend = mustSend || ( remoteComponent != remoteComponents.end() && 
             static_cast< int >( remoteComponent->second.available_ ) != dotation.available() );
@@ -253,25 +259,29 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
     message().set_type( sword::UnitMagicAction::change_equipment_state );
     sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
-    BOOST_FOREACH( const T_StaticComponents::value_type& component, agentType->second )
+    std::for_each( agentType->second.begin(), agentType->second.end(), [&](const T_StaticComponents::value_type& component)
     {
         const std::string& componentTypeName = component.first;
         const unsigned int componentTypeIdentifier = component.second.first;
         const unsigned int componentStaticNumber = component.second.second;
-        const T_Components::const_iterator remoteComponent = remoteAgent->second.find( componentTypeName );
+        const EquipmentUpdater::T_Components::const_iterator remoteComponent = remoteAgent->second.find( componentTypeName );
         if( remoteComponent != remoteAgent->second.end() && remoteComponent->second.available_ <= componentStaticNumber )
         {
+            auto deads = remoteComponent->second.dead_;
+            if( (remoteComponent->second.available_ + remoteComponent->second.dead_ + 
+                remoteComponent->second.heavyDamages_ + remoteComponent->second.lightDamages_) != componentStaticNumber )
+                deads = componentStaticNumber - (remoteComponent->second.available_+remoteComponent->second.heavyDamages_ + remoteComponent->second.lightDamages_);
             sword::MissionParameter_Value* componentChanged = parameter.add_value();
             componentChanged->add_list()->set_identifier( componentTypeIdentifier );
             componentChanged->add_list()->set_quantity( remoteComponent->second.available_ );
-            componentChanged->add_list()->set_quantity( remoteComponent->second.dead_ );
+            componentChanged->add_list()->set_quantity( deads );
             componentChanged->add_list()->set_quantity( remoteComponent->second.heavyDamages_ );
             componentChanged->add_list()->set_quantity( remoteComponent->second.lightDamages_ );
             componentChanged->add_list()->set_quantity( 0 );
             componentChanged->add_list()->set_quantity( 0 );
             componentChanged->add_list()->mutable_list();
         }
-    }
+    });
     if( message().parameters().elem( 0 ).value_size() > 0 )
         message.Send( publisher_, factory_.Create() );
 }

@@ -13,7 +13,7 @@
 #include "ContextHandler_ABC.h"
 #include "HlaObject_ABC.h"
 #include "protocol/Simulation.h"
-#include <boost/foreach.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -240,8 +240,10 @@ void RemoteAgentResolver::ParentChanged( const std::string& rtiIdentifier, const
 // -----------------------------------------------------------------------------
 void RemoteAgentResolver::SubAgregatesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children )
 {
-    BOOST_FOREACH( const std::string& v, children )
-        children_[ v ] = rtiIdentifier;
+    std::for_each( children.begin(), children.end(), [&](const std::string& v)
+        {
+            children_[ v ] = rtiIdentifier;
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -250,8 +252,10 @@ void RemoteAgentResolver::SubAgregatesChanged( const std::string& rtiIdentifier,
 // -----------------------------------------------------------------------------
 void RemoteAgentResolver::SubEntitiesChanged(const std::string& rtiIdentifier, const std::set< std::string >& children )
 {
-    BOOST_FOREACH( const std::string& v, children )
-        children_[ v ] = rtiIdentifier;
+    std::for_each( children.begin(), children.end(), [&](const std::string& v)
+        {
+            children_[ v ] = rtiIdentifier;
+        });
 }
 
 // -----------------------------------------------------------------------------

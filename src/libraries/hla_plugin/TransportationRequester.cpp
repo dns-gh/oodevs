@@ -19,11 +19,12 @@
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include <set>
+#include <algorithm>
 #include <xeumeuleu/xml.hpp>
-#include <boost/foreach.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
+
 
 using namespace plugins::hla;
 namespace bpt = boost::posix_time;
@@ -386,7 +387,7 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
     const interactions::NetnOfferConvoy& contextRequest = contextRequests_[ context ];
     const std::vector< char > transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
     const unsigned int transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
-    BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, units.list )
+    std::for_each( units.list.begin(), units.list.end(), [&](const NetnObjectDefinitionStruct& unit)
     {
         const unsigned int id = callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId );
 
@@ -402,7 +403,7 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
             else
                 TeleportToDestination( id, contextRequest.transportData.dataDisembarkment.appointment.location.Latitude(),
                                        contextRequest.transportData.dataDisembarkment.appointment.location.Longitude(), publisher_ );
-    }
+    });
 }
 
 // -----------------------------------------------------------------------------
@@ -458,7 +459,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyDestroyedEntities
     if( serviceStartedRequests_.left.find( context ) == serviceStartedRequests_.left.end() )
         return;
 
-    BOOST_FOREACH( const NetnObjectDefinitionStruct& entity, interaction.listOfEmbarkedObjectDestroyed.list )
+    std::for_each( interaction.listOfEmbarkedObjectDestroyed.list.begin(), interaction.listOfEmbarkedObjectDestroyed.list.end(), [&](const NetnObjectDefinitionStruct& entity)
     {
         const unsigned int entityIdentifier = callsignResolver_.ResolveSimulationIdentifier( entity.uniqueId );
 
@@ -467,7 +468,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyDestroyedEntities
         message().set_type( sword::UnitMagicAction::destroy_all );
         message().mutable_parameters();
         message.Send( publisher_ );
-    }
+    });
 }
 
 namespace

@@ -108,7 +108,7 @@ private:
     void SendUpdate( const std::string& identifier );
     //@}
 
-private:
+public:
     //! @name Types
     //@{
     struct T_Component

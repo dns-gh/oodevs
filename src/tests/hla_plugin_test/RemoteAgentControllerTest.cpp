@@ -108,6 +108,7 @@ namespace
             remoteClassListener->RemoteCreated( "identifier", hlaClass, object );
             BOOST_REQUIRE( remoteAgentListener );
             automatCreationHandler->Notify( MakeAutomatCreationMessage( party, automat ), "default_remote_automat" );
+            MOCK_EXPECT( object.Unregister );
         }
         sword::AutomatCreation MakeAutomatCreationMessage( unsigned long party, unsigned long automat )
         {
