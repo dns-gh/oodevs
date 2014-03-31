@@ -75,8 +75,7 @@ private slots:
     //! @name Slots
     //@{
     void ClearPositions();
-    void SelectToPostion();
-    void SelectFromPosition();
+    void AddPosition();
     void SendRequest();
     //@}
 
@@ -88,8 +87,7 @@ private:
     Publisher_ABC& publisher_;
     const kernel::CoordinateConverter_ABC& coordinateConverter_;
     kernel::SafePointer< kernel::Entity_ABC > element_;
-    boost::optional< geometry::Point2f > from_;
-    boost::optional< geometry::Point2f > to_;
+    std::vector< geometry::Point2f > positions_;
     geometry::Point2f point_;
     std::vector< geometry::Point2f > path_;
     //@}

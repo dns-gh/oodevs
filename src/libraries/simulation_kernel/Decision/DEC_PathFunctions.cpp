@@ -76,6 +76,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_
     assert( !listPt.empty() );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
+    listPt.insert( listPt.begin(), boost::make_shared< MT_Vector2D >( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
     boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, listPt, *pPathType ) );
     StartCompute( pPath );
     return pPath;

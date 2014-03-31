@@ -1467,16 +1467,12 @@ Voulez-vous le remplacer ?</translation>
         <translation>Pathfind</translation>
     </message>
     <message>
-        <source>Directions from here</source>
-        <translation>Itinéraire à partir de ce lieu</translation>
-    </message>
-    <message>
-        <source>Directions to here</source>
-        <translation>Itinéraire vers ce lieu</translation>
-    </message>
-    <message>
         <source>Clear positions</source>
         <translation>Effacer les positions</translation>
+    </message>
+    <message>
+        <source>Add position</source>
+        <translation>Ajouter une position</translation>
     </message>
 </context>
 <context>

@@ -82,7 +82,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
 // Name: DEC_Agent_Path constructor
 // Created: LDC 2009-06-18
 // -----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points, const DEC_PathType& pathType )
+DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const std::vector< boost::shared_ptr< MT_Vector2D > >& points, const DEC_PathType& pathType )
     : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
@@ -93,18 +93,16 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, std::vector< boost::s
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
-    , destroyed_( false )
+    , destroyed_               ( false )
 {
     queryMaker_.RegisterPath( *this );
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    initialWaypoints_.reserve( 1 + points.size() );
-    nextWaypoints_.reserve( points.size() );
-    initialWaypoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
+    for( auto it = points.begin(); it != points.end(); ++it )
     {
         initialWaypoints_.push_back( **it );
-        nextWaypoints_.push_back( **it );
+        if( it != points.begin() )
+            nextWaypoints_.push_back( **it );
     }
     Initialize( initialWaypoints_ );
 }

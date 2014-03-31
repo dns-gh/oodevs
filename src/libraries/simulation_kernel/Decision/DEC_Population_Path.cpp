@@ -41,7 +41,7 @@
 // Name: DEC_Population_Path constructor
 // Created: JSR 2014-01-16
 //-----------------------------------------------------------------------------
-DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const MT_Vector2D& start, const std::vector< boost::shared_ptr< MT_Vector2D > >& destination )
+DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const std::vector< boost::shared_ptr< MT_Vector2D > >& destination )
     : DEC_PathResult( DEC_PathType::movement_ )
     , id_        ( population.GetID() )
     , pathClass_ ( DEC_Population_PathClass::GetPathClass( "base" ) ) //$$$ n'importe quoi
@@ -50,8 +50,6 @@ DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, cons
     , profiler_()
 {
     T_PointVector pointsTmp;
-    pointsTmp.reserve( 1 + destination.size() );
-    pointsTmp.push_back( start );
     for( auto it = destination.begin(); it != destination.end(); ++it )
         pointsTmp.push_back( **it );
     Initialize( pointsTmp );

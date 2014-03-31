@@ -36,7 +36,7 @@ public:
     //@}
 
 public:
-             DEC_Population_Path( const MIL_Population& population, const MT_Vector2D& start, const std::vector< boost::shared_ptr< MT_Vector2D > >& destination );
+             DEC_Population_Path( const MIL_Population& population, const std::vector< boost::shared_ptr< MT_Vector2D > >& destination );
     virtual ~DEC_Population_Path();
 
     //! @name Path calculation
