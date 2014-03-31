@@ -13,6 +13,7 @@ import (
 	. "launchpad.net/gocheck"
 	"math"
 	"reflect"
+	"sort"
 	"strings"
 	"swapi"
 	"sword"
@@ -2627,5 +2628,57 @@ func (s *TestSuite) TestDestroyRandomEquipment(c *C) {
 	err = client.DeleteUnit(unit.Id)
 	c.Assert(err, IsNil)
 	err = client.DestroyRandomEquipment(unit.Id)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+}
+
+type HumansSorter []*swapi.HumanDotation
+
+func (h HumansSorter) Len() int           { return len(h) }
+func (h HumansSorter) Less(i, j int) bool { return h[i].Rank < h[j].Rank }
+func (h HumansSorter) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func normalizeHumans(src []*swapi.HumanDotation) []*swapi.HumanDotation {
+	h := HumansSorter(src)
+	sort.Sort(h)
+	return []*swapi.HumanDotation(h)
+}
+
+func (s *TestSuite) TestRecoverHumans(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	formation := CreateFormation(c, client, 1)
+	automat := CreateAutomat(c, client, formation.Id, 0)
+	unit := CreateUnit(c, client, automat.Id)
+	model := client.Model
+	ref := normalizeHumans(model.GetUnit(unit.Id).HumanDotations)
+	dead := []*swapi.HumanDotation{}
+	swapi.DeepCopy(&dead, ref)
+	for _, v := range dead {
+		v.State = int32(sword.EnumHumanState_deadly)
+	}
+	for _, withLog := range []bool{true, false} {
+		// invalid unit
+		err := client.RecoverHumans(123456, withLog)
+		c.Assert(err, IsSwordError, "error_invalid_unit")
+		// destroy first, recover later
+		err = client.DestroyUnit(unit.Id)
+		c.Assert(err, IsNil)
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			humans := normalizeHumans(d.Units[unit.Id].HumanDotations)
+			return reflect.DeepEqual(humans, dead)
+		})
+		err = client.RecoverHumans(unit.Id, withLog)
+		c.Assert(err, IsNil)
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			humans := normalizeHumans(d.Units[unit.Id].HumanDotations)
+			return reflect.DeepEqual(humans, ref)
+		})
+	}
+	// deleted unit
+	err := client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	err = client.RecoverHumans(unit.Id, false)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	err = client.RecoverHumans(unit.Id, true)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 }

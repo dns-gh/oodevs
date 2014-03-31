@@ -1214,6 +1214,14 @@ func (c *Client) ChangeHumanState(unitId uint32, humans []*HumanDotation) error 
 		sword.UnitMagicAction_change_human_state)
 }
 
+func (c *Client) RecoverHumans(unitId uint32, withLog bool) error {
+	next := sword.UnitMagicAction_recover_troops
+	if withLog {
+		next = sword.UnitMagicAction_recover_troops_except_log
+	}
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), next)
+}
+
 func (c *Client) ChangeDotation(unitId uint32, resources map[uint32]*ResourceDotation) error {
 	params := MakeParameters()
 	if len(resources) != 0 {
