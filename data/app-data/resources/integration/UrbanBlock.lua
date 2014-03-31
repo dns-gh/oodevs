@@ -46,7 +46,7 @@ end
 -- This method only confines the given urban block if it is populated.
 -- @param urbanBlock Urban block knowledge
 -- @param confinementDelay Integer, the number of ticks needed for the confinement to take place.
--- By default, maxConfinementDelay = 10
+-- By default, confinementDelay = 10
 -- @return Boolean, true once the urban block is confined (or if it is not populated), false otherwise
 integration.confineUrbanBlock = masalife.brain.integration.startStopAction( 
 { 
@@ -106,7 +106,7 @@ end
 -- This method only evacuation the given urban block if it is populated.
 -- @param urbanBlock Urban block knowledge
 -- @param evacuationDelay Integer, the number of ticks needed for the evacuation to take place.
--- By default, maxEvacuationDelay  = 10
+-- By default, evacuationDelay = 10
 -- @return Boolean, true once the urban block is evacuated (or if it is not populated), false otherwise
 integration.evacuateUrbanBlock = masalife.brain.integration.startStopAction( 
 { 
