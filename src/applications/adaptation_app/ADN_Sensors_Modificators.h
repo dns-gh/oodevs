@@ -151,6 +151,41 @@ public:
     };
 
     // =============================================================================
+    /** @class  PostureInfos
+        @brief  PostureInfos
+    */
+    // Created: JSR 2014-03-28
+    // =============================================================================
+    class PostureInfos : public ADN_Ref_ABC
+    {
+    public:
+        explicit PostureInfos( const E_UnitPosture& e );
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output ) const;
+
+    public:
+        E_UnitPosture eType_;
+        ADN_Type_Double rCoeff_;
+
+    public:
+        class Cmp : public std::unary_function< PostureInfos*, bool >
+        {
+        public:
+            explicit Cmp( const E_UnitPosture& val ) : val_( val ) {}
+            virtual ~Cmp() {}
+
+            bool operator()( PostureInfos* tgtnfos ) const
+            {
+                return tgtnfos->eType_ == val_;
+            }
+
+        private:
+            E_UnitPosture val_;
+        };
+    };
+
+    // =============================================================================
     /** @class  EnvironmentInfos
         @brief  EnvironmentInfos
     */
@@ -239,25 +274,32 @@ public:
     };
 
 public:
-             ADN_Sensors_Modificators();
+             ADN_Sensors_Modificators( bool usePostures );
     virtual ~ADN_Sensors_Modificators();
 
     void CopyFrom( const ADN_Sensors_Modificators& src );
+    void ReadArchive( xml::xistream& xis );
+    void WriteArchive( xml::xostream& xos ) const;
 
+    bool NeedsSaving() const;
+    void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const std::string& name ) const;
+
+private:
     void ReadSizeModifiers( xml::xistream& xis );
     void ReadMeteoModifiers( xml::xistream& xis );
     void ReadIlluminationModifiers( xml::xistream& xis );
+    void ReadSourcePostureModifiers( xml::xistream& xis );
+    void ReadTargetPostureModifiers( xml::xistream& xis );
     void ReadEnvironmentModifiers( xml::xistream& xis );
     void ReadUrbanBlocksModifiers( xml::xistream& xis );
 
     void WriteSizeModifiers( xml::xostream& xos ) const;
     void WriteMeteoModifiers( xml::xostream& xos ) const;
     void WriteIlluminationModifiers( xml::xostream& xos ) const;
+    void WriteSourcePostureModifiers( xml::xostream& xos ) const;
+    void WriteTargetPostureModifiers( xml::xostream& xos ) const;
     void WriteEnvironmentModifiers( xml::xostream& xos ) const;
     void WriteUrbanBlocksModifiers( xml::xostream& xos ) const;
-
-    bool NeedsSaving() const;
-    void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const std::string& name ) const;
 
 private:
     typedef ADN_Type_VectorFixed_ABC< SizeInfos > T_SizeInfos_Vector;
@@ -265,11 +307,14 @@ private:
     typedef ADN_Type_Vector_ABC< IlluminationInfos > T_IlluminationInfos_Vector;
     typedef ADN_Type_Vector_ABC< EnvironmentInfos > T_EnvironmentInfos_Vector;
     typedef ADN_Type_VectorFixed_ABC< UrbanBlockInfos > T_UrbanBlockInfos_Vector;
+    typedef ADN_Type_Vector_ABC< PostureInfos > T_PostureInfos_Vector;
 
 public:
     T_SizeInfos_Vector vModifSizes_;
     T_MeteoInfos_Vector vModifWeather_;
     T_IlluminationInfos_Vector vModifIlluminations_;
+    T_PostureInfos_Vector vModifStance_;
+    T_PostureInfos_Vector vModifTargetStance_;
     T_EnvironmentInfos_Vector vModifEnvironments_;
     T_UrbanBlockInfos_Vector vModifUrbanBlocks_;
 };

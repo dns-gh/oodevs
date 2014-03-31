@@ -46,38 +46,6 @@ public:
 // LTO end
 
 //*****************************************************************************
-    class ModificatorPostureInfos : public ADN_Ref_ABC
-    {
-    public:
-        explicit ModificatorPostureInfos( const E_UnitPosture& e );
-
-        void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output ) const;
-
-    public:
-        E_UnitPosture eType_;
-        ADN_Type_Double rCoeff_;
-
-    public:
-        class Cmp : public std::unary_function< ModificatorPostureInfos*, bool >
-        {
-        public:
-            explicit Cmp( const E_UnitPosture& val ) : val_( val ) {}
-            virtual ~Cmp() {}
-
-            bool operator()( ModificatorPostureInfos* tgtnfos ) const
-            {
-                return tgtnfos->eType_ == val_;
-            }
-
-        private:
-            E_UnitPosture val_;
-        };
-    };
-
-    typedef ADN_Type_Vector_ABC<ModificatorPostureInfos>  T_ModificatorPostureInfos_Vector;
-
-//*****************************************************************************
     class PopulationInfos : public ADN_RefWithName
     {
     public:
@@ -109,7 +77,7 @@ public:
 
     public:
         ADN_Type_Double rDistanceDetection_;
-        T_ModificatorPostureInfos_Vector vModifStance_;
+        ADN_Type_Vector_ABC< ADN_Sensors_Modificators::PostureInfos > vModifStance_;
         PopulationInfos populationInfos_;
     };
 
@@ -150,8 +118,6 @@ public:
         void ReadObjectDetection( xml::xistream& input );
         void ReadDisasterDetection( xml::xistream& input );
         void ReadUnitDetection( xml::xistream& input );
-        void ReadSourcePosture( xml::xistream& input );
-        void ReadTargetPosture( xml::xistream& input );
         void ReadItem( const std::string& name, xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
@@ -170,8 +136,6 @@ public:
         ADN_Type_Bool                           activatedOnRequest_;
         T_LimitedToSensorsInfos_Vector          vLimitedToSensorsInfos_; // LTO
         boost::scoped_ptr< ADN_Sensors_Modificators > modificators_;
-        T_ModificatorPostureInfos_Vector        vModifStance_;
-        T_ModificatorPostureInfos_Vector        vModifTargetStance_;
         PopulationInfos                         populationInfos_;
 
         ADN_Type_Bool                           bCanDetectObjects_;

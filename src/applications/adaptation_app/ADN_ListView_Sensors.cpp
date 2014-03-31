@@ -66,8 +66,8 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::eModifIllumination]->Connect( &pInfos->modificators_->vModifIlluminations_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifEnvironment]->Connect( &pInfos->modificators_->vModifEnvironments_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifUrbanBlockMaterial]->Connect( &pInfos->modificators_->vModifUrbanBlocks_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::eModifStances]->Connect( &pInfos->vModifStance_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::eModifTargetStances]->Connect( &pInfos->vModifTargetStance_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::eModifStances]->Connect( &pInfos->modificators_->vModifStance_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::eModifTargetStances]->Connect( &pInfos->modificators_->vModifTargetStance_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eTargets]->Connect( &pInfos->vTargets_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePopulationDensity]->Connect( &pInfos->populationInfos_.rDensity_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePopulationModifier]->Connect( &pInfos->populationInfos_.rModifier_, bConnect );
@@ -86,8 +86,8 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifIllumination]->Connect( &pInfos->modificators_->vModifIlluminations_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifEnvironment]->Connect( &pInfos->modificators_->vModifEnvironments_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifUrbanBlockMaterial]->Connect( &pInfos->modificators_->vModifUrbanBlocks_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifStances]->Connect( &pInfos->vModifStance_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifTargetStances]->Connect( &pInfos->vModifTargetStance_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifStances]->Connect( &pInfos->modificators_->vModifStance_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifTargetStances]->Connect( &pInfos->modificators_->vModifTargetStance_, bConnect );
 }
 
 //-----------------------------------------------------------------------------

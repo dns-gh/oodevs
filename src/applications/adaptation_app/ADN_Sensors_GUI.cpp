@@ -453,8 +453,8 @@ QWidget* ADN_Sensors_GUI::CreateAgentDetectionTable()
         pTable->AddCells( &sensor, nRow, nCol, sensor.modificators_->vModifIlluminations_, eNbrLightingType );
         pTable->AddCells( &sensor, nRow, nCol, sensor.modificators_->vModifEnvironments_, eNbrVisionObject );
         pTable->AddCells( &sensor, nRow, nCol, sensor.modificators_->vModifUrbanBlocks_, static_cast< int >( materials.size() ) );
-        pTable->AddCells( &sensor, nRow, nCol, sensor.vModifStance_, eNbrUnitPosture );
-        pTable->AddCells( &sensor, nRow, nCol, sensor.vModifTargetStance_, eNbrUnitPosture );
+        pTable->AddCells( &sensor, nRow, nCol, sensor.modificators_->vModifStance_, eNbrUnitPosture );
+        pTable->AddCells( &sensor, nRow, nCol, sensor.modificators_->vModifTargetStance_, eNbrUnitPosture );
 
         ++nRow;
     }

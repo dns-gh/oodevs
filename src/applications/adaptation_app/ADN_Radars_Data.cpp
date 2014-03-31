@@ -123,7 +123,7 @@ ADN_Radars_Data::RadarInfos::RadarInfos()
     , bHasDetectableActivities_( false )
     , bHasDetectTimes_         ( false )
     , bHasHQDetectTimes_       ( false )
-    , modificators_            ( new ADN_Sensors_Modificators )
+    , modificators_            ( new ADN_Sensors_Modificators( false ) )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eSensors, "radars" ) );
     for( int n = 0; n < eNbrConsumptionType; ++n )
@@ -208,11 +208,7 @@ void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
     if( input.has_child( "distance-modifiers" ) )
     {
         input >> xml::start( "distance-modifiers" );
-        modificators_->ReadSizeModifiers( input );
-        modificators_->ReadMeteoModifiers( input );
-        modificators_->ReadIlluminationModifiers( input );
-        modificators_->ReadEnvironmentModifiers( input );
-        modificators_->ReadUrbanBlocksModifiers( input );
+        modificators_->ReadArchive( input );
         input  >> xml::end; // "distance-modifiers"
     }
 }
@@ -272,19 +268,7 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output ) const
     if( modificators_->NeedsSaving() )
     {
         output << xml::start( "distance-modifiers" );
-        modificators_->WriteSizeModifiers( output );
-        modificators_->WriteMeteoModifiers( output );
-        modificators_->WriteIlluminationModifiers( output );
-
-        // unused, kept for Scipio compatibility
-        output << xml::start( "source-posture-modifiers" )
-               << xml::end;
-        output << xml::start( "target-posture-modifiers" )
-               << xml::end;
-
-        modificators_->WriteEnvironmentModifiers( output );
-        modificators_->WriteUrbanBlocksModifiers( output );
-
+        modificators_->WriteArchive( output );
         output << xml::end; // distance-modifiers
     }
     output << xml::end;

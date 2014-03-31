@@ -136,6 +136,38 @@ bool ADN_Sensors_Modificators::MeteoInfos::NeedsSaving() const
 }
 
 //-----------------------------------------------------------------------------
+// Name: PostureInfos::PostureInfos
+// Created: JSR 2014-03-28
+//-----------------------------------------------------------------------------
+ADN_Sensors_Modificators::PostureInfos::PostureInfos( const E_UnitPosture& e )
+    : eType_( e )
+    , rCoeff_( 1 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PostureInfos::ReadArchive
+// Created: APE 2004-11-23
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Modificators::PostureInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::attribute( "value", rCoeff_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PostureInfos::WriteArchive
+// Created: APE 2004-11-23
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Modificators::PostureInfos::WriteArchive( xml::xostream& output ) const
+{
+    output << xml::start( "distance-modifier" )
+        << xml::attribute( "type", ADN_Tools::ComputePostureScriptName( eType_ ) )
+        << xml::attribute( "value", rCoeff_ )
+        << xml::end;
+}
+
+//-----------------------------------------------------------------------------
 // Name: EnvironmentInfos::EnvironmentInfos
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
@@ -221,10 +253,12 @@ bool ADN_Sensors_Modificators::UrbanBlockInfos::NeedsSaving() const
 // Name: ADN_Sensors_Modificators constructor
 // Created: JSR 2014-03-27
 // -----------------------------------------------------------------------------
-ADN_Sensors_Modificators::ADN_Sensors_Modificators()
+ADN_Sensors_Modificators::ADN_Sensors_Modificators( bool usePostures )
     : vModifSizes_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos() )
     , vModifWeather_( false )
     , vModifIlluminations_( false )
+    , vModifStance_( false )
+    , vModifTargetStance_( false )
     , vModifEnvironments_( false )
     , vModifUrbanBlocks_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 {
@@ -234,6 +268,14 @@ ADN_Sensors_Modificators::ADN_Sensors_Modificators()
         vModifWeather_.AddItem( new MeteoInfos( static_cast< E_SensorWeatherModifiers >( i ) ) );
     for( int i = 0; i < eNbrVisionObject; ++i )
         vModifEnvironments_.AddItem( new EnvironmentInfos( static_cast< E_VisionObject >( i ) ) );
+    if( usePostures )
+    {
+        for( int i = 0; i < eNbrUnitPosture; ++i )
+        {
+            vModifStance_.AddItem( new PostureInfos( static_cast< E_UnitPosture >( i ) ) );
+            vModifTargetStance_.AddItem( new PostureInfos( static_cast< E_UnitPosture >( i ) ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -264,8 +306,41 @@ void ADN_Sensors_Modificators::CopyFrom( const ADN_Sensors_Modificators& src )
     CopyModificators( vModifIlluminations_, src.vModifIlluminations_ );
     CopyModificators( vModifWeather_, src.vModifWeather_ );
     CopyModificators( vModifEnvironments_, src.vModifEnvironments_ );
+    CopyModificators( vModifStance_, src.vModifStance_ );
+    CopyModificators( vModifTargetStance_, src.vModifTargetStance_ );
     CopyModificators( vModifSizes_, src.vModifSizes_ );
     CopyModificators( vModifUrbanBlocks_, src.vModifUrbanBlocks_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Modificators::ReadArchive
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Modificators::ReadArchive( xml::xistream& xis )
+{
+    ReadSizeModifiers( xis );
+    ReadMeteoModifiers( xis );
+    ReadIlluminationModifiers( xis );
+    ReadSourcePostureModifiers( xis );
+    ReadTargetPostureModifiers( xis );
+    ReadEnvironmentModifiers( xis );
+    ReadUrbanBlocksModifiers( xis );
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Modificators::WriteArchive
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Modificators::WriteArchive( xml::xostream& xos ) const
+{
+    WriteSizeModifiers( xos );
+    WriteMeteoModifiers( xos );
+    WriteIlluminationModifiers( xos );
+    WriteSourcePostureModifiers( xos );
+    WriteTargetPostureModifiers( xos );
+    WriteEnvironmentModifiers( xos );
+    WriteUrbanBlocksModifiers( xos );
 }
 
 // -----------------------------------------------------------------------------
@@ -297,7 +372,7 @@ void ADN_Sensors_Modificators::ReadMeteoModifiers( xml::xistream& xis )
         >> xml::list( "distance-modifier", [&]( xml::xistream& xis )
         {
             const std::string type = xis.attribute< std::string >( "type" );
-            for( unsigned i = 0; i < eNbrSensorWeatherModifiers; ++i )
+            for( unsigned int i = 0; i < eNbrSensorWeatherModifiers; ++i )
                 if( ADN_Tools::Scriptify( ADN_Tr::ConvertFromSensorWeatherModifiers( static_cast< E_SensorWeatherModifiers >( i ) ) ) == type )
                 {
                     vModifWeather_.at( i )->ReadArchive( xis );
@@ -319,6 +394,48 @@ void ADN_Sensors_Modificators::ReadIlluminationModifiers( xml::xistream& xis )
         {
             E_LightingType n = ENT_Tr::ConvertToLightingType( xis.attribute< std::string >( "type" ) );
             vModifIlluminations_.at( n )->ReadArchive( xis );
+        })
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Modificators::ReadSourcePostureModifiers
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Modificators::ReadSourcePostureModifiers( xml::xistream& xis )
+{
+    xis >> xml::start( "source-posture-modifiers" )
+        >> xml::list( "distance-modifier", [&]( xml::xistream& xis )
+        {
+            const std::string type = xis.attribute< std::string >( "type" );
+            for( unsigned int i = 0; i < eNbrUnitPosture; ++i )
+                if( type == ADN_Tools::ComputePostureScriptName( static_cast< E_UnitPosture >( i ) ) )
+                {
+                    vModifStance_.at( i )->ReadArchive( xis );
+                    return;
+                }
+            throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toStdString() );
+        })
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Modificators::ReadTargetPostureModifiers
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Modificators::ReadTargetPostureModifiers( xml::xistream& xis )
+{
+    xis >> xml::start( "target-posture-modifiers" )
+        >> xml::list( "distance-modifier", [&]( xml::xistream& xis )
+        {
+            const std::string type = xis.attribute< std::string >( "type" );
+            for( unsigned int i = 0; i < eNbrUnitPosture; ++i )
+                if( type == ADN_Tools::ComputePostureScriptName( static_cast< E_UnitPosture >( i ) ) )
+                {
+                    vModifTargetStance_.at( i )->ReadArchive( xis );
+                    return;
+                }
+            throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toStdString() );
         })
         >> xml::end;
 }
@@ -393,6 +510,24 @@ void ADN_Sensors_Modificators::WriteMeteoModifiers( xml::xostream& xos ) const
 void ADN_Sensors_Modificators::WriteIlluminationModifiers( xml::xostream& xos ) const
 {
     Write( xos, "visibility-modifiers", vModifIlluminations_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Modificators::WriteSourcePostureModifiers
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Modificators::WriteSourcePostureModifiers( xml::xostream& xos ) const
+{
+    Write( xos, "source-posture-modifiers", vModifIlluminations_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Modificators::WriteTargetPostureModifiers
+// Created: JSR 2014-03-28
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Modificators::WriteTargetPostureModifiers( xml::xostream& xos ) const
+{
+    Write( xos, "target-posture-modifiers", vModifIlluminations_ );
 }
 
 // -----------------------------------------------------------------------------
