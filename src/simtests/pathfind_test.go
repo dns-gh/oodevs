@@ -115,7 +115,7 @@ func CheckPointOrder(objectives, points []swapi.Point) bool {
 	return true
 }
 
-func (s *TestSuite) TestOrderPoints(c *C) {
+func (s *TestSuite) TestPointOrder(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 
