@@ -249,7 +249,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
 {
     if( ! world_.IsValidPosition( to ) )
     {
-        LOG_REASON( "no way: out of world" );
+        LOG_REASON( "no path: out of world" );
         return -1;
     }
 
@@ -257,14 +257,14 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     double rSpeed = path_.GetUnitSpeeds().GetMaxSpeed( nLinkTerrainType );
     if( rSpeed <= 0 )
     {
-        LOG_REASON( "no way: speed on " << nLinkTerrainType.DumpToString()
-                << " == " << rSpeed );
+        LOG_REASON( "no path: speed on " << nLinkTerrainType.DumpToString()
+                << " = " << rSpeed );
         return -1;
     }
 
     if( ! path_.GetUnitSpeeds().IsPassable( nToTerrainType ) )
     {
-        LOG_REASON( "no way: cannot cross terrain" );
+        LOG_REASON( "no path: cannot cross terrain" );
         return -1;
     }
 
@@ -277,7 +277,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
             return delta * delta > from.SquareDistance( to ) * rMaxSlope_ * rMaxSlope_;
         } ) )
     {
-        LOG_REASON( "no way: slope is too steep" );
+        LOG_REASON( "no path: slope is too steep" );
         return -1;
     }
 
@@ -292,7 +292,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
         modifier.ModifySpeed( rSpeed, rSlopeDeceleration_, rMaxSlope_, to );
         if( rSpeed == 0 )
         {
-            LOG_REASON( "no way: speed on slope is null" );
+            LOG_REASON( "no path: speed on slope is null" );
             return -1;
         }
     }
@@ -323,7 +323,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rUrbanBlockCost = GetUrbanBlockCost( from, to );
     if( rUrbanBlockCost < 0. )
     {
-        LOG_REASON( "no way: urban block cost" );
+        LOG_REASON( "no path: urban block cost" );
         return -1;
     }
     rDynamicCost += rUrbanBlockCost;
@@ -332,7 +332,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rObjectsCost = GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType, rSpeed );
     if( rObjectsCost < 0 || rSpeed <= 0. )
     {
-        LOG_REASON( "no way: objects cost" );
+        LOG_REASON( "no path: objects cost" );
         return -1;
     }
     rDynamicCost += rObjectsCost;
@@ -341,7 +341,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rEnemiesCost = GetEnemiesCost( from, to );
     if( rEnemiesCost < 0 )
     {
-        LOG_REASON( "no way: enemies cost" );
+        LOG_REASON( "no path: enemies cost" );
         return -1;
     }
     rDynamicCost += rEnemiesCost;
@@ -350,7 +350,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rPopulationsCost = GetPopulationsCost( to );
     if( rPopulationsCost < 0 )
     {
-        LOG_REASON( "no way: populations cost" );
+        LOG_REASON( "no path: populations cost" );
         return -1;
     }
     rDynamicCost += rPopulationsCost;
@@ -373,7 +373,7 @@ double DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, const 
         const double rFuseauCost = pFuseau_ ? pFuseau_->GetCost( from, to, rMaximumFuseauDistance_, rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_ ) : 0;
         if( rFuseauCost < 0 )
         {
-            LOG_REASON( "not way: unit limits" );
+            LOG_REASON( "no path: unit limits" );
             return -1;
         }
         rCost += rFuseauCost;
@@ -383,7 +383,7 @@ double DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, const 
         const double rAutomateFuseauCost = pAutomateFuseau_ ? pAutomateFuseau_->GetCost( from, to, rMaximumAutomataFuseauDistance_, rAutomataFuseauCostPerMeterOut_, 0, 0 ) : 0;
         if( rAutomateFuseauCost < 0 )
         {
-            LOG_REASON( "no way: automat limits" );
+            LOG_REASON( "no path: automat limits" );
             return -1;
         }
         rCost += rAutomateFuseauCost;
