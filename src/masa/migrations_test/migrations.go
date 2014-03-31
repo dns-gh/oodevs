@@ -185,8 +185,8 @@ ROOTDIR DATADIR OUTDIR RUNDIR BASEPORT JOBS [EXERCISES...] expected`)
 	}
 	close(exercises)
 
-	// Setting GOMAXPROC is not enough to control concurrency because of system
-	// calls. Use goroutine workers instead.
+	// Setting GOMAXPROC is not enough to control syscall threads created when
+	// spawning simulations. Use goroutine workers instead.
 	running := &sync.WaitGroup{}
 	results := make(chan error, len(tests))
 	for i := 0; i != int(jobs); i++ {
