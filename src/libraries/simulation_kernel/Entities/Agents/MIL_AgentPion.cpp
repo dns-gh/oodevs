@@ -1017,6 +1017,8 @@ void MIL_AgentPion::OnReceiveResupplyResources( bool withLog )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveResupplyEquipement( bool withLog )
 {
+    if( markedForDestruction_ )
+        throw MASA_BADUNIT_UNIT( "invalid unit: " << GetID() );
     GetRole< PHY_RolePion_Composantes >().RepairAllComposantes( withLog );
 }
 
