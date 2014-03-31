@@ -1,9 +1,0 @@
-<configuration>
-	<host>localhost</host>
-	<port>10001</port>
-	<login>Supervisor</login>
-	<password/>
-	<output>tester.log</output>
-	<timeout>600000</timeout>
-	<scheduler>2000</scheduler>
-</configuration>

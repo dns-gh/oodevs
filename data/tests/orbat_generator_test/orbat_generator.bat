@@ -1,1 +1,0 @@
-orbat_generator_app.exe --input=input.xml 
