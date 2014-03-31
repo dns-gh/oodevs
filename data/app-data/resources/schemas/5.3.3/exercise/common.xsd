@@ -10,7 +10,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="T_PositiveTime">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="[\-]?[0-9]*\.?[1-9]+[smhdj]"/>
+			<xs:pattern value="(0\.\d*[1-9]\d*|[1-9]\d*(\.\d+)?)+[smhdj]"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_ShortIsoDate">
