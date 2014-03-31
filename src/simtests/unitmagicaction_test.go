@@ -2597,19 +2597,22 @@ func mini32(a, b int32) int32 {
 	return b
 }
 
-func (s *TestSuite) TestDestroyRandomEquipment(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer stopSimAndClient(c, sim, client)
+func setupSomeUnit(c *C, client *swapi.Client) *swapi.Unit {
 	formation := CreateFormation(c, client, 1)
 	automat := CreateAutomat(c, client, formation.Id, 0)
 	unit := CreateUnit(c, client, automat.Id)
-	model := client.Model
-	data := model.GetData()
+	return unit
+}
+
+func (s *TestSuite) TestDestroyRandomEquipment(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	unit := setupSomeUnit(c, client)
 	const id = 11
 	eqs := map[uint32]*swapi.EquipmentDotation{
 		id: {Available: 4},
 	}
-	c.Assert(data.Units[unit.Id].EquipmentDotations, DeepEquals, eqs)
+	c.Assert(client.Model.GetUnit(unit.Id).EquipmentDotations, DeepEquals, eqs)
 	// invalid unit
 	err := client.DestroyRandomEquipment(123456)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
@@ -2631,6 +2634,43 @@ func (s *TestSuite) TestDestroyRandomEquipment(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 }
 
+func (s *TestSuite) TestRecoverEquipments(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	unit := setupSomeUnit(c, client)
+	const id = 11
+	eqs := map[uint32]*swapi.EquipmentDotation{
+		id: {Available: 4},
+	}
+	for _, withLog := range []bool{true, false} {
+		// invalid unit
+		err := client.RecoverEquipments(123456, withLog)
+		c.Assert(err, IsSwordError, "error_invalid_unit")
+		err = client.DestroyUnit(unit.Id)
+		c.Assert(err, IsNil)
+		eqs[id].Unavailable = eqs[id].Available
+		eqs[id].Available = 0
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			return reflect.DeepEqual(d.Units[unit.Id].EquipmentDotations, eqs)
+		})
+		// valid unit
+		err = client.RecoverEquipments(unit.Id, withLog)
+		c.Assert(err, IsNil)
+		eqs[id].Available = eqs[id].Unavailable
+		eqs[id].Unavailable = 0
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			return reflect.DeepEqual(d.Units[unit.Id].EquipmentDotations, eqs)
+		})
+	}
+	// deleted unit
+	err := client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	err = client.RecoverEquipments(unit.Id, false)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	err = client.RecoverEquipments(unit.Id, true)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+}
+
 type HumansSorter []*swapi.HumanDotation
 
 func (h HumansSorter) Len() int           { return len(h) }
@@ -2646,11 +2686,8 @@ func normalizeHumans(src []*swapi.HumanDotation) []*swapi.HumanDotation {
 func (s *TestSuite) TestRecoverHumans(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
-	formation := CreateFormation(c, client, 1)
-	automat := CreateAutomat(c, client, formation.Id, 0)
-	unit := CreateUnit(c, client, automat.Id)
-	model := client.Model
-	ref := normalizeHumans(model.GetUnit(unit.Id).HumanDotations)
+	unit := setupSomeUnit(c, client)
+	ref := normalizeHumans(client.Model.GetUnit(unit.Id).HumanDotations)
 	dead := []*swapi.HumanDotation{}
 	swapi.DeepCopy(&dead, ref)
 	for _, v := range dead {

@@ -259,11 +259,6 @@ func (c *Client) SendAutomatOrder(automatId, missionType uint32,
 	})
 }
 
-func (c *Client) DestroyRandomEquipment(unitId uint32) error {
-	return c.sendUnitMagicAction(MakeUnitTasker(unitId),
-		MakeParameters(), sword.UnitMagicAction_destroy_component)
-}
-
 func (c *Client) DestroyUnit(unitId uint32) error {
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(),
 		sword.UnitMagicAction_destroy_all)
@@ -1238,6 +1233,19 @@ func (c *Client) ChangeEquipmentState(unitId uint32, equipments map[uint32]*Equi
 	}
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), params,
 		sword.UnitMagicAction_change_equipment_state)
+}
+
+func (c *Client) RecoverEquipments(unitId uint32, withLog bool) error {
+	next := sword.UnitMagicAction_recover_equipments
+	if withLog {
+		next = sword.UnitMagicAction_recover_equipments_except_log
+	}
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), next)
+}
+
+func (c *Client) DestroyRandomEquipment(unitId uint32) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId),
+		MakeParameters(), sword.UnitMagicAction_destroy_component)
 }
 
 func (c *Client) CreateBreakdowns(unitId uint32, equipments map[uint32]*EquipmentDotation) error {
