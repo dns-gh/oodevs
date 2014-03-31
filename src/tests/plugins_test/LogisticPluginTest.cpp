@@ -267,6 +267,8 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogMedicalHandlingUpdate* medic = m.mutable_message()->mutable_log_medical_handling_update();
             medic->mutable_request()->set_id( 7 );
+            medic->mutable_unit()->set_id( 8 );
+            medic->mutable_provider()->set_id( 12 );
             medic->set_state( static_cast< sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus >( 1 ) );
             medic->set_current_state_end_tick( 400 );
             plugin->Receive( m, day2 );
@@ -277,6 +279,8 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogMedicalHandlingUpdate* medic = m.mutable_message()->mutable_log_medical_handling_update();
             medic->mutable_request()->set_id( 7 );
+            medic->mutable_unit()->set_id( 8 );
+            medic->mutable_provider()->set_id( 12 );
             medic->set_state( static_cast< sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus >( 2 ) );
             medic->set_current_state_end_tick( 500 );
             plugin->Receive( m, day3 );
@@ -749,27 +753,27 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorderLRU )
     BOOST_CHECK_EQUAL( 1u, rec.GetHistorySize() );
     AddAndFlush( rec, 1, 2, false );
     BOOST_CHECK_EQUAL( 1u, rec.GetHistorySize() );
-    rec.GetHistory( 1, entries ); 
+    rec.GetHistory( 1, entries );
     BOOST_CHECK_EQUAL( "1.1, 1.2", GetHistoryTrace( entries ) );
 
     // One destroyed
     AddAndFlush( rec, 2, 3, true );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
-    rec.GetHistory( 2, entries ); 
+    rec.GetHistory( 2, entries );
     BOOST_CHECK_EQUAL( "2.3", GetHistoryTrace( entries ) );
 
     // Another valid -> evict the destroyed [2]
     AddAndFlush( rec, 3, 4, false );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
-    rec.GetHistory( 3, entries ); 
+    rec.GetHistory( 3, entries );
     BOOST_CHECK_EQUAL( "3.4", GetHistoryTrace( entries ) );
-    rec.GetHistory( 2, entries ); 
+    rec.GetHistory( 2, entries );
     BOOST_CHECK_EQUAL( "", GetHistoryTrace( entries ) );
 
     // Another destroyed -> removed immediately
     AddAndFlush( rec, 4, 5, true );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
-    rec.GetHistory( 4, entries ); 
+    rec.GetHistory( 4, entries );
     BOOST_CHECK_EQUAL( "", GetHistoryTrace( entries ) );
 
     // Update [1]
@@ -779,11 +783,11 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorderLRU )
     // A new valid one -> evict [3]
     AddAndFlush( rec, 5, 6, false );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
-    rec.GetHistory( 1, entries ); 
+    rec.GetHistory( 1, entries );
     BOOST_CHECK_EQUAL( "1.1, 1.2, 1.6", GetHistoryTrace( entries ) );
-    rec.GetHistory( 3, entries ); 
+    rec.GetHistory( 3, entries );
     BOOST_CHECK_EQUAL( "", GetHistoryTrace( entries ) );
-    rec.GetHistory( 5, entries ); 
+    rec.GetHistory( 5, entries );
     BOOST_CHECK_EQUAL( "5.6", GetHistoryTrace( entries ) );
 }
 
@@ -834,7 +838,7 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorderEntitiesIndex )
     };
 
     // Check from initial recorder
-    check( rec ); 
+    check( rec );
 
     // Reload and check again
     ConsignRecorder reloaded( path, 1000, 4 );

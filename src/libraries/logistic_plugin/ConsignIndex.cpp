@@ -64,8 +64,8 @@ void UpdateEntry( const sword::SimToClient& message, sword::LogHistoryEntry& ent
     }
     else if( msg.has_log_funeral_handling_update() )
     {
-        entry.mutable_funeral()->mutable_update()->MergeFrom(
-            msg.log_funeral_handling_update() );
+        *entry.mutable_funeral()->mutable_update() =
+            msg.log_funeral_handling_update();
     }
     else if( msg.has_log_funeral_handling_destruction() )
     {
@@ -79,8 +79,8 @@ void UpdateEntry( const sword::SimToClient& message, sword::LogHistoryEntry& ent
     }
     else if( msg.has_log_maintenance_handling_update() )
     {
-        entry.mutable_maintenance()->mutable_update()->MergeFrom(
-            msg.log_maintenance_handling_update() );
+        *entry.mutable_maintenance()->mutable_update() =
+            msg.log_maintenance_handling_update();
     }
     else if( msg.has_log_maintenance_handling_destruction() )
     {
@@ -94,8 +94,8 @@ void UpdateEntry( const sword::SimToClient& message, sword::LogHistoryEntry& ent
     }
     else if( msg.has_log_medical_handling_update() )
     {
-        entry.mutable_medical()->mutable_update() ->MergeFrom(
-            msg.log_medical_handling_update() );
+        *entry.mutable_medical()->mutable_update() =
+            msg.log_medical_handling_update();
     }
     else if( msg.has_log_medical_handling_destruction() )
     {
@@ -109,13 +109,8 @@ void UpdateEntry( const sword::SimToClient& message, sword::LogHistoryEntry& ent
     }
     else if( msg.has_log_supply_handling_update() )
     {
-        // Sub-messages are merged recursively and repeated fields are *appended*.
-        // Clear them before merging. This is fragile but saves tons of code
-        // right now.
-        const auto& sub = msg.log_supply_handling_update();
-        if( sub.has_requests() )
-            entry.mutable_supply()->mutable_update()->mutable_requests()->Clear();
-        entry.mutable_supply()->mutable_update()->MergeFrom( sub );
+        *entry.mutable_supply()->mutable_update() =
+            msg.log_supply_handling_update();
     }
     else if( msg.has_log_supply_handling_destruction() )
     {
