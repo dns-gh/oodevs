@@ -917,3 +917,12 @@ void ADN_ListView::Sort( int column /*= 0*/, Qt::SortOrder order /*= Qt::Ascendi
 {
     proxyModel_->sort( column, order );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::Title
+// Created: ABR 2014-03-31
+// -----------------------------------------------------------------------------
+const QString& ADN_ListView::Title() const
+{
+    return title_;
+}
