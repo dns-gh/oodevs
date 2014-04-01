@@ -50,6 +50,18 @@
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 
+namespace
+{
+    double GetWeight( const MIL_Agent_ABC& queryMaker )
+    {
+        double weight = queryMaker.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight();
+        const auto& reinforcements = queryMaker.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+        for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
+            weight = std::max( weight, ( *it )->GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight() );
+        return weight;
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path constructor
 // Created: JDY 03-04-10
@@ -65,7 +77,8 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
-    , destroyed_( false )
+    , destroyed_               ( false )
+    , unitMajorWeight_         ( GetWeight( queryMaker ) )
 {
     queryMaker_.RegisterPath( *this );
     fuseau_= queryMaker.GetOrderManager().GetFuseau();
@@ -93,7 +106,8 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, std::vector< boost::s
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
-    , destroyed_( false )
+    , destroyed_               ( false )
+    , unitMajorWeight_         ( GetWeight( queryMaker ) )
 {
     queryMaker_.RegisterPath( *this );
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
@@ -124,7 +138,8 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vP
     , rCostOutsideOfAllObjects_ ( 0. )
     , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_       ( false )
-    , destroyed_( false )
+    , destroyed_                ( false )
+    , unitMajorWeight_          ( GetWeight( queryMaker ) )
 {
     queryMaker_.RegisterPath( *this );
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
@@ -191,11 +206,7 @@ void DEC_Agent_Path::Initialize( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 double DEC_Agent_Path::GetUnitMajorWeight() const
 {
-    double weight = queryMaker_.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight();
-    const auto& reinforcements = queryMaker_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
-        weight = std::max( weight, ( *it )->GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight() );
-    return weight;
+    return unitMajorWeight_;
 }
 
 // -----------------------------------------------------------------------------
