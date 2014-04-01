@@ -12,6 +12,7 @@
 
 #include "clients_gui/RichDockWidget.h"
 #include <tools/ElementObserver_ABC.h>
+#include <boost/shared_ptr.hpp>
 
 namespace kernel
 {

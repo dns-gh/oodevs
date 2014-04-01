@@ -16,6 +16,7 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 #include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace actions
 {

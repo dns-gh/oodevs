@@ -10,6 +10,8 @@
 #ifndef __RichLineEdit_h_
 #define __RichLineEdit_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace gui
 {
 

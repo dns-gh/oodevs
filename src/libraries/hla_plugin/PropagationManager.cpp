@@ -16,6 +16,7 @@
 #include "protocol/SimulationSenders.h"
 
 #include <boost/lexical_cast.hpp>
+#include <fstream>
 
 using namespace plugins::hla;
 

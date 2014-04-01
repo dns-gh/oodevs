@@ -15,6 +15,7 @@
 #include "clients_kernel/TimelineHandler_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 #include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace gui
 {

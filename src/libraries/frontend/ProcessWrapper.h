@@ -12,6 +12,7 @@
 
 #include "frontend/Process_ABC.h"
 #include <boost/function.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace boost
 {
