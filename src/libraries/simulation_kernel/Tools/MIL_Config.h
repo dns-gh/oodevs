@@ -57,8 +57,6 @@ public:
     // Enable triggering of random breakdowns on equipments, mostly for tests.
     bool               EnableRandomBreakdowns      () const;
 
-    bool               UseNetworkLogger            () const;
-    unsigned short     GetNetworkLoggerPort        () const;
     unsigned int       GetCheckPointsFrequency     () const;
     unsigned int       GetCheckPointsKept          () const;
     unsigned int       GetTimeStep                 () const;
@@ -111,14 +109,12 @@ private:
     unsigned int   tickLatency_;
     unsigned int   pathFinderThreads_;
     boost::optional< unsigned int > pathFinderMaxComputationTime_;
-    unsigned short networkLoggerPort_;
     std::string    networkAddress_;
     unsigned long  networkTimeOut_;
     bool           bCheckPointOrbat_;
     bool           bCheckAutomateComposition_;
     bool           bUseDecDebug_;
     bool           bUsePathDebug_;
-    bool           bUseNetworkLogger_;
     bool           bDecisionalProfilingEnabled_;
     bool           bDecisionalLoggerEnabled_;
     bool           bHookProfilingEnabled_;

@@ -1,6 +1,5 @@
 #include "simulation_app_pch.h"
 #include "SIM_App.h"
-#include "SIM_NetworkLogger.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FormatString.h"

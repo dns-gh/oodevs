@@ -262,14 +262,14 @@
                 <xs:documentation xml:lang="en">When DirectIA debugger is enabled, defines the network port on which to accept incoming debugging client connections.</xs:documentation>
               </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="networklogger" type="xs:boolean" use="required">
+            <xs:attribute name="networklogger" type="xs:boolean" use="optional">
               <xs:annotation>
-                <xs:documentation xml:lang="en">Enables remote logger (accessible through telnet).</xs:documentation>
+                <xs:documentation xml:lang="en">(DEPRECATED)Enables remote logger (accessible through telnet).</xs:documentation>
               </xs:annotation>
             </xs:attribute>
             <xs:attribute name="networkloggerport" type="T_NetworkPort" use="required">
               <xs:annotation>
-                <xs:documentation xml:lang="en">When network logger is enabled, defines the network port on which to accept incoming client connections.</xs:documentation>
+                <xs:documentation xml:lang="en">(DEPRECATED)When network logger is enabled, defines the network port on which to accept incoming client connections.</xs:documentation>
               </xs:annotation>
             </xs:attribute>
             <xs:attribute name="pathfind" type="xs:boolean" use="required">
