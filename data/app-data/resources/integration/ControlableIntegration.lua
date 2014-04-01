@@ -6,7 +6,7 @@ local defaultPointRecceSpeed = 3
 -- An action in the simulation is started
 -- This method can only be called by an agent
 -- @param area The DirectIA area to control
--- @param pointRecceSpeed Float, the reconnaissance speed in meters/tick
+-- @param pointRecceSpeed Float, the reconnaissance speed in meters/tick (optional, default value defaultPointRecceSpeed = 3)
 -- @return true
 integration.startControlArea = function( area, pointRecceSpeed )
     area.perceptionID = DEC_Perception_ActivateLocationProgressiveRecce( area.source, pointRecceSpeed or defaultPointRecceSpeed )
@@ -56,8 +56,8 @@ end
 -- An action in the simulation is started
 -- This method can only be called by an agent
 -- @param point The DirectIA point to control
--- @param pointCircleSize Float, the radius of the circle to control
--- @param pointRecceSpeed Float, the reconnaissance speed in km/h
+-- @param pointCircleSize Float, the radius of the circle to control (optional, default value is defaultPointCircleSize = 250)
+-- @param pointRecceSpeed Float, the reconnaissance speed in km/h (optional, default value is defaultPointRecceSpeed = 3)
 -- @return true
 integration.startControlPoint = function( point, pointCircleSize, pointRecceSpeed )
     point.perceptionID = DEC_Perception_ActiverReconnaissancePoint( point.source, pointCircleSize or defaultPointCircleSize, pointRecceSpeed or defaultPointRecceSpeed )
