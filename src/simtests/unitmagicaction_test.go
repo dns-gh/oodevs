@@ -2639,14 +2639,23 @@ func (s *TestSuite) TestRecoverEquipments(c *C) {
 	defer stopSimAndClient(c, sim, client)
 	unit := setupSomeUnit(c, client)
 	const id = 11
+	const quantity = 4
 	eqs := map[uint32]*swapi.EquipmentDotation{
-		id: {Available: 4},
+		id: {Available: quantity},
 	}
 	for _, withLog := range []bool{true, false} {
 		// invalid unit
 		err := client.RecoverAllEquipments(123456, withLog)
 		c.Assert(err, IsSwordError, "error_invalid_unit")
-		err = client.DestroyUnit(unit.Id)
+	}
+	next := []swapi.Quantity{{Id: id, Quantity: quantity}}
+	recovers := []func() error{
+		func() error { return client.RecoverAllEquipments(unit.Id, true) },
+		func() error { return client.RecoverAllEquipments(unit.Id, false) },
+		func() error { return client.RecoverEquipments(unit.Id, next) },
+	}
+	for _, recov := range recovers {
+		err := client.DestroyUnit(unit.Id)
 		c.Assert(err, IsNil)
 		eqs[id].Unavailable = eqs[id].Available
 		eqs[id].Available = 0
@@ -2654,7 +2663,7 @@ func (s *TestSuite) TestRecoverEquipments(c *C) {
 			return reflect.DeepEqual(d.Units[unit.Id].EquipmentDotations, eqs)
 		})
 		// valid unit
-		err = client.RecoverAllEquipments(unit.Id, withLog)
+		err = recov()
 		c.Assert(err, IsNil)
 		eqs[id].Available = eqs[id].Unavailable
 		eqs[id].Unavailable = 0
