@@ -1005,6 +1005,8 @@ void MIL_AgentPion::OnReceiveResupplyHumans( bool withLog )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveResupplyResources( bool withLog )
 {
+    if( markedForDestruction_ )
+        throw MASA_BADUNIT_UNIT( "invalid unit: " << GetID() );
     GetRole< dotation::PHY_RolePion_Dotations >().ResupplyDotations( withLog );
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
