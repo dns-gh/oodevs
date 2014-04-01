@@ -18,8 +18,12 @@
 
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
+// find a way to remove them
+#include <protocol/Protocol.h>
+
 #pragma warning( disable: 4505 )
 #include <turtle/mock.hpp>
+#include <xeumeuleu/xml.hpp>
 
 #include <vector>
 #include <list>
