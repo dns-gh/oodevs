@@ -69,6 +69,8 @@ void PathfindLayer::Paint( gui::Viewport_ABC& )
     DrawLines( 3, 0, 179, 253 );
     for( auto it = positions_.begin(); it != positions_.end(); ++it )
         DrawPoint( *it );
+    if( hovered_ )
+        DrawPoint( *hovered_ );
     glPopAttrib();
 }
 
@@ -177,4 +179,25 @@ void PathfindLayer::BeforeSelection()
 void PathfindLayer::AfterSelection()
 {
     // NOTHING
+}
+
+bool PathfindLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Point2f& point )
+{
+    hovered_ = boost::none;
+    if( path_.empty() )
+        return false;
+    float distance = std::numeric_limits< float >::infinity();
+    for( auto it = path_.begin(); it != path_.end() - 1; ++it )
+    {
+        const auto projection = geometry::Segment2f( *(it + 1), (*it) ).Project( point );
+        const auto d = projection.SquareDistance( point );
+        const auto pixels = tools_.Pixels( projection );
+        static const auto threshold = 200; // pixels
+        if( d < distance && d < threshold * pixels * pixels )
+        {
+            distance = d;
+            hovered_ = projection;
+        }
+    }
+    return false;
 }

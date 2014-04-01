@@ -61,6 +61,8 @@ public:
     //@}
 
 private:
+    virtual bool HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point );
+
     //! @name Helpers
     //@{
     virtual void Select( const kernel::Agent_ABC& element );
@@ -91,6 +93,7 @@ private:
     std::vector< geometry::Point2f > positions_;
     geometry::Point2f point_;
     std::vector< geometry::Point2f > path_;
+    boost::optional< geometry::Point2f > hovered_;
     //@}
 };
 
