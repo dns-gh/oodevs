@@ -1170,8 +1170,8 @@ func (c *Client) DebugBrain(automatId uint32, enable bool) error {
 	return c.DebugBrainTest(automatId, params)
 }
 
-func (c *Client) TransferEquipment(unitId uint32, targetId uint32, equipments []Equipment) error {
-	params := MakeParameters(MakeIdentifier(targetId), MakeEquipments(equipments))
+func (c *Client) TransferEquipment(unitId uint32, targetId uint32, equipments []Quantity) error {
+	params := MakeParameters(MakeIdentifier(targetId), MakeQuantities(equipments))
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), params,
 		sword.UnitMagicAction_transfer_equipment)
 }

@@ -192,17 +192,17 @@ func MakeAdhesions(adhesions map[uint32]float32) *sword.MissionParameter {
 	return MakeParameter(list...)
 }
 
-type Equipment struct {
+type Quantity struct {
 	Id       uint32
 	Quantity int
 }
 
-func MakeEquipments(equipments []Equipment) *sword.MissionParameter {
+func MakeQuantities(quantities []Quantity) *sword.MissionParameter {
 	list := []*sword.MissionParameter_Value{}
-	for _, equipment := range equipments {
+	for _, qty := range quantities {
 		list = append(list, MakeList(
-			MakeIdentifier(equipment.Id),
-			MakeQuantity(int32(equipment.Quantity)),
+			MakeIdentifier(qty.Id),
+			MakeQuantity(int32(qty.Quantity)),
 		))
 	}
 	return MakeParameter(list...)

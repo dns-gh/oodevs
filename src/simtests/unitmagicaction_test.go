@@ -1196,55 +1196,55 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid empty equipment list")
 
 	// error: invalid unit identifier
-	err = client.TransferEquipment(1000, 12, []swapi.Equipment{{11, 1}})
+	err = client.TransferEquipment(1000, 12, []swapi.Quantity{{11, 1}})
 	c.Assert(err, ErrorMatches, "error_invalid_unit.*")
 
 	// error: target does not have equipment
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{1000, 1}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{1000, 1}})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: no equipment type of parameter #0 available to lend in source unit")
 
 	// error: invalid unit identifier
-	err = client.TransferEquipment(11, 1000, []swapi.Equipment{{11, 1}})
+	err = client.TransferEquipment(11, 1000, []swapi.Quantity{{11, 1}})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid target identifier")
 
 	// error: cannot transfer from a unit to itself
-	err = client.TransferEquipment(11, 11, []swapi.Equipment{{11, 1}})
+	err = client.TransferEquipment(11, 11, []swapi.Quantity{{11, 1}})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: source and target are identical")
 
 	// error: negative equipment count
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, -1}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{11, -1}})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid negative equipment count #0")
 
 	// valid: transfer zero available equipments
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 0}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{11, 0}})
 	c.Assert(err, IsNil)
 
 	// valid: transfer zero unavailable equipments
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{1000, 0}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{1000, 0}})
 	c.Assert(err, IsNil)
 
 	// valid: transfer equipment
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 1}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{11, 1}})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 1))
 
 	// valid: transfer twice the same equipment sums the two quantities
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 1}, {11, 1}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{11, 1}, {11, 1}})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 3))
 
 	// valid: transfering more caps to the available quantity
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 1000}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{11, 1000}})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 4))
 
 	// valid: transfering back
-	err = client.TransferEquipment(12, 11, []swapi.Equipment{{11, 3}})
+	err = client.TransferEquipment(12, 11, []swapi.Quantity{{11, 3}})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 1))
 
 	// valid: transfering to a third unit
-	err = client.TransferEquipment(12, 13, []swapi.Equipment{{11, 5}})
+	err = client.TransferEquipment(12, 13, []swapi.Quantity{{11, 5}})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return CheckLentEquipment(data, 11, 12, 3, 1) && CheckBorrowedEquipment(data, 11, 12, 0, 1) &&
@@ -2135,7 +2135,7 @@ func (s *TestSuite) TestTransferAwayEquipment(c *C) {
 	c.Assert(err, IsNil)
 
 	// Transfer 2 equipments not loadable
-	err = client.TransferEquipment(transported.Id, unit.Id, []swapi.Equipment{{awayEquipmentId, 2}})
+	err = client.TransferEquipment(transported.Id, unit.Id, []swapi.Quantity{{awayEquipmentId, 2}})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -2153,7 +2153,7 @@ func (s *TestSuite) TestTransferAwayEquipment(c *C) {
 	CheckAwayEquipment(c, client, awayEquipmentId, transported.Id, carrier.Id, 1)
 
 	// Transfering back
-	err = client.TransferEquipment(unit.Id, transported.Id, []swapi.Equipment{{awayEquipmentId, 2}})
+	err = client.TransferEquipment(unit.Id, transported.Id, []swapi.Quantity{{awayEquipmentId, 2}})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
