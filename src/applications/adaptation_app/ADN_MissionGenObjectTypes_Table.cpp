@@ -91,20 +91,6 @@ void ADN_MissionGenObjectTypes_Table::AddRow( int row, void* data )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MissionGenObjectTypes_Table::OnTypeChanged
-// Created: LGY 2012-04-20
-// -----------------------------------------------------------------------------
-void ADN_MissionGenObjectTypes_Table::OnTypeChanged( E_MissionParameterType type )
-{
-    if( type == eMissionParameterTypeGenObject || type == eMissionParameterTypeObjectKnowledge )
-    {
-        all_->blockSignals( true );
-        all_->setChecked( IsChecked() );
-        all_->blockSignals( false );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_MissionGenObjectTypes_Table::OnStateChanged
 // Created: LGY 2012-04-19
 // -----------------------------------------------------------------------------
