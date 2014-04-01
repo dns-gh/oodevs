@@ -381,7 +381,6 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 }
 
 func (s *TestSuite) TestLogisticUpdates(c *C) {
-	c.Skip("simulation part was temporarily reverted. See http://jira.masagroup.net/browse/SWBUG-12091")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
