@@ -20,7 +20,9 @@
 #include <cassert>
 #include <sstream>
 
+#include "protocol/Protocol.h"
 #include <tools/Exception.h>
+#include <tools/Map.h>
 
 #pragma warning ( pop )
 
