@@ -16,7 +16,6 @@
 #include "LogSupplyRecipientResourcesRequest.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include <boost/foreach.hpp>
 
 using namespace dispatcher;
 
@@ -63,15 +62,16 @@ void LogConsignSupply::Update( const sword::LogSupplyHandlingUpdate& msg )
     if( msg.has_requests() )
     {
         requests_.DeleteAll();
-        BOOST_FOREACH( const sword::SupplyRecipientResourcesRequest& req, msg.requests().requests() )
+        const auto& requests = msg.requests().requests();
+        for( auto it = requests.begin(); it != requests.end(); ++it )
         {
-            LogSupplyRecipientResourcesRequest* request = requests_.Find( req.recipient().id() );
+            LogSupplyRecipientResourcesRequest* request = requests_.Find( it->recipient().id() );
             if( request )
-                request->Update( req ); //$$ useless
+                request->Update( *it ); //$$ useless
             else
             {
-                request = new LogSupplyRecipientResourcesRequest( model_, req );
-                requests_.Register( req.recipient().id(), *request );
+                request = new LogSupplyRecipientResourcesRequest( model_, *it );
+                requests_.Register( it->recipient().id(), *request );
             }
         }
     }

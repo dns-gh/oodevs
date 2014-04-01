@@ -17,8 +17,6 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <tools/Resolver_ABC.h>
-#include <boost/bind.hpp>
-#include <boost/foreach.hpp>
 
 using namespace dispatcher;
 
@@ -50,9 +48,10 @@ LogisticHierarchy::~LogisticHierarchy()
 void LogisticHierarchy::DoUpdate( const sword::ChangeLogisticLinks& msg )
 {
     superiorLinks_.clear();
-    BOOST_FOREACH( const sword::ParentEntity& parentEntity, msg.superior() )
+    const auto& superior = msg.superior();
+    for( auto it = superior.begin(); it != superior.end(); ++it )
     {
-        const LogisticEntity_ABC* superior = FindLogisticEntity( parentEntity );
+        const LogisticEntity_ABC* superior = FindLogisticEntity( *it );
         assert( superior );
         superiorLinks_.push_back( boost::shared_ptr< LogisticLink >( new LogisticLink( owner_, *superior ) ) );
     }
@@ -80,12 +79,13 @@ void LogisticHierarchy::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     // Links
     client::ChangeLogisticLinks msg;
     owner_.Send( *msg().mutable_requester() );
-    BOOST_FOREACH( boost::shared_ptr< LogisticLink > link, superiorLinks_ )
-        link->GetSuperior().Send( *msg().add_superior() );
+    for( auto it = superiorLinks_.begin(); it != superiorLinks_.end(); ++it )
+        (*it)->GetSuperior().Send( *msg().add_superior() );
     msg.Send( publisher );
 
     // Links attributes
-    std::for_each( superiorLinks_.begin(), superiorLinks_.end(), boost::bind( &LogisticLink::SendFullUpdate, _1, boost::ref( publisher ) ) );
+    for( auto it = superiorLinks_.begin(); it != superiorLinks_.end(); ++it )
+        (*it)->SendFullUpdate( publisher );
 }
 
 // =============================================================================
@@ -113,10 +113,10 @@ LogisticEntity_ABC* LogisticHierarchy::FindLogisticEntity( const sword::ParentEn
 // -----------------------------------------------------------------------------
 LogisticLink* LogisticHierarchy::FindLogisticLink( const LogisticEntity_ABC& superior ) const
 {
-    BOOST_FOREACH( boost::shared_ptr< LogisticLink > link, superiorLinks_ )
+    for( auto it = superiorLinks_.begin(); it != superiorLinks_.end(); ++it )
     {
-        if( &link->GetSuperior() == &superior )
-            return link.get();
+        if( &(*it)->GetSuperior() == &superior )
+            return it->get();
     }
     return 0;
 }

@@ -13,7 +13,6 @@
 #include "Automat.h"
 #include "Model.h"
 #include "protocol/Protocol.h"
-#include <boost/foreach.hpp>
 
 using namespace dispatcher;
 
@@ -43,15 +42,16 @@ LogSupplyRecipientResourcesRequest::~LogSupplyRecipientResourcesRequest()
 // -----------------------------------------------------------------------------
 void LogSupplyRecipientResourcesRequest::Update( const sword::SupplyRecipientResourcesRequest& msg )
 {
-    BOOST_FOREACH( const sword::SupplyResourceRequest& req, msg.resources() )
+    const auto& resources = msg.resources();
+    for( auto it = resources.begin(); it != resources.end(); ++it )
     {
-        LogSupplyResourceRequest* resource = resources_.Find( req.resource().id() );
+        LogSupplyResourceRequest* resource = resources_.Find( it->resource().id() );
         if( resource )
-            resource->Update( req );
+            resource->Update( *it );
         else
         {
-            resource = new LogSupplyResourceRequest( model_, req );
-            resources_.Register( req.resource().id(), *resource );
+            resource = new LogSupplyResourceRequest( model_, *it );
+            resources_.Register( it->resource().id(), *resource );
         }
     }
 }
