@@ -15,6 +15,7 @@
 #include <queue>
 #include <tools/Path.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/serialization/split_member.hpp>
 
 namespace sword
 {

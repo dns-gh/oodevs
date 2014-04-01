@@ -18,6 +18,7 @@
 #include "propagation/PropagationManager.h"
 #include "propagation/ASCExtractor.h"
 #include "tools/XmlStreamOperators.h"
+#include <tools/PathSerialization.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 
