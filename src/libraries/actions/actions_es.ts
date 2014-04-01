@@ -148,5 +148,25 @@
         <source>List</source>
         <translation>Lista</translation>
     </message>
+    <message>
+        <source>Parameter &apos;%1&apos; should be a structure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expecting &apos;%1&apos; parameters, got &apos;%2&apos; on structure &apos;%3&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expecting at least one parameter on union &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expecting an identifier as first parameter on union &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No parameter found for id &apos;%1&apos; on union &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

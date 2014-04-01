@@ -300,7 +300,7 @@ Action_ABC* ActionFactory::CreateAction( const sword::ClientToSim& message, bool
         else if( content.has_object_magic_action() )
             return CreateAction( content.object_magic_action(), needRegistration );
     }
-    throw MASA_EXCEPTION( "ActionFactory: Failed to create an action from this ClientToSim message" );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

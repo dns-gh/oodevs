@@ -17,7 +17,7 @@
 #include "ParameterFactory_ABC.h"
 
 #include "clients_kernel/OrderParameter.h"
-#include "MT_Tools/MT_FormatString.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
 #include <boost/lexical_cast.hpp>
@@ -47,13 +47,11 @@ namespace
                             const boost::optional< const kernel::Entity_ABC& >& entity )
     {
         if( !parameter.IsStructure() )
-            throw MASA_EXCEPTION( MT_FormatString( "Parameter %s should be a structure",
-                                                   parameter.GetName() ) );
+            throw MASA_EXCEPTION( tools::translate( "ParameterList", "Parameter '%1' should be a structure" )
+                                    .arg( QString::fromStdString( parameter.GetName() ) ).toStdString() );
         if( static_cast< int >( parameter.Count() ) != list.size() )
-            throw MASA_EXCEPTION( MT_FormatString( "Expecting %d parameters, got %d on parameter %s",
-                                                   parameter.Count(),
-                                                   list.size(),
-                                                   parameter.GetName() ) );
+            throw MASA_EXCEPTION( tools::translate( "ParameterList", "Expecting '%1' parameters, got '%2' on structure '%3'" )
+                                    .arg( parameter.Count() ).arg( list.size() ).arg( QString::fromStdString( parameter.GetName() ) ).toStdString() );
         for( unsigned int i = 0; i < parameter.Count(); ++i )
         {
             std::unique_ptr< Parameter_ABC > param( factory.CreateParameter( parameter.Get( i ), list.Get( i ), entity ) );
@@ -82,16 +80,17 @@ ParameterList::ParameterList( const kernel::OrderParameter& parameter,
     else if( parameter.IsUnion() )
     {
         if( list.size() < 1 )
-            throw MASA_EXCEPTION( "Expecting at least one parameter on union parameter " + parameter.GetName() );
+            throw MASA_EXCEPTION( tools::translate( "ParameterList", "Expecting at least one parameter on union '%1'" )
+                                    .arg( QString::fromStdString( parameter.GetName() ) ).toStdString() );
         auto& idParameter = list.Get( 0 );
         if( !idParameter.has_identifier() )
-            throw MASA_EXCEPTION( "Expecting an identifier as first parameter on union parameter " + parameter.GetName() );
+            throw MASA_EXCEPTION( tools::translate( "ParameterList", "Expecting an identifier as first parameter on union '%1'" )
+                                    .arg( QString::fromStdString( parameter.GetName() ) ).toStdString() );
         auto id = idParameter.identifier();
         auto subParam = parameter.Find( id );
         if( !subParam )
-            throw MASA_EXCEPTION( MT_FormatString( "No parameter found for id %d on union parameter %s",
-                                                    id,
-                                                    parameter.GetName() ) );
+            throw MASA_EXCEPTION( tools::translate( "ParameterList", "No parameter found for id '%1' on union '%2'" )
+                                    .arg( id ).arg( QString::fromStdString( parameter.GetName() ) ).toStdString() );
         RegisterStructure( *this, *subParam, list, factory, entity );
         SetName( QString::fromStdString( subParam->GetName() ) );
     }
