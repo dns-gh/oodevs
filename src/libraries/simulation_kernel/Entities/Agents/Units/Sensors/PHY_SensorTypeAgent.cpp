@@ -56,15 +56,6 @@ namespace
             factors[ ic->second->GetID() ] = it->second;
         }
     }
-
-    std::map< std::string, PHY_RawVisionData::E_VisionObject > environmentAssociation;
-    void InitializeEnvironmentAssociation()
-    {
-        environmentAssociation[ "Sol"    ] = PHY_RawVisionData::eVisionGround;
-        environmentAssociation[ "Vide"   ] = PHY_RawVisionData::eVisionEmpty;
-        environmentAssociation[ "Foret"  ] = PHY_RawVisionData::eVisionForest;
-        environmentAssociation[ "Urbain" ] = PHY_RawVisionData::eVisionUrban;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +92,6 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     InitializeFactors( weather::PHY_Lighting::GetLightings(), "visibility-modifiers", lightingFactors_, xis );
     ReadPostureFactors( xis, "source-posture-modifiers", postureSourceFactors_ );
     ReadPostureFactors( xis, "target-posture-modifiers", postureTargetFactors_ );
-    InitializeEnvironmentAssociation();
     InitializeEnvironmentFactors( xis );
     InitializePopulationFactors( xis );
     InitializeUrbanBlockFactors( xis );
@@ -230,7 +220,7 @@ void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis )
     xis >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
         throw MASA_EXCEPTION( xis.context() + "terrain-modifier: value not in [0..1]" );
-    environmentFactors_.insert( std::pair< unsigned, double >( environmentAssociation[ terrainType ], rFactor ) );
+    environmentFactors_.insert( std::pair< unsigned, double >( PHY_RawVisionData::environmentAssociation_[ terrainType ], rFactor ) );
 }
 
 // -----------------------------------------------------------------------------

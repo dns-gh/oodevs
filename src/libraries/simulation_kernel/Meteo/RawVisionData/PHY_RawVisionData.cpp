@@ -16,8 +16,15 @@
 #include "MT_Tools/MT_Logger.h"
 #include "meteo/Meteo.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include <boost/assign.hpp>
 #include <tools/InputBinaryStream.h>
 #include <tools/Path.h>
+
+std::map< std::string, PHY_RawVisionData::E_VisionObject > PHY_RawVisionData::environmentAssociation_ = boost::assign::map_list_of
+    ( "Sol"    , PHY_RawVisionData::eVisionGround )
+    ( "Vide"   , PHY_RawVisionData::eVisionEmpty )
+    ( "Foret"  , PHY_RawVisionData::eVisionForest )
+    ( "Urbain" , PHY_RawVisionData::eVisionUrban );
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData constructor
