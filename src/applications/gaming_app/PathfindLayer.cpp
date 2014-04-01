@@ -58,37 +58,18 @@ PathfindLayer::~PathfindLayer()
     controllers_.Unregister( *this );
 }
 
-namespace
-{
-    void DrawCross( const boost::optional< geometry::Point2f >& point, gui::GlTools_ABC& tools )
-    {
-        if( point )
-        {
-            glColor4f( COLOR_BLACK );
-            tools.DrawCross( *point, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer::Paint
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
 void PathfindLayer::Paint( gui::Viewport_ABC& )
 {
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
+    DrawLines( 5, 34, 105, 187 );
+    DrawLines( 3, 0, 179, 253 );
     for( auto it = positions_.begin(); it != positions_.end(); ++it )
-    {
-        glColor4f( COLOR_BLACK );
-        tools_.DrawCross( *it, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
-    }
-
-    if( !path_.empty() )
-    {
-        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
-        DrawLines( 5, 34, 105, 187 );
-        DrawLines( 3, 0, 179, 253 );
-        glPopAttrib();
-    }
+        DrawPoint( *it );
+    glPopAttrib();
 }
 
 void PathfindLayer::DrawLines( float width, uint8_t r, uint8_t g, uint8_t b ) const
@@ -98,6 +79,16 @@ void PathfindLayer::DrawLines( float width, uint8_t r, uint8_t g, uint8_t b ) co
     tools_.DrawLines( path_ );
     for( auto it = path_.begin(); it != path_.end(); ++it )
         tools_.DrawDisc( *it, width / 2, gui::GlTools_ABC::pixels );
+}
+
+void PathfindLayer::DrawPoint( geometry::Point2f p ) const
+{
+    glColor4f( COLOR_WHITE );
+    tools_.DrawDisc( p, 6, gui::GlTools_ABC::pixels );
+    glColor4f( COLOR_BLACK );
+    tools_.DrawDisc( p, 5, gui::GlTools_ABC::pixels );
+    glColor4f( COLOR_WHITE );
+    tools_.DrawDisc( p, 3, gui::GlTools_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

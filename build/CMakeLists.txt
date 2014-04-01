@@ -627,7 +627,7 @@ target_link_libraries( core
 )
 
 # core_test
-add_target( core_test test "tests/core_test" OPTIONS test )
+add_target( core_test tests "tests/core_test" OPTIONS test )
 target_link_libraries( core_test core )
 
 # xeuseudeu
@@ -635,7 +635,7 @@ add_target( xeuseudeu libraries "libraries/xeuseudeu" )
 target_link_libraries( xeuseudeu core )
 
 # xeuseudeu_test
-add_target( xeuseudeu_test test "tests/xeuseudeu_test" OPTIONS protobuf test )
+add_target( xeuseudeu_test tests "tests/xeuseudeu_test" OPTIONS protobuf test )
 target_link_libraries( xeuseudeu_test
     xeuseudeu
     ${TOOLS_LIBRARIES}

@@ -768,17 +768,22 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
     DrawArrow( to - endSegment * 10.f * Pixels(), to, 15.f * Pixels() );
 }
 
+float GlWidget::Radius( float radius, E_Unit unit ) const
+{
+    if( radius < 0 )
+        return 10.f * Pixels();
+    if( unit == pixels )
+        return radius * Pixels();
+    return radius;
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawCircle
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
 void GlWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    if( radius < 0 )
-        radius = 10.f * Pixels();
-    else if( unit == pixels )
-        radius *= Pixels();
-
+    radius = Radius( radius, unit );
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
     glMatrixMode(GL_MODELVIEW);
@@ -792,39 +797,22 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Un
     glPopAttrib();
 }
 
-namespace
-{
-    void DrawDiscPart( const geometry::Point2f& center, float pixels, int glList, float angleDegrees, float radius, GlTools_ABC::E_Unit unit )
-    {
-        if( radius < 0 )
-            radius = 10.f * pixels;
-        else if( unit == GlTools_ABC::pixels )
-            radius *= pixels;
-
-        glPushAttrib( GL_LINE_BIT );
-        glEnable( GL_LINE_SMOOTH );
-        glMatrixMode(GL_MODELVIEW);
-        glPushMatrix();
-            glTranslatef( center.X(), center.Y(), 0.f );
-            glScalef( radius, radius, 1.f );
-            if( angleDegrees != 0 )
-                glRotatef( -angleDegrees, 0, 0, 1 );
-            glBegin( GL_TRIANGLE_FAN );
-                glVertex2f( 0.f, 0.f );
-                glCallList( glList );
-            glEnd();
-        glPopMatrix();
-        glPopAttrib();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawDisc
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
 void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    DrawDiscPart( center, Pixels(), circle_, 0, radius, unit );
+    if( radius < 0 )
+        radius = 10;
+    else if( unit == meters )
+        radius = radius / Pixels();
+    glPushAttrib( GL_LINE_BIT );
+    glEnable( GL_POINT_SMOOTH );
+    glPointSize( 2 * radius );
+    glVertexPointer( 2, GL_FLOAT, 0, (const void*)&center );
+    glDrawArrays( GL_POINTS, 0, 1 );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -833,7 +821,21 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit
 // -----------------------------------------------------------------------------
 void GlWidget::DrawHalfDisc( const geometry::Point2f& center, float angleDegrees, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-    DrawDiscPart( center, Pixels(), halfCircle_, angleDegrees, radius, unit );
+    radius = Radius( radius, unit );
+    glPushAttrib( GL_LINE_BIT );
+    glEnable( GL_LINE_SMOOTH );
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+        glTranslatef( center.X(), center.Y(), 0.f );
+        glScalef( radius, radius, 1.f );
+        if( angleDegrees != 0 )
+            glRotatef( -angleDegrees, 0, 0, 1 );
+        glBegin( GL_TRIANGLE_FAN );
+            glVertex2f( 0.f, 0.f );
+            glCallList( halfCircle_ );
+        glEnd();
+    glPopMatrix();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
