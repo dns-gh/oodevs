@@ -797,7 +797,29 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Un
     glPopAttrib();
 }
 
-void GlWidget::DrawDiscPart( const geometry::Point2f& center, int glList, float angleDegrees, float radius, GlTools_ABC::E_Unit unit ) const
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawDisc
+// Created: AGE 2006-03-16
+// -----------------------------------------------------------------------------
+void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
+{
+    if( radius < 0 )
+        radius = 10;
+    else if( unit == meters )
+        radius = radius / Pixels();
+    glPushAttrib( GL_LINE_BIT );
+    glEnable( GL_POINT_SMOOTH );
+    glPointSize( 2 * radius );
+    glVertexPointer( 2, GL_FLOAT, 0, (const void*)&center );
+    glDrawArrays( GL_POINTS, 0, 1 );
+    glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawHalfDisc
+// Created: JSR 2013-09-25
+// -----------------------------------------------------------------------------
+void GlWidget::DrawHalfDisc( const geometry::Point2f& center, float angleDegrees, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
     radius = Radius( radius, unit );
     glPushAttrib( GL_LINE_BIT );
@@ -810,28 +832,10 @@ void GlWidget::DrawDiscPart( const geometry::Point2f& center, int glList, float 
             glRotatef( -angleDegrees, 0, 0, 1 );
         glBegin( GL_TRIANGLE_FAN );
             glVertex2f( 0.f, 0.f );
-            glCallList( glList );
+            glCallList( halfCircle_ );
         glEnd();
     glPopMatrix();
     glPopAttrib();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlWidget::DrawDisc
-// Created: AGE 2006-03-16
-// -----------------------------------------------------------------------------
-void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
-{
-    DrawDiscPart( center, circle_, 0, radius, unit );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlWidget::DrawHalfDisc
-// Created: JSR 2013-09-25
-// -----------------------------------------------------------------------------
-void GlWidget::DrawHalfDisc( const geometry::Point2f& center, float angleDegrees, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
-{
-    DrawDiscPart( center, halfCircle_, angleDegrees, radius, unit );
 }
 
 // -----------------------------------------------------------------------------
