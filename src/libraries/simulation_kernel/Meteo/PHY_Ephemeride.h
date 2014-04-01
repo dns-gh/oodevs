@@ -14,6 +14,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/serialization/split_member.hpp>
 #include <utility>
 
 class MIL_CheckPointInArchive;
