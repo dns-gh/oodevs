@@ -143,6 +143,7 @@ private:
     MT_Profiler profiler_;
     bool bDecPointsInserted_;
     bool destroyed_;
+    double unitMajorWeight_;
     //@}
 };
 

@@ -72,7 +72,7 @@ void HistoryLogisticsModel::Fill( const sword::ListLogisticRequestsAck& message 
         sword::LogHistoryEntry entry = message.entries( i );
         if( entry.has_funeral() && entry.funeral().has_creation() && entry.funeral().has_update() )
         {
-            if( !tools::Resolver< LogFuneralConsign >::Find( entry.maintenance().creation().request().id() ) )
+            if( !tools::Resolver< LogFuneralConsign >::Find( entry.funeral().creation().request().id() ) )
                 CreateFuneralConsign( entry.funeral().creation() );
             UpdateFuneralConsign( entry.funeral().update() );
         }

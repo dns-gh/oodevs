@@ -13,9 +13,9 @@
 #include "ChildListener.h"
 #include "EventListener_ABC.h"
 #include "dispatcher/Formation_ABC.h"
-#include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <numeric>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -40,12 +40,12 @@ FormationProxy::FormationProxy( dispatcher::Formation_ABC& agent, const LocalAge
 // -----------------------------------------------------------------------------
 FormationProxy::~FormationProxy()
 {
-    BOOST_FOREACH( const T_Subordinates::value_type& v, subordinates_ )
+    std::for_each( subordinates_.begin(), subordinates_.end(), [&](const T_Subordinates::value_type& v)
     {
         unsigned int id = v.first;
         boost::shared_ptr< ChildListener > childListener = childrenListeners_[ id ];
         v.second->Unregister( *childListener );
-    }
+    });
 }
 
 // -----------------------------------------------------------------------------
@@ -109,14 +109,16 @@ void FormationProxy::RemoveSubordinate( unsigned int id )
 void FormationProxy::NotifyChildren()
 {
     EventListener_ABC::T_ChildrenIds children;
-    BOOST_FOREACH( const T_Subordinates::value_type& v, subordinates_ )
-    {
-        std::string rtiId = localAgentResolver_.Resolve( v.first );
-        if( rtiId.size() > 0 )
-            children.insert( rtiId );
-    }
-    BOOST_FOREACH( EventListener_ABC* l, listeners_ )
-        l->ChildrenChanged( children );
+    std::for_each( subordinates_.begin(), subordinates_.end(), [&](const T_Subordinates::value_type& v)
+        {
+            std::string rtiId = localAgentResolver_.Resolve( v.first );
+            if( rtiId.size() > 0 )
+                children.insert( rtiId );
+        });
+    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* l)
+        {
+            l->ChildrenChanged( children );
+        });
 }
 
 namespace
@@ -138,8 +140,10 @@ void FormationProxy::UpdateLocationCallback()
 {
     ChildListener::LocationStruct loc = std::accumulate( childrenListeners_.begin(), childrenListeners_.end(), ChildListener::LocationStruct() , &addLocation );
     loc = loc / static_cast< double >(  childrenListeners_.size() );
-    BOOST_FOREACH( EventListener_ABC* l, listeners_ )
-        l->SpatialChanged( loc.latitude, loc.longitude, loc.altitude, loc.speed, loc.direction );
+    std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* l)
+        {
+            l->SpatialChanged( loc.latitude, loc.longitude, loc.altitude, loc.speed, loc.direction );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -155,6 +159,8 @@ void FormationProxy::PublishParent()
 {
     std::string parentId( localAgentResolver_.Resolve( agent_.GetParent()->GetId() ) );
    if( parentId.size() > 0 )
-       BOOST_FOREACH( EventListener_ABC* l, listeners_ )
+       std::for_each( listeners_.begin(), listeners_.end(), [&](EventListener_ABC* l)
+           {
               l->ParentChanged( parentId );
+           });
 }

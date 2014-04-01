@@ -66,12 +66,12 @@ void ReadPerimeter( ::hla::Deserializer_ABC& deserializer, const std::string& id
     deserializer >> loc;
     geocoord::PlanarCartesian::Parameters params; params.SetOrigin( center.Latitude() * rPiOver180, center.Longitude() * rPiOver180 );
     std::vector< rpr::WorldLocation > wl;
-    BOOST_FOREACH( const rpr::PerimeterPoint& v, loc )
-    {
-        geocoord::PlanarCartesian pc( v.X(), v.Y(), 0, params );
-        geocoord::Geodetic geo( pc );
-        wl.push_back( rpr::WorldLocation( geo.GetLatitude() / rPiOver180, geo.GetLongitude() / rPiOver180, 0 ) );
-    }
+    std::for_each( loc.begin(), loc.end(), [&](const rpr::PerimeterPoint& v)
+        {
+            geocoord::PlanarCartesian pc( v.X(), v.Y(), 0, params );
+            geocoord::Geodetic geo( pc );
+            wl.push_back( rpr::WorldLocation( geo.GetLatitude() / rPiOver180, geo.GetLongitude() / rPiOver180, 0 ) );
+        });
     listener.GeometryChanged( identifier, wl, ObjectListener_ABC::eGeometryType_Polygon );
 }
 }

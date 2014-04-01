@@ -63,10 +63,10 @@ bool FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingUpdate&
 {
     if( msg.has_current_state_end_tick() )
     {
-        int entTick = msg.current_state_end_tick();
-        if( entTick > 0 )
-            stateEndTick_ = boost::lexical_cast< std::string >( entTick );
-        if( entTick <= GetTick() )
+        int endTick = msg.current_state_end_tick();
+        if( endTick > 0 )
+            stateEndTick_ = boost::lexical_cast< std::string >( endTick );
+        if( endTick <= GetTick() )
             stateEndTick_.clear();
     }
     if( msg.has_handling_unit() )

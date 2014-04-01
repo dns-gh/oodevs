@@ -148,7 +148,6 @@ void GlToolsBase::BindIcon( const char** xpm )
 // -----------------------------------------------------------------------------
 void GlToolsBase::SetCurrentColor( float r, float g, float b, float a /* = 1*/ )
 {
-    glColor4f( r, g, b, a );
     renderer_->SetCurrentColor( r, g, b, a );
     graphics_->SetCurrentColor( r, g, b, a );
     symbols_->SetCurrentColor( r, g, b, a );

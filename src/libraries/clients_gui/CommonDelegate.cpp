@@ -109,6 +109,18 @@ unsigned int CommonDelegate::AddLineEdit( int fromRow, int toRow, int fromCol, i
 }
 
 // -----------------------------------------------------------------------------
+// Name: CommonDelegate::AddDelayEdit
+// Created: LGY 2014-03-26
+// -----------------------------------------------------------------------------
+unsigned int CommonDelegate::AddDelayEdit( int fromRow, int toRow, int fromCol, int toCol, unsigned int min /*= 0u*/ )
+{
+    unsigned int id = GetNewId();
+    CreatePosition( id, fromRow, toRow, fromCol, toCol );
+    delayEdits_[ id ] = min;
+    return id;
+}
+
+// -----------------------------------------------------------------------------
 // Name: CommonDelegate::AddCheckBox
 // Created: ABR 2012-10-23
 // -----------------------------------------------------------------------------

@@ -23,6 +23,7 @@
 #include <hla/Serializer.h>
 #include <hla/Deserializer.h>
 #include <vector>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -205,8 +206,10 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_sub_aggregates_attribute_
     plugins::hla::ObjectListener_ABC::T_EntityIDs ids;
     ids.insert( "id1" ); ids.insert( "id2" );
     Omt13StringArray subAggr;
-    BOOST_FOREACH( const plugins::hla::ObjectListener_ABC::T_EntityIDs::value_type v, ids )
-        subAggr.Add( v );
+    std::for_each( ids.begin(), ids.end(), [&](const plugins::hla::ObjectListener_ABC::T_EntityIDs::value_type v)
+        {
+            subAggr.Add( v );
+        });
     
     subAggr.Serialize( serializer );
     MOCK_EXPECT( listener.SubAgregatesChanged ).once().with( "identifier", ids );
@@ -219,8 +222,10 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_sub_entities_attribute_an
     plugins::hla::ObjectListener_ABC::T_EntityIDs ids;
     ids.insert( "id1" ); ids.insert( "id2" );
     Omt13StringArray subAggr;
-    BOOST_FOREACH( const plugins::hla::ObjectListener_ABC::T_EntityIDs::value_type v, ids )
-        subAggr.Add( v );
+    std::for_each( ids.begin(), ids.end(), [&](const plugins::hla::ObjectListener_ABC::T_EntityIDs::value_type v)
+        {
+            subAggr.Add( v );
+        });
     
     subAggr.Serialize( serializer );
     MOCK_EXPECT( listener.SubEntitiesChanged ).once().with( "identifier", ids );

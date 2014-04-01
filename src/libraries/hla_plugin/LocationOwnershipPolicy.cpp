@@ -18,7 +18,6 @@
 #include "protocol/Protocol.h"
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
-#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -432,7 +431,6 @@ void LocationOwnershipPolicy::Notify( const sword::ShapeDestruction& message, in
 // -----------------------------------------------------------------------------
 void LocationOwnershipPolicy::RemoteCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object )
 {
-    assert( states_.end() == states_.find( identifier ) );
     OwnershipState* ptr = new OwnershipState( boost::bind( &LocationOwnershipPolicy::IsInDivestureArea, this, _1, _2 ), identifier, hlaClass, object, false,
             ownershipController_, transferSender_ );
     states_[identifier] = OwnershipStatePtr(ptr);

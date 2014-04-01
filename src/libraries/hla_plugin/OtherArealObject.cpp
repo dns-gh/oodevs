@@ -177,11 +177,11 @@ void OtherArealObject::SpatialChanged( const ObjectLocationEventListener_ABC::T_
         return;
 
     points_.clear();
-    BOOST_FOREACH( ObjectLocationEventListener_ABC::T_PositionVector::const_reference v, pos )
-    {
-        rpr::WorldLocation wl( v.latitude(), v.longitude(), 0 );
-        points_.push_back( wl );
-    }
+    std::for_each( pos.begin(), pos.end(), [&](ObjectLocationEventListener_ABC::T_PositionVector::const_reference v)
+        {
+            rpr::WorldLocation wl( v.latitude(), v.longitude(), 0 );
+            points_.push_back( wl );
+        });
     attributes_->Update( "PointsData", Wrapper< std::vector< rpr::WorldLocation > >( points_ ) );
 }
 

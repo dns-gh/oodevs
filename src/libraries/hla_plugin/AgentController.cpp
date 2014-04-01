@@ -40,7 +40,6 @@
 
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
-#include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include <boost/uuid/uuid.hpp>
@@ -52,6 +51,7 @@
 #endif
 
 #include <limits>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -140,14 +140,14 @@ AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::Entit
 AgentController::~AgentController()
 {
     model_.UnregisterFactory( *this );
-    BOOST_FOREACH( const T_Parents::value_type& v, parents_ )
-    {
-        unsigned long childId = v.first;
-        unsigned long parentId = v.second;
-        T_Agents::const_iterator itP( agents_.find( parentId ) );
-        if( agents_.end() != itP )
-            itP->second->RemoveSubordinate( childId );
-    }
+    std::for_each( parents_.begin(), parents_.end(), [&](const T_Parents::value_type& v )
+        {
+            unsigned long childId = v.first;
+            unsigned long parentId = v.second;
+            auto itP( agents_.find( parentId ) );
+            if( agents_.end() != itP )
+                itP->second->RemoveSubordinate( childId );
+        });
 }
 
 // -----------------------------------------------------------------------------

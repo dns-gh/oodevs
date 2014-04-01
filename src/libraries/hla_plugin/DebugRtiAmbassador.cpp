@@ -15,7 +15,7 @@
 #include <hla/TimeInterval_ABC.h>
 #include <hla/HLA_Lib.h>
 #include <hla/AttributeFunctor_ABC.h>
-#include <boost/foreach.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 using namespace hla;
@@ -105,8 +105,10 @@ bool DebugRtiAmbassador::Create( const std::string& federation, const T_FomFiles
     Flush();
     std::string info;
     info += "-> Create federation " + federation + " with fom files";
-    BOOST_FOREACH( const std::string& fom, fomFiles )
-        info += " " + fom;
+    std::for_each( fomFiles.begin(), fomFiles.end(), [&](const std::string& fom)
+        {
+            info += " " + fom;
+        });
     logger_.LogInfo( info );
     return ambassador_->Create( federation, fomFiles );
 }
@@ -260,8 +262,10 @@ namespace
     std::string ToString( const T& attributes )
     {
         std::string result;
-        BOOST_FOREACH( const T::value_type& attribute, attributes )
-            result += ( result.empty() ? "" : ", " ) + attribute.first.ToString();
+        std::for_each( attributes.begin(), attributes.end(), [&](const T::value_type& attribute)
+            {
+                result += ( result.empty() ? "" : ", " ) + attribute.first.ToString();
+            });
         return result;
     }
 }

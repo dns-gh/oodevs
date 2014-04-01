@@ -23,7 +23,7 @@
 #include <hla/Class.h>
 
 #include <boost/lexical_cast.hpp>
-#include <boost/foreach.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -42,8 +42,10 @@ HlaTacticalObjectClass::HlaTacticalObjectClass( Federate_ABC& federate, const Hl
     builder->Build( federate, *hlaClass_ );
     std::vector< std::string > temp;
     builder->GetAttributes( temp );
-    BOOST_FOREACH( const std::string& name, temp)
-        attributes_.push_back( ::hla::AttributeIdentifier( name ) );
+    std::for_each( temp.begin(), temp.end(), [&](const std::string& name)
+        {
+            attributes_.push_back( ::hla::AttributeIdentifier( name ) );
+        });
 }
 
 // -----------------------------------------------------------------------------
@@ -153,10 +155,14 @@ void HlaTacticalObjectClass::Acquire(const std::string& /*objectID*/, const T_At
 void HlaTacticalObjectClass::Register( ClassListener_ABC& listener )
 {
     pListeners_->Register( listener );
-    BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
-        listener.RemoteCreated( entity.first, *this, *entity.second );
-    BOOST_FOREACH( const T_Entities::value_type& entity, localEntities_ )
-        listener.LocalCreated( entity.first, *this, *entity.second );
+    std::for_each( remoteEntities_.begin(), remoteEntities_.end(), [&](const T_Entities::value_type& entity)
+        {
+            listener.RemoteCreated( entity.first, *this, *entity.second );
+        });
+    std::for_each( localEntities_.begin(), localEntities_.end(), [&](const T_Entities::value_type& entity)
+        {
+            listener.LocalCreated( entity.first, *this, *entity.second );
+        });
 }
 
 // -----------------------------------------------------------------------------
