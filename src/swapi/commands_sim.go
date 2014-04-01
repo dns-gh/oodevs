@@ -1209,7 +1209,7 @@ func (c *Client) ChangeHumanState(unitId uint32, humans []*HumanDotation) error 
 		sword.UnitMagicAction_change_human_state)
 }
 
-func (c *Client) RecoverHumans(unitId uint32, withLog bool) error {
+func (c *Client) RecoverAllHumans(unitId uint32, withLog bool) error {
 	next := sword.UnitMagicAction_recover_troops
 	if withLog {
 		next = sword.UnitMagicAction_recover_troops_except_log
@@ -1226,7 +1226,7 @@ func (c *Client) ChangeDotation(unitId uint32, resources map[uint32]*ResourceDot
 		sword.UnitMagicAction_change_dotation)
 }
 
-func (c *Client) RecoverResources(unitId uint32, withLog bool) error {
+func (c *Client) RecoverAllResources(unitId uint32, withLog bool) error {
 	next := sword.UnitMagicAction_recover_resources
 	if withLog {
 		next = sword.UnitMagicAction_recover_resources_except_log
@@ -1243,7 +1243,7 @@ func (c *Client) ChangeEquipmentState(unitId uint32, equipments map[uint32]*Equi
 		sword.UnitMagicAction_change_equipment_state)
 }
 
-func (c *Client) RecoverEquipments(unitId uint32, withLog bool) error {
+func (c *Client) RecoverAllEquipments(unitId uint32, withLog bool) error {
 	next := sword.UnitMagicAction_recover_equipments
 	if withLog {
 		next = sword.UnitMagicAction_recover_equipments_except_log

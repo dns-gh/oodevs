@@ -2644,7 +2644,7 @@ func (s *TestSuite) TestRecoverEquipments(c *C) {
 	}
 	for _, withLog := range []bool{true, false} {
 		// invalid unit
-		err := client.RecoverEquipments(123456, withLog)
+		err := client.RecoverAllEquipments(123456, withLog)
 		c.Assert(err, IsSwordError, "error_invalid_unit")
 		err = client.DestroyUnit(unit.Id)
 		c.Assert(err, IsNil)
@@ -2654,7 +2654,7 @@ func (s *TestSuite) TestRecoverEquipments(c *C) {
 			return reflect.DeepEqual(d.Units[unit.Id].EquipmentDotations, eqs)
 		})
 		// valid unit
-		err = client.RecoverEquipments(unit.Id, withLog)
+		err = client.RecoverAllEquipments(unit.Id, withLog)
 		c.Assert(err, IsNil)
 		eqs[id].Available = eqs[id].Unavailable
 		eqs[id].Unavailable = 0
@@ -2665,9 +2665,9 @@ func (s *TestSuite) TestRecoverEquipments(c *C) {
 	// deleted unit
 	err := client.DeleteUnit(unit.Id)
 	c.Assert(err, IsNil)
-	err = client.RecoverEquipments(unit.Id, false)
+	err = client.RecoverAllEquipments(unit.Id, false)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
-	err = client.RecoverEquipments(unit.Id, true)
+	err = client.RecoverAllEquipments(unit.Id, true)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 }
 
@@ -2695,7 +2695,7 @@ func (s *TestSuite) TestRecoverHumans(c *C) {
 	}
 	for _, withLog := range []bool{true, false} {
 		// invalid unit
-		err := client.RecoverHumans(123456, withLog)
+		err := client.RecoverAllHumans(123456, withLog)
 		c.Assert(err, IsSwordError, "error_invalid_unit")
 		// destroy first, recover later
 		err = client.DestroyUnit(unit.Id)
@@ -2704,7 +2704,7 @@ func (s *TestSuite) TestRecoverHumans(c *C) {
 			humans := normalizeHumans(d.Units[unit.Id].HumanDotations)
 			return reflect.DeepEqual(humans, dead)
 		})
-		err = client.RecoverHumans(unit.Id, withLog)
+		err = client.RecoverAllHumans(unit.Id, withLog)
 		c.Assert(err, IsNil)
 		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
 			humans := normalizeHumans(d.Units[unit.Id].HumanDotations)
@@ -2714,9 +2714,9 @@ func (s *TestSuite) TestRecoverHumans(c *C) {
 	// deleted unit
 	err := client.DeleteUnit(unit.Id)
 	c.Assert(err, IsNil)
-	err = client.RecoverHumans(unit.Id, false)
+	err = client.RecoverAllHumans(unit.Id, false)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
-	err = client.RecoverHumans(unit.Id, true)
+	err = client.RecoverAllHumans(unit.Id, true)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 }
 
@@ -2743,13 +2743,13 @@ func (s *TestSuite) TestRecoverResources(c *C) {
 	}
 	for _, withLog := range []bool{true, false} {
 		// invalid unit
-		err := client.RecoverResources(123456, withLog)
+		err := client.RecoverAllResources(123456, withLog)
 		c.Assert(err, IsSwordError, "error_invalid_unit")
 		// reset first, recover later
 		err = client.ChangeDotation(unit.Id, zero)
 		c.Assert(err, IsNil)
 		waitCondition(c, client.Model, checkNoResources)
-		err = client.RecoverResources(unit.Id, withLog)
+		err = client.RecoverAllResources(unit.Id, withLog)
 		c.Assert(err, IsNil)
 		condition := hasResources
 		if withLog {
@@ -2761,9 +2761,9 @@ func (s *TestSuite) TestRecoverResources(c *C) {
 	// deleted unit
 	err := client.DeleteUnit(unit.Id)
 	c.Assert(err, IsNil)
-	err = client.RecoverResources(unit.Id, false)
+	err = client.RecoverAllResources(unit.Id, false)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
-	err = client.RecoverResources(unit.Id, true)
+	err = client.RecoverAllResources(unit.Id, true)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 }
 
