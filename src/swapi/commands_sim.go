@@ -1217,6 +1217,12 @@ func (c *Client) RecoverAllHumans(unitId uint32, withLog bool) error {
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), next)
 }
 
+func (c *Client) RecoverHumans(unitId uint32, humans []Quantity) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId),
+		MakeParameters(nil, MakeQuantities(humans), nil, nil, nil),
+		sword.UnitMagicAction_partial_recovery)
+}
+
 func (c *Client) ChangeDotation(unitId uint32, resources map[uint32]*ResourceDotation) error {
 	params := MakeParameters()
 	if len(resources) != 0 {

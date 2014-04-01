@@ -2706,14 +2706,25 @@ func (s *TestSuite) TestRecoverHumans(c *C) {
 		// invalid unit
 		err := client.RecoverAllHumans(123456, withLog)
 		c.Assert(err, IsSwordError, "error_invalid_unit")
+	}
+	next := []swapi.Quantity{}
+	for k, v := range dead {
+		next = append(next, swapi.Quantity{uint32(k), int(v.Quantity)})
+	}
+	recovers := []func() error{
+		func() error { return client.RecoverAllHumans(unit.Id, true) },
+		func() error { return client.RecoverAllHumans(unit.Id, false) },
+		func() error { return client.RecoverHumans(unit.Id, next) },
+	}
+	for _, recov := range recovers {
 		// destroy first, recover later
-		err = client.DestroyUnit(unit.Id)
+		err := client.DestroyUnit(unit.Id)
 		c.Assert(err, IsNil)
 		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
 			humans := normalizeHumans(d.Units[unit.Id].HumanDotations)
 			return reflect.DeepEqual(humans, dead)
 		})
-		err = client.RecoverAllHumans(unit.Id, withLog)
+		err = recov()
 		c.Assert(err, IsNil)
 		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
 			humans := normalizeHumans(d.Units[unit.Id].HumanDotations)
