@@ -1634,17 +1634,20 @@ message UnitMagicAction {
         //! Destroy a random equipment
         //! The tasker must be a unit identifier.
         destroy_component                 = 4;
-        //! A recover all magic action
+        //! Recover equipments, troops & resources from the target unit
+        //! The tasker must be a unit identifier.
         recover_all                       = 5;
-        //! A recover troops magic action
+        //! Recover troops from the target unit
         //! The tasker must be a unit identifier.
         recover_troops                    = 6;
-        //! A recover equiments magic action
+        //! Recover equipments from the target unit
         //! The tasker must be a unit identifier.
         recover_equipments                = 7;
-        //! A recover resources magic action
+        //! Recover resources from the target unit
+        //! The tasker must be a unit identifier.
         recover_resources                 = 8;
-        //! A destroy all magic action
+        //! Destroy the target unit
+        //! The tasker must be a unit identifier.
         destroy_all                       = 9;
         //! Change the human factors
         //! The tasker must be a unit identifier.
@@ -1970,13 +1973,18 @@ message UnitMagicAction {
         //! The tasker must be set to selected unit.
         //! result[0], UnitId: deleted unit identifier.
         delete_unit                       = 51;
-        //! A recover all except log magic action
+        //! Recover equipments, troops & resources
+        //! except log from the target unit
+        //! The tasker must be a unit identifier.
         recover_all_except_log            = 52;
-        //! A recover troops except log magic action
+        //! Recover troops except log from the target unit
+        //! The tasker must be a unit identifier.
         recover_troops_except_log         = 53;
-        //! A recover equiments except log magic action
+        //! Recover equipments except log from target unit
+        //! The tasker must be a unit identifier.
         recover_equipments_except_log     = 54;
-        //! A recover resources except log magic action
+        //! Recover resources except log from target unit
+        //! The tasker must be a unit identifier.
         recover_resources_except_log      = 55;
         //! Make a unit, automat or crowd emit decisional debug traces. The
         //! traces currently contain activation graphs in Graphviz format, and
