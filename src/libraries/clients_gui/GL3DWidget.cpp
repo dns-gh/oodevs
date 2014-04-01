@@ -912,7 +912,7 @@ QColor Gl3dWidget::GetPickingColor() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::OptionChanged
+// Name: Gl3dWidget::OptionChanged
 // Created: MMC 2013-03-12
 // -----------------------------------------------------------------------------
 void Gl3dWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
