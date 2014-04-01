@@ -1251,6 +1251,14 @@ func (c *Client) RecoverEquipments(unitId uint32, withLog bool) error {
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), next)
 }
 
+func (c *Client) RecoverUnit(unitId uint32, withLog bool) error {
+	next := sword.UnitMagicAction_recover_all
+	if withLog {
+		next = sword.UnitMagicAction_recover_all_except_log
+	}
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), next)
+}
+
 func (c *Client) DestroyRandomEquipment(unitId uint32) error {
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId),
 		MakeParameters(), sword.UnitMagicAction_destroy_component)

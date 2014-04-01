@@ -2767,3 +2767,57 @@ func (s *TestSuite) TestRecoverResources(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 }
 
+func (s *TestSuite) TestRecoverAll(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	unit := setupSomeUnit(c, client)
+	ref := client.Model.GetUnit(unit.Id)
+	empty := swapi.Unit{}
+	swapi.DeepCopy(&empty, ref)
+	for _, eq := range empty.EquipmentDotations {
+		eq.Unavailable = eq.Available
+		eq.Available = 0
+	}
+	refHumans := normalizeHumans(unit.HumanDotations)
+	dead := []*swapi.HumanDotation{}
+	swapi.DeepCopy(&dead, refHumans)
+	for _, v := range dead {
+		v.State = int32(sword.EnumHumanState_deadly)
+	}
+	for k, v := range empty.ResourceDotations {
+		v.Quantity = 0
+		v.Threshold = 0
+		empty.ResourceDotations[k] = v
+	}
+	for _, withLog := range []bool{true, false} {
+		// invalid unit
+		err := client.RecoverUnit(123456, withLog)
+		c.Assert(err, IsSwordError, "error_invalid_unit")
+		// destroy first, then recover everything
+		err = client.DestroyUnit(unit.Id)
+		c.Assert(err, IsNil)
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			u := d.Units[unit.Id]
+			humans := normalizeHumans(u.HumanDotations)
+			return reflect.DeepEqual(u.EquipmentDotations, empty.EquipmentDotations) &&
+				reflect.DeepEqual(humans, dead) &&
+				reflect.DeepEqual(u.ResourceDotations, empty.ResourceDotations)
+		})
+		err = client.RecoverUnit(unit.Id, withLog)
+		c.Assert(err, IsNil)
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			u := d.Units[unit.Id]
+			humans := normalizeHumans(u.HumanDotations)
+			return reflect.DeepEqual(u.EquipmentDotations, ref.EquipmentDotations) &&
+				reflect.DeepEqual(humans, refHumans) &&
+				reflect.DeepEqual(u.ResourceDotations, ref.ResourceDotations)
+		})
+	}
+	// deleted unit
+	err := client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	err = client.RecoverUnit(unit.Id, false)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	err = client.RecoverUnit(unit.Id, true)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+}
