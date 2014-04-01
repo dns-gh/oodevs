@@ -1226,6 +1226,14 @@ func (c *Client) ChangeDotation(unitId uint32, resources map[uint32]*ResourceDot
 		sword.UnitMagicAction_change_dotation)
 }
 
+func (c *Client) RecoverResources(unitId uint32, withLog bool) error {
+	next := sword.UnitMagicAction_recover_resources
+	if withLog {
+		next = sword.UnitMagicAction_recover_resources_except_log
+	}
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), next)
+}
+
 func (c *Client) ChangeEquipmentState(unitId uint32, equipments map[uint32]*EquipmentDotation) error {
 	params := MakeParameters()
 	if len(equipments) != 0 {

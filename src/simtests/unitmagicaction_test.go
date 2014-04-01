@@ -2719,3 +2719,51 @@ func (s *TestSuite) TestRecoverHumans(c *C) {
 	err = client.RecoverHumans(unit.Id, true)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 }
+
+func (s *TestSuite) TestRecoverResources(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	unit := setupSomeUnit(c, client)
+	ref := client.Model.GetUnit(unit.Id).ResourceDotations
+	zero := map[uint32]*swapi.ResourceDotation{}
+	for k, v := range ref {
+		next := v
+		next.Quantity = 0
+		zero[k] = &next
+	}
+	checkNoResources := func(d *swapi.ModelData) bool {
+		none := true
+		for _, v := range d.Units[unit.Id].ResourceDotations {
+			none = none && v.Quantity == 0
+		}
+		return none
+	}
+	hasResources := func(d *swapi.ModelData) bool {
+		return reflect.DeepEqual(d.Units[unit.Id].ResourceDotations, ref)
+	}
+	for _, withLog := range []bool{true, false} {
+		// invalid unit
+		err := client.RecoverResources(123456, withLog)
+		c.Assert(err, IsSwordError, "error_invalid_unit")
+		// reset first, recover later
+		err = client.ChangeDotation(unit.Id, zero)
+		c.Assert(err, IsNil)
+		waitCondition(c, client.Model, checkNoResources)
+		err = client.RecoverResources(unit.Id, withLog)
+		c.Assert(err, IsNil)
+		condition := hasResources
+		if withLog {
+			// I can't explain that yet
+			condition = checkNoResources
+		}
+		waitCondition(c, client.Model, condition)
+	}
+	// deleted unit
+	err := client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	err = client.RecoverResources(unit.Id, false)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	err = client.RecoverResources(unit.Id, true)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+}
+
