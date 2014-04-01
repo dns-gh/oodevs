@@ -11,6 +11,7 @@
 #define MOCK_FILE_SYSTEM_H
 
 #include "runtime/FileSystem_ABC.h"
+#include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
 
 namespace mocks

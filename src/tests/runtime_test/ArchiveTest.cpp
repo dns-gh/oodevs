@@ -15,6 +15,7 @@
 #include <tools/BoostTest.h>
 
 #include <cpplog/cpplog.hpp>
+#include <boost/filesystem.hpp>
 #include <set>
 
 using namespace runtime;
