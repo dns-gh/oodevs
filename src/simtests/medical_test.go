@@ -93,14 +93,6 @@ func (cc *MedicalUpdateChecker) Check(c *C, ctx *MedicalCheckContext, msg *sword
 	return cc.check(c, ctx, msg, false)
 }
 
-type MedicalStrictUpdateChecker struct {
-	MedicalUpdateChecker
-}
-
-func (cc *MedicalStrictUpdateChecker) Check(c *C, ctx *MedicalCheckContext, msg *sword.SimToClient_Content) bool {
-	return cc.check(c, ctx, msg, true)
-}
-
 type MedicalApplyChecker struct {
 	MedicalChecker
 	operand func(ctx *MedicalCheckContext) error
@@ -141,13 +133,13 @@ func (MedicalDeleteChecker) Check(c *C, ctx *MedicalCheckContext, msg *sword.Sim
 }
 
 func checkMedical(c *C, client *swapi.Client, unit *swapi.Unit, offset int,
-	state int32, mental bool, checkers ...MedicalChecker) {
+	rank sword.EnumHumanRank, state int32, mental bool, checkers ...MedicalChecker) {
 
 	client.Pause()
 	check := MedicalCheckContext{
 		data:         client.Model.GetData(),
 		unitId:       unit.Id,
-		rank:         sword.EnumHumanRank_trooper,
+		rank:         rank,
 		mental:       mental,
 		contaminated: false,
 		errors:       make(chan error),
@@ -231,7 +223,7 @@ func (s *TestSuite) TestMedicalHandlings(c *C) {
 			nil))
 	c.Assert(err, IsNil)
 	// physical injury
-	checkMedical(c, client, unit, 0, eInjured, false,
+	checkMedical(c, client, unit, 0, sword.EnumHumanRank_trooper, eInjured, false,
 		MedicalCreateChecker{},
 		&MedicalUpdateChecker{"waiting_for_evacuation", tc2},
 		&MedicalUpdateChecker{"evacuation_ambulance_moving_in", tc2},
@@ -253,7 +245,7 @@ func (s *TestSuite) TestMedicalHandlings(c *C) {
 		// no deleter because a physical wound never heals
 	)
 	// physical and mental injury
-	checkMedical(c, client, unit, 0, eInjured, true,
+	checkMedical(c, client, unit, 0, sword.EnumHumanRank_sub_officer, eInjured, true,
 		MedicalCreateChecker{},
 		&MedicalUpdateChecker{"waiting_for_evacuation", tc2},
 		&MedicalUpdateChecker{"evacuation_ambulance_moving_in", tc2},
@@ -278,7 +270,7 @@ func (s *TestSuite) TestMedicalHandlings(c *C) {
 		// no deleter because a physical wound never heals
 	)
 	// mental injury
-	checkMedical(c, client, unit, 0, eHealthy, true,
+	checkMedical(c, client, unit, 0, sword.EnumHumanRank_officer, eHealthy, true,
 		MedicalCreateChecker{},
 		&MedicalUpdateChecker{"waiting_for_evacuation", tc2},
 		&MedicalUpdateChecker{"evacuation_ambulance_moving_in", tc2},
