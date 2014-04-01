@@ -357,6 +357,15 @@ eEtatRadio_Silence = 1
 eEtatRadio_Silence_Partiel = 2
 
 -- tri state enumeration
- eTristate_True = 0
- eTristate_False = 1
- eTristate_DontKnow = 2
+eTristate_True = 0
+eTristate_False = 1
+eTristate_DontKnow = 2
+ 
+-- Illumination
+eActionIllumination_Impossible = 0
+eActionIllumination_EnemyDestroyed = 1
+eActionIllumination_NoCapacity = 2
+eActionIllumination_NoAmmo = 3
+eActionIllumination_Running = 4
+eActionIllumination_Finished = 5
+eActionIllumination_None = 6

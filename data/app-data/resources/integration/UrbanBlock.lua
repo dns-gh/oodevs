@@ -45,6 +45,8 @@ end
 --- consecutive ticks for the confinement to take place.
 -- This method only confines the given urban block if it is populated.
 -- @param urbanBlock Urban block knowledge
+-- @param confinementDelay Integer, the number of ticks needed for the confinement to take place.
+-- By default, confinementDelay = 10
 -- @return Boolean, true once the urban block is confined (or if it is not populated), false otherwise
 integration.confineUrbanBlock = masalife.brain.integration.startStopAction( 
 { 
@@ -57,9 +59,9 @@ integration.confineUrbanBlock = masalife.brain.integration.startStopAction(
                     reportFunction(eRC_NoPopulationInUrbanBlock )
                 end
               end,
-    started = function( urbanBlock )
+    started = function( urbanBlock, confinementDelay )
                 if DEC_Agent_UrbanBlockIsPopulated( urbanBlock.source) then
-                    if urbanBlock.confinementDelay_ == maxConfinementDelay 
+                    if urbanBlock.confinementDelay_ == ( confinementDelay or maxConfinementDelay )
                         or DEC_Agent_IsAlerted( DEC_PolygoneBlocUrbain( urbanBlock.source ) ) then
                         DEC_Agent_Confine( DEC_PolygoneBlocUrbain( urbanBlock.source ) ) 
                         reportFunction(eRC_ObjectiveConfined )
@@ -103,6 +105,8 @@ end
 --- consecutive ticks for the evacuation to take place.
 -- This method only evacuation the given urban block if it is populated.
 -- @param urbanBlock Urban block knowledge
+-- @param evacuationDelay Integer, the number of ticks needed for the evacuation to take place.
+-- By default, evacuationDelay = 10
 -- @return Boolean, true once the urban block is evacuated (or if it is not populated), false otherwise
 integration.evacuateUrbanBlock = masalife.brain.integration.startStopAction( 
 { 
@@ -115,9 +119,9 @@ integration.evacuateUrbanBlock = masalife.brain.integration.startStopAction(
                     reportFunction(eRC_NoPopulationInUrbanBlock )
                 end
               end,
-    started = function( urbanBlock )
+    started = function( urbanBlock, evacuationDelay )
                 if DEC_Agent_UrbanBlockIsPopulated( urbanBlock.source) then
-                    if urbanBlock.evacuationDelay_ == maxEvacuationDelay 
+                    if urbanBlock.evacuationDelay_ == ( evacuationDelay or maxEvacuationDelay )
                     or DEC_Agent_IsAlerted( DEC_PolygoneBlocUrbain( urbanBlock.source ) ) then
                         DEC_Agent_Evacuate( DEC_PolygoneBlocUrbain( urbanBlock.source ) ) 
                         reportFunction(eRC_ObjectiveEvacuated )

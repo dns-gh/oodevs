@@ -318,11 +318,10 @@ end
 -- If there is no such concentration, this method returns 0.
 -- @param crowd Crowd knowledge
 -- @param position Localized element knowledge defining a "getPosition" method returning a simulation point.
--- @param distance Float, the maximum distance between the position and the considered concentration.
+-- @param distance Float, the maximum distance between the position and the considered concentration (in meters, 300 by default).
 -- @return Integer, the id of the closest concentration
 integration.getNearbyConcentration = function ( crowd, position, distance )
-    distance = distance or 300
-    return DEC_GetConcentrationLaPlusProche( myself, crowd.source, position:getPosition(), distance )
+    return DEC_GetConcentrationLaPlusProche( myself, crowd.source, position:getPosition(), distance or 300 )
 end
 
 --- Returns the given crowd's concentration position.
