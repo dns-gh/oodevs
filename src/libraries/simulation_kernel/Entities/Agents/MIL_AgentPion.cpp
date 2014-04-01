@@ -1047,101 +1047,70 @@ void MIL_AgentPion::OnReceiveResupplyAll( bool withLog )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
 {
-    if( msg.elem_size() < 5 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-    if( msg.elem( 0 ).value_size() > 0 ) // Equipments
+    protocol::CheckCount( msg, 5 );
+    int idx = -1;
+    if( !protocol::IsNull( msg, ++idx ) )
     {
-        PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
-        for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
+        auto& composantes = GetRole< PHY_RolePion_Composantes >();
+        for( int i = 0; i < protocol::GetCount( msg, idx ); ++i )
         {
-            if ( msg.elem( 0 ).value( i ).list_size() < 2 )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 0 ).value( i ).list( 0 ).has_identifier() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 0 ).value( i ).list( 1 ).has_quantity() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-            auto type = msg.elem( 0 ).value( i ).list( 0 ).identifier();
-            int number = msg.elem( 0 ).value( i ).list( 1 ).quantity();
-            const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
-            if( pComposanteType )
-                roleComposantes.ChangeComposantesAvailability( *pComposanteType, number );
+            protocol::CheckCount( idx, i, msg, 2 );
+            const auto id = protocol::GetIdentifier( msg, idx, i, 0 );
+            const auto quantity = protocol::GetQuantity( msg, idx, i, 1 );
+            const auto* type = PHY_ComposanteTypePion::Find( id );
+            protocol::Check( type, "must be a valid composante type identifier", idx, i, 0 );
+            composantes.ChangeComposantesAvailability( *type, quantity );
         }
     }
-    if( msg.elem( 1 ).value_size() > 0 ) // Humans
+    if( !protocol::IsNull( msg, ++idx ) )
     {
-        human::PHY_RolePion_Humans& roleHumans = GetRole< human::PHY_RolePion_Humans >();
-        for( int i = 0 ; i < msg.elem( 1 ).value_size(); ++i )
+        auto& humans = GetRole< human::PHY_RolePion_Humans >();
+        for( int i = 0; i < protocol::GetCount( msg, idx ); ++i )
         {
-            if ( msg.elem( 1 ).value( i ).list_size() < 2 )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 1 ).value( i ).list( 0 ).has_identifier() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 1 ).value( i ).list( 1 ).has_quantity() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-            unsigned int rank = msg.elem( 1 ).value( i ).list( 0 ).identifier();
-            int number = msg.elem( 1 ).value( i ).list( 1 ).quantity();
-            const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( rank );
-            if( pHumanRank )
-                roleHumans.ChangeHumansAvailability( *pHumanRank, number );
+            protocol::CheckCount( idx, i, msg, 2 );
+            const auto id = protocol::GetIdentifier( msg, idx, i, 0 );
+            const auto quantity = protocol::GetQuantity( msg, idx, i, 1 );
+            const auto* rank = PHY_HumanRank::Find( id );
+            protocol::Check( rank, "must be a valid human rank identifier", idx, i, 0 );
+            humans.ChangeHumansAvailability( *rank, quantity );
         }
     }
-    if( msg.elem( 2 ).value_size() > 0 ) // Dotations
+    if( !protocol::IsNull( msg, ++idx ) )
     {
-        dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
-        for( int i = 0; i < msg.elem( 2 ).value_size(); ++i )
+        auto& dotations = GetRole< dotation::PHY_RolePion_Dotations >();
+        for( int i = 0; i < protocol::GetCount( msg, idx ); ++i )
         {
-            if ( msg.elem( 2 ).value( i ).list_size() < 2 )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 2 ).value( i ).list( 0 ).has_identifier() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 2 ).value( i ).list( 1 ).has_quantity() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-            unsigned int dotation = msg.elem( 2 ).value( i ).list( 0 ).identifier();
-            int number = msg.elem( 2 ).value( i ).list( 1 ).quantity();
-            const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( dotation );
-            if( pDotationType )
-                roleDotations.ResupplyDotations( *pDotationType, number / 100. );
+            protocol::CheckCount( idx, i, msg, 2 );
+            const auto id = protocol::GetIdentifier( msg, idx, i, 0 );
+            const auto quantity = protocol::GetQuantity( msg, idx, i, 1 );
+            const auto* dotation = PHY_DotationType::FindDotationType( id );
+            protocol::Check( dotation, "must be a valid dotation type identifier", idx, i, 0 );
+            dotations.ResupplyDotations( *dotation, quantity / 100. );
         }
     }
-    if( msg.elem( 3 ).value_size() > 0 ) // Ammunition
+    if( !protocol::IsNull( msg, ++idx ) )
     {
-        dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
-        for( int i = 0; i < msg.elem( 3 ).value_size(); ++i )
+        auto& dotations = GetRole< dotation::PHY_RolePion_Dotations >();
+        for( int i = 0; i < protocol::GetCount( msg, idx ); ++i )
         {
-            if ( msg.elem( 3 ).value( i ).list_size() < 2 )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 3 ).value( i ).list( 0 ).has_identifier() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 3 ).value( i ).list( 1 ).has_quantity() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-            unsigned int munition = msg.elem( 3 ).value( i ).list( 0 ).identifier();
-            int number = msg.elem( 3 ).value( i ).list( 1 ).quantity();
-            const PHY_AmmoDotationClass* pAmmoClass = PHY_AmmoDotationClass::Find( munition );
-            if( pAmmoClass )
-                roleDotations.ResupplyDotations( *pAmmoClass, number / 100. );
+            protocol::CheckCount( idx, i, msg, 2 );
+            const auto id = protocol::GetIdentifier( msg, idx, i, 0 );
+            const auto quantity = protocol::GetQuantity( msg, idx, i, 1 );
+            const auto* ammo = PHY_AmmoDotationClass::Find( id );
+            protocol::Check( ammo, "must be a valid ammo type identifier", idx, i, 0 );
+            dotations.ResupplyDotations( *ammo, quantity / 100. );
         }
     }
-    PHY_RoleInterface_Supply* roleSupply = RetrieveRole< PHY_RoleInterface_Supply >();
-    if( roleSupply && msg.elem( 4 ).value_size() > 0 ) // stocks
-        for( int i = 0; i < msg.elem( 4 ).value_size(); ++i )
+    auto* supply = RetrieveRole< PHY_RoleInterface_Supply >();
+    if( supply && !protocol::IsNull( msg, ++idx ) )
+        for( int i = 0; i < protocol::GetCount( msg, idx ); ++i )
         {
-            if ( msg.elem( 4 ).value( i ).list_size() < 2 )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 4 ).value( i ).list( 0 ).has_identifier() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 4 ).value( i ).list( 1 ).has_quantity() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-            unsigned int stock = msg.elem( 4 ).value( i ).list( 0 ).identifier();
-            int number = msg.elem( 4 ).value( i ).list( 1 ).quantity();
-            const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( stock );
-            if( pDotationCategory )
-                roleSupply->ResupplyStocks( *pDotationCategory, number );
+            protocol::CheckCount( idx, i, msg, 2 );
+            const auto id = protocol::GetIdentifier( msg, idx, i, 0 );
+            const auto quantity = protocol::GetQuantity( msg, idx, i, 1 );
+            const auto* category = PHY_DotationType::FindDotationCategory( id );
+            protocol::Check( category, "must be a valid dotation category identifier", idx, i, 0 );
+            supply->ResupplyStocks( *category, quantity );
         }
 }
 
