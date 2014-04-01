@@ -69,6 +69,7 @@ private:
     virtual void AfterSelection();
 
     void DrawLines( float width, uint8_t r, uint8_t g, uint8_t b ) const;
+    void DrawPoint( geometry::Point2f p ) const;
     //@}
 
 private slots:
