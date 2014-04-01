@@ -432,6 +432,33 @@ namespace
             return PHY_HumanWound::killed_;
         }
     }
+    template< typename Checker >
+    void ApplyOnHumans( sword::MissionParameters& msg, std::set< boost::shared_ptr< Human_ABC > >& done, const std::vector< boost::shared_ptr< Human_ABC > >& humans, const Checker& checker )
+    {
+        for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
+        {
+            sword::MissionParameter_Value& elem = *msg.mutable_elem( 0 )->mutable_value()->Mutable( i );
+            const PHY_HumanRank* rank = PHY_HumanRank::Find( static_cast< unsigned int >( elem.list( 1 ).enumeration() ) );
+            int32_t number = elem.list( 0 ).quantity();
+            if( number == 0 )
+                continue;
+            const PHY_HumanWound& wound = GetWound( elem );
+            bool psyop = elem.list( 4 ).booleanvalue();
+            bool contaminated = elem.list( 5 ).booleanvalue();
+            for( auto it = humans.begin(); it != humans.end() && number; ++it )
+            {
+                if( done.find( *it ) != done.end() )
+                    continue;
+                const boost::shared_ptr< Human_ABC >& human = *it;
+                if( checker( *human, *rank, wound, psyop, contaminated ) )
+                {
+                    done.insert( *it );
+                    --number;
+                }
+            }
+            elem.mutable_list( 0 )->set_quantity( number );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -440,29 +467,13 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::UpdateHumanState( sword::MissionParameters& msg, std::set< boost::shared_ptr< Human_ABC > >& done )
 {
-    for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
+    ApplyOnHumans( msg, done, humans_, [&]( Human_ABC& human, const PHY_HumanRank& rank, const PHY_HumanWound& wound, bool psyop, bool contaminated )
     {
-        sword::MissionParameter_Value& elem = *msg.mutable_elem( 0 )->mutable_value()->Mutable( i );
-        const PHY_HumanRank* rank = PHY_HumanRank::Find( static_cast< unsigned int >( elem.list( 1 ).enumeration() ) );
-        int32_t number = elem.list( 0 ).quantity();
-        if( number == 0 )
-            continue;
-        const PHY_HumanWound& wound = GetWound( elem );
-        bool psyop = elem.list( 4 ).booleanvalue();
-        bool contaminated = elem.list( 5 ).booleanvalue();
-        for( auto it = humans_.begin(); it != humans_.end() && number; ++it )
-        {
-            if( done.find( *it ) != done.end() )
-                continue;
-            const boost::shared_ptr< Human_ABC >& human = *it;
-            if( human->GetRank() == *rank && wound == human->GetWound() && psyop == human->IsMentalDiseased() && contaminated == human->IsContaminated() )
-            {
-                done.insert( *it );
-                --number;
-            }
-        }
-        elem.mutable_list( 0 )->set_quantity( number );
-    }
+        return rank == human.GetRank() &&
+               wound == human.GetWound() &&
+               psyop == human.IsMentalDiseased() &&
+               contaminated == human.IsContaminated();
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -471,29 +482,13 @@ void PHY_HumansComposante::UpdateHumanState( sword::MissionParameters& msg, std:
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::ChangeHumanState( sword::MissionParameters& msg, std::set< boost::shared_ptr< Human_ABC > >& done )
 {
-    for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
+    ApplyOnHumans( msg, done, humans_, [&]( Human_ABC& human, const PHY_HumanRank& rank, const PHY_HumanWound& wound, bool psyop, bool contaminated ) -> bool
     {
-        sword::MissionParameter_Value& elem = *msg.mutable_elem( 0 )->mutable_value()->Mutable( i );
-        const PHY_HumanRank* rank = PHY_HumanRank::Find( static_cast< unsigned int >( elem.list( 1 ).enumeration() ) );
-        int32_t number = elem.list( 0 ).quantity();
-        if( number == 0 )
-            continue;
-        const PHY_HumanWound& wound = GetWound( elem );
-        bool psyop = elem.list( 4 ).booleanvalue();
-        bool contaminated = elem.list( 5 ).booleanvalue();
-        for( auto it = humans_.begin(); it != humans_.end() && number; ++it )
-        {
-            if( done.find( *it ) != done.end() )
-                continue;
-            const boost::shared_ptr< Human_ABC >& human = *it;
-            if( (*it)->GetRank() != *rank )
-                continue;
-            done.insert( *it );
-            human->SetState( wound, psyop, contaminated );
-            --number;
-        }
-        elem.mutable_list( 0 )->set_quantity( number );
-    }
+        if( human.GetRank() != rank )
+            return false;
+        human.SetState( wound, psyop, contaminated );
+        return true;
+    } );
 }
 
 // -----------------------------------------------------------------------------
