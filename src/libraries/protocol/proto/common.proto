@@ -1678,13 +1678,18 @@ message UnitMagicAction {
         change_human_factors              = 10;
         //! A partial recovery magic action
         //! The tasker must be a valid unit identifier.
-        //! parameters[0], the equipment
-        //! parameters[1], the crew
-        //! parameters[2], the resources
-        //! parameters[3], the ammunitions
-        //! parameters[4], the stocks
+        //! parameters[0], Resupply equipments
+        //!     List of Identifier: equipment, Quantity: quantity
+        //! parameters[1], Resupply humands
+        //!     List of Identifier: human, Quantity: availability
+        //! parameters[2], Resupply resources
+        //!     List of Identifier: DotationCategory, Quantity: % of capacity
+        //! parameters[3], Resupply ammunitions
+        //!     List of Identifier: Ammunition, Quantity: % of capacity
+        //! parameters[4], Resupply supplies
+        //!     List of Identifier: DotationCategory, Quantity: quantity
         //! Each parameter must be either a null_value to be omitted or
-        //! a parameter value list:
+        //! a parameter value list.
         //! value { list { identifier: 1 }
         //!         list { quantity: 10  } }
         partial_recovery                  = 11;
