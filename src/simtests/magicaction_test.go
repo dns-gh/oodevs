@@ -296,12 +296,12 @@ func TriggerBreakdown(c *C, client *swapi.Client) uint32 {
 	unit := client.Model.GetUnit(8)
 	equipmentId := uint32(39)
 	MOBBreakdown2EBEvac := int32(13)
-	equipment := swapi.EquipmentDotation{
+	equipment := swapi.Equipment{
 		Available:  1,
 		Repairable: 1,
 		Breakdowns: []int32{MOBBreakdown2EBEvac},
 	}
-	err := client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err := client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 	var handlingId uint32
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {

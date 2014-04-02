@@ -17,10 +17,10 @@ import (
 	"time"
 )
 
-func makeBreakdown(c *C, id uint32, eq *swapi.EquipmentDotation, count int32, breakdown BreakdownType) map[uint32]*swapi.EquipmentDotation {
+func makeBreakdown(c *C, id uint32, eq *swapi.Equipment, count int32, breakdown BreakdownType) map[uint32]*swapi.Equipment {
 	c.Assert(eq.Available, Greater, count)
-	return map[uint32]*swapi.EquipmentDotation{
-		id: &swapi.EquipmentDotation{
+	return map[uint32]*swapi.Equipment{
+		id: &swapi.Equipment{
 			Available:  eq.Available - count,
 			Repairable: count,
 			Breakdowns: []int32{int32(breakdown)},
@@ -257,11 +257,11 @@ func setParts(client *swapi.Client, provider *sword.Tasker, qty int32, resources
 	d := client.Model.GetData()
 	for _, u := range d.Units {
 		if IsProvider(d, u.Id, provider, false) {
-			next := map[uint32]*swapi.ResourceDotation{}
+			next := map[uint32]*swapi.Resource{}
 			for _, id := range resources {
-				next[uint32(id)] = &swapi.ResourceDotation{Quantity: qty}
+				next[uint32(id)] = &swapi.Resource{Quantity: qty}
 			}
-			err := client.ChangeDotation(u.Id, next)
+			err := client.ChangeResource(u.Id, next)
 			if err != nil {
 				return err
 			}

@@ -172,9 +172,9 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	supplierId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
 	supplier := swapi.MakeAutomatTasker(supplierId)
 	removeElectrogen_1 := func() {
-		err := client.ChangeDotation(unit.Id,
-			map[uint32]*swapi.ResourceDotation{
-				uint32(electrogen_1): &swapi.ResourceDotation{
+		err := client.ChangeResource(unit.Id,
+			map[uint32]*swapi.Resource{
+				uint32(electrogen_1): &swapi.Resource{
 					Quantity:  0,
 					Threshold: 50,
 				}})
@@ -189,9 +189,9 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	err := client.LogisticsChangeLinks(swapi.MakeAutomatTasker(automat.Id), []uint32{supplierId, supplier2Id})
 	c.Assert(err, IsNil)
 	removeElectrogen_2 := func() {
-		err := client.ChangeDotation(unit.Id,
-			map[uint32]*swapi.ResourceDotation{
-				uint32(electrogen_2): &swapi.ResourceDotation{
+		err := client.ChangeResource(unit.Id,
+			map[uint32]*swapi.Resource{
+				uint32(electrogen_2): &swapi.Resource{
 					Quantity:  0,
 					Threshold: 50,
 				}})
@@ -220,8 +220,8 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
 	c.Assert(err, IsNil)
 	removeElectrogen_1 := func() {
 		err := client.RecoverStocks(unit.Id,
-			map[uint32]*swapi.ResourceDotation{
-				uint32(electrogen_1): &swapi.ResourceDotation{
+			map[uint32]*swapi.Resource{
+				uint32(electrogen_1): &swapi.Resource{
 					Quantity:  0,
 					Threshold: 50,
 				}})
@@ -240,8 +240,8 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
 	c.Assert(err, IsNil)
 	removeElectrogen_3 := func() {
 		err := client.RecoverStocks(unit.Id,
-			map[uint32]*swapi.ResourceDotation{
-				uint32(electrogen_3): &swapi.ResourceDotation{
+			map[uint32]*swapi.Resource{
+				uint32(electrogen_3): &swapi.Resource{
 					Quantity:  0,
 					Threshold: 50,
 				}})
@@ -275,9 +275,9 @@ func (s *TestSuite) TestSupplyHandlingsBaseManual(c *C) {
 
 	// no automatic convoy in manual supply
 	SetManualSupply(c, client, supplierId, true)
-	err := client.ChangeDotation(unit.Id,
-		map[uint32]*swapi.ResourceDotation{
-			uint32(electrogen_1): &swapi.ResourceDotation{
+	err := client.ChangeResource(unit.Id,
+		map[uint32]*swapi.Resource{
+			uint32(electrogen_1): &swapi.Resource{
 				Quantity:  0,
 				Threshold: 50,
 			}})
@@ -308,8 +308,8 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBaseManual(c *C) {
 	// no automatic convoy in manual supply
 	SetManualSupply(c, client, supplierId, true)
 	err = client.RecoverStocks(unit.Id,
-		map[uint32]*swapi.ResourceDotation{
-			uint32(electrogen_1): &swapi.ResourceDotation{
+		map[uint32]*swapi.Resource{
+			uint32(electrogen_1): &swapi.Resource{
 				Quantity:  0,
 				Threshold: 50,
 			}})

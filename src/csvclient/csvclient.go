@@ -188,7 +188,7 @@ func WriteOrbat(out string, data *swapi.ModelData, resources phy.Resources, root
 				}
 				stocks[stock.Type].Stock = amount
 			}
-			for idResource, dotation := range unit.ResourceDotations {
+			for idResource, dotation := range unit.Resources {
 				if stocks[idResource] == nil {
 					stocks[idResource] = &Pair{}
 				}

@@ -176,14 +176,14 @@ func checkMedical(c *C, client *swapi.Client, unit *swapi.Unit, offset int,
 		return false
 	})
 	defer client.Unregister(ctx)
-	human := swapi.HumanDotation{
+	human := swapi.Human{
 		Quantity:     1,
 		Rank:         int32(check.rank),
 		State:        state,
 		Psyop:        mental,
 		Contaminated: check.contaminated,
 	}
-	err := client.ChangeHumanState(unit.Id, []*swapi.HumanDotation{&human})
+	err := client.ChangeHumanState(unit.Id, []*swapi.Human{&human})
 	c.Assert(err, IsNil)
 	client.Resume(0)
 	select {

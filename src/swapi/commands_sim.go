@@ -1194,16 +1194,16 @@ func (c *Client) CancelSurrender(automatId uint32) error {
 func (c *Client) CreateWounds(unitId uint32, humans map[int32]int32) error {
 	params := MakeParameters()
 	if len(humans) != 0 {
-		params = MakeParameters(MakeHumans(humans))
+		params = MakeParameters(EnumerateHumans(humans))
 	}
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), params,
 		sword.UnitMagicAction_create_wounds)
 }
 
-func (c *Client) ChangeHumanState(unitId uint32, humans []*HumanDotation) error {
+func (c *Client) ChangeHumanState(unitId uint32, humans []*Human) error {
 	params := MakeParameters()
 	if len(humans) != 0 {
-		params = MakeParameters(MakeHumansDotation(humans))
+		params = MakeParameters(MakeHumans(humans))
 	}
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), params,
 		sword.UnitMagicAction_change_human_state)
@@ -1223,10 +1223,10 @@ func (c *Client) RecoverHumans(unitId uint32, humans []Quantity) error {
 		sword.UnitMagicAction_partial_recovery)
 }
 
-func (c *Client) ChangeDotation(unitId uint32, resources map[uint32]*ResourceDotation) error {
+func (c *Client) ChangeResource(unitId uint32, resources map[uint32]*Resource) error {
 	params := MakeParameters()
 	if len(resources) != 0 {
-		params = MakeParameters(MakeResourcesDotation(resources))
+		params = MakeParameters(MakeResources(resources))
 	}
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), params,
 		sword.UnitMagicAction_change_dotation)
@@ -1246,10 +1246,10 @@ func (c *Client) RecoverResources(unitId uint32, resources []Quantity) error {
 		sword.UnitMagicAction_partial_recovery)
 }
 
-func (c *Client) ChangeEquipmentState(unitId uint32, equipments map[uint32]*EquipmentDotation) error {
+func (c *Client) ChangeEquipmentState(unitId uint32, equipments map[uint32]*Equipment) error {
 	params := MakeParameters()
 	if len(equipments) != 0 {
-		params = MakeParameters(MakeEquipmentDotation(equipments))
+		params = MakeParameters(MakeEquipment(equipments))
 	}
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), params,
 		sword.UnitMagicAction_change_equipment_state)
@@ -1282,7 +1282,7 @@ func (c *Client) DestroyRandomEquipment(unitId uint32) error {
 		MakeParameters(), sword.UnitMagicAction_destroy_component)
 }
 
-func (c *Client) CreateBreakdowns(unitId uint32, equipments map[uint32]*EquipmentDotation) error {
+func (c *Client) CreateBreakdowns(unitId uint32, equipments map[uint32]*Equipment) error {
 	params := MakeParameters()
 	if len(equipments) != 0 {
 		params = MakeParameters(MakeBreakdowns(equipments))
@@ -1740,7 +1740,7 @@ func (c *Client) SelectRepairTeam(handlingId, equipmentId uint32) error {
 		MakeParameters(MakeIdentifier(handlingId), MakeIdentifier(equipmentId)))
 }
 
-func (c *Client) RecoverStocks(unitId uint32, resources map[uint32]*ResourceDotation) error {
+func (c *Client) RecoverStocks(unitId uint32, resources map[uint32]*Resource) error {
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId),
 		MakeParameters(nil, nil, nil, nil, MakeStocks(resources)),
 		sword.UnitMagicAction_partial_recovery)

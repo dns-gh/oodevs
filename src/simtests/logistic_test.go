@@ -147,23 +147,23 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 
 	// Generate maintenance activity
 	equipmentId := uint32(11)
-	dotation := swapi.EquipmentDotation{
+	dotation := swapi.Equipment{
 		Available: 4,
 	}
-	c.Assert(dotation, DeepEquals, *unit.EquipmentDotations[equipmentId])
-	equipment := swapi.EquipmentDotation{
+	c.Assert(dotation, DeepEquals, *unit.Equipments[equipmentId])
+	equipment := swapi.Equipment{
 		Available:  3,
 		Repairable: 1,
 		Breakdowns: []int32{82},
 	}
-	err := client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.EquipmentDotation{
+	err := client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.Equipment{
 		equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
 	// Generate medical and funeral activity
-	c.Assert(CheckHumanQuantity(unit.HumanDotations,
+	c.Assert(CheckHumanQuantity(unit.Humans,
 		map[int32]int32{eOfficer: 1, eWarrantOfficer: 4, eTrooper: 7}), Equals, true)
-	injured := swapi.HumanDotation{
+	injured := swapi.Human{
 		Quantity:     1,
 		Rank:         eTrooper,
 		State:        eInjured,
@@ -171,25 +171,25 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 		Psyop:        true,
 		Contaminated: true,
 	}
-	dead := swapi.HumanDotation{
+	dead := swapi.Human{
 		Quantity: 1,
 		Rank:     eTrooper,
 		State:    eDead,
 	}
-	err = client.ChangeHumanState(unit.Id, []*swapi.HumanDotation{&injured, &dead})
+	err = client.ChangeHumanState(unit.Id, []*swapi.Human{&injured, &dead})
 	c.Assert(err, IsNil)
 
 	// Generate supply activity
-	c.Assert(unit.ResourceDotations, NotNil)
-	c.Assert(unit.ResourceDotations[1], DeepEquals,
-		swapi.ResourceDotation{
+	c.Assert(unit.Resources, NotNil)
+	c.Assert(unit.Resources[1], DeepEquals,
+		swapi.Resource{
 			Quantity:  3200,
 			Threshold: 10,
 		})
-	resource := swapi.ResourceDotation{
+	resource := swapi.Resource{
 		Threshold: 10,
 	}
-	err = client.ChangeDotation(unit.Id, map[uint32]*swapi.ResourceDotation{1: &resource})
+	err = client.ChangeResource(unit.Id, map[uint32]*swapi.Resource{1: &resource})
 	c.Assert(err, IsNil)
 
 	client.Model.WaitTicks(2)

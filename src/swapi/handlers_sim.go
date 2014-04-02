@@ -138,10 +138,10 @@ func (model *ModelData) handleUnitCreation(m *sword.SimToClient_Content) error {
 		AutomatId:           mm.GetAutomat().GetId(),
 		Name:                mm.GetName(),
 		Pc:                  mm.GetPc(),
-		EquipmentDotations:  map[uint32]*EquipmentDotation{},
+		Equipments:          map[uint32]*Equipment{},
 		LentEquipments:      []*LentEquipment{},
 		BorrowedEquipments:  []*BorrowedEquipment{},
-		ResourceDotations:   map[uint32]ResourceDotation{},
+		Resources:           map[uint32]Resource{},
 		RawOperationalState: 100,
 	}
 	if !model.addUnit(unit) {
@@ -180,7 +180,7 @@ func (model *ModelData) handleUnitAttributes(m *sword.SimToClient_Content) error
 	}
 	if dotations := mm.GetEquipmentDotations(); dotations != nil {
 		for _, dotation := range dotations.GetElem() {
-			unit.EquipmentDotations[dotation.GetType().GetId()] = &EquipmentDotation{
+			unit.Equipments[dotation.GetType().GetId()] = &Equipment{
 				Available:     dotation.GetAvailable(),
 				Unavailable:   dotation.GetUnavailable(),
 				Repairable:    dotation.GetRepairable(),
@@ -209,14 +209,14 @@ func (model *ModelData) handleUnitAttributes(m *sword.SimToClient_Content) error
 				Quantity: equipment.GetQuantity()})
 		}
 	}
-	if humanDotations := mm.GetHumanDotations(); humanDotations != nil {
-		unit.HumanDotations = []*HumanDotation{}
-		for _, human := range humanDotations.GetElem() {
+	if humans := mm.GetHumanDotations(); humans != nil {
+		unit.Humans = []*Human{}
+		for _, human := range humans.GetElem() {
 			injury := int32(0)
 			if injuries := human.GetInjuries(); len(injuries) != 0 {
 				injury = int32(injuries[0].GetSeriousness())
 			}
-			unit.HumanDotations = append(unit.HumanDotations, &HumanDotation{
+			unit.Humans = append(unit.Humans, &Human{
 				Quantity:     human.GetQuantity(),
 				Rank:         int32(human.GetRank()),
 				State:        int32(human.GetState()),
@@ -225,9 +225,9 @@ func (model *ModelData) handleUnitAttributes(m *sword.SimToClient_Content) error
 				Contaminated: human.GetContaminated()})
 		}
 	}
-	if resourceDotations := mm.GetResourceDotations(); resourceDotations != nil {
-		for _, dotation := range resourceDotations.GetElem() {
-			unit.ResourceDotations[dotation.GetType().GetId()] = ResourceDotation{
+	if resources := mm.GetResourceDotations(); resources != nil {
+		for _, dotation := range resources.GetElem() {
+			unit.Resources[dotation.GetType().GetId()] = Resource{
 				Quantity:  dotation.GetQuantity(),
 				Threshold: dotation.GetThreshold()}
 		}
