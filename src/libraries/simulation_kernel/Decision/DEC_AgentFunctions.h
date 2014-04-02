@@ -156,7 +156,7 @@ public:
     static bool IsInReceptionBlackout( DEC_Decision_ABC* pAgent );
     static void SetToAmbianceSafety( MIL_Agent_ABC& callerAgent, bool safety );
     static bool IsInSmoke( DEC_Decision_ABC* pAgent );
-    static bool CreateBreakdown( MIL_Agent_ABC& callerAgent, unsigned int type, unsigned int breakdown );
+    static bool CreateBreakdown( MIL_Agent_ABC& callerAgent, const PHY_ComposanteTypePion* composanteType, unsigned int breakdown );
 
     // Etat d'un agent
     static double GetRapForLocalAgent( const DEC_Decision_ABC* agent );

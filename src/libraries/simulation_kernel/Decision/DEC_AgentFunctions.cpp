@@ -1801,10 +1801,9 @@ double DEC_AgentFunctions::GetMaxSpeed( const DEC_Decision_ABC& agent )
 // Name: DEC_AgentFunctions::CreateBreakdown
 // Created: LGY 2014-02-26
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CreateBreakdown( MIL_Agent_ABC& callerAgent, unsigned int type, unsigned int breakdown )
+bool DEC_AgentFunctions::CreateBreakdown( MIL_Agent_ABC& callerAgent, const PHY_ComposanteTypePion* composanteType, unsigned int breakdown )
 {
     const PHY_BreakdownType* breakdownType = PHY_BreakdownType::Find( breakdown );
-    const PHY_ComposanteTypePion* composanteType = PHY_ComposanteTypePion::Find( type );
     if( breakdownType && composanteType )
         return callerAgent.GetRole< PHY_RolePion_Composantes >().
             CreateBreakdowns( *composanteType, 1, breakdownType );
