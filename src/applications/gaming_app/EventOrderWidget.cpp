@@ -273,7 +273,6 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel
             menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 3 );
             AddReplaceTargetToMenu( menu );
         }
-        AddReplaceTargetToMenu( menu );
     }
 }
 
