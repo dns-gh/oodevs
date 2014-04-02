@@ -89,7 +89,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Extensions panel
     {
-        ExtensionsPanel* pExtensionsPanel = new ExtensionsPanel( parent, controllers, model, staticModel, simulation );
+        ExtensionsPanel* pExtensionsPanel = new ExtensionsPanel( parent, controllers, model, staticModel, simulation, profile );
         pExtensionsPanel->SetModes( eModes_Default );
         pExtensionsPanel->SetReadOnlyModes( eModes_Replay );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel );

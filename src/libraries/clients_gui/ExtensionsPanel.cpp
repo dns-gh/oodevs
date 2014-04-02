@@ -44,10 +44,13 @@ using namespace kernel;
 // Name: ExtensionsPanel constructor
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations )
+ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions,
+                                  const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations,
+                                  const kernel::Profile_ABC& profile )
     : RichDockWidget( controllers, parent, "extensions", tr( "Extensions" ) )
     , controllers_    ( controllers )
     , extensions_     ( extensions )
+    , profile_        ( profile )
     , diffusionDialog_( new DiffusionListDialog( parent, controllers, agents, formations, extensions, "DiffusionListDialog" ) )
     , selected_       ( controllers )
     , pGroupBox_      ( 0 )
@@ -557,6 +560,6 @@ void ExtensionsPanel::UpdateDependencies()
     {
         AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( it->first );
         if( attribute )
-            it->second->setEnabled( attribute->IsActive( extensions ) );
+            it->second->setEnabled( attribute->IsActive( extensions ) && attribute->IsEditable( profile_ ) );
     }
 }

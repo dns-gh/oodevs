@@ -11,6 +11,7 @@
 #include "AttributeType.h"
 #include "EntryLabelType.h"
 #include "ExtensionDependency.h"
+#include "Profile_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -30,6 +31,7 @@ AttributeType::AttributeType( xml::xistream& xis )
     ReaderHelper( maxLength_, "max-length", xis );
     ReaderHelper( dictionaryKind_, "dictionary-kind", xis );
     ReaderHelper( dictionaryLanguage_, "dictionary-language", xis );
+    ReaderHelper( supervisor_, "supervisor", xis );
     std::string op;
     xis >> xml::optional >> xml::start( "dependencies" )
             >> xml::attribute( "logical", op )
@@ -168,4 +170,15 @@ bool AttributeType::IsActive( const std::map< std::string, std::string >& extens
                 break;
             }
     return hasChanged ? active : false;;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeType::IsEditable
+// Created: SLI 2014-04-02
+// -----------------------------------------------------------------------------
+bool AttributeType::IsEditable( const kernel::Profile_ABC& profile ) const
+{
+    if( !supervisor_.IsSet() )
+        return true;
+    return supervisor_.Data() && profile.IsSupervision();
 }
