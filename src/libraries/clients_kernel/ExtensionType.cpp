@@ -47,7 +47,7 @@ void ExtensionType::ReadAttribute( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ExtensionType::GetAttributeTypes( const std::string& type, T_AttributesTypes& attributeTypes )
 {
-    tools::Iterator< const kernel::AttributeType& > it = CreateIterator();
+    auto it = CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::AttributeType& attribute = it.NextElement();

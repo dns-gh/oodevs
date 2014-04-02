@@ -112,12 +112,12 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
                 type->GetAttributeTypes( "population", attributes );
             else if( typeName == Team_ABC::typeName_ )
                 type->GetAttributeTypes( "party", attributes );
-            if( attributes.size() )
+            if( !attributes.empty() )
             {
                 pGroupBox_ = new RichGroupBox( "enabledGroupBox", tr( "Enabled" ) );
                 pGroupBoxLayout_ = new QGridLayout( pGroupBox_ );
                 int currentRow = 0;
-                for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it, ++currentRow )
+                for( auto it = attributes.rbegin(); it != attributes.rend(); ++it, ++currentRow )
                     AddWidget( **it, currentRow );
                 pGroupBoxLayout_->setColStretch( 1, 4 );
                 delete pExtensionLayout_->layout();
@@ -275,7 +275,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute, int cur
         return;
     static const std::string& language = tools::Language::Current();
     const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
-    std::string value( ext ? ext->GetValue( attribute.GetName() ) : "" );
+    const std::string value( ext ? ext->GetValue( attribute.GetName() ) : "" );
     if( attribute.GetType() == AttributeType::ETypeBoolean )
     {
         RichCheckBox* box = new RichCheckBox( attribute.GetName().c_str(), attribute.GetLabel( language, "" ).c_str() );

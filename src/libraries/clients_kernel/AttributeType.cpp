@@ -159,7 +159,7 @@ bool AttributeType::IsActive( const std::map< std::string, std::string >& extens
     bool active = operator_ == EOperatorAND;
     bool hasChanged = false;
     for( auto dep = dependencies_.begin(); dep != dependencies_.end(); ++dep )
-        for( std::map< std::string, std::string >::const_iterator ext = extensions.begin(); ext != extensions.end(); ++ext )
+        for( auto ext = extensions.begin(); ext != extensions.end(); ++ext )
             if( dep->GetName() == ext->first )
             {
                 if( operator_ == EOperatorAND )
@@ -169,7 +169,7 @@ bool AttributeType::IsActive( const std::map< std::string, std::string >& extens
                 hasChanged = true;
                 break;
             }
-    return hasChanged ? active : false;;
+    return hasChanged ? active : false;
 }
 
 // -----------------------------------------------------------------------------
