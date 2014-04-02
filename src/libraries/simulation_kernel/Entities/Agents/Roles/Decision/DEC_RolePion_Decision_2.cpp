@@ -732,8 +732,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_CreateBreakdown",
         boost::function< bool( unsigned int, unsigned int ) >( boost::bind( &DEC_AgentFunctions::CreateBreakdown, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_StartConsumingResources",
-        boost::function< unsigned( const PHY_DotationCategory*, double, double ) >(
-            [&]( const PHY_DotationCategory* category, double value, double duration ) {
+        boost::function< unsigned( unsigned, double, double ) >(
+            [&]( unsigned category, double value, double duration ) {
                 return DEC_ActionFunctions::StartAction< PHY_ActionConsumeResources >( GetPion(), category, value, duration, MIL_Time_ABC::GetTime().GetTickDuration() );
     }));
 

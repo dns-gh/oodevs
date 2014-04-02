@@ -81,6 +81,7 @@ public:
     double GetValue( const PHY_DotationCategory& category ) const;
     double Consume ( const PHY_DotationCategory& category, double rNbr );
     double Supply  ( const PHY_DotationCategory& category, double rNbr );
+    void   SupplyAll( double rFactor );
 
     const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
     float GetIlluminatingRange( ) const;

@@ -205,6 +205,16 @@ double PHY_DotationGroupContainer::Supply( const PHY_DotationCategory& category,
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::SupplyAll
+// Created: BAX 2014-04-03
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::SupplyAll( const PHY_DotationType& type, double factor )
+{
+    if( auto group = GetDotationGroup( type ) )
+        group->SupplyAll( factor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::Resupply
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------

@@ -9,16 +9,22 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionConsumeResources.h"
+#include "Decision/DEC_Decision_ABC.h"
+#include "Decision/DEC_PathWalker.h"
 #include "Entities/MIL_Entity_ABC.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+
+#include <boost/lexical_cast.hpp>
 
 namespace
 {
-    const PHY_DotationCategory& GetCategory( const PHY_DotationCategory* category )
+    const PHY_DotationType& GetType( unsigned value )
     {
-        if( !category )
-            throw MASA_EXCEPTION( "invalid dotation category" );
-        return *category;
+        auto type = PHY_DotationType::FindDotationType( value );
+        if( !type )
+            throw MASA_EXCEPTION( "invalid dotation type " + boost::lexical_cast< std::string >( value ) );
+        return *type;
     }
 
     int GetSteps( double duration, unsigned tickDuration )
@@ -30,15 +36,16 @@ namespace
 }
 
 PHY_ActionConsumeResources::PHY_ActionConsumeResources( MIL_Entity_ABC& unit,
-                                                        const PHY_DotationCategory* category,
+                                                        unsigned type,
                                                         double value, double duration,
                                                         unsigned tickDuration )
-    : dotations_( unit.GetRole< dotation::PHY_RoleInterface_Dotations >() )
-    , category_ ( GetCategory( category ) )
+    : PHY_DecisionCallbackAction_ABC( unit )
+    , dotations_( unit.GetRole< dotation::PHY_RoleInterface_Dotations >() )
+    , type_     ( GetType( type ) )
     , steps_    ( GetSteps( duration, tickDuration ) )
     , fraction_ ( value / steps_ / 100 )
 {
-    // NOTHING
+    Callback( static_cast< int >( DEC_PathWalker::eRunning ) );
 }
 
 PHY_ActionConsumeResources::~PHY_ActionConsumeResources()
@@ -51,7 +58,9 @@ void PHY_ActionConsumeResources::Execute()
     if( !steps_ )
         return;
     --steps_;
-    dotations_.ChangeDotation( category_, fraction_ );
+    dotations_.ChangeDotation( type_, fraction_ );
+    if( !steps_ )
+        Callback( static_cast< int >( DEC_PathWalker::eFinished ) );
 }
 
 void PHY_ActionConsumeResources::ExecuteSuspended()
@@ -59,7 +68,7 @@ void PHY_ActionConsumeResources::ExecuteSuspended()
     // NOTHING
 }
 
-void PHY_ActionConsumeResources::Stop()
+void PHY_ActionConsumeResources::StopAction()
 {
     // NOTHING
 }
