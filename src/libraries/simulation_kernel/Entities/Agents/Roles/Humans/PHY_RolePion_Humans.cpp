@@ -333,7 +333,6 @@ void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MI
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
 {
-    //$$$ Ne devrait contenir que la partie RC, et déléguer la gestion de la consign à l'Human
     MIL_AutomateLOG* pTC2 = owner_->GetLogisticHierarchy().GetPrimarySuperior();
     if( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
     {
@@ -346,15 +345,6 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
         MIL_Report::PostEvent( *owner_, report::eRC_DemandeEvacuationSanitaire );
     nTickRcMedicalQuerySent_ = nCurrentTick;
     human.SetMedicalState( pTC2->MedicalHandleHumanForEvacuation( *owner_, human ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::NotifyHumanBackFromMedical
-// Created: NLD 2005-01-10
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::NotifyHumanBackFromMedical( PHY_MedicalHumanState& )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

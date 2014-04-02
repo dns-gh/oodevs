@@ -76,7 +76,6 @@ public:
     virtual void ChangeEvacuationMode( E_EvacuationMode nMode );
     virtual void NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MIL_AutomateLOG& destinationTC2 ); // Imex
     virtual void NotifyHumanWaitingForMedical( Human_ABC& human );
-    virtual void NotifyHumanBackFromMedical( PHY_MedicalHumanState& humanState );
     //@}
 
     //! @name Operations

@@ -148,9 +148,9 @@ void PHY_MedicalHealingConsign::ChooseStateAfterResting()
         EnterStateSearchingForHealingArea();
     else
     {
-        if( pHumanState_->ShouldGoBackToWar() )
-            DoReturnHuman();
         EnterStateFinished();
+        if( pHumanState_->GoBackToWar() )
+            pHumanState_ = 0;
     }
 }
 
@@ -205,26 +205,12 @@ bool PHY_MedicalHealingConsign::DoWaitingForCollection()
     MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {
-        pHumanState_ = 0;
         EnterStateFinished();
+        pHumanState_ = 0;
         return true;
     }
     return false;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_MedicalHealingConsign::DoReturnHuman
-// Created: JVT 2005-04-28
-// -----------------------------------------------------------------------------
-void PHY_MedicalHealingConsign::DoReturnHuman()
-{
-    if( pHumanState_->GoBackToWar() )
-        pHumanState_ = 0;
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHealingConsign::Update

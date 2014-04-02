@@ -65,15 +65,15 @@ public:
         {
             Purge();
             std::set< const Request* > consigns;
-            logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( entity, [ &consigns ]( const kernel::Entity_ABC& entity ) {
-                const Extension* pConsigns = entity.Retrieve< Extension >();
-                if( pConsigns )
+            logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( entity,
+                [&]( const kernel::Entity_ABC& entity )
                 {
-                    consigns.insert( pConsigns->requested_.begin(), pConsigns->requested_.end() );
-                    consigns.insert( pConsigns->handled_.begin(), pConsigns->handled_.end() );
-                }
-            } );
-
+                    if( const Extension* pConsigns = entity.Retrieve< Extension >() )
+                    {
+                        consigns.insert( pConsigns->requested_.begin(), pConsigns->requested_.end() );
+                        consigns.insert( pConsigns->handled_.begin(), pConsigns->handled_.end() );
+                    }
+                } );
             for( auto it = consigns.begin(); it != consigns.end(); ++it )
                 DisplayRequest( **it );
             requestsTable_->ResizeColumnsToContents();

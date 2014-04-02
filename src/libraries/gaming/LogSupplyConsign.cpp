@@ -66,16 +66,16 @@ LogSupplyConsign::~LogSupplyConsign()
 // Name: LogSupplyConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message, kernel::Agent_ABC* pionLogConvoying )
+bool LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message, kernel::Agent_ABC* pionLogConvoying )
 {
     pPionLogConvoying_ = pionLogConvoying;
-
     if( message.has_state()  )
         nState_ = message.state();
     if( message.has_current_state_end_tick() )
         currentStateEndTick_ = message.current_state_end_tick();
     else
         currentStateEndTick_ = std::numeric_limits< unsigned int >::max();
+    return nState_ != sword::LogSupplyHandlingUpdate::convoy_finished;
 }
 
 // -----------------------------------------------------------------------------

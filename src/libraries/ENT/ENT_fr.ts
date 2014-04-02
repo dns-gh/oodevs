@@ -1071,7 +1071,7 @@
     </message>
     <message>
         <source>finished</source>
-        <translation>terminé</translation>
+        <translation>hospitalisation en métropole</translation>
     </message>
 </context>
 <context>

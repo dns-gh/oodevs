@@ -64,7 +64,7 @@ LogFuneralConsign::~LogFuneralConsign()
 // Name: LogFuneralConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogFuneralConsign::Update( const sword::LogFuneralHandlingUpdate& message, kernel::Entity_ABC* handler, kernel::Agent_ABC* convoy )
+bool LogFuneralConsign::Update( const sword::LogFuneralHandlingUpdate& message, kernel::Entity_ABC* handler, kernel::Agent_ABC* convoy )
 {
     if( message.has_state() )
         nState_ = message.state();
@@ -76,6 +76,7 @@ void LogFuneralConsign::Update( const sword::LogFuneralHandlingUpdate& message, 
         currentStateEndTick_ = std::numeric_limits< unsigned int >::max();
     if( message.has_packaging_resource() )
         packagingResource_ = dotationResolver_.Find( message.packaging_resource().id() );
+    return nState_ != sword::LogFuneralHandlingUpdate::finished;
 }
 
 // -----------------------------------------------------------------------------

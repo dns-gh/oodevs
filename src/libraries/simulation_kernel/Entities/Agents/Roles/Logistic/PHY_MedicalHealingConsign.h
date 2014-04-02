@@ -59,7 +59,6 @@ private:
     void DoSearchForHealingArea           ();
     void EnterStateWaitingForCollection   ();
     bool DoWaitingForCollection           ();
-    void DoReturnHuman                    ();
     //@}
 
 private:

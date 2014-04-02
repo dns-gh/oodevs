@@ -54,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const sword::LogMaintenanceHandlingUpdate& message, kernel::Entity_ABC* handler );
+    bool Update( const sword::LogMaintenanceHandlingUpdate& message, kernel::Entity_ABC* handler );
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual bool RefersToAgent( unsigned long id ) const;
     virtual bool RefersToAgent( const std::set< unsigned long >& id ) const;
