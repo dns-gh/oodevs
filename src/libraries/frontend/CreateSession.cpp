@@ -83,8 +83,6 @@ void CreateSession::SetDefaultValues()
         setter_->SetValue( "session/config/simulation/checkpoint/@usecrc"      , true );
         setter_->SetValue( "session/config/simulation/debug/@decisional"       , false );
         setter_->SetValue( "session/config/simulation/debug/@pathfind"         , false );
-        setter_->SetValue( "session/config/simulation/debug/@networklogger"    , false );
-        setter_->SetValue( "session/config/simulation/debug/@networkloggerport", 20000 );
         setter_->SetValue( "session/config/simulation/dispatcher/@embedded"    , true );
         setter_->SetValue( "session/config/simulation/network/@port"           , "localhost:" +  boost::lexical_cast< std::string >( GetPort( 1, SIMULATION_PORT ) ) );
         setter_->SetValue( "session/config/simulation/orbat/@checkcomposition" , false );

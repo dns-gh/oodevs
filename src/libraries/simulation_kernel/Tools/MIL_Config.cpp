@@ -37,13 +37,11 @@ MIL_Config::MIL_Config( const boost::shared_ptr< tools::RealFileLoaderObserver_A
     , endTick_( 0 )
     , tickLatency_( 1 )
     , pathFinderThreads_( 0 )
-    , networkLoggerPort_( 0 )
     , networkTimeOut_( 10000 )
     , bCheckPointOrbat_( false )
     , bCheckAutomateComposition_( false )
     , bUseDecDebug_( false )
     , bUsePathDebug_( false )
-    , bUseNetworkLogger_( false )
     , bDecisionalProfilingEnabled_( false )
     , bDecisionalLoggerEnabled_( false )
     , bHookProfilingEnabled_( false )
@@ -236,9 +234,7 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
     xis >> xml::start( "debug" )
             >> xml::attribute( "decisional", bUseDecDebug_ )
             >> xml::attribute( "pathfind", bUsePathDebug_ )
-            >> xml::attribute( "networklogger", bUseNetworkLogger_ )
             >> xml::optional >> xml::attribute( "decisional-logger", bDecisionalLoggerEnabled_ )
-            >> xml::optional >> xml::attribute( "networkloggerport", networkLoggerPort_ )
             >> xml::optional >> xml::attribute(
                     "random-breakdowns", bEnableRandomBreakdowns_ )
             >> logSim
@@ -383,24 +379,6 @@ bool MIL_Config::IsSaveCheckpointTestMode() const
 bool MIL_Config::IsDispatcherEmbedded() const
 {
     return bEmbeddedDispatcher_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::UseNetworkLogger
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-bool MIL_Config::UseNetworkLogger() const
-{
-    return bUseNetworkLogger_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetNetworkLoggerPort
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-unsigned short MIL_Config::GetNetworkLoggerPort() const
-{
-    return networkLoggerPort_;
 }
 
 // -----------------------------------------------------------------------------

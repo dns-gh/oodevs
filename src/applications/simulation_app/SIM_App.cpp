@@ -18,8 +18,8 @@
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_Version.h"
+#include "MT_Tools/MT_Logger.h"
 #include "resource.h"
-#include "SIM_NetworkLogger.h"
 #include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/MIL_Random.h"
@@ -74,19 +74,6 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPWSTR lpC
     MT_LOG_STARTUP_MESSAGE( ( "Starting simulation - " + boost::posix_time::to_simple_string( boost::posix_time::second_clock::local_time() ) ).c_str() );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_INFO_MSG( "Session: " << config_->GetSessionDir() );
-    if( config_->UseNetworkLogger() )
-    {
-        try
-        {
-            pNetworkLogger_.reset( new SIM_NetworkLogger( config_->GetNetworkLoggerPort(), MT_Logger_ABC::eLogLevel_All ) );
-            MT_LOG_REGISTER_LOGGER( *pNetworkLogger_ );
-        }
-        catch( const std::exception& e )
-        {
-            MT_LOG_WARNING_MSG( "Network logger (telnet) not registered - Reason : '" << tools::GetExceptionMsg( e ) << "'" );
-            pNetworkLogger_.reset();
-        }
-    }
 }
 
 //-----------------------------------------------------------------------------
@@ -103,8 +90,6 @@ SIM_App::~SIM_App()
         gui_->join();
     MIL_AgentServer::DestroyWorkspace();
     MT_LOG_UNREGISTER_LOGGER( *logger_ );
-    if( pNetworkLogger_.get() )
-        MT_LOG_UNREGISTER_LOGGER( *pNetworkLogger_ );
 }
 
 // -----------------------------------------------------------------------------

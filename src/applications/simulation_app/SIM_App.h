@@ -27,7 +27,6 @@ namespace tools
 class MIL_Config;
 class MT_ConsoleLogger;
 class MT_FileLogger;
-class SIM_NetworkLogger;
 
 //=============================================================================
 // Created: NLD 2002-08-07
@@ -69,7 +68,6 @@ private:
 
     std::auto_ptr< MIL_Config > config_;
     std::auto_ptr< tools::WinArguments > winArguments_;
-    std::auto_ptr< SIM_NetworkLogger > pNetworkLogger_;
     std::auto_ptr< MT_FileLogger > logger_;
     std::auto_ptr< tools::WaitEvent > quit_;
     std::auto_ptr< boost::thread > gui_;
