@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 ADN_Sensors_Modificators::SizeInfos::SizeInfos( ADN_Volumes_Data::VolumeInfos* ptr )
     : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true )
-    , rCoeff_( 0 )
+    , rCoeff_( 1 )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ void ADN_Sensors_Modificators::SizeInfos::WriteArchive( xml::xostream& output ) 
 // -----------------------------------------------------------------------------
 bool ADN_Sensors_Modificators::SizeInfos::NeedsSaving() const
 {
-    return rCoeff_ != 0;
+    return rCoeff_ != 1;
 }
 
 //-----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ bool ADN_Sensors_Modificators::SizeInfos::NeedsSaving() const
 //-----------------------------------------------------------------------------
 ADN_Sensors_Modificators::IlluminationInfos::IlluminationInfos( const E_LightingType& e )
     : eType_( e )
-    , rCoeff_( 0 )
+    , rCoeff_( 1 )
 {
     // NOTHING
 }
@@ -91,7 +91,7 @@ void ADN_Sensors_Modificators::IlluminationInfos::WriteArchive( xml::xostream& o
 // -----------------------------------------------------------------------------
 bool ADN_Sensors_Modificators::IlluminationInfos::NeedsSaving() const
 {
-    return rCoeff_ != 0;
+    return rCoeff_ != 1;
 }
 
 //-----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ bool ADN_Sensors_Modificators::IlluminationInfos::NeedsSaving() const
 //-----------------------------------------------------------------------------
 ADN_Sensors_Modificators::MeteoInfos::MeteoInfos( const E_SensorWeatherModifiers& e )
     : eType_( e )
-    , rCoeff_( 0 )
+    , rCoeff_( 1 )
 {
     // NOTHING
 }
@@ -132,7 +132,7 @@ void ADN_Sensors_Modificators::MeteoInfos::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 bool ADN_Sensors_Modificators::MeteoInfos::NeedsSaving() const
 {
-    return rCoeff_ != 0;
+    return rCoeff_ != 1;
 }
 
 //-----------------------------------------------------------------------------
