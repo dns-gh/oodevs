@@ -356,6 +356,7 @@ void ADN_Workspace::BuildGUI()
     AddPage( eKnowledgeGroups );
     AddPage( eHumanFactors );
     AddPage( eAiEngine );
+    AddPage( eDisasters );
     mainWindow_.SetIsLoading( false );
     connect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), &mainWindow_, SIGNAL( ChangeTab( E_WorkspaceElements ) ) );
 }
