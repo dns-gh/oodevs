@@ -77,7 +77,6 @@ namespace tools
     QString ToString( E_HumanWound nType );
     QString ToString( E_LocationType nType );
     QString ToString( E_AgentNbcSuit nType );
-    QString ToString( E_DotationFamily nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToSim );
     QString ToString( E_EquipmentState nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr );
     QString ToString( E_HumanRank nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr );
     QString ToString( E_HumanState nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr );
@@ -89,7 +88,6 @@ namespace tools
     QString ToDisplayedString( E_LightingType lighting );
     QString ToDisplayedString( E_WeatherType weather );
 
-    E_DotationFamily        DotationFamilyFromString( const std::string& type );
     E_NatureLevel           NatureLevelFromString   ( const std::string& type );
     E_LocationType          LocationFromString      ( const std::string& type );
 

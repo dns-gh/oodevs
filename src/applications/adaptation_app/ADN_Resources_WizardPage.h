@@ -12,6 +12,7 @@
 
 #include "ADN_WizardPage.h"
 #include "ADN_Resources_Data.h"
+#include "protocol/Protocol.h"
 
 // =============================================================================
 /** @class  ADN_Resources_WizardPage
@@ -95,9 +96,9 @@ public:
 
     virtual ADN_Resources_Data::CategoryInfo* NewT()
     {
-        if( parentResource_.nType_ == eDotationFamily_Munition ||
-            parentResource_.nType_ == eDotationFamily_Mine ||
-            parentResource_.nType_ == eDotationFamily_Explosif )
+        if( parentResource_.nType_ == sword::category_ammunition ||
+            parentResource_.nType_ == sword::category_mine ||
+            parentResource_.nType_ == sword::category_explosive )
             return new ADN_Resources_Data::AmmoCategoryInfo( parentResource_ );
         else
             return new ADN_Resources_Data::CategoryInfo( parentResource_ );

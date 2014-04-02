@@ -30,7 +30,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 QDateTime tools::IsoStringToQDateTime( const std::string& text )
 {
-    return QDateTime::fromString( text.c_str(), "yyyyMMddThhmmss" );
+    return QDateTime::fromString( QString::fromStdString( text ), "yyyyMMddThhmmss" );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ QDateTime tools::IsoStringToQDateTime( const std::string& text )
 // -----------------------------------------------------------------------------
 QDateTime tools::GDHStringToQDateTime( const std::string& text )
 {
-    QString extended( text.c_str() );
+    QString extended = QString::fromStdString( text );
     extended.insert( 13, ':' ); extended.insert( 11, ':' );
     extended.insert(  6, '-' ); extended.insert(  4, '-' );
     return QDateTime::fromString( extended, Qt::ISODate );
@@ -229,7 +229,7 @@ QString tools::ToString( E_WeatherType weather )
 // -----------------------------------------------------------------------------
 QString tools::ToDisplayedString( E_LightingType lighting )
 {
-    return ENT_Tr::ConvertFromLightingType( lighting, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromLightingType( lighting, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -238,7 +238,7 @@ QString tools::ToDisplayedString( E_LightingType lighting )
 // -----------------------------------------------------------------------------
 QString tools::ToDisplayedString( E_WeatherType weather )
 {
-    return ENT_Tr::ConvertFromWeatherType( weather, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromWeatherType( weather, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,7 +247,7 @@ QString tools::ToDisplayedString( E_WeatherType weather )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_PopulationAttitude nType )
 {
-    return ENT_Tr::ConvertFromPopulationAttitude( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromPopulationAttitude( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -256,7 +256,7 @@ QString tools::ToString( E_PopulationAttitude nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_ObstacleActivation nType )
 {
-    return ENT_Tr::ConvertFromObstacleActivation( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromObstacleActivation( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,7 +265,7 @@ QString tools::ToString( E_ObstacleActivation nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_UnitPosture nType )
 {
-    return ENT_Tr::ConvertFromUnitPosture( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromUnitPosture( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -274,7 +274,7 @@ QString tools::ToString( E_UnitPosture nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_OperationalStatus nType )
 {
-    return ENT_Tr::ConvertFromOperationalStatus( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromOperationalStatus( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -283,7 +283,7 @@ QString tools::ToString( E_OperationalStatus nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_ForceRatioStatus nType )
 {
-    return ENT_Tr::ConvertFromForceRatioStatus( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromForceRatioStatus( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,7 +292,7 @@ QString tools::ToString( E_ForceRatioStatus nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_Roe nType )
 {
-    return ENT_Tr::ConvertFromRoe( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromRoe( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -301,7 +301,7 @@ QString tools::ToString( E_Roe nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_PopulationRoe nType )
 {
-    return ENT_Tr::ConvertFromPopulationRoe( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromPopulationRoe( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -310,7 +310,7 @@ QString tools::ToString( E_PopulationRoe nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_MeetingEngagementStatus nType )
 {
-    return ENT_Tr::ConvertFromMeetingEngagementStatus( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromMeetingEngagementStatus( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -319,7 +319,7 @@ QString tools::ToString( E_MeetingEngagementStatus nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_FireAvailability nType )
 {
-    return ENT_Tr::ConvertFromFireAvailability( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromFireAvailability( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -328,7 +328,7 @@ QString tools::ToString( E_FireAvailability nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_NatureLevel nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */  )
 {
-    return ENT_Tr::ConvertFromNatureLevel( nType, conversion ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromNatureLevel( nType, conversion ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -337,7 +337,7 @@ QString tools::ToString( E_NatureLevel nType, ENT_Tr::E_Conversion conversion /*
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_UnitExperience nType )
 {
-    return ENT_Tr::ConvertFromUnitExperience( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromUnitExperience( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,7 +346,7 @@ QString tools::ToString( E_UnitExperience nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_UnitMorale nType )
 {
-    return ENT_Tr::ConvertFromUnitMorale( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromUnitMorale( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -355,7 +355,7 @@ QString tools::ToString( E_UnitMorale nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_UnitStress nType )
 {
-    return ENT_Tr::ConvertFromUnitStress( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromUnitStress( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -364,7 +364,7 @@ QString tools::ToString( E_UnitStress nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_UnitTiredness nType )
 {
-    return ENT_Tr::ConvertFromUnitTiredness( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromUnitTiredness( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -373,16 +373,7 @@ QString tools::ToString( E_UnitTiredness nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_HumanWound nType )
 {
-    return ENT_Tr::ConvertFromHumanWound( nType, ENT_Tr::eToTr ).c_str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::ToString
-// Created: AGE 2008-02-05
-// -----------------------------------------------------------------------------
-QString tools::ToString( E_DotationFamily nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToSim */ )
-{
-    return ENT_Tr::ConvertFromDotationFamily( nType, conversion ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromHumanWound( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -391,7 +382,7 @@ QString tools::ToString( E_DotationFamily nType, ENT_Tr::E_Conversion conversion
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_LocationType nType )
 {
-    return ENT_Tr::ConvertFromLocationType( nType ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromLocationType( nType ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -400,7 +391,7 @@ QString tools::ToString( E_LocationType nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_AgentNbcSuit nType )
 {
-    return ENT_Tr::ConvertFromAgentNbcSuit( nType, ENT_Tr::eToTr ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromAgentNbcSuit( nType, ENT_Tr::eToTr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -409,7 +400,7 @@ QString tools::ToString( E_AgentNbcSuit nType )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_HumanRank nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */ )
 {
-    return ENT_Tr::ConvertFromHumanRank( nType, conversion ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromHumanRank( nType, conversion ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -418,7 +409,7 @@ QString tools::ToString( E_HumanRank nType, ENT_Tr::E_Conversion conversion /* =
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_HumanState nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */ )
 {
-    return ENT_Tr::ConvertFromHumanState( nType, conversion ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromHumanState( nType, conversion ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -427,7 +418,7 @@ QString tools::ToString( E_HumanState nType, ENT_Tr::E_Conversion conversion /* 
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_HumanLocation nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */ )
 {
-    return ENT_Tr::ConvertFromHumanLocation( nType, conversion ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromHumanLocation( nType, conversion ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -436,7 +427,7 @@ QString tools::ToString( E_HumanLocation nType, ENT_Tr::E_Conversion conversion 
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_EquipmentState nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */ )
 {
-    return ENT_Tr::ConvertFromEquipmentState( nType, conversion ).c_str();
+    return QString::fromStdString( ENT_Tr::ConvertFromEquipmentState( nType, conversion ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -445,16 +436,7 @@ QString tools::ToString( E_EquipmentState nType, ENT_Tr::E_Conversion conversion
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_InjuriesSeriousness nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */ )
 {
-    return ENT_Tr::ConvertFromInjuriesSeriousness( nType, conversion ).c_str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::DotationFamilyFromString
-// Created: AGE 2007-06-19
-// -----------------------------------------------------------------------------
-E_DotationFamily tools::DotationFamilyFromString( const std::string& type )
-{
-    return ENT_Tr::ConvertToDotationFamily( type );
+    return QString::fromStdString( ENT_Tr::ConvertFromInjuriesSeriousness( nType, conversion ) );
 }
 
 // -----------------------------------------------------------------------------

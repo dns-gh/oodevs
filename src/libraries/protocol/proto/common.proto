@@ -202,6 +202,22 @@ enum EnumHumanWound {
     wounded_extreme_urgency = 5;
 }
 
+/** @enum DotationCategory
+    @brief Defines possible dotation categories
+*/
+enum DotationCategory {
+    category_ammunition         = 0;
+    category_fuel               = 1;
+    category_explosive          = 2;
+    category_mine               = 3;
+    category_barbed_wire        = 4;
+    category_parts              = 5;
+    category_food_and_water     = 6;
+    category_extinguisher_agent = 7;
+    category_energy             = 8;
+    category_funeral            = 9;
+}
+
 //! Defines the different nature levels using APP-6A symbols
 //! See: http://en.wikipedia.org/wiki/Military_organization
 enum EnumNatureLevel {

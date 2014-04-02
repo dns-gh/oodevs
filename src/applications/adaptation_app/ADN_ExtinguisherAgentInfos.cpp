@@ -10,13 +10,14 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ExtinguisherAgentInfos.h"
 #include "ADN_WorkspaceElement.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ExtinguisherAgentInfos constructor
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_ExtinguisherAgentInfos::ADN_ExtinguisherAgentInfos( ADN_Resources_Data::CategoryInfo* agent )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_AgentExtincteur ).categories_, agent, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_extinguisher_agent ).categories_, agent, true )
     , heatDecreaseRate_( 0 )
 {
     // NOTHING

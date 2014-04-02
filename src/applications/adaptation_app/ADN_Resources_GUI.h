@@ -27,6 +27,11 @@ namespace helpers
     class ADN_UrbanAttritionInfos;
 }
 
+namespace sword
+{
+    enum DotationCategory;
+}
+
 // =============================================================================
 /** @class  ADN_Resources_GUI
     @brief  ADN_Resources_GUI
@@ -143,7 +148,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void BuildGeneric( E_DotationFamily nType );
+    void BuildGeneric( sword::DotationCategory nType );
     void BuildAmmunition();
     //@}
 
@@ -159,19 +164,19 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ADN_Resources_Data&            data_;
-    std::vector< ADN_CheckBox* >    vNetworkUsablecheckboxes_;
-    E_DotationFamily                currentTab_;
-    std::map< E_DotationFamily, ADN_Resources_AttritionTable* > pAttritionTables_;
-    std::map< E_DotationFamily, ADN_Resources_AttritionGraph* > pAttritionGraphs_;
-    std::map< E_DotationFamily, ADN_ComboBox_Vector* >           pArmorCombos_;
-    std::map< E_DotationFamily, ADN_ComboBox_Vector* >           pMaterialCombos_;
-    QButtonGroup*                   buttonGroup_;
-    Q3GroupBox*                     pExplosiveParametersGroup_;
-    Q3GroupBox*                     pFlareParametersGroup_;
-    Q3GroupBox*                     pEffectParametersGroup_;
-    Q3GroupBox*                     pMineParametersGroup_;
-    Q3GroupBox*                     pSmokeParametersGroup_;
+    ADN_Resources_Data&                                                data_;
+    std::vector< ADN_CheckBox* >                                       vNetworkUsablecheckboxes_;
+    sword::DotationCategory                                            currentTab_;
+    std::map< sword::DotationCategory, ADN_Resources_AttritionTable* > pAttritionTables_;
+    std::map< sword::DotationCategory, ADN_Resources_AttritionGraph* > pAttritionGraphs_;
+    std::map< sword::DotationCategory, ADN_ComboBox_Vector* >          pArmorCombos_;
+    std::map< sword::DotationCategory, ADN_ComboBox_Vector* >          pMaterialCombos_;
+    QButtonGroup*                                                      buttonGroup_;
+    Q3GroupBox*                                                        pExplosiveParametersGroup_;
+    Q3GroupBox*                                                        pFlareParametersGroup_;
+    Q3GroupBox*                                                        pEffectParametersGroup_;
+    Q3GroupBox*                                                        pMineParametersGroup_;
+    Q3GroupBox*                                                        pSmokeParametersGroup_;
     //@}
 };
 

@@ -15,6 +15,7 @@
 #include "ADN_Tr.h"
 #include "ADN_WorkspaceElement.h"
 #include "clients_kernel/XmlTranslations.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_Data constructor
@@ -109,7 +110,7 @@ namespace
 {
     ADN_Type_Vector_ABC< ADN_Resources_Data::CategoryInfo >& GetMunitionsVector()
     {
-        return ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition ).categories_;
+        return ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_ammunition ).categories_;
     }
 }
 

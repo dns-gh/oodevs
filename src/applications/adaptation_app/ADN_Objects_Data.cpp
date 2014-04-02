@@ -19,6 +19,7 @@
 #include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 #include "ADN_ConsistencyChecker.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -429,9 +430,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Disaster::CheckDatabaseValidity( ADN_Co
 //@{
 
 ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
-    : ammoCategory_     ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition ).categories_, 0 )
-    , mineCategory_     ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Mine ).categories_, 0 )
-    , explosiveCategory_( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Explosif ).categories_, 0 )
+    : ammoCategory_     ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_ammunition ).categories_, 0 )
+    , mineCategory_     ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_mine ).categories_, 0 )
+    , explosiveCategory_( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_explosive ).categories_, 0 )
     , useAmmo_          ( false )
     , useMine_          ( false )
     , useExplo_         ( false )
@@ -450,17 +451,17 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
         ADN_Resources_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( dotation );
         if( pCategory )
         {
-            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToSim ) )
+            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationCategory( sword::category_ammunition, ENT_Tr::eToSim ) )
             {
                 ammoCategory_ = pCategory;
                 useAmmo_ = true;
             }
-            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Mine, ENT_Tr::eToSim ) )
+            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationCategory( sword::category_mine, ENT_Tr::eToSim ) )
             {
                 mineCategory_ = pCategory;
                 useMine_ = true;
             }
-            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Explosif, ENT_Tr::eToSim ) )
+            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationCategory( sword::category_explosive, ENT_Tr::eToSim ) )
             {
                 explosiveCategory_ = pCategory;
                 useExplo_ = true;

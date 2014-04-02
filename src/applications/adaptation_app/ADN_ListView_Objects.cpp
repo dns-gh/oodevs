@@ -22,6 +22,7 @@
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 #include "ENT/ENT_Tr.h"
+#include "protocol/Protocol.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Objects constructor
@@ -345,7 +346,7 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
                                         ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), eSensors );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                         ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
-                                        ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), eResources, eDotationFamily_Munition );
+                                        ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), eResources, sword::category_ammunition );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                         ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
                                         ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), eEquipments );

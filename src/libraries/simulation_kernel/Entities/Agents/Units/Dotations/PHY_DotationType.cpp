@@ -42,16 +42,16 @@ namespace
 void PHY_DotationType::Initialize( xml::xisubstream xis )
 {
     MT_LOG_INFO_MSG( "Initializing dotation types" );
-    PHY_DotationType::munition_        = new PHY_DotationType( "munition"         , eDotationFamily_Munition        );
-    PHY_DotationType::carburant_       = new PHY_DotationType( "carburant"        , eDotationFamily_Carburant       );
-    PHY_DotationType::explosif_        = new PHY_DotationType( "explosif"         , eDotationFamily_Explosif        );
-    PHY_DotationType::mine_            = new PHY_DotationType( "mine"             , eDotationFamily_Mine            );
-    PHY_DotationType::barbele_         = new PHY_DotationType( "barbele"          , eDotationFamily_Barbele         );
-    PHY_DotationType::piece_           = new PHY_DotationType( "piece"            , eDotationFamily_Piece           );
-    PHY_DotationType::ration_          = new PHY_DotationType( "ration"           , eDotationFamily_Ration          );
-    PHY_DotationType::agentExtincteur_ = new PHY_DotationType( "agent extincteur" , eDotationFamily_AgentExtincteur );
-    PHY_DotationType::energie_         = new PHY_DotationType( "energie"          , eDotationFamily_Energy          );
-    PHY_DotationType::funeraire_       = new PHY_DotationType( "funeraire"        , eDotationFamily_Funeraire       );
+    PHY_DotationType::munition_        = new PHY_DotationType( "munition"         , sword::category_ammunition );
+    PHY_DotationType::carburant_       = new PHY_DotationType( "carburant"        , sword::category_fuel );
+    PHY_DotationType::explosif_        = new PHY_DotationType( "explosif"         , sword::category_explosive );
+    PHY_DotationType::mine_            = new PHY_DotationType( "mine"             , sword::category_mine );
+    PHY_DotationType::barbele_         = new PHY_DotationType( "barbele"          , sword::category_barbed_wire );
+    PHY_DotationType::piece_           = new PHY_DotationType( "piece"            , sword::category_parts );
+    PHY_DotationType::ration_          = new PHY_DotationType( "ration"           , sword::category_food_and_water );
+    PHY_DotationType::agentExtincteur_ = new PHY_DotationType( "agent extincteur" , sword::category_extinguisher_agent );
+    PHY_DotationType::energie_         = new PHY_DotationType( "energie"          , sword::category_energy );
+    PHY_DotationType::funeraire_       = new PHY_DotationType( "funeraire"        , sword::category_funeral );
     types[ munition_       ->GetName() ] = munition_;
     types[ carburant_      ->GetName() ] = carburant_;
     types[ explosif_       ->GetName() ] = explosif_;
@@ -113,7 +113,7 @@ void PHY_DotationType::RegisterDotation( xml::xistream& xis )
 // Name: PHY_DotationType constructor
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-PHY_DotationType::PHY_DotationType( const std::string& name, E_DotationFamily type )
+PHY_DotationType::PHY_DotationType( const std::string& name, sword::DotationCategory type )
     : name_( name )
     , type_( type )
 {

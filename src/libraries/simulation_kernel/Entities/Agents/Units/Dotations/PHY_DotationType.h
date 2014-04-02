@@ -19,6 +19,11 @@ namespace xml
     class xisubstream;
 }
 
+namespace sword
+{
+    enum DotationCategory;
+}
+
 class PHY_DotationCategory;
 
 // =============================================================================
@@ -68,7 +73,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    PHY_DotationType( const std::string& name, E_DotationFamily type );
+    PHY_DotationType( const std::string& name, sword::DotationCategory type );
     //@}
 
     //! @name Helpers
@@ -81,8 +86,8 @@ private:
 private:
     //! @name Memnber data
     //@{
-    const std::string      name_;
-    const E_DotationFamily type_;
+    const std::string             name_;
+    const sword::DotationCategory type_;
     //@}
 };
 

@@ -32,8 +32,8 @@ typedef ADN_Resources_Data::CategoryInfo CategoryInfo;
 // Name: ADN_Resources_GenericListView constructor
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Resources_GenericListView::ADN_Resources_GenericListView( QWidget* pParent, E_DotationFamily nType )
-    : ADN_ListView( pParent, "ADN_Resources_GenericListView", ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToTr ).c_str() )
+ADN_Resources_GenericListView::ADN_Resources_GenericListView( QWidget* pParent, sword::DotationCategory nType )
+    : ADN_ListView( pParent, "ADN_Resources_GenericListView", ENT_Tr::ConvertFromDotationCategory( nType, ENT_Tr::eToTr ).c_str() )
     , nType_      ( nType )
 {
     pConnector_.reset( new ADN_Connector_ListView<CategoryInfo>( *this ) );
@@ -97,7 +97,7 @@ void ADN_Resources_GenericListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
     ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( nType_ );
-    ADN_Resources_Wizard wizard( dotation, ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources(), ENT_Tr::ConvertFromDotationFamily( nType_, ENT_Tr::eToTr ).c_str(), this );
+    ADN_Resources_Wizard wizard( dotation, ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources(), ENT_Tr::ConvertFromDotationCategory( nType_, ENT_Tr::eToTr ).c_str(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

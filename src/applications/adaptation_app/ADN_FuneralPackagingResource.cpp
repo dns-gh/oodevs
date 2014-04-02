@@ -14,13 +14,14 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ADN_WorkspaceElement.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_FuneralPackagingResource constructor
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------
 ADN_FuneralPackagingResource::ADN_FuneralPackagingResource()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Funeraire ).GetCategories(), 0, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_funeral ).GetCategories(), 0, true )
     , processDuration_( "0s" )
     , terminal_( false )
 {

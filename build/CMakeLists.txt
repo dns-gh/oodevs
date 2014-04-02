@@ -596,7 +596,7 @@ target_link_libraries( selftraining_app
 )
 
 # adaptation_app
-add_target( adaptation_app clients "applications/adaptation_app" OPTIONS qt3 qt executable )
+add_target( adaptation_app clients "applications/adaptation_app" OPTIONS qt3 qt protocol executable )
 target_link_libraries( adaptation_app
     clients_gui
     ${EXCEL_LIBRARIES}

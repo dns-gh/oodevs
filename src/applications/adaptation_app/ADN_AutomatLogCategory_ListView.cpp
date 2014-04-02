@@ -205,8 +205,8 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
         ADN_Resources_Data::ResourceInfos& dotation = **itDotation;
         ADN_Rich_ListViewItem* pDotationItem = new ADN_Rich_ListViewItem( this, Qt::AlignVCenter | Qt::AlignRight );
         const auto name =
-            ENT_Tr::ConvertFromDotationFamily(
-                ENT_Tr::ConvertToDotationFamily( dotation.strName_.GetData() ),
+            ENT_Tr::ConvertFromDotationCategory(
+                ENT_Tr::ConvertToDotationCategory( dotation.strName_.GetData() ),
                 ENT_Tr::eToTr );
         pDotationItem->setText( eColumnTarget, name.c_str() );
 

@@ -420,7 +420,7 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
                 continue;
 
             ParameterList& personalList = list.AddList( CreateName( "Dotation", index ) );
-            personalList.AddIdentifier( "Dotation", tools::DotationFamilyFromString( catetoriesNames_[ nRow ].toStdString() ) );
+            personalList.AddIdentifier( "Dotation", ENT_Tr::ConvertToDotationCategory( catetoriesNames_[ nRow ].toStdString() ) );
             personalList.AddQuantity( "Number", dotationsTable_->item( nRow, 1 )->text().toInt() );
         }
     }

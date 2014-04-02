@@ -89,7 +89,7 @@ void ADN_Equipments_Resources_Table::OnContextMenu( const QPoint& pt )
         }
         ADN_Tools::SortMenu( *pSubMenu );
 
-        targetMenu.insertItem( ENT_Tr::ConvertFromDotationFamily( (*it)->nType_, ENT_Tr::eToTr ).c_str(), pSubMenu );
+        targetMenu.insertItem( ENT_Tr::ConvertFromDotationCategory( (*it)->nType_, ENT_Tr::eToTr ).c_str(), pSubMenu );
     }
 
     menu.insertItem( tools::translate( "ADN_Equipments_Resources_Table", "Add resource"), &targetMenu ,0 );
