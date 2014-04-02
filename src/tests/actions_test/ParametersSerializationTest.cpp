@@ -125,7 +125,7 @@ namespace
         if( values.size() > 1 )
         {
             result += ">";
-            for( int i = 0; i < values.size(); ++i )
+            for( int i = 0; i < static_cast< int >( values.size() ); ++i )
                 result += "<parameter name='" + name + " (item " +
                     boost::lexical_cast< std::string >( i + 1 ) +
                     ")' type='" + type + "' value='" + values.at( i ) + "'/>";
@@ -134,7 +134,7 @@ namespace
         if( contents.size()  > 1 )
         {
             result += ">";
-            for( int i = 0; i < contents.size(); ++i )
+            for( int i = 0; i < static_cast< int >( contents.size() ); ++i )
             {
                 result += "<parameter name='" + name + " (item " +
                     boost::lexical_cast< std::string >( i + 1 ) +
@@ -275,8 +275,8 @@ namespace
                             const std::vector< const std::string >& points )
         {
             BOOST_REQUIRE_EQUAL( location.type(), type );
-            BOOST_REQUIRE_EQUAL( location.coordinates().elem_size(), points.size() );
-            for( int i = 0; i < points.size(); ++i )
+            BOOST_REQUIRE_EQUAL( location.coordinates().elem_size(), static_cast< int >( points.size() ) );
+            for( int i = 0; i < static_cast< int >( points.size() ); ++i )
             {
                 const geometry::Point2f expected = coordinateConverter.ConvertToXY( points.at( i ) );
                 const geometry::Point2f actual   = coordinateConverter.kernel::CoordinateConverter_ABC::ConvertToXY( location.coordinates().elem( i ) );
