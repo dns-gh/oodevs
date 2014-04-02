@@ -1240,6 +1240,12 @@ func (c *Client) RecoverAllResources(unitId uint32, withLog bool) error {
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), next)
 }
 
+func (c *Client) RecoverResources(unitId uint32, resources []Quantity) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId),
+		MakeParameters(nil, nil, MakeQuantities(resources), nil, nil),
+		sword.UnitMagicAction_partial_recovery)
+}
+
 func (c *Client) ChangeEquipmentState(unitId uint32, equipments map[uint32]*EquipmentDotation) error {
 	params := MakeParameters()
 	if len(equipments) != 0 {

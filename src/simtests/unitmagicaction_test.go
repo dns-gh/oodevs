@@ -2765,11 +2765,22 @@ func (s *TestSuite) TestRecoverResources(c *C) {
 		// invalid unit
 		err := client.RecoverAllResources(123456, withLog)
 		c.Assert(err, IsSwordError, "error_invalid_unit")
+	}
+	next := []swapi.Quantity{}
+	for k := range sword.DotationType_name {
+		next = append(next, swapi.Quantity{uint32(k), 100})
+	}
+	recovers := []func() (error, bool){
+		func() (error, bool) { return client.RecoverAllResources(unit.Id, true), true },
+		func() (error, bool) { return client.RecoverAllResources(unit.Id, false), false },
+		func() (error, bool) { return client.RecoverResources(unit.Id, next), false },
+	}
+	for _, recov := range recovers {
 		// reset first, recover later
-		err = client.ChangeDotation(unit.Id, zero)
+		err := client.ChangeDotation(unit.Id, zero)
 		c.Assert(err, IsNil)
 		waitCondition(c, client.Model, checkNoResources)
-		err = client.RecoverAllResources(unit.Id, withLog)
+		err, withLog := recov()
 		c.Assert(err, IsNil)
 		condition := hasResources
 		if withLog {
