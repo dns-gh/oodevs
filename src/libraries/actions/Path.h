@@ -43,8 +43,6 @@ public:
              Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
              Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Location& message );
-             Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
-             Path( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Path();
     //@}
 
@@ -76,7 +74,6 @@ private:
     virtual void VisitPath      ( const geometry::Point2f& first, const T_PointVector& points );
     virtual void VisitCurve     ( const T_PointVector& points );
     void AddPoints( const sword::Location& message );
-    void ReadPoint( xml::xistream& xis );
     void AddPoint( const geometry::Point2f& p, std::size_t i, std::size_t count );
     //@}
 

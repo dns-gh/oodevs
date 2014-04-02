@@ -78,3 +78,12 @@ bool ParamFireClass::InternalCheckValidity() const
 {
     return GetValue() != 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamFireClass::Visit
+// Created: ABR 2014-03-28
+// -----------------------------------------------------------------------------
+void ParamFireClass::Visit( const actions::parameters::FireClass& param )
+{
+    InternalVisit( param );
+}

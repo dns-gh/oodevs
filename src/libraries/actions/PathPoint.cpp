@@ -27,16 +27,6 @@ PathPoint::PathPoint( const kernel::OrderParameter& parameter, const kernel::Coo
 }
 
 // -----------------------------------------------------------------------------
-// Name: PathPoint constructor
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-PathPoint::PathPoint( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
-: Location( kernel::OrderParameter( xis.attribute< std::string >( "name", "" ), "pathpoint", false ), converter, xis )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: PathPoint destructor
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------

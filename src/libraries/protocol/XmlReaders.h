@@ -68,7 +68,7 @@ namespace protocol
         //@}
     };
 
-    void Read( const Reader_ABC& reader, sword::MissionParameter& dst,     xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::MissionParameter& dst,     xml::xistream& xis, bool firstLevelParam = false );
     void Read( const Reader_ABC& reader, sword::MissionParameters& dst,    xml::xistream& xis );
     void Read( const Reader_ABC& reader, sword::UnitOrder& dst,            xml::xistream& xis );
     void Read( const Reader_ABC& reader, sword::AutomatOrder& dst,         xml::xistream& xis );

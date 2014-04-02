@@ -28,7 +28,6 @@ public:
     //@{
     explicit String( const kernel::OrderParameter& parameter );
              String( const kernel::OrderParameter& parameter, const std::string& value );
-             String( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~String();
     //@}
 

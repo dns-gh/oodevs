@@ -41,8 +41,6 @@ public:
     //@{
              UrbanBlock( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
-             UrbanBlock( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
-             UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~UrbanBlock();
     //@}
 

@@ -44,23 +44,6 @@ MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, c
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenancePriorities constructor
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const tools::Resolver_ABC< EquipmentType >& resolver, xml::xistream& xis )
-    : Parameter< std::string >( parameter )
-{
-    if( xis.has_attribute( "value" ) )
-    {
-        std::string value;
-        xis >> xml::attribute( "value", value );
-        QStringList list = QStringList::split( ";", value.c_str() );
-        for( int i = 0; i < list.count(); ++i )
-            AddPriority( resolver.Get( list[i].toUInt() ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MaintenancePriorities destructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------

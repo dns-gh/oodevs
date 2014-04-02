@@ -23,11 +23,6 @@ namespace gui
     class GlTooltip_ABC;
 }
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace actions
 {
 
@@ -43,7 +38,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              Mission( const kernel::MissionType* mission, kernel::Controller& controller, bool registered = true );
-             Mission( const kernel::MissionType* mission, kernel::Controller& controller, xml::xistream& xis );
     virtual ~Mission();
     //@}
 

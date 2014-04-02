@@ -95,15 +95,6 @@ const std::string& OrderType::GetUsageInformation() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderType::AddParameter
-// Created: SBO 2008-03-05
-// -----------------------------------------------------------------------------
-void OrderType::AddParameter( const OrderParameter& parameter )
-{
-    Register( Count(), *new OrderParameter( parameter ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: OrderType::GetType
 // Created: ABR 2014-01-14
 // -----------------------------------------------------------------------------

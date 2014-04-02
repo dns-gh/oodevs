@@ -41,17 +41,6 @@ KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, unsigne
 // Name: KnowledgeGroup constructor
 // Created: JSR 2010-04-19
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< KnowledgeGroup_ABC >( parameter, controller )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( resolver.FindKnowledgeGroup( xis.attribute< unsigned long >( "value" ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup constructor
-// Created: JSR 2010-04-19
-// -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, const kernel::KnowledgeGroup_ABC& group, kernel::Controller& controller )
     : Entity< KnowledgeGroup_ABC >( parameter, &group, controller )
 {

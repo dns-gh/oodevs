@@ -59,24 +59,6 @@ ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& paramete
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworkNode constructor
-// Created: JSR 2011-05-03
-// -----------------------------------------------------------------------------
-ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< kernel::Entity_ABC >( parameter, controller )
-{
-    if( xis.has_attribute( "value" ) )
-    {
-        unsigned long id = xis.attribute< unsigned long >( "value" );
-        const kernel::Entity_ABC* object = resolver.FindUrbanObject( id );
-        if( !object )
-            object = resolver.FindObject( id );
-        SetValue( object );
-        xis >> xml::list( "parameter", *this, &ResourceNetworkNode::ReadParameter );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: ResourceNetworkNode destructor
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
@@ -166,16 +148,6 @@ void ResourceNetworkNode::CommitTo( sword::MissionParameter_Value& message ) con
 void ResourceNetworkNode::AddResourceParameter( const std::string& resource )
 {
     AddParameter( *new Resource( kernel::OrderParameter( tools::translate( "Parameter", "Resource" ).toStdString(), "resource", false ), resource ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceNetworkNode::ReadParameter
-// Created: JSR 2011-05-04
-// -----------------------------------------------------------------------------
-void ResourceNetworkNode::ReadParameter( xml::xistream& xis )
-{
-    if( xis.attribute< std::string >( "type" ) == "resource" )
-        AddResourceParameter( xis.attribute< std::string >( "value" ) );
 }
 
 // -----------------------------------------------------------------------------

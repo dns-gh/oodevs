@@ -26,6 +26,7 @@
 #include "actions/Automat.h"
 #include "actions/Bool.h"
 #include "actions/EngineerConstruction.h"
+#include "actions/FireClass.h"
 #include "actions/Location.h"
 #include "actions/ObstacleType.h"
 #include "actions/Quantity.h"
@@ -59,10 +60,10 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     location_ = static_cast< ParamLocation* >( AddElement( "location", tr( "Construction location" ).toStdString(), true ) );
     density_ = static_cast< ParamFloat* >( &builder.BuildOne( kernel::OrderParameter( tr( "Density per 100 square meter" ).toStdString(), "float", false ), false ) );
     tc2_ = static_cast< ParamAutomat* >( AddElement( "automat", tr( "TC2" ).toStdString(), true ) );
-    kernel::OrderParameter activityTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "integer", true );
-    activityTime_ = static_cast< ParamNumericField< int >* >( &builder.BuildOne( activityTimeParameter, false ) );
-    kernel::OrderParameter activationTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "integer", true );
-    activationTime_ = static_cast< ParamNumericField< int >* >( &builder.BuildOne( activationTimeParameter, false ) );
+    kernel::OrderParameter activityTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "quantity", true );
+    activityTime_ = static_cast< ParamQuantity* >( &builder.BuildOne( activityTimeParameter, false ) );
+    kernel::OrderParameter activationTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "quantity", true );
+    activationTime_ = static_cast< ParamQuantity* >( &builder.BuildOne( activationTimeParameter, false ) );
     activityTime_->SetSuffix( kernel::Units::seconds.AsString() );
     activationTime_->SetSuffix( kernel::Units::seconds.AsString() );
 
@@ -71,8 +72,8 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     mining_              = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).toStdString(), true ) );
     altitudeModifier_    = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).toStdString(), true ) );
     lodging_             = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Lodging" ).toStdString(), true ) );
-    fireClass_           = static_cast< ParamFireClass* >( AddElement( "fireClass",       tr( "Fire class:" ).toStdString(), true ) );
-    maxCombustionEnergy_ = static_cast< ParamQuantity* >( AddElement( "quantity", tr( "Max combustion energy" ).toStdString(), false ) );
+    fireClass_           = static_cast< ParamFireClass* >( AddElement( "fireClass",  tr( "Fire class:" ).toStdString(), true ) );
+    maxCombustionEnergy_ = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Max combustion energy" ).toStdString(), false ) );
 
     tc2_                ->SetKeyName( "tc2" );
     location_           ->SetKeyName( "location" );
@@ -293,6 +294,18 @@ bool ParamObstacle::InternalCheckValidity() const
         location_->CheckValidity();
 }
 
+namespace
+{
+    void CommitAndSetKeyName( const Param_ABC& guiParam, actions::Parameter_ABC& param )
+    {
+        guiParam.CommitTo( param );
+        if( auto newParam = param.Find( param.Count() - 1 ) )
+            newParam->SetKeyName( guiParam.GetKeyName() );
+        else
+            throw MASA_EXCEPTION( "Impossible to retrieve the last inserted parameter in ParamObstacle" );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ParamObstacle::CommitTo
 // Created: SBO 2007-03-19
@@ -306,30 +319,31 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
     {
         std::auto_ptr< actions::parameters::EngineerConstruction > param( new actions::parameters::EngineerConstruction( parameter_, *type ) );
         if( type->HasBuildableDensity() )
-            density_->CommitTo( *param );
+            CommitAndSetKeyName( *density_, *param );
         if( type->HasLogistic() )
-            tc2_->CommitTo( *param );
+            CommitAndSetKeyName( *tc2_, *param );
         if( type->CanBeActivated() )
         {
             param->AddParameter( *new actions::parameters::ObstacleType( kernel::OrderParameter( tr( "Activation" ).toStdString(), "obstacletype", false ), activatedCombo_->currentIndex() ) );
-            activityTime_->CommitTo( *param );
-            activationTime_->CommitTo( *param );
+            CommitAndSetKeyName( *activityTime_, *param );
+            CommitAndSetKeyName( *activationTime_, *param );
         }
+        CommitAndSetKeyName( *name_, *param );
         name_->CommitTo( *param );
         if( type->HasAltitudeModifierCapacity() )
-            altitudeModifier_->CommitTo( *param );
+            CommitAndSetKeyName( *altitudeModifier_, *param );
         if( type->HasTimeLimitedCapacity() )
-            timeLimit_->CommitTo( *param );
+            CommitAndSetKeyName( *timeLimit_, *param );
         if( type->HasLodgingCapacity() )
-            lodging_->CommitTo( *param );
+            CommitAndSetKeyName( *lodging_, *param );
         if( type->CanBeValorized() )
-            mining_->CommitTo( *param );
+            CommitAndSetKeyName( *mining_, *param );
         if( type->HasBurnCapacity() )
         {
-            fireClass_->CommitTo( *param );
-            maxCombustionEnergy_->CommitTo( *param );
+            CommitAndSetKeyName( *fireClass_, *param );
+            CommitAndSetKeyName( *maxCombustionEnergy_, *param );
         }
-        location_->CommitTo( *param );
+        CommitAndSetKeyName( *location_, *param );
         action.AddParameter( *param.release() );
     }
     else
@@ -455,6 +469,16 @@ void ParamObstacle::Visit( const actions::parameters::Bool& param )
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacle::Visit
+// Created: ABR 2014-03-27
+// -----------------------------------------------------------------------------
+void ParamObstacle::Visit( const actions::parameters::FireClass& param )
+{
+    assert( fireClass_ != 0 );
+    param.Accept( *fireClass_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Visit
 // Created: ABR 2013-06-17
 // -----------------------------------------------------------------------------
 void ParamObstacle::Visit( const actions::parameters::Location& param )
@@ -469,13 +493,9 @@ void ParamObstacle::Visit( const actions::parameters::Location& param )
 // -----------------------------------------------------------------------------
 void ParamObstacle::Visit( const actions::parameters::Numeric& param )
 {
-    assert( density_ != 0 && activityTime_ != 0 && activationTime_ != 0 );
+    assert( density_ != 0 );
     if( param.GetKeyName() == density_->GetKeyName() )
         param.Accept( *density_ );
-    else if( param.GetKeyName() == activityTime_->GetKeyName() )
-        param.Accept( *activityTime_ );
-    else if( param.GetKeyName() == activationTime_->GetKeyName() )
-        param.Accept( *activationTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -494,13 +514,20 @@ void ParamObstacle::Visit( const actions::parameters::ObstacleType& param )
 // -----------------------------------------------------------------------------
 void ParamObstacle::Visit( const actions::parameters::Quantity& param )
 {
-    assert( altitudeModifier_ != 0 && lodging_ != 0 && timeLimit_ != 0 );
+    assert( altitudeModifier_ != 0 && lodging_ != 0 && timeLimit_ != 0 &&
+            activityTime_ != 0 && activationTime_ != 0 );
     if( param.GetKeyName() == altitudeModifier_->GetKeyName() )
         param.Accept( *altitudeModifier_ );
     else if( param.GetKeyName() == lodging_->GetKeyName() )
         param.Accept( *lodging_ );
     else if( param.GetKeyName() == timeLimit_->GetKeyName() )
         param.Accept( *timeLimit_ );
+    else if( param.GetKeyName() == activityTime_->GetKeyName() )
+        param.Accept( *activityTime_ );
+    else if( param.GetKeyName() == activationTime_->GetKeyName() )
+        param.Accept( *activationTime_ );
+    else if( param.GetKeyName() == maxCombustionEnergy_->GetKeyName() )
+        param.Accept( *maxCombustionEnergy_ );
 }
 
 // -----------------------------------------------------------------------------

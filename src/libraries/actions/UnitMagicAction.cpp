@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "UnitMagicAction.h"
 #include "ActionTasker.h"
+#include "ActionTiming.h"
 
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -38,18 +39,6 @@ UnitMagicAction::UnitMagicAction( const kernel::MagicActionType& magic, kernel::
     : Action_ABC ( controller, &magic )
     , controller_( controller )
     , registered_( registered )
-{
-    Rename( ENT_Tr::ConvertFromUnitMagicActionType( ENT_Tr::ConvertToUnitMagicActionType( magic.GetName() ) ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMagicAction::MagicAction
-// Created: JSR 2010-04-02
-// -----------------------------------------------------------------------------
-UnitMagicAction::UnitMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
-    : Action_ABC( xis, controller, &magic )
-    , controller_( controller )
-    , registered_( true )
 {
     Rename( ENT_Tr::ConvertFromUnitMagicActionType( ENT_Tr::ConvertToUnitMagicActionType( magic.GetName() ) ).c_str() );
 }
@@ -108,6 +97,7 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
         message().mutable_tasker()->mutable_party()->set_id( id );
     else if( typeName == kernel::Inhabitant_ABC::typeName_ )
         message().mutable_tasker()->mutable_population()->set_id( id );
+    message().mutable_start_time()->set_data( Get< ActionTiming >().GetIsoTime() );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

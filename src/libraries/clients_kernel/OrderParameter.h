@@ -11,6 +11,7 @@
 #define __OrderParameter_h_
 
 #include "OrderParameterValue.h"
+#include <tools/Resolver.h>
 #include <set>
 #include <map>
 
@@ -46,13 +47,14 @@ public:
 */
 // Created: SBO 2007-04-23
 // =============================================================================
-class OrderParameter
+class OrderParameter : public tools::Resolver< OrderParameter >
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit OrderParameter( xml::xistream& xis );
              OrderParameter( const std::string& name, const std::string& type, bool optional, unsigned int min = 1, unsigned int max = 1 );
+             OrderParameter( const OrderParameter& other );
     virtual ~OrderParameter();
     //@}
 
@@ -72,7 +74,19 @@ public:
     double MinValue() const;
     double MaxValue() const;
     double IndirectFireOnly() const;
+    // a repeated is a dynamic list of "this" parameter.
+    bool IsRepeated() const;
+    // a list is a dynamic list of a certain type of parameter.
+    // this parameter is registered within "this".
     bool IsList() const;
+    // a structure is a list with a fixed size of parameters
+    // theses parameters are registered within "this".
+    bool IsStructure() const;
+    void SetStructure( bool );
+    // a union is a list of possible structure
+    // these structures are registered within "this".
+    bool IsUnion() const;
+    void SetUnion( bool );
     const OrderParameterValue* FindValue( unsigned int id ) const;
     const OrderParameterValue& GetValue( unsigned int id ) const;
     const std::string& GetChoice( unsigned int id ) const;
@@ -80,7 +94,6 @@ public:
     virtual void Accept( OrderParameterValueVisitor_ABC& visitor ) const;
     virtual void Accept( ChoicesVisitor_ABC& visitor ) const;
     void AddChoice( const std::string& choice );
-    std::string CompatibleType( const std::string& type ) const;
     //@}
 
 private:
@@ -105,6 +118,8 @@ private:
     std::string type_;
     std::string keyName_;
     bool optional_;
+    bool structure_;
+    bool union_;
     unsigned int minOccurs_;
     unsigned int maxOccurs_;
     double minValue_;

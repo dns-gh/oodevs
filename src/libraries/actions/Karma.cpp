@@ -72,17 +72,6 @@ Karma::Karma( const kernel::OrderParameter& parameter, const sword::EnumDiplomac
 }
 
 // -----------------------------------------------------------------------------
-// Name: Karma constructor
-// Created: SBO 2007-10-24
-// -----------------------------------------------------------------------------
-Karma::Karma( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< QString >( parameter )
-    , karma_( kernel::Karma::ResolveId( xis.attribute< std::string >( "value" ) ) )
-{
-    SetValue( karma_.GetName() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Karma destructor
 // Created: SBO 2007-10-24
 // -----------------------------------------------------------------------------

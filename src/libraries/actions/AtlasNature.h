@@ -41,7 +41,6 @@ public:
     explicit AtlasNature( const kernel::OrderParameter& parameter );
              AtlasNature( const kernel::OrderParameter& parameter, const kernel::AtlasNature& nature );
              AtlasNature( const kernel::OrderParameter& parameter, const sword::Nature& asn, const kernel::AtlasNatures& natures );
-             AtlasNature( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::AtlasNatures& natures );
     virtual ~AtlasNature();
     //@}
 

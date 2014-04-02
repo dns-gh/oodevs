@@ -90,7 +90,7 @@ public:
     //! @name Operations
     //@{
     // From xml
-    virtual Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const = 0;
+    virtual Action_ABC* CreateAction( xml::xistream& xis ) const = 0;
 
     // From proto
     virtual Action_ABC* CreateAction( const sword::ClientToSim& message, bool needRegistration ) const = 0;
@@ -121,7 +121,6 @@ public:
     virtual Action_ABC* CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected ) const = 0;
     virtual Action_ABC* CreateInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected ) const = 0;
 
-    virtual Action_ABC* CreateObjectMagicAction( const std::string& magicAction, unsigned long targetId = 0 ) const = 0;
     virtual Action_ABC* CreateObjectUpdateMagicAction( const kernel::Entity_ABC& objet, const std::vector< parameters::ParameterList* >& attributes ) const = 0;
     virtual Action_ABC* CreateObjectDestroyMagicAction( const kernel::Entity_ABC& object ) const = 0;
 

@@ -46,21 +46,6 @@ Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType*
 }
 
 // -----------------------------------------------------------------------------
-// Name: Action_ABC constructor
-// Created: SBO 2008-05-28
-// -----------------------------------------------------------------------------
-Action_ABC::Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType* type )
-    : controller_( controller )
-    , type_( boost::none )
-    , id_( ++ids )
-    , name_( xis.attribute< std::string >( "name", type ? type->GetName() : "" ).c_str() )
-    , valid_( type != 0 )
-{
-    if( type )
-        type_ = *type;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Action_ABC destructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------

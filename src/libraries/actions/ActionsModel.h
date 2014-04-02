@@ -45,7 +45,6 @@ namespace kernel
 namespace xml
 {
     class xostream;
-    class xistream;
 }
 
 namespace tools
@@ -92,7 +91,7 @@ public:
     //@{
     void Destroy( const Action_ABC& action );
     void Purge( const ActionsFilter_ABC* filter = 0 );
-    void Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader, bool readonly = false );
+    void Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader );
     void Save( const tools::Path& filename, const ActionsFilter_ABC* filter = 0 ) const;
     int Publish( const Action_ABC& action );
     void RegisterHandler( Publisher_ABC::T_SimHandler handler );
@@ -114,7 +113,6 @@ public:
     int PublishInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected );
     int PublishInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected );
     int PublishInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected );
-    int PublishObjectMagicAction( const std::string& action, unsigned long targetId );
     int PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, const std::vector< parameters::ParameterList* >& attributes );
     int PublishObjectDestroyMagicAction( const kernel::Entity_ABC& object );
     int PublishLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual );
@@ -131,13 +129,6 @@ public:
     int PublishGlobalWeather( const ::gui::WeatherParameters& params );
     int PublishLocalWeather( const ::gui::LocalWeatherParameters& params );
     int PublishLocalDestruction( unsigned int weatherId );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void ReadActions( xml::xistream& xis, bool readonly );
-    void ReadAction ( xml::xistream& xis, bool readonly );
     //@}
 
 private:

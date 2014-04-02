@@ -32,7 +32,6 @@ namespace gui
 namespace xml
 {
     class xostream;
-    class xistream;
 }
 
 namespace actions {
@@ -52,7 +51,6 @@ public:
     explicit LocationBase( const kernel::CoordinateConverter_ABC& converter );
              LocationBase( const kernel::CoordinateConverter_ABC& converter, const sword::Location& message );
              LocationBase( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             LocationBase( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~LocationBase();
     //@}
 
@@ -80,7 +78,6 @@ protected:
 private:
     //! @name Helpers
     //@{
-    virtual void ReadPoint( xml::xistream& xis );
     virtual void VisitLines     ( const T_PointVector& points );
     virtual void VisitRectangle ( const T_PointVector& points );
     virtual void VisitPolygon   ( const T_PointVector& points );

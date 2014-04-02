@@ -22,11 +22,31 @@ struct ActionEnum
     size_t valuesCount;
 };
 
+struct Action;
+struct ActionParam;
+
+struct ActionUnionType
+{
+    int id;
+    const char* name;
+    const ActionParam* params;
+    size_t paramsCount;
+};
+
+struct ActionUnion
+{
+    const ActionUnionType* types;
+    size_t typesCount;
+};
+
 struct ActionParam
 {
     const char* name;
     const char* type;
-    const ActionEnum* enumeration;
+    const ActionEnum* enumeration;        // mandatory if type == "enumeration"
+    const Action* list;                   // mandatory if type == "list" && is a dynamic list
+    const Action* structure;              // mandatory if type == "list" && is a structure
+    const ActionUnion* structure_union;   // mandatory if type == "list" && can be different structures
 };
 
 struct Action

@@ -32,7 +32,6 @@
 #include "MedicalPriorities.h"
 #include "Numeric.h"
 #include "ObjectKnowledge.h"
-#include "ObjectKnowledgeOrder.h"
 #include "ParameterList.h"
 #include "Path.h"
 #include "Point.h"
@@ -58,7 +57,6 @@
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
-#include <xeumeuleu/xml.hpp>
 
 using namespace actions;
 
@@ -99,7 +97,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
                                                         const sword::MissionParameter& message,
                                                         boost::optional< const kernel::Entity_ABC& > entity ) const
 {
-    if( !parameter.IsList() && message.value_size() == 1 && parameter.GetType() != "list" )
+    if( !parameter.IsRepeated() && message.value_size() == 1 && parameter.GetType() != "list" )
         return CreateParameter( parameter, message.value( 0 ), entity, message.null_value() );
     return new parameters::ParameterList( parameter, message.value(), *this, entity );
 }
@@ -186,219 +184,13 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         return ( nullValue ) ? new parameters::ResourceNetworkNode( parameter, controller_ ): new parameters::ResourceNetworkNode( parameter, message.resourcenetworknode(), entities_, controller_ );
     if( message.has_resourcenetworktype() )
         return ( nullValue ) ? new parameters::ResourceNetworkType( parameter )             : new parameters::ResourceNetworkType( parameter, message.resourcenetworktype().name(), staticModel_.objectTypes_ );
-    if( message.list_size() )
-        return new parameters::ParameterList( parameter, message.list(), *this, entity );
     if( message.has_extensionlist() )
         return ( nullValue ) ? new parameters::ExtensionList( parameter )                   : new parameters::ExtensionList( parameter, message.extensionlist() );
     if( message.has_push_flow_parameters() )
         return ( nullValue ) ? new parameters::PushFlowParameters( parameter, converter_, false ) : new parameters::PushFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, message.push_flow_parameters() );
     if( message.has_pull_flow_parameters() )
         return ( nullValue ) ? new parameters::PullFlowParameters( parameter, converter_ ) : new parameters::PullFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, message.pull_flow_parameters() );
+    if( message.list_size() || parameter.IsList() )
+        return new parameters::ParameterList( parameter, message.list(), *this, entity );
     return 0;
-}
-
-namespace
-{
-    class NullParameter : public actions::Parameter_ABC
-    {
-    public:
-        NullParameter( const std::string& name )
-            : actions::Parameter_ABC( name.c_str() )
-        {
-            Set( false );
-        }
-        virtual ~NullParameter()
-        {
-            // NOTHING
-        }
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterFactory::CreateParameter
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter,
-                                                        xml::xistream& xis,
-                                                        boost::optional< const kernel::Entity_ABC& > entity ) const
-{
-    std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type", "" ) );
-    type = parameter.CompatibleType( type );
-    if( type.empty() )
-        return new NullParameter( parameter.GetName() );
-    std::unique_ptr< Parameter_ABC > param;
-    if( entity )
-        DoCreateParameter( parameter, xis, *entity, type, param );
-    if( !param )
-        DoCreateParameter( parameter, xis, type, param );
-    if( !param )
-        return new NullParameter( parameter.GetName() );
-    return param.release();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterFactory::CreateListParameter
-// Created: JSR 2010-04-15
-// -----------------------------------------------------------------------------
-void ActionParameterFactory::CreateListParameter( xml::xistream& xis,
-                                                  parameters::ParameterList& list,
-                                                  const std::string& parent ) const
-{
-    std::string name = xis.attribute< std::string >( "name", "" );
-    if( name.empty() )
-        name = parent;
-    const std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type", "" ) );
-    if( type.empty() )
-        return list.AddParameter( *new NullParameter( parent ) );
-    list.AddParameter( *CreateParameter( kernel::OrderParameter( name, type, false ), xis, boost::none ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterFactory::CreateListParameter
-// Created: JSR 2010-04-15
-// -----------------------------------------------------------------------------
-void ActionParameterFactory::CreateListParameter( xml::xistream& xis,
-                                                  parameters::ParameterList& list,
-                                                  const kernel::Entity_ABC& entity,
-                                                  const std::string& parent ) const
-{
-    std::string name = xis.attribute< std::string >( "name", "" );
-    if( name.empty() )
-        name = parent;
-    const std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type", "" ) );
-    if( type.empty() )
-        return list.AddParameter( *new NullParameter( parent ) );
-    list.AddParameter( *CreateParameter( kernel::OrderParameter( name, type, false ), xis, entity ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterFactory::DoCreateParameter
-// Created: JSR 2010-04-02
-// -----------------------------------------------------------------------------
-bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter,
-                                                xml::xistream& xis,
-                                                const std::string& type,
-                                                std::unique_ptr< Parameter_ABC >& param ) const
-{
-    if( parameter.IsList() || type == "list" || type == "locationcomposite" )
-    {
-        parameters::ParameterList* parameterList = new parameters::ParameterList( parameter );
-        param.reset( parameterList );
-        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList, boost::cref( parameter.GetName() ) );
-    }
-    else if( type == "bool" || type == "boolean" )
-        param.reset( new parameters::Bool( parameter, xis ) );
-    else if( type == "numeric" )
-        param.reset( new parameters::Numeric( parameter, xis ) );
-    else if( type == "integer" )
-        param.reset( new parameters::Numeric( parameter, xis ) );
-    else if( type == "string" )
-        param.reset( new parameters::String( parameter, xis ) );
-    else if( type == "path" )
-        param.reset( new parameters::Path( parameter, converter_, xis ) );
-    else if( type == "point" )
-        param.reset( new parameters::Point( parameter, converter_, xis ) );
-    else if( type == "polygon" )
-        param.reset( new parameters::Polygon( parameter, converter_, xis ) );
-    else if( type == "location" )
-        param.reset( new parameters::Location( parameter, converter_, xis ) );
-    else if( type == "heading" )
-        param.reset( new parameters::Direction( parameter, xis ) );
-    else if( type == "phaseline" )
-        param.reset( new parameters::Lima( converter_, xis ) );
-    else if( type == "limit" )
-        param.reset( new parameters::Limit( parameter, converter_, xis ) );
-    else if( type == "enumeration" )
-        param.reset( new parameters::Enumeration( parameter, xis ) );
-    else if( type == "agent" )
-        param.reset( new parameters::Agent( parameter, xis, entities_, controller_, false ) );
-    else if( type == "automate" || type == "automat" )
-        param.reset( new parameters::Automat( parameter, xis, entities_, controller_ ) );
-    else if( type == "army" )
-        param.reset( new parameters::Army( parameter, xis, entities_, controller_ ) );
-    else if( type == "formation" )
-        param.reset( new parameters::Formation( parameter, xis, entities_, controller_ ) );
-    else if( type == "dotationtype" || type == "resourcetype" )
-        param.reset( new parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
-    else if( type == "genobject" || type == "plannedwork" )
-        param.reset( new parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_, staticModel_.objectTypes_ ) );
-    else if( type == "natureatlas" )
-        param.reset( new parameters::AtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
-    else if( type == "medicalpriorities" )
-        param.reset( new parameters::MedicalPriorities( parameter, xis ) );
-    else if( type == "maintenancepriorities" )
-        param.reset( new parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, xis ) );
-    else if( type == "datetime" )
-        param.reset( new parameters::DateTime( parameter, xis ) );
-    else if( type == "quantity" )
-        param.reset( new parameters::Quantity( parameter, xis ) );
-    else if( type == "identifier" )
-        param.reset( new parameters::Identifier( parameter, xis ) );
-    else if( type == "knowledgegroup" )
-        param.reset( new parameters::KnowledgeGroup( parameter, xis, entities_, controller_ ) );
-    else if( type == "resourcenetworknode" )
-        param.reset( new parameters::ResourceNetworkNode( parameter, xis, entities_, controller_ ) );
-    else if( type == "resourcenetworktype" )
-        param.reset( new parameters::ResourceNetworkType( parameter, xis, staticModel_.objectTypes_ ) );
-    else if( type == "extensionlist" )
-    {
-        parameters::ParameterList* extensionList = new parameters::ExtensionList( parameter );
-        param.reset( extensionList );
-        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *extensionList, parameter.GetName() );
-    }
-    else if( type == "pushflowparameters" )
-        param.reset( new parameters::PushFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, xis ) );
-    else if( type == "pullflowparameters" )
-        param.reset( new parameters::PullFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, xis ) );
-    else
-        return false;
-    std::string identifier = xis.attribute( "identifier", std::string() );
-    if( !identifier.empty() )
-        param->SetKeyName( identifier );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterFactory::DoCreateParameter
-// Created: MGD 2010-11-10
-// -----------------------------------------------------------------------------
-bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter,
-                                                xml::xistream& xis,
-                                                const kernel::Entity_ABC& entity,
-                                                const std::string& type,
-                                                std::unique_ptr< Parameter_ABC >& param ) const
-{
-    if( !parameter.IsList() && type == "locationcomposite" )
-        xis >> xml::list( *this, &ActionParameterFactory::CreateLocationComposite, parameter, entity, param );
-    else if( parameter.IsList() || type == "list" || type == "locationcomposite" )
-    {
-        parameters::ParameterList* parameterList = new parameters::ParameterList( parameter );
-        param.reset( parameterList );
-        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList, entity, parameter.GetName() );
-    }
-    else if( type == "agentknowledge" )
-        param.reset( new parameters::Agent( parameter, xis, entities_, controller_, true ) );
-    else if( type == "crowdknowledge" )
-        param.reset( new parameters::PopulationKnowledge( parameter, xis, entities_, controller_ ) );
-    else if( type == "objectknowledge" )
-        param.reset( new parameters::ObjectKnowledgeOrder( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "urbanknowledge" || type == "urbanblock" )
-        param.reset( new parameters::UrbanBlock( parameter, xis, entities_, controller_ ) );
-    else
-        return false;
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterFactory::CreateLocationComposite
-// Created: ABN 2010-03-13
-// -----------------------------------------------------------------------------
-void ActionParameterFactory::CreateLocationComposite( const std::string &type,
-                                                      xml::xistream& xis,
-                                                      const kernel::OrderParameter& parameter,
-                                                      const kernel::Entity_ABC& entity,
-                                                      std::unique_ptr< actions::Parameter_ABC >& param ) const
-{
-    if( !DoCreateParameter( parameter, xis, entity, type, param ) || !param )
-        DoCreateParameter( parameter, xis, type, param );
 }

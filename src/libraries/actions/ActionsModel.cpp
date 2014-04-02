@@ -158,16 +158,6 @@ int ActionsModel::PublishInhabitantChangeConfinedStateAction( bool confined, con
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::PublishObjectMagicAction
-// Created: BCI 2011-01-10
-// -----------------------------------------------------------------------------
-int ActionsModel::PublishObjectMagicAction( const std::string& magicAction, unsigned long targetId )
-{
-    std::unique_ptr< Action_ABC > action( factory_.CreateObjectMagicAction( magicAction, targetId ) );
-    return Publish( *action );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishObjectUpdateMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
@@ -345,31 +335,18 @@ void ActionsModel::Destroy( const Action_ABC& action )
 // Name: ActionsModel::Load
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-void ActionsModel::Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader, bool readonly /* = false*/ )
+void ActionsModel::Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader )
 {
-    fileLoader.LoadFile( filename, boost::bind( &ActionsModel::ReadActions, this, _1, readonly ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::ReadActions
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-void ActionsModel::ReadActions( xml::xistream& xis, bool readonly )
-{
-    xis >> xml::start( "actions" )
-            >> xml::list( "action", *this, &ActionsModel::ReadAction, readonly )
-        >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::ReadAction
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-void ActionsModel::ReadAction( xml::xistream& xis, bool readonly )
-{
-    std::auto_ptr< Action_ABC > action( factory_.CreateAction( xis, readonly ) );
-    Register( action->GetId(), *action );
-    action.release();
+    const auto readaction = [&]( xml::xistream& xis ){
+        std::auto_ptr< Action_ABC > action( factory_.CreateAction( xis ) );
+        Register( action->GetId(), *action );
+        action.release();
+    };
+    fileLoader.LoadFile( filename, [&]( xml::xistream& xis ){
+        xis >> xml::start( "actions" )
+            >> xml::list( "action", readaction )
+            >> xml::end;
+    });
 }
 
 // -----------------------------------------------------------------------------

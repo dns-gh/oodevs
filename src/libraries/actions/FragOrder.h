@@ -18,11 +18,6 @@ namespace kernel
     class Controller;
 }
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace actions
 {
 
@@ -38,7 +33,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              FragOrder( const kernel::FragOrderType* fragOrder, kernel::Controller& controller, bool registered );
-             FragOrder( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders );
     virtual ~FragOrder();
     //@}
 

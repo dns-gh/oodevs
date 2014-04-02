@@ -38,7 +38,6 @@ public:
     //@{
     explicit LimaList( const kernel::OrderParameter& parameter );
              LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::PhaseLinesOrder& limas );
-             LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~LimaList();
     //@}
 
@@ -59,7 +58,6 @@ private:
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
-    void ReadLima( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     //@}
 };
 

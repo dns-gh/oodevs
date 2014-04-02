@@ -38,7 +38,6 @@ public:
 private:
     //! @name Operations
     //@{
-    OrderParameter* CreateOrderParameter( const std::string& name, const std::string& type );
     void Initialize();
     //@}
 };

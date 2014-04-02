@@ -80,6 +80,7 @@ public:
     void Load( const tools::ExerciseConfig& config );
     void Purge();
     void ReadOrderTypes( xml::xistream& xis );
+    void CreateMagicActionTypes();
     //@}
 
 private:
@@ -115,7 +116,6 @@ private:
     void ReadFragOrderType( xml::xistream& xis );
 
     void RegisterActionType( MagicActionType& actionType );
-    void CreateMagicActionTypes();
     //@}
 
 private:

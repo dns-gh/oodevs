@@ -44,21 +44,6 @@ DotationType::DotationType( const kernel::OrderParameter& parameter, unsigned in
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationType constructor
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-DotationType::DotationType( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& resolver )
-    : Parameter< std::string >( parameter )
-    , type_( 0 )
-{
-    if( xis.has_attribute( "value" ) )
-    {
-        type_ = &resolver.Get( xis.attribute< unsigned int >( "value" ) );
-        SetValue( type_->GetName() );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DotationType destructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------

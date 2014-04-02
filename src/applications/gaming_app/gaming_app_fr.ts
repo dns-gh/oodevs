@@ -3574,6 +3574,18 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Invalid timeline binary &apos;%1&apos;</source>
         <translation>Binaire de timeline invalide &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>The following errors occurred:</source>
+        <translation>Les erreurs suivantes se sont produites:</translation>
+    </message>
+    <message>
+        <source>Unable to create order &apos;%1&apos; on target &apos;%2&apos;, planned for &apos;%3&apos;</source>
+        <translation>Impossible de créer l&apos;ordre &apos;%1&apos; sur la cible &apos;%2&apos;, prévu pour &apos;%3&apos;</translation>
+    </message>
+    <message>
+        <source>Invalid orders while loading &apos;%1&apos;</source>
+        <translation>Ordres invalides pendant le chargement de &apos;%1&apos;</translation>
+    </message>
 </context>
 <context>
     <name>UnitMagicOrdersInterface</name>

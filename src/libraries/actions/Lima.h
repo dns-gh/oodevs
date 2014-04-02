@@ -42,7 +42,6 @@ public:
              Lima( const kernel::OrderParameter& parameter );
              Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::PhaseLineOrder& message );
-             Lima( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Lima();
     //@}
 
@@ -64,7 +63,6 @@ private:
     //@{
     virtual std::string SerializeType() const;
     virtual void Serialize( xml::xostream& xos ) const;
-    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     //@}
 };
 

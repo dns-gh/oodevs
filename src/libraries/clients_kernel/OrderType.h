@@ -28,7 +28,7 @@ namespace kernel
 */
 // Created: SBO 2007-04-23
 // =============================================================================
-class OrderType : public  tools::Resolver< OrderParameter >
+class OrderType : public tools::Resolver< OrderParameter >
 {
 public:
     //! @name Constructors/Destructor
@@ -45,7 +45,6 @@ public:
     const std::string& GetName() const;
     const std::string& GetDoctrineInformation() const;
     const std::string& GetUsageInformation() const;
-    void AddParameter( const OrderParameter& parameter );
     virtual E_MissionType GetType() const;
     //@}
 

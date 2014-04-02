@@ -43,7 +43,6 @@ public:
     //@{
              Level( const kernel::OrderParameter& parameter, E_NatureLevel level );
              Level( const kernel::OrderParameter& parameter, const sword::EnumNatureLevel& message );
-             Level( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~Level();
     //@}
 

@@ -30,17 +30,6 @@ Bool::Bool( const kernel::OrderParameter& parameter )
 // Name: Bool constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-Bool::Bool( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< bool >( parameter )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( xis.attribute< bool >( "value" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Bool constructor
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
 Bool::Bool( const kernel::OrderParameter& parameter, bool value )
     : Parameter< bool >( parameter, value )
 {

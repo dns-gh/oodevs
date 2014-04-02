@@ -38,17 +38,6 @@ Numeric::Numeric( const kernel::OrderParameter& parameter, float value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Numeric constructor
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-Numeric::Numeric( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< float >( parameter )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( xis.attribute< float >( "value" ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Numeric destructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------

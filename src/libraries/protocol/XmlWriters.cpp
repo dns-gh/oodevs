@@ -301,25 +301,29 @@ namespace
         if( src.has_position() )
             AddLocation( xos, Location::Geometry_Name( src.position().type() ), writer, &src.position() );
         if( src.has_type_obstacle() )
-            AddParameter( xos, "obstacletype", ObstacleType::DemolitionTargetType_Name( src.type_obstacle() ) );
+            AddIdentifier( xos, "obstacletype", "obstacletype", src.type_obstacle() );
         if( src.has_density() )
-            AddParameter( xos, "density", src.density() );
+            AddIdentifier( xos, "numeric", "density", src.density() );
         if( src.has_combat_train() )
-            AddParameter( xos, "automat", src.combat_train().id() );
+            AddIdentifier( xos, "automat", "tc2", src.combat_train().id() );
         if( src.has_activity_time() )
-            AddIdentifier( xos, "integer", "activitytime", src.activity_time() );
+            AddIdentifier( xos, "quantity", "activitytime", src.activity_time() );
         if( src.has_activation_time() )
-            AddIdentifier( xos, "integer", "activationtime", src.activation_time() );
+            AddIdentifier( xos, "quantity", "activationtime", src.activation_time() );
         if( src.has_name() )
-            AddParameter( xos, "string", src.name() );
+            AddIdentifier( xos, "string", "name", src.name() );
         if( src.has_altitude_modifier() )
-            AddIdentifier( xos, "integer", "altitude_modifier", src.altitude_modifier() );
+            AddIdentifier( xos, "quantity", "altitude_modifier", src.altitude_modifier() );
         if( src.has_time_limit() )
-            AddIdentifier( xos, "integer", "time_limit", src.time_limit() );
+            AddIdentifier( xos, "quantity", "time_limit", src.time_limit() );
         if( src.has_mining() )
             AddIdentifier( xos, "bool", "obstacle_mining", src.mining() );
         if( src.has_lodging() )
             AddIdentifier( xos, "quantity", "lodging", src.lodging() );
+        if( src.has_fire_class() )
+            AddIdentifier( xos, "fireclass", "fire_class", src.fire_class() );
+        if( src.has_max_combustion() )
+            AddIdentifier( xos, "quantity", "max_combustion_energy", src.max_combustion() );
     }
 
     void WritePlannedWork( xml::xostream& xos, const Writer_ABC& writer, const Value& value )
@@ -677,7 +681,7 @@ namespace
         if( src.has_name() )
             xos << xml::attribute( "name", src.name() );
         if( src.has_start_time() )
-            xos << xml::attribute( "start_time", src.start_time().data() );
+            xos << xml::attribute( "time", src.start_time().data() );
         if( src.has_parameters() )
             Write( xos, writer, src.parameters() );
     }
@@ -729,6 +733,8 @@ namespace
         if( src.has_type() )
             if( const auto opt = FindType< T >( src.type() ) )
                 xos << xml::attribute( "id", *opt );
+        if( src.has_start_time() )
+            xos << xml::attribute( "time", src.start_time().data() );
         if( src.has_parameters() )
             protocol::Write( xos, writer, src.parameters() );
     }
@@ -768,6 +774,8 @@ void protocol::Write( xml::xostream& xos, const Writer_ABC&, const SetAutomatMod
         xos << xml::attribute( "target", src.automate().id() );
     if( src.has_mode() )
         xos << xml::attribute( "engaged", src.mode() == engaged );
+    if( src.has_start_time() )
+        xos << xml::attribute( "time", src.start_time().data() );
 }
 
 void protocol::Write( xml::xostream& xos, const Writer_ABC& writer, const ClientToSim_Content& src )

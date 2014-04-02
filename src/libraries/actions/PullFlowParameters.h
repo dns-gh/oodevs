@@ -48,12 +48,6 @@ public:
                                  const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
                                  const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
                                  const sword::PullFlowParameters& parameters );
-             PullFlowParameters( const kernel::OrderParameter& parameter,
-                                 const kernel::CoordinateConverter_ABC& converter,
-                                 const kernel::EntityResolver_ABC& entityResolver,
-                                 const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
-                                 const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
-                                 xml::xistream& xis );
     virtual ~PullFlowParameters();
     //@}
 
@@ -69,8 +63,6 @@ public:
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     virtual bool IsSet() const;
-
-    void ReadPoint( xml::xistream& xis, T_PointVector& points );
     //@}
 
 private:
@@ -92,9 +84,6 @@ private:
     virtual void Serialize( xml::xostream& xos ) const;
     void Serialize( const T_PointVector& path, const std::string& tag, xml::xostream& xos ) const;
     void CommitTo( const T_PointVector& path, sword::PointList& msgPath ) const;
-
-    void ReadResource   ( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver );
-    void ReadTransporter( xml::xistream& xis, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver );
     //@}
 
 private:

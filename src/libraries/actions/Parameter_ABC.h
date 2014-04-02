@@ -65,6 +65,7 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
+    virtual void SetName( const QString& name );
     virtual QString GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const;
     virtual void SetKeyName( const std::string& identifier );
     virtual bool IsOptional() const;

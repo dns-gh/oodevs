@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "EngageMagicAction.h"
 #include "ActionTasker.h"
+#include "ActionTiming.h"
 
 #include "protocol/SimulationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -36,19 +37,6 @@ EngageMagicAction::EngageMagicAction( const kernel::MagicActionType& magic, kern
     : Action_ABC ( controller, &magic )
     , controller_( controller )
     , registered_( registered )
-    , engaged_( engaged )
-{
-    Rename( ::GetName( engaged ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EngageMagicAction::EngageMagicAction
-// Created: FDS 2010-11-22
-// -----------------------------------------------------------------------------
-EngageMagicAction::EngageMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const bool engaged )
-    : Action_ABC( xis, controller, &magic )
-    , controller_( controller )
-    , registered_( true )
     , engaged_( engaged )
 {
     Rename( ::GetName( engaged ) );
@@ -94,6 +82,7 @@ void EngageMagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
     simulation::SetAutomatMode message;
     message().mutable_automate()->set_id( Get< ActionTasker >().GetId() );
+    message().mutable_start_time()->set_data( Get< ActionTiming >().GetIsoTime() );
     message().set_mode( engaged_ ? sword::engaged : sword::disengaged );
     message().set_name( GetName().toStdString() );
     message.Send( publisher, context );

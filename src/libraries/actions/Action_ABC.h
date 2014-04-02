@@ -40,7 +40,6 @@ namespace gui
 namespace xml
 {
     class xostream;
-    class xistream;
 }
 
 class Publisher_ABC;
@@ -70,7 +69,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              Action_ABC( kernel::Controller& controller, const kernel::OrderType* type );
-             Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType* type );
     virtual ~Action_ABC();
     //@}
 

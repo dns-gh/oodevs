@@ -82,87 +82,12 @@ PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
 }
 
 // -----------------------------------------------------------------------------
-// Name: PushFlowParameters constructor
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
-                                        const kernel::CoordinateConverter_ABC& converter,
-                                        const kernel::EntityResolver_ABC& entityResolver,
-                                        const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
-                                        const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
-                                        xml::xistream& xis )
-    : Parameter< QString >( parameter )
-    , converter_( converter )
-    , isSupply_( false )
-{
-    const T_XmlFunctor backpath = boost::bind( &PushFlowParameters::ReadPoint, this, _1, boost::ref( wayBackPath_ ) );
-    xis >> xml::optional >> xml::start( "type" ) >> xml::attribute( "supply", isSupply_ ) >> xml::end
-        >> xml::list( "recipient", *this, &PushFlowParameters::ReadRecipient, entityResolver, dotationTypeResolver )
-        >> xml::list( "transporter", *this, &PushFlowParameters::ReadTransporter, equipmentTypeResolver )
-        >> xml::list( boost::bind( &WalkPointList, "waybackpath", backpath, _1, _2, _3 ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PushFlowParameters destructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
 PushFlowParameters::~PushFlowParameters()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PushFlowParameters::ReadRecipient
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-void PushFlowParameters::ReadRecipient( xml::xistream& xis, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver )
-{
-    kernel::Automat_ABC& automat = entityResolver.GetAutomat( xis.attribute< unsigned int >( "id" ) );
-    Recipient& recipient = recipients_[ &automat ];
-    recipientsSequence_.push_back( &automat );
-    xis >> xml::list( "resource", *this, &PushFlowParameters::ReadResource, dotationTypeResolver, recipient.resources_ )
-        >> xml::optional >> xml::start( "path" )
-            >> xml::list( "point", *this, &PushFlowParameters::ReadPoint, recipient.path_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PushFlowParameters::ReadResource
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-void PushFlowParameters::ReadResource( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, T_Resources& resources )
-{
-    const kernel::DotationType& dotationType = dotationTypeResolver.Get( xis.attribute< unsigned int >( "id" ) );
-    const unsigned int quantity = xis.attribute< unsigned int >( "quantity" );
-    resources[ &dotationType ] += quantity;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PushFlowParameters::ReadTransporter
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-void PushFlowParameters::ReadTransporter( xml::xistream& xis, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver )
-{
-    const kernel::EquipmentType& type = equipmentTypeResolver.Get( xis.attribute< unsigned int >( "id" ) );
-    const unsigned int quantity = xis.attribute< unsigned int >( "quantity" );
-    transporters_[ &type ] += quantity;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PushFlowParameters::ReadPoint
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-void PushFlowParameters::ReadPoint( xml::xistream& xis, T_PointVector& points )
-{
-    std::string mgrs = xis.attribute< std::string> ( "coordinates" );
-    std::vector< std::string > result;
-    boost::algorithm::split( result, mgrs, boost::is_any_of(" ") );
-    geometry::Point2f point;
-    if( result.size() == 2 ) //Location in WGS84
-        point = converter_.ConvertFromGeo( geometry::Point2d( boost::lexical_cast< double >( result[ 0 ] ),
-                                                      boost::lexical_cast< double >( result[ 1 ] ) ) );
-    else
-        point = converter_.ConvertToXY( mgrs );
-    points.push_back( point );
 }
 
 // -----------------------------------------------------------------------------
