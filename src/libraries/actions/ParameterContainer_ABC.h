@@ -28,8 +28,8 @@ class ParameterContainer_ABC : public tools::Resolver< Parameter_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParameterContainer_ABC() {};
-    virtual ~ParameterContainer_ABC() {};
+             ParameterContainer_ABC() {}
+    virtual ~ParameterContainer_ABC() {}
     //@}
 
     //! @name Operations
