@@ -18,8 +18,6 @@
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <boost/bind.hpp>
-#include <boost/foreach.hpp>
 
 using namespace dispatcher;
 
@@ -220,11 +218,11 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     client::CrowdUpdate asn;
     asn().mutable_crowd()->set_id( GetId() );
     asn().set_domination( nDominationState_ );
-    BOOST_FOREACH( const T_Affinities::value_type& affinity, affinities_ )
+    for( auto it = affinities_.cbegin(); it != affinities_.cend(); ++it )
     {
         sword::PartyAdhesion& adhesion = *asn().mutable_adhesions()->add_adhesion();
-        adhesion.mutable_party()->set_id( affinity.first );
-        adhesion.set_value( affinity.second );
+        adhesion.mutable_party()->set_id( it->first );
+        adhesion.set_value( it->second );
     }
     asn().set_critical_intelligence( criticalIntelligence_ );
     asn().set_armed_individuals( armedIndividuals_ );

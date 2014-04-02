@@ -64,7 +64,9 @@
 #include <set>
 
 #include <tools/Exception.h>
+#include <tools/Map.h>
 #include <tools/Path.h>
+#include "protocol/Protocol.h"
 #include "tools/FileWrapper.h"
 #include "tools/XmlStreamOperators.h"
 

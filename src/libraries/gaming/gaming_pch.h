@@ -35,6 +35,7 @@
 #include <map>
 #include <set>
 
+#include "protocol/Protocol.h"
 #include <tools/Exception.h>
 
 #include <geometry/Types.h>

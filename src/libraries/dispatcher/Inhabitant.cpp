@@ -14,7 +14,6 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include <boost/foreach.hpp>
 
 using namespace dispatcher;
 
@@ -123,9 +122,9 @@ void Inhabitant::SendCreation( ClientPublisher_ABC& publisher ) const
     msg().mutable_type()->set_id( nType_ );
     msg().set_text( text_ );
     msg().set_name( strName_ );
-    BOOST_FOREACH( int id, urbanObjectId_ )
+    for( auto it = urbanObjectId_.cbegin(); it != urbanObjectId_.cend(); ++it )
     {
-        msg().add_objects()->set_id( id );
+        msg().add_objects()->set_id( *it );
     }
     msg.Send( publisher );
 }
@@ -157,26 +156,26 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         resource->mutable_resource()->set_id( it->first );
         resource->set_value( it->second );
     }
-    BOOST_FOREACH( const T_UrbanBlocks::value_type& urbanBlock, urbanBlocks_ )
+    for( auto it = urbanBlocks_.cbegin(); it != urbanBlocks_.cend(); ++it )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().add_occupations();
-        block.mutable_object()->set_id( urbanBlock.first );
-        for( std::map< std::string, unsigned int >::const_iterator it = urbanBlock.second.persons_.begin(); it != urbanBlock.second.persons_.end(); ++it )
+        block.mutable_object()->set_id( it->first );
+        for( auto ip = it->second.persons_.cbegin(); ip != it->second.persons_.cend(); ++ip )
         {
             sword::PopulationUpdate_BlockOccupation_UsageOccupation* occupation = block.add_persons();
-            occupation->set_usage( it->first );
-            occupation->set_number( it->second );
+            occupation->set_usage( ip->first );
+            occupation->set_number( ip->second );
         }
-        block.set_alerted( urbanBlock.second.alerted_ );
-        block.set_confined( urbanBlock.second.confined_ );
-        block.set_evacuated( urbanBlock.second.evacuated_ );
-        block.set_angriness( urbanBlock.second.angriness_ );
+        block.set_alerted( it->second.alerted_ );
+        block.set_confined( it->second.confined_ );
+        block.set_evacuated( it->second.evacuated_ );
+        block.set_angriness( it->second.angriness_ );
     }
-    BOOST_FOREACH( const T_Affinities::value_type& affinity, affinities_ )
+    for( auto it = affinities_.cbegin(); it != affinities_.cend(); ++it )
     {
         sword::PartyAdhesion& adhesion = *msg().mutable_adhesions()->add_adhesion();
-        adhesion.mutable_party()->set_id( affinity.first );
-        adhesion.set_value( affinity.second );
+        adhesion.mutable_party()->set_id( it->first );
+        adhesion.set_value( it->second );
     }
     for( T_Extensions::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {

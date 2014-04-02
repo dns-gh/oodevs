@@ -20,11 +20,15 @@
 #include <cassert>
 #include <sstream>
 
+#include "protocol/Protocol.h"
 #include <tools/Exception.h>
+#include <tools/Map.h>
 
 #pragma warning ( pop )
 
 #pragma warning ( disable : 4355 )
+// warning C4503: decorated name length exceeded, name was truncated
+#pragma warning( disable : 4503 )
 
 #endif // __dispatcher_pch_h_
 

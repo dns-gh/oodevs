@@ -25,7 +25,6 @@
 #include "clients_kernel/DecisionalModel.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <boost/foreach.hpp>
 
 using namespace dispatcher;
 
@@ -608,11 +607,11 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             entry->set_value( it->second );
         }
         asn().set_critical_intelligence( criticalIntelligence_ );
-        BOOST_FOREACH( const T_Affinities::value_type& affinity, affinities_ )
+        for( auto it = affinities_.cbegin(); it != affinities_.cend(); ++it )
         {
             sword::PartyAdhesion& adhesion = *asn().mutable_adhesions()->add_adhesion();
-            adhesion.mutable_party()->set_id( affinity.first );
-            adhesion.set_value( affinity.second );
+            adhesion.mutable_party()->set_id( it->first );
+            adhesion.set_value( it->second );
         }
         if( transportedCrowd_ != -1 )
             asn().set_transported_crowd( transportedCrowd_ );
