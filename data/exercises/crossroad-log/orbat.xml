@@ -102,6 +102,31 @@
             </automat>
           </formation>
         </formation>
+        <formation id="190" level="xxx" name="Medical F3" symbol="symbols/sfgpu">
+          <formation id="200" level="xx" name="Medical F2" symbol="symbols/sfgpu">
+            <formation id="209" level="x" name="Medical F1" symbol="symbols/sfgpu">
+              <automat engaged="true" id="193" knowledge-group="3" name="Medical Mobile Infantry Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
+                <unit command-post="true" id="194" name="Medical Mobile Infantry" position="28RDS2599741151" type="Mobile Infantry"/>
+                <unit command-post="false" id="195" name="Medical Mobile Infantry" position="28RDS2599741250" type="Mobile Infantry"/>
+                <unit command-post="false" id="196" name="Medical Mobile Infantry" position="28RDS2608341100" type="Mobile Infantry"/>
+                <unit command-post="false" id="197" name="Medical Mobile Infantry" position="28RDS2591041101" type="Mobile Infantry"/>
+              </automat>
+              <automat engaged="true" id="198" knowledge-group="3" logistic-level="logistic-base" name="Medical Log Automat 1" symbol="symbols/sfgpusm" type="Medical Log Automat 1">
+                <unit command-post="true" id="199" name="Medical Log Unit 1" position="28RDS2597641311" type="Medical Log Unit 1"/>
+              </automat>
+            </formation>
+            <formation id="210" level="x" logistic-level="logistic-base" name="Medical BLD" symbol="symbols/sfgpusm">
+              <automat engaged="true" id="204" knowledge-group="3" name="Medical Log Automat 2" symbol="symbols/sfgpusm" type="Medical Log Automat 1">
+                <unit command-post="true" id="205" name="Medical Log Unit 2" position="28RDS2591741287" type="Medical Log Unit 1"/>
+              </automat>
+            </formation>
+          </formation>
+          <formation id="206" level="xx" logistic-level="logistic-base" name="Medical BLT" symbol="symbols/sfgpusm">
+            <automat engaged="true" id="207" knowledge-group="3" name="Medical Log Automat 3" symbol="symbols/sfgpusm" type="Medical Log Automat 1">
+              <unit command-post="true" id="208" name="Medical Log Unit 3" position="28RDS2604041312" type="Medical Log Unit 1"/>
+            </automat>
+          </formation>
+        </formation>
       </tactical>
       <communication>
         <knowledge-group id="3" name="knowledge group [3]" type="knowledge group"/>
@@ -135,6 +160,15 @@
         </logistic-base>
         <logistic-base id="184">
           <subordinate id="180"/>
+        </logistic-base>
+        <logistic-base id="198">
+          <subordinate id="193"/>
+        </logistic-base>
+        <logistic-base id="210">
+          <subordinate id="198"/>
+        </logistic-base>
+        <logistic-base id="206">
+          <subordinate id="210"/>
         </logistic-base>
       </logistics>
     </party>
