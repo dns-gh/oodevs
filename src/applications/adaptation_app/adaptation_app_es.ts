@@ -6160,6 +6160,13 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
     </message>
 </context>
 <context>
+    <name>ADN_Weapons_Data_WeaponInfos</name>
+    <message>
+        <source>Weapon system</source>
+        <translation type="unfinished">Sistema de armas</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Name</source>

@@ -41,6 +41,7 @@ public:
     virtual void Initialize( ADN_Connector_ABC& dest ) const;
     void Initialize( T_TypeVector* vector = 0 );
     void SetRefName( const std::string& refName );
+    const std::string& GetRefName() const;
 
     void SetData( const T_TypePtr& value );
     const T_TypePtr GetData() const;

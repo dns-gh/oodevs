@@ -243,3 +243,13 @@ end
 integration.startConsumingResources = function( dotation, value, duration )
     DEC_StartConsumingResources( dotation, value, duration )
 end
+
+--- Triggers a breakdown of the given id to the equipment of the
+-- provided type of this entity.
+-- This method can only be called by an agent.
+-- @param equipmentType Equipment type
+-- @param breakdownID Integer, the id of breakdown
+-- @return Boolean, whether or not the breakdown has been successfully triggered.
+integration.triggerBreakdown = function( equipmentType, breakdownID )
+    return DEC_CreateBreakdown( equipmentType, breakdownID )
+end

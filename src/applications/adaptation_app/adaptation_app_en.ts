@@ -6147,6 +6147,13 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Weapons_Data_WeaponInfos</name>
+    <message>
+        <source>Weapon system</source>
+        <translation>Weapon system</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Name</source>
