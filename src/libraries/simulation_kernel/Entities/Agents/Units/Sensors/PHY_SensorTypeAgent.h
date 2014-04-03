@@ -73,9 +73,7 @@ private:
     void InitializeAngle             ( xml::xistream& xis );
     void InitializeLimitedToSensors  ( xml::xistream& xis ); // LTO
     void InitializeDistances         ( xml::xistream& xis );
-    void InitializeEnvironmentFactors( xml::xistream& xis );
     void InitializePopulationFactors ( xml::xistream& xis );
-    void InitializeUrbanBlockFactors ( xml::xistream& xis );
     //@}
 
     //! @name Tools
@@ -86,7 +84,6 @@ private:
     const PHY_PerceptionLevel& RayTrace( const MT_Vector2D& vSource, double rSourceAltitude, const MT_Vector2D& vTarget, double rTargetAltitude, double rDistanceMaxModificator, bool posted ) const;
     double ComputeEnvironmentFactor( envBits nEnv ) const;
     double ComputeExtinction( const PHY_RawVisionDataIterator& env, double rDistanceModificator, double rInitialCoef, bool bIsAroundBU ) const;
-    bool ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ, bool posted ) const;
     const double ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
     const PHY_PerceptionLevel& InterpretExtinction( double rExtinction ) const;
 
@@ -102,8 +99,6 @@ private:
     //@{
     void ReadDistance            ( xml::xistream& xis );
     void ReadLimitedToSensorsList( xml::xistream& xis ); // LTO
-    void ReadTerrainModifier     ( xml::xistream& xis );
-    void ReadUrbanBlockModifier  ( xml::xistream& xis, unsigned int& visionUrbanBlockMaterial );
     //@}
 
 private:
@@ -126,7 +121,7 @@ private:
     T_FactorVector postureSourceFactors_;
     T_FactorVector postureTargetFactors_;
     T_FactorMap    environmentFactors_;
-    T_FactorVector urbanBlockFactors_;
+    T_FactorVector urbanFactors_;
 
     // Population
     double rPopulationDensity_;

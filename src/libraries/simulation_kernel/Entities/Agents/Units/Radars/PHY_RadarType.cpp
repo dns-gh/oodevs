@@ -23,8 +23,11 @@
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Sensors/DistanceModifiersHelpers.h"
 #include "meteo/rawvisiondata/PHY_RawVisionData.h"
+#include "meteo/PHY_Lighting.h"
+#include "meteo/PHY_Precipitation.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
+#include "Urban/PHY_MaterialCompositionType.h"
 
 PHY_RadarType::T_RadarTypeMap PHY_RadarType::radarTypes_;
 unsigned int PHY_RadarType::nNextID_ = 0;
@@ -97,7 +100,10 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     , rMinHeight_           ( -std::numeric_limits< double >::max() )
     , rMaxHeight_           (  std::numeric_limits< double >::max() )
     , detectableActivities_ ( PHY_ConsumptionType::GetConsumptionTypes().size(), false )
-    , volumeFactors_        ( PHY_Volume::GetVolumes().size(), 0. )
+    , volumeFactors_        ( PHY_Volume::GetVolumes().size(), 1. )
+    , precipitationFactors_ ( weather::PHY_Precipitation::GetPrecipitations().size(), 1. )
+    , lightingFactors_      ( weather::PHY_Lighting::GetLightings().size(), 1. )
+    , urbanFactors_         ( PHY_MaterialCompositionType::Count(), 0. )
     , rDetectionTime_       ( std::numeric_limits< double >::max() )
     , rRecognitionTime_     ( std::numeric_limits< double >::max() )
     , rIdentificationTime_  ( std::numeric_limits< double >::max() )
@@ -108,8 +114,23 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     InitializeRange           ( xis );
     InitializeActivities      ( xis );
     InitializeAcquisitionTimes( xis );
-    distance_modifiers::InitializeFactors( PHY_Volume::GetVolumes(), "size-modifiers", volumeFactors_, xis );
-    InitializeTerrainModifiers( xis );
+    if( xis.has_child( "distance-modifiers" ) )
+    {
+        xis >> xml::start( "distance-modifiers" );
+        distance_modifiers::InitializeFactors( PHY_Volume::GetVolumes(), "size-modifiers", volumeFactors_, xis );
+        distance_modifiers::InitializeFactors( weather::PHY_Precipitation::GetPrecipitations (), "precipitation-modifiers", precipitationFactors_, xis );
+        distance_modifiers::InitializeFactors( weather::PHY_Lighting::GetLightings(), "visibility-modifiers", lightingFactors_, xis );
+        distance_modifiers::InitializeTerrainModifiers( xis, environmentFactors_ );
+        distance_modifiers::InitializeUrbanFactors( xis, urbanFactors_ );
+        xis >> xml::end;
+    }
+    else
+    {
+        environmentFactors_.insert( std::make_pair( PHY_RawVisionData::eVisionEmpty, 1 ) );
+        environmentFactors_.insert( std::make_pair( PHY_RawVisionData::eVisionForest, 0 ) );
+        environmentFactors_.insert( std::make_pair( PHY_RawVisionData::eVisionUrban, 0 ) );
+        environmentFactors_.insert( std::make_pair( PHY_RawVisionData::eVisionGround, 0 ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -202,26 +223,6 @@ void PHY_RadarType::InitializeAcquisitionTimes( xml::xistream& xis )
         rPcIdentificationTime_ = std::numeric_limits< double >::max();
         return;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RadarType::InitializeTerrainModifiers
-// Created: JSR 2014-04-01
-// -----------------------------------------------------------------------------
-void PHY_RadarType::InitializeTerrainModifiers( xml::xistream& xis )
-{
-    xis >> xml::start( "distance-modifiers" )
-            >>xml::start( "terrain-modifiers" )
-                >> xml::list( "distance-modifier", [&]( xml::xistream& xis )
-                {
-                    const std::string terrainType = xis.attribute< std::string >( "type" );
-                    const double rFactor = xis.attribute< double >( "value" );
-                    if( rFactor < 0 || rFactor > 1 )
-                        xis.error( "terrain-modifier: value not in [0..1]" );
-                    environmentFactors_.insert( std::make_pair( PHY_RawVisionData::environmentAssociation_[ terrainType ], rFactor ) );
-                })
-            >> xml::end
-        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -414,4 +415,33 @@ double PHY_RadarType::GetVolumeFactor( const PHY_Volume& volume ) const
 {
     assert( volumeFactors_.size() > volume.GetID() );
     return volumeFactors_[ volume.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::GetPrecipitationFactor
+// Created: JSR 2014-04-03
+// -----------------------------------------------------------------------------
+double PHY_RadarType::GetPrecipitationFactor( const weather::PHY_Precipitation& precipitation ) const
+{
+    assert( precipitationFactors_.size() > precipitation.GetID() );
+    return precipitationFactors_[ precipitation.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::GetLightingFactor
+// Created: JSR 2014-04-03
+// -----------------------------------------------------------------------------
+double PHY_RadarType::GetLightingFactor( const weather::PHY_Lighting& lighting ) const
+{
+    assert( lightingFactors_.size() > lighting.GetID() );
+    return lightingFactors_[ lighting.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< double >& PHY_RadarType::GetUrbanFactors
+// Created: JSR 2014-04-03
+// -----------------------------------------------------------------------------
+const std::vector< double >& PHY_RadarType::GetUrbanFactors() const
+{
+    return urbanFactors_;
 }

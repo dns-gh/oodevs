@@ -18,6 +18,12 @@ class PHY_PerceptionLevel;
 class PHY_Volume;
 class MIL_Time_ABC;
 
+namespace weather
+{
+    class PHY_Lighting;
+    class PHY_Precipitation;
+}
+
 // =============================================================================
 // @class  PHY_RadarType
 // Created: JVT 2004-08-03
@@ -46,6 +52,9 @@ public:
     double GetRadius() const;
     double ComputeEnvironmentFactor( unsigned char nEnv ) const;
     double GetVolumeFactor( const PHY_Volume& volume ) const;
+    double GetPrecipitationFactor( const weather::PHY_Precipitation& precipitation ) const;
+    double GetLightingFactor( const weather::PHY_Lighting& lighting ) const;
+    const std::vector< double >& GetUrbanFactors() const;
     //@}
 
 private:
@@ -64,7 +73,6 @@ private:
     void InitializeRange           ( xml::xistream& xis );
     void InitializeActivities      ( xml::xistream& xis );
     void InitializeAcquisitionTimes( xml::xistream& xis );
-    void InitializeTerrainModifiers( xml::xistream& xis );
     void ReadDetectableActivity    ( xml::xistream& xis, bool& bIsActivity );
     void ReadActivity              ( xml::xistream& xis );
     void ReadAcquisitionTime       ( xml::xistream& xis, bool& bIsTime );
@@ -89,6 +97,9 @@ private:
 
     T_ActivityVector detectableActivities_;
     std::vector< double > volumeFactors_;
+    std::vector< double > precipitationFactors_;
+    std::vector< double > lightingFactors_;
+    std::vector< double > urbanFactors_;
     std::map< unsigned int, double > environmentFactors_;
 
     // Acquisition times
