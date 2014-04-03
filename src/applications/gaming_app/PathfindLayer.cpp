@@ -11,6 +11,7 @@
 #include "PathfindLayer.h"
 #include "moc_PathfindLayer.cpp"
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -30,6 +31,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     , element_( controllers )
     , publisher_( publisher )
     , coordinateConverter_( coordinateConverter )
+    , lock_( false )
 {
     controllers_.Register( *this );
     std::function< void( const sword::SimToClient& ) > fun =
@@ -37,14 +39,21 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
         {
             if( !message.message().has_pathfind_request_ack() )
                 return;
+            lock_ = false;
             const auto& request = message.message().pathfind_request_ack();
             if( request.error_code() != sword::PathfindRequestAck_ErrorCode_no_error )
                 return;
-            const auto& path = request.path();
             path_.clear();
-            const auto& elements = path.points();
-            for( auto it = elements.begin(); it != elements.end(); ++it )
-                path_.push_back( coordinateConverter_.ConvertToXY( it->coordinate() ) );
+            const auto& path = request.path();
+            const auto& points = path.points();
+            for( auto it = points.begin(); it != points.end(); ++it )
+            {
+                boost::optional< uint32_t > waypoint;
+                if( it->has_waypoint() )
+                    waypoint = it->waypoint();
+                const Point p = { coordinateConverter_.ConvertToXY( it->coordinate() ), waypoint };
+                path_.push_back( p );
+            }
         };
     publisher_.Register( fun );
 }
@@ -70,17 +79,20 @@ void PathfindLayer::Paint( gui::Viewport_ABC& )
     for( auto it = positions_.begin(); it != positions_.end(); ++it )
         DrawPoint( *it );
     if( hovered_ )
-        DrawPoint( *hovered_ );
+        DrawPoint( hovered_->first );
     glPopAttrib();
 }
 
 void PathfindLayer::DrawLines( float width, uint8_t r, uint8_t g, uint8_t b ) const
 {
-    glLineWidth( width );
+    if( path_.empty() )
+        return;
     glColor3ub( r, g, b );
-    tools_.DrawLines( path_ );
-    for( auto it = path_.begin(); it != path_.end(); ++it )
-        tools_.DrawDisc( *it, width / 2, gui::GlTools_ABC::pixels );
+    for( auto it = path_.begin(); it != path_.end() - 1; ++it )
+    {
+        tools_.DrawLine( it->coordinate_, (it + 1)->coordinate_, width );
+        tools_.DrawDisc( (it + 1)->coordinate_, width / 2, gui::GlTools_ABC::pixels );
+    }
 }
 
 void PathfindLayer::DrawPoint( geometry::Point2f p ) const
@@ -117,13 +129,12 @@ void PathfindLayer::Select( const kernel::Population_ABC& element )
 // -----------------------------------------------------------------------------
 void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu )
 {
-    if( element_ )
-    {
-        point_ = point;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Interface", tools::translate( "LocationEditorToolbar", "Pathfind" ) );
-        subMenu->InsertItem( "Interface", tools::translate( "LocationEditorToolbar", "Add position" ), this, SLOT( AddPosition() ) );
-        subMenu->InsertItem( "Interface", tools::translate( "LocationEditorToolbar", "Clear positions" ), this, SLOT( ClearPositions() ) );
-    }
+    if( !element_ || lock_ )
+        return;
+    point_ = point;
+    kernel::ContextMenu* subMenu = menu.SubMenu( "Interface", tools::translate( "LocationEditorToolbar", "Pathfind" ) );
+    subMenu->InsertItem( "Interface", tools::translate( "LocationEditorToolbar", "Add position" ), this, SLOT( AddPosition() ) );
+    subMenu->InsertItem( "Interface", tools::translate( "LocationEditorToolbar", "Clear positions" ), this, SLOT( ClearPositions() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,8 +143,11 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
 // -----------------------------------------------------------------------------
 void PathfindLayer::ClearPositions()
 {
+    if( lock_ )
+        return;
     positions_.clear();
     path_.clear();
+    hovered_ = boost::none;
 }
 
 // -----------------------------------------------------------------------------
@@ -141,6 +155,8 @@ void PathfindLayer::ClearPositions()
 // -----------------------------------------------------------------------------
 void PathfindLayer::AddPosition()
 {
+    if( lock_ )
+        return;
     positions_.push_back( point_ );
     SendRequest();
 }
@@ -160,6 +176,7 @@ void PathfindLayer::SendRequest()
         for( auto it = positions_.begin(); it != positions_.end(); ++it )
             coordinateConverter_.ConvertToGeo( *it, *positions->Add() );
         publisher_.Send( msg );
+        lock_ = true;
     }
 }
 
@@ -181,23 +198,73 @@ void PathfindLayer::AfterSelection()
     // NOTHING
 }
 
+namespace
+{
+    const auto threshold = 200; // pixels
+}
+
 bool PathfindLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Point2f& point )
 {
     hovered_ = boost::none;
-    if( path_.empty() )
+    if( path_.empty() || lock_ )
         return false;
+    std::size_t waypoint = 0;
     float distance = std::numeric_limits< float >::infinity();
     for( auto it = path_.begin(); it != path_.end() - 1; ++it )
     {
-        const auto projection = geometry::Segment2f( *(it + 1), (*it) ).Project( point );
+        if( it->waypoint_ )
+            waypoint = *it->waypoint_;
+        const auto projection =
+            geometry::Segment2f( (it + 1)->coordinate_, it->coordinate_ )
+                .Project( point );
         const auto d = projection.SquareDistance( point );
         const auto pixels = tools_.Pixels( projection );
-        static const auto threshold = 200; // pixels
         if( d < distance && d < threshold * pixels * pixels )
         {
             distance = d;
-            hovered_ = projection;
+            hovered_ = std::make_pair( projection, waypoint );
         }
     }
     return false;
+}
+
+bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
+{
+    if( event->button() != Qt::LeftButton || !hovered_ )
+        return false;
+    const auto pixels = tools_.Pixels( point );
+    if( point.SquareDistance( hovered_->first ) >= threshold * pixels * pixels )
+        return false;
+    hovered_->first = point;
+    QWidget w;
+    dnd::CreateDragObject( this, &w );
+    return true;
+}
+
+bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* /*event*/, const geometry::Point2f& point )
+{
+    hovered_->first = point;
+    return true;
+}
+
+bool PathfindLayer::HandleDropEvent( QDropEvent* /*event*/, const geometry::Point2f& point )
+{
+    if( hovered_->second < positions_.size() )
+    {
+        const auto it = positions_.begin() + hovered_->second + 1;
+        positions_.insert( it, point );
+        SendRequest();
+    }
+    return true;
+}
+
+bool PathfindLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
+{
+    hovered_ = boost::none;
+    return true;
+}
+
+bool PathfindLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*point*/ ) const
+{
+    return dnd::HasData< PathfindLayer >( event );
 }

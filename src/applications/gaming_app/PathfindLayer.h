@@ -62,6 +62,11 @@ public:
 
 private:
     virtual bool HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
+    virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
+    virtual bool HandleLeaveDragEvent( QDragLeaveEvent* event );
+    virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
 
     //! @name Helpers
     //@{
@@ -83,6 +88,13 @@ private slots:
     //@}
 
 private:
+    struct Point
+    {
+        geometry::Point2f coordinate_;
+        boost::optional< uint32_t > waypoint_;
+    };
+
+private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
@@ -91,9 +103,10 @@ private:
     const kernel::CoordinateConverter_ABC& coordinateConverter_;
     kernel::SafePointer< kernel::Entity_ABC > element_;
     std::vector< geometry::Point2f > positions_;
+    std::vector< Point > path_;
+    boost::optional< std::pair< geometry::Point2f, std::size_t > > hovered_;
     geometry::Point2f point_;
-    std::vector< geometry::Point2f > path_;
-    boost::optional< geometry::Point2f > hovered_;
+    bool lock_;
     //@}
 };
 
