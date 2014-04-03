@@ -2,31 +2,36 @@
 local defaultPointCircleSize = 250 -- meters 
 local defaultPointRecceSpeed = 3
 
---- Start controlling an area
--- An action in the simulation is started
+--- Start controlling a location
+-- Activate 'magical' progressive recce inside an area or an object
+-- The agent will gradually acquire knwoledges inside an area in the given location.
+-- This area will grow over time depending of the pointRecceSpeed parameter
 -- This method can only be called by an agent
--- @param area The DirectIA area to control
+-- @param location The DirectIA location or object to control
 -- @param pointRecceSpeed Float, the reconnaissance speed in meters/tick (optional, default value defaultPointRecceSpeed = 3)
 -- @return true
-integration.startControlArea = function( area, pointRecceSpeed )
-    area.perceptionID = DEC_Perception_ActivateLocationProgressiveRecce( area.source, pointRecceSpeed or defaultPointRecceSpeed )
-    area.bActionFinished = false
-    perceptionReconnaissanceCallbacks[ area.perceptionID ] = function( arg )
-        area.bActionFinished = true
+integration.startControlArea = function( location, pointRecceSpeed )
+    location.perceptionID = DEC_Perception_ActivateLocationProgressiveRecce( location:getLocalisation(), pointRecceSpeed or defaultPointRecceSpeed )
+    location.bActionFinished = false
+    perceptionReconnaissanceCallbacks[ location.perceptionID ] = function( arg )
+        location.bActionFinished = true
     end
     reportFunction(eRC_DebutControleZone )
     return true
 end
 
---- Stop controlling an area
+--- Stop controlling a location
+-- Deactivate 'magical' progressive recce inside an area or an object
+-- @see integration.startControlArea
+-- @see integration.startLocationProgressiveRecce
 -- The action in the simulation is stopped
 -- This method can only be called by an agent
--- @param area, the DirectIA area to stop controlling
+-- @param location, the DirectIA location or object to stop controlling
 -- @return true
-integration.stopControlArea  = function( area )
-    DEC_Perception_DesactiverReconnaissanceLocalisation( area.perceptionID )
-    reportFunction(eRC_FinControleZone )
-    perceptionReconnaissanceCallbacks[ area.perceptionID ] = nil
+integration.stopControlArea = function( location )
+    DEC_Perception_DesactiverReconnaissanceLocalisation( location.perceptionID )
+    reportFunction( eRC_FinControleZone )
+    perceptionReconnaissanceCallbacks[ location.perceptionID ] = nil
     return true
 end
 
