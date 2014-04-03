@@ -302,6 +302,16 @@ void ADN_TypePtr_InVector_ABC< T >::SetRefName( const std::string& refName )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_TypePtr_InVector_ABC::GetRefName
+// Created: SLI 2014-04-03
+// -----------------------------------------------------------------------------
+template< class T >
+const std::string& ADN_TypePtr_InVector_ABC< T >::GetRefName() const
+{
+    return refName_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC::CheckValidity
 // Created: JSR 2013-04-03
 // -----------------------------------------------------------------------------

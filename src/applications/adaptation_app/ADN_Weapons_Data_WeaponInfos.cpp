@@ -114,6 +114,20 @@ void ADN_Weapons_Data_WeaponInfos::ReadTargetSize( xml::xistream& input )
         (*itPhSizeInfo)->ReadArchive( input );
 }
 
+namespace
+{
+    template< typename T >
+    bool Check( const T& data, const char* name )
+    {
+        if( !data.GetData() )
+        {
+            ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, tools::translate( "ADN_Weapons_Data_WeaponInfos", "Weapon system" ).toStdString(), eWeapons, -1, tools::translate( "ADN_Weapons_Data_WeaponInfos", name ).arg( data.GetRefName().c_str() ).toStdString() );
+            return false;
+        }
+        return true;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data_WeaponInfos::ReadArchive
 // Created: APE 2004-11-22
@@ -121,30 +135,33 @@ void ADN_Weapons_Data_WeaponInfos::ReadTargetSize( xml::xistream& input )
 void ADN_Weapons_Data_WeaponInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "launcher", ptrLauncher_ )
-        >> xml::attribute( "munition", ptrAmmunition_ );
+          >> xml::attribute( "munition", ptrAmmunition_ );
+
+    if( !Check( ptrLauncher_, "Launcher %1" ) || !Check( ptrAmmunition_, "Ammunition %1" ) )
+        return;
 
     connect( &ptrLauncher_.GetData()->strName_, SIGNAL( DataChanged(void*)), this, SLOT(OnNameChanged(void*) ));
     connect( &ptrAmmunition_.GetData()->strName_, SIGNAL( DataChanged(void*)), this, SLOT(OnNameChanged(void*) ));
     OnNameChanged(0);
 
     input >> xml::start( "burst" )
-        >> xml::attribute( "munition", nRoundsPerBurst_ )
-        >> xml::attribute( "duration", burstDuration_ )
-        >> xml::end
-        >> xml::start( "reloading" )
-        >> xml::attribute( "munition", nRoundsPerReload_ )
-        >> xml::attribute( "duration", reloadDuration_ )
-        >> xml::end;
-    input >> xml::optional
-        >> xml::start( "direct-fire" )
-        >> xml::list( "hit-probabilities", *this, &ADN_Weapons_Data_WeaponInfos::ReadTargetSize )
-        >> xml::end
-        >> xml::optional
-        >> xml::start( "indirect-fire" )
-        >> xml::attribute( "average-speed", rAverageSpeed_ )
-        >> xml::attribute( "min-range",     rMinRange_ )
-        >> xml::attribute( "max-range",     rMaxRange_ )
-        >> xml::end;
+            >> xml::attribute( "munition", nRoundsPerBurst_ )
+            >> xml::attribute( "duration", burstDuration_ )
+          >> xml::end
+          >> xml::start( "reloading" )
+            >> xml::attribute( "munition", nRoundsPerReload_ )
+            >> xml::attribute( "duration", reloadDuration_ )
+          >> xml::end
+          >> xml::optional
+          >> xml::start( "direct-fire" )
+            >> xml::list( "hit-probabilities", *this, &ADN_Weapons_Data_WeaponInfos::ReadTargetSize )
+          >> xml::end
+          >> xml::optional
+          >> xml::start( "indirect-fire" )
+            >> xml::attribute( "average-speed", rAverageSpeed_ )
+            >> xml::attribute( "min-range",     rMinRange_ )
+            >> xml::attribute( "max-range",     rMaxRange_ )
+          >> xml::end;
 
     bIndirect_ = rMaxRange_ != .0;
     ConnectLauncherAmmunition();
