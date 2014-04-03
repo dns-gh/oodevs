@@ -1811,6 +1811,15 @@ bool DEC_AgentFunctions::CreateBreakdown( MIL_Agent_ABC& callerAgent, const PHY_
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetEquipmentFromID
+// Created: NMI 2014-04-03
+// -----------------------------------------------------------------------------
+const PHY_ComposanteTypePion* DEC_AgentFunctions::GetEquipmentFromID( unsigned int equipmentID )
+{
+    return PHY_ComposanteTypePion::Find( equipmentID );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::EnableSharedPerception
 // Created: LGY 2013-05-07
 // -----------------------------------------------------------------------------

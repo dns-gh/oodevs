@@ -157,6 +157,7 @@ public:
     static void SetToAmbianceSafety( MIL_Agent_ABC& callerAgent, bool safety );
     static bool IsInSmoke( DEC_Decision_ABC* pAgent );
     static bool CreateBreakdown( MIL_Agent_ABC& callerAgent, const PHY_ComposanteTypePion* composanteType, unsigned int breakdown );
+    static const PHY_ComposanteTypePion* GetEquipmentFromID( unsigned int equipmentID );
 
     // Etat d'un agent
     static double GetRapForLocalAgent( const DEC_Decision_ABC* agent );
