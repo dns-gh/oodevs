@@ -730,7 +730,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_ChangeValeurDotations3",
         boost::function< void( int, const double, int ) >( boost::bind( &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     RegisterFunction( "DEC_CreateBreakdown",
-        boost::function< bool( unsigned int, unsigned int ) >( boost::bind( &DEC_AgentFunctions::CreateBreakdown, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< bool( const PHY_ComposanteTypePion*, unsigned int ) >( boost::bind( &DEC_AgentFunctions::CreateBreakdown, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_StartConsumingResources",
         boost::function< unsigned( const PHY_DotationCategory*, double, double ) >(
             [&]( const PHY_DotationCategory* category, double value, double duration ) {
