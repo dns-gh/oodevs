@@ -92,8 +92,8 @@ private:
 
     void SetProfile( const QString& profile );
 
-    void ReadActions( xml::xisubstream xis );
-    void ReadAction( timeline::Events& events, xml::xistream& xis );
+    void ReadActions( xml::xisubstream xis, const tools::Path& filename );
+    void ReadAction( timeline::Events& events, xml::xistream& xis, QStringList& errors );
     //@}
 
     //! @name TimelineHandler_ABC implementation

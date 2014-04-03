@@ -39,17 +39,6 @@ Level::Level( const kernel::OrderParameter& parameter, const sword::EnumNatureLe
 }
 
 // -----------------------------------------------------------------------------
-// Name: Level constructor
-// Created: SBO 2007-10-23
-// -----------------------------------------------------------------------------
-Level::Level( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< QString >( parameter )
-    , level_( ENT_Tr::ConvertToNatureLevel( xis.attribute< std::string >( "value" ).c_str() ) )
-{
-    SetValue( ENT_Tr::ConvertFromNatureLevel( level_ ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Level destructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------

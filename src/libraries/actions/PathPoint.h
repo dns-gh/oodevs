@@ -32,7 +32,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              PathPoint( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             PathPoint( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     virtual ~PathPoint();
     //@}
 

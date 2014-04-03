@@ -39,22 +39,6 @@ FireClass::FireClass( const kernel::OrderParameter& parameter, const std::string
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireClass constructor
-// Created: LGY 2013-11-26
-// -----------------------------------------------------------------------------
-FireClass::FireClass( const kernel::OrderParameter& parameter, xml::xistream& xis,
-                     const tools::StringResolver< kernel::FireClass >& resolver )
-    : Parameter< std::string >( parameter )
-    , type_( 0 )
-{
-    if( xis.has_attribute( "value" ) )
-    {
-        type_ = &resolver.Get( xis.attribute< std::string >( "value" ) );
-        SetValue( type_->GetName() );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: FireClass destructor
 // Created: LGY 2013-11-26
 // -----------------------------------------------------------------------------
@@ -89,5 +73,5 @@ void FireClass::Accept( ParameterVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 std::string FireClass::SerializeType() const
 {
-    return "FireClass";
+    return "fireclass";
 }

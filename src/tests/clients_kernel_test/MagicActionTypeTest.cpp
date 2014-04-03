@@ -78,6 +78,34 @@ BOOST_AUTO_TEST_CASE( TestMagicActionTypeParameters )
     }
 }
 
+namespace
+{
+    void RetrieveEnumerations( std::set< std::string >& referenced, const mapping::Action& action );
+    void RetrieveEnumerations( std::set< std::string >& referenced, const mapping::ActionParam& param )
+    {
+        if( param.enumeration )
+            referenced.insert( param.enumeration->name );
+        else if( param.list )
+            RetrieveEnumerations( referenced, *param.list );
+        else if( param.structure )
+            RetrieveEnumerations( referenced, *param.structure );
+        else if( param.structure_union )
+        {
+            for( size_t i = 0; i != param.structure_union->typesCount; ++i )
+            {
+                const auto& unionType = param.structure_union->types[i];
+                for( size_t j = 0; j != unionType.paramsCount; ++j )
+                    RetrieveEnumerations( referenced, unionType.params[j] );
+            }
+        }
+    }
+    void RetrieveEnumerations( std::set< std::string >& referenced, const mapping::Action& action )
+    {
+        for( size_t i = 0; i != action.paramsCount; ++i )
+            RetrieveEnumerations( referenced, action.params[i] );
+    }
+}
+
 BOOST_AUTO_TEST_CASE( TestMagicActionTypeEnums )
 {
     // Check all enums are mapped to stringifiers
@@ -92,15 +120,7 @@ BOOST_AUTO_TEST_CASE( TestMagicActionTypeEnums )
     // Check referenced enums are listed in the enum list
     std::set< std::string > referenced;
     for( size_t i = 0; i != mapping::actionsCount; ++i )
-    {
-        const auto& action = mapping::actions[i];
-        for( size_t j = 0; j != action.paramsCount; ++j )
-        {
-            const auto& param = action.params[j];
-            if( param.enumeration )
-                referenced.insert( param.enumeration->name );
-        }
-    }
+        RetrieveEnumerations( referenced, mapping::actions[i] );
     BOOST_CHECK_EQUAL_COLLECTIONS( listed.begin(), listed.end(),
-            referenced.begin(), referenced.end() );
+                                   referenced.begin(), referenced.end() );
 }

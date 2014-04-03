@@ -27,7 +27,6 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Enumeration( const kernel::OrderParameter& parameter );
-             Enumeration( const kernel::OrderParameter& parameter, xml::xistream& xis );
              Enumeration( const kernel::OrderParameter& parameter, unsigned int value );
     virtual ~Enumeration();
     //@}

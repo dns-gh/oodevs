@@ -497,7 +497,7 @@ PHY_MaintenanceComposanteState* PHY_RolePionLOG_Maintenance::HandleComposanteFor
     if( !bSystemEnabled_ || composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) )
         return 0;
     PHY_MaintenanceComposanteState* pComposanteState = new PHY_MaintenanceComposanteState( pion, composante );
-    InsertConsign( boost::make_shared< PHY_MaintenanceTransportConsign >( boost::ref( owner_ ), boost::ref( *pComposanteState ) ) );
+    InsertConsign( boost::make_shared< PHY_MaintenanceTransportConsign >( owner_, *pComposanteState ) );
     return pComposanteState;
 }
 
@@ -509,7 +509,7 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( PHY_MaintenanceC
 {
     if( !bSystemEnabled_ || composanteState.GetComposanteBreakdown().AffectMobility() && !HasUsableHauler( composanteState.GetComposante().GetType() ) )
         return false;
-    InsertConsign( boost::make_shared< PHY_MaintenanceTransportConsign >( boost::ref( owner_ ), boost::ref( composanteState ) ) );
+    InsertConsign( boost::make_shared< PHY_MaintenanceTransportConsign >( owner_, composanteState ) );
     return true;
 }
 
@@ -545,7 +545,7 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForRepair( PHY_MaintenanceComp
 {
     if( !bSystemEnabled_ || !HasUsableRepairer( composanteState.GetComposanteBreakdown() ) )
         return false;
-    InsertConsign( boost::make_shared< PHY_MaintenanceRepairConsign >( boost::ref( owner_ ), boost::ref( composanteState ) ) );
+    InsertConsign( boost::make_shared< PHY_MaintenanceRepairConsign >( owner_, composanteState ) );
     return true;
 }
 
@@ -557,7 +557,7 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForDiagnosis( PHY_MaintenanceC
 {
     if( !bSystemEnabled_ || !HasUsableDiagnoser() )
         return false;
-    InsertConsign( boost::make_shared< PHY_MaintenanceDiagnosisConsign >( boost::ref( owner_ ), boost::ref( composanteState ) ) );
+    InsertConsign( boost::make_shared< PHY_MaintenanceDiagnosisConsign >( owner_, composanteState ) );
     return true;
 }
 

@@ -34,7 +34,6 @@ public:
              Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
              Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Line& line );
              Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Limit();
     //@}
 

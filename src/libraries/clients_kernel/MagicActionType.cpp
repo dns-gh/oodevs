@@ -15,6 +15,8 @@
 #include "Tools.h"
 #include "protocol/Actions.h"
 
+#include <boost/optional.hpp>
+
 using namespace kernel;
 using namespace protocol;
 
@@ -83,6 +85,9 @@ const EnumStringifier stringifiers[] =
     { "stress", EnumToString< E_UnitStress > },
     { "attitude", EnumToString< E_PopulationAttitude > },
     { "identification", EnumToString< E_PopulationAttitude > },
+    { "injury", EnumToString< E_InjuriesSeriousness > },
+    { "human_rank", EnumToString< E_HumanRank > },
+    { "human_state", EnumToString< E_HumanState > },
     { "diplomacy", DiplomacyToString },
     { "identification", IdentificationToString },
     { "weather", WeatherToString },
@@ -137,15 +142,80 @@ MagicActionType::~MagicActionType()
     DeleteAll();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MagicActionType::CreateOrderParameter
-// Created: JSR 2010-04-23
-// -----------------------------------------------------------------------------
-OrderParameter* MagicActionType::CreateOrderParameter( const std::string& name, const std::string& type )
+namespace
 {
-    OrderParameter* param = new OrderParameter( name, type, false );
-    Register( Count(), *param );
-    return param;
+    void InitializeAction( tools::Resolver< OrderParameter >& parent,
+                           const protocol::mapping::Action& action );
+    void InitializeParam( tools::Resolver< OrderParameter >& parent,
+                          const protocol::mapping::ActionParam& param );
+
+    OrderParameter* CreateOrderParameter( tools::Resolver< OrderParameter >& parent,
+                                          const std::string& name,
+                                          const std::string& type,
+                                          boost::optional< int > id = boost::none )
+    {
+        OrderParameter* param = new OrderParameter( name, type, false );
+        parent.Register( id ? *id : parent.Count(), *param );
+        return param;
+    }
+
+    void InitializeEnum( OrderParameter& orderParameter,
+                         const protocol::mapping::ActionParam& param )
+    {
+        if( !param.enumeration )
+            return;
+        const auto& e = *param.enumeration;
+        const auto& stringifier = GetEnumStringifier( e.name );
+        for( size_t k = 0; k != e.valuesCount; ++k )
+        {
+            const int value = e.values[k];
+            const std::string s = stringifier( value );
+            if( !s.empty() )
+                orderParameter.AddValue( value, s );
+        }
+    }
+
+    void InitializeUnion( OrderParameter& orderParameter,
+                          const protocol::mapping::ActionParam& param )
+    {
+        orderParameter.SetUnion( true );
+        const auto& u = *param.structure_union;
+        for( size_t j = 0; j != u.typesCount; ++j )
+        {
+            const auto& type = u.types[j];
+            OrderParameter* typeParameter = CreateOrderParameter( orderParameter, type.name, "list", type.id );
+            typeParameter->SetStructure( true );
+            for( size_t k = 0; k != type.paramsCount; ++k )
+            {
+                const auto& subParam = type.params[k];
+                InitializeParam( *typeParameter, subParam );
+            }
+        }
+    }
+
+    void InitializeParam( tools::Resolver< OrderParameter >& parent,
+                          const protocol::mapping::ActionParam& param )
+    {
+        OrderParameter* orderParameter = CreateOrderParameter( parent, param.name, param.type );
+        if( param.list )
+            InitializeAction( *orderParameter, *param.list );
+        else if( param.structure )
+        {
+            orderParameter->SetStructure( true );
+            InitializeAction( *orderParameter, *param.structure );
+        }
+        else if( param.enumeration )
+            InitializeEnum( *orderParameter, param );
+        else if( param.structure_union )
+            InitializeUnion( *orderParameter, param );
+    }
+
+    void InitializeAction( tools::Resolver< OrderParameter >& parent,
+                           const protocol::mapping::Action& action )
+    {
+        for( size_t i = 0; i != action.paramsCount; ++i )
+            InitializeParam( parent, action.params[i] );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -160,21 +230,6 @@ void MagicActionType::Initialize()
         const mapping::Action& action = mapping::actions[i];
         if( action.name != name )
             continue;
-        for( size_t j = 0; j != action.paramsCount; ++j )
-        {
-            const auto& p = action.params[j];
-            OrderParameter* param = CreateOrderParameter( p.name, p.type );
-            if( !p.enumeration )
-                continue;
-            const auto& e = *p.enumeration;
-            const auto& stringifier = GetEnumStringifier( e.name );
-            for( size_t k = 0; k != e.valuesCount; ++k )
-            {
-                const int value = e.values[k];
-                const std::string s = stringifier( value );
-                if( !s.empty() )
-                    param->AddValue( value, s );
-            }
-        }
+        InitializeAction( *this, action );
     }
 }

@@ -47,16 +47,6 @@ Polygon::Polygon( const OrderParameter& parameter, const CoordinateConverter_ABC
 }
 
 // -----------------------------------------------------------------------------
-// Name: Polygon constructor
-// Created: SBO 2007-05-22
-// -----------------------------------------------------------------------------
-Polygon::Polygon( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : Location( parameter, converter, xis )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Polygon destructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------

@@ -54,7 +54,6 @@ public:
           bool          IsAnEmergency        () const;
           bool          IsInAmbulance        () const;
           bool          EvacuatedByThirdParty() const;
-          bool          ShouldGoBackToWar    () const;
           void          NotifyDiagnosed      ();
           void          NotifySorted         ();
     //@}

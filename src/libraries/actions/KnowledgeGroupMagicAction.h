@@ -33,7 +33,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              KnowledgeGroupMagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true );
-             KnowledgeGroupMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic );
     virtual ~KnowledgeGroupMagicAction();
     //@}
 

@@ -29,12 +29,6 @@ public:
     virtual ~ADN_MissionGenObjectTypes_Table();
     //@}
 
-public slots:
-    //! @name slots
-    //@{
-    void OnTypeChanged( E_MissionParameterType type );
-    //@}
-
 private:
     //! @name Operations
     //@{

@@ -430,33 +430,60 @@ void TimelineWebView::OnKeyUp( int key )
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnLoadOrderFileRequested( const tools::Path& filename )
 {
-    config_.GetLoader().LoadFile( filename, boost::bind( &TimelineWebView::ReadActions, this, _1 ) ); // $$$$ ABR 2013-06-19: ReadOnly if replay ? may be we can handle that directly with timeline_ui, or with profile
+    config_.GetLoader().LoadFile( filename, boost::bind( &TimelineWebView::ReadActions, this, _1, boost::cref( filename ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineWebView::ReadActions
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineWebView::ReadActions( xml::xisubstream xis )
+void TimelineWebView::ReadActions( xml::xisubstream xis, const tools::Path& filename )
 {
     timeline::Events events;
+    QStringList errors;
     xis >> xml::start( "actions" )
             >> xml::list( "action", [&]( xml::xistream& xis ){
-                ReadAction( events, xis );
+                ReadAction( events, xis, errors );
             });
     server_->CreateEvents( events );
+    if( !errors.empty() )
+    {
+        QString error = tr( "The following errors occurred:" ) + "\n";
+        for( auto it = errors.begin(); it != errors.end(); ++it )
+            error += "- " + *it + "\n";
+        QMessageBox::warning( QApplication::activeWindow(),
+                              tr( "Invalid orders while loading '%1'" ).arg( QString::fromStdWString( filename.FileName().ToUnicode() ) ),
+                              error,
+                              QMessageBox::Ok, Qt::NoButton );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineWebView::ReadAction
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineWebView::ReadAction( timeline::Events& events,  xml::xistream& xis )
+void TimelineWebView::ReadAction( timeline::Events& events,
+                                  xml::xistream& xis,
+                                  QStringList& errors )
 {
     boost::scoped_ptr< actions::Action_ABC > action;
-    action.reset( model_.actionFactory_.CreateAction( xis, false ) );
-    if( !action )
+    try
+    {
+        action.reset( model_.actionFactory_.CreateAction( xis ) );
+    }
+    catch( std::exception& e )
+    {
+        errors << QString::fromStdString( tools::GetExceptionMsg( e ) );
         return;
+    }
+    if( !action )
+    {
+        errors << tr( "Unable to create order '%1' on target '%2', planned for '%3'" )
+                    .arg( QString::fromStdString( xis.attribute( "name", "" ) ) )
+                    .arg( QString::fromStdString( xis.attribute( "target", "" ) ) )
+                    .arg( QString::fromStdString( xis.attribute( "time", "" ) ) );
+        return;
+    }
 
     action->Publish( model_.timelinePublisher_, 0 );
     timeline::Event event;

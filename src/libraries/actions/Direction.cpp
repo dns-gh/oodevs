@@ -51,20 +51,6 @@ Direction::Direction( const kernel::OrderParameter& parameter, int value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Direction constructor
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-Direction::Direction( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< int >( parameter )
-{
-    if( xis.has_attribute( "value" ) )
-    {
-        SetValue( xis.attribute< int >( "value" ) );
-        direction_ = ComputeDirection( GetValue() );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: Direction destructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------

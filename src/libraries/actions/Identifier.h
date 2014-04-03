@@ -35,7 +35,6 @@ public:
     //@{
     explicit Identifier( const kernel::OrderParameter& parameter );
              Identifier( const kernel::OrderParameter& parameter, unsigned int value );
-             Identifier( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~Identifier();
     //@}
 

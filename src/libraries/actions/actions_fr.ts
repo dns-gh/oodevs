@@ -148,5 +148,25 @@
         <source>Not set</source>
         <translation>Non défini</translation>
     </message>
+    <message>
+        <source>Parameter &apos;%1&apos; should be a structure</source>
+        <translation>Le paramètre &apos;%1&apos; devrait être une structure</translation>
+    </message>
+    <message>
+        <source>Expecting &apos;%1&apos; parameters, got &apos;%2&apos; on structure &apos;%3&apos;</source>
+        <translation>&apos;%1&apos; paramètres attendus, &apos;%2&apos; paramètres reçu pour la structure &apos;%3&apos;</translation>
+    </message>
+    <message>
+        <source>Expecting at least one parameter on union &apos;%1&apos;</source>
+        <translation>Au moins un paramètre attendu pour l&apos;union &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Expecting an identifier as first parameter on union &apos;%1&apos;</source>
+        <translation>Un premier paramètre de type &apos;identifier&apos; est attendu pour l&apos;union &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>No parameter found for id &apos;%1&apos; on union &apos;%2&apos;</source>
+        <translation>Aucun paramètre trouvé pour l&apos;id &apos;%1&apos; dans l&apos;union &apos;%2&apos;</translation>
+    </message>
 </context>
 </TS>

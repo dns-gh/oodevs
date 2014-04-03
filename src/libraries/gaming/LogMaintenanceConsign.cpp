@@ -61,7 +61,7 @@ LogMaintenanceConsign::~LogMaintenanceConsign()
 // Name: LogMaintenanceConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& message, kernel::Entity_ABC* handler )
+bool LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& message, kernel::Entity_ABC* handler )
 {
     if( message.has_state() )
         nState_ = message.state();
@@ -72,6 +72,7 @@ void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& m
     else
         currentStateEndTick_ = std::numeric_limits< unsigned int >::max();
     provider_ = handler;
+    return nState_ != sword::LogMaintenanceHandlingUpdate::finished;
 }
 
 // -----------------------------------------------------------------------------

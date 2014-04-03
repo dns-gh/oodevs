@@ -27,6 +27,7 @@ namespace actions
         class EngineerConstruction;
         class Enumeration;
         class ExtensionList;
+        class FireClass;
         class Identifier;
         class Inhabitant;
         class KnowledgeGroup;
@@ -99,6 +100,7 @@ public:
     virtual void Visit( const parameters::EngineerConstruction&  ) {}
     virtual void Visit( const parameters::Enumeration&           ) {}
     virtual void Visit( const parameters::ExtensionList&         ) {}
+    virtual void Visit( const parameters::FireClass&             ) {}
     virtual void Visit( const parameters::Identifier&            ) {}
     virtual void Visit( const parameters::Inhabitant&            ) {}
     virtual void Visit( const parameters::KnowledgeGroup&        ) {}

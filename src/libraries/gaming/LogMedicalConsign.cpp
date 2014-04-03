@@ -59,7 +59,7 @@ LogMedicalConsign::~LogMedicalConsign()
 // Name: LogMedicalConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message, kernel::Entity_ABC* handler )
+bool LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message, kernel::Entity_ABC* handler )
 {
     pPionLogHandling_ = handler;
     if( message.has_mental_wound() )
@@ -76,6 +76,7 @@ void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message, 
         currentStateEndTick_ = std::numeric_limits< unsigned int >::max();
     if( message.has_diagnosed() )
         diagnosed_ = message.diagnosed();
+    return nState_ != sword::LogMedicalHandlingUpdate::finished;
 }
 
 // -----------------------------------------------------------------------------

@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "KnowledgeGroupMagicAction.h"
 #include "ActionTasker.h"
+#include "ActionTiming.h"
 
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
@@ -29,18 +30,6 @@ KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( const kernel::MagicActionT
     : Action_ABC( controller, &magic )
     , controller_( controller )
     , registered_( registered )
-{
-    Rename( ENT_Tr::ConvertFromKnowledgeMagicActionType( ENT_Tr::ConvertToKnowledgeMagicActionType( magic.GetName() ) ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupMagicAction constructor
-// Created: JSR 2010-04-20
-// -----------------------------------------------------------------------------
-KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
-    : Action_ABC( xis, controller, &magic )
-    , controller_         ( controller )
-    , registered_         ( true )
 {
     Rename( ENT_Tr::ConvertFromKnowledgeMagicActionType( ENT_Tr::ConvertToKnowledgeMagicActionType( magic.GetName() ) ).c_str() );
 }
@@ -86,6 +75,7 @@ void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher, int context )
         ( sword::KnowledgeMagicAction_Type ) GetType()->GetId();
     simulation::KnowledgeMagicAction message;
     message().mutable_knowledge_group()->set_id( Get< ActionTasker >().GetId() );
+    message().mutable_start_time()->set_data( Get< ActionTiming >().GetIsoTime() );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

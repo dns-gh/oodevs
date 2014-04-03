@@ -33,9 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Crowd( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             Crowd( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
              Crowd( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
-             Crowd( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~Crowd();
     //@}
 

@@ -1071,7 +1071,7 @@
     </message>
     <message>
         <source>finished</source>
-        <translation type="unfinished">finished</translation>
+        <translation type="unfinished">treatment finished</translation>
     </message>
 </context>
 <context>

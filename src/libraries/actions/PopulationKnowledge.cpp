@@ -31,18 +31,6 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, kerne
 // Name: PopulationKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis,
-                                          const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Population_ABC >( parameter, controller )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( resolver.FindPopulation( xis.attribute< unsigned long >( "value" ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge constructor
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
 PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsigned int id,
                                           const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Entity< Population_ABC >( parameter, resolver.FindPopulation( id ), controller )

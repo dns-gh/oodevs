@@ -33,7 +33,6 @@ public:
     //@{
     explicit MedicalPriorities( const kernel::OrderParameter& parameter );
              MedicalPriorities( const kernel::OrderParameter& parameter, const sword::LogMedicalPriorities& message );
-             MedicalPriorities( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~MedicalPriorities();
     //@}
 

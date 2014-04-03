@@ -925,7 +925,6 @@ bool PHY_ComposantePion::CanHealHuman( const Human_ABC& human ) const
 unsigned int PHY_ComposantePion::Heal( Human_ABC& human ) const
 {
     assert( pType_ );
-    assert( bUsedForLogistic_ );
     return pType_->Heal( human );
 }
 
@@ -936,7 +935,6 @@ unsigned int PHY_ComposantePion::Heal( Human_ABC& human ) const
 unsigned int PHY_ComposantePion::GetHealingTime( const Human_ABC& human ) const
 {
     assert( pType_ );
-    assert( bUsedForLogistic_ );
     return pType_->GetHealingTime( human );
 }
 

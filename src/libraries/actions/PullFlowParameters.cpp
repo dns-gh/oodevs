@@ -78,90 +78,12 @@ PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter,
 }
 
 // -----------------------------------------------------------------------------
-// Name: PullFlowParameters constructor
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter,
-                                        const kernel::CoordinateConverter_ABC& converter,
-                                        const kernel::EntityResolver_ABC& entityResolver,
-                                        const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
-                                        const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
-                                        xml::xistream& xis )
-    : Parameter< QString >( parameter )
-    , supplierFormation_  ( 0 )
-    , supplierAutomat_    ( 0 )
-    , converter_          ( converter )
-{
-    unsigned int idTmp;
-    xis >> xml::start( "supplier" )
-        >> xml::attribute< unsigned int >( "id", idTmp )
-        >> xml::end;
-
-    supplierAutomat_ = entityResolver.FindAutomat( idTmp );
-    if( !supplierAutomat_ )
-        supplierFormation_ = &entityResolver.GetFormation( idTmp) ;
-
-    const T_XmlFunctor outpath = boost::bind( &PullFlowParameters::ReadPoint, this, _1, boost::ref( wayOutPath_ ) );
-    const T_XmlFunctor backpath = boost::bind( &PullFlowParameters::ReadPoint, this, _1, boost::ref( wayBackPath_ ) );
-    xis >> xml::list( "resource", *this, &PullFlowParameters::ReadResource, dotationTypeResolver )
-        >> xml::list( "transporter", *this, &PullFlowParameters::ReadTransporter, equipmentTypeResolver )
-        >> xml::list( boost::bind( &WalkPointList, "wayoutpath", outpath, _1, _2, _3 ) )
-        >> xml::list( boost::bind( &WalkPointList, "waybackpath", backpath, _1, _2, _3 ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PullFlowParameters destructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
 PullFlowParameters::~PullFlowParameters()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PullFlowParameters::ReadResource
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-void PullFlowParameters::ReadResource( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver )
-{
-    const unsigned int idTmp = xis.attribute< unsigned int >("id" );
-    const DotationType& dotationType = dotationTypeResolver.Get( idTmp );
-    const unsigned int quantity = xis.attribute< unsigned int >("quantity" );
-    resources_[ &dotationType ] += quantity;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PullFlowParameters::ReadTransporter
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-void PullFlowParameters::ReadTransporter( xml::xistream& xis, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver )
-{
-    const unsigned int idTmp = xis.attribute< unsigned int >( "id" );
-    const EquipmentType& type = equipmentTypeResolver.Get( idTmp );
-    const unsigned int quantity = xis.attribute< unsigned int >( "quantity" );
-    transporters_[ &type ] += quantity;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PullFlowParameters::ReadPoint
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-void PullFlowParameters::ReadPoint( xml::xistream& xis, T_PointVector& points )
-{
-    std::string mgrs;
-    xis >> xml::attribute( "coordinates", mgrs );
-
-    std::vector< std::string > result;
-    boost::algorithm::split( result, mgrs, boost::is_any_of(" ") );
-    geometry::Point2f point;
-    if( result.size() == 2 ) //Location in WGS84
-    {
-        point = converter_.ConvertFromGeo( geometry::Point2d( boost::lexical_cast< double >( result[ 0 ] ),
-            boost::lexical_cast< double >( result[ 1 ] ) ) );
-    }
-    else
-        point = converter_.ConvertToXY( mgrs );
-    points.push_back( point );
 }
 
 // -----------------------------------------------------------------------------

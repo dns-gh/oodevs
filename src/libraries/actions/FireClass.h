@@ -36,8 +36,6 @@ public:
     explicit FireClass( const kernel::OrderParameter& parameter );
              FireClass( const kernel::OrderParameter& parameter, const std::string name,
                         const tools::StringResolver< kernel::FireClass >& resolver );
-             FireClass( const kernel::OrderParameter& parameter, xml::xistream& xis,
-                        const tools::StringResolver< kernel::FireClass >& resolver );
     virtual ~FireClass();
     //@}
 

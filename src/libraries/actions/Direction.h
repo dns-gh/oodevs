@@ -28,7 +28,6 @@ public:
     //@{
     explicit Direction( const kernel::OrderParameter& parameter );
              Direction( const kernel::OrderParameter& parameter, int value );
-             Direction( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~Direction();
     //@}
 

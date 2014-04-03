@@ -21,7 +21,7 @@ using namespace parameters;
 // Created: ABR 2011-11-17
 // -----------------------------------------------------------------------------
 Quantity::Quantity( const kernel::OrderParameter& parameter )
-    : Parameter< int >( parameter )
+    : Parameter< int >( parameter, 0 )
 {
     // NOTHING
 }
@@ -34,17 +34,6 @@ Quantity::Quantity( const kernel::OrderParameter& parameter, int value )
     : Parameter< int >( parameter, value )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Quantity constructor
-// Created: JSR 2010-04-14
-// -----------------------------------------------------------------------------
-Quantity::Quantity( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< int >( parameter )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( xis.attribute< int >( "value" ) );
 }
 
 // -----------------------------------------------------------------------------

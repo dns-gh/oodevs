@@ -34,21 +34,6 @@ DateTime::DateTime( const kernel::OrderParameter& parameter )
 
 // -----------------------------------------------------------------------------
 // Name: DateTime constructor
-// Created: SBO 2007-06-25
-// -----------------------------------------------------------------------------
-DateTime::DateTime( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< QString >( parameter )
-{
-    if( xis.has_attribute( "value" ) )
-    {
-        xis >> xml::attribute( "value", time_ );
-        bpt::ptime time( bpt::from_iso_string( time_ ) );
-        SetValue( bpt::to_simple_string( time ).c_str() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DateTime constructor
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
 DateTime::DateTime( const OrderParameter& parameter, const sword::DateTime& date )

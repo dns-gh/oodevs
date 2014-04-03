@@ -37,17 +37,6 @@ String::String( const kernel::OrderParameter& parameter, const std::string& valu
 }
 
 // -----------------------------------------------------------------------------
-// Name: String constructor
-// Created: SBO 2007-10-23
-// -----------------------------------------------------------------------------
-String::String( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< QString >( parameter )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( xis.attribute< std::string >( "value" ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: String destructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------

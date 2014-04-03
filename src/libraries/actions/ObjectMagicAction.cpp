@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "ObjectMagicAction.h"
 #include "ActionTasker.h"
+#include "ActionTiming.h"
 
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
@@ -29,18 +30,6 @@ ObjectMagicAction::ObjectMagicAction( const kernel::MagicActionType& magic, kern
     : Action_ABC ( controller, &magic )
     , controller_( controller )
     , registered_( registered )
-{
-    Rename( ENT_Tr::ConvertFromObjectMagicActionType( ENT_Tr::ConvertToObjectMagicActionType( magic.GetName() ) ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectMagicAction::ObjectMagicAction
-// Created: JSR 2010-04-02
-// -----------------------------------------------------------------------------
-ObjectMagicAction::ObjectMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
-    : Action_ABC ( xis, controller, &magic )
-    , controller_( controller )
-    , registered_( true )
 {
     Rename( ENT_Tr::ConvertFromObjectMagicActionType( ENT_Tr::ConvertToObjectMagicActionType( magic.GetName() ) ).c_str() );
 }
@@ -86,6 +75,7 @@ void ObjectMagicAction::Publish( Publisher_ABC& publisher, int context ) const
     sword::ObjectMagicAction_Type type = ( sword::ObjectMagicAction_Type ) GetType()->GetId();
     simulation::ObjectMagicAction message;
     message().mutable_object()->set_id( Get< ActionTasker >().GetId() );
+    message().mutable_start_time()->set_data( Get< ActionTiming >().GetIsoTime() );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

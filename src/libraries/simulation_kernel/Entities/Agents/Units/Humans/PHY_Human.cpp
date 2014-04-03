@@ -158,7 +158,6 @@ void PHY_Human::CancelMedicalLogisticRequest()
     if( pMedicalState_ )
     {
         PHY_Human oldHumanState( *this );
-        const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanBackFromMedical, *pMedicalState_ );
         if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::maintenance_ )
             nLocation_ = eHumanLocation_Maintenance;
         else

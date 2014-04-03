@@ -37,17 +37,6 @@ Identifier::Identifier( const kernel::OrderParameter& parameter, unsigned int va
 }
 
 // -----------------------------------------------------------------------------
-// Name: Identifier constructor
-// Created: JSR 2010-04-15
-// -----------------------------------------------------------------------------
-Identifier::Identifier( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< unsigned int >( parameter )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( xis.attribute< unsigned int >( "value" ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Identifier destructor
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------

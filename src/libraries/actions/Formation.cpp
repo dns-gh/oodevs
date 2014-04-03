@@ -49,17 +49,6 @@ Formation::Formation( const OrderParameter& parameter, const int& message, const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Formation constructor
-// Created: SBO 2007-10-23
-// -----------------------------------------------------------------------------
-Formation::Formation( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Formation_ABC >( parameter, controller )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( resolver.FindFormation( xis.attribute< unsigned long >( "value" ) ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Formation destructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------

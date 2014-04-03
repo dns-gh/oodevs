@@ -8,14 +8,16 @@
 // *****************************************************************************
 
 #include "actions_test_pch.h"
-#include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
-#include "clients_kernel/AgentKnowledgeConverter_ABC.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
 
-#pragma warning( push, 0 )
-#include <QtCore/qstring.h>
-#pragma warning( pop )
+#include "actions/Action_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentKnowledgeConverter_ABC.h"
+#include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
+#include "clients_kernel/Time_ABC.h"
+#include "protocol/Protocol.h"
+
+#include <protocol/ServerPublisher_ABC.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace
 {
@@ -45,4 +47,49 @@ MOCK_BASE_CLASS( MockAgent, kernel::Agent_ABC )
     MOCK_METHOD( GetId, 0 );
     MOCK_METHOD( GetType, 0 );
 };
+
+MOCK_BASE_CLASS( MockTime, kernel::Time_ABC )
+{
+    MOCK_METHOD( GetDateTime, 0 );
+    MOCK_METHOD( GetInitialDateTime, 0 );
+    MOCK_METHOD( GetTickDuration, 0 );
+    MOCK_METHOD( GetTimeAsString, 0 );
+};
+
+MOCK_BASE_CLASS( MockPublisher, Publisher_ABC )
+{
+    MOCK_METHOD( Send, 1, void( const sword::ClientToSim& ),            ClientToSim );
+    MOCK_METHOD( Send, 1, void( const sword::ClientToAuthentication& ), ClientToAuthentication );
+    MOCK_METHOD( Send, 1, void( const sword::ClientToReplay& ),         ClientToReplay );
+    MOCK_METHOD( Send, 1, void( const sword::ClientToAar& ),            ClientToAar );
+    MOCK_METHOD( Send, 1, void( const sword::ClientToMessenger& ),      ClientToMessenger );
+    MOCK_METHOD( Register, 1, void( T_SimHandler ),    SimRegister );
+    MOCK_METHOD( Register, 1, void( T_ReplayHandler ), ReplayRegister );
+};
+
+std::string Serialize( const actions::Action_ABC& action )
+{
+    xml::xostringstream xos;
+    action.Serialize( xos << xml::start( "action" ) );
+    return xos.str();
+}
+
+void CheckXml( const std::string expected, const std::string& obtained )
+{
+    xml::xistringstream xis1( expected ), xis2( obtained );
+    xml::xostringstream xos1, xos2;
+    xos1 << xis1;
+    xos2 << xis2;
+    BOOST_REQUIRE_EQUAL( xos1.str(), xos2.str() );
+}
+
+sword::ClientToSim Publish( const actions::Action_ABC& action )
+{
+    sword::ClientToSim msg;
+    MockPublisher publisher;
+    MOCK_EXPECT( publisher.ClientToSim ).once().with( mock::retrieve( msg ) );
+    action.Publish( publisher, 42 );
+    return msg;
+}
+
 }

@@ -119,7 +119,7 @@ BOOST_FIXTURE_TEST_CASE( read_boolean, Fixture )
     AddParameterValue( xos, "boolean", true );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
-    BOOST_CHECK(  msg.elem( 0 ).value( 0 ).booleanvalue() );
+    BOOST_CHECK( msg.elem( 0 ).value( 0 ).booleanvalue() );
     CheckCycle( msg );
 }
 
@@ -502,7 +502,7 @@ namespace
         BOOST_CHECK_EQUAL( work.type(), "barricade" );
         CheckLocation( work.position(), Location::polygon, 3 );
         BOOST_CHECK_EQUAL( work.type_obstacle(), ObstacleType::reserved );
-        BOOST_CHECK_EQUAL( work.density(), 4.7f );
+        BOOST_CHECK_EQUAL( work.density(), 4.2f );
         BOOST_CHECK_EQUAL( work.combat_train().id(), 5169u );
         BOOST_CHECK_EQUAL( work.activity_time(), 38 );
         BOOST_CHECK_EQUAL( work.activation_time(), 39 );
@@ -511,6 +511,8 @@ namespace
         BOOST_CHECK_EQUAL( work.time_limit(), 41 );
         BOOST_CHECK_EQUAL( work.mining(), true );
         BOOST_CHECK_EQUAL( work.lodging(), 98 );
+        BOOST_CHECK_EQUAL( work.fire_class(), "some fire" );
+        BOOST_CHECK_EQUAL( work.max_combustion(), 42 );
     }
 }
 
@@ -525,16 +527,18 @@ BOOST_FIXTURE_TEST_CASE( read_planned_work, Fixture )
     "        <point coordinates='dummy'/>"
     "      </location>"
     "    </parameter>"
-    "    <parameter type='obstacletype' value='reserved'/>"
-    "    <parameter type='density' value='4.7'/>"
-    "    <parameter type='automat' value='5169'/>"
-    "    <parameter type='integer' identifier='activitytime' value='38'/>"
-    "    <parameter type='integer' identifier='activationtime' value='39'/>"
-    "    <parameter type='string' value='gyhjkf'/>"
-    "    <parameter identifier='altitude_modifier' type='integer' value='40'/>"
-    "    <parameter identifier='time_limit' type='integer' value='41'/>"
+    "    <parameter identifier='obstacletype' type='obstacletype' value='1'/>"
+    "    <parameter identifier='density' type='numeric' value='4.2'/>"
+    "    <parameter identifier='tc2' type='automat' value='5169'/>"
+    "    <parameter identifier='activitytime' type='quantity' value='38'/>"
+    "    <parameter identifier='activationtime' type='quantity' value='39'/>"
+    "    <parameter identifier='name' type='string' value='gyhjkf'/>"
+    "    <parameter identifier='altitude_modifier' type='quantity' value='40'/>"
+    "    <parameter identifier='time_limit' type='quantity' value='41'/>"
     "    <parameter identifier='obstacle_mining' type='bool' value='true'/>"
     "    <parameter identifier='lodging' type='quantity' value='98'/>"
+    "    <parameter identifier='fire_class' type='fireclass' value='some fire'/>"
+    "    <parameter identifier='max_combustion_energy' type='quantity' value='42'/>"
     "  </parameter>";
     const std::string input =
     "<action>"
@@ -970,12 +974,14 @@ namespace
     {
         fix.xos << xml::attribute( "target", 27u )
                 << xml::attribute( "id", 17 )
-                << xml::attribute( "type", "mission" );
+                << xml::attribute( "type", "mission" )
+                << xml::attribute( "time", "2011-04-08T10:01:36" );
         const auto msg = fix.Read< T >();
         BOOST_CHECK_EQUAL( msg.tasker().id(), 27u );
         BOOST_CHECK_EQUAL( msg.type().id(), 17u );
         BOOST_CHECK( msg.has_parameters() );
         BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+        BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
         fix.CheckCycle( msg );
     }
 }
@@ -999,24 +1005,28 @@ BOOST_FIXTURE_TEST_CASE( read_frag_order, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "id", 1 )
-        << xml::attribute( "type", "fragorder" );
+        << xml::attribute( "type", "fragorder" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     MOCK_EXPECT( reader.Resolve ).once().with( 27u ).returns( Reader_ABC::PARTY );
     const auto msg = Read< FragOrder >();
     BOOST_CHECK_EQUAL( msg.tasker().party().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type().id(), 1u );
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_magic_action, Fixture )
 {
     xos << xml::attribute( "id", mapping::MagicAction::data_[1].name )
-        << xml::attribute( "type", "magic" );
+        << xml::attribute( "type", "magic" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     const auto msg = Read< MagicAction >();
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicAction::data_[1].type );
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
@@ -1024,13 +1034,15 @@ BOOST_FIXTURE_TEST_CASE( read_unit_magic_action, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "id", mapping::MagicUnitAction::data_[10].name )
-        << xml::attribute( "type", "magicunit" );
+        << xml::attribute( "type", "magicunit" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     MOCK_EXPECT( reader.Resolve ).once().with( 27u ).returns( Reader_ABC::PARTY );
     const auto msg = Read< UnitMagicAction >();
     BOOST_CHECK_EQUAL( msg.tasker().party().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicUnitAction::data_[10].type );
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
@@ -1038,12 +1050,14 @@ BOOST_FIXTURE_TEST_CASE( read_object_magic_action, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "id", mapping::MagicObjectAction::data_[0].name )
-        << xml::attribute( "type", "magicobject" );
+        << xml::attribute( "type", "magicobject" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     const auto msg = Read< ObjectMagicAction >();
     BOOST_CHECK_EQUAL( msg.object().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicObjectAction::data_[0].type );
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
@@ -1051,12 +1065,14 @@ BOOST_FIXTURE_TEST_CASE( read_knowledge_magic_action, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "id", mapping::MagicKnowledgeAction::data_[0].name )
-        << xml::attribute( "type", "magicknowledge" );
+        << xml::attribute( "type", "magicknowledge" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     const auto msg = Read< KnowledgeMagicAction >();
     BOOST_CHECK_EQUAL( msg.knowledge_group().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicKnowledgeAction::data_[0].type );
     BOOST_CHECK( msg.has_parameters() );
     BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
@@ -1064,10 +1080,12 @@ BOOST_FIXTURE_TEST_CASE( read_set_automat_mode, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "engaged", true )
-        << xml::attribute( "type", "change_mode" );
+        << xml::attribute( "type", "change_mode" )
+        << xml::attribute( "time", "2011-04-08T10:01:36" );
     const auto msg = Read< SetAutomatMode >();
     BOOST_CHECK_EQUAL( msg.automate().id(), 27u );
     BOOST_CHECK_EQUAL( msg.mode(), engaged );
+    BOOST_CHECK_EQUAL( msg.start_time().data(), "2011-04-08T10:01:36" );
     CheckCycle( msg );
 }
 
@@ -1082,6 +1100,50 @@ BOOST_FIXTURE_TEST_CASE( read_client_to_sim, Fixture )
     BOOST_CHECK_EQUAL( msg.automat_order().tasker().id(), 8323u );
     BOOST_CHECK_EQUAL( msg.automat_order().type().id(), 2053u );
     CheckCycle( msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( read_complex_list_of_list, Fixture )
+{
+    const std::string input =
+    "<action>"
+    "  <parameter type='list'>"
+    "    <parameter type='list'>"
+    "      <parameter type='quantity' value='1'/>"
+    "      <parameter type='enumeration' value='1'/>"
+    "      <parameter type='enumeration' value='1'/>"
+    "      <parameter type='list'>"
+    "        <parameter type='list'>"
+    "          <parameter type='identifier' value='1'/>"
+    "          <parameter type='enumeration' value='1'/>"
+    "        </parameter>"
+    "        <parameter type='list'>"
+    "          <parameter type='identifier' value='2'/>"
+    "          <parameter type='enumeration' value='2'/>"
+    "        </parameter>"
+    "      </parameter>"
+    "      <parameter type='boolean' value='false'/>"
+    "      <parameter type='boolean' value='false'/>"
+    "    </parameter>"
+    "    <parameter type='list'>"
+    "      <parameter type='quantity' value='1'/>"
+    "      <parameter type='enumeration' value='1'/>"
+    "      <parameter type='enumeration' value='1'/>"
+    "      <parameter type='list'>"
+    "        <parameter type='list'>"
+    "          <parameter type='identifier' value='0'/>"
+    "          <parameter type='enumeration' value='0'/>"
+    "        </parameter>"
+    "      </parameter>"
+    "      <parameter type='boolean' value='false'/>"
+    "      <parameter type='boolean' value='false'/>"
+    "    </parameter>"
+    "  </parameter>"
+    "</action>";
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    const auto& list = msg.elem( 0 ).value();
+    BOOST_CHECK_EQUAL( list.size(), 2 );
+    CheckCycle( input, msg );
 }
 
 #if 0

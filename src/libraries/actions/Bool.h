@@ -35,7 +35,6 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Bool( const kernel::OrderParameter& parameter );
-             Bool( const kernel::OrderParameter& parameter, xml::xistream& xis );
              Bool( const kernel::OrderParameter& parameter, bool value );
     virtual ~Bool();
     //@}

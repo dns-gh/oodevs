@@ -30,28 +30,8 @@ Crowd::Crowd( const kernel::OrderParameter& parameter, kernel::Controller& contr
 // Name: Crowd constructor
 // Created: FPO 2011-05-30
 // -----------------------------------------------------------------------------
-Crowd::Crowd( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Population_ABC >( parameter, resolver.FindPopulation( xis.attribute< unsigned long >( "value" ) ), controller )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Crowd constructor
-// Created: FPO 2011-05-30
-// -----------------------------------------------------------------------------
 Crowd::Crowd( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Entity< Population_ABC >( parameter, resolver.FindPopulation( id ), controller )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Crowd constructor
-// Created: FPO 2011-05-30
-// -----------------------------------------------------------------------------
-Crowd::Crowd( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Population_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "crowd", false ), resolver.FindPopulation( xis.attribute< unsigned long >( "value" ) ), controller )
 {
     // NOTHING
 }

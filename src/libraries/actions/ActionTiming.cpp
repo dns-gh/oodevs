@@ -38,36 +38,10 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const kernel::Time_A
     : controller_( controller )
     , simulation_( simulation )
     , enabled_( true )
-    , time_( tools::GDHStringToQDateTime( datetime ) )
+    , time_( tools::IsoStringToQDateTime( datetime ) )
 {
-    // NOTHING
-}
-
-namespace
-{
-    QDateTime ReadDateTime( xml::xistream& xis, const kernel::Time_ABC& simulation )
-    {
-        std::string datetime;
-        xis >> xml::attribute( "time", datetime );
-        bool ok = false;
-        const unsigned int ticks = QString( datetime.c_str() ).toUInt( &ok );
-        if( ok )
-            return simulation.GetInitialDateTime().addSecs( ticks * simulation.GetTickDuration() );
-        return QDateTime::fromString( datetime.c_str(), Qt::ISODate );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionTiming constructor
-// Created: SBO 2007-06-28
-// -----------------------------------------------------------------------------
-ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, const kernel::Time_ABC& simulation )
-    : controller_( controller )
-    , simulation_( simulation )
-    , enabled_( true )
-    , time_( ReadDateTime( xis, simulation ) )
-{
-    // NOTHING
+    if( !time_.isValid() || time_.isNull() )
+        time_ = QDateTime::fromString( QString::fromStdString( datetime ), Qt::ISODate );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,4 +130,13 @@ void ActionTiming::Shift( long secs )
     if( time_ < simulation_.GetInitialDateTime() )
         time_ = simulation_.GetInitialDateTime();
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionTiming::GetIsoTime
+// Created: ABR 2014-03-24
+// -----------------------------------------------------------------------------
+std::string ActionTiming::GetIsoTime() const
+{
+    return time_.toString( "yyyyMMddThhmmss" ).toStdString();
 }

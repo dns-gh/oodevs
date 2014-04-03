@@ -41,31 +41,12 @@ LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimaList constructor
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : Parameter< QString >( parameter )
-{
-    xis >> xml::list( "parameter", *this, &LimaList::ReadLima, converter );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LimaList destructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
 LimaList::~LimaList()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimaList::ReadLima
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-void LimaList::ReadLima( xml::xistream& xis, const CoordinateConverter_ABC& converter )
-{
-    AddParameter( *new Lima( converter, xis ) );
 }
 
 namespace

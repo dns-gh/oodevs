@@ -3584,6 +3584,18 @@ Los datos no pueden ser proyectados.</translation>
         <source>Invalid timeline binary &apos;%1&apos;</source>
         <translation>Cronología binaria no válida  &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Unable to create order &apos;%1&apos; on target &apos;%2&apos;, planned for &apos;%3&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid orders while loading &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following errors occurred:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitMagicOrdersInterface</name>

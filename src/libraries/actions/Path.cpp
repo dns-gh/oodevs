@@ -54,28 +54,6 @@ Path::Path( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
 }
 
 // -----------------------------------------------------------------------------
-// Name: Path constructor
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-Path::Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : Parameter< QString >( parameter )
-    , converter_( converter )
-{
-    xis >> xml::list( "parameter", *this, &Path::ReadPoint );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Path constructor
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-Path::Path( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
-: Parameter< QString >( OrderParameter( xis.attribute< std::string >( "name" ), "path", false ) )
-    , converter_( converter )
-{
-    xis >> xml::list( "parameter", *this, &Path::ReadPoint );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Path destructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
@@ -138,15 +116,6 @@ void Path::AddPoint( const geometry::Point2f& p, std::size_t i, std::size_t coun
     else
         label = tools::translate( "Parameter", "Way point %1" ).arg( i + 1 );
     AddParameter( *new PathPoint( OrderParameter( label.toStdString(), "pathpoint", false ), converter_, pt ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Path::ReadPoint
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-void Path::ReadPoint( xml::xistream& xis )
-{
-    AddParameter( *new PathPoint( xis, converter_ ) );
 }
 
 // -----------------------------------------------------------------------------

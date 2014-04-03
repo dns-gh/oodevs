@@ -39,7 +39,6 @@ public:
     //@{
     explicit MaintenancePriorities( const kernel::OrderParameter& parameter );
              MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const sword::IdList& message );
-             MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, xml::xistream& xis );
     virtual ~MaintenancePriorities();
     //@}
 
