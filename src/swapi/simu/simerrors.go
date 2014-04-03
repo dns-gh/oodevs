@@ -128,6 +128,9 @@ var reFunctErr *regexp.Regexp = regexp.MustCompile(makePattern(
 	// Happens if client is a bit slow and simulation wants to disconnect it,
 	// not a fatal error...
 	`Client hasn't answered messages from last tick!`,
+	// Invalid date in .ord
+	// http://jira.masagroup.net/browse/SWBUG-12202
+	`invalid gYearMonth value`,
 ))
 
 // Reads reader and possibly returns a concatenation of all <functERR> lines,
