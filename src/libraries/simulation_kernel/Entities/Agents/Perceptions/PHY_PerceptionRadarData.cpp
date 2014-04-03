@@ -13,10 +13,11 @@
 #include "PHY_PerceptionRadarData.h"
 #include "DetectionComputer.h"
 #include "MIL_AgentServer.h"
-#include "Entities/Agents/Units/Radars/PHY_RadarType.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
@@ -67,14 +68,14 @@ PHY_PerceptionRadarData::~PHY_PerceptionRadarData()
 
 namespace
 {
-    double ComputeExtinction( const PHY_RawVisionDataIterator& env, double rVisionNRJ, const PHY_RadarType& type ) 
+    double ComputeExtinction( const PHY_RawVisionDataIterator& env, double rVisionNRJ, double rDistanceMaxModificator, const PHY_RadarType& type ) 
     {
         const double epsilon = 1e-8;
-        double rDistanceModificator = type.ComputeEnvironmentFactor( env.GetCurrentEnv() );
-        return rDistanceModificator <= epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceModificator ;
+        rDistanceMaxModificator *= type.ComputeEnvironmentFactor( env.GetCurrentEnv() );
+        return rDistanceMaxModificator <= epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceMaxModificator;
     }
 
-    bool CanPerceive( const MT_Vector2D& sourcePosition, const MT_Vector2D& targetPosition, double sensorHeight, double perceiverAltitude, double targetAltitude, const PHY_RadarType& type )
+    bool CanPerceive( const MT_Vector2D& sourcePosition, const MT_Vector2D& targetPosition, double sensorHeight, double perceiverAltitude, double targetAltitude, double rDistanceMaxModificator, const PHY_RadarType& type )
     {
         static const double targetHeight = 2.0;
         const MT_Vector3D vSource3D( sourcePosition.rX_, sourcePosition.rY_, sensorHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( sourcePosition.rX_, sourcePosition.rY_ ) + perceiverAltitude );
@@ -83,10 +84,10 @@ namespace
         PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
         double rVisionNRJ = type.GetRadius();
         if( rVisionNRJ > 0 )
-            rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, rVisionNRJ, type );
+            rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, rVisionNRJ, rDistanceMaxModificator, type );
 
         while( rVisionNRJ > 0 && !(++it).End() )
-            rVisionNRJ = ComputeExtinction( it, rVisionNRJ, type );
+            rVisionNRJ = ComputeExtinction( it, rVisionNRJ, rDistanceMaxModificator, type );
 
         return ( rVisionNRJ > 0 );
     }
@@ -109,9 +110,14 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perce
         target.Execute( detectionComputer );
         if( detectionComputer.CanBeSeen() && pRadarType_->CanAcquire( perceiver.GetPion(), target ) )
         {
+            const PHY_Volume* pSignificantVolume = target.GetRole< PHY_RoleInterface_Composantes >().GetSignificantVolume( *pRadarType_ );
+            if( !pSignificantVolume )
+                continue;
+            double rDistanceMaxModificator = pRadarType_->GetVolumeFactor( *pSignificantVolume );
+
             const MT_Vector2D& targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
             double targetAltitude = target.GetRole< PHY_RoleInterface_Location >().GetHeight();
-            if( CanPerceive( perceiverPosition, targetPosition, sensorHeight_, perceiverAltitude, targetAltitude, *pRadarType_ ) )
+            if( CanPerceive( perceiverPosition, targetPosition, sensorHeight_, perceiverAltitude, targetAltitude, rDistanceMaxModificator, *pRadarType_ ) )
             {
                 sAcquisitionData& agentData = acquisitionData_[ &target ];
                 agentData.bUpdated_ = true;

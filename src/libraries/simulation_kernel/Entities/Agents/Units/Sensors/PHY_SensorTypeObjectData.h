@@ -14,27 +14,10 @@
 
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 
-namespace xml
-{
-    class xistream;
-}
-
 class MIL_Object_ABC;
 class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
-
-// Extract "type" and "value" attribute of "distance-modifier" child elements
-// of "parent" in xis. Values must be double within [0, 1], an exception is
-// thrown otherwise.
-std::map< std::string, double > ReadDistanceModifiers( xml::xistream& xis,
-        const std::string& parent );
-
-// Reads posture elements, maps their type to an integer identifier and sets
-// factors[ id ] to the posture factor. "factors" size must be greater or
-// equal to PHY_Posture::GetPostureCount().
-void ReadPostureFactors( xml::xistream& xis, const std::string& parent,
-        std::vector< double >& factors );
 
 // =============================================================================
 // @class  PHY_SensorTypeObjectData
@@ -72,7 +55,7 @@ private:
     //@}
 
 private:
-    double       rDD_;
+    double rDD_;
     T_FactorVector postureSourceFactors_;
 
     // Population

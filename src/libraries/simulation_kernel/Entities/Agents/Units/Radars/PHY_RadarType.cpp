@@ -13,13 +13,15 @@
 #include "PHY_RadarType.h"
 #include "MIL_Time_ABC.h"
 #include "PHY_RadarClass.h"
-#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Entities/Agents/Units/Sensors/DistanceModifiersHelpers.h"
 #include "meteo/rawvisiondata/PHY_RawVisionData.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
@@ -95,6 +97,7 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     , rMinHeight_           ( -std::numeric_limits< double >::max() )
     , rMaxHeight_           (  std::numeric_limits< double >::max() )
     , detectableActivities_ ( PHY_ConsumptionType::GetConsumptionTypes().size(), false )
+    , volumeFactors_        ( PHY_Volume::GetVolumes().size(), 0. )
     , rDetectionTime_       ( std::numeric_limits< double >::max() )
     , rRecognitionTime_     ( std::numeric_limits< double >::max() )
     , rIdentificationTime_  ( std::numeric_limits< double >::max() )
@@ -105,6 +108,7 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     InitializeRange           ( xis );
     InitializeActivities      ( xis );
     InitializeAcquisitionTimes( xis );
+    distance_modifiers::InitializeFactors( PHY_Volume::GetVolumes(), "size-modifiers", volumeFactors_, xis );
     InitializeTerrainModifiers( xis );
 }
 
@@ -400,4 +404,14 @@ double PHY_RadarType::ComputeEnvironmentFactor( unsigned char nEnv ) const
         if( mask & nEnv )
             res *= environmentFactors_.find( mask )->second;
     return res;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::GetVolumeFactor
+// Created: JSR 2014-04-02
+// -----------------------------------------------------------------------------
+double PHY_RadarType::GetVolumeFactor( const PHY_Volume& volume ) const
+{
+    assert( volumeFactors_.size() > volume.GetID() );
+    return volumeFactors_[ volume.GetID() ];
 }

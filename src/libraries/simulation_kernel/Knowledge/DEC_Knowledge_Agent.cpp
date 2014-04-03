@@ -23,7 +23,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent_ABC.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -834,14 +834,14 @@ void DEC_Knowledge_Agent::KillOfficers()
 // Name: DEC_Knowledge_Agent::GetSignificantVolume
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const PHY_Volume* DEC_Knowledge_Agent::GetSignificantVolume( const PHY_SensorTypeAgent_ABC& sensorType ) const
+const PHY_Volume* DEC_Knowledge_Agent::GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const
 {
     const PHY_Volume* pSignificantVolume = 0;
     double rSignificantVolumeFactor = 0;
     const auto& volumes = dataDetection_.GetVisibleVolumes();
     for( auto it = volumes.begin(); it != volumes.end(); ++it )
     {
-        double rVolumeFactor = sensorType.GetFactor( **it );
+        double rVolumeFactor = sensorType.GetVolumeFactor( **it );
         if( rVolumeFactor > rSignificantVolumeFactor )
         {
             pSignificantVolume = &**it;

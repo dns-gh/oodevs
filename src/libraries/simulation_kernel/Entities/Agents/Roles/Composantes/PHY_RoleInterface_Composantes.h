@@ -28,7 +28,8 @@ class PHY_DotationCategory;
 class PHY_FireDamages_Agent;
 class PHY_FireResults_ABC;
 class PHY_MaintenanceComposanteState;
-class PHY_SensorTypeAgent_ABC;
+class PHY_RadarType;
+class PHY_SensorTypeAgent;
 class PHY_Volume;
 
 // =============================================================================
@@ -99,7 +100,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual const PHY_Volume*         GetSignificantVolume     ( const PHY_SensorTypeAgent_ABC& sensorType ) const = 0;
+    virtual const PHY_Volume*         GetSignificantVolume     ( const PHY_SensorTypeAgent& sensorType ) const = 0;
+    virtual const PHY_Volume*         GetSignificantVolume     ( const PHY_RadarType& radarType ) const = 0;
     virtual       T_ComposanteVolumes GetVisibleVolumes      () const = 0;
     virtual       void                BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const = 0;
     virtual const PHY_Composante_ABC* GetMajorComposante       () const = 0;

@@ -11,9 +11,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_SensorTypeAgent.h"
-#include "PHY_SensorTypeObjectData.h"
 #include "MIL_AgentServer.h"
+#include "PHY_SensorType.h"
 #include "PerceptionDistanceComputer.h"
+#include "DistanceModifiersHelpers.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -22,11 +23,11 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h" // LTO
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h" // LTO
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h" // LTO
-#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -38,25 +39,7 @@
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/UrbanPhysicalCapacity.h"
-#include <tools/Resolver.h>
 #include <boost/range/algorithm.hpp>
-
-namespace
-{
-    template< typename C >
-    void InitializeFactors( const C& container, const std::string& strTagName, PHY_SensorTypeAgent::T_FactorVector& factors, xml::xistream& xis )
-    {
-        auto values = ReadDistanceModifiers( xis, strTagName );
-        for( auto it = values.cbegin(); it != values.cend(); ++it )
-        {
-            auto ic = container.find( it->first );
-            if( ic == container.end() )
-                throw MASA_EXCEPTION( xis.context()
-                        + "distance-modifier: unknown type: " + it->first );
-            factors[ ic->second->GetID() ] = it->second;
-        }
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent constructor
@@ -87,11 +70,11 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
 
     xis >> xml::start( "distance-modifiers" );
 
-    InitializeFactors( PHY_Volume::GetVolumes(), "size-modifiers", volumeFactors_, xis );
-    InitializeFactors( weather::PHY_Precipitation::GetPrecipitations (), "precipitation-modifiers", precipitationFactors_, xis );
-    InitializeFactors( weather::PHY_Lighting::GetLightings(), "visibility-modifiers", lightingFactors_, xis );
-    ReadPostureFactors( xis, "source-posture-modifiers", postureSourceFactors_ );
-    ReadPostureFactors( xis, "target-posture-modifiers", postureTargetFactors_ );
+    distance_modifiers::InitializeFactors( PHY_Volume::GetVolumes(), "size-modifiers", volumeFactors_, xis );
+    distance_modifiers::InitializeFactors( weather::PHY_Precipitation::GetPrecipitations (), "precipitation-modifiers", precipitationFactors_, xis );
+    distance_modifiers::InitializeFactors( weather::PHY_Lighting::GetLightings(), "visibility-modifiers", lightingFactors_, xis );
+    distance_modifiers::ReadPostureFactors( xis, "source-posture-modifiers", postureSourceFactors_ );
+    distance_modifiers::ReadPostureFactors( xis, "target-posture-modifiers", postureTargetFactors_ );
     InitializeEnvironmentFactors( xis );
     InitializePopulationFactors( xis );
     InitializeUrbanBlockFactors( xis );
@@ -578,7 +561,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     if( !pSignificantVolume )
         return PHY_PerceptionLevel::notSeen_;
 
-    double rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
+    double rDistanceMaxModificator  = GetVolumeFactor( *pSignificantVolume );
            rDistanceMaxModificator *= GetTargetFactor( target );
            rDistanceMaxModificator *= GetSourceFactor( source );
 
@@ -657,7 +640,7 @@ const double PHY_SensorTypeAgent::ComputeDistanceModificator( const MIL_Agent_AB
 {
     double rDistanceMaxModificator = 1.;
     if( const PHY_Volume* pSignificantVolume = target.GetRole< PHY_RoleInterface_Composantes >().GetSignificantVolume( *this ) )
-        rDistanceMaxModificator  = GetFactor( *pSignificantVolume );
+        rDistanceMaxModificator  = GetVolumeFactor( *pSignificantVolume );
     rDistanceMaxModificator *= GetTargetFactor( target );
     rDistanceMaxModificator *= GetSourceFactor( perceiver );
     return rDistanceMaxModificator;
@@ -700,10 +683,10 @@ const PHY_SensorType& PHY_SensorTypeAgent::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::GetFactor
+// Name: PHY_SensorTypeAgent::GetVolumeFactor
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-double PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
+double PHY_SensorTypeAgent::GetVolumeFactor( const PHY_Volume& volume ) const
 {
     assert( volumeFactors_.size() > volume.GetID() );
     return volumeFactors_[ volume.GetID() ];

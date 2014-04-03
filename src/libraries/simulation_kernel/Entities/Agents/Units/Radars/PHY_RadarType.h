@@ -15,6 +15,7 @@
 class PHY_RadarClass;
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
+class PHY_Volume;
 class MIL_Time_ABC;
 
 // =============================================================================
@@ -44,6 +45,7 @@ public:
     const PHY_RadarClass& GetClass() const;
     double GetRadius() const;
     double ComputeEnvironmentFactor( unsigned char nEnv ) const;
+    double GetVolumeFactor( const PHY_Volume& volume ) const;
     //@}
 
 private:
@@ -86,9 +88,10 @@ private:
     double rMaxHeight_;
 
     T_ActivityVector detectableActivities_;
+    std::vector< double > volumeFactors_;
     std::map< unsigned int, double > environmentFactors_;
 
-    // Acquistion times
+    // Acquisition times
     double rDetectionTime_;
     double rRecognitionTime_;
     double rIdentificationTime_;

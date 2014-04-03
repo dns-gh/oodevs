@@ -12,32 +12,23 @@
 #ifndef __PHY_SensorTypeAgent_h_
 #define __PHY_SensorTypeAgent_h_
 
-#include "PHY_SensorTypeAgent_ABC.h"
-#include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
 
-namespace xml
-{
-    class xistream;
-}
-
 class PHY_PerceptionLevel;
-class PHY_RoleInterface_Posture;
-class PHY_RoleInterface_Posture;
-class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class MIL_UrbanObject_ABC;
 class PHY_SensorType;
+class PHY_Volume;
 
 // =============================================================================
 // @class  PHY_SensorTypeAgent
 // Created: JVT 2004-08-03
 // Modified: JVT 2004-09-28
 // =============================================================================
-class PHY_SensorTypeAgent : public PHY_SensorTypeAgent_ABC
+class PHY_SensorTypeAgent : private boost::noncopyable
 {
 public:
              PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistream& xis );
@@ -45,15 +36,15 @@ public:
 
     //! @name Accessors
     //@{
-          double        GetSquareProximityDistance() const;
-          double        GetMaxDistance            () const;
-          double        GetAngle                  () const;
-    virtual double      GetFactor                 ( const PHY_Volume& volume ) const;
-          double        GetUrbanBlockFactor( const MIL_UrbanObject_ABC& target ) const;
-          bool            CanScan                   () const;
-          bool            CanDetectFirer            ( double distance ) const;
-    const PHY_SensorType& GetType                   () const;
-          unsigned int    GetDelay                  () const;
+    double GetSquareProximityDistance() const;
+    double GetMaxDistance() const;
+    double GetAngle() const;
+    double GetVolumeFactor( const PHY_Volume& volume ) const;
+    double GetUrbanBlockFactor( const MIL_UrbanObject_ABC& target ) const;
+    bool CanScan() const;
+    bool CanDetectFirer( double distance ) const;
+    const PHY_SensorType& GetType() const;
+    unsigned int GetDelay() const;
     //@}
 
     //! @name Operations
@@ -63,8 +54,8 @@ public:
     const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_PopulationConcentration& target, double rSensorHeight ) const;
     const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow& target, double rSensorHeight, T_PointVector& shape ) const;
     double ComputePerceptionAccuracy( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow& target, double rSensorHeight ) const;
-    const double IdentificationDistance   () const;
-    const double ReconnoissanceDistance   () const;
+    const double IdentificationDistance() const;
+    const double ReconnoissanceDistance() const;
     void ComputeDistances( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target, double& identification, double& recognition, double& detection ) const;
     const double RayTrace( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double sensorHeight, bool posted ) const;
     //@}
@@ -119,7 +110,7 @@ private:
     const PHY_SensorType& type_;
 
     double rAngle_;
-    bool     bScanningAllowed_;
+    bool bScanningAllowed_;
     double rRecognitionFirerDist_;
 
     // Distances

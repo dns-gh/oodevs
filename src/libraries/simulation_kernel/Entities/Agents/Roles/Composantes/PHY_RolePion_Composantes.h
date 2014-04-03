@@ -203,7 +203,8 @@ public:
 
     //! @name Perception / Knowledge
     //@{
-    virtual const PHY_Volume* GetSignificantVolume( const PHY_SensorTypeAgent_ABC& sensorType ) const;
+    virtual const PHY_Volume* GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const;
+    virtual const PHY_Volume* GetSignificantVolume( const PHY_RadarType& radarType ) const;
     virtual T_ComposanteVolumes GetVisibleVolumes() const;
     virtual void BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
     virtual const PHY_ComposantePion* GetMajorComposante() const;
@@ -322,6 +323,8 @@ private:
     void GetStockTransporterCapacity( const PHY_DotationNature& nature, double& rWeightMax, double& rVolumeMax ) const;
     void AddEquipmentDotation( client::UnitAttributes& msg, const PHY_ComposanteTypePion& compType, const T_ComposanteTypeProperties& properties ) const;
     void MarkAwayComposantesAsChanged();
+    template< typename T >
+    const PHY_Volume* DoGetSignificantVolume( const T& type ) const;
     //@}
 
 private:
