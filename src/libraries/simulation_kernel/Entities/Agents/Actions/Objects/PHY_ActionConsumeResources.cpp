@@ -19,7 +19,7 @@
 
 namespace
 {
-    const PHY_DotationType& GetType( unsigned value )
+    const PHY_DotationType& GetType( unsigned int value )
     {
         auto type = PHY_DotationType::FindDotationType( value );
         if( !type )
@@ -27,7 +27,7 @@ namespace
         return *type;
     }
 
-    int GetSteps( double duration, unsigned tickDuration )
+    int GetSteps( double duration, unsigned int tickDuration )
     {
         if( duration < 0 )
             throw MASA_EXCEPTION( "invalid negative duration" );
@@ -36,9 +36,9 @@ namespace
 }
 
 PHY_ActionConsumeResources::PHY_ActionConsumeResources( MIL_Entity_ABC& unit,
-                                                        unsigned type,
+                                                        unsigned int type,
                                                         double value, double duration,
-                                                        unsigned tickDuration )
+                                                        unsigned int tickDuration )
     : PHY_DecisionCallbackAction_ABC( unit )
     , dotations_( unit.GetRole< dotation::PHY_RoleInterface_Dotations >() )
     , type_     ( GetType( type ) )

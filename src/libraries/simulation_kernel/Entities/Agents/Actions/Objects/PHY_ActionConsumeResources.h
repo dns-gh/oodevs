@@ -29,10 +29,10 @@ public:
     // Consumes value (in %) dotations during duration (in seconds)
     // from entity and selected dotation category
     PHY_ActionConsumeResources( MIL_Entity_ABC& entity,
-                                unsigned category,
+                                unsigned int category,
                                 double value,
                                 double duration,
-                                unsigned tickDuration );
+                                unsigned int tickDuration );
     virtual ~PHY_ActionConsumeResources();
 
     virtual void Execute();
