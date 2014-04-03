@@ -76,7 +76,11 @@ private:
     virtual void AfterSelection();
 
     void DrawLines( float width, uint8_t r, uint8_t g, uint8_t b ) const;
-    void DrawPoint( geometry::Point2f p ) const;
+    void DrawPoints() const;
+    void DrawPoint( geometry::Point2f p, bool invert = false ) const;
+    bool IsNear( float squareDistance, geometry::Point2f point ) const;
+    bool PickWaypoint( geometry::Point2f point );
+    void PickSegment( geometry::Point2f point );
     //@}
 
 private slots:
@@ -94,6 +98,13 @@ private:
         boost::optional< uint32_t > waypoint_;
     };
 
+    struct Hover
+    {
+        geometry::Point2f coordinate_;
+        std::size_t waypoint_;
+        bool insert_;
+    };
+
 private:
     //! @name Member data
     //@{
@@ -104,7 +115,7 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > element_;
     std::vector< geometry::Point2f > positions_;
     std::vector< Point > path_;
-    boost::optional< std::pair< geometry::Point2f, std::size_t > > hovered_;
+    boost::optional< Hover > hovered_;
     geometry::Point2f point_;
     bool lock_;
     //@}

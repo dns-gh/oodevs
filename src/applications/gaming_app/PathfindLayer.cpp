@@ -76,10 +76,7 @@ void PathfindLayer::Paint( gui::Viewport_ABC& )
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
     DrawLines( 5, 34, 105, 187 );
     DrawLines( 3, 0, 179, 253 );
-    for( auto it = positions_.begin(); it != positions_.end(); ++it )
-        DrawPoint( *it );
-    if( hovered_ )
-        DrawPoint( hovered_->first );
+    DrawPoints();
     glPopAttrib();
 }
 
@@ -95,13 +92,31 @@ void PathfindLayer::DrawLines( float width, uint8_t r, uint8_t g, uint8_t b ) co
     }
 }
 
-void PathfindLayer::DrawPoint( geometry::Point2f p ) const
+void PathfindLayer::DrawPoints() const
 {
-    glColor4f( COLOR_WHITE );
+    for( std::size_t i = 0; i < positions_.size(); ++i )
+        DrawPoint( positions_[i],
+            hovered_ && !hovered_->insert_ && hovered_->waypoint_ == i );
+    if( hovered_ && hovered_->insert_ )
+        DrawPoint( hovered_->coordinate_ );
+}
+
+void PathfindLayer::DrawPoint( geometry::Point2f p, bool invert ) const
+{
+    if( invert )
+        glColor4f( COLOR_BLACK );
+    else
+        glColor4f( COLOR_WHITE );
     tools_.DrawDisc( p, 6, gui::GlTools_ABC::pixels );
-    glColor4f( COLOR_BLACK );
+    if( invert )
+        glColor4f( COLOR_WHITE );
+    else
+        glColor4f( COLOR_BLACK );
     tools_.DrawDisc( p, 5, gui::GlTools_ABC::pixels );
-    glColor4f( COLOR_WHITE );
+    if( invert )
+        glColor4f( COLOR_BLACK );
+    else
+        glColor4f( COLOR_WHITE );
     tools_.DrawDisc( p, 3, gui::GlTools_ABC::pixels );
 }
 
@@ -203,11 +218,35 @@ namespace
     const auto threshold = 200; // pixels
 }
 
-bool PathfindLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Point2f& point )
+bool PathfindLayer::IsNear( float squareDistance, geometry::Point2f point ) const
 {
-    hovered_ = boost::none;
-    if( path_.empty() || lock_ )
-        return false;
+    const auto pixels = tools_.Pixels( point );
+    return squareDistance < threshold * pixels * pixels;
+}
+
+bool PathfindLayer::PickWaypoint( geometry::Point2f point )
+{
+    // path iterated backwards to select the waypoint on top
+    // when several of them overlap
+    for( auto it = path_.rbegin(); it != path_.rend(); ++it )
+    {
+        if( it->waypoint_
+            && IsNear( point.SquareDistance( it->coordinate_ ), point ) )
+        {
+            const Hover hover = {
+                point,
+                *it->waypoint_,
+                false
+            };
+            hovered_ = hover;
+            return true;
+        }
+    }
+    return false;
+}
+
+void PathfindLayer::PickSegment( geometry::Point2f point )
+{
     std::size_t waypoint = 0;
     float distance = std::numeric_limits< float >::infinity();
     for( auto it = path_.begin(); it != path_.end() - 1; ++it )
@@ -217,42 +256,59 @@ bool PathfindLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Poi
         const auto projection =
             geometry::Segment2f( (it + 1)->coordinate_, it->coordinate_ )
                 .Project( point );
-        const auto d = projection.SquareDistance( point );
-        const auto pixels = tools_.Pixels( projection );
-        if( d < distance && d < threshold * pixels * pixels )
+        const auto d = point.SquareDistance( projection );
+        if( d < distance && IsNear( d, point ) )
         {
             distance = d;
-            hovered_ = std::make_pair( projection, waypoint );
+            const Hover hover = {
+                projection,
+                waypoint,
+                true
+            };
+            hovered_ = hover;
         }
     }
+}
+
+bool PathfindLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Point2f& point )
+{
+    hovered_ = boost::none;
+    if( path_.empty() || lock_ )
+        return false;
+    if( PickWaypoint( point ) )
+        return false;
+    PickSegment( point );
     return false;
 }
 
 bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( event->button() != Qt::LeftButton || !hovered_ )
-        return false;
-    const auto pixels = tools_.Pixels( point );
-    if( point.SquareDistance( hovered_->first ) >= threshold * pixels * pixels )
-        return false;
-    hovered_->first = point;
-    QWidget w;
-    dnd::CreateDragObject( this, &w );
-    return true;
+    if( event->button() == Qt::LeftButton && hovered_
+        && IsNear( point.SquareDistance( hovered_->coordinate_ ), point ) )
+    {
+        hovered_->coordinate_ = point;
+        QWidget w;
+        dnd::CreateDragObject( this, &w );
+        return true;
+    }
+    return false;
 }
 
 bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* /*event*/, const geometry::Point2f& point )
 {
-    hovered_->first = point;
+    hovered_->coordinate_ = point;
     return true;
 }
 
 bool PathfindLayer::HandleDropEvent( QDropEvent* /*event*/, const geometry::Point2f& point )
 {
-    if( hovered_->second < positions_.size() )
+    if( hovered_->waypoint_ < positions_.size() )
     {
-        const auto it = positions_.begin() + hovered_->second + 1;
-        positions_.insert( it, point );
+        const auto it = positions_.begin() + hovered_->waypoint_;
+        if( hovered_->insert_ )
+            positions_.insert( it + 1, point );
+        else
+            *it = point;
         SendRequest();
     }
     return true;
