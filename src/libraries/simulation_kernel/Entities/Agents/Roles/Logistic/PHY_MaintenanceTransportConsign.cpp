@@ -347,6 +347,8 @@ void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_Co
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         throw MASA_EXCEPTION( "transport consign not in a waiting for transporter selection state" );
+    if( component_ )
+        throw MASA_EXCEPTION( "transport consign already has a repair team selected" );
     component_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType(), &type );
     destination_ = destination;
     if( component_ )
