@@ -97,6 +97,7 @@ void ActionsLogger::SaveTo( const tools::Path& filename, const T_Filter& filter 
         xml::xosubstream sub( xos );
         sub << xml::start( "action" );
         protocol::Write( sub, adapter, it->second.message() );
+        // kludge: overwrite the time value from protocol::Write which doesn't use the right format
         sub << xml::attribute( "time", boost::posix_time::to_iso_extended_string( it->first ) );
     }
 }
