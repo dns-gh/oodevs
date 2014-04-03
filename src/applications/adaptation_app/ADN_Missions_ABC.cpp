@@ -97,6 +97,16 @@ void ADN_Missions_ABC::ReadParameter( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Missions_ABC::CheckMissionDataConsistency
+// Created: LDC 2014-04-03
+// -----------------------------------------------------------------------------
+void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& checker )
+{
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
+        (*it)->CheckDatabaseValidity( checker );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Missions_ABC::CheckDataConsistency
 // Created: NPT 2013-01-24
 // -----------------------------------------------------------------------------
@@ -104,10 +114,7 @@ void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& chec
 {
     CheckFieldDataConsistency( descriptionContext_.GetValue( language ), checker );
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
-    {
         CheckFieldDataConsistency( (*it)->description_.GetValue( language ), checker );
-        (*it)->CheckDatabaseValidity( checker );
-    }
     CheckFieldDataConsistency( descriptionBehavior_.GetValue( language ), checker );
     CheckFieldDataConsistency( descriptionSpecific_.GetValue( language ), checker );
     CheckFieldDataConsistency( descriptionComment_.GetValue( language ), checker );
