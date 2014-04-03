@@ -6128,6 +6128,13 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Weapons_Data_WeaponInfos</name>
+    <message>
+        <source>Weapon system</source>
+        <translation>Système d&apos;arme</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Name</source>
