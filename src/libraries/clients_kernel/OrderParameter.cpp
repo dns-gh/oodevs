@@ -15,6 +15,7 @@
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
+#include <boost/noncopyable.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
