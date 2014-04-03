@@ -57,6 +57,7 @@
     <xs:attribute name="max-length" type="xs:nonNegativeInteger" use="optional"/>
     <xs:attribute name="dictionary-kind" type="LabelKind" use="optional"/>
     <xs:attribute name="dictionary-language" type="xs:language" use="optional"/>
+    <xs:attribute name="supervisor" type="xs:boolean" use="optional"/>
   </xs:complexType>
   <xs:complexType name="ProfileAttribute">
     <xs:annotation>
