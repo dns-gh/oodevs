@@ -209,6 +209,16 @@ double PHY_DotationGroup::Supply( const PHY_DotationCategory& category, double r
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::SupplyAll
+// Created: BAX 2014-04-03
+// -----------------------------------------------------------------------------
+void PHY_DotationGroup::SupplyAll( double rFactor )
+{
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
+        it->second->Supply( it->second->GetCapacity() * rFactor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup::Resupply
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------

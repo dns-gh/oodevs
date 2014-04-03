@@ -356,7 +356,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_CanUseDotation",
         boost::function< bool ( const PHY_DotationCategory* ) >( boost::bind( &DEC_AgentFunctions::CanUseDotation, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_GetDotation",
-        boost::function< const PHY_DotationCategory*( unsigned ) >( [&]( unsigned value ){
+        boost::function< const PHY_DotationCategory*( unsigned int ) >( [&]( unsigned int value ){
             return DEC_AgentFunctions::GetDotation( GetPion(), value );
     }));
     RegisterFunction( "DEC_Agent_IlluminateRange", boost::bind( &DEC_AgentFunctions::GetIlluminatingRange, boost::cref( GetPion() ) ) );
@@ -732,8 +732,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_CreateBreakdown",
         boost::function< bool( const PHY_ComposanteTypePion*, unsigned int ) >( boost::bind( &DEC_AgentFunctions::CreateBreakdown, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_StartConsumingResources",
-        boost::function< unsigned( const PHY_DotationCategory*, double, double ) >(
-            [&]( const PHY_DotationCategory* category, double value, double duration ) {
+        boost::function< unsigned int( unsigned int, double, double ) >(
+            [&]( unsigned int category, double value, double duration ) {
                 return DEC_ActionFunctions::StartAction< PHY_ActionConsumeResources >( GetPion(), category, value, duration, MIL_Time_ABC::GetTime().GetTickDuration() );
     }));
 
