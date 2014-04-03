@@ -35,6 +35,20 @@ type Point struct {
 	Y float64
 }
 
+type PathPoint struct {
+	Point    Point
+	Waypoint int32
+	Reached  bool
+}
+
+func NewPathPoint(point Point) PathPoint {
+	return PathPoint{
+		Point:    point,
+		Waypoint: -1,
+		Reached:  false,
+	}
+}
+
 type Profile struct {
 	Login               string
 	Password            string

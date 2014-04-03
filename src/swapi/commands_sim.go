@@ -1691,7 +1691,22 @@ func (c *Client) RecoverStocks(unitId uint32, resources map[uint32]*ResourceDota
 		sword.UnitMagicAction_partial_recovery)
 }
 
-func (c *Client) PathfindRequest(unitId uint32, position ...Point) ([]Point, error) {
+func ReadPathPoints(pathPoints []*sword.PathPoint) []PathPoint {
+	points := []PathPoint{}
+	for _, v := range pathPoints {
+		point := NewPathPoint(ReadPoint(v.GetCoordinate()))
+		if waypoint := v.Waypoint; waypoint != nil {
+			point.Waypoint = *waypoint
+		}
+		if reached := v.Reached; reached != nil {
+			point.Reached = *reached
+		}
+		points = append(points, point)
+	}
+	return points
+}
+
+func (c *Client) PathfindRequest(unitId uint32, position ...Point) ([]PathPoint, error) {
 	positions := make([]*sword.CoordLatLong, len(position))
 	for i, p := range position {
 		positions[i] = MakeCoordLatLong(p)
@@ -1707,7 +1722,7 @@ func (c *Client) PathfindRequest(unitId uint32, position ...Point) ([]Point, err
 			},
 		},
 	}
-	var points []Point
+	var points []PathPoint
 	handler := func(msg *sword.SimToClient_Content) error {
 		reply := msg.GetPathfindRequestAck()
 		if reply == nil {
@@ -1717,7 +1732,7 @@ func (c *Client) PathfindRequest(unitId uint32, position ...Point) ([]Point, err
 		if code != sword.PathfindRequestAck_no_error {
 			return makeError(reply, int32(code), sword.PathfindRequestAck_ErrorCode_name)
 		}
-		points = ReadPoints(reply.GetPath().GetLocation().GetCoordinates())
+		points = ReadPathPoints(reply.GetPath().GetPoints())
 		return nil
 	}
 	err := <-c.postSimRequest(msg, handler)

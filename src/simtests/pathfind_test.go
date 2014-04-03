@@ -79,38 +79,34 @@ func (s *TestSuite) TestPathfindRequest(c *C) {
 	points, err := client.PathfindRequest(unit.Id, from, to)
 	c.Assert(err, IsNil)
 	c.Assert(len(points), Greater, 1)
-	c.Assert(from, IsNearby, points[0])
-	c.Assert(to, IsNearby, points[len(points)-1])
+	c.Assert(from, IsNearby, points[0].Point)
+	c.Assert(to, IsNearby, points[len(points)-1].Point)
 
 	// Pathfind request from -> from
 	points, err = client.PathfindRequest(unit.Id, from, from)
 	c.Assert(err, IsNil)
 	c.Assert(len(points), Equals, 2)
-	c.Assert(from, IsNearby, points[0])
-	c.Assert(from, IsNearby, points[1])
+	c.Assert(from, IsNearby, points[0].Point)
+	c.Assert(from, IsNearby, points[1].Point)
 
 	// No other client can receive the acknowledge
 	client2.Unregister(handlerId)
 	c.Assert(seen, Equals, false)
 }
 
-func CheckPointOrder(objectives, points []swapi.Point) bool {
-	index := 0
-	for _, value1 := range objectives {
-		content := points[index:len(points)]
-		found := false
-		for k, value2 := range content {
-			if isNearby(value1, value2) {
-				index = k + 1
-				found = true
-				break
+func CheckWaypoints(c *C, waypoints []swapi.Point, result []swapi.PathPoint,
+	waypointsReached []bool) {
+	// Check waypoint count
+	c.Assert(int32(len(waypoints)-1), Equals, result[len(result)-1].Waypoint)
+	// Check waypoint value
+	for _, value := range result {
+		if index := value.Waypoint; index != -1 {
+			if value.Reached {
+				c.Assert(isNearby(waypoints[index], value.Point), Equals, true)
 			}
-		}
-		if !found {
-			return false
+			c.Assert(value.Reached, Equals, waypointsReached[index])
 		}
 	}
-	return true
 }
 
 func (s *TestSuite) TestPointOrder(c *C) {
@@ -118,15 +114,26 @@ func (s *TestSuite) TestPointOrder(c *C) {
 	defer stopSimAndClient(c, sim, client)
 
 	automat := createAutomat(c, client)
-	positions := []swapi.Point{swapi.Point{X: -15.9296, Y: 28.3601},
-		swapi.Point{X: -15.8423, Y: 28.4106},
-		swapi.Point{X: -15.9339, Y: 28.3316},
-		swapi.Point{X: -15.7327, Y: 28.251}}
+	positions := []swapi.Point{swapi.Point{X: -15.9248, Y: 28.2645},
+		swapi.Point{X: -15.8429, Y: 28.3308},
+		swapi.Point{X: -15.8640, Y: 28.2507},
+		swapi.Point{X: -15.8946, Y: 28.3189}}
 
 	unit, err := client.CreateUnit(automat.Id, UnitType, positions[0])
 	c.Assert(err, IsNil)
 
 	points, err := client.PathfindRequest(unit.Id, positions...)
 	c.Assert(err, IsNil)
-	c.Assert(CheckPointOrder(positions, points), Equals, true)
+	CheckWaypoints(c, positions, points, []bool{true, true, true, true})
+
+	// Compute path with an invalid position
+	positions = []swapi.Point{swapi.Point{X: -15.918268777007073, Y: 28.3155935041111},
+		swapi.Point{X: -15.932060713923917, Y: 28.325101964202737},
+		swapi.Point{X: -15.951392003907085, Y: 28.352895879429273}, // invalid
+		swapi.Point{X: -15.932953364977887, Y: 28.365605325676778},
+		swapi.Point{X: -15.946757028026328, Y: 28.378285449675836}} // invalid
+
+	points, err = client.PathfindRequest(unit.Id, positions...)
+	c.Assert(err, IsNil)
+	CheckWaypoints(c, positions, points, []bool{true, true, false, true, false})
 }
