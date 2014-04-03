@@ -538,6 +538,120 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualSelection(c *C) {
 	)
 }
 
+func (s *TestSuite) TestMaintenanceHandlingsWithManualTransporterMultipleSelection(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	const TowTruck = 4
+	SetManualMaintenance(c, client, tc2Id)
+	handlingId := uint32(0)
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
+			func(ctx *MaintenanceCheckContext) error {
+				handlingId = ctx.handlingId
+				return nil
+			}),
+	)
+	err := client.Pause()
+	c.Assert(err, IsNil)
+	err = client.SelectMaintenanceTransporter(handlingId, TowTruck)
+	c.Assert(err, IsNil)
+	err = client.SelectMaintenanceTransporter(handlingId, TowTruck)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: transport consign already has a repair team selected")
+}
+
+func (s *TestSuite) TestMaintenanceHandlingsWithManualDiagnosisTeamMultipleSelection(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	const TowTruck = 4
+	const gyroscrew_1 = 6
+	SetManualMaintenance(c, client, tc2Id)
+	handlingId := uint32(0)
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck)
+			}),
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		checkUpdateThenApply("waiting_for_diagnosis_team_selection", tc2, true,
+			func(ctx *MaintenanceCheckContext) error {
+				handlingId = ctx.handlingId
+				return nil
+			}),
+	)
+	err := client.Pause()
+	c.Assert(err, IsNil)
+	err = client.SelectDiagnosisTeam(handlingId, gyroscrew_1)
+	c.Assert(err, IsNil)
+	err = client.SelectDiagnosisTeam(handlingId, gyroscrew_1)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: diagnosis consign already has a diagnosis team selected")
+}
+
+func (s *TestSuite) TestMaintenanceHandlingsWithManualRepairerMultipleSelection(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	bldId := getSomeFormationByName(c, d, "Maintenance BLD").Id
+	bld := swapi.MakeFormationTasker(bldId)
+	const TowTruck = 4
+	const gyroscrew_1 = 6
+	const gyroscrew_2 = 7
+	SetManualMaintenance(c, client, tc2Id)
+	SetManualMaintenance(c, client, bldId)
+	handlingId := uint32(0)
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck)
+			}),
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		checkUpdateThenApply("waiting_for_diagnosis_team_selection", tc2, true,
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectDiagnosisTeam(ctx.handlingId, gyroscrew_1)
+			}),
+		checkUpdate("diagnosing", tc2),
+		checkUpdate("searching_upper_levels", tc2),
+		checkUpdateThenApply("waiting_for_transporter_selection", bld, true,
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck)
+			}),
+		checkUpdate("transporter_moving_to_supply", bld),
+		checkUpdate("transporter_loading", bld),
+		checkUpdate("transporter_moving_back", bld),
+		checkUpdate("transporter_unloading", bld),
+		checkUpdateThenApply("waiting_for_repair_team_selection", bld, true,
+			func(ctx *MaintenanceCheckContext) error {
+				handlingId = ctx.handlingId
+				return nil
+			}),
+	)
+	err := client.Pause()
+	c.Assert(err, IsNil)
+	err = client.SelectRepairTeam(handlingId, gyroscrew_2)
+	c.Assert(err, IsNil)
+	err = client.SelectRepairTeam(handlingId, gyroscrew_2)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: repair consign not in a waiting for repair team selection state")
+}
+
 func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
