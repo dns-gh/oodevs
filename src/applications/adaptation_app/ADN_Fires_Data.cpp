@@ -163,7 +163,7 @@ void ADN_Fires_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output ) con
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_Fires_Data::FireClassInfos::FireClassInfos()
-    : agents_          ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_extinguisher_agent ).categories_ )
+    : agents_          ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_extinguisher_agent ).categories_ )
     , initialHeat_     ( 0 )
     , maxHeat_         ( 0 )
     , increaseRate_    ( 0 )

@@ -47,7 +47,7 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo()
 ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
     : nId_                   ( ADN_Resources_Data::idManager_.GetNextId() )
     , parentResource_        ( parentDotation )
-    , category_              ( ENT_Tr::ConvertFromDotationCategory( parentDotation.nType_ ) )
+    , category_              ( ENT_Tr::ConvertFromDotationType( parentDotation.nType_ ) )
     , strCodeEMAT6_          ()
     , strCodeEMAT8_          ()
     , strCodeLFRIL_          ()
@@ -70,7 +70,7 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
 ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation, unsigned int id )
     : nId_                   ( id )
     , parentResource_        ( parentDotation )
-    , category_              ( ENT_Tr::ConvertFromDotationCategory( parentDotation.nType_ ) )
+    , category_              ( ENT_Tr::ConvertFromDotationType( parentDotation.nType_ ) )
     , strCodeEMAT6_          ()
     , strCodeEMAT8_          ()
     , strCodeLFRIL_          ()
@@ -683,8 +683,8 @@ bool ADN_Resources_Data::AmmoCategoryInfo::HasUrbanAttrition() const
 // Name: ResourceInfos::ResourceInfos
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-ADN_Resources_Data::ResourceInfos::ResourceInfos( sword::DotationCategory nType, T_CategoryInfos_Vector& networkUsableResources )
-    : ADN_RefWithName( ENT_Tr::ConvertFromDotationCategory( nType ) )
+ADN_Resources_Data::ResourceInfos::ResourceInfos( sword::DotationType nType, T_CategoryInfos_Vector& networkUsableResources )
+    : ADN_RefWithName( ENT_Tr::ConvertFromDotationType( nType ) )
     , nType_( nType )
     , categories_( true )
     , networkUsableResources_( &networkUsableResources )
@@ -811,8 +811,8 @@ ADN_Resources_Data::ADN_Resources_Data()
     , resources_ ()
     , networkUsableResources_( true, false )
 {
-    for( int n = 0; n < sword::DotationCategory_MAX; ++n )
-        resources_.AddItem( new ResourceInfos( static_cast< sword::DotationCategory >( n ), networkUsableResources_ ) );
+    for( int n = 0; n < sword::DotationType_MAX; ++n )
+        resources_.AddItem( new ResourceInfos( static_cast< sword::DotationType >( n ), networkUsableResources_ ) );
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
         ( *it )->categories_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
@@ -843,7 +843,7 @@ void ADN_Resources_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Resources_Data::ReadResource( xml::xistream& input )
 {
     std::string category = input.attribute< std::string >( "category" );
-    auto nResourceType = ENT_Tr::ConvertToDotationCategory( category );
+    auto nResourceType = ENT_Tr::ConvertToDotationType( category );
     if( nResourceType == -1 )
         throw MASA_EXCEPTION( tools::translate( "ADN_Resources_Data", "Equipment - Invalid resource type '%1'" ).arg( category.c_str() ).toStdString() );
     resources_.at( nResourceType )->ReadArchive( input, *translations_ );
@@ -886,7 +886,7 @@ void ADN_Resources_Data::WriteArchive( xml::xostream& output ) const
         for( auto it = resources_.begin(); it != resources_.end(); ++it )
             if( ( *it )->categories_.GetErrorStatus() == eError )
                 throw MASA_EXCEPTION( tools::translate( "ADN_Resources_Data", "Invalid data on tab '%1', subtab '%2'" )
-                                      .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ENT_Tr::ConvertFromDotationCategory( ( *it )->nType_, ENT_Tr::eToTr ).c_str() ).toStdString() );
+                                      .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ENT_Tr::ConvertFromDotationType( ( *it )->nType_, ENT_Tr::eToTr ).c_str() ).toStdString() );
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
     }
 
@@ -939,7 +939,7 @@ ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::FindResourceCategory( cons
 // Name: ADN_Resources_Data::GetResource
 // Created: APE 2005-01-12
 // -----------------------------------------------------------------------------
-ADN_Resources_Data::ResourceInfos& ADN_Resources_Data::GetResource( sword::DotationCategory nType )
+ADN_Resources_Data::ResourceInfos& ADN_Resources_Data::GetResource( sword::DotationType nType )
 {
     return *resources_[ nType ];
 }
@@ -1026,7 +1026,7 @@ QStringList ADN_Resources_Data::GetResourcesWithDirectFire()
 // Name: ADN_Resources_Data::GetResourcesThatUse
 // Created: ABR 2012-08-06
 // -----------------------------------------------------------------------------
-QStringList ADN_Resources_Data::GetResourcesThatUse( ADN_Natures_Data::NatureInfos& object, sword::DotationCategory familly )
+QStringList ADN_Resources_Data::GetResourcesThatUse( ADN_Natures_Data::NatureInfos& object, sword::DotationType familly )
 {
     QStringList result;
     ResourceInfos& resourceInfos = GetResource( familly );
@@ -1043,9 +1043,9 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( ADN_Natures_Data::NatureInf
 // Name: ADN_Resources_Data::IsMineOrExplosive
 // Created: ABR 2012-11-14
 // -----------------------------------------------------------------------------
-bool ADN_Resources_Data::IsMineOrExplosive( sword::DotationCategory type )
+bool ADN_Resources_Data::IsMineOrExplosive( sword::DotationType type )
 {
-    return type == sword::category_mine || type == sword::category_explosive;
+    return type == sword::dotation_type_mine || type == sword::dotation_type_explosive;
 }
 
 // -----------------------------------------------------------------------------

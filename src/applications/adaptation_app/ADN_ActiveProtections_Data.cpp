@@ -110,7 +110,7 @@ namespace
 {
     ADN_Type_Vector_ABC< ADN_Resources_Data::CategoryInfo >& GetMunitionsVector()
     {
-        return ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_ammunition ).categories_;
+        return ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_ammunition ).categories_;
     }
 }
 

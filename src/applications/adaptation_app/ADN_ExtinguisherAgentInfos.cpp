@@ -17,7 +17,7 @@
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_ExtinguisherAgentInfos::ADN_ExtinguisherAgentInfos( ADN_Resources_Data::CategoryInfo* agent )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_extinguisher_agent ).categories_, agent, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_extinguisher_agent ).categories_, agent, true )
     , heatDecreaseRate_( 0 )
 {
     // NOTHING

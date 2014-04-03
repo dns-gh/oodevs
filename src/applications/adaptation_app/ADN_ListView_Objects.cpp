@@ -346,7 +346,7 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
                                         ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), eSensors );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                         ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
-                                        ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), eResources, sword::category_ammunition );
+                                        ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), eResources, sword::dotation_type_ammunition );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                         ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
                                         ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), eEquipments );

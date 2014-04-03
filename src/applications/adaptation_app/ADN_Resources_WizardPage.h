@@ -96,9 +96,9 @@ public:
 
     virtual ADN_Resources_Data::CategoryInfo* NewT()
     {
-        if( parentResource_.nType_ == sword::category_ammunition ||
-            parentResource_.nType_ == sword::category_mine ||
-            parentResource_.nType_ == sword::category_explosive )
+        if( parentResource_.nType_ == sword::dotation_type_ammunition ||
+            parentResource_.nType_ == sword::dotation_type_mine ||
+            parentResource_.nType_ == sword::dotation_type_explosive )
             return new ADN_Resources_Data::AmmoCategoryInfo( parentResource_ );
         else
             return new ADN_Resources_Data::CategoryInfo( parentResource_ );

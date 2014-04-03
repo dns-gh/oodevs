@@ -39,7 +39,7 @@ DotationType::DotationType( xml::xistream& xis, const tools::Resolver_ABC< Logis
         unitWeight_ /= nbrInPackage;
         unitVolume_ /= nbrInPackage;
     }
-    categoryId_ = ENT_Tr::ConvertToDotationCategory( category );
+    categoryId_ = ENT_Tr::ConvertToDotationType( category );
     gaz_        = category == "carburant";
     ammunition_ = category == "munition";
     indirectFireAmmunition_ = xis.has_child( "indirect-fires" );
@@ -78,7 +78,7 @@ const std::string& DotationType::GetName() const
 // -----------------------------------------------------------------------------
 const std::string DotationType::GetCategoryDisplay() const
 {
-    return ENT_Tr::ConvertFromDotationCategory( categoryId_, ENT_Tr::eToTr );
+    return ENT_Tr::ConvertFromDotationType( categoryId_, ENT_Tr::eToTr );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ const std::string DotationType::GetCategoryDisplay() const
 // -----------------------------------------------------------------------------
 const std::string DotationType::GetCategoryName() const
 {
-    return ENT_Tr::ConvertFromDotationCategory( categoryId_, ENT_Tr::eToTr );
+    return ENT_Tr::ConvertFromDotationType( categoryId_, ENT_Tr::eToTr );
 }
 
 // -----------------------------------------------------------------------------

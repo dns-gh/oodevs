@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    enum DotationCategory;
+    enum DotationType;
     enum EnumLogisticLevel;
     enum KnowledgeMagicAction_Type;
     enum LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus;
@@ -79,7 +79,7 @@ namespace ENT_Tr
     const std::string& ConvertFromUnitTiredness( E_UnitTiredness, E_Conversion = eToSim );
     const std::string& ConvertFromWeatherType( E_WeatherType, E_Conversion = eToSim );
 
-    const std::string& ConvertFromDotationCategory( sword::DotationCategory, E_Conversion = eToTr );
+    const std::string& ConvertFromDotationType( sword::DotationType, E_Conversion = eToTr );
     const std::string& ConvertFromKnowledgeMagicActionType( sword::KnowledgeMagicAction_Type, E_Conversion = eToTr );
     const std::string& ConvertFromLogFuneralHandlingStatus( sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus, E_Conversion = eToTr );
     const std::string& ConvertFromLogisticLevel( sword::EnumLogisticLevel, E_Conversion = eToTr );
@@ -131,7 +131,7 @@ namespace ENT_Tr
     E_UnitTiredness ConvertToUnitTiredness( const std::string&, E_Conversion = eToSim );
     E_WeatherType ConvertToWeatherType( const std::string&, E_Conversion = eToSim );
 
-    sword::DotationCategory ConvertToDotationCategory( const std::string&, E_Conversion = eToSim );
+    sword::DotationType ConvertToDotationType( const std::string&, E_Conversion = eToSim );
     sword::EnumLogisticLevel ConvertToLogisticLevel( const std::string&, E_Conversion = eToSim );
     sword::KnowledgeMagicAction_Type ConvertToKnowledgeMagicActionType( const std::string&, E_Conversion = eToSim );
     sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus ConvertToLogFuneralHandlingStatus( const std::string&, E_Conversion = eToSim );

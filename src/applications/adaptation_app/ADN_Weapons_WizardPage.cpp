@@ -53,7 +53,7 @@ QWidget* ADN_Weapons_WizardPage::CreateNameField()
         pComboLauncher_->insertItem( (*itLauncher)->strName_.GetData().c_str() );
     pComboLauncher_->model()->sort( 0 );
 
-    ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_ammunition );
+    ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_ammunition );
     ADN_Resources_Data::T_CategoryInfos_Vector& vAmmo = ammoDotation.GetCategories();
     for( auto itAmmo = vAmmo.begin(); itAmmo != vAmmo.end(); ++itAmmo )
         pComboAmmo_->insertItem( (*itAmmo)->strName_.GetData().c_str() );
@@ -81,7 +81,7 @@ bool ADN_Weapons_WizardPage::validatePage()
     std::string strAmmo = pComboAmmo_->currentText().toStdString();
 
     ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
-    ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_ammunition );
+    ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_ammunition );
     ADN_Resources_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
     if( !pLauncher || !pAmmo )
     {
@@ -117,7 +117,7 @@ void ADN_Weapons_WizardPage::ApplyOptions()
         element_->ptrLauncher_ = pLauncher;
 
         std::string strAmmo = pComboAmmo_->currentText().toStdString();
-        ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_ammunition );
+        ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_ammunition );
         ADN_Resources_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
         ADN_Resources_Data::AmmoCategoryInfo* ammo = dynamic_cast< ADN_Resources_Data::AmmoCategoryInfo* >( pAmmo );
         element_->ptrAmmunition_ = ammo;

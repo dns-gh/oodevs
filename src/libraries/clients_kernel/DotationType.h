@@ -25,7 +25,7 @@ namespace kernel
 
 namespace sword
 {
-    enum DotationCategory;
+    enum DotationType;
 }
 
 namespace kernel
@@ -69,7 +69,7 @@ private:
     //@{
     std::string name_;
     unsigned long id_;
-    sword::DotationCategory categoryId_;
+    sword::DotationType categoryId_;
     std::string type_;
     const LogisticSupplyClass* logisticSupplyClass_;
     std::string nature_;

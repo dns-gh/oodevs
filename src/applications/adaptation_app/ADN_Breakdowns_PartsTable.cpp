@@ -62,7 +62,7 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( const QPoint& pt )
     Q3PopupMenu menu( this );
     Q3PopupMenu subMenu( &menu );
 
-    ADN_Resources_Data::T_CategoryInfos_Vector& parts = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_parts ).categories_;
+    ADN_Resources_Data::T_CategoryInfos_Vector& parts = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_parts ).categories_;
     for( auto it = parts.begin(); it != parts.end(); ++it )
     {
         if( Contains( **it ) )

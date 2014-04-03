@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    enum DotationCategory;
+    enum DotationType;
 }
 
 // =============================================================================
@@ -29,7 +29,7 @@ class ADN_Resources_GenericListView : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Resources_GenericListView( QWidget* pParent, sword::DotationCategory nType );
+    ADN_Resources_GenericListView( QWidget* pParent, sword::DotationType nType );
     virtual ~ADN_Resources_GenericListView();
     //@}
 
@@ -42,7 +42,7 @@ private:
     //@}
 
 private:
-    sword::DotationCategory nType_;
+    sword::DotationType nType_;
 };
 
 #endif // __ADN_Resources_GenericListView_h_

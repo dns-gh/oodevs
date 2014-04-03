@@ -33,7 +33,7 @@
 // -----------------------------------------------------------------------------
 ADN_Weapons_Data_WeaponInfos::ADN_Weapons_Data_WeaponInfos()
     : ptrLauncher_      ( ADN_Workspace::GetWorkspace().GetLaunchers().GetData().GetLaunchersInfos(), 0 )
-    , ptrAmmunition_    ( (ADN_Resources_Data::T_AmmoCategoryInfo_Vector&)ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_ammunition ).categories_, 0 )
+    , ptrAmmunition_    ( (ADN_Resources_Data::T_AmmoCategoryInfo_Vector&)ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_ammunition ).categories_, 0 )
     , nRoundsPerBurst_  ( 1 )
     , burstDuration_    ( "1s" )
     , nRoundsPerReload_ ( 1 )

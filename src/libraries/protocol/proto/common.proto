@@ -202,20 +202,20 @@ enum EnumHumanWound {
     wounded_extreme_urgency = 5;
 }
 
-/** @enum DotationCategory
+/** @enum DotationType
     @brief Defines possible dotation categories
 */
-enum DotationCategory {
-    category_ammunition         = 0;
-    category_fuel               = 1;
-    category_explosive          = 2;
-    category_mine               = 3;
-    category_barbed_wire        = 4;
-    category_parts              = 5;
-    category_food_and_water     = 6;
-    category_extinguisher_agent = 7;
-    category_energy             = 8;
-    category_funeral            = 9;
+enum DotationType {
+    dotation_type_ammunition         = 0;
+    dotation_type_fuel               = 1;
+    dotation_type_explosive          = 2;
+    dotation_type_mine               = 3;
+    dotation_type_barbed_wire        = 4;
+    dotation_type_parts              = 5;
+    dotation_type_food_and_water     = 6;
+    dotation_type_extinguisher_agent = 7;
+    dotation_type_energy             = 8;
+    dotation_type_funeral            = 9;
 }
 
 //! Defines the different nature levels using APP-6A symbols
@@ -1683,11 +1683,11 @@ message UnitMagicAction {
         //! parameters[1], Resupply humands
         //!     List of Identifier: human, Quantity: availability
         //! parameters[2], Resupply resources
-        //!     List of Identifier: DotationCategory, Quantity: % of capacity
+        //!     List of Identifier: DotationType, Quantity: % of capacity
         //! parameters[3], Resupply ammunitions
         //!     List of Identifier: Ammunition, Quantity: % of capacity
         //! parameters[4], Resupply supplies
-        //!     List of Identifier: DotationCategory, Quantity: quantity
+        //!     List of Identifier: DotationType, Quantity: quantity
         //! Each parameter must be either a null_value to be omitted or
         //! a parameter value list.
         //! value { list { identifier: 1 }

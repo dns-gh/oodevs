@@ -22,7 +22,7 @@
 
 namespace sword
 {
-    enum DotationCategory;
+    enum DotationType;
 }
 
 // =============================================================================
@@ -195,7 +195,7 @@ public:
     class ResourceInfos : public ADN_RefWithName
     {
     public:
-        explicit ResourceInfos( sword::DotationCategory nType, T_CategoryInfos_Vector& networkUsableResources );
+        explicit ResourceInfos( sword::DotationType nType, T_CategoryInfos_Vector& networkUsableResources );
         virtual ~ResourceInfos();
 
         T_CategoryInfos_Vector& GetCategories();
@@ -210,7 +210,7 @@ public:
         void RemoveNetworkUsableResources();
 
     public:
-        sword::DotationCategory nType_;
+        sword::DotationType nType_;
         T_CategoryInfos_Vector categories_;
         T_CategoryInfos_Vector* networkUsableResources_;
     };
@@ -234,7 +234,7 @@ public:
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     T_ResourceInfos_Vector& GetResources();
-    ResourceInfos& GetResource( sword::DotationCategory nType );
+    ResourceInfos& GetResource( sword::DotationType nType );
     T_CategoryInfos_Vector& GetNetworkUsableResources();
     CategoryInfo* FindResourceCategory( const std::string& strDotationName, const std::string& strCategoryName );
     CategoryInfo* FindResourceCategory( const std::string& strCategoryName );
@@ -243,11 +243,11 @@ public:
 
     QStringList GetResourcesThatUse( ADN_Objects_Data_ObjectInfos& object );
     QStringList GetResourcesThatUse( ADN_Natures_Data::NatureInfos& object );
-    QStringList GetResourcesThatUse( ADN_Natures_Data::NatureInfos& object, sword::DotationCategory familly );
+    QStringList GetResourcesThatUse( ADN_Natures_Data::NatureInfos& object, sword::DotationType familly );
     QStringList GetResourcesThatUse( ADN_LogisticSupplyClasses_Data::LogisticSupplyClass& object );
     QStringList GetResourcesWithDirectFire();
 
-    static bool IsMineOrExplosive( sword::DotationCategory type );
+    static bool IsMineOrExplosive( sword::DotationType type );
 
 private:
     void ReadArchive( xml::xistream& );

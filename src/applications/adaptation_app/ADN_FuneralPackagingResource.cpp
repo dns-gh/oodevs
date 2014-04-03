@@ -21,7 +21,7 @@
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------
 ADN_FuneralPackagingResource::ADN_FuneralPackagingResource()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_funeral ).GetCategories(), 0, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_funeral ).GetCategories(), 0, true )
     , processDuration_( "0s" )
     , terminal_( false )
 {

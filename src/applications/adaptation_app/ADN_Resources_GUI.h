@@ -29,7 +29,7 @@ namespace helpers
 
 namespace sword
 {
-    enum DotationCategory;
+    enum DotationType;
 }
 
 // =============================================================================
@@ -148,7 +148,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void BuildGeneric( sword::DotationCategory nType );
+    void BuildGeneric( sword::DotationType nType );
     void BuildAmmunition();
     //@}
 
@@ -166,11 +166,11 @@ private:
     //@{
     ADN_Resources_Data&                                                data_;
     std::vector< ADN_CheckBox* >                                       vNetworkUsablecheckboxes_;
-    sword::DotationCategory                                            currentTab_;
-    std::map< sword::DotationCategory, ADN_Resources_AttritionTable* > pAttritionTables_;
-    std::map< sword::DotationCategory, ADN_Resources_AttritionGraph* > pAttritionGraphs_;
-    std::map< sword::DotationCategory, ADN_ComboBox_Vector* >          pArmorCombos_;
-    std::map< sword::DotationCategory, ADN_ComboBox_Vector* >          pMaterialCombos_;
+    sword::DotationType                                            currentTab_;
+    std::map< sword::DotationType, ADN_Resources_AttritionTable* > pAttritionTables_;
+    std::map< sword::DotationType, ADN_Resources_AttritionGraph* > pAttritionGraphs_;
+    std::map< sword::DotationType, ADN_ComboBox_Vector* >          pArmorCombos_;
+    std::map< sword::DotationType, ADN_ComboBox_Vector* >          pMaterialCombos_;
     QButtonGroup*                                                      buttonGroup_;
     Q3GroupBox*                                                        pExplosiveParametersGroup_;
     Q3GroupBox*                                                        pFlareParametersGroup_;

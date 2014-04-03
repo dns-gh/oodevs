@@ -25,7 +25,7 @@ tools::IdManager ADN_Breakdowns_Data::idManager_;
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_parts ).categories_, 0, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_parts ).categories_, 0, true )
     , nNbr_( 1 )
 {
     // NOTHING

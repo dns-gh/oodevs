@@ -32,7 +32,7 @@ typedef ADN_Resources_Data::CategoryInfo CategoryInfo;
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
 ADN_Resources_AmmoListView::ADN_Resources_AmmoListView( QWidget* pParent )
-    : ADN_ListView( pParent, "ADN_Resources_AmmoListView", ENT_Tr::ConvertFromDotationCategory( sword::category_ammunition, ENT_Tr::eToTr ).c_str() )
+    : ADN_ListView( pParent, "ADN_Resources_AmmoListView", ENT_Tr::ConvertFromDotationType( sword::dotation_type_ammunition, ENT_Tr::eToTr ).c_str() )
 {
     pConnector_.reset( new ADN_Connector_ListView<AmmoCategoryInfo>( *this ) );
     SetDeletionEnabled( true );
@@ -129,8 +129,8 @@ void ADN_Resources_AmmoListView::ConnectItem( bool bConnect )
 void ADN_Resources_AmmoListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::category_ammunition );
-    ADN_Resources_Wizard wizard( dotation, ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources(), ENT_Tr::ConvertFromDotationCategory( sword::category_ammunition, ENT_Tr::eToTr ).c_str(), this );
+    ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_ammunition );
+    ADN_Resources_Wizard wizard( dotation, ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources(), ENT_Tr::ConvertFromDotationType( sword::dotation_type_ammunition, ENT_Tr::eToTr ).c_str(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

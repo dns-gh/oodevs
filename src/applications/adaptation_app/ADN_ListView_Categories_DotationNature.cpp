@@ -68,11 +68,11 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
     {
         ADN_Natures_Data::NatureInfos* pCastData = static_cast< ADN_Natures_Data::NatureInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        for( uint n = 0; n < sword::DotationCategory_MAX; ++n )
+        for( uint n = 0; n < sword::DotationType_MAX; ++n )
         {
-            auto value = static_cast< sword::DotationCategory >( n );
+            auto value = static_cast< sword::DotationType >( n );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
-                                          ENT_Tr::ConvertFromDotationCategory( value ).c_str(),
+                                          ENT_Tr::ConvertFromDotationType( value ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData, value ), eResources, value );
         }
     }
@@ -92,10 +92,10 @@ std::string ADN_ListView_Categories_DotationNature::GetToolTipFor( const QModelI
     assert( pCastData != 0 );
 
     std::string result;
-    for( uint n = 0; n < sword::DotationCategory_MAX; ++n )
+    for( uint n = 0; n < sword::DotationType_MAX; ++n )
     {
-        auto value = static_cast< sword::DotationCategory >( n );
-        FillMultiUsersList( ENT_Tr::ConvertFromDotationCategory( value ).c_str(),
+        auto value = static_cast< sword::DotationType >( n );
+        FillMultiUsersList( ENT_Tr::ConvertFromDotationType( value ).c_str(),
                             ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData, value ), result );
     }
 

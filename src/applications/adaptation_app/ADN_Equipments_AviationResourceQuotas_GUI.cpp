@@ -31,7 +31,7 @@ ADN_Equipments_AviationResourceQuotas_GUI::ADN_Equipments_AviationResourceQuotas
     for( int i = 0; i < eNbrAmmunitionType + 1; ++i )
     {
         if( i == eNbrAmmunitionType )
-            horizontalHeaders.append( QString::fromStdString( ENT_Tr::ConvertFromDotationCategory( sword::category_fuel ) + " (%)" ) );
+            horizontalHeaders.append( QString::fromStdString( ENT_Tr::ConvertFromDotationType( sword::dotation_type_fuel ) + " (%)" ) );
         else
             horizontalHeaders.append( ( ENT_Tr::ConvertFromAmmunitionType( static_cast< E_AmmunitionType >( i ), ENT_Tr::eToTr ) + " (%)" ).c_str() );
         delegate_.AddColorOnColumn( i, 0., 100. );

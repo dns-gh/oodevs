@@ -21,7 +21,7 @@ namespace xml
 
 namespace sword
 {
-    enum DotationCategory;
+    enum DotationType;
 }
 
 class PHY_DotationCategory;
@@ -73,7 +73,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    PHY_DotationType( const std::string& name, sword::DotationCategory type );
+    PHY_DotationType( const std::string& name, sword::DotationType type );
     //@}
 
     //! @name Helpers
@@ -87,7 +87,7 @@ private:
     //! @name Memnber data
     //@{
     const std::string             name_;
-    const sword::DotationCategory type_;
+    const sword::DotationType type_;
     //@}
 };
 
