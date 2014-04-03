@@ -244,7 +244,7 @@ func (s *TestSuite) TestDecGeometry(c *C) {
 func DecCreateBreakdown(c *C, client *swapi.Client, unitId, equipmentType uint32,
 	breakdownType int32, result string) {
 	script := `function TestFunction()
-		return tostring(DEC_CreateBreakdown({{.equipmentType}},
+		return tostring(DEC_CreateBreakdown(DEC_GetEquipmentFromID({{.equipmentType}}),
 			{{.breakdownType}}))
 	end`
 	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
