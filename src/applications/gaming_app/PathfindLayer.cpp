@@ -67,6 +67,14 @@ PathfindLayer::~PathfindLayer()
     controllers_.Unregister( *this );
 }
 
+namespace
+{
+    void SetColor( QColor color )
+    {
+        glColor3d( color.redF(), color.greenF(), color.blueF() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer::Paint
 // Created: LGY 2014-02-28
@@ -74,17 +82,18 @@ PathfindLayer::~PathfindLayer()
 void PathfindLayer::Paint( gui::Viewport_ABC& )
 {
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
-    DrawLines( 5, 34, 105, 187 );
-    DrawLines( 3, 0, 179, 253 );
+    SetColor( "#2269BB" );
+    DrawLines( 5 );
+    SetColor( "#00B3FD" );
+    DrawLines( 3 );
     DrawPoints();
     glPopAttrib();
 }
 
-void PathfindLayer::DrawLines( float width, uint8_t r, uint8_t g, uint8_t b ) const
+void PathfindLayer::DrawLines( float width ) const
 {
     if( path_.empty() )
         return;
-    glColor3ub( r, g, b );
     for( auto it = path_.begin(); it != path_.end() - 1; ++it )
     {
         tools_.DrawLine( it->coordinate_, (it + 1)->coordinate_, width );
@@ -98,25 +107,17 @@ void PathfindLayer::DrawPoints() const
         DrawPoint( positions_[i],
             hovered_ && !hovered_->insert_ && hovered_->waypoint_ == i );
     if( hovered_ && hovered_->insert_ )
-        DrawPoint( hovered_->coordinate_ );
+        DrawPoint( hovered_->coordinate_, false );
 }
 
 void PathfindLayer::DrawPoint( geometry::Point2f p, bool invert ) const
 {
-    if( invert )
-        glColor4f( COLOR_BLACK );
-    else
-        glColor4f( COLOR_WHITE );
+    const auto bottom = invert ? Qt::black : Qt::white;
+    SetColor( bottom );
     tools_.DrawDisc( p, 6, gui::GlTools_ABC::pixels );
-    if( invert )
-        glColor4f( COLOR_WHITE );
-    else
-        glColor4f( COLOR_BLACK );
+    SetColor( invert ? Qt::white : Qt::black );
     tools_.DrawDisc( p, 5, gui::GlTools_ABC::pixels );
-    if( invert )
-        glColor4f( COLOR_BLACK );
-    else
-        glColor4f( COLOR_WHITE );
+    SetColor( bottom );
     tools_.DrawDisc( p, 3, gui::GlTools_ABC::pixels );
 }
 
