@@ -297,17 +297,16 @@ func (s *TestSuite) TestDecCreateBreakdown(c *C) {
 	})
 }
 
-func DecConsumeResources(c *C, client *swapi.Client, unit uint32, resource ResourceType, offset, duration float64) {
+func DecConsumeResources(c *C, client *swapi.Client, unit, dotation uint32, offset, duration float64) {
 	script := strings.TrimSpace(`
 function ConsumeResources()
-    dotation = DEC_GetDotation({{.resource}})
-    DEC_StartConsumingResources(dotation, {{.offset}}, {{.duration}})
+    DEC_StartConsumingResources({{.dotation}}, {{.offset}}, {{.duration}})
     return "";
 end
 `)
 	_, err := client.ExecScript(unit, "ConsumeResources", Parse(c, script,
 		map[string]interface{}{
-			"resource": resource,
+			"dotation": dotation,
 			"offset":   offset,
 			"duration": duration,
 		}))
@@ -361,7 +360,8 @@ func testDecStartConsumingResources(c *C, client *swapi.Client, unitType uint32,
 		return false
 	})
 	defer client.Unregister(ctx)
-	DecConsumeResources(c, client, unit.Id, electrogen_1, percentage, duration)
+	const parts = 5
+	DecConsumeResources(c, client, unit.Id, parts, percentage, duration)
 	client.Resume(0)
 	select {
 	case <-quit:
