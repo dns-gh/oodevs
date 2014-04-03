@@ -19,6 +19,7 @@ DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint 
     , nType_( type )
     , nPointType_( nPointType )
     , diaType_( szDIARepType )
+    , waypoint_( false )
 {
     // NOTHING
 }
@@ -27,12 +28,13 @@ DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint 
 // Name: DEC_PathPoint constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint )
+DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool waypoint )
     : vPos_( vPos )
     , nType_( eTypePointPath )
     , nPointType_( eTypePointNormal )
     , nObjectTypes_( nObjectTypes )
     , nObjectTypesToNextPoint_( nObjectTypesToNextPoint )
+    , waypoint_( waypoint )
 {
     // NOTHING
 }
@@ -144,6 +146,15 @@ const TerrainData& DEC_PathPoint::GetTypeTerrain() const
 bool DEC_PathPoint::IsSlopeValid() const
 {
     return slope_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathPoint::IsWaypoint
+// Created: LGY 2014-04-03
+// -----------------------------------------------------------------------------
+bool DEC_PathPoint::IsWaypoint() const
+{
+    return waypoint_;
 }
 
 // -----------------------------------------------------------------------------

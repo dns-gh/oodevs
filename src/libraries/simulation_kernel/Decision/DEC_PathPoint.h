@@ -49,7 +49,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
+             DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool waypoint );
     virtual ~DEC_PathPoint();
 protected:
              DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointType, const char* szDIARepType);
@@ -68,6 +68,7 @@ public:
     virtual unsigned int GetLimaID();
     virtual const TerrainData& GetTypeTerrain() const;
     bool IsSlopeValid() const;
+    bool IsWaypoint() const;
     double GetSlope() const;
     //@}
 
@@ -95,6 +96,7 @@ protected:
     TerrainData nObjectTypesToNextPoint_;
     std::string diaType_;
     boost::optional< double > slope_;
+    bool waypoint_;
     //@}
 };
 

@@ -65,13 +65,15 @@ public:
     //! @name Network
     //@{
     void Serialize( sword::Path& asn, int firstPoint, int pathSizeThreshold ) const;
+    void Serialize( sword::PathResult& msg ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
     virtual void NotifySectionEnded();
-    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
+    virtual void NotifyPartialSection();
+    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool waypoint );
     MT_Vector2D InternalGetFuturePosition( const T_PathPoints::const_iterator& itCurrentPos, double rDist, bool bBoundOnPath ) const;
     //@}
 
@@ -80,6 +82,7 @@ protected:
     //@{
     T_PathPoints resultList_; //$$$
     T_PathPoints::const_iterator itCurrentPathPoint_;
+    T_PointVector closestPoints_;
     //@}
 
 private:

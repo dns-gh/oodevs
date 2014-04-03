@@ -117,6 +117,7 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
             }
             else
             {
+                NotifyPartialSection();
                 T_PathSectionVector::iterator itNextPathSection = itPathSection + 1;
                 if( itNextPathSection == pathSections_.end() )
                 {

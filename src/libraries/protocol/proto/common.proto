@@ -353,6 +353,26 @@ message Path {
     required Location location = 1;
 }
 
+/** @struct PathPoint
+*/
+message PathPoint {
+    // The coordinate point
+    required CoordLatLong coordinate = 1;
+    // The index of the associated waypoint
+    optional int32        waypoint   = 2;
+    // if the associated waypoint is reached
+    optional bool         reached    = 3;
+}
+
+/** @struct PathResult
+    @brief Defines a path in response to the PathfindRequestAck message
+        with the debug information
+*/
+message PathResult {
+    //! The calculated path
+    repeated PathPoint points = 1;
+}
+
 /** @struct PathList
     @brief Defines a list of paths
 */
@@ -2596,7 +2616,7 @@ message PathfindRequestAck {
     //! @see ErrorCode
     required ErrorCode error_code     = 1;
     //! Returns computed path
-    optional Path      path           = 2;
+    optional PathResult      path     = 2;
     //! More detailed account of the returned error
     optional string    error_msg      = 3;
 }

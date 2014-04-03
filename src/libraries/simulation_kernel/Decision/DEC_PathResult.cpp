@@ -277,10 +277,32 @@ void DEC_PathResult::Serialize( sword::Path& asn, int firstPoint, int pathSizeTh
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PathResult::Serialize
+// Created: LGY 2014-04-02
+// -----------------------------------------------------------------------------
+void DEC_PathResult::Serialize( sword::PathResult& msg ) const
+{
+    unsigned int index = 0u;
+    for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
+    {
+        sword::PathPoint* point = msg.add_points();
+        const MT_Vector2D& position = (*it)->GetPos();
+        bool partialPoint = std::find( closestPoints_.begin(), closestPoints_.end(), position )
+            != closestPoints_.end();
+        if( (*it)->IsWaypoint() || partialPoint )
+        {
+            point->set_waypoint( index++ );
+            point->set_reached( !partialPoint );
+        }
+        NET_ASN_Tools::WritePoint( position, *point->mutable_coordinate() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PathResult::AddResultPoint
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint )
+void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool waypoint )
 {
     if( bSectionJustEnded_ )
     {
@@ -306,12 +328,12 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
             {
                 const MT_Line segment( startPoint, vPos );
                 const MT_Vector2D projected = segment.ProjectPointOnLine( ( itSlope + 1 )->first );
-                auto point = boost::make_shared< DEC_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint );
+                auto point = boost::make_shared< DEC_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint, waypoint );
                 resultList_.push_back( point );
             }
         }
     }
-    auto point = boost::make_shared< DEC_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint );
+    auto point = boost::make_shared< DEC_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint, waypoint );
     resultList_.push_back( point );
     if( resultList_.size() == 1 )
         itCurrentPathPoint_ = resultList_.begin();
@@ -362,4 +384,14 @@ const DEC_PathResult::T_PathPoints& DEC_PathResult::GetResult( bool useCheck ) c
 const DEC_PathType& DEC_PathResult::GetPathType() const
 {
     return pathType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathResult::NotifyPartialSection
+// Created: LGY 2014-04-03
+// -----------------------------------------------------------------------------
+void DEC_PathResult::NotifyPartialSection()
+{
+    if( !resultList_.empty() )
+        closestPoints_.push_back( resultList_.back()->GetPos() );
 }

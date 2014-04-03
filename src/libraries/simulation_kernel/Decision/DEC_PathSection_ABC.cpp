@@ -21,11 +21,13 @@
 // -----------------------------------------------------------------------------
 DEC_PathSection_ABC::DEC_PathSection_ABC( DEC_Path& path, const MT_Vector2D& startPoint, const MT_Vector2D& endPoint )
     : startPoint_         ( startPoint )
-    , endPoint_           ( endPoint   )
+    , endPoint_           ( endPoint )
     , path_               ( path  )
     , bCanceled_          ( false )
     , nAddedPoints_       ( 0 )
     , nComputationEndTime_( 0 )
+    , from_               ( float( startPoint_.rX_ ), float( startPoint_.rY_ ) )
+    , to_                 ( float( endPoint.rX_ ), float( endPoint.rY_ ) )
 {
     // NOTHING
 }
@@ -45,14 +47,12 @@ DEC_PathSection_ABC::~DEC_PathSection_ABC()
 // -----------------------------------------------------------------------------
 bool DEC_PathSection_ABC::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nComputationEndTime )
 {
-    geometry::Point2f from( float( startPoint_.rX_ ), float( startPoint_.rY_ ) );
-    geometry::Point2f to( float( endPoint_.rX_ ), float( endPoint_.rY_ ) );
     nComputationEndTime_ = nComputationEndTime;
     if( path_.NeedRefine() )
         pathfind.SetConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
     pathfind.SetChoiceRatio( path_.UseStrictClosest() ? 0.f : 0.1f );
     pathfind.SetCallback( this );
-    const bool bResult = pathfind.ComputePath( from, to, GetRule(), *this );
+    const bool bResult = pathfind.ComputePath( from_, to_, GetRule(), *this );
     pathfind.SetConfiguration( 0, 0 );
     pathfind.SetCallback( 0 );
     return bResult;
@@ -66,7 +66,7 @@ void DEC_PathSection_ABC::Handle( const TerrainPathPoint& point )
 {
     const geometry::Point2f p( point );
     ++ nAddedPoints_;
-    path_.AddResultPoint( MT_Vector2D( p.X(), p.Y() ), point.DataAtPoint(), point.DataToNextPoint() );
+    path_.AddResultPoint( MT_Vector2D( p.X(), p.Y() ), point.DataAtPoint(), point.DataToNextPoint(), p == from_ || p == to_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,4 +146,5 @@ const DEC_Path_ABC& DEC_PathSection_ABC::GetPath() const
 void DEC_PathSection_ABC::SetPosStart( const MT_Vector2D& point )
 {
     startPoint_ = point;
+    from_ = geometry::Point2f( float( startPoint_.rX_ ), float( startPoint_.rY_ ) );
 }
