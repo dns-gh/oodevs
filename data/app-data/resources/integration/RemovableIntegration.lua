@@ -63,12 +63,12 @@ end
 -- This method can only be called by an agent.
 -- @param object Object knowledge
 -- @return Boolean, whether or not this agent can remove the given object.
--- This method returns true if the given knowledge is not an object.
+-- This method returns false if the given knowledge is not an object.
 integration.canRemoveIt = function( object )
     if masalife.brain.core.class.isOfType( object, integration.ontology.types.object ) then
         return DEC_Agent_PeutDetruireObjet( object.source )
     end
-    return true
+    return false
 end
 
 integration.canRemoveItSecu = integration.canRemoveIt
