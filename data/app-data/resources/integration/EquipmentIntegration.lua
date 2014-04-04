@@ -1015,3 +1015,35 @@ integration.getToxicPlumeDetected = function( agent )
     objects = DEC_Connaissances_CollisionsDesastres()
     return objects
 end
+
+--- Makes the caller agent start to consume the given percentage of the given resource.
+-- The consumption is done during the time defined by the 'duration' parameter.
+-- This method can only be called by an agent.
+-- @param resourceType Integer Define the type of resource to consume
+-- @param percentage Integer The percentage of resource to consume
+-- @param duration Integer The delay during which the agent consumes the percentage of resource
+integration.startConsumeResource = function( resourceType, percentage, duration )
+    myself.consumeAction = myself.consumeAction or {}
+    myself.consumeAction[ resourceType + 1 ] = { actionId = nil, etatAction = nil }
+    myself.consumeAction[ resourceType + 1 ].actionId = DEC_StartConsumingResources( resourceType, -percentage, duration * 60 )
+    actionCallbacks[ myself.consumeAction[ resourceType + 1 ].actionId ] = function( arg )
+        myself.consumeAction[ resourceType + 1 ].etatAction = arg
+    end
+end
+--- Makes the caller agent check the consumption action feedback. 
+-- @param resourceType Integer Define the type of resource to consume
+-- @param percentage Integer The percentage of resource to consume
+-- @param duration Integer The delay during which the agent consumes the percentage of resource
+integration.updateConsumeResource = function( resourceType, percentage, duration )
+    local etat = myself.consumeAction[ resourceType + 1 ].etatAction
+    if etat == eActionFinished then
+        DEC__StopAction( myself.consumeAction[ resourceType + 1 ].actionId )
+        myself.consumeAction[ resourceType + 1 ] = nil
+        return true
+    elseif etat == eActionNotAllowed then
+        DEC_Trace( "then agent cannot consume the given resource "..tostring( resourceType ) )
+        return false
+    else
+        return false -- action is running
+    end
+end
