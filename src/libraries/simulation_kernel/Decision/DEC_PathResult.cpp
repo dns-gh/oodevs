@@ -29,7 +29,7 @@
 // -----------------------------------------------------------------------------
 DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType )
     : pathType_( pathType )
-    , bSectionJustEnded_( false )
+    , bSectionJustStarted_( false )
 {
     itCurrentPathPoint_ = resultList_.end();
 }
@@ -282,17 +282,16 @@ void DEC_PathResult::Serialize( sword::Path& asn, int firstPoint, int pathSizeTh
 // -----------------------------------------------------------------------------
 void DEC_PathResult::Serialize( sword::PathResult& msg ) const
 {
-    unsigned int index = 0u;
+    unsigned int index = 0;
     for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
     {
-        sword::PathPoint* point = msg.add_points();
+        auto point = msg.add_points();
         const MT_Vector2D& position = (*it)->GetPos();
-        bool partialPoint = std::find( closestPoints_.begin(), closestPoints_.end(), position )
-            != closestPoints_.end();
-        if( (*it)->IsWaypoint() || partialPoint )
+        const bool partial = (*it)->IsPartial();
+        if( (*it)->IsWaypoint() || partial )
         {
             point->set_waypoint( index++ );
-            point->set_reached( !partialPoint );
+            point->set_reached( !partial );
         }
         NET_ASN_Tools::WritePoint( position, *point->mutable_coordinate() );
     }
@@ -304,11 +303,12 @@ void DEC_PathResult::Serialize( sword::PathResult& msg ) const
 // -----------------------------------------------------------------------------
 void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool waypoint )
 {
-    if( bSectionJustEnded_ )
+    if( bSectionJustStarted_ )
     {
-        // Pop last point
-        resultList_.pop_back();
-        bSectionJustEnded_ = false;
+       bSectionJustStarted_ = false;
+       // skip the first next point of the new section
+        if( !resultList_.empty() )
+            return;
     }
     if( !resultList_.empty() )
     {
@@ -340,12 +340,12 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathResult::NotifySectionEnded
+// Name: DEC_PathResult::NotifySectionStarted
 // Created: AGE 2005-09-01
 // -----------------------------------------------------------------------------
-void DEC_PathResult::NotifySectionEnded()
+void DEC_PathResult::NotifySectionStarted()
 {
-    bSectionJustEnded_ = true;
+    bSectionJustStarted_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -393,5 +393,5 @@ const DEC_PathType& DEC_PathResult::GetPathType() const
 void DEC_PathResult::NotifyPartialSection()
 {
     if( !resultList_.empty() )
-        closestPoints_.push_back( resultList_.back()->GetPos() );
+        resultList_.back()->NotifyPartial();
 }

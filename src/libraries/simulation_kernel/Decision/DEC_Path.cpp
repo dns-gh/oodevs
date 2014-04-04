@@ -100,6 +100,7 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
             return;
         }
         DEC_PathSection_ABC& pathSection = **itPathSection;
+        NotifySectionStarted();
         if( !pathSection.Execute( pathfind, nComputationEndTime ) )
         {
             if( !pathPoints.empty() )
@@ -130,7 +131,6 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
         }
         else if( !pathPoints.empty() )
             computedWaypoints_.push_back( pathPoints.back()->GetPos() );
-        NotifySectionEnded();
     }
     nState_ = eValid;
 }

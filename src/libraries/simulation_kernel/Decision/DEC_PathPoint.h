@@ -69,6 +69,7 @@ public:
     virtual const TerrainData& GetTypeTerrain() const;
     bool IsSlopeValid() const;
     bool IsWaypoint() const;
+    bool IsPartial() const;
     double GetSlope() const;
     //@}
 
@@ -77,6 +78,7 @@ public:
     bool IsInObject( const TerrainData& data ) const;
     bool WillBeInObject( const TerrainData& data ) const;
     void SetSlope( double slope );
+    void NotifyPartial();
     //@}
 
     //! @name DIA
@@ -96,7 +98,8 @@ protected:
     TerrainData nObjectTypesToNextPoint_;
     std::string diaType_;
     boost::optional< double > slope_;
-    bool waypoint_;
+    const bool waypoint_;
+    bool partial_;
     //@}
 };
 

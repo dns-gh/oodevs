@@ -65,7 +65,7 @@ protected:
     std::string GetPathAsString() const;
     const T_PointVector& GetComputedWaypoints() const;
 
-    virtual void NotifySectionEnded() = 0;
+    virtual void NotifySectionStarted() = 0;
 
     void DoExecute( TER_Pathfinder_ABC& pathfind );
     void RemoveComputedWaypoint();

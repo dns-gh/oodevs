@@ -20,6 +20,7 @@ DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint 
     , nPointType_( nPointType )
     , diaType_( szDIARepType )
     , waypoint_( false )
+    , partial_( false )
 {
     // NOTHING
 }
@@ -35,6 +36,7 @@ DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjec
     , nObjectTypes_( nObjectTypes )
     , nObjectTypesToNextPoint_( nObjectTypesToNextPoint )
     , waypoint_( waypoint )
+    , partial_( false )
 {
     // NOTHING
 }
@@ -155,6 +157,24 @@ bool DEC_PathPoint::IsSlopeValid() const
 bool DEC_PathPoint::IsWaypoint() const
 {
     return waypoint_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathPoint::IsPartial
+// Created: LGY 2014-04-03
+// -----------------------------------------------------------------------------
+bool DEC_PathPoint::IsPartial() const
+{
+    return partial_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathPoint::NotifyPartial
+// Created: LGY 2014-04-03
+// -----------------------------------------------------------------------------
+void DEC_PathPoint::NotifyPartial()
+{
+    partial_ = true;
 }
 
 // -----------------------------------------------------------------------------

@@ -71,7 +71,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySectionEnded();
+    virtual void NotifySectionStarted();
     virtual void NotifyPartialSection();
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool waypoint );
     MT_Vector2D InternalGetFuturePosition( const T_PathPoints::const_iterator& itCurrentPos, double rDist, bool bBoundOnPath ) const;
@@ -82,14 +82,13 @@ protected:
     //@{
     T_PathPoints resultList_; //$$$
     T_PathPoints::const_iterator itCurrentPathPoint_;
-    T_PointVector closestPoints_;
     //@}
 
 private:
     //! @name Member data
     //@{
     const DEC_PathType& pathType_;
-    bool bSectionJustEnded_;
+    bool bSectionJustStarted_;
     //@}
 };
 
