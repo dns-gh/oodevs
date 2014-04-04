@@ -68,7 +68,6 @@ EventOrderPresenter::EventOrderPresenter( EventView_ABC< EventOrderViewState >& 
     , timelinePublisher_( timelinePublisher )
     , entity_( controllers )
     , order_( 0 )
-    , currentAction_( 0 )
     , lastContext_( 0 )
 {
     // NOTHING
@@ -145,9 +144,10 @@ void EventOrderPresenter::OnMissionTypeChanged( E_MissionType missionType )
 void EventOrderPresenter::OnMissionChanged( const QString& mission )
 {
     if( currentAction_ )
-        for( unsigned int i = currentAction_->Count(); i >= 4; --i ) // $$$$ SLI: Assuming the 4 first parameters are always the danger direction, limits and limas
-            currentAction_->Remove( i );
-    Select( state_->currentType_, mission.toStdString(), currentAction_ );
+        for( unsigned int i = currentAction_->Count(); i > 0; --i )
+            if( !currentAction_->ParameterContainer_ABC::Get( i - 1 ).IsContext() )
+                currentAction_->Delete( i );
+    Select( state_->currentType_, mission.toStdString(), currentAction_.get() );
     BuildView();
 }
 
@@ -245,8 +245,7 @@ void EventOrderPresenter::CommitTo( timeline::Event& event ) const
         action->Publish( timelinePublisher_, 0 );
         event.name = action->GetName();
         event.action.payload = timelinePublisher_.GetPayload();
-        delete currentAction_;
-        currentAction_ = action;
+        currentAction_.reset( action );
     }
     event.action.apply = true;
     event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
