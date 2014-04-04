@@ -17,10 +17,7 @@
 #include "Urban/UrbanPhysicalCapacity.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 
-namespace distance_modifiers
-{
-
-std::map< std::string, double > ReadDistanceModifiers( xml::xistream& xis, const std::string& parent )
+std::map< std::string, double > distance_modifiers::ReadDistanceModifiers( xml::xistream& xis, const std::string& parent )
 {
     const std::string attr = "distance-modifier";
     std::map< std::string, double > factors;
@@ -36,7 +33,7 @@ std::map< std::string, double > ReadDistanceModifiers( xml::xistream& xis, const
     return factors;
 }
 
-void ReadPostureFactors( xml::xistream& xis, const std::string& parent, std::vector< double >& factors )
+void distance_modifiers::ReadPostureFactors( xml::xistream& xis, const std::string& parent, std::vector< double >& factors )
 {
     auto values = ReadDistanceModifiers( xis, parent );
     for( auto it = values.cbegin(); it != values.cend(); ++it )
@@ -50,21 +47,21 @@ void ReadPostureFactors( xml::xistream& xis, const std::string& parent, std::vec
     }
 }
 
-void InitializeTerrainModifiers( xml::xistream& xis, std::map< unsigned int, double >& factors )
+void distance_modifiers::InitializeTerrainModifiers( xml::xistream& xis, std::map< unsigned int, double >& factors )
 {
     xis >> xml::start( "terrain-modifiers" )
-        >> xml::list( "distance-modifier", [&]( xml::xistream& xis )
-        {
-            const std::string terrainType = xis.attribute< std::string >( "type" );
-            const double rFactor = xis.attribute< double >( "value" );
-            if( rFactor < 0 || rFactor > 1 )
-                xis.error( "terrain-modifier: value not in [0..1]" );
-            factors.insert( std::make_pair( PHY_RawVisionData::environmentAssociation_[ terrainType ], rFactor ) );
-        })
+            >> xml::list( "distance-modifier", [&]( xml::xistream& xis )
+            {
+                const std::string terrainType = xis.attribute< std::string >( "type" );
+                const double rFactor = xis.attribute< double >( "value" );
+                if( rFactor < 0 || rFactor > 1 )
+                    xis.error( "terrain-modifier: value not in [0..1]" );
+                factors[ PHY_RawVisionData::environmentAssociation_[ terrainType ] ] = rFactor;
+            })
         >> xml::end;
 }
 
-void InitializeUrbanFactors( xml::xistream& xis, std::vector< double >& factors )
+void distance_modifiers::InitializeUrbanFactors( xml::xistream& xis, std::vector< double >& factors )
 {
     xis >> xml::start( "urbanBlock-material-modifiers" )
             >> xml::list( "distance-modifier", [&]( xml::xistream& xis )
@@ -81,14 +78,14 @@ void InitializeUrbanFactors( xml::xistream& xis, std::vector< double >& factors 
         >> xml::end;
 }
 
-bool ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ, const std::vector< double >& factors, bool posted )
+bool distance_modifiers::ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ, const std::vector< double >& factors, bool posted )
 {
     std::vector< const MIL_UrbanObject_ABC* > list;
     MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( vSource, vTarget, list );
     if( list.empty() )
         return false;
 
-    bool isAroundBU = false;
+    bool isAroundUrbanBlock = false;
 
     for( auto it = list.begin(); it != list.end() && rVisionNRJ >= 0; ++it )
     {
@@ -106,7 +103,7 @@ bool ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTar
         T_PointSet intersectPoints( cmp );
         if( footPrint.IsInside( vSource ) || footPrint.IsInside( vTarget ) || footPrint.Intersect2D( MT_Line( vSource, vTarget ), intersectPoints ) )
         {
-            isAroundBU = true;
+            isAroundUrbanBlock = true;
             double intersectionDistance = 0;
             if( intersectPoints.empty() )
                 intersectionDistance = posted ? 0 : vSource.Distance( vTarget );
@@ -133,7 +130,5 @@ bool ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTar
             }
         }
     }
-    return isAroundBU;
-}
-
+    return isAroundUrbanBlock;
 }

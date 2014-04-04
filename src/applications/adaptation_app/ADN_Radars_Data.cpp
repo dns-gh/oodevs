@@ -9,12 +9,13 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Radars_Data.h"
-#include "ADN_Project_Data.h"
 #include "ADN_Categories_Data.h"
-#include "ADN_WorkspaceElement.h"
+#include "ADN_Project_Data.h"
+#include "ADN_Sensors_Modificators.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/XmlTranslations.h"
 #include "ENT/ENT_Tr.h"
 

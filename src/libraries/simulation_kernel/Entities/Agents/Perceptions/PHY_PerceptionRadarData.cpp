@@ -70,13 +70,13 @@ PHY_PerceptionRadarData::~PHY_PerceptionRadarData()
 
 namespace
 {
-    double ComputeExtinction( const PHY_RawVisionDataIterator& env, double rVisionNRJ, double rDistanceMaxModificator, bool isAroundBU, const PHY_RadarType& type ) 
+    double ComputeExtinction( const PHY_RawVisionDataIterator& env, double rVisionNRJ, double rDistanceMaxModificator, bool isAroundUrbanBlock, const PHY_RadarType& type ) 
     {
-        const double epsilon = 1e-8;
+        static const double epsilon = 1e-8;
         rDistanceMaxModificator *= type.GetPrecipitationFactor( env.GetPrecipitation() );
-        if( !isAroundBU )
+        if( !isAroundUrbanBlock )
             rDistanceMaxModificator *= type.ComputeEnvironmentFactor( env.GetCurrentEnv() );
-        return rDistanceMaxModificator <= epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceMaxModificator;
+        return rDistanceMaxModificator <= epsilon ? -1 : rVisionNRJ - env.Length() / rDistanceMaxModificator;
     }
 
     bool CanPerceive( const MT_Vector2D& sourcePosition, const MT_Vector2D& targetPosition, double sensorHeight, double perceiverAltitude, double targetAltitude, double rDistanceMaxModificator, bool posted, const PHY_RadarType& type )
@@ -89,15 +89,15 @@ namespace
         PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
         double rVisionNRJ = type.GetRadius();
         rVisionNRJ *= type.GetLightingFactor( data.GetLighting( data( targetPosition ) ) );
-        const bool isAroundBU = distance_modifiers::ComputeUrbanExtinction( sourcePosition, targetPosition, rVisionNRJ, type.GetUrbanFactors(), posted );
+        const bool isAroundUrbanBlock = distance_modifiers::ComputeUrbanExtinction( sourcePosition, targetPosition, rVisionNRJ, type.GetUrbanFactors(), posted );
 
         if( rVisionNRJ > 0 )
-            rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, rVisionNRJ, rDistanceMaxModificator, isAroundBU, type );
+            rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, rVisionNRJ, rDistanceMaxModificator, isAroundUrbanBlock, type );
 
         while( rVisionNRJ > 0 && !(++it).End() )
-            rVisionNRJ = ComputeExtinction( it, rVisionNRJ, rDistanceMaxModificator, isAroundBU, type );
+            rVisionNRJ = ComputeExtinction( it, rVisionNRJ, rDistanceMaxModificator, isAroundUrbanBlock, type );
 
-        return ( rVisionNRJ > 0 );
+        return rVisionNRJ > 0;
     }
 
 }
@@ -121,8 +121,7 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perce
             const PHY_Volume* pSignificantVolume = target.GetRole< PHY_RoleInterface_Composantes >().GetSignificantVolume( *pRadarType_ );
             if( !pSignificantVolume )
                 continue;
-            double rDistanceMaxModificator = pRadarType_->GetVolumeFactor( *pSignificantVolume );
-
+            const double rDistanceMaxModificator = pRadarType_->GetVolumeFactor( *pSignificantVolume );
             const MT_Vector2D& targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
             double targetAltitude = target.GetRole< PHY_RoleInterface_Location >().GetHeight();
             if( CanPerceive( perceiverPosition, targetPosition, sensorHeight_, perceiverAltitude, targetAltitude, rDistanceMaxModificator, IsPosted( perceiver.GetPion() ), *pRadarType_ ) )

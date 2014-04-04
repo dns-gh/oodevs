@@ -106,8 +106,7 @@ void ADN_Radars_GUI::Build()
     pLayout->addWidget( pDetectTimesGroup, 0, 2 );
 
     QGroupBox* pTerrainModifiersGroup = new gui::RichGroupBox( "terrain-modifiers", tools::translate( "ADN_Sensors_GUI", "Terrain modifiers" ) );
-    QHBoxLayout* terrainModifiersLayout = new QHBoxLayout;
-    pTerrainModifiersGroup->setLayout( terrainModifiersLayout );
+    QHBoxLayout* terrainModifiersLayout = new QHBoxLayout( pTerrainModifiersGroup );
     terrainModifiersLayout->addWidget( new ADN_Sensors_Sizes_GUI( builder.GetChildName( "size-modifiers" ), vConnectors[ eModifSizes ], pTerrainModifiersGroup ) );
     terrainModifiersLayout->addWidget( new ADN_Sensors_Meteos_GUI( builder.GetChildName( "weather-modifiers" ), vConnectors[ eModifWeather ], pTerrainModifiersGroup ) );
     terrainModifiersLayout->addWidget( new ADN_Sensors_Illumination_GUI( builder.GetChildName( "illu-modifiers" ), vConnectors[ eModifIllumination ], pTerrainModifiersGroup ) );

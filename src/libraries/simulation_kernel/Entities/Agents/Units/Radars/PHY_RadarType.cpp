@@ -28,6 +28,7 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 #include "Urban/PHY_MaterialCompositionType.h"
+#include <boost/assign.hpp>
 
 PHY_RadarType::T_RadarTypeMap PHY_RadarType::radarTypes_;
 unsigned int PHY_RadarType::nNextID_ = 0;
@@ -38,7 +39,7 @@ namespace
     bool ReadPcAndBaseTime( xml::xistream& xis, const std::string& name, T& time )
     {
         int seconds = 0;
-        const std::string timeString = xis.attribute< std::string >( name, std::string() );
+        const std::string timeString = xis.attribute( name, std::string() );
         if( tools::DecodeTime( timeString, seconds ) )
         {
             time = seconds;
@@ -100,10 +101,10 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     , rMinHeight_           ( -std::numeric_limits< double >::max() )
     , rMaxHeight_           (  std::numeric_limits< double >::max() )
     , detectableActivities_ ( PHY_ConsumptionType::GetConsumptionTypes().size(), false )
-    , volumeFactors_        ( PHY_Volume::GetVolumes().size(), 1. )
-    , precipitationFactors_ ( weather::PHY_Precipitation::GetPrecipitations().size(), 1. )
-    , lightingFactors_      ( weather::PHY_Lighting::GetLightings().size(), 1. )
-    , urbanFactors_         ( PHY_MaterialCompositionType::Count(), 0. )
+    , volumeFactors_        ( PHY_Volume::GetVolumes().size(), 1 )
+    , precipitationFactors_ ( weather::PHY_Precipitation::GetPrecipitations().size(), 1 )
+    , lightingFactors_      ( weather::PHY_Lighting::GetLightings().size(), 1 )
+    , urbanFactors_         ( PHY_MaterialCompositionType::Count(), 0 )
     , rDetectionTime_       ( std::numeric_limits< double >::max() )
     , rRecognitionTime_     ( std::numeric_limits< double >::max() )
     , rIdentificationTime_  ( std::numeric_limits< double >::max() )
@@ -126,10 +127,11 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     }
     else
     {
-        environmentFactors_.insert( std::make_pair( PHY_RawVisionData::eVisionEmpty, 1 ) );
-        environmentFactors_.insert( std::make_pair( PHY_RawVisionData::eVisionForest, 0 ) );
-        environmentFactors_.insert( std::make_pair( PHY_RawVisionData::eVisionUrban, 0 ) );
-        environmentFactors_.insert( std::make_pair( PHY_RawVisionData::eVisionGround, 0 ) );
+
+        environmentFactors_ = boost::assign::map_list_of( PHY_RawVisionData::eVisionEmpty, 1 )
+                                                ( PHY_RawVisionData::eVisionForest, 0 )
+                                                ( PHY_RawVisionData::eVisionUrban, 0 )
+                                                ( PHY_RawVisionData::eVisionGround, 0 );
     }
 }
 
@@ -413,7 +415,9 @@ double PHY_RadarType::ComputeEnvironmentFactor( unsigned char nEnv ) const
 // -----------------------------------------------------------------------------
 double PHY_RadarType::GetVolumeFactor( const PHY_Volume& volume ) const
 {
-    assert( volumeFactors_.size() > volume.GetID() );
+    assert( volume.GetID() < volumeFactors_.size() );
+    if( volume.GetID() >= volumeFactors_.size() )
+        return 0;
     return volumeFactors_[ volume.GetID() ];
 }
 
@@ -423,7 +427,9 @@ double PHY_RadarType::GetVolumeFactor( const PHY_Volume& volume ) const
 // -----------------------------------------------------------------------------
 double PHY_RadarType::GetPrecipitationFactor( const weather::PHY_Precipitation& precipitation ) const
 {
-    assert( precipitationFactors_.size() > precipitation.GetID() );
+    assert( precipitation.GetID() < precipitationFactors_.size() );
+    if( precipitation.GetID() >= precipitationFactors_.size() )
+        return 0;
     return precipitationFactors_[ precipitation.GetID() ];
 }
 
@@ -433,7 +439,9 @@ double PHY_RadarType::GetPrecipitationFactor( const weather::PHY_Precipitation& 
 // -----------------------------------------------------------------------------
 double PHY_RadarType::GetLightingFactor( const weather::PHY_Lighting& lighting ) const
 {
-    assert( lightingFactors_.size() > lighting.GetID() );
+    assert( lighting.GetID() < lightingFactors_.size() );
+    if( lighting.GetID() >= lightingFactors_.size() )
+        return 0;
     return lightingFactors_[ lighting.GetID() ];
 }
 

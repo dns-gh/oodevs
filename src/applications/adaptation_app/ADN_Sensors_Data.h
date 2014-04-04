@@ -135,8 +135,8 @@ public:
         ADN_Type_Time                           detectionDelay_;
         ADN_Type_Bool                           activatedOnRequest_;
         T_LimitedToSensorsInfos_Vector          vLimitedToSensorsInfos_; // LTO
-        boost::scoped_ptr< ADN_Sensors_Modificators > modificators_;
         PopulationInfos                         populationInfos_;
+        boost::scoped_ptr< ADN_Sensors_Modificators > modificators_;
 
         ADN_Type_Bool                           bCanDetectObjects_;
         T_TargetsInfos_Vector                   vTargets_;

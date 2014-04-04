@@ -13,10 +13,11 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
 #include "ADN_Enums.h"
-#include "ADN_Sensors_Modificators.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include <boost/scoped_ptr.hpp>
+
+class ADN_Sensors_Modificators;
 
 // =============================================================================
 /** @class  ADN_Radars_Data

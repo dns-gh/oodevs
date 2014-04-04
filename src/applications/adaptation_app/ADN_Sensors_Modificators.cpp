@@ -325,7 +325,6 @@ void ADN_Sensors_Modificators::ReadArchive( xml::xistream& xis )
     ReadTargetPostureModifiers( xis );
     ReadEnvironmentModifiers( xis );
     ReadUrbanBlocksModifiers( xis );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -398,25 +397,33 @@ void ADN_Sensors_Modificators::ReadIlluminationModifiers( xml::xistream& xis )
         >> xml::end;
 }
 
+namespace
+{
+    void ReadPostureModifiers( xml::xistream& xis, const std::string& tag, ADN_Type_Vector_ABC< ADN_Sensors_Modificators::PostureInfos >& vector )
+    {
+        xis >> xml::start( tag )
+                >> xml::list( "distance-modifier", [&]( xml::xistream& xis )
+                {
+                    const std::string type = xis.attribute< std::string >( "type" );
+                    for( unsigned int i = 0; i < eNbrUnitPosture; ++i )
+                        if( type == ADN_Tools::ComputePostureScriptName( static_cast< E_UnitPosture >( i ) ) )
+                        {
+                            vector.at( i )->ReadArchive( xis );
+                            return;
+                        }
+                        throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toStdString() );
+                })
+            >> xml::end;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Modificators::ReadSourcePostureModifiers
 // Created: JSR 2014-03-28
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Modificators::ReadSourcePostureModifiers( xml::xistream& xis )
 {
-    xis >> xml::start( "source-posture-modifiers" )
-        >> xml::list( "distance-modifier", [&]( xml::xistream& xis )
-        {
-            const std::string type = xis.attribute< std::string >( "type" );
-            for( unsigned int i = 0; i < eNbrUnitPosture; ++i )
-                if( type == ADN_Tools::ComputePostureScriptName( static_cast< E_UnitPosture >( i ) ) )
-                {
-                    vModifStance_.at( i )->ReadArchive( xis );
-                    return;
-                }
-            throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toStdString() );
-        })
-        >> xml::end;
+    ReadPostureModifiers( xis, "source-posture-modifiers", vModifStance_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -425,19 +432,7 @@ void ADN_Sensors_Modificators::ReadSourcePostureModifiers( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Modificators::ReadTargetPostureModifiers( xml::xistream& xis )
 {
-    xis >> xml::start( "target-posture-modifiers" )
-        >> xml::list( "distance-modifier", [&]( xml::xistream& xis )
-        {
-            const std::string type = xis.attribute< std::string >( "type" );
-            for( unsigned int i = 0; i < eNbrUnitPosture; ++i )
-                if( type == ADN_Tools::ComputePostureScriptName( static_cast< E_UnitPosture >( i ) ) )
-                {
-                    vModifTargetStance_.at( i )->ReadArchive( xis );
-                    return;
-                }
-            throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toStdString() );
-        })
-        >> xml::end;
+    ReadPostureModifiers( xis, "target-posture-modifiers", vModifTargetStance_ );
 }
 
 // -----------------------------------------------------------------------------
