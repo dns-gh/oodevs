@@ -59,13 +59,16 @@ integration.stopDemineIt = function( object )
         return false
     end
 end
---- Return if the unit has the capacity to remove the selected object
--- @param knowledge on an object
--- @author PSN
--- @release 2010-03-30
+--- Returns true if this entity can remove the given object, false otherwise.
+-- This method can only be called by an agent.
+-- @param object Object knowledge
+-- @return Boolean, whether or not this agent can remove the given object.
+-- This method returns false if the given knowledge is not an object.
 integration.canRemoveIt = function( object )
-    return masalife.brain.core.class.isOfType( object, integration.ontology.types.object ) 
-           and DEC_Agent_PeutDetruireObjet( object.source ) or true  -- return false if object is not valid.
+    if masalife.brain.core.class.isOfType( object, integration.ontology.types.object ) then
+        return DEC_Agent_PeutDetruireObjet( object.source )
+    end
+    return false
 end
 
 integration.canRemoveItSecu = integration.canRemoveIt
