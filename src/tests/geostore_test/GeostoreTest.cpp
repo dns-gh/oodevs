@@ -12,9 +12,7 @@
 #include <geostore/Geostore.h>
 #include <geostore/SpatialIndexer.h>
 #pragma warning( push, 0 )
-#include <boost/thread/thread.hpp>
 #include <boost/exception_ptr.hpp>
-#include <boost/phoenix.hpp>
 #pragma warning( pop )
 
 namespace
@@ -83,23 +81,6 @@ namespace
         }
     }
 }
-
-/* Disabled, there is still a race.
- *
-BOOST_FIXTURE_TEST_CASE( ConcurrentlyCreateDatabaseTwice_Test, Fixture )
-{
-    boost::exception_ptr error;
-    auto f = boost::bind( &Watch, boost::ref( error ),
-        boost::phoenix::construct< geostore::Geostore >( terrain, boost::cref( indexer ) ) );
-    boost::thread_group group;
-    group.create_thread( f );
-    boost::this_thread::sleep( boost::posix_time::milliseconds( 100 ) );
-    group.create_thread( f );
-    group.join_all();
-    BOOST_CHECK_MESSAGE( ! error, boost::diagnostic_information( error ) );
-    BOOST_CHECK( database.Exists() );
-}
-*/
 
 BOOST_FIXTURE_TEST_CASE( UrbanBlockAutoGeneration_Test, Fixture )
 {
