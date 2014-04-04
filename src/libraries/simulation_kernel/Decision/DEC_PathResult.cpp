@@ -301,7 +301,7 @@ void DEC_PathResult::Serialize( sword::PathResult& msg ) const
 // Name: DEC_PathResult::AddResultPoint
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool waypoint )
+void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint )
 {
     if( bSectionJustStarted_ )
     {
@@ -328,12 +328,12 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
             {
                 const MT_Line segment( startPoint, vPos );
                 const MT_Vector2D projected = segment.ProjectPointOnLine( ( itSlope + 1 )->first );
-                auto point = boost::make_shared< DEC_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint, waypoint );
+                auto point = boost::make_shared< DEC_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
                 resultList_.push_back( point );
             }
         }
     }
-    auto point = boost::make_shared< DEC_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint, waypoint );
+    auto point = boost::make_shared< DEC_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
     resultList_.push_back( point );
     if( resultList_.size() == 1 )
         itCurrentPathPoint_ = resultList_.begin();
@@ -394,4 +394,14 @@ void DEC_PathResult::NotifyPartialSection()
 {
     if( !resultList_.empty() )
         resultList_.back()->NotifyPartial();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathResult::NotifyCompletedSection
+// Created: LGY 2014-04-03
+// -----------------------------------------------------------------------------
+void DEC_PathResult::NotifyCompletedSection()
+{
+    if( !resultList_.empty() )
+        resultList_.back()->NotifyWaypoint();
 }

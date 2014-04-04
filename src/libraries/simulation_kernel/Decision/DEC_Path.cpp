@@ -130,7 +130,10 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
             }
         }
         else if( !pathPoints.empty() )
+        {
             computedWaypoints_.push_back( pathPoints.back()->GetPos() );
+            NotifyCompletedSection();
+        }
     }
     nState_ = eValid;
 }

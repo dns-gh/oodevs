@@ -68,8 +68,6 @@ private:
     MT_Vector2D startPoint_;
     MT_Vector2D endPoint_;
     unsigned int nComputationEndTime_;
-    geometry::Point2f from_;
-    const geometry::Point2f to_;
 
     bool bCanceled_;
     unsigned int nAddedPoints_;

@@ -79,6 +79,7 @@ public:
     bool WillBeInObject( const TerrainData& data ) const;
     void SetSlope( double slope );
     void NotifyPartial();
+    void NotifyWaypoint();
     //@}
 
     //! @name DIA
@@ -98,7 +99,7 @@ protected:
     TerrainData nObjectTypesToNextPoint_;
     std::string diaType_;
     boost::optional< double > slope_;
-    const bool waypoint_;
+    bool waypoint_;
     bool partial_;
     //@}
 };
