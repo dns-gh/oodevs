@@ -165,7 +165,9 @@ namespace
                 const sword::TimeTable_TimeMapping& map = timeTable.time_table_item( i );
                 table->setItem( i, 0, new QTableWidgetItem( locale().toString( map.tick() ) ) );
                 table->setItem( i, 1, new QTableWidgetItem( map.simulation_time().data().c_str() ) );
-                table->setItem( i, 2, new QTableWidgetItem( map.real_time().data().c_str() ) );
+                QDateTime date = tools::IsoStringToQDateTime( map.real_time().data().c_str() );
+                date.setTimeSpec( Qt::UTC );
+                table->setItem( i, 2, new QTableWidgetItem( tools::QDateTimeToGDHString( date.toLocalTime() ).c_str() ) );
                 table->item( i, 0 )->setFlags( Qt::ItemIsEnabled );
                 table->item( i, 1 )->setFlags( Qt::ItemIsEnabled );
                 table->item( i, 2 )->setFlags( Qt::ItemIsEnabled );
