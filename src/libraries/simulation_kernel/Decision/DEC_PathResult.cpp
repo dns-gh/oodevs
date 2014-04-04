@@ -305,8 +305,8 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
 {
     if( bSectionJustStarted_ )
     {
-       bSectionJustStarted_ = false;
-       // skip the first next point of the new section
+        bSectionJustStarted_ = false;
+        // skip the first next point of the new section
         if( !resultList_.empty() )
             return;
     }
