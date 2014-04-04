@@ -773,6 +773,10 @@ Parked engine running</translation>
         <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
         <translation type="unfinished">Weapon %1 - Indirect fire - max range &lt; min range</translation>
     </message>
+    <message>
+        <source>Mission parameter %1 defines duplicate enumeration values.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

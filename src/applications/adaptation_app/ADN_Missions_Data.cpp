@@ -529,6 +529,8 @@ void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker )
             CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetKey(), 0 );
 
             const tools::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
+
+            ( *it )->CheckMissionDataConsistency( checker );
             ( *it )->CheckMissionDataConsistency( checker, ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
             for( auto itLang = languages.begin(); itLang != languages.end(); ++itLang )
                 ( *it )->CheckMissionDataConsistency( checker, itLang->GetCode() );

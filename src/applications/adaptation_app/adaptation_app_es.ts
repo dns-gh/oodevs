@@ -774,6 +774,10 @@ Estacionado y motor encendido</translation>
         <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
         <translation type="unfinished">Arma %1 - Fuego indirecto - rango máximo &lt; rango mínimo</translation>
     </message>
+    <message>
+        <source>Mission parameter %1 defines duplicate enumeration values.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

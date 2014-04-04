@@ -56,6 +56,7 @@ public:
     void ReadParameter( xml::xistream& input );
 
     void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, const std::string& language );
+    void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker );
     void ReadMissionSheet( const tools::Path& missionDir, const std::string& language );
     void RenameDifferentNamedMissionSheet( const tools::Path& missionDir, const std::string& language );
     void WriteMissionSheet( const tools::Path& missionDir, const std::string& language ) const;
