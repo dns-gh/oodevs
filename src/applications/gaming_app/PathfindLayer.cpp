@@ -284,15 +284,24 @@ bool PathfindLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Poi
 
 bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( event->button() == Qt::LeftButton && hovered_
-        && IsNear( point.SquareDistance( hovered_->coordinate_ ), point ) )
+    if( lock_ || !hovered_ )
+        return false;
+    if( event->button() == Qt::LeftButton )
     {
         hovered_->coordinate_ = point;
         QWidget w;
         dnd::CreateDragObject( this, &w );
-        return true;
     }
-    return false;
+    else if( event->button() == Qt::RightButton )
+    {
+        if( !hovered_->insert_ )
+            positions_.erase( positions_.begin() + hovered_->waypoint_ );
+        if( positions_.size() < 2 )
+            ClearPositions();
+        else
+            SendRequest();
+    }
+    return true;
 }
 
 bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* /*event*/, const geometry::Point2f& point )
