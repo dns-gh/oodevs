@@ -178,7 +178,7 @@ bool AttributeType::IsActive( const std::map< std::string, std::string >& extens
 // -----------------------------------------------------------------------------
 bool AttributeType::IsEditable( const kernel::Profile_ABC& profile ) const
 {
-    if( !supervisor_.IsSet() )
+    if( !supervisor_.IsSet() || !supervisor_.Data() )
         return true;
-    return supervisor_.Data() && profile.IsSupervision();
+    return profile.IsSupervision();
 }
