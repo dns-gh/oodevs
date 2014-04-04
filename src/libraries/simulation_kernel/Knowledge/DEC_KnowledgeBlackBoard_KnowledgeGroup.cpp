@@ -204,13 +204,13 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_KnowledgeGroup:
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetAllAgentsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const
 {
-	container.clear();
-	auto knowledgeMap = pKnowledgeAgentContainer_->GetKnowledgeAgents();
+    container.clear();
+    auto knowledgeMap = pKnowledgeAgentContainer_->GetKnowledgeAgents();
     for( auto it = knowledgeMap.begin(); it != knowledgeMap.end(); ++it )
     {
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge = ( *it ).second;
         if( zone.IsInside( knowledge->GetPosition() ) )
-            container.push_back( knowledge );
+        container.push_back( knowledge );
     }
 }
 
