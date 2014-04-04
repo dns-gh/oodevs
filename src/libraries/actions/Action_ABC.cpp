@@ -36,7 +36,6 @@ namespace
 // -----------------------------------------------------------------------------
 Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType* type )
     : controller_( controller )
-    , type_( boost::none )
     , id_( ++ids )
     , name_( type ? type->GetName().c_str() : "" )
     , valid_( type != 0 )

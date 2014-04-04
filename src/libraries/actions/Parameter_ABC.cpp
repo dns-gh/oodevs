@@ -26,9 +26,8 @@ using namespace actions;
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 Parameter_ABC::Parameter_ABC( const QString& name )
-    : name_    ( name )
-    , position_()
-    , isSet_   ( false )
+    : name_ ( name )
+    , isSet_( false )
 {
     // NOTHING
 }

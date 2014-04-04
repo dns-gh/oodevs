@@ -263,7 +263,7 @@ void OrderParameter::SetKeyName( const std::string& keyName )
 // -----------------------------------------------------------------------------
 const OrderParameterValue& OrderParameter::GetValue( unsigned int id ) const
 {
-    CIT_OrderParameterValues it = values_.find( id );
+    auto it = values_.find( id );
     if( it == values_.end() )
         throw MASA_EXCEPTION( "Undefined enumeration value." ); // $$$$ SBO 2007-05-25:
     return it->second;
@@ -287,7 +287,7 @@ const OrderParameterValue* OrderParameter::FindValue( unsigned int id ) const
 // -----------------------------------------------------------------------------
 const std::string& OrderParameter::GetChoice( unsigned int id ) const
 {
-    CIT_Aliases it = aliases_.begin();
+    auto it = aliases_.begin();
     while( it != aliases_.end() && id > 0 )
     {
         ++it;

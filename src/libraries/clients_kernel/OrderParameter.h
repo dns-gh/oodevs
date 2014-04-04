@@ -101,9 +101,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, OrderParameterValue >   T_OrderParameterValues;
-    typedef T_OrderParameterValues::const_iterator        CIT_OrderParameterValues;
     typedef std::set< std::string >                         T_Aliases;
-    typedef T_Aliases::const_iterator                     CIT_Aliases;
     //@}
 
     //! @name Helpers

@@ -16,17 +16,14 @@
 #include "EventPresenter.h"
 #include "EventView_ABC.h"
 #include "TimelinePublisher.h"
-
 #include "actions/ActionsModel.h"
 #include "actions/ActionFactory_ABC.h"
 #include "actions/ActionTasker.h"
-
+#include "actions/Parameter_ABC.h"
 #include "actions_gui/MissionInterface_ABC.h"
-
 #include "clients_gui/AutomatDecisions.h"
 #include "clients_gui/Decisions_ABC.h"
 #include "clients_gui/Tools.h"
-
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -40,9 +37,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TimelineHelpers.h"
 #include "clients_kernel/Tools.h"
-
 #include <timeline/api.h>
-
 #include <boost/assign.hpp>
 
 using namespace gui;
