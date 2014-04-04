@@ -49,6 +49,7 @@ public:
     static std::vector< boost::shared_ptr< MT_Vector2D > > GetRoadIntersectionsWithZone( const TER_Localisation* zone );
     static bool IsLinearRiverInBetween( const MT_Vector2D* from, const MT_Vector2D* to );
     static bool IsWaterInBetween( const MT_Vector2D* from, const MT_Vector2D* to );
+    static std::pair< unsigned int, unsigned int > GetTerrainData( const MT_Vector2D* location );
 
     // Movement
     static bool CanMoveOn( const DEC_Decision_ABC* agent, boost::shared_ptr< MT_Vector2D > position );

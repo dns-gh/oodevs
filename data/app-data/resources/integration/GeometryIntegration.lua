@@ -312,6 +312,16 @@ settleDistance = function( lineComputer )
     return DEC_Geometrie_CalculerDistanceLigneAvant( lineComputer, meKnowledge.source )
 end
 
+--- Picks the terrain data given the provided location. Returns the type of terrain
+--- at this point, divided into linear types (roads, rivers, ...) and area types (forest, urban, ...)
+-- @param point The location where to pick the terrain data
+-- @return Table with two members :
+-- <li> first : The area part of the terrain data, as integer</li>
+-- <li> second : The linear part of the terrain data, as integer</li>
+integration.getTerrainData = function( point )
+    return DEC_Geometrie_GetTerrainData( point )
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
