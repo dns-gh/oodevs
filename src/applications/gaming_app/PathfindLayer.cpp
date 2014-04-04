@@ -94,6 +94,7 @@ void PathfindLayer::DrawLines( float width ) const
 {
     if( path_.empty() )
         return;
+    tools_.DrawDisc( path_.front().coordinate_, width / 2, gui::GlTools_ABC::pixels );
     for( auto it = path_.begin(); it != path_.end() - 1; ++it )
     {
         tools_.DrawLine( it->coordinate_, (it + 1)->coordinate_, width );
@@ -193,6 +194,7 @@ void PathfindLayer::SendRequest()
             coordinateConverter_.ConvertToGeo( *it, *positions->Add() );
         publisher_.Send( msg );
         lock_ = true;
+        hovered_ = boost::none;
     }
 }
 
@@ -289,6 +291,11 @@ bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
     if( event->button() == Qt::LeftButton )
     {
         hovered_->coordinate_ = point;
+        if( hovered_->onWaypoint_ )
+            positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
+        else
+            ++hovered_->lastWaypoint_;
+        hovered_->onWaypoint_ = false;
         QWidget w;
         dnd::CreateDragObject( this, &w );
     }
@@ -312,15 +319,8 @@ bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* /*event*/, const geomet
 
 bool PathfindLayer::HandleDropEvent( QDropEvent* /*event*/, const geometry::Point2f& point )
 {
-    if( hovered_->lastWaypoint_ < positions_.size() )
-    {
-        const auto it = positions_.begin() + hovered_->lastWaypoint_;
-        if( hovered_->onWaypoint_ )
-            *it = point;
-        else
-            positions_.insert( it + 1, point );
-        SendRequest();
-    }
+    positions_.insert( positions_.begin() + hovered_->lastWaypoint_, point );
+    SendRequest();
     return true;
 }
 
