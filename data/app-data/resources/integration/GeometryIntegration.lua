@@ -314,10 +314,38 @@ end
 
 --- Picks the terrain data given the provided location. Returns the type of terrain
 --- at this point, divided into linear types (roads, rivers, ...) and area types (forest, urban, ...)
--- @param point The location where to pick the terrain data
+-- @param point Simulation point, the location where to pick the terrain data
 -- @return Table with two members :
--- <li> first : The area part of the terrain data, as integer</li>
--- <li> second : The linear part of the terrain data, as integer</li>
+-- <li> first : The area part of the terrain data, as a bit-field integer
+-- unknown    = 0
+-- forest     = 1
+-- plantation = 2
+-- swamp      = 4
+-- urban      = 8
+-- water      = 16
+-- dune       = 32
+-- ice        = 64
+-- mountain   = 128
+-- </li>
+-- <li> second : The linear part of the terrain data, as a bit-field integer
+-- cliff       = 1
+-- motorway    = 2
+-- largeroad   = 4
+-- mediumroad  = 8
+-- smallroad   = 16
+-- bridge      = 32
+-- railroad    = 64
+-- largeriver  = 128
+-- mediumriver = 256
+-- smallriver  = 512
+-- crossroad   = 1024
+-- street      = 2048
+-- avenue      = 4096
+-- underpass   = 8192
+-- metro       = 16384
+-- </li>
+-- Example: a point with urban as area terrain type, smallriver and bridge as linear terrain type, will return
+-- { first = 8, second = 544 } (bridge 32 +  smallriver 512)
 integration.getTerrainData = function( point )
     return DEC_Geometrie_GetTerrainData( point )
 end
