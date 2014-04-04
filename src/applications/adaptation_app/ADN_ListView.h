@@ -101,6 +101,7 @@ protected:
     void FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString usingName, QString userName, QStringList userList, E_WorkspaceElements targetTab, int subTargetTab = -1 );
     std::string FormatUsersList( const QString& category, const QStringList& usersList ) const;
     void FillMultiUsersList( const QString& category, const QStringList& usersList, std::string& result ) const;
+    const QString& Title() const;
 
 private:
     virtual QStringList MimeTypes() const { return QStringList(); }

@@ -86,7 +86,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef Mission* ( MissionFactory::*T_Resolver )( const std::string& );
+    typedef Mission* ( MissionFactory::*T_Resolver )( const std::string& ) const;
     typedef tools::StringResolver< MissionType > T_MissionResolver;
     //@}
 

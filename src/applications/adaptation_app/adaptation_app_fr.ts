@@ -2518,21 +2518,6 @@ PNG (*.png)
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Orders</name>
-    <message>
-        <source>Frag orders</source>
-        <translation>Ordres de conduite</translation>
-    </message>
-    <message>
-        <source>Add frag order</source>
-        <translation>Ajouter un ordre de conduite</translation>
-    </message>
-    <message>
-        <source>Remove frag order</source>
-        <translation>Enlever un ordre de conduite</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ListView_RoofShapes</name>
     <message>
         <source>RoofShape</source>
@@ -3098,10 +3083,6 @@ PNG (*.png)
     <message>
         <source>Missions</source>
         <translation>Missions</translation>
-    </message>
-    <message>
-        <source>FragOrders</source>
-        <translation>Ordres de conduite</translation>
     </message>
     <message>
         <source>Crowds models</source>

@@ -32,8 +32,8 @@ public:
     {
 
     public:
-        OrderInfos();
-        OrderInfos( ADN_Missions_FragOrder* fragorder, const std::string& name );
+        explicit OrderInfos( const ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_ABC* mission = 0 );
+                 OrderInfos( ADN_Missions_FragOrder* fragorder, const std::string& name );
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
@@ -79,7 +79,6 @@ public:
         void RemoveFragOder( const std::string& order );
 
     public:
-        ADN_Missions_Data::T_Mission_Vector& missions_;
         ADN_Type_String strDiaType_;
         ADN_Type_Path strFile_;
         ADN_Type_Bool isMasalife_;

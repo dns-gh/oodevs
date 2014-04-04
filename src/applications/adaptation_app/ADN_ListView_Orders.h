@@ -19,9 +19,7 @@
 #ifndef __ADN_ListView_Orders_h_
 #define __ADN_ListView_Orders_h_
 
-#include "ADN_Types.h"
 #include "ADN_ListView.h"
-#include <map>
 
 // =============================================================================
 /** @class  ADN_ListView_Orders
@@ -34,36 +32,13 @@ class ADN_ListView_Orders : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_Orders( bool usedWithMission, QWidget* parent );
+             ADN_ListView_Orders( QWidget* parent );
     virtual ~ADN_ListView_Orders();
     //@}
 
     //! @name Operations
     //@{
     virtual void OnContextMenu( const QPoint& pt );
-    bool Contains( const std::string& strComposanteName ) const;
-
-    void CreateNewItem( int n );
-    void RemoveCurrentItem();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void ConnectItem( bool bConnect );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< int, std::string > T_FragOrders;
-    //@}
-
-private:
-    //! @name data
-    //@{
-    bool usedWithMission_;
-    T_FragOrders fragOrders_;
     //@}
 };
 

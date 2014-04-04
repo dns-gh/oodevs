@@ -29,7 +29,6 @@ typedef ADN_Models_Data::MissionInfos MissionInfos;
 ADN_ListView_Missions::ADN_ListView_Missions( E_EntityType eEntityType, QWidget* parent )
     : ADN_ListView  ( parent, "ADN_ListView_Missions", tools::translate( "ADN_ListView_Missions", "Missions" ) )
     , eEntityType_  ( eEntityType )
-    , currentMissions_( 0 )
 {
     pConnector_.reset( new ADN_Connector_ListView< MissionInfos >( *this ) );
     SetDeletionEnabled( true );

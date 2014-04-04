@@ -2496,21 +2496,6 @@ PNG (*.png)
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Orders</name>
-    <message>
-        <source>Frag orders</source>
-        <translation type="unfinished">أوامر frag</translation>
-    </message>
-    <message>
-        <source>Add frag order</source>
-        <translation type="unfinished">إضافة أمر frag</translation>
-    </message>
-    <message>
-        <source>Remove frag order</source>
-        <translation type="unfinished">إزالة ترتيب frag</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ListView_RoofShapes</name>
     <message>
         <source>RoofShape</source>
@@ -3080,10 +3065,6 @@ PNG (*.png)
     <message>
         <source>Missions</source>
         <translation type="unfinished">البعثات</translation>
-    </message>
-    <message>
-        <source>FragOrders</source>
-        <translation type="unfinished">فراجورديرس</translation>
     </message>
     <message>
         <source>DIA5</source>

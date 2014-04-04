@@ -43,7 +43,6 @@ private:
 
 private:
     E_EntityType eEntityType_;
-    ADN_Missions_Data::T_Mission_Vector* currentMissions_;
 };
 
 #endif // __ADN_ListView_Missions_h_
