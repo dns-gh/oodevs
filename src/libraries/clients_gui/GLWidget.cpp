@@ -807,7 +807,7 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit
         radius = 10;
     else if( unit == meters )
         radius = radius / Pixels();
-    glPushAttrib( GL_LINE_BIT );
+    glPushAttrib( GL_POINT_BIT );
     glEnable( GL_POINT_SMOOTH );
     glPointSize( 2 * radius );
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)&center );
