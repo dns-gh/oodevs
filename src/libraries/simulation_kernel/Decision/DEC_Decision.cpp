@@ -483,6 +483,28 @@ void RegisterObjectsFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ObjectKnowledge_IsFullMined", &DEC_KnowledgeObjectFunctions::IsFullMined );
     brain.RegisterFunction( "DEC_ObjectKnowledge_MustBeMined", &DEC_KnowledgeObjectFunctions::MustBeMined );
     brain.RegisterFunction( "DEC_ObjectKnowledge_IsTrafficable", &DEC_KnowledgeObjectFunctions::IsObjectTrafficable );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstConstuit", &DEC_KnowledgeObjectFunctions::IsConstructed );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif", &DEC_KnowledgeObjectFunctions::IsObstacleActivated );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_DateActivationObstacle", &DEC_KnowledgeObjectFunctions::GetActivationTime );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre", &DEC_KnowledgeObjectFunctions::IsActivableObstacle );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstContourne", &DEC_KnowledgeObjectFunctions::IsBypassed );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstValorise", &DEC_KnowledgeObjectFunctions::IsMined );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstBreche", &DEC_KnowledgeObjectFunctions::IsBreached );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauConstruction", &DEC_KnowledgeObjectFunctions::GetConstructionLevel );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauValorisation", &DEC_KnowledgeObjectFunctions::GetValorizationLevel );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_Localisation", &DEC_KnowledgeObjectFunctions::GetLocalisation );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_Type", &DEC_KnowledgeObjectFunctions::GetType );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_Name", &DEC_KnowledgeObjectFunctions::GetName );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauAnimation", &DEC_KnowledgeObjectFunctions::GetAnimationLevel );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_LargeurSiteFranchissement", &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstReconnu", &DEC_KnowledgeObjectFunctions::IsRecon );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_PeutEtreContourne", &DEC_KnowledgeObjectFunctions::CanBeBypassed );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_ChangeDensitePopulationSortante", &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_ResetDensitePopulationSortante", &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_PointEstDansZoneEvitement", &DEC_KnowledgeObjectFunctions::IsInAvoidanceArea );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_PointEstProcheZoneEffet", &DEC_KnowledgeObjectFunctions::IsNearEffectArea );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_BurningLevel", &DEC_KnowledgeObjectFunctions::GetBurningLevel );
+    brain.RegisterFunction( "DEC_IsValidKnowledgeObject", &DEC_KnowledgeObjectFunctions::IsKnowledgeValid );
 }
 
 // -----------------------------------------------------------------------------
