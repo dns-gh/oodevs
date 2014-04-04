@@ -14,6 +14,7 @@
 #include "MIL_AgentServer.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectWeatherFire.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -23,13 +24,15 @@
 // Name: MIL_Effect_Weather constructor
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-MIL_Effect_Weather::MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, double rLifeDuration, double rDeploymentDuration )
-    : MIL_Effect_Fire_ABC ( surface, ammoCategory )
-    , nDeploymentTimeStep_( MIL_Time_ABC::GetTime().GetCurrentTimeStep() + (unsigned int)rDeploymentDuration )
-    , nLifeLastTimeStep_  ( nDeploymentTimeStep_ + (unsigned int)rLifeDuration )
+MIL_Effect_Weather::MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_DotationCategory_IndirectWeatherFire& dotationCategory, double rLifeDuration, double rDeploymentDuration )
+    : MIL_Effect_Fire_ABC ( surface, dotationCategory.GetIndirectFireDotationCategory() )
+    , dotationCategory_( dotationCategory )
+    , nDeploymentTimeStep_( MIL_Time_ABC::GetTime().GetCurrentTimeStep() + static_cast< unsigned int >( rDeploymentDuration ) )
+    , nLifeLastTimeStep_  ( nDeploymentTimeStep_ + static_cast< unsigned int >( rLifeDuration ) )
     , bIsDeployed_        ( false )
 {
-    assert( ammoCategory_ == PHY_IndirectFireDotationClass::eclairant_ || ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ );
+    assert( dotationCategory.GetIndirectFireDotationCategory() == PHY_IndirectFireDotationClass::eclairant_ ||
+            dotationCategory.GetIndirectFireDotationCategory() == PHY_IndirectFireDotationClass::fumigene_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,6 +55,7 @@ bool MIL_Effect_Weather::Execute()
     {
         MIL_AgentServer::GetWorkspace().GetMeteoDataManager().RegisterWeatherEffect( surface_, ammoCategory_ );
         SendMsgStartEffect( ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ ? sword::StartFireEffect::smoke : sword::StartFireEffect::light );
+        dotationCategory_.NotifyEffectStarted( *this );
         bIsDeployed_ = true;
     }
 

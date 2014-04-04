@@ -78,25 +78,8 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC*
 
     const MT_Ellipse effectSurface( vTargetPosition, vTargetPosition + vFireDirection, vTargetPosition + vRotatedFireDirection );
     const double deploymentDuration = MIL_Tools::ConvertSecondsToSim( rDeploymentDuration_ );
-    MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, MIL_Tools::ConvertSecondsToSim( rLifeDuration_ ), deploymentDuration );
+    MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, *this, MIL_Tools::ConvertSecondsToSim( rLifeDuration_ ), deploymentDuration );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
-
-    std::vector< unsigned int > fireEffectsIds;
-    fireEffectsIds.push_back( pEffect->GetFireEffectId() );
-    ApplyDetectionRangeEffect( vTargetPosition, fireEffectsIds );
-
-    TER_Agent_ABC::T_AgentPtrVector targets;
-    TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( effectSurface, targets );
-    for( auto itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
-    {
-        MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
-        if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
-            continue;
-        if( category_ == PHY_IndirectFireDotationClass::eclairant_ )
-            MIL_Report::PostEvent( target, report::eRC_PrisSousTirEclairant, dotationCategory_ );
-        else if( category_ == PHY_IndirectFireDotationClass::fumigene_  )
-            MIL_Report::PostEvent( target, report::eRC_PrisSousTirFumigene, dotationCategory_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -110,3 +93,26 @@ double PHY_DotationCategory_IndirectWeatherFire::GetSmokeDuration() const
     else
         return 0.;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectWeatherFire::NotifyEffectStarted
+// Created: JSR 2014-04-04
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory_IndirectWeatherFire::NotifyEffectStarted( const MIL_Effect_Weather& effect ) const
+{
+    std::vector< unsigned int > fireEffectsIds;
+    fireEffectsIds.push_back( effect.GetFireEffectId() );
+    ApplyDetectionRangeEffect( effect.GetSurface().GetCenter(), fireEffectsIds );
+
+    TER_Agent_ABC::T_AgentPtrVector targets;
+    TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( effect.GetSurface(), targets );
+    for( auto itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
+    {
+        MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
+        if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
+            continue;
+        if( category_ == PHY_IndirectFireDotationClass::eclairant_ )
+            MIL_Report::PostEvent( target, report::eRC_PrisSousTirEclairant, dotationCategory_ );
+        else if( category_ == PHY_IndirectFireDotationClass::fumigene_  )
+            MIL_Report::PostEvent( target, report::eRC_PrisSousTirFumigene, dotationCategory_ );
+    }}

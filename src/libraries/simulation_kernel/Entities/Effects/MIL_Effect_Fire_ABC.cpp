@@ -48,6 +48,15 @@ unsigned int MIL_Effect_Fire_ABC::GetFireEffectId() const
     return nID_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_Fire_ABC::GetSurface
+// Created: JSR 2014-04-04
+// -----------------------------------------------------------------------------
+const MT_Ellipse& MIL_Effect_Fire_ABC::GetSurface() const
+{
+    return surface_;
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_Effect_Fire_ABC::SendMsgStartEffect
 // Created: JVT 04-03-25

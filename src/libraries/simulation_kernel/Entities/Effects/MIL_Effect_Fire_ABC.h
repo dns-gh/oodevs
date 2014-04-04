@@ -40,6 +40,7 @@ public:
     //! @name Accessors
     //@{
     unsigned int GetFireEffectId() const;
+    const MT_Ellipse& GetSurface() const;
     //@}
 
 protected:

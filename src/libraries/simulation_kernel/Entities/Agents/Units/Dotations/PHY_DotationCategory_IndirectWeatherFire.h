@@ -14,6 +14,8 @@
 
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
 
+class MIL_Effect_Weather;
+
 namespace xml
 {
     class xistream;
@@ -40,6 +42,7 @@ public:
     //@{
     virtual void ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
     virtual double GetSmokeDuration() const;
+    void NotifyEffectStarted( const MIL_Effect_Weather& effect ) const;
     //@}
 
 private:

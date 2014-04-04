@@ -14,6 +14,8 @@
 
 #include "MIL_Effect_Fire_ABC.h"
 
+class PHY_DotationCategory_IndirectWeatherFire;
+
 // =============================================================================
 // @class  MIL_Effect_Weather
 // Created: JVT 2004-08-03
@@ -21,7 +23,7 @@
 class MIL_Effect_Weather : public MIL_Effect_Fire_ABC
 {
 public:
-             MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, double rLifeDuration, double rDeploymentDuration );
+             MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_DotationCategory_IndirectWeatherFire& dotationCategory, double rLifeDuration, double rDeploymentDuration );
     virtual ~MIL_Effect_Weather();
 
     //! @name Operations
@@ -30,9 +32,10 @@ public:
     //@}
 
 private:
+    const PHY_DotationCategory_IndirectWeatherFire& dotationCategory_;
     const unsigned int nDeploymentTimeStep_;
     const unsigned int nLifeLastTimeStep_;
-          bool         bIsDeployed_;
+    bool bIsDeployed_;
 
     static MIL_IDManager idManager_;
 };
