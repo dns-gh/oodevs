@@ -105,8 +105,8 @@ void PathfindLayer::DrawPoints() const
 {
     for( std::size_t i = 0; i < positions_.size(); ++i )
         DrawPoint( positions_[i],
-            hovered_ && !hovered_->insert_ && hovered_->waypoint_ == i );
-    if( hovered_ && hovered_->insert_ )
+            hovered_ && hovered_->onWaypoint_ && hovered_->lastWaypoint_ == i );
+    if( hovered_ && !hovered_->onWaypoint_ )
         DrawPoint( hovered_->coordinate_, false );
 }
 
@@ -237,7 +237,7 @@ bool PathfindLayer::PickWaypoint( geometry::Point2f point )
             const Hover hover = {
                 point,
                 *it->waypoint_,
-                false
+                true
             };
             hovered_ = hover;
             return true;
@@ -264,7 +264,7 @@ void PathfindLayer::PickSegment( geometry::Point2f point )
             const Hover hover = {
                 projection,
                 waypoint,
-                true
+                false
             };
             hovered_ = hover;
         }
@@ -294,8 +294,8 @@ bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
     }
     else if( event->button() == Qt::RightButton )
     {
-        if( !hovered_->insert_ )
-            positions_.erase( positions_.begin() + hovered_->waypoint_ );
+        if( hovered_->onWaypoint_ )
+            positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
         if( positions_.size() < 2 )
             ClearPositions();
         else
@@ -312,13 +312,13 @@ bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* /*event*/, const geomet
 
 bool PathfindLayer::HandleDropEvent( QDropEvent* /*event*/, const geometry::Point2f& point )
 {
-    if( hovered_->waypoint_ < positions_.size() )
+    if( hovered_->lastWaypoint_ < positions_.size() )
     {
-        const auto it = positions_.begin() + hovered_->waypoint_;
-        if( hovered_->insert_ )
-            positions_.insert( it + 1, point );
-        else
+        const auto it = positions_.begin() + hovered_->lastWaypoint_;
+        if( hovered_->onWaypoint_ )
             *it = point;
+        else
+            positions_.insert( it + 1, point );
         SendRequest();
     }
     return true;

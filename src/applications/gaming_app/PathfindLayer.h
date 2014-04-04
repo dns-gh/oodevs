@@ -101,8 +101,8 @@ private:
     struct Hover
     {
         geometry::Point2f coordinate_;
-        std::size_t waypoint_;
-        bool insert_;
+        std::size_t lastWaypoint_;
+        bool onWaypoint_;
     };
 
 private:
