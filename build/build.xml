@@ -851,7 +851,7 @@
         <update name="icu" version="4.52.1"/>
         <update name="libpng" version="1.6.6"/>
         <update name="mapnik" version="2.2.0.r719"/>
-        <update name="masalife/brain"/>
+        <update name="DIA"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
         <update name="models" package="propagations-dev" todir="${data.dir}/data/propagations"/>
