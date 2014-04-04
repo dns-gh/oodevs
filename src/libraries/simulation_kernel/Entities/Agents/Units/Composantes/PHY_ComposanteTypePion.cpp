@@ -872,7 +872,7 @@ namespace
     template< typename Objects >
     bool CanDoIt( const Objects& objects, const MIL_ObjectType_ABC& objectType, std::function< bool( const PHY_ComposanteTypeObjectData& ) > f )
     {
-        if( objectType.GetID() > objects.size() )
+        if( objectType.GetID() >= objects.size() )
             return false;
         auto objectData = objects[ objectType.GetID() ];
         return objectData && f( *objectData );
@@ -947,7 +947,7 @@ namespace
     template< typename Objects >
     double GetTime( const Objects& objects, const MIL_ObjectType_ABC& objectType, std::function< double( const PHY_ComposanteTypeObjectData& ) > f )
     {
-        if( objectType.GetID() > objects.size() )
+        if( objectType.GetID() >= objects.size() )
             return std::numeric_limits< double >::max();
         const auto objectData = objects[ objectType.GetID() ];
         if( objectData )
