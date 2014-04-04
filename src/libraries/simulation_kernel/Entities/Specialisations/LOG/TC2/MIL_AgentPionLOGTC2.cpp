@@ -53,6 +53,7 @@ MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type,
                                           xml::xistream& xis )
     : MIL_AgentPionLOG_ABC( type, controller, automate, xis )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -82,10 +83,21 @@ MIL_AgentPionLOGTC2::~MIL_AgentPionLOGTC2()
 void MIL_AgentPionLOGTC2::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
-
-    { PHY_RolePionLOG_Maintenance* pRole; file >> pRole; }
-    { PHY_RolePionLOG_Medical    * pRole; file >> pRole; RegisterRole( *pRole ); }
-    { PHY_RolePionLOG_Supply     * pRole; file >> pRole; }
+    {
+        PHY_RolePionLOG_Maintenance* role;
+        file >> role;
+        RegisterRole( *role );
+    }
+    {
+        PHY_RolePionLOG_Medical* role;
+        file >> role;
+        RegisterRole( *role );
+    }
+    {
+        PHY_RolePionLOG_Supply* role;
+        file >> role;
+        RegisterRole( *role );
+    }
 }
 
 // -----------------------------------------------------------------------------

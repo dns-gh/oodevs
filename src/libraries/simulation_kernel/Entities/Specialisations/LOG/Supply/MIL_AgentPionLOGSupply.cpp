@@ -77,9 +77,9 @@ MIL_AgentPionLOGSupply::~MIL_AgentPionLOGSupply()
 void MIL_AgentPionLOGSupply::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
-
-    PHY_RolePionLOG_Supply* pRole;
-    file >> pRole;
+    PHY_RolePionLOG_Supply* role;
+    file >> role;
+    RegisterRole( *role );
 }
 
 // -----------------------------------------------------------------------------

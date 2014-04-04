@@ -49,7 +49,6 @@ void load_construct_data( Archive& archive, PHY_RolePionLOG_Supply* role, const 
     MIL_AgentPionLOG_ABC* pion;
     archive >> pion;
     ::new( role )PHY_RolePionLOG_Supply( *pion );
-    pion->RegisterRole( *role );
 }
 
 // -----------------------------------------------------------------------------
