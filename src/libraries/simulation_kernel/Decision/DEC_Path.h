@@ -38,7 +38,9 @@ public:
     virtual bool NeedRefine() const = 0;
     virtual bool UseStrictClosest() const = 0;
 
-    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;
+    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint ) = 0;
+    virtual void NotifyPartialSection() = 0;
+    virtual void NotifyCompletedSection() = 0;
 
     virtual void Destroy() {}
     //@}
@@ -64,7 +66,7 @@ protected:
     std::string GetPathAsString() const;
     const T_PointVector& GetComputedWaypoints() const;
 
-    virtual void NotifySectionEnded() = 0;
+    virtual void NotifySectionStarted() = 0;
 
     void DoExecute( TER_Pathfinder_ABC& pathfind );
     void RemoveComputedWaypoint();

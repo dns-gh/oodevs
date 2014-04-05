@@ -100,6 +100,7 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
             return;
         }
         DEC_PathSection_ABC& pathSection = **itPathSection;
+        NotifySectionStarted();
         if( !pathSection.Execute( pathfind, nComputationEndTime ) )
         {
             if( !pathPoints.empty() )
@@ -117,6 +118,7 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
             }
             else
             {
+                NotifyPartialSection();
                 T_PathSectionVector::iterator itNextPathSection = itPathSection + 1;
                 if( itNextPathSection == pathSections_.end() )
                 {
@@ -128,8 +130,10 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
             }
         }
         else if( !pathPoints.empty() )
+        {
             computedWaypoints_.push_back( pathPoints.back()->GetPos() );
-        NotifySectionEnded();
+            NotifyCompletedSection();
+        }
     }
     nState_ = eValid;
 }

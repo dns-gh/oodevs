@@ -29,7 +29,7 @@
 // -----------------------------------------------------------------------------
 DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType )
     : pathType_( pathType )
-    , bSectionJustEnded_( false )
+    , bSectionJustStarted_( false )
 {
     itCurrentPathPoint_ = resultList_.end();
 }
@@ -277,16 +277,38 @@ void DEC_PathResult::Serialize( sword::Path& asn, int firstPoint, int pathSizeTh
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PathResult::Serialize
+// Created: LGY 2014-04-02
+// -----------------------------------------------------------------------------
+void DEC_PathResult::Serialize( sword::PathResult& msg ) const
+{
+    unsigned int index = 0;
+    for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
+    {
+        auto point = msg.add_points();
+        const MT_Vector2D& position = (*it)->GetPos();
+        const bool partial = (*it)->IsPartial();
+        if( (*it)->IsWaypoint() || partial )
+        {
+            point->set_waypoint( index++ );
+            point->set_reached( !partial );
+        }
+        NET_ASN_Tools::WritePoint( position, *point->mutable_coordinate() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PathResult::AddResultPoint
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint )
+void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint )
 {
-    if( bSectionJustEnded_ )
+    if( bSectionJustStarted_ )
     {
-        // Pop last point
-        resultList_.pop_back();
-        bSectionJustEnded_ = false;
+        bSectionJustStarted_ = false;
+        // skip the first next point of the new section
+        if( !resultList_.empty() )
+            return;
     }
     if( !resultList_.empty() )
     {
@@ -306,24 +328,24 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
             {
                 const MT_Line segment( startPoint, vPos );
                 const MT_Vector2D projected = segment.ProjectPointOnLine( ( itSlope + 1 )->first );
-                auto point = boost::make_shared< DEC_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint );
+                auto point = boost::make_shared< DEC_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
                 resultList_.push_back( point );
             }
         }
     }
-    auto point = boost::make_shared< DEC_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint );
+    auto point = boost::make_shared< DEC_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
     resultList_.push_back( point );
     if( resultList_.size() == 1 )
         itCurrentPathPoint_ = resultList_.begin();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathResult::NotifySectionEnded
+// Name: DEC_PathResult::NotifySectionStarted
 // Created: AGE 2005-09-01
 // -----------------------------------------------------------------------------
-void DEC_PathResult::NotifySectionEnded()
+void DEC_PathResult::NotifySectionStarted()
 {
-    bSectionJustEnded_ = true;
+    bSectionJustStarted_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -362,4 +384,24 @@ const DEC_PathResult::T_PathPoints& DEC_PathResult::GetResult( bool useCheck ) c
 const DEC_PathType& DEC_PathResult::GetPathType() const
 {
     return pathType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathResult::NotifyPartialSection
+// Created: LGY 2014-04-03
+// -----------------------------------------------------------------------------
+void DEC_PathResult::NotifyPartialSection()
+{
+    if( !resultList_.empty() )
+        resultList_.back()->NotifyPartial();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathResult::NotifyCompletedSection
+// Created: LGY 2014-04-03
+// -----------------------------------------------------------------------------
+void DEC_PathResult::NotifyCompletedSection()
+{
+    if( !resultList_.empty() )
+        resultList_.back()->NotifyWaypoint();
 }

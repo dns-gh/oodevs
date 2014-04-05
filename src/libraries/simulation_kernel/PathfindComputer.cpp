@@ -103,9 +103,7 @@ bool PathfindComputer::PathComputed( unsigned int clientId, const T_Result& cont
     else
     {
         ack().set_error_code( sword::PathfindRequestAck::no_error );
-        sword::Path& msg = *ack().mutable_path();
-        msg.mutable_location()->set_type( sword::Location::line );
-        path->Serialize( *ack().mutable_path(), 0, std::numeric_limits< int >::max() );
+        path->Serialize( *ack().mutable_path() );
     }
     path->DecRef();
     ack.Send( NET_Publisher_ABC::Publisher(), content.first, clientId );

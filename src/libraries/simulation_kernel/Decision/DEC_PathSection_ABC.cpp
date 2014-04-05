@@ -21,7 +21,7 @@
 // -----------------------------------------------------------------------------
 DEC_PathSection_ABC::DEC_PathSection_ABC( DEC_Path& path, const MT_Vector2D& startPoint, const MT_Vector2D& endPoint )
     : startPoint_         ( startPoint )
-    , endPoint_           ( endPoint   )
+    , endPoint_           ( endPoint )
     , path_               ( path  )
     , bCanceled_          ( false )
     , nAddedPoints_       ( 0 )
@@ -65,8 +65,8 @@ bool DEC_PathSection_ABC::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nC
 void DEC_PathSection_ABC::Handle( const TerrainPathPoint& point )
 {
     const geometry::Point2f p( point );
+    path_.AddResultPoint( MT_Vector2D( p.X(), p.Y() ), point.DataAtPoint(), point.DataToNextPoint(), nAddedPoints_ == 0u );
     ++ nAddedPoints_;
-    path_.AddResultPoint( MT_Vector2D( p.X(), p.Y() ), point.DataAtPoint(), point.DataToNextPoint() );
 }
 
 // -----------------------------------------------------------------------------

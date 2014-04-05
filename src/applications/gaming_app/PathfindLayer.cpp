@@ -42,9 +42,9 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
                 return;
             const auto& path = request.path();
             path_.clear();
-            const auto& elements = path.location().coordinates().elem();
+            const auto& elements = path.points();
             for( auto it = elements.begin(); it != elements.end(); ++it )
-                path_.push_back( coordinateConverter_.ConvertToXY( *it ) );
+                path_.push_back( coordinateConverter_.ConvertToXY( it->coordinate() ) );
         };
     publisher_.Register( fun );
 }
