@@ -293,6 +293,12 @@ ElevationCell& PHY_RawVisionData::operator() ( double rCol, double rRow )
     return pElevationGrid_->GetCell( GetCol( rCol ), GetRow( rRow ) );
 }
 
+const weather::Meteo& PHY_RawVisionData::GetWeather( const MT_Vector2D& pos ) const
+{
+    const auto& cell = operator()( pos );
+    return cell.pMeteo ? *cell.pMeteo : globalMeteo_; 
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetPrecipitation
 // Created: BCI 2010-12-13

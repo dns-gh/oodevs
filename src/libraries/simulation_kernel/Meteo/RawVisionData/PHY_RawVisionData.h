@@ -72,6 +72,7 @@ public:
 
     double GetCellSize() const;
 
+    const weather::Meteo& GetWeather( const MT_Vector2D& pos ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const MT_Vector2D& ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const ElevationCell& ) const;
     const weather::PHY_Lighting& GetLighting( const ElevationCell& ) const;

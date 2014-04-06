@@ -16,6 +16,7 @@
 #include "Tools/MIL_MessageParameters.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
+#include "MT_Tools/MT_Rect.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/EnumMaps.h"
 #include "protocol/MessageParameters.h"
@@ -237,4 +238,11 @@ void PHY_LocalMeteo::SendDestruction() const
 bool PHY_LocalMeteo::IsPatched() const
 {
     return bIsPatched_;
+}
+
+bool PHY_LocalMeteo::IsInside( const geometry::Point2f& point ) const
+{
+    const MT_Rect rect( upLeft_.GetX(), upLeft_.GetY(),
+                        downRight_.GetX(), downRight_.GetY() ); 
+    return rect.IsInside( MT_Vector2D( point.X(), point.Y() ) );
 }

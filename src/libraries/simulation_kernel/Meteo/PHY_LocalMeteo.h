@@ -57,6 +57,7 @@ public:
     virtual void Update( const sword::MissionParameters& msg );
     using weather::Meteo::Update;
     virtual bool IsPatched() const;
+    virtual bool IsInside( const geometry::Point2f& point ) const;
     virtual void SendCreation() const;
     virtual void SendDestruction() const;
     //@}
