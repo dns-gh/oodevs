@@ -118,6 +118,9 @@ BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_creation_destruction )
 
     auto man = CreateMeteoManager( world );
 
+    const auto global = man->GetGlobalWeather();
+    BOOST_REQUIRE( global );
+
     // Remove imaginary weather
     BOOST_CHECK( !man->RemoveLocalWeather( 1234 ) );
 

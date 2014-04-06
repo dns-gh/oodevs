@@ -46,8 +46,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MeteoDataManager )
 // Created: JSR 2011-11-22
 // -----------------------------------------------------------------------------
 PHY_MeteoDataManager::PHY_MeteoDataManager()
-    : pGlobalMeteo_( 0 )
-    , pRawData_    ( 0 )
+    : pRawData_    ( 0 )
     , tickDuration_( 1 )
 {
     // NOTHING
@@ -61,7 +60,6 @@ PHY_MeteoDataManager::PHY_MeteoDataManager(
     const boost::shared_ptr< TER_World >& world, xml::xistream& xis,
     const tools::Path& detectionFile, uint32_t now, uint32_t tickDuration )
     : world_( world )
-    , pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
     , tickDuration_( tickDuration )
 {
@@ -80,7 +78,6 @@ PHY_MeteoDataManager::PHY_MeteoDataManager(
 PHY_MeteoDataManager::~PHY_MeteoDataManager()
 {
     delete pRawData_;
-    delete pGlobalMeteo_;
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +87,8 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), tickDuration_ );
+    pGlobalMeteo_.reset(
+        new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), tickDuration_ ) );
     pGlobalMeteo_->SetLighting( pEphemeride_->GetLightingBase() );
     xis >> xml::end;
 }
@@ -359,6 +357,11 @@ boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::GetLocalWeather(
             result = it->second;
     }
     return result;
+}
+
+boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::GetGlobalWeather() const
+{
+    return pGlobalMeteo_;
 }
 
 //-----------------------------------------------------------------------------
