@@ -2126,27 +2126,70 @@ bool DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau( const MIL_Fuseau* pFuse
 // -----------------------------------------------------------------------------
 namespace
 {
-
-boost::shared_ptr< MT_Vector2D > ComputeObstaclePosition( const MIL_Fuseau& fuseau,
-        MT_Vector2D* pCenter, const std::string& type, double rRadius )
-{
-    if( !pCenter )
-        throw MASA_EXCEPTION( "Compute obstacle position with null center" );
-    boost::shared_ptr< MT_Vector2D > pResultPos ( new MT_Vector2D( *pCenter ) );
-
-    const MIL_ObjectType_ABC& object = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( type );
-    const TerrainHeuristicCapacity* pCapacity = object.GetCapacity< TerrainHeuristicCapacity >();
-    if ( pCapacity )
+    // =============================================================================
+    // $$$$ NLD - A TRIER - DEGUEU
+    // =============================================================================
+    struct BestNodeForObstacle
     {
-        sBestNodeForObstacle  costEvaluationFunctor( fuseau, *pCapacity, *pCenter, rRadius );
-        TER_World::GetWorld().GetAnalyzerManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );
-        if( costEvaluationFunctor.FoundAPoint() )
-            pResultPos.reset( new MT_Vector2D( costEvaluationFunctor.BestPosition() ) );
-    }
-    return pResultPos;
-}
+        BestNodeForObstacle( const MIL_Fuseau& fuseau, const TerrainHeuristicCapacity& heuristic, const MT_Vector2D& vCenter, double rRadius )
+            : fuseau_      ( fuseau )
+            , heuristic_   ( heuristic )
+            , center_      ( vCenter )
+            , rSquareRadius_( rRadius * rRadius )
+            , bestPos_()
+            , nLastScore_( std::numeric_limits< int >::min() )
+        {}
+        void operator()( const MT_Vector2D& pos, const TerrainData& nPassability )
+        {
+            const double rTestNodeSquareDistance = center_.SquareDistance( pos );
+            if( rTestNodeSquareDistance > rSquareRadius_ || !fuseau_.IsInside( pos ) )
+                return;
 
-} // namespace
+            const int nTestNodeScore = heuristic_.ComputePlacementScore( pos, nPassability );
+            if( nTestNodeScore == -1 )
+                return;
+
+            if( nLastScore_ == std::numeric_limits< int >::min()
+             || nTestNodeScore  > nLastScore_
+             || ( nTestNodeScore  == nLastScore_ && rTestNodeSquareDistance < center_.SquareDistance( bestPos_ ) ) )
+            {
+                nLastScore_ = nTestNodeScore;
+                bestPos_ = pos;
+            }
+        }
+        bool FoundAPoint() const { return nLastScore_ != std::numeric_limits< int >::min(); };
+        const MT_Vector2D& BestPosition() const { return bestPos_; };
+
+    private:
+        BestNodeForObstacle& operator=( const BestNodeForObstacle& );
+        const MIL_Fuseau&         fuseau_;
+        const TerrainHeuristicCapacity& heuristic_;
+        const MT_Vector2D&        center_;
+        double                  rSquareRadius_;
+        MT_Vector2D               bestPos_;
+        int                       nLastScore_;
+    };
+
+    boost::shared_ptr< MT_Vector2D > ComputeObstaclePosition( const MIL_Fuseau& fuseau,
+            MT_Vector2D* pCenter, const std::string& type, double rRadius )
+    {
+        if( !pCenter )
+            throw MASA_EXCEPTION( "Compute obstacle position with null center" );
+        boost::shared_ptr< MT_Vector2D > pResultPos ( new MT_Vector2D( *pCenter ) );
+
+        const MIL_ObjectType_ABC& object = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( type );
+        const TerrainHeuristicCapacity* pCapacity = object.GetCapacity< TerrainHeuristicCapacity >();
+        if ( pCapacity )
+        {
+            BestNodeForObstacle costEvaluationFunctor( fuseau, *pCapacity, *pCenter, rRadius );
+            TER_World::GetWorld().GetAnalyzerManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );
+            if( costEvaluationFunctor.FoundAPoint() )
+                pResultPos.reset( new MT_Vector2D( costEvaluationFunctor.BestPosition() ) );
+        }
+        return pResultPos;
+    }
+
+}
 
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePositionForUnit(
     const MIL_AgentPion& pion, MT_Vector2D* pCenter, const std::string& type, double rRadius )

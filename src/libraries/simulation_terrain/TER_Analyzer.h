@@ -15,7 +15,6 @@
 class TerrainAnalyzer;
 class TerrainData;
 class TER_Localisation;
-class TER_NodeFunctor_ABC;
 class TER_Polygon;
 class TER_StaticData;
 
@@ -28,6 +27,8 @@ class TER_StaticData;
 class TER_Analyzer
 {
 public:
+    typedef std::function< void( const MT_Vector2D& pos, const TerrainData& data ) > T_Functor;
+
     //! @name Constructors/Destructor
     //@{
     explicit TER_Analyzer( const TER_StaticData& staticData );
@@ -36,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const;
+    void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_Functor& bestNodeFunction ) const;
 
     std::vector< boost::shared_ptr< MT_Vector2D > > FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius );
     void FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance, std::vector< boost::shared_ptr< MT_Vector2D > >& positions );

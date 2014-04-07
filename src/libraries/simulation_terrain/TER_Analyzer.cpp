@@ -10,7 +10,6 @@
 #include "simulation_terrain_pch.h"
 #include "TER_Analyzer.h"
 #include "TER_Localisation.h"
-#include "TER_NodeFunctor_ABC.h"
 #include "TER_StaticData.h"
 #include "TER_Polygon.h"
 #include <spatialcontainer/Node.h>
@@ -40,7 +39,7 @@ namespace
     class NodeCircleFinder
     {
     public:
-        NodeCircleFinder( TER_NodeFunctor_ABC& functor, const MT_Vector2D& vCenter, double rRadius )
+        NodeCircleFinder( TER_Analyzer::T_Functor& functor, const MT_Vector2D& vCenter, double rRadius )
             : functor_      ( functor )
             , center_       ( vCenter )
             , rSquareRadius_( rRadius * rRadius )
@@ -51,43 +50,43 @@ namespace
         {
             const MT_Vector2D nodePos( node.X(), node.Y() );
             if( center_.SquareDistance( nodePos ) < rSquareRadius_ )
-                functor_.Visit( nodePos, TerrainData::BuildData( node ) );
+                functor_( nodePos, TerrainData::BuildData( node ) );
             return true;
         }
     private:
         NodeCircleFinder& operator=( const NodeCircleFinder& );
-        TER_NodeFunctor_ABC& functor_;
+        TER_Analyzer::T_Functor& functor_;
         MT_Vector2D center_;
         double rSquareRadius_;
     };
 
-    inline geometry::Point2f MakePoint( const MT_Vector2D& v )
+    geometry::Point2f MakePoint( const MT_Vector2D& v )
     {
         return geometry::Point2f( static_cast< float >( v.rX_ ), static_cast< float >( v.rY_ ) );
-    };
-    inline geometry::Segment2f MakeSegment( const MT_Vector2D& from, const MT_Vector2D& to )
+    }
+    geometry::Segment2f MakeSegment( const MT_Vector2D& from, const MT_Vector2D& to )
     {
         return geometry::Segment2f( MakePoint( from ), MakePoint( to ) );
-    };
-    inline boost::shared_ptr< MT_Vector2D > MakeVectorPointer( const geometry::Point2f& p )
+    }
+    boost::shared_ptr< MT_Vector2D > MakeVectorPointer( const geometry::Point2f& p )
     {
         return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( p.X() ), static_cast< double >( p.Y() ) ) );
-    };
-    inline geometry::Polygon2f MakePolygon( const TER_Polygon& p )
+    }
+    geometry::Polygon2f MakePolygon( const TER_Polygon& p )
     {
         geometry::Polygon2f polygon;
         const T_PointVector& points = p.GetBorderPoints();
         for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
             polygon.Add( MakePoint( *it ) );
         return polygon;
-    };
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: TER_Analyzer::ApplyOnNodesWithinCircle
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
-void TER_Analyzer::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const
+void TER_Analyzer::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_Functor& bestNodeFunction ) const
 {
     NodeCircleFinder finder( bestNodeFunction, vCenter, rRadius );
     pAnalyzer_->ApplyOnNodesInCircle( MakePoint( vCenter ), static_cast< float >( rRadius ), finder );

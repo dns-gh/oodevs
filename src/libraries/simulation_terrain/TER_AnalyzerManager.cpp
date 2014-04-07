@@ -9,6 +9,7 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_AnalyzerManager.h"
+#include "TER_Analyzer.h"
 #include "TER_World.h"
 #include <spatialcontainer/TerrainData.h>
 
@@ -129,4 +130,9 @@ TerrainData TER_AnalyzerManager::Pick( const MT_Vector2D& pos )
 TerrainData TER_AnalyzerManager::GetTerrainData( const TER_Localisation& localisation )
 {
     return pAnalyzer_->GetTerrainData( localisation );
+}
+
+void TER_AnalyzerManager::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_Functor& bestNodeFunction ) const
+{
+    pAnalyzer_->ApplyOnNodesWithinCircle( vCenter, rRadius, bestNodeFunction );
 }

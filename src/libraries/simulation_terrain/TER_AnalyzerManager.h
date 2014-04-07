@@ -11,11 +11,12 @@
 #define __TER_AnalyzerManager_h_
 
 #include "MT_Tools/MT_Vector2DTypes.h"
-#include "TER_Analyzer.h"
-#include "TER_NodeFunctor_ABC.h"
 
 class TerrainData;
 class TER_StaticData;
+class TER_Analyzer;
+class TER_Polygon;
+class TER_Localisation;
 
 // =============================================================================
 /** @class  TER_AnalyzerManager
@@ -25,6 +26,8 @@ class TER_StaticData;
 // =============================================================================
 class TER_AnalyzerManager
 {
+    typedef std::function< void( const MT_Vector2D& pos, const TerrainData& data ) > T_Functor;
+
 public:
     //! @name Helpers
     //@{
@@ -42,8 +45,7 @@ public:
     //@{
     static TER_AnalyzerManager& GetAnalyzerManager();
 
-    template< typename Functor >
-    void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, Functor& bestNodeFunction ) const;
+    void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_Functor& bestNodeFunction ) const;
 
     std::vector< boost::shared_ptr< MT_Vector2D > > FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius );
     void FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance, std::vector< boost::shared_ptr< MT_Vector2D > >& positions );
@@ -71,16 +73,5 @@ private:
     TER_Analyzer* pAnalyzer_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: TER_AnalyzerManager::ApplyOnNodesWithinCircle
-// Created: CMA 2011-08-16
-// -----------------------------------------------------------------------------
-template < typename Functor >
-void TER_AnalyzerManager::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, Functor& bestNodeFunction ) const
-{
-    TER_NodeFunctor< Functor > functor( bestNodeFunction );
-    pAnalyzer_->ApplyOnNodesWithinCircle( vCenter, rRadius, functor );
-}
 
 #endif // __TER_AnalyzerManager_h_
