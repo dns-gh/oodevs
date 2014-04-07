@@ -1210,11 +1210,11 @@ func (c *Client) ChangeHumanState(unitId uint32, humans []*Human) error {
 }
 
 func (c *Client) RecoverAllHumans(unitId uint32, withLog bool) error {
-	next := sword.UnitMagicAction_recover_troops
+	action := sword.UnitMagicAction_recover_troops
 	if withLog {
-		next = sword.UnitMagicAction_recover_troops_except_log
+		action = sword.UnitMagicAction_recover_troops_except_log
 	}
-	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), next)
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), action)
 }
 
 func (c *Client) RecoverHumans(unitId uint32, humans []Quantity) error {
@@ -1233,11 +1233,11 @@ func (c *Client) ChangeResource(unitId uint32, resources map[uint32]*Resource) e
 }
 
 func (c *Client) RecoverAllResources(unitId uint32, withLog bool) error {
-	next := sword.UnitMagicAction_recover_resources
+	action := sword.UnitMagicAction_recover_resources
 	if withLog {
-		next = sword.UnitMagicAction_recover_resources_except_log
+		action = sword.UnitMagicAction_recover_resources_except_log
 	}
-	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), next)
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), action)
 }
 
 func (c *Client) RecoverResources(unitId uint32, resources []Quantity) error {
@@ -1256,11 +1256,11 @@ func (c *Client) ChangeEquipmentState(unitId uint32, equipments map[uint32]*Equi
 }
 
 func (c *Client) RecoverAllEquipments(unitId uint32, withLog bool) error {
-	next := sword.UnitMagicAction_recover_equipments
+	action := sword.UnitMagicAction_recover_equipments
 	if withLog {
-		next = sword.UnitMagicAction_recover_equipments_except_log
+		action = sword.UnitMagicAction_recover_equipments_except_log
 	}
-	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), next)
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), action)
 }
 
 func (c *Client) RecoverEquipments(unitId uint32, equipments []Quantity) error {
@@ -1270,11 +1270,11 @@ func (c *Client) RecoverEquipments(unitId uint32, equipments []Quantity) error {
 }
 
 func (c *Client) RecoverUnit(unitId uint32, withLog bool) error {
-	next := sword.UnitMagicAction_recover_all
+	action := sword.UnitMagicAction_recover_all
 	if withLog {
-		next = sword.UnitMagicAction_recover_all_except_log
+		action = sword.UnitMagicAction_recover_all_except_log
 	}
-	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), next)
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(), action)
 }
 
 func (c *Client) DestroyRandomEquipment(unitId uint32) error {
