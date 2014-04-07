@@ -120,7 +120,7 @@ public:
             return false;
 
         ADN_Weapons_Data_PhSizeInfos* pPhSizeInfos = static_cast< ADN_Weapons_Data_PhSizeInfos* >( pItem );
-        if( !pPhSizeInfos->ptrSize_.GetData() )
+        if( !pPhSizeInfos->GetCrossedElement() )
             return false;
         userIds_[ pItem ] = ++userId_;
         ADN_GraphData* pNewData = new ADN_GraphData( userIds_[ pItem ], graph_ );
@@ -131,7 +131,7 @@ public:
         pNewData->SetPointPen( QPen( color ) );
         pNewData->SetLinePen( QPen( color ) );
 
-        pNewData->SetName( pPhSizeInfos->ptrSize_.GetData()->strName_.GetData().c_str() );
+        pNewData->SetName( pPhSizeInfos->strName_.GetData().c_str() );
 
         graph_.RegisterPlotData( *pNewData );
         nNbrDatas_++;
@@ -448,11 +448,11 @@ QWidget* ADN_Weapons_GUI::CreatePHTable()
         int nSubRow = 0;
         for( auto it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2 )
         {
-            if( !(*it2)->ptrSize_.GetData() )
+            if( !(*it2)->GetCrossedElement() )
                 continue;
             if( nSubRow > 0 )
                 pTable->AddItem( nRow + nSubRow, 0, *it, ( *it )->strName_.GetData().c_str() );
-            pTable->AddItem( nRow + nSubRow, 1, *it, &(*it2)->ptrSize_.GetData()->strName_, ADN_StandardItem::eString );
+            pTable->AddItem( nRow + nSubRow, 1, *it, &(*it2)->strName_, ADN_StandardItem::eString );
             auto& phs = (*it2)->vPhs_;
             for( auto it3 = phs.begin(); it3 != phs.end(); ++it3 )
             {
@@ -536,9 +536,9 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools
             int nRow = 1;
             for( auto it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2 )
             {
-                if( !( *it2 )->ptrSize_.GetData() )
+                if( !( *it2 )->GetCrossedElement() )
                     continue;
-                builder.TableItem( nRow, 0, (*it2)->ptrSize_.GetData()->strName_.GetData().c_str() );
+                builder.TableItem( nRow, 0, (*it2)->strName_.GetData().c_str() );
                 auto& phs = (*it2)->vPhs_;
                 for( auto it3 = phs.begin(); it3 != phs.end(); ++it3 )
                 {
