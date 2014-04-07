@@ -25,6 +25,7 @@
 #include "ADN_Tr.h"
 #include "ADN_UrbanModifiersTable.h"
 #include "ENT/ENT_Tr.h"
+#include "protocol/Protocol.h"
 
 class ADN_Resources_UrbanModifiersTable : public helpers::ADN_UrbanModifiersTable
 {
@@ -118,9 +119,8 @@ void ADN_Resources_GUI::Build()
 
     // Tab management
     pTabWidget_ = new QTabWidget();
-    BuildAmmunition(); // eDotationFamily_Munition
-    for( int i = eDotationFamily_Munition + 1; i < eNbrDotationFamily; ++i ) // Change enum order to change tab order.
-        BuildGeneric( static_cast< E_DotationFamily >( i ) );
+    for( int i = sword::DotationType_MIN; i < sword::DotationType_MAX; ++i )
+        BuildGeneric( static_cast< sword::DotationType >( i ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
@@ -137,13 +137,16 @@ void ADN_Resources_GUI::Build()
 // Name: ADN_Resources_GUI::BuildGeneric
 // Created: APE 2004-12-28
 // -----------------------------------------------------------------------------
-void ADN_Resources_GUI::BuildGeneric( E_DotationFamily nType )
+void ADN_Resources_GUI::BuildGeneric( sword::DotationType nType )
 {
+    if( nType == sword::dotation_type_ammunition )
+        return BuildAmmunition();
+
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
     ADN_GuiBuilder builder( strClassName_ );
-    builder.PushSubName( ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToSim ).c_str() );
+    builder.PushSubName( ENT_Tr::ConvertFromDotationType( nType, ENT_Tr::eToSim ).c_str() );
     T_ConnectorVector vConnectors( eNbrGenericGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
@@ -215,7 +218,7 @@ void ADN_Resources_GUI::BuildGeneric( E_DotationFamily nType )
     assert( nType == static_cast< int >( vListViews_.size() - 1) );
 
     // Main page
-    pTabWidget_->addTab( CreateScrollArea( builder.GetName(), *pContent, pSearchListView ), ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToTr ).c_str() );
+    pTabWidget_->addTab( CreateScrollArea( builder.GetName(), *pContent, pSearchListView ), ENT_Tr::ConvertFromDotationType( nType, ENT_Tr::eToTr ).c_str() );
     builder.PopSubName(); //! tab name
 }
 
@@ -240,7 +243,7 @@ void ADN_Resources_GUI::BuildAmmunition()
     // Creations
     // -------------------------------------------------------------------------
     ADN_GuiBuilder builder( strClassName_ );
-    builder.PushSubName( ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToSim ).c_str() );
+    builder.PushSubName( ENT_Tr::ConvertFromDotationType( sword::dotation_type_ammunition, ENT_Tr::eToSim ).c_str() );
     T_ConnectorVector vConnectors( eNbrAmmoGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
@@ -269,28 +272,28 @@ void ADN_Resources_GUI::BuildAmmunition()
     // Direct fire properties
     builder.PushSubName( "attritions" );
     ADN_GroupBox* pDirectGroup = builder.AddGroupBox( 0, "attritions", tr( "Attritions" ), vConnectors[ eDirect ] );
-    pAttritionTables_[ eDotationFamily_Munition ] = new ADN_Resources_AttritionTable( builder.GetChildName( "attritions-table" ), vConnectors[ eAttritions ], pDirectGroup );
+    pAttritionTables_[ sword::dotation_type_ammunition ] = new ADN_Resources_AttritionTable( builder.GetChildName( "attritions-table" ), vConnectors[ eAttritions ], pDirectGroup );
     ADN_Resources_UrbanModifiersTable* pUrbanTable = new ADN_Resources_UrbanModifiersTable( builder.GetChildName( "urban-modifiers" ), vConnectors[ eUrbanAttritions ], pDirectGroup );
 
     QGroupBox* pAttritionVisualisation = new gui::RichGroupBox( "simulation", tr( "Simulation" ) );
     builder.PushSubName( "simulation" );
     QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
-    pArmorCombos_[ eDotationFamily_Munition ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, "armor-plating", tr( "Armor-Plating" ), vConnectors[ eArmor ] );
-    connect( pArmorCombos_[ eDotationFamily_Munition ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
-    pMaterialCombos_[ eDotationFamily_Munition ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, "urban-material", tr( "Urban material" ), vConnectors[ eMaterial ] );
-    connect( pMaterialCombos_[ eDotationFamily_Munition ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
-    pAttritionGraphs_[ eDotationFamily_Munition ] = new ADN_Resources_AttritionGraph( pAttritionVisualisation );
-    vConnectors[ eAttritionGraph ] = &pAttritionGraphs_[ eDotationFamily_Munition ]->GetConnector();
+    pArmorCombos_[ sword::dotation_type_ammunition ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, "armor-plating", tr( "Armor-Plating" ), vConnectors[ eArmor ] );
+    connect( pArmorCombos_[ sword::dotation_type_ammunition ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
+    pMaterialCombos_[ sword::dotation_type_ammunition ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, "urban-material", tr( "Urban material" ), vConnectors[ eMaterial ] );
+    connect( pMaterialCombos_[ sword::dotation_type_ammunition ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
+    pAttritionGraphs_[ sword::dotation_type_ammunition ] = new ADN_Resources_AttritionGraph( pAttritionVisualisation );
+    vConnectors[ eAttritionGraph ] = &pAttritionGraphs_[ sword::dotation_type_ammunition ]->GetConnector();
     builder.PopSubName(); //! simulation
     builder.PopSubName(); //! attrition
 
     QVBoxLayout* pAttritionVisualisationLayout = new QVBoxLayout();
     pAttritionVisualisationLayout->addWidget( pComboGroup );
-    pAttritionVisualisationLayout->addWidget( pAttritionGraphs_[ eDotationFamily_Munition ], 1 );
+    pAttritionVisualisationLayout->addWidget( pAttritionGraphs_[ sword::dotation_type_ammunition ], 1 );
     pAttritionVisualisation->setLayout( pAttritionVisualisationLayout );
 
     QGridLayout* pDirectGroupLayout = new QGridLayout();
-    pDirectGroupLayout->addWidget( pAttritionTables_[ eDotationFamily_Munition ], 0, 0 );
+    pDirectGroupLayout->addWidget( pAttritionTables_[ sword::dotation_type_ammunition ], 0, 0 );
     pDirectGroupLayout->addWidget( pUrbanTable, 1, 0 );
     pDirectGroupLayout->addWidget( pAttritionVisualisation, 0, 1, 2, 1 );
     pDirectGroup->setLayout( pDirectGroupLayout );
@@ -392,11 +395,11 @@ void ADN_Resources_GUI::BuildAmmunition()
     pContentLayout->addWidget( pGuidanceGroup );
 
     // List view
-    QWidget* pSearchListView = builder.AddSearchListView< ADN_Resources_AmmoListView >( this, data_.GetResource( eDotationFamily_Munition ).categories_, vConnectors, eDotationFamily_Munition );
-    assert( eDotationFamily_Munition == vListViews_.size() - 1 );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_Resources_AmmoListView >( this, data_.GetResource( sword::dotation_type_ammunition ).categories_, vConnectors, sword::dotation_type_ammunition );
+    assert( sword::dotation_type_ammunition == vListViews_.size() - 1 );
 
     // Main page
-    pTabWidget_->addTab( CreateScrollArea( builder.GetName(), *pContent, pSearchListView ), ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToTr ).c_str() );
+    pTabWidget_->addTab( CreateScrollArea( builder.GetName(), *pContent, pSearchListView ), ENT_Tr::ConvertFromDotationType( sword::dotation_type_ammunition, ENT_Tr::eToTr ).c_str() );
     builder.PopSubName(); //! tab name
 
     IndirectTypeChanged();
@@ -447,7 +450,7 @@ void ADN_Resources_GUI::InitializeSimulationCombos()
 // -----------------------------------------------------------------------------
 ADN_Armors_Data::ArmorInfos* ADN_Resources_GUI::GetSelectedArmor() const
 {
-    std::map< E_DotationFamily, ADN_ComboBox_Vector* >::const_iterator it = pArmorCombos_.find( currentTab_ );
+    auto it = pArmorCombos_.find( currentTab_ );
     if( it == pArmorCombos_.end() )
         throw MASA_EXCEPTION( "cannot find armor element" );
     return static_cast< ADN_Armors_Data::ArmorInfos* >( it->second->GetCurrentData() );
@@ -459,7 +462,7 @@ ADN_Armors_Data::ArmorInfos* ADN_Resources_GUI::GetSelectedArmor() const
 // -----------------------------------------------------------------------------
 helpers::ADN_UrbanAttritionInfos* ADN_Resources_GUI::GetSelectedMaterial() const
 {
-    std::map< E_DotationFamily, ADN_ComboBox_Vector* >::const_iterator it = pMaterialCombos_.find( currentTab_ );
+    auto it = pMaterialCombos_.find( currentTab_ );
     if( it == pMaterialCombos_.end() )
         throw MASA_EXCEPTION( "cannot find material element" );
     return static_cast< helpers::ADN_UrbanAttritionInfos* >( it->second->GetCurrentData() );
@@ -497,7 +500,7 @@ QWidget* ADN_Resources_GUI::CreatePKTable()
 
     ADN_Table* pTable = new ADN_PK_Table( tr( "PKs" ) );
     // Fill the table.
-    ADN_Resources_Data::ResourceInfos& ammo = data_.GetResource( eDotationFamily_Munition );
+    ADN_Resources_Data::ResourceInfos& ammo = data_.GetResource( sword::dotation_type_ammunition );
     int nRowSize = static_cast< int >( armorInfos.size() ) - 1; // -1 to filter out crowd 'armor'
     int nRow = 0;
     for( auto it = ammo.categories_.begin(); it != ammo.categories_.end(); ++it )
@@ -544,11 +547,11 @@ void ADN_Resources_GUI::ExportPKs( ADN_HtmlBuilder& builder, ADN_Resources_Data:
 {
     if( !infos.bDirect_.GetData() )
         return;
-    assert( vListViews_[ eDotationFamily_Munition ] != 0 );
-    vListViews_[ eDotationFamily_Munition ]->SetCurrentItem( &infos );
+    assert( vListViews_[ sword::dotation_type_ammunition ] != 0 );
+    vListViews_[ sword::dotation_type_ammunition ]->SetCurrentItem( &infos );
     builder.Section( tr( "PKs" ) );
-    if( pAttritionTables_[ eDotationFamily_Munition ] )
-        builder.CreateTableFrom( *pAttritionTables_[ eDotationFamily_Munition ] );
+    if( pAttritionTables_[ sword::dotation_type_ammunition ] )
+        builder.CreateTableFrom( *pAttritionTables_[ sword::dotation_type_ammunition ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -610,5 +613,5 @@ void ADN_Resources_GUI::NetworkUsableActivated( int state )
 // -----------------------------------------------------------------------------
 void ADN_Resources_GUI::OnCurrentTabChanged( int tab )
 {
-    currentTab_ = static_cast< E_DotationFamily >( tab );
+    currentTab_ = static_cast< sword::DotationType >( tab );
 }

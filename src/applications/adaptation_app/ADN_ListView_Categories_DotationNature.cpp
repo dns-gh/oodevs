@@ -18,6 +18,7 @@
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 #include "ADN_WorkspaceElement.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature
@@ -67,11 +68,11 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
     {
         ADN_Natures_Data::NatureInfos* pCastData = static_cast< ADN_Natures_Data::NatureInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        for( uint n = 0; n < eNbrDotationFamily; ++n )
+        for( uint n = 0; n < sword::DotationType_MAX; ++n )
         {
-            E_DotationFamily value = static_cast< E_DotationFamily >( n );
+            auto value = static_cast< sword::DotationType >( n );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
-                                          ENT_Tr::ConvertFromDotationFamily( value ).c_str(),
+                                          ENT_Tr::ConvertFromDotationType( value ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData, value ), eResources, value );
         }
     }
@@ -91,10 +92,10 @@ std::string ADN_ListView_Categories_DotationNature::GetToolTipFor( const QModelI
     assert( pCastData != 0 );
 
     std::string result;
-    for( uint n = 0; n < eNbrDotationFamily; ++n )
+    for( uint n = 0; n < sword::DotationType_MAX; ++n )
     {
-        E_DotationFamily value = static_cast< E_DotationFamily >( n );
-        FillMultiUsersList( ENT_Tr::ConvertFromDotationFamily( value ).c_str(),
+        auto value = static_cast< sword::DotationType >( n );
+        FillMultiUsersList( ENT_Tr::ConvertFromDotationType( value ).c_str(),
                             ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData, value ), result );
     }
 

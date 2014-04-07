@@ -19,7 +19,6 @@ namespace
 {
 // Typedefs
 typedef ENT_Tr::Converter< E_LocationType > T_ConverterLocationType;
-typedef ENT_Tr::Converter< E_DotationFamily > T_ConverterDotationFamily;
 typedef ENT_Tr::Converter< E_AmmunitionType > T_ConverterAmmunitionType;
 typedef ENT_Tr::Converter< E_NatureLevel > T_ConverterNatureLevel;
 typedef ENT_Tr::Converter< E_Diplomacy > T_ConverterDiplomacy;
@@ -69,6 +68,7 @@ typedef ENT_Tr::Converter< sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlin
 typedef ENT_Tr::Converter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus > T_ConverterLogMaintenanceHandlingStatus;
 typedef ENT_Tr::Converter< sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus > T_ConverterLogMedicalHandlingStatus;
 typedef ENT_Tr::Converter< sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus > T_ConverterLogSupplyHandlingStatus;
+typedef ENT_Tr::Converter< sword::DotationType > T_ConverterDotationType;
 
 T_ConverterLocationType LocationTypeConverter_[] =
 {
@@ -80,21 +80,6 @@ T_ConverterLocationType LocationTypeConverter_[] =
     T_ConverterLocationType( "point", QT_TRANSLATE_NOOP( "ENT_Tr", "point" ), eLocationType_Point ),
     T_ConverterLocationType( "sector", QT_TRANSLATE_NOOP( "ENT_Tr", "sector" ), eLocationType_Sector ),
     T_ConverterLocationType( "", "", (E_LocationType)-1 )
-};
-
-T_ConverterDotationFamily DotationFamilyConverter_[] =
-{
-    T_ConverterDotationFamily( "munition", QT_TRANSLATE_NOOP( "ENT_Tr", "Ammunition" ), eDotationFamily_Munition ),
-    T_ConverterDotationFamily( "carburant", QT_TRANSLATE_NOOP( "ENT_Tr", "Fuel" ), eDotationFamily_Carburant ),
-    T_ConverterDotationFamily( "explosif", QT_TRANSLATE_NOOP( "ENT_Tr", "Explosive" ), eDotationFamily_Explosif ),
-    T_ConverterDotationFamily( "mine", QT_TRANSLATE_NOOP( "ENT_Tr", "Mine" ), eDotationFamily_Mine ),
-    T_ConverterDotationFamily( "barbele", QT_TRANSLATE_NOOP( "ENT_Tr", "Barbed wire" ), eDotationFamily_Barbele ),
-    T_ConverterDotationFamily( "piece", QT_TRANSLATE_NOOP( "ENT_Tr", "Parts" ), eDotationFamily_Piece ),
-    T_ConverterDotationFamily( "ration", QT_TRANSLATE_NOOP( "ENT_Tr", "Food/water" ), eDotationFamily_Ration ),
-    T_ConverterDotationFamily( "agent extincteur", QT_TRANSLATE_NOOP( "ENT_Tr", "Extinguisher agent" ), eDotationFamily_AgentExtincteur ),
-    T_ConverterDotationFamily( "energie", QT_TRANSLATE_NOOP( "ENT_Tr", "Energy" ), eDotationFamily_Energy ),
-    T_ConverterDotationFamily( "funeraire", QT_TRANSLATE_NOOP( "ENT_Tr", "Funeral" ), eDotationFamily_Funeraire ),
-    T_ConverterDotationFamily( "", "", (E_DotationFamily)-1 )
 };
 
 T_ConverterAmmunitionType AmmunitionTypeConverter_[] =
@@ -681,6 +666,21 @@ T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_[] =
     T_ConverterLogSupplyHandlingStatus( "", "", sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus_MAX )
 };
 
+T_ConverterDotationType DotationTypeConverter_[] =
+{
+    T_ConverterDotationType( "munition",         QT_TRANSLATE_NOOP( "ENT_Tr", "Ammunition" ),         sword::dotation_type_ammunition ),
+    T_ConverterDotationType( "carburant",        QT_TRANSLATE_NOOP( "ENT_Tr", "Fuel" ),               sword::dotation_type_fuel ),
+    T_ConverterDotationType( "explosif",         QT_TRANSLATE_NOOP( "ENT_Tr", "Explosive" ),          sword::dotation_type_explosive ),
+    T_ConverterDotationType( "mine",             QT_TRANSLATE_NOOP( "ENT_Tr", "Mine" ),               sword::dotation_type_mine ),
+    T_ConverterDotationType( "barbele",          QT_TRANSLATE_NOOP( "ENT_Tr", "Barbed wire" ),        sword::dotation_type_barbed_wire ),
+    T_ConverterDotationType( "piece",            QT_TRANSLATE_NOOP( "ENT_Tr", "Parts" ),              sword::dotation_type_parts ),
+    T_ConverterDotationType( "ration",           QT_TRANSLATE_NOOP( "ENT_Tr", "Food/water" ),         sword::dotation_type_food_and_water ),
+    T_ConverterDotationType( "agent extincteur", QT_TRANSLATE_NOOP( "ENT_Tr", "Extinguisher agent" ), sword::dotation_type_extinguisher_agent ),
+    T_ConverterDotationType( "energie",          QT_TRANSLATE_NOOP( "ENT_Tr", "Energy" ),             sword::dotation_type_energy ),
+    T_ConverterDotationType( "funeraire",        QT_TRANSLATE_NOOP( "ENT_Tr", "Funeral" ),            sword::dotation_type_funeral ),
+    T_ConverterDotationType( "", "", sword::DotationType_MAX )
+};
+
 }  // namespace
 
 #define INIT_TRANSLATION( NAME, CONTEXT )\
@@ -749,7 +749,6 @@ void ENT_Tr::InitTranslations()
     INIT_TR_WITH_CONTEXT( CoordinateSystem );
     INIT_TR( CrossingType );
     INIT_TR( Diplomacy );
-    INIT_TR( DotationFamily );
     INIT_TR( EquipmentState );
     INIT_TR( EventDockModes );
     INIT_TR( EventTypes );
@@ -782,6 +781,7 @@ void ENT_Tr::InitTranslations()
     INIT_TR( UnitTiredness );
     INIT_TR( WeatherType );
 
+    INIT_PROTO_TR( DotationType, DotationType );
     INIT_PROTO_TR( EnumLogisticLevel, LogisticLevel );
     INIT_SUB_PROTO_TR( KnowledgeMagicAction, Type, KnowledgeMagicActionType );
     INIT_SUB_PROTO_TR( LogFuneralHandlingUpdate, EnumLogFuneralHandlingStatus, LogFuneralHandlingStatus );
@@ -801,7 +801,6 @@ IMPLEMENT_CONVERT_METHODS( BreakdownType );
 IMPLEMENT_CONVERT_METHODS( CoordinateSystem );
 IMPLEMENT_CONVERT_METHODS( CrossingType );
 IMPLEMENT_CONVERT_METHODS( Diplomacy );
-IMPLEMENT_CONVERT_METHODS( DotationFamily );
 IMPLEMENT_CONVERT_METHODS( EquipmentState );
 IMPLEMENT_CONVERT_METHODS( EventDockModes );
 IMPLEMENT_CONVERT_METHODS( EventTypes );
@@ -834,6 +833,7 @@ IMPLEMENT_CONVERT_METHODS( UnitStress );
 IMPLEMENT_CONVERT_METHODS( UnitTiredness );
 IMPLEMENT_CONVERT_METHODS( WeatherType );
 
+IMPLEMENT_CONVERT_METHODS_PROTO( DotationType, DotationType );
 IMPLEMENT_CONVERT_METHODS_PROTO( EnumLogisticLevel, LogisticLevel );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( KnowledgeMagicAction, Type, KnowledgeMagicActionType );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogFuneralHandlingUpdate, EnumLogFuneralHandlingStatus, LogFuneralHandlingStatus );

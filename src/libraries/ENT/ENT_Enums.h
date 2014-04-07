@@ -41,21 +41,6 @@ enum E_LocationType
     eNbrLocationType
 };
 
-enum E_DotationFamily
-{
-    eDotationFamily_Munition,
-    eDotationFamily_Carburant,
-    eDotationFamily_Explosif,
-    eDotationFamily_Mine,
-    eDotationFamily_Barbele,
-    eDotationFamily_Piece,
-    eDotationFamily_Ration,
-    eDotationFamily_AgentExtincteur,
-    eDotationFamily_Energy,
-    eDotationFamily_Funeraire,
-    eNbrDotationFamily
-};
-
 enum E_AmmunitionType
 {
     eAmmunitionType_Obus,

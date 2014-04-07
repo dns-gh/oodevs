@@ -100,7 +100,7 @@ void ADN_Equipments_Dotations_GUI::OnContextMenu( const QPoint& pt )
         }
         ADN_Tools::SortMenu( *pSubMenu );
 
-        targetMenu.insertItem( ENT_Tr::ConvertFromDotationFamily( (*it)->nType_, ENT_Tr::eToTr ).c_str(), pSubMenu );
+        targetMenu.insertItem( ENT_Tr::ConvertFromDotationType( (*it)->nType_, ENT_Tr::eToTr ).c_str(), pSubMenu );
     }
 
     menu.insertItem( tr( "Add resource"), &targetMenu ,0 );

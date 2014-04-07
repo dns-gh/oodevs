@@ -21,7 +21,15 @@ namespace xml
 namespace kernel
 {
     class LogisticSupplyClass;
+}
 
+namespace sword
+{
+    enum DotationType;
+}
+
+namespace kernel
+{
 // =============================================================================
 /** @class  DotationType
     @brief  DotationType
@@ -61,7 +69,7 @@ private:
     //@{
     std::string name_;
     unsigned long id_;
-    unsigned long categoryId_;
+    sword::DotationType categoryId_;
     std::string type_;
     const LogisticSupplyClass* logisticSupplyClass_;
     std::string nature_;

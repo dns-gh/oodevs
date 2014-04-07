@@ -13,6 +13,11 @@
 #include "ADN_ListView.h"
 #include "ADN_Enums.h"
 
+namespace sword
+{
+    enum DotationType;
+}
+
 // =============================================================================
 /** @class  ADN_Resources_GenericListView
     @brief  ADN_Resources_GenericListView
@@ -24,7 +29,7 @@ class ADN_Resources_GenericListView : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Resources_GenericListView( QWidget* pParent, E_DotationFamily nType );
+    ADN_Resources_GenericListView( QWidget* pParent, sword::DotationType nType );
     virtual ~ADN_Resources_GenericListView();
     //@}
 
@@ -37,7 +42,7 @@ private:
     //@}
 
 private:
-    E_DotationFamily nType_;
+    sword::DotationType nType_;
 };
 
 #endif // __ADN_Resources_GenericListView_h_

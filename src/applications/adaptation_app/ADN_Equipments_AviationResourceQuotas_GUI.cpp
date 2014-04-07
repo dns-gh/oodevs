@@ -11,6 +11,7 @@
 #include "ADN_Equipments_AviationResourceQuotas_GUI.h"
 #include "ADN_Equipments_Data.h"
 #include "ENT/ENT_Tr.h"
+#include "protocol/Protocol.h"
 
 typedef ADN_Equipments_Data::AviationResourceQuotasInfos AviationResourceQuotasInfos;
 
@@ -30,7 +31,7 @@ ADN_Equipments_AviationResourceQuotas_GUI::ADN_Equipments_AviationResourceQuotas
     for( int i = 0; i < eNbrAmmunitionType + 1; ++i )
     {
         if( i == eNbrAmmunitionType )
-            horizontalHeaders.append( ( ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Carburant ) + " (%)" ).c_str() );
+            horizontalHeaders.append( QString::fromStdString( ENT_Tr::ConvertFromDotationType( sword::dotation_type_fuel ) + " (%)" ) );
         else
             horizontalHeaders.append( ( ENT_Tr::ConvertFromAmmunitionType( static_cast< E_AmmunitionType >( i ), ENT_Tr::eToTr ) + " (%)" ).c_str() );
         delegate_.AddColorOnColumn( i, 0., 100. );

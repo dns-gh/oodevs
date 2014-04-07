@@ -202,6 +202,22 @@ enum EnumHumanWound {
     wounded_extreme_urgency = 5;
 }
 
+/** @enum DotationType
+    @brief Defines possible dotation categories
+*/
+enum DotationType {
+    dotation_type_ammunition         = 0;
+    dotation_type_fuel               = 1;
+    dotation_type_explosive          = 2;
+    dotation_type_mine               = 3;
+    dotation_type_barbed_wire        = 4;
+    dotation_type_parts              = 5;
+    dotation_type_food_and_water     = 6;
+    dotation_type_extinguisher_agent = 7;
+    dotation_type_energy             = 8;
+    dotation_type_funeral            = 9;
+}
+
 //! Defines the different nature levels using APP-6A symbols
 //! See: http://en.wikipedia.org/wiki/Military_organization
 enum EnumNatureLevel {
@@ -1653,17 +1669,24 @@ message UnitMagicAction {
         cancel_surrender                  = 2;
         //! A recover transporters magic action
         recover_transporters              = 3;
-        //! A destroy component magic action
+        //! Destroy a random equipment
+        //! The tasker must be a unit identifier.
         destroy_component                 = 4;
-        //! A recover all magic action
+        //! Restore target unit equipments, troops and resource to their
+        //! capacity
+        //! The tasker must be a unit identifier.
         recover_all                       = 5;
-        //! A recover troops magic action
+        //! Restore target unit troops to their capacity
+        //! The tasker must be a unit identifier.
         recover_troops                    = 6;
-        //! A recover equiments magic action
+        //! Restore target unit equipments to their capacity
+        //! The tasker must be a unit identifier.
         recover_equipments                = 7;
-        //! A recover resources magic action
+        //! Recover target unit resources to their capacity
+        //! The tasker must be a unit identifier.
         recover_resources                 = 8;
-        //! A destroy all magic action
+        //! Destroy the target unit
+        //! The tasker must be a unit identifier.
         destroy_all                       = 9;
         //! Change the human factors
         //! The tasker must be a unit identifier.
@@ -1678,13 +1701,18 @@ message UnitMagicAction {
         change_human_factors              = 10;
         //! A partial recovery magic action
         //! The tasker must be a valid unit identifier.
-        //! parameters[0], the equipment
-        //! parameters[1], the crew
-        //! parameters[2], the resources
-        //! parameters[3], the ammunitions
-        //! parameters[4], the stocks
+        //! parameters[0], Resupply equipments
+        //!     List of Identifier: equipment, Quantity: quantity
+        //! parameters[1], Resupply humands
+        //!     List of Identifier: human, Quantity: availability
+        //! parameters[2], Resupply resources
+        //!     List of Identifier: DotationType, Quantity: % of capacity
+        //! parameters[3], Resupply ammunitions
+        //!     List of Identifier: Ammunition, Quantity: % of capacity
+        //! parameters[4], Resupply supplies
+        //!     List of Identifier: DotationType, Quantity: quantity
         //! Each parameter must be either a null_value to be omitted or
-        //! a parameter value list:
+        //! a parameter value list.
         //! value { list { identifier: 1 }
         //!         list { quantity: 10  } }
         partial_recovery                  = 11;
@@ -1989,13 +2017,21 @@ message UnitMagicAction {
         //! The tasker must be set to selected unit.
         //! result[0], UnitId: deleted unit identifier.
         delete_unit                       = 51;
-        //! A recover all except log magic action
+        //! Restore target unit equipments, troops and resources to their
+        //! capacity, without those currently handled by logistics
+        //! The tasker must be a unit identifier.
         recover_all_except_log            = 52;
-        //! A recover troops except log magic action
+        //! Restore target unit troops to their capacity, without those
+        //! currently handled by logistics
+        //! The tasker must be a unit identifier.
         recover_troops_except_log         = 53;
-        //! A recover equiments except log magic action
+        //! Restore target unit equipments to their capacity, without those
+        //! currently handled by logistics
+        //! The tasker must be a unit identifier.
         recover_equipments_except_log     = 54;
-        //! A recover resources except log magic action
+        //! Restore target unit resources to their capacity, without those
+        //! currently handled by logistics
+        //! The tasker must be a unit identifier.
         recover_resources_except_log      = 55;
         //! Make a unit, automat or crowd emit decisional debug traces. The
         //! traces currently contain activation graphs in Graphviz format, and

@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "DotationType.h"
-#include "Tools.h"
+#include "ENT/ENT_Tr.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -39,9 +39,9 @@ DotationType::DotationType( xml::xistream& xis, const tools::Resolver_ABC< Logis
         unitWeight_ /= nbrInPackage;
         unitVolume_ /= nbrInPackage;
     }
-    categoryId_ = tools::DotationFamilyFromString( category );
-    gaz_        = ( category == "carburant" );
-    ammunition_ = ( category == "munition" );
+    categoryId_ = ENT_Tr::ConvertToDotationType( category );
+    gaz_        = category == "carburant";
+    ammunition_ = category == "munition";
     indirectFireAmmunition_ = xis.has_child( "indirect-fires" );
 }
 
@@ -78,7 +78,7 @@ const std::string& DotationType::GetName() const
 // -----------------------------------------------------------------------------
 const std::string DotationType::GetCategoryDisplay() const
 {
-    return tools::ToString( static_cast< E_DotationFamily >( categoryId_ ), ENT_Tr::eToTr ).toStdString();
+    return ENT_Tr::ConvertFromDotationType( categoryId_, ENT_Tr::eToTr );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ const std::string DotationType::GetCategoryDisplay() const
 // -----------------------------------------------------------------------------
 const std::string DotationType::GetCategoryName() const
 {
-    return tools::ToString( static_cast< E_DotationFamily >( categoryId_ ), ENT_Tr::eToSim ).toStdString();
+    return ENT_Tr::ConvertFromDotationType( categoryId_, ENT_Tr::eToTr );
 }
 
 // -----------------------------------------------------------------------------

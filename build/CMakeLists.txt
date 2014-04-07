@@ -596,7 +596,7 @@ target_link_libraries( selftraining_app
 )
 
 # adaptation_app
-add_target( adaptation_app clients "applications/adaptation_app" OPTIONS qt3 qt executable )
+add_target( adaptation_app clients "applications/adaptation_app" OPTIONS qt3 qt protocol executable )
 target_link_libraries( adaptation_app
     clients_gui
     ${EXCEL_LIBRARIES}
@@ -619,7 +619,7 @@ masa_add_target_include( client_sample_app "${CMAKE_CURRENT_BINARY_DIR}/protocol
 target_link_libraries( client_sample_app ws2_32 ${TOOLS_LIBRARIES} )
 
 # core
-add_target( core libraries "libraries/core" )
+add_target( core common "libraries/core" )
 target_link_libraries( core
     ${CMAKE_THREAD_LIBS_INIT}
     ${XERCES_LIBRARIES}
@@ -631,7 +631,7 @@ add_target( core_test tests "tests/core_test" OPTIONS test )
 target_link_libraries( core_test core )
 
 # xeuseudeu
-add_target( xeuseudeu libraries "libraries/xeuseudeu" )
+add_target( xeuseudeu common "libraries/xeuseudeu" )
 target_link_libraries( xeuseudeu core )
 
 # xeuseudeu_test
@@ -642,14 +642,14 @@ target_link_libraries( xeuseudeu_test
 )
 
 # model_generator_app
-add_target( model_generator_app applications "applications/model_generator_app" OPTIONS executable )
+add_target( model_generator_app server "applications/model_generator_app" OPTIONS executable )
 target_link_libraries( model_generator_app
     xeuseudeu
     ${TOOLS_LIBRARIES}
 )
 
 # model_app
-add_target( model_app applications "applications/model_app" OPTIONS executable )
+add_target( model_app server "applications/model_app" OPTIONS executable )
 target_link_libraries( model_app
     core
     ${TOOLS_LIBRARIES}

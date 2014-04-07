@@ -14,6 +14,7 @@
 #include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 #include "clients_kernel/XmlTranslations.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Fires_Data::FireInjuryInfos::FireInjuryInfos
@@ -162,7 +163,7 @@ void ADN_Fires_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output ) con
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_Fires_Data::FireClassInfos::FireClassInfos()
-    : agents_          ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_AgentExtincteur ).categories_ )
+    : agents_          ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( sword::dotation_type_extinguisher_agent ).categories_ )
     , initialHeat_     ( 0 )
     , maxHeat_         ( 0 )
     , increaseRate_    ( 0 )
