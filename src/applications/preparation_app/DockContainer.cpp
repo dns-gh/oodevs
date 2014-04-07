@@ -37,7 +37,8 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
                               gui::FormationLayer& formation, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
                               Model& model, StaticModel& staticModel, const tools::ExerciseConfig& config, gui::SymbolIcons& symbols,
                               gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer,
-                              gui::GlProxy& glProxy, ColorController& colorController, gui::TerrainProfilerLayer& terrainProfileLayer )
+                              gui::GlProxy& glProxy, ColorController& colorController, gui::TerrainProfilerLayer& terrainProfileLayer,
+                              const kernel::Profile_ABC& profile )
     : pCreationPanel_  ( 0 )
     , pLivingAreaPanel_( 0 )
 {
@@ -75,7 +76,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Extensions panel
     {
-        gui::RichDockWidget* pExtensionsPanel = new gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, *model.agents_, *model.formations_ );
+        gui::RichDockWidget* pExtensionsPanel = new gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, *model.agents_, *model.formations_, profile );
         pExtensionsPanel->SetModes( eModes_Default | eModes_LivingArea | eModes_Terrain );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel );
     }

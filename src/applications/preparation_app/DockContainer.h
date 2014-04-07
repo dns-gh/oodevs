@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -62,7 +63,8 @@ public:
                             gui::FormationLayer& formation, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
                             Model& model, StaticModel& staticModel, const tools::ExerciseConfig& config, gui::SymbolIcons& symbols,
                             gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer,
-                            gui::GlProxy& glProxy, ColorController& colorController, gui::TerrainProfilerLayer& terrainProfilerLayer );
+                            gui::GlProxy& glProxy, ColorController& colorController, gui::TerrainProfilerLayer& terrainProfilerLayer,
+                            const kernel::Profile_ABC& profile );
     virtual ~DockContainer();
     //@}
 
