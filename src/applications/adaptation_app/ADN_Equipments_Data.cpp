@@ -1031,7 +1031,7 @@ void ADN_Equipments_Data::ResourceInfos::ReadArchive( xml::xistream& input, cons
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::ResourceInfos::WriteArchive( xml::xostream& output ) const
 {
-    for( uint n = 0; n < sword::DotationType_MAX; ++n )
+    for( uint n = sword::DotationType_MIN; n <= sword::DotationType_MAX; ++n )
     {
         bool entered = false;
         for( auto it = categories_.begin(); it != categories_.end(); ++it )

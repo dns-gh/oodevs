@@ -811,7 +811,7 @@ ADN_Resources_Data::ADN_Resources_Data()
     , resources_ ()
     , networkUsableResources_( true, false )
 {
-    for( int n = 0; n < sword::DotationType_MAX; ++n )
+    for( int n = sword::DotationType_MIN; n <= sword::DotationType_MAX; ++n )
         resources_.AddItem( new ResourceInfos( static_cast< sword::DotationType >( n ), networkUsableResources_ ) );
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
         ( *it )->categories_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );

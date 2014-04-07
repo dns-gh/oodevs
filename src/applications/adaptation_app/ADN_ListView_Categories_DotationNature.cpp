@@ -68,7 +68,7 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
     {
         ADN_Natures_Data::NatureInfos* pCastData = static_cast< ADN_Natures_Data::NatureInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        for( uint n = 0; n < sword::DotationType_MAX; ++n )
+        for( uint n = sword::DotationType_MIN; n <= sword::DotationType_MAX; ++n )
         {
             auto value = static_cast< sword::DotationType >( n );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
@@ -92,7 +92,7 @@ std::string ADN_ListView_Categories_DotationNature::GetToolTipFor( const QModelI
     assert( pCastData != 0 );
 
     std::string result;
-    for( uint n = 0; n < sword::DotationType_MAX; ++n )
+    for( uint n = sword::DotationType_MIN; n <= sword::DotationType_MAX; ++n )
     {
         auto value = static_cast< sword::DotationType >( n );
         FillMultiUsersList( ENT_Tr::ConvertFromDotationType( value, ENT_Tr::eToSim ).c_str(),

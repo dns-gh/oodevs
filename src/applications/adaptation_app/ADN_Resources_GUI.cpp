@@ -119,7 +119,7 @@ void ADN_Resources_GUI::Build()
 
     // Tab management
     pTabWidget_ = new QTabWidget();
-    for( int i = sword::DotationType_MIN; i < sword::DotationType_MAX; ++i )
+    for( int i = sword::DotationType_MIN; i <= sword::DotationType_MAX; ++i )
         BuildGeneric( static_cast< sword::DotationType >( i ) );
 
     // Main widget
