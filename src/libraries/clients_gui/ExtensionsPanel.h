@@ -51,7 +51,9 @@ class ExtensionsPanel : public RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< kernel::Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations );
+             ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, 
+                              const kernel::ExtensionTypes& extensions, const tools::Resolver< kernel::Agent_ABC >& agents,
+                              const tools::Resolver< kernel::Formation_ABC >& formations, const kernel::Profile_ABC& profile );
     virtual ~ExtensionsPanel();
     //@}
 
@@ -86,6 +88,7 @@ protected:
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     const kernel::ExtensionTypes& extensions_;
+    const kernel::Profile_ABC& profile_;
     std::auto_ptr< DiffusionListDialog > diffusionDialog_;
     QVBoxLayout* pMainLayout_;
     QWidget* pExtensionLayout_;

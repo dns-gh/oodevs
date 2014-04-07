@@ -30,24 +30,25 @@ class OptionalValue
 public:
     //! @name Constructors/Destructor
     //@{
-                 OptionalValue() : value_(), set_( false ) {};
-    /*implicit*/ OptionalValue( const T& value, bool isSet = true ) : value_( value ), set_( isSet ) {};
-    virtual     ~OptionalValue() {};
+                 OptionalValue() : value_(), set_( false ) {}
+    /*implicit*/ OptionalValue( const T& value, bool isSet = true ) : value_( value ), set_( isSet ) {}
+    virtual     ~OptionalValue() {}
     //@}
 
     //! @name Operations
     //@{
-    T&   Data() { return value_; };
-    void Set() { set_ = true; };
-    bool IsSet() const { return set_; };
+    T&   Data() { return value_; }
+    const T& Data() const { return value_; }
+    void Set() { set_ = true; }
+    bool IsSet() const { return set_; }
     //@}
 
     //! @name Operators
     //@{
-    T operator->() { return value_; };
-    operator const T&() const { return value_; };
-    OptionalValue& operator=( const T& value ) { value_ = value; set_ = true; return *this; };
-    bool operator==( const T& value ) const { return value_ == value; };
+    T operator->() { return value_; }
+    operator const T&() const { return value_; }
+    OptionalValue& operator=( const T& value ) { value_ = value; set_ = true; return *this; }
+    bool operator==( const T& value ) const { return value_ == value; }
     //@}
 
 private:

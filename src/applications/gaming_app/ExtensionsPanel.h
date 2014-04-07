@@ -46,7 +46,8 @@ class ExtensionsPanel : public gui::ExtensionsPanel
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, const kernel::Time_ABC& simulation );
+             ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const Model& model,
+                              const StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
     virtual ~ExtensionsPanel();
     //@}
 

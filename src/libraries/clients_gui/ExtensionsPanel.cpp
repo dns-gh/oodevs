@@ -44,10 +44,13 @@ using namespace kernel;
 // Name: ExtensionsPanel constructor
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations )
+ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions,
+                                  const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations,
+                                  const kernel::Profile_ABC& profile )
     : RichDockWidget( controllers, parent, "extensions", tr( "Extensions" ) )
     , controllers_    ( controllers )
     , extensions_     ( extensions )
+    , profile_        ( profile )
     , diffusionDialog_( new DiffusionListDialog( parent, controllers, agents, formations, extensions, "DiffusionListDialog" ) )
     , selected_       ( controllers )
     , pGroupBox_      ( 0 )
@@ -109,12 +112,12 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
                 type->GetAttributeTypes( "population", attributes );
             else if( typeName == Team_ABC::typeName_ )
                 type->GetAttributeTypes( "party", attributes );
-            if( attributes.size() )
+            if( !attributes.empty() )
             {
                 pGroupBox_ = new RichGroupBox( "enabledGroupBox", tr( "Enabled" ) );
                 pGroupBoxLayout_ = new QGridLayout( pGroupBox_ );
                 int currentRow = 0;
-                for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it, ++currentRow )
+                for( auto it = attributes.rbegin(); it != attributes.rend(); ++it, ++currentRow )
                     AddWidget( **it, currentRow );
                 pGroupBoxLayout_->setColStretch( 1, 4 );
                 delete pExtensionLayout_->layout();
@@ -272,7 +275,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute, int cur
         return;
     static const std::string& language = tools::Language::Current();
     const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
-    std::string value( ext ? ext->GetValue( attribute.GetName() ) : "" );
+    const std::string value( ext ? ext->GetValue( attribute.GetName() ) : "" );
     if( attribute.GetType() == AttributeType::ETypeBoolean )
     {
         RichCheckBox* box = new RichCheckBox( attribute.GetName().c_str(), attribute.GetLabel( language, "" ).c_str() );
@@ -557,6 +560,6 @@ void ExtensionsPanel::UpdateDependencies()
     {
         AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( it->first );
         if( attribute )
-            it->second->setEnabled( attribute->IsActive( extensions ) );
+            it->second->setEnabled( attribute->IsActive( extensions ) && attribute->IsEditable( profile_ ) );
     }
 }

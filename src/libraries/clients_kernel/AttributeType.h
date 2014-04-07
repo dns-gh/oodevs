@@ -21,6 +21,7 @@ namespace xml
 namespace kernel
 {
 
+class Profile_ABC;
 class EntryLabelType;
 class ExtensionDependency;
 
@@ -71,6 +72,7 @@ public:
     void GetMinMaxLength( int& min, int& max ) const;
     void GetDictionaryValues( std::string& dictionary, std::string& kind, std::string& language ) const;
     bool IsActive( const std::map< std::string, std::string >& extensions ) const;
+    bool IsEditable( const kernel::Profile_ABC& profile ) const;
     //@}
 
 private:
@@ -105,6 +107,7 @@ private:
     OptionalValue< unsigned int > maxLength_;
     OptionalValue< std::string >  dictionaryKind_;
     OptionalValue< std::string >  dictionaryLanguage_;
+    OptionalValue< bool >         supervisor_;
     T_Entries                     labels_;
     EOperator                     operator_;
     T_Dependencies                dependencies_;

@@ -48,7 +48,7 @@ public:
     //@{
     void Load( const tools::ExerciseConfig& config );
     void Purge();
-    const std::string GetNameByType( AttributeType::EType typeName ) const;
+    std::string GetNameByType( AttributeType::EType typeName ) const;
     //@}
 
 private:

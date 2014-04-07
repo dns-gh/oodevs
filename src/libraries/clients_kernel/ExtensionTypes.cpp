@@ -91,12 +91,12 @@ void ExtensionTypes::ReadDictionary( xml::xistream& xis )
 // Name: ExtensionTypes::GetNameByType
 // Created: ABR 2011-05-03
 // -----------------------------------------------------------------------------
-const std::string ExtensionTypes::GetNameByType( AttributeType::EType type ) const
+std::string ExtensionTypes::GetNameByType( AttributeType::EType type ) const
 {
     ExtensionType* extension = tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( extension )
     {
-        tools::Iterator< const AttributeType& > it = extension->CreateIterator();
+        auto it = extension->CreateIterator();
         while( it.HasMoreElements() )
         {
             const AttributeType& attribute = it.NextElement();
