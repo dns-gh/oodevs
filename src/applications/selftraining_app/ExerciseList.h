@@ -93,7 +93,6 @@ private:
     virtual void NotifyUpdated( const frontend::Exercise_ABC& exercise );
     virtual void NotifyDeleted( const frontend::Exercise_ABC& exercise );
     virtual void OnLanguageChanged();
-    virtual void customEvent( QEvent* e );
     const frontend::Exercise_ABC* GetSelectedExercise() const;
     void UpdateExerciseEntry( const frontend::Exercise_ABC& exercise );
     //@}
