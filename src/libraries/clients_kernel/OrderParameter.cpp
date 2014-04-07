@@ -53,9 +53,9 @@ namespace
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
 OrderParameter::OrderParameter( xml::xistream& xis )
-    : name_( xis.attribute< std::string >( "name" ) )
-    , type_( boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) ) )
-    , optional_( xis.attribute( "optional", false ) )
+    : name_        ( xis.attribute< std::string >( "name" ) )
+    , type_        ( boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) ) )
+    , optional_    ( xis.attribute( "optional", false ) )
     , context_     ( xis.attribute( "is-context", false ) )
     , structure_   ( false )
     , union_       ( false )
@@ -103,11 +103,12 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
 // Created: ABR 2014-03-05
 // -----------------------------------------------------------------------------
 OrderParameter::OrderParameter( const OrderParameter& other )
-    : name_( other.name_ )
-    , type_( other.type_ )
-    , optional_( other.optional_ )
+    : name_     ( other.name_ )
+    , type_     ( other.type_ )
+    , optional_ ( other.optional_ )
+    , context_  ( other.context_ )
     , structure_( other.structure_ )
-    , union_( other.union_ )
+    , union_    ( other.union_ )
     , minOccurs_( other.minOccurs_ )
     , maxOccurs_( other.maxOccurs_ )
     , minValue_ ( other.minValue_ )

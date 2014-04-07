@@ -209,6 +209,20 @@ void MissionInterface::CommitTo( actions::Action_ABC& action ) const
         (*it)->CommitTo( action );
 }
 
+namespace
+{
+    const actions::Parameter_ABC* FindParameter( const actions::Action_ABC& action, const QString& name )
+    {
+        for( auto it = action.CreateIterator(); it.HasMoreElements(); )
+        {
+            const actions::Parameter_ABC& parameter = it.NextElement();
+            if( parameter.GetName() == name )
+                return &parameter;
+        }
+        return 0;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MissionInterface::FillFrom
 // Created: ABR 2013-06-12
@@ -216,14 +230,9 @@ void MissionInterface::CommitTo( actions::Action_ABC& action ) const
 void MissionInterface::FillFrom( const actions::Action_ABC& action )
 {
     filling_ = true;
-    auto itAction = action.CreateIterator();
-    for( auto it = parameters_.begin(); it != parameters_.end() && itAction.HasMoreElements(); ++it )
-    {
-        const actions::Parameter_ABC& actionParam = itAction.NextElement();
-        assert( ( *it )->GetName() == actionParam.GetName() );
-        if( ( *it )->GetName() == actionParam.GetName() )
-            actionParam.Accept( **it );
-    }
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
+        if( auto param = FindParameter( action, ( *it )->GetName() ) )
+            param->Accept( **it );
     filling_ = false;
 }
 
