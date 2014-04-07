@@ -35,7 +35,7 @@ class TER_AgentManager;
 class TER_ObjectManager;
 class TER_PopulationManager;
 class TER_CoordinateManager;
-class TER_GraphManager;
+class TER_StaticData;
 class TER_PathFindManager;
 class TER_AnalyzerManager;
 class TER_LimitDataManager;
@@ -113,7 +113,7 @@ private:
     TER_AgentManager*      pAgentManager_;
     TER_ObjectManager*     pObjectManager_;
     TER_CoordinateManager* pCoordinateManager_;
-    TER_GraphManager*      pGraphManager_;
+    TER_StaticData*        pGraphManager_;
     TER_PathFindManager*   pPathfindManager_;
     TER_AnalyzerManager*   pAnalyzerManager_;
     TER_PopulationManager* pPopulationManager_;

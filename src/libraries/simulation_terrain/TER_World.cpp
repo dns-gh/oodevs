@@ -22,7 +22,7 @@
 #include "TER_ObjectManager.h"
 #include "TER_PopulationManager.h"
 #include "TER_CoordinateManager.h"
-#include "TER_GraphManager.h"
+#include "TER_StaticData.h"
 #include "TER_PathFindManager.h"
 #include "TER_AnalyzerManager.h"
 #include "TER_LimitDataManager.h"
@@ -69,7 +69,7 @@ TER_World::TER_World( const tools::ExerciseConfig& config )
     pObjectManager_     = new TER_ObjectManager    ( extent );
     pPopulationManager_ = new TER_PopulationManager( extent );
     pCoordinateManager_ = new TER_CoordinateManager( config.GetTerrainLatitude(), config.GetTerrainLongitude(), extent );
-    pGraphManager_      = new TER_GraphManager     ( config.GetPathfindGraphFile(), config.GetPathfindNodesFile(), config.GetPathfindLinksFile(), 1e-4f );
+    pGraphManager_      = new TER_StaticData       ( config.GetPathfindGraphFile(), config.GetPathfindNodesFile(), config.GetPathfindLinksFile(), 1e-4f );
     pPathfindManager_   = new TER_PathFindManager  ( *pGraphManager_ );
     pAnalyzerManager_   = new TER_AnalyzerManager  ( *pGraphManager_ );
     limitManager_.reset( new TER_LimitDataManager() );
