@@ -56,7 +56,6 @@ public:
             const boost::shared_ptr< weather::Meteo >& meteo );
     virtual void Update( const sword::MissionParameters& msg );
     using weather::Meteo::Update;
-    virtual bool IsPatched() const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
     virtual void SendCreation() const;
     virtual void SendDestruction() const;
@@ -82,7 +81,6 @@ private:
     int endTime_;
     MT_Vector2D upLeft_;
     MT_Vector2D downRight_;
-    bool bIsPatched_;
     //@}
 };
 

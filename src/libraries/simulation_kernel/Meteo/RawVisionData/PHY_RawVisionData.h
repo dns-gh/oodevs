@@ -10,6 +10,8 @@
 #ifndef __PHY_RawVisionData_h_
 #define __PHY_RawVisionData_h_
 
+#include <unordered_set>
+
 typedef unsigned char envBits;
 struct ElevationCell;
 class ElevationGrid;
@@ -73,6 +75,7 @@ public:
     double GetCellSize() const;
 
     const weather::Meteo& GetWeather( const MT_Vector2D& pos ) const;
+    bool IsWeatherPatched( uint32_t id ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const MT_Vector2D& ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const ElevationCell& ) const;
     const weather::PHY_Lighting& GetLighting( const ElevationCell& ) const;
@@ -126,6 +129,8 @@ private:
 
     PHY_MeteoDataManager* meteoManager_;
     const weather::Meteo& globalMeteo_;
+    // Patched weather instances, by identifier
+    std::unordered_set< uint32_t > meteos_;
 };
 
 #endif // __PHY_RawVisionData_h_

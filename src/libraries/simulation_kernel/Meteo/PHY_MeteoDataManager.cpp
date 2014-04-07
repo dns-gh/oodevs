@@ -351,7 +351,7 @@ boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::GetLocalWeather(
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
     {
         const auto meteo = it->second.get();
-        if( meteo->IsPatched() && meteo->IsInside( position )
+        if( pRawData_->IsWeatherPatched( meteo->GetId() ) && meteo->IsInside( position )
             && ( !result || result->IsOlder( *meteo ) )
             && meteo != pMeteo.get() )
             result = it->second;

@@ -18,6 +18,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include <tools/InputBinaryStream.h>
 #include <tools/Path.h>
+#include <boost/lexical_cast.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData constructor
@@ -54,6 +55,11 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft,
         const geometry::Point2d& downRight,
         const boost::shared_ptr< const weather::Meteo >& pMeteo )
 {
+    if( !meteos_.insert( pMeteo->GetId() ).second )
+        throw MASA_EXCEPTION( "weather instance "
+            + boost::lexical_cast< std::string >( pMeteo->GetId() )
+            + " is already registered in vision data" );
+
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
     unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
     unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
@@ -84,6 +90,11 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft,
         const geometry::Point2d& downRight,
         const boost::shared_ptr< const weather::Meteo >& pMeteo )
 {
+    if( !meteos_.erase( pMeteo->GetId() ) )
+        throw MASA_EXCEPTION( "weather instance "
+            + boost::lexical_cast< std::string >( pMeteo->GetId() )
+            + " is already unregistered from vision data" );
+
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
     unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
     unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
@@ -454,4 +465,9 @@ void PHY_RawVisionData::GetVisionObjectsInSurface( const TER_Localisation_ABC& l
     nEmptySurface  *= cellSizeSquare;
     nForestSurface *= cellSizeSquare;
     nUrbanSurface  *= cellSizeSquare;
+}
+
+bool PHY_RawVisionData::IsWeatherPatched( uint32_t id ) const
+{
+    return meteos_.count( id ) > 0;
 }
