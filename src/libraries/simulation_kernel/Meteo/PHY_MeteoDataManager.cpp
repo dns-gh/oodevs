@@ -67,7 +67,7 @@ PHY_MeteoDataManager::PHY_MeteoDataManager(
     xis >> xml::start( "weather" );
     pEphemeride_ = ReadEphemeride( xis, now );
     InitializeGlobalMeteo( xis );
-    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, detectionFile, this );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, detectionFile );
     InitializeLocalMeteos( xis );
     xis >> xml::end;
 }
@@ -231,7 +231,7 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
          >> const_cast< uint32_t& >( tickDuration_ )
          >> size;
     MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
-    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config.GetDetectionFile(), this );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config.GetDetectionFile() );
     PHY_LocalMeteo* meteo = 0;
     for( ; size > 0; --size )
     {
@@ -332,7 +332,7 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
     {
         const auto& w = it->second;
-        const auto patched = pRawData_->IsWeatherPatched( w->GetId() );
+        const auto patched = pRawData_->IsWeatherPatched( w );
         const bool active = w->GetStartTime() < now && now < w->GetEndTime()
             && removed_.count( w->GetId() ) == 0;
         if( active != patched )
@@ -369,26 +369,6 @@ void PHY_MeteoDataManager::SendStateToNewClient()
     pGlobalMeteo_->SendCreation();
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
         it->second->SendCreation();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::GetLocalWeather
-// Created: ABR 2012-03-21
-// -----------------------------------------------------------------------------
-boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::GetLocalWeather(
-    const geometry::Point2f& position,
-    const boost::shared_ptr< const weather::Meteo >& pMeteo ) const
-{
-    boost::shared_ptr< const weather::Meteo > result;
-    for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
-    {
-        const auto meteo = it->second.get();
-        if( pRawData_->IsWeatherPatched( meteo->GetId() ) && meteo->IsInside( position )
-            && ( !result || result->IsOlder( *meteo ) )
-            && meteo != pMeteo.get() )
-            result = it->second;
-    }
-    return result;
 }
 
 boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::GetGlobalWeather() const

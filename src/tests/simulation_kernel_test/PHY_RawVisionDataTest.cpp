@@ -19,7 +19,7 @@ BOOST_AUTO_TEST_CASE( phy_rawvisiondata_getaltitude_offsets )
 
     weather::Meteo meteo;
     tools::Path detectionFile = testOptions.GetDataPath( "../../data/terrains/Paris_Est/Detection/detection.dat" );
-    PHY_RawVisionData vision( meteo, detectionFile, 0 );
+    PHY_RawVisionData vision( meteo, detectionFile );
 
     T_PointVector points( 4 );
     points[ 0 ] = MT_Vector2D( 0.5, 0.5 );

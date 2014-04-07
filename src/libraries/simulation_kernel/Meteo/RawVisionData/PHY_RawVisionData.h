@@ -19,7 +19,6 @@ class MT_Ellipse;
 class MT_Vector2D;
 class PHY_IndirectFireDotationClass;
 class PHY_LocalMeteo;
-class PHY_MeteoDataManager;
 class TER_Localisation;
 class TER_Localisation_ABC;
 
@@ -57,7 +56,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_RawVisionData( const weather::Meteo& globalMeteo,
-                     const tools::Path& detection, PHY_MeteoDataManager* manager );
+                     const tools::Path& detection );
     virtual ~PHY_RawVisionData();
     //@}
 
@@ -69,7 +68,7 @@ public:
     double GetCellSize() const;
 
     const weather::Meteo& GetWeather( const MT_Vector2D& pos ) const;
-    bool IsWeatherPatched( uint32_t id ) const;
+    bool IsWeatherPatched( const boost::shared_ptr< const PHY_LocalMeteo >& weather ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const MT_Vector2D& ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const ElevationCell& ) const;
     const weather::PHY_Lighting& GetLighting( const ElevationCell& ) const;
@@ -119,10 +118,11 @@ private:
     double rMaxAltitude_;
     std::auto_ptr< ElevationGrid > pElevationGrid_;
 
-    PHY_MeteoDataManager* meteoManager_;
     const weather::Meteo& globalMeteo_;
-    // Patched weather instances, by identifier
-    std::unordered_set< uint32_t > meteos_;
+    // Patched weather instances. It also ensures that weather pointers
+    // in the elevation map cells remain valid as long as they remain
+    // patched.
+    std::set< boost::shared_ptr< const PHY_LocalMeteo > > meteos_;
 };
 
 #endif // __PHY_RawVisionData_h_

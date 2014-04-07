@@ -11,7 +11,6 @@
 #include "PHY_RawVisionData.h"
 #include "PHY_AmmoEffect.h"
 #include "Meteo/PHY_LocalMeteo.h"
-#include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/ElevationGrid.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
@@ -27,10 +26,9 @@
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
 PHY_RawVisionData::PHY_RawVisionData( const weather::Meteo& globalMeteo,
-        const tools::Path& detection, PHY_MeteoDataManager* manager )
+        const tools::Path& detection )
     : nNbrCol_( 0 )
     , nNbrRow_( 0 )
-    , meteoManager_( manager )
     , pElevationGrid_( 0 )
     , globalMeteo_( globalMeteo )
 {
@@ -47,6 +45,27 @@ PHY_RawVisionData::~PHY_RawVisionData()
     // NOTHING
 }
 
+namespace
+{
+
+// Returns the best weather instance in meteos at a given location.
+const PHY_LocalMeteo* GetLocalWeather(
+        const std::set< boost::shared_ptr< const PHY_LocalMeteo > >& meteos,
+        const geometry::Point2f& position )
+{
+    const PHY_LocalMeteo* result = 0;
+    for( auto it = meteos.begin(); it != meteos.end(); ++it )
+    {
+        const auto meteo = it->get();
+        if( meteo->IsInside( position )
+            && ( !result || result->IsOlder( *meteo ) ) )
+            result = meteo;
+    }
+    return result;
+}
+
+}  // namespace
+
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::RegisterMeteoPatch
 // Created: JVT 03-08-06
@@ -55,7 +74,7 @@ PHY_RawVisionData::~PHY_RawVisionData()
 void PHY_RawVisionData::RegisterMeteoPatch(
         const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo )
 {
-    if( !meteos_.insert( pMeteo->GetId() ).second )
+    if( !meteos_.insert( pMeteo ).second )
         throw MASA_EXCEPTION( "weather instance "
             + boost::lexical_cast< std::string >( pMeteo->GetId() )
             + " is already registered in vision data" );
@@ -79,7 +98,7 @@ void PHY_RawVisionData::RegisterMeteoPatch(
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             ElevationCell& cell = pElevationGrid_->GetCell( nXBeg, y );
-            cell.pMeteo = pMeteo;
+            cell.pMeteo = pMeteo.get();
         }
         ++nXBeg;
     }
@@ -92,7 +111,7 @@ void PHY_RawVisionData::RegisterMeteoPatch(
 void PHY_RawVisionData::UnregisterMeteoPatch(
         const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo )
 {
-    if( !meteos_.erase( pMeteo->GetId() ) )
+    if( !meteos_.erase( pMeteo ) )
         throw MASA_EXCEPTION( "weather instance "
             + boost::lexical_cast< std::string >( pMeteo->GetId() )
             + " is already unregistered from vision data" );
@@ -119,7 +138,7 @@ void PHY_RawVisionData::UnregisterMeteoPatch(
             const auto pos = geometry::Point2f(
                     static_cast< float >( nXBeg * rCellSize_ ),
                     static_cast< float >( y * rCellSize_ ) );
-            cell.pMeteo = meteoManager_->GetLocalWeather( pos, pMeteo );
+            cell.pMeteo = GetLocalWeather( meteos_, pos );
         }
         ++nXBeg;
     }
@@ -214,7 +233,7 @@ bool PHY_RawVisionData::Read( const tools::Path& path )
 
         for( unsigned int i = 0; i < nNbrRow_; ++i )
         {
-            pTmp->pMeteo.reset();
+            pTmp->pMeteo = 0;
             pTmp->pEffects = 0;
             archive.Read( reinterpret_cast< char* >( pTmp++ ), 4 );
             if( !archive )
@@ -472,7 +491,8 @@ void PHY_RawVisionData::GetVisionObjectsInSurface( const TER_Localisation_ABC& l
     nUrbanSurface  *= cellSizeSquare;
 }
 
-bool PHY_RawVisionData::IsWeatherPatched( uint32_t id ) const
+bool PHY_RawVisionData::IsWeatherPatched(
+        const boost::shared_ptr< const PHY_LocalMeteo >& weather ) const
 {
-    return meteos_.count( id ) > 0;
+    return meteos_.count( weather ) > 0;
 }

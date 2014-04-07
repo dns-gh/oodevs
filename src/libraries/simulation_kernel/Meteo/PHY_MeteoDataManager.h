@@ -16,12 +16,6 @@
 #include <memory>
 #include <set>
 
-namespace geometry
-{
-    template< typename T > class Point2;
-    typedef Point2< float > Point2f;
-}
-
 namespace sword
 {
     class MagicAction;
@@ -78,9 +72,6 @@ public:
     // The creation notification will be sent during the next Update().
     // Returned instance is const, use PHY_MeteoDataManager API to modify it.
     boost::shared_ptr< const weather::Meteo > AddLocalWeather( xml::xistream& xis );
-    boost::shared_ptr< const weather::Meteo > GetLocalWeather(
-        const geometry::Point2f& position, 
-        const boost::shared_ptr< const weather::Meteo >& pMeteo ) const;
     boost::shared_ptr< const weather::Meteo > GetGlobalWeather() const;
     // Unregisters a local weather, returns false if the entity cannot be found.
     // The destruction message is sent immediately.

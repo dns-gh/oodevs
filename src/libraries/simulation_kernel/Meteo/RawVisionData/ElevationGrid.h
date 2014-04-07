@@ -28,6 +28,7 @@ public:
         : h       ( 0 )
         , dh      ( 0 )
         , e       ( 0 )
+        , pMeteo  ( 0 )
         , pEffects( 0 )
     {
         // NOTHING
@@ -47,7 +48,7 @@ private:
     unsigned short h  : 16;                         // hauteur du sol
     unsigned char  dh : 8;                          // hauteur de la planimétrie
     envBits        e  : 8;                          // champ de bit représentant l'environnement visuel statique
-    boost::shared_ptr< const weather::Meteo > pMeteo; // local weather
+    const weather::Meteo* pMeteo;                   // local weather
     PHY_AmmoEffect* pEffects;                       // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
 };
 //@}
