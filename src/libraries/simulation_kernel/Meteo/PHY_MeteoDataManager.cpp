@@ -132,8 +132,7 @@ bool PHY_MeteoDataManager::RemoveLocalWeather( uint32_t id )
     const auto it = meteos_.find( id );
     if( it == meteos_.end() )
         return false;
-    it->second->SendDestruction();
-    meteos_.erase( it );
+    removed_.insert( id );
     return true;
 }
 
@@ -325,13 +324,17 @@ void PHY_MeteoDataManager::Update( unsigned int date )
             it->second->SetLighting( pEphemeride_->GetLightingBase() );
     }
 
+    // Note weather can be disabled without being removed
+    auto disabled = removed_;
+
     const int now = boost::numeric_cast< int >( date );
     pGlobalMeteo_->SendCreationIfModified();
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
     {
         const auto& w = it->second;
         const auto patched = pRawData_->IsWeatherPatched( w->GetId() );
-        const bool active = w->GetStartTime() < now && now < w->GetEndTime();
+        const bool active = w->GetStartTime() < now && now < w->GetEndTime()
+            && removed_.count( w->GetId() ) == 0;
         if( active != patched )
         {
             if( active )
@@ -341,12 +344,20 @@ void PHY_MeteoDataManager::Update( unsigned int date )
             else
             {
                 pRawData_->UnregisterMeteoPatch( w );
-                w->SendDestruction();
+                disabled.insert( w->GetId() );
             }
         }
         if( active )
             w->SendCreationIfModified();
     }
+
+    for( auto it = disabled.begin(); it != disabled.end(); ++it )
+    {
+        meteos_.at( *it )->SendDestruction();
+        if( removed_.count( *it ) > 0 )
+            meteos_.erase( *it );
+    }
+    removed_.clear();
 }
 
 // -----------------------------------------------------------------------------

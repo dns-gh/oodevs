@@ -14,6 +14,7 @@
 #include <boost/shared_ptr.hpp>
 #include <map>
 #include <memory>
+#include <set>
 
 namespace geometry
 {
@@ -136,6 +137,8 @@ private:
     boost::shared_ptr< PHY_GlobalMeteo > pGlobalMeteo_;
     PHY_RawVisionData* pRawData_;
     std::map< uint32_t, boost::shared_ptr< PHY_LocalMeteo > > meteos_;
+    // Identifiers of weather instances removed since last Update()
+    std::set< uint32_t > removed_;
     const uint32_t tickDuration_;
     static unsigned int localCounter_;
     //@}

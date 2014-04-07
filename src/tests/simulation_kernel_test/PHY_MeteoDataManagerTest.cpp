@@ -238,4 +238,21 @@ BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_creation_destruction )
     // Disable w3
     man->Update( 1350 );
     BOOST_CHECK_EQUAL( "g0 g0 g0 g0 g0 g0", check() );
+
+    // Test manual removal
+    man->Update( 350 );
+    BOOST_CHECK_EQUAL( "w1 w3 w3 w3 w2 g0", check() );
+    BOOST_CHECK( man->RemoveLocalWeather( w1->GetId() ) );
+    // Nothing changed, need to call Update() first
+    BOOST_CHECK_EQUAL( "w1 w3 w3 w3 w2 g0", check() );
+    man->Update( 350 );
+    BOOST_CHECK_EQUAL( "g0 w3 w3 w3 w2 g0", check() );
+
+    BOOST_CHECK( man->RemoveLocalWeather( w2->GetId() ) );
+    man->Update( 350 );
+    BOOST_CHECK_EQUAL( "g0 w3 w3 w3 g0 g0", check() );
+
+    BOOST_CHECK( man->RemoveLocalWeather( w3->GetId() ) );
+    man->Update( 350 );
+    BOOST_CHECK_EQUAL( "g0 g0 g0 g0 g0 g0", check() );
 }
