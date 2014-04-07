@@ -190,9 +190,9 @@ bool UnitStateTableResource::IsDotationAlreadyPresent( const QString& name ) con
 
 namespace 
 {
-    int RecursiveQuantity( const kernel::Entity_ABC& entity, const QString& name, const QString& category )
+    unsigned int RecursiveQuantity( const kernel::Entity_ABC& entity, const QString& name, const QString& category )
     {
-        int quantity = 0;
+        unsigned int quantity = 0;
         if( entity.GetTypeName() == kernel::Agent_ABC::typeName_)
         {
             const InitialState& extension = entity.Get< InitialState >();
@@ -220,38 +220,32 @@ namespace
 // -----------------------------------------------------------------------------
 bool UnitStateTableResource::HasChanged( kernel::Entity_ABC& selected ) const
 {
-    rowChanged_.clear();
-    bool result = false;
     if( selected.GetTypeName() == kernel::Agent_ABC::typeName_ )
     {
         InitialState& extension = selected.Get< InitialState >();
         if( extension.resources_.size() != static_cast< unsigned int >( dataModel_.rowCount() ) )
             return true;
         for( auto it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
-        {
             for( int row = 0; row < dataModel_.rowCount(); ++row )
                 if( GetDisplayData( row, eName ) == it->name_ &&
                     GetDisplayData( row, eCategory ) == it->category_ )
                 {
-                    return( it->number_ != GetUserData( row, eQuantity ).toUInt() ||
-                        it->maximum_ != GetUserData( row, eMaximum ).toUInt() ||
-                        it->threshold_ != GetUserData( row, eThreshold ).toDouble() );
+                    if ( it->number_ != GetUserData( row, eQuantity ).toUInt() ||
+                         it->maximum_ != GetUserData( row, eMaximum ).toUInt() ||
+                         it->threshold_ != GetUserData( row, eThreshold ).toDouble() )
+                         return true;
+                    break;
                 }
-        }
+        return false;
     }
-    else
+    rowChanged_.clear();
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
     {
-        for( int row = 0; row < dataModel_.rowCount(); ++row )
-        {
-            unsigned int quantity = RecursiveQuantity( selected, GetDisplayData( row, eName ), GetDisplayData( row, eCategory ) );
-            if( quantity != GetUserData( row, eQuantity ).toUInt() )
-            {
-                result = true;
-                rowChanged_.push_back( row );
-            }
-        }
+        auto quantity = RecursiveQuantity( selected, GetDisplayData( row, eName ), GetDisplayData( row, eCategory ) );
+        if( quantity != GetUserData( row, eQuantity ).toUInt() )
+            rowChanged_.push_back( row );
     }
-    return result;
+    return !rowChanged_.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -312,11 +306,11 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
 
         for( int row = 0; row < dataModel_.rowCount(); ++row )
             extension.resources_.push_back( InitialStateResource( GetDisplayData( row, eName ),
-                                                                    GetDisplayData( row, eCategory ),
-                                                                    GetUserData( row, eQuantity ).toUInt(),
-                                                                    GetUserData( row, eMaximum ).toUInt(),
-                                                                    GetUserData( row, eThreshold ).toDouble(),
-                                                                    GetUserData( row, eConsumption ).toDouble() ) );
+                                                                  GetDisplayData( row, eCategory ),
+                                                                  GetUserData( row, eQuantity ).toUInt(),
+                                                                  GetUserData( row, eMaximum ).toUInt(),
+                                                                  GetUserData( row, eThreshold ).toDouble(),
+                                                                  GetUserData( row, eConsumption ).toDouble() ) );
     }
     else
     {

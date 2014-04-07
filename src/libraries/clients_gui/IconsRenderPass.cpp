@@ -80,7 +80,9 @@ void IconsRenderPass::RenderIcon( const T_IconTask& task )
     glClear( GL_DEPTH_BUFFER_BIT );
     glRectf( viewport_.Left() - 50, viewport_.Bottom() - 50, viewport_.Right() + 50, viewport_.Top() + 50 );
     const SymbolIcon& symbol = task.first;
+    glPushAttrib( GL_CURRENT_BIT );
     tools_.SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );
+    glPopAttrib();
     const float thickness = viewport_.Width() * 1.5f / iconSide_;
     const geometry::Point2f center( 300, 100 );
     const geometry::Point2f infraSymbolCenter( 220, 310 );

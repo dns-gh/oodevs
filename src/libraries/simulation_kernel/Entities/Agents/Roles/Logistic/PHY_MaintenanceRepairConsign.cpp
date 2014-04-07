@@ -336,6 +336,8 @@ void PHY_MaintenanceRepairConsign::SelectRepairTeam( const PHY_ComposanteTypePio
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
         throw MASA_EXCEPTION( "repair consign not in a waiting for repair team selection state" );
+    if( pRepairer_ )
+        throw MASA_EXCEPTION( "repair consign already has a repair team selected" );
     pRepairer_ = GetPionMaintenance().GetAvailableRepairer( pComposanteState_->GetComposanteBreakdown(), &type );
     if( pRepairer_ )
     {

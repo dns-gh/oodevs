@@ -162,7 +162,9 @@ void PHY_MaintenanceDiagnosisConsign::SelectMaintenanceTransporter( const PHY_Co
 void PHY_MaintenanceDiagnosisConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
-        throw MASA_EXCEPTION( "transport consign not in a waiting for diagnosis team selection state" );
+        throw MASA_EXCEPTION( "diagnosis consign not in a waiting for diagnosis team selection state" );
+    if( component_ )
+        throw MASA_EXCEPTION( "diagnosis consign already has a diagnosis team selected" );
     component_ = GetPionMaintenance().GetAvailableDiagnoser( &type );
     if( component_ )
     {

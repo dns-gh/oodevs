@@ -23,7 +23,6 @@
 #include "Entities/Agents/Units/Weapons/PHY_LauncherType.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
-#include "StubPHY_RoleInterface_Dotation.h"
 #include "WeaponAvailabilityComputer_ABC.h"
 #include "MockObjectTypeResolver.h"
 #include <xeumeuleu/xml.hpp>

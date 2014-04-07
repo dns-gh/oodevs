@@ -85,6 +85,7 @@ public:
     double GetValue( const PHY_DotationCategory& category ) const;
     double Consume ( const PHY_DotationCategory& category, double rNbr );
     double Supply  ( const PHY_DotationCategory& category, double rNbr );
+    void   SupplyAll( const PHY_DotationType& type, double rFactor );
     void   Resupply( bool withLog );
     void   Resupply( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
     void   Resupply( const PHY_DotationType&     type              , double rFactor );
