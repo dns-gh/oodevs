@@ -2784,7 +2784,7 @@ func (s *TestSuite) TestRecoverResources(c *C) {
 		c.Assert(err, IsNil)
 		condition := hasResources
 		if withLog {
-			// I can't explain that yet
+			// http://jira.masagroup.net/browse/SWBUG-12215
 			condition = checkNoResources
 		}
 		waitCondition(c, client.Model, condition)
