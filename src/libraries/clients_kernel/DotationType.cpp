@@ -39,7 +39,7 @@ DotationType::DotationType( xml::xistream& xis, const tools::Resolver_ABC< Logis
         unitWeight_ /= nbrInPackage;
         unitVolume_ /= nbrInPackage;
     }
-    categoryId_ = ENT_Tr::ConvertToDotationType( category );
+    categoryId_ = ENT_Tr::ConvertToDotationType( category, ENT_Tr::eToSim );
     gaz_        = category == "carburant";
     ammunition_ = category == "munition";
     indirectFireAmmunition_ = xis.has_child( "indirect-fires" );
