@@ -8,10 +8,31 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#include "simulation_kernel/Meteo/RawVisionData/ElevationGrid.h"
 #include "simulation_kernel/Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "meteo/Meteo.h"
 #include "StubTER_World.h"
+
+BOOST_AUTO_TEST_CASE( phy_rawvisiondata_cell_non_regression )
+{
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
+
+    weather::Meteo meteo;
+    tools::Path detectionFile = testOptions.GetDataPath(
+            "../../data/terrains/Paris_Est/Detection/detection.dat" );
+    PHY_RawVisionData vision( meteo, detectionFile );
+
+    const MT_Vector2D p1( 34020.52, 70833.78 );
+    const auto& c1 = vision( p1 );
+    BOOST_CHECK_EQUAL( c1.GetAltitude(), 109 );
+    BOOST_CHECK_EQUAL( c1.GetEnv(), 1 );
+
+    const MT_Vector2D p2( 91211.93, 46216.39 );
+    const auto& c2 = vision( p2 );
+    BOOST_CHECK_EQUAL( c2.GetAltitude(), 213 );
+    BOOST_CHECK_EQUAL( c2.GetEnv(), 0 );
+}
 
 BOOST_AUTO_TEST_CASE( phy_rawvisiondata_getaltitude_offsets )
 {

@@ -226,6 +226,8 @@ bool PHY_RawVisionData::Read( const tools::Path& path )
 
     ElevationCell** ppCells = new ElevationCell*[ nNbrCol_ ];
 
+    uint16_t elevation;
+    uint8_t env, delta;
     for( unsigned int x = 0; x < nNbrCol_; ++x )
     {
         ElevationCell* pTmp = new ElevationCell[ nNbrRow_ ];
@@ -233,11 +235,15 @@ bool PHY_RawVisionData::Read( const tools::Path& path )
 
         for( unsigned int i = 0; i < nNbrRow_; ++i )
         {
-            pTmp->pMeteo = 0;
-            pTmp->pEffects = 0;
-            archive.Read( reinterpret_cast< char* >( pTmp++ ), 4 );
+            archive >> elevation >> delta >> env;
             if( !archive )
                 throw MASA_EXCEPTION( "Error reading file " + path.ToUTF8() );
+            pTmp->h = elevation;
+            pTmp->dh = delta;
+            pTmp->e = env;
+            pTmp->pMeteo = 0;
+            pTmp->pEffects = 0;
+            pTmp++;
         }
     }
 

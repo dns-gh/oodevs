@@ -42,14 +42,13 @@ public:
         return h == rhs.h && dh == rhs.dh && e == rhs.e;
     }
 private:
-    // $$$$ _RC_ JSR 2011-05-19: TODO à cleaner (virer le friend, rajouter des underscores...)
     friend class PHY_RawVisionData;
 
-    unsigned short h  : 16;                         // hauteur du sol
-    unsigned char  dh : 8;                          // hauteur de la planimétrie
-    envBits        e  : 8;                          // champ de bit représentant l'environnement visuel statique
-    const weather::Meteo* pMeteo;                   // local weather
-    PHY_AmmoEffect* pEffects;                       // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
+    uint16_t h;     // elevation
+    uint8_t  dh;    // elevation delta caused by environment
+    envBits  e;     // static environment bits
+    const weather::Meteo* pMeteo;   // local weather
+    PHY_AmmoEffect* pEffects;       // ammunitions effects
 };
 //@}
 
