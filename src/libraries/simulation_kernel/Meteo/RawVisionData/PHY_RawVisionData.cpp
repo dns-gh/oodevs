@@ -49,7 +49,7 @@ namespace
 {
 
 // Returns the best weather instance in meteos at a given location.
-const PHY_LocalMeteo* GetLocalWeather(
+uint32_t GetLocalWeather(
         const std::set< boost::shared_ptr< const PHY_LocalMeteo > >& meteos,
         const geometry::Point2f& position )
 {
@@ -61,7 +61,7 @@ const PHY_LocalMeteo* GetLocalWeather(
             && ( !result || result->IsOlder( *meteo ) ) )
             result = meteo;
     }
-    return result;
+    return result ? result->GetId() : 0;
 }
 
 }  // namespace
@@ -74,10 +74,11 @@ const PHY_LocalMeteo* GetLocalWeather(
 void PHY_RawVisionData::RegisterMeteoPatch(
         const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo )
 {
-    if( !meteos_.insert( pMeteo ).second )
+    if( meteoIds_.count( pMeteo->GetId() ) > 0 || !meteos_.insert( pMeteo ).second )
         throw MASA_EXCEPTION( "weather instance "
             + boost::lexical_cast< std::string >( pMeteo->GetId() )
             + " is already registered in vision data" );
+    meteoIds_[ pMeteo->GetId() ] = pMeteo.get();
 
     const auto upLeft = pMeteo->GetTopLeft();
     const auto downRight = pMeteo->GetBottomRight();
@@ -98,7 +99,7 @@ void PHY_RawVisionData::RegisterMeteoPatch(
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             ElevationCell& cell = pElevationGrid_->GetCell( nXBeg, y );
-            cell.pMeteo = pMeteo.get();
+            cell.weatherId = pMeteo->GetId();
         }
         ++nXBeg;
     }
@@ -111,10 +112,11 @@ void PHY_RawVisionData::RegisterMeteoPatch(
 void PHY_RawVisionData::UnregisterMeteoPatch(
         const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo )
 {
-    if( !meteos_.erase( pMeteo ) )
+    if( meteoIds_.count( pMeteo->GetId() ) == 0 || !meteos_.erase( pMeteo ) )
         throw MASA_EXCEPTION( "weather instance "
             + boost::lexical_cast< std::string >( pMeteo->GetId() )
             + " is already unregistered from vision data" );
+    meteoIds_.erase( pMeteo->GetId() );
 
     const auto upLeft = pMeteo->GetTopLeft();
     const auto downRight = pMeteo->GetBottomRight();
@@ -138,7 +140,7 @@ void PHY_RawVisionData::UnregisterMeteoPatch(
             const auto pos = geometry::Point2f(
                     static_cast< float >( nXBeg * rCellSize_ ),
                     static_cast< float >( y * rCellSize_ ) );
-            cell.pMeteo = GetLocalWeather( meteos_, pos );
+            cell.weatherId = GetLocalWeather( meteos_, pos );
         }
         ++nXBeg;
     }
@@ -241,7 +243,7 @@ bool PHY_RawVisionData::Read( const tools::Path& path )
             pTmp->h = elevation;
             pTmp->dh = delta;
             pTmp->e = env;
-            pTmp->pMeteo = 0;
+            pTmp->weatherId = 0;
             pTmp->pEffects = 0;
             pTmp++;
         }
@@ -336,8 +338,14 @@ ElevationCell& PHY_RawVisionData::operator() ( double rCol, double rRow )
 
 const weather::Meteo& PHY_RawVisionData::GetWeather( const MT_Vector2D& pos ) const
 {
-    const auto& cell = operator()( pos );
-    return cell.pMeteo ? *cell.pMeteo : globalMeteo_; 
+    return GetWeather( operator()( pos ) );
+}
+
+const weather::Meteo& PHY_RawVisionData::GetWeather( const ElevationCell& cell ) const
+{
+    if( !cell.weatherId )
+        return globalMeteo_;
+    return *meteoIds_.find( cell.weatherId )->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -351,7 +359,7 @@ const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const MT_
 
 const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const ElevationCell& cell ) const
 {
-    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    const auto& meteo = GetWeather( cell );
     if( cell.pEffects )
         return cell.pEffects->GetPrecipitation( meteo.GetPrecipitation() );
     return meteo.GetPrecipitation();
@@ -359,7 +367,7 @@ const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const Ele
 
 const weather::PHY_Lighting& PHY_RawVisionData::GetLighting( const ElevationCell& cell ) const
 {
-    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    const auto& meteo = GetWeather( cell );
     if( cell.pEffects )
         return cell.pEffects->GetLighting( meteo.GetLighting() );
     return meteo.GetLighting();
@@ -399,8 +407,7 @@ envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D& pos ) const
 // -----------------------------------------------------------------------------
 const weather::WindData& PHY_RawVisionData::GetWind( const MT_Vector2D& vPos ) const
 {
-    const auto& cell = operator()( vPos );
-    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    const auto& meteo = GetWeather( vPos );
     return meteo.GetWind();
 }
 

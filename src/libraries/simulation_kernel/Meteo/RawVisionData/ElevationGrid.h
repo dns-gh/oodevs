@@ -14,11 +14,6 @@
 
 class PHY_AmmoEffect;
 
-namespace weather
-{
-    class Meteo;
-}
-
 typedef unsigned char envBits;  // bit field
 
 struct ElevationCell
@@ -28,7 +23,7 @@ public:
         : h       ( 0 )
         , dh      ( 0 )
         , e       ( 0 )
-        , pMeteo  ( 0 )
+        , weatherId( 0 )
         , pEffects( 0 )
     {
         // NOTHING
@@ -44,11 +39,13 @@ public:
 private:
     friend class PHY_RawVisionData;
 
+    // Take care to pack the following fields to save memory when
+    // loading large elevation maps.
+    PHY_AmmoEffect* pEffects;       // ammunitions effects
     uint16_t h;     // elevation
     uint8_t  dh;    // elevation delta caused by environment
     envBits  e;     // static environment bits
-    const weather::Meteo* pMeteo;   // local weather
-    PHY_AmmoEffect* pEffects;       // ammunitions effects
+    uint32_t weatherId; // local weather identifier, 0 if unset
 };
 //@}
 

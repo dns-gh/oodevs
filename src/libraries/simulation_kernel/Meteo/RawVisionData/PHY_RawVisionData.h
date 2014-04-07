@@ -10,7 +10,8 @@
 #ifndef __PHY_RawVisionData_h_
 #define __PHY_RawVisionData_h_
 
-#include <unordered_set>
+#include <set>
+#include <unordered_map>
 
 typedef unsigned char envBits;
 struct ElevationCell;
@@ -67,6 +68,7 @@ public:
 
     double GetCellSize() const;
 
+    const weather::Meteo& GetWeather( const ElevationCell& cell ) const;
     const weather::Meteo& GetWeather( const MT_Vector2D& pos ) const;
     bool IsWeatherPatched( const boost::shared_ptr< const PHY_LocalMeteo >& weather ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const MT_Vector2D& ) const;
@@ -123,6 +125,7 @@ private:
     // in the elevation map cells remain valid as long as they remain
     // patched.
     std::set< boost::shared_ptr< const PHY_LocalMeteo > > meteos_;
+    std::unordered_map< uint32_t, const PHY_LocalMeteo* > meteoIds_;
 };
 
 #endif // __PHY_RawVisionData_h_
