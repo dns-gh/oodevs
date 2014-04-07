@@ -100,3 +100,13 @@ bool DEC_TerrainFunctions::IsWaterInBetween( const MT_Vector2D* from, const MT_V
     TER_AnalyzerManager::GetAnalyzerManager().FindSegmentIntersections( *from, *to, TerrainData::WaterBorder(), positions );
     return !positions.empty();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_TerrainFunctions::DEC_TerrainFunctions::GetTerrainData
+// Created: SLI 2014-04-03
+// -----------------------------------------------------------------------------
+std::pair< unsigned int, unsigned int > DEC_TerrainFunctions::GetTerrainData( const MT_Vector2D* location )
+{
+    const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *location );
+    return std::make_pair( data.Area(), data.Linear() );
+}

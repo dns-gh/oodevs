@@ -312,6 +312,45 @@ settleDistance = function( lineComputer )
     return DEC_Geometrie_CalculerDistanceLigneAvant( lineComputer, meKnowledge.source )
 end
 
+--- Picks the terrain data given the provided location. Returns the type of terrain
+--- at this point, divided into linear types (roads, rivers, ...) and area types (forest, urban, ...)
+-- @param point Simulation point, the location where to pick the terrain data
+-- @return Table with two members :
+-- <ul><li> first : The area part of the terrain data, as a bit-field integer</li>
+-- <ul>
+-- <li>unknown    = 0</li>
+-- <li>forest     = 1</li>
+-- <li>plantation = 2</li>
+-- <li>swamp      = 4</li>
+-- <li>urban      = 8</li>
+-- <li>water      = 16</li>
+-- <li>dune       = 32</li>
+-- <li>ice        = 64</li>
+-- <li>mountain   = 128</li></ul>
+-- <li> second : The linear part of the terrain data, as a bit-field integer</li>
+-- <ul>
+-- <li>cliff       = 1</li>
+-- <li>motorway    = 2</li>
+-- <li>largeroad   = 4</li>
+-- <li>mediumroad  = 8</li>
+-- <li>smallroad   = 16</li>
+-- <li>bridge      = 32</li>
+-- <li>railroad    = 64</li>
+-- <li>largeriver  = 128</li>
+-- <li>mediumriver = 256</li>
+-- <li>smallriver  = 512</li>
+-- <li>crossroad   = 1024</li>
+-- <li>street      = 2048</li>
+-- <li>avenue      = 4096</li>
+-- <li>underpass   = 8192</li>
+-- <li>metro       = 16384</li></ul>
+-- </ul>
+-- Example: a point with urban as area terrain type, smallriver and bridge as linear terrain type, will return
+-- { first = 8, second = 544 } (bridge 32 +  smallriver 512)
+integration.getTerrainData = function( point )
+    return DEC_Geometrie_GetTerrainData( point )
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
