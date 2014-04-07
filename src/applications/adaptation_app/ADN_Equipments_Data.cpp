@@ -996,7 +996,7 @@ void ADN_Equipments_Data::ResourceInfos::CopyFrom( ADN_Equipments_Data::Resource
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::ResourceInfos::ReadCategory( xml::xistream& input, const std::string& parentName )
 {
-    auto family = ENT_Tr::ConvertToDotationType( input.attribute< std::string >( "name" ) );
+    auto family = ENT_Tr::ConvertToDotationType( input.attribute< std::string >( "name" ), ENT_Tr::eToSim );
     ADN_Resources_Data::ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( family );
 
     input >> xml::list( "resource", *this, &ADN_Equipments_Data::ResourceInfos::ReadDotation, dotation, parentName );
@@ -1378,7 +1378,7 @@ void ADN_Equipments_Data::AviationResourceQuotasInfos::ReadQuota( xml::xistream&
     const unsigned int value = input.attribute< unsigned int >( "value" );
     try
     {
-        if( category ==  ENT_Tr::ConvertFromDotationType( sword::dotation_type_fuel ) )
+        if( category ==  ENT_Tr::ConvertFromDotationType( sword::dotation_type_fuel, ENT_Tr::eToSim ) )
             resourceQuotas_[ eNbrAmmunitionType ] = value;
         else
         {
@@ -1406,7 +1406,7 @@ void ADN_Equipments_Data::AviationResourceQuotasInfos::WriteArchive( xml::xostre
                 << xml::attribute( "value", resourceQuotas_[ i ] )
                << xml::end;
     output << xml::start( "quota" )
-            << xml::attribute( "category", ENT_Tr::ConvertFromDotationType( sword::dotation_type_fuel ) )
+            << xml::attribute( "category", ENT_Tr::ConvertFromDotationType( sword::dotation_type_fuel, ENT_Tr::eToSim ) )
             << xml::attribute( "value", resourceQuotas_[ eNbrAmmunitionType ] )
            << xml::end;
     output << xml::end;

@@ -206,7 +206,7 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
         ADN_Rich_ListViewItem* pDotationItem = new ADN_Rich_ListViewItem( this, Qt::AlignVCenter | Qt::AlignRight );
         const auto name =
             ENT_Tr::ConvertFromDotationType(
-                ENT_Tr::ConvertToDotationType( dotation.strName_.GetData() ),
+                ENT_Tr::ConvertToDotationType( dotation.strName_.GetData(), ENT_Tr::eToSim ),
                 ENT_Tr::eToTr );
         pDotationItem->setText( eColumnTarget, name.c_str() );
 

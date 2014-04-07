@@ -47,7 +47,7 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo()
 ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
     : nId_                   ( ADN_Resources_Data::idManager_.GetNextId() )
     , parentResource_        ( parentDotation )
-    , category_              ( ENT_Tr::ConvertFromDotationType( parentDotation.nType_ ) )
+    , category_              ( ENT_Tr::ConvertFromDotationType( parentDotation.nType_, ENT_Tr::eToSim ) )
     , strCodeEMAT6_          ()
     , strCodeEMAT8_          ()
     , strCodeLFRIL_          ()
@@ -70,7 +70,7 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
 ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation, unsigned int id )
     : nId_                   ( id )
     , parentResource_        ( parentDotation )
-    , category_              ( ENT_Tr::ConvertFromDotationType( parentDotation.nType_ ) )
+    , category_              ( ENT_Tr::ConvertFromDotationType( parentDotation.nType_, ENT_Tr::eToSim ) )
     , strCodeEMAT6_          ()
     , strCodeEMAT8_          ()
     , strCodeLFRIL_          ()
@@ -684,7 +684,7 @@ bool ADN_Resources_Data::AmmoCategoryInfo::HasUrbanAttrition() const
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::ResourceInfos::ResourceInfos( sword::DotationType nType, T_CategoryInfos_Vector& networkUsableResources )
-    : ADN_RefWithName( ENT_Tr::ConvertFromDotationType( nType ) )
+    : ADN_RefWithName( ENT_Tr::ConvertFromDotationType( nType, ENT_Tr::eToSim ) )
     , nType_( nType )
     , categories_( true )
     , networkUsableResources_( &networkUsableResources )
@@ -843,7 +843,7 @@ void ADN_Resources_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Resources_Data::ReadResource( xml::xistream& input )
 {
     std::string category = input.attribute< std::string >( "category" );
-    auto nResourceType = ENT_Tr::ConvertToDotationType( category );
+    auto nResourceType = ENT_Tr::ConvertToDotationType( category, ENT_Tr::eToSim );
     if( nResourceType == -1 )
         throw MASA_EXCEPTION( tools::translate( "ADN_Resources_Data", "Equipment - Invalid resource type '%1'" ).arg( category.c_str() ).toStdString() );
     resources_.at( nResourceType )->ReadArchive( input, *translations_ );
