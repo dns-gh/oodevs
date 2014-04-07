@@ -642,14 +642,14 @@ target_link_libraries( xeuseudeu_test
 )
 
 # model_generator_app
-add_target( model_generator_app applications "applications/model_generator_app" OPTIONS executable )
+add_target( model_generator_app server "applications/model_generator_app" OPTIONS executable )
 target_link_libraries( model_generator_app
     xeuseudeu
     ${TOOLS_LIBRARIES}
 )
 
 # model_app
-add_target( model_app applications "applications/model_app" OPTIONS executable )
+add_target( model_app server "applications/model_app" OPTIONS executable )
 target_link_libraries( model_app
     core
     ${TOOLS_LIBRARIES}
