@@ -753,6 +753,23 @@ BOOST_FIXTURE_TEST_CASE( read_resource_network_node, Fixture )
     CheckCycle( input, msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( read_resource_network_node_scipio, Fixture )
+{
+    std::string input =
+    "<action>"
+    "  <parameter type='resourcenetwork' value='1337'>"
+    "    <parameter type='resource' value='some_value'/>"
+    "  </parameter>"
+    "</action>";
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    auto& node = msg.elem( 0 ).value( 0 ).resourcenetworknode();
+    BOOST_CHECK_EQUAL( node.object().id(), 1337u );
+    BOOST_CHECK_EQUAL( node.resource().name(), "some_value" );
+    boost::replace_all( input, "resourcenetwork", "resourcenetworknode" );
+    CheckCycle( input, msg );
+}
+
 BOOST_FIXTURE_TEST_CASE( read_extension_list, Fixture )
 {
     const std::string input =
