@@ -33,6 +33,7 @@
 #pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/numeric/conversion/cast.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
 namespace bpt = boost::posix_time;
@@ -323,9 +324,29 @@ void PHY_MeteoDataManager::Update( unsigned int date )
         for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
             it->second->SetLighting( pEphemeride_->GetLightingBase() );
     }
+
+    const int now = boost::numeric_cast< int >( date );
     pGlobalMeteo_->SendCreationIfModified();
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
-        it->second->UpdateMeteoPatch( date, *pRawData_, it->second );
+    {
+        const auto& w = it->second;
+        const auto patched = pRawData_->IsWeatherPatched( w->GetId() );
+        const bool active = w->GetStartTime() < now && now < w->GetEndTime();
+        if( active != patched )
+        {
+            if( active )
+            {
+                pRawData_->RegisterMeteoPatch( w );
+            }
+            else
+            {
+                pRawData_->UnregisterMeteoPatch( w );
+                w->SendDestruction();
+            }
+        }
+        if( active )
+            w->SendCreationIfModified();
+    }
 }
 
 // -----------------------------------------------------------------------------

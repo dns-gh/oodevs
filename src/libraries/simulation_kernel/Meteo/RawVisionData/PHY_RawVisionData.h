@@ -18,16 +18,10 @@ class ElevationGrid;
 class MT_Ellipse;
 class MT_Vector2D;
 class PHY_IndirectFireDotationClass;
+class PHY_LocalMeteo;
 class PHY_MeteoDataManager;
 class TER_Localisation;
 class TER_Localisation_ABC;
-
-namespace geometry
-{
-    template< typename T > class Point2;
-    typedef Point2< float > Point2f;
-    typedef Point2< double > Point2d;
-}
 
 namespace tools
 {
@@ -98,10 +92,8 @@ public:
 
     void GetVisionObjectsInSurface( const TER_Localisation_ABC& localisation, unsigned int& rEmptySurface, unsigned int& rForestSurface, unsigned int& rUrbanSurface ) const;
 
-    void RegisterMeteoPatch  ( const geometry::Point2d&, const geometry::Point2d&,
-            const boost::shared_ptr< const weather::Meteo >& pMeteo );
-    void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d&,
-            const boost::shared_ptr< const weather::Meteo >& pMeteo );
+    void RegisterMeteoPatch( const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo );
+    void UnregisterMeteoPatch( const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo );
 
     void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
     void UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );

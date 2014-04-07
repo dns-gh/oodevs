@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RawVisionData.h"
 #include "PHY_AmmoEffect.h"
+#include "Meteo/PHY_LocalMeteo.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/ElevationGrid.h"
 #include "MT_Tools/MT_Ellipse.h"
@@ -51,19 +52,21 @@ PHY_RawVisionData::~PHY_RawVisionData()
 // Created: JVT 03-08-06
 // Last modified: JVT 03-08-18
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft,
-        const geometry::Point2d& downRight,
-        const boost::shared_ptr< const weather::Meteo >& pMeteo )
+void PHY_RawVisionData::RegisterMeteoPatch(
+        const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo )
 {
     if( !meteos_.insert( pMeteo->GetId() ).second )
         throw MASA_EXCEPTION( "weather instance "
             + boost::lexical_cast< std::string >( pMeteo->GetId() )
             + " is already registered in vision data" );
 
-    unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
-    unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
-    unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
-    unsigned int nYBeg = std::min( GetRow( downRight.Y() ), nNbrRow_ - 1 );
+    const auto upLeft = pMeteo->GetTopLeft();
+    const auto downRight = pMeteo->GetBottomRight();
+
+    unsigned int nXEnd = std::min( GetCol( downRight.GetX() ), nNbrCol_ - 1 );
+    unsigned int nYEnd = std::min( GetRow( upLeft.GetY() ),    nNbrRow_ - 1 );
+    unsigned int nXBeg = std::min( GetCol( upLeft.GetX() ),    nNbrCol_ - 1 );
+    unsigned int nYBeg = std::min( GetRow( downRight.GetY() ), nNbrRow_ - 1 );
 
     // On remet éventuellement dans le bon sens
     if( nXEnd < nXBeg )
@@ -86,19 +89,21 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft,
 // Name: PHY_RawVisionData::UnregisterLocalMeteoPatch
 // Created: SLG 2010-03-19
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft,
-        const geometry::Point2d& downRight,
-        const boost::shared_ptr< const weather::Meteo >& pMeteo )
+void PHY_RawVisionData::UnregisterMeteoPatch(
+        const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo )
 {
     if( !meteos_.erase( pMeteo->GetId() ) )
         throw MASA_EXCEPTION( "weather instance "
             + boost::lexical_cast< std::string >( pMeteo->GetId() )
             + " is already unregistered from vision data" );
 
-    unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
-    unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
-    unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
-    unsigned int nYBeg = std::min( GetRow( downRight.Y() ), nNbrRow_ - 1 );
+    const auto upLeft = pMeteo->GetTopLeft();
+    const auto downRight = pMeteo->GetBottomRight();
+
+    unsigned int nXEnd = std::min( GetCol( downRight.GetX() ), nNbrCol_ - 1 );
+    unsigned int nYEnd = std::min( GetRow( upLeft.GetY() ),    nNbrRow_ - 1 );
+    unsigned int nXBeg = std::min( GetCol( upLeft.GetX() ),    nNbrCol_ - 1 );
+    unsigned int nYBeg = std::min( GetRow( downRight.GetY() ), nNbrRow_ - 1 );
 
     // On remet éventuellement dans le bon sens
     if( nXEnd < nXBeg )

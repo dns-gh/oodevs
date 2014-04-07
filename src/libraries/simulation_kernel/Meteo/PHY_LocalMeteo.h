@@ -26,7 +26,6 @@ namespace xml
 
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
-class PHY_RawVisionData;
 class TER_World;
 
 // =============================================================================
@@ -52,8 +51,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void UpdateMeteoPatch( int date, PHY_RawVisionData& dataVision,
-            const boost::shared_ptr< weather::Meteo >& meteo );
     virtual void Update( const sword::MissionParameters& msg );
     using weather::Meteo::Update;
     virtual bool IsInside( const geometry::Point2f& point ) const;
@@ -66,6 +63,11 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Serialize( xml::xostream& xos ) const;
     //@}
+
+    int GetStartTime() const;
+    int GetEndTime() const;
+    MT_Vector2D GetTopLeft() const;
+    MT_Vector2D GetBottomRight() const;
 
 private:
     //! @name Helpers
