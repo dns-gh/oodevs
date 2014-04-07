@@ -520,11 +520,3 @@ bool Meteo::IsInside( const geometry::Point2f& /*point*/ ) const
     return true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: Meteo::IsYounger
-// Created: ABR 2012-03-23
-// -----------------------------------------------------------------------------
-bool Meteo::IsOlder( const weather::Meteo& /*other*/ ) const
-{
-    return true;
-}

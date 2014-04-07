@@ -58,7 +58,10 @@ uint32_t GetLocalWeather(
     {
         const auto meteo = it->get();
         if( meteo->IsInside( position )
-            && ( !result || result->IsOlder( *meteo ) ) )
+            && ( !result 
+                || meteo->GetStartTime() > result->GetStartTime()
+                || meteo->GetStartTime() == result->GetStartTime()
+                    && meteo->GetId() > result->GetId() ))
             result = meteo;
     }
     return result ? result->GetId() : 0;
