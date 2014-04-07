@@ -276,7 +276,6 @@ end
 -- @reurn Boolean true if simulation action is over, false otherwise
 integration.updateBuildItSecu = function( object )
     if object[ myself ].actionBuildState == eActionObjetTerminee and object.knowledge ~= nil then
-        reportFunction(eRC_FinTravauxObjet, object.knowledge.source )
         object[ myself ].actionBuild = DEC__StopAction( object[ myself ].actionBuild )
         object[ myself ].actionBuildState = nil
         return true
