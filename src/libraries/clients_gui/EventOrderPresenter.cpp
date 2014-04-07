@@ -139,9 +139,12 @@ void EventOrderPresenter::OnMissionTypeChanged( E_MissionType missionType )
 void EventOrderPresenter::OnMissionChanged( const QString& mission )
 {
     if( currentAction_ )
-        for( unsigned int i = currentAction_->Count(); i > 0; --i )
-            if( !currentAction_->ParameterContainer_ABC::Get( i - 1 ).IsContext() )
+    {
+        const unsigned int count = currentAction_->Count();
+        for( unsigned int i = 0; i < count; ++i )
+            if( !currentAction_->ParameterContainer_ABC::Get( i ).IsContext() )
                 currentAction_->Delete( i );
+    }
     Select( state_->currentType_, mission.toStdString(), currentAction_.get() );
     BuildView();
 }
