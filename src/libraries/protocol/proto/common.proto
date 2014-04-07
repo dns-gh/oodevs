@@ -1650,16 +1650,17 @@ message UnitMagicAction {
         //! Destroy a random equipment
         //! The tasker must be a unit identifier.
         destroy_component                 = 4;
-        //! Recover equipments, troops & resources from the target unit
+        //! Restore target unit equipments, troops and resource to their
+        //! capacity
         //! The tasker must be a unit identifier.
         recover_all                       = 5;
-        //! Recover troops from the target unit
+        //! Restore target unit troops to their capacity
         //! The tasker must be a unit identifier.
         recover_troops                    = 6;
-        //! Recover equipments from the target unit
+        //! Restore target unit equipments to their capacity
         //! The tasker must be a unit identifier.
         recover_equipments                = 7;
-        //! Recover resources from the target unit
+        //! Recover target unit resources to their capacity
         //! The tasker must be a unit identifier.
         recover_resources                 = 8;
         //! Destroy the target unit
@@ -1994,17 +1995,20 @@ message UnitMagicAction {
         //! The tasker must be set to selected unit.
         //! result[0], UnitId: deleted unit identifier.
         delete_unit                       = 51;
-        //! Recover equipments, troops & resources
-        //! except log from the target unit
+        //! Restore target unit equipments, troops and resources to their
+        //! capacity, without those currently handled by logistics
         //! The tasker must be a unit identifier.
         recover_all_except_log            = 52;
-        //! Recover troops except log from the target unit
+        //! Restore target unit troops to their capacity, without those
+        //! currently handled by logistics
         //! The tasker must be a unit identifier.
         recover_troops_except_log         = 53;
-        //! Recover equipments except log from target unit
+        //! Restore target unit equipments to their capacity, without those
+        //! currently handled by logistics
         //! The tasker must be a unit identifier.
         recover_equipments_except_log     = 54;
-        //! Recover resources except log from target unit
+        //! Restore target unit resources to their capacity, without those
+        //! currently handled by logistics
         //! The tasker must be a unit identifier.
         recover_resources_except_log      = 55;
         //! Make a unit, automat or crowd emit decisional debug traces. The
