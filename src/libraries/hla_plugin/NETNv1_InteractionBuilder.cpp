@@ -270,3 +270,43 @@ bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_Tra
 {
     return false;
 }
+
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_DisaggregationRequest >& ) const
+{
+    return false;
+}
+
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_DisaggregationResponse >& ) const
+{
+    return false;
+}
+
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_AggregationRequest >& ) const
+{
+    return false;
+}
+
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_AggregationResponse >& ) const
+{
+    return false;
+}
+
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_CancelRequest >& ) const
+{
+    return false;
+}
+
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_ActionComplete >& ) const
+{
+    return false;
+}
+
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_Trigger >& ) const
+{
+    return false;
+}
+
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_TriggerResponse >& ) const
+{
+    return false;
+}

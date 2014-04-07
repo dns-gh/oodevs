@@ -117,6 +117,18 @@ struct TransactionId
         archive >> b;
         federateHandle = ::hla::FederateIdentifier( &b[0], nameSize );
     }
+    bool operator==(const TransactionId& rhs) const
+    {
+        return transactionCounter == rhs.transactionCounter &&
+                static_cast<std::string>(federateHandle) == static_cast<std::string>(rhs.federateHandle);
+
+    }
+    bool operator<(const TransactionId& rhs) const
+    {
+        return transactionCounter < rhs.transactionCounter ||
+                ( rhs.transactionCounter == rhs.transactionCounter &&
+                  static_cast<std::string>(federateHandle) < static_cast<std::string>(rhs.federateHandle) );
+    }
     uint32_t transactionCounter;
     ::hla::FederateIdentifier federateHandle;
 };
@@ -185,7 +197,7 @@ struct TMR_InitiateTransferModellingResponsibility : public TMR
     UnicodeString intiating;
     uint32_t transferType; // TMR::TransferTypeEnum32
     VariableArray< NETN_UUID > instances;
-    VariableArray< UnicodeString > attributes;
+    PaddedVariableArray< UnicodeString, 4 > attributes;
     uint32_t capabilityType; // TMR::CapabilityTypeEnum32
     VariableArray< AttributeValueStruct >attributeValues;
 };
@@ -194,7 +206,7 @@ struct TMR_RequestTransferModellingResponsibility : public TMR
 {
     uint32_t transferType; // TMR::TransferTypeEnum32
     VariableArray< NETN_UUID > instances;
-    VariableArray< UnicodeString > attributes;
+    PaddedVariableArray< UnicodeString, 4 > attributes;
     uint32_t capabilityType; // TMR::CapabilityTypeEnum32
     VariableArray< AttributeValueStruct > attributeValues;
 };
@@ -211,7 +223,75 @@ struct TMR_CancelRequest : public TMR
 
 struct TMR_TransferResult : public TMR
 {
-    bool transferOk;
+    uint32_t transferOk; // 1 : OK, 0 : KO
+};
+
+struct MRM_Object
+{
+    enum NonComplianceReasonEnum
+    {
+        noncompliancereasonenum_Other = 0,
+        noncompliancereasonenum_UnitUnknown = 1,
+        noncompliancereasonenum_UnitAlreadyDisaggregated = 2,
+        noncompliancereasonenum_UnitAlreadyAggregated = 3,
+        noncompliancereasonenum_UnitNotOwned = 4
+    };
+    TransactionId transactionID;
+    UnicodeString aggregateFederate;
+    UnicodeString higherResolutionFederate;
+};
+
+struct MRM_DisaggregationRequest : public MRM_Object
+{
+    NETN_UUID aggregateUUID;
+    uint32_t aggregationState;
+    VariableArray< NETN_UUID > uuidsList;
+};
+
+struct MRM_DisaggregationResponse : public MRM_Object
+{
+    uint16_t acknowledge;
+    uint32_t nonComplianceReason;
+};
+
+struct MRM_AggregationRequest : public MRM_Object
+{
+    NETN_UUID aggregateUUID;
+    VariableArray< NETN_UUID > uuidsList;
+};
+
+struct MRM_AggregationResponse : public MRM_Object
+{
+    uint16_t acknowledge;
+    uint32_t nonComplianceReason; // NonComplianceReasonEnum
+};
+
+struct MRM_CancelRequest : public MRM_Object
+{
+    enum CancellationReasonEnum32
+    {
+        cancellationReasonEnum32_Other = 0,
+        cancellationReasonEnum32TimeOut = 1
+    };
+    uint32_t reason;
+};
+
+struct MRM_ActionComplete : public MRM_Object
+{
+    uint32_t result; // 1 : OK, 0 : KO
+};
+
+struct MRM_Trigger
+{
+    NETN_UUID instance;
+    uint32_t aggregationState;
+    VariableArray< NETN_UUID > uuidList;
+};
+
+struct MRM_TriggerResponse
+{
+    NETN_UUID instance;
+    TransactionId transactionID;
 };
 
 } // namespace interactions

@@ -41,6 +41,14 @@ MOCK_BASE_CLASS( MockNETNInteractionBuilder, NETN_InteractionBuilder_ABC )
     MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ), BuildTMR_RequestTransferModellingResponsibility );
     MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::TMR_CancelRequest >& interaction ), BuildTMR_CancelRequest );
     MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::TMR_TransferResult >& interaction ), BuildTMR_TransferResult );
+    MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::MRM_DisaggregationRequest >& interaction ), BuildMRM_DisaggregationRequest );
+    MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::MRM_DisaggregationResponse >& interaction ), BuildMRM_DisaggregationResponse );
+    MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::MRM_AggregationRequest >& interaction ), BuildMRM_AggregationRequest );
+    MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::MRM_AggregationResponse >& interaction ), BuildMRM_AggregationResponse );
+    MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::MRM_CancelRequest >& interaction ), BuildMRM_CancelRequest );
+    MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::MRM_ActionComplete >& interaction ), BuildMRM_ActionComplete );
+    MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::MRM_Trigger >& interaction ), BuildMRM_Trigger );
+    MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::MRM_TriggerResponse >& interaction ), BuildMRM_TriggerResponse );
 };
 
 }
