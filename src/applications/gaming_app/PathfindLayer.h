@@ -61,6 +61,13 @@ public:
     //@}
 
 private:
+    virtual bool HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
+    virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
+    virtual bool HandleLeaveDragEvent( QDragLeaveEvent* event );
+    virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
+
     //! @name Helpers
     //@{
     virtual void Select( const kernel::Agent_ABC& element );
@@ -68,8 +75,12 @@ private:
     virtual void BeforeSelection();
     virtual void AfterSelection();
 
-    void DrawLines( float width, uint8_t r, uint8_t g, uint8_t b ) const;
-    void DrawPoint( geometry::Point2f p ) const;
+    void DrawLines( float width ) const;
+    void DrawPoints() const;
+    void DrawPoint( geometry::Point2f p, bool invert ) const;
+    bool IsNear( float squareDistance, geometry::Point2f point ) const;
+    bool PickWaypoint( geometry::Point2f point );
+    void PickSegment( geometry::Point2f point );
     //@}
 
 private slots:
@@ -81,6 +92,20 @@ private slots:
     //@}
 
 private:
+    struct Point
+    {
+        geometry::Point2f coordinate_;
+        boost::optional< uint32_t > waypoint_;
+    };
+
+    struct Hover
+    {
+        geometry::Point2f coordinate_;
+        std::size_t lastWaypoint_;
+        bool onWaypoint_;
+    };
+
+private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
@@ -89,8 +114,10 @@ private:
     const kernel::CoordinateConverter_ABC& coordinateConverter_;
     kernel::SafePointer< kernel::Entity_ABC > element_;
     std::vector< geometry::Point2f > positions_;
+    std::vector< Point > path_;
+    boost::optional< Hover > hovered_;
     geometry::Point2f point_;
-    std::vector< geometry::Point2f > path_;
+    bool lock_;
     //@}
 };
 
