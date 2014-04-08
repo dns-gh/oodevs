@@ -599,3 +599,46 @@ func (s *TestSuite) TestDecLinearInterpolation(c *C) {
 		c.Assert(res, Equals, t.Expected)
 	}
 }
+
+func (s *TestSuite) TestDecGetTerrainData(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExLandOfStripesEmpty))
+	defer stopSim(c, sim, DisableLuaChecks())
+	model := client.Model.GetData()
+
+	// create a unit to execute script function
+	f := getSomeFormation(c, model)
+	kg := getSomeKnowledgeGroup(c, model)
+	c.Assert(f.PartyId, Equals, kg.PartyId)
+	automat, err := client.CreateAutomat(f.Id, 2, kg.Id)
+	c.Assert(err, IsNil)
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+	unit, err := client.CreateUnit(automat.Id, 2, swapi.Point{X: -15.82, Y: 28.34})
+	c.Assert(err, IsNil)
+
+	// create a point in directia and call getTerrainData with it
+	script := `
+	function TestFunction()
+		local point = DEC_Geometrie_CreerPointLatLong({{.lat}},{{.long}})
+		local data = integration.getTerrainData(point)
+		return tostring(data.first..","..data.second)
+	end`
+
+	tests := []struct {
+		lat, long float64
+		expected  string
+	}{
+		{28.44, -15.82, "1,0"},  // forest, no linear
+		{28.34, -15.82, "16,0"}, // water area, no linear
+		{28.23, -15.82, "0,0"},  // unknown, no linear
+	}
+	for _, t := range tests {
+		output, err := client.ExecScript(unit.Id, "TestFunction", Parse(c, script,
+			map[string]interface{}{
+				"lat":  t.lat,
+				"long": t.long,
+			}))
+		c.Assert(err, IsNil)
+		c.Assert(output, Equals, t.expected)
+	}
+}
