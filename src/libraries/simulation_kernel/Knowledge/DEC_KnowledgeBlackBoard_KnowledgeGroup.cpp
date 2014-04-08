@@ -210,7 +210,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetAllAgentsInZone( T_ConstKnowledg
     {
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge = ( *it ).second;
         if( zone.IsInside( knowledge->GetPosition() ) )
-        container.push_back( knowledge );
+            container.push_back( knowledge );
     }
 }
 
