@@ -57,18 +57,6 @@ NET_Publisher_ABC::~NET_Publisher_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_Publisher_ABC::SendAsnMessage
-// Created: LDC 2010-01-04
-// -----------------------------------------------------------------------------
-void NET_Publisher_ABC::SendAsnMessage( sword::SimToClient& msg )
-{
-    if( pPublisher_ )
-        pPublisher_->Send( msg );
-    else
-        throw MASA_EXCEPTION( "No publisher registered" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: NET_Publisher_ABC::Publisher
 // Created: LDC 2010-02-04
 // -----------------------------------------------------------------------------
