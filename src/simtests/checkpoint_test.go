@@ -167,7 +167,7 @@ func normalizeModel(model *swapi.ModelData) *swapi.ModelData {
 	return n
 }
 
-func stringifyModel(model *swapi.ModelData) string {
+func stringifyModel(model interface{}) string {
 	cfg := spew.NewDefaultConfig()
 	cfg.SortKeys = true
 	s := cfg.Sdump(model)

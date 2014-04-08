@@ -280,20 +280,20 @@ func (s *TestSuite) TestDecCreateBreakdown(c *C) {
 	DecCreateBreakdown(c, client, unit.Id, equipmentType, 12345, "false")
 
 	// Check initial state
-	equipment := swapi.EquipmentDotation{
+	equipment := swapi.Equipment{
 		Available:     4,
 		Unavailable:   0,
 		Repairable:    0,
 		OnSiteFixable: 0,
 	}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.Units[unit.Id].EquipmentDotations[equipmentType], &equipment)
+		return reflect.DeepEqual(data.Units[unit.Id].Equipments[equipmentType], &equipment)
 	})
 
 	DecCreateBreakdown(c, client, unit.Id, equipmentType, breakdownType, "true")
 
 	// Check breakdown
-	equipment = swapi.EquipmentDotation{
+	equipment = swapi.Equipment{
 		Available:     3,
 		Unavailable:   0,
 		Repairable:    1,
@@ -301,7 +301,7 @@ func (s *TestSuite) TestDecCreateBreakdown(c *C) {
 		Breakdowns:    []int32{breakdownType},
 	}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.Units[unit.Id].EquipmentDotations[equipmentType], &equipment)
+		return reflect.DeepEqual(data.Units[unit.Id].Equipments[equipmentType], &equipment)
 	})
 }
 
@@ -329,16 +329,16 @@ func testDecStartConsumingResources(c *C, client *swapi.Client, unitType uint32,
 	unit, err := client.CreateUnit(automat.Id, unitType, swapi.Point{X: -15.8219, Y: 28.2456})
 	c.Assert(err, IsNil)
 	const dotation = uint32(electrogen_1)
-	resource := swapi.ResourceDotation{
+	resource := swapi.Resource{
 		Quantity:  initial,
 		Threshold: 0,
 	}
-	if unit.ResourceDotations[dotation] != resource {
-		err = client.ChangeDotation(unit.Id,
-			map[uint32]*swapi.ResourceDotation{dotation: &resource})
+	if unit.Resources[dotation] != resource {
+		err = client.ChangeResource(unit.Id,
+			map[uint32]*swapi.Resource{dotation: &resource})
 		c.Assert(err, IsNil)
 		waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-			return data.Units[unit.Id].ResourceDotations[dotation] == resource
+			return data.Units[unit.Id].Resources[dotation] == resource
 		})
 	}
 	client.Pause()
@@ -358,7 +358,7 @@ func testDecStartConsumingResources(c *C, client *swapi.Client, unitType uint32,
 		if m.GetControlEndTick() == nil {
 			return false
 		}
-		dotations := client.Model.GetUnit(unit.Id).ResourceDotations[dotation]
+		dotations := client.Model.GetUnit(unit.Id).Resources[dotation]
 		c.Check(dotations.Quantity, Equals, quantities[idx])
 		idx++
 		if c.Failed() || idx == len(quantities) {

@@ -192,17 +192,17 @@ func MakeAdhesions(adhesions map[uint32]float32) *sword.MissionParameter {
 	return MakeParameter(list...)
 }
 
-type Equipment struct {
+type Quantity struct {
 	Id       uint32
 	Quantity int
 }
 
-func MakeEquipments(equipments []Equipment) *sword.MissionParameter {
+func MakeQuantities(quantities []Quantity) *sword.MissionParameter {
 	list := []*sword.MissionParameter_Value{}
-	for _, equipment := range equipments {
+	for _, qty := range quantities {
 		list = append(list, MakeList(
-			MakeIdentifier(equipment.Id),
-			MakeQuantity(int32(equipment.Quantity)),
+			MakeIdentifier(qty.Id),
+			MakeQuantity(int32(qty.Quantity)),
 		))
 	}
 	return MakeParameter(list...)
@@ -371,7 +371,7 @@ func MakeResourceType(value uint32) *sword.MissionParameter {
 		})
 }
 
-func MakeHumans(humans map[int32]int32) *sword.MissionParameter {
+func EnumerateHumans(humans map[int32]int32) *sword.MissionParameter {
 	list := []*sword.MissionParameter_Value{}
 	for k, v := range humans {
 		list = append(list, MakeList(
@@ -382,7 +382,7 @@ func MakeHumans(humans map[int32]int32) *sword.MissionParameter {
 	return MakeParameter(list...)
 }
 
-func MakeHumansDotation(humans []*HumanDotation) *sword.MissionParameter {
+func MakeHumans(humans []*Human) *sword.MissionParameter {
 	list := []*sword.MissionParameter_Value{}
 	for _, v := range humans {
 		list = append(list, MakeList(
@@ -402,7 +402,7 @@ func MakeHumansDotation(humans []*HumanDotation) *sword.MissionParameter {
 	return MakeParameter(list...)
 }
 
-func MakeResourcesDotation(resources map[uint32]*ResourceDotation) *sword.MissionParameter {
+func MakeResources(resources map[uint32]*Resource) *sword.MissionParameter {
 	list := []*sword.MissionParameter_Value{}
 	for k, v := range resources {
 		list = append(list, MakeList(
@@ -414,7 +414,7 @@ func MakeResourcesDotation(resources map[uint32]*ResourceDotation) *sword.Missio
 	return MakeParameter(list...)
 }
 
-func MakeEquipmentDotation(equipments map[uint32]*EquipmentDotation) *sword.MissionParameter {
+func MakeEquipment(equipments map[uint32]*Equipment) *sword.MissionParameter {
 	list := []*sword.MissionParameter_Value{}
 	for k, v := range equipments {
 		breakdowns := []*sword.MissionParameter{}
@@ -435,7 +435,7 @@ func MakeEquipmentDotation(equipments map[uint32]*EquipmentDotation) *sword.Miss
 	return MakeParameter(list...)
 }
 
-func MakeBreakdowns(equipments map[uint32]*EquipmentDotation) *sword.MissionParameter {
+func MakeBreakdowns(equipments map[uint32]*Equipment) *sword.MissionParameter {
 	list := []*sword.MissionParameter_Value{}
 	for k, v := range equipments {
 		if len(v.Breakdowns) != 0 {
@@ -521,7 +521,7 @@ func MakeSupplyFlowTransporters(equipments map[uint32]uint32) []*sword.SupplyFlo
 	return transporters
 }
 
-func MakeStocks(resources map[uint32]*ResourceDotation) *sword.MissionParameter {
+func MakeStocks(resources map[uint32]*Resource) *sword.MissionParameter {
 	list := []*sword.MissionParameter_Value{}
 	for k, v := range resources {
 		list = append(list, MakeList(

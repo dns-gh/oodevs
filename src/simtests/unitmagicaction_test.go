@@ -13,6 +13,7 @@ import (
 	. "launchpad.net/gocheck"
 	"math"
 	"reflect"
+	"sort"
 	"strings"
 	"swapi"
 	"sword"
@@ -551,12 +552,12 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	c.Assert(result, HasLen, 0)
 
 	// valid no transporter
-	transporters := client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
+	transporters := client.Model.GetUnit(unit).Equipments[transporter].Available
 	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, nil)
 	c.Assert(err, IsNil)
 	c.Assert(result, HasLen, 0)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-1
+		return data.Units[unit].Equipments[transporter].Available == transporters-1
 	})
 
 	// error: invalid transporter
@@ -580,21 +581,21 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	c.Assert(result, DeepEquals, []bool{false, true, false, true})
 
 	// valid underloaded transporters
-	transporters = client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
+	transporters = client.Model.GetUnit(unit).Equipments[transporter].Available
 	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 2})
 	c.Assert(err, IsNil)
 	c.Assert(result, DeepEquals, []bool{true, false, true, false})
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-2
+		return data.Units[unit].Equipments[transporter].Available == transporters-2
 	})
 
 	// valid transporters
-	transporters = client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
+	transporters = client.Model.GetUnit(unit).Equipments[transporter].Available
 	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 5}, map[uint32]uint32{transporter: 1})
 	c.Assert(err, IsNil)
 	c.Assert(result, DeepEquals, []bool{false, false, false, false})
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-1
+		return data.Units[unit].Equipments[transporter].Available == transporters-1
 	})
 }
 
@@ -652,12 +653,12 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	c.Assert(result, HasLen, 0)
 
 	// valid no transporter
-	transporters := client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
+	transporters := client.Model.GetUnit(unit).Equipments[transporter].Available
 	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, nil)
 	c.Assert(err, IsNil)
 	c.Assert(result, HasLen, 0)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-1
+		return data.Units[unit].Equipments[transporter].Available == transporters-1
 	})
 
 	// error: invalid transporter
@@ -681,21 +682,21 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	c.Assert(result, DeepEquals, []bool{false, true, false, true})
 
 	// valid underloaded transporter
-	transporters = client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
+	transporters = client.Model.GetUnit(unit).Equipments[transporter].Available
 	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 2})
 	c.Assert(err, IsNil)
 	c.Assert(result, DeepEquals, []bool{true, false, true, false})
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-2
+		return data.Units[unit].Equipments[transporter].Available == transporters-2
 	})
 
 	// valid transporter
-	transporters = client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
+	transporters = client.Model.GetUnit(unit).Equipments[transporter].Available
 	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 5}, map[uint32]uint32{transporter: 1})
 	c.Assert(err, IsNil)
 	c.Assert(result, DeepEquals, []bool{false, false, false, false})
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-1
+		return data.Units[unit].Equipments[transporter].Available == transporters-1
 	})
 }
 
@@ -1168,14 +1169,14 @@ func (s *TestSuite) TestDebugBrain(c *C) {
 
 func CheckLentEquipment(data *swapi.ModelData, from uint32, to uint32, available int32, lent int32) bool {
 	unit := data.Units[from]
-	return unit.EquipmentDotations[11].Available == available &&
+	return unit.Equipments[11].Available == available &&
 		(lent == 0 && len(unit.LentEquipments) == 0 ||
 			len(unit.LentEquipments) != 0 && unit.LentEquipments[0].Borrower == to && unit.LentEquipments[0].TypeId == 11 && unit.LentEquipments[0].Quantity == lent)
 }
 
 func CheckBorrowedEquipment(data *swapi.ModelData, from uint32, to uint32, available int32, borrowed int32) bool {
 	target := data.Units[to]
-	return target.EquipmentDotations[11].Available == available &&
+	return target.Equipments[11].Available == available &&
 		(borrowed == 0 && len(target.BorrowedEquipments) == 0 ||
 			len(target.BorrowedEquipments) != 0 && target.BorrowedEquipments[0].Owner == from && target.BorrowedEquipments[0].TypeId == 11 && target.BorrowedEquipments[0].Quantity == borrowed)
 }
@@ -1195,55 +1196,55 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid empty equipment list")
 
 	// error: invalid unit identifier
-	err = client.TransferEquipment(1000, 12, []swapi.Equipment{{11, 1}})
+	err = client.TransferEquipment(1000, 12, []swapi.Quantity{{11, 1}})
 	c.Assert(err, ErrorMatches, "error_invalid_unit.*")
 
 	// error: target does not have equipment
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{1000, 1}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{1000, 1}})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: no equipment type of parameter #0 available to lend in source unit")
 
 	// error: invalid unit identifier
-	err = client.TransferEquipment(11, 1000, []swapi.Equipment{{11, 1}})
+	err = client.TransferEquipment(11, 1000, []swapi.Quantity{{11, 1}})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid target identifier")
 
 	// error: cannot transfer from a unit to itself
-	err = client.TransferEquipment(11, 11, []swapi.Equipment{{11, 1}})
+	err = client.TransferEquipment(11, 11, []swapi.Quantity{{11, 1}})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: source and target are identical")
 
 	// error: negative equipment count
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, -1}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{11, -1}})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid negative equipment count #0")
 
 	// valid: transfer zero available equipments
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 0}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{11, 0}})
 	c.Assert(err, IsNil)
 
 	// valid: transfer zero unavailable equipments
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{1000, 0}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{1000, 0}})
 	c.Assert(err, IsNil)
 
 	// valid: transfer equipment
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 1}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{11, 1}})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 1))
 
 	// valid: transfer twice the same equipment sums the two quantities
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 1}, {11, 1}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{11, 1}, {11, 1}})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 3))
 
 	// valid: transfering more caps to the available quantity
-	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 1000}})
+	err = client.TransferEquipment(11, 12, []swapi.Quantity{{11, 1000}})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 4))
 
 	// valid: transfering back
-	err = client.TransferEquipment(12, 11, []swapi.Equipment{{11, 3}})
+	err = client.TransferEquipment(12, 11, []swapi.Quantity{{11, 3}})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 1))
 
 	// valid: transfering to a third unit
-	err = client.TransferEquipment(12, 13, []swapi.Equipment{{11, 5}})
+	err = client.TransferEquipment(12, 13, []swapi.Quantity{{11, 5}})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return CheckLentEquipment(data, 11, 12, 3, 1) && CheckBorrowedEquipment(data, 11, 12, 0, 1) &&
@@ -1340,7 +1341,7 @@ func (s *TestSuite) TestSurrender(c *C) {
 	// Wait for the unit to be fully generated, there is an update race
 	// otherwise masking the previous failure.
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.Units[u2.Id].EquipmentDotations) > 0
+		return len(data.Units[u2.Id].Equipments) > 0
 	})
 	err = client.ChangeUnitSuperior(u2.Id, automat.Id)
 	c.Assert(err, IsNil)
@@ -1358,7 +1359,7 @@ func (s *TestSuite) TestSurrender(c *C) {
 	})
 }
 
-func CheckHumanQuantity(actual []*swapi.HumanDotation, expected map[int32]int32) bool {
+func CheckHumanQuantity(actual []*swapi.Human, expected map[int32]int32) bool {
 	for _, human := range actual {
 		if human.Quantity != expected[human.Rank] {
 			return false
@@ -1367,9 +1368,9 @@ func CheckHumanQuantity(actual []*swapi.HumanDotation, expected map[int32]int32)
 	return true
 }
 
-func CheckHumanTotalState(actual []*swapi.HumanDotation, rank, state, quantity,
+func CheckHumanTotalState(actual []*swapi.Human, rank, state, quantity,
 	injury int32, psyop, contaminated bool) bool {
-	expected := swapi.HumanDotation{
+	expected := swapi.Human{
 		Quantity:     quantity,
 		Rank:         rank,
 		State:        state,
@@ -1385,7 +1386,7 @@ func CheckHumanTotalState(actual []*swapi.HumanDotation, rank, state, quantity,
 	return false
 }
 
-func CheckHumanState(actual []*swapi.HumanDotation, rank, state, quantity,
+func CheckHumanState(actual []*swapi.Human, rank, state, quantity,
 	injury int32) bool {
 	return CheckHumanTotalState(actual, rank, state, quantity,
 		injury, false, false)
@@ -1418,7 +1419,7 @@ func (s *TestSuite) TestUnitCreateWounds(c *C) {
 
 	// Check initial humans state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanQuantity(data.Units[u1.Id].HumanDotations,
+		return CheckHumanQuantity(data.Units[u1.Id].Humans,
 			map[int32]int32{eOfficer: 1, eWarrantOfficer: 4, eTrooper: 7})
 	})
 
@@ -1449,11 +1450,11 @@ func (s *TestSuite) TestUnitCreateWounds(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanState(data.Units[u1.Id].HumanDotations, eOfficer, eHealthy, 1, notWounded) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eWarrantOfficer, eHealthy, 4, notWounded) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eHealthy, 1, notWounded) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eInjured, quantity, eInjuryU2) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eInjured, quantity, eInjuryU1)
+		return CheckHumanState(data.Units[u1.Id].Humans, eOfficer, eHealthy, 1, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eWarrantOfficer, eHealthy, 4, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eTrooper, eHealthy, 1, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eTrooper, eInjured, quantity, eInjuryU2) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eTrooper, eInjured, quantity, eInjuryU1)
 	})
 
 	// Kill all humans
@@ -1461,11 +1462,11 @@ func (s *TestSuite) TestUnitCreateWounds(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanState(data.Units[u1.Id].HumanDotations, eOfficer, eDead, 1, notWounded) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eWarrantOfficer, eDead, 4, notWounded) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eDead, 1, notWounded) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eInjured, quantity, eInjuryU2) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eInjured, quantity, eInjuryU1)
+		return CheckHumanState(data.Units[u1.Id].Humans, eOfficer, eDead, 1, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eWarrantOfficer, eDead, 4, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eTrooper, eDead, 1, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eTrooper, eInjured, quantity, eInjuryU2) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eTrooper, eInjured, quantity, eInjuryU1)
 	})
 
 	// Heal humans
@@ -1473,9 +1474,9 @@ func (s *TestSuite) TestUnitCreateWounds(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanState(data.Units[u1.Id].HumanDotations, eOfficer, eDead, 1, notWounded) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eWarrantOfficer, eDead, 4, notWounded) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eHealthy, 7, notWounded)
+		return CheckHumanState(data.Units[u1.Id].Humans, eOfficer, eDead, 1, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eWarrantOfficer, eDead, 4, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eTrooper, eHealthy, 7, notWounded)
 	})
 }
 
@@ -1489,15 +1490,15 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 
 	// Check initial humans state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanQuantity(data.Units[u1.Id].HumanDotations,
+		return CheckHumanQuantity(data.Units[u1.Id].Humans,
 			map[int32]int32{eOfficer: 1, eWarrantOfficer: 4, eTrooper: 7})
 	})
 
 	// Error: Invalid parameters count
-	err := client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{})
+	err := client.ChangeHumanState(u1.Id, []*swapi.Human{})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
 
-	human := swapi.HumanDotation{
+	human := swapi.Human{
 		Quantity: -10,
 		Rank:     eOfficer,
 		State:    eHealthy,
@@ -1505,22 +1506,22 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 	}
 
 	// Error: Quantity must be non-zero positive
-	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human})
+	err = client.ChangeHumanState(u1.Id, []*swapi.Human{&human})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[0\] must be positive a non-zero positive number`)
 	human.Quantity = 0
-	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human})
+	err = client.ChangeHumanState(u1.Id, []*swapi.Human{&human})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	human.Quantity = 1
 
 	// Error: Invalid rank enumeration
 	human.Rank = 123
-	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human})
+	err = client.ChangeHumanState(u1.Id, []*swapi.Human{&human})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] invalid, bad human rank enumeration`)
 	human.Rank = eTrooper
 
 	// Error: Invalid state enumeration
 	human.State = 123
-	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human})
+	err = client.ChangeHumanState(u1.Id, []*swapi.Human{&human})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[2\] invalid, bad human state enumeration`)
 
 	// Change human state
@@ -1528,15 +1529,15 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 	human.Injury = eInjuryU3
 	human.Psyop = true
 	human.Contaminated = true
-	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human})
+	err = client.ChangeHumanState(u1.Id, []*swapi.Human{&human})
 	c.Assert(err, IsNil)
 
 	// Check human composition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanState(data.Units[u1.Id].HumanDotations, eOfficer, eHealthy, 1, 0) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eWarrantOfficer, eHealthy, 4, 0) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eHealthy, 6, 0) &&
-			CheckHumanTotalState(data.Units[u1.Id].HumanDotations, eTrooper, eInjured, 1, eInjuryU3, true, true)
+		return CheckHumanState(data.Units[u1.Id].Humans, eOfficer, eHealthy, 1, 0) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eWarrantOfficer, eHealthy, 4, 0) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eTrooper, eHealthy, 6, 0) &&
+			CheckHumanTotalState(data.Units[u1.Id].Humans, eTrooper, eInjured, 1, eInjuryU3, true, true)
 	})
 
 	// Heal trooper, kill officer and wound 1245 warrant officers
@@ -1546,31 +1547,31 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 	human.Contaminated = false
 	human.Quantity = 7
 
-	officer := swapi.HumanDotation{
+	officer := swapi.Human{
 		Quantity: 1,
 		Rank:     eOfficer,
 		State:    eDead,
 	}
 
-	warrantOfficer := swapi.HumanDotation{
+	warrantOfficer := swapi.Human{
 		Quantity: 1245,
 		Rank:     eWarrantOfficer,
 		State:    eInjured,
 		Injury:   eInjuryUe,
 	}
 
-	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human, &officer, &warrantOfficer})
+	err = client.ChangeHumanState(u1.Id, []*swapi.Human{&human, &officer, &warrantOfficer})
 	c.Assert(err, IsNil)
 
 	// Check human composition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanState(data.Units[u1.Id].HumanDotations, eOfficer, eDead, 1, 0) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eWarrantOfficer, eInjured, 4, eInjuryUe) &&
-			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eHealthy, 7, 0)
+		return CheckHumanState(data.Units[u1.Id].Humans, eOfficer, eDead, 1, 0) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eWarrantOfficer, eInjured, 4, eInjuryUe) &&
+			CheckHumanState(data.Units[u1.Id].Humans, eTrooper, eHealthy, 7, 0)
 	})
 }
 
-func (s *TestSuite) TestUnitChangeDotation(c *C) {
+func (s *TestSuite) TestUnitChangeResource(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 
@@ -1580,78 +1581,78 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 
 	// Check initial state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.Units[u1.Id].ResourceDotations) > 1
+		return len(data.Units[u1.Id].Resources) > 1
 	})
 
 	u1 = client.Model.GetUnit(u1.Id)
 	firstDotationId := uint32(1)
 	secondDotationId := uint32(3)
 
-	firstDotation := u1.ResourceDotations[firstDotationId]
-	secondDotation := u1.ResourceDotations[secondDotationId]
+	firstDotation := u1.Resources[firstDotationId]
+	secondDotation := u1.Resources[secondDotationId]
 
 	c.Assert(firstDotation, DeepEquals,
-		swapi.ResourceDotation{
+		swapi.Resource{
 			Quantity:  3200,
 			Threshold: 10,
 		})
 	c.Assert(secondDotation, DeepEquals,
-		swapi.ResourceDotation{
+		swapi.Resource{
 			Quantity:  8000,
 			Threshold: 10,
 		})
 
 	// Error: Invalid parameters count
-	err := client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{})
+	err := client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
 
-	resource := swapi.ResourceDotation{}
+	resource := swapi.Resource{}
 
 	// Error: Invalid dotation category
-	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{1245: &resource})
+	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{1245: &resource})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[0\] must be a valid dotation category identifier`)
 
 	// Error: Quantity must be positive
 	resource.Quantity = -123
-	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{firstDotationId: &resource})
+	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] must be a positive number`)
 	resource.Quantity = 1000
 
 	// Error: Threshold must be a number between 0 and 100
 	resource.Threshold = 123
-	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{firstDotationId: &resource})
+	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[2\] must be a number between 0 and 100`)
 	resource.Threshold = 50
 
 	// Change 2 dotations
-	resource2 := swapi.ResourceDotation{
+	resource2 := swapi.Resource{
 		Threshold: 100,
 	}
-	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{firstDotationId: &resource, secondDotationId: &resource2})
+	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource, secondDotationId: &resource2})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[u1.Id].ResourceDotations[firstDotationId] == resource &&
-			data.Units[u1.Id].ResourceDotations[secondDotationId] == resource2
+		return data.Units[u1.Id].Resources[firstDotationId] == resource &&
+			data.Units[u1.Id].Resources[secondDotationId] == resource2
 	})
 
 	// Change 1 dotation
 	resource.Threshold = 42
-	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{firstDotationId: &resource})
+	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[u1.Id].ResourceDotations[firstDotationId] == resource &&
-			data.Units[u1.Id].ResourceDotations[secondDotationId] == resource2
+		return data.Units[u1.Id].Resources[firstDotationId] == resource &&
+			data.Units[u1.Id].Resources[secondDotationId] == resource2
 	})
 
 	// Change dotation with a huge quantity
 	resource.Quantity = 123456789
-	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{firstDotationId: &resource})
+	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		dotation := data.Units[u1.Id].ResourceDotations[firstDotationId]
+		dotation := data.Units[u1.Id].Resources[firstDotationId]
 		return dotation.Quantity == int32(1000)
 	})
 }
@@ -1664,93 +1665,93 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	a1 := CreateAutomat(c, client, f1.Id, 0)
 	u1 := CreateUnit(c, client, a1.Id)
 	equipmentId := uint32(11)
-	equipment := swapi.EquipmentDotation{
+	equipment := swapi.Equipment{
 		Available: 4,
 	}
 
 	// Check initial state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.Units[u1.Id].EquipmentDotations) != 0
+		return len(data.Units[u1.Id].Equipments) != 0
 	})
 
-	c.Assert(*client.Model.GetUnit(u1.Id).EquipmentDotations[equipmentId], DeepEquals, equipment)
+	c.Assert(*client.Model.GetUnit(u1.Id).Equipments[equipmentId], DeepEquals, equipment)
 
 	// Error: Invalid parameters count
-	err := client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{})
+	err := client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
 
 	// Error: Invalid negative parameters
 	equipment.Available = -1
-	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] must be a positive number`)
 
 	// Error: Cannot exceed the initial quantity
-	equipment = swapi.EquipmentDotation{
+	equipment = swapi.Equipment{
 		Unavailable: 10,
 	}
-	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: number of equipment states \\(10\\) different from number of existing equipments \\(4\\)")
 
 	// Error: Cannot change to repairing
-	equipment = swapi.EquipmentDotation{
+	equipment = swapi.Equipment{
 		Available:   1,
 		Unavailable: 1,
 		Repairing:   1,
 		Captured:    1,
 	}
-	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: cannot change an equipment state to in maintenance directly")
 
 	// Change equipments
-	equipment = swapi.EquipmentDotation{
+	equipment = swapi.Equipment{
 		Available:     1,
 		Unavailable:   1,
 		OnSiteFixable: 1,
 		Captured:      1,
 	}
-	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &equipment)
+		return reflect.DeepEqual(data.Units[u1.Id].Equipments[equipmentId], &equipment)
 	})
 
 	// Error: breakdown missing
-	equipment = swapi.EquipmentDotation{
+	equipment = swapi.Equipment{
 		Available:     1,
 		Unavailable:   1,
 		Repairable:    1,
 		OnSiteFixable: 1,
 	}
-	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] size must be equal to parameters\[0\]\[0\]\[3\]`)
 
 	// Error: invalid breakdown
 	equipment.Breakdowns = []int32{1523}
-	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] must be a breakdown identifier`)
 
 	// Error: invalid breakdown for the composante
 	equipment.Breakdowns = []int32{1}
-	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] invalid breakdown identifier for the equipment`)
 
 	// Change equipments
 	equipment.Breakdowns = []int32{82}
-	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &equipment)
+		return reflect.DeepEqual(data.Units[u1.Id].Equipments[equipmentId], &equipment)
 	})
 
 	// Change breakdown
 	equipment.Breakdowns = []int32{83}
-	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &equipment)
+		return reflect.DeepEqual(data.Units[u1.Id].Equipments[equipmentId], &equipment)
 	})
 }
 
@@ -1763,40 +1764,40 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 	u1 := CreateUnit(c, client, a1.Id)
 	equipmentId := uint32(11)
 
-	initial := swapi.EquipmentDotation{
+	initial := swapi.Equipment{
 		Available: 4,
 	}
 
 	// Error: Invalid parameters count
-	err := client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{})
+	err := client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
-	equipment := swapi.EquipmentDotation{
+	equipment := swapi.Equipment{
 		Repairable: 1,
 		Breakdowns: []int32{82},
 	}
 
 	// Error: Invalid equipment type
-	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{123: &equipment})
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{123: &equipment})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: Quantity must be non-zero positive
 	equipment.Repairable = -1
-	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	equipment.Repairable = 0
-	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	equipment.Repairable = 1
 	// Error: invalid breakdown
 	equipment.Breakdowns = []int32{1523}
-	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Create breakdown
 	equipment.Breakdowns = []int32{82}
-	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
 	initial.Repairable = 1
@@ -1805,15 +1806,15 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 	// Check breakdown
 	initial.Breakdowns = equipment.Breakdowns
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &initial)
+		return reflect.DeepEqual(data.Units[u1.Id].Equipments[equipmentId], &initial)
 	})
 
 	// Create 5 breakdowns but 3 available
-	equipment = swapi.EquipmentDotation{
+	equipment = swapi.Equipment{
 		Repairable: 5,
 		Breakdowns: []int32{82},
 	}
-	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
 	// Check breakdown
@@ -1821,7 +1822,7 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 	initial.Available = 0
 	initial.Breakdowns = []int32{82, 82, 82, 82}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &initial)
+		return reflect.DeepEqual(data.Units[u1.Id].Equipments[equipmentId], &initial)
 	})
 }
 
@@ -1996,7 +1997,7 @@ func Helitransport(c *C, client *swapi.Client, transported, carrier *swapi.Unit)
 
 	// Check vehicles aren't away
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.Units[transported.Id].EquipmentDotations) != 0
+		return len(data.Units[transported.Id].Equipments) != 0
 	})
 
 	// Mission 'COMMON - Get transported' on the transported
@@ -2022,7 +2023,7 @@ func CheckAwayEquipment(c *C, client *swapi.Client, awayEquipmentId, transported
 	carrierId uint32, number int32) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		transported := data.Units[transportedId]
-		return transported.EquipmentDotations[awayEquipmentId].Away == number &&
+		return transported.Equipments[awayEquipmentId].Away == number &&
 			transported.TransporterId == carrierId
 	})
 }
@@ -2084,24 +2085,24 @@ func (s *TestSuite) TestUnitRecoverTransportersWithDestroyedEquipments(c *C) {
 	defer stopSimAndClient(c, sim, client)
 	transported, carrier := CreateTransportedAndCarrier(c, client)
 	awayEquipmentId := uint32(15)
-	awayEquipment := swapi.EquipmentDotation{
+	awayEquipment := swapi.Equipment{
 		Available: 3,
 	}
 	// Transported has 3 equipments not loadable
-	c.Assert(*client.Model.GetUnit(transported.Id).EquipmentDotations[awayEquipmentId],
+	c.Assert(*client.Model.GetUnit(transported.Id).Equipments[awayEquipmentId],
 		DeepEquals, awayEquipment)
 
 	// Destroy 2 equipments not loadable
-	awayEquipment = swapi.EquipmentDotation{
+	awayEquipment = swapi.Equipment{
 		Available:   1,
 		Unavailable: 2,
 	}
 	err := client.ChangeEquipmentState(transported.Id,
-		map[uint32]*swapi.EquipmentDotation{awayEquipmentId: &awayEquipment})
+		map[uint32]*swapi.Equipment{awayEquipmentId: &awayEquipment})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.Units[transported.Id].EquipmentDotations[awayEquipmentId],
+		return reflect.DeepEqual(data.Units[transported.Id].Equipments[awayEquipmentId],
 			&awayEquipment)
 	})
 
@@ -2134,7 +2135,7 @@ func (s *TestSuite) TestTransferAwayEquipment(c *C) {
 	c.Assert(err, IsNil)
 
 	// Transfer 2 equipments not loadable
-	err = client.TransferEquipment(transported.Id, unit.Id, []swapi.Equipment{{awayEquipmentId, 2}})
+	err = client.TransferEquipment(transported.Id, unit.Id, []swapi.Quantity{{awayEquipmentId, 2}})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -2152,7 +2153,7 @@ func (s *TestSuite) TestTransferAwayEquipment(c *C) {
 	CheckAwayEquipment(c, client, awayEquipmentId, transported.Id, carrier.Id, 1)
 
 	// Transfering back
-	err = client.TransferEquipment(unit.Id, transported.Id, []swapi.Equipment{{awayEquipmentId, 2}})
+	err = client.TransferEquipment(unit.Id, transported.Id, []swapi.Quantity{{awayEquipmentId, 2}})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -2334,13 +2335,13 @@ func (s *TestSuite) TestDestroyUnit(c *C) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		u1 := data.Units[unit1.Id]
 		// Equipments are unavailable
-		for _, eq := range u1.EquipmentDotations {
+		for _, eq := range u1.Equipments {
 			if eq.Available != 0 {
 				return false
 			}
 		}
 		// Crew members are dead
-		for _, h := range u1.HumanDotations {
+		for _, h := range u1.Humans {
 			if h.Quantity > 0 && h.State != eDead {
 				return false
 			}
@@ -2374,18 +2375,18 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 
 	// maintenance
 	equipmentId := uint32(11)
-	dotation := swapi.EquipmentDotation{
+	dotation := swapi.Equipment{
 		Available: 4,
 	}
 	data := client.Model.GetData()
-	c.Assert(dotation, DeepEquals, *data.Units[unitId].EquipmentDotations[equipmentId])
+	c.Assert(dotation, DeepEquals, *data.Units[unitId].Equipments[equipmentId])
 	c.Assert(data.MaintenanceHandlings, HasLen, 0)
-	equipment := swapi.EquipmentDotation{
+	equipment := swapi.Equipment{
 		Available:  3,
 		Repairable: 1,
 		Breakdowns: []int32{82},
 	}
-	err = client.ChangeEquipmentState(unitId, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err = client.ChangeEquipmentState(unitId, map[uint32]*swapi.Equipment{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 	var handlingId uint32
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -2406,14 +2407,14 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	client.Model.WaitTicks(2)
 	data = client.Model.GetData()
 	unit := data.Units[unitId]
-	c.Assert(dotation, DeepEquals, *unit.EquipmentDotations[equipmentId])
+	c.Assert(dotation, DeepEquals, *unit.Equipments[equipmentId])
 	c.Assert(data.MaintenanceHandlings, HasLen, 0)
 
 	// medical
-	c.Assert(CheckHumanQuantity(unit.HumanDotations,
+	c.Assert(CheckHumanQuantity(unit.Humans,
 		map[int32]int32{eOfficer: 1, eWarrantOfficer: 4, eTrooper: 7}), Equals, true)
 	c.Assert(data.MedicalHandlings, HasLen, 0)
-	human := swapi.HumanDotation{
+	human := swapi.Human{
 		Quantity:     1,
 		Rank:         eTrooper,
 		State:        eInjured,
@@ -2421,7 +2422,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 		Psyop:        true,
 		Contaminated: true,
 	}
-	err = client.ChangeHumanState(unitId, []*swapi.HumanDotation{&human})
+	err = client.ChangeHumanState(unitId, []*swapi.Human{&human})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		for _, h := range data.MedicalHandlings {
@@ -2440,8 +2441,8 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
 	unit = client.Model.GetUnit(unitId)
-	c.Assert(CheckHumanState(unit.HumanDotations, eTrooper, eHealthy, 6, 0), Equals, true)
-	c.Assert(CheckHumanState(unit.HumanDotations, eTrooper, eHealthy, 1, 0), Equals, true)
+	c.Assert(CheckHumanState(unit.Humans, eTrooper, eHealthy, 6, 0), Equals, true)
+	c.Assert(CheckHumanState(unit.Humans, eTrooper, eHealthy, 1, 0), Equals, true)
 	data = client.Model.GetData()
 	// this is a feature : healed humans do not go back on the field
 	c.Assert(data.MedicalHandlings, HasLen, 1)
@@ -2449,19 +2450,19 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 
 	// supply
 	c.Assert(client.Model.GetData().SupplyHandlings, HasLen, 0)
-	c.Assert(unit.ResourceDotations, NotNil)
-	c.Assert(unit.ResourceDotations[1], DeepEquals,
-		swapi.ResourceDotation{
+	c.Assert(unit.Resources, NotNil)
+	c.Assert(unit.Resources[1], DeepEquals,
+		swapi.Resource{
 			Quantity:  3200,
 			Threshold: 10,
 		})
-	resource := swapi.ResourceDotation{
+	resource := swapi.Resource{
 		Threshold: 10,
 	}
-	err = client.ChangeDotation(unitId, map[uint32]*swapi.ResourceDotation{1: &resource})
+	err = client.ChangeResource(unitId, map[uint32]*swapi.Resource{1: &resource})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if data.Units[unitId].ResourceDotations[1] != resource {
+		if data.Units[unitId].Resources[1] != resource {
 			return false
 		}
 		for _, h := range data.SupplyHandlings {
@@ -2479,8 +2480,8 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	err = client.LogFinishHandlings(23)
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
-	c.Assert(client.Model.GetUnit(unitId).ResourceDotations[1], DeepEquals,
-		swapi.ResourceDotation{
+	c.Assert(client.Model.GetUnit(unitId).Resources[1], DeepEquals,
+		swapi.Resource{
 			Quantity:  3200,
 			Threshold: 10,
 		})
@@ -2488,12 +2489,12 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 
 	// funeral
 	c.Assert(client.Model.GetData().FuneralHandlings, HasLen, 0)
-	human = swapi.HumanDotation{
+	human = swapi.Human{
 		Quantity: 1,
 		Rank:     eTrooper,
 		State:    eDead,
 	}
-	err = client.ChangeHumanState(unitId, []*swapi.HumanDotation{&human})
+	err = client.ChangeHumanState(unitId, []*swapi.Human{&human})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		for _, h := range data.FuneralHandlings {
@@ -2512,7 +2513,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	err = client.LogFinishHandlings(23)
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
-	dotations := client.Model.GetUnit(unitId).HumanDotations
+	dotations := client.Model.GetUnit(unitId).Humans
 	c.Assert(CheckHumanState(dotations, eTrooper, eHealthy, 6, 0), Equals, true)
 	c.Assert(CheckHumanState(dotations, eTrooper, eDead, 1, 0), Equals, true)
 	funerals := client.Model.GetData().FuneralHandlings
@@ -2580,4 +2581,274 @@ func (s *TestSuite) TestSetManualSupply(c *C) {
 		func(f *swapi.Formation) bool { return f.LogSupplyManual },
 		func(a *swapi.Automat) bool { return a.LogSupplyManual },
 	)
+}
+
+func maxi32(a, b int32) int32 {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func mini32(a, b int32) int32 {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func setupSomeUnit(c *C, client *swapi.Client) *swapi.Unit {
+	formation := CreateFormation(c, client, 1)
+	automat := CreateAutomat(c, client, formation.Id, 0)
+	unit := CreateUnit(c, client, automat.Id)
+	return unit
+}
+
+func (s *TestSuite) TestDestroyRandomEquipment(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	unit := setupSomeUnit(c, client)
+	const id = 11
+	eqs := map[uint32]*swapi.Equipment{
+		id: {Available: 4},
+	}
+	c.Assert(client.Model.GetUnit(unit.Id).Equipments, DeepEquals, eqs)
+	// invalid unit
+	err := client.DestroyRandomEquipment(123456)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	// valid unit
+	count := eqs[id].Available
+	for i := int32(0); i < count+1; i++ {
+		err = client.DestroyRandomEquipment(unit.Id)
+		c.Assert(err, IsNil)
+		eqs[id].Available = maxi32(0, eqs[id].Available-1)
+		eqs[id].Unavailable = mini32(count, eqs[id].Unavailable+1)
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			return reflect.DeepEqual(d.Units[unit.Id].Equipments, eqs)
+		})
+	}
+	// deleted unit
+	err = client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	err = client.DestroyRandomEquipment(unit.Id)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+}
+
+func (s *TestSuite) TestRecoverEquipments(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	unit := setupSomeUnit(c, client)
+	const id = 11
+	const quantity = 4
+	eqs := map[uint32]*swapi.Equipment{
+		id: {Available: quantity},
+	}
+	for _, withLog := range []bool{true, false} {
+		// invalid unit
+		err := client.RecoverAllEquipments(123456, withLog)
+		c.Assert(err, IsSwordError, "error_invalid_unit")
+	}
+	next := []swapi.Quantity{{Id: id, Quantity: quantity}}
+	recovers := []func() error{
+		func() error { return client.RecoverAllEquipments(unit.Id, true) },
+		func() error { return client.RecoverAllEquipments(unit.Id, false) },
+		func() error { return client.RecoverEquipments(unit.Id, next) },
+	}
+	for _, recov := range recovers {
+		err := client.DestroyUnit(unit.Id)
+		c.Assert(err, IsNil)
+		eqs[id].Unavailable = eqs[id].Available
+		eqs[id].Available = 0
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			return reflect.DeepEqual(d.Units[unit.Id].Equipments, eqs)
+		})
+		// valid unit
+		err = recov()
+		c.Assert(err, IsNil)
+		eqs[id].Available = eqs[id].Unavailable
+		eqs[id].Unavailable = 0
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			return reflect.DeepEqual(d.Units[unit.Id].Equipments, eqs)
+		})
+	}
+	// deleted unit
+	err := client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	err = client.RecoverAllEquipments(unit.Id, false)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	err = client.RecoverAllEquipments(unit.Id, true)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+}
+
+type HumansSorter []*swapi.Human
+
+func (h HumansSorter) Len() int           { return len(h) }
+func (h HumansSorter) Less(i, j int) bool { return h[i].Rank < h[j].Rank }
+func (h HumansSorter) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func normalizeHumans(src []*swapi.Human) []*swapi.Human {
+	h := HumansSorter(src)
+	sort.Sort(h)
+	return []*swapi.Human(h)
+}
+
+func (s *TestSuite) TestRecoverHumans(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	unit := setupSomeUnit(c, client)
+	ref := normalizeHumans(client.Model.GetUnit(unit.Id).Humans)
+	dead := []*swapi.Human{}
+	swapi.DeepCopy(&dead, ref)
+	for _, v := range dead {
+		v.State = int32(sword.EnumHumanState_deadly)
+	}
+	for _, withLog := range []bool{true, false} {
+		// invalid unit
+		err := client.RecoverAllHumans(123456, withLog)
+		c.Assert(err, IsSwordError, "error_invalid_unit")
+	}
+	next := []swapi.Quantity{}
+	for k, v := range dead {
+		next = append(next, swapi.Quantity{uint32(k), int(v.Quantity)})
+	}
+	recovers := []func() error{
+		func() error { return client.RecoverAllHumans(unit.Id, true) },
+		func() error { return client.RecoverAllHumans(unit.Id, false) },
+		func() error { return client.RecoverHumans(unit.Id, next) },
+	}
+	for _, recov := range recovers {
+		// destroy first, recover later
+		err := client.DestroyUnit(unit.Id)
+		c.Assert(err, IsNil)
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			humans := normalizeHumans(d.Units[unit.Id].Humans)
+			return reflect.DeepEqual(humans, dead)
+		})
+		err = recov()
+		c.Assert(err, IsNil)
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			humans := normalizeHumans(d.Units[unit.Id].Humans)
+			return reflect.DeepEqual(humans, ref)
+		})
+	}
+	// deleted unit
+	err := client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	err = client.RecoverAllHumans(unit.Id, false)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	err = client.RecoverAllHumans(unit.Id, true)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+}
+
+func (s *TestSuite) TestRecoverResources(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	unit := setupSomeUnit(c, client)
+	ref := client.Model.GetUnit(unit.Id).Resources
+	zero := map[uint32]*swapi.Resource{}
+	for k, v := range ref {
+		next := v
+		next.Quantity = 0
+		zero[k] = &next
+	}
+	checkNoResources := func(d *swapi.ModelData) bool {
+		none := true
+		for _, v := range d.Units[unit.Id].Resources {
+			none = none && v.Quantity == 0
+		}
+		return none
+	}
+	hasResources := func(d *swapi.ModelData) bool {
+		return reflect.DeepEqual(d.Units[unit.Id].Resources, ref)
+	}
+	for _, withLog := range []bool{true, false} {
+		// invalid unit
+		err := client.RecoverAllResources(123456, withLog)
+		c.Assert(err, IsSwordError, "error_invalid_unit")
+	}
+	next := []swapi.Quantity{}
+	for k := range sword.DotationType_name {
+		next = append(next, swapi.Quantity{uint32(k), 100})
+	}
+	recovers := []func() (error, bool){
+		func() (error, bool) { return client.RecoverAllResources(unit.Id, true), true },
+		func() (error, bool) { return client.RecoverAllResources(unit.Id, false), false },
+		func() (error, bool) { return client.RecoverResources(unit.Id, next), false },
+	}
+	for _, recov := range recovers {
+		// reset first, recover later
+		err := client.ChangeResource(unit.Id, zero)
+		c.Assert(err, IsNil)
+		waitCondition(c, client.Model, checkNoResources)
+		err, withLog := recov()
+		c.Assert(err, IsNil)
+		condition := hasResources
+		if withLog {
+			// http://jira.masagroup.net/browse/SWBUG-12215
+			condition = checkNoResources
+		}
+		waitCondition(c, client.Model, condition)
+	}
+	// deleted unit
+	err := client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	err = client.RecoverAllResources(unit.Id, false)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	err = client.RecoverAllResources(unit.Id, true)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+}
+
+func (s *TestSuite) TestRecoverAll(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	unit := setupSomeUnit(c, client)
+	ref := client.Model.GetUnit(unit.Id)
+	empty := swapi.Unit{}
+	swapi.DeepCopy(&empty, ref)
+	for _, eq := range empty.Equipments {
+		eq.Unavailable = eq.Available
+		eq.Available = 0
+	}
+	refHumans := normalizeHumans(unit.Humans)
+	dead := []*swapi.Human{}
+	swapi.DeepCopy(&dead, refHumans)
+	for _, v := range dead {
+		v.State = int32(sword.EnumHumanState_deadly)
+	}
+	for k, v := range empty.Resources {
+		v.Quantity = 0
+		v.Threshold = 0
+		empty.Resources[k] = v
+	}
+	for _, withLog := range []bool{true, false} {
+		// invalid unit
+		err := client.RecoverUnit(123456, withLog)
+		c.Assert(err, IsSwordError, "error_invalid_unit")
+		// destroy first, then recover everything
+		err = client.DestroyUnit(unit.Id)
+		c.Assert(err, IsNil)
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			u := d.Units[unit.Id]
+			humans := normalizeHumans(u.Humans)
+			return reflect.DeepEqual(u.Equipments, empty.Equipments) &&
+				reflect.DeepEqual(humans, dead) &&
+				reflect.DeepEqual(u.Resources, empty.Resources)
+		})
+		err = client.RecoverUnit(unit.Id, withLog)
+		c.Assert(err, IsNil)
+		waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+			u := d.Units[unit.Id]
+			humans := normalizeHumans(u.Humans)
+			return reflect.DeepEqual(u.Equipments, ref.Equipments) &&
+				reflect.DeepEqual(humans, refHumans) &&
+				reflect.DeepEqual(u.Resources, ref.Resources)
+		})
+	}
+	// deleted unit
+	err := client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	err = client.RecoverUnit(unit.Id, false)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+	err = client.RecoverUnit(unit.Id, true)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 }

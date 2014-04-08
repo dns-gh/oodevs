@@ -178,7 +178,7 @@ func NewObject(id, partyId uint32, objectType, name string) *Object {
 	}
 }
 
-type EquipmentDotation struct {
+type Equipment struct {
 	Available     int32
 	Unavailable   int32
 	Repairable    int32
@@ -201,7 +201,7 @@ type BorrowedEquipment struct {
 	Quantity int32
 }
 
-type HumanDotation struct {
+type Human struct {
 	Quantity     int32
 	Rank         int32
 	State        int32
@@ -210,7 +210,7 @@ type HumanDotation struct {
 	Contaminated bool
 }
 
-type ResourceDotation struct {
+type Resource struct {
 	Quantity  int32
 	Threshold float32
 }
@@ -255,12 +255,12 @@ type Unit struct {
 	Speed               int32
 	PathPoints          uint32
 	DebugBrain          bool
-	EquipmentDotations  map[uint32]*EquipmentDotation
+	Equipments          map[uint32]*Equipment
 	LentEquipments      []*LentEquipment
 	BorrowedEquipments  []*BorrowedEquipment
 	PartySurrenderedTo  uint32
-	HumanDotations      []*HumanDotation
-	ResourceDotations   map[uint32]ResourceDotation
+	Humans              []*Human
+	Resources           map[uint32]Resource
 	Posture             Posture
 	VisionCones         VisionCones
 	TransporterId       uint32

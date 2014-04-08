@@ -89,7 +89,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	// vision cones sent after being (un)loaded
 	// $$$$ MCO : we need a magic action
 	// vision cones sent after components changed
-	check(client.TransferEquipment(11, 12, []swapi.Equipment{{11, 1}}))
+	check(client.TransferEquipment(11, 12, []swapi.Quantity{{11, 1}}))
 	// vision cones sent after unit surrenders
 	check(client.Surrender(automatId, 2))
 	// vision cones sent after unit cancels surrender

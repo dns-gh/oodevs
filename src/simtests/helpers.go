@@ -126,8 +126,8 @@ func getAnyKnowledgeGroupIdWithPartyIndex(c *C, data *swapi.ModelData, index int
 	return 0
 }
 
-func getSomeEquipment(c *C, unit *swapi.Unit) (uint32, *swapi.EquipmentDotation) {
-	for k, v := range unit.EquipmentDotations {
+func getSomeEquipment(c *C, unit *swapi.Unit) (uint32, *swapi.Equipment) {
+	for k, v := range unit.Equipments {
 		return k, v
 	}
 	c.Fatal("unable to find any equipment")
