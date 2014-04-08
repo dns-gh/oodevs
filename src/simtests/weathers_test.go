@@ -211,10 +211,10 @@ func (s *TestSuite) TestControlLocalWeatherDestruction(c *C) {
 	err = client.DestroyLocalWeather(12345)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
-	// Error: missing parameters
 	err = client.DestroyLocalWeather(1)
 	c.Assert(err, IsNil)
 
-	client.Model.WaitTicks(1)
-	c.Assert(client.Model.GetData().LocalWeathers, HasLen, 0)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.LocalWeathers) == 0
+	})
 }
