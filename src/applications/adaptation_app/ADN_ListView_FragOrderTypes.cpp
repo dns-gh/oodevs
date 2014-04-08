@@ -195,24 +195,3 @@ bool ADN_ListView_FragOrderTypes::ContextMenuDelete()
     }
     return false;
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ListView_FragOrderTypes::OnToogled
-// Created: HBD 2010-09-06
-// -----------------------------------------------------------------------------
-void ADN_ListView_FragOrderTypes::OnToogled( bool isChecked )
-{
-    if( pCurData_ == 0 || isChecked )
-        return;
-    FragOrder* pInfos = reinterpret_cast< FragOrder* >( pCurData_ );
-    const std::string& name = pInfos->strName_.GetData();
-    ADN_Models_Data::T_ModelInfos_Vector& units = ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Pawn );
-    ADN_Models_Data::T_ModelInfos_Vector& automata = ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Automat );
-    ADN_Models_Data::T_ModelInfos_Vector& pops = ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Population );
-    for( auto it1 = units.begin(); it1 != units.end(); ++it1 )
-        ( *it1 )->RemoveFragOder( name );
-    for( auto it1 = automata.begin(); it1 != automata.end(); ++it1 )
-        ( *it1 )->RemoveFragOder( name );
-    for( auto it1 = pops.begin(); it1 != pops.end(); ++it1 )
-        ( *it1 )->RemoveFragOder( name );
-}

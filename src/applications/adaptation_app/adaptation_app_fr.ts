@@ -3031,14 +3031,6 @@ PNG (*.png)
         <translation>Un nom de mission ne peut contenir les caractères suivants : %1</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation>Attention</translation>
-    </message>
-    <message>
-        <source>Switching off &quot;available without mission&quot; will remove the fragmentary order from all models.</source>
-        <translation>Décocher &quot;disponible sans mission&quot; retirera l&apos;ordre de conduite de tous les modèles.</translation>
-    </message>
-    <message>
         <source>Filter</source>
         <translation>Filtre</translation>
     </message>

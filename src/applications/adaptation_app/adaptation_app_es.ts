@@ -3031,14 +3031,6 @@ PNG (*.png)</translation>
         <translation>El nombre de misión no puede contener los siguientes caracteres: %1</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation>Advertencia</translation>
-    </message>
-    <message>
-        <source>Switching off &quot;available without mission&quot; will remove the fragmentary order from all models.</source>
-        <translation>Desconectar &quot;disponible sin misión&quot; eliminará la orden fragmentaria de todos los modelos.</translation>
-    </message>
-    <message>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
