@@ -186,7 +186,7 @@ func testCreateAllUnits(c *C, client *swapi.Client, phydb *phy.PhysicalFile,
 	c.Assert(err, IsNil)
 
 	jobs := sync.WaitGroup{}
-	errs := []error{}
+	errs := make(chan error, len(types.Units))
 	for _, typ := range types.Units {
 		typ := typ
 		jobs.Add(1)
@@ -194,12 +194,13 @@ func testCreateAllUnits(c *C, client *swapi.Client, phydb *phy.PhysicalFile,
 			defer jobs.Done()
 			_, err := client.CreateUnit(automat.Id, typ.Id, pos)
 			if err != nil {
-				errs = append(errs, fmt.Errorf("%s creation failed: %s", typ.Name, err))
+				errs <- fmt.Errorf("%s creation failed: %s", typ.Name, err)
 			}
 		}()
 	}
 	jobs.Wait()
-	for _, err := range errs {
+	close(errs)
+	for err := range errs {
 		c.Check(err, IsNil)
 	}
 }
@@ -213,7 +214,7 @@ func testCreateAllAutomats(c *C, client *swapi.Client, phydb *phy.PhysicalFile,
 
 	// Running them in goroutines reduces test duration from 14s to 8s
 	jobs := sync.WaitGroup{}
-	errs := []error{}
+	errs := make(chan error, len(types.Automats))
 	for _, typ := range types.Automats {
 		typ := typ
 		jobs.Add(1)
@@ -221,12 +222,13 @@ func testCreateAllAutomats(c *C, client *swapi.Client, phydb *phy.PhysicalFile,
 			defer jobs.Done()
 			_, _, err := client.CreateAutomatAndUnits(formation.Id, typ.Id, kg.Id, pos)
 			if err != nil {
-				errs = append(errs, fmt.Errorf("%s creation failed: %s", typ.Name, err))
+				errs <- fmt.Errorf("%s creation failed: %s", typ.Name, err)
 			}
 		}()
 	}
 	jobs.Wait()
-	for _, err := range errs {
+	close(errs)
+	for err := range errs {
 		c.Check(err, IsNil)
 	}
 }
