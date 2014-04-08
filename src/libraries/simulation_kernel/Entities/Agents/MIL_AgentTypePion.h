@@ -70,8 +70,6 @@ public:
           double                            GetFeedbackTime() const;
           const MIL_HumanRepartition&       GetHumanRepartition              () const;
     void SetBrainFunctions( const std::vector< std::string >& names );
-    virtual bool IsWrittenInODB() const;
-    void SetWrittenInODB( bool written );
     //@}
 
     //! @name Operators
@@ -122,7 +120,6 @@ private:
     double                  rFeedbackTime_;
     MIL_HumanRepartition*   pHumanRepartition_;
     std::vector< std::string > functions_;
-    bool                    writtenInOdb_;
 
 private:
     static T_PionTypeMap           pionTypes_;

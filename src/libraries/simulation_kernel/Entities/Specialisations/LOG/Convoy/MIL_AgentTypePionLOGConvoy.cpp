@@ -26,8 +26,6 @@
 MIL_AgentTypePionLOGConvoy::MIL_AgentTypePionLOGConvoy( const std::string& strName, const std::string& strType, xml::xistream& xis )
     : MIL_AgentTypePionLOG_ABC( strName, strType, xis )
 {
-    // Don't serialize Convoys
-    SetWrittenInODB( false );
     // $$$ ?? Checker que le type ne contient aucun equipement ?
 }
 
@@ -67,4 +65,10 @@ void MIL_AgentTypePionLOGConvoy::DeleteUnit( MIL_Agent_ABC& unit ) const
         logBrain->ResetConsignsForConvoyPion( unit );
     unit.GetAutomate().GetStockSupplyManager().ResetConsignsForConvoyPion( unit );
     unit.GetAutomate().GetDotationSupplyManager().ResetConsignsForConvoyPion( unit );
+}
+
+bool MIL_AgentTypePionLOGConvoy::IsWrittenInODB() const
+{
+    // Don't serialize Convoys
+    return true;
 }

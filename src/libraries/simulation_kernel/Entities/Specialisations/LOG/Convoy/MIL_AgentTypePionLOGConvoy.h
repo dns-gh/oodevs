@@ -33,6 +33,7 @@ public:
     //@{
     virtual void RegisterRoles( MIL_AgentPion& pion, sword::RoleExtender_ABC* ext ) const;
     //@}
+    virtual bool IsWrittenInODB() const;
 
     static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
 
