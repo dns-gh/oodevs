@@ -88,8 +88,8 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_.reset(
-        new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), tickDuration_ ) );
+    pGlobalMeteo_ = boost::make_shared< PHY_GlobalMeteo >(
+            xis, pEphemeride_->GetLightingBase(), tickDuration_ );
     pGlobalMeteo_->SetLighting( pEphemeride_->GetLightingBase() );
     xis >> xml::end;
 }
