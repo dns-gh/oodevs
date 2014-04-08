@@ -303,7 +303,7 @@ void ADN_Weapons_GUI::Build()
     pDirectGroup->setCheckable( false );
     vInfosConnectors[ eDirect ] = &pDirectGroup->GetConnector();
 
-    ADN_Graph* pGraph = new ADN_Graph(/* pDirectGroup */);
+    ADN_Graph* pGraph = new ADN_Graph();
     pGraph->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     pGraph->setMinimumSize( 400, 200 );
     pGraph->YAxis().SetAxisCaption( tr( "Ph (%)" ) );
