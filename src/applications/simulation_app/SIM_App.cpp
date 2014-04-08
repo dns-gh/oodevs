@@ -73,6 +73,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPWSTR lpC
     MT_LOG_STARTUP_MESSAGE( ( "Sword Simulation - Version " + std::string( tools::AppVersion() ) + " - " MT_COMPILE_TYPE ).c_str() );
     MT_LOG_STARTUP_MESSAGE( ( "Starting simulation - " + boost::posix_time::to_simple_string( boost::posix_time::second_clock::local_time() ) ).c_str() );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
+    MT_LOG_INFO_MSG( "Command line: " << winArguments_->GetCommandLine() );
     MT_LOG_INFO_MSG( "Session: " << config_->GetSessionDir() );
 }
 

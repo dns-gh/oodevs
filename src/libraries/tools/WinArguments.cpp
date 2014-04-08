@@ -23,7 +23,7 @@ using namespace tools;
 WinArguments::WinArguments( const std::wstring& arguments )
 {
     std::vector< std::wstring > wargv = boost::program_options::split_winmain( arguments );
-    argv_.insert( argv_.begin(), "dummy-application.exe" ); // $$$$ ABR 2013-03-13: here to simulate a classic command line for boost parser
+    argv_.push_back( "dummy-application.exe" ); // $$$$ ABR 2013-03-13: here to simulate a classic command line for boost parser
     for( auto it = wargv.begin(); it != wargv.end(); ++it )
         argv_.push_back( tools::FromUnicodeToUtf8( *it ) );
     std::transform( argv_.begin(), argv_.end(), std::back_inserter( cArgv_ ), std::mem_fun_ref( &std::string::c_str ) );
@@ -89,4 +89,12 @@ std::string WinArguments::GetOption( const std::string& name, const std::string&
         }
     }
     return defaultValue;
+}
+
+std::string WinArguments::GetCommandLine() const
+{
+    std::stringstream s;
+    std::copy( argv_.begin() + 1, argv_.end(),
+        std::ostream_iterator< std::string >( s, " " ) );
+    return s.str();
 }

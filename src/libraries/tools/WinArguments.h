@@ -37,6 +37,8 @@ public:
 
     bool HasOption( const std::string& name ) const;
     std::string GetOption( const std::string& name, const std::string& defaultValue = "" );
+
+    std::string GetCommandLine() const;
     //@}
 
 private:
