@@ -42,62 +42,6 @@
 
 namespace
 {
-//-----------------------------------------------------------------------------
-// Internal Canvas connector
-//-----------------------------------------------------------------------------
-class ADN_GC_Ph : public ADN_Connector_Vector_ABC
-                , private boost::noncopyable
-{
-public:
-    explicit ADN_GC_Ph( ADN_GraphData& graphData )
-        : ADN_Connector_Vector_ABC()
-        , graphData_( graphData )
-    {
-        // NOTHING
-    }
-
-    virtual ~ADN_GC_Ph()
-    {
-        // NOTHING
-    }
-
-    bool AddItemPrivate( void* pItem )
-    {
-        if( pItem == 0 )
-            return false;
-
-        ADN_Weapons_Data_PhInfos* pPhInfos = static_cast< ADN_Weapons_Data_PhInfos* >( pItem );
-        new ADN_GraphValue( graphData_, pPhInfos, pPhInfos->nModifiedDistance_, pPhInfos->rModifiedPerc_ );
-        return true;
-    }
-
-    bool RemItemPrivate( void* pItem )
-    {
-        graphData_.DeleteData( pItem );
-        ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
-        return true;
-    }
-
-    void ConnectPrivateSub( ADN_Connector_Vector_ABC* pDataConnector )
-    {
-        ADN_Connector_ABC::ConnectPrivateSub( static_cast< ADN_Connector_ABC* >( pDataConnector ) );
-
-        pDataConnector->Initialize( *this );
-        connect( pDataConnector, SIGNAL( ItemAdded( void* ) ),      this, SLOT( AddItemNoEmit( void* ) ) );
-        connect( pDataConnector, SIGNAL( ItemRemoved( void* ) ),    this, SLOT( RemItemNoEmit( void* ) ) );
-    }
-
-    void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pDataConnector )
-    {
-        ADN_Connector_ABC::DisconnectPrivateSub( static_cast< ADN_Connector_ABC* >( pDataConnector ) );
-
-        disconnect( pDataConnector, SIGNAL( ItemAdded( void* ) ),      this, SLOT( AddItemNoEmit( void* ) ) );
-        disconnect( pDataConnector, SIGNAL( ItemRemoved( void* ) ),    this, SLOT( RemItemNoEmit( void* ) ) );
-    }
-
-private:
-    ADN_GraphData& graphData_;
-};
 
 class ADN_GC_PhSize : public ADN_Connector_Graph_ABC
 {
@@ -123,7 +67,12 @@ public:
         if( !pPhSizeInfos->GetCrossedElement() )
             return false;
         userIds_[ pItem ] = ++userId_;
+
         ADN_GraphData* pNewData = new ADN_GraphData( userIds_[ pItem ], graph_ );
+        pNewData->SetValueCreator( [pNewData] ( void* item ) {
+            ADN_Weapons_Data_PhInfos* pPhInfos = static_cast< ADN_Weapons_Data_PhInfos* >( item );
+            new ADN_GraphValue( *pNewData, pPhInfos, pPhInfos->nModifiedDistance_, pPhInfos->rModifiedPerc_ );
+        } );
         QColor color;
         color.setHsv( nNbrDatas_ * 100, 255, 255 );
         GQ_PlotData::E_PointShapeType nPointShape = static_cast< GQ_PlotData::E_PointShapeType >( nNbrDatas_ % ( GQ_PlotData::eUserShape - 1 ) + 1 );
@@ -134,11 +83,8 @@ public:
         pNewData->SetName( pPhSizeInfos->strName_.GetData().c_str() );
 
         graph_.RegisterPlotData( *pNewData );
+        pNewData->GetConnector().Connect( &pPhSizeInfos->vPhs_ );
         nNbrDatas_++;
-
-        ADN_GC_Ph* pConnector = new ADN_GC_Ph( *pNewData );
-        pNewData->SetConnector( *pConnector );
-        pConnector->Connect( &pPhSizeInfos->vPhs_ );
         return true;
     }
 
