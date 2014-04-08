@@ -150,6 +150,14 @@ integration.proximity = function( pos1, pos2 ) -- $$$ MIA security. A mettre en 
     return LinearInterpolation( 1, 100, 10, distanceMax, false, integration.distance( pos1, pos2 ) )
 end
 
+local isOldPoint = function( pos )
+    if sword and sword.military and sword.military.world and sword.military.world.Point then
+        return masalife.brain.core.class.getType( pos ) == sword.military.world.Point -- needded for old compatibility (with Scipio) 
+    else
+        return false
+    end
+end
+
 local normalizedInverseDistanceSimSim = function( simPos1, simPos2, distanceMax )
     if not simPos1 or not simPos2 then
         return 1
@@ -172,7 +180,7 @@ end
 
 local normalizedInverseDistanceSim = function( simPos, pos2, distanceMax )
     if not simPos or not pos2 then return 1 end
-    if pos2.getPositions then 
+    if ( not isOldPoint( pos2 ) ) and pos2.getPositions then 
         return normalizedInverseDistanceSimListSim( pos2:getPositions(), simPos, distanceMax )
     end
     return normalizedInverseDistanceSimSim( simPos, pos2:getPosition(), distanceMax )
@@ -198,10 +206,10 @@ integration.normalizedInversedDistance = function( pos1, pos2 )
         return 1
     end
     local distanceMax = 100000 -- hard coded : same order of scale for an operational theater
-    if pos1.getPositions then
+    if ( not isOldPoint( pos1 ) ) and pos1.getPositions then
         return normalizedInverseDistanceSimList( pos1:getPositions(), pos2, distanceMax )
     end
-    if pos2.getPositions then
+    if ( not isOldPoint( pos2 ) ) and pos2.getPositions then
         return normalizedInverseDistanceSimList( pos2:getPositions(), pos1, distanceMax )
     end
     return normalizedInverseDistanceSimSim ( pos1:getPosition(), pos2:getPosition(), distanceMax )
