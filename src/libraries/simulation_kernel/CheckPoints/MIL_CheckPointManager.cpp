@@ -177,7 +177,7 @@ tools::Path MIL_CheckPointManager::BuildCheckPointName() const
     name << std::setfill( '0' ) << std::setw( 2 ) << time->tm_hour << 'h';
     name << std::setfill( '0' ) << std::setw( 2 ) << time->tm_min << 'm';
     name << std::setfill( '0' ) << std::setw( 2 ) << time->tm_sec;
-    return name.str().c_str();
+    return tools::Path( name.str().c_str() );
 }
 
 // -----------------------------------------------------------------------------
