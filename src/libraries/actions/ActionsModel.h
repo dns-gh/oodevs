@@ -148,11 +148,13 @@ private:
 template< typename T >
 Action_ABC* ActionsModel::CreateAction( const T& order, const kernel::Entity_ABC* target )
 {
-    Action_ABC* action = factory_.CreateAction( target, order );
+    std::auto_ptr< Action_ABC > action( factory_.CreateAction( target, order ) );
+    if( !action.get() )
+        return nullptr;
     Register( action->GetId(), *action );
     if( !action->CheckValidity() )
         action->Invalidate();
-    return action;
+    return action.release();
 }
 
 // -----------------------------------------------------------------------------
@@ -162,11 +164,13 @@ Action_ABC* ActionsModel::CreateAction( const T& order, const kernel::Entity_ABC
 template< typename T >
 Action_ABC* ActionsModel::CreateAction( const T& message, bool needRegistration )
 {
-    Action_ABC* action = factory_.CreateAction( message, needRegistration );
+    std::auto_ptr< Action_ABC > action( factory_.CreateAction( message, needRegistration ) );
+    if( !action.get() )
+        return nullptr;
     Register( action->GetId(), *action );
     if( !action->CheckValidity() )
         action->Invalidate();
-    return action;
+    return action.release();
 }
 
 } //! namespace actions

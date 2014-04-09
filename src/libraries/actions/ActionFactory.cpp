@@ -185,11 +185,12 @@ Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC* target, const
     std::unique_ptr< Action_ABC > action;
     if( mission.GetType() == eMissionType_Pawn )
         action.reset( new AgentMission( &mission, controller_, true ) );
-    if( mission.GetType() == eMissionType_Automat )
+    else if( mission.GetType() == eMissionType_Automat )
         action.reset( new AutomatMission( &mission, controller_, true ) );
     else if( mission.GetType() == eMissionType_Population )
         action.reset( new PopulationMission( &mission, controller_, true ) );
-
+    else
+        return nullptr;
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, target, false );
     action->Polish();
@@ -238,7 +239,7 @@ Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC* target, E_Mis
     else if( type == eMissionType_FragOrder )
         action.reset( new FragOrder( 0, controller_, true ) );
     else
-        throw MASA_EXCEPTION( "Invalid mission type" );
+        return nullptr;
     AddTasker( *action, target, false );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     action->Rename( target ? target->GetName() : tools::translate( "ActionFactory", "Incomplete order" ) );
