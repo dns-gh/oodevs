@@ -17,6 +17,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "simulation_terrain/TER_AnalyzerManager.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include <spatialcontainer/TerrainData.h>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_CapabilityComputer constructor

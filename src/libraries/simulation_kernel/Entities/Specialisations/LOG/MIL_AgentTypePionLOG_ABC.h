@@ -29,6 +29,8 @@ public:
              MIL_AgentTypePionLOG_ABC( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentTypePionLOG_ABC();
 
+    virtual MIL_AgentPion* InstanciatePion( MissionController_ABC& controller,
+            MIL_Automate& automate, xml::xistream& xis ) const;
     virtual void RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const;
 
 };

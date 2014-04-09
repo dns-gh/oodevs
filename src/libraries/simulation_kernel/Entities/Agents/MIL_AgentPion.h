@@ -189,7 +189,6 @@ private:
     //@{
     void UpdatePhysicalState();
     void CancelCurrentMission();
-    virtual void SpecializedDelete();
     void ResetTeleported();
     //@}
 

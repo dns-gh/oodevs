@@ -592,20 +592,7 @@ void MIL_EntityManager::Finalize()
     armyFactory_->Finalize();
     MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();
     inhabitantFactory_->Finalize();
-    Synchronize();
     UpdateStates();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::Synchronize
-// Created: MCO 2012-09-13
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::Synchronize()
-{
-    sink_->Finalize();
-    sink_->UpdateUrbanModel( MIL_AgentServer::GetWorkspace().GetUrbanCache() );
-    sink_->UpdateModel( time_.GetCurrentTimeStep(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
-    sink_->NotifyEffects();
 }
 
 namespace
@@ -669,7 +656,6 @@ void MIL_EntityManager::LogInfo()
             s << it->first << " " << it->second << " ms ";
         MT_LOG_INFO_MSG( s.str() );
     }
-    sink_->LogProfiling();
 }
 
 // -----------------------------------------------------------------------------
@@ -823,23 +809,11 @@ void MIL_EntityManager::UpdateKnowledges()
     {
         int currentTimeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
         {
-            Profiler profiler( profilers_[ "update model" ] );
-            sink_->UpdateModel( time_.GetCurrentTimeStep(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
-        }
-        {
-            Profiler profiler( profilers_[ "execute perceptions" ] );
-            sink_->ExecutePerceptions();
-        }
-        {
             Profiler profiler( profilers_[ "update knowledges" ] );
             armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges, _1, currentTimeStep ) );
             populationFactory_->Apply( boost::bind( &MIL_Population::UpdateKnowledges, _1 ) );
             armyFactory_->Apply( boost::bind( &MIL_Army_ABC::CleanKnowledges, _1 ) );
             populationFactory_->Apply( boost::bind( &MIL_Population::CleanKnowledges, _1 ) );
-        }
-        {
-            Profiler profiler( profilers_[ "synchronize knowledges" ] );
-            sink_->UpdateKnowledges();
         }
     }
     catch( const std::exception& e )
@@ -888,8 +862,6 @@ void MIL_EntityManager::UpdateDecisions()
 void MIL_EntityManager::UpdateActions()
 {
     Profiler profiler( rActionsTime_ );
-    sink_->UpdateModel( time_.GetCurrentTimeStep(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
-    sink_->ExecuteCommands();
     formationFactory_->Apply( boost::bind( &MIL_Formation::UpdateActions, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
     sink_->Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
@@ -904,7 +876,6 @@ void MIL_EntityManager::UpdateEffects()
 {
     Profiler profiler( rEffectsTime_ );
     pObjectManager_->ProcessEvents();
-    sink_->ApplyEffects();
     effectManager_.Update();
 }
 

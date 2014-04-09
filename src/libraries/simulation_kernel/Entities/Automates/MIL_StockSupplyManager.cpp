@@ -149,7 +149,7 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
 // Name: MIL_StockSupplyManager::ResetConsignsForConvoyPion
 // Created: JSR 2013-02-08
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
+void MIL_StockSupplyManager::ResetConsignsForConvoyPion( const MIL_Agent_ABC& pion )
 {
     autoSupplyRequest_->ResetConsignsForConvoyPion( pion );
     boost::remove_erase_if( scheduledSupplies_,

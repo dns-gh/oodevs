@@ -267,7 +267,7 @@ void SupplyConvoyReal::Finish( bool finished /*= true*/ )
 // Name: SupplyConvoyReal::HasConvoy
 // Created: JSR 2013-02-06
 // -----------------------------------------------------------------------------
-bool SupplyConvoyReal::HasConvoy( const MIL_AgentPion& pion ) const
+bool SupplyConvoyReal::HasConvoy( const MIL_Agent_ABC& pion ) const
 {
     return &pion == convoyPion_;
 }

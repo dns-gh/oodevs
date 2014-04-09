@@ -57,6 +57,10 @@ public:
     virtual const DEC_Model_ABC& GetModel() const = 0;
     virtual double GetDistanceAvantPoint ( const TerrainData& nType ) const = 0;
     virtual double GetDistanceAvantLima () const = 0;
+    // Custom finalizer invoked by MIL_AgentPion::DeleteUnit.
+    virtual void DeleteUnit( MIL_Agent_ABC& unit ) const;
+    // For some reasons, units like convoys are not serialized in ODB backup.
+    virtual bool IsWrittenInODB() const;
     //@}
 
 protected:

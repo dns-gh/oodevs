@@ -174,3 +174,12 @@ void MIL_AgentType_ABC::SetNBC( bool isNBC )
 {
     isNBC_ = isNBC;
 }
+
+void MIL_AgentType_ABC::DeleteUnit( MIL_Agent_ABC& ) const
+{
+}
+
+bool MIL_AgentType_ABC::IsWrittenInODB() const
+{
+    return true;
+}

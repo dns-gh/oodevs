@@ -50,7 +50,7 @@ public:
     void Update();
     void Clean ();
     void ResetAllConsigns();
-    void ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
+    void ResetConsignsForConvoyPion( const MIL_Agent_ABC& pion );
     void DeleteRequestsForRequester( MIL_AgentPion& pion );
     //@}
 

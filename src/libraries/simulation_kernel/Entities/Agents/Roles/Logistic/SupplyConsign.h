@@ -57,7 +57,7 @@ public:
     virtual bool Update    ();
     virtual bool IsSupplying( const PHY_DotationCategory& dotationCategory, const SupplyRecipient_ABC& recipient );
     virtual bool IsFinished() const;
-    virtual bool ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
+    virtual bool ResetConsignsForConvoyPion( const MIL_Agent_ABC& pion );
     virtual bool ResetConsignsForProvider( const MIL_Agent_ABC& pion );
     virtual void ResetConsign();
     virtual bool GrantsNothing() const;

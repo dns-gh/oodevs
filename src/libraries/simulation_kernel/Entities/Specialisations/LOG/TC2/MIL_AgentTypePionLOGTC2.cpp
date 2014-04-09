@@ -11,12 +11,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentTypePionLOGTC2.h"
-#include "MIL_AgentPionLOGTC2.h"
 
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Medical.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Supply.h"
-
+#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/MIL_StockSupplyManager.h"
+#include "Entities/Automates/MIL_DotationSupplyManager.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLog.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGTC2 constructor
@@ -35,17 +38,6 @@ MIL_AgentTypePionLOGTC2::MIL_AgentTypePionLOGTC2( const std::string& strName, co
 MIL_AgentTypePionLOGTC2::~MIL_AgentTypePionLOGTC2()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePionLOGTC2::InstanciatePion
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGTC2::InstanciatePion( MissionController_ABC& controller,
-                                                         MIL_Automate& automate,
-                                                         xml::xistream& xis ) const
-{
-    return new MIL_AgentPionLOGTC2( *this, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,4 +60,16 @@ void MIL_AgentTypePionLOGTC2::RegisterRoles( MIL_AgentPion& pion, sword::RoleExt
 const MIL_AgentTypePion* MIL_AgentTypePionLOGTC2::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
     return new MIL_AgentTypePionLOGTC2( strName, strType, xis );
+}
+
+void MIL_AgentTypePionLOGTC2::DeleteUnit( MIL_Agent_ABC& unit ) const
+{
+    MIL_AutomateLOG* logBrain = unit.GetAutomate().GetBrainLogistic();
+    if( logBrain )
+        logBrain->ResetConsignsForProvider( unit );// inutile ??
+    //GetAutomate().GetStockSupplyManager().ResetAutoConsignForProvider( *this );
+    unit.GetAutomate().GetStockSupplyManager().ResetAllConsigns();
+    unit.GetAutomate().GetDotationSupplyManager().ResetAllConsigns();
+    unit.GetRole< PHY_RolePionLOG_Maintenance >().ClearMaintenanceConsigns();
+    unit.GetRole< PHY_RolePionLOG_Medical >().ClearMedicalConsigns();
 }

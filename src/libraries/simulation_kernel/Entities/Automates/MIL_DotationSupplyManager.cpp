@@ -162,7 +162,7 @@ void MIL_DotationSupplyManager::DeleteRequestsForRequester( MIL_AgentPion& pion 
 // Name: MIL_DotationSupplyManager::ResetConsignsForConvoyPion
 // Created: JSR 2013-02-20
 // -----------------------------------------------------------------------------
-void MIL_DotationSupplyManager::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
+void MIL_DotationSupplyManager::ResetConsignsForConvoyPion( const MIL_Agent_ABC& pion )
 {
     supplyRequests_->ResetConsignsForConvoyPion( pion );
     for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); )

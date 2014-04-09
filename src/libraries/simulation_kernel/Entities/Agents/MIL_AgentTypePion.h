@@ -12,7 +12,6 @@
 
 #include "MIL.h"
 #include "MIL_AgentType_ABC.h"
-#include <spatialcontainer/TerrainData.h>
 
 namespace xml
 {
@@ -32,6 +31,7 @@ class PHY_UnitType;
 class MIL_HumanRepartition;
 class MIL_Config;
 class MissionController_ABC;
+class TerrainData;
 
 // =============================================================================
 // @class  MIL_AgentTypePion
@@ -86,8 +86,6 @@ protected:
     //! @name // $$$$ _RC_ SBO 2011-05-20: only for test purpose...
     //@{
     explicit MIL_AgentTypePion( const DEC_Model_ABC* pModel );
-    template< typename T >
-    MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* pUnitTypeType /*Used only to determine T type*/ );
     //@}
 
 private:
@@ -126,24 +124,5 @@ private:
 private:
     static T_PionTypeMap           pionTypes_;
 };
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePion constructor
-// Created: NLD 2004-08-09
-// -----------------------------------------------------------------------------
-template< typename T >
-MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* )
-    : MIL_AgentType_ABC( strName, xis )
-    , pModel_( 0 )
-    , pUnitType_( new T( xis ) )
-    , rDistanceAvantLimas_( 0. )
-    , rFeedbackTime_( 0. )
-    , pHumanRepartition_( new MIL_HumanRepartition( xis ) )
-    , isNBC_ ( false )
-{
-    InitializeRapFor              ( xis );
-    InitializeDistancesAvantPoints( xis );
-    InitializeModel               ( xis );
-}
 
 #endif // __MIL_AgentTypePion_h_

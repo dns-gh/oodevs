@@ -184,7 +184,6 @@ public:
     void Clean();
     void CleanDeletedAgentKnowledges();
     void Finalize();
-    void Synchronize();
     void LogInfo();
     //@}
 

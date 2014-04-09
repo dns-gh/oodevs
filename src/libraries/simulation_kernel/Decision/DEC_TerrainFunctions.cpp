@@ -16,6 +16,7 @@
 #include "simulation_terrain/TER_AnalyzerManager.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_World.h"
+#include <spatialcontainer/TerrainData.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_TerrainFunctions::GetCrossroads

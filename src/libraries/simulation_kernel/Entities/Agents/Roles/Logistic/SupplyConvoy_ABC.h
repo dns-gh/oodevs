@@ -61,7 +61,7 @@ public:
     virtual void     Supply                    ( SupplyRecipient_ABC& supplyRecipient, const PHY_DotationCategory& dotationCategory, double quantity ) = 0;
     virtual void     Finish                    ( bool finished = true ) = 0;
     virtual void     ResetConveyors( SupplyConvoyEventsObserver_ABC& observer ) = 0;
-    virtual bool     HasConvoy( const MIL_AgentPion& pion ) const = 0;
+    virtual bool     HasConvoy( const MIL_Agent_ABC& pion ) const = 0;
     virtual bool     IsConvoyDestroyed() const = 0;
     virtual bool     IsFinished() const = 0;
     virtual bool     IsImpossible() const = 0;

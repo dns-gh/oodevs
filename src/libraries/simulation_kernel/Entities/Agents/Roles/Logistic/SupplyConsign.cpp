@@ -232,7 +232,7 @@ bool SupplyConsign::IsFinished() const
 // Name: SupplyConsign::ResetConsignsForConvoyPion
 // Created: JSR 2013-02-06
 // -----------------------------------------------------------------------------
-bool SupplyConsign::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
+bool SupplyConsign::ResetConsignsForConvoyPion( const MIL_Agent_ABC& pion )
 {
     if( convoy_ && convoy_->HasConvoy( pion ) )
     {

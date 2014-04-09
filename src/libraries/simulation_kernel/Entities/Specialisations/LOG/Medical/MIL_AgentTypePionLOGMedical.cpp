@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentTypePionLOGMedical.h"
-#include "MIL_AgentPionLOGMedical.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Medical.h"
 
@@ -32,17 +32,6 @@ MIL_AgentTypePionLOGMedical::MIL_AgentTypePionLOGMedical( const std::string& str
 MIL_AgentTypePionLOGMedical::~MIL_AgentTypePionLOGMedical()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePionLOGMedical::InstanciatePion
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( MissionController_ABC& controller,
-                                                             MIL_Automate& automate,
-                                                             xml::xistream& xis ) const
-{
-    return new MIL_AgentPionLOGMedical( *this, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------

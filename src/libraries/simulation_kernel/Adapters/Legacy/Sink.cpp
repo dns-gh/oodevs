@@ -125,15 +125,6 @@ Sink::~Sink()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Sink::Finalize
-// Created: BAX 2012-10-18
-// -----------------------------------------------------------------------------
-void Sink::Finalize()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Sink::Clean
 // Created: JSR 2013-01-30
 // -----------------------------------------------------------------------------
@@ -152,88 +143,6 @@ void Sink::Clean()
         else
             ++it;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::ExecutePerceptions
-// Created: SLI 2012-09-11
-// -----------------------------------------------------------------------------
-void Sink::ExecutePerceptions()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::ExecuteCommands
-// Created: SLI 2012-01-13
-// -----------------------------------------------------------------------------
-void Sink::ExecuteCommands()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::ApplyEffects
-// Created: SLI 2012-01-13
-// -----------------------------------------------------------------------------
-void Sink::ApplyEffects()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::NotifyEffects
-// Created: MCO 2012-10-25
-// -----------------------------------------------------------------------------
-void Sink::NotifyEffects()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::UpdateModel
-// Created: SLI 2012-01-13
-// -----------------------------------------------------------------------------
-void Sink::UpdateModel( unsigned int /*tick*/, int /*duration*/, const MIL_ObjectManager& /*objects*/, const MIL_EffectManager& /*effects*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::UpdateKnowledges
-// Created: SLI 2012-09-25
-// -----------------------------------------------------------------------------
-void Sink::UpdateKnowledges()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::UpdateUrbanModel
-// Created: SLI 2012-09-24
-// -----------------------------------------------------------------------------
-void Sink::UpdateUrbanModel( const MIL_UrbanCache& /*cache*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::LogProfiling
-// Created: MCO 2012-11-12
-// -----------------------------------------------------------------------------
-void Sink::LogProfiling()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::Configure
-// Created: SLI 2012-02-10
-// -----------------------------------------------------------------------------
-MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
-{
-    tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );
-    return pion;
 }
 
 // -----------------------------------------------------------------------------
@@ -263,7 +172,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
     CreateRoles( chainExt );
     MIL_AgentPion* pPion = type.InstanciatePion( missionController_, automate, xis );
     type.RegisterRoles( *pPion, &chainExt );
-    MIL_AgentPion& pion = Configure( *pPion );
+    tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
     { 
         MT_Vector2D vPos;
         if( xis.has_attribute( "position" ) )
@@ -277,10 +186,11 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
             xis >> xml::attribute( "x", vPos.rX_ );
             xis >> xml::attribute( "y", vPos.rY_ );
         }
-        Initialize( pion, vPos );
+        pPion->CallRole( &PHY_RoleInterface_Location::Move, vPos, MT_Vector2D( 0., 1. ), 0. );
+        pPion->CallRole( &PHY_RoleInterface_UrbanLocation::MagicMove, vPos );
     }
-    pion.ReadOverloading( xis );
-    return &pion;
+    pPion->ReadOverloading( xis );
+    return pPion;
 }
 
 // -----------------------------------------------------------------------------
@@ -300,16 +210,6 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
     automate.GetColor().WriteODB( x );
     x >> xml::start( "unit" );
     return Create( type, automate, x, ext );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink::Initialize
-// Created: SLG 2010-01-21
-// -----------------------------------------------------------------------------
-void Sink::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition )
-{
-    pion.CallRole( &PHY_RoleInterface_Location::Move, vPosition, MT_Vector2D( 0., 1. ), 0. );
-    pion.CallRole( &PHY_RoleInterface_UrbanLocation::MagicMove, vPosition );
 }
 
 // -----------------------------------------------------------------------------

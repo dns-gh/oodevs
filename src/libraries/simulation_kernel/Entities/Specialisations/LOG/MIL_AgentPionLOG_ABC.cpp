@@ -12,12 +12,36 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPionLOG_ABC.h"
 #include "MIL_AutomateLOG.h"
+#include "MissionController_ABC.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPionLOG_ABC )
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_AgentPionLOG_ABC* pion, const unsigned int /*version*/ )
+{
+    unsigned int nTypeID = pion->GetType().GetID();
+    const MissionController_ABC* const controller = &pion->GetController();
+    archive << nTypeID
+            << controller;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_AgentPionLOG_ABC* pion, const unsigned int /*version*/ )
+{
+    unsigned int nTypeID;
+    MissionController_ABC* controller = 0;
+    archive >> nTypeID
+            >> controller;
+    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
+    assert( pType );
+    ::new( pion ) MIL_AgentPionLOG_ABC( *pType, *controller );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOG_ABC constructor
@@ -93,3 +117,33 @@ void MIL_AgentPionLOG_ABC::CancelAllActions()
     MIL_AgentPion::CancelAllActions();
     this->RegisterAction( pLogisticAction_ );
 }
+
+template < typename Archive >
+void MIL_AgentPionLOG_ABC::load( Archive& file, const unsigned int )
+{
+    file >> boost::serialization::base_object< MIL_AgentPion >( *this );
+    // Only medical role does not auto register
+    PHY_RoleInterface_Maintenance* maintenance;
+    file >> maintenance;
+    PHY_RoleInterface_Medical* medical;
+    file >> medical;
+    if( medical )
+        RegisterRole( *medical );
+    PHY_RoleInterface_Supply* supply;
+    file >> supply;
+}
+
+template < typename Archive >
+void MIL_AgentPionLOG_ABC::save( Archive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_AgentPion >( *this );
+    const auto* const maintenance = RetrieveRole< PHY_RoleInterface_Maintenance >();
+    file << maintenance;
+    const auto* const medical = RetrieveRole< PHY_RoleInterface_Medical >();
+    file << medical;
+    const auto* const supply = RetrieveRole< PHY_RoleInterface_Supply >();
+    file << supply;
+}
+
+template void MIL_AgentPionLOG_ABC::serialize( MIL_CheckPointInArchive&, const unsigned int );
+template void MIL_AgentPionLOG_ABC::serialize( MIL_CheckPointOutArchive&, const unsigned int );

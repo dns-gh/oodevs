@@ -66,6 +66,7 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 
+#include <spatialcontainer/TerrainData.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/assign/list_of.hpp>
 #include <functional>
@@ -534,3 +535,4 @@ void MIL_AgentTypePion::SetBrainFunctions( const std::vector< std::string >& nam
 {
     functions_ = names;
 }
+
