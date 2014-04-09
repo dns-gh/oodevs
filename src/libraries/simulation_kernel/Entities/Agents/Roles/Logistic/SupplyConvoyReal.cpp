@@ -253,10 +253,8 @@ const MIL_Agent_ABC* SupplyConvoyReal::GetProvider() const
 // -----------------------------------------------------------------------------
 void SupplyConvoyReal::Finish( bool finished /*= true*/ )
 {
-    if( IsFinished() )
-        return;
     SupplyConvoy::Finish( finished );
-    if( convoyPion_ )
+    if( finished && convoyPion_ )
     {
         transportersProvider_->SupplyDestroyConvoyPion( *convoyPion_ );
         convoyPion_ = 0;
