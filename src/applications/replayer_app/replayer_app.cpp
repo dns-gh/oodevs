@@ -48,18 +48,11 @@ int main( int /*argc*/, char* /*argv*/[] )
     tools::WinArguments winArgs( GetCommandLineW() );
     tools::InitPureCallHandler();
     boost::scoped_ptr< MT_FileLogger > fileLogger;
-    tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "" ));
-    if( !debugDir.IsEmpty() )
-    {
-        debugDir.CreateDirectories();
-        fileLogger.reset( new MT_FileLogger( debugDir / "replayer.log", 1, 0,
-            MT_Logger_ABC::eLogLevel_All ) );
-        MT_LOG_REGISTER_LOGGER( *fileLogger );
-    }
-    else
-    {
-        debugDir = tools::Path::FromUTF8( "./Debug" );
-    }
+    const tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
+    debugDir.CreateDirectories();
+    fileLogger.reset( new MT_FileLogger( debugDir / "replayer.log", 1, 0,
+        MT_Logger_ABC::eLogLevel_All ) );
+    MT_LOG_REGISTER_LOGGER( *fileLogger );
 
     try
     {

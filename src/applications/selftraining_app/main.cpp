@@ -67,17 +67,14 @@ int main( int, char** )
     if( !cwd.IsEmpty() && cwd.Exists() )
         boost::filesystem::current_path( cwd.ToBoost() );
 
-    tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir" ) );
     boost::scoped_ptr< MT_FileLogger > logger;
-    if( !debugDir.IsEmpty() )
-    {
-        debugDir.CreateDirectories();
-        logger.reset( new MT_FileLogger(
-            debugDir / "selftraining.log", 1, 0,
-            MT_Logger_ABC::eLogLevel_All ) );
-        MT_LOG_REGISTER_LOGGER( *logger );
-        MT_CrashHandler::SetRootDirectory( debugDir );
-    }
+    const tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
+    debugDir.CreateDirectories();
+    logger.reset( new MT_FileLogger(
+        debugDir / "selftraining.log", 1, 0,
+        MT_Logger_ABC::eLogLevel_All ) );
+    MT_LOG_REGISTER_LOGGER( *logger );
+    MT_CrashHandler::SetRootDirectory( debugDir );
 
     int ret = mainWrapper( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
     if( logger )
