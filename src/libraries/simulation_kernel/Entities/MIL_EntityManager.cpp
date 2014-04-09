@@ -139,23 +139,16 @@ using namespace sword;
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
 
 template< typename Archive >
-void save_construct_data( Archive& archive, const MIL_EntityManager* manager, const unsigned int /*version*/ )
+void save_construct_data( Archive& /*archive*/, const MIL_EntityManager* /*manager*/, const unsigned int /*version*/ )
 {
-    //@TODO MGD work on serialization to avoid singleton and add test for all entities
-    //const AutomateFactory_ABC* const automateFactory = &factory->automateFactory_;
-    //archive << armyFactory_
-    //        << formationFactory_
-    //        <<
-    archive << manager->sink_;
+    // NOTHING
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_EntityManager* manager, const unsigned int /*version*/ )
 {
-    std::auto_ptr< Sink_ABC > sink;
-    archive >> sink;
     ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(),
-            MIL_EffectManager::GetEffectManager(), sink,
+            MIL_EffectManager::GetEffectManager(),
             MIL_AgentServer::GetWorkspace().GetConfig(), archive.GetWorld(),
             MIL_AgentServer::GetWorkspace().GetPathFindManager() );
 }
@@ -312,8 +305,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
 // Name: MIL_EntityManager constructor
 // Created: MCO 2012-09-12
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
-        MIL_EffectManager& effects, std::auto_ptr< sword::Sink_ABC > sink,
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects,
         const MIL_Config& config, const boost::shared_ptr< const TER_World >& world,
         DEC_PathFind_Manager& pathfindManager )
     : time_                         ( time )
@@ -332,7 +324,6 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
     , rEffectsTime_                 ( 0 )
     , rStatesTime_                  ( 0 )
     , idManager_                    ( new MIL_IDManager() )
-    , sink_                         ( sink.release() )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() ) // todo : delete if saved in checkpoint
     , world_                        ( world )
     , pathfindComputer_             ( new PathfindComputer( pathfindManager ) )
@@ -2470,6 +2461,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> inhabitantFactory_
          >> pObjectManager_
          >> missionController_
+         >> sink_
          >> rKnowledgesTime_
          >> rAutomatesDecisionTime_
          >> rPionsDecisionTime_
@@ -2512,6 +2504,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
          << inhabitantFactory_
          << pObjectManager_
          << missionController_
+         << sink_
          << rKnowledgesTime_
          << rAutomatesDecisionTime_
          << rPionsDecisionTime_
