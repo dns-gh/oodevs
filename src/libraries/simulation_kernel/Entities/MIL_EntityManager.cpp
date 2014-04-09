@@ -136,6 +136,30 @@
 
 using namespace sword;
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_EntityManager* manager, const unsigned int /*version*/ )
+{
+    //@TODO MGD work on serialization to avoid singleton and add test for all entities
+    //const AutomateFactory_ABC* const automateFactory = &factory->automateFactory_;
+    //archive << armyFactory_
+    //        << formationFactory_
+    //        <<
+    archive << manager->sink_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_EntityManager* manager, const unsigned int /*version*/ )
+{
+    std::auto_ptr< Sink_ABC > sink;
+    archive >> sink;
+    ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(),
+            MIL_EffectManager::GetEffectManager(), sink,
+            MIL_AgentServer::GetWorkspace().GetConfig(), archive.GetWorld(),
+            MIL_AgentServer::GetWorkspace().GetPathFindManager() );
+}
+
 void TerminatePhysicalSingletons()
 {
     PHY_SensorType                ::Terminate();
@@ -194,11 +218,6 @@ void TerminateLogisticsSingletons()
     logistic::SupplyConvoyConfig  ::Terminate();
 }
 
-BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 namespace
 {
     std::string GetStringParam( const sword::MissionParameters& params, int index )
@@ -211,61 +230,35 @@ namespace
             throw MASA_BADPARAM_UNIT( "parameters[" << index << "] must be an ACharStr" );
         return elem.value( 0 ).acharstr();
     }
-}
 
-MIL_Automate* TaskerToAutomat( MIL_EntityManager_ABC& manager, const Tasker& tasker )
-{
-    return tasker.has_automat() && tasker.automat().has_id() ? manager.FindAutomate( tasker.automat().id() ) : 0;
-}
-
-MIL_Formation* TaskerToFormation( MIL_EntityManager& manager, const Tasker& tasker )
-{
-    return tasker.has_formation() && tasker.formation().has_id() ? manager.FindFormation( tasker.formation().id() ) : 0;
-}
-
-logistic::LogisticHierarchy_ABC* TaskerToLogisticHierarchy( MIL_EntityManager& manager, const Tasker& tasker )
-{
-    // Return the targeted logistic hierarchy
-    // For an automat, which can have its own logistic hierarchy and the logistic hierarchy of its potential logistic brain
-    //  the method returns the logistic BRAIN hierarchy: in this case, the automat's logistic hierarchy is always itself.
-    MIL_Automate* pAutomateTmp = TaskerToAutomat( manager, tasker );
-    if( pAutomateTmp )
+    MIL_Automate* TaskerToAutomat( MIL_EntityManager_ABC& manager, const Tasker& tasker )
     {
-        if( pAutomateTmp->GetBrainLogistic() )
-            return &pAutomateTmp->GetBrainLogistic()->GetLogisticHierarchy();
-        else
-            return &pAutomateTmp->GetLogisticHierarchy();
+        return tasker.has_automat() && tasker.automat().has_id() ? manager.FindAutomate( tasker.automat().id() ) : 0;
     }
-    MIL_Formation* pFormationTmp = TaskerToFormation( manager, tasker );
-    if( pFormationTmp && pFormationTmp->GetBrainLogistic() )
-        return &pFormationTmp->GetBrainLogistic()->GetLogisticHierarchy();
-    return 0;
-}
 
-// =============================================================================
-// SERIALIZATION
-// =============================================================================
+    MIL_Formation* TaskerToFormation( MIL_EntityManager& manager, const Tasker& tasker )
+    {
+        return tasker.has_formation() && tasker.formation().has_id() ? manager.FindFormation( tasker.formation().id() ) : 0;
+    }
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const MIL_EntityManager* manager, const unsigned int /*version*/ )
-{
-    //@TODO MGD work on serialization to avoid singleton and add test for all entities
-    //const AutomateFactory_ABC* const automateFactory = &factory->automateFactory_;
-    //archive << armyFactory_
-    //        << formationFactory_
-    //        <<
-    archive << manager->sink_;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, MIL_EntityManager* manager, const unsigned int /*version*/ )
-{
-    std::auto_ptr< Sink_ABC > sink;
-    archive >> sink;
-    ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(),
-            MIL_EffectManager::GetEffectManager(), sink,
-            MIL_AgentServer::GetWorkspace().GetConfig(), archive.GetWorld(),
-            MIL_AgentServer::GetWorkspace().GetPathFindManager() );
+    logistic::LogisticHierarchy_ABC* TaskerToLogisticHierarchy( MIL_EntityManager& manager, const Tasker& tasker )
+    {
+        // Return the targeted logistic hierarchy
+        // For an automat, which can have its own logistic hierarchy and the logistic hierarchy of its potential logistic brain
+        //  the method returns the logistic BRAIN hierarchy: in this case, the automat's logistic hierarchy is always itself.
+        MIL_Automate* pAutomateTmp = TaskerToAutomat( manager, tasker );
+        if( pAutomateTmp )
+        {
+            if( pAutomateTmp->GetBrainLogistic() )
+                return &pAutomateTmp->GetBrainLogistic()->GetLogisticHierarchy();
+            else
+                return &pAutomateTmp->GetLogisticHierarchy();
+        }
+        MIL_Formation* pFormationTmp = TaskerToFormation( manager, tasker );
+        if( pFormationTmp && pFormationTmp->GetBrainLogistic() )
+            return &pFormationTmp->GetBrainLogistic()->GetLogisticHierarchy();
+        return 0;
+    }
 }
 
 void MIL_EntityManager::Initialize( const tools::PhyLoader& loader, const MIL_Time_ABC& time,
