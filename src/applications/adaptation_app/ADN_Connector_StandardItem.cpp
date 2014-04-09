@@ -64,7 +64,11 @@ void ADN_Connector_StandardItem::SetDataPrivate( void* data )
             QString text = static_cast< std::string* >( data )->c_str();
             QColor color( "#" + text.right( 6 ) );
             if( color.isValid() )
-                item_.setBackground( QBrush( color ) );
+            {
+                const QBrush brush( color );
+                item_.setBackground( brush );
+                item_.setData( brush, gui::Roles::OtherRole );
+            }
             item_.setData( text, gui::Roles::DataRole );
             break;
         }
