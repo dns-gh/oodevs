@@ -12,11 +12,6 @@
 
 #include <boost/serialization/export.hpp>
 
-namespace sword
-{
-    class Sink_ABC;
-}
-
 class MIL_Object_ABC;
 
 // =============================================================================

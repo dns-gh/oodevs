@@ -12,30 +12,7 @@
 
 namespace
 {
-    NET_Publisher_ABC* pPublisher_ = 0;
-    // -----------------------------------------------------------------------------
-    // Name: Register
-    // Created: LDC 2010-01-04
-    // -----------------------------------------------------------------------------
-    void Register( NET_Publisher_ABC& publisher )
-    {
-        if( pPublisher_ == 0 )
-            pPublisher_ = &publisher;
-        else
-            throw MASA_EXCEPTION( "Publisher already registered" );
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: Unregister
-    // Created: LDC 2010-01-04
-    // -----------------------------------------------------------------------------
-    void Unregister( NET_Publisher_ABC& publisher )
-    {
-        if( pPublisher_ == &publisher )
-            pPublisher_ = 0;
-        else
-            throw MASA_EXCEPTION( "Unregistering incorrect publisher" );
-    }
+    NET_Publisher_ABC* pPublisher = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +21,9 @@ namespace
 // -----------------------------------------------------------------------------
 NET_Publisher_ABC::NET_Publisher_ABC()
 {
-    Register( *this );
+    if( pPublisher )
+        throw MASA_EXCEPTION( "Publisher already registered" );
+    pPublisher = this;
 }
 
 // -----------------------------------------------------------------------------
@@ -53,19 +32,9 @@ NET_Publisher_ABC::NET_Publisher_ABC()
 // -----------------------------------------------------------------------------
 NET_Publisher_ABC::~NET_Publisher_ABC()
 {
-    Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_Publisher_ABC::SendAsnMessage
-// Created: LDC 2010-01-04
-// -----------------------------------------------------------------------------
-void NET_Publisher_ABC::SendAsnMessage( sword::SimToClient& msg )
-{
-    if( pPublisher_ )
-        pPublisher_->Send( msg );
-    else
-        throw MASA_EXCEPTION( "No publisher registered" );
+    if( pPublisher != this )
+        throw MASA_EXCEPTION( "Unregistering incorrect publisher" );
+    pPublisher = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +43,7 @@ void NET_Publisher_ABC::SendAsnMessage( sword::SimToClient& msg )
 // -----------------------------------------------------------------------------
 NET_Publisher_ABC& NET_Publisher_ABC::Publisher()
 {
-    if( !pPublisher_ )
+    if( !pPublisher )
         throw MASA_EXCEPTION( "No publisher registered" );
-    return *pPublisher_;
+    return *pPublisher;
 }

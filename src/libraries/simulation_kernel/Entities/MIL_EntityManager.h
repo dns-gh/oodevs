@@ -238,8 +238,7 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
     MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects,
-        std::auto_ptr< sword::Sink_ABC > sink, const MIL_Config& config,
-        const boost::shared_ptr< const TER_World >& world,
+        const MIL_Config& config, const boost::shared_ptr< const TER_World >& world,
         DEC_PathFind_Manager& pathfindManager );
 
     void load( MIL_CheckPointInArchive&, const unsigned int );

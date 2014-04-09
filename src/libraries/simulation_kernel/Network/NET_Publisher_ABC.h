@@ -34,7 +34,6 @@ public:
     //@{
     virtual void Send( sword::SimToClient& ) = 0;
 
-    static void SendAsnMessage( sword::SimToClient& );
     static NET_Publisher_ABC& Publisher();
     //@}
 };
