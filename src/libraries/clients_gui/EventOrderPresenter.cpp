@@ -16,17 +16,14 @@
 #include "EventPresenter.h"
 #include "EventView_ABC.h"
 #include "TimelinePublisher.h"
-
 #include "actions/ActionsModel.h"
 #include "actions/ActionFactory_ABC.h"
 #include "actions/ActionTasker.h"
-
+#include "actions/Parameter_ABC.h"
 #include "actions_gui/MissionInterface_ABC.h"
-
 #include "clients_gui/AutomatDecisions.h"
 #include "clients_gui/Decisions_ABC.h"
 #include "clients_gui/Tools.h"
-
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -40,9 +37,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TimelineHelpers.h"
 #include "clients_kernel/Tools.h"
-
 #include <timeline/api.h>
-
 #include <boost/assign.hpp>
 
 using namespace gui;
@@ -143,7 +138,17 @@ void EventOrderPresenter::OnMissionTypeChanged( E_MissionType missionType )
 // -----------------------------------------------------------------------------
 void EventOrderPresenter::OnMissionChanged( const QString& mission )
 {
-    Select( state_->currentType_, mission.toStdString() );
+    if( currentAction_ )
+    {
+        const unsigned int count = currentAction_->Count();
+        for( unsigned int i = 0; i < count; ++i )
+        {
+            const auto& param = currentAction_->ParameterContainer_ABC::Get( i );
+            if( !param.IsContext() || !param.IsSet() )
+                currentAction_->Delete( i );
+        }
+    }
+    Select( state_->currentType_, mission.toStdString(), currentAction_.get() );
     BuildView();
 }
 
@@ -241,9 +246,8 @@ void EventOrderPresenter::CommitTo( timeline::Event& event ) const
         action->Publish( timelinePublisher_, 0 );
         event.name = action->GetName();
         event.action.payload = timelinePublisher_.GetPayload();
-        delete action;
+        currentAction_.reset( action );
     }
-
     event.action.apply = true;
     event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
 }

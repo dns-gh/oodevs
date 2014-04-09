@@ -68,6 +68,7 @@ public:
     void SetMinMaxOccurs( unsigned int min, unsigned int max );
     void SetKeyName( const std::string& name );
     bool IsOptional() const;
+    bool IsContext() const;
     bool HasGenObject( const std::string& type ) const; // $$$$ ABR 2013-01-08: Rename this method, not only about gen objects, that can be about object knowledge too
     unsigned int MinOccurs() const;
     unsigned int MaxOccurs() const;
@@ -100,9 +101,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, OrderParameterValue >   T_OrderParameterValues;
-    typedef T_OrderParameterValues::const_iterator        CIT_OrderParameterValues;
     typedef std::set< std::string >                         T_Aliases;
-    typedef T_Aliases::const_iterator                     CIT_Aliases;
     //@}
 
     //! @name Helpers
@@ -118,6 +117,7 @@ private:
     std::string type_;
     std::string keyName_;
     bool optional_;
+    bool context_;
     bool structure_;
     bool union_;
     unsigned int minOccurs_;

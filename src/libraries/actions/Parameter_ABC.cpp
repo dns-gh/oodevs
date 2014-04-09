@@ -26,9 +26,8 @@ using namespace actions;
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 Parameter_ABC::Parameter_ABC( const QString& name )
-    : name_    ( name )
-    , position_()
-    , isSet_   ( false )
+    : name_ ( name )
+    , isSet_( false )
 {
     // NOTHING
 }
@@ -92,6 +91,15 @@ void Parameter_ABC::SetKeyName( const std::string& /*identifier*/ )
 // Created: LDC 2012-09-05
 // -----------------------------------------------------------------------------
 bool Parameter_ABC::IsOptional() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parameter_ABC::IsContext
+// Created: SLI 2014-04-04
+// -----------------------------------------------------------------------------
+bool Parameter_ABC::IsContext() const
 {
     return false;
 }

@@ -23,6 +23,12 @@ using namespace kernel;
 
 namespace
 {
+    unsigned int GetMaxOccurs( xml::xistream& xis )
+    {
+        return xis.attribute< std::string >( "max-occurs", "1" ) == "unbounded" ?
+               std::numeric_limits< unsigned int >::max() :
+               xis.attribute< unsigned int >( "max-occurs", 1 );
+    }
     struct CopyVisitor : public OrderParameterValueVisitor_ABC
                        , public ChoicesVisitor_ABC
                        , private boost::noncopyable
@@ -47,15 +53,16 @@ namespace
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
 OrderParameter::OrderParameter( xml::xistream& xis )
-    : name_( xis.attribute< std::string >( "name" ) )
-    , type_( boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) ) )
-    , optional_( xis.attribute( "optional", false ) )
-    , structure_( false )
-    , union_( false )
-    , minOccurs_( 1 )
-    , maxOccurs_( 1 )
-    , minValue_ ( std::numeric_limits< double >::min() )
-    , maxValue_ ( std::numeric_limits< double >::max() )
+    : name_        ( xis.attribute< std::string >( "name" ) )
+    , type_        ( boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) ) )
+    , optional_    ( xis.attribute( "optional", false ) )
+    , context_     ( xis.attribute( "is-context", false ) )
+    , structure_   ( false )
+    , union_       ( false )
+    , minOccurs_   ( 1 )
+    , maxOccurs_   ( GetMaxOccurs( xis ) )
+    , minValue_    ( std::numeric_limits< double >::min() )
+    , maxValue_    ( std::numeric_limits< double >::max() )
     , indirectFire_( false )
 {
     xis >> xml::list( "value", *this, &OrderParameter::ReadValue )
@@ -69,12 +76,6 @@ OrderParameter::OrderParameter( xml::xistream& xis )
         >> xml::optional >> xml::attribute( "min-value", minValue_ )
         >> xml::optional >> xml::attribute( "max-value", maxValue_ )
         >> xml::optional >> xml::attribute( "indirect-fire-only", indirectFire_ );
-    std::string maxString( "1" );
-    xis >> xml::optional >> xml::attribute( "max-occurs", maxString );
-    if( maxString == "unbounded" )
-        maxOccurs_ = std::numeric_limits< unsigned int >::max();
-    else
-        xis >> xml::optional >> xml::attribute( "max-occurs", maxOccurs_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,15 +83,16 @@ OrderParameter::OrderParameter( xml::xistream& xis )
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
 OrderParameter::OrderParameter( const std::string& name, const std::string& type, bool optional, unsigned int min /* = 1*/, unsigned int max /* = 1*/ )
-    : name_( name )
-    , type_( boost::algorithm::to_lower_copy( type ) )
-    , optional_( optional )
-    , structure_( false )
-    , union_( false )
-    , minOccurs_( min )
-    , maxOccurs_( max )
-    , minValue_ ( std::numeric_limits< double >::min() )
-    , maxValue_ ( std::numeric_limits< double >::max() )
+    : name_        ( name )
+    , type_        ( boost::algorithm::to_lower_copy( type ) )
+    , optional_    ( optional )
+    , context_     ( false )
+    , structure_   ( false )
+    , union_       ( false )
+    , minOccurs_   ( min )
+    , maxOccurs_   ( max )
+    , minValue_    ( std::numeric_limits< double >::min() )
+    , maxValue_    ( std::numeric_limits< double >::max() )
     , indirectFire_( false )
 {
     // NOTHING
@@ -101,11 +103,12 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
 // Created: ABR 2014-03-05
 // -----------------------------------------------------------------------------
 OrderParameter::OrderParameter( const OrderParameter& other )
-    : name_( other.name_ )
-    , type_( other.type_ )
-    , optional_( other.optional_ )
+    : name_     ( other.name_ )
+    , type_     ( other.type_ )
+    , optional_ ( other.optional_ )
+    , context_  ( other.context_ )
     , structure_( other.structure_ )
-    , union_( other.union_ )
+    , union_    ( other.union_ )
     , minOccurs_( other.minOccurs_ )
     , maxOccurs_( other.maxOccurs_ )
     , minValue_ ( other.minValue_ )
@@ -166,6 +169,15 @@ const std::string& OrderParameter::GetKeyName() const
 bool OrderParameter::IsOptional() const
 {
     return optional_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::IsContext
+// Created: SLI 2014-04-04
+// -----------------------------------------------------------------------------
+bool OrderParameter::IsContext() const
+{
+    return context_;
 }
 
 // -----------------------------------------------------------------------------
@@ -252,7 +264,7 @@ void OrderParameter::SetKeyName( const std::string& keyName )
 // -----------------------------------------------------------------------------
 const OrderParameterValue& OrderParameter::GetValue( unsigned int id ) const
 {
-    CIT_OrderParameterValues it = values_.find( id );
+    auto it = values_.find( id );
     if( it == values_.end() )
         throw MASA_EXCEPTION( "Undefined enumeration value." ); // $$$$ SBO 2007-05-25:
     return it->second;
@@ -276,7 +288,7 @@ const OrderParameterValue* OrderParameter::FindValue( unsigned int id ) const
 // -----------------------------------------------------------------------------
 const std::string& OrderParameter::GetChoice( unsigned int id ) const
 {
-    CIT_Aliases it = aliases_.begin();
+    auto it = aliases_.begin();
     while( it != aliases_.end() && id > 0 )
     {
         ++it;

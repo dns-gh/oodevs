@@ -69,6 +69,7 @@ public:
     virtual QString GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const;
     virtual void SetKeyName( const std::string& identifier );
     virtual bool IsOptional() const;
+    virtual bool IsContext() const;
     virtual std::string GetType() const;
     virtual geometry::Point2f GetPosition() const;
     virtual std::string GetKeyName() const;

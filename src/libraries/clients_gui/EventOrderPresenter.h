@@ -127,6 +127,7 @@ private:
     TimelinePublisher& timelinePublisher_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     const kernel::OrderType* order_;
+    mutable std::unique_ptr< actions::Action_ABC > currentAction_;
     int lastContext_;
     //@}
 };
