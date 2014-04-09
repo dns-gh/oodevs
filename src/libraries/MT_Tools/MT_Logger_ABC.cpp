@@ -83,6 +83,8 @@ const char* MT_Logger_ABC::GetTypeAsString() const
         return "Replayer";
     case eFrontend:
         return "Frontend";
+    case eAdaptation:
+        return "Adaptation";
     default:
         return "Unknown type";
     }

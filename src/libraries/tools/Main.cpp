@@ -23,6 +23,7 @@ namespace
     {
         switch( type )
         {
+        case MT_Logger_ABC::eAdaptation : return "adaptation";
         case MT_Logger_ABC::ePreparation : return "preparation";
         case MT_Logger_ABC::eFrontend : return "selftraining";
         case MT_Logger_ABC::eDispatcher : return "dispatcher";
