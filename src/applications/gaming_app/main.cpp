@@ -43,5 +43,5 @@ int main()
     gdal_ogr::SetLogger( CreateMTLogger( "gdal_ogr" ) );
     return tools::Main(
         tools::WinArguments( GetCommandLineW() ),
-        MT_Logger_ABC::eGaming, true, &Main );
+        MT_Logger_ABC::eGaming, false, &Main );
 }
