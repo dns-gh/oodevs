@@ -17,17 +17,11 @@
 #include "tools/Language.h"
 #include "tools/Languages.h"
 #include "tools/VersionHelper.h"
-#include <tools/StackContext.h>
 #include <license_gui/LicenseDialog.h>
 
 //#define NO_LICENSE_CHECK
 
 using namespace gui;
-
-namespace
-{
-    tools::StackContext context;
-}
 
 // -----------------------------------------------------------------------------
 // Name: Application_ABC constructor

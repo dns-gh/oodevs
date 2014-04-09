@@ -17,14 +17,10 @@
 #include <license_gui/LicenseDialog.h>
 #include <tools/Path.h>
 #include <tools/Exception.h>
-#include <tools/StackContext.h>
 #include <windows.h>
 
 namespace
 {
-
-    tools::StackContext context;
-
     int Main( const tools::WinArguments& winArgs )
     {
         int result = EXIT_FAILURE;
@@ -49,7 +45,6 @@ namespace
         }
         return result;
     }
-
 }
 
 int main()

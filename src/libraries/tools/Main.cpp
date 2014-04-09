@@ -15,10 +15,13 @@
 #include "tools/Exception.h"
 #include <tools/Path.h>
 #include <tools/win32/CrashHandler.h>
+#include <tools/StackContext.h>
 #include <windows.h>
 
 namespace
 {
+    tools::StackContext context;
+
     const char* GetFileName( MT_Logger_ABC::E_Type type )
     {
         switch( type )

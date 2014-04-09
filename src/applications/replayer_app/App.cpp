@@ -17,7 +17,6 @@
 #include "tools/IpcWatch.h"
 #include "tools/WaitEvent.h"
 #include "tools/WinArguments.h"
-#include <tools/StackContext.h>
 #include <tools/Exception.h>
 
 #include <boost/bind.hpp>
@@ -28,8 +27,6 @@ using namespace dispatcher;
 
 namespace
 {
-    tools::StackContext context;
-
     const int NUM_ICON_FOR_ANIMATION = 2;
     int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1 };
 }

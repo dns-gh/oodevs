@@ -16,7 +16,6 @@
 #include "tools/WinArguments.h"
 #include "simulation_terrain/TER_Logger.h"
 #include <license_gui/LicenseDialog.h>
-#include <tools/StackContext.h>
 #include <tools/win32/FlexLm.h>
 #include <tools/win32/CrashHandler.h>
 #pragma warning( push, 0 )
@@ -26,9 +25,6 @@
 
 namespace
 {
-
-    tools::StackContext context;
-
     int Main( const tools::WinArguments& winArgs )
     {
         boost::scoped_ptr< SIM_App > app;
