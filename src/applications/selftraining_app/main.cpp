@@ -54,7 +54,7 @@ int mainWrapper( int argc, char** argv )
 
 }  // namespace
 
-int main( int, char** )
+int main()
 {
     tools::WinArguments winArgs( GetCommandLineW() ) ;
 

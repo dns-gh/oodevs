@@ -43,7 +43,7 @@ namespace
     }
 }
 
-int main( int, char** )
+int main()
 {
     tools::WinArguments winArgs( GetCommandLineW() );
     int argc = winArgs.Argc();
