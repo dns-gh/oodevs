@@ -13,44 +13,31 @@
 #include "clients_kernel/Tools.h"
 #include "tools/Main.h"
 #include "tools/WinArguments.h"
-#include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_Logger.h"
-
-int appMain( int argc, char** argv )
-{
-    gui::ApplicationMonitor monitor( argc, argv );
-    try
-    {
-        Application app( monitor, argc, argv );
-        return app.Run();
-    }
-    catch( const std::exception& e )
-    {
-        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::GetExceptionMsg( e ).c_str() );
-    }
-    catch( ... )
-    {
-        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::translate( "Application", "Unhandled error" ) );
-    }
-    return EXIT_FAILURE;
-}
 
 namespace
 {
-
-int mainWrapper( int argc, char** argv )
-{
-    __try
+    int Main( const tools::WinArguments& winArgs )
     {
-        return appMain( argc, argv );
-    }
-    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
-    {
+        int argc = winArgs.Argc();
+        auto argv = const_cast< char** >( winArgs.Argv() );
+        gui::ApplicationMonitor monitor( argc, argv );
+        try
+        {
+            Application app( monitor, argc, argv );
+            return app.Run();
+        }
+        catch( const std::exception& e )
+        {
+            QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::GetExceptionMsg( e ).c_str() );
+        }
+        catch( ... )
+        {
+            QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::translate( "Application", "Unhandled error" ) );
+        }
         return EXIT_FAILURE;
     }
 }
-
-}  // namespace
 
 int main()
 {
@@ -63,6 +50,5 @@ int main()
     const tools::Path cwd = tools::Path::FromUTF8( winArgs.GetOption( "--cwd" ));
     if( !cwd.IsEmpty() && cwd.Exists() )
         boost::filesystem::current_path( cwd.ToBoost() );
-    const auto logger = tools::Initialize( winArgs, MT_Logger_ABC::eFrontend );
-    return mainWrapper( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
+    return tools::Main( winArgs, MT_Logger_ABC::eFrontend, false, &Main );
 }
