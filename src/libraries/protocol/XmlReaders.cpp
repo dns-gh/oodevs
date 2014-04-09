@@ -904,6 +904,7 @@ namespace
         { &ReadObjectKnowledgeId,     "objectknowledge" },
         { &ReadPartyId,               "army" },
         { &ReadQuantity,              "quantity" },
+        { &ReadResourceNetworkNode,   "resourcenetwork" },
         { &ReadResourceNetworkNode,   "resourcenetworknode" },
         { &ReadResourceNetworkType,   "resourcenetworktype" },
         { &ReadResourceType,          "dotationtype" },
