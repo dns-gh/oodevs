@@ -56,10 +56,6 @@
         <translation>A propos</translation>
     </message>
     <message>
-        <source>sword@masagroup.net</source>
-        <translation>sword@masagroup.net</translation>
-    </message>
-    <message>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
