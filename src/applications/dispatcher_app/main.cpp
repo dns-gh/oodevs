@@ -10,16 +10,15 @@
 #include "Application.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
-#include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"
+#include "tools/Main.h"
 #include "tools/WinArguments.h"
 #include <license_gui/LicenseDialog.h>
 #include <tools/Path.h>
 #include <tools/Exception.h>
 #include <tools/win32/CrashHandler.h>
 #include <windows.h>
-#include <boost/smart_ptr.hpp>
 
 namespace
 {
@@ -37,17 +36,10 @@ void CrashHandler( EXCEPTION_POINTERS* exception )
 //-----------------------------------------------------------------------------
 int main( int /*argc*/, char* /*argv*/[] )
 {
-    // Init logger
-    tools::WinArguments winArgs( GetCommandLineW() );
     MT_ConsoleLogger consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
-    boost::scoped_ptr< MT_FileLogger > fileLogger;
-    const tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
-    debugDir.CreateDirectories();
-    MT_CrashHandler::SetRootDirectory( debugDir );
-    fileLogger.reset( new MT_FileLogger( debugDir / "dispatcher.log", 1, 0,
-        MT_Logger_ABC::eLogLevel_All ) );
-    MT_LOG_REGISTER_LOGGER( *fileLogger );
+    const tools::WinArguments winArgs( GetCommandLineW() );
+    const auto logger = tools::Initialize( winArgs, MT_Logger_ABC::eDispatcher );
     tools::InitPureCallHandler();
     tools::InitCrashHandler( &CrashHandler );
 
@@ -73,8 +65,6 @@ int main( int /*argc*/, char* /*argv*/[] )
         MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 
-    if( fileLogger )
-        MT_LOG_UNREGISTER_LOGGER( *fileLogger );
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResult;
 }

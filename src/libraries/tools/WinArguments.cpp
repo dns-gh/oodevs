@@ -69,7 +69,7 @@ bool WinArguments::HasOption( const std::string& name ) const
 // Name: WinArguments::GetOption
 // Created: ABR 2013-03-12
 // -----------------------------------------------------------------------------
-std::string WinArguments::GetOption( const std::string& name, const std::string& defaultValue /* = "" */ )
+std::string WinArguments::GetOption( const std::string& name, const std::string& defaultValue /* = "" */ ) const
 {
     for( auto arg = argv_.begin() + 1; arg != argv_.end(); ++arg )
     {
