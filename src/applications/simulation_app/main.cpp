@@ -10,7 +10,6 @@
 #include "simulation_app_pch.h"
 #include "SIM_App.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
-#include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Main.h"
 #include "tools/VersionHelper.h"
@@ -28,60 +27,57 @@
 namespace
 {
 
-tools::StackContext context;
+    tools::StackContext context;
 
-void CrashHandler( EXCEPTION_POINTERS* exception )
-{
-    MT_CrashHandler::ExecuteHandler( exception );
+    int Main( const tools::WinArguments& winArgs )
+    {
+        boost::scoped_ptr< SIM_App > app;
+        int result = EXIT_FAILURE;
+        try
+        {
+            const bool verbose = winArgs.HasOption( "--verbose" ) || winArgs.HasOption( "--verbose=true" ) ;
+            int maxConnections = 0;
+    #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+            license_gui::LicenseDialog::CheckLicense( "sword-runtime", !verbose );
+            try
+            {
+                FlexLmLicense license_dispatch( "sword-dispatcher", 1.0f );
+                maxConnections = license_dispatch.GetAuthorisedUsers();
+            }
+            catch( const FlexLmLicense::LicenseError& )
+            {
+                maxConnections = 1;
+            }
+    #endif
+            GOOGLE_PROTOBUF_VERIFY_VERSION;
+            HINSTANCE hInstance = GetModuleHandle( NULL );
+            HINSTANCE prevInstance = GetModuleHandle( NULL );
+            app.reset( new SIM_App( hInstance, prevInstance, GetCommandLineW(), 0, maxConnections, verbose ) );
+            result = app->Execute();
+        }
+        catch( const FlexLmLicense::LicenseError& e )
+        {
+            MT_LOG_ERROR_MSG( e.CreateLoggerMsg() );
+        }
+        catch( const xml::exception& e )
+        {
+            MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
+        }
+        catch( const tools::Exception& e )
+        {
+            MT_LOG_ERROR_MSG( tools::GetStackTraceAndMessage( e ) );
+        }
+        google::protobuf::ShutdownProtobufLibrary();
+        return result;
+    }
 }
 
-}
-
-int main( int /*argc*/, char* /*argv*/[] )
+int main()
 {
-    const tools::WinArguments winArgs( GetCommandLineW() );
-    tools::InitPureCallHandler();
-    const auto logger = tools::Initialize( winArgs, MT_Logger_ABC::eSimulation );
-    tools::InitCrashHandler( &CrashHandler );
     MT_ConsoleLogger consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
     InitializeTerrainLogger();
-    boost::scoped_ptr< SIM_App > app;
-    int nResult = EXIT_FAILURE;
-    try
-    {
-        const bool verbose = winArgs.HasOption( "--verbose" ) || winArgs.HasOption( "--verbose=true" ) ;
-        int maxConnections = 0;
-#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-        license_gui::LicenseDialog::CheckLicense( "sword-runtime", !verbose );
-        try
-        {
-            FlexLmLicense license_dispatch( "sword-dispatcher", 1.0f );
-            maxConnections = license_dispatch.GetAuthorisedUsers();
-        }
-        catch( const FlexLmLicense::LicenseError& )
-        {
-            maxConnections = 1;
-        }
-#endif
-        GOOGLE_PROTOBUF_VERIFY_VERSION;
-        HINSTANCE hInstance = GetModuleHandle( NULL );
-        HINSTANCE prevInstance = GetModuleHandle( NULL );
-        app.reset( new SIM_App( hInstance, prevInstance, GetCommandLineW(), 0, maxConnections, verbose ) );
-        nResult = app->Execute();
-    }
-    catch( const FlexLmLicense::LicenseError& e )
-    {
-        MT_LOG_ERROR_MSG( e.CreateLoggerMsg() );
-    }
-    catch( const xml::exception& e )
-    {
-        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
-    }
-    catch( const tools::Exception& e )
-    {
-        MT_LOG_ERROR_MSG( tools::GetStackTraceAndMessage( e ) );
-    }
-    google::protobuf::ShutdownProtobufLibrary();
-    return nResult;
+    return tools::Main(
+        tools::WinArguments( GetCommandLineW() ),
+        MT_Logger_ABC::eSimulation, true, &Main );
 }

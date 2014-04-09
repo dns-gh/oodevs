@@ -60,7 +60,7 @@ namespace
     }
 }
 
-int main( int /*argc*/, char** /*argv*/ )
+int main()
 {
     ProcessMonitor monitor;
     core::Model model;

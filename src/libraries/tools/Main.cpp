@@ -14,6 +14,7 @@
 #include "tools/WinArguments.h"
 #include "tools/Exception.h"
 #include <tools/Path.h>
+#include <tools/win32/CrashHandler.h>
 #include <windows.h>
 
 namespace
@@ -32,10 +33,39 @@ namespace
             throw MASA_EXCEPTION( "unsupported logger type" );
         }
     }
+
+    void CrashHandler( EXCEPTION_POINTERS* exception )
+    {
+        MT_CrashHandler::ExecuteHandler( exception );
+    }
+
+    template< typename M >
+    int CallMain( const M& main, const tools::WinArguments& winArgs, bool silentCrash )
+    {
+        if( silentCrash )
+            return main( winArgs );
+        __try
+        {
+            return main( winArgs );
+        }
+        __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
+        {
+            return EXIT_FAILURE;
+        }
+    }
 }
 
-std::shared_ptr< MT_Logger_ABC > tools::Initialize( const tools::WinArguments& winArgs, MT_Logger_ABC::E_Type type )
+int tools::Main(
+    const tools::WinArguments& winArgs,
+    MT_Logger_ABC::E_Type type,
+    bool silentCrash,
+    int(*main)( const tools::WinArguments& winArgs ) )
 {
+    if( silentCrash )
+    {
+        tools::InitCrashHandler( &CrashHandler );
+        tools::InitPureCallHandler();
+    }
     const tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
     debugDir.CreateDirectories();
     const std::shared_ptr< MT_FileLogger > logger(
@@ -49,5 +79,5 @@ std::shared_ptr< MT_Logger_ABC > tools::Initialize( const tools::WinArguments& w
         } );
     MT_LOG_REGISTER_LOGGER( *logger );
     MT_CrashHandler::SetRootDirectory( debugDir );
-    return logger;
+    return CallMain( main, winArgs, silentCrash );
 }

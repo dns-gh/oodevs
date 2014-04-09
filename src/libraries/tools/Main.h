@@ -17,7 +17,11 @@ namespace tools
 {
     class WinArguments;
 
-    std::shared_ptr< MT_Logger_ABC > Initialize( const tools::WinArguments& winArgs, MT_Logger_ABC::E_Type type );
+    int Main(
+        const tools::WinArguments& winArgs,
+        MT_Logger_ABC::E_Type type,
+        bool silentCrash,
+        int(*main)( const tools::WinArguments& winArgs ) );
 }
 
 #endif // Main_h
