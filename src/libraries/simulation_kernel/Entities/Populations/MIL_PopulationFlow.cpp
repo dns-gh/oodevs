@@ -250,6 +250,9 @@ void MIL_PopulationFlow::MoveToAlternateDestination( const MT_Vector2D& destinat
     {
         alternateDestination_ = destination;
         ComputePath( alternateDestination_ );
+        pTailPath_->Cancel();
+        pTailPath_->DecRef();
+        pTailPath_.reset();
     }
 }
 
@@ -300,6 +303,7 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
     object.NotifyPopulationMovingInside( *this );
     //$$$ DEUGUEU Cf. refactor gestion objets <-> population
+    pFirstSplittingObject_ = 0;
     if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &object )
         pFirstSplittingObject_ = &object;
     if( pFirstSplittingObject_ )
