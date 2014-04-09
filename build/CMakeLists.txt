@@ -602,10 +602,6 @@ target_link_libraries( adaptation_app
     ${EXCEL_LIBRARIES}
 )
 
-# loadtester_app
-add_target( loadtester_app clients "applications/loadtester_app" OPTIONS protocol executable )
-target_link_libraries( loadtester_app sword_tools )
-
 # clients_test
 add_target( clients_test tests "tests/clients_test" OPTIONS qt3 qt test )
 target_link_libraries( clients_test
