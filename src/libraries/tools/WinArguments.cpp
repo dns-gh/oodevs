@@ -42,9 +42,9 @@ WinArguments::~WinArguments()
 // Name: WinArguments::Argv
 // Created: RDS 2008-07-22
 // -----------------------------------------------------------------------------
-const char* const* WinArguments::Argv() const
+char** WinArguments::Argv() const
 {
-    return cArgv_.empty() ? 0 : &cArgv_.front();
+    return const_cast< char** >( cArgv_.empty() ? 0 : &cArgv_.front() );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ const char* const* WinArguments::Argv() const
 // -----------------------------------------------------------------------------
 int WinArguments::Argc() const
 {
-    return (int)cArgv_.size();
+    return static_cast< int >( cArgv_.size() );
 }
 
 // -----------------------------------------------------------------------------

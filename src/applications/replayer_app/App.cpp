@@ -50,7 +50,7 @@ App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/, LPWSTR lpCmdLine, i
     // win32 argument parsing
     tools::WinArguments winArgs( lpCmdLine );
     test_ = winArgs.HasOption( "--test" );
-    config_->Parse( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
+    config_->Parse( winArgs.Argc(), winArgs.Argv() );
     if( replayLog )
         MT_LOG_REGISTER_LOGGER( *new MT_FileLogger(
             config_->BuildSessionChildFile( "Replayer.log" ),

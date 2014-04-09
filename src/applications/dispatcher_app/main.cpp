@@ -40,7 +40,7 @@ namespace
 #endif
             // Execute dispatcher
             tools::SetCodec();
-            Application app( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ), maxConnections );
+            Application app( winArgs.Argc(), winArgs.Argv(), maxConnections );
             result = app.Execute( winArgs.HasOption( "--test" ) );
         }
         catch( const std::exception& e )
