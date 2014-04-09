@@ -103,7 +103,7 @@ namespace
         }
         std::stringstream ss;
         ss << bytes << ' ' << units[i];
-        return QString( ss.str().c_str() );
+        return QString::fromStdString( ss.str() );
     }
 }
 
