@@ -12,12 +12,11 @@
 #include "clients_gui/ApplicationMonitor.h"
 #include "clients_kernel/Tools.h"
 #include "tools/WinArguments.h"
+#include "tools/Main.h"
 #include "MT_Tools/MT_CrashHandler.h"
-#include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include <extractor/Logging.h>
 #include <gdal_ogr/GdalLogging.h>
-#include <boost/scoped_ptr.hpp>
 
 int appMain( int argc, char** argv )
 {
@@ -57,20 +56,9 @@ int mainWrapper( int argc, char** argv )
 
 int main()
 {
-    tools::WinArguments winArgs( GetCommandLineW() );
-    boost::scoped_ptr< MT_FileLogger > logger;
-    const tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
-    debugDir.CreateDirectories();
-    logger.reset( new MT_FileLogger(
-        debugDir / "preparation.log", 1, 0, MT_Logger_ABC::eLogLevel_All,
-        false, MT_Logger_ABC::ePreparation ) );
-    MT_LOG_REGISTER_LOGGER( *logger );
-    MT_CrashHandler::SetRootDirectory( debugDir );
+    const tools::WinArguments winArgs( GetCommandLineW() );
+    const auto logger = tools::Initialize( winArgs, MT_Logger_ABC::ePreparation );
     extractor::SetLogger( CreateMTLogger( "extractor" ) );
     gdal_ogr::SetLogger( CreateMTLogger( "gdal_ogr" ) );
-
-    int ret = mainWrapper( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
-    if( logger )
-        MT_LOG_UNREGISTER_LOGGER( *logger );
-    return ret;
+    return mainWrapper( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
 }

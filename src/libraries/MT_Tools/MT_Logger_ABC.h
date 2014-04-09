@@ -46,6 +46,8 @@ public:
         eLoggerPlugin,
         ePreparation,
         eGaming,
+        eReplayer,
+        eFrontend,
     };
     //@}
 

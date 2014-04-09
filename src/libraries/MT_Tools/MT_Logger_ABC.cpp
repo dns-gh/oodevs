@@ -79,6 +79,10 @@ const char* MT_Logger_ABC::GetTypeAsString() const
         return "Preparation";
     case eGaming:
         return "Gaming";
+    case eReplayer:
+        return "Replayer";
+    case eFrontend:
+        return "Frontend";
     default:
         return "Unknown type";
     }
