@@ -3,7 +3,6 @@
 #include "SIM_NetworkLogger.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_CrashHandler.h"
-#include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/VersionHelper.h"
@@ -17,8 +16,6 @@
 #include <google/protobuf/message.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
-#include <new.h>
-#include <direct.h>
 
 namespace
 {
@@ -28,10 +25,6 @@ void CrashHandler( EXCEPTION_POINTERS* exception )
 }
 }
 
-//-----------------------------------------------------------------------------
-// Name: Run()
-// Created: NLD 2004-02-04
-//-----------------------------------------------------------------------------
 int main( int /*argc*/, char* /*argv*/[] )
 {
     tools::WinArguments winArgs( GetCommandLineW() );
@@ -39,7 +32,6 @@ int main( int /*argc*/, char* /*argv*/[] )
 
     // Init logger & crash handler
     boost::scoped_ptr< MT_FileLogger > fileLogger;
-    boost::scoped_ptr< MT_FileLogger > crashFileLogger;
     MT_ConsoleLogger consoleLogger;
     try
     {
@@ -50,10 +42,7 @@ int main( int /*argc*/, char* /*argv*/[] )
         tools::InitCrashHandler( &CrashHandler );
 
         fileLogger.reset( new MT_FileLogger( debugDir / "Sim.log", 1, 0, MT_Logger_ABC::eLogLevel_All ) );
-        const tools::Path filename = debugDir / "Crash Version " + tools::AppProjectVersion() + ".log";
-        crashFileLogger.reset( new MT_FileLogger( filename, 1, 0, MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError ) );
         MT_LOG_REGISTER_LOGGER( *fileLogger );
-        MT_LOG_REGISTER_LOGGER( *crashFileLogger );
         MT_LOG_REGISTER_LOGGER( consoleLogger );
         InitializeTerrainLogger();
     }
@@ -102,11 +91,10 @@ int main( int /*argc*/, char* /*argv*/[] )
     }
     catch( const tools::Exception& e )
     {
-        MT_LOG_ERROR_MSG( tools::GetStackTraceAndMessage( e ));
+        MT_LOG_ERROR_MSG( tools::GetStackTraceAndMessage( e ) );
     }
     google::protobuf::ShutdownProtobufLibrary();
     app.reset();
-    MT_LOG_UNREGISTER_LOGGER( *crashFileLogger );
     MT_LOG_UNREGISTER_LOGGER( *fileLogger );
     return nResult;
 }
