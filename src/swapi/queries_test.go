@@ -220,3 +220,14 @@ func (s *TestSuite) TestIsSomethingInProfile(c *C) {
 	c.Assert(d.IsObjectInProfile(1, p), Equals, false)
 	c.Assert(d.IsObjectInProfile(2, p), Equals, true) // object without party is available for any profile
 }
+
+func (s *TestSuite) TestIsUrbanInProfile(c *C) {
+	model := NewModel()
+	defer model.Close()
+	d := model.data
+	p := &Profile{Login: "noname"}
+	d.Profiles[p.Login] = p
+	urban := NewUrban(1, "noname", nil)
+	d.Objects[urban.Id] = urban
+	c.Assert(d.IsObjectInProfile(1, p), Equals, true)
+}
