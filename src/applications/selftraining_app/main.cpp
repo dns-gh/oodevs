@@ -20,7 +20,7 @@ namespace
     int Main( const tools::WinArguments& winArgs )
     {
         int argc = winArgs.Argc();
-        auto argv = const_cast< char** >( winArgs.Argv() );
+        auto argv = winArgs.Argv();
         gui::ApplicationMonitor monitor( argc, argv );
         try
         {

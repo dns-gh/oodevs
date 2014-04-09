@@ -47,7 +47,7 @@ int main()
 {
     tools::WinArguments winArgs( GetCommandLineW() );
     int argc = winArgs.Argc();
-    char** argv = const_cast< char** >( winArgs.Argv() );
+    auto argv = winArgs.Argv();
     gui::ApplicationMonitor monitor( argc, argv );
 
     // Set library path for Qt plugins
