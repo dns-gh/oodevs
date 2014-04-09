@@ -125,12 +125,16 @@ void MIL_AgentPionLOG_ABC::load( Archive& file, const unsigned int )
     // Only medical role does not auto register
     PHY_RoleInterface_Maintenance* maintenance;
     file >> maintenance;
+    if( maintenance )
+        RegisterRole( *maintenance );
     PHY_RoleInterface_Medical* medical;
     file >> medical;
     if( medical )
         RegisterRole( *medical );
     PHY_RoleInterface_Supply* supply;
     file >> supply;
+    if( supply )
+        RegisterRole( *supply );
 }
 
 template < typename Archive >

@@ -182,8 +182,6 @@ void load_construct_data( Archive& archive, MIL_Formation* formation, const unsi
 void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    MIL_DictionaryExtensions* pExtensions;
-    MIL_Color* pColor;
     file >> pArmy_
          >> pParent_;
     idManager_.GetId( GetID(), true );
@@ -193,12 +191,10 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
     assert( pLevel_ );
     file >> tools::Resolver< MIL_Formation >::elements_
          >> tools::Resolver< MIL_Automate >::elements_
-         >> pExtensions
-         >> pColor
+         >> pExtensions_
+         >> pColor_
          >> symbol_
          >> pBrainLogistic_;
-    pExtensions_.reset( pExtensions );
-    pColor_.reset( pColor );
     if( pBrainLogistic_.get() )
     {
         pLogisticAction_.reset( new PHY_ActionLogistic< MIL_AutomateLOG >( *pBrainLogistic_ ) );
@@ -213,8 +209,6 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
-    const MIL_Color* const pColor = pColor_.get();
     assert( pLevel_ );
     unsigned int level = pLevel_->GetID();
     file << pArmy_
@@ -222,8 +216,8 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
          << level
          << tools::Resolver< MIL_Formation >::elements_
          << tools::Resolver< MIL_Automate >::elements_
-         << pExtensions
-         << pColor
+         << pExtensions_
+         << pColor_
          << symbol_
          << pBrainLogistic_;
 }
