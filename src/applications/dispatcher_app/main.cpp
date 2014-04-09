@@ -42,15 +42,12 @@ int main( int /*argc*/, char* /*argv*/[] )
     MT_ConsoleLogger consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
     boost::scoped_ptr< MT_FileLogger > fileLogger;
-    tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "" ) );
-    if( !debugDir.IsEmpty() )
-    {
-        debugDir.CreateDirectories();
-        MT_CrashHandler::SetRootDirectory( debugDir );
-        fileLogger.reset( new MT_FileLogger( debugDir / "Dispatcher.log", 1, 0,
-            MT_Logger_ABC::eLogLevel_All ) );
-        MT_LOG_REGISTER_LOGGER( *fileLogger );
-    }
+    const tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
+    debugDir.CreateDirectories();
+    MT_CrashHandler::SetRootDirectory( debugDir );
+    fileLogger.reset( new MT_FileLogger( debugDir / "dispatcher.log", 1, 0,
+        MT_Logger_ABC::eLogLevel_All ) );
+    MT_LOG_REGISTER_LOGGER( *fileLogger );
     tools::InitPureCallHandler();
     tools::InitCrashHandler( &CrashHandler );
 

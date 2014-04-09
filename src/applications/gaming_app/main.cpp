@@ -50,18 +50,15 @@ int main( int, char** )
 {
     tools::WinArguments winArgs( GetCommandLineW() ) ;
     tools::InitPureCallHandler();
-    tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir" ) );
     boost::scoped_ptr< MT_FileLogger > logger;
-    if( !debugDir.IsEmpty() )
-    {
-        debugDir.CreateDirectories();
-        logger.reset( new MT_FileLogger(
-            debugDir / "gaming.log", 1, 0, MT_Logger_ABC::eLogLevel_All,
-            false, MT_Logger_ABC::eGaming ) );
-        MT_LOG_REGISTER_LOGGER( *logger );
-        MT_CrashHandler::SetRootDirectory( debugDir );
-        tools::InitCrashHandler( &CrashHandler );
-    }
+    const tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
+    debugDir.CreateDirectories();
+    logger.reset( new MT_FileLogger(
+        debugDir / "gaming.log", 1, 0, MT_Logger_ABC::eLogLevel_All,
+        false, MT_Logger_ABC::eGaming ) );
+    MT_LOG_REGISTER_LOGGER( *logger );
+    MT_CrashHandler::SetRootDirectory( debugDir );
+    tools::InitCrashHandler( &CrashHandler );
     gdal_ogr::SetLogger( CreateMTLogger( "gdal_ogr" ) );
 
     int ret = appMain( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
