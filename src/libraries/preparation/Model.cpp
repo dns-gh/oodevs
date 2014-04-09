@@ -286,7 +286,7 @@ void Model::Load( const tools::ExerciseConfig& config )
 
     const tools::SchemaWriter schemaWriter;
     if( !LoadOptional( config.GetLoader(), config.GetWeatherFile(), weather_, schemaWriter ) )
-        controllers_.controller_.Update( weather_);
+        controllers_.controller_.Update( *weather_ );
     LoadOptional( config.GetLoader(), config.GetProfilesFile(), profiles_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetScoresFile(), scores_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
