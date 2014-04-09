@@ -801,11 +801,11 @@ func (c *Client) ChangeResourceNetworkTest(params *sword.MissionParameters) erro
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
-func (c *Client) ChangeResourceNetwork(urban *Urban) error {
+func (c *Client) ChangeResourceNetwork(urban *Object) error {
 	params := MakeParameters(nil, nil)
 	params.Elem[0] = MakeIdentifier(urban.Id)
 	resources := []*sword.MissionParameter_Value{}
-	for _, r := range urban.ResourceNetworks {
+	for _, r := range urban.Urban.ResourceNetworks {
 		resources = append(resources,
 			MakeList(
 				MakeString(r.Name),
