@@ -48,6 +48,7 @@ public:
         eGaming,
         eReplayer,
         eFrontend,
+        eAdaptation,
     };
     //@}
 
