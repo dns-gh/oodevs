@@ -46,7 +46,7 @@ void CrashHandler( EXCEPTION_POINTERS* exception )
 
 }  // namespace
 
-int main( int, char** )
+int main()
 {
     tools::WinArguments winArgs( GetCommandLineW() ) ;
     tools::InitPureCallHandler();
