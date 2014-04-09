@@ -19,17 +19,12 @@ class ADN_Connector_ABC;
 // =============================================================================
 /** @class  ADN_GraphData
     @brief  ADN_GraphData
-    @par    Using example
-    @code
-    ADN_GraphData;
-    @endcode
 */
 // Created: APE 2004-12-21
 // =============================================================================
 class ADN_GraphData : public GQ_PlotData
                     , private boost::noncopyable
 {
-
 public:
     typedef std::vector< ADN_GraphValue* > T_GraphValue_Vector;
 
@@ -46,16 +41,11 @@ public:
     void DeleteData( void* pRelatedObject );
 
     void OnDataChanged( ADN_GraphValue& );
-
     int GetDataIndex( const ADN_GraphValue& ) const;
-
     void SelectRelatedData( void* pObj );
 
-    void SetConnector( ADN_Connector_ABC& connector );
-    //@}
-
-    //! @name Accessors
-    //@{
+    void SetValueCreator( const std::function< void (void*) >& valueCreator );
+    ADN_Connector_ABC& GetConnector() const;
     ADN_GraphValue& GetGraphValue( uint nIndex );
     //@}
 
@@ -66,38 +56,5 @@ private:
     ADN_Connector_ABC* pConnector_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GraphData::SetConnector
-// Created: APE 2005-01-13
-// -----------------------------------------------------------------------------
-inline
-void ADN_GraphData::SetConnector( ADN_Connector_ABC& connector )
-{
-    pConnector_ = &connector;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GraphData::GetGraphValue
-// Created: APE 2004-12-22
-// -----------------------------------------------------------------------------
-inline
-ADN_GraphValue& ADN_GraphData::GetGraphValue( uint nIndex )
-{
-    assert( nIndex < graphValueList_.size() );
-    return * graphValueList_[nIndex];
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GraphData::GetDataIndex
-// Created: APE 2005-01-10
-// -----------------------------------------------------------------------------
-inline
-int ADN_GraphData::GetDataIndex( const ADN_GraphValue& value ) const
-{
-    auto it = std::find( graphValueList_.begin(), graphValueList_.end(), &value );
-    assert( it != graphValueList_.end() );
-    return static_cast< int >( std::distance( graphValueList_.begin(), it ) );
-}
 
 #endif // __ADN_GraphData_h_

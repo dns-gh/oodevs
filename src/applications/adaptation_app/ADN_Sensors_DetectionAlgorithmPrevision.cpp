@@ -12,10 +12,10 @@
 #include "moc_ADN_Sensors_DetectionAlgorithmPrevision.cpp"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Sensors_GUI.h"
-#include "ADN_Graph.h"
 #include "ADN_Connector_Graph_ABC.h"
-#include "ADN_GraphData.h"
+#include "GQ_Plot.h"
 #include "GQ_PlotData.h"
+#include "GQ_ValueConvertor.h"
 
 namespace
 {

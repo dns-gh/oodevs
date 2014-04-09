@@ -10,6 +10,7 @@
 #ifndef __ADN_Weapons_Data_PhInfos_h_
 #define __ADN_Weapons_Data_PhInfos_h_
 
+#include "ADN_CrossedRef.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Volumes_Data.h"
@@ -46,7 +47,7 @@ public:
 */
 // Created: APE 2004-11-19
 // =============================================================================
-class ADN_Weapons_Data_PhSizeInfos : public ADN_Ref_ABC
+class ADN_Weapons_Data_PhSizeInfos : public ADN_CrossedRef< ADN_Volumes_Data::VolumeInfos >
 {
 public:
     explicit ADN_Weapons_Data_PhSizeInfos( ADN_Volumes_Data::VolumeInfos *ptr );
@@ -57,7 +58,6 @@ public:
     void WriteArchive( xml::xostream& output ) const;
 
 public:
-    ADN_TypePtr_InVector_ABC< ADN_Volumes_Data::VolumeInfos > ptrSize_;
     ADN_Type_Vector_ABC< ADN_Weapons_Data_PhInfos > vPhs_;
 
 public:
@@ -70,7 +70,7 @@ public:
         ~Cmp() {}
 
         bool operator()( ADN_Weapons_Data_PhSizeInfos* tgtnfos ) const
-        { return tgtnfos->ptrSize_.GetData() && tgtnfos->ptrSize_.GetData()->strName_.GetData()==val_; }
+        { return tgtnfos->GetCrossedElement() && tgtnfos->GetCrossedElement()->strName_.GetData()==val_; }
 
     private:
         std::string val_;
@@ -83,7 +83,7 @@ public:
         ~CmpRef(){}
 
         bool operator()( ADN_Weapons_Data_PhSizeInfos* tgtnfos ) const
-        { return tgtnfos->ptrSize_.GetData() == val_; }
+        { return tgtnfos->GetCrossedElement() == val_; }
 
     private:
         ADN_Volumes_Data::VolumeInfos* val_;
