@@ -96,7 +96,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     debugPortBox->addWidget( timelineDebugPortSpinBox_ );
 
     oldTimeline_ = new QCheckBox();
-    oldTimeline_->setChecked( registry::ReadBool( "HasLegacyTimeline" ) );
+    oldTimeline_->setChecked( registry::ReadBool( "EnableLegacyTimeline" ) );
     QHBoxLayout* oldTimelineLayout = new QHBoxLayout();
     oldTimelineLayout->addWidget( oldTimeline_ );
     connect( oldTimeline_, SIGNAL( toggled( bool ) ), this, SLOT( OnTimelineChecked( bool ) ) );
@@ -310,7 +310,7 @@ void DebugConfigPanel::OnChangeDataFilter()
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnTimelineChecked( bool checked )
 {
-    registry::WriteBool( "HasLegacyTimeline", checked );
+    registry::WriteBool( "EnableLegacyTimeline", checked );
 }
 
 // -----------------------------------------------------------------------------
