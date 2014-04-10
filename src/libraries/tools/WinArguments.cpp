@@ -62,7 +62,10 @@ int WinArguments::Argc() const
 // -----------------------------------------------------------------------------
 bool WinArguments::HasOption( const std::string& name ) const
 {
-    return std::find( argv_.begin(), argv_.end(), name ) != argv_.end();
+    for( auto arg = argv_.begin() + 1; arg != argv_.end(); ++arg )
+        if( *arg == name || arg->find( name + '=' ) == 0 )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,20 +76,10 @@ std::string WinArguments::GetOption( const std::string& name, const std::string&
 {
     for( auto arg = argv_.begin() + 1; arg != argv_.end(); ++arg )
     {
-        if( arg->find(name) != 0 )
-            continue;
-        if( arg->size() == name.size() )
-        {
-            // "--foo bar" form
-            if( (arg + 1) != argv_.end() )
-                return *(arg + 1);
-        }
-        else
-        {
-            // "--foo=bar" form
-            if( (*arg)[name.size()] == '=' )
-                return arg->substr(name.size() + 1 );
-        }
+        if( *arg == name && (arg + 1) != argv_.end() && (*(arg + 1))[ 0 ] != '-' )
+            return *(arg + 1 );
+        if( arg->find( name + '=' ) == 0 )
+            return arg->substr( name.size() + 1 );
     }
     return defaultValue;
 }

@@ -31,7 +31,7 @@ namespace
         int result = EXIT_FAILURE;
         try
         {
-            const bool verbose = winArgs.HasOption( "--verbose" ) || winArgs.HasOption( "--verbose=true" ) ;
+            const bool verbose = winArgs.HasOption( "--verbose" );
             int maxConnections = 0;
     #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
             license_gui::LicenseDialog::CheckLicense( "sword-runtime", !verbose );
