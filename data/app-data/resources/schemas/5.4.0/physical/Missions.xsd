@@ -266,6 +266,11 @@
 				<xs:documentation xml:lang="en">Defines whether parameter is from context.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="indirect-fire-only" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">If true, only ammunition suitable for indirect fire can be used.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
 	<xs:complexType name="parameterChoice">
 		<xs:sequence>
