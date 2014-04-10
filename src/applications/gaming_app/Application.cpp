@@ -77,7 +77,8 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     qApp->setLibraryPaths( libList );
 
     // GUI
-    mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *simulationController_, *network_, *filter_, *config_, *logger_, GetExpiration() );
+    mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *simulationController_,
+        *network_, *filter_, *config_, *logger_, *workers_, GetExpiration() );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
 }
 
