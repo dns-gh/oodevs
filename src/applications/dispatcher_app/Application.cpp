@@ -45,4 +45,5 @@ int Application::Execute( bool test )
     tools::ipc::Watch watch( *quit_ );
     do{}
     while( dispatcher_->Update() && !test && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) );
+    return 0;
 }
