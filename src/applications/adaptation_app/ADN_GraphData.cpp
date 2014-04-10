@@ -11,6 +11,60 @@
 #include "ADN_GraphData.h"
 #include "ADN_GraphValue.h"
 
+namespace
+{
+    class ADN_GraphDataConnector : public ADN_Connector_Vector_ABC
+                                 , private boost::noncopyable
+    {
+    public:
+        explicit ADN_GraphDataConnector( ADN_GraphData& graphData )
+            : ADN_Connector_Vector_ABC()
+            , graphData_( graphData )
+        {
+            // NOTHING
+        }
+
+        void SetValueCreator( const std::function< void (void*) >& valueCreator )
+        {
+            valueCreator_ = valueCreator;
+        }
+
+        bool AddItemPrivate( void* pItem )
+        {
+            if( pItem == 0 || !valueCreator_ )
+                return false;
+            valueCreator_( pItem );
+            return true;
+        }
+
+        bool RemItemPrivate( void* pItem )
+        {
+            graphData_.DeleteData( pItem );
+            ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
+            return true;
+        }
+
+        void ConnectPrivateSub( ADN_Connector_Vector_ABC* pDataConnector )
+        {
+            ADN_Connector_ABC::ConnectPrivateSub( static_cast< ADN_Connector_ABC* >( pDataConnector ) );
+            pDataConnector->Initialize( *this );
+            connect( pDataConnector, SIGNAL( ItemAdded( void* ) ),      this, SLOT( AddItemNoEmit( void* ) ) );
+            connect( pDataConnector, SIGNAL( ItemRemoved( void* ) ),    this, SLOT( RemItemNoEmit( void* ) ) );
+        }
+
+        void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pDataConnector )
+        {
+            ADN_Connector_ABC::DisconnectPrivateSub( static_cast< ADN_Connector_ABC* >( pDataConnector ) );
+            disconnect( pDataConnector, SIGNAL( ItemAdded( void* ) ),      this, SLOT( AddItemNoEmit( void* ) ) );
+            disconnect( pDataConnector, SIGNAL( ItemRemoved( void* ) ),    this, SLOT( RemItemNoEmit( void* ) ) );
+        }
+
+    private:
+        ADN_GraphData& graphData_;
+        std::function< void (void*) > valueCreator_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphData constructor
 /** @param  nUserID
@@ -21,7 +75,7 @@ ADN_GraphData::ADN_GraphData( uint nUserID, gui::GQ_Plot& plot )
     : gui::GQ_PlotData( nUserID, plot )
     , pConnector_( 0 )
 {
-    // NOTHING
+    pConnector_ = new ADN_GraphDataConnector( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,6 +85,25 @@ ADN_GraphData::ADN_GraphData( uint nUserID, gui::GQ_Plot& plot )
 ADN_GraphData::~ADN_GraphData()
 {
     clear_owned_ptrs( graphValueList_ );
+    delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GraphData::SetValueCreator
+// Created: ABR 2014-04-08
+// -----------------------------------------------------------------------------
+void ADN_GraphData::SetValueCreator( const std::function< void (void*) >& valueCreator )
+{
+    static_cast< ADN_GraphDataConnector* >( pConnector_ )->SetValueCreator( valueCreator );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GraphData::GetConnector
+// Created: ABR 2014-04-08
+// -----------------------------------------------------------------------------
+ADN_Connector_ABC& ADN_GraphData::GetConnector() const
+{
+    return *pConnector_;
 }
 
 // -----------------------------------------------------------------------------
@@ -84,4 +157,15 @@ void ADN_GraphData::OnDataChanged( ADN_GraphValue& value )
     T_Point newPoint = value.GetPoint();
     this->ChangePoint( static_cast< unsigned int >( std::distance( graphValueList_.begin(), it ) ), newPoint );
     TouchData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GraphData::GetDataIndex
+// Created: APE 2005-01-10
+// -----------------------------------------------------------------------------
+int ADN_GraphData::GetDataIndex( const ADN_GraphValue& value ) const
+{
+    auto it = std::find( graphValueList_.begin(), graphValueList_.end(), &value );
+    assert( it != graphValueList_.end() );
+    return static_cast< int >( std::distance( graphValueList_.begin(), it ) );
 }

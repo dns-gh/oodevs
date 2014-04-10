@@ -157,10 +157,10 @@ void ExerciseList::SelectProfile( const frontend::Profile& profile )
 // -----------------------------------------------------------------------------
 void ExerciseList::Clear()
 {
-    emit ClearSelection();
     profiles_->clear();
     exercises_->Clear();
     properties_->Update();
+    emit ClearSelection();
 }
 
 // -----------------------------------------------------------------------------

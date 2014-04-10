@@ -60,9 +60,7 @@ public:
         pItem->setIcon( icon );
 
         // Connect it with the size info.
-        PhSizeInfos* infos = static_cast< PhSizeInfos* >( pObj );
-        if( infos && infos->ptrSize_.GetData() )
-            pItem->Connect( &static_cast<PhSizeInfos*>( pObj )->ptrSize_.GetData()->strName_ );
+        pItem->Connect( &static_cast< PhSizeInfos* >( pObj )->strName_ );
 
         return pItem;
     }

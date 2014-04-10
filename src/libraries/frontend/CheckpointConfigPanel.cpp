@@ -199,6 +199,7 @@ void CheckpointConfigPanel::ClearSelection()
     sessions_->clear();
     sessions_->setCurrentRow( 0 );
     sessions_->addItem( tools::translate( "CheckpointConfigPanel", "No session" ) );
+    loadGroup_->setChecked( false );
     sessions_->setDisabled( true );
 }
 

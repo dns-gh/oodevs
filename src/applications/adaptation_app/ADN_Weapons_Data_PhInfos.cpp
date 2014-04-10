@@ -104,10 +104,10 @@ void ADN_Weapons_Data_PhInfos::WriteArchive( xml::xostream& output ) const
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
 ADN_Weapons_Data_PhSizeInfos::ADN_Weapons_Data_PhSizeInfos( ADN_Volumes_Data::VolumeInfos* ptr )
-    : ptrSize_              ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr )
-    , vPhs_                 ( false )
+    : ADN_CrossedRef< ADN_Volumes_Data::VolumeInfos >( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true )
+    , vPhs_( false )
 {
-    this->BindExistenceTo( &ptrSize_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +146,7 @@ void ADN_Weapons_Data_PhSizeInfos::ReadArchive( xml::xistream& input )
 void ADN_Weapons_Data_PhSizeInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "hit-probabilities" )
-        << xml::attribute( "target", ptrSize_ );
+        << xml::attribute( "target", *this );
     for( auto it = vPhs_.begin(); it != vPhs_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
