@@ -1022,7 +1022,7 @@ end
 -- @param resourceType Integer, id of the resource defined in the physical database
 -- @param percentage Integer, the percentage of resource to consume.
 -- Can be positive (consume) or negative (replenish)
--- @param duration Integer, the duration the agent will take to consume the percentage of resource
+-- @param duration Integer, the duration (in minutes) the agent will take to consume the percentage of resource
 integration.startConsumeResource = function( resourceType, percentage, duration )
     myself.consumeAction = myself.consumeAction or {}
     myself.consumeAction[ resourceType ] = {}
@@ -1035,7 +1035,7 @@ end
 -- @param resourceType Integer, id of the resource defined in the physical database
 -- @param percentage Integer The percentage of resource to consume
 -- Can be positive (consume) or negative (replenish)
--- @param duration Integer, the duration the agent will take to consume the percentage of resource
+-- @param duration Integer, the duration (in minutes) the agent will take to consume the percentage of resource
 integration.updateConsumeResource = function( resourceType, percentage, duration )
     local etat = myself.consumeAction[ resourceType ].etatAction
     if etat == eActionFinished then
