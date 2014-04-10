@@ -27,7 +27,7 @@ namespace
 {
     int Main( const tools::WinArguments& winArgs )
     {
-        boost::scoped_ptr< SIM_App > app;
+        std::unique_ptr< SIM_App > app;
         int result = EXIT_FAILURE;
         try
         {
@@ -63,6 +63,7 @@ namespace
         {
             MT_LOG_ERROR_MSG( tools::GetStackTraceAndMessage( e ) );
         }
+        app.reset();
         google::protobuf::ShutdownProtobufLibrary();
         return result;
     }
