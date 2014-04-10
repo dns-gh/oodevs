@@ -1019,29 +1019,31 @@ end
 --- Makes the caller agent start to consume the given percentage of the given resource.
 -- The consumption is done during the time defined by the 'duration' parameter.
 -- This method can only be called by an agent.
--- @param resourceType Integer Define the type of resource to consume
--- @param percentage Integer The percentage of resource to consume
--- @param duration Integer The delay during which the agent consumes the percentage of resource
+-- @param resourceType Integer, id of the resource defined in the physical database
+-- @param percentage Integer, the percentage of resource to consume.
+-- Can be positive (consume) or negative (replenish)
+-- @param duration Integer, the duration the agent will take to consume the percentage of resource
 integration.startConsumeResource = function( resourceType, percentage, duration )
     myself.consumeAction = myself.consumeAction or {}
-    myself.consumeAction[ resourceType + 1 ] = { actionId = nil, etatAction = nil }
-    myself.consumeAction[ resourceType + 1 ].actionId = DEC_StartConsumingResources( resourceType, -percentage, duration * 60 )
-    actionCallbacks[ myself.consumeAction[ resourceType + 1 ].actionId ] = function( arg )
-        myself.consumeAction[ resourceType + 1 ].etatAction = arg
+    myself.consumeAction[ resourceType ] = {}
+    myself.consumeAction[ resourceType ].actionId = DEC_StartConsumingResources( resourceType, -percentage, duration * 60 )
+    actionCallbacks[ myself.consumeAction[ resourceType ].actionId ] = function( arg )
+        myself.consumeAction[ resourceType ].etatAction = arg
     end
 end
 --- Makes the caller agent check the consumption action feedback. 
--- @param resourceType Integer Define the type of resource to consume
+-- @param resourceType Integer, id of the resource defined in the physical database
 -- @param percentage Integer The percentage of resource to consume
--- @param duration Integer The delay during which the agent consumes the percentage of resource
+-- Can be positive (consume) or negative (replenish)
+-- @param duration Integer, the duration the agent will take to consume the percentage of resource
 integration.updateConsumeResource = function( resourceType, percentage, duration )
-    local etat = myself.consumeAction[ resourceType + 1 ].etatAction
+    local etat = myself.consumeAction[ resourceType ].etatAction
     if etat == eActionFinished then
-        DEC__StopAction( myself.consumeAction[ resourceType + 1 ].actionId )
-        myself.consumeAction[ resourceType + 1 ] = nil
+        DEC__StopAction( myself.consumeAction[ resourceType ].actionId )
+        myself.consumeAction[ resourceType ] = nil
         return true
     elseif etat == eActionNotAllowed then
-        DEC_Trace( "then agent cannot consume the given resource "..tostring( resourceType ) )
+        DEC_Trace( "the agent cannot consume the given resource "..tostring( resourceType ) )
         return false
     else
         return false -- action is running
