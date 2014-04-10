@@ -156,7 +156,7 @@ BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_creation_destruction )
     const auto global = man->GetGlobalWeather();
     BOOST_REQUIRE( global );
 
-    // Cannot remove globale weather
+    // Cannot remove global weather
     BOOST_CHECK( !man->RemoveLocalWeather( global->GetId() ) );
 
     // Remove imaginary weather
@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_creation_destruction )
 
     const PHY_RawVisionData& vision = man->GetRawVisionData();
 
-    // 3 active weather in partially overlapping square areas, in ascending
+    // 3 active weather systems in partially overlapping square areas, in ascending
     // start time order. They are on a top-left -> bottom-right diagonal to
     // avoid symmetry bugs.
     const auto w1 = AddWeather( *world, *man, 50000,     0, 20000, 30000, 100, 1100 );
@@ -191,7 +191,7 @@ BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_creation_destruction )
         const auto p0 = MT_Vector2D( 55000, 5000 );  // out of weather set
         const MT_Vector2D points[] = { p1, p13, p123, p23, p2, p0 };
 
-        std::string res  = "";
+        std::string res;
         for( size_t i = 0; i != COUNT_OF( points ); ++i )
         {
             if( i > 0 )
