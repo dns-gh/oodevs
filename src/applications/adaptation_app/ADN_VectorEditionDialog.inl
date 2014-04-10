@@ -14,7 +14,9 @@
 // Created: ABR 2013-02-11
 // -----------------------------------------------------------------------------
 template< typename SourceType, typename TargetType >
-ADN_VectorEditionDialog< SourceType, TargetType >::ADN_VectorEditionDialog( const QString& objectName, const QString& title, QWidget* parent /* = 0 */ )
+ADN_VectorEditionDialog< SourceType, TargetType >::ADN_VectorEditionDialog( const QString& objectName,
+                                                                            const QString& title,
+                                                                            QWidget* parent /* = 0 */ )
     : QDialog( parent )
 {
     // Initialization
@@ -132,7 +134,11 @@ namespace
 // Created: ABR 2013-02-11
 // -----------------------------------------------------------------------------
 template< typename SourceType, typename TargetType >
-void ADN_VectorEditionDialog< SourceType, TargetType >::AddVector( const QString& vectorName, const T_SourceVector& sourceVector, const QStandardItemModel& targetModel, ADN_Connector_Vector_ABC& targetConnector )
+void ADN_VectorEditionDialog< SourceType, TargetType >::AddVector( const QString& vectorName,
+                                                                   const T_SourceVector& sourceVector,
+                                                                   const QStandardItemModel& targetModel,
+                                                                   ADN_Connector_Vector_ABC& targetConnector,
+                                                                   const T_FilterFunctor& filterFunctor )
 {
     editionInfos_.push_back( std::auto_ptr< T_EditionInfo >( new T_EditionInfo( vectorName, sourceVector, targetConnector ) ) );
 
@@ -141,6 +147,8 @@ void ADN_VectorEditionDialog< SourceType, TargetType >::AddVector( const QString
 
     for( auto it = sourceVector.begin(); it != sourceVector.end(); ++it )
     {
+        if( *it == 0 || !filterFunctor( **it ) )
+            continue;
         QString name = ( *it )->strName_.GetData().c_str();
         QStandardItem* childItem = new QStandardItem( name );
         childItem->setFlags( childItem->flags() | Qt::ItemIsUserCheckable );

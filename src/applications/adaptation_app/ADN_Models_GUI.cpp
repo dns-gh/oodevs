@@ -118,7 +118,15 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Type_Vector_AB
     pContentLayout->addWidget( pFragOdersGroup );
 
     // List view
-    QWidget* pSearchListView = builder.AddSearchListView< ADN_ListView_Models >( this, eEntityType, model, vInfosConnectors, static_cast< int >( eEntityType ) );
+    ADN_SearchListView* pSearchListView = builder.AddSearchListView< ADN_ListView_Models >( this, eEntityType, model, vInfosConnectors, static_cast< int >( eEntityType ) );
+    pListOrders->SetFilterFunctor( [pSearchListView]( const ADN_Missions_ABC& order ) -> bool {
+        auto currentModel = static_cast< ADN_Models_ModelInfos* >( pSearchListView->GetListView()->GetCurrentData() );
+        if( currentModel )
+            for( auto it = currentModel->vFragOrders_.begin(); it != currentModel->vFragOrders_.end(); ++it )
+                if( *it && ( *it )->GetCrossedElement() == &order )
+                    return false;
+        return true;
+    });
 
     // Main page
     builder.PopSubName(); //eEntityType-tab

@@ -27,14 +27,16 @@ class ADN_VectorEditionDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_VectorEditionDialog( const QString& objectName, const QString& title, QWidget* parent = 0 );
+    explicit ADN_VectorEditionDialog( const QString& objectName,
+                                      const QString& title,
+                                      QWidget* parent = 0 );
     virtual ~ADN_VectorEditionDialog();
     //@}
 
     //! @name Types
     //@{
     typedef ADN_Type_Vector_ABC< SourceType > T_SourceVector;
-
+    typedef std::function< bool ( const SourceType& ) > T_FilterFunctor;
     struct T_EditionInfo : private boost::noncopyable
     {
         T_EditionInfo( const QString& name, const T_SourceVector& source, ADN_Connector_Vector_ABC& targetConnector )
@@ -55,7 +57,11 @@ public:
 
     //! @name Operations
     //@{
-    void AddVector( const QString& vectorName, const T_SourceVector& sourceVector, const QStandardItemModel& targetModel, ADN_Connector_Vector_ABC& targetConnector );
+    void AddVector( const QString& vectorName,
+                    const T_SourceVector& sourceVector,
+                    const QStandardItemModel& targetModel,
+                    ADN_Connector_Vector_ABC& targetConnector,
+                    const T_FilterFunctor& filterFunctor );
     //@}
 
 private:

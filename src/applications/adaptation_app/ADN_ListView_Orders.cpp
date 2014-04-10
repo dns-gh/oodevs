@@ -18,7 +18,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Orders.h"
-
 #include "ADN_Connector_ListView.h"
 #include "ADN_Gui_Tools.h"
 #include "ADN_Missions_ABC.h"
@@ -36,7 +35,8 @@ ADN_ListView_Orders::ADN_ListView_Orders( QWidget* parent )
     : ADN_ListView( parent,
                     "ADN_ListView_Orders",
                     QString::fromStdString( ENT_Tr::ConvertFromMissionType( eMissionType_FragOrder ) ) )
-{
+    , filterFunctor_( []( const ADN_Missions_ABC& ){ return true; } )
+{   
     pConnector_.reset( new ADN_Connector_ListView< ADN_Models_OrderInfos >( *this ) );
     SetDeletionEnabled( true );
 }
@@ -51,6 +51,15 @@ ADN_ListView_Orders::~ADN_ListView_Orders()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_ListView_Orders::function< bool
+// Created: ABR 2014-04-10
+// -----------------------------------------------------------------------------
+void ADN_ListView_Orders::SetFilterFunctor( const std::function< bool( const ADN_Missions_ABC& ) >& filterFunctor )
+{
+    filterFunctor_ = filterFunctor;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_ListView_Orders::OnContextMenu
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
@@ -62,5 +71,6 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
         objectName() + "-edition-dialog",
         Title(),
         Title(),
-        ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ) );
+        ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ),
+        filterFunctor_ );
 }
