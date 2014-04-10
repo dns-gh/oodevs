@@ -352,11 +352,9 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     }
 
     for( auto it = disabled.begin(); it != disabled.end(); ++it )
-    {
         meteos_.at( *it )->SendDestruction();
-        if( removed_.count( *it ) > 0 )
-            meteos_.erase( *it );
-    }
+    for( auto it = removed_.begin(); it != removed_.end(); ++it )
+        meteos_.erase( *it );
     removed_.clear();
 }
 
