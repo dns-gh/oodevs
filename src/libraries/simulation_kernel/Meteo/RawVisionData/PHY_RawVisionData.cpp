@@ -48,21 +48,20 @@ PHY_RawVisionData::~PHY_RawVisionData()
 namespace
 {
 
-// Returns the best weather instance in meteos at a given location.
-uint32_t GetLocalWeather(
+uint32_t GetActiveLocalWeatherOnLocation(
         const std::set< boost::shared_ptr< const PHY_LocalMeteo > >& meteos,
         const geometry::Point2f& position )
 {
     const PHY_LocalMeteo* result = 0;
     for( auto it = meteos.begin(); it != meteos.end(); ++it )
     {
-        const auto meteo = it->get();
+        const auto& meteo = *it;
         if( meteo->IsInside( position )
             && ( !result 
                 || meteo->GetStartTime() > result->GetStartTime()
                 || meteo->GetStartTime() == result->GetStartTime()
                     && meteo->GetId() > result->GetId() ))
-            result = meteo;
+            result = meteo.get();
     }
     return result ? result->GetId() : 0;
 }
@@ -143,7 +142,7 @@ void PHY_RawVisionData::UnregisterMeteoPatch(
             const auto pos = geometry::Point2f(
                     static_cast< float >( nXBeg * rCellSize_ ),
                     static_cast< float >( y * rCellSize_ ) );
-            cell.weatherId = GetLocalWeather( meteos_, pos );
+            cell.weatherId = GetActiveLocalWeatherOnLocation( meteos_, pos );
         }
         ++nXBeg;
     }
