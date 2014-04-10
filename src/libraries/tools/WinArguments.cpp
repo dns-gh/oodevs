@@ -63,8 +63,14 @@ int WinArguments::Argc() const
 bool WinArguments::HasOption( const std::string& name ) const
 {
     for( auto arg = argv_.begin() + 1; arg != argv_.end(); ++arg )
-        if( *arg == name || arg->find( name + '=' ) == 0 )
-            return true;
+    {
+        if( *arg == name )
+            return (arg + 1) == argv_.end()
+                || (*(arg + 1))[ 0 ] == '-'
+                || *(arg + 1) == "true";
+        if( arg->find( name + '=' ) == 0 )
+            return arg->substr( name.size() + 1 ) == "true";
+    }
     return false;
 }
 
