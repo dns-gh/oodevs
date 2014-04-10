@@ -13,6 +13,7 @@
 #include "clients_gui/Layer.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/ModesObserver_ABC.h"
 #include <tools/SelectionObserver_ABC.h>
 #include <boost/optional.hpp>
 
@@ -31,6 +32,7 @@ namespace gui
 }
 
 class Publisher_ABC;
+class ItineraryEditionDockWidget;
 
 // =============================================================================
 /** @class  PathfindLayer
@@ -43,6 +45,7 @@ class PathfindLayer : public gui::Layer
                     , public tools::SelectionObserver_Base< kernel::Agent_ABC >
                     , public tools::SelectionObserver_Base< kernel::Population_ABC >
                     , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
+                    , public kernel::ModesObserver_ABC
 {
     Q_OBJECT;
 
@@ -50,7 +53,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
-                            Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& coordinateConverter );
+                            Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& coordinateConverter,
+                            const ItineraryEditionDockWidget& itineraryDockWidget );
     virtual ~PathfindLayer();
     //@}
 
@@ -87,8 +91,10 @@ private slots:
     //! @name Slots
     //@{
     void ClearPositions();
-    void AddPosition();
+    void SetStartPosition();
+    void SetEndPosition();
     void SendRequest();
+    void OpenEditingMode();
     //@}
 
 private:
@@ -116,6 +122,8 @@ private:
     std::vector< geometry::Point2f > positions_;
     std::vector< Point > path_;
     boost::optional< Hover > hovered_;
+    bool isBeginSet_;
+    bool isEndSet_;
     geometry::Point2f point_;
     bool lock_;
     //@}

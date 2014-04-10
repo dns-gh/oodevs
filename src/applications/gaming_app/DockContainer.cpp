@@ -17,12 +17,13 @@
 #include "Config.h"
 #include "CreationPanels.h"
 #include "EventDockWidget.h"
+#include "ExtensionsPanel.h"
 #include "FormationLayer.h"
 #include "IndicatorPlotFactory.h"
 #include "InfoDock.h"
 #include "InfoPanels.h"
 #include "InhabitantPanel.h"
-#include "ExtensionsPanel.h"
+#include "ItineraryEditionDockWidget.h"
 #include "InhabitantPanel.h"
 #include "LinkInterpreter.h"
 #include "NotesPanel.h"
@@ -31,11 +32,11 @@
 #include "ProfilesPanel.h"
 #include "ProfilingPanel.h"
 #include "Properties.h"
+#include "ResourceLinksDialog.h"
+#include "ScorePanel.h"
 #include "TimelinePanel.h"
 #include "TimelineDockWidget.h"
 #include "TimelineWebView.h"
-#include "ResourceLinksDialog.h"
-#include "ScorePanel.h"
 
 #include "actions/ActionsModel.h"
 #include "actions_gui/InterfaceBuilder.h"
@@ -127,7 +128,12 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         afterAction_->SetModes( eModes_Default | eModes_Gaming );
         parent->addDockWidget( Qt::LeftDockWidgetArea, afterAction_ );
     }
-
+    // Itinerary edition
+    {
+        itineraryDockWidget_ = new ItineraryEditionDockWidget( parent, controllers );
+        itineraryDockWidget_->SetModes( eModes_AllGaming - eModes_Itinerary, eModes_Itinerary );
+        parent->addDockWidget( Qt::LeftDockWidgetArea, itineraryDockWidget_ );
+    }
     // -----------------------------------------------------------------------------
     // Right
     // -----------------------------------------------------------------------------
@@ -324,4 +330,13 @@ gui::MiniViews& DockContainer::GetMiniView() const
 EventDockWidget& DockContainer::GetEventDockWidget() const
 {
     return *eventDockWidget_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DockContainer::GetItineraryDockWidget
+// Created: SLI 2014-04-10
+// -----------------------------------------------------------------------------
+ItineraryEditionDockWidget& DockContainer::GetItineraryDockWidget() const
+{
+    return *itineraryDockWidget_;
 }

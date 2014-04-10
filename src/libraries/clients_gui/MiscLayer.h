@@ -27,8 +27,8 @@ class MiscLayer : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MiscLayer( Panel& panel ) : panel_( panel ) {};
-    virtual ~MiscLayer() {};
+    explicit MiscLayer( Panel& panel ) : panel_( panel ) {}
+    virtual ~MiscLayer() {}
     //@}
 
     //! @name Operations

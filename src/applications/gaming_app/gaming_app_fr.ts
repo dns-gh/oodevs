@@ -1393,6 +1393,21 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>ItineraryEditionDockWidget</name>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Itinerary creation</source>
+        <translation>Création d'itinéraire</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
     <name>KnowledgeAddInGroupDialog</name>
     <message>
         <source>Add to knowledge group</source>
@@ -1463,16 +1478,20 @@ Voulez-vous le remplacer ?</translation>
 <context>
     <name>LocationEditorToolbar</name>
     <message>
-        <source>Pathfind</source>
-        <translation>Pathfind</translation>
+        <source>Create itinerary</source>
+        <translation>Création d'itinéraire</translation>
     </message>
     <message>
-        <source>Clear positions</source>
-        <translation>Effacer les positions</translation>
+        <source>Itinerary from here</source>
+        <translation>Itinéraire à partir de ce lieu</translation>
     </message>
     <message>
-        <source>Add position</source>
-        <translation>Ajouter une position</translation>
+        <source>Itinerary to here</source>
+        <translation>Itinéraire vers ce lieu</translation>
+    </message>
+    <message>
+        <source>Clear waypoints</source>
+        <translation>Supprimer les points de passage</translation>
     </message>
 </context>
 <context>

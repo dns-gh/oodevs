@@ -858,6 +858,10 @@
         <source>Seriousness level 3</source>
         <translation>Gravité niveau 3</translation>
     </message>
+    <message>
+        <source>Itinerary</source>
+        <translation>Itinéraire</translation>
+    </message>
 </context>
 <context>
     <name>sword::EnumLogisticLevel</name>

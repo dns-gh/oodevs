@@ -1392,6 +1392,21 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>ItineraryEditionDockWidget</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Itinerary creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
     <name>KnowledgeAddInGroupDialog</name>
     <message>
         <source>Add to knowledge group</source>
@@ -1462,15 +1477,19 @@ Do you want to replace it?</source>
 <context>
     <name>LocationEditorToolbar</name>
     <message>
-        <source>Pathfind</source>
+        <source>Create itinerary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clear positions</source>
+        <source>Itinerary from here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add position</source>
+        <source>Itinerary to here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear waypoints</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -858,6 +858,10 @@
         <source>Seriousness level 3</source>
         <translation>Severity level 3</translation>
     </message>
+    <message>
+        <source>Itinerary</source>
+        <translation>Itinerary</translation>
+    </message>
 </context>
 <context>
     <name>sword::EnumLogisticLevel</name>

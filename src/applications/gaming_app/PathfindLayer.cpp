@@ -10,8 +10,10 @@
 #include "gaming_app_pch.h"
 #include "PathfindLayer.h"
 #include "moc_PathfindLayer.cpp"
+#include "ItineraryEditionDockWidget.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/DragAndDropHelpers.h"
+#include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -22,18 +24,22 @@
 #include "gaming/Equipments.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
+#include <boost/assign.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer constructor
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
 PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
-                              Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& coordinateConverter )
+                              Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& coordinateConverter,
+                              const ItineraryEditionDockWidget& itineraryDockWidget )
     : controllers_( controllers )
     , tools_( tools )
     , element_( controllers )
     , publisher_( publisher )
     , coordinateConverter_( coordinateConverter )
+    , isBeginSet_( false )
+    , isEndSet_( false )
     , lock_( false )
 {
     controllers_.Register( *this );
@@ -59,6 +65,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
             }
         };
     publisher_.Register( fun );
+    connect( &itineraryDockWidget, SIGNAL( ItineraryRejected() ), this, SLOT( ClearPositions() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,9 +159,14 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
     if( !element_ || lock_ )
         return;
     point_ = point;
-    kernel::ContextMenu* subMenu = menu.SubMenu( "Interface", tools::translate( "LocationEditorToolbar", "Pathfind" ) );
-    subMenu->InsertItem( "Interface", tools::translate( "LocationEditorToolbar", "Add position" ), this, SLOT( AddPosition() ) );
-    subMenu->InsertItem( "Interface", tools::translate( "LocationEditorToolbar", "Clear positions" ), this, SLOT( ClearPositions() ) );
+    if( controllers_.GetCurrentMode() == eModes_Itinerary )
+    {
+        menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Itinerary from here" ), this, SLOT( SetStartPosition() ) );
+        menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Itinerary to here" ), this, SLOT( SetEndPosition() ) );
+        menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Clear waypoints" ), this, SLOT( ClearPositions() ) );
+}
+    else
+        menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Create itinerary" ), this, SLOT( OpenEditingMode() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,16 +180,41 @@ void PathfindLayer::ClearPositions()
     positions_.clear();
     path_.clear();
     hovered_ = boost::none;
+    isBeginSet_ = false;
+    isEndSet_ = false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PathfindLayer::AddPosition
+// Name: PathfindLayer::SetStartPosition
 // -----------------------------------------------------------------------------
-void PathfindLayer::AddPosition()
+void PathfindLayer::SetStartPosition()
 {
     if( lock_ )
         return;
+    if( isBeginSet_ )
+        positions_.front() = point_;
+    else
+    {
+        positions_.insert( positions_.begin(), point_ );
+        isBeginSet_ = true;
+    }
+    SendRequest();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PathfindLayer::SetEndPosition
+// -----------------------------------------------------------------------------
+void PathfindLayer::SetEndPosition()
+{
+    if( lock_ )
+        return;
+    if( isEndSet_ )
+        positions_.back() = point_;
+    else
+    {
     positions_.push_back( point_ );
+        isEndSet_ = true;
+    }
     SendRequest();
 }
 
@@ -282,7 +319,7 @@ void PathfindLayer::PickSegment( geometry::Point2f point )
 bool PathfindLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Point2f& point )
 {
     hovered_ = boost::none;
-    if( path_.empty() || lock_ )
+    if( path_.empty() || lock_ || !element_ )
         return false;
     if( PickWaypoint( point ) )
         return false;
@@ -339,4 +376,15 @@ bool PathfindLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
 bool PathfindLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*point*/ ) const
 {
     return dnd::HasData< PathfindLayer >( event );
+}
+
+void PathfindLayer::OpenEditingMode()
+{
+    const kernel::Entity_ABC* element = element_;
+    if( !element )
+        return;
+    controllers_.ChangeMode( eModes_Itinerary );
+    element->Select( controllers_.actions_ );
+    element->MultipleSelect( controllers_.actions_, boost::assign::list_of( element ) );
+    ClearPositions();
 }
