@@ -159,7 +159,7 @@ public:
     //@{
     virtual void PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) const;
 
-    virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
+    virtual boost::shared_ptr< PHY_MaintenanceComposanteState > NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
     virtual void NotifyComposanteBackFromMaintenance( PHY_MaintenanceComposanteState& composanteState );
     virtual PHY_MaintenanceComposanteState* FindRequest( uint32_t request ) const;
     //@}

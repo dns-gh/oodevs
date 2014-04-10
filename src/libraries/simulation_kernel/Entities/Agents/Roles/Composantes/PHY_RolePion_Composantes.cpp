@@ -1282,21 +1282,20 @@ void PHY_RolePion_Composantes::PreprocessRandomBreakdowns( unsigned int nEndDayT
 // Name: PHY_RolePion_Composantes::NotifyComposanteWaitingForMaintenance
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante )
+boost::shared_ptr< PHY_MaintenanceComposanteState > PHY_RolePion_Composantes::NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante )
 {
     MIL_AutomateLOG* pTC2 = owner_->GetLogisticHierarchy().GetPrimarySuperior();
     if( !pTC2 )
-        return 0;
+        return boost::shared_ptr< PHY_MaintenanceComposanteState >();
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const unsigned int nCurrentTick = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMaintenanceQuerySent_ + 1 ) || nTickRcMaintenanceQuerySent_ == 0 )
         MIL_Report::PostEvent( *owner_, report::eRC_DemandeEvacuationMateriel );
     nTickRcMaintenanceQuerySent_ = nCurrentTick;
-    PHY_MaintenanceComposanteState* pMaintenanceComposanteState = pTC2->MaintenanceHandleComposanteForTransport( *owner_, composante );
-    if( !pMaintenanceComposanteState )
-        return 0;
-    maintenanceComposanteStates_[ pMaintenanceComposanteState->GetID() ] = pMaintenanceComposanteState;
-    return pMaintenanceComposanteState;
+    auto state = pTC2->MaintenanceHandleComposanteForTransport( *owner_, composante );
+    if( state )
+        maintenanceComposanteStates_[ state->GetID() ] = state.get();
+    return state;
 }
 
 // -----------------------------------------------------------------------------

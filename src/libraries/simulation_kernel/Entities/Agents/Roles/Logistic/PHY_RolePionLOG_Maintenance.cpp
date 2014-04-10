@@ -470,7 +470,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( const boost::shared_ptr< PHY_Ma
     if( !consign->HasValidComposanteState() )
         return;
     auto itTact = consigns_.begin();
-    const MIL_Automate* pAutomate = &consign->GetComposanteState().GetAutomate();
+    const MIL_Automate* pAutomate = &consign->GetComposanteState()->GetAutomate();
     for( ; itTact != consigns_.end(); ++itTact )
         if( pAutomate == itTact->first ) // TODO || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
@@ -495,25 +495,25 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( const boost::shared_ptr< PHY_Ma
 // Name: PHY_RolePionLOG_Maintenance::HandleComposanteForTransport
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
-PHY_MaintenanceComposanteState* PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
+boost::shared_ptr< PHY_MaintenanceComposanteState > PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
 {
     assert( composante.GetBreakdown() );
     if( !bSystemEnabled_ || composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) )
-        return 0;
-    PHY_MaintenanceComposanteState* pComposanteState = new PHY_MaintenanceComposanteState( pion, composante );
-    InsertConsign( boost::make_shared< PHY_MaintenanceTransportConsign >( owner_, *pComposanteState ) );
-    return pComposanteState;
+        return boost::shared_ptr< PHY_MaintenanceComposanteState >();
+    const auto state = boost::make_shared< PHY_MaintenanceComposanteState >( pion, composante );
+    InsertConsign( boost::make_shared< PHY_MaintenanceTransportConsign >( owner_, state ) );
+    return state;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::HandleComposanteForTransport
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState )
+bool PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
 {
-    if( !bSystemEnabled_ || composanteState.GetComposanteBreakdown().AffectMobility() && !HasUsableHauler( composanteState.GetComposante().GetType() ) )
+    if( !bSystemEnabled_ || state->GetComposanteBreakdown().AffectMobility() && !HasUsableHauler( state->GetComposante().GetType() ) )
         return false;
-    InsertConsign( boost::make_shared< PHY_MaintenanceTransportConsign >( owner_, composanteState ) );
+    InsertConsign( boost::make_shared< PHY_MaintenanceTransportConsign >( owner_, state ) );
     return true;
 }
 
@@ -545,11 +545,11 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
 // Name: PHY_RolePionLOG_Maintenance::HandleComposanteForRepair
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Maintenance::HandleComposanteForRepair( PHY_MaintenanceComposanteState& composanteState )
+bool PHY_RolePionLOG_Maintenance::HandleComposanteForRepair( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
 {
-    if( !bSystemEnabled_ || !HasUsableRepairer( composanteState.GetComposanteBreakdown() ) )
+    if( !bSystemEnabled_ || !HasUsableRepairer( state->GetComposanteBreakdown() ) )
         return false;
-    InsertConsign( boost::make_shared< PHY_MaintenanceRepairConsign >( owner_, composanteState ) );
+    InsertConsign( boost::make_shared< PHY_MaintenanceRepairConsign >( owner_, state ) );
     return true;
 }
 
@@ -557,11 +557,11 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForRepair( PHY_MaintenanceComp
 // Name: PHY_RolePionLOG_Maintenance::HandleComposanteForDiagnosis
 // Created: SLI 2014-02-12
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Maintenance::HandleComposanteForDiagnosis( PHY_MaintenanceComposanteState& composanteState )
+bool PHY_RolePionLOG_Maintenance::HandleComposanteForDiagnosis( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
 {
     if( !bSystemEnabled_ || !HasUsableDiagnoser() )
         return false;
-    InsertConsign( boost::make_shared< PHY_MaintenanceDiagnosisConsign >( owner_, composanteState ) );
+    InsertConsign( boost::make_shared< PHY_MaintenanceDiagnosisConsign >( owner_, state ) );
     return true;
 }
 
@@ -580,16 +580,16 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForDiagnosis( const PHY_Com
 // Name: PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type /*= 0*/ ) const
+int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state, const PHY_ComposanteTypePion* type /*= 0*/ ) const
 {
-    if( !bSystemEnabled_ || !GetAvailableRepairer( composanteState.GetComposanteBreakdown(), type ) )
+    if( !bSystemEnabled_ || !GetAvailableRepairer( state->GetComposanteBreakdown(), type ) )
         return std::numeric_limits< int >::min();
     // Parts score
     double rRatioPartsAvailable = 0.;
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( owner_.GetAlgorithms().dotationComputerFactory_->Create() );
     owner_.Execute( *dotationComputer );
 
-    const PHY_BreakdownType::T_PartMap& parts = composanteState.GetComposanteBreakdown().GetNeededParts();
+    const PHY_BreakdownType::T_PartMap& parts = state->GetComposanteBreakdown().GetNeededParts();
     for( auto it = parts.begin(); it != parts.end(); ++it )
     {
         // Parts never available ...
@@ -603,7 +603,7 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( const PHY_Mainte
     else
         rRatioPartsAvailable /= parts.size();
     // Repairers score
-    return (unsigned int)( GetNbrAvailableRepairersAllowedToWork( composanteState.GetComposanteBreakdown() ) * rRatioPartsAvailable );
+    return (unsigned int)( GetNbrAvailableRepairersAllowedToWork( state->GetComposanteBreakdown() ) * rRatioPartsAvailable );
 }
 
 // -----------------------------------------------------------------------------

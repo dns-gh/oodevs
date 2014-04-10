@@ -25,7 +25,7 @@ class PHY_MaintenanceTransportConsign : public PHY_MaintenanceConsign_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_MaintenanceTransportConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState );
+             PHY_MaintenanceTransportConsign( MIL_Agent_ABC& maintenanceAgent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
              PHY_MaintenanceTransportConsign();
     virtual ~PHY_MaintenanceTransportConsign();
     //@}
