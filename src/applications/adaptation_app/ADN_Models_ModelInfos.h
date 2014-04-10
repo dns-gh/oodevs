@@ -25,6 +25,8 @@ class ADN_Missions_FragOrder;
 // =============================================================================
 class ADN_Models_ModelInfos : public ADN_RefWithLocalizedName
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -42,6 +44,12 @@ public:
     void WriteArchive( const std::string& type, xml::xostream& output );
     void AddFragOrder( ADN_Missions_FragOrder* fragorder, const std::string& order );
     void RemoveFragOder( const std::string& order );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnMainFragOrderAdded( void* data );
     //@}
 
 public:

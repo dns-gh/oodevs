@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Models_ModelInfos.h"
+#include "moc_ADN_Models_ModelInfos.cpp"
 #include "ADN_Missions_Data.h"
 #include "ADN_Models_MissionInfos.h"
 #include "ADN_Models_OrderInfos.h"
@@ -33,6 +34,7 @@ ADN_Models_ModelInfos::ADN_Models_ModelInfos( E_EntityType type )
     : isMasalife_( false )
     , type_( type )
 {
+    connect( &vFragOrders_, SIGNAL( ItemAdded( void* ) ), this, SLOT( OnMainFragOrderAdded( void* ) ) );
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eModels, ADN_Tools::MakePluralFromEntityType( type ) ) );
 }
 
@@ -156,4 +158,27 @@ void ADN_Models_ModelInfos::WriteArchive( const std::string& type, xml::xostream
         ( *it )->WriteArchive( output );
     output << xml::end
         << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_ModelInfos::OnMainFragOrderAdded
+// Created: ABR 2014-04-10
+// -----------------------------------------------------------------------------
+void ADN_Models_ModelInfos::OnMainFragOrderAdded( void* data )
+{
+    auto order = static_cast< ADN_Models_OrderInfos* >( data );
+    if( !order )
+        return;
+    for( auto itMission = vMissions_.begin(); itMission != vMissions_.end(); ++itMission )
+    {
+        auto& mission = **itMission;
+        ADN_Models_OrderInfos* missionOrder = 0;
+        for( auto it = mission.vOrders_.begin(); it != mission.vOrders_.end(); ++it )
+            if( order->GetCrossedElement() == ( *it )->GetCrossedElement() )
+            {
+                missionOrder = *it;
+                break;
+            }
+        mission.vOrders_.RemItem( missionOrder );
+    }   
 }
