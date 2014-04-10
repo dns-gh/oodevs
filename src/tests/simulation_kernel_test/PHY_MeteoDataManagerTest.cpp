@@ -181,7 +181,7 @@ BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_creation_destruction )
     // Returns a string "wx wy wz ... " of N geographic locations along a line
     // crossing the weather set, each wx being the currently active weather
     // at this location.
-    auto check = [&]() -> std::string
+    const auto listActiveWeather = [&]() -> std::string
     {
         const auto p1 = MT_Vector2D( 5000, 45000 );
         const auto p13 = MT_Vector2D( 15000, 35000 );
@@ -213,46 +213,46 @@ BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_creation_destruction )
 
     // Too early, none is activated
     man->Update( 0 );
-    BOOST_CHECK_EQUAL( "g0 g0 g0 g0 g0 g0", check() );
+    BOOST_CHECK_EQUAL( "g0 g0 g0 g0 g0 g0", listActiveWeather() );
 
     // Activate w1
     man->Update( 150 );
-    BOOST_CHECK_EQUAL( "w1 w1 w1 g0 g0 g0", check() );
+    BOOST_CHECK_EQUAL( "w1 w1 w1 g0 g0 g0", listActiveWeather() );
 
     // Activate w2
     man->Update( 250 );
-    BOOST_CHECK_EQUAL( "w1 w1 w2 w2 w2 g0", check() );
+    BOOST_CHECK_EQUAL( "w1 w1 w2 w2 w2 g0", listActiveWeather() );
 
     // Activate w3
     man->Update( 350 );
-    BOOST_CHECK_EQUAL( "w1 w3 w3 w3 w2 g0", check() );
+    BOOST_CHECK_EQUAL( "w1 w3 w3 w3 w2 g0", listActiveWeather() );
 
     // Disable w1
     man->Update( 1150 );
-    BOOST_CHECK_EQUAL( "g0 w3 w3 w3 w2 g0", check() );
+    BOOST_CHECK_EQUAL( "g0 w3 w3 w3 w2 g0", listActiveWeather() );
 
     // Disable w2
     man->Update( 1250 );
-    BOOST_CHECK_EQUAL( "g0 w3 w3 w3 g0 g0", check() );
+    BOOST_CHECK_EQUAL( "g0 w3 w3 w3 g0 g0", listActiveWeather() );
 
     // Disable w3
     man->Update( 1350 );
-    BOOST_CHECK_EQUAL( "g0 g0 g0 g0 g0 g0", check() );
+    BOOST_CHECK_EQUAL( "g0 g0 g0 g0 g0 g0", listActiveWeather() );
 
     // Test manual removal
     man->Update( 350 );
-    BOOST_CHECK_EQUAL( "w1 w3 w3 w3 w2 g0", check() );
+    BOOST_CHECK_EQUAL( "w1 w3 w3 w3 w2 g0", listActiveWeather() );
     BOOST_CHECK( man->RemoveLocalWeather( w1->GetId() ) );
     // Nothing changed, need to call Update() first
-    BOOST_CHECK_EQUAL( "w1 w3 w3 w3 w2 g0", check() );
+    BOOST_CHECK_EQUAL( "w1 w3 w3 w3 w2 g0", listActiveWeather() );
     man->Update( 350 );
-    BOOST_CHECK_EQUAL( "g0 w3 w3 w3 w2 g0", check() );
+    BOOST_CHECK_EQUAL( "g0 w3 w3 w3 w2 g0", listActiveWeather() );
 
     BOOST_CHECK( man->RemoveLocalWeather( w2->GetId() ) );
     man->Update( 350 );
-    BOOST_CHECK_EQUAL( "g0 w3 w3 w3 g0 g0", check() );
+    BOOST_CHECK_EQUAL( "g0 w3 w3 w3 g0 g0", listActiveWeather() );
 
     BOOST_CHECK( man->RemoveLocalWeather( w3->GetId() ) );
     man->Update( 350 );
-    BOOST_CHECK_EQUAL( "g0 g0 g0 g0 g0 g0", check() );
+    BOOST_CHECK_EQUAL( "g0 g0 g0 g0 g0 g0", listActiveWeather() );
 }
