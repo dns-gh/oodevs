@@ -67,7 +67,7 @@ void ADN_Models_GUI::Build()
 // Name: ADN_Models_GUI::BuildPage
 // Created: APE 2005-02-09
 // -----------------------------------------------------------------------------
-QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model )
+QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Type_Vector_ABC< ADN_Models_ModelInfos >& model )
 {
     // -------------------------------------------------------------------------
     // Creations

@@ -10,15 +10,16 @@
 #ifndef __ADN_Crowds_Data_h_
 #define __ADN_Crowds_Data_h_
 
-#include "ADN_Data_ABC.h"
+#include "ADN_Armors_Data.h"
 #include "ADN_CrossedRef.h"
+#include "ADN_Data_ABC.h"
+#include "ADN_Models_ModelInfos.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Type_Repartition.h"
-#include "ADN_Models_Data.h"
-#include "ADN_Armors_Data.h"
 #include "ADN_Volumes_Data.h"
+#include "tools/IdManager.h"
 
 // =============================================================================
 /** @class  ADN_Crowds_Data
@@ -243,7 +244,7 @@ public:
 
     public:
         ADN_Type_Int nId_;
-        ADN_TypePtr_InVector_ABC< ADN_Models_Data::ModelInfos > ptrModel_;
+        ADN_TypePtr_InVector_ABC< ADN_Models_ModelInfos > ptrModel_;
         ADN_Type_Bool bCrowdCollision_;
         ADN_Type_Double rConcentrationDensity_;
         ADN_Type_Double rMoveDensity_;
@@ -284,7 +285,7 @@ public:
 
     T_CrowdsInfosVector& GetCrowds();
     CrowdsInfos* FindCrowd( const std::string& strName );
-    QStringList GetCrowdsThatUse( ADN_Models_Data::ModelInfos& model );
+    QStringList GetCrowdsThatUse( ADN_Models_ModelInfos& model );
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
 private:

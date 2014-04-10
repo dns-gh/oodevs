@@ -343,7 +343,7 @@ QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Units_Data::UnitInfos& un
 // Name: ADN_Automata_Data::GetAutomataThatUse
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Models_Data::ModelInfos& model )
+QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Models_ModelInfos& model )
 {
     QStringList result;
     for( auto it = vAutomata_.begin(); it != vAutomata_.end(); ++it )

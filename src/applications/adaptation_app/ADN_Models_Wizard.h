@@ -20,14 +20,14 @@
 */
 // Created: APE 2005-01-19
 // =============================================================================
-class ADN_Models_Wizard : public ADN_Wizard< ADN_Models_Data::ModelInfos, ADN_Models_WizardPage >
+class ADN_Models_Wizard : public ADN_Wizard< ADN_Models_ModelInfos, ADN_Models_WizardPage >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Models_Wizard( E_EntityType entityType, const QString& elementName, ADN_Models_Data::T_ModelInfos_Vector& vector, QWidget* pParent = 0 )
-        : ADN_Wizard< ADN_Models_Data::ModelInfos, ADN_Models_WizardPage >( elementName, vector, pParent )
+    explicit ADN_Models_Wizard( E_EntityType entityType, const QString& elementName, ADN_Type_Vector_ABC< ADN_Models_ModelInfos >& vector, QWidget* pParent = 0 )
+        : ADN_Wizard< ADN_Models_ModelInfos, ADN_Models_WizardPage >( elementName, vector, pParent )
         , entityType_( entityType )
     {
         // NOTHING

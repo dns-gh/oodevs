@@ -11,6 +11,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Tools.h"
+#include "ADN_Tr.h"
 
 #include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr.h"
@@ -302,6 +303,14 @@ void ADN_Tools::SetAutoClear( T_ConnectorVector& v, bool b )
     for( auto itConnector = v.begin(); itConnector != v.end(); ++itConnector )
         if( *itConnector != 0 )
             ( *itConnector )->SetAutoClear( b );
+}
+
+std::string ADN_Tools::MakePluralFromEntityType( E_EntityType type )
+{
+    std::string result = ADN_Tr::ConvertFromEntityType( type, ENT_Tr::eToSim );
+    if( type != eEntityType_Population )
+        result += 's';
+    return result;
 }
 
 } //! namespace ADN_Tools

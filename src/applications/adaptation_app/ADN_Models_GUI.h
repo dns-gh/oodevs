@@ -62,7 +62,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildPage( E_EntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model );
+    QWidget* BuildPage( E_EntityType eEntityType, ADN_Type_Vector_ABC< ADN_Models_ModelInfos >& model );
     //@}
 
 private:

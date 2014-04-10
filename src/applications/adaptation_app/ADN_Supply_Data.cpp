@@ -11,6 +11,7 @@
 #include "ADN_Supply_Data.h"
 
 #include "ADN_ConsistencyChecker.h"
+#include "ADN_Missions_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Supply_Gui.h"
 #include "ADN_Logistic_GUI.h"

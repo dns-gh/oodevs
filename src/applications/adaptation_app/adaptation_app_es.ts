@@ -3045,14 +3045,6 @@ PNG (*.png)</translation>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Datos no válidos en &apos;%1&apos;, sección &apos;%2&apos;</translation>
     </message>
-    <message>
-        <source>Missions</source>
-        <translation>Misiones</translation>
-    </message>
-    <message>
-        <source>Frag orders</source>
-        <translation>Órdenes fragmentarias</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Models_GUI</name>
@@ -3087,6 +3079,24 @@ PNG (*.png)</translation>
     <message>
         <source>DIA5</source>
         <translation>DIA5</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_MissionInfos</name>
+    <message>
+        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
+        <translation>Modelos de doctrina - Misión inválida &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_ModelInfos</name>
+    <message>
+        <source>Missions</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Frag orders</source>
+        <translation>Órdenes fragmentarias</translation>
     </message>
 </context>
 <context>
@@ -6546,13 +6556,6 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
     <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
         <translation>Sistema logístico médico - Tipo de herido inválido&apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>Models_Data</name>
-    <message>
-        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
-        <translation>Modelos de doctrina - Misión inválida &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

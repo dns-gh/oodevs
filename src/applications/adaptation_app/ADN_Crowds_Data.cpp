@@ -10,10 +10,10 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Crowds_Data.h"
 #include "ADN_Categories_Data.h"
-#include "ADN_Workspace.h"
+#include "ADN_Missions_ABC.h"
+#include "ADN_Models_Data.h"
+#include "ADN_Models_ModelInfos.h"
 #include "ADN_Project_Data.h"
-#include "ADN_Tr.h"
-#include "ENT/ENT_Tr.h"
 #include "ADN_WorkspaceElement.h"
 
 tools::IdManager ADN_Crowds_Data::idManager_;
@@ -864,7 +864,7 @@ void ADN_Crowds_Data::WriteArchive( xml::xostream& output ) const
 // Name: ADN_Crowds_Data::GetCrowdsThatUse
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-QStringList ADN_Crowds_Data::GetCrowdsThatUse( ADN_Models_Data::ModelInfos& model )
+QStringList ADN_Crowds_Data::GetCrowdsThatUse( ADN_Models_ModelInfos& model )
 {
     QStringList result;
     for( auto it = vCrowds_.begin(); it != vCrowds_.end(); ++it )

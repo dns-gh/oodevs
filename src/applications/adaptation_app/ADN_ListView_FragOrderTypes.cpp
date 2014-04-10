@@ -102,19 +102,19 @@ namespace
             std::string name = GetName();
             if( addForAllUnits_->isChecked() )
             {
-                ADN_Models_Data::T_ModelInfos_Vector& units = ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Pawn );
+                auto& units = ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Pawn );
                 for( auto it1 = units.begin(); it1 != units.end(); ++it1 )
                     (*it1)->AddFragOrder( static_cast< FragOrder* >( element_ ), name );
             }
             if( addForAllAutomata_->isChecked() )
             {
-                ADN_Models_Data::T_ModelInfos_Vector& automata = ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Automat );
+                auto& automata = ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Automat );
                 for( auto it1 = automata.begin(); it1 != automata.end(); ++it1 )
                     (*it1)->AddFragOrder( static_cast< FragOrder* >( element_ ), name );
             }
             if( addForAllPops_->isChecked() )
             {
-                ADN_Models_Data::T_ModelInfos_Vector& pops = ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Population );
+                auto& pops = ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Population );
                 for( auto it1 = pops.begin(); it1 != pops.end(); ++it1 )
                     (*it1)->AddFragOrder( static_cast< FragOrder* >( element_ ), name );
             }

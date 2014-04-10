@@ -8,300 +8,12 @@
 // *****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Models_Data.h"
-
-#include "ADN_Workspace.h"
-#include "ADN_AiEngine_Data.h"
-#include "ADN_Models_Gui.h"
+#include "ADN_Missions_FragOrder.h"
+#include "ADN_Missions_Mission.h"
+#include "ADN_Models_MissionInfos.h"
+#include "ADN_Models_ModelInfos.h"
+#include "ADN_Models_OrderInfos.h"
 #include "ADN_Project_Data.h"
-#include "ADN_Tools.h"
-#include "ADN_Tr.h"
-#include "ADN_enums.h"
-#include "ADN_WorkspaceElement.h"
-#include "ENT/ENT_Tr.h"
-#include "clients_kernel/XmlTranslations.h"
-
-namespace
-{
-    std::string MakePluralFromEntityType( E_EntityType type )
-    {
-        std::string result = ADN_Tr::ConvertFromEntityType( type, ENT_Tr::eToSim );
-        if( type != eEntityType_Population )
-            result += 's';
-        return result;
-    }
-}
-
-// =============================================================================
-// OrderInfos
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: OrderInfos::OrderInfos
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-ADN_Models_Data::OrderInfos::OrderInfos( const ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_ABC* mission /* = 0 */ )
-    : ADN_CrossedRef< ADN_Missions_ABC >( missions, mission, true )
-{
-    // NOTHING
-}
-
-ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_FragOrder* fragorder, const std::string& name )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ), fragorder, true )
-{
-    strName_ = name;
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderInfos::ReadArchive
-// Created: APE 2004-12-01
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::OrderInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "name", *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderInfos::WriteArchive
-// Created: APE 2004-12-01
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::OrderInfos::WriteArchive( xml::xostream& output ) const
-{
-    output << xml::start( "fragorder" )
-             << xml::attribute( "name", *this )
-           << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::OrderInfos::CreateCopy
-// Created: HBD 2010-08-31
-// -----------------------------------------------------------------------------
-ADN_Models_Data::OrderInfos* ADN_Models_Data::OrderInfos::CreateCopy()
-{
-    return new OrderInfos( GetVector(), GetCrossedElement() );
-}
-
-// =============================================================================
-// MissionInfos
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MissionInfos::~MissionInfos
-// Created: AGN 2003-12-03
-// -----------------------------------------------------------------------------
-ADN_Models_Data::MissionInfos::MissionInfos( const ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_ABC* mission /* = 0 */ )
-    : ADN_CrossedRef< ADN_Missions_ABC >( missions, mission, true )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInfos::~MissionInfos
-// Created: AGN 2003-12-03
-// -----------------------------------------------------------------------------
-ADN_Models_Data::MissionInfos::~MissionInfos()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInfos::CreateCopy
-// Created: AGN 2003-12-03
-// -----------------------------------------------------------------------------
-ADN_Models_Data::MissionInfos* ADN_Models_Data::MissionInfos::CreateCopy()
-{
-    MissionInfos* pMission = new MissionInfos( GetVector(), GetCrossedElement() );
-
-    pMission->vOrders_.reserve( vOrders_.size() );
-    for( auto it = vOrders_.begin(); it != vOrders_.end(); ++it )
-        pMission->vOrders_.AddItem( ( *it )->CreateCopy() );
-    return pMission;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::MissionInfos::ReadFragOrder
-// Created: AGE 2007-08-17
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::MissionInfos::ReadFragOrder( xml::xistream& input )
-{
-    std::auto_ptr< OrderInfos > spNew( new OrderInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ) ) );
-    spNew->ReadArchive( input );
-    vOrders_.AddItem( spNew.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInfos::ReadArchive
-// Created: APE 2004-12-01
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "name", *this );
-    ADN_Missions_ABC* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( GetVector(), strName_.GetData() );
-    if( !mission )
-        throw MASA_EXCEPTION( tools::translate( "Models_Data", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
-    SetCrossedElement( mission );
-    input >> xml::list( "fragorder", *this, &ADN_Models_Data::MissionInfos::ReadFragOrder );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInfos::WriteArchive
-// Created: APE 2004-12-01
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::MissionInfos::WriteArchive( xml::xostream& output ) const
-{
-    output << xml::start( "mission" )
-             << xml::attribute( "name", *this );
-    for( auto it = vOrders_.begin(); it != vOrders_.end(); ++it )
-        (*it)->WriteArchive( output );
-    output << xml::end;
-}
-
-// =============================================================================
-//
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::ModelInfos
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-ADN_Models_Data::ModelInfos::ModelInfos()
-    : isMasalife_( false )
-    , type_( eNbrEntityType )
-{
-    assert( false ); // $$$$ ABR 2013-08-23: useless constructor, needed by ADN_Wizard...
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::ModelInfos
-// Created: ABR 2013-08-23
-// -----------------------------------------------------------------------------
-ADN_Models_Data::ModelInfos::ModelInfos( E_EntityType type )
-    : isMasalife_( false )
-    , type_( type )
-{
-    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eModels, MakePluralFromEntityType( type ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelInfos::ModelInfos
-// Created: AGN 2003-11-27
-// -----------------------------------------------------------------------------
-ADN_Models_Data::ModelInfos::~ModelInfos()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::AddFragOrder
-// Created: HBD 2010-09-01
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::ModelInfos::AddFragOrder( ADN_Missions_FragOrder* fragorder, const std::string& name )
-{
-    std::auto_ptr< OrderInfos > spNew( new OrderInfos( fragorder, name ) );
-    vFragOrders_.AddItem( spNew.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::RemoveFragOder
-// Created: HBD 2010-09-06
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::ModelInfos::RemoveFragOder( const std::string& order )
-{
-    for( auto it = vFragOrders_.begin(); it != vFragOrders_.end(); ++it )
-        if( (*it)->strName_ == order)
-        {
-            vFragOrders_.RemItem( *it );
-            break;
-        }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelInfos::CreateCopy
-// Created: AGN 2003-12-03
-// -----------------------------------------------------------------------------
-ADN_Models_Data::ModelInfos* ADN_Models_Data::ModelInfos::CreateCopy()
-{
-    ModelInfos* pNewInfo = new ModelInfos( type_ );
-    pNewInfo->strDiaType_ = strDiaType_.GetData();
-    pNewInfo->strFile_ = strFile_.GetData();
-    pNewInfo->isMasalife_ = isMasalife_.GetData();
-
-    pNewInfo->vMissions_.reserve( vMissions_.size() );
-    for( T_MissionInfos_Vector::iterator itMission = vMissions_.begin(); itMission != vMissions_.end(); ++itMission )
-        pNewInfo->vMissions_.AddItem( (*itMission)->CreateCopy() );
-    pNewInfo->vFragOrders_.reserve( vFragOrders_.size() );
-    for( T_OrderInfos_Vector::iterator itOrder = vFragOrders_.begin(); itOrder != vFragOrders_.end(); ++itOrder )
-        pNewInfo->vFragOrders_.AddItem( (*itOrder)->CreateCopy() );
-    return pNewInfo;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::ModelInfos::ReadMission
-// Created: AGE 2007-08-17
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::ModelInfos::ReadMission( xml::xistream& input )
-{
-    std::auto_ptr<MissionInfos> spNew( new MissionInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( ADN_Tools::ConvertEntityTypeToMissionType( type_ ) ) ) );
-    spNew->ReadArchive( input );
-    if( spNew->GetCrossedElement() )
-        vMissions_.AddItem( spNew.release() );
-    else
-        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eModels, -1, tools::translate( "ADN_Models_Data", "Missions" ).toStdString() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::ModelInfos::ReadOrder
-// Created: HBD 2010-08-31
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::ModelInfos::ReadOrder( xml::xistream& input )
-{
-    std::auto_ptr<OrderInfos> spNew( new OrderInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ) ) );
-    spNew->ReadArchive( input );
-    if( spNew->GetCrossedElement() )
-        vFragOrders_.AddItem( spNew.release() );
-    else
-        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eModels, -1, tools::translate( "ADN_Models_Data", "Frag orders" ).toStdString() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelInfos::ReadArchive
-// Created: APE 2004-12-01
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::ModelInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "name", *this )
-          >> xml::attribute( "dia-type", strDiaType_ )
-          >> xml::attribute( "file", strFile_ )
-          >> xml::attribute( "masalife", isMasalife_ )
-          >> xml::start( "missions" )
-            >> xml::list( "mission", *this, &ADN_Models_Data::ModelInfos::ReadMission )
-        >> xml::end
-        >> xml::optional
-        >> xml::start( "fragorders" )
-            >> xml::list( "fragorder", *this, &ADN_Models_Data::ModelInfos::ReadOrder )
-        >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelInfos::WriteArchive
-// Created: APE 2004-12-01
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xostream& output )
-{
-    output << xml::start( type )
-            <<  xml::attribute( "name", *this )
-            <<  xml::attribute( "dia-type", strDiaType_ )
-            <<  xml::attribute( "file", strFile_.GetData().Normalize() )
-            <<  xml::attribute( "masalife", isMasalife_ )
-            <<  xml::start( "missions" );
-    for( auto it = vMissions_.begin(); it != vMissions_.end(); ++it )
-        ( *it )->WriteArchive( output );
-    output << xml::end
-        << xml::start( "fragorders" );
-    for( auto it = vFragOrders_.begin(); it != vFragOrders_.end(); ++it )
-        ( *it )->WriteArchive( output );
-    output << xml::end
-        << xml::end;
-}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Models_Data constructor
@@ -368,7 +80,7 @@ void ADN_Models_Data::FilesNeeded(tools::Path::T_Paths& files) const
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ReadModels( xml::xistream& input, E_EntityType type )
 {
-    std::auto_ptr< ModelInfos > spNew( new ModelInfos( type ) );
+    std::auto_ptr< ADN_Models_ModelInfos > spNew( new ADN_Models_ModelInfos( type ) );
     spNew->ReadArchive( input );
     vModels_[ type ].AddItem( spNew.release() );
 }
@@ -383,7 +95,7 @@ void ADN_Models_Data::ReadArchive( xml::xistream& input )
     for( int i = 0; i < eNbrEntityType; ++i )
     {
         E_EntityType type = static_cast< E_EntityType >( i );
-        input >> xml::start( MakePluralFromEntityType( type ) )
+        input >> xml::start( ADN_Tools::MakePluralFromEntityType( type ) )
                 >> xml::list( ADN_Tr::ConvertFromEntityType( type, ENT_Tr::eToSim ), *this, &ADN_Models_Data::ReadModels, type )
               >> xml::end;
         vModels_[ i ].CheckValidity();
@@ -407,7 +119,7 @@ void ADN_Models_Data::WriteArchive( xml::xostream& output ) const
     for( int i = 0; i < eNbrEntityType; ++i )
     {
         E_EntityType type = static_cast< E_EntityType >( i );
-        output << xml::start( MakePluralFromEntityType( type ) );
+        output << xml::start( ADN_Tools::MakePluralFromEntityType( type ) );
         for( auto it = vModels_[ i ].begin(); it != vModels_[ i ].end(); ++it )
             ( *it )->WriteArchive( ADN_Tr::ConvertFromEntityType( type, ENT_Tr::eToSim ), output );
         output << xml::end;
@@ -423,7 +135,7 @@ QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_M
 {
     QStringList result;
     for( auto it = vModels_[ type ].begin(); it != vModels_[ type ].end(); ++it )
-        if( ModelInfos* pModel = *it )
+        if( auto* pModel = *it )
             for( auto missionIt = pModel->vMissions_.begin(); missionIt != pModel->vMissions_.end(); ++missionIt )
                 if( ( *missionIt )->GetCrossedElement() == &mission )
                 {
@@ -476,4 +188,34 @@ void ADN_Models_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) c
     for( int i = 0; i < eNbrEntityType; ++i )
         for( auto it = vModels_[ i ].begin(); it != vModels_[ i ].end(); ++it )
             ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eModels, i );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::GetModels
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
+ADN_Type_Vector_ABC< ADN_Models_ModelInfos >& ADN_Models_Data::GetModels( E_EntityType type )
+{
+    return vModels_[ type ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::FindModel
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
+ADN_Models_ModelInfos* ADN_Models_Data::FindModel( E_EntityType type, const std::string& strName )
+{
+    auto it = std::find_if( vModels_[ type ].begin(), vModels_[ type ].end(), ADN_Tools::NameCmp( strName ) );
+    if( it == vModels_[ type ].end() )
+        return 0;
+    return *it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::GetSourcePath
+// Created: ABR 2013-09-13
+// -----------------------------------------------------------------------------
+const ADN_Models_Data::T_SourcePaths& ADN_Models_Data::GetSourcePaths() const
+{
+    return sourcePaths_;
 }

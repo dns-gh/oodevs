@@ -20,7 +20,7 @@
 #include "ADN_enums.h"
 #include "ADN_WorkspaceElement.h"
 
-typedef ADN_Models_Data::ModelInfos ModelInfos;
+typedef ADN_Models_ModelInfos ModelInfos;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Models constructor

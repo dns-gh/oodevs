@@ -123,6 +123,7 @@ namespace ADN_Tools
     std::string Scriptify( const std::string& strFieldName );
     std::string ComputePostureScriptName( E_UnitPosture nPosture );
     void SortMenu( Q3PopupMenu& menu );
+    std::string MakePluralFromEntityType( E_EntityType type );
 
     // -----------------------------------------------------------------------------
     E_EntityType ConvertMissionToEntityType( E_MissionType type );
