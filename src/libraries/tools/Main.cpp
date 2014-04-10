@@ -19,6 +19,11 @@
 
 namespace
 {
+    void CrashHandler( EXCEPTION_POINTERS* exception )
+    {
+        MT_CrashHandler::ExecuteHandler( exception );
+    }
+
     const char* GetFileName( MT_Logger_ABC::E_Type type )
     {
         switch( type )
@@ -35,16 +40,54 @@ namespace
         }
     }
 
-    void CrashHandler( EXCEPTION_POINTERS* exception )
+    MT_Logger_ABC::E_LogLevel GetLogLevel( const std::string& level )
     {
-        MT_CrashHandler::ExecuteHandler( exception );
+        if( level == "fatal" )
+            return MT_Logger_ABC::eLogLevel_FatalError;
+        if( level == "error" )
+            return MT_Logger_ABC::eLogLevel_Error;
+        if( level == "warning" )
+            return MT_Logger_ABC::eLogLevel_Warning;
+        if( level == "message" )
+            return MT_Logger_ABC::eLogLevel_Message;
+        if( level == "info" )
+            return MT_Logger_ABC::eLogLevel_Info;
+        if( level == "verbose" )
+            return MT_Logger_ABC::eLogLevel_Verbose;
+        if( level == "debug" )
+            return MT_Logger_ABC::eLogLevel_Debug;
+        return MT_Logger_ABC::eLogLevel_None;
+    }
+
+    std::shared_ptr< MT_Logger_ABC > CreateLogger(
+        MT_Logger_ABC::E_Type type,
+        MT_Logger_ABC::E_LogLevel level,
+        const tools::Path& debugDir )
+    {
+        if( level != MT_Logger_ABC::eLogLevel_None )
+            try
+            {
+                debugDir.CreateDirectories();
+                std::shared_ptr< MT_Logger_ABC > logger(
+                    new MT_FileLogger(
+                        debugDir / GetFileName( type ) + ".log",
+                        1, 0, level, false, type ),
+                    []( MT_FileLogger* logger )
+                    {
+                        MT_LOG_UNREGISTER_LOGGER( *logger );
+                        delete logger;
+                    } );
+                MT_LOG_REGISTER_LOGGER( *logger );
+                return logger;
+            }
+            catch( ... )
+            {}
+        return std::shared_ptr< MT_Logger_ABC >();
     }
 
     template< typename M >
-    int CallMain( const M& main, const tools::WinArguments& winArgs, bool silentCrash )
+    int CallMain( const M& main, const tools::WinArguments& winArgs )
     {
-        if( silentCrash )
-            return main( winArgs );
         __try
         {
             return main( winArgs );
@@ -60,7 +103,7 @@ int tools::Main(
     const tools::WinArguments& winArgs,
     MT_Logger_ABC::E_Type type,
     bool silentCrash,
-    int(*main)( const tools::WinArguments& winArgs ) )
+    int(*main)( const tools::WinArguments& ) )
 {
     if( silentCrash )
     {
@@ -68,17 +111,10 @@ int tools::Main(
         tools::InitPureCallHandler();
     }
     const tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
-    debugDir.CreateDirectories();
-    const std::shared_ptr< MT_FileLogger > logger(
-        new MT_FileLogger( debugDir / GetFileName( type ) + ".log",
-            1, 0, MT_Logger_ABC::eLogLevel_All,
-            false, type ),
-        []( MT_FileLogger* logger )
-        {
-            MT_LOG_UNREGISTER_LOGGER( *logger );
-            delete logger;
-        } );
-    MT_LOG_REGISTER_LOGGER( *logger );
     MT_CrashHandler::SetRootDirectory( debugDir );
-    return CallMain( main, winArgs, silentCrash );
+    const MT_Logger_ABC::E_LogLevel level = GetLogLevel( winArgs.GetOption( "--log-level", "fatal" ) );
+    const auto logger = CreateLogger( type, level, debugDir );
+    if( silentCrash )
+        return main( winArgs );
+    return CallMain( main, winArgs );
 }

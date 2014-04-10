@@ -21,7 +21,7 @@ namespace tools
         const tools::WinArguments& winArgs,
         MT_Logger_ABC::E_Type type,
         bool silentCrash,
-        int(*main)( const tools::WinArguments& winArgs ) );
+        int(*main)( const tools::WinArguments& ) );
 }
 
 #endif // Main_h
