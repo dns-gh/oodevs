@@ -48,6 +48,7 @@
 #include "SideResolver.h"
 #include "SimulationTimeManager.h"
 #include "ExternalOwnershipPolicy.h"
+#include "MRMController.h"
 #include "tools/FileWrapper.h"
 #include "tools/MessageController.h"
 #include "tools/XmlStreamOperators.h"
@@ -296,6 +297,8 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pOwnershipPolicy_.reset( new LocationOwnershipPolicy( *pMessengerMessageController_, *pOwnershipController_, *pFederate_, *transferSender_, ReadDivestitureZone( *pXisConfiguration_ ) ) );
             pExternalOwnershipPolicy_.reset( new ExternalOwnershipPolicy( pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_, *pOwnershipController_,
                     logger_, *pFederate_, *pLocalAgentResolver_, *pCallsignResolver_, *transferSender_ ));
+            pMrmController.reset( new MRMController( pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_,  *pFederate_, logger_,
+                    *pLocalAgentResolver_, *pCallsignResolver_ ) );
             // must be last action
             pSubject_->Visit( dynamicModel_ );
             pTacticalObjectSubject_->Visit( dynamicModel_ );

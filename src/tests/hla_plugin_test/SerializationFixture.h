@@ -39,14 +39,6 @@ namespace hla
     {
         return lhs.str() == rhs.str();
     }
-    namespace interactions
-    {
-    inline bool operator==( const TransactionId& lhs, const TransactionId& rhs )
-        {
-            return (std::string)lhs.federateHandle == (std::string)rhs.federateHandle &&
-                lhs.transactionCounter == rhs.transactionCounter;
-        }
-    }
 
     template < typename T >
     inline bool operator==( const VariableArray< T >& lhs, const VariableArray< T >& rhs )
@@ -103,14 +95,14 @@ namespace
         p.push_back( std::make_pair( ::hla::ParameterIdentifier( paramName ), new ::hla::Deserializer( &(bufVect.back()[0]), ser.GetSize() ) ) );
     }
     template <typename T>
-    void CheckParameter( const ::hla::ParameterIdentifier& , ::hla::T_SerializerPtr serializer, const T& ref )
+    void CheckParameter( const ::hla::ParameterIdentifier& param, ::hla::T_SerializerPtr serializer, const T& ref )
     {
         T value;
         std::vector<uint8_t> buff( serializer->GetSize(), 0 );
         serializer->CopyTo( &buff[0] );
         ::hla::Deserializer deser( &buff[0], serializer->GetSize() );
         deser >> value;
-        BOOST_CHECK( value == ref );
+        BOOST_CHECK_MESSAGE( value == ref, std::string("Failed verification on value of parameter ") + param.ToString() );
     }
 }
 
