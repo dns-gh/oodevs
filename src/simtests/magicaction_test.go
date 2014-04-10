@@ -172,7 +172,7 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 
 	// model updated
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(urban, data.Urbans[21])
+		return reflect.DeepEqual(urban, data.Objects[21])
 	})
 
 	// the magic action changes resources network values totally
@@ -187,7 +187,7 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 
 	// model updated
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(urban, data.Urbans[21])
+		return reflect.DeepEqual(urban, data.Objects[21])
 	})
 }
 

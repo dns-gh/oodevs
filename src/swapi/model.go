@@ -398,18 +398,6 @@ func (model *Model) GetGlobalWeather() *Weather {
 	return w
 }
 
-func (model *Model) GetUrban(id uint32) *Urban {
-	var u *Urban
-	model.waitCommand(func(model *Model) {
-		urban, ok := model.data.Urbans[id]
-		if ok {
-			u = &Urban{}
-			DeepCopy(u, urban)
-		}
-	})
-	return u
-}
-
 func (model *Model) GetOrder(id uint32) *Order {
 	var o *Order
 	model.waitCommand(func(model *Model) {

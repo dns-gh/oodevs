@@ -910,7 +910,7 @@ func (model *ModelData) handleUrbanCreation(m *sword.SimToClient_Content) error 
 		mm.GetName(),
 		NewResourceNetworks(mm.GetAttributes()),
 	)
-	if !model.addUrban(urban) {
+	if !model.addObject(urban) {
 		return fmt.Errorf("cannot insert urban block %d", urban.Id)
 	}
 	return nil

@@ -156,6 +156,41 @@ func NewCrowd(id, partyId uint32, name string) *Crowd {
 	}
 }
 
+type ResourceNetwork struct {
+	Name        string
+	Consumption uint32
+	Critical    bool
+	Activated   bool
+	Production  uint32
+	StockMax    uint32
+}
+
+func NewResourceNetworks(attributes *sword.UrbanAttributes) map[string]*ResourceNetwork {
+	resources := make(map[string]*ResourceNetwork)
+	if attributes != nil {
+		infrastructructures := attributes.GetInfrastructures()
+		if infrastructructures != nil {
+			resourcesNetworks := infrastructructures.GetResourceNetwork()
+			for _, r := range resourcesNetworks {
+				resources[r.GetResource().GetName()] =
+					&ResourceNetwork{
+						Name:        r.GetResource().GetName(),
+						Consumption: r.GetConsumption(),
+						Critical:    r.GetCritical(),
+						Activated:   r.GetEnabled(),
+						Production:  r.GetProduction(),
+						StockMax:    r.GetMaxStock(),
+					}
+			}
+		}
+	}
+	return resources
+}
+
+type Urban struct {
+	ResourceNetworks map[string]*ResourceNetwork
+}
+
 type Object struct {
 	Id             uint32
 	ObjectType     string
@@ -166,6 +201,7 @@ type Object struct {
 	Altitude       int32
 	Construction   int32
 	Trafficability float32
+	Urban          *Urban
 }
 
 func NewObject(id, partyId uint32, objectType, name string) *Object {
@@ -174,7 +210,18 @@ func NewObject(id, partyId uint32, objectType, name string) *Object {
 		ObjectType: objectType,
 		Name:       name,
 		PartyId:    partyId,
-		Activated:  false,
+	}
+}
+
+func NewUrban(id uint32, name string,
+	resourceNetworks map[string]*ResourceNetwork) *Object {
+	return &Object{
+		Id:         id,
+		ObjectType: "urban",
+		Name:       name,
+		Urban: &Urban{
+			ResourceNetworks: resourceNetworks,
+		},
 	}
 }
 
@@ -370,52 +417,6 @@ type LocalWeather struct {
 	Id          uint32
 }
 
-type ResourceNetwork struct {
-	Name        string
-	Consumption uint32
-	Critical    bool
-	Activated   bool
-	Production  uint32
-	StockMax    uint32
-}
-
-type Urban struct {
-	Id               uint32
-	Name             string
-	ResourceNetworks map[string]*ResourceNetwork
-}
-
-func NewResourceNetworks(attributes *sword.UrbanAttributes) map[string]*ResourceNetwork {
-	resources := make(map[string]*ResourceNetwork)
-	if attributes != nil {
-		infrastructructures := attributes.GetInfrastructures()
-		if infrastructructures != nil {
-			resourcesNetworks := infrastructructures.GetResourceNetwork()
-			for _, r := range resourcesNetworks {
-				resources[r.GetResource().GetName()] =
-					&ResourceNetwork{
-						Name:        r.GetResource().GetName(),
-						Consumption: r.GetConsumption(),
-						Critical:    r.GetCritical(),
-						Activated:   r.GetEnabled(),
-						Production:  r.GetProduction(),
-						StockMax:    r.GetMaxStock(),
-					}
-			}
-		}
-	}
-	return resources
-}
-
-func NewUrban(id uint32, name string,
-	resourceNetworks map[string]*ResourceNetwork) *Urban {
-	return &Urban{
-		Id:               id,
-		Name:             name,
-		ResourceNetworks: resourceNetworks,
-	}
-}
-
 type OrderKind int
 
 const (
@@ -528,7 +529,6 @@ type ModelData struct {
 	ObjectKnowledges     map[uint32]*ObjectKnowledge
 	CrowdKnowledges      map[uint32]*CrowdKnowledge
 	Profiles             map[string]*Profile
-	Urbans               map[uint32]*Urban
 	Orders               map[uint32]*Order
 	MagicOrders          map[uint32]*MagicOrder
 	Objects              map[uint32]*Object
@@ -568,7 +568,6 @@ func NewModelData() *ModelData {
 		CrowdKnowledges:      map[uint32]*CrowdKnowledge{},
 		Profiles:             map[string]*Profile{},
 		LocalWeathers:        map[uint32]*LocalWeather{},
-		Urbans:               map[uint32]*Urban{},
 		Orders:               map[uint32]*Order{},
 		MagicOrders:          map[uint32]*MagicOrder{},
 		Objects:              map[uint32]*Object{},
@@ -856,15 +855,9 @@ func (model *ModelData) removeLocalWeather(id uint32) bool {
 	return size != len(model.LocalWeathers)
 }
 
-func (model *ModelData) addUrban(urban *Urban) bool {
-	size := len(model.Urbans)
-	model.Urbans[urban.Id] = urban
-	return size != len(model.Urbans)
-}
-
 func (model *ModelData) updateUrban(id uint32, resourceNetworks map[string]*ResourceNetwork) bool {
-	if urban, ok := model.Urbans[id]; ok {
-		urban.ResourceNetworks = resourceNetworks
+	if urban, ok := model.Objects[id]; ok && urban.Urban != nil {
+		urban.Urban.ResourceNetworks = resourceNetworks
 		return true
 	}
 	return false

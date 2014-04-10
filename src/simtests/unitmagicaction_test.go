@@ -2709,7 +2709,7 @@ func (s *TestSuite) TestRecoverHumans(c *C) {
 	}
 	next := []swapi.Quantity{}
 	for k, v := range dead {
-		next = append(next, swapi.Quantity{uint32(k), int(v.Quantity)})
+		next = append(next, swapi.Quantity{Id: uint32(k), Quantity: int(v.Quantity)})
 	}
 	recovers := []func() error{
 		func() error { return client.RecoverAllHumans(unit.Id, true) },
@@ -2768,7 +2768,7 @@ func (s *TestSuite) TestRecoverResources(c *C) {
 	}
 	next := []swapi.Quantity{}
 	for k := range sword.DotationType_name {
-		next = append(next, swapi.Quantity{uint32(k), 100})
+		next = append(next, swapi.Quantity{Id: uint32(k), Quantity: 100})
 	}
 	recovers := []func() (error, bool){
 		func() (error, bool) { return client.RecoverAllResources(unit.Id, true), true },
