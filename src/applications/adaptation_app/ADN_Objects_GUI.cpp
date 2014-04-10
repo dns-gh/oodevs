@@ -317,7 +317,7 @@ void ADN_Objects_GUI::Build()
         ADN_GroupBox* disaster = CreateCapacityGroupBox( 3, builder, "disaster", tr( "Disaster" ), vInfosConnectors[ eDisasterCapacityPresent ] );
         builder.AddField< ADN_ComboBox_Vector >( disaster, "model", tr( "Model" ), vInfosConnectors[ eDisasterCapacity_DisasterType ] );
         builder.PopSubName(); // !disaster
-        disaster->setVisible( ADN_Workspace::GetWorkspace().IsDevMode() );
+        disaster->setVisible( ADN_Workspace::GetWorkspace().GetDisasters().GetData().IsActivated() );
 
         ADN_GroupBox* attitudeModifier = CreateCapacityGroupBox( 3, builder, "attitude", tr( "AttitudeModifier" ), vInfosConnectors[ eAttitudeModifierCapacityPresent ] );
         builder.AddEnumField( attitudeModifier, "modifier", tr( "Attitude" ), vInfosConnectors[ eAttitudeModifierCapacity_Attitude ] );

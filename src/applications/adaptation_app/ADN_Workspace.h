@@ -165,7 +165,6 @@ public:
     const boost::shared_ptr< kernel::Context >& GetContext( E_WorkspaceElements element, int subElement, const std::string& context );
 
     bool IsNewBaseReadOnly( const tools::Path& filename ) const;
-    bool IsDevMode() const;
 
     const ADN_GeneralConfig& GetConfig() const;
     kernel::LanguageController& GetLanguageController();
