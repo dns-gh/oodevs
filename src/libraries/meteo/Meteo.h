@@ -80,6 +80,7 @@ public:
              Meteo( unsigned int id, const sword::WeatherAttributes&, unsigned int timeStep, const std::string& name = "" );
              Meteo( unsigned int id, const sword::MissionParameters&, const PHY_Lighting& light, unsigned int timeStep,
                     const std::string& name = "" );
+             Meteo( const Meteo& meteo );
     virtual ~Meteo();
     //@}
 

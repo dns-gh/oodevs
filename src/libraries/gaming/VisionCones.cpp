@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "VisionCones.h"
 #include "Surface.h"
-#include "SurfaceFactory.h"
+#include "SurfaceFactory_ABC.h"
 #include "VisionMap.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -83,7 +83,7 @@ private:
 // Name: VisionCones constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Workers& workers, kernel::Controller& controller )
+VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory_ABC& factory, Workers& workers, kernel::Controller& controller )
     : agent_           ( agent )
     , factory_         ( factory )
     , workers_         ( workers )

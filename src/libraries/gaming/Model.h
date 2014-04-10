@@ -12,6 +12,8 @@
 
 #include "clients_kernel/EntityResolverFacade.h"
 #include "clients_kernel/Model_ABC.h"
+#include "SurfaceFactory_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace tools
 {
@@ -69,7 +71,6 @@ class ScoreDefinitions;
 class ScoreModel;
 class Simulation;
 class StaticModel;
-class SurfaceFactory;
 class TacticalLineFactory;
 class TeamFactory_ABC;
 class TeamsModel;
@@ -80,6 +81,7 @@ class UserProfilesModel;
 class WeatherModel;
 class UrbanModel;
 class HistoryLogisticsModel;
+class VisionMeteoModel;
 
 // =============================================================================
 /** @class  Model
@@ -89,6 +91,9 @@ class HistoryLogisticsModel;
 // =============================================================================
 class Model : public kernel::Model_ABC
             , public kernel::EntityResolverFacade
+            , public tools::Observer_ABC
+            , public tools::ElementObserver_ABC< MeteoModel >
+            , public SurfaceFactory_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -114,6 +119,9 @@ public:
 
     //! @name Operations
     //@{
+    virtual Surface* CreateSurface( const kernel::Agent_ABC& agent, const sword::VisionCone& input );
+    virtual VisionMap* CreateVisionMap();
+    virtual void NotifyUpdated( const MeteoModel& model );
     void Purge();
     //@}
 
@@ -163,7 +171,7 @@ public:
     kernel::SymbolFactory& symbolsFactory_;
     NotesModel& notes_;
     MeteoModel& meteo_;
-    SurfaceFactory& surfaceFactory_;
+    boost::shared_ptr< VisionMeteoModel > visionMeteoModel_;
     FloodProxy& floodProxy_;
     Publisher_ABC& publisher_;
     const gui::EventFactory& eventFactory_;

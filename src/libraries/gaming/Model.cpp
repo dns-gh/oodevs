@@ -36,8 +36,8 @@
 #include "ScoreDefinitions.h"
 #include "ScoreModel.h"
 #include "Simulation.h"
+#include "Surface.h"
 #include "StaticModel.h"
-#include "SurfaceFactory.h"
 #include "HistoryLogisticsModel.h"
 #include "TacticalLineFactory.h"
 #include "TeamFactory.h"
@@ -48,6 +48,8 @@
 #include "UserProfileFactory.h"
 #include "UserProfilesModel.h"
 #include "WeatherModel.h"
+#include "VisionMap.h"
+#include "VisionMeteoModel.h"
 #include "actions/ActionFactory.h"
 #include "actions/ActionParameterFactory.h"
 #include "actions/ActionsModel.h"
@@ -57,6 +59,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "indicators/GaugeTypes.h"
+#include <boost/make_shared.hpp>
 
 #pragma warning( disable : 4355 )
 
@@ -110,7 +113,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , symbolsFactory_          ( *new kernel::SymbolFactory() )
     , notes_                   ( *new NotesModel( controllers.controller_ ))
     , meteo_                   ( *new MeteoModel( static_.coordinateConverter_, simulation, controllers.controller_ ) )
-    , surfaceFactory_          ( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_, meteo_ ) )
+    , visionMeteoModel_        ( boost::make_shared< VisionMeteoModel >( meteo_ ) )
     , floodProxy_              ( *new FloodProxy( static_.detection_ ) )
     , publisher_               ( publisher )
     , eventFactory_            ( *new gui::EventFactory( actions_, controllers ) )
@@ -118,6 +121,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , timelinePublisher_       ( *new gui::TimelinePublisher() )
 {
     symbolsFactory_.Load( config );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -207,13 +211,13 @@ tools::Resolver_ABC< kernel::UrbanObject_ABC >& Model::GetUrbanObjectResolver() 
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    controllers_.Unregister( *this );
     delete &events_;
     delete &eventFactory_;
     delete &floodProxy_;
     delete &meteo_;
     delete &notes_;
     delete &symbolsFactory_;
-    delete &surfaceFactory_;
     delete &resourceNetwork_;
     delete &urbanBlockDetectionMap_;
     delete &urbanObjects_;
@@ -274,4 +278,34 @@ void Model::Purge()
     teams_.Purge();
     meteo_.Purge();
     events_.Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::NotifyUpdated
+// Created: LGY 2014-04-10
+// -----------------------------------------------------------------------------
+void Model::NotifyUpdated( const MeteoModel& model )
+{
+    // Vision meteo model is used by the vision cones. It's a copy of the meteo model
+    // to avoid threads problem when the model changes/destroys.
+    visionMeteoModel_ = boost::make_shared< VisionMeteoModel >( model );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::CreateSurface
+// Created: LGY 2014-04-10
+// -----------------------------------------------------------------------------
+Surface* Model::CreateSurface( const kernel::Agent_ABC& agent, const sword::VisionCone& input )
+{
+    return new Surface( agent, input, static_.coordinateConverter_, static_.detection_,
+        static_.types_, urbanBlockDetectionMap_, visionMeteoModel_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::CreateVisionMap
+// Created: LGY 2014-04-10
+// -----------------------------------------------------------------------------
+VisionMap* Model::CreateVisionMap()
+{
+    return new VisionMap( static_.detection_ );
 }
