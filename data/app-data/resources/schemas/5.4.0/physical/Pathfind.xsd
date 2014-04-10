@@ -140,6 +140,22 @@
             <xs:sequence>
               <xs:element name="rule" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="object-costs" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="object-cost" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="type" type="xs:string" use="required"/>
+                              <xs:attribute name="value" type="xs:double" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="avoid" type="xs:boolean" use="required"/>
+                        <xs:attribute name="threshold" type="xs:nonNegativeInteger"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
                   <xs:attribute name="type" type="xs:string" use="required"/>
                   <xs:attribute name="cost-out-of-channeling" type="xs:nonNegativeInteger" use="required"/>
                   <xs:attribute name="channeling-range" type="xs:nonNegativeInteger" use="required"/>
