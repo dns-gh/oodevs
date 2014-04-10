@@ -28,8 +28,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceDiagnosisConsign )
 // Name: PHY_MaintenanceDiagnosisConsign constructor
 // Created: SLI 2014-02-12
 // -----------------------------------------------------------------------------
-PHY_MaintenanceDiagnosisConsign::PHY_MaintenanceDiagnosisConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
-    : PHY_MaintenanceConsign_ABC( maintenanceAgent, composanteState )
+PHY_MaintenanceDiagnosisConsign::PHY_MaintenanceDiagnosisConsign( MIL_Agent_ABC& maintenanceAgent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
+    : PHY_MaintenanceConsign_ABC( maintenanceAgent, state )
     , component_              ( 0 )
     , searchForUpperLevelDone_( false )
 {
@@ -190,9 +190,9 @@ void PHY_MaintenanceDiagnosisConsign::SelectRepairTeam( const PHY_ComposanteType
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceDiagnosisConsign::EnterStateWaitingForDiagnosisTeam()
 {
+    const auto state = GetComposanteState();
     ResetComponent();
-    assert( pComposanteState_ );
-    if( !pComposanteState_->NeedDiagnosis() )
+    if( !state->NeedDiagnosis() )
         ChooseStateAfterDiagnostic();
     else if( IsManualMode() )
         SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection, 0 );
@@ -222,15 +222,15 @@ void PHY_MaintenanceDiagnosisConsign::EnterStateDiagnosing()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceDiagnosisConsign::ChooseStateAfterDiagnostic()
 {
+    const auto state = GetComposanteState();
     ResetComponent();
-    assert( pComposanteState_ );
-    pComposanteState_->NotifyDiagnosed();
-    pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
+    state->NotifyDiagnosed();
+    state->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
-    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
+    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForRepair( state ) )
     {
-        pComposanteState_ = 0;
-        EnterStateFinished(); // Managed by a 'repair consign'
+        pComposanteState_.reset();
+        EnterStateFinished();
     }
     else
         next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels, 0 ); };
@@ -242,17 +242,15 @@ void PHY_MaintenanceDiagnosisConsign::ChooseStateAfterDiagnostic()
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceDiagnosisConsign::DoSearchForUpperLevel()
 {
-    assert( pComposanteState_ );
     assert( !component_ );
-
     searchForUpperLevelDone_ = true;
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( !pLogisticManager )
         return false;
     MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
-    if( pLogisticSuperior && pLogisticSuperior->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
+    if( pLogisticSuperior && pLogisticSuperior->MaintenanceHandleComposanteForTransport( GetComposanteState() ) )
     {
-        pComposanteState_ = 0;
+        pComposanteState_.reset();
         return true;
     }
     return false;
@@ -277,16 +275,17 @@ bool PHY_MaintenanceDiagnosisConsign::FindAlternativeDiagnosisTeam( const PHY_Co
 {
     if( MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager() )
     {
+        const auto state = GetComposanteState();
         PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeDiagnosisHandler( type );
-        if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForDiagnosis( *pComposanteState_ ) )
+        if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForDiagnosis( state ) )
         {
             if( type )
             {
-                pComposanteState_->GetConsign()->SetState( GetState(), 0 );
-                pComposanteState_->SelectDiagnosisTeam( *type );
+                state->GetConsign()->SetState( GetState(), 0 );
+                state->SelectDiagnosisTeam( *type );
             }
             EnterStateFinished();
-            pComposanteState_ = 0; // Crade
+            pComposanteState_.reset();
             return true;
         }
     }

@@ -23,7 +23,7 @@ class PHY_ComposantePion;
 class PHY_MaintenanceRepairConsign : public PHY_MaintenanceConsign_ABC
 {
 public:
-             PHY_MaintenanceRepairConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState );
+             PHY_MaintenanceRepairConsign( MIL_Agent_ABC& maintenanceAgent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
              PHY_MaintenanceRepairConsign();
     virtual ~PHY_MaintenanceRepairConsign();
 

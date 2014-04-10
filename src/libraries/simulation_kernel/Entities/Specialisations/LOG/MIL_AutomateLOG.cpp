@@ -178,53 +178,85 @@ void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
 // Name: MIL_AutomateLOG::MaintenanceHandleComposanteForTransport
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
-PHY_MaintenanceComposanteState* MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
+boost::shared_ptr< PHY_MaintenanceComposanteState > MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
 {
     MaintenanceTransportVisitor visitor( composante );
     Visit( visitor );
-    return visitor.selected_ ? visitor.selected_->HandleComposanteForTransport( pion, composante ) : 0;
+    return visitor.selected_ ? visitor.selected_->HandleComposanteForTransport( pion, composante ) : boost::shared_ptr< PHY_MaintenanceComposanteState >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::MaintenanceHandleComposanteForTransport
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState )
+bool MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
 {
-    MaintenanceTransportVisitor visitor( composanteState.GetComposante() );
+    MaintenanceTransportVisitor visitor( state->GetComposante() );
     Visit( visitor );
-    return visitor.selected_ ? visitor.selected_->HandleComposanteForTransport( composanteState ) : false;
+    return visitor.selected_ ? visitor.selected_->HandleComposanteForTransport( state ) : false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::MaintenanceHandleComposanteForDiagnosis
 // Created: SLI 2014-02-12
 // -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::MaintenanceHandleComposanteForDiagnosis( PHY_MaintenanceComposanteState& composanteState )
+bool MIL_AutomateLOG::MaintenanceHandleComposanteForDiagnosis( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
 {
     MaintenanceDiagnosisVisitor visitor;
     Visit( visitor );
-    return visitor.selected_ ? visitor.selected_->HandleComposanteForDiagnosis( composanteState ) : false;
+    return visitor.selected_ ? visitor.selected_->HandleComposanteForDiagnosis( state ) : false;
+}
+
+namespace
+{
+    class MaintenanceRepairVisitor : public MIL_LogisticEntitiesVisitor
+                                   , private boost::noncopyable
+    {
+        public:
+            MaintenanceRepairVisitor( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state, const PHY_ComposanteTypePion* type = 0 )
+                : score_   ( std::numeric_limits< int >::min() )
+                , selected_( 0 )
+                , state_   ( state )
+                , type_    ( type )
+            {}
+
+            void Visit( const MIL_AgentPion& tmp )
+            {
+                const PHY_RoleInterface_Maintenance* candidate = tmp.RetrieveRole< PHY_RoleInterface_Maintenance >();
+                const int score = candidate != 0 ? candidate->GetAvailabilityScoreForRepair( state_, type_ ) : std::numeric_limits< int >::min();
+                if( score > score_ )
+                {
+                    score_    = score;
+                    selected_ = const_cast<PHY_RoleInterface_Maintenance*>( candidate );
+                }
+            }
+
+        public:
+                  int                             score_;
+                  PHY_RoleInterface_Maintenance*  selected_;
+            const boost::shared_ptr< PHY_MaintenanceComposanteState >& state_;
+            const PHY_ComposanteTypePion*         type_;
+    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::MaintenanceHandleComposanteForRepair
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::MaintenanceHandleComposanteForRepair( PHY_MaintenanceComposanteState& composanteState )
+bool MIL_AutomateLOG::MaintenanceHandleComposanteForRepair( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
 {
-    MaintenanceRepairVisitor visitor( composanteState );
+    MaintenanceRepairVisitor visitor( state );
     Visit( visitor );
-    return visitor.selected_ ? visitor.selected_->HandleComposanteForRepair( composanteState ) : false;
+    return visitor.selected_ ? visitor.selected_->HandleComposanteForRepair( state ) : false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type /*= 0*/ )
+PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state, const PHY_ComposanteTypePion* type /*= 0*/ )
 {
-    MaintenanceTransportVisitor visitor( composanteState.GetComposante(), type );
+    MaintenanceTransportVisitor visitor( state->GetComposante(), type );
     Visit( visitor );
     return visitor.selected_;
 }
@@ -244,9 +276,9 @@ PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeDiagno
 // Name: MIL_AutomateLOG::MaintenanceFindAlternativeRepairHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeRepairHandler( PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type /*= 0*/ )
+PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeRepairHandler( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state, const PHY_ComposanteTypePion* type /*= 0*/ )
 {
-    MaintenanceRepairVisitor visitor( composanteState, type );
+    MaintenanceRepairVisitor visitor( state, type );
     Visit( visitor );
     return visitor.selected_;
 }

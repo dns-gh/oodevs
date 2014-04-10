@@ -30,14 +30,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceTransportConsign )
 // Name: PHY_MaintenanceTransportConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
-    : PHY_MaintenanceConsign_ABC( maintenanceAgent, composanteState )
+PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( MIL_Agent_ABC& maintenanceAgent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
+    : PHY_MaintenanceConsign_ABC( maintenanceAgent, state )
     , component_                ( 0 )
     , searchForUpperLevelDone_  ( false )
 {
-    const PHY_Breakdown& breakdown = composanteState.GetComposanteBreakdown();
-
-    if( breakdown.AffectMobility() )
+    if( GetComposanteBreakdown().AffectMobility() )
         EnterStateWaitingForCarrier();
     else
         EnterStateGoingFrom();
@@ -92,16 +90,17 @@ bool PHY_MaintenanceTransportConsign::FindAlternativeTransportUnit( const PHY_Co
 {
     if( MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager() )
     {
-        PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeTransportHandler( *pComposanteState_, type );
-        if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForTransport( *pComposanteState_ ) )
+        const auto state = GetComposanteState();
+        PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeTransportHandler( state, type );
+        if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForTransport( state ) )
         {
             if( type )
             {
-                pComposanteState_->GetConsign()->SetState( GetState(), 0 );
-                pComposanteState_->SelectMaintenanceTransporter( *type, destination_ );
+                state->GetConsign()->SetState( GetState(), 0 );
+                state->SelectMaintenanceTransporter( *type, destination_ );
             }
             EnterStateFinished();
-            pComposanteState_ = 0; // Crade
+            pComposanteState_.reset();
             return true;
         }
     }
@@ -114,9 +113,7 @@ bool PHY_MaintenanceTransportConsign::FindAlternativeTransportUnit( const PHY_Co
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceTransportConsign::DoWaitingForCarrier()
 {
-    assert( pComposanteState_ );
     assert( !component_ );
-
     component_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType() );
     if( component_ )
         GetPionMaintenance().StartUsingForLogistic( *component_ );
@@ -144,17 +141,15 @@ void PHY_MaintenanceTransportConsign::DoWaitingForCarrierSelection()
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceTransportConsign::DoSearchForUpperLevel()
 {
-    assert( pComposanteState_ );
     assert( !component_ );
-
     searchForUpperLevelDone_ = true;
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( !pLogisticManager )
         return false;
     MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
-    if( pLogisticSuperior && pLogisticSuperior->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
+    if( pLogisticSuperior && pLogisticSuperior->MaintenanceHandleComposanteForTransport( GetComposanteState() ) )
     {
-        pComposanteState_ = 0;
+        pComposanteState_.reset();
         return true;
     }
     return false;
@@ -185,12 +180,12 @@ void PHY_MaintenanceTransportConsign::ResetComponent()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::EnterStateGoingFrom()
 {
-    assert( pComposanteState_ );
+    const auto state = GetComposanteState();
     SetState( sword::LogMaintenanceHandlingUpdate::moving_to_supply,
-        pComposanteState_->ApproximateTravelTime(
-            pComposanteState_->GetComposantePosition(),
+        state->ApproximateTravelTime(
+            state->GetComposantePosition(),
             pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() ) );
-    pComposanteState_->NotifyHandledByMaintenance();
+    state->NotifyHandledByMaintenance();
 }
 
 // -----------------------------------------------------------------------------
@@ -199,12 +194,12 @@ void PHY_MaintenanceTransportConsign::EnterStateGoingFrom()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingTo()
 {
-    assert( pComposanteState_ );
+    const auto state = GetComposanteState();
     assert( component_ );
     const MT_Vector2D& position = destination_ ?  destination_->GetRole< PHY_RoleInterface_Location>().GetPosition()
                                                : pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition();
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply,
-              component_->ApproximateTravelTime( position, pComposanteState_->GetComposantePosition() ) );
+              component_->ApproximateTravelTime( position, state->GetComposantePosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -213,12 +208,11 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingTo()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::EnterStateCarrierLoading()
 {
-    assert( pComposanteState_ );
     assert( component_ );
-
+    const auto state = GetComposanteState();
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_loading,
         static_cast< int >( component_->GetType().GetHaulerLoadingTime() ) );
-    pComposanteState_->NotifyHandledByMaintenance();
+    state->NotifyHandledByMaintenance();
 }
 
 // -----------------------------------------------------------------------------
@@ -227,12 +221,12 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierLoading()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingFrom()
 {
-    assert( pComposanteState_ );
     assert( component_ );
+    const auto state = GetComposanteState();
     const MT_Vector2D& position = destination_ ?  destination_->GetRole< PHY_RoleInterface_Location>().GetPosition()
                                                : pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition();
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_moving_back,
-              component_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), position ) );
+              component_->ApproximateTravelTime( state->GetComposantePosition(), position ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,9 +235,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingFrom()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::EnterStateCarrierUnloading()
 {
-    assert( pComposanteState_ );
     assert( component_ );
-
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_unloading,
         static_cast< int >( component_->GetType().GetHaulerUnloadingTime() ) );
 }
@@ -306,13 +298,13 @@ bool PHY_MaintenanceTransportConsign::Update()
 void PHY_MaintenanceTransportConsign::ChooseStateAfterTransport()
 {
     ResetComponent();
-    assert( pComposanteState_ );
-    pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
+    const auto state = GetComposanteState();
+    state->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
-    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForDiagnosis( *pComposanteState_ ) )
+    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForDiagnosis( state ) )
     {
-        pComposanteState_ = 0;
-        EnterStateFinished(); // Managed by a 'diagnosis consign'
+        pComposanteState_.reset();
+        EnterStateFinished();
     }
     else
         next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels, 0 ); };
