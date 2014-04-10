@@ -57,7 +57,6 @@ protected:
     void LoadCommandLineLanguage( const tools::Languages& language, const std::string& languageCode );
 
     virtual void Initialize();
-    void InitializeBugTrap();
     void InitializeLayoutDirection();
     virtual void InitializeStyle();
 

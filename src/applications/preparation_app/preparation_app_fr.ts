@@ -41,10 +41,6 @@
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
-    <message>
-        <source>Unhandled error</source>
-        <translation>Erreur non gérée</translation>
-    </message>
 </context>
 <context>
     <name>ChangeAutomatTypeDialog</name>

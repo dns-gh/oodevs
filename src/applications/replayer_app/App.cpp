@@ -46,7 +46,7 @@ App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/, LPWSTR lpCmdLine, i
     // win32 argument parsing
     tools::WinArguments winArgs( lpCmdLine );
     test_ = winArgs.HasOption( "--test" );
-    config_->Parse( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
+    config_->Parse( winArgs.Argc(), winArgs.Argv() );
     if( replayLog )
         MT_LOG_REGISTER_LOGGER( *new MT_FileLogger(
             config_->BuildSessionChildFile( "Replayer.log" ),
@@ -73,17 +73,10 @@ App::~App()
 void App::Execute()
 {
     StartIconAnimation();
-    try
-    {
-        tools::ipc::Watch watch( *quit_ );
-        do
-            replayer_->Update();
-        while( !test_ && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) );
-    }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "Replayer error : " << tools::GetExceptionMsg( e ) );
-    }
+    tools::ipc::Watch watch( *quit_ );
+    do
+        replayer_->Update();
+    while( !test_ && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) );
     StopIconAnimation();
 }
 
@@ -179,7 +172,7 @@ void App::RunGUI( HINSTANCE hinstance )
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "gui: " << tools::GetExceptionMsg( e ) );
+        MT_LOG_FATAL_ERROR_MSG( "gui: " << tools::GetExceptionMsg( e ) );
     }
     quit_->Signal();
 }

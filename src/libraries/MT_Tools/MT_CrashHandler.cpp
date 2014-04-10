@@ -115,9 +115,9 @@ namespace
         if( ! bSuccess )
             return bSuccess;
         if( bMiniDumpSuccessful )
-            MT_LOG_ERROR_MSG( "Crash - dumped " << pszFilename );
+            MT_LOG_FATAL_ERROR_MSG( "Crash - dumped " << pszFilename );
         if( ! bMiniDumpSuccessful )
-            MT_LOG_ERROR_MSG( "Crash - unable to create dump file " << pszFilename );
+            MT_LOG_FATAL_ERROR_MSG( "Crash - unable to create dump file " << pszFilename );
         return(bSuccess);
     }
 
@@ -141,7 +141,7 @@ namespace
 
         if( hDumpFile == INVALID_HANDLE_VALUE )
         {
-            MT_LOG_ERROR_MSG( "Crash - unable to create file " << szFileName );
+            MT_LOG_FATAL_ERROR_MSG( "Crash - unable to create file " << szFileName );
             return;
         }
 
@@ -154,9 +154,9 @@ namespace
         if( ! Log( hDumpFile, bMiniDumpSuccessful ) )
         {
             if( bMiniDumpSuccessful )
-                MT_LOG_ERROR_MSG( "Crash - dumped " << szFileName );
+                MT_LOG_FATAL_ERROR_MSG( "Crash - dumped " << szFileName );
             if( ! bMiniDumpSuccessful )
-                MT_LOG_ERROR_MSG( "Crash - unable to create dump file " << szFileName );
+                MT_LOG_FATAL_ERROR_MSG( "Crash - unable to create dump file " << szFileName );
         }
     }
 }
@@ -171,7 +171,7 @@ int MT_CrashHandler::ContinueSearch( EXCEPTION_POINTERS* pExceptionPointers )
     std::stringstream stream;
     stream << "Crash - stack trace :" << std::endl;
     int result = StackWalkerProxy::ContinueSearch( pExceptionPointers, stream );
-    MT_LOG_ERROR_MSG( stream.str() );
+    MT_LOG_FATAL_ERROR_MSG( stream.str() );
     return result;
 }
 
@@ -185,7 +185,7 @@ int MT_CrashHandler::ExecuteHandler( EXCEPTION_POINTERS* pExceptionPointers )
     std::stringstream stream;
     stream << "Crash - stack trace :" << std::endl;
     int result = StackWalkerProxy::ExecuteHandler( pExceptionPointers, stream );
-    MT_LOG_ERROR_MSG( stream.str() );
+    MT_LOG_FATAL_ERROR_MSG( stream.str() );
     return result;
 }
 
@@ -199,7 +199,7 @@ int MT_CrashHandler::ContinueExecution( EXCEPTION_POINTERS* pExceptionPointers )
     std::stringstream stream;
     stream << "Crash - stack trace :" << std::endl;
     int result = StackWalkerProxy::ContinueExecution( pExceptionPointers, stream );
-    MT_LOG_ERROR_MSG( stream.str() );
+    MT_LOG_FATAL_ERROR_MSG( stream.str() );
     return result;
 }
 

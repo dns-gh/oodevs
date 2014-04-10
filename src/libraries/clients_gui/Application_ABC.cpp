@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "Application_ABC.h"
+#include "moc_Application_ABC.cpp"
 #include "ApplicationMonitor.h"
 #include "VerticalHeaderTableView.h"
 #include "clients_kernel/Tools.h"
@@ -16,8 +17,6 @@
 #include "tools/Language.h"
 #include "tools/Languages.h"
 #include "tools/VersionHelper.h"
-#include "tools/Win32/BugTrap.h"
-#include "moc_Application_ABC.cpp"
 #include <license_gui/LicenseDialog.h>
 
 //#define NO_LICENSE_CHECK
@@ -57,7 +56,6 @@ void Application_ABC::Initialize()
     CreateTranslators();
 
     // Post translator initialization
-    InitializeBugTrap();
     InitializeStyle();
     InitializeLayoutDirection();
 }
@@ -81,17 +79,6 @@ void Application_ABC::CheckLicense( const std::string& licenseName )
         invalidLicense_ = true;
     }
 #endif
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application_ABC::InitializeBugTrap
-// Created: ABR 2012-07-11
-// -----------------------------------------------------------------------------
-void Application_ABC::InitializeBugTrap()
-{
-    BugTrap::Setup( tools::translate( "Application", "SWORD" ).toStdString() )
-            .SetEmail( tools::translate( "Application", "sword@masagroup.net" ).toStdString() )
-            .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
