@@ -19,10 +19,6 @@
         <source>SWORD</source>
         <translation type="unfinished">السيف</translation>
     </message>
-    <message>
-        <source>Unhandled error</source>
-        <translation type="unfinished">خطأ لم تتم معالجته</translation>
-    </message>
 </context>
 <context>
     <name>AuthoringPage</name>

@@ -31,7 +31,7 @@ namespace
         catch( const std::exception& e )
         {
             const std::string err = tools::GetExceptionMsg( e );
-            MT_LOG_ERROR_MSG( err );
+            MT_LOG_FATAL_ERROR_MSG( err );
             QMessageBox::critical( 0, tools::translate( "Application", "Error" ), err.c_str() );
         }
         return EXIT_FAILURE;

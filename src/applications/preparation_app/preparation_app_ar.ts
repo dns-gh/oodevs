@@ -41,10 +41,6 @@
         <source>Error</source>
         <translation type="unfinished">خطأ</translation>
     </message>
-    <message>
-        <source>Unhandled error</source>
-        <translation type="unfinished">خطأ لم تتم معالجته</translation>
-    </message>
 </context>
 <context>
     <name>ChangeAutomatTypeDialog</name>
