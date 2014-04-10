@@ -23,10 +23,6 @@
         <source>SWORD</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Unhandled error</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>AuthoringPage</name>

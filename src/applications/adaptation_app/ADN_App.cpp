@@ -180,7 +180,7 @@ int ADN_App::Run()
         {
             std::stringstream ss;
             ss << tools::GetExceptionMsg( e ).c_str() << std::endl;
-            MT_LOG_ERROR_MSG( Wrap( ss.str(), "ERROR: " ) );
+            MT_LOG_FATAL_ERROR_MSG( Wrap( ss.str(), "ERROR: " ) );
         }
         return EXIT_FAILURE;
     }

@@ -22,7 +22,6 @@ namespace
 {
     int Main( const tools::WinArguments& winArgs )
     {
-        int result = EXIT_SUCCESS;
         try
         {
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
@@ -37,9 +36,9 @@ namespace
         catch( const std::exception& e )
         {
             MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
-            result = EXIT_FAILURE;
+            return EXIT_FAILURE;
         }
-        return result;
+        return EXIT_SUCCESS;
     }
 }
 

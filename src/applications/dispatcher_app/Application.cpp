@@ -42,15 +42,7 @@ Application::~Application()
 // -----------------------------------------------------------------------------
 int Application::Execute( bool test )
 {
-    try
-    {
-        tools::ipc::Watch watch( *quit_ );
-        do{}
-        while( dispatcher_->Update() && !test && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) );
-    }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "Initialization error : " << tools::GetExceptionMsg( e ) );
-    }
-    return 0;
+    tools::ipc::Watch watch( *quit_ );
+    do{}
+    while( dispatcher_->Update() && !test && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) );
 }

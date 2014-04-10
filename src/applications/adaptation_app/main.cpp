@@ -31,16 +31,9 @@ namespace
         }
         catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
+            MT_LOG_FATAL_ERROR_MSG( tools::GetExceptionMsg( e ) );
             if( !silent )
                 QMessageBox::critical( 0, "Critical", tools::GetExceptionMsg( e ).c_str() );
-        }
-        catch( ... )
-        {
-            const char* error = "Unhandled error";
-            MT_LOG_ERROR_MSG( error );
-            if( !silent )
-                QMessageBox::critical( 0, "Critical", error );
         }
         return EXIT_FAILURE;
     }
