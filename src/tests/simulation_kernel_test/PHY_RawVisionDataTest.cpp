@@ -14,14 +14,14 @@
 #include "meteo/Meteo.h"
 #include "StubTER_World.h"
 
-BOOST_AUTO_TEST_CASE( phy_rawvisiondata_cell_non_regression )
+BOOST_AUTO_TEST_CASE( phy_rawvisiondata_cell )
 {
     FakeWorld world( "worldwide/tests/EmptyParis-ML" );
 
     weather::Meteo meteo;
-    tools::Path detectionFile = testOptions.GetDataPath(
+    const tools::Path detectionFile = testOptions.GetDataPath(
             "../../data/terrains/Paris_Est/Detection/detection.dat" );
-    PHY_RawVisionData vision( meteo, detectionFile );
+    const PHY_RawVisionData vision( meteo, detectionFile );
 
     const MT_Vector2D p1( 34020.52, 70833.78 );
     const auto& c1 = vision( p1 );
