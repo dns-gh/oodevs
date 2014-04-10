@@ -73,8 +73,11 @@ void MissionParameters::UpdateMessage( const T& message )
 
     try
     {
-        Action_ABC* action = factory_.CreateAction( message, true );
+        std::auto_ptr< Action_ABC > action( factory_.CreateAction( message, true ) );
+        if( !action.get() )
+            return;
         Register( action->GetId(), *action );
+        action.release();
         controller_.Update( *this );
     }
     catch( ... )
@@ -146,7 +149,6 @@ void MissionParameters::DoUpdate( const sword::TaskCreationRequestAck& message )
 {
     UpdateMessageAck( message );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameters::DoUpdate

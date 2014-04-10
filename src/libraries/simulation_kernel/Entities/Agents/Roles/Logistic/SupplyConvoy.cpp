@@ -234,6 +234,11 @@ void SupplyConvoy::Finish(  bool finished /*= true*/ )
 {
     finished_ = finished;
     conveyors_.clear();
+    if( finished )
+    {
+        eventsObserver_ = 0;
+        parameters_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
