@@ -347,7 +347,7 @@ const weather::Meteo& PHY_RawVisionData::GetWeather( const ElevationCell& cell )
 {
     if( !cell.weatherId )
         return globalMeteo_;
-    return *meteoIds_.find( cell.weatherId )->second;
+    return *meteoIds_.at( cell.weatherId );
 }
 
 // -----------------------------------------------------------------------------
