@@ -70,7 +70,6 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
     pRole_->NotifyComposanteAdded( *this, 0 );
-    assert( pHumans_->IsViable() ); //$$$ Pre-check in PHY_UnitType
 }
 
 // -----------------------------------------------------------------------------
@@ -1519,10 +1518,10 @@ void PHY_ComposantePion::DeleteMaintenanceState()
 {
     if( pMaintenanceState_ )
     {
-        pHumans_->NotifyComposanteBackFromMaintenance();
         pRole_->NotifyComposanteBackFromMaintenance( *pMaintenanceState_ );
         pMaintenanceState_->Cancel();
         pMaintenanceState_.reset();
+        pHumans_->NotifyComposanteBackFromMaintenance();
     }
 }
 

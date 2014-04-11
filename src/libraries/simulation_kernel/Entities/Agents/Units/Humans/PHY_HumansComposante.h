@@ -70,7 +70,6 @@ public:
     virtual void CancelLogisticRequests();
 
     double GetOperationalState() const;
-    bool IsViable() const;
     bool IsEmpty() const;
     //@}
 
@@ -100,6 +99,9 @@ public:
     unsigned int GetNbrUsableHumans() const;
     unsigned int GetNbrHealthyHumans( const PHY_HumanRank& rank ) const;
     //@}
+
+private:
+    void UpdateComponent() const;
 
 private:
     PHY_ComposantePion* pComposante_;
