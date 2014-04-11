@@ -56,10 +56,6 @@
         <translation>images/gui/splash_swordot.png</translation>
     </message>
     <message>
-        <source>sword@masagroup.net</source>
-        <translation>sword@masagroup.net</translation>
-    </message>
-    <message>
         <source>Warning</source>
         <translation>Warning</translation>
     </message>

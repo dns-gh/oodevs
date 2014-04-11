@@ -41,7 +41,7 @@ public:
 
     //! @name Main
     //@{
-    int Execute( bool test );
+    void Execute( bool test );
     //@}
 
 private:

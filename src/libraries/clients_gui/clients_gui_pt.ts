@@ -51,10 +51,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>sword@masagroup.net</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>

@@ -154,7 +154,7 @@ namespace
         }
         catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( "dispatcher: " << tools::GetExceptionMsg( e ) );
+            MT_LOG_FATAL_ERROR_MSG( "dispatcher: " << tools::GetExceptionMsg( e ) );
             result = EXIT_FAILURE;
         }
         quit->Signal();
@@ -212,7 +212,7 @@ void SIM_App::RunGUI()
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "gui: " << tools::GetExceptionMsg( e ) );
+        MT_LOG_FATAL_ERROR_MSG( "gui: " << tools::GetExceptionMsg( e ) );
     }
     quit_->Signal();
 }

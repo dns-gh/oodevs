@@ -16,10 +16,6 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>Unhandled error</source>
-        <translation>Erreur inconnue</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>

@@ -42,9 +42,9 @@ WinArguments::~WinArguments()
 // Name: WinArguments::Argv
 // Created: RDS 2008-07-22
 // -----------------------------------------------------------------------------
-const char* const* WinArguments::Argv() const
+char** WinArguments::Argv() const
 {
-    return cArgv_.empty() ? 0 : &cArgv_.front();
+    return const_cast< char** >( cArgv_.empty() ? 0 : &cArgv_.front() );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ const char* const* WinArguments::Argv() const
 // -----------------------------------------------------------------------------
 int WinArguments::Argc() const
 {
-    return (int)cArgv_.size();
+    return static_cast< int >( cArgv_.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,31 +62,30 @@ int WinArguments::Argc() const
 // -----------------------------------------------------------------------------
 bool WinArguments::HasOption( const std::string& name ) const
 {
-    return std::find( argv_.begin(), argv_.end(), name ) != argv_.end();
+    for( auto arg = argv_.begin() + 1; arg != argv_.end(); ++arg )
+    {
+        if( *arg == name )
+            return (arg + 1) == argv_.end()
+                || (*(arg + 1))[ 0 ] == '-'
+                || *(arg + 1) == "true";
+        if( arg->find( name + '=' ) == 0 )
+            return arg->substr( name.size() + 1 ) == "true";
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: WinArguments::GetOption
 // Created: ABR 2013-03-12
 // -----------------------------------------------------------------------------
-std::string WinArguments::GetOption( const std::string& name, const std::string& defaultValue /* = "" */ )
+std::string WinArguments::GetOption( const std::string& name, const std::string& defaultValue /* = "" */ ) const
 {
     for( auto arg = argv_.begin() + 1; arg != argv_.end(); ++arg )
     {
-        if( arg->find(name) != 0 )
-            continue;
-        if( arg->size() == name.size() )
-        {
-            // "--foo bar" form
-            if( (arg + 1) != argv_.end() )
-                return *(arg + 1);
-        }
-        else
-        {
-            // "--foo=bar" form
-            if( (*arg)[name.size()] == '=' )
-                return arg->substr(name.size() + 1 );
-        }
+        if( *arg == name && (arg + 1) != argv_.end() && (*(arg + 1))[ 0 ] != '-' )
+            return *(arg + 1 );
+        if( arg->find( name + '=' ) == 0 )
+            return arg->substr( name.size() + 1 );
     }
     return defaultValue;
 }
