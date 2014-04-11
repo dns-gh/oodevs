@@ -33,6 +33,7 @@
 #pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/numeric/conversion/cast.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
 namespace bpt = boost::posix_time;
@@ -46,8 +47,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MeteoDataManager )
 // Created: JSR 2011-11-22
 // -----------------------------------------------------------------------------
 PHY_MeteoDataManager::PHY_MeteoDataManager()
-    : pGlobalMeteo_( 0 )
-    , pRawData_    ( 0 )
+    : pRawData_    ( 0 )
     , tickDuration_( 1 )
 {
     // NOTHING
@@ -61,14 +61,13 @@ PHY_MeteoDataManager::PHY_MeteoDataManager(
     const boost::shared_ptr< TER_World >& world, xml::xistream& xis,
     const tools::Path& detectionFile, uint32_t now, uint32_t tickDuration )
     : world_( world )
-    , pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
     , tickDuration_( tickDuration )
 {
     xis >> xml::start( "weather" );
     pEphemeride_ = ReadEphemeride( xis, now );
     InitializeGlobalMeteo( xis );
-    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, detectionFile, this );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, detectionFile );
     InitializeLocalMeteos( xis );
     xis >> xml::end;
 }
@@ -80,7 +79,6 @@ PHY_MeteoDataManager::PHY_MeteoDataManager(
 PHY_MeteoDataManager::~PHY_MeteoDataManager()
 {
     delete pRawData_;
-    delete pGlobalMeteo_;
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +88,8 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), tickDuration_ );
+    pGlobalMeteo_ = boost::make_shared< PHY_GlobalMeteo >(
+            xis, pEphemeride_->GetLightingBase(), tickDuration_ );
     pGlobalMeteo_->SetLighting( pEphemeride_->GetLightingBase() );
     xis >> xml::end;
 }
@@ -133,8 +132,7 @@ bool PHY_MeteoDataManager::RemoveLocalWeather( uint32_t id )
     const auto it = meteos_.find( id );
     if( it == meteos_.end() )
         return false;
-    it->second->SendDestruction();
-    meteos_.erase( it );
+    removed_.insert( id );
     return true;
 }
 
@@ -233,7 +231,7 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
          >> const_cast< uint32_t& >( tickDuration_ )
          >> size;
     MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
-    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config.GetDetectionFile(), this );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config.GetDetectionFile() );
     PHY_LocalMeteo* meteo = 0;
     for( ; size > 0; --size )
     {
@@ -325,9 +323,39 @@ void PHY_MeteoDataManager::Update( unsigned int date )
         for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
             it->second->SetLighting( pEphemeride_->GetLightingBase() );
     }
+
+    // Note weather can be disabled without being removed
+    auto disabled = removed_;
+
+    const int now = boost::numeric_cast< int >( date );
     pGlobalMeteo_->SendCreationIfModified();
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
-        it->second->UpdateMeteoPatch( date, *pRawData_, it->second );
+    {
+        const auto& w = it->second;
+        const auto patched = pRawData_->IsWeatherPatched( w );
+        const bool active = w->GetStartTime() < now && now < w->GetEndTime()
+            && removed_.count( w->GetId() ) == 0;
+        if( active != patched )
+        {
+            if( active )
+            {
+                pRawData_->RegisterMeteoPatch( w );
+            }
+            else
+            {
+                pRawData_->UnregisterMeteoPatch( w );
+                disabled.insert( w->GetId() );
+            }
+        }
+        if( active )
+            w->SendCreationIfModified();
+    }
+
+    for( auto it = disabled.begin(); it != disabled.end(); ++it )
+        meteos_.at( *it )->SendDestruction();
+    for( auto it = removed_.begin(); it != removed_.end(); ++it )
+        meteos_.erase( *it );
+    removed_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -341,24 +369,9 @@ void PHY_MeteoDataManager::SendStateToNewClient()
         it->second->SendCreation();
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::GetLocalWeather
-// Created: ABR 2012-03-21
-// -----------------------------------------------------------------------------
-boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::GetLocalWeather(
-    const geometry::Point2f& position,
-    const boost::shared_ptr< const weather::Meteo >& pMeteo ) const
+boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::GetGlobalWeather() const
 {
-    boost::shared_ptr< const weather::Meteo > result;
-    for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
-    {
-        const auto meteo = it->second.get();
-        if( meteo->IsPatched() && meteo->IsInside( position )
-            && ( !result || result->IsOlder( *meteo ) )
-            && meteo != pMeteo.get() )
-            result = it->second;
-    }
-    return result;
+    return pGlobalMeteo_;
 }
 
 //-----------------------------------------------------------------------------

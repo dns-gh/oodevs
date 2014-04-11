@@ -14,12 +14,7 @@
 #include <boost/shared_ptr.hpp>
 #include <map>
 #include <memory>
-
-namespace geometry
-{
-    template< typename T > class Point2;
-    typedef Point2< float > Point2f;
-}
+#include <set>
 
 namespace sword
 {
@@ -77,9 +72,7 @@ public:
     // The creation notification will be sent during the next Update().
     // Returned instance is const, use PHY_MeteoDataManager API to modify it.
     boost::shared_ptr< const weather::Meteo > AddLocalWeather( xml::xistream& xis );
-    boost::shared_ptr< const weather::Meteo > GetLocalWeather(
-        const geometry::Point2f& position, 
-        const boost::shared_ptr< const weather::Meteo >& pMeteo ) const;
+    boost::shared_ptr< const weather::Meteo > GetGlobalWeather() const;
     // Unregisters a local weather, returns false if the entity cannot be found.
     // The destruction message is sent immediately.
     bool RemoveLocalWeather( uint32_t id );
@@ -132,9 +125,11 @@ private:
     //@{
     boost::shared_ptr< TER_World > world_;
     boost::shared_ptr< PHY_Ephemeride > pEphemeride_;
-    PHY_GlobalMeteo* pGlobalMeteo_;
+    boost::shared_ptr< PHY_GlobalMeteo > pGlobalMeteo_;
     PHY_RawVisionData* pRawData_;
     std::map< uint32_t, boost::shared_ptr< PHY_LocalMeteo > > meteos_;
+    // Identifiers of weather instances removed since last Update()
+    std::set< uint32_t > removed_;
     const uint32_t tickDuration_;
     static unsigned int localCounter_;
     //@}

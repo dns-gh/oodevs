@@ -10,22 +10,18 @@
 #ifndef __PHY_RawVisionData_h_
 #define __PHY_RawVisionData_h_
 
+#include <set>
+#include <unordered_map>
+
 typedef unsigned char envBits;
 struct ElevationCell;
 class ElevationGrid;
 class MT_Ellipse;
 class MT_Vector2D;
 class PHY_IndirectFireDotationClass;
-class PHY_MeteoDataManager;
+class PHY_LocalMeteo;
 class TER_Localisation;
 class TER_Localisation_ABC;
-
-namespace geometry
-{
-    template< typename T > class Point2;
-    typedef Point2< float > Point2f;
-    typedef Point2< double > Point2d;
-}
 
 namespace tools
 {
@@ -61,7 +57,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_RawVisionData( const weather::Meteo& globalMeteo,
-                     const tools::Path& detection, PHY_MeteoDataManager* manager );
+                     const tools::Path& detection );
     virtual ~PHY_RawVisionData();
     //@}
 
@@ -72,6 +68,9 @@ public:
 
     double GetCellSize() const;
 
+    const weather::Meteo& GetWeather( const ElevationCell& cell ) const;
+    const weather::Meteo& GetWeather( const MT_Vector2D& pos ) const;
+    bool IsWeatherPatched( const boost::shared_ptr< const PHY_LocalMeteo >& weather ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const MT_Vector2D& ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const ElevationCell& ) const;
     const weather::PHY_Lighting& GetLighting( const ElevationCell& ) const;
@@ -94,10 +93,8 @@ public:
 
     void GetVisionObjectsInSurface( const TER_Localisation_ABC& localisation, unsigned int& rEmptySurface, unsigned int& rForestSurface, unsigned int& rUrbanSurface ) const;
 
-    void RegisterMeteoPatch  ( const geometry::Point2d&, const geometry::Point2d&,
-            const boost::shared_ptr< const weather::Meteo >& pMeteo );
-    void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d&,
-            const boost::shared_ptr< const weather::Meteo >& pMeteo );
+    void RegisterMeteoPatch( const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo );
+    void UnregisterMeteoPatch( const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo );
 
     void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
     void UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
@@ -123,8 +120,12 @@ private:
     double rMaxAltitude_;
     std::auto_ptr< ElevationGrid > pElevationGrid_;
 
-    PHY_MeteoDataManager* meteoManager_;
     const weather::Meteo& globalMeteo_;
+    // Patched weather instances. It also ensures that weather pointers
+    // in the elevation map cells remain valid as long as they remain
+    // patched.
+    std::set< boost::shared_ptr< const PHY_LocalMeteo > > meteos_;
+    std::unordered_map< uint32_t, const PHY_LocalMeteo* > meteoIds_;
 };
 
 #endif // __PHY_RawVisionData_h_

@@ -11,11 +11,10 @@
 #include "PHY_LocalMeteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
-#include "PHY_MeteoDataManager.h"
-#include "RawVisionData/PHY_RawVisionData.h"
 #include "Tools/MIL_MessageParameters.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
+#include "MT_Tools/MT_Rect.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/EnumMaps.h"
 #include "protocol/MessageParameters.h"
@@ -32,8 +31,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_LocalMeteo )
 // Created: JSR 2011-11-22
 // -----------------------------------------------------------------------------
 PHY_LocalMeteo::PHY_LocalMeteo()
-    : bIsPatched_( false )
-    , startTime_ ( 0 )
+    : startTime_ ( 0 )
     , endTime_   ( 0 )
 {
         // NOTHING
@@ -48,7 +46,6 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis,
         const boost::shared_ptr< TER_World >& world )
     : Meteo( id, xis, &light, timeStep )
     , world_( world )
-    , bIsPatched_( false )
     , startTime_ ( 0 )
     , endTime_   ( 0 )
 {
@@ -72,7 +69,6 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters&
         const boost::shared_ptr< TER_World >& world )
     : Meteo( id, msg, light, timeStep )
     , world_( world )
-    , bIsPatched_( false )
     , startTime_ ( 0 )
     , endTime_   ( 0 )
 {
@@ -101,8 +97,7 @@ void PHY_LocalMeteo::serialize( Archive& file, const unsigned int )
          & startTime_
          & endTime_
          & upLeft_
-         & downRight_
-         & bIsPatched_;
+         & downRight_;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,30 +148,6 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCr
     world_->MosToSimMgrsCoord( points[1].latitude(), points[1].longitude(), downRight_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_LocalMeteo::UpdateMeteoPatch
-// Created: SLG 2010-03-18
-// -----------------------------------------------------------------------------
-void PHY_LocalMeteo::UpdateMeteoPatch( int date, PHY_RawVisionData& dataVision,
-        const boost::shared_ptr< weather::Meteo >& meteo )
-{
-    bool bNeedToBePatched = ( date > startTime_ && date < endTime_ );
-    if( !bIsPatched_ && bNeedToBePatched )
-    {
-        dataVision.RegisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_), geometry::Point2d( downRight_.rX_, downRight_.rY_ ), meteo );
-        bIsPatched_ = true;
-        modified_ = true;
-    }
-    else if( bIsPatched_ && !bNeedToBePatched )
-    {
-        dataVision.UnregisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_), geometry::Point2d( downRight_.rX_, downRight_.rY_ ), meteo );
-        bIsPatched_ = false;
-        modified_ = false;
-        SendDestruction();
-    }
-    SendCreationIfModified();
-}
-
 namespace
 {
 
@@ -199,8 +170,6 @@ void SimToWorld( const TER_World& w, MT_Vector2D sim, sword::CoordLatLong& world
 // -----------------------------------------------------------------------------
 void PHY_LocalMeteo::SendCreation() const
 {
-    if( !bIsPatched_ )
-        return;
     client::ControlLocalWeatherCreation msg;
     sword::WeatherAttributes* att = msg().mutable_attributes();
     msg().mutable_weather()->set_id( id_ );
@@ -230,11 +199,29 @@ void PHY_LocalMeteo::SendDestruction() const
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_LocalMeteo::IsPatched
-// Created: ABR 2012-03-21
-// -----------------------------------------------------------------------------
-bool PHY_LocalMeteo::IsPatched() const
+bool PHY_LocalMeteo::IsInside( const geometry::Point2f& point ) const
 {
-    return bIsPatched_;
+    const MT_Rect rect( upLeft_.GetX(), upLeft_.GetY(),
+                        downRight_.GetX(), downRight_.GetY() ); 
+    return rect.IsInside( MT_Vector2D( point.X(), point.Y() ) );
+}
+
+MT_Vector2D PHY_LocalMeteo::GetTopLeft() const
+{
+    return upLeft_;
+}
+
+MT_Vector2D PHY_LocalMeteo::GetBottomRight() const
+{
+    return downRight_;
+}
+
+int PHY_LocalMeteo::GetStartTime() const
+{
+    return startTime_;
+}
+
+int PHY_LocalMeteo::GetEndTime() const
+{
+    return endTime_;
 }

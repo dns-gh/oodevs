@@ -101,8 +101,6 @@ public:
     const sCloudData&        GetCloud           () const;
     double                   GetConversionFactor() const;
     bool                     IsModified() const;
-    virtual bool             IsPatched() const;
-    virtual bool             IsOlder( const weather::Meteo& other ) const;
 
     void SetPrecipitation( const PHY_Precipitation& precipitation );
     void SetLighting     ( const PHY_Lighting& light );

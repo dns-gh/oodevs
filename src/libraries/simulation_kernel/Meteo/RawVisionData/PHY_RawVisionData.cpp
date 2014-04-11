@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RawVisionData.h"
 #include "PHY_AmmoEffect.h"
-#include "Meteo/PHY_MeteoDataManager.h"
+#include "Meteo/PHY_LocalMeteo.h"
 #include "Meteo/RawVisionData/ElevationGrid.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
@@ -18,6 +18,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include <tools/InputBinaryStream.h>
 #include <tools/Path.h>
+#include <boost/lexical_cast.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData constructor
@@ -25,10 +26,9 @@
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
 PHY_RawVisionData::PHY_RawVisionData( const weather::Meteo& globalMeteo,
-        const tools::Path& detection, PHY_MeteoDataManager* manager )
+        const tools::Path& detection )
     : nNbrCol_( 0 )
     , nNbrRow_( 0 )
-    , meteoManager_( manager )
     , pElevationGrid_( 0 )
     , globalMeteo_( globalMeteo )
 {
@@ -45,19 +45,50 @@ PHY_RawVisionData::~PHY_RawVisionData()
     // NOTHING
 }
 
+namespace
+{
+
+uint32_t GetActiveLocalWeatherOnLocation(
+        const std::set< boost::shared_ptr< const PHY_LocalMeteo > >& meteos,
+        const geometry::Point2f& position )
+{
+    const PHY_LocalMeteo* result = 0;
+    for( auto it = meteos.begin(); it != meteos.end(); ++it )
+    {
+        const auto& meteo = *it;
+        if( meteo->IsInside( position )
+            && ( !result 
+                || meteo->GetStartTime() > result->GetStartTime()
+                || meteo->GetStartTime() == result->GetStartTime()
+                    && meteo->GetId() > result->GetId() ))
+            result = meteo.get();
+    }
+    return result ? result->GetId() : 0;
+}
+
+}  // namespace
+
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::RegisterMeteoPatch
 // Created: JVT 03-08-06
 // Last modified: JVT 03-08-18
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft,
-        const geometry::Point2d& downRight,
-        const boost::shared_ptr< const weather::Meteo >& pMeteo )
+void PHY_RawVisionData::RegisterMeteoPatch(
+        const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo )
 {
-    unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
-    unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
-    unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
-    unsigned int nYBeg = std::min( GetRow( downRight.Y() ), nNbrRow_ - 1 );
+    if( meteoIds_.count( pMeteo->GetId() ) > 0 || !meteos_.insert( pMeteo ).second )
+        throw MASA_EXCEPTION( "weather instance "
+            + boost::lexical_cast< std::string >( pMeteo->GetId() )
+            + " is already registered in vision data" );
+    meteoIds_[ pMeteo->GetId() ] = pMeteo.get();
+
+    const auto upLeft = pMeteo->GetTopLeft();
+    const auto downRight = pMeteo->GetBottomRight();
+
+    unsigned int nXEnd = std::min( GetCol( downRight.GetX() ), nNbrCol_ - 1 );
+    unsigned int nYEnd = std::min( GetRow( upLeft.GetY() ),    nNbrRow_ - 1 );
+    unsigned int nXBeg = std::min( GetCol( upLeft.GetX() ),    nNbrCol_ - 1 );
+    unsigned int nYBeg = std::min( GetRow( downRight.GetY() ), nNbrRow_ - 1 );
 
     // On remet éventuellement dans le bon sens
     if( nXEnd < nXBeg )
@@ -70,7 +101,7 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft,
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             ElevationCell& cell = pElevationGrid_->GetCell( nXBeg, y );
-            cell.pMeteo = pMeteo;
+            cell.weatherId = pMeteo->GetId();
         }
         ++nXBeg;
     }
@@ -80,14 +111,22 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft,
 // Name: PHY_RawVisionData::UnregisterLocalMeteoPatch
 // Created: SLG 2010-03-19
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft,
-        const geometry::Point2d& downRight,
-        const boost::shared_ptr< const weather::Meteo >& pMeteo )
+void PHY_RawVisionData::UnregisterMeteoPatch(
+        const boost::shared_ptr< const PHY_LocalMeteo >& pMeteo )
 {
-    unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
-    unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
-    unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
-    unsigned int nYBeg = std::min( GetRow( downRight.Y() ), nNbrRow_ - 1 );
+    if( meteoIds_.count( pMeteo->GetId() ) == 0 || !meteos_.erase( pMeteo ) )
+        throw MASA_EXCEPTION( "weather instance "
+            + boost::lexical_cast< std::string >( pMeteo->GetId() )
+            + " is already unregistered from vision data" );
+    meteoIds_.erase( pMeteo->GetId() );
+
+    const auto upLeft = pMeteo->GetTopLeft();
+    const auto downRight = pMeteo->GetBottomRight();
+
+    unsigned int nXEnd = std::min( GetCol( downRight.GetX() ), nNbrCol_ - 1 );
+    unsigned int nYEnd = std::min( GetRow( upLeft.GetY() ),    nNbrRow_ - 1 );
+    unsigned int nXBeg = std::min( GetCol( upLeft.GetX() ),    nNbrCol_ - 1 );
+    unsigned int nYBeg = std::min( GetRow( downRight.GetY() ), nNbrRow_ - 1 );
 
     // On remet éventuellement dans le bon sens
     if( nXEnd < nXBeg )
@@ -103,7 +142,7 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft,
             const auto pos = geometry::Point2f(
                     static_cast< float >( nXBeg * rCellSize_ ),
                     static_cast< float >( y * rCellSize_ ) );
-            cell.pMeteo = meteoManager_->GetLocalWeather( pos, pMeteo );
+            cell.weatherId = GetActiveLocalWeatherOnLocation( meteos_, pos );
         }
         ++nXBeg;
     }
@@ -191,6 +230,8 @@ bool PHY_RawVisionData::Read( const tools::Path& path )
 
     ElevationCell** ppCells = new ElevationCell*[ nNbrCol_ ];
 
+    uint16_t elevation;
+    uint8_t env, delta;
     for( unsigned int x = 0; x < nNbrCol_; ++x )
     {
         ElevationCell* pTmp = new ElevationCell[ nNbrRow_ ];
@@ -198,11 +239,15 @@ bool PHY_RawVisionData::Read( const tools::Path& path )
 
         for( unsigned int i = 0; i < nNbrRow_; ++i )
         {
-            pTmp->pMeteo.reset();
-            pTmp->pEffects = 0;
-            archive.Read( reinterpret_cast< char* >( pTmp++ ), 4 );
+            archive >> elevation >> delta >> env;
             if( !archive )
                 throw MASA_EXCEPTION( "Error reading file " + path.ToUTF8() );
+            pTmp->h = elevation;
+            pTmp->dh = delta;
+            pTmp->e = env;
+            pTmp->weatherId = 0;
+            pTmp->pEffects = 0;
+            pTmp++;
         }
     }
 
@@ -293,6 +338,18 @@ ElevationCell& PHY_RawVisionData::operator() ( double rCol, double rRow )
     return pElevationGrid_->GetCell( GetCol( rCol ), GetRow( rRow ) );
 }
 
+const weather::Meteo& PHY_RawVisionData::GetWeather( const MT_Vector2D& pos ) const
+{
+    return GetWeather( operator()( pos ) );
+}
+
+const weather::Meteo& PHY_RawVisionData::GetWeather( const ElevationCell& cell ) const
+{
+    if( !cell.weatherId )
+        return globalMeteo_;
+    return *meteoIds_.at( cell.weatherId );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetPrecipitation
 // Created: BCI 2010-12-13
@@ -304,7 +361,7 @@ const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const MT_
 
 const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const ElevationCell& cell ) const
 {
-    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    const auto& meteo = GetWeather( cell );
     if( cell.pEffects )
         return cell.pEffects->GetPrecipitation( meteo.GetPrecipitation() );
     return meteo.GetPrecipitation();
@@ -312,7 +369,7 @@ const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const Ele
 
 const weather::PHY_Lighting& PHY_RawVisionData::GetLighting( const ElevationCell& cell ) const
 {
-    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    const auto& meteo = GetWeather( cell );
     if( cell.pEffects )
         return cell.pEffects->GetLighting( meteo.GetLighting() );
     return meteo.GetLighting();
@@ -352,8 +409,7 @@ envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D& pos ) const
 // -----------------------------------------------------------------------------
 const weather::WindData& PHY_RawVisionData::GetWind( const MT_Vector2D& vPos ) const
 {
-    const auto& cell = operator()( vPos );
-    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    const auto& meteo = GetWeather( vPos );
     return meteo.GetWind();
 }
 
@@ -448,4 +504,10 @@ void PHY_RawVisionData::GetVisionObjectsInSurface( const TER_Localisation_ABC& l
     nEmptySurface  *= cellSizeSquare;
     nForestSurface *= cellSizeSquare;
     nUrbanSurface  *= cellSizeSquare;
+}
+
+bool PHY_RawVisionData::IsWeatherPatched(
+        const boost::shared_ptr< const PHY_LocalMeteo >& weather ) const
+{
+    return meteos_.count( weather ) > 0;
 }

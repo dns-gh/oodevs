@@ -64,7 +64,6 @@ public:
     const boost::posix_time::ptime& GetStartTime() const;
     const boost::posix_time::ptime& GetEndTime() const;
     bool IsCreated() const;
-    virtual bool IsOlder( const weather::Meteo& other ) const;
     const kernel::CoordinateConverter_ABC& GetCoordinateConverter() const;
 
     virtual bool IsInside( const geometry::Point2f& point ) const;
