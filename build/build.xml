@@ -6,6 +6,8 @@
 
     <target name="update">
         <update name="python" version="2.7.3-3"/>
+        <update name="sword" version="current" package="protobuf"
+            todir="${data.dir}/proto-master"/>
     </target>
 
     <macrodef name="compare-proto">
@@ -103,6 +105,13 @@
             <arg value="--exclude=ClientToSim.Content.MagicAction.Type"/>
             <!-- New logistic state introduced by manual mode -->
             <arg value="--exclude=*LogMaintenanceHandlingUpdate.EnumLogMaintenanceHandlingStatus"/>
+        </compare-proto>
+        <compare-proto olddir="${data.dir}/proto-5.3.2" newdir="${data.dir}/proto-master">
+            <!-- New magic actions are fine -->
+            <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitMagicAction.Type"/>
+            <arg value="--exclude=ClientToSim.Content.UnitMagicAction.Type"/>
+            <!-- New weather enumeration -->
+            <arg value="--exclude=*EnumPrecipitationType"/>
         </compare-proto>
     </target>
 
