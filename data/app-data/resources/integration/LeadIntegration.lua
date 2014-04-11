@@ -1011,10 +1011,9 @@ integration.leadActivate = function( self, findBestsFunction, manageReinforcemen
         end
     end
     
-    if not self.params.noCoordination then
-        if not self.params.continueIfNoMainTask and not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
-            Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
-        end
+    if not self.params.continueIfNoMainTask and not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
+        Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
+        myself.feedback = true -- terminating the mission if there is no operational unit in the first echelon
     end
 end
 
