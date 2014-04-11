@@ -110,6 +110,8 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
           >> xml::optional >> xml::attribute( "min-value", minValue_ )
           >> xml::optional >> xml::attribute( "max-value", maxValue_ )
           >> xml::optional >> xml::attribute( "is-context", isContext_ );
+    if( ADN_Tr::ConvertToContextParameters( diaName_.GetData() ) > -1 )
+        isContext_ = true;
     if( max == "unbounded" )
         maxOccurs_ = std::numeric_limits< int >::max();
     else
@@ -117,9 +119,9 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
     type_ = ADN_Tr::ConvertToMissionParameterType( type );
     input >> xml::list( "value", *this, &ADN_Missions_Parameter::ReadValue );
     input >> xml::optional
-              >> xml::start( "choice" )
-                  >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoiceVector, this, _1, boost::ref( choices_ ) ) )
-              >> xml::end;
+          >> xml::start( "choice" )
+            >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoiceVector, this, _1, boost::ref( choices_ ) ) )
+          >> xml::end;
     if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge )
     {
         if( type_.GetData() == eMissionParameterTypeGenObject )
