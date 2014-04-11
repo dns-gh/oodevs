@@ -71,7 +71,7 @@ end
 
 --- Continue searching an urban block
 -- @param urbanBlock Urban block knowledge
--- @param doNotCaptureTerrorists false, if terrorists should not be captured; false, otherwise
+-- @param doNotCaptureTerrorists true, if terrorists should not be captured; false, otherwise
 integration.startedSearchUrbanBlock = function( urbanBlock, doNotCaptureTerrorists )
     if  urbanBlock.recoFinished then
         DEC_Connaissances_IdentifierToutesUnitesDansZone( urbanBlock.area )     
