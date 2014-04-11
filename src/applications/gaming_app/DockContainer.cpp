@@ -132,7 +132,6 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     {
         itineraryDockWidget_ = new ItineraryEditionDockWidget( parent, controllers );
         itineraryDockWidget_->SetModes( eModes_AllGaming - eModes_Itinerary, eModes_Itinerary );
-        parent->addDockWidget( Qt::LeftDockWidgetArea, itineraryDockWidget_ );
     }
     // -----------------------------------------------------------------------------
     // Right

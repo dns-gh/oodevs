@@ -26,6 +26,7 @@ ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel:
     // Main Layout
     QWidget* mainWidget = new QWidget( this );
     QHBoxLayout* mainLayout = new QHBoxLayout( mainWidget );
+    mainLayout->setAlignment( Qt::AlignRight | Qt::AlignBottom );
     QPushButton* okButton = new gui::RichPushButton( "ItineraryEdition-dock-widget-ok-button", tr( "Ok" ), mainWidget );
     QPushButton* cancelButton = new gui::RichPushButton( "ItineraryEdition-dock-widget-cancel-button", tr( "Cancel" ), mainWidget );
     mainLayout->addWidget( okButton );
