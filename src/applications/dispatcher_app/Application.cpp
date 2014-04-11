@@ -40,7 +40,7 @@ Application::~Application()
 // Name: Application::Run
 // Created: NLD 2006-10-10
 // -----------------------------------------------------------------------------
-int Application::Execute( bool test )
+void Application::Execute( bool test )
 {
     tools::ipc::Watch watch( *quit_ );
     do{}

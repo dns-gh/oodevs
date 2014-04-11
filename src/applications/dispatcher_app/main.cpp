@@ -23,7 +23,6 @@ namespace
 {
     int Main( const tools::WinArguments& winArgs )
     {
-        int result = EXIT_FAILURE;
         try
         {
             int maxConnections = 0;
@@ -37,13 +36,14 @@ namespace
             // Execute dispatcher
             tools::SetCodec();
             Application app( winArgs.Argc(), winArgs.Argv(), maxConnections );
-            result = app.Execute( winArgs.HasOption( "--test" ) );
+            app.Execute( winArgs.HasOption( "--test" ) );
         }
         catch( const std::exception& e )
         {
             MT_LOG_FATAL_ERROR_MSG( tools::GetExceptionMsg( e ) );
+            return EXIT_FAILURE;
         }
-        return result;
+        return EXIT_SUCCESS;
     }
 }
 
