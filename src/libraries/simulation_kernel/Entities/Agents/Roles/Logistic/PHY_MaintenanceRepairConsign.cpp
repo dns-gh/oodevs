@@ -28,8 +28,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceRepairConsign )
 // Name: PHY_MaintenanceRepairConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
-    : PHY_MaintenanceConsign_ABC( maintenanceAgent, composanteState )
+PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign( MIL_Agent_ABC& maintenanceAgent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
+    : PHY_MaintenanceConsign_ABC( maintenanceAgent, state )
     , pRepairer_              ( 0 )
     , searchForUpperLevelDone_( false )
 {
@@ -97,10 +97,8 @@ void PHY_MaintenanceRepairConsign::ResetRepairer()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::DoReturnComposante()
 {
-    assert( pComposanteState_ );
-    assert( !pRepairer_ );
-    pComposanteState_->NotifyRepaired();
-    pComposanteState_ = 0;
+    GetComposanteState()->NotifyRepaired();
+    pComposanteState_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -109,8 +107,7 @@ void PHY_MaintenanceRepairConsign::DoReturnComposante()
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceRepairConsign::DoWaitingForParts()
 {
-    assert( pComposanteState_ );
-    return GetPionMaintenance().ConsumePartsForBreakdown( pComposanteState_->GetComposanteBreakdown() );
+    return GetPionMaintenance().ConsumePartsForBreakdown( GetComposanteBreakdown() );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,15 +116,13 @@ bool PHY_MaintenanceRepairConsign::DoWaitingForParts()
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceRepairConsign::DoWaitingForRepairer()
 {
-    assert( pComposanteState_ );
     assert( !pRepairer_ );
-
-    pRepairer_ = GetPionMaintenance().GetAvailableRepairer( pComposanteState_->GetComposanteBreakdown() );
+    const auto& breakdown = GetComposanteBreakdown();
+    pRepairer_ = GetPionMaintenance().GetAvailableRepairer( breakdown );
     if( !pRepairer_ )
     {
-        // Find alternative repair unit
-        if( !FindAlternativeRepairTeam() )
-            if( !GetPionMaintenance().HasUsableRepairer( pComposanteState_->GetComposanteBreakdown() ) )
+        if( !FindAlternativeRepairTeam()
+            && !GetPionMaintenance().HasUsableRepairer( breakdown ) )
                 EnterStateWaitingForCarrier();
         return false;
     }
@@ -150,11 +145,10 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForCarrier()
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceRepairConsign::DoSearchForCarrier()
 {
-    assert( pComposanteState_ );
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
-    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
+    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForTransport( GetComposanteState() ) )
     {
-        pComposanteState_ = 0;
+        pComposanteState_.reset();
         EnterStateFinished();
         return true;
     }
@@ -197,9 +191,8 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairer()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::EnterStateRepairing()
 {
-    assert( pComposanteState_ );
     SetState( sword::LogMaintenanceHandlingUpdate::repairing,
-        pComposanteState_->GetComposanteBreakdown().GetRepairTime() );
+        GetComposanteBreakdown().GetRepairTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,15 +201,14 @@ void PHY_MaintenanceRepairConsign::EnterStateRepairing()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::EnterStateGoingBackToWar()
 {
-    assert( pComposanteState_ );
+    const auto state = GetComposanteState();
     assert( pRepairer_ );
-
     GetPionMaintenance().StopUsingForLogistic( *pRepairer_ );
     pRepairer_ = 0;
     SetState( sword::LogMaintenanceHandlingUpdate::moving_back,
-        pComposanteState_->ApproximateTravelTime(
+        state->ApproximateTravelTime(
             pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(),
-            pComposanteState_->GetPionPosition() ) );
+            state->GetPionPosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -295,9 +287,9 @@ bool PHY_MaintenanceRepairConsign::DoSearchForUpperLevel()
     if( !pLogisticManager )
         return false;
     MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
-    if( pLogisticSuperior && pLogisticSuperior->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
+    if( pLogisticSuperior && pLogisticSuperior->MaintenanceHandleComposanteForRepair( GetComposanteState() ) )
     {
-        pComposanteState_ = 0;
+        pComposanteState_.reset();
         return true;
     }
     return false;
@@ -338,7 +330,7 @@ void PHY_MaintenanceRepairConsign::SelectRepairTeam( const PHY_ComposanteTypePio
         throw MASA_EXCEPTION( "repair consign not in a waiting for repair team selection state" );
     if( pRepairer_ )
         throw MASA_EXCEPTION( "repair consign already has a repair team selected" );
-    pRepairer_ = GetPionMaintenance().GetAvailableRepairer( pComposanteState_->GetComposanteBreakdown(), &type );
+    pRepairer_ = GetPionMaintenance().GetAvailableRepairer( GetComposanteBreakdown(), &type );
     if( pRepairer_ )
     {
         GetPionMaintenance().StartUsingForLogistic( *pRepairer_ );
@@ -351,18 +343,20 @@ void PHY_MaintenanceRepairConsign::SelectRepairTeam( const PHY_ComposanteTypePio
 bool PHY_MaintenanceRepairConsign::FindAlternativeRepairTeam( const PHY_ComposanteTypePion* type )
 {
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
-    if( pLogisticManager && pComposanteState_ )
+    if( !pLogisticManager )
+        return false;
+    if( auto state = pComposanteState_.lock() )
     {
-        PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeRepairHandler( *pComposanteState_, type );
-        if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForRepair( *pComposanteState_ ) )
+        PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeRepairHandler( state, type );
+        if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForRepair( state ) )
         {
             if( type )
             {
-                pComposanteState_->GetConsign()->SetState( GetState(), 0 );
-                pComposanteState_->SelectRepairTeam( *type );
+                state->GetConsign()->SetState( GetState(), 0 );
+                state->SelectRepairTeam( *type );
             }
             EnterStateFinished();
-            pComposanteState_ = 0; // Crade
+            pComposanteState_.reset();
             return true;
         }
     }

@@ -132,35 +132,6 @@ class MaintenanceDiagnosisVisitor : public MIL_LogisticEntitiesVisitor
         const PHY_ComposanteTypePion*          type_;
 };
 
-class MaintenanceRepairVisitor : public MIL_LogisticEntitiesVisitor
-                               , private boost::noncopyable
-{
-    public:
-        MaintenanceRepairVisitor( const PHY_MaintenanceComposanteState& state, const PHY_ComposanteTypePion* type = 0 )
-            : score_   ( std::numeric_limits< int >::min() )
-            , selected_( 0 )
-            , state_   ( state )
-            , type_    ( type )
-        {}
-
-        void Visit( const MIL_AgentPion& tmp )
-        {
-            const PHY_RoleInterface_Maintenance* candidate = tmp.RetrieveRole< PHY_RoleInterface_Maintenance >();
-            const int score = candidate != 0 ? candidate->GetAvailabilityScoreForRepair( state_, type_ ) : std::numeric_limits< int >::min();
-            if( score > score_ )
-            {
-                score_    = score;
-                selected_ = const_cast<PHY_RoleInterface_Maintenance*>( candidate );
-            }
-        }
-
-    public:
-              int                             score_;
-              PHY_RoleInterface_Maintenance*  selected_;
-        const PHY_MaintenanceComposanteState& state_;
-        const PHY_ComposanteTypePion*         type_;
-};
-
 // =============================================================================
 // MEDICAL
 // =============================================================================

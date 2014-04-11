@@ -54,7 +54,7 @@ ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Pag
     mapnik_ = new QCheckBox();
     mapnik_->setChecked( registry::ReadBool( "HasMapnikLayer" ) );
     oldTimeline_ = new QCheckBox();
-    oldTimeline_->setChecked( registry::ReadBool( "HasLegacyTimeline" ) );
+    oldTimeline_->setChecked( registry::ReadBool( "EnableLegacyTimeline" ) );
 
     auto gen = new QWidget( this );
     auto genlayout = new QVBoxLayout( gen );

@@ -13,6 +13,8 @@
 #define __PHY_MaintenanceConsign_ABC_h_
 
 #include <boost/optional.hpp>
+#include <boost/weak_ptr.hpp>
+#include <boost/serialization/weak_ptr.hpp>
 
 namespace client
 {
@@ -37,7 +39,7 @@ class PHY_Breakdown;
 class PHY_MaintenanceConsign_ABC : private boost::noncopyable
 {
 public:
-             PHY_MaintenanceConsign_ABC( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState );
+             PHY_MaintenanceConsign_ABC( MIL_Agent_ABC& maintenanceAgent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
              PHY_MaintenanceConsign_ABC();
     virtual ~PHY_MaintenanceConsign_ABC();
 
@@ -51,7 +53,7 @@ public:
           bool                            IsFinished             () const;
     const PHY_ComposanteTypePion&         GetComposanteType      () const;
     const PHY_Breakdown&                  GetComposanteBreakdown () const;
-    const PHY_MaintenanceComposanteState& GetComposanteState     () const;
+    boost::shared_ptr< PHY_MaintenanceComposanteState > GetComposanteState() const;
     bool                                  HasValidComposanteState() const;
     //@}
 
@@ -105,7 +107,7 @@ private:
     bool     bHasChanged_;
 
 protected:
-    PHY_MaintenanceComposanteState* pComposanteState_;
+    boost::weak_ptr< PHY_MaintenanceComposanteState > pComposanteState_;
 };
 
 // -----------------------------------------------------------------------------

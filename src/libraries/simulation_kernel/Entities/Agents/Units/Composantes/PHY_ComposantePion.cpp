@@ -744,7 +744,7 @@ void PHY_ComposantePion::Update()
     {
         assert( pBreakdown_ );
         assert( pRole_ );
-        pMaintenanceState_.reset( pRole_->NotifyComposanteWaitingForMaintenance( *this ) );
+        pMaintenanceState_ = pRole_->NotifyComposanteWaitingForMaintenance( *this );
     }
     if( pRole_->GetPion().IsJammed() ||
         pRole_->GetPion().IsLogisticJammed() ||
@@ -1527,7 +1527,7 @@ void PHY_ComposantePion::DeleteMaintenanceState()
         pHumans_->NotifyComposanteBackFromMaintenance();
         pRole_->NotifyComposanteBackFromMaintenance( *pMaintenanceState_ );
         pMaintenanceState_->Cancel();
-        pMaintenanceState_ = 0;
+        pMaintenanceState_.reset();
     }
 }
 

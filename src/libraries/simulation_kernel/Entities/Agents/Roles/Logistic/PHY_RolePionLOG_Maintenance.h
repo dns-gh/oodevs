@@ -68,15 +68,15 @@ public:
     virtual int GetWorkRate() const;
     virtual void ChangeWorkRate( const PHY_MaintenanceWorkRate& workRate );
 
-    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
-    virtual bool HandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState );
+    virtual boost::shared_ptr< PHY_MaintenanceComposanteState > HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
+    virtual bool HandleComposanteForTransport( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
     virtual int GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante, const PHY_ComposanteTypePion* type = 0 ) const;
 
-    virtual bool HandleComposanteForDiagnosis( PHY_MaintenanceComposanteState& composanteState );
+    virtual bool HandleComposanteForDiagnosis( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
     virtual int GetAvailabilityScoreForDiagnosis( const PHY_ComposanteTypePion* type = 0 ) const;
 
-    virtual bool HandleComposanteForRepair( PHY_MaintenanceComposanteState& composanteState );
-    virtual int GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type = 0 ) const;
+    virtual bool HandleComposanteForRepair( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
+    virtual int GetAvailabilityScoreForRepair( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state, const PHY_ComposanteTypePion* type = 0 ) const;
 
     virtual void NotifyComponentHasChanged();
     virtual void NotifyIsLoadedInVab();

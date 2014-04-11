@@ -101,19 +101,19 @@ public:
 
     //! @name Maintenance
     //@{
-    PHY_MaintenanceComposanteState* MaintenanceHandleComposanteForTransport   ( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
-    bool                            MaintenanceHandleComposanteForTransport   ( PHY_MaintenanceComposanteState& composanteState );
-    bool                            MaintenanceHandleComposanteForDiagnosis   ( PHY_MaintenanceComposanteState& composanteState );
-    bool                            MaintenanceHandleComposanteForRepair      ( PHY_MaintenanceComposanteState& composanteState );
+    boost::shared_ptr< PHY_MaintenanceComposanteState > MaintenanceHandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
+    bool                            MaintenanceHandleComposanteForTransport   ( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
+    bool                            MaintenanceHandleComposanteForDiagnosis   ( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
+    bool                            MaintenanceHandleComposanteForRepair      ( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
     bool                            IsMaintenanceManual() const;
     bool                            IsSupplyManual() const;
     void                            OnReceiveLogMaintenanceSetManual          ( const sword::MissionParameters& parameters );
     void                            OnReceiveLogSupplySetManual               ( const sword::MissionParameters& parameters );
 
     //$$$ A FACTORISER AVEC LES FONCTION CI DESSUS
-    PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type = 0 );
+    PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeTransportHandler( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state, const PHY_ComposanteTypePion* type = 0 );
     PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeDiagnosisHandler( const PHY_ComposanteTypePion* type = 0 );
-    PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeRepairHandler   ( PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type = 0 );
+    PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeRepairHandler   ( const boost::shared_ptr< PHY_MaintenanceComposanteState >& state, const PHY_ComposanteTypePion* type = 0 );
     //@}
 
     //! @name Medical

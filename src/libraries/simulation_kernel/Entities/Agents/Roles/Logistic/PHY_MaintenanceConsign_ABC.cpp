@@ -24,15 +24,15 @@
 // Name: PHY_MaintenanceConsign_ABC constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC(  MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
+PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC( MIL_Agent_ABC& maintenanceAgent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
     : nState_( sword::LogMaintenanceHandlingUpdate::moving_to_supply )
     , pMaintenance_( &maintenanceAgent )
-    , pComposanteState_( &composanteState )
+    , pComposanteState_( state )
     , nTimer_( 0 )
     , currentStateEndTimeStep_( std::numeric_limits< unsigned >::max() )
     , bHasChanged_( true )
 {
-    pComposanteState_->SetConsign( this );
+    state->SetConsign( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,6 @@ PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC(  MIL_Agent_ABC& maintena
 PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC()
     : nState_( sword::LogMaintenanceHandlingUpdate::moving_to_supply )
     , pMaintenance_( 0 )
-    , pComposanteState_( 0 )
     , nTimer_( 0 )
     , currentStateEndTimeStep_ ( std::numeric_limits< unsigned >::max() )
     , bHasChanged_( true )
@@ -56,8 +55,8 @@ PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC()
 // -----------------------------------------------------------------------------
 PHY_MaintenanceConsign_ABC::~PHY_MaintenanceConsign_ABC()
 {
-    if( pComposanteState_ )
-        pComposanteState_->SetConsign( 0 );
+    if( auto state = pComposanteState_.lock() )
+        state->SetConsign( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,8 +65,7 @@ PHY_MaintenanceConsign_ABC::~PHY_MaintenanceConsign_ABC()
 // -----------------------------------------------------------------------------
 const PHY_ComposanteTypePion& PHY_MaintenanceConsign_ABC::GetComposanteType() const
 {
-    assert( pComposanteState_ );
-    return pComposanteState_->GetComposante().GetType();
+    return GetComposanteState()->GetComposante().GetType();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,8 +74,7 @@ const PHY_ComposanteTypePion& PHY_MaintenanceConsign_ABC::GetComposanteType() co
 // -----------------------------------------------------------------------------
 const PHY_Breakdown& PHY_MaintenanceConsign_ABC::GetComposanteBreakdown() const
 {
-    assert( pComposanteState_ );
-    return pComposanteState_->GetComposanteBreakdown();
+    return GetComposanteState()->GetComposanteBreakdown();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +84,7 @@ const PHY_Breakdown& PHY_MaintenanceConsign_ABC::GetComposanteBreakdown() const
 void PHY_MaintenanceConsign_ABC::Cancel()
 {
     EnterStateFinished();
-    pComposanteState_ = 0;
+    pComposanteState_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -208,14 +205,11 @@ bool PHY_MaintenanceConsign_ABC::IsFinished() const
     return nState_ == sword::LogMaintenanceHandlingUpdate::finished;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceConsign_ABC::GetComposanteState
-// Created: JVT 2005-05-04
-// -----------------------------------------------------------------------------
-const PHY_MaintenanceComposanteState& PHY_MaintenanceConsign_ABC::GetComposanteState() const
+boost::shared_ptr< PHY_MaintenanceComposanteState > PHY_MaintenanceConsign_ABC::GetComposanteState() const
 {
-    assert( pComposanteState_ );
-    return *pComposanteState_;
+    if( auto state = pComposanteState_.lock() )
+        return state;
+    throw MASA_EXCEPTION( "invalid state" );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +218,7 @@ const PHY_MaintenanceComposanteState& PHY_MaintenanceConsign_ABC::GetComposanteS
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceConsign_ABC::HasValidComposanteState() const
 {
-    return pComposanteState_ != 0 ;
+    return !pComposanteState_.expired();
 }
 
 // -----------------------------------------------------------------------------
@@ -243,9 +237,9 @@ PHY_RoleInterface_Maintenance& PHY_MaintenanceConsign_ABC::GetPionMaintenance() 
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceConsign_ABC::FinishSuccessfullyWithoutDelay()
 {
-    if( pComposanteState_ )
-        pComposanteState_->NotifyRepaired();
-    pComposanteState_ = 0;
+    if( auto state = pComposanteState_.lock() )
+        state->NotifyRepaired();
+    pComposanteState_.reset();
     EnterStateFinished();
 }
 
@@ -255,9 +249,9 @@ void PHY_MaintenanceConsign_ABC::FinishSuccessfullyWithoutDelay()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceConsign_ABC::ClearConsign()
 {
-    if( pComposanteState_ )
-        const_cast< PHY_ComposantePion& >( pComposanteState_->GetComposante() ).DeleteMaintenanceState();
-    pComposanteState_ = 0;
+    if( auto state = pComposanteState_.lock() )
+        const_cast< PHY_ComposantePion& >( state->GetComposante() ).DeleteMaintenanceState();
+    pComposanteState_.reset();
 }
 
 // -----------------------------------------------------------------------------
