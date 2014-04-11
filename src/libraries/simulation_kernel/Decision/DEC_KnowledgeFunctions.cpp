@@ -28,6 +28,19 @@
 #include "Urban/MIL_UrbanCache.h"
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetAllAgentsInZone
+// Created: FAI 2014-04-03
+// -----------------------------------------------------------------------------
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetAllAgentsInZone( const DEC_Decision_ABC* callerAgent, const TER_Localisation* area )
+{
+    T_ConstKnowledgeAgentVector knowledges;
+    auto bbKg = callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetAllAgentsInZone( knowledges, *area );
+    return knowledges;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------

@@ -442,20 +442,20 @@ integration.getTerroristsInObjective = function( objective )
     local integration = integration
     local CreateKnowledge = CreateKnowledge
     local res = {}
-    local enemies = {}
+    local localisation = nil
     if masalife.brain.core.class.isOfType( objective, integration.ontology.types.area ) then
-        enemies = integration.isKnowledgesAgentsInArea( objective.source ) 
+        localisation = objective.source
     elseif masalife.brain.core.class.isOfType( objective, integration.ontology.types.urbanBlock ) then
-        enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( objective.source )           
+        localisation = integration.polylineUrbanBlock( objective.source )         
     else
-        enemies = integration.getKnowledgesLivingAgentsInCircle( objective:getPosition(), 600 )
+        localisation = DEC_Geometrie_CreerLocalisationCercle( objective:getPosition(), 600 )
     end
-    
+    local units = DEC_Connaissances_UnitesDansZone( myself, localisation )
     local DEC_ConnaissanceAgent_EstTerroriste = DEC_ConnaissanceAgent_EstTerroriste
-    for i = 1, #enemies do
-        local enemy = enemies[i]
-        if DEC_ConnaissanceAgent_EstTerroriste( enemy ) then
-            res[ #res + 1 ] = CreateKnowledge( integration.ontology.types.agentKnowledge, enemy )
+    for i = 1, #units do
+        local unit = units[i]
+        if DEC_ConnaissanceAgent_EstTerroriste( unit ) and DEC_ConnaissanceAgent_EnAgent( unit ) ~= myself and not DEC_ConnaissanceAgent_EstTransporte( unit ) then
+            res[ #res + 1 ] = CreateKnowledge( integration.ontology.types.agentKnowledge, unit )
         end
     end
     return res

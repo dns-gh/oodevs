@@ -98,6 +98,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Automate_PionsDeAutomateSansPCCommunication", &DEC_AutomateFunctions::GetCommunicationPionsOfAutomateWithoutPC );
     brain.RegisterFunction( "DEC_Automate_PionsDeAutomateAvecPCCommunication", &DEC_AutomateFunctions::GetCommunicationAutomatPionsWithPC );
     brain.RegisterMethod( "DEC_Automate_EstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
+    brain.RegisterFunction( "DEC_Connaissances_UnitesDansZone", &DEC_KnowledgeFunctions::GetAllAgentsInZone );
     brain.RegisterFunction( "DEC_Connaissances_UnitesPrenantAPartieUnAmi", &DEC_KnowledgeFunctions::GetEnemiesAttacking );
     brain.RegisterFunction( "DEC_Connaissances_UniteLaPlusProcheDunAmi", &DEC_KnowledgeFunctions::GetNearestToFriend );
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesDansZone", &DEC_KnowledgeFunctions::GetEnemyAgentsInZone );
