@@ -403,11 +403,24 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
     local pionsSE = echelons[2]
     local pionsEE = echelons[3]
 
-    -- if their is a unit in the first echelon that end his mission, we considere him like a SE unit
-    for _, entity in pairs( pionsPE ) do
+    local firstEchelonNeutralized = true
+
+    for i = 1, #pionsPE do
+        local entity = pionsPE[i]
+
+        -- Check if this entity is neutralized (in order to display reports later)
+        firstEchelonNeutralized = firstEchelonNeutralized and integration.isAgentNeutralized( entity.source )
+
+        -- If there is a unit in the first echelon that has ended his mission,
+        -- then we consider him like a second echelon unit
         if not integration.hasMission(entity.source) and entity:isOperational() then
             pionsSE[#pionsSE + 1] = entity
         end
+    end
+    
+    -- If all the units of the first echelon are neutralized, then display a report.
+    if firstEchelonNeutralized then
+        Activate( self.skill.links.RC, 1, { RC = eRC_DebutNeutralisation } )
     end
 
     local tasksForSE = ( ( self.params.supportTasks and self.params.supportTasks ~= NIL ) and ( self.params.supportTasks..";" ) or "" ) 
