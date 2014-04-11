@@ -681,6 +681,7 @@
                          includes="*.qm,
                                    *.qss,
                                    *.xml,
+                                   BugTrap*.dll,
                                    gdal19.dll,
                                    geos.dll,
                                    geos_c.dll,
@@ -816,6 +817,7 @@
         <update name="7z" version="9.30-1"/>
         <update name="asciidoc" version="8.6.8"/>
         <update name="boost" version="1.50.r653"/>
+        <update name="bugtrap" version="1.3.3291.42976"/>
         <update name="buildtools" version="5.3"/>
         <update name="cmake" version="2.8.11.1-masa1"/>
         <update name="depends" version="2.2.6000"/>
