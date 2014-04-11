@@ -130,6 +130,8 @@ var reFunctErr *regexp.Regexp = regexp.MustCompile(makePattern(
 	`Client hasn't answered messages from last tick!`,
 ))
 
+var reError *regexp.Regexp = regexp.MustCompile(`<(fatalERR|functERR)>`)
+
 // Reads reader and possibly returns a concatenation of all <functERR> lines,
 // or an empty string.
 func FindLoggedFatalErrors(reader io.Reader, opts *SessionErrorsOpts) (string, error) {
@@ -146,7 +148,7 @@ func FindLoggedFatalErrors(reader io.Reader, opts *SessionErrorsOpts) (string, e
 	scanner := NewLogParser(reader)
 	for scanner.Scan() {
 		group := scanner.Text()
-		if strings.Contains(group, "<functERR>") {
+		if reError.MatchString(group) {
 			if reFunctErr.MatchString(group) {
 				continue
 			}
@@ -164,8 +166,8 @@ func FindLoggedFatalErrors(reader io.Reader, opts *SessionErrorsOpts) (string, e
 
 // Reads reader and possibly returns a stack trace, or an error.
 func FindStacktrace(reader io.Reader) (string, error) {
-	// [2014-01-14 11:07:28] <Simulation> <functERR> Crash -
-	reStart := regexp.MustCompile(`<functERR>\s+Crash\s+-`)
+	// [2014-01-14 11:07:28] <Simulation> <fatalERR> Crash -
+	reStart := regexp.MustCompile(`<(fatalERR|functERR)>\s+Crash\s+-`)
 
 	trace := bytes.Buffer{}
 	scanner := NewLogParser(reader)
