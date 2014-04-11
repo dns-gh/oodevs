@@ -448,7 +448,7 @@ integration.getTerroristsInObjective = function( objective )
     elseif masalife.brain.core.class.isOfType( objective, integration.ontology.types.urbanBlock ) then
         localisation = integration.polylineUrbanBlock( objective.source )         
     else
-        localisation = DEC_Geometrie_CreerLocalisationCercle( objective.source, 600 )
+        localisation = DEC_Geometrie_CreerLocalisationCercle( objective:getPosition(), 600 )
     end
     local units = DEC_Connaissances_UnitesDansZone( myself, localisation )
     local DEC_ConnaissanceAgent_EstTerroriste = DEC_ConnaissanceAgent_EstTerroriste
