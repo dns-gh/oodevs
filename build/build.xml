@@ -920,7 +920,9 @@
     </target>
 
     <target name="go.build" description="build go applications">
+        <go_fmt/>
         <go_build/>
+        <go cmd="vet"/>
     </target>
 
     <target name="test" depends="unit_test
