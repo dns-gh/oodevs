@@ -142,6 +142,16 @@ func getSomeParty(c *C, model *swapi.ModelData) *swapi.Party {
 	return nil
 }
 
+func getPartyByName(c *C, model *swapi.ModelData, name string) *swapi.Party {
+	for _, party := range model.Parties {
+		if party.Name == name {
+			return party
+		}
+	}
+	c.Fatal("no party found")
+	return nil
+}
+
 func getAutomatTypeFromName(c *C, phydb *phy.PhysicalFile, typeName string) uint32 {
 	automats, err := phy.ReadAutomats(*phydb)
 	c.Assert(err, IsNil)
