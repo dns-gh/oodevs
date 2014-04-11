@@ -63,13 +63,12 @@ PHY_HumansComposante::~PHY_HumansComposante()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::IsViable
-// Created: NLD 2006-02-09
-// -----------------------------------------------------------------------------
-bool PHY_HumansComposante::IsViable() const
+void PHY_HumansComposante::UpdateComponent() const
 {
-    return nNbrUsableHumans_ > 0 || pComposante_->GetRole().GetPion().IsAutonomous();
+    if( pComposante_->GetState() != PHY_ComposanteState::dead_
+        && nNbrUsableHumans_ == 0
+        && !pComposante_->GetRole().GetPion().IsAutonomous() )
+        pComposante_->ReinitializeState( PHY_ComposanteState::dead_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -314,8 +313,7 @@ void PHY_HumansComposante::NotifyHumanRemoved( Human_ABC& human )
     }
     assert( pComposante_ );
     const_cast< MIL_Agent_ABC& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanRemoved, human );
-    if( !IsViable() )
-        pComposante_->ReinitializeState( PHY_ComposanteState::dead_ );
+    UpdateComponent();
 }
 
 // -----------------------------------------------------------------------------
@@ -333,8 +331,7 @@ void PHY_HumansComposante::NotifyHumanChanged( Human_ABC& human, const Human_ABC
         ++nNbrUsableHumans_;
     assert( pComposante_ );
     const_cast< MIL_Agent_ABC& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanChanged, human, copyOfOldHumanState );
-    if( !IsViable() )
-        pComposante_->ReinitializeState( PHY_ComposanteState::dead_ );
+    UpdateComponent();
 }
 
 // -----------------------------------------------------------------------------
