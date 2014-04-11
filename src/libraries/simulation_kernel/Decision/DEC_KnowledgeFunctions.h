@@ -57,6 +57,7 @@ public:
     //@{
     static double GetRapForLocal( const MIL_AgentPion& callerAgent );
 
+	static T_ConstKnowledgeAgentVector GetAllAgentsInZone( const DEC_Decision_ABC* callerAgent, const TER_Localisation* area );
     static T_ConstKnowledgeAgentVector GetDetectedAgentsInFuseau( const MIL_AgentPion& callerAgent );
     static T_ConstKnowledgeAgentVector GetDetectedAgentsInZone( const MIL_AgentPion& callerAgent, const TER_Localisation* area );
     static T_ConstKnowledgeAgentVector GetEnemyAgentsInZone( const DEC_Decision_ABC* callerAgent, const TER_Localisation* area );
