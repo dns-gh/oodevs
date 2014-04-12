@@ -63,7 +63,6 @@ public:
     virtual void CancelLogisticRequests() = 0;
 
     virtual double GetOperationalState() const = 0;
-    virtual bool IsViable() const = 0;
     virtual bool IsEmpty() const = 0;
     //@}
 

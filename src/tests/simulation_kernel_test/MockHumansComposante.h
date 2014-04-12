@@ -32,7 +32,6 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( KillAllHumans, 0 );
     MOCK_METHOD( OverloadHumans, 5 );
     MOCK_METHOD( GetOperationalState, 0 );
-    MOCK_METHOD( IsViable, 0 );
     MOCK_METHOD( IsEmpty, 0 );
     MOCK_METHOD( NotifyComposanteHandledByMaintenance, 0 );
     MOCK_METHOD( NotifyComposanteBackFromMaintenance, 0 );
@@ -45,14 +44,6 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( GetComposante, 0 );
     MOCK_METHOD( GetNbrUsableHumans, 0 );
     MOCK_METHOD( GetNbrHealthyHumans, 1 );
-
-    //! @name Serialization
-    //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int ){}
-    //@}
 };
-
-//BOOST_CLASS_EXPORT_KEY( MockHumansComposante )
-//BOOST_CLASS_EXPORT_IMPLEMENT( MockHumansComposante )
 
 #endif // __MockHumansComposante_ABC_h_
