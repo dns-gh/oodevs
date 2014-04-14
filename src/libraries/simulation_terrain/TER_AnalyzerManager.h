@@ -29,12 +29,6 @@ class TER_AnalyzerManager
     typedef std::function< void( const MT_Vector2D& pos, const TerrainData& data ) > T_Functor;
 
 public:
-    //! @name Helpers
-    //@{
-    static TerrainData& DefaultTerrainData();
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
     explicit TER_AnalyzerManager( const TER_StaticData& staticData );

@@ -42,16 +42,6 @@ TER_AnalyzerManager::~TER_AnalyzerManager()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_AnalyzerManager::DefaultTerrainData
-// Created: AGE 2005-02-01
-// -----------------------------------------------------------------------------
-TerrainData& TER_AnalyzerManager::DefaultTerrainData()
-{
-    static TerrainData data;
-    return data;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TER_AnalyzerManager::FindCrossroadsWithinCircle
 // Created: CMA 2011-08-16
 // -----------------------------------------------------------------------------

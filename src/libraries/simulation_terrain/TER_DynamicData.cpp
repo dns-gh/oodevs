@@ -11,7 +11,6 @@
 #include "TER_DynamicData.h"
 #include "TER_PathFindManager.h"
 #include "TER_World.h"
-#include "TER_AnalyzerManager.h"
 #include <spatialcontainer/TerrainData.h>
 #include <boost/make_shared.hpp>
 
@@ -21,7 +20,7 @@ namespace
 TerrainData Convert( const std::string& type )
 {
     if( type.empty() )
-        return TER_AnalyzerManager::DefaultTerrainData();
+        return TerrainData();
     const TerrainData result( type );
     if( result.IsRoad() )
         return result;
