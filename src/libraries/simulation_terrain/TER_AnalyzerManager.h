@@ -63,7 +63,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const TER_StaticData& staticData_;
     TER_Analyzer* pAnalyzer_;
     //@}
 };

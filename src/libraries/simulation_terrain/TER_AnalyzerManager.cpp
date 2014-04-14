@@ -27,9 +27,8 @@ TER_AnalyzerManager& TER_AnalyzerManager::GetAnalyzerManager()
 // Created: CMA 2011-08-16
 // -----------------------------------------------------------------------------
 TER_AnalyzerManager::TER_AnalyzerManager( const TER_StaticData& staticData )
-    : staticData_( staticData )
 {
-    pAnalyzer_ = new TER_Analyzer( staticData_ );
+    pAnalyzer_ = new TER_Analyzer( staticData );
 }
 
 // -----------------------------------------------------------------------------
