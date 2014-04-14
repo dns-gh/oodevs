@@ -37,7 +37,7 @@ class TER_PopulationManager;
 class TER_CoordinateManager;
 class TER_StaticData;
 class TER_PathFindManager;
-class TER_AnalyzerManager;
+class TER_Analyzer;
 class TER_LimitDataManager;
 class MT_Rect;
 class MT_Vector2D;
@@ -100,7 +100,7 @@ public:
     //! @name Accessors
     //@{
     TER_PathFindManager&   GetPathFindManager  () const;
-    TER_AnalyzerManager&   GetAnalyzerManager  () const;
+    TER_Analyzer&          GetAnalyzer() const;
     TER_AgentManager&      GetAgentManager     () const;
     TER_ObjectManager&     GetObjectManager    () const;
     TER_PopulationManager& GetPopulationManager() const;
@@ -115,8 +115,8 @@ private:
     TER_CoordinateManager* pCoordinateManager_;
     TER_StaticData*        pGraphManager_;
     TER_PathFindManager*   pPathfindManager_;
-    TER_AnalyzerManager*   pAnalyzerManager_;
     TER_PopulationManager* pPopulationManager_;
+    std::unique_ptr< TER_Analyzer > analyzer_;
     std::unique_ptr< TER_LimitDataManager > limitManager_;
     //@}
 };

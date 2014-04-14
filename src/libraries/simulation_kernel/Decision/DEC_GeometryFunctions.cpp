@@ -2182,7 +2182,7 @@ namespace
         if ( pCapacity )
         {
             BestNodeForObstacle costEvaluationFunctor( fuseau, *pCapacity, *pCenter, rRadius );
-            TER_World::GetWorld().GetAnalyzerManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );
+            TER_World::GetWorld().GetAnalyzer().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );
             if( costEvaluationFunctor.FoundAPoint() )
                 pResultPos.reset( new MT_Vector2D( costEvaluationFunctor.BestPosition() ) );
         }

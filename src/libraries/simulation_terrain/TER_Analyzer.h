@@ -11,6 +11,7 @@
 #define __TER_Analyzer_h_
 
 #include "MT_Tools/MT_Vector2DTypes.h"
+#include <boost/noncopyable.hpp>
 
 class TerrainAnalyzer;
 class TerrainData;
@@ -24,10 +25,12 @@ class TER_StaticData;
 */
 // Created: CMA 2011-08-16
 // =============================================================================
-class TER_Analyzer
+class TER_Analyzer : boost::noncopyable
 {
 public:
     typedef std::function< void( const MT_Vector2D& pos, const TerrainData& data ) > T_Functor;
+
+    static TER_Analyzer& GetAnalyzer();
 
     //! @name Constructors/Destructor
     //@{
@@ -49,13 +52,6 @@ public:
     TerrainData FindTerrainDataWithinPolygon( const TER_Polygon& polygon );
     TerrainData Pick( const MT_Vector2D& pos );
     TerrainData GetTerrainData( const TER_Localisation& localisation );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    TER_Analyzer( const TER_Analyzer& );            //!< Copy constructor
-    TER_Analyzer& operator=( const TER_Analyzer& ); //!< Assignment operator
     //@}
 
 private:

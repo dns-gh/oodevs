@@ -13,7 +13,7 @@
 #include "Brain.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
-#include "simulation_terrain/TER_AnalyzerManager.h"
+#include "simulation_terrain/TER_Analyzer.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_World.h"
 #include <spatialcontainer/TerrainData.h>
@@ -53,7 +53,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_TerrainFunctions::GetRoadInt
     {
         TER_Polygon polygon;
         polygon.Reset( zone->GetPoints() );
-        TER_World::GetWorld().GetAnalyzerManager().FindRoadsOnBorderOfPolygon( polygon, points );
+        TER_World::GetWorld().GetAnalyzer().FindRoadsOnBorderOfPolygon( polygon, points );
     }
     else
         MT_LOG_INFO_MSG( "TER_Localisation parameter of DEC_TerrainFunctions::GetRoadIntersectionsWithZone method should be a polygon" );
@@ -84,7 +84,7 @@ bool DEC_TerrainFunctions::IsLinearRiverInBetween( const MT_Vector2D* from, cons
     std::vector< boost::shared_ptr< MT_Vector2D > > positions;
     TerrainData rivers;
     rivers.Merge( TerrainData::SmallRiver() ).Merge( TerrainData::MediumRiver() ).Merge( TerrainData::LargeRiver() );
-    TER_AnalyzerManager::GetAnalyzerManager().FindSegmentIntersections( *from, *to, rivers, positions );
+    TER_Analyzer::GetAnalyzer().FindSegmentIntersections( *from, *to, rivers, positions );
     return !positions.empty();
 }
 
@@ -98,7 +98,7 @@ bool DEC_TerrainFunctions::IsWaterInBetween( const MT_Vector2D* from, const MT_V
         throw MASA_EXCEPTION( "Invalid point in call to ArePointsOnSameRiverBank" );
     std::vector< boost::shared_ptr< MT_Vector2D > > positions;
     TerrainData rivers;
-    TER_AnalyzerManager::GetAnalyzerManager().FindSegmentIntersections( *from, *to, TerrainData::WaterBorder(), positions );
+    TER_Analyzer::GetAnalyzer().FindSegmentIntersections( *from, *to, TerrainData::WaterBorder(), positions );
     return !positions.empty();
 }
 
@@ -108,6 +108,6 @@ bool DEC_TerrainFunctions::IsWaterInBetween( const MT_Vector2D* from, const MT_V
 // -----------------------------------------------------------------------------
 std::pair< unsigned int, unsigned int > DEC_TerrainFunctions::GetTerrainData( const MT_Vector2D* location )
 {
-    const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *location );
+    const TerrainData data = TER_Analyzer::GetAnalyzer().Pick( *location );
     return std::make_pair( data.Area(), data.Linear() );
 }

@@ -20,7 +20,7 @@
 #include "Entities/Objects/TerrainHeuristicCapacity.h"
 #include "Tools/MIL_Tools.h"
 
-#include "simulation_terrain/TER_AnalyzerManager.h"
+#include "simulation_terrain/TER_Analyzer.h"
 #include "simulation_terrain/TER_World.h"
 
 #include <boost/make_shared.hpp>

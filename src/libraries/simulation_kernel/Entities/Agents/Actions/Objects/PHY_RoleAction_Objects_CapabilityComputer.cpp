@@ -15,7 +15,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "simulation_terrain/TER_AnalyzerManager.h"
+#include "simulation_terrain/TER_Analyzer.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include <spatialcontainer/TerrainData.h>
 
@@ -84,7 +84,7 @@ void PHY_RoleAction_Objects_CapabilityComputer::operator() ( PHY_ComposantePion&
     }
     if( bHasCapability_ && localisation_ && localisation_->GetType() != TER_Localisation::eNone && composante.HasConstructionSpeeds() )
     {
-        TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().GetTerrainData( *localisation_ );
+        TerrainData data = TER_Analyzer::GetAnalyzer().GetTerrainData( *localisation_ );
         if( composante.GetConstructionSpeed( data ) == 0 )
             bHasCapability_ = false;
     }

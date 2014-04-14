@@ -24,7 +24,7 @@
 #include "TER_CoordinateManager.h"
 #include "TER_StaticData.h"
 #include "TER_PathFindManager.h"
-#include "TER_AnalyzerManager.h"
+#include "TER_Analyzer.h"
 #include "TER_LimitDataManager.h"
 #include <spatialcontainer/TerrainData.h>
 #include "MT_Tools/MT_Rect.h"
@@ -71,7 +71,7 @@ TER_World::TER_World( const tools::ExerciseConfig& config )
     pCoordinateManager_ = new TER_CoordinateManager( config.GetTerrainLatitude(), config.GetTerrainLongitude(), extent );
     pGraphManager_      = new TER_StaticData       ( config.GetPathfindGraphFile(), config.GetPathfindNodesFile(), config.GetPathfindLinksFile(), 1e-4f );
     pPathfindManager_   = new TER_PathFindManager  ( *pGraphManager_ );
-    pAnalyzerManager_   = new TER_AnalyzerManager  ( *pGraphManager_ );
+    analyzer_.reset( new TER_Analyzer( *pGraphManager_ ) );
     limitManager_.reset( new TER_LimitDataManager() );
 }
 
@@ -81,7 +81,6 @@ TER_World::TER_World( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 TER_World::~TER_World()
 {
-    delete pAnalyzerManager_;
     delete pPathfindManager_;
     delete pGraphManager_;
     delete pCoordinateManager_;
@@ -216,13 +215,12 @@ TER_PathFindManager& TER_World::GetPathFindManager() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_World::GetAnalyzerManager
+// Name: TER_World::GetAnalyzer
 // Created: CMA 2011-08-16
 // -----------------------------------------------------------------------------
-TER_AnalyzerManager& TER_World::GetAnalyzerManager() const
+TER_Analyzer& TER_World::GetAnalyzer() const
 {
-    assert( pAnalyzerManager_ );
-    return *pAnalyzerManager_;
+    return *analyzer_;
 }
 
 // -----------------------------------------------------------------------------

@@ -19,7 +19,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
-#include "simulation_terrain/TER_AnalyzerManager.h"
+#include "simulation_terrain/TER_Analyzer.h"
 #include <spatialcontainer/TerrainData.h>
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::operator() ( const PHY_Composa
     if( composante.HasConstructionSpeeds() )
     {
         const TER_Localisation& localisation = pObject_->GetLocalisation();
-        TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().GetTerrainData( localisation );
+        TerrainData data = TER_Analyzer::GetAnalyzer().GetTerrainData( localisation );
         constructionSpeed = composante.GetConstructionSpeed( data );
         if( constructionSpeed == 0 )
             return;

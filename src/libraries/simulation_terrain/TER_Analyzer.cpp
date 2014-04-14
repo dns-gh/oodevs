@@ -9,6 +9,7 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_Analyzer.h"
+#include "TER_World.h"
 #include "TER_Localisation.h"
 #include "TER_StaticData.h"
 #include "TER_Polygon.h"
@@ -32,6 +33,11 @@ TER_Analyzer::TER_Analyzer( const TER_StaticData& staticData )
 TER_Analyzer::~TER_Analyzer()
 {
     delete pAnalyzer_;
+}
+
+TER_Analyzer& TER_Analyzer::GetAnalyzer()
+{
+    return TER_World::GetWorld().GetAnalyzer();
 }
 
 namespace
