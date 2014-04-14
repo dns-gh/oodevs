@@ -934,7 +934,7 @@ QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Equipments_Data::EquipmentInfos
 // Name: ADN_Units_Data::GetUnitsThatUse
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Models_Data::ModelInfos& model )
+QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Models_ModelInfos& model )
 {
     QStringList result;
     for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )

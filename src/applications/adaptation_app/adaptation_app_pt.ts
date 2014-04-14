@@ -3008,14 +3008,6 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Switching off &quot;available without mission&quot; will remove the fragmentary order from all models.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3026,14 +3018,6 @@ PNG (*.png)
 </context>
 <context>
     <name>ADN_Models_Data</name>
-    <message>
-        <source>Missions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Frag orders</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
@@ -3072,6 +3056,24 @@ PNG (*.png)
     <message>
         <source>DIA5</source>
         <translation>DIA5</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_MissionInfos</name>
+    <message>
+        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_ModelInfos</name>
+    <message>
+        <source>Missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frag orders</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6523,13 +6525,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <name>Health_Data</name>
     <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Models_Data</name>
-    <message>
-        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

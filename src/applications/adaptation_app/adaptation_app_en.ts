@@ -3022,14 +3022,6 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation type="unfinished">Warning</translation>
-    </message>
-    <message>
-        <source>Switching off &quot;available without mission&quot; will remove the fragmentary order from all models.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
@@ -3043,14 +3035,6 @@ PNG (*.png)
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</translation>
-    </message>
-    <message>
-        <source>Missions</source>
-        <translation>Missions</translation>
-    </message>
-    <message>
-        <source>Frag orders</source>
-        <translation>Frag orders</translation>
     </message>
 </context>
 <context>
@@ -3086,6 +3070,24 @@ PNG (*.png)
     <message>
         <source>DIA5</source>
         <translation>DIA5</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_MissionInfos</name>
+    <message>
+        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
+        <translation type="unfinished">Doctrine models - Invalid mission &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_ModelInfos</name>
+    <message>
+        <source>Missions</source>
+        <translation type="unfinished">Missions</translation>
+    </message>
+    <message>
+        <source>Frag orders</source>
+        <translation type="unfinished">Frag orders</translation>
     </message>
 </context>
 <context>
@@ -6541,13 +6543,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
         <translation>Logistic medical system - Invalid wound type &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>Models_Data</name>
-    <message>
-        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
-        <translation>Doctrine models - Invalid mission &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

@@ -37,8 +37,20 @@ namespace ADN_Gui_Tools
             view.CreateNewElement< TargetType >();
     }
 
+    template< typename T >
+    bool TrueFunctor( const T& )
+    {
+        return true;
+    }
+
     template< typename SourceType, typename TargetType, typename ViewType >
-    void GenerateStandardEditionDialog( ViewType& view, const QPoint& pt, const QString& objectName, const QString& dialogTitle, const QString& vectorName, ADN_Type_Vector_ABC< SourceType >& vector )
+    void GenerateStandardEditionDialog( ViewType& view,
+                                        const QPoint& pt,
+                                        const QString& objectName,
+                                        const QString& dialogTitle,
+                                        const QString& vectorName,
+                                        ADN_Type_Vector_ABC< SourceType >& vector,
+                                        const std::function< bool( const SourceType& ) >& filterFunctor = &TrueFunctor< SourceType > )
     {
         Q3PopupMenu menu( &view );
         menu.insertItem( tools::translate( "ADN_Tools", "Edit" ), 0 );
@@ -51,7 +63,7 @@ namespace ADN_Gui_Tools
         else if( menuResult == 0 )
         {
             ADN_VectorEditionDialog< SourceType, TargetType > dialog( view.objectName() + "_" + objectName, dialogTitle, &view );
-            dialog.AddVector( vectorName, vector, view.GetModel(), static_cast< ADN_Connector_Vector_ABC& >( view.GetConnector() ) );
+            dialog.AddVector( vectorName, vector, view.GetModel(), static_cast< ADN_Connector_Vector_ABC& >( view.GetConnector() ), filterFunctor );
             dialog.exec();
         }
     }

@@ -18,10 +18,10 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Orders.h"
-
 #include "ADN_Connector_ListView.h"
 #include "ADN_Gui_Tools.h"
 #include "ADN_Missions_ABC.h"
+#include "ADN_Missions_Data.h"
 #include "ADN_Models_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_WorkspaceElement.h"
@@ -35,8 +35,9 @@ ADN_ListView_Orders::ADN_ListView_Orders( QWidget* parent )
     : ADN_ListView( parent,
                     "ADN_ListView_Orders",
                     QString::fromStdString( ENT_Tr::ConvertFromMissionType( eMissionType_FragOrder ) ) )
-{
-    pConnector_.reset( new ADN_Connector_ListView< ADN_Models_Data::OrderInfos >( *this ) );
+    , filterFunctor_( []( const ADN_Missions_ABC& ){ return true; } )
+{   
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Models_OrderInfos >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -50,16 +51,26 @@ ADN_ListView_Orders::~ADN_ListView_Orders()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_ListView_Orders::function< bool
+// Created: ABR 2014-04-10
+// -----------------------------------------------------------------------------
+void ADN_ListView_Orders::SetFilterFunctor( const std::function< bool( const ADN_Missions_ABC& ) >& filterFunctor )
+{
+    filterFunctor_ = filterFunctor;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_ListView_Orders::OnContextMenu
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
 void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
 {
-    ADN_Gui_Tools::GenerateStandardEditionDialog< ADN_Missions_ABC, ADN_Models_Data::OrderInfos >(
+    ADN_Gui_Tools::GenerateStandardEditionDialog< ADN_Missions_ABC, ADN_Models_OrderInfos >(
         *this,
         pt,
         objectName() + "-edition-dialog",
         Title(),
         Title(),
-        ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ) );
+        ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ),
+        filterFunctor_ );
 }

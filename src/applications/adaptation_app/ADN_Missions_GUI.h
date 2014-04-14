@@ -84,7 +84,6 @@ private:
     QTabWidget* missionTabs_[ eNbrMissionType ];
     ADN_Missions_Data& data_;
     ADN_HtmlViewer* missionViewers_[ eNbrMissionType ];
-    QCheckBox* availableState_;
     QGroupBox* helpPanel_[ eNbrMissionType ];
     //@}
     
@@ -97,7 +96,6 @@ private slots:
     void OnGenerate( bool changeTab = true );
     void OnHelpNeeded();
     void OnChangeMission();
-    void OnToggleAvailableWithoutMission( bool );
     //@}
 };
 

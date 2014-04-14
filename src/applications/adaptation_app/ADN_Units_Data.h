@@ -170,7 +170,7 @@ public:
         ADN_Type_Int nId_;
         ADN_Type_Enum< E_AgentTypePion, eNbrAgentTypePion > eTypeId_;
         ADN_Type_Enum< E_AgentNbcSuit, eNbrAgentNbcSuit > eNbcSuit_;
-        ADN_TypePtr_InVector_ABC< ADN_Models_Data::ModelInfos > ptrModel_;
+        ADN_TypePtr_InVector_ABC< ADN_Models_ModelInfos > ptrModel_;
         ADN_Type_Enum< E_NatureLevel, eNbrNatureLevel > eNatureLevel_;
         ADN_Type_Enum< E_NatureAtlasType, eNbrNatureAtlasType > eNatureAtlas_;
         ADN_Type_String strNature_;
@@ -237,7 +237,7 @@ public:
     UnitInfos* FindUnit( const std::string& strName );
 
     QStringList GetUnitsThatUse( ADN_Equipments_Data::EquipmentInfos& composante );
-    QStringList GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
+    QStringList GetUnitsThatUse( ADN_Models_ModelInfos& model );
     QStringList GetUnitsThatUse( ADN_LogisticSupplyClasses_Data::LogisticSupplyClass& supply );
 
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;

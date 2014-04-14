@@ -698,7 +698,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatWillBeDeleted( ADN_R
         return FillUsingElements( eWeapons, *infos, GetWeapons().GetData(), &ADN_Weapons_Data::GetWeaponThatUse, result );
 
     // Automat, population or units to delete when model deleted
-    if( ADN_Models_Data::ModelInfos* infos = dynamic_cast< ADN_Models_Data::ModelInfos* >( data ) )
+    if( ADN_Models_ModelInfos* infos = dynamic_cast< ADN_Models_ModelInfos* >( data ) )
     {
         FillUsingElements( eAutomata, *infos, GetAutomata().GetData(), &ADN_Automata_Data::GetAutomataThatUse, result );
         FillUsingElements( eCrowds, *infos, GetCrowds().GetData(), &ADN_Crowds_Data::GetCrowdsThatUse, result );

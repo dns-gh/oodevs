@@ -19,14 +19,14 @@
 */
 // Created: ABR 2012-07-31
 // =============================================================================
-class ADN_Models_WizardPage : public ADN_WizardPage< ADN_Models_Data::ModelInfos >
+class ADN_Models_WizardPage : public ADN_WizardPage< ADN_Models_ModelInfos >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              ADN_Models_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0, E_EntityType entityType = eNbrEntityType )
-                 : ADN_WizardPage< ADN_Models_Data::ModelInfos >( existingItems, pageTitle, pParent )
+                 : ADN_WizardPage< ADN_Models_ModelInfos >( existingItems, pageTitle, pParent )
                  , entityType_( entityType )
              {
                  // NOTHING
@@ -35,9 +35,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual ADN_Models_Data::ModelInfos* NewT()
+    virtual ADN_Models_ModelInfos* NewT()
     {
-        return new ADN_Models_Data::ModelInfos( entityType_ );
+        return new ADN_Models_ModelInfos( entityType_ );
     }
     //@}
 

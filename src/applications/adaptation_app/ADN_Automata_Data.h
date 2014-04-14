@@ -61,7 +61,7 @@ public:
     public:
         ADN_Type_Int nId_;
         ADN_Type_Enum< E_AgentTypeAutomate, eNbrAgentTypeAutomate > nAgentType_;
-        ADN_TypePtr_InVector_ABC< ADN_Models_Data::ModelInfos > ptrModel_;
+        ADN_TypePtr_InVector_ABC< ADN_Models_ModelInfos > ptrModel_;
         T_UnitInfosVector vSubUnits_;
         ADN_TypePtr_InVector_ABC< UnitInfos > ptrUnit_;
         ADN_Type_Bool bStrengthRatioFeedbackTime_;
@@ -82,7 +82,7 @@ public:
     AutomatonInfos* FindAutomaton( const std::string& strName );
 
     QStringList GetAutomataThatUse( ADN_Units_Data::UnitInfos& unit );
-    QStringList GetAutomataThatUse( ADN_Models_Data::ModelInfos& model );
+    QStringList GetAutomataThatUse( ADN_Models_ModelInfos& model );
 
 private:
     void ReadArchive( xml::xistream& input );

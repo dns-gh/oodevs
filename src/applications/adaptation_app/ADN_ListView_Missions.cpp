@@ -20,8 +20,6 @@
 #include "ADN_enums.h"
 #include "ADN_WorkspaceElement.h"
 
-typedef ADN_Models_Data::MissionInfos MissionInfos;
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Missions constructor
 // Created: AGN 2003-11-27
@@ -30,7 +28,7 @@ ADN_ListView_Missions::ADN_ListView_Missions( E_EntityType eEntityType, QWidget*
     : ADN_ListView  ( parent, "ADN_ListView_Missions", tools::translate( "ADN_ListView_Missions", "Missions" ) )
     , eEntityType_  ( eEntityType )
 {
-    pConnector_.reset( new ADN_Connector_ListView< MissionInfos >( *this ) );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Models_MissionInfos >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -52,7 +50,7 @@ void ADN_ListView_Missions::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Models_GUI::eNbrMissionGuiElements );
-    MissionInfos* pInfos = static_cast< MissionInfos* >( pCurData_ );
+    ADN_Models_MissionInfos* pInfos = static_cast< ADN_Models_MissionInfos* >( pCurData_ );
     vItemConnectors_[ADN_Models_GUI::eOrders]->Connect( &pInfos->vOrders_, bConnect );
 }
 
@@ -62,7 +60,7 @@ void ADN_ListView_Missions::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
 {
-    ADN_Gui_Tools::GenerateStandardEditionDialog< ADN_Missions_ABC, ADN_Models_Data::MissionInfos >(
+    ADN_Gui_Tools::GenerateStandardEditionDialog< ADN_Missions_ABC, ADN_Models_MissionInfos >(
         *this, pt, std::string( ADN_Tr::ConvertFromEntityType( eEntityType_, ENT_Tr::eToSim ) + "-list" ).c_str(), tools::translate( "ADN_ListView_Missions", "Missions" ),
         ADN_Tr::ConvertFromEntityType( eEntityType_ ).c_str(), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( static_cast< E_MissionType >( eEntityType_ ) ) );
 }

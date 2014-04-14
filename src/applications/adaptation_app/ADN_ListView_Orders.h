@@ -21,6 +21,8 @@
 
 #include "ADN_ListView.h"
 
+class ADN_Missions_ABC;
+
 // =============================================================================
 /** @class  ADN_ListView_Orders
     @brief  ADN_ListView_Orders
@@ -39,6 +41,13 @@ public:
     //! @name Operations
     //@{
     virtual void OnContextMenu( const QPoint& pt );
+    void SetFilterFunctor( const std::function< bool( const ADN_Missions_ABC& ) >& filterFunctor );
+    //@}
+
+private:
+    //! @name Member
+    //@{
+    std::function< bool( const ADN_Missions_ABC& ) > filterFunctor_;
     //@}
 };
 

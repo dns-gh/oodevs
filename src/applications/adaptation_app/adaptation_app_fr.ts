@@ -3031,14 +3031,6 @@ PNG (*.png)
         <translation>Un nom de mission ne peut contenir les caractères suivants : %1</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation>Attention</translation>
-    </message>
-    <message>
-        <source>Switching off &quot;available without mission&quot; will remove the fragmentary order from all models.</source>
-        <translation>Décocher &quot;disponible sans mission&quot; retirera l&apos;ordre de conduite de tous les modèles.</translation>
-    </message>
-    <message>
         <source>Filter</source>
         <translation>Filtre</translation>
     </message>
@@ -3052,14 +3044,6 @@ PNG (*.png)
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
-    </message>
-    <message>
-        <source>Missions</source>
-        <translation>Missions</translation>
-    </message>
-    <message>
-        <source>Frag orders</source>
-        <translation>Ordres de conduite</translation>
     </message>
 </context>
 <context>
@@ -3095,6 +3079,24 @@ PNG (*.png)
     <message>
         <source>DIA5</source>
         <translation>DIA5</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_MissionInfos</name>
+    <message>
+        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
+        <translation>Modèles - Mission invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_ModelInfos</name>
+    <message>
+        <source>Missions</source>
+        <translation>Missions</translation>
+    </message>
+    <message>
+        <source>Frag orders</source>
+        <translation>Ordres de conduite</translation>
     </message>
 </context>
 <context>
@@ -6561,13 +6563,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
         <translation>Chaîne médicale - Type de blessure invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>Models_Data</name>
-    <message>
-        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
-        <translation>Modèles - Mission invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

@@ -40,12 +40,6 @@ private:
     bool ContextMenuDelete();
     //@}
 
-public slots:
-    //! @name Slots
-    //@{
-    void OnToogled( bool );
-    //@}
-
 signals:
     //! @name Signals
     //@{
