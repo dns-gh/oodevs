@@ -415,10 +415,7 @@ double PHY_RadarType::ComputeEnvironmentFactor( unsigned char nEnv ) const
 // -----------------------------------------------------------------------------
 double PHY_RadarType::GetVolumeFactor( const PHY_Volume& volume ) const
 {
-    assert( volume.GetID() < volumeFactors_.size() );
-    if( volume.GetID() >= volumeFactors_.size() )
-        return 0;
-    return volumeFactors_[ volume.GetID() ];
+    return volumeFactors_.at( volume.GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -427,10 +424,7 @@ double PHY_RadarType::GetVolumeFactor( const PHY_Volume& volume ) const
 // -----------------------------------------------------------------------------
 double PHY_RadarType::GetPrecipitationFactor( const weather::PHY_Precipitation& precipitation ) const
 {
-    assert( precipitation.GetID() < precipitationFactors_.size() );
-    if( precipitation.GetID() >= precipitationFactors_.size() )
-        return 0;
-    return precipitationFactors_[ precipitation.GetID() ];
+    return precipitationFactors_.at( precipitation.GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -439,10 +433,7 @@ double PHY_RadarType::GetPrecipitationFactor( const weather::PHY_Precipitation& 
 // -----------------------------------------------------------------------------
 double PHY_RadarType::GetLightingFactor( const weather::PHY_Lighting& lighting ) const
 {
-    assert( lighting.GetID() < lightingFactors_.size() );
-    if( lighting.GetID() >= lightingFactors_.size() )
-        return 0;
-    return lightingFactors_[ lighting.GetID() ];
+    return lightingFactors_.at( lighting.GetID() );
 }
 
 // -----------------------------------------------------------------------------
