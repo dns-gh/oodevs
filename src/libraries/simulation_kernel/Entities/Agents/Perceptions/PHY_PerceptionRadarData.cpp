@@ -13,10 +13,13 @@
 #include "PHY_PerceptionRadarData.h"
 #include "DetectionComputer.h"
 #include "MIL_AgentServer.h"
-#include "Entities/Agents/Units/Radars/PHY_RadarType.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Units/Radars/PHY_RadarType.h"
+#include "Entities/Agents/Units/Sensors/DistanceModifiersHelpers.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
@@ -67,19 +70,34 @@ PHY_PerceptionRadarData::~PHY_PerceptionRadarData()
 
 namespace
 {
-    bool CanPerceive( const MT_Vector2D& sourcePosition, const MT_Vector2D& targetPosition, double sensorHeight, double perceiverAltitude, double targetAltitude  )
+    double ComputeExtinction( const PHY_RawVisionDataIterator& env, double rVisionNRJ, double rDistanceMaxModificator, bool isAroundUrbanBlock, const PHY_RadarType& type ) 
+    {
+        static const double epsilon = 1e-8;
+        rDistanceMaxModificator *= type.GetPrecipitationFactor( env.GetPrecipitation() );
+        if( !isAroundUrbanBlock )
+            rDistanceMaxModificator *= type.ComputeEnvironmentFactor( env.GetCurrentEnv() );
+        return rDistanceMaxModificator <= epsilon ? -1 : rVisionNRJ - env.Length() / rDistanceMaxModificator;
+    }
+
+    bool CanPerceive( const MT_Vector2D& sourcePosition, const MT_Vector2D& targetPosition, double sensorHeight, double perceiverAltitude, double targetAltitude, double rDistanceMaxModificator, bool posted, const PHY_RadarType& type )
     {
         static const double targetHeight = 2.0;
-        const MT_Vector3D vSource3D( sourcePosition.rX_, sourcePosition.rY_, sensorHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( sourcePosition.rX_, sourcePosition.rY_ ) + perceiverAltitude );
-        const MT_Vector3D vTarget3D( targetPosition.rX_, targetPosition.rY_, targetHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( targetPosition.rX_, targetPosition.rY_ ) + targetAltitude );
+        const PHY_RawVisionData& data = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
+        const MT_Vector3D vSource3D( sourcePosition.rX_, sourcePosition.rY_, sensorHeight + data.GetAltitude( sourcePosition.rX_, sourcePosition.rY_ ) + perceiverAltitude );
+        const MT_Vector3D vTarget3D( targetPosition.rX_, targetPosition.rY_, targetHeight + data.GetAltitude( targetPosition.rX_, targetPosition.rY_ ) + targetAltitude );
 
         PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
-        while ( !(++it).End() )
-        {
-            if( PHY_RawVisionData::eVisionGround & it.GetCurrentEnv() )
-                return false;
-        }
-        return true;
+        double rVisionNRJ = type.GetRadius();
+        rVisionNRJ *= type.GetLightingFactor( data.GetLighting( data( targetPosition ) ) );
+        const bool isAroundUrbanBlock = distance_modifiers::ComputeUrbanExtinction( sourcePosition, targetPosition, rVisionNRJ, type.GetUrbanFactors(), posted );
+
+        if( rVisionNRJ > 0 )
+            rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, rVisionNRJ, rDistanceMaxModificator, isAroundUrbanBlock, type );
+
+        while( rVisionNRJ > 0 && !(++it).End() )
+            rVisionNRJ = ComputeExtinction( it, rVisionNRJ, rDistanceMaxModificator, isAroundUrbanBlock, type );
+
+        return rVisionNRJ > 0;
     }
 
 }
@@ -100,9 +118,13 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perce
         target.Execute( detectionComputer );
         if( detectionComputer.CanBeSeen() && pRadarType_->CanAcquire( perceiver.GetPion(), target ) )
         {
+            const PHY_Volume* pSignificantVolume = target.GetRole< PHY_RoleInterface_Composantes >().GetSignificantVolume( *pRadarType_ );
+            if( !pSignificantVolume )
+                continue;
+            const double rDistanceMaxModificator = pRadarType_->GetVolumeFactor( *pSignificantVolume );
             const MT_Vector2D& targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
             double targetAltitude = target.GetRole< PHY_RoleInterface_Location >().GetHeight();
-            if( CanPerceive( perceiverPosition, targetPosition, sensorHeight_, perceiverAltitude, targetAltitude ) )
+            if( CanPerceive( perceiverPosition, targetPosition, sensorHeight_, perceiverAltitude, targetAltitude, rDistanceMaxModificator, IsPosted( perceiver.GetPion() ), *pRadarType_ ) )
             {
                 sAcquisitionData& agentData = acquisitionData_[ &target ];
                 agentData.bUpdated_ = true;

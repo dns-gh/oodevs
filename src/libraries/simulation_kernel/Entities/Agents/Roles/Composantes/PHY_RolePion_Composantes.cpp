@@ -17,7 +17,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent_ABC.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
@@ -29,6 +29,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
+#include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
@@ -680,10 +681,11 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetSignificantVolume
-// Created: NLD 2004-08-30
+// Name: PHY_RolePion_Composantes::DoGetSignificantVolume
+// Created: JSR 2014-04-03
 // -----------------------------------------------------------------------------
-const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_SensorTypeAgent_ABC& sensorType ) const
+template< typename T >
+const PHY_Volume* PHY_RolePion_Composantes::DoGetSignificantVolume( const T& type ) const
 {
     const PHY_Volume* pSignificantVolume = 0;
     double rSignificantVolumeFactor = 0.;
@@ -693,7 +695,7 @@ const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_Sens
         const T_ComposanteTypeProperties& compProp = it->second;
         if( !compProp.HasUsableComposantes() )
             continue;
-        double rVolumeFactor = sensorType.GetFactor( compTypeVolume );
+        double rVolumeFactor = type.GetVolumeFactor( compTypeVolume );
         if( rVolumeFactor > rSignificantVolumeFactor )
         {
             pSignificantVolume = &compTypeVolume;
@@ -701,6 +703,24 @@ const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_Sens
         }
     }
     return pSignificantVolume;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetSignificantVolume
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const
+{
+    return DoGetSignificantVolume( sensorType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetSignificantVolume
+// Created: JSR 2014-04-03
+// -----------------------------------------------------------------------------
+const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_RadarType& radarType ) const
+{
+    return DoGetSignificantVolume( radarType );
 }
 
 // -----------------------------------------------------------------------------

@@ -38,7 +38,8 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( NotifyComposanteWaitingForMaintenance, 1 );
     MOCK_METHOD( NotifyComposanteBackFromMaintenance, 1 );
     MOCK_METHOD( FindRequest, 1 );
-    MOCK_METHOD( GetSignificantVolume, 1 );
+    MOCK_METHOD( GetSignificantVolume, 1, const PHY_Volume*( const PHY_SensorTypeAgent& ), GetSignificantVolumeSensor );
+    MOCK_METHOD( GetSignificantVolume, 1, const PHY_Volume*( const PHY_RadarType& ), GetSignificantVolumeRadar );
     MOCK_METHOD( GetVisibleVolumes, 0 );
     MOCK_METHOD( BuildKnowledgeComposantes, 1 );
     MOCK_METHOD( GetMajorComposante, 0 );

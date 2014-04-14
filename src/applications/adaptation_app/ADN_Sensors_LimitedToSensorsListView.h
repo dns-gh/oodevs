@@ -11,6 +11,7 @@
 #define __ADN_Sensors_LimitedToSensorsListView_h_
 
 #include "ADN_ListView.h"
+#include "ADN_Radars_Data.h"
 #include "ADN_Sensors_Data.h"
 
 // =============================================================================

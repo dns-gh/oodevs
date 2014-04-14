@@ -11,9 +11,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_SensorTypeAgent.h"
-#include "PHY_SensorTypeObjectData.h"
 #include "MIL_AgentServer.h"
+#include "PHY_SensorType.h"
 #include "PerceptionDistanceComputer.h"
+#include "DistanceModifiersHelpers.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -22,11 +23,11 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h" // LTO
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h" // LTO
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h" // LTO
-#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -35,37 +36,9 @@
 #include "Tools/MIL_Tools.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
-#include "Urban/MIL_UrbanCache.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/UrbanPhysicalCapacity.h"
-#include <tools/Resolver.h>
 #include <boost/range/algorithm.hpp>
-
-namespace
-{
-    template< typename C >
-    void InitializeFactors( const C& container, const std::string& strTagName, PHY_SensorTypeAgent::T_FactorVector& factors, xml::xistream& xis )
-    {
-        auto values = ReadDistanceModifiers( xis, strTagName );
-        for( auto it = values.cbegin(); it != values.cend(); ++it )
-        {
-            auto ic = container.find( it->first );
-            if( ic == container.end() )
-                throw MASA_EXCEPTION( xis.context()
-                        + "distance-modifier: unknown type: " + it->first );
-            factors[ ic->second->GetID() ] = it->second;
-        }
-    }
-
-    std::map< std::string, PHY_RawVisionData::E_VisionObject > environmentAssociation;
-    void InitializeEnvironmentAssociation()
-    {
-        environmentAssociation[ "Sol"    ] = PHY_RawVisionData::eVisionGround;
-        environmentAssociation[ "Vide"   ] = PHY_RawVisionData::eVisionEmpty;
-        environmentAssociation[ "Foret"  ] = PHY_RawVisionData::eVisionForest;
-        environmentAssociation[ "Urbain" ] = PHY_RawVisionData::eVisionUrban;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent constructor
@@ -85,7 +58,7 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     , lightingFactors_      ( weather::PHY_Lighting::GetLightings().size(), 0. )
     , postureSourceFactors_ ( PHY_Posture::GetPostureCount(), 0. )
     , postureTargetFactors_ ( PHY_Posture::GetPostureCount(), 0. )
-    , urbanBlockFactors_    ( PHY_MaterialCompositionType::Count(), 1. )
+    , urbanFactors_         ( PHY_MaterialCompositionType::Count(), 1. )
     , rPopulationDensity_   ( 1. )
     , rPopulationFactor_    ( 1. )
     , isLimitedToSensors_   ( false ) // LTO
@@ -95,17 +68,14 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     InitializeDistances       ( xis );
 
     xis >> xml::start( "distance-modifiers" );
-
-    InitializeFactors( PHY_Volume::GetVolumes(), "size-modifiers", volumeFactors_, xis );
-    InitializeFactors( weather::PHY_Precipitation::GetPrecipitations (), "precipitation-modifiers", precipitationFactors_, xis );
-    InitializeFactors( weather::PHY_Lighting::GetLightings(), "visibility-modifiers", lightingFactors_, xis );
-    ReadPostureFactors( xis, "source-posture-modifiers", postureSourceFactors_ );
-    ReadPostureFactors( xis, "target-posture-modifiers", postureTargetFactors_ );
-    InitializeEnvironmentAssociation();
-    InitializeEnvironmentFactors( xis );
+    distance_modifiers::InitializeFactors( PHY_Volume::GetVolumes(), "size-modifiers", volumeFactors_, xis );
+    distance_modifiers::InitializeFactors( weather::PHY_Precipitation::GetPrecipitations(), "precipitation-modifiers", precipitationFactors_, xis );
+    distance_modifiers::InitializeFactors( weather::PHY_Lighting::GetLightings(), "visibility-modifiers", lightingFactors_, xis );
+    distance_modifiers::ReadPostureFactors( xis, "source-posture-modifiers", postureSourceFactors_ );
+    distance_modifiers::ReadPostureFactors( xis, "target-posture-modifiers", postureTargetFactors_ );
+    distance_modifiers::InitializeTerrainModifiers( xis, environmentFactors_ );
     InitializePopulationFactors( xis );
-    InitializeUrbanBlockFactors( xis );
-
+    distance_modifiers::InitializeUrbanFactors( xis, urbanFactors_ );
     xis >> xml::end;
 }
 
@@ -208,32 +178,6 @@ void PHY_SensorTypeAgent::ReadLimitedToSensorsList( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::InitializeEnvironmentFactors
-// Created: NLD 2004-08-06
-// -----------------------------------------------------------------------------
-void PHY_SensorTypeAgent::InitializeEnvironmentFactors( xml::xistream& xis )
-{
-    xis >> xml::start( "terrain-modifiers" )
-            >> xml::list( "distance-modifier", *this, &PHY_SensorTypeAgent::ReadTerrainModifier )
-        >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ReadTerrainModifier
-// Created: ABL 2007-07-25
-// -----------------------------------------------------------------------------
-void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis )
-{
-    std::string terrainType;
-    xis >> xml::attribute( "type", terrainType );
-    double rFactor;
-    xis >> xml::attribute( "value", rFactor );
-    if( rFactor < 0 || rFactor > 1 )
-        throw MASA_EXCEPTION( xis.context() + "terrain-modifier: value not in [0..1]" );
-    environmentFactors_.insert( std::pair< unsigned, double >( environmentAssociation[ terrainType ], rFactor ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::InitializePopulationFactors
 // Created: NLD 2005-10-27
 // -----------------------------------------------------------------------------
@@ -248,36 +192,6 @@ void PHY_SensorTypeAgent::InitializePopulationFactors( xml::xistream& xis )
         throw MASA_EXCEPTION( xis.context() + "population-modifier: density < 0" );
     if( rPopulationFactor_ < 0 || rPopulationFactor_ > 1 )
         throw MASA_EXCEPTION( xis.context() + "population-modifier: modifier not in [0..1]" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::InitializeUrbanBlockFactors
-// Created: SLG 2010-03-03
-// -----------------------------------------------------------------------------
-void PHY_SensorTypeAgent::InitializeUrbanBlockFactors( xml::xistream& xis )
-{
-    unsigned int visionUrbanBlockMaterial = 0;
-    xis >> xml::start( "urbanBlock-material-modifiers" )
-        >> xml::list( "distance-modifier", *this, &PHY_SensorTypeAgent::ReadUrbanBlockModifier, visionUrbanBlockMaterial )
-        >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ReadUrbanBlockModifier
-// Created: SLG 2010-03-03
-// -----------------------------------------------------------------------------
-void PHY_SensorTypeAgent::ReadUrbanBlockModifier( xml::xistream& xis, unsigned int& visionUrbanBlockMaterial )
-{
-    assert( urbanBlockFactors_.size() > visionUrbanBlockMaterial );  // $$$$ _RC_ ABL 2007-07-27: use exception instead
-    double& rFactor = urbanBlockFactors_[ visionUrbanBlockMaterial ];
-    std::string materialType;
-    xis >> xml::attribute( "type", materialType )
-        >> xml::attribute( "value", rFactor );
-    if( rFactor < 0 || rFactor > 1 )
-        throw MASA_EXCEPTION( xis.context() + "urbanBlock-modifier: value not in [0..1]" );
-    if( !PHY_MaterialCompositionType::Find( materialType ) )
-        throw MASA_EXCEPTION( xis.context() + "material type doesn't exist" );
-    ++visionUrbanBlockMaterial;
 }
 
 // -----------------------------------------------------------------------------
@@ -398,74 +312,14 @@ namespace
 // Created: JVT 02-11-20
 // Last modified: JVT 04-02-12
 //-----------------------------------------------------------------------------
-double PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator& env, double rDistanceModificator, double rVisionNRJ, bool bIsAroundBU ) const
+double PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator& env, double rDistanceModificator, double rVisionNRJ, bool isAroundUrbanBlock ) const
 {
     assert( rVisionNRJ <= rDetectionDist_ );
     assert( rVisionNRJ >= 0 );
     rDistanceModificator *= precipitationFactors_ [ env.GetPrecipitation().GetID() ];
-    if( !bIsAroundBU )
+    if( !isAroundUrbanBlock )
         rDistanceModificator *= ComputeEnvironmentFactor( env.GetCurrentEnv() );
     return rDistanceModificator <= epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceModificator ;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ComputeUrbanExtinction
-// Created: SLG 2010-03-02
-// -----------------------------------------------------------------------------
-bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ, bool posted ) const
-{
-    bool bIsAroundBU = false;
-
-    std::vector< const MIL_UrbanObject_ABC* > list;
-    MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( vSource, vTarget, list );
-
-    if( !list.empty() )
-    {
-        for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ >= 0; ++it )
-        {
-            const MIL_UrbanObject_ABC& object = **it;
-            const UrbanPhysicalCapacity* pPhysical = object.Retrieve< UrbanPhysicalCapacity >();
-            if( pPhysical == 0 )
-                continue;
-            const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetMaterial() );
-            if( !materialCompositionType )
-                continue;
-
-            const TER_Localisation& footPrint = object.GetLocalisation();
-
-            TER_DistanceLess cmp ( vSource );
-            T_PointSet intersectPoints( cmp );
-            if( footPrint.IsInside( vSource ) || footPrint.IsInside( vTarget ) || footPrint.Intersect2D( MT_Line( vSource, vTarget ), intersectPoints ) )
-            {
-                bIsAroundBU = true;
-                double intersectionDistance = 0;
-                if( intersectPoints.size() == 1 )
-                {
-                    if( footPrint.IsInside( vSource ) )
-                        intersectionDistance = posted ? 0 : vSource.Distance( *intersectPoints.begin() );
-                    else if( footPrint.IsInside( vTarget ) )
-                        intersectionDistance = vTarget.Distance( *intersectPoints.begin() );
-                }
-                else if( intersectPoints.empty() )
-                    intersectionDistance = posted ? 0 : vSource.Distance( vTarget );
-                else
-                    intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
-                if( intersectionDistance == 0 )
-                    continue;
-                double rDistanceModificator = urbanBlockFactors_[ materialCompositionType->GetId() ];
-                double occupationFactor = std::sqrt( pPhysical->GetOccupation() );
-                if( occupationFactor == 1. && rDistanceModificator <= epsilon )
-                    rVisionNRJ = -1 ;
-                else
-                {
-                    double referenceDistance = 200; // $$$$ LDC Hard coded 200m. reference distance
-                    double distanceFactor = std::min( ( intersectionDistance / referenceDistance ) * occupationFactor * ( 1 - rDistanceModificator ), 1. );
-                    rVisionNRJ -= rVisionNRJ * distanceFactor + intersectionDistance;
-                }
-            }
-        }
-    }
-    return bIsAroundBU;
 }
 
 //-----------------------------------------------------------------------------
@@ -517,14 +371,14 @@ const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const M
     double rVisionNRJ = rDetectionDist_;
     const auto& data = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
     rVisionNRJ *= lightingFactors_[ data.GetLighting( data( vTarget ) ).GetID() ];
-    bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ, posted );
+    const bool isAroundUrbanBlock = distance_modifiers::ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ, urbanFactors_, posted );
 
     PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
     if( rVisionNRJ >= 0 )
-        rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, 1, rVisionNRJ, bIsAroundBU );
+        rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, 1, rVisionNRJ, isAroundUrbanBlock );
 
     while( rVisionNRJ >= 0 && !(++it).End() )
-        rVisionNRJ = ComputeExtinction( it, 1, rVisionNRJ, bIsAroundBU );
+        rVisionNRJ = ComputeExtinction( it, 1, rVisionNRJ, isAroundUrbanBlock );
 
     return rVisionNRJ;
 }
@@ -544,14 +398,14 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSo
     double rVisionNRJ = rDetectionDist_;
     const auto& data = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
     rVisionNRJ *= lightingFactors_[ data.GetLighting( data( vTarget ) ).GetID() ];
-    bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ, posted );
+    const bool isAroundUrbanBlock = distance_modifiers::ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ, urbanFactors_, posted );
 
     PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
     if( rVisionNRJ >= 0 )
-        rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
+        rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, isAroundUrbanBlock );
 
     while( rVisionNRJ >= 0 && !(++it).End() )
-        rVisionNRJ = ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
+        rVisionNRJ = ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, isAroundUrbanBlock );
 
     return InterpretExtinction( rVisionNRJ );
 }
@@ -588,7 +442,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     if( !pSignificantVolume )
         return PHY_PerceptionLevel::notSeen_;
 
-    double rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
+    double rDistanceMaxModificator  = GetVolumeFactor( *pSignificantVolume );
            rDistanceMaxModificator *= GetTargetFactor( target );
            rDistanceMaxModificator *= GetSourceFactor( source );
 
@@ -667,7 +521,7 @@ const double PHY_SensorTypeAgent::ComputeDistanceModificator( const MIL_Agent_AB
 {
     double rDistanceMaxModificator = 1.;
     if( const PHY_Volume* pSignificantVolume = target.GetRole< PHY_RoleInterface_Composantes >().GetSignificantVolume( *this ) )
-        rDistanceMaxModificator  = GetFactor( *pSignificantVolume );
+        rDistanceMaxModificator  = GetVolumeFactor( *pSignificantVolume );
     rDistanceMaxModificator *= GetTargetFactor( target );
     rDistanceMaxModificator *= GetSourceFactor( perceiver );
     return rDistanceMaxModificator;
@@ -710,10 +564,10 @@ const PHY_SensorType& PHY_SensorTypeAgent::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::GetFactor
+// Name: PHY_SensorTypeAgent::GetVolumeFactor
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-double PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
+double PHY_SensorTypeAgent::GetVolumeFactor( const PHY_Volume& volume ) const
 {
     assert( volumeFactors_.size() > volume.GetID() );
     return volumeFactors_[ volume.GetID() ];
@@ -727,7 +581,7 @@ double PHY_SensorTypeAgent::GetUrbanBlockFactor( const MIL_UrbanObject_ABC& bloc
 {
     if( const UrbanPhysicalCapacity* pPhysical = block.Retrieve< UrbanPhysicalCapacity >() )
         if( const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetMaterial() ) )
-            return urbanBlockFactors_[ materialCompositionType->GetId() ];
+            return urbanFactors_[ materialCompositionType->GetId() ];
     return 1.f;
 }
 

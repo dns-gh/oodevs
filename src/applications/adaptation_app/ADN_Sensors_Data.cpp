@@ -11,8 +11,8 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Data.h"
+#include "ADN_Radars_Data.h"
 #include "ADN_Workspace.h"
-#include "ADN_Categories_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Tools.h"
@@ -61,6 +61,7 @@ void ADN_Sensors_Data::LimitedToSensorsInfos::ReadArchive( xml::xistream& input 
 {
     input >> xml::attribute( "name", *this );
 }
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive
 // Created: JSR 2010-03-16
@@ -70,222 +71,6 @@ void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& outpu
 {
     output << xml::start( "sensor" )
                 << xml::attribute( "name", *this )
-           << xml::end;
-}
-
-// =============================================================================
-//
-// =============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: ModificatorSizeInfos::ModificatorSizeInfos
-// Created: JDY 03-08-28
-//-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorSizeInfos::ModificatorSizeInfos( ADN_Volumes_Data::VolumeInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true )
-    , rCoeff_( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorSizeInfos::ReadArchive
-// Created: APE 2004-11-23
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorSizeInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "value", rCoeff_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorSizeInfos::WriteArchive
-// Created: APE 2004-11-23
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output ) const
-{
-    output << xml::start( "distance-modifier" )
-             << xml::attribute( "type", *this )
-             << xml::attribute( "value", rCoeff_ )
-           << xml::end;
-}
-
-// =============================================================================
-//
-// =============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: ModificatorIlluminationInfos::ModificatorIlluminationInfos
-// Created: JDY 03-07-24
-//-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorIlluminationInfos::ModificatorIlluminationInfos( const E_LightingType& e )
-    : eType_( e )
-    , rCoeff_( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorIlluminationInfos::ReadArchive
-// Created: APE 2004-11-23
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorIlluminationInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "value", rCoeff_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorIlluminationInfos::WriteArchive
-// Created: APE 2004-11-23
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorIlluminationInfos::WriteArchive( xml::xostream& output ) const
-{
-    output << xml::start( "distance-modifier" )
-            << xml::attribute( "type", ENT_Tr::ConvertFromLightingType( eType_ ) )
-            << xml::attribute( "value", rCoeff_ )
-           << xml::end;
-}
-
-// =============================================================================
-//
-// =============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: ModificatorMeteoInfos::ModificatorMeteoInfos
-// Created: JDY 03-07-24
-//-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorMeteoInfos::ModificatorMeteoInfos( const E_SensorWeatherModifiers& e )
-    : eType_( e )
-    , rCoeff_( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorMeteoInfos::ReadArchive
-// Created: APE 2004-11-23
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorMeteoInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "value", rCoeff_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorMeteoInfos::WriteArchive
-// Created: APE 2004-11-23
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorMeteoInfos::WriteArchive( xml::xostream& output ) const
-{
-    output << xml::start( "distance-modifier" )
-            << xml::attribute( "type", ADN_Tools::Scriptify( ADN_Tr::ConvertFromSensorWeatherModifiers( eType_ ) ) )
-            << xml::attribute( "value", rCoeff_ )
-           << xml::end;
-}
-
-// =============================================================================
-//
-// =============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: ModificatorEnvironmentInfos::ModificatorEnvironmentInfos
-// Created: JDY 03-07-24
-//-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorEnvironmentInfos::ModificatorEnvironmentInfos( const E_VisionObject& e )
-    : eType_( e )
-    , rCoeff_( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorEnvironmentInfos::ReadArchive
-// Created: APE 2004-11-23
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorEnvironmentInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "value", rCoeff_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorEnvironmentInfos::WriteArchive
-// Created: APE 2004-11-23
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream& output ) const
-{
-    output << xml::start( "distance-modifier" )
-            << xml::attribute( "value", rCoeff_ )
-            << xml::attribute( "type", ADN_Tr::ConvertFromVisionObject( eType_ ) )
-           << xml::end;
-}
-
-// =============================================================================
-//
-// =============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: ModificatorEnvironmentInfos::ModificatorUrbanBlockInfos
-// Created: SLG 2010-03-02
-//-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr, true )
-    , rCoeff_( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorUrbanBlockInfos::ReadArchive
-// Created: SLG 2010-03-02
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorUrbanBlockInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "value", rCoeff_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorUrbanBlockInfos::WriteArchive
-// Created: SLG 2010-03-02
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& output ) const
-{
-    output << xml::start( "distance-modifier" )
-             << xml::attribute( "type", *this )
-             << xml::attribute( "value", rCoeff_ )
-           << xml::end;
-}
-
-// =============================================================================
-//
-// =============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: ModificatorPostureInfos::ModificatorPostureInfos
-// Created: JDY 03-09-29
-//-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorPostureInfos::ModificatorPostureInfos( const E_UnitPosture& e )
-    : eType_( e )
-    , rCoeff_( 1 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorPostureInfos::ReadArchive
-// Created: APE 2004-11-23
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorPostureInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "value", rCoeff_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorPostureInfos::WriteArchive
-// Created: APE 2004-11-23
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& output ) const
-{
-    output << xml::start( "distance-modifier" )
-            << xml::attribute( "type", ADN_Tools::ComputePostureScriptName( eType_ ) )
-            << xml::attribute( "value", rCoeff_ )
            << xml::end;
 }
 
@@ -304,7 +89,7 @@ ADN_Sensors_Data::TargetInfos::TargetInfos()
 {
     // Initialize the posture modificator infos
     for( int i = 0 ; i < eNbrUnitPosture ; ++i )
-        vModifStance_.AddItem( new ModificatorPostureInfos( static_cast< E_UnitPosture >( i ) ) );
+        vModifStance_.AddItem( new ADN_Sensors_Modificators::PostureInfos( static_cast< E_UnitPosture >( i ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -329,7 +114,7 @@ ADN_Sensors_Data::TargetInfos* ADN_Sensors_Data::TargetInfos::CreateCopy()
     pNew->populationInfos_.CopyFrom( populationInfos_ );
     for( unsigned int i = 0; i < vModifStance_.size(); ++i )
     {
-        ModificatorPostureInfos* pNewModif = new ModificatorPostureInfos( vModifStance_[ i ]->eType_ );
+        ADN_Sensors_Modificators::PostureInfos* pNewModif = new ADN_Sensors_Modificators::PostureInfos( vModifStance_[ i ]->eType_ );
         pNewModif->rCoeff_ = vModifStance_[ i ]->rCoeff_.GetData();
         pNew->vModifStance_[ i ] = pNewModif;
     }
@@ -530,48 +315,11 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     , rDistDetection_      ( 0 )
     , rDistReco_           ( 0 )
     , rDistIdent_          ( 0 )
-    , vModifSizes_         ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos() )
-    , vModifIlluminations_ ( false )
-    , vModifWeather_       ( false )
-    , vModifEnvironments_  ( false )
-    , vModifUrbanBlocks_   ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
-    , vModifStance_        ( false )
-    , vModifTargetStance_  ( false )
+    , modificators_        ( new ADN_Sensors_Modificators( true ) )
     , detectionDelay_      ( "0h" )
     , activatedOnRequest_  ( false )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eSensors, "sensors" ) );
-
-    // initialize illumination modificator infos
-    unsigned int i = 0;
-    for( i = 0; i< eNbrLightingType; ++i )
-    {
-        ModificatorIlluminationInfos* pInfo = new ModificatorIlluminationInfos( static_cast< E_LightingType >( i ) );
-        vModifIlluminations_.AddItem( pInfo );
-    }
-
-    // initialize meteo modificator infos
-    for( i = 0; i< eNbrSensorWeatherModifiers; ++i )
-    {
-        ModificatorMeteoInfos* pInfo = new ModificatorMeteoInfos( static_cast< E_SensorWeatherModifiers >( i) );
-        vModifWeather_.AddItem( pInfo );
-    }
-
-    // initialize environment modificator infos
-    for( i = 0; i< eNbrVisionObject; ++i )
-    {
-        ModificatorEnvironmentInfos* pInfo = new ModificatorEnvironmentInfos( static_cast< E_VisionObject >( i) );
-        vModifEnvironments_.AddItem( pInfo );
-    }
-
-    // initialize posture modificator infos
-    for( i = 0; i< eNbrUnitPosture; ++i )
-    {
-        ModificatorPostureInfos* pInfo1 = new ModificatorPostureInfos( static_cast< E_UnitPosture >( i) );
-        vModifStance_.AddItem( pInfo1 );
-        ModificatorPostureInfos* pInfo2 = new ModificatorPostureInfos( static_cast< E_UnitPosture >( i ) );
-        vModifTargetStance_.AddItem( pInfo2 );
-    }
 }
 
 //-----------------------------------------------------------------------------
@@ -626,30 +374,7 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
     }
     // LTO end
 
-    unsigned int i;
-    for( i = 0; i < eNbrLightingType; ++i )
-        pCopy->vModifIlluminations_[ i ]->rCoeff_ = vModifIlluminations_[ i ]->rCoeff_.GetData();
-
-    // initialize meteo modificator infos
-    for( i = 0; i < eNbrSensorWeatherModifiers; ++i )
-        pCopy->vModifWeather_[ i ]->rCoeff_ = vModifWeather_[ i ]->rCoeff_.GetData();
-
-    // initialize environment modificator infos
-    for( i= 0; i < eNbrVisionObject; ++i )
-        pCopy->vModifEnvironments_[ i ]->rCoeff_ = vModifEnvironments_[ i ]->rCoeff_.GetData();
-
-    // initialize posture modificator infos
-    for( i = 0; i < eNbrUnitPosture; ++i )
-    {
-        pCopy->vModifStance_[ i ]->rCoeff_ = vModifStance_[ i ]->rCoeff_.GetData();
-        pCopy->vModifTargetStance_[ i ]->rCoeff_ = vModifTargetStance_[ i ]->rCoeff_.GetData();
-    }
-
-    for( auto itSizeModif = vModifSizes_.begin(); itSizeModif != vModifSizes_.end(); ++itSizeModif )
-        pCopy->vModifSizes_[ std::distance( vModifSizes_.begin(), itSizeModif ) ]->rCoeff_ = (*itSizeModif)->rCoeff_.GetData();
-
-    for( auto itUrbanBlockModif = vModifUrbanBlocks_.begin(); itUrbanBlockModif != vModifUrbanBlocks_.end(); ++itUrbanBlockModif )
-        pCopy->vModifUrbanBlocks_[ std::distance( vModifUrbanBlocks_.begin(), itUrbanBlockModif ) ]->rCoeff_ = (*itUrbanBlockModif)->rCoeff_.GetData();
+    pCopy->modificators_->CopyFrom( *modificators_ );
 
     return pCopy;
 }
@@ -684,101 +409,6 @@ void ADN_Sensors_Data::SensorInfos::ReadBaseDistance( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::SensorInfos::ReadSize
-// Created: AGE 2007-08-21
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::SensorInfos::ReadSize( xml::xistream& input )
-{
-    const std::string type = input.attribute< std::string >( "type" );
-    auto it = std::find_if( vModifSizes_.begin(), vModifSizes_.end(),
-                            boost::bind( &ADN_Tools::CrossedRefNameCompare< ModificatorSizeInfos >, _1, boost::cref( type ) ) );
-    if( it == vModifSizes_.end() )
-        throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).toStdString() );
-    (*it)->ReadArchive( input );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::SensorInfos::ReadPrecipitation
-// Created: AGE 2007-08-21
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::SensorInfos::ReadPrecipitation( xml::xistream& input )
-{
-    const std::string type = input.attribute< std::string >( "type" );
-    for( unsigned i = 0; i < eNbrSensorWeatherModifiers; ++i )
-        if( ADN_Tools::Scriptify( ADN_Tr::ConvertFromSensorWeatherModifiers( static_cast< E_SensorWeatherModifiers >( i ) ) ) == type )
-        {
-            vModifWeather_.at( i )->ReadArchive( input );
-            return;
-        }
-    throw MASA_EXCEPTION(tools::translate( "Sensor_Data", "Sensors - Invalid weather '%1'" ).arg( type.c_str() ).toStdString() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::SensorInfos::ReadVisibility
-// Created: AGE 2007-08-21
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::SensorInfos::ReadVisibility( xml::xistream& input )
-{
-    E_LightingType n = ENT_Tr::ConvertToLightingType( input.attribute< std::string >( "type" ) );
-    vModifIlluminations_.at( n )->ReadArchive( input );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::SensorInfos::ReadSourcePosture
-// Created: AGE 2007-08-21
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::SensorInfos::ReadSourcePosture( xml::xistream& input )
-{
-    const std::string type = input.attribute< std::string >( "type" );
-    for( unsigned i = 0; i < eNbrUnitPosture; ++i )
-        if( type == ADN_Tools::ComputePostureScriptName( static_cast< E_UnitPosture >( i ) ) )
-        {
-            vModifStance_.at( i )->ReadArchive( input );
-            return;
-        }
-    throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toStdString() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::SensorInfos::ReadTargetPosture
-// Created: AGE 2007-08-21
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::SensorInfos::ReadTargetPosture( xml::xistream& input )
-{
-    const std::string type = input.attribute< std::string >( "type" );
-    for( unsigned i = 0; i < eNbrUnitPosture; ++i )
-        if( type == ADN_Tools::ComputePostureScriptName( static_cast< E_UnitPosture >( i ) ) )
-        {
-            vModifTargetStance_.at( i )->ReadArchive( input );
-            return;
-        }
-    throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toStdString() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::SensorInfos::ReadTerrain
-// Created: AGE 2007-08-21
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::SensorInfos::ReadTerrain( xml::xistream& input )
-{
-    E_VisionObject n = ADN_Tr::ConvertToVisionObject( input.attribute< std::string >( "type" ) );
-    vModifEnvironments_.at( n )->ReadArchive( input );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::SensorInfos::ReadTerrain
-// Created: AGE 2007-08-21
-// -----------------------------------------------------------------------------
-void ADN_Sensors_Data::SensorInfos::ReadUrbanBlockMaterial( xml::xistream& input )
-{
-    const std::string type = input.attribute< std::string >( "type" );
-    auto it = std::find_if( vModifUrbanBlocks_.begin(), vModifUrbanBlocks_.end(), ModificatorUrbanBlockInfos::Cmp( type ) );
-    if( it == vModifUrbanBlocks_.end() )
-        throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).toStdString() );
-    ( *it )->ReadArchive( input );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::SensorInfos::ReadUnitDetection
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
@@ -796,30 +426,10 @@ void ADN_Sensors_Data::SensorInfos::ReadUnitDetection( xml::xistream& input )
             >> xml::attribute( "close-range", rDistProximity_ )
             >> xml::list( "base-distance", *this, &ADN_Sensors_Data::SensorInfos::ReadBaseDistance )
           >> xml::end
-          >> xml::start( "distance-modifiers" )
-            >> xml::start( "size-modifiers" )
-                >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadSize )
-            >> xml::end
-            >> xml::start( "precipitation-modifiers" )
-                >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadPrecipitation )
-            >> xml::end
-            >> xml::start( "visibility-modifiers" )
-                >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadVisibility )
-            >> xml::end
-            >> xml::start( "source-posture-modifiers" )
-                >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadSourcePosture )
-            >> xml::end
-            >> xml::start( "target-posture-modifiers" )
-                >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadTargetPosture )
-            >> xml::end
-            >> xml::start( "terrain-modifiers" )
-                >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadTerrain )
-            >> xml::end
-            >> xml::start( "urbanBlock-material-modifiers" )
-                >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadUrbanBlockMaterial )
-            >> xml::end;
+          >> xml::start( "distance-modifiers" );
+    modificators_->ReadArchive( input );
     populationInfos_.ReadArchive( input );
-    input >> xml::end;
+    input  >> xml::end; // "distance-modifiers"
 }
 
 // -----------------------------------------------------------------------------
@@ -934,44 +544,8 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output ) const
                 << xml::end; //base-distances
 
         output << xml::start( "distance-modifiers" );
-
         populationInfos_.WriteArchive( output );
-
-        output << xml::start( "size-modifiers" );
-        for( auto it1 = vModifSizes_.begin(); it1 != vModifSizes_.end(); ++it1 )
-            ( *it1 )->WriteArchive( output );
-        output << xml::end;
-
-        output << xml::start( "precipitation-modifiers" );
-        for( auto it2 = vModifWeather_.begin(); it2 != vModifWeather_.end(); ++it2 )
-            ( *it2 )->WriteArchive( output );
-        output << xml::end;
-
-        output << xml::start( "visibility-modifiers" );
-        for( auto it3 = vModifIlluminations_.begin(); it3 != vModifIlluminations_.end(); ++it3 )
-            ( *it3 )->WriteArchive( output );
-        output << xml::end;
-
-        output << xml::start( "source-posture-modifiers" );
-        for( auto it4 = vModifStance_.begin(); it4 != vModifStance_.end(); ++it4 )
-            ( *it4 )->WriteArchive( output );
-        output << xml::end;
-
-        output << xml::start( "target-posture-modifiers" );
-        for( auto it5 = vModifTargetStance_.begin(); it5 != vModifTargetStance_.end(); ++it5 )
-            ( *it5 )->WriteArchive( output );
-        output << xml::end;
-
-        output << xml::start( "terrain-modifiers" );
-        for( auto it6 = vModifEnvironments_.begin(); it6 != vModifEnvironments_.end(); ++it6 )
-            ( *it6 )->WriteArchive( output );
-        output << xml::end;
-
-        output << xml::start( "urbanBlock-material-modifiers" );
-        for( auto it7 = vModifUrbanBlocks_.begin(); it7 != vModifUrbanBlocks_.end(); ++it7 )
-            ( *it7 )->WriteArchive( output );
-        output << xml::end;
-
+        modificators_->WriteArchive( output );
         output << xml::end; // distance-modifiers
         output << xml::end; // unit-detection
     }
@@ -1002,14 +576,9 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output ) const
 void ADN_Sensors_Data::SensorInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     if( bCanDetectDisasters_.GetData() )
-    {
         for( auto it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
             ( *it )->CheckValidity( checker, strName_.GetData(), eSensors, -1, tools::translate( "ADN_Sensors_Data", "Disasters" ).toStdString() );
-        for( auto it = vModifUrbanBlocks_.begin(); it != vModifUrbanBlocks_.end(); ++it )
-            ( *it )->CheckValidity( checker, strName_.GetData(), eSensors, -1, tools::translate( "ADN_Sensors_Data", "UrbanBlock material modifiers" ).toStdString() );
-        for( auto it = vModifSizes_.begin(); it != vModifSizes_.end(); ++it )
-            ( *it )->CheckValidity( checker, strName_.GetData(), eSensors, -1, tools::translate( "ADN_Sensors_Data", "Target size" ).toStdString() );
-    }
+    modificators_->CheckDatabaseValidity( checker, strName_.GetData() );
 }
 
 // -----------------------------------------------------------------------------

@@ -3814,12 +3814,6 @@ PNG (*.png)
         <source>CP durations</source>
         <translation>Durées relatives aux PC</translation>
     </message>
-    <message>
-        <source>When &apos;Durations&apos; is unchecked, units are recognized instantly.
-When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</source>
-        <translation>Si &apos;Durées&apos; n&apos;est pas renseigné, les pions sont détectés instantanément.
-SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de détection d&apos;un PC est la même que pour les autres pions.</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Radars_ListView</name>

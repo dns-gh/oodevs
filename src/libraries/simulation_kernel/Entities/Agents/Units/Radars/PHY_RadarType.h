@@ -12,17 +12,17 @@
 #ifndef __PHY_RadarType_h_
 #define __PHY_RadarType_h_
 
-
-namespace xml
-{
-    class xistream;
-}
-
 class PHY_RadarClass;
-class MIL_AgentPion;
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
+class PHY_Volume;
 class MIL_Time_ABC;
+
+namespace weather
+{
+    class PHY_Lighting;
+    class PHY_Precipitation;
+}
 
 // =============================================================================
 // @class  PHY_RadarType
@@ -41,29 +41,32 @@ public:
 
     //! @name Operations
     //@{
-          bool                  CanAcquire             ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const PHY_PerceptionLevel&  ComputeAcquisitionLevel( const MIL_Agent_ABC& target   , unsigned int nFirstAcquisitionTimeStep ) const;
+    bool CanAcquire( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const PHY_PerceptionLevel&  ComputeAcquisitionLevel( const MIL_Agent_ABC& target, unsigned int nFirstAcquisitionTimeStep ) const;
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&    GetName  () const;
-    const PHY_RadarClass& GetClass () const;
-          double        GetRadius() const;
+    const std::string& GetName() const;
+    const PHY_RadarClass& GetClass() const;
+    double GetRadius() const;
+    double ComputeEnvironmentFactor( unsigned char nEnv ) const;
+    double GetVolumeFactor( const PHY_Volume& volume ) const;
+    double GetPrecipitationFactor( const weather::PHY_Precipitation& precipitation ) const;
+    double GetLightingFactor( const weather::PHY_Lighting& lighting ) const;
+    const std::vector< double >& GetUrbanFactors() const;
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_RadarType* > T_RadarTypeMap;
-    typedef T_RadarTypeMap::const_iterator             CIT_RadarTypeMap;
-
     typedef std::vector< bool > T_ActivityVector;
     //@}
 
 private:
-     PHY_RadarType( const std::string& strName, const PHY_RadarClass& type, const MIL_Time_ABC& time, xml::xistream& xis );
-    ~PHY_RadarType();
+             PHY_RadarType( const std::string& strName, const PHY_RadarClass& type, const MIL_Time_ABC& time, xml::xistream& xis );
+    virtual ~PHY_RadarType();
 
     //! @name Init
     //@{
@@ -82,10 +85,10 @@ private:
     //@}
 
 private:
-    const std::string     strName_;
+    const std::string strName_;
     const PHY_RadarClass& class_;
-    const MIL_Time_ABC&   time_;
-    const unsigned int            nID_;
+    const MIL_Time_ABC& time_;
+    const unsigned int nID_;
 
     // Range
     double rRadius_;
@@ -93,8 +96,13 @@ private:
     double rMaxHeight_;
 
     T_ActivityVector detectableActivities_;
+    std::vector< double > volumeFactors_;
+    std::vector< double > precipitationFactors_;
+    std::vector< double > lightingFactors_;
+    std::vector< double > urbanFactors_;
+    std::map< unsigned int, double > environmentFactors_;
 
-    // Acquistion times
+    // Acquisition times
     double rDetectionTime_;
     double rRecognitionTime_;
     double rIdentificationTime_;
@@ -104,7 +112,7 @@ private:
 
 private:
     static T_RadarTypeMap radarTypes_;
-    static unsigned int           nNextID_;
+    static unsigned int nNextID_;
 };
 
 #endif // __PHY_RadarType_h_

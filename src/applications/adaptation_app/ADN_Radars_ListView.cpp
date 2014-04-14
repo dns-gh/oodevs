@@ -78,6 +78,11 @@ void ADN_Radars_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Radars_GUI::eHasIdentificationTime]->Connect( &pInfos->detectTimes_.bIdentTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasRecoTime]->Connect( &pInfos->detectTimes_.bRecoTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasDetectionTimes]->Connect( &pInfos->bHasDetectTimes_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eModifSizes]->Connect( &pInfos->modificators_->vModifSizes_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eModifWeather]->Connect( &pInfos->modificators_->vModifWeather_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eModifIllumination]->Connect( &pInfos->modificators_->vModifIlluminations_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eModifEnvironment]->Connect( &pInfos->modificators_->vModifEnvironments_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eModifUrbanBlockMaterial]->Connect( &pInfos->modificators_->vModifUrbanBlocks_, bConnect );
 }
 
 // -----------------------------------------------------------------------------

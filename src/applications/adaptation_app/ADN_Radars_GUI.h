@@ -50,6 +50,11 @@ public:
         eHQRecoTime,
         eHasHQIdentificationTime,
         eHQIdentificationTime,
+        eModifSizes,
+        eModifWeather,
+        eModifIllumination,
+        eModifEnvironment,
+        eModifUrbanBlockMaterial,
         eNbrGuiElements
     };
 

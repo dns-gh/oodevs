@@ -52,6 +52,7 @@ public:
         eVisionGround     = 0x4,
         eNbrVisionObject = 4
     };
+    static std::map< std::string, E_VisionObject > environmentAssociation_;
 
 public:
     //! @name Constructors/Destructor

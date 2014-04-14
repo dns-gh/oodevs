@@ -15,6 +15,9 @@
 #include "ADN_Enums.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
+#include <boost/scoped_ptr.hpp>
+
+class ADN_Sensors_Modificators;
 
 // =============================================================================
 /** @class  ADN_Radars_Data
@@ -70,9 +73,10 @@ public:
         DetectTimes detectTimes_;
         ADN_Type_Bool bHasHQDetectTimes_;
         DetectTimes hqDetectTimes_;
+        boost::scoped_ptr< ADN_Sensors_Modificators > modificators_;
     };
 
-    typedef ADN_Type_Vector_ABC<RadarInfos > T_RadarInfos_Vector;
+    typedef ADN_Type_Vector_ABC< RadarInfos > T_RadarInfos_Vector;
 
 //*****************************************************************************
 public:

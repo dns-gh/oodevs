@@ -10,7 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Environments_GUI.h"
-#include "ADN_Sensors_Data.h"
+#include "ADN_Sensors_Modificators.h"
 #include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ ADN_Sensors_Environments_GUI::~ADN_Sensors_Environments_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Environments_GUI::InternalEmit()
 {
-    if( ADN_Sensors_Data::ModificatorEnvironmentInfos* data = static_cast< ADN_Sensors_Data::ModificatorEnvironmentInfos* >( GetSelectedData() ) )
+    if( ADN_Sensors_Modificators::EnvironmentInfos* data = static_cast< ADN_Sensors_Modificators::EnvironmentInfos* >( GetSelectedData() ) )
         emit ContentChanged( ADN_Tr::ConvertFromVisionObject( data->eType_, ENT_Tr::eToTr ), data->rCoeff_.GetData() );
 }
 
@@ -48,15 +48,10 @@ void ADN_Sensors_Environments_GUI::InternalEmit()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Environments_GUI::AddRow( int row, void* data )
 {
-    ADN_Sensors_Data::ModificatorEnvironmentInfos* pInfos = static_cast< ADN_Sensors_Data::ModificatorEnvironmentInfos* >( data );
+    ADN_Sensors_Modificators::EnvironmentInfos* pInfos = static_cast< ADN_Sensors_Modificators::EnvironmentInfos* >( data );
     if( !pInfos )
         return;
-    Qt::ItemFlags flags = Qt::ItemIsEditable;
-    if( pInfos->eType_ == eVisionEmpty )
-    {
-        pInfos->rCoeff_ = 1;
-        flags = 0;
-    }
+    Qt::ItemFlags flags = pInfos->eType_ == eVisionEmpty ? 0 : Qt::ItemIsEditable;
     AddItem( row, 0, data, ADN_Tr::ConvertFromVisionObject( pInfos->eType_, ENT_Tr::eToTr ).c_str(), Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pInfos->rCoeff_, ADN_StandardItem::eDouble, flags );
 }

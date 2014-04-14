@@ -13,18 +13,25 @@
 #include "PHY_RadarType.h"
 #include "MIL_Time_ABC.h"
 #include "PHY_RadarClass.h"
-#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Entities/Agents/Units/Sensors/DistanceModifiersHelpers.h"
+#include "meteo/rawvisiondata/PHY_RawVisionData.h"
+#include "meteo/PHY_Lighting.h"
+#include "meteo/PHY_Precipitation.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
+#include "Urban/PHY_MaterialCompositionType.h"
+#include <boost/assign.hpp>
 
 PHY_RadarType::T_RadarTypeMap PHY_RadarType::radarTypes_;
-unsigned int                          PHY_RadarType::nNextID_ = 0;
+unsigned int PHY_RadarType::nNextID_ = 0;
 
 namespace
 {
@@ -32,8 +39,7 @@ namespace
     bool ReadPcAndBaseTime( xml::xistream& xis, const std::string& name, T& time )
     {
         int seconds = 0;
-        std::string timeString;
-        xis >> xml::optional >> xml::attribute( name, timeString );
+        const std::string timeString = xis.attribute( name, std::string() );
         if( tools::DecodeTime( timeString, seconds ) )
         {
             time = seconds;
@@ -60,15 +66,11 @@ void PHY_RadarType::Initialize( xml::xistream& xis, const MIL_Time_ABC& time )
 // -----------------------------------------------------------------------------
 void PHY_RadarType::ReadRadar( xml::xistream& xis, const MIL_Time_ABC& time )
 {
-    std::string strRadarName;
-    xis >> xml::attribute( "name", strRadarName );
-
-    std::string strType;
-    xis >> xml::attribute( "type", strType );
+    const std::string strRadarName = xis.attribute< std::string >( "name" );
+    const std::string strType = xis.attribute< std::string >( "type" );
     const PHY_RadarClass* pType = PHY_RadarClass::Find( strType );
     if( !pType )
         throw MASA_EXCEPTION( xis.context() + "Unknown radar type " + strType );
-
     const PHY_RadarType*& pRadarType = radarTypes_[ strRadarName ];
     if( pRadarType )
         throw MASA_EXCEPTION( xis.context() + "Radar " + strRadarName + " already exists" );
@@ -99,6 +101,10 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     , rMinHeight_           ( -std::numeric_limits< double >::max() )
     , rMaxHeight_           (  std::numeric_limits< double >::max() )
     , detectableActivities_ ( PHY_ConsumptionType::GetConsumptionTypes().size(), false )
+    , volumeFactors_        ( PHY_Volume::GetVolumes().size(), 1 )
+    , precipitationFactors_ ( weather::PHY_Precipitation::GetPrecipitations().size(), 1 )
+    , lightingFactors_      ( weather::PHY_Lighting::GetLightings().size(), 1 )
+    , urbanFactors_         ( PHY_MaterialCompositionType::Count(), 0 )
     , rDetectionTime_       ( std::numeric_limits< double >::max() )
     , rRecognitionTime_     ( std::numeric_limits< double >::max() )
     , rIdentificationTime_  ( std::numeric_limits< double >::max() )
@@ -109,6 +115,24 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     InitializeRange           ( xis );
     InitializeActivities      ( xis );
     InitializeAcquisitionTimes( xis );
+    if( xis.has_child( "distance-modifiers" ) )
+    {
+        xis >> xml::start( "distance-modifiers" );
+        distance_modifiers::InitializeFactors( PHY_Volume::GetVolumes(), "size-modifiers", volumeFactors_, xis );
+        distance_modifiers::InitializeFactors( weather::PHY_Precipitation::GetPrecipitations (), "precipitation-modifiers", precipitationFactors_, xis );
+        distance_modifiers::InitializeFactors( weather::PHY_Lighting::GetLightings(), "visibility-modifiers", lightingFactors_, xis );
+        distance_modifiers::InitializeTerrainModifiers( xis, environmentFactors_ );
+        distance_modifiers::InitializeUrbanFactors( xis, urbanFactors_ );
+        xis >> xml::end;
+    }
+    else
+    {
+
+        environmentFactors_ = boost::assign::map_list_of( PHY_RawVisionData::eVisionEmpty, 1 )
+                                                ( PHY_RawVisionData::eVisionForest, 0 )
+                                                ( PHY_RawVisionData::eVisionUrban, 0 )
+                                                ( PHY_RawVisionData::eVisionGround, 0 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +187,6 @@ void PHY_RadarType::ReadDetectableActivity( xml::xistream& xis, bool& bIsActivit
 {
     bIsActivity = true;
     std::fill( detectableActivities_.begin(), detectableActivities_.end(), false );
-
     xis >> xml::list( "detectable-activity", *this, &PHY_RadarType::ReadActivity );
 }
 
@@ -175,16 +198,11 @@ void PHY_RadarType::ReadActivity( xml::xistream& xis )
 {
     const PHY_ConsumptionType::T_ConsumptionTypeMap& consumptionTypes = PHY_ConsumptionType::GetConsumptionTypes();
 
-    std::string activityType;
-    xis >> xml::attribute( "type", activityType );
-
-    auto it = consumptionTypes.find( activityType );
+    auto it = consumptionTypes.find( xis.attribute< std::string >( "type" ) );
     if( it != consumptionTypes.end() )
     {
         const PHY_ConsumptionType& conso = *it->second;
-        bool bValue = false;
-        xis >> xml::optional >> xml::attribute( "value", bValue );
-        detectableActivities_[ conso.GetID() ] = bValue;
+        detectableActivities_[ conso.GetID() ] = xis.attribute< bool >( "value", false );
     }
 }
 
@@ -199,9 +217,12 @@ void PHY_RadarType::InitializeAcquisitionTimes( xml::xistream& xis )
 
     if( !bIsTime )
     {
-        rPcDetectionTime_       = rDetectionTime_       = std::numeric_limits< double >::max();
-        rPcRecognitionTime_     = rRecognitionTime_     = 0;
-        rPcIdentificationTime_  = rIdentificationTime_  = std::numeric_limits< double >::max();
+        rDetectionTime_ = std::numeric_limits< double >::max();
+        rPcDetectionTime_ = std::numeric_limits< double >::max();
+        rRecognitionTime_ = 0;
+        rPcRecognitionTime_ = 0;
+        rIdentificationTime_ = std::numeric_limits< double >::max();
+        rPcIdentificationTime_ = std::numeric_limits< double >::max();
         return;
     }
 }
@@ -230,8 +251,7 @@ void PHY_RadarType::ReadAcquisitionTime( xml::xistream& xis, bool& bIsTime )
 // -----------------------------------------------------------------------------
 void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
 {
-    std::string acquisitionType;
-    xis >> xml::attribute( "level", acquisitionType );
+    const std::string acquisitionType = xis.attribute< std::string >( "level" );
 
     if( acquisitionType == "detection" )
     {
@@ -345,7 +365,7 @@ const PHY_PerceptionLevel& PHY_RadarType::ComputeAcquisitionLevel( const MIL_Age
 // -----------------------------------------------------------------------------
 const PHY_RadarType* PHY_RadarType::Find( const std::string& strType )
 {
-    CIT_RadarTypeMap it = radarTypes_.find( strType );
+    auto it = radarTypes_.find( strType );
     return it == radarTypes_.end() ? 0 : it->second;
 }
 
@@ -374,4 +394,62 @@ const PHY_RadarClass& PHY_RadarType::GetClass() const
 double PHY_RadarType::GetRadius() const
 {
     return rRadius_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::ComputeEnvironmentFactor
+// Created: LDC 2014-01-27
+// -----------------------------------------------------------------------------
+double PHY_RadarType::ComputeEnvironmentFactor( unsigned char nEnv ) const
+{
+    double res = nEnv & PHY_RawVisionData::eVisionEmpty ? environmentFactors_.find( 0 )->second : 1.;
+    for( unsigned int mask = 1, idx = 1; idx < PHY_RawVisionData::eNbrVisionObject; mask <<= 1, ++idx )
+        if( mask & nEnv )
+            res *= environmentFactors_.find( mask )->second;
+    return res;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::GetVolumeFactor
+// Created: JSR 2014-04-02
+// -----------------------------------------------------------------------------
+double PHY_RadarType::GetVolumeFactor( const PHY_Volume& volume ) const
+{
+    assert( volume.GetID() < volumeFactors_.size() );
+    if( volume.GetID() >= volumeFactors_.size() )
+        return 0;
+    return volumeFactors_[ volume.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::GetPrecipitationFactor
+// Created: JSR 2014-04-03
+// -----------------------------------------------------------------------------
+double PHY_RadarType::GetPrecipitationFactor( const weather::PHY_Precipitation& precipitation ) const
+{
+    assert( precipitation.GetID() < precipitationFactors_.size() );
+    if( precipitation.GetID() >= precipitationFactors_.size() )
+        return 0;
+    return precipitationFactors_[ precipitation.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::GetLightingFactor
+// Created: JSR 2014-04-03
+// -----------------------------------------------------------------------------
+double PHY_RadarType::GetLightingFactor( const weather::PHY_Lighting& lighting ) const
+{
+    assert( lighting.GetID() < lightingFactors_.size() );
+    if( lighting.GetID() >= lightingFactors_.size() )
+        return 0;
+    return lightingFactors_[ lighting.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< double >& PHY_RadarType::GetUrbanFactors
+// Created: JSR 2014-04-03
+// -----------------------------------------------------------------------------
+const std::vector< double >& PHY_RadarType::GetUrbanFactors() const
+{
+    return urbanFactors_;
 }

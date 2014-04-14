@@ -37,7 +37,7 @@ ADN_Sensors_Postures_GUI::~ADN_Sensors_Postures_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Postures_GUI::InternalEmit()
 {
-    if( ADN_Sensors_Data::ModificatorPostureInfos* data = static_cast< ADN_Sensors_Data::ModificatorPostureInfos* >( GetSelectedData() ) )
+    if( ADN_Sensors_Modificators::PostureInfos* data = static_cast< ADN_Sensors_Modificators::PostureInfos* >( GetSelectedData() ) )
         emit ContentChanged(  ENT_Tr::ConvertFromUnitPosture( data->eType_, ENT_Tr::eToTr ), data->rCoeff_.GetData() );
 }
 
@@ -47,7 +47,7 @@ void ADN_Sensors_Postures_GUI::InternalEmit()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Postures_GUI::AddRow( int row, void* data )
 {
-    ADN_Sensors_Data::ModificatorPostureInfos* pInfos = static_cast< ADN_Sensors_Data::ModificatorPostureInfos* >( data );
+    ADN_Sensors_Modificators::PostureInfos* pInfos = static_cast< ADN_Sensors_Modificators::PostureInfos* >( data );
     if( !pInfos )
         return;
 

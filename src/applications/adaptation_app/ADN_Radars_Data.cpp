@@ -9,12 +9,15 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Radars_Data.h"
-#include "ADN_Workspace.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Project_Data.h"
+#include "ADN_Sensors_Modificators.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
-#include "ENT/ENT_Tr.h"
+#include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/XmlTranslations.h"
+#include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: DetectTimes::DetectTimes
@@ -121,6 +124,7 @@ ADN_Radars_Data::RadarInfos::RadarInfos()
     , bHasDetectableActivities_( false )
     , bHasDetectTimes_         ( false )
     , bHasHQDetectTimes_       ( false )
+    , modificators_            ( new ADN_Sensors_Modificators( false ) )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eSensors, "radars" ) );
     for( int n = 0; n < eNbrConsumptionType; ++n )
@@ -166,6 +170,7 @@ ADN_Radars_Data::RadarInfos* ADN_Radars_Data::RadarInfos::CreateCopy()
     pCopy->hqDetectTimes_.recoTime_ = hqDetectTimes_.recoTime_.GetData();
     pCopy->hqDetectTimes_.bRecoTime_ = hqDetectTimes_.bRecoTime_.GetData();
     pCopy->hqDetectTimes_.identTime_ = hqDetectTimes_.identTime_.GetData();
+    pCopy->modificators_->CopyFrom( *modificators_ );
     return pCopy;
 }
 
@@ -200,6 +205,13 @@ void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
     bHasHQDetectTimes_ = hqDetectTimes_.bDetectTime_.GetData()
                     || hqDetectTimes_.bIdentTime_.GetData()
                     || hqDetectTimes_.bRecoTime_.GetData();
+
+    if( input.has_child( "distance-modifiers" ) )
+    {
+        input >> xml::start( "distance-modifiers" );
+        modificators_->ReadArchive( input );
+        input  >> xml::end; // "distance-modifiers"
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -252,6 +264,13 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output ) const
         detectTimes_.WriteArchive( output, false );
         hqDetectTimes_.WriteArchive( output, true );
         output << xml::end;
+    }
+
+    if( modificators_->NeedsSaving() )
+    {
+        output << xml::start( "distance-modifiers" );
+        modificators_->WriteArchive( output );
+        output << xml::end; // distance-modifiers
     }
     output << xml::end;
 }

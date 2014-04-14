@@ -3814,12 +3814,6 @@ PNG (*.png)</translation>
         <source>CP durations</source>
         <translation>Duracion de CP</translation>
     </message>
-    <message>
-        <source>When &apos;Durations&apos; is unchecked, units are recognized instantly.
-When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</source>
-        <translation>Cuando  &apos;Duraciones&apos; no está seleccionado, las unidades se reconocen instantáneamente.
-Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detección para HQs son los mismos que los otros.</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Radars_ListView</name>

@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_SensorTypeObjectData.h"
 #include "PerceptionDistanceComputer.h"
+#include "DistanceModifiersHelpers.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
@@ -21,49 +22,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Tools/MIL_Tools.h"
-
-namespace
-{
-
-void ReadFactor( xml::xistream& xis, const std::string& name,
-        std::map< std::string, double >& factors )
-{
-    std::string type;
-    xis >> xml::attribute( "type", type );
-    double factor;
-    xis >> xml::attribute( "value", factor );
-    if( factor < 0 || factor > 1 )
-        throw MASA_EXCEPTION( xis.context() + name + ": value not in [0..1]" );
-    factors[ type ] = factor;
-}
-
-} // namespace
-
-std::map< std::string, double > ReadDistanceModifiers( xml::xistream& xis,
-        const std::string& parent )
-{
-    const std::string attr = "distance-modifier";
-    std::map< std::string, double > factors;
-    xis >> xml::start( parent )
-        >> xml::list( attr, boost::bind( &ReadFactor, _1, attr, boost::ref( factors )) )
-        >> xml::end;
-    return factors;
-}
-
-void ReadPostureFactors( xml::xistream& xis, const std::string& parent,
-        std::vector< double >& factors )
-{
-    auto values = ReadDistanceModifiers( xis, parent );
-    for( auto it = values.cbegin(); it != values.cend(); ++it )
-    {
-        const PHY_Posture* posture = PHY_Posture::FindPosture( it->first );
-        if( ! posture )
-            throw MASA_EXCEPTION( "unknown distance-modifier: " + it->first );
-        if( ! posture->CanModifyDetection() )
-            continue;
-        factors.at( posture->GetID() ) = it->second;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObjectData::PHY_SensorTypeObjectData
@@ -77,7 +35,7 @@ PHY_SensorTypeObjectData::PHY_SensorTypeObjectData( xml::xistream& xis )
 {
     xis >> xml::attribute( "detection-distance", rDD_ );
     rDD_ = MIL_Tools::ConvertMeterToSim( rDD_ );
-    ReadPostureFactors( xis, "source-posture-modifiers", postureSourceFactors_ );
+    distance_modifiers::ReadPostureFactors( xis, "source-posture-modifiers", postureSourceFactors_ );
     InitializePopulationFactors( xis );
 }
 
