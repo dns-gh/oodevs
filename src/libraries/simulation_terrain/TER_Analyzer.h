@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_Functor& bestNodeFunction ) const;
+    void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, const T_Functor& bestNodeFunction ) const;
 
     std::vector< boost::shared_ptr< MT_Vector2D > > FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius );
     void FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance, std::vector< boost::shared_ptr< MT_Vector2D > >& positions );
