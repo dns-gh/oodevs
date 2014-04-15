@@ -1790,22 +1790,24 @@ func (c *Client) PathfindRequest(unitId uint32, position ...Point) ([]PathPoint,
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
-				PathfindRequest: &sword.PathfindRequest{
-					Unit:      MakeId(unitId),
-					Positions: positions,
+				ComputePathfind: &sword.ComputePathfind{
+					Request: &sword.PathfindRequest{
+						Unit:      MakeId(unitId),
+						Positions: positions,
+					},
 				},
 			},
 		},
 	}
 	var points []PathPoint
 	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetPathfindRequestAck()
+		reply := msg.GetComputePathfindAck()
 		if reply == nil {
 			return ErrContinue
 		}
 		code := reply.GetErrorCode()
-		if code != sword.PathfindRequestAck_no_error {
-			return makeError(reply, int32(code), sword.PathfindRequestAck_ErrorCode_name)
+		if code != sword.ComputePathfindAck_no_error {
+			return makeError(reply, int32(code), sword.ComputePathfindAck_ErrorCode_name)
 		}
 		points = ReadPathPoints(reply.GetPath().GetPoints())
 		return nil

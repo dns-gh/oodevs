@@ -61,7 +61,7 @@ func (s *TestSuite) TestPathfindRequest(c *C) {
 		if msg.SimulationToClient == nil || msg.SimulationToClient.GetMessage() == nil {
 			return false
 		}
-		seen = msg.SimulationToClient.GetMessage().GetPathfindRequestAck() != nil
+		seen = msg.SimulationToClient.GetMessage().GetComputePathfindAck() != nil
 		return seen
 	})
 
