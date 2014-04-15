@@ -31,7 +31,7 @@ ADN_Equipments_Dotations_GUI::ADN_Equipments_Dotations_GUI( const QString& objec
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "Supplies" )
                       << tr( "Qty" )
-                      << tr( "Log threshold (%)" )
+                      << tr( "Log low threshold (%)" )
                       << tr( "Normalized consumption" );
 
     delegate_.AddSpinBoxOnColumn( 1, 1, INT_MAX );
@@ -168,6 +168,6 @@ void ADN_Equipments_Dotations_GUI::AddRow( int row, void* data )
         return;
     AddItem( row, 0, data, &pCategory->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pCategory->rNbr_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
-    AddItem( row, 2, data, &pCategory->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 2, data, &pCategory->rLogLowThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
     AddItem( row, 3, data, &pCategory->rNormalizedConsumption_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

@@ -84,7 +84,7 @@ private:
     bool IsResourcesSaveNeeded() const;
     const QString RetrieveResourceCategory( const QString& resourceName ) const;
     double RetrieveNormalizedConsumption( const QString& resourceName ) const;
-    double RetrieveDefaultLogisticThreshold( const QString& resourceName ) const;
+    double RetrieveLowLogisticThreshold( const QString& resourceName ) const;
     void UpdateEquipmentsWithOriginal() ;
     //@}
 

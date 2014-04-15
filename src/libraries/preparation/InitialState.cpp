@@ -141,7 +141,7 @@ void InitialState::ReadResource( xml::xistream& xis )
     }
     resource.consumption_ = RetrieveNormalizedConsumption( resource.name_ );
     if( resource.threshold_ == -1 )
-        resource.threshold_ = RetrieveDefaultLogisticThreshold( resource.name_ );
+        resource.threshold_ = RetrieveLowLogisticThreshold( resource.name_ );
     auto it = std::find_if( resources_.begin(), resources_.end(),
         [&]( const InitialStateResource& initial )
         {
@@ -180,7 +180,7 @@ void InitialState::SerializeAttributes( xml::xostream& xos ) const
         xos << xml::start( "resources" );
         for( auto it = resources_.begin(); it != resources_.end(); ++it )
             if( std::find( originalResources_.begin(), originalResources_.end(), *it ) == originalResources_.end() )
-                it->Serialize( xos, RetrieveDefaultLogisticThreshold( it->name_ ) );
+                it->Serialize( xos, RetrieveLowLogisticThreshold( it->name_ ) );
         xos << xml::end;
     }
 }
@@ -322,7 +322,7 @@ void InitialState::FillResources( tools::Iterator< const kernel::DotationCapacit
                 break;
             }
         if( i == originalResources_.size() )
-            originalResources_.push_back( InitialStateResource( dotation.GetName().c_str(), RetrieveResourceCategory( dotation.GetName().c_str() ), dotation.GetCapacity() * factor, dotation.GetCapacity() * factor, dotation.GetLogisticThreshold(), dotation.GetNormalizedConsumption() * factor ) );
+            originalResources_.push_back( InitialStateResource( dotation.GetName().c_str(), RetrieveResourceCategory( dotation.GetName().c_str() ), dotation.GetCapacity() * factor, dotation.GetCapacity() * factor, dotation.GetLowThreshold(), dotation.GetNormalizedConsumption() * factor ) );
     }
 }
 
@@ -364,10 +364,10 @@ double InitialState::RetrieveNormalizedConsumption( const QString& resourceName 
 }
 
 // -----------------------------------------------------------------------------
-// Name: InitialState::RetrieveDefaultLogisticThreshold
+// Name: InitialState::RetrieveLowLogisticThreshold
 // Created: JSR 2013-01-08
 // -----------------------------------------------------------------------------
-double InitialState::RetrieveDefaultLogisticThreshold( const QString& resourceName ) const
+double InitialState::RetrieveLowLogisticThreshold( const QString& resourceName ) const
 {
     kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( typeId_ );
     auto dotationCapacityTypeIt = agent.CreateResourcesIterator();
@@ -375,7 +375,7 @@ double InitialState::RetrieveDefaultLogisticThreshold( const QString& resourceNa
     {
         const kernel::DotationCapacityType& type = dotationCapacityTypeIt.NextElement();
         if( type.GetName() == resourceName.toStdString() )
-            return type.GetLogisticThreshold();
+            return type.GetLowThreshold();
     }
 
     tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agent.CreateIterator();
@@ -388,7 +388,7 @@ double InitialState::RetrieveDefaultLogisticThreshold( const QString& resourceNa
         {
             const kernel::DotationCapacityType& type = dotationIterator.NextElement();
             if( type.GetName() == resourceName.toStdString() )
-                return type.GetLogisticThreshold();
+                return type.GetLowThreshold();
         }
     }
     return 0;

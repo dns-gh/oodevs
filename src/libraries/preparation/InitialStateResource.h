@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos, double defaultLogisticThreshold ) const;
+    void Serialize( xml::xostream& xos, double defaultLowThreshold ) const;
     bool operator==( const InitialStateResource& object ) const;
     bool operator!=( const InitialStateResource& object ) const;
     //@}

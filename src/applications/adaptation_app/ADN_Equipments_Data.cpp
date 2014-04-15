@@ -924,7 +924,7 @@ ADN_Equipments_Data::CategoryInfos::CategoryInfos( ADN_Resources_Data::ResourceI
     : ADN_CrossedRef( parentDotation.categories_, 0, true )
     , ptrDotation_( &parentDotation )
     , rNormalizedConsumption_( 0 )
-    , rLogThreshold_( 0 )
+    , rLogLowThreshold_( 0 )
     , rNbr_ ( 0 )
 {
     // NOGHING
@@ -941,7 +941,7 @@ ADN_Equipments_Data::CategoryInfos* ADN_Equipments_Data::CategoryInfos::CreateCo
     pCopy->ptrDotation_ = ptrDotation_.GetData();
     pCopy->rNormalizedConsumption_ = rNormalizedConsumption_.GetData();
     pCopy->rNbr_ = rNbr_.GetData();
-    pCopy->rLogThreshold_ = rLogThreshold_.GetData();
+    pCopy->rLogLowThreshold_ = rLogLowThreshold_.GetData();
     return pCopy;
 }
 
@@ -953,7 +953,7 @@ void ADN_Equipments_Data::CategoryInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", *this )
           >> xml::attribute( "capacity", rNbr_ )
-          >> xml::attribute( "logistic-threshold", rLogThreshold_ )
+          >> xml::attribute( "low-threshold", rLogLowThreshold_ )
           >> xml::optional >> xml::attribute( "normalized-consumption", rNormalizedConsumption_ );
 }
 
@@ -966,7 +966,7 @@ void ADN_Equipments_Data::CategoryInfos::WriteArchive( xml::xostream& output ) c
     output << xml::start( "resource" )
              << xml::attribute( "name", *this )
              << xml::attribute( "capacity", rNbr_ )
-             << xml::attribute( "logistic-threshold", rLogThreshold_ )
+             << xml::attribute( "low-threshold", rLogLowThreshold_ )
              << xml::attribute( "normalized-consumption", rNormalizedConsumption_ )
            << xml::end;
 }

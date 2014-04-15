@@ -2172,16 +2172,16 @@ Voulez-vous le supprimer?</translation>
         <translation>Pourcentage (%)</translation>
     </message>
     <message>
-        <source>Logistic threshold (%)</source>
-        <translation>Seuil logistique (%)</translation>
-    </message>
-    <message>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
         <source>Normalized quantity</source>
         <translation>Quantité normalisée</translation>
+    </message>
+    <message>
+        <source>Logistic low threshold (%)</source>
+        <translation>Seuil bas logistique (%)</translation>
     </message>
 </context>
 <context>

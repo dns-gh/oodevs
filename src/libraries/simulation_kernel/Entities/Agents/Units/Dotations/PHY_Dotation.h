@@ -74,7 +74,7 @@ public:
     //! @name Accessors
     //@{
     const PHY_DotationCategory& GetCategory() const;
-    double GetSupplyThresholdPercentage() const;
+    double GetLowThresholdPercentage() const;
     //@}
 
 private:
@@ -96,7 +96,7 @@ private:
     double rCapacity_;
     double rConsumptionReservation_;
     double rFireReservation_;
-    double rSupplyThreshold_;
+    double rLowThreshold_;
     bool bNotified_;
     bool bDotationBlocked_; // Prisoner
     bool bInfiniteDotations_;

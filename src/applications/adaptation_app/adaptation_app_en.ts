@@ -1116,10 +1116,6 @@ Parked engine running</translation>
         <translation>Qty</translation>
     </message>
     <message>
-        <source>Log threshold (%)</source>
-        <translation>Log threshold (%)</translation>
-    </message>
-    <message>
         <source>Normalized consumption</source>
         <translation>Normalized consumption</translation>
     </message>
@@ -1130,6 +1126,10 @@ Parked engine running</translation>
     <message>
         <source>Remove supplies</source>
         <translation>Remove supplies</translation>
+    </message>
+    <message>
+        <source>Log low threshold (%)</source>
+        <translation>Logistics low threshold (%)</translation>
     </message>
 </context>
 <context>

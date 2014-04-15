@@ -105,14 +105,14 @@ PHY_DotationCapacities::T_Dotations PHY_DotationCapacities::UnregisterCapacities
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCapacities::GetDefaultLogisticThreshold
+// Name: PHY_DotationCapacities::GetDefaultLowThreshold
 // Created: JSR 2013-01-08
 // -----------------------------------------------------------------------------
-double PHY_DotationCapacities::GetDefaultLogisticThreshold( const PHY_DotationCategory& category ) const
+double PHY_DotationCapacities::GetDefaultLowThreshold( const PHY_DotationCategory& category ) const
 {
     auto it = dotationCapacities_.find( &category );
     if( it != dotationCapacities_.end() )
-        return it->second->GetDefaultThreshold();
+        return it->second->GetDefaultLowThreshold();
     return -1;
 }
 

@@ -1104,10 +1104,6 @@ Parked engine running</source>
         <translation type="unfinished">الكمية</translation>
     </message>
     <message>
-        <source>Log threshold (%)</source>
-        <translation type="unfinished">سجل عتبة (%)</translation>
-    </message>
-    <message>
         <source>Normalized consumption</source>
         <translation type="unfinished">الاستهلاك تم تسويتها</translation>
     </message>
@@ -1118,6 +1114,10 @@ Parked engine running</source>
     <message>
         <source>Remove supplies</source>
         <translation type="unfinished">إزالة مورد</translation>
+    </message>
+    <message>
+        <source>Log low threshold (%)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

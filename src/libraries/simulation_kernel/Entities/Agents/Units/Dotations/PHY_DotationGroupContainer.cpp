@@ -100,7 +100,7 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, const PHY_Uni
     if( !pGroup )
     {
         pGroup = &CreateDotationGroup( pDotationCategory->GetType() );
-        pGroup->AddCapacity( PHY_DotationCapacity( *pDotationCategory, xis.attribute< double >( "quantity" ), unitType.GetDefaultLogisticThreshold( *pDotationCategory ) ), 0 );
+        pGroup->AddCapacity( PHY_DotationCapacity( *pDotationCategory, xis.attribute< double >( "quantity" ), unitType.GetDefaultLowThreshold( *pDotationCategory ) ), 0 );
     }
     pGroup->ReadValues( xis, *pDotationCategory );
 }
@@ -438,7 +438,7 @@ void PHY_DotationGroupContainer::SendChangedState( client::UnitAttributes& asn )
         sword::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_resource_dotations()->add_elem();
         asnRessource.mutable_type()->set_id( dotation.GetCategory().GetMosID() );
         asnRessource.set_quantity( static_cast< unsigned int >( dotation.GetValue() + .5 ) );
-        asnRessource.set_threshold( static_cast< float >( dotation.GetSupplyThresholdPercentage() ) );
+        asnRessource.set_threshold( static_cast< float >( dotation.GetLowThresholdPercentage() ) );
     }
 }
 
@@ -462,7 +462,7 @@ void PHY_DotationGroupContainer::SendFullState( client::UnitAttributes& asn ) co
             sword::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_resource_dotations()->add_elem();
             asnRessource.mutable_type()->set_id( dotation.GetCategory().GetMosID() );
             asnRessource.set_quantity( static_cast< unsigned int >( dotation.GetValue() + .5 ) );
-            asnRessource.set_threshold( static_cast< float >( dotation.GetSupplyThresholdPercentage() ) );
+            asnRessource.set_threshold( static_cast< float >( dotation.GetLowThresholdPercentage() ) );
         }
     }
 }

@@ -37,8 +37,8 @@ public:
     //@{
     const PHY_DotationCategory& GetCategory() const;
     double GetCapacity() const;
-    double GetSupplyThreshold() const;
-    double GetDefaultThreshold() const;
+    double GetLowThreshold() const;
+    double GetDefaultLowThreshold() const;
     //@}
 
 private:
@@ -52,8 +52,8 @@ private:
     //@{
     const PHY_DotationCategory& category_;
     double                      rCapacity_;
-    double                      rSupplyThreshold_;
-    double                      rSupplyThresholdPercentage_;
+    double                      rLowThreshold_;
+    double                      rLowThresholdPercentage_;
     //@}
 };
 

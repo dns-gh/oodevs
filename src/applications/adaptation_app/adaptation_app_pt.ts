@@ -1104,10 +1104,6 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Log threshold (%)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Normalized consumption</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1117,6 +1113,10 @@ Parked engine running</source>
     </message>
     <message>
         <source>Remove supplies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log low threshold (%)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

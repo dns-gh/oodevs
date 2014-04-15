@@ -1116,10 +1116,6 @@ Arrêt moteur allumé</translation>
         <translation>Qté</translation>
     </message>
     <message>
-        <source>Log threshold (%)</source>
-        <translation>Seuil logistique (%)</translation>
-    </message>
-    <message>
         <source>Normalized consumption</source>
         <translation>Consommation normalisée</translation>
     </message>
@@ -1130,6 +1126,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Remove supplies</source>
         <translation type="unfinished">Enlever cette dotation</translation>
+    </message>
+    <message>
+        <source>Log low threshold (%)</source>
+        <translation>Seuil bas logistique (%)</translation>
     </message>
 </context>
 <context>

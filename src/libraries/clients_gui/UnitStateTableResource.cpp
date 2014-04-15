@@ -29,7 +29,7 @@ UnitStateTableResource::UnitStateTableResource( const QString& objectName,
                                         << tr( "Quantity" )
                                         << maximalCapacityLabel
                                         << tr( "Percentage (%)" )
-                                        << tr( "Logistic threshold (%)" )
+                                        << tr( "Logistic low threshold (%)" )
                                         << tr( "Normalized quantity" ) )
     , blockSlots_( false )
 {

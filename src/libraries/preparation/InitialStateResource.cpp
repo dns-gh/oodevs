@@ -31,8 +31,7 @@ InitialStateResource::InitialStateResource( const QString& name, const QString& 
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
 InitialStateResource::InitialStateResource( xml::xistream& xis )
-    : category_( "" )
-    , maximum_( 0 )
+    : maximum_( 0 )
     , number_( 0 )
     , consumption_( 0 )
     , threshold_( -1 )
@@ -40,7 +39,7 @@ InitialStateResource::InitialStateResource( xml::xistream& xis )
     std::string name;
     xis >> xml::attribute( "name", name )
         >> xml::attribute( "quantity", number_ )
-        >> xml::optional >> xml::attribute( "logistic-threshold", threshold_ );
+        >> xml::optional >> xml::attribute( "low-threshold", threshold_ );
     name_ = name.c_str();
 }
 
@@ -57,13 +56,13 @@ InitialStateResource::~InitialStateResource()
 // Name: InitialStateResource::Serialize
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-void InitialStateResource::Serialize( xml::xostream& xos, double defaultLogisticThreshold ) const
+void InitialStateResource::Serialize( xml::xostream& xos, double defaultLowThreshold ) const
 {
     xos << xml::start( "resource" )
         << xml::attribute( "name", name_ )
         << xml::attribute( "quantity", number_ );
-    if( threshold_ != defaultLogisticThreshold )
-        xos.attribute( "logistic-threshold", threshold_ );
+    if( threshold_ != defaultLowThreshold )
+        xos.attribute( "low-threshold", threshold_ );
     xos << xml::end; // resource
 }
 

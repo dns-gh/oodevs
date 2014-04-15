@@ -19,8 +19,8 @@
 PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category, xml::xistream& xis )
     : category_        ( category )
     , rCapacity_       ( xis.attribute< double >( "capacity" ) )
-    , rSupplyThreshold_( 0. )
-    , rSupplyThresholdPercentage_( xis.attribute< double >( "logistic-threshold" ) )
+    , rLowThreshold_( 0. )
+    , rLowThresholdPercentage_( xis.attribute< double >( "low-threshold" ) )
 {
     ComputeThreshold();
 }
@@ -32,8 +32,8 @@ PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category
 PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category, double capacity, double rSupplyThresholdPercentage )
     : category_        ( category )
     , rCapacity_       ( capacity )
-    , rSupplyThreshold_( 0. )
-    , rSupplyThresholdPercentage_( rSupplyThresholdPercentage )
+    , rLowThreshold_( 0. )
+    , rLowThresholdPercentage_( rSupplyThresholdPercentage )
 {
     ComputeThreshold();
 }
@@ -55,9 +55,9 @@ void PHY_DotationCapacity::ComputeThreshold()
 {
     if( rCapacity_ < 0 )
         throw MASA_EXCEPTION( "Dotation capacity < 0." );
-    if( rSupplyThresholdPercentage_ < 0 || rSupplyThresholdPercentage_ > 100 )
-        throw MASA_EXCEPTION( "Dotation logistic-threshold not in [0..100]." );
-    rSupplyThreshold_ = rCapacity_ * rSupplyThresholdPercentage_ / 100.;
+    if( rLowThresholdPercentage_ < 0 || rLowThresholdPercentage_ > 100 )
+        throw MASA_EXCEPTION( "Dotation low-threshold not in [0..100]." );
+    rLowThreshold_ = rCapacity_ * rLowThresholdPercentage_ / 100.;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,21 +70,21 @@ double PHY_DotationCapacity::GetCapacity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCapacity::GetSupplyThreshold
+// Name: PHY_DotationCapacity::GetLowThreshold
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
-double PHY_DotationCapacity::GetSupplyThreshold() const
+double PHY_DotationCapacity::GetLowThreshold() const
 {
-    return rSupplyThreshold_;
+    return rLowThreshold_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCapacity::GetDefaultThreshold
+// Name: PHY_DotationCapacity::GetDefaultLowThreshold
 // Created: JSR 2013-01-08
 // -----------------------------------------------------------------------------
-double PHY_DotationCapacity::GetDefaultThreshold() const
+double PHY_DotationCapacity::GetDefaultLowThreshold() const
 {
-    return rSupplyThresholdPercentage_;
+    return rLowThresholdPercentage_;
 }
 
 // -----------------------------------------------------------------------------

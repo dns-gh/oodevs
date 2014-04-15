@@ -980,7 +980,7 @@ message ResourceDotations {
     message ResourceDotation {
         required Id           type      = 1;
         required int32        quantity  = 2;
-        //! The logistic threshold between 0 and 100.
+        //! The low logistic threshold between 0 and 100.
         optional float        threshold = 3;
     }
     repeated ResourceDotation elem = 1;

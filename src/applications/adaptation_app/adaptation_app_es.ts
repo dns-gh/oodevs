@@ -1117,10 +1117,6 @@ Estacionado y motor encendido</translation>
         <translation>Cant</translation>
     </message>
     <message>
-        <source>Log threshold (%)</source>
-        <translation>Umbral logístico (%)</translation>
-    </message>
-    <message>
         <source>Normalized consumption</source>
         <translation>Consumo normalizado</translation>
     </message>
@@ -1131,6 +1127,10 @@ Estacionado y motor encendido</translation>
     <message>
         <source>Remove supplies</source>
         <translation type="unfinished">Quitar recurso</translation>
+    </message>
+    <message>
+        <source>Log low threshold (%)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
