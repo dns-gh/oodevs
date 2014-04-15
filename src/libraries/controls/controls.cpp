@@ -139,6 +139,7 @@ namespace
         dst.set_info( event.info );
         dst.set_begin( event.begin );
         dst.set_end( event.end );
+        dst.set_parent( event.parent );
         if( !event.action.target.empty() )
             SetAction( *dst.mutable_action(), event.action );
         dst.set_done( event.done );
@@ -164,6 +165,7 @@ namespace
         dst.info = src.info();
         dst.begin = src.begin();
         dst.end = src.end();
+        dst.parent = src.parent();
         if( src.has_action() )
             dst.action = GetAction( src.action() );
         dst.done = src.done();

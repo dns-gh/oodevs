@@ -82,6 +82,7 @@ struct Event
     std::string info;
     std::string begin;
     std::string end;
+    std::string parent;
     std::string error_text;
     int         error_code;
     bool        read_only;

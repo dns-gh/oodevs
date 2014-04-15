@@ -234,6 +234,7 @@ namespace
         SetValue( data, "info", event.info );
         SetValue( data, "begin", event.begin );
         SetValue( data, "end", event.end );
+        SetValue( data, "parent", event.parent );
         SetValue( data, "error_text", event.error_text );
         SetValue( data, "error_code", event.error_code );
         SetValue( data, "read_only", event.read_only );
@@ -249,11 +250,12 @@ namespace
     timeline::Event GetEvent( const CefRefPtr< CefV8Value > src )
     {
         timeline::Event dst;
-        dst.uuid  = GetString( src, "uuid" );
-        dst.name  = GetString( src, "name" );
-        dst.info  = GetString( src, "info" );
-        dst.begin = GetString( src, "begin" );
-        dst.end   = GetString( src, "end" );
+        dst.uuid   = GetString( src, "uuid" );
+        dst.name   = GetString( src, "name" );
+        dst.info   = GetString( src, "info" );
+        dst.begin  = GetString( src, "begin" );
+        dst.end    = GetString( src, "end" );
+        dst.parent = GetString( src, "parent" );
         dst.error_text = GetString( src, "error_text" );
         dst.error_code = GetInteger( src, "error_code" );
         dst.read_only  = GetBool( src, "read_only" );

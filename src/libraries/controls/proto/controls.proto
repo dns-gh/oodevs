@@ -71,9 +71,10 @@ message Event
     optional string end    = 5;
     optional Action action = 6;
     optional bool   done   = 7;
-    optional bool   read_only = 8;
+    optional bool   read_only  = 8;
     optional int32  error_code = 9;
     optional string error_text = 10;
+    optional string parent     = 11;
 }
 
 message Error
