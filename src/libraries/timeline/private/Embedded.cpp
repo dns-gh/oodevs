@@ -156,7 +156,7 @@ namespace
             next.url = cfg.url;
             next.debug_port = cfg.debug_port;
             next.log = cfg.client_log.ToUTF8();
-            client_ = core::MakeClient( next );
+            client_ = core::MakeClient( next, log_ );
             thread_.reset( new boost::thread( &core::Client_ABC::Run, client_.get() ) );
         }
 
