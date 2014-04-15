@@ -57,6 +57,7 @@ end
 -- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, buSearchSpeed = 0.5
 -- @return true
 integration.startSearchUrbanBlock = function( urbanBlock, recceSpeed )
+    local buSearchSpeed = 1
     urbanBlock.area = urbanBlock.area or DEC_PolygoneBlocUrbain( urbanBlock.source )
     urbanBlock.actionSearch = 
         DEC_Perception_ActivateLocationProgressiveRecce( urbanBlock.area, recceSpeed or buSearchSpeed )
