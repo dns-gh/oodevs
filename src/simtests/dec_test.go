@@ -23,7 +23,6 @@ import (
 	"swapi"
 	"swapi/simu"
 	"swtest"
-	"text/template"
 	"time"
 )
 
@@ -68,22 +67,11 @@ func (s *TestSuite) TestExecScript(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter:.*string expected, got nil.*")
 }
 
-func Parse(c *C, script string, keys map[string]interface{}) string {
-	w := &bytes.Buffer{}
-	t, err := template.New("test").Parse(script)
-	c.Assert(err, IsNil)
-	err = t.Execute(w, keys)
-	c.Assert(err, IsNil)
-	return string(w.Bytes())
-}
-
 func execScript(c *C, client *swapi.Client, script string, keys map[string]interface{}) (
 	string, error) {
 
 	unit := getRandomUnit(c, client)
-	output, err := client.ExecScript(unit.Id, "TestFunction",
-		Parse(c, script, keys))
-	return output, err
+	return client.ExecTemplate(unit.Id, "TestFunction", script, keys)
 }
 
 func checkScript(c *C, client *swapi.Client, script string, keys map[string]interface{},
@@ -255,9 +243,11 @@ func DecCreateBreakdown(c *C, client *swapi.Client, unitId, equipmentType uint32
 		return tostring(DEC_CreateBreakdown(DEC_GetEquipmentFromID({{.equipmentType}}),
 			{{.breakdownType}}))
 	end`
-	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
-		map[string]interface{}{"equipmentType": equipmentType,
-			"breakdownType": breakdownType}))
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
+		map[string]interface{}{
+			"equipmentType": equipmentType,
+			"breakdownType": breakdownType,
+		})
 	c.Assert(err, IsNil)
 	c.Assert(output, Equals, result)
 }
@@ -312,12 +302,12 @@ function ConsumeResources()
     return "";
 end
 `)
-	_, err := client.ExecScript(unit, "ConsumeResources", Parse(c, script,
+	_, err := client.ExecTemplate(unit, "ConsumeResources", script,
 		map[string]interface{}{
 			"dotation": dotation,
 			"offset":   offset,
 			"duration": duration,
-		}))
+		})
 	c.Assert(err, IsNil)
 }
 
@@ -419,10 +409,12 @@ function TestFunction()
 		DEC_GetUnitById({{.targetId}}),
 		{{.vehicles}}))
 end`
-	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
-		map[string]interface{}{"unitId": unitId,
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
+		map[string]interface{}{
+			"unitId":   unitId,
 			"targetId": targetId,
-			"vehicles": vehicles}))
+			"vehicles": vehicles,
+		})
 	c.Assert(err, IsNil)
 	c.Assert(output, Equals, result)
 }
@@ -481,8 +473,8 @@ func HasDecProperty(c *C, client *swapi.Client, unitId uint32, has bool,
 function TestFunction()
 	return tostring({{.property}}())
 end`
-	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
-		map[string]interface{}{"property": property}))
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
+		map[string]interface{}{"property": property})
 	c.Assert(err, IsNil)
 	res := output == "true"
 	if res != has {
@@ -498,8 +490,8 @@ func HasDecFunction(c *C, client *swapi.Client, unitId uint32, has bool,
 function TestFunction()
 	return tostring({{.function}} ~= nil)
 end`
-	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
-		map[string]interface{}{"function": function}))
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
+		map[string]interface{}{"function": function})
 	c.Assert(err, IsNil)
 	res := output == "true"
 	if res != has {
@@ -560,7 +552,7 @@ func DecLinearInterpolation(c *C, client *swapi.Client, unitId uint32,
         {{.upSlope}}, {{.value}})
 end
 `
-	output, err := client.ExecScript(unitId, "TestFunction", Parse(c, script,
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
 		map[string]interface{}{
 			"minTo":   minTo,
 			"maxTo":   maxTo,
@@ -568,7 +560,7 @@ end
 			"maxFrom": maxFrom,
 			"upSlope": upSlope,
 			"value":   value,
-		}))
+		})
 	if err != nil {
 		return 0.0, err
 	}
@@ -633,11 +625,11 @@ func (s *TestSuite) TestDecGetTerrainData(c *C) {
 		{28.23, -15.82, "0,0"},  // unknown, no linear
 	}
 	for _, t := range tests {
-		output, err := client.ExecScript(unit.Id, "TestFunction", Parse(c, script,
+		output, err := client.ExecTemplate(unit.Id, "TestFunction", script,
 			map[string]interface{}{
 				"lat":  t.lat,
 				"long": t.long,
-			}))
+			})
 		c.Assert(err, IsNil)
 		c.Assert(output, Equals, t.expected)
 	}

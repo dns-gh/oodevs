@@ -9,10 +9,12 @@
 package swapi
 
 import (
+	"bytes"
 	"code.google.com/p/goprotobuf/proto"
 	"errors"
 	"fmt"
 	"sword"
+	"text/template"
 )
 
 func getUnitMagicActionAck(msg *sword.SimToClient_Content) (*sword.UnitMagicActionAck,
@@ -1462,6 +1464,24 @@ func (c *Client) ExecScript(id uint32, function, script string) (string, error) 
 	}
 	err := <-c.postSimRequest(msg, handler)
 	return result, err
+}
+
+// Substitutes parameters in script Go template and execute the script on
+// supplied unit.
+func (c *Client) ExecTemplate(id uint32, function, script string,
+	params map[string]interface{}) (string, error) {
+
+	w := &bytes.Buffer{}
+	t, err := template.New("test").Parse(script)
+	if err != nil {
+		return "", fmt.Errorf("failed to parse template: %s", err)
+	}
+	err = t.Execute(w, params)
+	if err != nil {
+		return "", fmt.Errorf("failed to substitute params: %s", err)
+	}
+	text := string(w.Bytes())
+	return c.ExecScript(id, function, text)
 }
 
 func (c *Client) ChangePopulationHealthState(populationId uint32, healthy, wounded,
