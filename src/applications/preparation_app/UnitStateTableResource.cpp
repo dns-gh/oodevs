@@ -200,14 +200,14 @@ namespace
         if( entity.GetTypeName() == kernel::Agent_ABC::typeName_)
         {
             const InitialState& extension = entity.Get< InitialState >();
-            for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+            for( auto it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
                 if( name == it->name_ && category == it->category_ )
                     quantity += it->number_;
         }
         else
         {
             const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
-            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+            auto it = hierarchy.CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 const kernel::Entity_ABC& subEntity = it.NextElement();
@@ -286,7 +286,7 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
     kernel::Agent_ABC& agent = static_cast< kernel::Agent_ABC& >( selected );
     typeId_ = agent.GetType().GetId();
     InitialState& extension = selected.Get< InitialState >();
-    for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+    for( auto it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
         MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->threshold_, it->consumption_ );
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( IsEntityOriginalResource( selected, GetDisplayData( row, eName ) ) )

@@ -51,7 +51,7 @@ bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
         return false;
     assert( extension.equipments_.size() == static_cast< unsigned int >( dataModel_.rowCount() ) );
     int row = 0;
-    for( InitialState::IT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end() && row < dataModel_.rowCount(); ++it, ++row )
+    for( auto it = extension.equipments_.begin(); it != extension.equipments_.end() && row < dataModel_.rowCount(); ++it, ++row )
         if( it->name_ != GetDisplayData( row, eName ) ||
             it->state_ != GetEnumData< E_EquipmentState >( row, eState ) ||
             ( dataModel_.item( row, eBreakdown ) && it->currentBreakdown_ != GetUserData( row, eBreakdown ).toUInt() ) )
@@ -84,7 +84,7 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
     InitialState& extension = selected.Get< InitialState >();
     assert( extension.equipments_.size() == static_cast< unsigned int >( dataModel_.rowCount() ) );
     int row = 0;
-    for( InitialState::IT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end(); ++it, ++row )
+    for( auto it = extension.equipments_.begin(); it != extension.equipments_.end(); ++it, ++row )
     {
         it->state_ = GetEnumData< E_EquipmentState >( row, eState );
         it->currentBreakdown_ = ( dataModel_.item( row, eBreakdown ) ) ? GetUserData( row, eBreakdown ).toUInt() : 0;

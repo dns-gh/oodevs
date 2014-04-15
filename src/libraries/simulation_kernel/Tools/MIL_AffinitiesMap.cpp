@@ -134,7 +134,7 @@ bool MIL_AffinitiesMap::IsEmpty() const
 // -----------------------------------------------------------------------------
 float MIL_AffinitiesMap::GetAffinity( unsigned long teamID ) const
 {
-    CIT_Affinities it = affinities_.find( teamID );
+    auto it = affinities_.find( teamID );
     if( it == affinities_.end() )
         return 0.f;
     return it->second;

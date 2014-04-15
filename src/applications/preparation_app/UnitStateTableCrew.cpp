@@ -58,7 +58,7 @@ bool UnitStateTableCrew::HasChanged( kernel::Entity_ABC& selected ) const
     if( static_cast< int >( extension.crews_.size() ) != dataModel_.rowCount() )
         return true;
     int row = 0;
-    for( InitialState::CIT_Crews it = extension.crews_.begin(); it != extension.crews_.end() && row < dataModel_.rowCount(); ++it, ++row )
+    for( auto it = extension.crews_.begin(); it != extension.crews_.end() && row < dataModel_.rowCount(); ++it, ++row )
         if( it->rank_ != GetEnumData< E_HumanRank >( row, eRank ) ||
             it->state_ != GetEnumData< E_HumanState >( row, eState ) ||
             it->currentSeriousness_ != GetEnumData< E_InjuriesSeriousness >( row, eInjuries ) || // $$$$ ABR 2011-08-11: waiting story 660
@@ -78,7 +78,7 @@ void UnitStateTableCrew::Load( kernel::Entity_ABC& selected )
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     InitialState& extension = selected.Get< InitialState >();
     assert( extension.crews_.size() > 2 );
-    for( InitialState::CIT_Crews it = extension.crews_.begin(); it != extension.crews_.end(); ++it )
+    for( auto it = extension.crews_.begin(); it != extension.crews_.end(); ++it )
         MergeLine( it->rank_, it->state_, it->currentSeriousness_, it->psyop_, it->contaminated_, it->number_ );
 }
 

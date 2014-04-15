@@ -63,7 +63,7 @@ CsvExport::CsvExport( Model& model, const kernel::CoordinateConverter_ABC& conve
     : model_    ( model )
     , converter_( converter )
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ CsvExport::CsvExport( Model& model, const kernel::CoordinateConverter_ABC& conve
 // -----------------------------------------------------------------------------
 CsvExport::~CsvExport()
 {
-        // NOTHING
+    // NOTHING
 }
 
 namespace
@@ -161,27 +161,27 @@ void CsvExport::WriteEntity( const tools::Path& exerciseName, const tools::Path&
     file    << tools::translate( "CsvExport", "SIDE" ) << separator << tools::translate( "CsvExport", "CATEGORY" )
             << separator << tools::translate( "CsvExport", "NAME" ) << separator << tools::translate( "CsvExport", "TYPE" )
             << separator << tools::translate( "CsvExport", "POSITION" ) << std::endl;
-    tools::Iterator< const kernel::Team_ABC& > itTeam = model_.teams_->CreateIterator();
+    auto itTeam = model_.teams_->CreateIterator();
     while( itTeam.HasMoreElements() )
     {
         const kernel::Team_ABC& team = itTeam.NextElement();
         WriteEntity( team, team.GetName().toStdString(), file, separator );
     }
-    tools::Iterator< const kernel::Object_ABC& > itObject = model_.objects_->CreateIterator();
+    auto itObject = model_.objects_->CreateIterator();
     while( itObject.HasMoreElements() )
     {
         const kernel::Object_ABC& object = itObject.NextElement();
         Write( file, separator, GetSide( object ), tools::translate( "CsvExport", "Object" ).toStdString(),
                object.GetName().toStdString(), object.GetType().GetName(), GetPosition( object, converter_, separator ) );
     }
-    tools::Iterator< const kernel::Population_ABC& > itPopulation = model_.GetPopulationResolver().CreateIterator();
+    auto itPopulation = model_.GetPopulationResolver().CreateIterator();
     while( itPopulation.HasMoreElements() )
     {
         const kernel::Population_ABC& population = itPopulation.NextElement();
         Write( file, separator, GetSide( population ), tools::translate( "CsvExport", "Population" ).toStdString(),
                population.GetName().toStdString(), GetType( population ), GetPosition( population, converter_, separator ) );
     }
-    tools::Iterator< const kernel::Inhabitant_ABC& > itInhabitant = model_.GetInhabitantResolver().CreateIterator();
+    auto itInhabitant = model_.GetInhabitantResolver().CreateIterator();
     while( itInhabitant.HasMoreElements() )
     {
         const kernel::Inhabitant_ABC& inhabitant = itInhabitant.NextElement();
@@ -197,7 +197,7 @@ void CsvExport::WriteEntity( const tools::Path& exerciseName, const tools::Path&
 // -----------------------------------------------------------------------------
 void CsvExport::WriteEntity( const kernel::Entity_ABC& entity, const std::string& side, tools::Ofstream& file, const std::string& separator )
 {
-    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    auto it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = it.NextElement();
@@ -228,12 +228,12 @@ void CsvExport::WriteResources( const tools::Path& exerciseName, const tools::Pa
     tools::Ofstream file( resourcesPath );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
-    tools::Iterator< const kernel::Agent_ABC& > it = model_.GetAgentResolver().CreateIterator();
+    auto it = model_.GetAgentResolver().CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::Agent_ABC& child = it.NextElement();
         const InitialState& extension = child.Get< InitialState >();
-        for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+        for( auto it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
             file << GetName( child ) << separator << it->name_ << separator << it->number_ << std::endl;
     }
     file.close();
@@ -249,14 +249,14 @@ void CsvExport::WriteStocks( const tools::Path& exerciseName, const tools::Path&
     tools::Ofstream file( stocksPath );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
-    tools::Iterator< const kernel::Agent_ABC& > it = model_.GetAgentResolver().CreateIterator();
+    auto it = model_.GetAgentResolver().CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::Agent_ABC& child = it.NextElement();
         const Stocks* stocks = child.Retrieve< Stocks >();
         if( stocks && stocks->HasDotations() )
         {
-            tools::Iterator< const Dotation& > itStock = stocks->CreateIterator();
+            auto itStock = stocks->CreateIterator();
             while( itStock.HasMoreElements() )
             {
                 const Dotation& dotation = itStock.NextElement();
@@ -286,7 +286,7 @@ void CsvExport::WriteWeather( const tools::Path& exerciseName, const tools::Path
          << global.GetCloud().nFloor_ << separator << global.GetCloud().nCeiling_ << separator << global.GetCloud().nDensityPercentage_ << separator
          << global.GetPrecipitation().GetName() << separator << separator << std::endl;
 
-    tools::Iterator< const weather::MeteoLocal& > it = model_.weather_->CreateIterator();
+    auto it = model_.weather_->CreateIterator();
     while( it.HasMoreElements() )
     {
         const weather::MeteoLocal& meteo = it.NextElement();
@@ -307,16 +307,16 @@ void CsvExport::WriteDiplomaty( const tools::Path& exerciseName, const tools::Pa
 {
     tools::Path diplomacyPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "diplomacy" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( diplomacyPath );
-    tools::Iterator< const kernel::Team_ABC& > it = model_.teams_->CreateIterator();
+    auto it = model_.teams_->CreateIterator();
     while( it.HasMoreElements() )
         file << separator<< it.NextElement().GetName();
     file << std::endl;
-    tools::Iterator< const kernel::Team_ABC& > itRhs = model_.teams_->CreateIterator();
+    auto itRhs = model_.teams_->CreateIterator();
     while( itRhs.HasMoreElements() )
     {
         const kernel::Team_ABC& rhs = itRhs.NextElement();
         file << rhs.GetName();
-        tools::Iterator< const kernel::Team_ABC& > itLhs = model_.teams_->CreateIterator();
+        auto itLhs = model_.teams_->CreateIterator();
         while( itLhs.HasMoreElements() )
         {
             file << separator;
@@ -342,10 +342,10 @@ void CsvExport::WriteProfiles( const tools::Path& exerciseName, const tools::Pat
     BOOST_FOREACH( const std::string& profile, profiles )
         file << separator << profile;
     file << std::endl;
-    tools::Iterator< const kernel::Automat_ABC& > itAutomat = model_.GetAutomatResolver().CreateIterator();
+    auto itAutomat = model_.GetAutomatResolver().CreateIterator();
     while( itAutomat.HasMoreElements() )
         WriteProfiles( file, separator, itAutomat.NextElement(), profiles );
-    tools::Iterator< const kernel::Population_ABC& > itPopulation = model_.GetPopulationResolver().CreateIterator();
+    auto itPopulation = model_.GetPopulationResolver().CreateIterator();
     while( itPopulation.HasMoreElements() )
         WriteProfiles( file, separator, itPopulation.NextElement(), profiles );
     file.close();
@@ -378,14 +378,14 @@ void CsvExport::WriteLogistic( const tools::Path& exerciseName, const tools::Pat
 {
     tools::Path logisticPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "logistic" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( logisticPath );
-    tools::Iterator< const kernel::Automat_ABC& > itTC2 = model_.GetAutomatResolver().CreateIterator();
+    auto itTC2 = model_.GetAutomatResolver().CreateIterator();
     while( itTC2.HasMoreElements() )
     {
         const kernel::Automat_ABC& child = itTC2.NextElement();
         if( child.Get< gui::LogisticBase >().IsBase() )
             file << separator << GetName( child );
     }
-    tools::Iterator< const kernel::Formation_ABC& > itBL = model_.GetFormationResolver().CreateIterator();
+    auto itBL = model_.GetFormationResolver().CreateIterator();
     while( itBL.HasMoreElements() )
     {
         const kernel::Formation_ABC& child = itBL.NextElement();
@@ -393,7 +393,7 @@ void CsvExport::WriteLogistic( const tools::Path& exerciseName, const tools::Pat
             file << separator << GetName( child );
     }
     file << std::endl;
-    tools::Iterator< const kernel::Automat_ABC& > itAutomat = model_.GetAutomatResolver().CreateIterator();
+    auto itAutomat = model_.GetAutomatResolver().CreateIterator();
     while( itAutomat.HasMoreElements() )
     {
         const kernel::Automat_ABC& child = itAutomat.NextElement();
@@ -401,7 +401,7 @@ void CsvExport::WriteLogistic( const tools::Path& exerciseName, const tools::Pat
         WriteLogistic( file, separator, child );
         file << std::endl;
     }
-    tools::Iterator< const kernel::Formation_ABC& > itFormation = model_.GetFormationResolver().CreateIterator();
+    auto itFormation = model_.GetFormationResolver().CreateIterator();
     while( itFormation.HasMoreElements() )
     {
         const kernel::Formation_ABC& child = itFormation.NextElement();
@@ -432,7 +432,7 @@ namespace
 // -----------------------------------------------------------------------------
 void CsvExport::WriteLogistic( tools::Ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity )
 {
-    tools::Iterator< const kernel::Automat_ABC& > itTC2 = model_.GetAutomatResolver().CreateIterator();
+    auto itTC2 = model_.GetAutomatResolver().CreateIterator();
     while( itTC2.HasMoreElements() )
     {
         const kernel::Automat_ABC& child = itTC2.NextElement();
@@ -443,7 +443,7 @@ void CsvExport::WriteLogistic( tools::Ofstream& file, const std::string& separat
                 file << "X";
         }
     }
-    tools::Iterator< const kernel::Formation_ABC& > itBL = model_.GetFormationResolver().CreateIterator();
+    auto itBL = model_.GetFormationResolver().CreateIterator();
     while( itBL.HasMoreElements() )
     {
         const kernel::Formation_ABC& child = itBL.NextElement();

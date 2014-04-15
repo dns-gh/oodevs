@@ -69,7 +69,7 @@ AgentAffinities::~AgentAffinities()
 void AgentAffinities::Add( unsigned long team, float affinity )
 {
     affinities_[ team ] = affinity;
-    CIT_Affinities it = affinities_.find( team );
+    auto it = affinities_.find( team );
     dictionary_.Register( agent_, propertyName_ + "/" + teams_[ team ].c_str(), it->second );
     controllers_.controller_.Update( gui::DictionaryUpdated( agent_, propertyName_ ) );
 }
@@ -122,7 +122,7 @@ void AgentAffinities::NotifyDeleted( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 void AgentAffinities::InitializeAffinities()
 {
-    tools::Iterator< const kernel::Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
+    auto it = model_.GetTeamResolver().CreateIterator();
     while( it.HasMoreElements() )
         AddTeam( it.NextElement() );
 }
@@ -135,7 +135,7 @@ void AgentAffinities::AddTeam( const kernel::Team_ABC& team )
 {
     dictionary_.Remove( propertyName_ + "/" + teams_[ team.GetId() ].c_str() );
     teams_[ team.GetId() ] = team.GetName();
-    CIT_Affinities it = affinities_.find( team.GetId() );
+    auto it = affinities_.find( team.GetId() );
     if( it != affinities_.end() )
         dictionary_.Register( agent_, propertyName_ + "/" + teams_[ team.GetId() ].c_str(), it->second );
 }

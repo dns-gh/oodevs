@@ -49,14 +49,8 @@ public:
     //! @name Types
     //@{
     typedef std::vector< InitialStateEquipment >    T_Equipments;
-    typedef T_Equipments::iterator                 IT_Equipments;
-    typedef T_Equipments::const_iterator          CIT_Equipments;
-
     typedef std::vector< InitialStateCrew >         T_Crews;
-    typedef T_Crews::const_iterator               CIT_Crews;
-
     typedef std::vector< InitialStateResource >     T_Resources;
-    typedef T_Resources::const_iterator           CIT_Resources;
     //@}
 
 public:

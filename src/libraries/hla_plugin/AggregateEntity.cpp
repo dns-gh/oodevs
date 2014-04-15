@@ -144,7 +144,7 @@ namespace
 void AggregateEntity::EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available,
         unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages )
 {
-    IT_Equipments result = std::find_if( equipments_.begin(), equipments_.end(), boost::bind( &::Find< T_Equipment >, type, _1 ) );
+    auto result = std::find_if( equipments_.begin(), equipments_.end(), boost::bind( &::Find< T_Equipment >, type, _1 ) );
     if( result == equipments_.end() )
         equipments_.push_back( T_Equipment( type, available, dead, lightDamages, heavyDamages, entityType ) );
     else

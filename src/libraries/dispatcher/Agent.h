@@ -130,7 +130,6 @@ private:
         HumanRepartition( float male, float female, float children ) : male_( male ), female_( female ), children_( children ) {}
     };
     typedef std::map< unsigned long, float > T_Affinities;
-    typedef T_Affinities::const_iterator   CIT_Affinities;
 
     struct UnitDetectionData
     {
@@ -138,10 +137,7 @@ private:
         sword::UnitVisibility_Level maxLevel_;
     };
     typedef std::map< unsigned long, UnitDetectionData > T_UnitDetection;
-    typedef T_UnitDetection::const_iterator                 CIT_UnitDetection;
-
     typedef std::map< unsigned long, sword::UnitVisibility_Level > T_ObjectDetection;
-    typedef T_ObjectDetection::const_iterator                       CIT_ObjectDetection;
 
     struct CrowdConcentrationDetectionData
     {
@@ -149,7 +145,6 @@ private:
         sword::UnitVisibility_Level level_;
     };
     typedef std::map< unsigned long, CrowdConcentrationDetectionData > T_CrowdConcentrationDetection;
-    typedef T_CrowdConcentrationDetection::const_iterator CIT_CrowdConcentrationDetection;
 
     struct CrowdFlowDetectionData
     {
@@ -157,7 +152,6 @@ private:
         Localisation path_;
     };
     typedef std::map< unsigned long, CrowdFlowDetectionData > T_CrowdFlowDetection;
-    typedef T_CrowdFlowDetection::const_iterator CIT_CrowdFlowDetection;
     //@}
 
 private:
