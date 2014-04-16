@@ -393,24 +393,6 @@ local isAMissionForTransport = function( mission )
         or missionType == "france.military.platoon.tasks.SeFaireTransporter" )
 end
 
---- Returns true if the given agent is ready to be loaded, false otherwise.
--- For it to be deemed ready to be loaded, the agent must have a mission with one of the following DIA types : 
--- <ul> <li> T_Task_Pion_SeFaireTransporter </li>
--- <li> T_Mission_Pion_SeFaireTransporter </li>
--- <li> platoon.tasks.SeFaireTransporter </li>
--- <li> worldwide.agent.tasks.GetTransported </li>
--- <li> france.military.platoon.tasks.SeFaireTransporter </li> </ul>
--- The agent must also meet one of the following two conditions :
--- <ul> <li> The distanceMax parameter is positive, and the distance between this entity and the agent is
--- lower than distanceMax, or; </li>
--- <li> The distanceMax parameter is equal to -1, and the agent is inside the given area </li> </ul>
--- @param knowledge Directia agent
--- @param distanceMax Float, the maximal distance between this entity and the given agent for the latter to be
--- ready to be loaded. If this parameters equals to -1, then the distance is ignored, and the area parameter
--- is taken into account instead.
--- @param area Simulation area, taken into account only if the distanceMax parameter is equal to -1.
--- @param mission String
--- @return Boolean
 local readyForLoad = function( knowledge, distanceMax, area, mission )
     distanceMax = distanceMax or 300
     if isAMissionForTransport( mission ) then
@@ -422,23 +404,7 @@ local readyForLoad = function( knowledge, distanceMax, area, mission )
     return false
 end
 
---- Returns true if the given agent is ready to be loaded, false otherwise.
--- For it to be deemed ready to be loaded, the agent must have a mission with one of the following DIA types : 
--- <ul> <li> T_Task_Pion_SeFaireTransporter </li>
--- <li> T_Mission_Pion_SeFaireTransporter </li>
--- <li> platoon.tasks.SeFaireTransporter </li>
--- <li> worldwide.agent.tasks.GetTransported </li>
--- <li> france.military.platoon.tasks.SeFaireTransporter </li> </ul>
--- The agent must also meet one of the following two conditions :
--- <ul> <li> The distanceMax parameter is positive, and the distance between this entity and the agent is
--- lower than distanceMax, or; </li>
--- <li> The distanceMax parameter is equal to -1, and the agent is inside the given area </li> </ul>
--- @param unit Directia agent, defining a "getPosition" method returning a simulation point
--- @param distanceMax Float, the maximal distance between this entity and the given agent for the latter to be
--- ready to be loaded. If this parameters equals to -1, then the distance is ignored, and the area parameter
--- is taken into account instead.
--- @param area Simulation area, taken into account only if the distanceMax parameter is equal to -1.
--- @return Boolean, whether or not the given agent is ready to be loaded
+-- distanceMax is equal to -1 if the unit is ready to load when it is into an area.
 integration.readyForLoad = function( unit, distanceMax, area )
     local mission = DEC_GetRawMission( unit.source )
     return readyForLoad( unit, distanceMax, area, mission )
