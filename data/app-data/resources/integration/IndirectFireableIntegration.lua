@@ -188,17 +188,13 @@ integration.findEnemyToMortarIndirectFire = function( targets )
         local DEC_ConnaissanceAgent_EstUnEnnemi = DEC_ConnaissanceAgent_EstUnEnnemi
         local DEC_ConnaissanceAgent_EstDetruitTactique = DEC_ConnaissanceAgent_EstDetruitTactique
         local DEC_ConnaissanceAgent_EstEnVol = DEC_ConnaissanceAgent_EstEnVol
-        local minDistance = 10000 -- why : because it's more than mortar range
         local result = {}
-        local integration = integration
         for i = 1, #targets do
             local dotation = integration.munitionPourTirIndirect( targets[i]:getPosition() )
             if DEC_ConnaissanceAgent_EstUnEnnemi( targets[i].source ) and not DEC_ConnaissanceAgent_EstDetruitTactique( targets[i].source ) and not DEC_ConnaissanceAgent_EstEnVol( targets[i].source ) and 
               integration.isOnRangeFor( targets[i], dotation ) then
-                local currentDistance = integration.distance( meKnowledge, targets[i] )
-                if currentDistance < minDistance then -- return the nearest enemy.
-                    result = targets[i]
-                    minDistance = currentDistance
+                if not exists( result, targets[i] ) then
+                    result[ #result + 1 ] = targets[i]
                 end
             end
         end
