@@ -149,7 +149,6 @@ function RegisterTaskListener()
             if self.main == taskName then
                 self.main = nil
                 reportFunction( eRC_FinMission )
-                myself.currentMission = nil
                 DEC_FinMission()
             end
             self.stage[ taskName ] = nil
