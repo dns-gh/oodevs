@@ -149,6 +149,7 @@ function RegisterTaskListener()
             if self.main == taskName then
                 self.main = nil
                 reportFunction( eRC_FinMission )
+                myself.currentMission = nil
                 DEC_FinMission()
             end
             self.stage[ taskName ] = nil
@@ -301,6 +302,13 @@ end
 -- @param list the Stage
 integration.RC_Stage = function( myself, typeMessage, id, list )
     DEC_RC_Stage( myself, typeMessage, id, list )
+end
+
+--- Stop all tasks, main task and fragOrder
+integration.stopTasks = function( )
+    masalife.brain.core.stopTasks()
+    myself.currentMission = nil
+    myself.taskParams = {}
 end
 
 
