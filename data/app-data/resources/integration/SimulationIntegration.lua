@@ -18,9 +18,7 @@ rawset( getfenv(), "StartEvent", function( task, params )
 end )
 
 rawset( getfenv(), "StopEvents", function( ... )
-  masalife.brain.core.stopTasks() --Stop all tasks, main task and fragOrder
-  myself.currentMission = nil
-  myself.taskParams = {}
+  integration.stopTasks() --Stop all tasks, main task and fragOrder
 end )
 
 function knowledgeIdFunction( knowledge )

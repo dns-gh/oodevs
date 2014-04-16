@@ -303,4 +303,11 @@ integration.RC_Stage = function( myself, typeMessage, id, list )
     DEC_RC_Stage( myself, typeMessage, id, list )
 end
 
+--- Stop all tasks, main task and fragOrder
+integration.stopTasks = function( )
+    masalife.brain.core.stopTasks()
+    myself.currentMission = nil
+    myself.taskParams = {}
+end
+
 
