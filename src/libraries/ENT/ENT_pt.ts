@@ -1167,6 +1167,14 @@
         <source>Select Repair Team</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Create pathfind</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroy pathfind</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::ObjectMagicAction::Type</name>

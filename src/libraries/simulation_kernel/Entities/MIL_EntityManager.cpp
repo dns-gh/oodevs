@@ -2052,8 +2052,8 @@ void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message
         pathfindComputer_->Compute( *pPopulation, points, nCtx, clientId );
     else
     {
-        client::PathfindRequestAck ack;
-        ack().set_error_code( PathfindRequestAck::error_invalid_parameter );
+        client::ComputePathfindAck ack;
+        ack().set_error_code( ComputePathfindAck::error_invalid_parameter );
         ack().set_error_msg( "invalid crowd or unit identifier" );
         ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
     }

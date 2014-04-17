@@ -97,12 +97,12 @@ bool PathfindComputer::PathComputed( unsigned int clientId, const T_Result& cont
     if( nPathState == DEC_Path_ABC::eComputing )
         return false;
 
-    client::PathfindRequestAck ack;
+    client::ComputePathfindAck ack;
     if( nPathState == DEC_Path_ABC::eInvalid || nPathState == DEC_Path_ABC::eImpossible )
-        ack().set_error_code( sword::PathfindRequestAck::error_path_invalid );
+        ack().set_error_code( sword::ComputePathfindAck::error_path_invalid );
     else
     {
-        ack().set_error_code( sword::PathfindRequestAck::no_error );
+        ack().set_error_code( sword::ComputePathfindAck::no_error );
         path->Serialize( *ack().mutable_path() );
     }
     path->DecRef();

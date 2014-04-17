@@ -112,6 +112,8 @@ const mapping::MagicAction mapping::MagicAction::data_[] = {
     { "local_weather",                  sword::MagicAction::local_weather },
     { "local_weather_destruction",      sword::MagicAction::local_weather_destruction },
     { "debug_internal",                 sword::MagicAction::debug_internal},
+    { "pathfind_creation",              sword::MagicAction::pathfind_creation },
+    { "pathfind_destruction",           sword::MagicAction::pathfind_destruction },
     { "select_diagnosis_team",          sword::MagicAction::select_diagnosis_team},
     { "select_maintenance_transporter", sword::MagicAction::select_maintenance_transporter},
     { "select_new_logistic_state",      sword::MagicAction::select_new_logistic_state},

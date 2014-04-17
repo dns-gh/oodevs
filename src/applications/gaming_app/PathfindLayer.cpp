@@ -42,11 +42,11 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     std::function< void( const sword::SimToClient& ) > fun =
         [&]( const sword::SimToClient& message )
         {
-            if( !message.message().has_pathfind_request_ack() )
+            if( !message.message().has_compute_pathfind_ack() )
                 return;
             lock_ = false;
-            const auto& request = message.message().pathfind_request_ack();
-            if( request.error_code() != sword::PathfindRequestAck_ErrorCode_no_error )
+            const auto& request = message.message().compute_pathfind_ack();
+            if( request.error_code() != sword::ComputePathfindAck_ErrorCode_no_error )
                 return;
             path_.clear();
             const auto& path = request.path();
@@ -214,7 +214,7 @@ void PathfindLayer::SendRequest()
     if( element_ && positions_.size() > 1 )
     {
         sword::ClientToSim msg;
-        auto request = msg.mutable_message()->mutable_pathfind_request();
+        auto request = msg.mutable_message()->mutable_compute_pathfind()->mutable_request();
         request->mutable_unit()->set_id( element_->GetId() );
         auto* positions = request->mutable_positions();
         for( auto it = positions_.begin(); it != positions_.end(); ++it )
