@@ -379,3 +379,12 @@ void BaseDisplayer::Call( const kernel::RoofShapeType& value )
 {
     AddToDisplay( value.GetName() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: JSR 2014-04-17
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const tools::Path& value )
+{
+    AddToDisplay( value.ToUTF8() );
+}
