@@ -4,8 +4,8 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:choice>
-                    <xs:element name="projection" type="xs:string" minOccurs="0"/>
-                    <xs:element name="time-zone" type="xs:short" minOccurs="0"/>
+                    <xs:element name="projection" type="xs:string"/>
+                    <xs:element name="time-zone" type="xs:short"/>
                 </xs:choice>
                 <xs:element name="files" minOccurs="1" maxOccurs="1">
                     <xs:complexType>

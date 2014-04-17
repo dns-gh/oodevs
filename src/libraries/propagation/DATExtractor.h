@@ -23,6 +23,12 @@ namespace tools
     class Path;
 }
 
+/*
+   This class is used for reading the data that we receive for CASAVA project.
+   This is not a standard, we should maybe preprocess the files before to convert them into
+   a standard format. We can assume that this file is temporary and subject to change.
+*/
+
 // =============================================================================
 /** @class  DATExtractor
     @brief  DAT extractor

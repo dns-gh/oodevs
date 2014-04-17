@@ -18,12 +18,6 @@
 #include <geocoord/Geodetic.h>
 #include <set>
 
-/*
-   This class is used for reading the data that we receive for CASAVA project.
-   This is not a standard, we should maybe preprocess the files before to convert them into
-   a standard format. We can assume that this file is temporary and subject to change.
-*/
-
 // -----------------------------------------------------------------------------
 // Name: DATExtractor constructor
 // Created: JSR 2014-04-10
