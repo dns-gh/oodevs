@@ -129,9 +129,9 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     {
 
         environmentFactors_ = boost::assign::map_list_of( PHY_RawVisionData::eVisionEmpty, 1 )
-                                                ( PHY_RawVisionData::eVisionForest, 0 )
-                                                ( PHY_RawVisionData::eVisionUrban, 0 )
-                                                ( PHY_RawVisionData::eVisionGround, 0 );
+                                                ( PHY_RawVisionData::eVisionForest, 1 )
+                                                ( PHY_RawVisionData::eVisionUrban, 1 )
+                                                ( PHY_RawVisionData::eVisionGround, 1 );
     }
 }
 
