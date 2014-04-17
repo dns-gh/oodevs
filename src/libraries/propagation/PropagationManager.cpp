@@ -50,7 +50,7 @@ void PropagationManager::Initialize( const tools::Path& config, const std::strin
         xis >> xml::content( "projection", projection_ );
     else if( xis.has_child( "time-zone" ) )
         timeZone_ = xis.content< short >( "time-zone" );
-    else
+    if( projection_.IsEmpty() && !timeZone_ )
         throw MASA_EXCEPTION( xis.context() + "Propagation file " + config.ToUTF8() + " not valid" );
     xis     >> xml::start( "files" )
                 >> xml::list( "file", *this, &PropagationManager::ReadFile, parent, startTime, delta )
@@ -69,8 +69,7 @@ boost::shared_ptr< Extractor_ABC > PropagationManager::CreateExtractor( const to
 {
     if( timeZone_ )
         return boost::shared_ptr< Extractor_ABC >( new DATExtractor( file, *timeZone_ ) );
-    else
-        return boost::shared_ptr< Extractor_ABC >( new ASCExtractor( file, projection_ ) );
+    return boost::shared_ptr< Extractor_ABC >( new ASCExtractor( file, projection_ ) );
 }
 
 namespace

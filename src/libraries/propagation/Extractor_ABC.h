@@ -22,7 +22,7 @@
 // =============================================================================
 class Extractor_ABC : private boost::noncopyable
 {
-public:
+protected:
     //! @name Types
     //@{
     typedef std::vector< float > T_Values;

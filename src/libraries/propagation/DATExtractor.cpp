@@ -18,6 +18,12 @@
 #include <geocoord/Geodetic.h>
 #include <set>
 
+/*
+   This class is used for reading the data that we receive for CASAVA project.
+   This is not a standard, we should maybe preprocess the files before to convert them into
+   a standard format. We can assume that this file is temporary and subject to change.
+*/
+
 // -----------------------------------------------------------------------------
 // Name: DATExtractor constructor
 // Created: JSR 2014-04-10
@@ -48,7 +54,7 @@ DATExtractor::DATExtractor( const tools::Path& file, short timeZone )
         ySet.insert( yUTM );
 
         // Height in meters = isomass(g.m^-2) / 1060(kg.m^-3) / 1000 (g->kg)
-        values.push_back( static_cast< float >( boost::lexical_cast< double >( inputs[ 2 ] ) / 1060000 ) );
+        values.push_back( boost::lexical_cast< float >( inputs[ 2 ] ) / 1060000 );
         xUTMMin = std::min( xUTMMin, xUTM );
         xUTMMax = std::max( xUTMMax, xUTM );
         yUTMMin = std::min( yUTMMin, yUTM );
@@ -57,7 +63,7 @@ DATExtractor::DATExtractor( const tools::Path& file, short timeZone )
     origin_ = geometry::Point2d( xUTMMin, yUTMMin );
     ncols_ = static_cast< int >( xSet.size() );
     nrows_ = static_cast< int >( ySet.size() );
-    pixelSize_.Set( *std::next( xSet.begin() ) - *( xSet.begin() ), *std::next( ySet.begin() ) - *( ySet.begin() ) );
+    pixelSize_.Set( *std::next( xSet.begin() ) - *xSet.begin(), *std::next( ySet.begin() ) - *ySet.begin() );
 
     values_.resize( nrows_ * ncols_ );
     for( int i = 0; i < nrows_; ++i )

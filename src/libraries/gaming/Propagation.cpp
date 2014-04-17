@@ -24,7 +24,7 @@ Propagation::Propagation( const tools::Path& file, const PropagationManager& man
                           const kernel::CoordinateConverter_ABC& converter, const kernel::DisasterType& disasterType )
 {
     boost::shared_ptr< Extractor_ABC > extractor = manager.CreateExtractor( file );
-    const Extractor_ABC::T_Values& values = extractor->GetValues();
+    auto values = extractor->GetValues();
 
     std::vector< unsigned char > rgba( values.size() * 4 );
     const int rowsCount = extractor->GetRows();
