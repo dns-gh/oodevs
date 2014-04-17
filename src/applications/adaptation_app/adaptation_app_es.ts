@@ -763,6 +763,10 @@ Estacionado y motor encendido</translation>
         <source>Mission parameter %1 defines duplicate enumeration values.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -1094,6 +1098,10 @@ Estacionado y motor encendido</translation>
         <source>Armor-Plating</source>
         <translation>Blindaje</translation>
     </message>
+    <message>
+        <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_DisasterImpactTable</name>
@@ -1117,10 +1125,6 @@ Estacionado y motor encendido</translation>
         <translation>Cant</translation>
     </message>
     <message>
-        <source>Normalized consumption</source>
-        <translation>Consumo normalizado</translation>
-    </message>
-    <message>
         <source>Add supplies</source>
         <translation type="unfinished">Agregar recurso</translation>
     </message>
@@ -1129,7 +1133,15 @@ Estacionado y motor encendido</translation>
         <translation type="unfinished">Quitar recurso</translation>
     </message>
     <message>
-        <source>Log low threshold (%)</source>
+        <source>Low thld. (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High thld. (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Norm. cons.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

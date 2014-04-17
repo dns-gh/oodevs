@@ -26,17 +26,19 @@ ADN_Equipments_Dotations_GUI::ADN_Equipments_Dotations_GUI( const QString& objec
     : ADN_Table( objectName, connector, pParent )
 {
     // Setup the columns.
-    dataModel_.setColumnCount( 4 );
+    dataModel_.setColumnCount( 5 );
 
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "Supplies" )
                       << tr( "Qty" )
-                      << tr( "Log low threshold (%)" )
-                      << tr( "Normalized consumption" );
+                      << tr( "Low thld. (%)" )
+                      << tr( "High thld. (%)" )
+                      << tr( "Norm. cons." );
 
     delegate_.AddSpinBoxOnColumn( 1, 1, INT_MAX );
     delegate_.AddDoubleSpinBoxOnColumn( 2, 0.0, 100.0, 0.01, 2 );
-    delegate_.AddDoubleSpinBoxOnColumn( 3, 0.001, INT_MAX, 0.001, 3 );
+    delegate_.AddDoubleSpinBoxOnColumn( 3, 0.0, 100.0, 0.01, 2 );
+    delegate_.AddDoubleSpinBoxOnColumn( 4, 0.001, INT_MAX, 0.001, 3 );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( resizeMode );
     verticalHeader()->setVisible( false );
@@ -50,10 +52,12 @@ ADN_Equipments_Dotations_GUI::ADN_Equipments_Dotations_GUI( const QString& objec
         hideColumn( 0 );
     if( !( visibleColumns & eColumn_Quantity ) )
         hideColumn( 1 );
-    if( !( visibleColumns & eColumn_Threshold ) )
+    if( !( visibleColumns & eColumn_LowThreshold ) )
         hideColumn( 2 );
-    if( !( visibleColumns & eColumn_Consumption ) )
+    if( !( visibleColumns & eColumn_HighThreshold ) )
         hideColumn( 3 );
+    if( !( visibleColumns & eColumn_Consumption ) )
+        hideColumn( 4 );
 }
 
 //-----------------------------------------------------------------------------
@@ -169,5 +173,6 @@ void ADN_Equipments_Dotations_GUI::AddRow( int row, void* data )
     AddItem( row, 0, data, &pCategory->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pCategory->rNbr_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
     AddItem( row, 2, data, &pCategory->rLogLowThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-    AddItem( row, 3, data, &pCategory->rNormalizedConsumption_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 3, data, &pCategory->rLogHighThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 4, data, &pCategory->rNormalizedConsumption_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

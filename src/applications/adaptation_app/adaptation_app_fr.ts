@@ -762,6 +762,10 @@ Arrêt moteur allumé</translation>
         <source>Mission parameter %1 defines duplicate enumeration values.</source>
         <translation>Le paramètre de mission %1 définit plusieurs fois la même valeur d&apos;énuméré.</translation>
     </message>
+    <message>
+        <source>%1 %2</source>
+        <translation>%1 %2</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -1093,6 +1097,10 @@ Arrêt moteur allumé</translation>
         <source>Armor-Plating</source>
         <translation>Protection</translation>
     </message>
+    <message>
+        <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos;.</source>
+        <translation>Seuils invalides, le seuil haut '%1' doit être supérieur au seuil bas '%2'.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_DisasterImpactTable</name>
@@ -1116,10 +1124,6 @@ Arrêt moteur allumé</translation>
         <translation>Qté</translation>
     </message>
     <message>
-        <source>Normalized consumption</source>
-        <translation>Consommation normalisée</translation>
-    </message>
-    <message>
         <source>Add supplies</source>
         <translation type="unfinished">Ajouter une dotation</translation>
     </message>
@@ -1128,8 +1132,16 @@ Arrêt moteur allumé</translation>
         <translation type="unfinished">Enlever cette dotation</translation>
     </message>
     <message>
-        <source>Log low threshold (%)</source>
-        <translation>Seuil bas logistique (%)</translation>
+        <source>Low thld. (%)</source>
+        <translation>Seuil bas (%)</translation>
+    </message>
+    <message>
+        <source>High thld. (%)</source>
+        <translation>Seuil haut (%)</translation>
+    </message>
+    <message>
+        <source>Norm. cons.</source>
+        <translation>Conso. norm.</translation>
     </message>
 </context>
 <context>

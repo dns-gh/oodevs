@@ -925,6 +925,7 @@ ADN_Equipments_Data::CategoryInfos::CategoryInfos( ADN_Resources_Data::ResourceI
     , ptrDotation_( &parentDotation )
     , rNormalizedConsumption_( 0 )
     , rLogLowThreshold_( 0 )
+    , rLogHighThreshold_( 0 )
     , rNbr_ ( 0 )
 {
     // NOGHING
@@ -942,6 +943,7 @@ ADN_Equipments_Data::CategoryInfos* ADN_Equipments_Data::CategoryInfos::CreateCo
     pCopy->rNormalizedConsumption_ = rNormalizedConsumption_.GetData();
     pCopy->rNbr_ = rNbr_.GetData();
     pCopy->rLogLowThreshold_ = rLogLowThreshold_.GetData();
+    pCopy->rLogHighThreshold_ = rLogHighThreshold_.GetData();
     return pCopy;
 }
 
@@ -949,12 +951,17 @@ ADN_Equipments_Data::CategoryInfos* ADN_Equipments_Data::CategoryInfos::CreateCo
 // Name: CategoryInfos::ReadArchive
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::CategoryInfos::ReadArchive( xml::xistream& input )
+void ADN_Equipments_Data::CategoryInfos::ReadArchive( xml::xistream& input, const std::string& parentName )
 {
     input >> xml::attribute( "name", *this )
           >> xml::attribute( "capacity", rNbr_ )
           >> xml::attribute( "low-threshold", rLogLowThreshold_ )
+          >> xml::attribute( "high-threshold", rLogHighThreshold_ )
           >> xml::optional >> xml::attribute( "normalized-consumption", rNormalizedConsumption_ );
+    if( rLogLowThreshold_.GetData() > rLogHighThreshold_.GetData() )
+        ADN_ConsistencyChecker::AddLoadingError( eRepartitionError, parentName, eEquipments, -1,
+            tools::translate( "ADN_Equipments_Data", "Invalid thresholds, high \'%1\' must be superior than low \'%2\'." )
+                .arg( rLogHighThreshold_.GetData() ).arg( rLogLowThreshold_.GetData() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -967,6 +974,7 @@ void ADN_Equipments_Data::CategoryInfos::WriteArchive( xml::xostream& output ) c
              << xml::attribute( "name", *this )
              << xml::attribute( "capacity", rNbr_ )
              << xml::attribute( "low-threshold", rLogLowThreshold_ )
+             << xml::attribute( "high-threshold", rLogHighThreshold_ )
              << xml::attribute( "normalized-consumption", rNormalizedConsumption_ )
            << xml::end;
 }
@@ -1009,7 +1017,7 @@ void ADN_Equipments_Data::ResourceInfos::ReadCategory( xml::xistream& input, con
 void ADN_Equipments_Data::ResourceInfos::ReadDotation( xml::xistream& input, ADN_Resources_Data::ResourceInfos& dotation, const std::string& parentName )
 {
     std::unique_ptr< CategoryInfos > pInfo( new CategoryInfos( dotation ) );
-    pInfo->ReadArchive( input );
+    pInfo->ReadArchive( input, parentName );
     if( pInfo->GetCrossedElement() )
         categories_.AddItem( pInfo.release() );
     else
@@ -1287,6 +1295,7 @@ void ADN_Equipments_Data::ConsumptionItem::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 ADN_Equipments_Data::ConsumptionsInfos::ConsumptionsInfos()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1977,6 +1986,11 @@ void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_Consistency
     randomBreakdowns_.CheckValidity( checker, strName_.GetData() );
     if( !logInfos_.IsRepairTypeValid() )
         checker.AddError( eMissingRepairType, strName_.GetData(), eEquipments );
+    for( auto it = resources_.categories_.begin(); it != resources_.categories_.end(); ++it )
+        if( (*it)->rLogLowThreshold_.GetData() > (*it)->rLogHighThreshold_.GetData() )
+            checker.AddError( eRepartitionError, strName_.GetData(), eEquipments, -1,
+                tools::translate( "ADN_Equipments_Data", "Invalid thresholds, high \'%1\' must be superior than low \'%2\'." )
+                    .arg( (*it)->rLogHighThreshold_.GetData() ).arg( (*it)->rLogLowThreshold_.GetData() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
