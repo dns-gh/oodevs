@@ -3,7 +3,10 @@
     <xs:element name="config">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="projection" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:choice>
+                    <xs:element name="projection" type="xs:string"/>
+                    <xs:element name="time-zone" type="xs:short"/>
+                </xs:choice>
                 <xs:element name="files" minOccurs="1" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
@@ -11,7 +14,7 @@
                                 <xs:complexType>
                                     <xs:simpleContent>
                                         <xs:extension base="xs:string">
-                                            <xs:attribute  name="time" type="xs:string" use="required"/>
+                                            <xs:attribute name="time" type="xs:string" use="required"/>
                                         </xs:extension>
                                     </xs:simpleContent>
                                 </xs:complexType>

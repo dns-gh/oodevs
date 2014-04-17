@@ -8,8 +8,11 @@
 // *****************************************************************************
 
 #include "PropagationManager.h"
+#include "ASCExtractor.h"
+#include "DATExtractor.h"
 #include "tools/FileWrapper.h"
 #include "tools/XmlStreamOperators.h"
+#include "tools/Exception.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -42,14 +45,31 @@ void PropagationManager::Initialize( const tools::Path& config, const std::strin
     boost::posix_time::time_duration delta;
     if( time != "" )
        startTime = boost::posix_time::from_iso_string( time );
-    xis >> xml::start( "config" )
-            >> xml::content( "projection", projection_ )
-                >> xml::start( "files" )
-                    >> xml::list( "file", *this, &PropagationManager::ReadFile, parent, startTime, delta )
-                >> xml::end
+    xis >> xml::start( "config" );
+    if( xis.has_child( "projection" ) )
+        xis >> xml::content( "projection", projection_ );
+    else if( xis.has_child( "time-zone" ) )
+        timeZone_ = xis.content< short >( "time-zone" );
+    if( projection_.IsEmpty() && !timeZone_ )
+        throw MASA_EXCEPTION( xis.context() + "Propagation file " + config.ToUTF8() + " not valid" );
+    xis     >> xml::start( "files" )
+                >> xml::list( "file", *this, &PropagationManager::ReadFile, parent, startTime, delta )
+            >> xml::end
         >> xml::end;
 
-    projection_ = ( parent / projection_ ).Normalize();
+    if( !projection_.IsEmpty() )
+        projection_ = ( parent / projection_ ).Normalize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropagationManager::CreateExtractor
+// Created: JSR 2014-04-14
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Extractor_ABC > PropagationManager::CreateExtractor( const tools::Path& file ) const
+{
+    if( timeZone_ )
+        return boost::shared_ptr< Extractor_ABC >( new DATExtractor( file, *timeZone_ ) );
+    return boost::shared_ptr< Extractor_ABC >( new ASCExtractor( file, projection_ ) );
 }
 
 namespace

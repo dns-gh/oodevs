@@ -178,7 +178,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     BUILDER_HELPER( Activable );
 
-    if( ADN_Workspace::GetWorkspace().IsDevMode() )
+    if( ADN_Workspace::GetWorkspace().GetDisasters().GetData().IsActivated() )
     {
         BUILDER_HELPER( Disaster );
         CONNECT_HELPER( Disaster, DisasterType, disaster_ );

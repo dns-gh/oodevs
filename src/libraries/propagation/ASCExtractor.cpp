@@ -40,8 +40,6 @@ ASCExtractor::ASCExtractor( const tools::Path& file )
     : pDataset_       ( 0 )
     , pBand_          ( 0 )
     , pTransformation_( 0 )
-    , ncols_          ( 0 )
-    , nrows_          ( 0 )
     , max_            ( 1. )
     , noValueData_    ( 0. )
 {
@@ -69,8 +67,6 @@ ASCExtractor::ASCExtractor( const tools::Path& file, const tools::Path& projecti
     : pDataset_       ( 0 )
     , pBand_          ( 0 )
     , pTransformation_( 0 )
-    , ncols_          ( 0 )
-    , nrows_          ( 0 )
     , max_            ( 1. )
     , noValueData_    ( 0. )
 {
@@ -162,33 +158,6 @@ void ASCExtractor::Project( const geometry::Point2d& point, double& rLatitudeInD
 }
 
 // -----------------------------------------------------------------------------
-// Name: ASCExtractor::GetExtent
-// Created: LGY 2012-10-08
-// -----------------------------------------------------------------------------
-const geometry::Rectangle2d& ASCExtractor::GetExtent() const
-{
-    return extent_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ASCExtractor::GetCols
-// Created: LGY 2012-10-03
-// -----------------------------------------------------------------------------
-int ASCExtractor::GetCols() const
-{
-    return ncols_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ASCExtractor::GetRows
-// Created: LGY 2012-10-03
-// -----------------------------------------------------------------------------
-int ASCExtractor::GetRows() const
-{
-    return nrows_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ASCExtractor::GetNoValueData
 // Created: LGY 2012-10-03
 // -----------------------------------------------------------------------------
@@ -207,30 +176,12 @@ const geometry::Point2d& ASCExtractor::GetOrigin() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ASCExtractor::GetPixelSize
-// Created: LGY 2012-10-03
-// -----------------------------------------------------------------------------
-const geometry::Point2d& ASCExtractor::GetPixelSize() const
-{
-    return pixelSize_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ASCExtractor::GetMaximumValue
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
 double ASCExtractor::GetMaximumValue() const
 {
     return max_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ASCExtractor::GetValues
-// Created: LGY 2012-10-24
-// -----------------------------------------------------------------------------
-const ASCExtractor::T_Values& ASCExtractor::GetValues() const
-{
-    return values_;
 }
 
 // -----------------------------------------------------------------------------
@@ -253,20 +204,4 @@ void ASCExtractor::Fill( std::vector< geometry::Point2d >& points ) const
                 points.push_back( GenerateExtent( origin_.X() + widthmin, origin_.Y() + heightbottom, origin_.X() + widthmax, origin_.Y() + heighttop ).Center() );
             }
         }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ASCExtractor::GetValue
-// Created: LGY 2012-11-12
-// -----------------------------------------------------------------------------
-float ASCExtractor::GetValue( double longitude, double latitude ) const
-{
-    const double dlng = longitude - extent_.Left();
-    const double dlat = latitude - extent_.Bottom();
-    if( dlng < 0 || dlng > extent_.Width() || dlat < 0 || dlat > extent_.Height() )
-        return 0;
-    // We want the boundary points to belong to the shape
-    const int x = std::min( static_cast< int >( ( dlng / extent_.Width() )*ncols_ ), ncols_ - 1 );
-    const int y = nrows_ - 1 - std::min( static_cast< int >( ( dlat / extent_.Height() )*nrows_ ), nrows_ - 1);
-    return values_[ y * ncols_ + x ];
 }

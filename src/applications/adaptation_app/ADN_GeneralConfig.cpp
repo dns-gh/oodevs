@@ -29,12 +29,10 @@ ADN_GeneralConfig::ADN_GeneralConfig( int argc, char** argv, const tools::Path& 
         ( "create,c", po::value( &newFile_    )->default_value( "" ), "specify root file for creating new base (physical.xml)" )
         ( "swap,s", po::value( &swapLanguage_ )->default_value( "" ), "specify the language to swap with the master (input and output must be specified)" )
         ( "debug-qt-names", po::value( &qtNamesPath_ )->default_value( "" ), "Qt hierarchy names debug path" )
-        ( "dev", "activate dev mode" )
         ( "noreadonly", "disable read-only protection" )
         ;
     AddOptions( desc );
     Parse( argc, argv );
-    devMode_ = IsSet( "dev" );
     noreadonly_ = IsSet( "noreadonly" );
 }
 
@@ -45,15 +43,6 @@ ADN_GeneralConfig::ADN_GeneralConfig( int argc, char** argv, const tools::Path& 
 ADN_GeneralConfig::~ADN_GeneralConfig()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GeneralConfig::IsDevMode
-// Created: LGY 2013-05-16
-// -----------------------------------------------------------------------------
-bool ADN_GeneralConfig::IsDevMode() const
-{
-    return devMode_;
 }
 
 // -----------------------------------------------------------------------------

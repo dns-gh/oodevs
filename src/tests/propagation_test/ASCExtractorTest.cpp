@@ -26,7 +26,7 @@ namespace
         BOOST_CHECK_EQUAL( pixelSire.X(), 50 );
         BOOST_CHECK_EQUAL( pixelSire.Y(), -50 );
 
-        const ASCExtractor::T_Values& values = extractor.GetValues();
+        auto values = extractor.GetValues();
         BOOST_CHECK_EQUAL( values.size(), 24u );
     }
 }

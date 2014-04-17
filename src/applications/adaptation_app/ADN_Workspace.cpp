@@ -309,15 +309,6 @@ bool ADN_Workspace::IsNewBaseReadOnly( const tools::Path& filename ) const
     return readOnly;
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::IsDevMode
-// Created: LGY 2013-05-16
-// -----------------------------------------------------------------------------
-bool ADN_Workspace::IsDevMode() const
-{
-    return config_.IsDevMode();
-}
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::BuildGUI
 // Created: JDY 03-07-04

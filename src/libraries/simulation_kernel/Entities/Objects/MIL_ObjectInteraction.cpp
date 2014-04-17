@@ -156,8 +156,8 @@ void MIL_ObjectInteraction::UpdateAgents( MIL_Object_ABC& object, const TER_Loca
 {
     const T_SortedAgents agents( agentsInside_.begin(), agentsInside_.end() );
     const T_SortedAgents inside = GetAgentsInside( location, precision );
-    boost::set_difference( agents, inside, boost::make_function_output_iterator( boost::bind( &NotifyTerrainPutOutsideObject, _1, boost::ref( object ) ) ) );
-    boost::set_difference( inside, agents, boost::make_function_output_iterator( boost::bind( &NotifyTerrainPutInsideObject, _1, boost::ref( object ) ) ) );
+    boost::set_difference( agents, inside, boost::make_function_output_iterator( boost::bind( &NotifyTerrainPutOutsideObject, _1, boost::ref( object ) ) ), Comparator() );
+    boost::set_difference( inside, agents, boost::make_function_output_iterator( boost::bind( &NotifyTerrainPutInsideObject, _1, boost::ref( object ) ) ), Comparator() );
 }
 
 namespace

@@ -49,6 +49,11 @@ namespace kernel
     class RoofShapeType;
 }
 
+namespace tools
+{
+    class Path;
+}
+
 namespace gui
 {
 // =============================================================================
@@ -92,6 +97,7 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public tools::Caller< kernel::Ghost_ABC >
                     , public tools::Caller< kernel::MaterialCompositionType >
                     , public tools::Caller< kernel::RoofShapeType >
+                    , public tools::Caller< tools::Path >
 {
 public:
     //! @name Constructors/Destructor
@@ -142,6 +148,7 @@ private:
     virtual void Call( const kernel::Ghost_ABC& value );
     virtual void Call( const kernel::MaterialCompositionType& value );
     virtual void Call( const kernel::RoofShapeType& value );
+    virtual void Call( const tools::Path& value );
     //@}
 };
 

@@ -272,6 +272,7 @@ add_target( propagation_test tests "tests/propagation_test" OPTIONS test protoco
 target_link_libraries( propagation_test
     propagation
     sword_tools
+    ${GEOCOORD_LIBRARIES}
 )
 
 # protocol_test
