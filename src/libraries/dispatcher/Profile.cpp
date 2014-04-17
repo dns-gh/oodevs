@@ -256,6 +256,8 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
         return true;
     if( message.has_pathfind_request() )
         return true;
+    if( message.has_segment_request() )
+        return true;
     if( message.has_logistic_history_request() ||
         message.has_list_logistic_requests() )
         // This message is handled by the logistic plugin, we allow it here only

@@ -17,24 +17,27 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Network/NET_ASN_Tools.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/DispatcherSenders.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_MessageParameters.h"
+#include "simulation_terrain/TER_Analyzer.h"
+#include <spatialcontainer/TerrainData.h>
 
 //-----------------------------------------------------------------------------
 // Name: NET_SimMsgHandler constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 NET_SimMsgHandler::NET_SimMsgHandler( NET_AgentServer& agentServer,
-        NET_Simulation_ABC& simulation, bool enableTestCommands)
+        NET_Simulation_ABC& simulation, bool enableTestCommands )
     : agentServer_( agentServer )
-    , simulation_ ( simulation )
+    , simulation_( simulation )
     , enableTestCommands_( enableTestCommands )
 {
-    agentServer.RegisterMessage( *this, & NET_SimMsgHandler::OnReceiveClient );
-    agentServer.RegisterMessage( *this, & NET_SimMsgHandler::OnReceiveMiddle );
+    agentServer.RegisterMessage( *this, &NET_SimMsgHandler::OnReceiveClient );
+    agentServer.RegisterMessage( *this, &NET_SimMsgHandler::OnReceiveMiddle );
 }
 
 //-----------------------------------------------------------------------------
@@ -76,7 +79,6 @@ void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const swor
     const auto& msg = wrapper.message();
     const unsigned int nCtx = wrapper.context();
     const unsigned int clientId = wrapper.has_client_id() ? wrapper.client_id() : 0u;
-
     if( msg.has_control_stop() )
         simulation_.Stop( nCtx, clientId );
     else if( msg.has_control_pause() )
@@ -90,10 +92,10 @@ void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const swor
         simulation_.SetRealTime( msg.control_date_time_change().date_time().data() );
     else if( msg.has_control_checkpoint_save_now() )
         server.GetCheckPointManager().OnReceiveMsgCheckPointSaveNow(
-                msg.control_checkpoint_save_now(), clientId, nCtx );
+            msg.control_checkpoint_save_now(), clientId, nCtx );
     else if( msg.has_control_checkpoint_set_frequency() )
         server.GetCheckPointManager().OnReceiveMsgCheckPointSetFrequency(
-                msg.control_checkpoint_set_frequency() );
+            msg.control_checkpoint_set_frequency() );
     else if( msg.has_control_toggle_vision_cones() )
         manager.OnReceiveControlToggleVisionCones( msg.control_toggle_vision_cones() );
     else if( msg.has_unit_order() )
@@ -120,6 +122,8 @@ void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const swor
         OnReceiveMagicAction( msg.magic_action(), nCtx, clientId );
     else if( msg.has_pathfind_request() )
         manager.OnPathfindRequest( msg.pathfind_request(), nCtx, clientId );
+    else if( msg.has_segment_request() )
+        OnReceiveSegmentRequest( msg.segment_request(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +163,6 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
     MIL_EntityManager& manager = server.GetEntityManager();
     auto& magics = server.GetMagicOrderManager();
     const auto type = msg.type();
-
     client::MagicActionAck ack;
     ack().set_error_code( sword::MagicActionAck::no_error );
     const auto magicId = magics.Register( msg );
@@ -243,4 +246,65 @@ void NET_SimMsgHandler::OnReceiveDebugError( const sword::MissionParameters& par
     }
     else
         throw MASA_BADPARAM_MAGICACTION( "unknown command: " << command );
+}
+
+namespace
+{
+    TerrainData Convert( sword::SegmentRequest::Terrain type )
+    {
+        switch( type )
+        {
+        case sword::SegmentRequest::forest: return TerrainData::Forest();
+        case sword::SegmentRequest::orchard: return TerrainData::Plantation();
+        case sword::SegmentRequest::swamp: return TerrainData::Swamp();
+        case sword::SegmentRequest::urban_area: return TerrainData::Urban();
+        case sword::SegmentRequest::lake: return TerrainData::Water();
+        case sword::SegmentRequest::dune: return TerrainData::Dune();
+        case sword::SegmentRequest::glacier: return TerrainData::Ice();
+        case sword::SegmentRequest::mountain: return TerrainData::Mountain();
+        case sword::SegmentRequest::forest_edge: return TerrainData::ForestBorder();
+        case sword::SegmentRequest::orchard_edge: return TerrainData::PlantationBorder();
+        case sword::SegmentRequest::swamp_edge: return TerrainData::SwampBorder();
+        case sword::SegmentRequest::suburb: return TerrainData::UrbanBorder();
+        case sword::SegmentRequest::dune_edge: return TerrainData::DuneBorder();
+        case sword::SegmentRequest::glacier_edge: return TerrainData::IceBorder();
+        case sword::SegmentRequest::mountain_edge: return TerrainData::MountainBorder();
+        case sword::SegmentRequest::cliff: return TerrainData::Cliff();
+        case sword::SegmentRequest::highway: return TerrainData::Motorway();
+        case sword::SegmentRequest::main_road: return TerrainData::LargeRoad();
+        case sword::SegmentRequest::secondary_road: return TerrainData::MediumRoad();
+        case sword::SegmentRequest::country_road: return TerrainData::SmallRoad();
+        case sword::SegmentRequest::bridge: return TerrainData::Bridge();
+        case sword::SegmentRequest::railroad: return TerrainData::Railroad();
+        case sword::SegmentRequest::main_river: return TerrainData::LargeRiver();
+        case sword::SegmentRequest::river: return TerrainData::MediumRiver();
+        case sword::SegmentRequest::stream: return TerrainData::SmallRiver();
+        case sword::SegmentRequest::crossroad: return TerrainData::Crossroad();
+        default: return TerrainData();
+        }
+    }
+}
+
+void NET_SimMsgHandler::OnReceiveSegmentRequest( const sword::SegmentRequest& msg, uint32_t ctx, uint32_t clientId )
+{
+    MT_Vector2D position;
+    NET_ASN_Tools::ReadPoint( msg.position(), position );
+    TerrainData terrain;
+    if( msg.terrains().size() == 0 )
+        terrain = TerrainData( 0xff, 0xff, 0xff, 0xff );
+    else
+        for( int i = 0; i < msg.terrains().size(); ++i )
+            terrain.Merge( Convert( msg.terrains( i ) ) );
+    client::SegmentRequestAck ack;
+    ack().set_error_code( sword::SegmentRequestAck::no_error );
+    const float radius = msg.has_radius() ? msg.radius() : 10000;
+    TER_Analyzer::GetAnalyzer().FindSegments(
+        position, radius, msg.has_count() ? msg.count() : 1, terrain,
+        [&]( const MT_Vector2D& from, const MT_Vector2D& to )
+        {
+            auto segments = ack().add_segments();
+            NET_ASN_Tools::WritePoint( from, *segments->mutable_from() );
+            NET_ASN_Tools::WritePoint( to, *segments->mutable_to() );
+        } );
+    ack.Send( NET_Publisher_ABC::Publisher(), ctx, clientId );
 }

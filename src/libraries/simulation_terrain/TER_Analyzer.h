@@ -47,6 +47,8 @@ public:
     void FindRoadsOnBorderOfPolygon( const TER_Polygon& polygon, std::vector< boost::shared_ptr< MT_Vector2D > >& positions );
     void FindSegmentIntersections( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& terrainSought, std::vector< boost::shared_ptr< MT_Vector2D > >& positions );
     std::vector< boost::shared_ptr< MT_Vector2D > > FindAllPositions( const MT_Vector2D& center, float radius );
+    void FindSegments( const MT_Vector2D& origin, float radius, uint32_t count, const TerrainData& terrain,
+        const std::function< void( const MT_Vector2D&, const MT_Vector2D& ) >& f ) const;
 
     TerrainData FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius );
     TerrainData FindTerrainDataWithinPolygon( const TER_Polygon& polygon );

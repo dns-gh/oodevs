@@ -54,7 +54,9 @@ namespace
 {
     bool ShouldUnicast( const sword::SimToClient& message )
     {
-        return message.has_client_id() && message.message().has_pathfind_request_ack();
+        return message.has_client_id() &&
+            ( message.message().has_pathfind_request_ack() ||
+              message.message().has_segment_request_ack() );
     }
 }
 
@@ -70,7 +72,6 @@ void ClientsNetworker::Receive( const sword::SimToClient& message )
         AllowConnections();
     else if( message.message().has_control_begin_tick() )
         OnNewTick();
-
     if( ShouldUnicast( message ) )
         Unicast( message );
     else
@@ -86,7 +87,6 @@ void ClientsNetworker::Broadcast( const sword::SimToClient& message )
     for( auto it = internals_.begin(); it != internals_.end(); ++it )
         it->second->Send( message );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::Unicast

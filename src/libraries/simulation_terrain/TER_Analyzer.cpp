@@ -246,3 +246,22 @@ TerrainData TER_Analyzer::GetTerrainData( const TER_Localisation& localisation )
     }
     return data;
 }
+
+namespace
+{
+    MT_Vector2D MakePoint( const geometry::Point2f& p )
+    {
+        return MT_Vector2D( p.X(), p.Y() );
+    }
+}
+
+void TER_Analyzer::FindSegments(
+    const MT_Vector2D& origin, float radius, uint32_t count, const TerrainData& terrain,
+    const std::function< void( const MT_Vector2D&, const MT_Vector2D& ) >& f ) const
+{
+    pAnalyzer_->FindSegments( MakePoint( origin ), radius, count, terrain,
+        [&]( const geometry::Segment2f& s )
+        {
+            f( MakePoint( s.Start() ), MakePoint( s.End() ) );
+        } );
+}
