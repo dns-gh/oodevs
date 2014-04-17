@@ -173,7 +173,7 @@ void ADN_Sensors_Modificators::PostureInfos::WriteArchive( xml::xostream& output
 //-----------------------------------------------------------------------------
 ADN_Sensors_Modificators::EnvironmentInfos::EnvironmentInfos( const E_VisionObject& e )
     : eType_( e )
-    , rCoeff_( e == eVisionEmpty ? 1 : 0 )
+    , rCoeff_( 1 )
 {
     // NOTHING
 }
@@ -205,7 +205,7 @@ void ADN_Sensors_Modificators::EnvironmentInfos::WriteArchive( xml::xostream& ou
 // -----------------------------------------------------------------------------
 bool ADN_Sensors_Modificators::EnvironmentInfos::NeedsSaving() const
 {
-    return rCoeff_ != ( eType_ == eVisionEmpty ? 1 : 0 );
+    return rCoeff_ != 1;
 }
 
 //-----------------------------------------------------------------------------
