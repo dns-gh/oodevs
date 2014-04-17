@@ -70,6 +70,7 @@ public slots:
     void OnTabContextMenu();
     void OnRenameTab();
     void OnLoadRequested();
+    void OnShowOnlyFilterChanged( const std::string& uuid );
     //@}
 
 private:

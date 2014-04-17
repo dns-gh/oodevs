@@ -3547,6 +3547,18 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Display orders given to engaged units</source>
         <translation>Afficher les ordres donnés aux unités embrayées</translation>
     </message>
+    <message>
+        <source>Add events to this task</source>
+        <translation>Ajouter des évenements à cette tâche</translation>
+    </message>
+    <message>
+        <source>Hide children events of this task</source>
+        <translation>Masquer les évenements de cette tâche</translation>
+    </message>
+    <message>
+        <source>Show children events of this task</source>
+        <translation>Afficher les évenements de cette tâche</translation>
+    </message>
 </context>
 <context>
     <name>TimelineView</name>
