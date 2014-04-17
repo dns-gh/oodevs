@@ -49,6 +49,18 @@ func NewPathPoint(point Point) PathPoint {
 	}
 }
 
+type Segment struct {
+	From Point
+	To   Point
+}
+
+func NewSegment(from, to Point) Segment {
+	return Segment{
+		From: from,
+		To:   to,
+	}
+}
+
 type Profile struct {
 	Login               string
 	Password            string
