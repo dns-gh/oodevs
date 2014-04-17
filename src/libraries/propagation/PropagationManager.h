@@ -13,8 +13,11 @@
 #include <tools/Path.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
 #include <string>
 #include <map>
+
+class Extractor_ABC;
 
 namespace xml
 {
@@ -44,6 +47,7 @@ public:
     //! @name Operations
     //@{
     void Initialize( const tools::Path& config, const std::string& time );
+    boost::shared_ptr< Extractor_ABC > CreateExtractor( const tools::Path& file ) const;
     tools::Path::T_Paths GetFiles( const std::string& time );
     const tools::Path& GetProjectionFile() const;
     //@}
@@ -59,6 +63,7 @@ private:
     //! @name Member data
     //@{
     tools::Path projection_;
+    boost::optional< short > timeZone_;
     T_Schedule schedule_;
     //@}
 };

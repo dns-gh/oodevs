@@ -27,7 +27,7 @@ namespace xml
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 class PropagationManager;
-class ASCExtractor;
+class Extractor_ABC;
 
 // =============================================================================
 /** @class  DisasterAttribute
@@ -77,7 +77,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef boost::shared_ptr< ASCExtractor > T_Extractor;
+    typedef boost::shared_ptr< Extractor_ABC > T_Extractor;
     //@}
 
 private:

@@ -11,11 +11,10 @@
 #include "Propagation.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DisasterType.h"
-#include "propagation/ASCExtractor.h"
+#include "propagation/Extractor_ABC.h"
 #include "propagation/PropagationManager.h"
 #include <graphics/Visitor2d.h>
 #include <graphics/TextureVisitor_ABC.h>
-
 
 // -----------------------------------------------------------------------------
 // Name: Propagation constructor
@@ -24,11 +23,12 @@
 Propagation::Propagation( const tools::Path& file, const PropagationManager& manager,
                           const kernel::CoordinateConverter_ABC& converter, const kernel::DisasterType& disasterType )
 {
-    ASCExtractor extractor( file, manager.GetProjectionFile() );
-    const ASCExtractor::T_Values& values = extractor.GetValues();
+    boost::shared_ptr< Extractor_ABC > extractor = manager.CreateExtractor( file );
+    const Extractor_ABC::T_Values& values = extractor->GetValues();
+
     std::vector< unsigned char > rgba( values.size() * 4 );
-    const int rowsCount = extractor.GetRows();
-    const int colsCount = extractor.GetCols();
+    const int rowsCount = extractor->GetRows();
+    const int colsCount = extractor->GetCols();
 
     for( int i = 0; i < rowsCount; i++ )
     {
@@ -45,10 +45,10 @@ Propagation::Propagation( const tools::Path& file, const PropagationManager& man
         }
     }
 
-    const geometry::Rectangle2d& extent = extractor.GetExtent();
+    const geometry::Rectangle2d& extent = extractor->GetExtent();
     globalExtent_= geometry::Rectangle2f( converter.ConvertFromGeo( extent.BottomLeft() ),
                                           converter.ConvertFromGeo( extent.TopRight() ) );
-    const double pixelSize = ( globalExtent_.Right() - globalExtent_.Left() ) / rowsCount;
+    const double pixelSize = extractor->GetPixelSize().X();
     pFactory_.reset( new RGBATextureFactory( &rgba[ 0 ], colsCount, pixelSize ) );
     pTree_.reset( new TextureTree( *pFactory_, colsCount, rowsCount ) );
 }

@@ -16,7 +16,7 @@
 #include "simulation_terrain/TER_Polygon.h"
 #include "simulation_terrain/TER_World.h"
 #include "propagation/PropagationManager.h"
-#include "propagation/ASCExtractor.h"
+#include "propagation/Extractor_ABC.h"
 #include "tools/XmlStreamOperators.h"
 #include <tools/PathSerialization.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -158,7 +158,7 @@ void DisasterAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int
         std::vector< geometry::Point2d > points;
         for( std::size_t i = 0; i < files.size(); ++i )
         {
-            boost::shared_ptr< ASCExtractor > extractor( new ASCExtractor( files[ i ], pManager_->GetProjectionFile() ) );
+            T_Extractor extractor = pManager_->CreateExtractor( files[ i ] );
             extractor->Fill( points );
             values_.push_back( extractor );
         }
@@ -180,7 +180,7 @@ float DisasterAttribute::GetDose( const MT_Vector2D& position ) const
     double latitude, longitude;
     TER_World::GetWorld().SimToMosMgrsCoord( position, latitude, longitude );
 
-    BOOST_FOREACH( boost::shared_ptr< ASCExtractor > value, values_ )
+    BOOST_FOREACH( T_Extractor value, values_ )
     {
         float dose = value->GetValue( longitude, latitude );
         if( dose > 0.f )
