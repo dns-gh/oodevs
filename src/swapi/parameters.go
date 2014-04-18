@@ -108,6 +108,13 @@ func MakeIdentifier(value uint32) *sword.MissionParameter {
 		})
 }
 
+func MakePathfind(value uint32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Pathfind: MakeId(value),
+		})
+}
+
 func MakeAgent(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
@@ -351,6 +358,20 @@ func MakePlannedWork(objectType string, point Point) *sword.MissionParameter {
 			PlannedWork: &sword.PlannedWork{
 				Type:     proto.String(objectType),
 				Position: MakePointLocation(point),
+			},
+		})
+}
+
+func MakePathfindRequest(unitId uint32, points ...Point) *sword.MissionParameter {
+	positions := make([]*sword.CoordLatLong, len(points))
+	for i, p := range points {
+		positions[i] = MakeCoordLatLong(p)
+	}
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			PathfindRequest: &sword.PathfindRequest{
+				Unit:      MakeId(unitId),
+				Positions: positions,
 			},
 		})
 }

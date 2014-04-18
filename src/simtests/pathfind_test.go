@@ -61,7 +61,9 @@ func (s *TestSuite) TestPathfindRequest(c *C) {
 		if msg.SimulationToClient == nil || msg.SimulationToClient.GetMessage() == nil {
 			return false
 		}
-		seen = msg.SimulationToClient.GetMessage().GetComputePathfindAck() != nil
+		if mm := msg.SimulationToClient.GetMessage().GetComputePathfindAck(); mm != nil {
+			seen = mm.Id == nil
+		}
 		return seen
 	})
 
@@ -136,4 +138,40 @@ func (s *TestSuite) TestPointOrder(c *C) {
 	points, err = client.PathfindRequest(unit.Id, positions...)
 	c.Assert(err, IsNil)
 	CheckWaypoints(c, positions, points, []bool{true, true, false, true, false})
+}
+
+func (s *TestSuite) TestCreateDestroyPathfind(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+
+	automat := createAutomat(c, client)
+	positions := []swapi.Point{swapi.Point{X: -15.9248, Y: 28.2645},
+		swapi.Point{X: -15.8429, Y: 28.3308},
+		swapi.Point{X: -15.8640, Y: 28.2507},
+		swapi.Point{X: -15.8946, Y: 28.3189}}
+
+	unit, err := client.CreateUnit(automat.Id, UnitType, positions[0])
+	c.Assert(err, IsNil)
+
+	// Invalid unit id
+	_, err = client.CreatePathfind(12345, positions...)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Invalid position count
+	_, err = client.CreatePathfind(unit.Id, positions[0])
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Create pathfind
+	pathfind, err := client.CreatePathfind(unit.Id, positions...)
+	c.Assert(err, IsNil)
+	CheckWaypoints(c, positions, pathfind.Points, []bool{true, true, true, true})
+
+	// Invalid pathfind id
+	err = client.DestroyPathfind(12345)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Destroy pathfind
+	err = client.DestroyPathfind(pathfind.Id)
+	c.Assert(err, IsNil)
+	c.Assert(len(client.Model.GetData().Pathfinds), Equals, 0)
 }
