@@ -116,6 +116,7 @@
 #include "clients_gui/TooltipsLayer_ABC.h"
 #include "clients_gui/UrbanLayer.h"
 #include "clients_gui/WatershedLayer.h"
+#include "clients_kernel/Workers.h"
 #include "geodata/ProjectionException.h"
 #include "protocol/Dispatcher.h"
 #include "protocol/ReplaySenders.h"
@@ -138,7 +139,7 @@ namespace
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, SimulationController& simulationController,
-                        Network& network, ProfileFilter& filter, Config& config, LoggerProxy& logger, const QString& license )
+                        Network& network, ProfileFilter& filter, Config& config, LoggerProxy& logger, kernel::Workers& workers, const QString& license )
     : QMainWindow()
     , controllers_       ( controllers )
     , staticModel_       ( staticModel )
@@ -146,6 +147,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , network_           ( network )
     , config_            ( config )
     , profile_           ( filter )
+    , workers_           ( workers )
     , graphicPreferences_( new gui::GraphicPreferences( controllers ) )
     , pPainter_          ( new gui::ElevationPainter( staticModel_.detection_ ) )
     , pColorController_  ( new ColorController( controllers_ ) )
@@ -421,9 +423,11 @@ void MainWindow::Load()
         dockContainer_->Purge();
         if( lockMapViewController_.get() )
             lockMapViewController_->Clear();
+        workers_.Terminate();
         model_.Purge();
         selector_->Close();
         selector_->Load();
+        workers_.Initialize();
         staticModel_.Load( config_ );
         controllers_.LoadOptions( eModes_Gaming );
     }
@@ -447,6 +451,7 @@ void MainWindow::Close()
     dockContainer_->Purge();
     if( lockMapViewController_.get() )
         lockMapViewController_->Clear();
+    workers_.Terminate();
     model_.Purge();
     staticModel_.Purge();
 }

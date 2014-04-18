@@ -30,7 +30,7 @@ namespace sword
 
 class MeteoModel;
 class Surface;
-class SurfaceFactory;
+class SurfaceFactory_ABC;
 class VisionMap;
 
 // =============================================================================
@@ -49,7 +49,8 @@ class VisionCones : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionCones( const kernel::Agent_ABC& agent, SurfaceFactory& factory, kernel::Workers& workers, kernel::Controller& controller );
+             VisionCones( const kernel::Agent_ABC& agent, SurfaceFactory_ABC& factory,
+                          kernel::Workers& workers, kernel::Controller& controller );
     virtual ~VisionCones();
     //@}
 
@@ -87,7 +88,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Agent_ABC& agent_;
-    SurfaceFactory& factory_;
+    SurfaceFactory_ABC& factory_;
     kernel::Workers& workers_;
     kernel::Controller& controller_;
     bool needUpdating_;

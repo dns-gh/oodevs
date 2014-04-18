@@ -151,6 +151,24 @@ Meteo::Meteo( unsigned int id, const PHY_Lighting& light, const PHY_Precipitatio
 }
 
 // -----------------------------------------------------------------------------
+// Name: Meteo constructor
+// Created: LGY 2014-04-16
+// -----------------------------------------------------------------------------
+Meteo::Meteo( const Meteo& meteo )
+    : pLighting_       ( meteo.pLighting_ )
+    , pPrecipitation_  ( meteo.pPrecipitation_ )
+    , id_              ( meteo.id_ )
+    , wind_            ( meteo.wind_ )
+    , cloud_           ( meteo.cloud_ )
+    , name_            ( meteo.name_ )
+    , conversionFactor_( meteo.conversionFactor_ )
+    , modified_        ( meteo.modified_ )
+    , temperature_     ( meteo.temperature_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Meteo destructor
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------

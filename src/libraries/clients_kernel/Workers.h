@@ -52,6 +52,8 @@ public:
     void Enqueue( std::auto_ptr< WorkerTask_ABC > task );
 
     void CommitTasks();
+    void Terminate();
+    void Initialize();
     //@}
 
 private:

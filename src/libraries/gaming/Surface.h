@@ -33,7 +33,7 @@ namespace gui
     class Viewport_ABC;
 }
 
-class MeteoModel;
+class VisionMeteoModel;
 class UrbanBlockDetectionMap;
 class VisionMap;
 
@@ -46,7 +46,9 @@ class Surface
 public:
     //! @name Constructor/Destructor
     //@{
-             Surface( const kernel::Agent_ABC& agent, const sword::VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver, const UrbanBlockDetectionMap& urbanModelMap, const MeteoModel& meteoModel );
+             Surface( const kernel::Agent_ABC& agent, const sword::VisionCone& message, const kernel::CoordinateConverter_ABC& converter,
+                 const kernel::DetectionMap& map, const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver,
+                 const UrbanBlockDetectionMap& urbanModelMap, const boost::shared_ptr< VisionMeteoModel >& meteoModel);
     virtual ~Surface();
     //@}
 
@@ -91,7 +93,7 @@ private:
     mutable float maxRadius_;
     mutable float distanceModificator_;
     const UrbanBlockDetectionMap& urbanModelMap_;
-    const MeteoModel& meteoModel_;
+    const boost::shared_ptr< VisionMeteoModel > meteoModel_;
     //@}
 };
 

@@ -20,6 +20,7 @@ namespace kernel
 {
     class Controllers;
     class Profile_ABC;
+    class Workers;
 }
 
 namespace gui
@@ -92,7 +93,7 @@ public:
     //@{
              MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation,
                          SimulationController& simulationController, Network& network, ProfileFilter& profile,
-                         Config& config, LoggerProxy& logger, const QString& license );
+                         Config& config, LoggerProxy& logger, kernel::Workers& workers, const QString& license );
     virtual ~MainWindow();
     //@}
 
@@ -148,6 +149,7 @@ private:
     QString login_;
     Config& config_;
     const kernel::Profile_ABC& profile_;
+    kernel::Workers& workers_;
     std::auto_ptr< gui::GraphicPreferences > graphicPreferences_;
     std::auto_ptr< gui::CircularEventStrategy > forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;

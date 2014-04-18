@@ -33,11 +33,8 @@ namespace
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 Workers::Workers()
-    : pool_( new tools::thread::ThreadPool() )
 {
-    const unsigned threads = pool_->GetCpuNumber();
-    for( unsigned i = 0; i < threads; ++i )
-        pool_->Enqueue( PrioritySetter() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +72,8 @@ namespace
 // -----------------------------------------------------------------------------
 void Workers::Enqueue( std::auto_ptr< WorkerTask_ABC > task )
 {
-    pool_->Enqueue( Adaptor( *task.release(), mutex_, finished_ ) );
+    if( pool_.get() )
+        pool_->Enqueue( Adaptor( *task.release(), mutex_, finished_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,4 +93,26 @@ void Workers::CommitTasks()
         (*it)->Commit();
         delete *it;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Workers::Terminate
+// Created: LGY 2014-04-09
+// -----------------------------------------------------------------------------
+void Workers::Terminate()
+{
+    pool_.reset();
+    finished_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Workers::Initialize
+// Created: LGY 2014-04-09
+// -----------------------------------------------------------------------------
+void Workers::Initialize()
+{
+    pool_.reset( new tools::thread::ThreadPool() );
+    const auto threads = pool_->GetCpuNumber();
+    for( auto i = 0u; i < threads; ++i )
+        pool_->Enqueue( PrioritySetter() );
 }
