@@ -452,7 +452,7 @@ integration.updateMoveToIt = function( objective, pathType, waypoints )
     if etat == eEtatActionDeplacement_Termine then -- obective is reached or sub-objective if unit needs to dismount
         -- Specific case if agent is blocked by an obstacle
         if myself.canBeBlocked then
-            meKnowledge:RC( eRC_DestinationNonReachable )
+            reportFunction( eRC_DestinationNonReachable )
             myself.blocked = true
             myself.canBeBlocked = nil
             return false
