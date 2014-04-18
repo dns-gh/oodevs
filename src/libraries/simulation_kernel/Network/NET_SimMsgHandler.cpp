@@ -193,6 +193,10 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
             server.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ack(), ctx );
         else if( enableTestCommands_ && type == sword::MagicAction::debug_internal )
             OnReceiveDebugError( msg.parameters(), ack() );
+        else if( type == sword::MagicAction::pathfind_creation )
+            manager.OnReceivePathfindCreation( msg, ack(), ctx, clientId );
+        else if( type == sword::MagicAction::pathfind_destruction )
+            manager.OnReceivePathfindDestruction( msg, ack() );
     }
     catch( const std::exception& e )
     {

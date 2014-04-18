@@ -55,7 +55,7 @@ namespace
     bool ShouldUnicast( const sword::SimToClient& message )
     {
         return message.has_client_id() &&
-            ( message.message().has_pathfind_request_ack() ||
+            ( message.message().has_pathfind_request_ack() && !message.message().compute_pathfind_ack().has_id() ) ||
               message.message().has_segment_request_ack() );
     }
 }

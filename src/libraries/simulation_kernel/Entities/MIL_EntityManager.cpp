@@ -296,7 +296,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() )
     , world_                        ( world )
-    , pathfindComputer_             ( new PathfindComputer( pathfindManager ) )
+    , pathfindComputer_             ( new PathfindComputer( pathfindManager, *world_ ) )
 {
     // NOTHING
 }
@@ -326,7 +326,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , idManager_                    ( new MIL_IDManager() )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() ) // todo : delete if saved in checkpoint
     , world_                        ( world )
-    , pathfindComputer_             ( new PathfindComputer( pathfindManager ) )
+    , pathfindComputer_             ( new PathfindComputer( pathfindManager, *world_ ) )
 {
     // NOTHING
 }
@@ -2034,22 +2034,13 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId )
 {
+    const unsigned int id = message.unit().id();
     const auto& positions = message.positions();
     protocol::Check( positions.size() > 1, "must have at least two points" );
-    std::vector< boost::shared_ptr< MT_Vector2D > > points;
-    for( auto i = 0; i < positions.size(); ++i )
-    {
-        auto point = boost::make_shared< MT_Vector2D >();
-        const auto& position= positions.Get( i );
-        world_->MosToSimMgrsCoord( position.latitude(), position.longitude(), *point );
-        points.push_back( point );
-    }
-
-    const unsigned int id = message.unit().id();
     if( MIL_AgentPion* pPion = FindAgentPion( id ) )
-        pathfindComputer_->Compute( *pPion, points, nCtx, clientId );
+        pathfindComputer_->Compute( *pPion, message, nCtx, clientId, false );
     else if( MIL_Population* pPopulation = FindPopulation( id ) )
-        pathfindComputer_->Compute( *pPopulation, points, nCtx, clientId );
+        pathfindComputer_->Compute( *pPopulation, message, nCtx, clientId, false );
     else
     {
         client::ComputePathfindAck ack;
@@ -2057,6 +2048,54 @@ void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message
         ack().set_error_msg( "invalid crowd or unit identifier" );
         ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceivePathfindCreation
+// Created: LGY 2014-04-15
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceivePathfindCreation( const sword::MagicAction& message, sword::MagicActionAck& ack,
+                                                   unsigned int nCtx, unsigned int clientId )
+{
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 1 );
+    const auto& value = message.parameters().elem( 0 ).value( 0 );
+    protocol::Check( value.has_pathfind_request(), "invalid parameters" );
+    const auto& request = value.pathfind_request();
+    const auto& positions = request.positions();
+    protocol::Check( positions.size() > 1, "must have at least two points" );
+    const unsigned int id = request.unit().id();
+    unsigned long result = 0;
+    if( MIL_AgentPion* pPion = FindAgentPion( id ) )
+        result = pathfindComputer_->Compute( *pPion, request, nCtx, clientId, true );
+    else if( MIL_Population* pPopulation = FindPopulation( id ) )
+        result = pathfindComputer_->Compute( *pPopulation, request, nCtx, clientId, true );
+    else
+    {
+        ack.set_error_code( MagicActionAck::error_invalid_parameter );
+        ack.set_error_msg( "invalid crowd or unit identifier" );
+    }
+    if( ack.error_code() == sword::ControlAck::no_error )
+        ack.mutable_result()->add_elem()->add_value()->mutable_pathfind()->set_id( result );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceivePathfindDestruction
+// Created: LGY 2014-04-15
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceivePathfindDestruction( const sword::MagicAction& message, sword::MagicActionAck& ack )
+{
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 1 );
+    const auto& value = message.parameters().elem( 0 ).value( 0 );
+    protocol::Check( value.has_pathfind(), "invalid parameter" );
+    const auto id = value.pathfind().id();
+    if( !pathfindComputer_->Destroy( id ) )
+    {
+        ack.set_error_code( MagicActionAck::error_invalid_parameter );
+        ack.set_error_msg( "invalid pathfind identifier");
+    }
+    ack.mutable_result()->add_elem()->add_value()->mutable_pathfind()->set_id( id );
 }
 
 // -----------------------------------------------------------------------------

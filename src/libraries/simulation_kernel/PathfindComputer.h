@@ -17,6 +17,8 @@ class DEC_PathFind_Manager;
 class DEC_PathResult;
 class MIL_Population;
 class MT_Vector2D;
+class MIL_IDManager;
+class PathRequest;
 
 // =============================================================================
 /** @class  PathfindComputer
@@ -29,36 +31,38 @@ class PathfindComputer : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PathfindComputer( DEC_PathFind_Manager& pathfindManager );
+             PathfindComputer( DEC_PathFind_Manager& pathfindManager, const TER_World& world );
     virtual ~PathfindComputer();
     //@}
 
     //! @name Operations
     //@{
-    void Compute( MIL_AgentPion& pion, const std::vector< boost::shared_ptr< MT_Vector2D > >& positions,
-                  unsigned int nCtx, unsigned int clientId );
-    void Compute( const MIL_Population& population, const std::vector< boost::shared_ptr< MT_Vector2D > >& positions,
-                  unsigned int nCtx, unsigned int clientId );
+    unsigned long Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
+                           unsigned int nCtx, unsigned int clientId, bool stored );
+    unsigned long Compute( const MIL_Population& population, const sword::PathfindRequest& message,
+                           unsigned int nCtx, unsigned int clientId, bool stored );
+    bool Destroy( unsigned int pathfind );
     void Update();
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::pair< unsigned int, boost::shared_ptr< DEC_PathResult > > T_Result;
-    typedef std::map< unsigned int, T_Result >                             T_Results;
+    typedef std::map< unsigned long, boost::shared_ptr< PathRequest > > T_Results;
     //@}
 
     //! @name Helpers
     //@{
-    void Compute( const boost::shared_ptr< DEC_PathResult >& path, unsigned int nCtx, unsigned int clientId );
-    bool PathComputed( unsigned int clientId, const T_Result& content );
+    unsigned long Compute( boost::shared_ptr< DEC_PathResult > path, const sword::PathfindRequest& request,
+                           unsigned int unitId, unsigned int nCtx, unsigned int clientId, bool stored );
     //@}
 
 private:
     //! @name Member data
     //@{
     DEC_PathFind_Manager& pathfindManager_;
+    const TER_World& world_;
+    std::unique_ptr< MIL_IDManager > idPathManager_;
     T_Results results_;
     //@}
 };

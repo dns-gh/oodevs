@@ -65,6 +65,7 @@ namespace
     MAKE_DESCRIPTOR2( AutomatId, uint32_t, automat, id, "automat id" );
     MAKE_DESCRIPTOR2( DateTime, const std::string&, datetime, data, "datetime" );
     MAKE_DESCRIPTOR2( FormationId, uint32_t, formation, id, "formation id" );
+    MAKE_DESCRIPTOR2( PathfindId, uint32_t, pathfind, id, "pathfind id" );
     MAKE_DESCRIPTOR2( Heading, int, heading, heading, "heading" );
     MAKE_DESCRIPTOR2( KnowledgeGroup, uint32_t, knowledgegroup, id, "knowledgegroup" );
     MAKE_DESCRIPTOR2( PartyId, uint32_t, party, id, "party id" );
@@ -296,9 +297,14 @@ uint32_t protocol::GetFormationId( const sword::MissionParameters& params, int i
     return GetValue< FormationId >( params, i, j, k );
 }
 
-boost::optional< uint32_t > protocol::TryGetFormationId( const sword::MissionParameters& params, int i, int  j, int k )
+boost::optional< uint32_t > protocol::TryGetFormationId( const sword::MissionParameters& params, int i, int j, int k )
 {
     return TryGetValue< FormationId >( params, i, j, k );
+}
+
+boost::optional< uint32_t > protocol::TryGetPathfindId( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return TryGetValue< PathfindId >( params, i, j, k );
 }
 
 uint32_t protocol::GetPartyId( const sword::MissionParameters& params, int i, int j, int k )
