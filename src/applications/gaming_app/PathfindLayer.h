@@ -57,22 +57,16 @@ public:
     virtual ~PathfindLayer();
     //@}
 
-    //! @name Operations
-    //@{
+private:
     virtual void Paint( gui::Viewport_ABC& viewport );
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
-    //@}
 
-private:
     virtual bool HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
-    virtual bool HandleLeaveDragEvent( QDragLeaveEvent* event );
     virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
 
-    //! @name Helpers
-    //@{
     virtual void Select( const kernel::Agent_ABC& element );
     virtual void Select( const kernel::Population_ABC& element );
     virtual void BeforeSelection();
@@ -84,17 +78,13 @@ private:
     bool IsNear( float squareDistance, geometry::Point2f point ) const;
     bool PickWaypoint( geometry::Point2f point );
     void PickSegment( geometry::Point2f point );
-    //@}
 
 private slots:
-    //! @name Slots
-    //@{
     void ClearPositions();
     void SetStartPosition();
     void SetEndPosition();
     void SendRequest();
     void OpenEditingMode();
-    //@}
 
 private:
     struct Point

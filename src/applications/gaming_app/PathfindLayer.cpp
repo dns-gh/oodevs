@@ -49,8 +49,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
             if( request.error_code() != sword::ComputePathfindAck_ErrorCode_no_error )
                 return;
             path_.clear();
-            const auto& path = request.path();
-            const auto& points = path.points();
+            const auto& points = request.path().points();
             for( auto it = points.begin(); it != points.end(); ++it )
             {
                 boost::optional< uint32_t > waypoint;
@@ -61,6 +60,24 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
             }
         };
     publisher_.Register( fun );
+    std::function< void( const sword::SimToClient& ) > fun2 =
+        [&]( const sword::SimToClient& message )
+        {
+            if( !message.message().has_segment_request_ack() )
+                return;
+            lock_ = false;
+            if( !hovered_ )
+                return;
+            const auto& request = message.message().segment_request_ack();
+            if( request.error_code() != sword::PathfindRequestAck_ErrorCode_no_error )
+                return;
+            const auto& segments = request.segments();
+            for( auto it = segments.begin(); it != segments.end(); ++it )
+                hovered_->coordinate_ = geometry::Segment2f(
+                    coordinateConverter_.ConvertToXY( it->from() ),
+                    coordinateConverter_.ConvertToXY( it->to() ) ).Project( point_ );
+        };
+    publisher_.Register( fun2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -216,9 +233,8 @@ void PathfindLayer::SendRequest()
         sword::ClientToSim msg;
         auto request = msg.mutable_message()->mutable_compute_pathfind()->mutable_request();
         request->mutable_unit()->set_id( element_->GetId() );
-        auto* positions = request->mutable_positions();
         for( auto it = positions_.begin(); it != positions_.end(); ++it )
-            coordinateConverter_.ConvertToGeo( *it, *positions->Add() );
+            coordinateConverter_.ConvertToGeo( *it, *request->add_positions() );
         for( auto it = element_->Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
             request->add_equipment_types()->set_id( it.NextElement().type_.GetId() );
         request->set_ignore_dynamic_objects( true );
@@ -341,28 +357,51 @@ bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
     return true;
 }
 
+namespace
+{
+    sword::ClientToSim MakeMessage()
+    {
+        sword::ClientToSim msg;
+        auto request = msg.mutable_message()->mutable_segment_request();
+        request->add_terrains( sword::highway );
+        request->add_terrains( sword::large_road );
+        request->add_terrains( sword::medium_road );
+        request->add_terrains( sword::small_road );
+        request->add_terrains( sword::crossroad );
+        request->add_terrains( sword::street );
+        request->add_terrains( sword::avenue );
+        request->add_terrains( sword::underpass );
+        request->set_radius( 500 );
+        request->set_count( 1 );
+        return msg;
+    }
+}
+
 bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
     if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
-    hovered_->coordinate_ = point;
+    if( event->keyboardModifiers() == Qt::ControlModifier )
+        hovered_->coordinate_ = point;
+    else
+    {
+        static sword::ClientToSim msg = MakeMessage();
+        auto request = msg.mutable_message()->mutable_segment_request();
+        coordinateConverter_.ConvertToGeo( point, *request->mutable_position() );
+        publisher_.Send( msg );
+        point_ = point;
+    }
+    lock_ = true;
     return true;
 }
 
 bool PathfindLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( !dnd::HasData< PathfindLayer >( event ) )
-        return false;
-    positions_.insert( positions_.begin() + hovered_->lastWaypoint_, point );
-    SendRequest();
-    return true;
-}
-
-bool PathfindLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
-{
-    if( !hovered_ )
+    if( !dnd::HasData< PathfindLayer >( event ) || !hovered_ )
         return false;
     hovered_ = boost::none;
+    positions_.insert( positions_.begin() + hovered_->lastWaypoint_, point );
+    SendRequest();
     return true;
 }
 

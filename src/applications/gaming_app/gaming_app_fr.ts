@@ -1400,7 +1400,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Itinerary creation</source>
-        <translation>Création d'itinéraire</translation>
+        <translation>Création d&apos;itinéraire</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1479,7 +1479,7 @@ Voulez-vous le remplacer ?</translation>
     <name>LocationEditorToolbar</name>
     <message>
         <source>Create itinerary</source>
-        <translation>Création d'itinéraire</translation>
+        <translation>Création d&apos;itinéraire</translation>
     </message>
     <message>
         <source>Itinerary from here</source>
