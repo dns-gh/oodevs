@@ -2639,12 +2639,17 @@ message ListLogisticRequestsAck {
     repeated LogHistoryEntry entries = 1;
 }
 
-//! Asks a path between positions. This path is
-//! calculated with the physical specifications of the 'unit'.
-//! The 'Id' parameter is an identifier of an agent or a crowd
+//! Defines a pathfind request.
 message PathfindRequest {
-    required Id           unit      = 1;
-    repeated CoordLatLong positions = 2;
+    //! The unit identifier.
+    required Id           unit                   = 1;
+    //! The waypoints.
+    repeated CoordLatLong positions              = 2;
+    //! The equipment types composing the unit.
+    repeated Id           equipment_types        = 3;
+    //! Indicate whether or not the request
+    //! should ignore the dynamic objects.
+    optional bool         ignore_dynamic_objects = 4;
 }
 
 //! Returns a calculated path, if operation succeeded.

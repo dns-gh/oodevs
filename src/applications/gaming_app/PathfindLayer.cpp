@@ -12,11 +12,14 @@
 #include "moc_PathfindLayer.cpp"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/DragAndDropHelpers.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Tools.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Tools.h"
+#include "gaming/Equipment.h"
+#include "gaming/Equipments.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 
@@ -192,6 +195,9 @@ void PathfindLayer::SendRequest()
         auto* positions = request->mutable_positions();
         for( auto it = positions_.begin(); it != positions_.end(); ++it )
             coordinateConverter_.ConvertToGeo( *it, *positions->Add() );
+        for( auto it = element_->Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
+            request->add_equipment_types()->set_id( it.NextElement().type_.GetId() );
+        request->set_ignore_dynamic_objects( true );
         publisher_.Send( msg );
         lock_ = true;
         hovered_ = boost::none;
