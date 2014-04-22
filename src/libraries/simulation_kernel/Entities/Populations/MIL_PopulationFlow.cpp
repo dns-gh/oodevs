@@ -93,7 +93,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     : MIL_PopulationElement_ABC( population, idManager_.GetId() )
     , pSourceConcentration_       ( &sourceConcentration )
     , pDestConcentration_         ( 0 )
-    , flowShape_                  ( 2, std::make_pair( sourceConcentration.GetPosition(), 0 ) )
+    , flowShape_                  ( 2, std::make_pair( sourceConcentration.GetPosition(), sourceConcentration.GetWaypointForNextPullingFlow() ) )
     , direction_                  ( 0., 1. )
     , rSpeed_                     ( 0. )
     , rWalkedDistance_            ( 0 )
@@ -112,6 +112,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
     , hasDoneMagicMove_( false )
     , speedLimit_( std::numeric_limits< double >::max() )
+    , moveAlongPath_( sourceConcentration.GetPathForNextPullingFlow() )
 {
     SetAttitude( sourceConcentration.GetAttitude() );
     UpdateLocation();
@@ -521,6 +522,8 @@ bool MIL_PopulationFlow::ManageObjectSplit()
     if( target == pSourceConcentration_ )
         return true;
     pointsToInsert_.clear();
+    if( !moveAlongPath_.empty() )
+        target->SetParamsForNextPullingFlow( moveAlongPath_, flowShape_.back().second );
     MoveToAlternateDestination( GetHeadPosition() );
     pDestConcentration_ = target;
     pDestConcentration_->SetPullingFlowsDensity( *pSplittingObject_ );

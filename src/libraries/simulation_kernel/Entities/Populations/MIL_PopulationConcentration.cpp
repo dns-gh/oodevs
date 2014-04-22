@@ -45,6 +45,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration()
     , TER_PopulationConcentration_ABC()
     , pPullingFlow_( 0 )
     , pSplittingObject_( 0 )
+    , waypointForNextPullingFlow_( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( 0 )
 {
@@ -60,6 +61,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , TER_PopulationConcentration_ABC()
     , pPullingFlow_( 0 )
     , pSplittingObject_( 0 )
+    , waypointForNextPullingFlow_( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pAttackController_   ( new MIL_AttackController() )
@@ -75,6 +77,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     : MIL_PopulationElement_ABC( population, idManager_.GetId() )
     , pPullingFlow_        ( 0 )
     , pSplittingObject_    ( 0 )
+    , waypointForNextPullingFlow_( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pAttackController_   ( new MIL_AttackController() )
@@ -97,6 +100,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , position_            ( position )
     , pPullingFlow_        ( 0 )
     , pSplittingObject_    ( 0 )
+    , waypointForNextPullingFlow_( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pAttackController_   ( new MIL_AttackController() )
@@ -116,6 +120,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , position_            ( position )
     , pPullingFlow_        ( 0 )
     , pSplittingObject_    ( 0 )
+    , waypointForNextPullingFlow_( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
 {
@@ -214,6 +219,8 @@ void MIL_PopulationConcentration::Move( const MT_Vector2D& destination )
     if( pPullingFlow_ || IsNearPosition( destination ) )
         return;
     pPullingFlow_ = &GetPopulation().CreateFlow( *this );
+    pathForNextPullingFlow_.clear();
+    waypointForNextPullingFlow_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -286,6 +293,16 @@ void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_Object_ABC& 
         if( animatorAttribute && animatorAttribute->GetAnimators().size() > 0 )
             MIL_Report::PostEvent( GetPopulation(), report::eRC_Filtree );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::SetParamsForNextPullingFlow
+// Created: JSR 2014-04-22
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::SetParamsForNextPullingFlow( const std::vector< boost::shared_ptr< MT_Vector2D > >& path, std::size_t waypoint )
+{
+    pathForNextPullingFlow_ = path;
+    waypointForNextPullingFlow_ = waypoint;
 }
 
 // -----------------------------------------------------------------------------
@@ -483,6 +500,24 @@ double MIL_PopulationConcentration::GetDefaultDensity( const MIL_PopulationType&
 bool MIL_PopulationConcentration::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, std::vector< MT_Vector2D >& /*shape*/ ) const
 {
     return TER_PopulationConcentration_ABC::Intersect2DWithCircle( vCircleCenter, rRadius );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > >& MIL_PopulationConcentration::GetPathForNextPullingFlow
+// Created: JSR 2014-04-22
+// -----------------------------------------------------------------------------
+const std::vector< boost::shared_ptr< MT_Vector2D > >& MIL_PopulationConcentration::GetPathForNextPullingFlow() const
+{
+    return pathForNextPullingFlow_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetWaypointForNextPullingFlow
+// Created: JSR 2014-04-22
+// -----------------------------------------------------------------------------
+std::size_t MIL_PopulationConcentration::GetWaypointForNextPullingFlow() const
+{
+    return waypointForNextPullingFlow_;
 }
 
 // -----------------------------------------------------------------------------
