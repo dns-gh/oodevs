@@ -299,7 +299,9 @@ void NET_SimMsgHandler::OnReceiveSegmentRequest( const sword::SegmentRequest& ms
     ack().set_error_code( sword::SegmentRequestAck::no_error );
     const float radius = msg.has_radius() ? msg.radius() : 10000;
     TER_Analyzer::GetAnalyzer().FindSegments(
-        position, radius, msg.has_count() ? msg.count() : 1, terrain,
+        position, radius,
+        msg.has_count() ? msg.count() : std::numeric_limits< uint32_t >::max(),
+        terrain,
         [&]( const MT_Vector2D& from, const MT_Vector2D& to )
         {
             auto segments = ack().add_segments();

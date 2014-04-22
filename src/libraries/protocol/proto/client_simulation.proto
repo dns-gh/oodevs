@@ -199,7 +199,7 @@ message SegmentRequest {
     //! The terrain types to consider, if empty it defaults to all combined
     //! terrain types
     repeated Terrain      terrains  = 2;
-    //! The maximum number of segments to return, defaults to 1
+    //! The maximum number of segments to return
     optional uint32       count     = 3;
     //! The maximum radius into which to consider terrain graph nodes in
     //! meters, defaults to 10 km
