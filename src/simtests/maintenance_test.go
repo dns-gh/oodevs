@@ -949,3 +949,51 @@ func (s *TestSuite) TestMaintenanceSuperiorUnableToRepair(c *C) {
 	reports := reporter.Stop()
 	c.Assert(len(reports), Equals, 1)
 }
+
+func (s *TestSuite) TestMaintenanceAbortsWhenCrewDies(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	zero := &sword.Tasker{}
+
+	SetManualMaintenance(c, client, tc2Id)
+
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectNewLogisticState(ctx.handlingId)
+			}),
+		checkUpdate("waiting_for_transporter", tc2),
+		checkUpdate("transporter_moving_to_supply", tc2),
+		checkUpdate("transporter_loading", tc2),
+		checkUpdate("transporter_moving_back", tc2),
+		checkUpdate("transporter_unloading", tc2),
+		checkUpdateThenApply("waiting_for_diagnosis_team_selection", tc2, true,
+			func(ctx *MaintenanceCheckContext) error {
+				return client.ChangeHumanState(unit.Id,
+					[]*swapi.Human{
+						&swapi.Human{
+							Quantity: 1,
+							Rank:     0,
+							State:    2,
+						},
+						&swapi.Human{
+							Quantity: 1,
+							Rank:     1,
+							State:    2,
+						},
+						&swapi.Human{
+							Quantity: 3,
+							Rank:     2,
+							State:    2,
+						},
+					})
+			}),
+		checkUpdate("finished", zero),
+		MaintenanceDeleteChecker{},
+	)
+}
