@@ -16,8 +16,8 @@
 
 namespace
 {
-    const auto tolerance = MIL_PopulationFlow::tolerance_;
-    const auto squareTolerance = MIL_PopulationFlow::squareTolerance_;
+    const auto& tolerance = MIL_PopulationFlow::tolerance_;
+    const auto& squareTolerance = MIL_PopulationFlow::squareTolerance_;
 }
 
 // -----------------------------------------------------------------------------
