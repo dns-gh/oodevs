@@ -86,7 +86,7 @@ DynamicDataPtr CreateAndRegisterDynamicData( const T_PointVector& points,
 {
     // This is ugly but let us run tests creating TER_LimitData
     // without having to instanciante all the TER_World machinery.
-    TER_World* w = &TER_World::GetWorld();
+    auto w = TER_World::GetWorldPtr();
     TER_PathFindManager* m = w ? &w->GetPathFindManager() : 0;
     auto p = boost::make_shared< DynamicData >( points, type );
     if( !m )
