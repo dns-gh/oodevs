@@ -503,7 +503,7 @@ bool MIL_PopulationConcentration::Intersect2DWithCircle( const MT_Vector2D& vCir
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< MT_Vector2D > >& MIL_PopulationConcentration::GetPathForNextPullingFlow
+// Name: MIL_PopulationConcentration::GetPathForNextPullingFlow
 // Created: JSR 2014-04-22
 // -----------------------------------------------------------------------------
 const std::vector< boost::shared_ptr< MT_Vector2D > >& MIL_PopulationConcentration::GetPathForNextPullingFlow() const
