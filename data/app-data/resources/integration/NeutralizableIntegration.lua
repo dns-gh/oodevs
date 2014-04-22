@@ -7,7 +7,7 @@
 integration.startNeutralizingIt = function( target )
     target[myself] = target[myself] or {} 
     if not target[myself].actionNeutralize then
-        target[myself].actionNeutralize = DEC_StartTirDirect( target.source, 100, eTirDirectNormal, -1 )
+        target[myself].actionNeutralize = DEC__StartTirDirectSurComposantesMajeures( -1, target.source, 100, eTirDirectNormal )
         actionCallbacks[ target[myself].actionNeutralize ] = function( arg ) target[myself].eTir = arg end
     end
 end
