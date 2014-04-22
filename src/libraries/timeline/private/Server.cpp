@@ -77,7 +77,7 @@ Server::Server( const Configuration& cfg )
     , lock_    ( new boost::mutex() )
     , write_   ( new ipc::Device( uuid_ + "_write", true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
     , read_    ( new ipc::Device( uuid_ + "_read",  true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
-    , embedded_( Embedded_ABC::Factory( *write_, logger_, cfg.external ).release() )
+    , embedded_( Embedded_ABC::Factory( *write_, logger_ ).release() )
 {
     if( !cfg_.server_log.IsEmpty() )
         log_.reset( new tools::Ofstream( cfg_.server_log, std::ios::out | std::ios::binary ) );

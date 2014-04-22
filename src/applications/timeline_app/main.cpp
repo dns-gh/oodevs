@@ -10,12 +10,14 @@
 #include <timeline/api.h>
 
 #include "Controller.h"
+#include <timeline/private/Embedded_ABC.h>
 
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
 #endif
 #include <QtGui>
 #include <boost/program_options.hpp>
+#include <boost/static_assert.hpp>
 #ifdef _MSC_VER
 #pragma warning( pop )
 #endif
@@ -41,10 +43,11 @@ int main( int argc, char* argv[] )
         bpo::options_description opts( "options" );
         opts.add_options()
             ( "help",       "print this message" )
+#ifndef USE_EMBEDDED_CORE
             ( "binary",     bpo::value( &cfg.binary )->required(), "set client binary when using external process" )
+#endif
             ( "rundir",     bpo::value( &cfg.rundir )->default_value( "." ), "set client binary run directory" )
             ( "url",        bpo::value( &cfg.url )->required(), "set url target" )
-            ( "external",   bpo::value( &cfg.external )->default_value( true ), "use external process" )
             ( "command",    bpo::value( &command )->default_value( std::string() ), "execute optional command and return" )
             ( "cmdargs",    bpo::value( &cmdargs ), "optional command arguments" )
             ( "server_log", bpo::value( &cfg.server_log ), "output server log filename" )
@@ -61,12 +64,13 @@ int main( int argc, char* argv[] )
             return 0;
         }
         bpo::notify( vmap );
-#ifdef _WIN64
-        if( !cfg.external )
-            throw std::exception( "Unable to disable external process in 64-bit mode" );
+#if defined(_WIN64) && defined(USE_EMBEDDED_CORE)
+        BOOST_STATIC_ASSERT_MSG( false, "Unable to disable external process in 64-bit mode" )
 #endif
+#ifndef USE_EMBEDDED_CORE
         if( !cfg.binary.IsRegularFile() )
             throw std::runtime_error( QString( "invalid file %1" ).arg( argv[1] ).toStdString() );
+#endif
         Controller controller( cfg );
         if( !command.empty() )
             return controller.Execute( command, cmdargs );

@@ -169,13 +169,11 @@ namespace
 #endif
 }
 
-std::auto_ptr< Embedded_ABC > Embedded_ABC::Factory( ipc::Device& device, const controls::T_Logger& log, bool external )
+std::auto_ptr< Embedded_ABC > Embedded_ABC::Factory( ipc::Device& device, const controls::T_Logger& log )
 {
 #ifdef USE_EMBEDDED_CORE
-    if( !external )
-        return std::auto_ptr< Embedded_ABC >( new Internal( device, log ) );
-#endif
-    if( !external )
-        throw std::runtime_error( "not implemented" );
+    return std::auto_ptr< Embedded_ABC >( new Internal( device, log ) );
+#else
     return std::auto_ptr< Embedded_ABC >( new External( device, log ) );
+#endif
 }
