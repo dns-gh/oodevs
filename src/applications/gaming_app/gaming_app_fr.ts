@@ -3548,16 +3548,16 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Afficher les ordres donnés aux unités embrayées</translation>
     </message>
     <message>
-        <source>Add events to this task</source>
-        <translation>Ajouter des évenements à cette tâche</translation>
+        <source>Add children events</source>
+        <translation>Ajouter des évenements fils</translation>
     </message>
     <message>
-        <source>Hide children events of this task</source>
-        <translation>Masquer les évenements de cette tâche</translation>
+        <source>Hide children</source>
+        <translation>Masquer les fils</translation>
     </message>
     <message>
-        <source>Show children events of this task</source>
-        <translation>Afficher les évenements de cette tâche</translation>
+        <source>Show children</source>
+        <translation>Afficher les fils</translation>
     </message>
 </context>
 <context>

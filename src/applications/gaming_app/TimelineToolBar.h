@@ -114,7 +114,7 @@ private:
     //! @name Member data
     //@{
     kernel::ActionController& eventActionsController_;
-    bool main_;
+    const bool main_;
     const tools::ExerciseConfig& config_;
     QAction* horizontalView_;
     std::string entityFilter_;
@@ -127,7 +127,7 @@ private:
     QAction* engagedFilter_;
     kernel::SafePointer< gui::Event > contextMenuEvent_;
     std::string showOnlyFilter_;
-    std::vector< std::string > hideHierarchiesFilter_;
+    std::set< std::string > hideHierarchiesFilter_;
     //@}
 };
 

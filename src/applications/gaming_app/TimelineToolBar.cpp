@@ -20,6 +20,7 @@
 #include "tools/ExerciseConfig.h"
 
 #include <timeline/api.h>
+#include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
@@ -275,12 +276,14 @@ void TimelineToolBar::NotifyContextMenu( const gui::Event& event, kernel::Contex
     if( event.GetType() == eEventTypes_Task && !event.GetEvent().end.empty() )
     {
         contextMenuEvent_ = &event;
-        menu.InsertItem( "Command", tr( "Add events to this task" ), this, SLOT( OnAddShowOnlyFilter() ) );
+        menu.addSeparator();
+        menu.InsertItem( "Command", tr( "Add children events" ), this, SLOT( OnAddShowOnlyFilter() ) );
+        menu.addSeparator();
         auto it = std::find( hideHierarchiesFilter_.begin(), hideHierarchiesFilter_.end(), event.GetEvent().uuid );
         if( it == hideHierarchiesFilter_.end() )
-            menu.InsertItem( "Command", tr( "Hide children events of this task" ), this, SLOT( OnHideChildren() ) );
+            menu.InsertItem( "Command", tr( "Hide children" ), this, SLOT( OnHideChildren() ) );
         else
-            menu.InsertItem( "Command", tr( "Show children events of this task" ), this, SLOT( OnShowChildren() ) );
+            menu.InsertItem( "Command", tr( "Show children" ), this, SLOT( OnShowChildren() ) );
     }
 }
 
@@ -311,7 +314,7 @@ void TimelineToolBar::OnHideChildren()
     auto it = std::find( hideHierarchiesFilter_.begin(), hideHierarchiesFilter_.end(), uuid );
     if( it != hideHierarchiesFilter_.end() )
         throw MASA_EXCEPTION( "Hide hierarchy filter already enabled for uuid " + uuid );
-    hideHierarchiesFilter_.push_back( uuid );
+    hideHierarchiesFilter_.insert( uuid );
     contextMenuEvent_ = 0;
     emit HideHierarchiesFilterChanged( GetHideHierarchiesFilter() );
 }
@@ -338,11 +341,5 @@ void TimelineToolBar::OnShowChildren()
 // -----------------------------------------------------------------------------
 std::string TimelineToolBar::GetHideHierarchiesFilter() const
 {
-    std::string hierarchies;
-    std::for_each( hideHierarchiesFilter_.begin(), hideHierarchiesFilter_.end(),[&]( const std::string& uuid ) {
-        if( !hierarchies.empty() )
-            hierarchies += ",";
-        hierarchies += uuid;
-    } );
-    return hierarchies;
+    return boost::algorithm::join( hideHierarchiesFilter_, "," );
 }

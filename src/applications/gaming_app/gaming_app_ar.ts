@@ -3534,15 +3534,15 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add events to this task</source>
+        <source>Add children events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide children events of this task</source>
+        <source>Hide children</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show children events of this task</source>
+        <source>Show children</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
