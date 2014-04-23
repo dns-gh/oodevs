@@ -18,8 +18,20 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 RichTableView::RichTableView( const QString& objectName, QWidget* parent )
     : gui::RichWidget< QTableView >( objectName, parent )
+    , dataModel_( parent )
+    , proxyModel_( parent )
+    , delegate_( parent )
 {
-    // NOTHING
+    proxyModel_.setSourceModel( &dataModel_ );
+    proxyModel_.setDynamicSortFilter( true );
+    proxyModel_.setSortRole( Qt::UserRole );
+
+    setModel( &proxyModel_ );
+    setItemDelegate( &delegate_ );
+
+    setShowGrid( true );
+    setAlternatingRowColors( true );
+    verticalHeader()->setVisible( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,10 +44,10 @@ RichTableView::~RichTableView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: RichTableView::ResizeColumnsToContents
-// Created: LGY 2014-01-09
+// Name: RichTableView::Purge
+// Created: ABR 2014-04-23
 // -----------------------------------------------------------------------------
-void RichTableView::ResizeColumnsToContents()
+void RichTableView::Purge()
 {
-    resizeColumnsToContents();
+    dataModel_.removeRows( 0, dataModel_.rowCount() );
 }

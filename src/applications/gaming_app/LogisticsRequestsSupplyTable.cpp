@@ -16,82 +16,30 @@
 
 Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 
-namespace
-{
-    class SupplyDelegate : public gui::CommonDelegate
-    {
-        public:
-            SupplyDelegate( QObject *parent = 0 )
-                : gui::CommonDelegate( parent )
-            {}
-        public:
-        virtual void paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
-        {
-            Qt::ItemFlags flags = index.flags();
-            if( ( flags & Qt::ItemIsUserCheckable ) )
-            {
-                // Draw background
-                painter->save();
-                drawBackground(painter, option, index);
-                painter->restore();
-
-                // Draw content
-                QStyleOptionViewItemV4 viewItemOption( option );
-                const int textMargin = QApplication::style()->pixelMetric( QStyle::PM_FocusFrameHMargin ) + 1;
-                viewItemOption.decorationAlignment = Qt::AlignCenter;
-                QRect newRect = QStyle::alignedRect( option.direction, Qt::AlignCenter,
-                                                        QSize( option.decorationSize.width() + 5, option.decorationSize.height() ),
-                                                        QRect( option.rect.x(), option.rect.y(), option.rect.width() - ( 2 * textMargin ), option.rect.height() ) );
-
-                // Print original
-                viewItemOption.rect = newRect;
-                gui::CommonDelegate::paint( painter, viewItemOption, index );
-            }
-            else
-                gui::CommonDelegate::paint( painter, option, index );
-        }
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogisticsRequestsSupplyTable constructor
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
 LogisticsRequestsSupplyTable::LogisticsRequestsSupplyTable( const QString& objectName, QWidget* parent )
     : gui::RichTableView( objectName, parent )
-    , dataModel_ ( parent )
-    , proxyModel_( parent )
-    , delegate_  ( new SupplyDelegate( parent ) )
 {
-    horizontalHeaders_ << tools::translate( "LogisticsRequestsSupplyTable", "Recipient" )
-        << tools::translate( "LogisticsRequestsSupplyTable", "Supplies" )
-        << tools::translate( "LogisticsRequestsSupplyTable", "Requested" )
-        << tools::translate( "LogisticsRequestsSupplyTable", "Granted" )
-        << tools::translate( "LogisticsRequestsSupplyTable", "Conveyed" )
-        << tools::translate( "LogisticsRequestsSupplyTable", "Delivered" );
-
-    dataModel_.setColumnCount( horizontalHeaders_.size() );
-    proxyModel_.setSourceModel( &dataModel_ );
-    proxyModel_.setDynamicSortFilter( true );
-
-    dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
+    dataModel_.setHorizontalHeaderLabels( QStringList() << tr( "Recipient" )
+                                                        << tr( "Supplies" )
+                                                        << tr( "Requested" )
+                                                        << tr( "Granted" )
+                                                        << tr( "Conveyed" )
+                                                        << tr( "Delivered" ) );
     horizontalHeader()->setResizeMode( QHeaderView::Interactive );
-
-    setModel( &proxyModel_ );
-    setItemDelegate( delegate_ );
+    verticalHeader()->setDefaultSectionSize( 22 );
 
     linkItemDelegate_ = new gui::LinkItemDelegate( this );
     setItemDelegateForColumn( 0, linkItemDelegate_ );
 
     setSortingEnabled( true );
-    setShowGrid( true );
     setFocusPolicy( Qt::NoFocus );
-    setAlternatingRowColors( true );
-    verticalHeader()->setVisible( false );
     setSelectionMode( SingleSelection );
     setSelectionBehavior( SelectRows );
     setEditTriggers( AllEditTriggers );
-    verticalHeader()->setDefaultSectionSize( 22 );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,15 +58,6 @@ LogisticsRequestsSupplyTable::~LogisticsRequestsSupplyTable()
 const gui::LinkItemDelegate* LogisticsRequestsSupplyTable::GetLinkItemDelegate() const
 {
     return linkItemDelegate_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsSupplyTable::Purge
-// Created: MMC 2013-09-11
-// -----------------------------------------------------------------------------
-void LogisticsRequestsSupplyTable::Purge()
-{
-    dataModel_.removeRows( 0, dataModel_.rowCount() );
 }
 
 // -----------------------------------------------------------------------------

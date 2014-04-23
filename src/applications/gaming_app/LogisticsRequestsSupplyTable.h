@@ -46,7 +46,6 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void Purge();
     virtual void AddRecipientResource( const QString& recipient, const QString& resource,
                                        unsigned int requested, unsigned int granted,
                                        unsigned int conveyed, bool delivered );
@@ -66,11 +65,7 @@ private:
 private:
     //! @name Data Members
     //@{
-    QStandardItemModel     dataModel_;
-    QSortFilterProxyModel  proxyModel_;
-    gui::CommonDelegate*   delegate_;
     gui::LinkItemDelegate* linkItemDelegate_;
-    QStringList            horizontalHeaders_;
     //@}
 };
 

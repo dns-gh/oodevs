@@ -21,16 +21,16 @@ using namespace gui;
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
 UnitStateTableCrew::UnitStateTableCrew( QWidget* parent, kernel::Controllers& controllers )
-    : UnitStateTable_ABC( "UnitStateTableCrew", parent, 7, controllers )
+    : UnitStateTable_ABC( "UnitStateTableCrew", parent, controllers,
+                          QStringList() << tr( "Rank" )
+                                        << tr( "State" )
+                                        << tr( "Injury seriousness" )
+                                        << tr( "Location" )
+                                        << tr( "Mentally injured" )
+                                        << tr( "Contaminated" )
+                                        << tr( "Quantity" ) )
     , updating_( false )
 {
-    horizontalHeaders_ << tr( "Rank" )
-                       << tr( "State" )
-                       << tr( "Injury seriousness" ) // $$$$ ABR 2011-08-11: should become Injuries with story 660
-                       << tr( "Location" )
-                       << tr( "Mentally injured" )
-                       << tr( "Contaminated" )
-                       << tr( "Quantity" );
     setAlternatingRowColors( false );
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnItemChanged( QStandardItem* ) ) );
 }

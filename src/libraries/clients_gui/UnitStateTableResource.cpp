@@ -18,16 +18,16 @@ using namespace gui;
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
 UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel, kernel::Controllers& controllers )
-    : UnitStateTable_ABC( "UnitStateTableResource", parent, 7, controllers )
+    : UnitStateTable_ABC( "UnitStateTableResource", parent, controllers,
+                          QStringList() << tr( "Supplies" )
+                                        << tr( "Category" )
+                                        << tr( "Quantity" )
+                                        << maximalCapacityLabel
+                                        << tr( "Percentage (%)" )
+                                        << tr( "Logistic threshold (%)" )
+                                        << tr( "Normalized quantity" ) )
     , blockSlots_( false )
 {
-    horizontalHeaders_ << tr( "Supplies" )
-                       << tr( "Category" )
-                       << tr( "Quantity" )
-                       << maximalCapacityLabel
-                       << tr( "Percentage (%)" )
-                       << tr( "Logistic threshold (%)" )
-                       << tr( "Normalized quantity" );
     delegate_.AddDoubleSpinBoxOnColumn( eThreshold, 0, 100, 0.5 );
     delegate_.AddDoubleSpinBoxOnColumn( ePercentage, 0, std::numeric_limits< double >::max(), 0.5 );
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnItemChanged( QStandardItem* ) ) );

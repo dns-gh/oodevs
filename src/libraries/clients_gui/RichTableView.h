@@ -10,6 +10,7 @@
 #ifndef __RichTableView_h_
 #define __RichTableView_h_
 
+#include "CommonDelegate.h"
 #include "RichWidget.h"
 
 namespace gui
@@ -31,7 +32,15 @@ public:
 
     //! @name Operations
     //@{
-    void ResizeColumnsToContents();
+    virtual void Purge();
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    QStandardItemModel dataModel_;
+    QSortFilterProxyModel proxyModel_;
+    gui::CommonDelegate delegate_;
     //@}
 };
 

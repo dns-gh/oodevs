@@ -278,7 +278,7 @@ void LogisticConsignsWidget_ABC::DisplayRequestHistory( const LogisticsConsign_A
                     GetDisplayName( it->handler_ ) );
             }
         if( !empty )
-            historyTable_->ResizeColumnsToContents();
+            historyTable_->resizeColumnsToContents();
     }
 }
 

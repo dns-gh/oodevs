@@ -24,19 +24,23 @@ using namespace gui;
 // Name: UnitStateTable_ABC constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTable_ABC::UnitStateTable_ABC( const QString& objectName, QWidget* parent, int numCols, kernel::Controllers& controllers )
-    : RichWidget< QTableView >( objectName, parent )
-    , dataModel_ ( parent )
-    , proxyModel_( parent )
-    , delegate_  ( parent )
+UnitStateTable_ABC::UnitStateTable_ABC( const QString& objectName,
+                                        QWidget* parent,
+                                        kernel::Controllers& controllers,
+                                        const QStringList& horizontalHeaders )
+    : RichTableView( objectName, parent )
     , aggregated_( false )
     , selected_  ( controllers )
 {
-    dataModel_.setColumnCount( numCols );
+    dataModel_.setColumnCount( horizontalHeaders.size() );
     proxyModel_.setSourceModel( &dataModel_ );
     proxyModel_.setSortRole( Qt::UserRole );
     setModel( &proxyModel_ );
     setItemDelegate( &delegate_ );
+
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
 
     setSortingEnabled( true );
     setShowGrid( false );
@@ -62,11 +66,8 @@ UnitStateTable_ABC::~UnitStateTable_ABC()
 // -----------------------------------------------------------------------------
 void UnitStateTable_ABC::Purge()
 {
+    RichTableView::Purge();
     aggregated_ = false;
-    dataModel_.clear();
-    dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
-    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
-    horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
 }
 
 // -----------------------------------------------------------------------------
