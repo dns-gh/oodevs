@@ -30,7 +30,7 @@ end
 -- @param noActionReport Boolean, false if the "Fire is being extinguished" report
 -- should be displayed, true otherwise.
 -- @return Boolean, true if the fire is already extinguished, or if there is not enough
--- dotation to extinguish it, or if the agent has no capacity to extinguish it, or if
+-- resource to extinguish it, or if the agent has no capacity to extinguish it, or if
 -- the extinguishing action is over; false otherwise.
 integration.updateExtinguish = function( fire, noActionReport )
     if fire.actionExtinguishState == eActionObjetImpossible then
@@ -66,7 +66,8 @@ integration.stopExtinguish = function( fire )
 end
 
 --- Returns true if the given object has the burning capacity, false otherwise.
--- This method displays a report if the object has no burning capacity.
+-- This method displays the "eRC_ImpossibleToExtinguishFire" report if 
+-- the object has no burning capacity.
 -- @param object Object knowledge
 -- @return Boolean
 integration.canBeExtinguished = function( object )
