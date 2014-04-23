@@ -161,44 +161,51 @@ message ListEnabledVisionCones {
     optional uint32 count = 2;
 }
 
+/** List of supported terrain types
+*/
+enum TerrainType {
+    forest         = 0;
+    orchard        = 1;
+    swamp          = 2;
+    urban          = 3;
+    water          = 4;
+    dune           = 5;
+    ice            = 6;
+    mountain       = 7;
+    forest_edge    = 8;
+    orchard_edge   = 9;
+    swamp_edge     = 10;
+    urban_edge     = 11;
+    dune_edge      = 12;
+    ice_edge       = 13;
+    mountain_edge  = 14;
+    cliff          = 15;
+    highway        = 16;
+    large_road     = 17;
+    medium_road    = 18;
+    small_road     = 19;
+    bridge         = 20;
+    railroad       = 21;
+    large_river    = 22;
+    medium_river   = 23;
+    small_river    = 24;
+    crossroad      = 25;
+    street         = 26;
+    avenue         = 27;
+    underpass      = 28;
+    metro          = 29;
+}
+
 /** Performs a search among terrain graph segments to locate the closest from
     a given position up to a certain count with terrain types intersecting a
     given list of types.
 */
 message SegmentRequest {
-    enum Terrain {
-        forest         = 0;
-        orchard        = 1;
-        swamp          = 2;
-        urban_area     = 3;
-        lake           = 4;
-        dune           = 5;
-        glacier        = 6;
-        mountain       = 7;
-        forest_edge    = 8;
-        orchard_edge   = 9;
-        swamp_edge     = 10;
-        suburb         = 11;
-        dune_edge      = 12;
-        glacier_edge   = 13;
-        mountain_edge  = 14;
-        cliff          = 15;
-        highway        = 16;
-        main_road      = 17;
-        secondary_road = 18;
-        country_road   = 19;
-        bridge         = 20;
-        railroad       = 21;
-        main_river     = 22;
-        river          = 23;
-        stream         = 24;
-        crossroad      = 25;
-    }
     //! The position near which to search
     required CoordLatLong position = 1;
     //! The terrain types to consider, if empty it defaults to all combined
     //! terrain types
-    repeated Terrain      terrains  = 2;
+    repeated TerrainType  terrains  = 2;
     //! The maximum number of segments to return
     optional uint32       count     = 3;
     //! The maximum radius into which to consider terrain graph nodes in

@@ -250,36 +250,40 @@ void NET_SimMsgHandler::OnReceiveDebugError( const sword::MissionParameters& par
 
 namespace
 {
-    TerrainData Convert( sword::SegmentRequest::Terrain type )
+    TerrainData Convert( sword::TerrainType type )
     {
         switch( type )
         {
-        case sword::SegmentRequest::forest: return TerrainData::Forest();
-        case sword::SegmentRequest::orchard: return TerrainData::Plantation();
-        case sword::SegmentRequest::swamp: return TerrainData::Swamp();
-        case sword::SegmentRequest::urban_area: return TerrainData::Urban();
-        case sword::SegmentRequest::lake: return TerrainData::Water();
-        case sword::SegmentRequest::dune: return TerrainData::Dune();
-        case sword::SegmentRequest::glacier: return TerrainData::Ice();
-        case sword::SegmentRequest::mountain: return TerrainData::Mountain();
-        case sword::SegmentRequest::forest_edge: return TerrainData::ForestBorder();
-        case sword::SegmentRequest::orchard_edge: return TerrainData::PlantationBorder();
-        case sword::SegmentRequest::swamp_edge: return TerrainData::SwampBorder();
-        case sword::SegmentRequest::suburb: return TerrainData::UrbanBorder();
-        case sword::SegmentRequest::dune_edge: return TerrainData::DuneBorder();
-        case sword::SegmentRequest::glacier_edge: return TerrainData::IceBorder();
-        case sword::SegmentRequest::mountain_edge: return TerrainData::MountainBorder();
-        case sword::SegmentRequest::cliff: return TerrainData::Cliff();
-        case sword::SegmentRequest::highway: return TerrainData::Motorway();
-        case sword::SegmentRequest::main_road: return TerrainData::LargeRoad();
-        case sword::SegmentRequest::secondary_road: return TerrainData::MediumRoad();
-        case sword::SegmentRequest::country_road: return TerrainData::SmallRoad();
-        case sword::SegmentRequest::bridge: return TerrainData::Bridge();
-        case sword::SegmentRequest::railroad: return TerrainData::Railroad();
-        case sword::SegmentRequest::main_river: return TerrainData::LargeRiver();
-        case sword::SegmentRequest::river: return TerrainData::MediumRiver();
-        case sword::SegmentRequest::stream: return TerrainData::SmallRiver();
-        case sword::SegmentRequest::crossroad: return TerrainData::Crossroad();
+        case sword::forest: return TerrainData::Forest();
+        case sword::orchard: return TerrainData::Plantation();
+        case sword::swamp: return TerrainData::Swamp();
+        case sword::urban: return TerrainData::Urban();
+        case sword::water: return TerrainData::Water();
+        case sword::dune: return TerrainData::Dune();
+        case sword::ice: return TerrainData::Ice();
+        case sword::mountain: return TerrainData::Mountain();
+        case sword::forest_edge: return TerrainData::ForestBorder();
+        case sword::orchard_edge: return TerrainData::PlantationBorder();
+        case sword::swamp_edge: return TerrainData::SwampBorder();
+        case sword::urban_edge: return TerrainData::UrbanBorder();
+        case sword::dune_edge: return TerrainData::DuneBorder();
+        case sword::ice_edge: return TerrainData::IceBorder();
+        case sword::mountain_edge: return TerrainData::MountainBorder();
+        case sword::cliff: return TerrainData::Cliff();
+        case sword::highway: return TerrainData::Motorway();
+        case sword::large_road: return TerrainData::LargeRoad();
+        case sword::medium_road: return TerrainData::MediumRoad();
+        case sword::small_road: return TerrainData::SmallRoad();
+        case sword::bridge: return TerrainData::Bridge();
+        case sword::railroad: return TerrainData::Railroad();
+        case sword::large_river: return TerrainData::LargeRiver();
+        case sword::medium_river: return TerrainData::MediumRiver();
+        case sword::small_river: return TerrainData::SmallRiver();
+        case sword::crossroad: return TerrainData::Crossroad();
+        case sword::street: return TerrainData::Street();
+        case sword::avenue: return TerrainData::Avenue();
+        case sword::underpass: return TerrainData::Underpass();
+        case sword::metro: return TerrainData::Metro();
         default: return TerrainData();
         }
     }
