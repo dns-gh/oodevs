@@ -21,12 +21,12 @@ func (s *TestSuite) TestSegmentRequest(c *C) {
 	// no terrain means all terrains
 	terrains := []sword.SegmentRequest_Terrain{}
 	count := 1
-	segments, err := client.SegmentRequest(position, terrains, count)
+	segments, err := client.SegmentRequest(position, terrains, uint32(count))
 	c.Assert(err, IsNil)
 	c.Assert(segments, HasLen, count)
 	// unavailable terrain yields no result
 	terrains = append(terrains, sword.SegmentRequest_glacier)
-	segments, err = client.SegmentRequest(position, terrains, count)
+	segments, err = client.SegmentRequest(position, terrains, uint32(count))
 	c.Assert(err, IsNil)
 	c.Assert(segments, HasLen, 0)
 	// all roads terrain finds a segment
@@ -36,12 +36,12 @@ func (s *TestSuite) TestSegmentRequest(c *C) {
 		sword.SegmentRequest_secondary_road,
 		sword.SegmentRequest_country_road,
 	}
-	segments, err = client.SegmentRequest(position, terrains, count)
+	segments, err = client.SegmentRequest(position, terrains, uint32(count))
 	c.Assert(err, IsNil)
 	c.Assert(segments, HasLen, count)
 	// find more segments
 	count = 7
-	segments, err = client.SegmentRequest(position, terrains, count)
+	segments, err = client.SegmentRequest(position, terrains, uint32(count))
 	c.Assert(err, IsNil)
 	c.Assert(segments, HasLen, count)
 }
