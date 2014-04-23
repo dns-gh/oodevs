@@ -291,26 +291,34 @@ namespace
 
 void NET_SimMsgHandler::OnReceiveSegmentRequest( const sword::SegmentRequest& msg, uint32_t ctx, uint32_t clientId )
 {
-    MT_Vector2D position;
-    NET_ASN_Tools::ReadPoint( msg.position(), position );
-    TerrainData terrain;
-    if( msg.terrains().size() == 0 )
-        terrain = TerrainData( 0xff, 0xff, 0xff, 0xff );
-    else
-        for( int i = 0; i < msg.terrains().size(); ++i )
-            terrain.Merge( Convert( msg.terrains( i ) ) );
     client::SegmentRequestAck ack;
     ack().set_error_code( sword::SegmentRequestAck::no_error );
-    const float radius = msg.has_radius() ? msg.radius() : 10000;
-    TER_Analyzer::GetAnalyzer().FindSegments(
-        position, radius,
-        msg.has_count() ? msg.count() : std::numeric_limits< uint32_t >::max(),
-        terrain,
-        [&]( const MT_Vector2D& from, const MT_Vector2D& to )
-        {
-            auto segments = ack().add_segments();
-            NET_ASN_Tools::WritePoint( from, *segments->mutable_from() );
-            NET_ASN_Tools::WritePoint( to, *segments->mutable_to() );
-        } );
+    try
+    {
+        MT_Vector2D position;
+        NET_ASN_Tools::ReadPoint( msg.position(), position );
+        TerrainData terrain;
+        if( msg.terrains().size() == 0 )
+            terrain = TerrainData( 0xff, 0xff, 0xff, 0xff );
+        else
+            for( int i = 0; i < msg.terrains().size(); ++i )
+                terrain.Merge( Convert( msg.terrains( i ) ) );
+        const float radius = msg.has_radius() ? msg.radius() : 10000;
+        TER_Analyzer::GetAnalyzer().FindSegments(
+            position, radius,
+            msg.has_count() ? msg.count() : std::numeric_limits< uint32_t >::max(),
+            terrain,
+            [&]( const MT_Vector2D& from, const MT_Vector2D& to )
+            {
+                auto segments = ack().add_segments();
+                NET_ASN_Tools::WritePoint( from, *segments->mutable_from() );
+                NET_ASN_Tools::WritePoint( to, *segments->mutable_to() );
+            } );
+    }
+    catch( const std::exception& e )
+    {
+        ack().set_error_code( sword::SegmentRequestAck::error_invalid_parameter );
+        ack().set_error_msg( tools::GetExceptionMsg( e ) );
+    }
     ack.Send( NET_Publisher_ABC::Publisher(), ctx, clientId );
 }
