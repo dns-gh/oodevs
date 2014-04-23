@@ -65,7 +65,6 @@ TimelineWebView::TimelineWebView( QWidget* parent,
         cfg_->debug_port = timelineDebugPort;
     cfg_->rundir = "cef";
     cfg_->binary = "cef/timeline_client.exe";
-    cfg_->external = true;
     if( !cfg_->binary.IsRegularFile() )
         MT_LOG_ERROR_MSG( tr( "Invalid timeline binary '%1'" ).arg( QString::fromStdWString( cfg_->binary.ToUnicode() ) ).toStdString() );
     cfg_->client_log = config.GetTimelineClientLogFile();
@@ -372,14 +371,20 @@ void TimelineWebView::SetProfile( const QString& profile )
 void TimelineWebView::UpdateFilters( const std::string& unitFilter,
                                      bool displayEngaged,
                                      const std::string& services,
-                                     const std::string& keyword )
+                                     const std::string& keyword,
+                                     const std::string& hierarchies,
+                                     const std::string& showOnly )
 {
-    if( server_ )
-        server_->UpdateQuery( boost::assign::map_list_of
-            ( "sword_filter", unitFilter )
-            ( "sword_filter_engaged", displayEngaged ? "false" : "true" )
-            ( "filter_keyword", keyword )
-            ( "filter_service", services ) );
+    if( !server_ )
+        return;
+    parentUuid_ = showOnly;
+    server_->UpdateQuery( boost::assign::map_list_of
+        ( "sword_filter", unitFilter )
+        ( "sword_filter_engaged", displayEngaged ? "false" : "true" )
+        ( "filter_keyword", keyword )
+        ( "filter_service", services )
+        ( "filter_hide_hierarchies", hierarchies)
+        ( "filter_show_only", showOnly ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -659,4 +664,37 @@ void TimelineWebView::OnKeywordFilterChanged( const std::string& keyword )
     if( server_ )
         server_->UpdateQuery( boost::assign::map_list_of
             ( "filter_keyword", keyword ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnHideHierarchiesFilterChanged
+// Created: ABR 2014-04-16
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnHideHierarchiesFilterChanged( const std::string& hierarchies )
+{
+    if( server_ )
+        server_->UpdateQuery( boost::assign::map_list_of
+            ( "filter_hide_hierarchies", hierarchies ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnShowOnlyFilterChanged
+// Created: ABR 2014-04-16
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnShowOnlyFilterChanged( const std::string& uuid )
+{
+    if( !server_ )
+        return;
+    parentUuid_ = uuid;
+    server_->UpdateQuery( boost::assign::map_list_of
+        ( "filter_show_only", uuid ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::GetCurrentParent
+// Created: ABR 2014-04-17
+// -----------------------------------------------------------------------------
+const std::string& TimelineWebView::GetCurrentParent() const
+{
+    return parentUuid_;
 }

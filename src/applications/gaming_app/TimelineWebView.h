@@ -78,7 +78,13 @@ public:
 
     //! @name Filters
     //@{
-    void UpdateFilters( const std::string& unitFilter, bool displayEngaged, const std::string& services, const std::string& keyword );
+    void UpdateFilters( const std::string& unitFilter,
+                        bool displayEngaged,
+                        const std::string& services,
+                        const std::string& keyword,
+                        const std::string& hierarchies,
+                        const std::string& showOnly );
+    void OnShowOnlyFilterChanged( const std::string& uuid );
     //@}
 
 private:
@@ -102,6 +108,7 @@ private:
     virtual void SelectEvent( const std::string& uuid );
     virtual void EditEvent( const timeline::Event& event );
     virtual void DeleteEvent( const std::string& uuid );
+    virtual const std::string& GetCurrentParent() const;
     //@}
 
 signals:
@@ -138,6 +145,7 @@ private slots:
     void OnEngagedFilterToggled( bool checked );
     void OnServicesFilterChanged( const std::string& services );
     void OnKeywordFilterChanged( const std::string& keyword );
+    void OnHideHierarchiesFilterChanged( const std::string& hierarchies );
     //@}
 
 private:
@@ -160,6 +168,7 @@ private:
     QString lastProfile_;
     QString serverProfile_;
     bool horizontal_;
+    std::string parentUuid_;
     //@}
 };
 

@@ -112,6 +112,7 @@ namespace
         MOCK_METHOD( SelectEvent, 1 );
         MOCK_METHOD( EditEvent, 1 );
         MOCK_METHOD( DeleteEvent, 1 );
+        MOCK_METHOD( GetCurrentParent, 0 );
     };
     MOCK_BASE_CLASS( MockSubPresenter, gui::EventPresenter_ABC )
     {
@@ -202,6 +203,7 @@ namespace
         {
             // can't know the generated uuid here, so can't expect with( state )
             MOCK_EXPECT( timelineHandler->CreateEvent ).once();
+            MOCK_EXPECT( timelineHandler->GetCurrentParent ).once().returns( std::string() );
             MOCK_EXPECT( subPresenter->FillFrom ).once();
             MOCK_EXPECT( subPresenter->ShouldEnableTrigger ).once().returns( false );
             MOCK_EXPECT( subPresenter->ShouldEnableClear ).once().returns( false );

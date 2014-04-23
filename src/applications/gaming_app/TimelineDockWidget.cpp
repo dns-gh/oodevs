@@ -93,6 +93,7 @@ const boost::shared_ptr< TimelineWebView >& TimelineDockWidget::GetWebView() con
 void TimelineDockWidget::Connect()
 {
     mainView_ = AddView( true );
+    connect( mainView_, SIGNAL( ShowOnlyFilterChanged( const std::string& ) ), this, SLOT( OnShowOnlyFilterChanged( const std::string& ) ) );
     tabWidget_->setVisible( true );
     if( webView_ )
         webView_->Connect();
@@ -118,7 +119,7 @@ void TimelineDockWidget::Disconnect()
 // -----------------------------------------------------------------------------
 QWidget* TimelineDockWidget::AddView( bool main )
 {
-    TimelineToolBar* toolBar = main ? new TimelineToolBar( config_ ) : new TimelineToolBar( *static_cast< TimelineToolBar* >( tabWidget_->widget( 0 ) ) );
+    TimelineToolBar* toolBar = main ? new TimelineToolBar( controllers_, config_ ) : new TimelineToolBar( *static_cast< TimelineToolBar* >( tabWidget_->widget( 0 ) ) );
     connect( toolBar, SIGNAL( CenterView() ), webView_.get(), SLOT( OnCenterView() ) );
     connect( toolBar, SIGNAL( AddView() ), this, SLOT( AddView() ) );
     connect( toolBar, SIGNAL( RemoveCurrentView() ), this, SLOT( RemoveCurrentView() ) );
@@ -132,6 +133,7 @@ QWidget* TimelineDockWidget::AddView( bool main )
     connect( toolBar, SIGNAL( EngagedFilterToggled( bool ) ), webView_.get(), SLOT( OnEngagedFilterToggled( bool ) ) );
     connect( toolBar, SIGNAL( ServicesFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnServicesFilterChanged( const std::string& ) ) );
     connect( toolBar, SIGNAL( KeywordFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnKeywordFilterChanged( const std::string& ) ) );
+    connect( toolBar, SIGNAL( HideHierarchiesFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnHideHierarchiesFilterChanged( const std::string& ) ) );
     const int index = tabWidget_->addTab( toolBar, "" );
     tabWidget_->setTabText( index, main ? tr( "Main" ): tr( "View %1" ).arg( ++maxTabNumber_ ) );
     tabWidget_->setCurrentIndex( index );
@@ -159,7 +161,9 @@ void TimelineDockWidget::OnCurrentChanged( int index )
         webView_->UpdateFilters( toolbar->GetEntityFilter(),
                                  toolbar->GetEngagedFilter(),
                                  toolbar->GetServicesFilter(),
-                                 toolbar->GetKeywordFilter() );
+                                 toolbar->GetKeywordFilter(),
+                                 toolbar->GetHideHierarchiesFilter(),
+                                 toolbar->GetShowOnlyFilter() );
 }
 
 namespace
@@ -213,7 +217,9 @@ void TimelineDockWidget:: NotifyUpdated( const kernel::Filter_ABC& filter )
             webView_->UpdateFilters( main->GetEntityFilter(),
                                      main->GetEngagedFilter(),
                                      main->GetServicesFilter(),
-                                     main->GetKeywordFilter() );
+                                     main->GetKeywordFilter(),
+                                     main->GetHideHierarchiesFilter(),
+                                     main->GetShowOnlyFilter() );
     }
 }
 
@@ -249,4 +255,14 @@ void TimelineDockWidget::OnRenameTab()
 void TimelineDockWidget::OnLoadRequested()
 {
     tabWidget_->setCurrentIndex( tabWidget_->indexOf( mainView_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::OnShowOnlyFilterChanged
+// Created: ABR 2014-04-16
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::OnShowOnlyFilterChanged( const std::string& uuid )
+{
+    AddView( false );
+    webView_->OnShowOnlyFilterChanged( uuid );
 }

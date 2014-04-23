@@ -10,27 +10,37 @@
 #include "gaming_app_pch.h"
 #include "TimelineToolBar.h"
 #include "moc_TimelineToolBar.cpp"
+#include "clients_gui/Event.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/SearchLineEdit.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/ActionController.h"
 #include "tools/ExerciseConfig.h"
+
+#include <timeline/api.h>
+#include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: TimelineToolBar constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineToolBar::TimelineToolBar( const tools::ExerciseConfig& config )
+TimelineToolBar::TimelineToolBar( kernel::Controllers& controllers,
+                                  const tools::ExerciseConfig& config )
     : QToolBar( 0 )
+    , eventActionsController_( controllers.eventActions_ )
     , config_( config )
     , filters_( tr( "Actions files (*.ord)" )  + ";;" + tr( "Timeline session files (*.timeline)" ) )
     , displayEngaged_( false )
     , displayOrders_( true )
     , displayTasks_( true )
+    , contextMenuEvent_( controllers )
+    , main_( true )
 {
-    Initialize( true );
+    Initialize();
+    eventActionsController_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,21 +48,26 @@ TimelineToolBar::TimelineToolBar( const tools::ExerciseConfig& config )
 // Created: SLI 2013-11-21
 // -----------------------------------------------------------------------------
 TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
-    : config_( other.config_ )
+    : eventActionsController_( other.eventActionsController_ )
+    , config_( other.config_ )
     , entityFilter_( other.entityFilter_ )
     , filters_( other.filters_ )
     , displayEngaged_( other.displayEngaged_ )
     , displayOrders_( other.displayOrders_ )
     , displayTasks_( other.displayTasks_ )
+    , contextMenuEvent_( other.contextMenuEvent_ )
+    , showOnlyFilter_( other.showOnlyFilter_ )
+    , hideHierarchiesFilter_( other.hideHierarchiesFilter_ )
+    , main_( false )
 {
-    Initialize( false );
+    Initialize();
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineToolBar::Initialize
 // Created: SLI 2013-11-21
 // -----------------------------------------------------------------------------
-void TimelineToolBar::Initialize( bool main )
+void TimelineToolBar::Initialize()
 {
     horizontalView_ = addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/rotate.png" ) ), tr( "Switch orientation" ), this, SIGNAL( ToggleLayoutOrientation() ) );
     filterMenu_ = new QMenu( this );
@@ -62,7 +77,7 @@ void TimelineToolBar::Initialize( bool main )
     button->setPopup( filterMenu_ );
     button->setPopupMode( QToolButton::InstantPopup );
     button->setPopupDelay( 1 );
-    button->setEnabled( main );
+    button->setEnabled( main_ );
     addWidget( button );
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), tr( "Center the view on the simulation time" ), this, SIGNAL( CenterView() ) );
 
@@ -103,7 +118,7 @@ void TimelineToolBar::Initialize( bool main )
     filterMenu_->addSeparator();
     filterMenu_->addAction( taskFilter );
 
-    if( !main )
+    if( !main_ )
         addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
 }
 
@@ -113,7 +128,8 @@ void TimelineToolBar::Initialize( bool main )
 // -----------------------------------------------------------------------------
 TimelineToolBar::~TimelineToolBar()
 {
-    // NOTHING
+    if( main_ )
+        eventActionsController_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -238,4 +254,92 @@ void TimelineToolBar::OnFilterKeyword( const QString& keyword )
 {
     keywordFilter_ = keyword.toStdString();
     emit KeywordFilterChanged( keywordFilter_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::GetShowOnlyFilter
+// Created: ABR 2014-04-16
+// -----------------------------------------------------------------------------
+const std::string& TimelineToolBar::GetShowOnlyFilter() const
+{
+    return showOnlyFilter_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::NotifyContextMenu
+// Created: ABR 2014-04-15
+// -----------------------------------------------------------------------------
+void TimelineToolBar::NotifyContextMenu( const gui::Event& event, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    if( event.GetType() == eEventTypes_Task && !event.GetEvent().end.empty() )
+    {
+        contextMenuEvent_ = &event;
+        menu.addSeparator();
+        menu.InsertItem( "Command", tr( "Add children events" ), this, SLOT( OnAddShowOnlyFilter() ) );
+        menu.addSeparator();
+        auto it = std::find( hideHierarchiesFilter_.begin(), hideHierarchiesFilter_.end(), event.GetEvent().uuid );
+        if( it == hideHierarchiesFilter_.end() )
+            menu.InsertItem( "Command", tr( "Hide children" ), this, SLOT( OnHideChildren() ) );
+        else
+            menu.InsertItem( "Command", tr( "Show children" ), this, SLOT( OnShowChildren() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnAddShowOnlyFilter
+// Created: ABR 2014-04-15
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnAddShowOnlyFilter()
+{
+    if( contextMenuEvent_ )
+    {
+        showOnlyFilter_ = contextMenuEvent_->GetEvent().uuid;
+        emit ShowOnlyFilterChanged( contextMenuEvent_->GetEvent().uuid );
+        showOnlyFilter_.clear();
+    }
+    contextMenuEvent_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnHideChildren
+// Created: ABR 2014-04-16
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnHideChildren()
+{
+    if( !contextMenuEvent_ )
+        return;
+    auto uuid = contextMenuEvent_->GetEvent().uuid;
+    auto it = std::find( hideHierarchiesFilter_.begin(), hideHierarchiesFilter_.end(), uuid );
+    if( it != hideHierarchiesFilter_.end() )
+        throw MASA_EXCEPTION( "Hide hierarchy filter already enabled for uuid " + uuid );
+    hideHierarchiesFilter_.insert( uuid );
+    contextMenuEvent_ = 0;
+    emit HideHierarchiesFilterChanged( GetHideHierarchiesFilter() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnShowChildren
+// Created: ABR 2014-04-16
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnShowChildren()
+{
+    if( !contextMenuEvent_ )
+        return;
+    auto it = std::find( hideHierarchiesFilter_.begin(), hideHierarchiesFilter_.end(), contextMenuEvent_->GetEvent().uuid );
+    if( it == hideHierarchiesFilter_.end() )
+        throw MASA_EXCEPTION( "Hide hierarchy filter not found for uuid " + contextMenuEvent_->GetEvent().uuid );
+    hideHierarchiesFilter_.erase( it );
+    contextMenuEvent_ = 0;
+    emit HideHierarchiesFilterChanged( GetHideHierarchiesFilter() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::GetHideHierarchiesFilter
+// Created: ABR 2014-04-16
+// -----------------------------------------------------------------------------
+std::string TimelineToolBar::GetHideHierarchiesFilter() const
+{
+    return boost::algorithm::join( hideHierarchiesFilter_, "," );
 }

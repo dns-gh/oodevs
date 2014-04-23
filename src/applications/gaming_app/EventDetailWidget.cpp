@@ -33,6 +33,8 @@ EventDetailWidget::EventDetailWidget( gui::EventPresenter& presenter )
     begin_->setReadOnly( true );
     end_ = new QLineEdit();
     end_->setReadOnly( true );
+    parent_ = new QLineEdit();
+    parent_->setReadOnly( true );
     done_ = new QCheckBox();
     done_->setEnabled( false );
     target_ = new QLineEdit();
@@ -59,17 +61,19 @@ EventDetailWidget::EventDetailWidget( gui::EventPresenter& presenter )
     gridLayout->addWidget( begin_, 3, 1 );
     gridLayout->addWidget( new QLabel( "End" ), 4, 0 );
     gridLayout->addWidget( end_, 4, 1 );
-    gridLayout->addWidget( new QLabel( "Done" ), 5, 0 );
-    gridLayout->addWidget( done_, 5, 1 );
-    gridLayout->addWidget( new QLabel( "Action" ), 6, 0, 1, 2 );
-    gridLayout->addWidget( new QLabel( "Target" ), 7, 0 );
-    gridLayout->addWidget( target_, 7, 1 );
-    gridLayout->addWidget( new QLabel( "Apply" ), 8, 0 );
-    gridLayout->addWidget( apply_, 8, 1 );
-    gridLayout->addWidget( new QLabel( "Base64 Payload" ), 9, 0 );
-    gridLayout->addWidget( payloadBase64_, 9, 1 );
-    gridLayout->addWidget( new QLabel( "String Payload" ), 10, 0 );
-    gridLayout->addWidget( payloadString_, 10, 1 );
+    gridLayout->addWidget( new QLabel( "Parent" ), 5, 0 );
+    gridLayout->addWidget( parent_, 5, 1 );
+    gridLayout->addWidget( new QLabel( "Done" ), 6, 0 );
+    gridLayout->addWidget( done_, 6, 1 );
+    gridLayout->addWidget( new QLabel( "Action" ), 7, 0, 1, 2 );
+    gridLayout->addWidget( new QLabel( "Target" ), 8, 0 );
+    gridLayout->addWidget( target_, 8, 1 );
+    gridLayout->addWidget( new QLabel( "Apply" ), 9, 0 );
+    gridLayout->addWidget( apply_, 9, 1 );
+    gridLayout->addWidget( new QLabel( "Base64 Payload" ), 10, 0 );
+    gridLayout->addWidget( payloadBase64_, 10, 1 );
+    gridLayout->addWidget( new QLabel( "String Payload" ), 11, 0 );
+    gridLayout->addWidget( payloadString_, 11, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,6 +96,7 @@ void EventDetailWidget::Purge()
     info_->clear();
     begin_->clear();
     end_->clear();
+    parent_->clear();
     done_->setCheckState( Qt::Unchecked );
     target_->clear();
     apply_->setCheckState( Qt::Unchecked );
@@ -113,6 +118,7 @@ void EventDetailWidget::Build( const gui::EventViewState& state )
     info_->setText( QString::fromStdString( timelineEvent.info ) );
     begin_->setText( QString::fromStdString( timelineEvent.begin ) );
     end_->setText( QString::fromStdString( timelineEvent.end ) );
+    parent_->setText( QString::fromStdString( timelineEvent.parent ) );
     done_->setCheckState( timelineEvent.done ? Qt::Checked : Qt::Unchecked );
     target_->setText( QString::fromStdString( timelineEvent.action.target ) );
     apply_->setCheckState( timelineEvent.action.apply ? Qt::Checked : Qt::Unchecked );

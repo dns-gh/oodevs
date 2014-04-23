@@ -3561,6 +3561,18 @@ Los datos no pueden ser proyectados.</translation>
         <source>Display orders given to engaged units</source>
         <translation>Mostrar órdenes dadas a las unidades comprometidas</translation>
     </message>
+    <message>
+        <source>Add children events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show children</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TimelineView</name>

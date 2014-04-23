@@ -43,6 +43,7 @@ private:
     QTextEdit* info_;
     QLineEdit* begin_;
     QLineEdit* end_;
+    QLineEdit* parent_;
     QCheckBox* done_;
     QLineEdit* target_;
     QCheckBox* apply_;

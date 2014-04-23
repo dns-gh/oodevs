@@ -359,6 +359,7 @@ void EventPresenter::Plan()
     event_->GetEvent().read_only = false;
     if( !timelineHandler_ )
         throw MASA_EXCEPTION( "Can't plan an event without a timeline handler" );
+    event_->GetEvent().parent = timelineHandler_->GetCurrentParent();
     timelineHandler_->CreateEvent( event_->GetEvent(), true );
 }
 

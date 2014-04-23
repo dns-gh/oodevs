@@ -3552,6 +3552,18 @@ This data can&apos;t be projected.</source>
         <source>Display orders given to engaged units</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add children events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show children</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TimelineView</name>
