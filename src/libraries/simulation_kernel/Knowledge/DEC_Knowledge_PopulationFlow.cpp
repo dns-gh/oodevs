@@ -216,9 +216,10 @@ void DEC_Knowledge_PopulationFlow::Prepare()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPerception& perception )
 {
-    pCurrentPerceptionLevel_ = pHackedPerceptionLevel_ == &PHY_PerceptionLevel::notSeen_ ?
-        &perception.GetCurrentPerceptionLevel() : pHackedPerceptionLevel_;
-    if( flowParts_.Update( perception ) )
+    bool isPerceptionHacked = pHackedPerceptionLevel_ != &PHY_PerceptionLevel::notSeen_;
+    pCurrentPerceptionLevel_ = isPerceptionHacked ? pHackedPerceptionLevel_ : &perception.GetCurrentPerceptionLevel();
+    const T_PointList* shape = ( isPerceptionHacked && pFlowKnown_ ) ? &pFlowKnown_->GetFlowShape() : 0;
+    if( flowParts_.Update( perception, shape ) )
         bFlowPartsUpdated_ = true;
     if( direction_ != perception.GetDirection() )
     {

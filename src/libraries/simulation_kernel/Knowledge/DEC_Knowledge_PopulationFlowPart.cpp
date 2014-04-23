@@ -109,11 +109,22 @@ void DEC_Knowledge_PopulationFlowPart::Prepare()
 // Name: DEC_Knowledge_PopulationFlowPart::Update
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationFlowPerception& perception )
+bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationFlowPerception& perception, const T_PointList* shape )
 {
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
 
-    if( perception.GetCurrentPerceptionLevel() != PHY_PerceptionLevel::notSeen_ )
+    if( shape )
+    {
+        bPerceived_ = true;
+        T_PointVector shapeVector;
+        std::copy( shape->begin(), shape->end(), std::back_inserter( shapeVector ) );
+        if( shape_ != shapeVector )
+        {
+            shape_ = shapeVector;
+            return true;
+        }
+    }
+    else if( perception.GetCurrentPerceptionLevel() != PHY_PerceptionLevel::notSeen_ )
     {
         bPerceived_ = true;
         if( shape_ != perception.GetShape() )
@@ -129,7 +140,7 @@ bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationFlo
 // Name: DEC_Knowledge_PopulationFlowPart::Update
 // Created: NLD 2005-10-28
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCollision& collision  )
+bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCollision& collision )
 {
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( bPerceived_ )

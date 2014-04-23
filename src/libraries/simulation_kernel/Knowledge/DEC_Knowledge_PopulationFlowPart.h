@@ -49,7 +49,7 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    bool Update( const DEC_Knowledge_PopulationFlowPerception& perception );
+    bool Update( const DEC_Knowledge_PopulationFlowPerception& perception, const T_PointList* shape );
     bool Update( const DEC_Knowledge_PopulationCollision& collision );
     bool UpdateRelevance( const double rMaxLifeTime );
     bool Clean();
