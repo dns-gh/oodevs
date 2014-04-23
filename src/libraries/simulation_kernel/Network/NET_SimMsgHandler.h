@@ -54,6 +54,7 @@ private:
     void OnReceiveCtrlClientAnnouncement( const std::string& from );
     void OnReceiveMagicAction( const sword::MagicAction& msg, uint32_t ctx, uint32_t clientId );
     void OnReceiveDebugError( const sword::MissionParameters& params, sword::MagicActionAck& ack );
+    void OnReceiveSegmentRequest( const sword::SegmentRequest& msg, uint32_t ctx, uint32_t clientId );
     //@}
 
     //! @name Types

@@ -38,7 +38,7 @@
 #include "Urban/UrbanPhysicalCapacity.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_ObjectManager.h"
-#include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_Analyzer.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/smart_ptr/make_shared.hpp>
 #include <boost/foreach.hpp>
@@ -2126,27 +2126,39 @@ bool DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau( const MIL_Fuseau* pFuse
 // -----------------------------------------------------------------------------
 namespace
 {
-
-boost::shared_ptr< MT_Vector2D > ComputeObstaclePosition( const MIL_Fuseau& fuseau,
-        MT_Vector2D* pCenter, const std::string& type, double rRadius )
-{
-    if( !pCenter )
-        throw MASA_EXCEPTION( "Compute obstacle position with null center" );
-    boost::shared_ptr< MT_Vector2D > pResultPos ( new MT_Vector2D( *pCenter ) );
-
-    const MIL_ObjectType_ABC& object = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( type );
-    const TerrainHeuristicCapacity* pCapacity = object.GetCapacity< TerrainHeuristicCapacity >();
-    if ( pCapacity )
+    boost::shared_ptr< MT_Vector2D > ComputeObstaclePosition( const MIL_Fuseau& fuseau,
+            MT_Vector2D* pCenter, const std::string& type, double rRadius )
     {
-        sBestNodeForObstacle  costEvaluationFunctor( fuseau, *pCapacity, *pCenter, rRadius );
-        TER_World::GetWorld().GetAnalyzerManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );
-        if( costEvaluationFunctor.FoundAPoint() )
-            pResultPos.reset( new MT_Vector2D( costEvaluationFunctor.BestPosition() ) );
+        if( !pCenter )
+            throw MASA_EXCEPTION( "Compute obstacle position with null center" );
+        boost::shared_ptr< MT_Vector2D > pResultPos( new MT_Vector2D( *pCenter ) );
+        const MIL_ObjectType_ABC& object = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( type );
+        const TerrainHeuristicCapacity* pCapacity = object.GetCapacity< TerrainHeuristicCapacity >();
+        if ( !pCapacity )
+            return pResultPos;
+        const double rSquareRadius_ = rRadius * rRadius;
+        int score = std::numeric_limits< int >::min();
+        TER_World::GetWorld().GetAnalyzer().ApplyOnNodesWithinCircle( *pCenter, rRadius,
+            [&]( const MT_Vector2D& pos, const TerrainData& nPassability )
+            {
+                const double rTestNodeSquareDistance = pCenter->SquareDistance( pos );
+                if( rTestNodeSquareDistance > rSquareRadius_ || !fuseau.IsInside( pos ) )
+                    return;
+                const int nTestNodeScore = pCapacity->ComputePlacementScore( pos, nPassability );
+                if( nTestNodeScore == -1 )
+                    return;
+                if( score == std::numeric_limits< int >::min()
+                    || nTestNodeScore > score
+                    || nTestNodeScore == score && rTestNodeSquareDistance < pCenter->SquareDistance( *pResultPos ) )
+                {
+                    score = nTestNodeScore;
+                    *pResultPos = pos;
+                }
+            } );
+        return pResultPos;
     }
-    return pResultPos;
-}
 
-} // namespace
+}
 
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePositionForUnit(
     const MIL_AgentPion& pion, MT_Vector2D* pCenter, const std::string& type, double rRadius )

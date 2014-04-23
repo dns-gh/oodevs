@@ -28,7 +28,6 @@ namespace spatialcontainer
 typedef boost::shared_ptr< spatialcontainer::RetractationHandle > RetractationPtr;
 
 class TerrainPathfinder;
-class TER_NodeFunctor_ABC;
 class TER_PathFindRequest_ABC;
 class TER_DynamicData;
 typedef boost::shared_ptr< TER_DynamicData > DynamicDataPtr;

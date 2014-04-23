@@ -19,8 +19,6 @@
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/TerrainHeuristicCapacity.h"
 #include "Tools/MIL_Tools.h"
-
-#include "simulation_terrain/TER_AnalyzerManager.h"
 #include "simulation_terrain/TER_World.h"
 
 #include <boost/make_shared.hpp>
@@ -382,54 +380,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetLeavingAreaPosition( 
         pResult = boost::make_shared< MT_Vector2D >( vResult );
 
     return pResult;
-}
-
-namespace
-{
-    // =============================================================================
-    // $$$$ NLD - A TRIER - DEGUEU
-    // =============================================================================
-    struct sBestNodeForObstacle
-    {
-        sBestNodeForObstacle( const MIL_Fuseau& fuseau, const TerrainHeuristicCapacity& heuristic, const MT_Vector2D& vCenter, double rRadius )
-            : fuseau_      ( fuseau )
-            , heuristic_   ( heuristic )
-            , center_      ( vCenter )
-            , rSquareRadius_( rRadius * rRadius )
-            , bestPos_()
-            , nLastScore_( std::numeric_limits< int >::min() )
-        {
-        }
-        void Visit( const MT_Vector2D& pos, const TerrainData& nPassability )
-        {
-            const double rTestNodeSquareDistance = center_.SquareDistance( pos );
-            if( rTestNodeSquareDistance > rSquareRadius_ || !fuseau_.IsInside( pos ) )
-                return;
-
-            const int nTestNodeScore = heuristic_.ComputePlacementScore( pos, nPassability );
-            if( nTestNodeScore == -1 )
-                return;
-
-            if( nLastScore_ == std::numeric_limits< int >::min()
-             || nTestNodeScore  > nLastScore_
-             || ( nTestNodeScore  == nLastScore_ && rTestNodeSquareDistance < center_.SquareDistance( bestPos_ ) ) )
-            {
-                nLastScore_ = nTestNodeScore;
-                bestPos_ = pos;
-            }
-        }
-        bool FoundAPoint() const { return nLastScore_ != std::numeric_limits< int >::min(); };
-        const MT_Vector2D& BestPosition() const { return bestPos_; };
-
-    private:
-        sBestNodeForObstacle& operator=( const sBestNodeForObstacle& );
-        const MIL_Fuseau&         fuseau_;
-        const TerrainHeuristicCapacity& heuristic_;
-        const MT_Vector2D&        center_;
-        double                  rSquareRadius_;
-        MT_Vector2D               bestPos_;
-        int                       nLastScore_;
-    };
 }
 
 //-----------------------------------------------------------------------------

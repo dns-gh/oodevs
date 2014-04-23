@@ -162,6 +162,7 @@ namespace client
     GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, ControlEnableVisionConesAck      , control_enable_vision_cones_ack           )
     GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, ListEnabledVisionConesAck        , list_enabled_vision_cones_ack             )
     GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, PathfindRequestAck               , pathfind_request_ack                      )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, SegmentRequestAck                , segment_request_ack                      )
 }
 
 #endif // __protocol_ClientSenders_h_

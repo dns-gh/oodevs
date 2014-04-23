@@ -161,7 +161,7 @@ void GlWidget::PickGL()
 {
     if( bMulti_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
     {
-        setAutoUpdate( false );;
+        setAutoUpdate( false );
         for( T_RenderPasses::iterator it = passes_.begin(); it != passes_.end(); ++it )
             if( (*it)->GetName() == "main" )
                 PickingPass( **it );

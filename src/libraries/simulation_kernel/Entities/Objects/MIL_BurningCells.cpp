@@ -15,7 +15,7 @@
 #include "FireAttribute.h"
 #include "BurnSurfaceAttribute.h"
 #include "FirePropagationModifierCapacity.h"
-#include "simulation_terrain/TER_AnalyzerManager.h"
+#include "simulation_terrain/TER_Analyzer.h"
 #include "simulation_terrain/TER_World.h"
 #include "meteo/Meteo.h"
 #include "Tools/MIL_Tools.h"
@@ -254,7 +254,7 @@ void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Ob
 // -----------------------------------------------------------------------------
 void MIL_BurningCells::FindTerrainData( const geometry::Point2d& center, float radius, TerrainData& data )
 {
-    data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinCircle( MT_Vector2D( center.X(), center.Y() ), radius );
+    data = TER_Analyzer::GetAnalyzer().FindTerrainDataWithinCircle( MT_Vector2D( center.X(), center.Y() ), radius );
 
     // $$$$ BCI 2011-04-05: grosse bidouille pour trouver un semblant de type de terrain quand le pathfind n'assure pas...
     const TerrainData unknow;

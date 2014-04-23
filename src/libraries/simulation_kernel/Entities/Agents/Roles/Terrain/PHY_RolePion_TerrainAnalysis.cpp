@@ -27,7 +27,7 @@
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "simulation_terrain/TER_AnalyzerManager.h"
+#include "simulation_terrain/TER_Analyzer.h"
 #include <spatialcontainer/TerrainData.h>
 
 // -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ void PHY_RolePion_TerrainAnalysis::UpdateCrossroads()
             ++it;
     }
     //Add new points
-    std::vector< boost::shared_ptr< MT_Vector2D > > temp = TER_AnalyzerManager::GetAnalyzerManager().FindCrossroadsWithinCircle( lastPos_, static_cast< float >( range ) );
+    std::vector< boost::shared_ptr< MT_Vector2D > > temp = TER_Analyzer::GetAnalyzer().FindCrossroadsWithinCircle( lastPos_, static_cast< float >( range ) );
     for( auto it = temp.begin(); it != temp.end(); ++it )
         crossroadsBuffer_.insert( std::pair< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >( **it, *it ) );
     //Remove outside fuseau
@@ -152,7 +152,7 @@ void PHY_RolePion_TerrainAnalysis::UpdateSafety( float radius, float safetyDista
     }
     //Add new points
     std::vector< boost::shared_ptr< MT_Vector2D > > positions;
-    TER_AnalyzerManager::GetAnalyzerManager().FindSafetyPositionsWithinCircle( lastPos_, radius, safetyDistance, positions );
+    TER_Analyzer::GetAnalyzer().FindSafetyPositionsWithinCircle( lastPos_, radius, safetyDistance, positions );
     for( auto it = positions.begin(); it != positions.end(); ++it )
         safetyBuffer_.insert( std::pair< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >( **it, *it ) );
     //Remove outside fuseau
@@ -196,7 +196,7 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vecto
         return true;
     for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
     {
-        const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
+        const TerrainData data = TER_Analyzer::GetAnalyzer().Pick( *it );
         double maxSpeed = owner_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed( data );
         if( maxSpeed > 0 )
             return true;
