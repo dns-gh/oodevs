@@ -173,5 +173,5 @@ func (s *TestSuite) TestCreateDestroyPathfind(c *C) {
 	// Destroy pathfind
 	err = client.DestroyPathfind(pathfind.Id)
 	c.Assert(err, IsNil)
-	c.Assert(len(client.Model.GetData().Pathfinds), Equals, 0)
+	c.Assert(client.Model.GetData().Pathfinds, HasLen, 0)
 }

@@ -1851,11 +1851,8 @@ func (c *Client) SegmentRequest(position Point, terrains []sword.TerrainType, co
 	return segments, err
 }
 
-func (c *Client) CreatePathfind(unitId uint32, points ...Point) (*Pathfind, error) {
-	msg := CreateMagicAction(MakeParameters(MakePathfindRequest(unitId, points...)),
-		sword.MagicAction_pathfind_creation)
-	var id uint32
-	handler := func(msg *sword.SimToClient_Content) error {
+func pathfindHandler(id *uint32) simHandler {
+	return func(msg *sword.SimToClient_Content) error {
 		reply := msg.GetMagicActionAck()
 		if reply == nil {
 			return unexpected(msg)
@@ -1868,10 +1865,16 @@ func (c *Client) CreatePathfind(unitId uint32, points ...Point) (*Pathfind, erro
 		if value == nil {
 			return invalid("result", reply.GetResult())
 		}
-		id = value.GetPathfind().GetId()
+		*id = value.GetPathfind().GetId()
 		return nil
 	}
-	err := <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) CreatePathfind(unitId uint32, points ...Point) (*Pathfind, error) {
+	msg := CreateMagicAction(MakeParameters(MakePathfindRequest(unitId, points...)),
+		sword.MagicAction_pathfind_creation)
+	var id uint32
+	err := <-c.postSimRequest(msg, pathfindHandler(&id))
 	if err != nil {
 		return nil, err
 	}
@@ -1894,23 +1897,7 @@ func (c *Client) DestroyPathfind(pathfindId uint32) error {
 	msg := CreateMagicAction(MakeParameters(MakePathfind(pathfindId)),
 		sword.MagicAction_pathfind_destruction)
 	var id uint32
-	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		code := reply.GetErrorCode()
-		if code != sword.MagicActionAck_no_error {
-			return makeError(reply, int32(code), sword.MagicActionAck_ErrorCode_name)
-		}
-		value := GetParameterValue(reply.GetResult(), 0)
-		if value == nil {
-			return invalid("result", reply.GetResult())
-		}
-		id = value.GetPathfind().GetId()
-		return nil
-	}
-	err := <-c.postSimRequest(msg, handler)
+	err := <-c.postSimRequest(msg, pathfindHandler(&id))
 	if err != nil {
 		return err
 	}
