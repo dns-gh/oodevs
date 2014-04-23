@@ -3171,9 +3171,9 @@ message SegmentRequestAck {
         error_invalid_parameter = 1;
     }
     //! Returns computed segments
-    repeated Segment   segments       = 2;
+    repeated Segment   segments       = 1;
     //! Reason for the failure of the request
-    required ErrorCode error_code     = 1;
+    required ErrorCode error_code     = 2;
     //! More detailed account of the returned error
     optional string    error_msg      = 3;
 }
