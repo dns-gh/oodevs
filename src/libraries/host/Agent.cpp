@@ -83,17 +83,6 @@ Tree Dispatch( T& controller, const U& operand )
 }
 
 template< typename T, typename U >
-Tree CheckAndDispatch( T& controller, const web::User& user, const U& operand )
-{
-    auto ptr = operand( controller );
-    if( !ptr )
-        throw HttpException( web::NOT_FOUND );
-    if( !GetFilterUser( user )( *ptr ) )
-        throw HttpException( web::FORBIDDEN );
-    return ptr->GetProperties();
-}
-
-template< typename T, typename U >
 Tree ClusterDispatch( T* controller, const U& operand )
 {
     if( !controller )
@@ -379,7 +368,7 @@ size_t Agent::CountSessions( const web::User& user ) const
 // -----------------------------------------------------------------------------
 Tree Agent::GetSession( const web::User& user, const Uuid& id ) const
 {
-    return CheckAndDispatch( sessions_, user, boost::bind( &SessionController_ABC::Get, _1, user.node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Get, _1, user.node, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -398,7 +387,7 @@ Tree Agent::CreateSession( const web::User& user, const web::session::Config& cf
 // -----------------------------------------------------------------------------
 Tree Agent::DeleteSession( const web::User& user, const Uuid& id )
 {
-    return CheckAndDispatch( sessions_, user, boost::bind( &SessionController_ABC::Delete, _1, user.node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Delete, _1, user.node, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -416,7 +405,7 @@ void Agent::DeleteUser( const web::User& user, int id )
 // -----------------------------------------------------------------------------
 Tree Agent::StartSession( const web::User& user, const Uuid& id, const std::string& checkpoint ) const
 {
-    return CheckAndDispatch( sessions_, user, boost::bind( &SessionController_ABC::Start, _1, user.node, id, checkpoint ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Start, _1, boost::cref( user ), id, checkpoint ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -425,7 +414,7 @@ Tree Agent::StartSession( const web::User& user, const Uuid& id, const std::stri
 // -----------------------------------------------------------------------------
 Tree Agent::StopSession( const web::User& user, const Uuid& id ) const
 {
-    return CheckAndDispatch( sessions_, user, boost::bind( &SessionController_ABC::Stop, _1, user.node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Stop, _1, boost::cref( user ), id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -434,7 +423,7 @@ Tree Agent::StopSession( const web::User& user, const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Tree Agent::PauseSession( const web::User& user, const Uuid& id ) const
 {
-    return CheckAndDispatch( sessions_, user, boost::bind( &SessionController_ABC::Pause, _1, user.node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Pause, _1, boost::cref( user ), id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -443,7 +432,7 @@ Tree Agent::PauseSession( const web::User& user, const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Tree Agent::UpdateSession( const web::User& user, const Uuid& id, const Tree& cfg ) const
 {
-    return CheckAndDispatch( sessions_, user, boost::bind( &SessionController_ABC::Update, _1, user.node, id, boost::cref( cfg ) ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Update, _1, boost::cref( user ), id, boost::cref( cfg ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -452,7 +441,7 @@ Tree Agent::UpdateSession( const web::User& user, const Uuid& id, const Tree& cf
 // -----------------------------------------------------------------------------
 Tree Agent::ArchiveSession( const web::User& user, const Uuid& id ) const
 {
-    return CheckAndDispatch( sessions_, user, boost::bind( &SessionController_ABC::Archive, _1, user.node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Archive, _1, boost::cref( user ), id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -461,7 +450,7 @@ Tree Agent::ArchiveSession( const web::User& user, const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Tree Agent::RestoreSession( const web::User& user, const Uuid& id ) const
 {
-    return CheckAndDispatch( sessions_, user, boost::bind( &SessionController_ABC::Restore, _1, user.node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Restore, _1, boost::cref( user ), id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -470,7 +459,7 @@ Tree Agent::RestoreSession( const web::User& user, const Uuid& id ) const
 // -----------------------------------------------------------------------------
 void Agent::DownloadSession( const web::User& user, const Uuid& id, web::Chunker_ABC& dst ) const
 {
-    CheckAndDispatch( sessions_, user, boost::bind( &SessionController_ABC::Download, _1, user.node, id, boost::ref( dst ) ) );
+    Dispatch( sessions_, boost::bind( &SessionController_ABC::Download, _1, boost::cref( user ), id, boost::ref( dst ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -479,7 +468,7 @@ void Agent::DownloadSession( const web::User& user, const Uuid& id, web::Chunker
 // -----------------------------------------------------------------------------
 Tree Agent::ReplaySession( const web::User& user, const Uuid& id ) const
 {
-    return CheckAndDispatch( sessions_, user, boost::bind( &SessionController_ABC::Replay, _1, user, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Replay, _1, boost::cref( user ), id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -488,7 +477,7 @@ Tree Agent::ReplaySession( const web::User& user, const Uuid& id ) const
 // -----------------------------------------------------------------------------
 void Agent::DownloadSessionLog( const web::User& user, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const
 {
-    CheckAndDispatch( sessions_, user, boost::bind( &SessionController_ABC::DownloadLog, _1, user.node, id, boost::ref( dst ), logFile, limitSize, deflate ) );
+    Dispatch( sessions_, boost::bind( &SessionController_ABC::DownloadLog, _1, boost::cref( user ), id, boost::ref( dst ), logFile, limitSize, deflate ) );
 }
 
 // -----------------------------------------------------------------------------

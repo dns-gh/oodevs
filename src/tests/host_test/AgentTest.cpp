@@ -303,7 +303,6 @@ BOOST_FIXTURE_TEST_CASE( agent_count_sessions, Fixture<> )
 BOOST_FIXTURE_TEST_CASE( agent_get_session, Fixture<> )
 {
     MOCK_EXPECT( sessions.Get ).once().with( anotherNode, mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    MOCK_EXPECT( mockSessions[1]->IsAuthorized ).once().with( mock::same( anotherUser ) ).returns( true );
     CheckTree( boost::bind( &Agent_ABC::GetSession, &agent, boost::cref( anotherUser ), mockSessions[1]->GetId() ), mockSessions[1]->GetProperties() );
 }
 
@@ -323,28 +322,18 @@ BOOST_FIXTURE_TEST_CASE( agent_create_session, Fixture<> )
 BOOST_FIXTURE_TEST_CASE( agent_delete_session, Fixture<> )
 {
     MOCK_EXPECT( sessions.Delete ).once().with( anotherNode, mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    MOCK_EXPECT( mockSessions[1]->IsAuthorized ).once().with( mock::same( anotherUser ) ).returns( true );
     CheckTree( boost::bind( &Agent_ABC::DeleteSession, &agent, boost::cref( anotherUser ), mockSessions[1]->GetId() ), mockSessions[1]->GetProperties() );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_start_session, Fixture<> )
 {
-   MOCK_EXPECT( sessions.Start ).once().with( anotherNode, mockSessions[1]->GetId(), mock::any ).returns( mockSessions[1] );
-   MOCK_EXPECT( mockSessions[1]->IsAuthorized ).once().with( mock::same( anotherUser ) ).returns( true );
+   MOCK_EXPECT( sessions.Start ).once().with( mock::same( anotherUser ), mockSessions[1]->GetId(), mock::any ).returns( mockSessions[1] );
    CheckTree( boost::bind( &Agent_ABC::StartSession, &agent, boost::cref( anotherUser ), mockSessions[1]->GetId(), std::string() ), mockSessions[1]->GetProperties() );
-}
-
-BOOST_FIXTURE_TEST_CASE( unauthorized_agent_can_not_start_session, Fixture<> )
-{
-    MOCK_EXPECT( sessions.Start ).once().with( anotherNode, mockSessions[1]->GetId(), mock::any ).returns( mockSessions[1] );
-    MOCK_EXPECT( mockSessions[1]->IsAuthorized ).once().with( mock::same( anotherUser ) ).returns( false );
-    CheckTree( boost::bind( &Agent_ABC::StartSession, &agent, boost::cref( anotherUser ), mockSessions[1]->GetId(), std::string() ), Tree(), false );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_stop_session, Fixture<> )
 {
-    MOCK_EXPECT( sessions.Stop ).once().with( anotherNode, mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    MOCK_EXPECT( mockSessions[1]->IsAuthorized ).once().with( mock::same( anotherUser ) ).returns( true );
+    MOCK_EXPECT( sessions.Stop ).once().with( mock::same( anotherUser ), mockSessions[1]->GetId() ).returns( mockSessions[1] );
     CheckTree( boost::bind( &Agent_ABC::StopSession, &agent, boost::cref( anotherUser ), mockSessions[1]->GetId() ), mockSessions[1]->GetProperties() );
 }
 

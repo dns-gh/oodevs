@@ -16,6 +16,7 @@
 #include "runtime/Utf8.h"
 #include "Session_ABC.h"
 #include "web/User.h"
+#include "web/HttpException.h"
 
 #include <boost/uuid/uuid_io.hpp>
 
@@ -318,12 +319,14 @@ void SessionController::DeleteUser( T_Session session, const web::User& user, in
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
 template< typename T >
-SessionController::T_Session SessionController::Dispatch( const Uuid& node, const Uuid& id, const T& operand ) const
+SessionController::T_Session SessionController::Dispatch( const web::User& user, const Uuid& id, const T& operand ) const
 {
     SessionController::T_Session ptr = sessions_.Get( id );
     if( !ptr )
         return ptr;
-    if( !node.is_nil() && node != ptr->GetNode() )
+    if( !ptr->IsAuthorized( user ) )
+       throw web::HttpException( web::FORBIDDEN );
+    if( !user.node.is_nil() && user.node != ptr->GetNode() )
         return T_Session();
     Apply( ptr, operand );
     return ptr;
@@ -343,9 +346,9 @@ namespace
 // Name: SessionController::Start
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Start( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const
+SessionController::T_Session SessionController::Start( const web::User& user, const Uuid& id, const std::string& checkpoint ) const
 {
-    return Dispatch( node, id, boost::bind( &StartSession, _1, simulation_,
+    return Dispatch( user, id, boost::bind( &StartSession, _1, simulation_,
                      replayer_, timeline_, checkpoint ) );
 }
 
@@ -353,56 +356,56 @@ SessionController::T_Session SessionController::Start( const Uuid& node, const U
 // Name: SessionController::Stop
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Stop( const Uuid& node, const Uuid& id ) const
+SessionController::T_Session SessionController::Stop( const web::User& user, const Uuid& id ) const
 {
-    return Dispatch( node, id, boost::bind( &Session_ABC::Stop, _1 ) );
+    return Dispatch( user, id, boost::bind( &Session_ABC::Stop, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SessionController::Pause
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Pause( const Uuid& node, const Uuid& id ) const
+SessionController::T_Session SessionController::Pause( const web::User& user, const Uuid& id ) const
 {
-    return Dispatch( node, id, boost::bind( &Session_ABC::Pause, _1 ) );
+    return Dispatch( user, id, boost::bind( &Session_ABC::Pause, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SessionController::Update
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Update( const Uuid& node, const Uuid& id, const Tree& cfg ) const
+SessionController::T_Session SessionController::Update( const web::User& user, const Uuid& id, const Tree& cfg ) const
 {
-    return Dispatch( node, id, boost::bind( &Session_ABC::Update, _1, boost::cref( cfg ) ) );
+    return Dispatch( user, id, boost::bind( &Session_ABC::Update, _1, boost::cref( cfg ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SessionController::Archive
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Archive( const Uuid& node, const Uuid& id ) const
+SessionController::T_Session SessionController::Archive( const web::User& user, const Uuid& id ) const
 {
-    return Dispatch( node, id, boost::bind( &Session_ABC::Archive, _1 ) );
+    return Dispatch( user, id, boost::bind( &Session_ABC::Archive, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SessionController::Restore
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Restore( const Uuid& node, const Uuid& id ) const
+SessionController::T_Session SessionController::Restore( const web::User& user, const Uuid& id ) const
 {
-    return Dispatch( node, id, boost::bind( &Session_ABC::Restore, _1 ) );
+    return Dispatch( user, id, boost::bind( &Session_ABC::Restore, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SessionController::Download
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Download( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const
+SessionController::T_Session SessionController::Download( const web::User& user, const Uuid& id, web::Chunker_ABC& dst ) const
 {
     try
     {
-        return Dispatch( node, id, boost::bind( &Session_ABC::Download, _1, boost::ref( dst ) ) );
+        return Dispatch( user, id, boost::bind( &Session_ABC::Download, _1, boost::ref( dst ) ) );
     }
     catch( const std::exception& err )
     {
@@ -428,7 +431,7 @@ bool Replay( Session_ABC::T_Ptr& next, Session_ABC::T_Ptr current, const web::Us
 SessionController::T_Session SessionController::Replay( const web::User& user, const Uuid& id )
 {
     T_Session next;
-    Dispatch( user.node, id, boost::bind( &::Replay, boost::ref( next ), _1, boost::ref( user ) ) );
+    Dispatch( user, id, boost::bind( &::Replay, boost::ref( next ), _1, boost::ref( user ) ) );
     if( !next )
         return next;
     sessions_.Attach( next );
@@ -458,12 +461,12 @@ void SessionController::NotifyNode( const Uuid& node )
 // Name: SessionController::DownloadLog
 // Created: NPT 2013-07-10
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::DownloadLog( const Uuid& node,
+SessionController::T_Session SessionController::DownloadLog( const web::User& user,
     const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const
 {
     try
     {
-        return Dispatch( node, id, boost::bind( &Session_ABC::DownloadLog, _1, boost::ref( dst ), boost::ref( logFile ), boost::ref( limitSize ), boost::ref( deflate ) ) );
+        return Dispatch( user, id, boost::bind( &Session_ABC::DownloadLog, _1, boost::ref( dst ), boost::ref( logFile ), boost::ref( limitSize ), boost::ref( deflate ) ) );
     }
     catch( const std::exception& err )
     {

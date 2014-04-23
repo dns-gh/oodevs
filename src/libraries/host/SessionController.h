@@ -71,16 +71,16 @@ public:
     virtual T_Session   Create     ( const web::User& user, const web::session::Config& cfg, const std::string& exercise );
     virtual T_Session   Delete     ( const Uuid& node, const Uuid& id );
     virtual void        DeleteUser ( const web::User& user, int id );
-    virtual T_Session   Start      ( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const;
-    virtual T_Session   Stop       ( const Uuid& node, const Uuid& id ) const;
-    virtual T_Session   Pause      ( const Uuid& node, const Uuid& id ) const;
-    virtual T_Session   Update     ( const Uuid& node, const Uuid& id, const Tree& cfg ) const;
-    virtual T_Session   Archive    ( const Uuid& node, const Uuid& id ) const;
-    virtual T_Session   Restore    ( const Uuid& node, const Uuid& id ) const;
-    virtual T_Session   Download   ( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const;
+    virtual T_Session   Start      ( const web::User& user, const Uuid& id, const std::string& checkpoint ) const;
+    virtual T_Session   Stop       ( const web::User& user, const Uuid& id ) const;
+    virtual T_Session   Pause      ( const web::User& user, const Uuid& id ) const;
+    virtual T_Session   Update     ( const web::User& user, const Uuid& id, const Tree& cfg ) const;
+    virtual T_Session   Archive    ( const web::User& user, const Uuid& id ) const;
+    virtual T_Session   Restore    ( const web::User& user, const Uuid& id ) const;
+    virtual T_Session   Download   ( const web::User& user, const Uuid& id, web::Chunker_ABC& dst ) const;
     virtual T_Session   Replay     ( const web::User& user, const Uuid& id );
     virtual void        NotifyNode ( const Uuid& node );
-    virtual T_Session   DownloadLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize,
+    virtual T_Session   DownloadLog( const web::User& user, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize,
                                      bool deflate ) const;
 
     //@}
@@ -103,7 +103,7 @@ private:
     //! @name Private template helpers
     //@{
     template< typename T >
-    T_Session Dispatch( const Uuid& node, const Uuid& id, const T& operand ) const;
+    T_Session Dispatch( const web::User& user, const Uuid& id, const T& operand ) const;
     typedef boost::function< bool( const T_Session& ) > T_Operand;
     void Apply( T_Session session, const T_Operand& operand ) const;
     //@}

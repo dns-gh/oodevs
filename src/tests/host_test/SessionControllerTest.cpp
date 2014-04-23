@@ -69,7 +69,7 @@ namespace
 
     const std::string idNodeText = "56789abc-1234-1234-1234-123412345678";
     const Uuid idNode = boost::uuids::string_generator()( idNodeText );
-    const web::User standardUser = web::User( 42, "standard", web::USER_TYPE_ADMINISTRATOR, boost::uuids::string_generator()( idNodeText ) );
+    const web::User standardUser = web::User( 42, "standard", web::USER_TYPE_ADMINISTRATOR, idNode );
 
     const std::string idActiveText = "12345678-1234-1234-1234-123456789abc";
     const Uuid idActive = boost::uuids::string_generator()( idActiveText );
@@ -193,7 +193,8 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts, Fixture )
     Reload();
     const std::string checkpoint = "checkpoint";
     MOCK_EXPECT( idle->Start ).once().with( mock::any, mock::any, checkpoint ).returns( true );
-    SessionController::T_Session session = control.Start( idNode, idIdle, checkpoint );
+    MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
+    SessionController::T_Session session = control.Start( standardUser, idIdle, checkpoint );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
 }
 
@@ -201,7 +202,8 @@ BOOST_FIXTURE_TEST_CASE( session_controller_stops, Fixture )
 {
     Reload();
     MOCK_EXPECT( active->Stop ).once().returns( true );
-    SessionController::T_Session session = control.Stop( idNode, idActive );
+    MOCK_EXPECT( active->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
+    SessionController::T_Session session = control.Stop( standardUser, idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
 }
 
@@ -209,9 +211,11 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts_with_right_app, Fixture )
 {
     Reload();
     MOCK_EXPECT( idle->Start ).once().with( simulation, timeline, mock::any ).returns( true );
-    control.Start( idNode, idIdle, std::string() );
+    MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
+    control.Start( standardUser, idIdle, std::string() );
     MOCK_RESET( idle->IsReplay );
     MOCK_EXPECT( idle->IsReplay ).once().returns( true );
+    MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
     MOCK_EXPECT( idle->Start ).once().with( replayer, timeline, mock::any ).returns( true );
-    control.Start( idNode, idIdle, std::string() );
+    control.Start( standardUser, idIdle, std::string() );
 }
