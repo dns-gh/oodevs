@@ -117,6 +117,7 @@ namespace
         dst.info       = ToString( *ui.info );
         dst.begin      = ToString( *ui.begin );
         dst.end        = ToBool( *ui.endLabel ) ? std::max( ToString( *ui.end ), dst.begin ) : std::string();
+        dst.parent     = ToString( *ui.parent );
         dst.error_code = ToInteger( *ui.error_code );
         dst.error_text = ToString( *ui.error_text );
         dst.read_only  = ToBool( *ui.read_only );
@@ -403,17 +404,19 @@ namespace
             ",info:%3"
             ",begin:%4"
             ",end:%5"
-            ",error_code:%6"
-            ",error_text:%7"
-            ",read_only:%8"
-            ",done:%9"
-            ",action:%10"
+            ",parent:%6"
+            ",error_code:%7"
+            ",error_text:%8"
+            ",read_only:%9"
+            ",done:%10"
+            ",action:%11"
             "}" )
             .arg( QString::fromStdString( event.uuid ) )
             .arg( QString::fromStdString( event.name ) )
             .arg( QString::fromStdString( event.info ) )
             .arg( QString::fromStdString( event.begin ) )
             .arg( QString::fromStdString( event.end ) )
+            .arg( QString::fromStdString( event.parent ) )
             .arg( event.error_code )
             .arg( QString::fromStdString( event.error_text ) )
             .arg( event.read_only )

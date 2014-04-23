@@ -82,6 +82,7 @@ struct Event
     std::string info;
     std::string begin;
     std::string end;
+    std::string parent;
     std::string error_text;
     int         error_code;
     bool        read_only;
@@ -165,7 +166,6 @@ struct Configuration
     Configuration()
         : sizeof_   ( sizeof( Configuration ) )
         , widget    ( 0 )
-        , external  ( true )
         , debug_port( 0 )
     {
         // NOTHING
@@ -180,7 +180,6 @@ struct Configuration
     tools::Path client_log;
     QWidget*    widget;
     std::string url;
-    bool        external;   ///< use external process
     int         debug_port; ///< optional remove debug port
 private:
     size_t      sizeof_;

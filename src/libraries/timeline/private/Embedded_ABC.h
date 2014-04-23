@@ -45,7 +45,7 @@ public:
     virtual ~Embedded_ABC() {}
 
     /// Default factory
-    static std::auto_ptr< Embedded_ABC > Factory( tools::ipc::Device& device, const controls::T_Logger& log, bool external );
+    static std::auto_ptr< Embedded_ABC > Factory( tools::ipc::Device& device, const controls::T_Logger& log );
 
     /// Public methods
     virtual void Start( const Configuration& cfg, const std::string& uuid ) = 0;
