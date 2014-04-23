@@ -11,7 +11,11 @@
 #define __PathRequest_h_
 
 class DEC_PathResult;
-class DEC_PathFind_Manager;
+
+namespace client
+{
+    class ComputePathfindAck;
+}
 
 // =============================================================================
 /** @class  PathRequest
@@ -24,16 +28,13 @@ class PathRequest : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PathRequest( boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
-                          DEC_PathFind_Manager& pathfindManager, unsigned int nCtx, unsigned int clientId,
-                          unsigned long id, unsigned int unitId, bool stored );
-    virtual ~PathRequest();
+             PathRequest( const boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
+                          unsigned int nCtx, unsigned int clientId, uint32_t id, bool stored );
+            ~PathRequest();
     //@}
 
     //! @name Operations
     //@{
-    unsigned long GetId() const;
-    bool IsStored() const;
     bool Update();
     //@}
 
@@ -42,12 +43,10 @@ private:
     //@{
     boost::shared_ptr< DEC_PathResult > path_;
     const sword::PathfindRequest request_;
-    unsigned int nCtx_;
-    unsigned int clientId_;
-    unsigned long id_;
-    unsigned long unitId_;
-    bool computed_;
-    bool stored_;
+    std::unique_ptr< client::ComputePathfindAck > ack_;
+    const unsigned int nCtx_;
+    const unsigned int clientId_;
+    const bool stored_;
     //@}
 };
 

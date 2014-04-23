@@ -17,7 +17,6 @@ class DEC_PathFind_Manager;
 class DEC_PathResult;
 class MIL_Population;
 class MT_Vector2D;
-class MIL_IDManager;
 class PathRequest;
 
 // =============================================================================
@@ -37,10 +36,10 @@ public:
 
     //! @name Operations
     //@{
-    unsigned long Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
-                           unsigned int nCtx, unsigned int clientId, bool stored );
-    unsigned long Compute( const MIL_Population& population, const sword::PathfindRequest& message,
-                           unsigned int nCtx, unsigned int clientId, bool stored );
+    uint32_t Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
+                      unsigned int ctx, unsigned int clientId, bool store );
+    uint32_t Compute( const MIL_Population& population, const sword::PathfindRequest& message,
+                      unsigned int ctx, unsigned int clientId, bool store );
     bool Destroy( unsigned int pathfind );
     void Update();
     //@}
@@ -48,13 +47,13 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< unsigned long, boost::shared_ptr< PathRequest > > T_Results;
+    typedef std::map< uint32_t, boost::shared_ptr< PathRequest > > T_Results;
     //@}
 
     //! @name Helpers
     //@{
-    unsigned long Compute( boost::shared_ptr< DEC_PathResult > path, const sword::PathfindRequest& request,
-                           unsigned int unitId, unsigned int nCtx, unsigned int clientId, bool stored );
+    uint32_t Compute( boost::shared_ptr< DEC_PathResult > path, const sword::PathfindRequest& request,
+                      unsigned int ctx, unsigned int clientId, bool store );
     //@}
 
 private:
@@ -62,7 +61,7 @@ private:
     //@{
     DEC_PathFind_Manager& pathfindManager_;
     const TER_World& world_;
-    std::unique_ptr< MIL_IDManager > idPathManager_;
+    uint32_t ids_;
     T_Results results_;
     //@}
 };

@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PathRequest.h"
-#include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_PathResult.h"
 #include "protocol/ClientSenders.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -18,20 +17,20 @@
 // Name: PathRequest constructor
 // Created: LGY 2014-04-16
 // -----------------------------------------------------------------------------
-PathRequest::PathRequest( boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
-                          DEC_PathFind_Manager& pathfindManager, unsigned int nCtx, unsigned int clientId,
-                          unsigned long id, unsigned int unitId, bool stored )
+PathRequest::PathRequest( const boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
+                          unsigned int nCtx, unsigned int clientId, uint32_t id, bool stored )
     : path_( path )
     , request_( request )
+    , ack_( new client::ComputePathfindAck() )
     , nCtx_( nCtx )
     , clientId_( clientId )
-    , id_( id )
-    , unitId_( unitId )
     , stored_( stored )
-    , computed_( false )
 {
     path_->AddRef();
-    pathfindManager.StartCompute( path_ );
+    auto& msg = (*ack_)();
+    msg.mutable_unit()->set_id( request.unit().id() );
+    if( stored_ )
+        msg.mutable_id()->set_id( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,48 +43,28 @@ PathRequest::~PathRequest()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PathRequest::GetId
-// Created: LGY 2014-03-03
-// -----------------------------------------------------------------------------
-unsigned long PathRequest::GetId() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PathRequest::IsStored
-// Created: LGY 2014-03-03
-// -----------------------------------------------------------------------------
-bool PathRequest::IsStored() const
-{
-    return stored_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PathRequest::Update
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
 bool PathRequest::Update()
 {
-    if( computed_ )
-        return true;
+    if( !ack_ )
+        return false;
+
     DEC_PathResult::E_State nPathState = path_->GetState();
     if( nPathState == DEC_Path_ABC::eComputing )
         return false;
 
-    client::ComputePathfindAck ack;
-    ack().mutable_id()->set_id( unitId_ );
-    if( stored_ )
-        ack().mutable_id()->set_id( id_ );
+    auto& msg = (*ack_)();
     if( nPathState == DEC_Path_ABC::eInvalid || nPathState == DEC_Path_ABC::eImpossible )
-        ack().set_error_code( sword::ComputePathfindAck::error_path_invalid );
+        msg.set_error_code( sword::ComputePathfindAck::error_path_invalid );
     else
     {
-        ack().set_error_code( sword::ComputePathfindAck::no_error );
-        path_->Serialize( *ack().mutable_path() );
+        msg.set_error_code( sword::ComputePathfindAck::no_error );
+        path_->Serialize( *msg.mutable_path() );
     }
     path_->DecRef();
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx_, clientId_ );
-    computed_ = true;
-    return true;
+    ack_->Send( NET_Publisher_ABC::Publisher(), nCtx_, clientId_ );
+    ack_.reset();
+    return !stored_;
 }

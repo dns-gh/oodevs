@@ -19,7 +19,6 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
-#include "Tools/MIL_IDManager.h"
 #include "protocol/ClientSenders.h"
 #include <boost/assign.hpp>
 #include <boost/make_shared.hpp>
@@ -31,7 +30,7 @@
 PathfindComputer::PathfindComputer( DEC_PathFind_Manager& pathfindManager, const TER_World& world )
     : pathfindManager_( pathfindManager )
     , world_          ( world )
-    , idPathManager_  ( new MIL_IDManager() )
+    , ids_            ( 0 )
 {
     // NOTHING
 }
@@ -53,7 +52,7 @@ void PathfindComputer::Update()
 {
     for( auto it = results_.begin(); it != results_.end(); )
     {
-        if( (*it).second->Update() && !(*it).second->IsStored() )
+        if( it->second->Update() )
             it = results_.erase( it );
         else
             ++it;
@@ -81,33 +80,34 @@ namespace
 // Name: PathfindComputer::Compute
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-unsigned long PathfindComputer::Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
-                                        unsigned int nCtx, unsigned int clientId, bool stored )
+uint32_t PathfindComputer::Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
+                                    unsigned int ctx, unsigned int clientId, bool store )
 {
     return Compute( boost::make_shared< DEC_Agent_Path >( pion, GetPositions( message, world_ ), DEC_PathType::movement_ ), message,
-        pion.GetID(),nCtx, clientId, stored );
+        ctx, clientId, store );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PathfindComputer::Compute
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-unsigned long PathfindComputer::Compute( const MIL_Population& population, const sword::PathfindRequest& message,
-                                        unsigned int nCtx, unsigned int clientId, bool stored )
+uint32_t PathfindComputer::Compute( const MIL_Population& population, const sword::PathfindRequest& message,
+                                    unsigned int ctx, unsigned int clientId, bool store )
 {
     return Compute( boost::make_shared< DEC_Population_Path >( population, GetPositions( message, world_ ) ), message,
-        population.GetID(), nCtx, clientId, stored );
+        ctx, clientId, store );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PathfindComputer::Compute
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-unsigned long PathfindComputer::Compute( boost::shared_ptr< DEC_PathResult > path, const sword::PathfindRequest& request,
-                                         unsigned int unitId, unsigned int nCtx, unsigned int clientId, bool stored )
+uint32_t PathfindComputer::Compute( boost::shared_ptr< DEC_PathResult > path, const sword::PathfindRequest& request,
+                                    unsigned int ctx, unsigned int clientId, bool store )
 {
-    unsigned long id = idPathManager_->GetId();
-    results_[ id ] = boost::make_shared< PathRequest >( path, request, pathfindManager_, nCtx, clientId, id, unitId, stored );
+    uint32_t id = ++ids_;
+    results_[ id ] = boost::make_shared< PathRequest >( path, request, ctx, clientId, id, store );
+    pathfindManager_.StartCompute( path );
     return id;
 }
 

@@ -2034,7 +2034,7 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId )
 {
-    const unsigned int id = message.unit().id();
+    const auto id = message.unit().id();
     const auto& positions = message.positions();
     protocol::Check( positions.size() > 1, "must have at least two points" );
     if( MIL_AgentPion* pPion = FindAgentPion( id ) )
@@ -2065,7 +2065,7 @@ void MIL_EntityManager::OnReceivePathfindCreation( const sword::MagicAction& mes
     const auto& positions = request.positions();
     protocol::Check( positions.size() > 1, "must have at least two points" );
     const unsigned int id = request.unit().id();
-    unsigned long result = 0;
+    uint32_t result = 0;
     if( MIL_AgentPion* pPion = FindAgentPion( id ) )
         result = pathfindComputer_->Compute( *pPion, request, nCtx, clientId, true );
     else if( MIL_Population* pPopulation = FindPopulation( id ) )
