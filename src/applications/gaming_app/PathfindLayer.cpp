@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "PathfindLayer.h"
 #include "moc_PathfindLayer.cpp"
-#include "ItineraryEditionDockWidget.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/RichDockWidget.h"
@@ -31,8 +30,7 @@
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
 PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
-                              Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& coordinateConverter,
-                              const ItineraryEditionDockWidget& itineraryDockWidget )
+                              Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& coordinateConverter )
     : controllers_( controllers )
     , tools_( tools )
     , element_( controllers )
@@ -63,7 +61,6 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
             }
         };
     publisher_.Register( fun );
-    connect( &itineraryDockWidget, SIGNAL( ItineraryRejected() ), this, SLOT( ClearPositions() ) );
 }
 
 // -----------------------------------------------------------------------------

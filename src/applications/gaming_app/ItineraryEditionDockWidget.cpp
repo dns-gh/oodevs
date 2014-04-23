@@ -22,6 +22,8 @@ ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel:
     : gui::RichDockWidget( controllers, parent, "itineraryEdition-dock-widget" )
 {
     setCaption( tr( "Itinerary creation" ) );
+    setFloating( true );
+    setVisible( false );
     QWidget* mainWidget = new QWidget( this );
     QHBoxLayout* mainLayout = new QHBoxLayout( mainWidget );
     mainLayout->setAlignment( Qt::AlignRight | Qt::AlignBottom );

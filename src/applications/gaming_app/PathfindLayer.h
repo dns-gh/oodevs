@@ -33,7 +33,6 @@ namespace gui
 }
 
 class Publisher_ABC;
-class ItineraryEditionDockWidget;
 
 // =============================================================================
 /** @class  PathfindLayer
@@ -54,8 +53,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
-                            Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& coordinateConverter,
-                            const ItineraryEditionDockWidget& itineraryDockWidget );
+                            Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& coordinateConverter );
     virtual ~PathfindLayer();
     //@}
 
