@@ -64,6 +64,7 @@ public:
     void UnregisterPushingFlow( MIL_PopulationFlow& flow );
     double GetPullingFlowsDensity() const;
     void SetPullingFlowsDensity( const MIL_Object_ABC& splittingObject );
+    void SetParamsForNextPullingFlow( const std::vector< boost::shared_ptr< MT_Vector2D > >& path, std::size_t waypoint );
     //@}
 
     //! @name Accessors
@@ -76,6 +77,8 @@ public:
     virtual boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const;
     virtual double GetDefaultDensity( const MIL_PopulationType& type ) const;
     virtual bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, std::vector< MT_Vector2D >& shape ) const;
+    const std::vector< boost::shared_ptr< MT_Vector2D > >& GetPathForNextPullingFlow() const;
+    std::size_t GetWaypointForNextPullingFlow() const;
     //@}
 
     //! @name Network
@@ -116,6 +119,8 @@ private:
     const MIL_Object_ABC* pSplittingObject_;
     std::auto_ptr< MIL_AttackController > pAttackController_;
     double rPullingFlowsDensity_;
+    std::vector< boost::shared_ptr< MT_Vector2D > > pathForNextPullingFlow_;
+    std::size_t waypointForNextPullingFlow_;
     bool hasDoneMagicMove_;
     static MIL_IDManager idManager_;
     //@}
