@@ -1813,3 +1813,38 @@ func (c *Client) PathfindRequest(unitId uint32, position ...Point) ([]PathPoint,
 	err := <-c.postSimRequest(msg, handler)
 	return points, err
 }
+
+func (c *Client) SegmentRequest(position Point, terrains []sword.SegmentRequest_Terrain, count uint32) ([]Segment, error) {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				SegmentRequest: &sword.SegmentRequest{
+					Position: MakeCoordLatLong(position),
+					Terrains: terrains,
+					Count:    proto.Uint32(count),
+				},
+			},
+		},
+	}
+	segments := []Segment{}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetSegmentRequestAck()
+		if reply == nil {
+			return ErrContinue
+		}
+		code := reply.GetErrorCode()
+		for _, s := range reply.GetSegments() {
+			segments = append(segments,
+				Segment{
+					From: ReadPoint(s.GetFrom()),
+					To:   ReadPoint(s.GetTo()),
+				})
+		}
+		if code != sword.SegmentRequestAck_no_error {
+			return makeError(reply, int32(code), sword.SegmentRequestAck_ErrorCode_name)
+		}
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return segments, err
+}
