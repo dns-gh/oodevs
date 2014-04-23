@@ -17,15 +17,16 @@ import (
 func (s *TestSuite) TestSegmentRequest(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallEmpty))
 	defer stopSimAndClient(c, sim, client)
+	position := swapi.Point{X: -15.8640, Y: 28.2507}
 	// no terrain means all terrains
 	terrains := []sword.SegmentRequest_Terrain{}
 	count := 1
-	segments, err := client.SegmentRequest(swapi.Point{X: -15.8640, Y: 28.2507}, terrains, count)
+	segments, err := client.SegmentRequest(position, terrains, count)
 	c.Assert(err, IsNil)
 	c.Assert(segments, HasLen, count)
 	// unavailable terrain yields no result
 	terrains = append(terrains, sword.SegmentRequest_glacier)
-	segments, err = client.SegmentRequest(swapi.Point{X: -15.8640, Y: 28.2507}, terrains, count)
+	segments, err = client.SegmentRequest(position, terrains, count)
 	c.Assert(err, IsNil)
 	c.Assert(segments, HasLen, 0)
 	// all roads terrain finds a segment
@@ -35,12 +36,12 @@ func (s *TestSuite) TestSegmentRequest(c *C) {
 		sword.SegmentRequest_secondary_road,
 		sword.SegmentRequest_country_road,
 	}
-	segments, err = client.SegmentRequest(swapi.Point{X: -15.8640, Y: 28.2507}, terrains, count)
+	segments, err = client.SegmentRequest(position, terrains, count)
 	c.Assert(err, IsNil)
 	c.Assert(segments, HasLen, count)
 	// find more segments
 	count = 7
-	segments, err = client.SegmentRequest(swapi.Point{X: -15.8640, Y: 28.2507}, terrains, count)
+	segments, err = client.SegmentRequest(position, terrains, count)
 	c.Assert(err, IsNil)
 	c.Assert(segments, HasLen, count)
 }
