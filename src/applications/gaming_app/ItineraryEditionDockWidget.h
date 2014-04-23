@@ -19,14 +19,6 @@ namespace kernel
     class Filter_ABC;
 }
 
-namespace tools
-{
-    class ExerciseConfig;
-}
-
-class Config;
-class Model;
-
 // =============================================================================
 /** @class  ItineraryEditionDockWidget
     @brief  ItineraryEditionDockWidget
@@ -50,13 +42,6 @@ signals:
     //@{
     void ItineraryAccepted();
     void ItineraryRejected();
-    //@}
-
-public slots:
-    //! @name Slots
-    //@{
-    void OnItineraryAccepted();
-    void OnItineraryRejected();
     //@}
 };
 

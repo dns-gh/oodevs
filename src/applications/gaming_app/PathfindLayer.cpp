@@ -38,8 +38,6 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     , element_( controllers )
     , publisher_( publisher )
     , coordinateConverter_( coordinateConverter )
-    , isBeginSet_( false )
-    , isEndSet_( false )
     , lock_( false )
 {
     controllers_.Register( *this );
@@ -180,8 +178,6 @@ void PathfindLayer::ClearPositions()
     positions_.clear();
     path_.clear();
     hovered_ = boost::none;
-    isBeginSet_ = false;
-    isEndSet_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -191,13 +187,10 @@ void PathfindLayer::SetStartPosition()
 {
     if( lock_ )
         return;
-    if( isBeginSet_ )
+    if( positions_.size() > 1 )
         positions_.front() = point_;
     else
-    {
-        positions_.insert( positions_.begin(), point_ );
-        isBeginSet_ = true;
-    }
+        positions_.push_front( point_ );
     SendRequest();
 }
 
@@ -208,13 +201,10 @@ void PathfindLayer::SetEndPosition()
 {
     if( lock_ )
         return;
-    if( isEndSet_ )
+    if( positions_.size() > 1 )
         positions_.back() = point_;
     else
-    {
     positions_.push_back( point_ );
-        isEndSet_ = true;
-    }
     SendRequest();
 }
 

@@ -11,6 +11,7 @@
 #include "ItineraryEditionDockWidget.h"
 #include "moc_ItineraryEditionDockWidget.cpp"
 #include "clients_gui/RichPushButton.h"
+#include "clients_gui/SignalAdapter.h"
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
@@ -18,24 +19,27 @@
 // Created: SLI 2014-04-09
 // -----------------------------------------------------------------------------
 ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel::Controllers& controllers )
-    : gui::RichDockWidget( controllers, parent, "ItineraryEdition-dock-widget" )
+    : gui::RichDockWidget( controllers, parent, "itineraryEdition-dock-widget" )
 {
-    // Init
     setCaption( tr( "Itinerary creation" ) );
-
-    // Main Layout
     QWidget* mainWidget = new QWidget( this );
     QHBoxLayout* mainLayout = new QHBoxLayout( mainWidget );
     mainLayout->setAlignment( Qt::AlignRight | Qt::AlignBottom );
-    QPushButton* okButton = new gui::RichPushButton( "ItineraryEdition-dock-widget-ok-button", tr( "Ok" ), mainWidget );
-    QPushButton* cancelButton = new gui::RichPushButton( "ItineraryEdition-dock-widget-cancel-button", tr( "Cancel" ), mainWidget );
+    QPushButton* okButton = new gui::RichPushButton( "itineraryEdition-dock-widget-ok-button", tr( "Ok" ), mainWidget );
+    QPushButton* cancelButton = new gui::RichPushButton( "itineraryEdition-dock-widget-cancel-button", tr( "Cancel" ), mainWidget );
     mainLayout->addWidget( okButton );
     mainLayout->addWidget( cancelButton );
     setWidget( mainWidget );
-
-    // Connections
-    connect( okButton,     SIGNAL( clicked( bool ) ), this, SLOT( OnItineraryAccepted() ) );
-    connect( cancelButton, SIGNAL( clicked( bool ) ), this, SLOT( OnItineraryRejected() ) );
+    gui::connect( okButton, SIGNAL( clicked( bool ) ), [&]()
+    {
+        controllers_.ChangeMode( eModes_Gaming );
+        emit ItineraryAccepted();
+    } );
+    gui::connect( cancelButton, SIGNAL( clicked( bool ) ), [&]()
+    {
+        controllers_.ChangeMode( eModes_Gaming );
+        emit ItineraryRejected();
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,24 +49,4 @@ ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel:
 ItineraryEditionDockWidget::~ItineraryEditionDockWidget()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ItineraryEditionDockWidget::OnItineraryAccepted
-// Created: SLI 2014-04-10
-// -----------------------------------------------------------------------------
-void ItineraryEditionDockWidget::OnItineraryAccepted()
-{
-    controllers_.ChangeMode( eModes_Gaming );
-    emit ItineraryAccepted();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ItineraryEditionDockWidget::OnItineraryRejected
-// Created: SLI 2014-04-10
-// -----------------------------------------------------------------------------
-void ItineraryEditionDockWidget::OnItineraryRejected()
-{
-    controllers_.ChangeMode( eModes_Gaming );
-    emit ItineraryRejected();
 }

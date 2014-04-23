@@ -16,6 +16,7 @@
 #include "clients_kernel/ModesObserver_ABC.h"
 #include <tools/SelectionObserver_ABC.h>
 #include <boost/optional.hpp>
+#include <deque>
 
 namespace kernel
 {
@@ -119,11 +120,9 @@ private:
     Publisher_ABC& publisher_;
     const kernel::CoordinateConverter_ABC& coordinateConverter_;
     kernel::SafePointer< kernel::Entity_ABC > element_;
-    std::vector< geometry::Point2f > positions_;
+    std::deque< geometry::Point2f > positions_;
     std::vector< Point > path_;
     boost::optional< Hover > hovered_;
-    bool isBeginSet_;
-    bool isEndSet_;
     geometry::Point2f point_;
     bool lock_;
     //@}
