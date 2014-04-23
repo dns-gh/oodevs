@@ -14,6 +14,7 @@
 #include "runtime/Utf8.h"
 #include "web/Configs.h"
 #include "web/User.h"
+#include "web/HttpException.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -196,6 +197,13 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts, Fixture )
     MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
     SessionController::T_Session session = control.Start( standardUser, idIdle, checkpoint );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
+}
+
+BOOST_FIXTURE_TEST_CASE( unauthorized_agent_can_not_start_session, Fixture )
+{
+    Reload();
+    MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( false );
+    BOOST_CHECK_THROW( control.Start( standardUser, idIdle, "checkpoint" ), web::HttpException ); ;
 }
 
 BOOST_FIXTURE_TEST_CASE( session_controller_stops, Fixture )

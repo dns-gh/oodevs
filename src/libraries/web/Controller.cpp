@@ -662,7 +662,7 @@ void Controller::CreateSession( Reply_ABC& rpy, Request_ABC& request )
     const std::string exercise = RequireParameter< std::string >( "exercise", body );
     session::Config cfg;
     session::ReadConfig( cfg, plugins_, body );
-    LOG_INFO( log_ ) << "[web] /create_session node: " << user.node << " name: " << cfg.name << " exercise: " << exercise << " owner: " << user.id;
+    LOG_INFO( log_ ) << "[web] /create_session node: " << user.node << " name: " << cfg.name << " exercise: " << exercise << " owner: " << user.name;
     WriteHttpReply( rpy, agent_.CreateSession( user, cfg, exercise ) );
 }
 
