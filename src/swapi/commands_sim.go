@@ -1818,9 +1818,10 @@ func (c *Client) SegmentRequest(position Point, terrains []sword.SegmentRequest_
 		}
 		for _, s := range reply.GetSegments() {
 			segments = append(segments,
-				NewSegment(
-					ReadPoint(s.GetFrom()),
-					ReadPoint(s.GetTo())))
+				Segment{
+					From: ReadPoint(s.GetFrom()),
+					To:   ReadPoint(s.GetTo()),
+				})
 		}
 		return nil
 	}
