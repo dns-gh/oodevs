@@ -162,12 +162,11 @@ class UserSelectedItemView extends Backbone.View
 
     delete: (evt) =>
         @remove()
-        @model.collection.remove(@model)
+        @model.collection.remove @model
 
 class UserSelectedListView extends Backbone.View
 
     initialize: (options) ->
-        @$el.empty()
         @$el = options
         @model = new UserSelectedList
         @model.bind 'add', @add
@@ -187,10 +186,10 @@ class UserSelectedListView extends Backbone.View
 pop_settings = (ui, session, users) ->
     all_users = []
     for it in users
-        all_users.push( { id: it.id, username: it.attributes.name } )
+        all_users.push id: it.id, username: it.attributes.name
     data = _.extend session, users: all_users
     if !data.owner
-        data.owner = { name: user.name }
+        data.owner = name: user.name
     set_ui_plugins data
     data.checkpoints.frequency = Math.ceil data.checkpoints.frequency / 60
     ui.html session_settings_template data
@@ -203,15 +202,12 @@ pop_settings = (ui, session, users) ->
     attach_click_to_dropdown $("#size_unit")
     user_selected_view = new UserSelectedListView ui.find ".user_table tbody"
     for k, v of data.authorized_users?.list
-        result = all_users.filter (x) -> x.id == k && x.username == v
-        if result?.length > 0
+        found = _.find all_users, (x) -> x.id == k && x.username == v
+        if found?
             user_selected_view.create { id: k, username: v }
 
     group = ui.find(".user_group")
-    if ui.find("#access_restricted").is ":checked"
-        group.show()
-    else
-        group.hide()
+    group.toggle ui.find("#access_restricted").is ":checked"
 
     ui.find("#access_restricted").click (e)->
         group = ui.find(".user_group")
@@ -222,7 +218,7 @@ pop_settings = (ui, session, users) ->
             group.hide()
 
     ui.find(".user_select").click ->
-        data = $('#user_selected :selected')
+        data = $("#user_selected :selected")
         user_selected_view.create id: data.val(), username: data.text()
 
     mod = ui.find ".modal"
@@ -357,7 +353,7 @@ validate_settings = (ui, is_default) ->
         next.list = {}
         for it in ui.find ".user_table tbody tr"
             id = $(it).attr "data_id"
-            username = ($(it).find "td").first().text()
+            username = $(it).find("td").first().text()
             next.list[id] = username
 
     data.checkpoints?.frequency *= 60
@@ -377,7 +373,7 @@ class UserList extends Backbone.Collection
     
     sync: (method, model, options) =>
         if method == "read"
-            return ajax "/api/list_users", scope({}),
+            return ajax "/api/list_users", scope(),
                 options.success, options.error
         return Backbone.sync method, model, options
 

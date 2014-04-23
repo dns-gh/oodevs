@@ -73,10 +73,9 @@
             <option value="{{value.id}}">{{value.username}}</option>
 {{/each_pair}}
         </select>
-    <a class="btn user_select"><i class="icon-plus"></i> Add</a>
+        <a class="btn user_select"><i class="icon-plus"></i> Add</a>
         <table class="table table-striped user_table">
-            <tbody>
-            </tbody>
+            <tbody/>
         </table>
     </div>
 </div>

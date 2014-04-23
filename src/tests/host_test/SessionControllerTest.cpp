@@ -69,7 +69,7 @@ namespace
 
     const std::string idNodeText = "56789abc-1234-1234-1234-123412345678";
     const Uuid idNode = boost::uuids::string_generator()( idNodeText );
-    const web::User standartUser = web::User( 42, "standart", web::USER_TYPE_ADMINISTRATOR, boost::uuids::string_generator()( idNodeText ) );
+    const web::User standardUser = web::User( 42, "standard", web::USER_TYPE_ADMINISTRATOR, boost::uuids::string_generator()( idNodeText ) );
 
     const std::string idActiveText = "12345678-1234-1234-1234-123456789abc";
     const Uuid idActive = boost::uuids::string_generator()( idActiveText );
@@ -139,8 +139,8 @@ namespace
                 boost::bind( &MockFileSystem::Apply, &sub.fs, _1, boost::assign::list_of< Path >( "a" )( "b" ) ) );
             MOCK_EXPECT( sub.fs.IsFile ).once().with( "a/session.id" ).returns( true );
             MOCK_EXPECT( sub.fs.IsFile ).once().with( "b/session.id" ).returns( true );
-            active = AddSession( idActive, standartUser, sessionActive, "a/session.id" );
-            idle = AddSession( idIdle, standartUser, sessionIdle, "b/session.id" );
+            active = AddSession( idActive, standardUser, sessionActive, "a/session.id" );
+            idle = AddSession( idIdle, standardUser, sessionIdle, "b/session.id" );
             control.Reload( &IsKnownNode );
         }
     };
@@ -158,10 +158,10 @@ BOOST_FIXTURE_TEST_CASE( session_controller_reloads, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( session_controller_creates, Fixture )
 {
-    AddSession( idIdle, standartUser, sessionIdle );
+    AddSession( idIdle, standardUser, sessionIdle );
     web::session::Config cfg;
     cfg.name = "myName2";
-    SessionController::T_Session session = control.Create( standartUser, cfg, "myExercise2" );
+    SessionController::T_Session session = control.Create( standardUser, cfg, "myExercise2" );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     BOOST_CHECK_EQUAL( control.Get( idNode, idIdle ), session );
