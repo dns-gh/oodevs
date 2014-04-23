@@ -19,22 +19,22 @@ func (s *TestSuite) TestSegmentRequest(c *C) {
 	defer stopSimAndClient(c, sim, client)
 	position := swapi.Point{X: -15.8640, Y: 28.2507}
 	// no terrain means all terrains
-	terrains := []sword.SegmentRequest_Terrain{}
+	terrains := []sword.TerrainType{}
 	count := 1
 	segments, err := client.SegmentRequest(position, terrains, uint32(count))
 	c.Assert(err, IsNil)
 	c.Assert(segments, HasLen, count)
 	// unavailable terrain yields no result
-	terrains = append(terrains, sword.SegmentRequest_glacier)
+	terrains = append(terrains, sword.TerrainType_ice)
 	segments, err = client.SegmentRequest(position, terrains, uint32(count))
 	c.Assert(err, IsNil)
 	c.Assert(segments, HasLen, 0)
 	// all roads terrain finds a segment
-	terrains = []sword.SegmentRequest_Terrain{
-		sword.SegmentRequest_highway,
-		sword.SegmentRequest_main_road,
-		sword.SegmentRequest_secondary_road,
-		sword.SegmentRequest_country_road,
+	terrains = []sword.TerrainType{
+		sword.TerrainType_highway,
+		sword.TerrainType_large_road,
+		sword.TerrainType_medium_road,
+		sword.TerrainType_small_road,
 	}
 	segments, err = client.SegmentRequest(position, terrains, uint32(count))
 	c.Assert(err, IsNil)
