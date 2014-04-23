@@ -192,7 +192,7 @@ void SupplyConsign::UpdateRequestsIfUnitDestroyed()
         else
             ++it;
     }
-    if( resetConsign && requestsQueued_.empty() )
+    if( resetConsign )
     {
         if( convoy_ )
         {
