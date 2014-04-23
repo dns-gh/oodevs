@@ -401,6 +401,7 @@ T_ConverterModes ModesConverter_ [] =
     T_ConverterModes( "game",        QT_TRANSLATE_NOOP( "ENT_Tr", "Game" ),        eModes_Gaming        ),
     T_ConverterModes( "planning",    QT_TRANSLATE_NOOP( "ENT_Tr", "Planning" ),    eModes_Planning      ),
     T_ConverterModes( "replay",      QT_TRANSLATE_NOOP( "ENT_Tr", "Replay" ),      eModes_Replay        ),
+    T_ConverterModes( "itinerary",   QT_TRANSLATE_NOOP( "ENT_Tr", "Itinerary" ),   eModes_Itinerary     ),
     T_ConverterModes( "all_gaming",  QT_TRANSLATE_NOOP( "ENT_Tr", "All Gaming" ),  eModes_AllGaming     ),
     T_ConverterModes( "all",         QT_TRANSLATE_NOOP( "ENT_Tr", "All" ),         eModes_All           ),
     T_ConverterModes( "", "", ( E_Modes ) - 1 )

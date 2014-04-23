@@ -49,6 +49,7 @@ class EventDockWidget;
 class FormationLayer;
 class IndicatorExportDialog;
 class IndicatorPlotFactory;
+class ItineraryEditionDockWidget;
 class LinkInterpreter;
 class Model;
 class Network;
@@ -96,6 +97,7 @@ public:
     gui::TerrainProfiler& GetTerrainProfiler() const;
     gui::MiniViews& GetMiniView() const;
     EventDockWidget& GetEventDockWidget() const;
+    ItineraryEditionDockWidget& GetItineraryDockWidget() const;
     //@}
 
 private:
@@ -110,6 +112,7 @@ private:
     gui::MiniViews* miniView_;
     TimelineDockWidget* timelineDockWidget_;
     EventDockWidget* eventDockWidget_;
+    ItineraryEditionDockWidget* itineraryDockWidget_;
     //@}
 
     //! @name Member data

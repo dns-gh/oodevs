@@ -13,8 +13,10 @@
 #include "clients_gui/Layer.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/ModesObserver_ABC.h"
 #include <tools/SelectionObserver_ABC.h>
 #include <boost/optional.hpp>
+#include <deque>
 
 namespace kernel
 {
@@ -43,6 +45,7 @@ class PathfindLayer : public gui::Layer
                     , public tools::SelectionObserver_Base< kernel::Agent_ABC >
                     , public tools::SelectionObserver_Base< kernel::Population_ABC >
                     , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
+                    , public kernel::ModesObserver_ABC
 {
     Q_OBJECT;
 
@@ -87,8 +90,10 @@ private slots:
     //! @name Slots
     //@{
     void ClearPositions();
-    void AddPosition();
+    void SetStartPosition();
+    void SetEndPosition();
     void SendRequest();
+    void OpenEditingMode();
     //@}
 
 private:
@@ -113,7 +118,7 @@ private:
     Publisher_ABC& publisher_;
     const kernel::CoordinateConverter_ABC& coordinateConverter_;
     kernel::SafePointer< kernel::Entity_ABC > element_;
-    std::vector< geometry::Point2f > positions_;
+    std::deque< geometry::Point2f > positions_;
     std::vector< Point > path_;
     boost::optional< Hover > hovered_;
     geometry::Point2f point_;

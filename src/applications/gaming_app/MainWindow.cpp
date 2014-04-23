@@ -29,6 +29,7 @@
 #include "icons.h"
 #include "IndicatorExportDialog.h"
 #include "IndicatorPlotFactory.h"
+#include "ItineraryEditionDockWidget.h"
 #include "LimitsLayer.h"
 #include "LinkInterpreter.h"
 #include "LockMapViewController.h"
@@ -381,8 +382,10 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     if( config_.IsActivated( "pathfind" ) )
     {
         gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, model_.publisher_, staticModel_.coordinateConverter_ );
+        connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryRejected() ), &pathfindLayer, SLOT( ClearPositions() ) );
         AddLayer( pathfindLayer, "main" );
         forward_->Register( pathfindLayer );
+        pathfindLayer.SetReadOnlyModes( 0 );
     }
 
     forward_->SetDefault( defaultLayer );
@@ -399,6 +402,7 @@ void MainWindow::AddLayer( gui::Layer& layer, const std::string& passes /*= ""*/
         preferenceDialog_->AddLayer( text, layer );
     if( !passes.empty() )
         layer.SetPasses( passes );
+    layer.SetReadOnlyModes( eModes_Itinerary );
 }
 
 // -----------------------------------------------------------------------------

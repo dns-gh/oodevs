@@ -363,11 +363,12 @@ enum E_Modes
     eModes_Gaming       = 0x0001 << 4,
     eModes_Planning     = 0x0002 << 4,
     eModes_Replay       = 0x0004 << 4,
+    eModes_Itinerary    = 0x0008 << 4,
     eModes_AllGaming    = 0x000F << 4,
 
     eModes_All          = 0xFFFF,       // Filter
 
-    eNbrModes = 11 // hardcoded
+    eNbrModes = 12 // hardcoded
 };
 
 enum E_AgentNbcSuit
