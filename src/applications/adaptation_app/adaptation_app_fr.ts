@@ -1110,6 +1110,17 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Equipments_DisasterImpactTable</name>
+    <message>
+        <source>Thresholds</source>
+        <translation>Seuils</translation>
+    </message>
+    <message>
+        <source>Modifiers</source>
+        <translation>Modificateurs</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
         <source>Category</source>
@@ -1637,6 +1648,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Can transport destroyed equipments</source>
         <translation>Peut transporter des équipements détruits</translation>
+    </message>
+    <message>
+        <source>Disaster impact on mobility</source>
+        <translation>Impact des désastres sur la mobilité</translation>
     </message>
 </context>
 <context>

@@ -420,6 +420,23 @@ public:
     typedef ADN_Type_Vector_ABC< ObjectInfos > T_ObjectInfos_Vector;
 
     //*****************************************************************************
+    class DisasterImpactInfos : public ADN_Ref_ABC
+    {
+    public:
+        DisasterImpactInfos();
+
+        DisasterImpactInfos* CreateCopy();
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output ) const;
+
+    public:
+        ADN_Type_Double threshold_;
+        ADN_Type_Double modifier_;
+    };
+
+    typedef ADN_Type_Vector_ABC< DisasterImpactInfos > T_DisasterImpactInfos_Vector;
+
+    //*****************************************************************************
     class ConsumptionItem : public ADN_CrossedRef< ADN_Equipments_Data::CategoryInfos >
     {
     public:
@@ -510,6 +527,7 @@ public:
         void ReadWeapon( xml::xistream& input );
         void ReadActiveProtection( xml::xistream& input );
         void ReadObject( xml::xistream& input );
+        void ReadDisasterImpact( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
         virtual void CheckValidity();
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker );
@@ -537,6 +555,7 @@ public:
         T_SensorInfos_Vector vSensors_;
         T_RadarInfos_Vector vRadars_;
         T_ObjectInfos_Vector vObjects_;
+        T_DisasterImpactInfos_Vector vDisasterImpacts_;
         ConsumptionsInfos consumptions_;
         ResourceInfos resources_;
         ADN_Type_Bool bAviationResourcesQuotas_;

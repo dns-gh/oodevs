@@ -53,7 +53,6 @@ public:
 ADN_ListView_Equipments_Objects::ADN_ListView_Equipments_Objects( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_ListView_Equipments_Objects", tr( "Objects" ) )
 {
-    setMaximumHeight( 270 );
     pConnector_.reset( new ADN_Connector_Objects( *this ) );
     SetDeletionEnabled( true );
 }

@@ -1177,6 +1177,51 @@ void ADN_Equipments_Data::ObjectInfos::WriteArchive( xml::xostream& output ) con
 }
 
 // -----------------------------------------------------------------------------
+// Name: DisasterImpactInfos constructor
+// Created: JSR 2014-04-22
+// -----------------------------------------------------------------------------
+ADN_Equipments_Data::DisasterImpactInfos::DisasterImpactInfos()
+    : threshold_( 0 )
+    , modifier_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterImpactInfos::CreateCopy
+// Created: JSR 2014-04-22
+// -----------------------------------------------------------------------------
+ADN_Equipments_Data::DisasterImpactInfos* ADN_Equipments_Data::DisasterImpactInfos::CreateCopy()
+{
+    DisasterImpactInfos* copy = new DisasterImpactInfos;
+    copy->threshold_ = threshold_.GetData();
+    copy->modifier_ = modifier_.GetData();
+    return copy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterImpactInfos::ReadArchive
+// Created: JSR 2014-04-22
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::DisasterImpactInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::attribute( "threshold", threshold_ )
+          >> xml::attribute( "modifier", modifier_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterImpactInfos::WriteArchive
+// Created: JSR 2014-04-22
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::DisasterImpactInfos::WriteArchive( xml::xostream& output ) const
+{
+    output << xml::start( "disaster-impact" )
+            << xml::attribute( "threshold", threshold_.GetData() )
+            << xml::attribute( "modifier", modifier_.GetData() )
+           << xml::end();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ConsumptionItem::ConsumptionItem
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
@@ -1608,6 +1653,12 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
         pCopy->vObjects_.AddItem( pNew );
     }
 
+    for( auto itDisaster = vDisasterImpacts_.begin(); itDisaster != vDisasterImpacts_.end(); ++itDisaster )
+    {
+        DisasterImpactInfos* pNew = (*itDisaster)->CreateCopy();
+        pCopy->vDisasterImpacts_.AddItem( pNew );
+    }
+
     pCopy->resources_.CopyFrom( resources_ );
     pCopy->consumptions_.CopyFrom( consumptions_ );
 
@@ -1743,12 +1794,23 @@ void ADN_Equipments_Data::EquipmentInfos::ReadActiveProtection( xml::xistream& i
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadObject( xml::xistream& input )
 {
-    std::auto_ptr<ObjectInfos> spNew( new ObjectInfos() );
+    std::auto_ptr< ObjectInfos > spNew( new ObjectInfos() );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vObjects_.AddItem( spNew.release() );
     else
         ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eEquipments, -1, tools::translate( "ADN_Automata_Data", "Objects" ).toStdString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipments_Data::ReadDisasterImpact
+// Created: JSR 2014-04-23
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::EquipmentInfos::ReadDisasterImpact( xml::xistream& input )
+{
+    std::auto_ptr< DisasterImpactInfos > spNew( new DisasterImpactInfos() );
+    spNew->ReadArchive( input );
+    vDisasterImpacts_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1869,6 +1931,10 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
             >> xml::optional >> xml::attribute( "starting-country", strStartingCountry_ )
             >> xml::optional >> xml::attribute( "starting-date", strStartingDate_ )
           >> xml::end;
+
+    input >> xml::optional >> xml::start( "disaster-impacts" )
+            >> xml::list( "disaster-impact", *this, &ADN_Equipments_Data::EquipmentInfos::ReadDisasterImpact )
+        >> xml::end;
 
     for( auto it = vWeapons_.begin(); it != vWeapons_.end(); ++it )
     {
@@ -2076,6 +2142,14 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output ) 
             output << xml::attribute( "starting-date", strStartingDate_ );
         if( !strInformationOrigin_.GetData().empty() )
             output << xml::attribute( "information-origin", strInformationOrigin_ );
+        output << xml::end;
+    }
+
+    if( !vDisasterImpacts_.empty() )
+    {
+        output << xml::start( "disaster-impacts" );
+        for( auto itDisaster= vDisasterImpacts_.begin(); itDisaster!= vDisasterImpacts_.end(); ++itDisaster )
+            (*itDisaster)->WriteArchive( output );
         output << xml::end;
     }
 
