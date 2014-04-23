@@ -1814,7 +1814,7 @@ func (c *Client) PathfindRequest(unitId uint32, position ...Point) ([]PathPoint,
 	return points, err
 }
 
-func (c *Client) SegmentRequest(position Point, terrains []sword.SegmentRequest_Terrain, count uint32) ([]Segment, error) {
+func (c *Client) SegmentRequest(position Point, terrains []sword.TerrainType, count uint32) ([]Segment, error) {
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
