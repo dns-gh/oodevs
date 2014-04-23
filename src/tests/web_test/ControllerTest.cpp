@@ -21,6 +21,7 @@
 #include "web/HttpException.h"
 #include "web/Request_ABC.h"
 #include "web/Reply_ABC.h"
+#include "web/User.h"
 
 #include <boost/bind.hpp>
 #include <boost/bind/apply.hpp>
@@ -89,6 +90,7 @@ namespace
         MOCK_METHOD( GetSession, 2 );
         MOCK_METHOD( CreateSession, 3 );
         MOCK_METHOD( DeleteSession, 2 );
+        MOCK_METHOD( DeleteUser, 2 );
         MOCK_METHOD( StartSession, 3 );
         MOCK_METHOD( StopSession, 2 );
         MOCK_METHOD( PauseSession, 2 );
@@ -264,7 +266,7 @@ BOOST_FIXTURE_TEST_CASE( controller_get_node_works_on_users, Fixture< true > )
     MOCK_EXPECT( agent.GetNode ).once().with( defaultId ).returns( FromJson( expected ) );
     ExpectReply( reply, web::OK, expected );
     MOCK_EXPECT( request.GetSid ).once().returns( "user" );
-    const std::string user = "{\"type\":\"user\",\"node\":\"" + defaultIdString + "\"}";
+    const std::string user = "{\"type\":\"user\",\"id\":\"42\",\"name\":\"name\",\"node\":\"" + defaultIdString + "\"}";
     MOCK_EXPECT( users.IsAuthenticated ).once().with( "user" ).returns( FromJson( user ) );
     controller.DoGet( reply, request );
 }
@@ -334,7 +336,7 @@ BOOST_FIXTURE_TEST_CASE( controller_list_sessions, Fixture<> )
     );
     const Tree dummy = FromJson( "{\"dummy\":\"ymmud\"}" );
     const std::vector< Tree > expected = boost::assign::list_of( dummy )( dummy );
-    MOCK_EXPECT( agent.ListSessions ).once().with( defaultId, 5, 3 ).returns( expected );
+    MOCK_EXPECT( agent.ListSessions ).once().with( mock::any, 5, 3 ).returns( expected );
     ExpectList( reply, web::OK, expected );
     controller.DoGet( reply, request );
 }
@@ -347,7 +349,7 @@ BOOST_FIXTURE_TEST_CASE( controller_list_empty_sessions, Fixture<> )
         ( "limit",  "3" )
     );
     const std::vector< Tree > expected;
-    MOCK_EXPECT( agent.ListSessions ).once().with( defaultId, 5, 3 ).returns( expected );
+    MOCK_EXPECT( agent.ListSessions ).once().with( mock::any, 5, 3 ).returns( expected );
     ExpectList( reply, web::OK, expected );
     controller.DoGet( reply, request );
 }
@@ -355,7 +357,7 @@ BOOST_FIXTURE_TEST_CASE( controller_list_empty_sessions, Fixture<> )
 BOOST_FIXTURE_TEST_CASE( controller_count_sessions, Fixture<> )
 {
     ExpectRequest( "GET", "/count_sessions", boost::assign::map_list_of( "node", defaultIdString ) );
-    MOCK_EXPECT( agent.CountSessions ).once().with( defaultId ).returns( 17 );
+    MOCK_EXPECT( agent.CountSessions ).once().with( mock::any ).returns( 17 );
     ExpectCount( reply, web::OK, 17 );
     controller.DoGet( reply, request );
 }
@@ -382,7 +384,7 @@ BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture<> )
     );
     MOCK_EXPECT( request.ParseBodyAsJson ).once().returns( dst );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
-    MOCK_EXPECT( agent.CreateSession ).once().with( defaultId, mock::any, exercise ).returns( FromJson( expected ) );
+    MOCK_EXPECT( agent.CreateSession ).once().with( mock::any, mock::any, exercise ).returns( FromJson( expected ) );
     ExpectReply( reply, web::OK, expected );
     controller.DoPost( reply, request );
 }

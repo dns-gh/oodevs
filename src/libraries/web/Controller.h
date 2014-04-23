@@ -11,7 +11,7 @@
 #define CONTROLLER_H
 
 #include "Observer_ABC.h"
-#include "UserType.h"
+#include "User.h"
 #include <string>
 
 namespace boost
@@ -154,6 +154,7 @@ private:
     //! @name Helpers
     //@{
     void Authenticate    ( const Request_ABC& request, UserType required );
+    User AuthenticateUser( const Request_ABC& request, UserType required, const std::string& id );
     Uuid AuthenticateNode( const Request_ABC& request, UserType required, const std::string& id );
     //@}
 

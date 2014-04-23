@@ -52,8 +52,17 @@ namespace property_tree
     void PutList( T_Tree& dst, const std::string& name, const T& list )
     {
         T_Tree& sub = dst.put_child( name, T_Tree() );
-        for( typename T::const_iterator it = list.begin(); it != list.end(); ++it )
+        for( auto it = list.begin(); it != list.end(); ++it )
             sub.push_back( std::make_pair( std::string(), boost::lexical_cast< std::string >( *it ) ) );
+    }
+
+    template< typename T >
+    void PutMap( T_Tree& dst, const std::string& name, const T& map )
+    {
+        T_Tree& sub = dst.put_child( name, T_Tree() );
+        for( auto it = map.begin(); it != map.end(); ++it )
+            sub.push_back( std::make_pair( boost::lexical_cast< std::string >( it->first ),
+                boost::lexical_cast< std::string >( it->second ) ) );
     }
 
     template< typename T, typename U >

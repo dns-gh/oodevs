@@ -13,6 +13,7 @@
 #include "Session_ABC.h"
 #include "runtime/Async.h"
 #include "web/Configs.h"
+#include "web/User.h"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -136,7 +137,8 @@ public:
                       const SessionPaths& paths,
                       const web::session::Config& cfg,
                       const std::string& exercise,
-                      const Uuid& replay );
+                      const Uuid& replay,
+                      const web::User& owner );
              Session( const SessionDependencies& deps,
                       boost::shared_ptr< Node_ABC > node,
                       const SessionPaths& paths,
@@ -157,6 +159,7 @@ public:
     virtual Uuid GetReplayId() const;
     virtual bool HasReplays() const;
     virtual Tree AvailableLogs() const;
+    virtual bool IsAuthorized( const web::User& user ) const;
     //@}
 
     //! @name Public methods
@@ -175,11 +178,12 @@ public:
     virtual bool  Archive();
     virtual bool  Restore();
     virtual bool  Download( web::Chunker_ABC& dst ) const;
-    virtual T_Ptr Replay();
+    virtual T_Ptr Replay( const web::User& owner );
     virtual void  AttachReplay( const Session_ABC& replay );
     virtual void  DetachReplay( const Session_ABC& replay );
     virtual void  NotifyNode();
     virtual bool  DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const;
+    virtual void DeleteUser( const web::User& user, int id );
     //@}
 
     //! @name Typedef helpers
@@ -255,6 +259,7 @@ private:
     bool first_time_;
     T_Replays replays_;
     mutable runtime::Async async_;
+    web::User owner_;
     //@}
 };
 }

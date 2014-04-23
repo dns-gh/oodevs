@@ -16,6 +16,7 @@
 #include "SessionController_ABC.h"
 #include "web/Configs.h"
 #include "web/HttpException.h"
+#include "web/User.h"
 
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
@@ -47,6 +48,14 @@ bool IsNode( const Session_ABC& session, const Uuid& id )
     return session.GetNode() == id;
 }
 
+SessionController_ABC::T_Predicate GetFilterUser( const web::User& user )
+{
+    auto predicate = boost::bind( &Session_ABC::IsAuthorized, _1, boost::cref( user ) );
+    if( user.node.is_nil() )
+        return predicate;
+    return predicate && boost::bind( &IsNode, _1, user.node );
+}
+
 template< typename T >
 std::vector< Tree > List( const std::vector< T >& list )
 {
@@ -67,7 +76,7 @@ Tree Create( T ptr )
 template< typename T, typename U >
 Tree Dispatch( T& controller, const U& operand )
 {
-    boost::shared_ptr< typename T::T_Base > ptr = operand( controller );
+    auto ptr = operand( controller );
     if( !ptr )
         throw HttpException( web::NOT_FOUND );
     return ptr->GetProperties();
@@ -339,133 +348,136 @@ Tree Agent::InstallFromCache( const Uuid& id, const std::vector< size_t >& list 
 // Name: Agent::ListSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-std::vector< Tree > Agent::ListSessions( const Uuid& node, int offset, int limit ) const
+std::vector< Tree > Agent::ListSessions( const web::User& user, int offset, int limit ) const
 {
-    SessionController_ABC::T_Predicate predicate;
-    if( !node.is_nil() )
-        predicate = boost::bind( &IsNode, _1, node );
-    return List( sessions_.List( predicate, offset, limit ) );
+    return List( sessions_.List( GetFilterUser( user ), offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::CountSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-size_t Agent::CountSessions( const Uuid& node ) const
+size_t Agent::CountSessions( const web::User& user ) const
 {
-    if( node.is_nil() )
-        return sessions_.Count( SessionController_ABC::T_Predicate() );
-    else
-        return sessions_.Count( boost::bind( &IsNode, _1, node ) );
+    return sessions_.Count( GetFilterUser( user ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::GetSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Tree Agent::GetSession( const Uuid& node, const Uuid& id ) const
+Tree Agent::GetSession( const web::User& user, const Uuid& id ) const
 {
-    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Get, _1, node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Get, _1, user.node, id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::CreateSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Tree Agent::CreateSession( const Uuid& node, const web::session::Config& cfg, const std::string& exercise )
+Tree Agent::CreateSession( const web::User& user, const web::session::Config& cfg, const std::string& exercise )
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    return Create( sessions_.Create( node, cfg, exercise ) );
+    return Create( sessions_.Create( user, cfg, exercise ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DeleteSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Tree Agent::DeleteSession( const Uuid& node, const Uuid& id )
+Tree Agent::DeleteSession( const web::User& user, const Uuid& id )
 {
-    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Delete, _1, node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Delete, _1, user.node, id ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DeleteUser
+// Created: LGY 2014-04-10
+// -----------------------------------------------------------------------------
+void Agent::DeleteUser( const web::User& user, int id )
+{
+    sessions_.DeleteUser( user, id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::StartSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
-Tree Agent::StartSession( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const
+Tree Agent::StartSession( const web::User& user, const Uuid& id, const std::string& checkpoint ) const
 {
-    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Start, _1, node, id, checkpoint ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Start, _1, boost::cref( user ), id, checkpoint ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::StopSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
-Tree Agent::StopSession( const Uuid& node, const Uuid& id ) const
+Tree Agent::StopSession( const web::User& user, const Uuid& id ) const
 {
-    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Stop, _1, node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Stop, _1, boost::cref( user ), id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::PauseSession
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
-Tree Agent::PauseSession( const Uuid& node, const Uuid& id ) const
+Tree Agent::PauseSession( const web::User& user, const Uuid& id ) const
 {
-    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Pause, _1, node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Pause, _1, boost::cref( user ), id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::UpdateSession
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-Tree Agent::UpdateSession( const Uuid& node, const Uuid& id, const Tree& cfg ) const
+Tree Agent::UpdateSession( const web::User& user, const Uuid& id, const Tree& cfg ) const
 {
-    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Update, _1, node, id, boost::cref( cfg ) ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Update, _1, boost::cref( user ), id, boost::cref( cfg ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::ArchiveSession
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-Tree Agent::ArchiveSession( const Uuid& node, const Uuid& id ) const
+Tree Agent::ArchiveSession( const web::User& user, const Uuid& id ) const
 {
-    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Archive, _1, node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Archive, _1, boost::cref( user ), id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::RestoreSession
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-Tree Agent::RestoreSession( const Uuid& node, const Uuid& id ) const
+Tree Agent::RestoreSession( const web::User& user, const Uuid& id ) const
 {
-    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Restore, _1, node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Restore, _1, boost::cref( user ), id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DownloadSession
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-void Agent::DownloadSession( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const
+void Agent::DownloadSession( const web::User& user, const Uuid& id, web::Chunker_ABC& dst ) const
 {
-    sessions_.Download( node, id, dst );
+    Dispatch( sessions_, boost::bind( &SessionController_ABC::Download, _1, boost::cref( user ), id, boost::ref( dst ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::ReplaySession
 // Created: BAX 2012-08-10
 // -----------------------------------------------------------------------------
-Tree Agent::ReplaySession( const Uuid& node, const Uuid& id ) const
+Tree Agent::ReplaySession( const web::User& user, const Uuid& id ) const
 {
-    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Replay, _1, node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Replay, _1, boost::cref( user ), id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DownloadSessionLog
 // Created: NPT 2013-07-10
 // -----------------------------------------------------------------------------
-void Agent::DownloadSessionLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const
+void Agent::DownloadSessionLog( const web::User& user, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const
 {
-    sessions_.DownloadLog( node, id, dst, logFile, limitSize, deflate );
+    Dispatch( sessions_, boost::bind( &SessionController_ABC::DownloadLog, _1, boost::cref( user ), id, boost::ref( dst ), logFile, limitSize, deflate ) );
 }
 
 // -----------------------------------------------------------------------------

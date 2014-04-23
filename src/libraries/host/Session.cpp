@@ -26,6 +26,7 @@
 #include "web/Chunker_ABC.h"
 #include "web/Client_ABC.h"
 #include "web/HttpException.h"
+#include "web/User.h"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/assign/list_of.hpp>
@@ -157,6 +158,11 @@ int GetPid( T& process )
     return process ? process->GetPid() : -1;
 }
 
+web::User GetOwner( const Tree& tree )
+{
+    return web::User( Get< int >( tree, "owner.id" ), Get< std::string >( tree, "owner.name" ) );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ReadConfig
 // Created: BAX 2012-08-02
@@ -187,7 +193,8 @@ Session::Session( const SessionDependencies& deps,
                   const SessionPaths& paths,
                   const Config& cfg,
                   const std::string& exercise,
-                  const Uuid& replay )
+                  const Uuid& replay,
+                  const web::User& owner )
     : deps_        ( deps )
     , async_       ( deps.pool )
     , node_        ( node )
@@ -197,6 +204,7 @@ Session::Session( const SessionDependencies& deps,
     , links_       ( deps.nodes.LinkExercise( *node_, exercise ) )
     , port_        ( deps.ports.Create() )
     , replay_      ( replay )
+    , owner_       ( owner )
     , running_     ()
     , process_     ()
     , timeline_    ()
@@ -234,6 +242,7 @@ Session::Session( const SessionDependencies& deps,
     , links_       ( deps.nodes.LinkExercise( *node_, tree.get_child( "links" ) ) )
     , port_        ( AcquirePort( Get< int >( tree, "port" ), deps.ports ) )
     , replay_      ( Get< Uuid >( tree, "replay.root" ) )
+    , owner_       ( GetOwner( tree ) )
     , process_     ( AcquireProcess( tree, "process", deps_.runtime, port_->Get() ) )
     , timeline_    ( AcquireProcess( tree, "timeline", deps_.runtime, port_->Get() ) )
     , running_     ( process_ ? node->StartSession( boost::posix_time::not_a_date_time, true ) : Node_ABC::T_Token() )
@@ -395,6 +404,8 @@ Tree Session::GetProperties( bool save ) const
 {
     Tree tree;
     tree.put( "id", id_ );
+    tree.put( "owner.id", owner_.id );
+    tree.put( "owner.name", owner_.name );
     tree.put( "node", node_->GetId() );
     tree.put( "port", port_->Get() );
     tree.put_child( "logs", AvailableLogs() );
@@ -1182,7 +1193,7 @@ bool Attach( const FileSystem_ABC& fs, const Path& path, T& items )
 // Name: Session::Replay
 // Created: BAX 2012-08-10
 // -----------------------------------------------------------------------------
-Session::T_Ptr Session::Replay()
+Session::T_Ptr Session::Replay( const web::User& owner )
 {
     boost::lock_guard< boost::shared_mutex > read( access_ );
     if( IsReplay() )
@@ -1193,7 +1204,7 @@ Session::T_Ptr Session::Replay()
     cfg.name += " replay " + boost::lexical_cast< std::string >( replays_.size() + 1 );
     SessionPaths paths = paths_;
     paths.root = deps_.fs.MakeAnyPath( paths.root.remove_filename() );
-    T_Ptr next = boost::make_shared< Session >( deps_, node_, paths, cfg, Utf8( GetExercise() ), id_ );
+    T_Ptr next = boost::make_shared< Session >( deps_, node_, paths, cfg, Utf8( GetExercise() ), id_, owner );
     replays_.insert( next->GetId() );
     return next;
 }
@@ -1255,4 +1266,32 @@ bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& file, int l
         return false;
     deps_.fs.LimitedReadFile( deflate ? *deps_.fs.MakeGzipFilter( sink ) : sink, input, limit );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::IsAuthorized
+// Created: LGY 2014-04-11
+// -----------------------------------------------------------------------------
+bool Session::IsAuthorized( const web::User& user ) const
+{
+    if( user.type == web::USER_TYPE_ADMINISTRATOR || user.type == web::USER_TYPE_MANAGER )
+        return true;
+    if( user.id == owner_.id )
+        return true;
+    if( !cfg_.restricted.enabled )
+        return true;
+    return cfg_.restricted.users.find( user.id ) != cfg_.restricted.users.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::DeleteUser
+// Created: LGY 2014-04-11
+// -----------------------------------------------------------------------------
+void Session::DeleteUser( const web::User& user, int id )
+{
+    if( owner_.id == id )
+        owner_ = user;
+    if( !cfg_.restricted.enabled )
+        return;
+    cfg_.restricted.users.erase( id );
 }

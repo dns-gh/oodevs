@@ -98,8 +98,9 @@ struct Config
     typedef std::map< std::string, PluginConfig > T_Plugins;
     typedef std::map< std::string, Side > T_Sides;
     typedef std::set< Profile > T_Profiles;
-    std::string     name;
-    T_Plugins       plugins;
+    typedef std::map< int, std::string > T_AuthorizedUsers;
+    std::string       name;
+    T_Plugins         plugins;
     struct
     {
         bool        paused;
@@ -146,6 +147,11 @@ struct Config
         bool        no_side_objects;
         T_Sides     list;
     }               sides;
+    struct
+    {
+        T_AuthorizedUsers users;
+        bool              enabled;
+    }                     restricted;
     struct
     {
         bool        enabled;

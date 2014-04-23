@@ -13,6 +13,8 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "web/Configs.h"
+#include "web/User.h"
+#include "web/HttpException.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -68,6 +70,7 @@ namespace
 
     const std::string idNodeText = "56789abc-1234-1234-1234-123412345678";
     const Uuid idNode = boost::uuids::string_generator()( idNodeText );
+    const web::User standardUser = web::User( 42, "standard", web::USER_TYPE_ADMINISTRATOR, idNode );
 
     const std::string idActiveText = "12345678-1234-1234-1234-123456789abc";
     const Uuid idActive = boost::uuids::string_generator()( idActiveText );
@@ -118,12 +121,12 @@ namespace
         boost::shared_ptr< MockSession > active;
         boost::shared_ptr< MockSession > idle;
 
-        boost::shared_ptr< MockSession > AddSession( const Uuid& id, const Uuid& node, const std::string& text, const Path& path = Path() )
+        boost::shared_ptr< MockSession > AddSession( const Uuid& id, const web::User& user, const std::string& text, const Path& path = Path() )
         {
             const Tree tree = FromJson( text );
-            boost::shared_ptr< MockSession > session = boost::make_shared< MockSession >( id, node, tree );
+            boost::shared_ptr< MockSession > session = boost::make_shared< MockSession >( id, user.node, tree );
             if( path.empty() )
-                MOCK_EXPECT( sub.factory.Make5 ).once().with( mock::any, mock::any, node, mock::any, session->GetExercise() ).returns( session );
+                MOCK_EXPECT( sub.factory.Make5 ).once().with( mock::any, mock::any, user.node, mock::any, session->GetExercise(), mock::same( user ) ).returns( session );
             else
                 MOCK_EXPECT( sub.factory.Make2 ).once().returns( session );
             MOCK_EXPECT( sub.fs.WriteFile ).returns( true );
@@ -137,8 +140,8 @@ namespace
                 boost::bind( &MockFileSystem::Apply, &sub.fs, _1, boost::assign::list_of< Path >( "a" )( "b" ) ) );
             MOCK_EXPECT( sub.fs.IsFile ).once().with( "a/session.id" ).returns( true );
             MOCK_EXPECT( sub.fs.IsFile ).once().with( "b/session.id" ).returns( true );
-            active = AddSession( idActive, idNode, sessionActive, "a/session.id" );
-            idle = AddSession( idIdle, idNode, sessionIdle, "b/session.id" );
+            active = AddSession( idActive, standardUser, sessionActive, "a/session.id" );
+            idle = AddSession( idIdle, standardUser, sessionIdle, "b/session.id" );
             control.Reload( &IsKnownNode );
         }
     };
@@ -156,10 +159,10 @@ BOOST_FIXTURE_TEST_CASE( session_controller_reloads, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( session_controller_creates, Fixture )
 {
-    AddSession( idIdle, idNode, sessionIdle );
+    AddSession( idIdle, standardUser, sessionIdle );
     web::session::Config cfg;
     cfg.name = "myName2";
-    SessionController::T_Session session = control.Create( idNode, cfg, "myExercise2" );
+    SessionController::T_Session session = control.Create( standardUser, cfg, "myExercise2" );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     BOOST_CHECK_EQUAL( control.Get( idNode, idIdle ), session );
@@ -191,15 +194,24 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts, Fixture )
     Reload();
     const std::string checkpoint = "checkpoint";
     MOCK_EXPECT( idle->Start ).once().with( mock::any, mock::any, checkpoint ).returns( true );
-    SessionController::T_Session session = control.Start( idNode, idIdle, checkpoint );
+    MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
+    SessionController::T_Session session = control.Start( standardUser, idIdle, checkpoint );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
+}
+
+BOOST_FIXTURE_TEST_CASE( unauthorized_agent_can_not_start_session, Fixture )
+{
+    Reload();
+    MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( false );
+    BOOST_CHECK_THROW( control.Start( standardUser, idIdle, "checkpoint" ), web::HttpException ); ;
 }
 
 BOOST_FIXTURE_TEST_CASE( session_controller_stops, Fixture )
 {
     Reload();
     MOCK_EXPECT( active->Stop ).once().returns( true );
-    SessionController::T_Session session = control.Stop( idNode, idActive );
+    MOCK_EXPECT( active->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
+    SessionController::T_Session session = control.Stop( standardUser, idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
 }
 
@@ -207,9 +219,11 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts_with_right_app, Fixture )
 {
     Reload();
     MOCK_EXPECT( idle->Start ).once().with( simulation, timeline, mock::any ).returns( true );
-    control.Start( idNode, idIdle, std::string() );
+    MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
+    control.Start( standardUser, idIdle, std::string() );
     MOCK_RESET( idle->IsReplay );
     MOCK_EXPECT( idle->IsReplay ).once().returns( true );
+    MOCK_EXPECT( idle->IsAuthorized ).once().with( mock::same( standardUser ) ).returns( true );
     MOCK_EXPECT( idle->Start ).once().with( replayer, timeline, mock::any ).returns( true );
-    control.Start( idNode, idIdle, std::string() );
+    control.Start( standardUser, idIdle, std::string() );
 }

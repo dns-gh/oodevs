@@ -11,6 +11,12 @@
 #define USER_TYPE_H
 
 #include <string>
+#include <boost/uuid/uuid.hpp>
+
+namespace web
+{
+    typedef boost::uuids::uuid Uuid;
+}
 
 namespace web
 {
@@ -34,6 +40,32 @@ enum UserType
 // -----------------------------------------------------------------------------
 std::string ConvertUserType( UserType type );
 UserType ConvertUserType( const std::string& type );
+
+// -----------------------------------------------------------------------------
+// Name: User struct
+// Created: LGY 2014-04-04
+// -----------------------------------------------------------------------------
+struct User
+{
+    User( int id, const std::string& name, UserType type, const Uuid& node )
+        : id( id )
+        , name( name )
+        , type( type )
+        , node( node )
+    {
+        // NOTHING
+    }
+    User( int id, const std::string& name )
+        : id( id )
+        , name( name )
+    {
+        // NOTHING
+    }
+    int         id;
+    std::string name;
+    UserType    type;
+    Uuid        node;
+};
 }
 
 #endif // USER_TYPE_H
