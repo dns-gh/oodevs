@@ -28,22 +28,19 @@ DEC_PathFindRequest::~DEC_PathFindRequest()
 
 void DEC_PathFindRequest::FindPath( TER_Pathfinder_ABC& pathfind )
 {
+    auto path = path_.lock(); // thread-safe
+    if( !path )
+        return;
     MT_Profiler profiler;
     profiler.Start();
-    path_->Execute( pathfind );
-    manager_->CleanPathAfterComputation( path_, profiler.Stop() );
+    path->Execute( pathfind );
+    manager_->CleanPathAfterComputation( path, profiler.Stop() );
 }
 
-const boost::shared_ptr< DEC_Path_ABC >& DEC_PathFindRequest::GetPath() const
+boost::shared_ptr< DEC_Path_ABC > DEC_PathFindRequest::GetPathForUnit( MIL_Agent_ABC* pion ) const
 {
-    return path_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathFindRequest::IsPathForUnit
-// Created: JSR 2013-03-11
-// -----------------------------------------------------------------------------
-bool DEC_PathFindRequest::IsPathForUnit( MIL_Agent_ABC* pion ) const
-{
-    return path_ && path_->IsPathForUnit( pion );
+    auto path = path_.lock(); // thread-safe
+    if( path && path->IsPathForUnit( pion ) )
+        return path;
+    return 0;
 }

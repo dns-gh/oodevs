@@ -49,7 +49,6 @@ public:
     double Update();
     void UpdateInSimulationThread();
     void StartCompute( const boost::shared_ptr< DEC_Path_ABC >& pPath );
-    void CancelJob( DEC_Path_ABC* pPath );
     void CancelJobForUnit( MIL_Agent_ABC* pion );
     void CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC >& pPath, double duration );
     //@}

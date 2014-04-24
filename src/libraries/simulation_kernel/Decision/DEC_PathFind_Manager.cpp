@@ -101,61 +101,37 @@ void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_Path_ABC >
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::CancelJob
-// Created: LDC 2012-05-15
-// -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::CancelJob( DEC_Path_ABC* pPath )
-{
-    boost::mutex::scoped_lock locker( mutex_ );
-    T_Requests& requests = ( pPath->GetLength() > rDistanceThreshold_ ) ? longRequests_ : shortRequests_;
-    for( auto it = requests.begin(); it != requests.end(); ++it )
-    {
-        if( (*it)->GetPath().get() == pPath )
-        {
-            requests.erase( it );
-            break;
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager::CancelJobForUnit
 // Created: JSR 2013-03-11
 // -----------------------------------------------------------------------------
 void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* pion )
 {
     std::vector< boost::shared_ptr< DEC_Path_ABC > > paths;
+    const auto f =
+        [&]( const boost::shared_ptr< DEC_PathFindRequest >& request ) -> bool
+        {
+            const auto path = request->GetPathForUnit( pion );
+            if( !path )
+                return false;
+            paths.push_back( path );
+            path->Destroy();
+            return true;
+        };
     {
         boost::mutex::scoped_lock locker( mutex_ );
-        for( auto it = longRequests_.begin(); it != longRequests_.end(); )
-            if( ( *it )->IsPathForUnit( pion ) )
-            {
-                paths.push_back( ( *it )->GetPath() );
-                ( *it )->GetPath()->Destroy();
-                it = longRequests_.erase( it );
-            }
-            else
-                ++it;
-        for( auto it = shortRequests_.begin(); it != shortRequests_.end(); )
-            if( ( *it )->IsPathForUnit( pion ) )
-            {
-                paths.push_back( ( *it )->GetPath() );
-                ( *it )->GetPath()->Destroy();
-                it = shortRequests_.erase( it );
-            }
-            else
-                ++it;
+        boost::remove_erase_if( longRequests_, f );
+        boost::remove_erase_if( shortRequests_, f );
     }
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     for( auto it = paths.begin(); it != paths.end(); ++it )
         boost::remove_erase_if( toCleanup_,
-        [&]( const T_Cleanups::value_type& v ) -> bool
-        {
-            if( v.first != *it )
-                return false;
-            pathfindTime_ += v.second;
-            return true;
-        } );
+            [&]( const T_Cleanups::value_type& v ) -> bool
+            {
+                if( v.first != *it )
+                    return false;
+                pathfindTime_ += v.second;
+                return true;
+            } );
 }
 
 // -----------------------------------------------------------------------------
