@@ -341,14 +341,18 @@ bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
     return true;
 }
 
-bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* /*event*/, const geometry::Point2f& point )
+bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
+    if( !dnd::HasData< PathfindLayer >( event ) )
+        return false;
     hovered_->coordinate_ = point;
     return true;
 }
 
-bool PathfindLayer::HandleDropEvent( QDropEvent* /*event*/, const geometry::Point2f& point )
+bool PathfindLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
+    if( !dnd::HasData< PathfindLayer >( event ) )
+        return false;
     positions_.insert( positions_.begin() + hovered_->lastWaypoint_, point );
     SendRequest();
     return true;
@@ -356,6 +360,8 @@ bool PathfindLayer::HandleDropEvent( QDropEvent* /*event*/, const geometry::Poin
 
 bool PathfindLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
 {
+    if( !hovered_ )
+        return false;
     hovered_ = boost::none;
     return true;
 }
