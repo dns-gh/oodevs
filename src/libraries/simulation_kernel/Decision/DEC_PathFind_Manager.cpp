@@ -216,32 +216,6 @@ boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage()
 
 namespace
 {
-    template< typename T >
-    struct IsNotEmpty_
-    {
-        IsNotEmpty_( const T& cont ) : cont_( cont ) {};
-        bool operator()() { return ! cont_.empty(); };
-    private:
-        const T& cont_;
-        IsNotEmpty_& operator=( const IsNotEmpty_& );
-    };
-    template< typename T >
-    IsNotEmpty_< T > IsNotEmpty( const T& cont ) { return IsNotEmpty_< T >( cont ); };
-
-    template< typename T >
-    struct AreNotEmpty_
-    {
-        AreNotEmpty_( const T& cont, const T& cont2 ) : cont_( cont ), cont2_( cont2 ) {};
-        bool operator()() { return ! cont_.empty() || ! cont2_.empty(); };
-    private:
-        const T& cont_;
-        const T& cont2_;
-        AreNotEmpty_& operator=( const AreNotEmpty_& );
-    };
-
-    template< typename T >
-    AreNotEmpty_< T > AreNotEmpty( const T& cont, const T& cont2 ) { return AreNotEmpty_< T >( cont, cont2 ); };
-
     static const unsigned maximumShortRequest = 5;
 }
 
@@ -269,13 +243,13 @@ boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage( u
     boost::mutex::scoped_lock locker( mutex_ );
     if( ( nThread % 2 ) )
     {
-        condition_.wait( locker, IsNotEmpty( shortRequests_ ) );
+        condition_.wait( locker, [&]() { return !shortRequests_.empty(); } );
         pRequest = shortRequests_.front();
         shortRequests_.pop_front();
     }
     else
     {
-        condition_.wait( locker, AreNotEmpty( shortRequests_, longRequests_ ) );
+        condition_.wait( locker, [&]() { return !shortRequests_.empty() || !longRequests_.empty(); } );
         T_Requests& requests = GetRequests();
         pRequest = requests.front();
         requests.pop_front();
@@ -301,7 +275,7 @@ int DEC_PathFind_Manager::GetCurrentThread() const
 // Name: DEC_PathFind_Manager::CleanPathAfterComputation
 // Created: NLD 2006-01-23
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC>& pPath, double duration )
+void DEC_PathFind_Manager::CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC >& pPath, double duration )
 {
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     toCleanup_.push_back( std::make_pair( pPath, duration ) );
