@@ -103,16 +103,20 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
 // Created: ABR 2014-03-05
 // -----------------------------------------------------------------------------
 OrderParameter::OrderParameter( const OrderParameter& other )
-    : name_     ( other.name_ )
-    , type_     ( other.type_ )
-    , optional_ ( other.optional_ )
-    , context_  ( other.context_ )
-    , structure_( other.structure_ )
-    , union_    ( other.union_ )
-    , minOccurs_( other.minOccurs_ )
-    , maxOccurs_( other.maxOccurs_ )
-    , minValue_ ( other.minValue_ )
-    , maxValue_ ( other.maxValue_ )
+    : name_        ( other.name_ )
+    , type_        ( other.type_ )
+    , optional_    ( other.optional_ )
+    , context_     ( other.context_ )
+    , structure_   ( other.structure_ )
+    , union_       ( other.union_ )
+    , minOccurs_   ( other.minOccurs_ )
+    , maxOccurs_   ( other.maxOccurs_ )
+    , minValue_    ( other.minValue_ )
+    , maxValue_    ( other.maxValue_ )
+    , indirectFire_( other.indirectFire_ )
+    , values_      ( other.values_ )
+    , aliases_     ( other.aliases_ )
+    , genObjects_  ( other.genObjects_ )
 {
     CopyVisitor visitor( *this );
     other.Accept( static_cast< OrderParameterValueVisitor_ABC& >( visitor ) );
