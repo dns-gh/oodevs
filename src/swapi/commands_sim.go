@@ -1851,8 +1851,10 @@ func (c *Client) SegmentRequest(position Point, terrains []sword.TerrainType, co
 	return segments, err
 }
 
-func pathfindHandler(id *uint32) simHandler {
-	return func(msg *sword.SimToClient_Content) error {
+func (c *Client) PathfindTest(params *sword.MissionParameters, action sword.MagicAction_Type) (uint32, error) {
+	msg := CreateMagicAction(params, action)
+	var id uint32
+	handlers := func(msg *sword.SimToClient_Content) error {
 		reply := msg.GetMagicActionAck()
 		if reply == nil {
 			return unexpected(msg)
@@ -1865,16 +1867,16 @@ func pathfindHandler(id *uint32) simHandler {
 		if value == nil {
 			return invalid("result", reply.GetResult())
 		}
-		*id = value.GetPathfind().GetId()
+		id = value.GetPathfind().GetId()
 		return nil
 	}
+	err := <-c.postSimRequest(msg, handlers)
+	return id, err
 }
 
 func (c *Client) CreatePathfind(unitId uint32, points ...Point) (*Pathfind, error) {
-	msg := CreateMagicAction(MakeParameters(MakePathfindRequest(unitId, points...)),
+	id, err := c.PathfindTest(MakeParameters(MakePathfindRequest(unitId, points...)),
 		sword.MagicAction_pathfind_creation)
-	var id uint32
-	err := <-c.postSimRequest(msg, pathfindHandler(&id))
 	if err != nil {
 		return nil, err
 	}
@@ -1894,15 +1896,12 @@ func (c *Client) CreatePathfind(unitId uint32, points ...Point) (*Pathfind, erro
 }
 
 func (c *Client) DestroyPathfind(pathfindId uint32) error {
-	msg := CreateMagicAction(MakeParameters(MakePathfind(pathfindId)),
+	id, err := c.PathfindTest(MakeParameters(MakePathfind(pathfindId)),
 		sword.MagicAction_pathfind_destruction)
-	var id uint32
-	err := <-c.postSimRequest(msg, pathfindHandler(&id))
 	if err != nil {
 		return err
 	}
-	ok := c.Model.data.removePathfind(id)
-	if !ok {
+	if !c.Model.data.removePathfind(id) {
 		return ErrNotFound
 	}
 	return nil
