@@ -1492,3 +1492,20 @@ func (model *ModelData) handleFireDetectionDestruction(m *sword.SimToClient_Cont
 	}
 	return nil
 }
+
+func (model *ModelData) handlePathfindCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetComputePathfindAck()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	if mm.Id == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetId().GetId()
+	model.Pathfinds[id] = &Pathfind{
+		Id:     id,
+		UnitId: mm.GetUnit().GetId(),
+		Points: ReadPathPoints(mm.GetPath().GetPoints()),
+	}
+	return nil
+}

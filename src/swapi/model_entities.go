@@ -422,6 +422,12 @@ type LocalWeather struct {
 	Id          uint32
 }
 
+type Pathfind struct {
+	Id     uint32
+	UnitId uint32
+	Points []PathPoint
+}
+
 type OrderKind int
 
 const (
@@ -544,6 +550,7 @@ type ModelData struct {
 	FireEffects          map[uint32]*FireEffect
 	FireDetections       map[uint32]*FireDetection
 	LocalWeathers        map[uint32]*LocalWeather
+	Pathfinds            map[uint32]*Pathfind
 	GlobalWeather        Weather
 	// Available scores definitions
 	KnownScores map[string]struct{}
@@ -573,6 +580,7 @@ func NewModelData() *ModelData {
 		CrowdKnowledges:      map[uint32]*CrowdKnowledge{},
 		Profiles:             map[string]*Profile{},
 		LocalWeathers:        map[uint32]*LocalWeather{},
+		Pathfinds:            map[uint32]*Pathfind{},
 		Orders:               map[uint32]*Order{},
 		MagicOrders:          map[uint32]*MagicOrder{},
 		Objects:              map[uint32]*Object{},
@@ -860,6 +868,12 @@ func (model *ModelData) removeLocalWeather(id uint32) bool {
 	return size != len(model.LocalWeathers)
 }
 
+func (model *ModelData) removePathfind(id uint32) bool {
+	size := len(model.Pathfinds)
+	delete(model.Pathfinds, id)
+	return size != len(model.Pathfinds)
+}
+
 func (model *ModelData) updateUrban(id uint32, resourceNetworks map[string]*ResourceNetwork) bool {
 	if urban, ok := model.Objects[id]; ok && urban.Urban != nil {
 		urban.Urban.ResourceNetworks = resourceNetworks
@@ -1034,6 +1048,7 @@ var (
 		(*ModelData).handleUnitVisionCones,
 		(*ModelData).handleUrbanCreation,
 		(*ModelData).handleUrbanUpdate,
+		(*ModelData).handlePathfindCreation,
 	}
 	authToClientHandlers = []func(model *ModelData, m *sword.AuthenticationToClient_Content) error{
 		(*ModelData).handleProfileCreation,
