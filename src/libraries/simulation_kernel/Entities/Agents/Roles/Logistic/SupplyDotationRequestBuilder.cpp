@@ -19,6 +19,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include <boost/make_shared.hpp>
 
 using namespace logistic;
 
@@ -32,6 +33,7 @@ SupplyDotationRequestBuilder::SupplyDotationRequestBuilder( MIL_Automate& automa
     : automate_ ( &automate )
     , recipient_( &recipient )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +44,7 @@ SupplyDotationRequestBuilder::SupplyDotationRequestBuilder()
     : automate_ ( 0 )
     , recipient_( 0 )
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,11 +53,8 @@ SupplyDotationRequestBuilder::SupplyDotationRequestBuilder()
 // -----------------------------------------------------------------------------
 SupplyDotationRequestBuilder::~SupplyDotationRequestBuilder()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SupplyDotationRequestBuilder::CreateRequest
@@ -63,22 +62,19 @@ SupplyDotationRequestBuilder::~SupplyDotationRequestBuilder()
 // -----------------------------------------------------------------------------
 void SupplyDotationRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 {
-    automate_->Apply2( (boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) >)boost::bind( &SupplyDotationRequestBuilder::VisitDotation, this, _1, _2, boost::ref( container ) ) );
-    container.SetConvoyFactory( SupplyConvoyConfig::GetDotationSupplyConvoyFactory() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyDotationRequestBuilder::VisitDotation
-// Created: NLD 2005-01-24
-// -----------------------------------------------------------------------------
-void SupplyDotationRequestBuilder::VisitDotation( const MIL_AgentPion& pion, PHY_Dotation& dotation, SupplyRequestContainer_ABC& container ) const
-{
-    if( dotation.NeedSupply() )
-        if( !pion.Retrieve< PHY_RoleInterface_Supply >() || !pion.Retrieve< PHY_RoleInterface_Supply >()->IsConvoy() )
+    const boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) > f =
+        [&]( const MIL_AgentPion& pion, PHY_Dotation& dotation )
         {
-            double quantityToRequest = std::max( 0., dotation.GetCapacity() - dotation.GetValue() ); //$$ devrait être le retour de NeedSupply() ?
-            container.AddResource( *recipient_, pion, boost::shared_ptr< SupplyResource_ABC >( new SupplyResourceDotation( dotation ) ), quantityToRequest );
-        }
+            if( !dotation.NeedSupply() )
+                return;
+            const auto supply = pion.Retrieve< PHY_RoleInterface_Supply >();
+            if( supply && supply->IsConvoy() )
+                return;
+            const double quantity = std::max( 0., dotation.GetCapacity() - dotation.GetValue() ); //$$ devrait être le retour de NeedSupply() ?
+            container.AddResource( *recipient_, pion, boost::make_shared< SupplyResourceDotation >( dotation ), quantity );
+        };
+    automate_->Apply2( f );
+    container.SetConvoyFactory( SupplyConvoyConfig::GetDotationSupplyConvoyFactory() );
 }
 
 // -----------------------------------------------------------------------------
