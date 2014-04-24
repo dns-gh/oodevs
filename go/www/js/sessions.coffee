@@ -184,9 +184,7 @@ class UserSelectedListView extends Backbone.View
         @$el.empty()
 
 pop_settings = (ui, session, users) ->
-    all_users = []
-    for it in users
-        all_users.push id: it.id, username: it.attributes.name
+    all_users = (id: d.id, name: d.get "name" for d in users.models)
     data = _.extend session, users: all_users
     if !data.owner
         data.owner = name: user.name
@@ -202,9 +200,9 @@ pop_settings = (ui, session, users) ->
     attach_click_to_dropdown $("#size_unit")
     user_selected_view = new UserSelectedListView ui.find ".user_table tbody"
     for k, v of data.authorized_users?.list
-        found = _.find all_users, (x) -> x.id == k && x.username == v
-        if found?
-            user_selected_view.create { id: k, username: v }
+        usr = users.get k
+        if usr?
+            user_selected_view.create usr.clone()
 
     group = ui.find(".user_group")
     group.toggle ui.find("#access_restricted").is ":checked"
@@ -219,7 +217,9 @@ pop_settings = (ui, session, users) ->
 
     ui.find(".user_select").click ->
         data = $("#user_selected :selected")
-        user_selected_view.create id: data.val(), username: data.text()
+        usr = users.get data.val()
+        if usr?
+            user_selected_view.create usr.clone()
 
     mod = ui.find ".modal"
     mod.modal "show"
@@ -353,8 +353,7 @@ validate_settings = (ui, is_default) ->
         next.list = {}
         for it in ui.find ".user_table tbody tr"
             id = $(it).attr "data_id"
-            username = $(it).find("td").first().text()
-            next.list[id] = username
+            next.list[id] = $(it).find("td").first().text().trim()
 
     data.checkpoints?.frequency *= 60
     return data
@@ -682,7 +681,7 @@ class SessionItemView extends Backbone.View
     edit: (evt) =>
         return if is_disabled evt
         session = _.extend {}, @model.attributes
-        [ui, mod] = pop_settings $("#settings"), session, user_view.model.models
+        [ui, mod] = pop_settings $("#settings"), session, user_view.model
         mod.find(".apply").click =>
             data = validate_settings ui
             return unless data?
@@ -1010,7 +1009,7 @@ $("#session_edit").click ->
         is_default: true
         status: "stopped"
     data = _.extend data, session_default.attributes, overrides
-    [ui, mod] = pop_settings $("#settings"), data, user_view.model.models
+    [ui, mod] = pop_settings $("#settings"), data, user_view.model
     mod.find(".apply").click ->
         data = validate_settings ui, true
         return unless data?

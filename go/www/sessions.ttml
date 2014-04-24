@@ -70,7 +70,7 @@
     <div class="controls">
         <select id="user_selected">
 {{#each_pair users}}
-            <option value="{{value.id}}">{{value.username}}</option>
+            <option value="{{value.id}}">{{value.name}}</option>
 {{/each_pair}}
         </select>
         <a class="btn user_select"><i class="icon-plus"></i> Add</a>
@@ -508,10 +508,8 @@
 </script>
 <!-- User selected Template -->
 <script type="text/template" id="user_selected_template">
-    <td>{{username}}</td>
-    <td class="action">
-        <div class="btn-group">
-            <a class="btn delete"><i class="icon-trash"></i> </a>
-        </div>
+    <td>
+        {{name}}
+        <a class="btn delete pull-right"> <i class="icon-trash"></i> </a>
     </td>
 </script>
