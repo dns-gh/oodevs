@@ -138,16 +138,16 @@ end
 -- ============================================================================
 integration.updateRemoveItSecu = function( object )
     if object[myself].actionRemoveState == eActionObjetImpossible then
-        reportFunction( eRC_ConstructionObjetImpossible )
+        reportOnceFunction( eRC_ConstructionObjetImpossible )
         DEC_Trace( "impossible works" )
         return true 
     elseif object[ myself ].actionRemoveState == eActionObjetManqueDotation then
         DEC_Trace( "not enough dotation" )
-         reportFunction( eRC_PasDotationConstructionObjet )
+        reportOnceFunction( eRC_PasDotationConstructionObjet )
         return true 
     elseif object[ myself ].actionRemoveState == eActionObjetPasDeCapacite then
         DEC_Trace( "no capacity" )
-        reportFunction( eRC_PasDotationConstructionObjet )
+        reportOnceFunction( eRC_PasDotationConstructionObjet )
         return true 
     elseif object[ myself ].actionRemoveState == eActionObjetTerminee then
         reportFunction(eRC_FinDegagement )

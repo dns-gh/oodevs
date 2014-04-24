@@ -223,6 +223,26 @@ function InitMeAutomat( strKnowledgeType, knowledgeSource, groupName )
     InitKnowledgeManager()
 end
 
+--- Displays a given report. If this method is called during multiple
+-- consecutive ticks with the same "instance" parameter (and the same report), 
+-- then the report will only be displayed the first time this method was called.
+-- @param instance Any type, the parameter used to determine whether or not to
+-- display reports multiple times over multiple calls.
+-- Any additional parameter will be used as parameters to the report.
+reportOnceAction = masalife.brain.integration.startStopAction( { 
+    start = function( instance, ... ) 
+        reportFunction( ... )
+    end
+} )
+
+--- Displays a given report. If this method is called during multiple
+-- consecutive ticks by this entity with the same report, then the
+-- report will only be displayed the first time this method was called.
+-- Any additional parameter will be used as parameters to the report.
+reportOnceFunction = function( ... )
+    reportOnceAction( myself, ... )
+end
+
 --- Unregister brain from communication group before deletion
 -- @param groupName The name of the leader
 -- @author MGD
