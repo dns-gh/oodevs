@@ -1901,6 +1901,9 @@ func (c *Client) DestroyPathfind(pathfindId uint32) error {
 	if err != nil {
 		return err
 	}
+	if pathfindId != id {
+		return mismatch("pathfind id", pathfindId, id)
+	}
 	if !c.Model.data.removePathfind(id) {
 		return ErrNotFound
 	}
