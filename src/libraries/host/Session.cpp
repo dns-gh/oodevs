@@ -391,8 +391,15 @@ Tree Session::AvailableLogs() const
             tree.put( runtime::Utf8( path.filename() ), true );
         return true;
     };
-    deps_.fs.Walk( GetOutput(), false, adder );
-    deps_.fs.Walk( GetRoot(), false, adder );
+    try
+    {
+        deps_.fs.Walk( GetOutput(), false, adder );
+        deps_.fs.Walk( GetRoot(), false, adder );
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
     return tree;
 }
 
