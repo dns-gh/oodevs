@@ -254,7 +254,7 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
         return true;
     if( message.has_list_enabled_vision_cones() )
         return true;
-    if( message.has_pathfind_request() )
+    if( message.has_compute_pathfind() )
         return true;
     if( message.has_segment_request() )
         return true;

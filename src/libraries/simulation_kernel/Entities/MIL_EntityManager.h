@@ -212,6 +212,9 @@ public:
     void OnReceiveSelectDiagnosisTeam         ( const sword::MagicAction&          message );
     void OnReceiveSelectRepairTeam            ( const sword::MagicAction&          message );
     void OnReceiveTransferToLogisticSuperior  ( const sword::MagicAction&          message );
+    void OnReceivePathfindCreation            ( const sword::MagicAction&          message, sword::MagicActionAck& ack,
+                                                unsigned int nCtx, unsigned int clientId );
+    void OnReceivePathfindDestruction         ( const sword::MagicAction&          message, sword::MagicActionAck& ack );
     void OnReceiveBurningCellRequest          ( const sword::BurningCellRequest&   message, unsigned int nCtx );
     void OnReceiveKnowledgeGroupCreation      ( const sword::MagicAction&          message, sword::MagicActionAck& ack );
     void OnPathfindRequest                    ( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId );

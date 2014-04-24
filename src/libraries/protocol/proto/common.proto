@@ -381,7 +381,7 @@ message PathPoint {
 }
 
 /** @struct PathResult
-    @brief Defines a path in response to the PathfindRequestAck message
+    @brief Defines a path
         with the debug information
 */
 message PathResult {
@@ -811,6 +811,10 @@ message MissionParameter {
         optional Id                       crowd                    = 52;
         //! A phase line function type
         optional PhaseLineOrder.Function  phase_line_function      = 53;
+        //! A pathfind request
+        optional PathfindRequest          pathfind_request         = 54;
+        //! A pathfind identifier
+        optional Id                       pathfind                 = 55;
     }
     //! Whether the parameter is a null value or not
     optional bool  null_value = 1;
@@ -1639,6 +1643,14 @@ message MagicAction {
         //! parameters[0], Identifier: identifier of log request.
         //! parameters[1], Identifier: selected repair team type identifier.
         select_repair_team                 = 12;
+        //! Create a pathfind
+        //! parameters[0], PathfindRequest: the unit and waypoints.
+        //! result[0], PathfindId: created pathfind identifier.
+        //! The pathfind identifier will be sent in a ComputePathfindAck in response.
+        pathfind_creation                  = 13;
+        //! Destroy a pathfind
+        //! parameters[0], PathfindId: the pathfind identifier.
+        pathfind_destruction               = 14;
     }
     required Type              type       = 1;
     required MissionParameters parameters = 2;
@@ -2652,8 +2664,14 @@ message PathfindRequest {
     optional bool         ignore_dynamic_objects = 4;
 }
 
+//! Creates a new path.
+//! (see PathfindRequest)
+message ComputePathfind {
+    required PathfindRequest request = 1;
+}
+
 //! Returns a calculated path, if operation succeeded.
-message PathfindRequestAck {
+message ComputePathfindAck {
     enum ErrorCode {
         //! Operation succeeded
         no_error                = 0;
@@ -2670,4 +2688,8 @@ message PathfindRequestAck {
     optional PathResult      path     = 2;
     //! More detailed account of the returned error
     optional string    error_msg      = 3;
+    //! The pathfind identifier
+    optional Id        id             = 4;
+    //! The associated unit
+    optional Id        unit           = 5;
 }

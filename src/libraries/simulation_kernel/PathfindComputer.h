@@ -17,6 +17,7 @@ class DEC_PathFind_Manager;
 class DEC_PathResult;
 class MIL_Population;
 class MT_Vector2D;
+class PathRequest;
 
 // =============================================================================
 /** @class  PathfindComputer
@@ -29,36 +30,38 @@ class PathfindComputer : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PathfindComputer( DEC_PathFind_Manager& pathfindManager );
+             PathfindComputer( DEC_PathFind_Manager& pathfindManager, const TER_World& world );
     virtual ~PathfindComputer();
     //@}
 
     //! @name Operations
     //@{
-    void Compute( MIL_AgentPion& pion, const std::vector< boost::shared_ptr< MT_Vector2D > >& positions,
-                  unsigned int nCtx, unsigned int clientId );
-    void Compute( const MIL_Population& population, const std::vector< boost::shared_ptr< MT_Vector2D > >& positions,
-                  unsigned int nCtx, unsigned int clientId );
+    uint32_t Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
+                      unsigned int ctx, unsigned int clientId, bool store );
+    uint32_t Compute( const MIL_Population& population, const sword::PathfindRequest& message,
+                      unsigned int ctx, unsigned int clientId, bool store );
+    bool Destroy( unsigned int pathfind );
     void Update();
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::pair< unsigned int, boost::shared_ptr< DEC_PathResult > > T_Result;
-    typedef std::map< unsigned int, T_Result >                             T_Results;
+    typedef std::map< uint32_t, boost::shared_ptr< PathRequest > > T_Results;
     //@}
 
     //! @name Helpers
     //@{
-    void Compute( const boost::shared_ptr< DEC_PathResult >& path, unsigned int nCtx, unsigned int clientId );
-    bool PathComputed( unsigned int clientId, const T_Result& content );
+    uint32_t Compute( boost::shared_ptr< DEC_PathResult > path, const sword::PathfindRequest& request,
+                      unsigned int ctx, unsigned int clientId, bool store );
     //@}
 
 private:
     //! @name Member data
     //@{
     DEC_PathFind_Manager& pathfindManager_;
+    const TER_World& world_;
+    uint32_t ids_;
     T_Results results_;
     //@}
 };

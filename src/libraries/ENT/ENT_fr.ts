@@ -1167,6 +1167,14 @@
         <source>Select Repair Team</source>
         <translation>Sélectionner une equipe de réparation</translation>
     </message>
+    <message>
+        <source>Create pathfind</source>
+        <translation>Créer un chemin</translation>
+    </message>
+    <message>
+        <source>Destroy pathfind</source>
+        <translation>Supprimer un chemin</translation>
+    </message>
 </context>
 <context>
     <name>sword::ObjectMagicAction::Type</name>
