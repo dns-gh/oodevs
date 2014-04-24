@@ -13,11 +13,10 @@
 #include "SupplyRequestBuilder_ABC.h"
 #include <boost/serialization/export.hpp>
 
-class PHY_Dotation;
 class MIL_Automate;
-class MIL_AgentPion;
 
-namespace logistic {
+namespace logistic
+{
     class SupplyRecipient_ABC;
 
 // =============================================================================
@@ -43,13 +42,7 @@ public:
     //@}
 
 private:
-    //! @name Operations
-    //@{
-    void VisitDotation( const MIL_AgentPion& pion, PHY_Dotation& dotation, SupplyRequestContainer_ABC& container ) const;
-    //@}
-
-private:
-    MIL_Automate*        automate_;
+    MIL_Automate* automate_;
     SupplyRecipient_ABC* recipient_;
 };
 
