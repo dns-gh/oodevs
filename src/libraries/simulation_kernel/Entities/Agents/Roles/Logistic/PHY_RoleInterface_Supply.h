@@ -135,6 +135,7 @@ public:
     virtual logistic::SupplySupplier_ABC*  ConvoyGetTransportersProvider() const { return 0; };
     virtual const T_PointVector*           ConvoyGetPathToNextDestination() const { return 0; };
     virtual bool                           ConvoyIsPushedFlow() const { return false; }
+    virtual bool                           IsConvoy() const { return false; }
     //@}
 
 private:

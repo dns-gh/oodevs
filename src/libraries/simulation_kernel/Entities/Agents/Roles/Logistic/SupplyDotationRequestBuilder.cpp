@@ -15,8 +15,10 @@
 #include "SupplyRequestContainer_ABC.h"
 #include "SupplyResourceDotation.h"
 #include "SupplyConvoyConfig.h"
-#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
+#include "Entities/Automates/MIL_Automate.h"
 
 using namespace logistic;
 
@@ -72,10 +74,11 @@ void SupplyDotationRequestBuilder::Process( SupplyRequestContainer_ABC& containe
 void SupplyDotationRequestBuilder::VisitDotation( const MIL_AgentPion& pion, PHY_Dotation& dotation, SupplyRequestContainer_ABC& container ) const
 {
     if( dotation.NeedSupply() )
-    {
-        double quantityToRequest = std::max( 0., dotation.GetCapacity() - dotation.GetValue() ); //$$ devrait être le retour de NeedSupply() ?
-        container.AddResource( *recipient_, pion, boost::shared_ptr< SupplyResource_ABC >( new SupplyResourceDotation( dotation ) ), quantityToRequest );
-    }
+        if( !pion.Retrieve< PHY_RoleInterface_Supply >() || !pion.Retrieve< PHY_RoleInterface_Supply >()->IsConvoy() )
+        {
+            double quantityToRequest = std::max( 0., dotation.GetCapacity() - dotation.GetValue() ); //$$ devrait être le retour de NeedSupply() ?
+            container.AddResource( *recipient_, pion, boost::shared_ptr< SupplyResource_ABC >( new SupplyResourceDotation( dotation ) ), quantityToRequest );
+        }
 }
 
 // -----------------------------------------------------------------------------

@@ -206,6 +206,15 @@ bool PHY_RolePionLOGConvoy_Supply::ConvoyIsPushedFlow() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::IsConvoy
+// Created: LDC 2014-04-24
+// -----------------------------------------------------------------------------
+bool PHY_RolePionLOGConvoy_Supply::IsConvoy() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::ModifySpeed
 // Created: NLD 2007-02-05
 // -----------------------------------------------------------------------------

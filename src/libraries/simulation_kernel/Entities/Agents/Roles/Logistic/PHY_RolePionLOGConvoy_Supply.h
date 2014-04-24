@@ -73,6 +73,7 @@ public:
     virtual logistic::SupplySupplier_ABC*  ConvoyGetTransportersProvider  () const;
     virtual const T_PointVector*           ConvoyGetPathToNextDestination () const;
     virtual bool                           ConvoyIsPushedFlow             () const;
+    virtual bool                           IsConvoy                       () const;
 
     virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     //@}
