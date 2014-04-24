@@ -218,23 +218,18 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPer
 {
     const bool isPerceptionHacked = pHackedPerceptionLevel_ != &PHY_PerceptionLevel::notSeen_;
     pCurrentPerceptionLevel_ = isPerceptionHacked ? pHackedPerceptionLevel_ : &perception.GetCurrentPerceptionLevel();
-    T_PointVector shape;
     flowParts_.UpdateTimeLastUpdate();
     if( isPerceptionHacked && pFlowKnown_ )
     {
         const T_PointList& shapeList = pFlowKnown_->GetFlowShape();
-        std::copy( shapeList.begin(), shapeList.end(), std::back_inserter( shape ) );
+        const T_PointVector shape( shapeList.begin(), shapeList.end() );
         if( flowParts_.Update( shape ) )
             bFlowPartsUpdated_ = true;
     }
-    else
+    else if( perception.GetCurrentPerceptionLevel() != PHY_PerceptionLevel::notSeen_ )
     {
-        if( perception.GetCurrentPerceptionLevel() != PHY_PerceptionLevel::notSeen_ )
-        {
-            shape = perception.GetShape();
-            if( flowParts_.Update( shape ) )
-                bFlowPartsUpdated_ = true;
-        }
+        if( flowParts_.Update( perception.GetShape() ) )
+            bFlowPartsUpdated_ = true;
     }
     if( direction_ != perception.GetDirection() )
     {
