@@ -53,7 +53,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
-                            Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& coordinateConverter );
+                            Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
     virtual ~PathfindLayer();
     //@}
 
@@ -106,7 +106,7 @@ private:
     kernel::Controllers& controllers_;
     gui::GlTools_ABC& tools_;
     Publisher_ABC& publisher_;
-    const kernel::CoordinateConverter_ABC& coordinateConverter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     sword::ClientToSim message_;
     kernel::SafePointer< kernel::Entity_ABC > element_;
     std::deque< geometry::Point2f > positions_;

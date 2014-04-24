@@ -50,12 +50,12 @@ namespace
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
 PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
-                              Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& coordinateConverter )
+                              Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
     : controllers_( controllers )
     , tools_( tools )
     , element_( controllers )
     , publisher_( publisher )
-    , coordinateConverter_( coordinateConverter )
+    , converter_( converter )
     , message_( MakeMessage() )
     , lock_( false )
 {
@@ -76,7 +76,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
                 boost::optional< uint32_t > waypoint;
                 if( it->has_waypoint() )
                     waypoint = it->waypoint();
-                const Point p = { coordinateConverter_.ConvertToXY( it->coordinate() ), waypoint };
+                const Point p = { converter_.ConvertToXY( it->coordinate() ), waypoint };
                 path_.push_back( p );
             }
         };
@@ -95,8 +95,8 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
             const auto& segments = request.segments();
             for( auto it = segments.begin(); it != segments.end(); ++it )
                 hovered_->coordinate_ = geometry::Segment2f(
-                    coordinateConverter_.ConvertToXY( it->from() ),
-                    coordinateConverter_.ConvertToXY( it->to() ) ).Project( point_ );
+                    converter_.ConvertToXY( it->from() ),
+                    converter_.ConvertToXY( it->to() ) ).Project( point_ );
         };
     publisher_.Register( fun2 );
 }
@@ -255,7 +255,7 @@ void PathfindLayer::SendRequest()
         auto request = msg.mutable_message()->mutable_compute_pathfind()->mutable_request();
         request->mutable_unit()->set_id( element_->GetId() );
         for( auto it = positions_.begin(); it != positions_.end(); ++it )
-            coordinateConverter_.ConvertToGeo( *it, *request->add_positions() );
+            converter_.ConvertToGeo( *it, *request->add_positions() );
         for( auto it = element_->Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
             request->add_equipment_types()->set_id( it.NextElement().type_.GetId() );
         request->set_ignore_dynamic_objects( true );
@@ -387,7 +387,7 @@ bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::
     else
     {
         auto request = message_.mutable_message()->mutable_segment_request();
-        coordinateConverter_.ConvertToGeo( point, *request->mutable_position() );
+        converter_.ConvertToGeo( point, *request->mutable_position() );
         publisher_.Send( message_ );
         point_ = point;
     }
