@@ -10,7 +10,6 @@
 #ifndef DEC_PATHFINDREQUEST_H
 #define DEC_PATHFINDREQUEST_H
 
-#include "MT_Tools/MT_Profiler.h"
 #include "simulation_terrain/TER_PathFindRequest_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
@@ -46,7 +45,6 @@ private:
     //@{
     DEC_PathFind_Manager* const manager_;
     const boost::shared_ptr< DEC_Path_ABC > path_;
-    MT_Profiler profiler_;
     //@}
 };
 
