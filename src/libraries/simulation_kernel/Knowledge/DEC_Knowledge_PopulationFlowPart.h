@@ -20,7 +20,6 @@ namespace sword
     class FlowPart;
 }
 
-class DEC_Knowledge_PopulationFlowPerception;
 class DEC_Knowledge_PopulationCollision;
 class PHY_PerceptionLevel;
 
@@ -49,7 +48,8 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    bool Update( const DEC_Knowledge_PopulationFlowPerception& perception );
+    void UpdateTimeLastUpdate();
+    bool Update( const T_PointVector& shape );
     bool Update( const DEC_Knowledge_PopulationCollision& collision );
     bool UpdateRelevance( const double rMaxLifeTime );
     bool Clean();

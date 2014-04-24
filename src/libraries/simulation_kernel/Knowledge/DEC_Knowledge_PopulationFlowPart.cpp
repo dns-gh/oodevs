@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationFlowPart.h"
-#include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "MIL_Time_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
@@ -106,21 +105,25 @@ void DEC_Knowledge_PopulationFlowPart::Prepare()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_PopulationFlowPart::Update
-// Created: NLD 2005-10-14
+// Name: DEC_Knowledge_PopulationFlowPart::UpdateTimeLastUpdate
+// Created: LDC 2014-04-23
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationFlowPerception& perception )
+void DEC_Knowledge_PopulationFlowPart::UpdateTimeLastUpdate()
 {
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
+}
 
-    if( perception.GetCurrentPerceptionLevel() != PHY_PerceptionLevel::notSeen_ )
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::Update
+// Created: LDC 2014-04-23
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationFlowPart::Update( const T_PointVector& shape )
+{
+    bPerceived_ = true;
+    if( shape_ != shape )
     {
-        bPerceived_ = true;
-        if( shape_ != perception.GetShape() )
-        {
-            shape_ = perception.GetShape();
-            return true;
-        }
+        shape_ = shape;
+        return true;
     }
     return false;
 }
@@ -129,9 +132,9 @@ bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationFlo
 // Name: DEC_Knowledge_PopulationFlowPart::Update
 // Created: NLD 2005-10-28
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCollision& collision  )
+bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCollision& collision )
 {
-    nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
+    UpdateTimeLastUpdate();
     if( bPerceived_ )
         return false;
     T_PointVector shape;
@@ -159,7 +162,7 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const double rMaxLifeTim
     assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
     if( rMaxLifeTime == 0. )
     {
-        nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
+        UpdateTimeLastUpdate();
         return ChangeRelevance( 0. );
     }
     else
@@ -167,7 +170,7 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const double rMaxLifeTim
         // Degradation : effacement au bout de X minutes
         const double rTimeRelevanceDegradation = ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() - nTimeLastUpdate_ ) / rMaxLifeTime;
         const double rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
-        nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
+        UpdateTimeLastUpdate();
         return ChangeRelevance( rRelevance );
     }
 }
