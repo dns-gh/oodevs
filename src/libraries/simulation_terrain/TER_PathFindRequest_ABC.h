@@ -41,7 +41,6 @@ public:
     //! @name Operations
     //@{
     virtual void FindPath( TER_Pathfinder_ABC& pathfind ) = 0;
-    virtual void CleanAfterComputation() = 0;
     //@}
 };
 

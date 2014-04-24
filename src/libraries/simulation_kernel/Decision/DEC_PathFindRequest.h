@@ -30,14 +30,13 @@ class DEC_PathFindRequest: public TER_PathFindRequest_ABC,
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC > p );
+             DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC >& p );
     virtual ~DEC_PathFindRequest();
     //@}
 
     //! @name Operations
     //@{
     virtual void FindPath( TER_Pathfinder_ABC& pathfind );
-    virtual void CleanAfterComputation();
     const boost::shared_ptr< DEC_Path_ABC >& GetPath() const;
     bool IsPathForUnit( MIL_Agent_ABC* pion ) const;
     //@}

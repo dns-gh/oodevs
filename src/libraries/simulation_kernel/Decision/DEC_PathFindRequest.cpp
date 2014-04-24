@@ -13,7 +13,7 @@
 #include "DEC_Path_ABC.h"
 #include "simulation_terrain/TER_PathFinder_ABC.h"
 
-DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC > p )
+DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC >& p )
     : manager_( m )
     , path_( p )
 {
@@ -29,10 +29,6 @@ void DEC_PathFindRequest::FindPath( TER_Pathfinder_ABC& pathfind )
 {
     profiler_.Start();
     path_->Execute( pathfind );
-}
-
-void DEC_PathFindRequest::CleanAfterComputation()
-{
     manager_->CleanPathAfterComputation( path_, profiler_.Stop() );
 }
 
