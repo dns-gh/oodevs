@@ -25,6 +25,26 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include <boost/assign.hpp>
 
+namespace
+{
+    sword::ClientToSim MakeMessage()
+    {
+        sword::ClientToSim msg;
+        auto request = msg.mutable_message()->mutable_segment_request();
+        request->add_terrains( sword::highway );
+        request->add_terrains( sword::large_road );
+        request->add_terrains( sword::medium_road );
+        request->add_terrains( sword::small_road );
+        request->add_terrains( sword::crossroad );
+        request->add_terrains( sword::street );
+        request->add_terrains( sword::avenue );
+        request->add_terrains( sword::underpass );
+        request->set_radius( 500 );
+        request->set_count( 1 );
+        return msg;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer constructor
 // Created: LGY 2014-02-28
@@ -36,10 +56,11 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     , element_( controllers )
     , publisher_( publisher )
     , coordinateConverter_( coordinateConverter )
+    , message_( MakeMessage() )
     , lock_( false )
 {
     controllers_.Register( *this );
-    std::function< void( const sword::SimToClient& ) > fun =
+    const std::function< void( const sword::SimToClient& ) > fun =
         [&]( const sword::SimToClient& message )
         {
             if( !message.message().has_compute_pathfind_ack() )
@@ -60,7 +81,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
             }
         };
     publisher_.Register( fun );
-    std::function< void( const sword::SimToClient& ) > fun2 =
+    const std::function< void( const sword::SimToClient& ) > fun2 =
         [&]( const sword::SimToClient& message )
         {
             if( !message.message().has_segment_request_ack() )
@@ -357,26 +378,6 @@ bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
     return true;
 }
 
-namespace
-{
-    sword::ClientToSim MakeMessage()
-    {
-        sword::ClientToSim msg;
-        auto request = msg.mutable_message()->mutable_segment_request();
-        request->add_terrains( sword::highway );
-        request->add_terrains( sword::large_road );
-        request->add_terrains( sword::medium_road );
-        request->add_terrains( sword::small_road );
-        request->add_terrains( sword::crossroad );
-        request->add_terrains( sword::street );
-        request->add_terrains( sword::avenue );
-        request->add_terrains( sword::underpass );
-        request->set_radius( 500 );
-        request->set_count( 1 );
-        return msg;
-    }
-}
-
 bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
     if( !dnd::HasData< PathfindLayer >( event ) )
@@ -385,10 +386,9 @@ bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::
         hovered_->coordinate_ = point;
     else
     {
-        static sword::ClientToSim msg = MakeMessage();
-        auto request = msg.mutable_message()->mutable_segment_request();
+        auto request = message_.mutable_message()->mutable_segment_request();
         coordinateConverter_.ConvertToGeo( point, *request->mutable_position() );
-        publisher_.Send( msg );
+        publisher_.Send( message_ );
         point_ = point;
     }
     lock_ = true;
