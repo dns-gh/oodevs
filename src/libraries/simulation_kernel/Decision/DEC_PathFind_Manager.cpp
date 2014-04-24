@@ -35,7 +35,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config, double maxAvoida
                                             const std::vector< unsigned int >& dangerousObjects )
     : nMaxComputationDuration_( std::numeric_limits< unsigned int >::max() )
     , nMaxEndConnections_     ( 8 )
-    , rDistanceThreshold_     ( 0. )
+    , rDistanceThreshold_     ( 0 )
     , treatedRequests_        ( 0 )
     , pathfindTime_           ( 0 )
 {
@@ -108,7 +108,7 @@ void DEC_PathFind_Manager::CancelJob( DEC_Path_ABC* pPath )
 {
     boost::mutex::scoped_lock locker( mutex_ );
     T_Requests& requests = ( pPath->GetLength() > rDistanceThreshold_ ) ? longRequests_ : shortRequests_;
-    for( T_Requests::iterator it = requests.begin(); it != requests.end(); ++it )
+    for( auto it = requests.begin(); it != requests.end(); ++it )
     {
         if( (*it)->GetPath().get() == pPath )
         {
@@ -139,7 +139,7 @@ void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* pion )
         for( auto it = shortRequests_.begin(); it != shortRequests_.end(); )
             if( ( *it )->IsPathForUnit( pion ) )
             {
-                paths.push_back(  ( *it )->GetPath() );
+                paths.push_back( ( *it )->GetPath() );
                 ( *it )->GetPath()->Destroy();
                 it = shortRequests_.erase( it );
             }
@@ -148,7 +148,8 @@ void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* pion )
     }
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     for( auto it = paths.begin(); it != paths.end(); ++it )
-        boost::remove_erase_if( toCleanup_, [&]( const T_Cleanups::value_type& v ) -> bool
+        boost::remove_erase_if( toCleanup_,
+        [&]( const T_Cleanups::value_type& v ) -> bool
         {
             if( v.first != *it )
                 return false;
@@ -183,6 +184,7 @@ unsigned int DEC_PathFind_Manager::GetNbrLongRequests() const
 // -----------------------------------------------------------------------------
 unsigned int DEC_PathFind_Manager::GetNbrTreatedRequests() const
 {
+    boost::mutex::scoped_lock locker( mutex_ );
     return treatedRequests_;
 }
 
@@ -264,8 +266,7 @@ boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage( u
 // -----------------------------------------------------------------------------
 int DEC_PathFind_Manager::GetCurrentThread() const
 {
-    unsigned int nIndex = 0;
-    for( ; nIndex < pathFindThreads_.size(); ++nIndex )
+    for( unsigned int nIndex = 0; nIndex < pathFindThreads_.size(); ++nIndex )
         if( pathFindThreads_[ nIndex ]->IsCurrent() )
             return nIndex;
     return -1;

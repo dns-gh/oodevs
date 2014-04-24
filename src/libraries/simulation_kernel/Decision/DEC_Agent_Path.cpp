@@ -166,7 +166,7 @@ void DEC_Agent_Path::Destroy()
 {
     if( destroyed_ )
         return;
-    for( auto it = resultList_.begin(); it!= resultList_.end(); it++ )
+    for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
         if( ( *it )->GetType() != DEC_PathPoint::eTypePointPath )
             ( *it )->RemoveFromDIA( *it );
     fuseau_.Reset();
