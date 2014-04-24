@@ -1646,7 +1646,7 @@ message MagicAction {
         //! Create a pathfind
         //! parameters[0], PathfindRequest: the unit and waypoints.
         //! result[0], PathfindId: created pathfind identifier.
-        //! The pathfind identifier will be sent in a ComputePathfindAck in response.
+        //! The pathfind identifier will be sent along in a ComputePathfindAck.
         pathfind_creation                  = 13;
         //! Destroy a pathfind
         //! parameters[0], PathfindId: the pathfind identifier.
