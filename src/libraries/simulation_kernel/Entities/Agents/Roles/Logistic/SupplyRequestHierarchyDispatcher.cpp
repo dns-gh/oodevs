@@ -49,7 +49,7 @@ void SupplyRequestHierarchyDispatcher::Dispatch( SupplyRecipient_ABC& recipient,
     // Filter out too small requests (0.xyz as quantity)
     if( request.GetRequestedQuantity() < 1 )
         return;
-    tools::Iterator< boost::shared_ptr< LogisticLink_ABC > > it = logisticHierarchy_.CreateSuperiorLinksIterator();
+    auto it = logisticHierarchy_.CreateSuperiorLinksIterator();
     if( ! it.HasMoreElements() )
     {
         request.NotifySuperiorNotAvailable( recipient );

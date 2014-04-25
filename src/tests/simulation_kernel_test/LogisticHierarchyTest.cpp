@@ -41,7 +41,7 @@ namespace {
 
             xml::xistringstream xisLogClass(
                 "<logistic-supply-classes>"
-                "   <logistic-supply-class id=\"12\" type=\"whatever\"/>"
+                "   <logistic-supply-class id='12' type='whatever'/>"
                 "</logistic-supply-classes>" );
             PHY_DotationLogisticType::Initialize( xisLogClass );
 
@@ -159,7 +159,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyXml )
 
     xml::xistringstream xis(
         "<quotas>"
-        "   <resource name=\"Bidule\" quantity=\"6666\"/>"
+        "   <resource name='Bidule' quantity='6666'/>"
         "</quotas>" );
 
     LogisticHierarchy logHierarchy( owner, brainLog, true, xis );

@@ -96,7 +96,7 @@ void InitialState::ReadEquipment( xml::xistream& xis )
     if( !found )
     {
         const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( equipment.name_.toStdString() );
-        tools::Iterator< const kernel::BreakdownOriginType& > breakdownIterator = equipmentType.CreateBreakdownsIterator();
+        auto breakdownIterator = equipmentType.CreateBreakdownsIterator();
         QStringList breakdowns;
         while( breakdownIterator.HasMoreElements() )
         {
@@ -277,14 +277,14 @@ void InitialState::Initialize()
 {
     kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( typeId_ );
     FillResources( agent.CreateResourcesIterator() );
-    tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agent.CreateIterator();
+    auto agentCompositionIterator = agent.CreateIterator();
     int nbrTotalOfficers = 0;
     while( agentCompositionIterator.HasMoreElements() )
     {
         const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
         const std::string& agentName = agentComposition.GetType().GetName();
         const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
-        tools::Iterator< const kernel::BreakdownOriginType& > breakdownIterator = equipmentType.CreateBreakdownsIterator();
+        auto breakdownIterator = equipmentType.CreateBreakdownsIterator();
         QStringList breakdowns;
         while( breakdownIterator.HasMoreElements() )
         {
@@ -344,12 +344,12 @@ double InitialState::RetrieveNormalizedConsumption( const QString& resourceName 
 {
     double normalizedConsumption = 0;
     kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( typeId_ );
-    tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agent.CreateIterator();
+    auto agentCompositionIterator = agent.CreateIterator();
     while( agentCompositionIterator.HasMoreElements() )
     {
         const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
         const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
-        tools::Iterator< const kernel::DotationCapacityType& > dotationIterator = equipmentType.CreateResourcesIterator();
+        auto dotationIterator = equipmentType.CreateResourcesIterator();
         while( dotationIterator.HasMoreElements() )
         {
             const kernel::DotationCapacityType& type = dotationIterator.NextElement();

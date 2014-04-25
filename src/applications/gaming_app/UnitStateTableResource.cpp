@@ -105,7 +105,7 @@ namespace
         if( entity.Retrieve< T >() == &extension )
             return true;
         const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
-        tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+        auto it = hierarchy.CreateSubordinateIterator();
         while( it.HasMoreElements() )
         {
             const kernel::Entity_ABC& subEntity = it.NextElement();
@@ -124,7 +124,7 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
 {
     if( selected_ && HasSubordinateWithExtension( *selected_, dotations ) )
     {
-        tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( dotations ).CreateIterator();
+        auto dotationIterator = static_cast< const Dotations& >( dotations ).CreateIterator();
         if( selected_->GetTypeName() != kernel::Agent_ABC::typeName_ || static_cast< const Dotations& >( dotations ).Count() != static_cast< unsigned long >( dataModel_.rowCount() ) )
         {
             Purge();
@@ -189,7 +189,7 @@ namespace
         int quantity = 0;
         if( entity.GetTypeName() == kernel::Agent_ABC::typeName_)
         {
-            tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( entity.Get< kernel::Dotations_ABC >() ).CreateIterator();
+            auto dotationIterator = static_cast< const Dotations& >( entity.Get< kernel::Dotations_ABC >() ).CreateIterator();
             while( dotationIterator.HasMoreElements() )
             {
                 const Dotation& dotation = dotationIterator.NextElement();
@@ -203,7 +203,7 @@ namespace
         else
         {
             const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
-            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+            auto it = hierarchy.CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 const kernel::Entity_ABC& subEntity = it.NextElement();
@@ -223,7 +223,7 @@ bool UnitStateTableResource::HasChanged( kernel::Entity_ABC& selected ) const
     rowsChanged_.clear();
     if( selected.GetTypeName() == kernel::Agent_ABC::typeName_ )
     {
-    tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( selected.Get< kernel::Dotations_ABC >() ).CreateIterator();
+    auto dotationIterator = static_cast< const Dotations& >( selected.Get< kernel::Dotations_ABC >() ).CreateIterator();
     while( dotationIterator.HasMoreElements() )
     {
         const Dotation& dotation = dotationIterator.NextElement();
@@ -253,7 +253,7 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
 {
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( static_cast< kernel::Agent_ABC& >( selected ).GetType().GetId() );
-    tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( selected.Get< kernel::Dotations_ABC >() ).CreateIterator();
+    auto dotationIterator = static_cast< const Dotations& >( selected.Get< kernel::Dotations_ABC >() ).CreateIterator();
     while( dotationIterator.HasMoreElements() )
     {
         const Dotation& dotation = dotationIterator.NextElement();
@@ -271,7 +271,7 @@ void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, c
 {
     if( entity.GetTypeName() == kernel::Agent_ABC::typeName_)
     {
-        tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( entity.Get< kernel::Dotations_ABC >() ).CreateIterator();
+        auto dotationIterator = static_cast< const Dotations& >( entity.Get< kernel::Dotations_ABC >() ).CreateIterator();
         while( dotationIterator.HasMoreElements() )
         {
             const Dotation& dotation = dotationIterator.NextElement();
@@ -291,7 +291,7 @@ void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, c
     else
     {
         const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
-        tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+        auto it = hierarchy.CreateSubordinateIterator();
         while( it.HasMoreElements() )
         {
             const kernel::Entity_ABC& subEntity = it.NextElement();
@@ -309,7 +309,7 @@ void UnitStateTableResource::CreateMagicAction( unsigned int quantity, const Dot
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_dotation" );
     std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, true ) );
 
-    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    auto it = actionType.CreateIterator();
     actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
     action->AddParameter( *parameterList );
     actions::parameters::ParameterList& list = parameterList->AddList( "Dotation" );
@@ -334,7 +334,7 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_dotation" );
         std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
 
-        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+        auto it = actionType.CreateIterator();
         actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
         action->AddParameter( *parameterList );
 
@@ -366,7 +366,7 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
             RecursiveMagicAction( selected, name, percentage, quantity, last );
             if( quantity > 0 && last )
             {
-                tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( last->Get< kernel::Dotations_ABC >() ).CreateIterator();
+                auto dotationIterator = static_cast< const Dotations& >( last->Get< kernel::Dotations_ABC >() ).CreateIterator();
                 while( dotationIterator.HasMoreElements() )
                 {
                     const Dotation& dotation = dotationIterator.NextElement();

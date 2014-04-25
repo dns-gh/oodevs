@@ -22,6 +22,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyResourceStock )
 SupplyResourceStock::SupplyResourceStock( PHY_DotationStock& stock )
     : stock_( &stock )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,6 +32,7 @@ SupplyResourceStock::SupplyResourceStock( PHY_DotationStock& stock )
 SupplyResourceStock::SupplyResourceStock()
     : stock_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,11 +41,8 @@ SupplyResourceStock::SupplyResourceStock()
 // -----------------------------------------------------------------------------
 SupplyResourceStock::~SupplyResourceStock()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SupplyResourceStock::SupplyResourceStock
@@ -63,10 +62,6 @@ bool SupplyResourceStock::HasReachedSupplyThreshold() const
     return stock_->HasReachedSupplyThreshold();
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyResourceStock::GetCategory
 // Created: NLD 2005-01-24
@@ -77,7 +72,7 @@ const PHY_DotationCategory& SupplyResourceStock::GetCategory() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void SupplyResourceStock::serialize
+// Name: SupplyResourceStock::serialize
 // Created: LDC 2013-01-16
 // -----------------------------------------------------------------------------
 template< typename Archive > void SupplyResourceStock::serialize( Archive& archive, const unsigned int )

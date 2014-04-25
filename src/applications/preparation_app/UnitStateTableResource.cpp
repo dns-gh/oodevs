@@ -34,7 +34,6 @@ namespace
     // -----------------------------------------------------------------------------
     typedef std::pair< QString, int >   T_MenuItem;
     typedef std::vector< T_MenuItem >   T_MenuItemVector;
-    typedef T_MenuItemVector::iterator IT_MenuItemVector;
     struct ItemSort
     {
         bool operator()( T_MenuItem& lhs, T_MenuItem& rhs )
@@ -58,7 +57,7 @@ namespace
             vItems.push_back( item );
         }
         std::sort( vItems.begin(), vItems.end(), ItemSort() );
-        for( IT_MenuItemVector it = vItems.begin(); it != vItems.end(); ++it )
+        for( auto it = vItems.begin(); it != vItems.end(); ++it )
             menu.insertItem( (*it).first, (*it).second );
     }
 }
@@ -98,7 +97,7 @@ void UnitStateTableResource::contextMenuEvent( QContextMenuEvent* e )
     kernel::ContextMenu menu( this );
     kernel::ContextMenu targetMenu( &menu );
     std::map< std::string, kernel::ContextMenu* > categoryMap;
-    tools::Iterator< const kernel::DotationType& > dotationIterator = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::CreateIterator();
+    auto dotationIterator = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::CreateIterator();
 
     while( dotationIterator.HasMoreElements() )
     {
@@ -160,12 +159,12 @@ void UnitStateTableResource::AddItem( int id )
     kernel::AgentType* agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Find( typeId_ );
     if( agent )
     {
-        tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agent->CreateIterator();
+        auto agentCompositionIterator = agent->CreateIterator();
         while( agentCompositionIterator.HasMoreElements() )
         {
             const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
             const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
-            tools::Iterator< const kernel::DotationCapacityType& > dotationIterator = equipmentType.CreateResourcesIterator();
+            auto dotationIterator = equipmentType.CreateResourcesIterator();
             while( dotationIterator.HasMoreElements() )
             {
                 const kernel::DotationCapacityType& type = dotationIterator.NextElement();
@@ -264,7 +263,7 @@ namespace
         else
         {
             const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
-            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+            auto it = hierarchy.CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 const kernel::Entity_ABC& subEntity = it.NextElement();
