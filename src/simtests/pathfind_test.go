@@ -161,6 +161,10 @@ func (s *TestSuite) TestCreateDestroyPathfind(c *C) {
 	_, err = client.CreatePathfind(unit.Id, positions[0])
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
+	// Invalid not ignoring dynamic objects
+	_, err = client.CreatePathfindTest(unit.Id, false, positions...)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
 	// Create pathfind
 	pathfind, err := client.CreatePathfind(unit.Id, positions...)
 	c.Assert(err, IsNil)
