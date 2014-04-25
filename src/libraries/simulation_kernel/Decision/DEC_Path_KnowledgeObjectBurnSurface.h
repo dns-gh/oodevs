@@ -40,13 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DEC_Path_KnowledgeObjectBurnSurface( const DEC_Path_KnowledgeObjectBurnSurface& );            //!< Copy constructor
-    DEC_Path_KnowledgeObjectBurnSurface& operator=( const DEC_Path_KnowledgeObjectBurnSurface& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const BurnSurfaceAttribute* pBurnSurfaceAttribute_;

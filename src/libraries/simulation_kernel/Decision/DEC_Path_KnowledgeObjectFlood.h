@@ -41,13 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DEC_Path_KnowledgeObjectFlood( const DEC_Path_KnowledgeObjectFlood& );            //!< Copy constructor
-    DEC_Path_KnowledgeObjectFlood& operator=( const DEC_Path_KnowledgeObjectFlood& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     E_CrossingHeight crossingHeight_;

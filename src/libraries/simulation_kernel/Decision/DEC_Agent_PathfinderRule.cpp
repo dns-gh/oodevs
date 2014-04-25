@@ -163,7 +163,7 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
         for( auto itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
         {
             double rCurrentObjectCost = ( *itKnowledge )->ComputeCost( from, to, nToTerrainType, nLinkTerrainType, path_.GetUnitMajorWeight() );
-            if( rCurrentObjectCost != std::numeric_limits< double >::min()  )
+            if( rCurrentObjectCost != std::numeric_limits< double >::min() )
             {
                 if( !bInsideObjectType )
                 {
