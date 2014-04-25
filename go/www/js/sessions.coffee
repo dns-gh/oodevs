@@ -12,6 +12,7 @@ session_error_template = Handlebars.compile $("#session_error_template").html()
 session_settings_template = Handlebars.compile $("#session_settings_template").html()
 session_redirect_template = Handlebars.compile $("#session_redirect_template").html()
 user_selected_template = Handlebars.compile $("#user_selected_template").html()
+profile_template = Handlebars.compile $("#profile_template").html()
 
 session_plugins = {}
 init_plugins = ->
@@ -140,48 +141,134 @@ bind_ui_plugins = (ui) ->
         idx = parseInt it.attr "data-ref"
         box.carousel idx+1
 
-class UserSelectedItem extends Backbone.Model
-    view: UserSelectedItemView
+class ProfileItemView extends Backbone.View
+    tagName: "span"
 
-class UserSelectedList extends Backbone.Collection
-    model: UserSelectedItem
+    initialize: ->
+        @model.bind "change", @render
+        @render()
+
+    events:
+        "click .profile_delete" : "delete"
+
+    render: =>
+        @$el.empty()
+        @$el.html profile_template @model.attributes
+
+    delete: =>
+        @model.collection.remove @model
+
+class ProfilesView extends Backbone.View
+
+    initialize: ->
+        @model = new Backbone.Collection
+        @model.bind "add",    @add
+        @model.bind "remove", @remove
+        @model.bind "reset",  @reset
+
+    add: (model) =>
+        view = new ProfileItemView model: model
+        model.view = view
+        @$el.append view.el
+
+    remove: (model) =>
+        model.view.remove()
+
+    reset: =>
+        @$el.empty()
 
 class UserSelectedItemView extends Backbone.View
     tagName: "tr"
 
-    initialize: ->
+    initialize: (options) ->
+        @session = options.session
+        @profiles = new ProfilesView
+        @model.bind "change", @render
         @render()
+        profiles = @session.restricted?.list[@model.id]?.profiles
+        if _.isArray profiles
+            for k in profiles
+                @profiles.model.add new Backbone.Model id: k
+        return
 
     events:
-        "click .delete" : "delete"
+        "click .user_delete"    : "delete"
+        "click .profile_add"    : "profile_add"
 
     render: =>
         @$el.empty()
-        @$el.attr "data_id", @model.id
-        @$el.html user_selected_template @model.attributes
+        @$el.attr "data-id", @model.id
+        data = _.pick @model.attributes, "name"
+        if @session.profiles?
+            data.profiles = _.keys @session.profiles
+        @$el.html user_selected_template data
+        @profiles.setElement @$el.find ".profiles"
 
-    delete: (evt) =>
-        @remove()
+    delete: =>
         @model.collection.remove @model
+
+    profile_add: (e) =>
+        btn = $ e.currentTarget
+        @profiles.model.add new Backbone.Model id: btn.attr "name"
 
 class UserSelectedListView extends Backbone.View
 
     initialize: (options) ->
-        @$el = options
-        @model = new UserSelectedList
-        @model.bind 'add', @add
+        @session = options.session
+        @model = new Backbone.Collection
+        @model.bind "add", @add
+        @model.bind "remove", @remove
+        @model.bind "reset", @reset
 
-    add: (item) =>
-        view = new UserSelectedItemView model: item
-        item.view = view
-        @$el.prepend view.el
+    add: (model) =>
+        view = new UserSelectedItemView model: model, session: @session
+        model.view = view
+        @$el.append view.el
 
-    create: (data) =>
-        @model.add data
+    remove: (model) =>
+        model.view.remove()
 
-    clear: =>
-        @model.reset()
+    reset: =>
         @$el.empty()
+
+class AccessView extends Backbone.View
+
+    initialize: (options) ->
+        @view = new UserSelectedListView session: options.session, el: @$el.find ".user_table tbody"
+        @users = options.users
+        @group = @$el.find ".user_group"
+        for k, v of options.session.restricted?.list
+            usr = @users.get k
+            if usr?
+                @view.model.add usr.clone()
+        @group.toggle @$el.find("#access_restricted").is ":checked"
+
+    events:
+        "click .profile"            : "toggle"
+        "click #access_restricted"  : "restrict"
+        "click .user_add"           : "user_add"
+
+    toggle: (e) =>
+        btn = $ e.currentTarget
+        offset = btn.offset()
+        top = offset.top + btn.outerHeight()
+        btn.siblings(".dropdown-menu").css
+            top:            "#{top}px"
+            left:           "#{offset.left}px"
+            "max-height":   "#{$(window).height() - top - 20}px"
+
+    restrict: (e) =>
+        if $(e.target).is ":checked"
+            @group.show()
+        else
+            @view.model.reset()
+            @group.hide()
+
+    user_add: =>
+        data = @$el.find "#user_select :selected"
+        usr = @users.get data.val()
+        if usr?
+            @view.model.add usr.clone()
 
 pop_settings = (ui, session, users) ->
     all_users = (id: d.id, name: d.get "name" for d in users.models)
@@ -198,29 +285,7 @@ pop_settings = (ui, session, users) ->
     attach_checkbox_and_input $("#rng_seed"), $("#rng_seed_check")
     attach_checkbox_and_input $("#logs_files"), $("#logs_files_check")
     attach_click_to_dropdown $("#size_unit")
-    user_selected_view = new UserSelectedListView ui.find ".user_table tbody"
-    for k, v of data.authorized_users?.list
-        usr = users.get k
-        if usr?
-            user_selected_view.create usr.clone()
-
-    group = ui.find(".user_group")
-    group.toggle ui.find("#access_restricted").is ":checked"
-
-    ui.find("#access_restricted").click (e)->
-        group = ui.find(".user_group")
-        if $(e.target).is ":checked"
-            group.show()
-        else
-            user_selected_view.clear()
-            group.hide()
-
-    ui.find(".user_select").click ->
-        data = $("#user_selected :selected")
-        usr = users.get data.val()
-        if usr?
-            user_selected_view.create usr.clone()
-
+    new AccessView el: ui, users: users, session: data
     mod = ui.find ".modal"
     mod.modal "show"
     return [ui, mod]
@@ -348,12 +413,15 @@ validate_settings = (ui, is_default) ->
         validate_plugins ui, data
 
     if has_element ui, "#tab_access"
-        next = data.authorized_users = {}
+        next = data.restricted = {}
         next.enabled = ui.find("#access_restricted").is ":checked"
         next.list = {}
         for it in ui.find ".user_table tbody tr"
-            id = $(it).attr "data_id"
-            next.list[id] = $(it).find("td").first().text().trim()
+            el = $ it
+            user = profiles: [], name: el.find("td.user_name").attr "data-name"
+            for label in el.find ".profile_label"
+                user.profiles.push $(label).attr "data-id"
+            next.list[el.attr "data-id"] = user
 
     data.checkpoints?.frequency *= 60
     return data
@@ -364,12 +432,10 @@ scope = (model) ->
         model.node = uuid
     return model
 
-class UserItem extends Backbone.Model
-
 class UserList extends Backbone.Collection
-    model: UserItem
+    model: Backbone.Model
     view:  UserListView
-    
+
     sync: (method, model, options) =>
         if method == "read"
             return ajax "/api/list_users", scope(),
@@ -394,7 +460,7 @@ class SessionItem extends Backbone.Model
     view: SessionItemView
 
     sync: (method, model, options) =>
-        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides", "timeline", "logs", "mapnik", "authorized_users"]
+        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides", "timeline", "logs", "mapnik", "restricted"]
 
         if method == "create"
             data = select_attributes model.attributes, _.union cfg_attributes, ["exercise"]

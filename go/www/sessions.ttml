@@ -64,16 +64,18 @@
         <span class="uneditable-input read_only">{{owner.name}}</span>
     </div>
 </div>
-[[ template "input_checkbox" sub "id" "access_restricted" "label" "Limit to authorized users only" "value" "{{#bool authorized_users.enabled}} checked=\"checked\"{{/bool}}" ]]
+[[ template "input_checkbox" sub "id" "access_restricted" "label" "Limit to authorized users only" "value" "{{#bool restricted.enabled}} checked=\"checked\"{{/bool}}" ]]
 <div class="control-group user_group">
     <label class="control-label">Users</label>
     <div class="controls">
-        <select id="user_selected">
-{{#each_pair users}}
-            <option value="{{value.id}}">{{value.name}}</option>
-{{/each_pair}}
-        </select>
-        <a class="btn user_select"><i class="icon-plus"></i> Add</a>
+        <div class="input-append">
+            <select id="user_select">
+            {{#each_pair users}}
+                <option value="{{value.id}}">{{value.name}}</option>
+            {{/each_pair}}
+            </select>
+            <a class="btn user_add"><i class="icon-plus"></i> Add</a>
+        </div>
         <table class="table table-striped user_table">
             <tbody/>
         </table>
@@ -98,9 +100,9 @@
                     <span class="caret"/>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a> KB </a></li>
-                    <li><a> MB </a></li>
-                    <li><a> Lines </a></li>
+                    <li><a class="emu_btn"> KB </a></li>
+                    <li><a class="emu_btn"> MB </a></li>
+                    <li><a class="emu_btn"> Lines </a></li>
                 </ul>
             </div>
         </div>
@@ -506,10 +508,30 @@
         </form>
     </div>
 </script>
+<!-- Profile Template -->
+<script type="text/template" id="profile_template">
+<span class="emu_btn label label-info profile_label" data-id="{{id}}">{{id}}<span class="profile_delete">&times;</span></span>
+</script>
 <!-- User selected Template -->
 <script type="text/template" id="user_selected_template">
-    <td>
-        {{name}}
-        <a class="btn delete pull-right"> <i class="icon-trash"></i> </a>
+    <td class="user_name" data-name="{{name}}">{{name}}</td>
+    <td class="profiles"/>
+    <td class="user_buttons">
+        <div class="btn-group pull-right">
+            {{#if profiles}}
+            <div class="btn-group">
+                <button class="btn profile dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-user"></i>
+                    <span class="caret"></span>
+                </button>
+                <ul class="profile_menu dropdown-menu">
+                    {{#each profiles}}
+                        <li><a class="emu_btn profile_add" name="{{.}}">{{.}}</a></li>
+                    {{/each}}
+                </ul>
+            </div>
+            {{/if}}
+            <button class="btn user_delete"> <i class="icon-trash"></i> </button>
+        </div>
     </td>
 </script>

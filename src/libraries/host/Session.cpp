@@ -1287,7 +1287,7 @@ bool Session::IsAuthorized( const web::User& user ) const
         return true;
     if( !cfg_.restricted.enabled )
         return true;
-    return cfg_.restricted.users.find( user.id ) != cfg_.restricted.users.end();
+    return cfg_.restricted.users.find( web::session::User( user.id ) ) != cfg_.restricted.users.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -1300,5 +1300,5 @@ void Session::DeleteUser( const web::User& user, int id )
         owner_ = user;
     if( !cfg_.restricted.enabled )
         return;
-    cfg_.restricted.users.erase( id );
+    cfg_.restricted.users.erase( web::session::User( id ) );
 }
