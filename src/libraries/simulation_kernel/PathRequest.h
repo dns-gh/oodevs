@@ -28,9 +28,9 @@ class PathRequest : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PathRequest( const boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
-                          unsigned int nCtx, unsigned int clientId, uint32_t id, bool stored );
-            ~PathRequest();
+     PathRequest( const boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
+                  unsigned int nCtx, unsigned int clientId, uint32_t id, bool stored );
+    ~PathRequest();
     //@}
 
     //! @name Operations
@@ -42,7 +42,6 @@ private:
     //! @name Member data
     //@{
     boost::shared_ptr< DEC_PathResult > path_;
-    const sword::PathfindRequest request_;
     std::unique_ptr< client::ComputePathfindAck > ack_;
     const unsigned int nCtx_;
     const unsigned int clientId_;

@@ -20,7 +20,6 @@
 PathRequest::PathRequest( const boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
                           unsigned int nCtx, unsigned int clientId, uint32_t id, bool stored )
     : path_( path )
-    , request_( request )
     , ack_( new client::ComputePathfindAck() )
     , nCtx_( nCtx )
     , clientId_( clientId )
@@ -49,11 +48,9 @@ bool PathRequest::Update()
 {
     if( !ack_ )
         return false;
-
     DEC_PathResult::E_State nPathState = path_->GetState();
     if( nPathState == DEC_Path_ABC::eComputing )
         return false;
-
     auto& msg = (*ack_)();
     if( nPathState == DEC_Path_ABC::eInvalid || nPathState == DEC_Path_ABC::eImpossible )
         msg.set_error_code( sword::ComputePathfindAck::error_path_invalid );
