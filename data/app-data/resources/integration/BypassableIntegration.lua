@@ -3,6 +3,7 @@
 -------------------------------------------------------------------
 
 --- Returns true if the unit has the capacity to bypass the selected object knowledge, false otherwise
+-- This method can only be called by an agent.
 -- @param object Object knowledge
 -- @return Boolean, whether or not unit has the capacity to bypass this object
 integration.canBypassIt = function( object )
