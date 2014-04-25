@@ -66,16 +66,15 @@ private:
     virtual void Process           ( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest );
             void ProcessDynamicData();
     //@}
-    //
+
 private:
     //! @name Member data
     //@{
+    bool                               bUseSameThread_;
     const tools::Path                  dump_; // empty if dump is disabled
     const std::set< size_t >           filter_; // empty if no id filters
-    std::auto_ptr< TerrainPathfinder > pPathfinder_;
-    bool                               bUseSameThread_;
+    std::unique_ptr< TerrainPathfinder > pathfinder_;
     std::map< DynamicDataPtr, RetractationPtr > handlers_;
-
     boost::mutex                       dynamicDataMutex_;
     std::vector< DynamicDataPtr >      dynamicDataToRegister_;
     std::vector< DynamicDataPtr >      dynamicDataToUnregister_;
