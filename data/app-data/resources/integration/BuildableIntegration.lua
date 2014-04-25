@@ -281,13 +281,13 @@ integration.updateBuildItSecu = function( object )
         return true
     else
         if object[ myself ].actionBuildState == eActionObjetImpossible then
-            reportFunction( eRC_ConstructionObjetImpossible )
+            reportOnceFunction( eRC_ConstructionObjetImpossible )
             return true
         elseif object[ myself ].actionBuildState == eActionObjetManqueDotation then
-            reportFunction( eRC_PasDotationConstructionObjet )
+            reportOnceFunction( eRC_PasDotationConstructionObjet )
             return true
         elseif object[ myself ].actionBuildState == eActionObjetPasDeCapacite then
-            reportFunction( eRC_PasDotationConstructionObjet )
+            reportOnceFunction( eRC_PasDotationConstructionObjet )
             return true
         end
     end

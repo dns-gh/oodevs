@@ -27,12 +27,10 @@ end
 -- @see integration.startExtinguish
 -- @see integration.stopExtinguish
 -- @param fire Object knowledge
--- @param noActionReport Boolean, false if the "Fire is being extinguished" report
--- should be displayed, true otherwise.
 -- @return Boolean, true if the fire is already extinguished, or if there is not enough
 -- resource to extinguish it, or if the agent has no capacity to extinguish it, or if
 -- the extinguishing action is over; false otherwise.
-integration.updateExtinguish = function( fire, noActionReport )
+integration.updateExtinguish = function( fire )
     if fire.actionExtinguishState == eActionObjetImpossible then
         DEC_Trace( "Fire is already extinguished" )
         reportFunction(eRC_ImpossibleToExtinguishFire )
@@ -49,9 +47,7 @@ integration.updateExtinguish = function( fire, noActionReport )
         reportFunction(eRC_ObjectExtinguished )
         return true
     end
-    if not noActionReport then
-        reportFunction( eRC_FireIsBeingExtinguished )
-    end
+    reportOnceFunction( eRC_FireIsBeingExtinguished )
     return false
 end
 
@@ -74,7 +70,7 @@ integration.canBeExtinguished = function( object )
     if DEC_ObjectKnowledge_HasCapacity( object.source, "burn" ) then
         return true
     else
-        reportFunction( eRC_ImpossibleToExtinguishFire )
+        reportOnceFunction( eRC_ImpossibleToExtinguishFire )
         return false
     end
 end

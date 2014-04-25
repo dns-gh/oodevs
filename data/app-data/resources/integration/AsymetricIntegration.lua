@@ -280,16 +280,16 @@ integration.updateLaunchProjectile = function( target, dotation )
         if target[ myself ].attackState == eIndirectFireState_Running then
             return false
         elseif target[ myself ].attackState == eIndirectFireState_Finished then
-            reportFunction( eRC_TirExecute )
+            reportOnceFunction( eRC_TirExecute )
             return true
         elseif target[ myself ].attackState == eIndirectFireState_NoAmmo then
-            reportFunction( eRC_TirImpossiblePlusDeMunitions )
+            reportOnceFunction( eRC_TirImpossiblePlusDeMunitions )
             return true
         elseif eIndirectFireState_Impossible then
-            reportFunction( eRC_TirIndirectImpossible )
+            reportOnceFunction( eRC_TirIndirectImpossible )
             return true
         elseif eIndirectFireState_NoCapacity then
-            reportFunction( eRC_TirIndirectNoCapacity )
+            reportOnceFunction( eRC_TirIndirectNoCapacity )
             return true
         end
     end
