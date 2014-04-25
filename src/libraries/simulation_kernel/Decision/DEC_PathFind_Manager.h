@@ -48,7 +48,7 @@ public:
     // Returns computation time since last update.
     double Update();
     void UpdateInSimulationThread();
-    void StartCompute( const boost::shared_ptr< DEC_Path_ABC >& pPath );
+    void StartCompute( const boost::shared_ptr< DEC_Path_ABC >& pPath, bool ignoreDynamicObjects = false );
     void CancelJobForUnit( MIL_Agent_ABC* pion );
     void CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC >& pPath, double duration );
     //@}
@@ -75,7 +75,6 @@ private:
     //@{
     virtual boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage();
     boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage( unsigned int nThread );
-    void AddPendingJob( const boost::shared_ptr< DEC_Path_ABC >& pPath );
     T_Requests& GetRequests();
     void ReadPathfind( xml::xistream& xis, MIL_Config& config, const std::vector< unsigned int >& dangerousObjects );
     //@}

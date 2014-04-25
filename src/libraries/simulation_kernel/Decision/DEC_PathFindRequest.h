@@ -30,12 +30,13 @@ class DEC_PathFindRequest: public TER_PathFindRequest_ABC,
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC >& p );
+             DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC >& p, bool ignoreDynamicObjects );
     virtual ~DEC_PathFindRequest();
     //@}
 
     //! @name Operations
     //@{
+    virtual bool IgnoreDynamicObjects() const;
     virtual void FindPath( TER_Pathfinder_ABC& pathfind );
     boost::shared_ptr< DEC_Path_ABC > GetPathForUnit( MIL_Agent_ABC* pion ) const;
     //@}
@@ -45,6 +46,8 @@ private:
     //@{
     DEC_PathFind_Manager* const manager_;
     boost::weak_ptr< DEC_Path_ABC > path_;
+    const bool ignoreDynamicObjects_;
+    MT_Profiler profiler_;
     //@}
 };
 

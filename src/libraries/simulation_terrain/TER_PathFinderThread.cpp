@@ -51,9 +51,12 @@ TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData,
     , dump_          ( dump )
     , filter_        ( ParseFilter( filter ) )
     , pathfinder_    ( new TerrainPathfinder( staticData ) )
+    , staticPathfinder_( new TerrainPathfinder( staticData ) )
 {
     pathfinder_->SetPickingDistances( 1000.f, 10000.f ); // minpicking, maxpicking
     pathfinder_->SetEndConnectionSetup( nMaxEndConnections, static_cast< float >( rMinEndConnectionLength * 1.1 ) ); // applying factor of 10%
+    staticPathfinder_->SetPickingDistances( 1000.f, 10000.f ); // minpicking, maxpicking
+    staticPathfinder_->SetEndConnectionSetup( nMaxEndConnections, static_cast< float >( rMinEndConnectionLength * 1.1 ) ); // applying factor of 10%
     if( !bUseSameThread )
         Start();
 }
@@ -205,7 +208,8 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
         ProcessDynamicData();
         if( pRequest )
         {
-            PathfinderProxy proxy( dump_, filter_, *pathfinder_ );
+            PathfinderProxy proxy( dump_, filter_,
+                pRequest->IgnoreDynamicObjects() ? *staticPathfinder_ : *pathfinder_ );
             pRequest->FindPath( proxy );
         }
     }

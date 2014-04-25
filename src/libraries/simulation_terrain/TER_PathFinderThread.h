@@ -74,6 +74,7 @@ private:
     const tools::Path                  dump_; // empty if dump is disabled
     const std::set< size_t >           filter_; // empty if no id filters
     std::unique_ptr< TerrainPathfinder > pathfinder_;
+    std::unique_ptr< TerrainPathfinder > staticPathfinder_;
     std::map< DynamicDataPtr, RetractationPtr > handlers_;
     boost::mutex                       dynamicDataMutex_;
     std::vector< DynamicDataPtr >      dynamicDataToRegister_;

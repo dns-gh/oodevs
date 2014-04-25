@@ -14,9 +14,10 @@
 #include "MT_Tools/MT_Profiler.h"
 #include "simulation_terrain/TER_PathFinder_ABC.h"
 
-DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC >& p )
+DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC >& p, bool ignoreDynamicObjects )
     : manager_( m )
     , path_( p )
+    , ignoreDynamicObjects_( ignoreDynamicObjects )
 {
     // NOTHING
 }
@@ -24,6 +25,11 @@ DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::
 DEC_PathFindRequest::~DEC_PathFindRequest()
 {
     // NOTHING
+}
+
+bool DEC_PathFindRequest::IgnoreDynamicObjects() const
+{
+    return ignoreDynamicObjects_;
 }
 
 void DEC_PathFindRequest::FindPath( TER_Pathfinder_ABC& pathfind )

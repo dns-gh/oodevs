@@ -94,10 +94,16 @@ DEC_PathFind_Manager::~DEC_PathFind_Manager()
 // Name: DEC_PathFind_Manager::StartCompute
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_Path_ABC >& path )
+void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_Path_ABC >& path, bool ignoreDynamicObjects )
 {
-    MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", path.get() ).c_str() );
-    AddPendingJob( path );
+    MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", path.get() ) );
+    auto p = boost::make_shared< DEC_PathFindRequest >( this, path, ignoreDynamicObjects );
+    boost::mutex::scoped_lock locker( mutex_ );
+    if( path->GetLength() > rDistanceThreshold_ )
+        longRequests_.push_back( p );
+    else
+        shortRequests_.push_back( p );
+    condition_.notify_all();
 }
 
 // -----------------------------------------------------------------------------
@@ -162,21 +168,6 @@ unsigned int DEC_PathFind_Manager::GetNbrTreatedRequests() const
 {
     boost::mutex::scoped_lock locker( mutex_ );
     return treatedRequests_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::AddPendingJob
-// Created: NLD 2003-08-14
-// -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::AddPendingJob( const boost::shared_ptr< DEC_Path_ABC >& pPath )
-{
-    auto p = boost::make_shared< DEC_PathFindRequest >( this, pPath );
-    boost::mutex::scoped_lock locker( mutex_ );
-    if( pPath->GetLength() > rDistanceThreshold_ )
-        longRequests_.push_back( p );
-    else
-        shortRequests_.push_back( p );
-    condition_.notify_all();
 }
 
 // -----------------------------------------------------------------------------

@@ -40,6 +40,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool IgnoreDynamicObjects() const = 0;
     virtual void FindPath( TER_Pathfinder_ABC& pathfind ) = 0;
     //@}
 };
