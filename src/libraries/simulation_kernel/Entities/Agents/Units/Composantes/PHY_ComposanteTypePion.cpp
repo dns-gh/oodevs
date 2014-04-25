@@ -38,6 +38,7 @@
 #include "PHY_ComposanteTypeObjectData.h"
 #include "ENT/ENT_Tr.h"
 #include "MIL_Random.h"
+#include "MT_Tools/MT_InterpolatedFunction.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
@@ -192,6 +193,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     InitializeLogistic        ( xis );
     InitializeBreakdownTypes  ( xis );
     InitializeProtections     ( xis );
+    InitializeDisasterImpacts ( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -294,6 +296,25 @@ void PHY_ComposanteTypePion::InitializeWeapons( xml::xistream& xis )
     xis >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &PHY_ComposanteTypePion::ReadWeaponSystem )
         >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::InitializeDisasterImpacts
+// Created: JSR 2014-04-23
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::InitializeDisasterImpacts( xml::xistream& xis )
+{
+    if( xis.has_child( "disaster-impacts" ) )
+    {
+        disasterImpacts_.reset( new MT_InterpolatedFunction() );
+        disasterImpacts_->SetBeforeValue( 1 );
+        xis >> xml::start( "disaster-impacts" )
+                >> xml::list( "disaster-impact", [&]( xml::xistream& xis )
+                {
+                    disasterImpacts_->AddNewPoint( xis.attribute< double >( "threshold" ), xis.attribute< double >( "modifier" ) );
+                })
+            >> xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1414,6 +1435,17 @@ bool PHY_ComposanteTypePion::DestroyIndirectFire( const PHY_DotationCategory& ca
         if( (*it)->DestroyIndirectFire( category, pion ) )
             return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetDisasterImpact
+// Created: JSR 2014-04-23
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetDisasterImpact( double value ) const
+{
+    if( !disasterImpacts_ || disasterImpacts_->empty() )
+        return 1;
+    return ( *disasterImpacts_ )( value );
 }
 
 // -----------------------------------------------------------------------------
