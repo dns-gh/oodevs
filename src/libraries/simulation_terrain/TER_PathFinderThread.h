@@ -43,9 +43,8 @@ public:
     //@{
              TER_PathFinderThread( const TER_StaticData& staticData,
                                    tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
-                                   unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread,
-                                   const tools::Path& dump,
-                                   const std::string& filter );
+                                   unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool useSameThread,
+                                   const tools::Path& dump, const std::string& filter );
     virtual ~TER_PathFinderThread();
     //@}
 
@@ -70,7 +69,7 @@ private:
 private:
     //! @name Member data
     //@{
-    bool                               bUseSameThread_;
+    const bool                         useSameThread_;
     const tools::Path                  dump_; // empty if dump is disabled
     const std::set< size_t >           filter_; // empty if no id filters
     std::unique_ptr< TerrainPathfinder > pathfinder_;

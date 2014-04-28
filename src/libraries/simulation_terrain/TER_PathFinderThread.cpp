@@ -43,11 +43,11 @@ namespace
 // -----------------------------------------------------------------------------
 TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData,
                                             tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
-                                            unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread,
+                                            unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool useSameThread,
                                             const tools::Path& dump,
                                             const std::string& filter )
     : tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >( queue )
-    , bUseSameThread_( bUseSameThread )
+    , useSameThread_( useSameThread )
     , dump_          ( dump )
     , filter_        ( ParseFilter( filter ) )
     , pathfinder_    ( new TerrainPathfinder( staticData ) )
@@ -231,7 +231,7 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
 // -----------------------------------------------------------------------------
 void TER_PathFinderThread::ProcessInSimulationThread( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest )
 {
-    if( !bUseSameThread_ )
+    if( !useSameThread_ )
         throw MASA_EXCEPTION( "Pathfind : Process in same thread than simulation not expected." );
     Process( pRequest );
 }
