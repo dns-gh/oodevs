@@ -201,7 +201,7 @@ double OrderParameter::MaxValue() const
     return maxValue_;
 }
 
-double OrderParameter::IndirectFireOnly() const
+bool OrderParameter::IndirectFireOnly() const
 {
     return indirectFire_;
 }

@@ -74,7 +74,7 @@ public:
     unsigned int MaxOccurs() const;
     double MinValue() const;
     double MaxValue() const;
-    double IndirectFireOnly() const;
+    bool IndirectFireOnly() const;
     // a repeated is a dynamic list of "this" parameter.
     bool IsRepeated() const;
     // a list is a dynamic list of a certain type of parameter.
