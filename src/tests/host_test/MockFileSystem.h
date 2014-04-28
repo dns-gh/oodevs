@@ -12,7 +12,6 @@
 
 #include "runtime/FileSystem_ABC.h"
 #include <boost/filesystem.hpp>
-#include <boost/foreach.hpp>
 
 namespace mocks
 {
@@ -42,8 +41,8 @@ namespace mocks
 
         bool Apply( const T_Predicate& operand, const std::vector< boost::filesystem::path >& list )
         {
-            BOOST_FOREACH( const boost::filesystem::path& it, list )
-                operand( it );
+            for( auto it = list.begin(); it != list.end(); ++it )
+                operand( *it );
             return true;
         }
     };

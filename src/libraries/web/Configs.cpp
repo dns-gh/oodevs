@@ -288,13 +288,12 @@ bool ReadSideConfig( session::Config::T_Sides& dst, const Tree& src, const std::
 // -----------------------------------------------------------------------------
 void WriteSideConfig( Tree& dst, const std::string& prefix, const session::Config::T_Sides& src )
 {
-    Tree tree;
+    auto& tree = dst.put_child( prefix, Tree() );
     for( auto it = src.begin(); it != src.end(); ++it )
     {
         tree.put( it->first + "." + "name", it->second.name );
         tree.put( it->first + "." + "created", it->second.created );
     }
-    dst.add_child( prefix, tree );
 }
 
 // -----------------------------------------------------------------------------
