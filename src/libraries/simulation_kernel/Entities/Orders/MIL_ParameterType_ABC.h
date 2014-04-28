@@ -10,8 +10,6 @@
 #ifndef __MIL_ParameterType_ABC_h_
 #define __MIL_ParameterType_ABC_h_
 
-#include "MT_Tools/MT_String.h"
-
 namespace sword
 {
     class MissionParameter;
@@ -91,8 +89,6 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const MIL_ParameterType_ABC*, sCaseInsensitiveLess > T_ParameterMap;
-    typedef T_ParameterMap::const_iterator                                            CIT_ParameterMap;
     //@}
 
 private:
@@ -100,12 +96,6 @@ private:
     //@{
     const std::string strName_;
     const E_Type type_;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    static T_ParameterMap parameters_;
     //@}
 };
 

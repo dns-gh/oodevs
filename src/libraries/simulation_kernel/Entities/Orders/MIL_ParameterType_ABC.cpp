@@ -9,8 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ParameterType_ABC.h"
+#include "MT_Tools/MT_String.h"
 
-MIL_ParameterType_ABC::T_ParameterMap MIL_ParameterType_ABC::parameters_;
+namespace
+{
+    std::map< std::string, const MIL_ParameterType_ABC*, sCaseInsensitiveLess > parameters;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_ABC::RegisterParameterType
@@ -18,11 +22,10 @@ MIL_ParameterType_ABC::T_ParameterMap MIL_ParameterType_ABC::parameters_;
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_ABC::RegisterParameterType( const std::string& name, E_Type type )
 {
-    const MIL_ParameterType_ABC* pParameter = new MIL_ParameterType_ABC( name, type );
-    const MIL_ParameterType_ABC*& pTmp = parameters_[ pParameter->GetName() ];
-    if( pTmp )
+    const MIL_ParameterType_ABC*& pParameter = parameters[ name ];
+    if( pParameter )
         throw MASA_EXCEPTION( "Parameter type " + pParameter->GetName() + " already defined" );
-    pTmp = pParameter;
+    pParameter = new MIL_ParameterType_ABC( name, type );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,8 +100,8 @@ MIL_ParameterType_ABC::~MIL_ParameterType_ABC()
 // -----------------------------------------------------------------------------
 const MIL_ParameterType_ABC* MIL_ParameterType_ABC::Find( const std::string& strName )
 {
-    CIT_ParameterMap it = parameters_.find( strName );
-    if( it == parameters_.end() )
+    auto it = parameters.find( strName );
+    if( it == parameters.end() )
         return 0;
     return it->second;
 }
