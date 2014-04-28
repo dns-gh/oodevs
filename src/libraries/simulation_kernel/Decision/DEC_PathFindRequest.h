@@ -30,7 +30,7 @@ class DEC_PathFindRequest: public TER_PathFindRequest_ABC,
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC >& p, bool ignoreDynamicObjects );
+             DEC_PathFindRequest( DEC_PathFind_Manager& m, const boost::shared_ptr< DEC_Path_ABC >& p, bool ignoreDynamicObjects );
     virtual ~DEC_PathFindRequest();
     //@}
 
@@ -44,7 +44,7 @@ public:
 private:
     //! @name Member data
     //@{
-    DEC_PathFind_Manager* const manager_;
+    DEC_PathFind_Manager& manager_;
     boost::weak_ptr< DEC_Path_ABC > path_;
     const bool ignoreDynamicObjects_;
     MT_Profiler profiler_;

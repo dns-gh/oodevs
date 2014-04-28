@@ -97,7 +97,7 @@ DEC_PathFind_Manager::~DEC_PathFind_Manager()
 void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_Path_ABC >& path, bool ignoreDynamicObjects )
 {
     MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", path.get() ) );
-    auto p = boost::make_shared< DEC_PathFindRequest >( this, path, ignoreDynamicObjects );
+    auto p = boost::make_shared< DEC_PathFindRequest >( *this, path, ignoreDynamicObjects );
     boost::mutex::scoped_lock locker( mutex_ );
     if( path->GetLength() > rDistanceThreshold_ )
         longRequests_.push_back( p );
