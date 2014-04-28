@@ -50,7 +50,7 @@ public:
     //@{
     static TER_PathFindManager& GetPathFindManager();
     TER_PathFinderThread& CreatePathFinderThread( tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
-                                                  unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread,
+                                                  unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool useSameThread,
                                                   const tools::Path& dump, const std::string& filter );
 
     void AddDynamicData   ( const DynamicDataPtr& data );

@@ -57,7 +57,7 @@ TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData,
     pathfinder_->SetEndConnectionSetup( nMaxEndConnections, static_cast< float >( rMinEndConnectionLength * 1.1 ) ); // applying factor of 10%
     staticPathfinder_->SetPickingDistances( 1000.f, 10000.f ); // minpicking, maxpicking
     staticPathfinder_->SetEndConnectionSetup( nMaxEndConnections, static_cast< float >( rMinEndConnectionLength * 1.1 ) ); // applying factor of 10%
-    if( !bUseSameThread )
+    if( !useSameThread )
         Start();
 }
 
