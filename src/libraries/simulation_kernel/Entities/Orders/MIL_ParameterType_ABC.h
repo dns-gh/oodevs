@@ -61,10 +61,13 @@ public:
         eLimaFunction               = 29
     };
 
+public:
+    ~MIL_ParameterType_ABC();
+
     //! @name Factory
     //@{
     static void Initialize();
-    static const MIL_ParameterType_ABC* Find ( const std::string& strName );
+    static const MIL_ParameterType_ABC* Find( const std::string& strName );
     //@}
 
     //! @name Accessors
@@ -77,18 +80,12 @@ private:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_ParameterType_ABC( const std::string& strName, E_Type type );
-    virtual ~MIL_ParameterType_ABC();
     //@}
 
 private:
     //! @name Initialization
     //@{
-    static void RegisterParameterType( const std::string& name, E_Type type );
-    //@}
-
-private:
-    //! @name Types
-    //@{
+    static void RegisterParameterType( std::string name, E_Type type );
     //@}
 
 private:

@@ -10,22 +10,21 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ParameterType_ABC.h"
 #include "MT_Tools/MT_String.h"
+#include <boost/ptr_container/ptr_map.hpp>
 
 namespace
 {
-    std::map< std::string, const MIL_ParameterType_ABC*, sCaseInsensitiveLess > parameters;
+    boost::ptr_map< std::string, MIL_ParameterType_ABC, sCaseInsensitiveLess > parameters;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_ABC::RegisterParameterType
 // Created: MGD 2010-11-17
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_ABC::RegisterParameterType( const std::string& name, E_Type type )
+void MIL_ParameterType_ABC::RegisterParameterType( std::string name, E_Type type )
 {
-    const MIL_ParameterType_ABC*& pParameter = parameters[ name ];
-    if( pParameter )
-        throw MASA_EXCEPTION( "Parameter type " + pParameter->GetName() + " already defined" );
-    pParameter = new MIL_ParameterType_ABC( name, type );
+    if( !parameters.insert( name, new MIL_ParameterType_ABC( name, type ) ).second )
+        throw MASA_EXCEPTION( "Parameter type " + name + " already defined" );
 }
 
 // -----------------------------------------------------------------------------
