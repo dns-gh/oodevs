@@ -18,6 +18,7 @@
 #include "DateTime.h"
 #include "Direction.h"
 #include "DotationType.h"
+#include "EquipmentType.h"
 #include "EngineerConstruction.h"
 #include "Enumeration.h"
 #include "ExtensionList.h"
@@ -150,7 +151,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_resourcetype() )
         return ( nullValue ) ? new parameters::DotationType( parameter )                    : new parameters::DotationType( parameter, message.resourcetype().id(), staticModel_.objectTypes_ );
     if( message.has_equipmenttype() )
-        return 0;
+        return nullValue ? new parameters::EquipmentType( parameter )                       : new parameters::EquipmentType( parameter, message.equipmenttype().id(), staticModel_.objectTypes_ );
     if( message.has_logmaintenancepriorities() )
         return ( nullValue ) ? new parameters::MaintenancePriorities( parameter )           : new parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, message.logmaintenancepriorities() );
     if( message.has_logmedicalpriorities() )
