@@ -90,7 +90,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
             if( !hovered_ )
                 return;
             const auto& request = message.message().segment_request_ack();
-            if( request.error_code() != sword::PathfindRequestAck_ErrorCode_no_error )
+            if( request.error_code() != sword::SegmentRequestAck_ErrorCode_no_error )
                 return;
             const auto& segments = request.segments();
             for( auto it = segments.begin(); it != segments.end(); ++it )
