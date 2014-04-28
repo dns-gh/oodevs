@@ -170,6 +170,12 @@ local normalizedInverseDistanceSimListSim = function( simList, simPos, distanceM
 
 end
 
+local listLocalisationPoints = function( pos )
+    local localisationPoints = DEC_Geometrie_ListePointsLocalisation( pos:getLocalisation() )
+    localisationPoints[ #localisationPoints + 1 ] = pos:getPosition()
+    return localisationPoints
+end
+
 local normalizedInverseDistanceSim = function( simPos, pos2, distanceMax )
     if not simPos or not pos2 then return 1 end
     if pos2.getLocalisation then 
@@ -190,12 +196,6 @@ local normalizedInverseDistanceSimList = function( posList, pos2, distanceMax )
           end
     end
     return distance
-end
-
-local listLocalisationPoints = function( pos )
-    local localisationPoints = DEC_Geometrie_ListePointsLocalisation( pos:getLocalisation() )
-    localisationPoints[ #localisationPoints + 1 ] = pos:getPosition()
-    return localisationPoints
 end
 
 -- Return 1 if positions are far, 100 if they are near. 'Near/far' is defined according to operational theater distance.
