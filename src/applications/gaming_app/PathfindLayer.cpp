@@ -133,7 +133,8 @@ void PathfindLayer::DrawPoint( geometry::Point2f p, bool invert ) const
 // -----------------------------------------------------------------------------
 void PathfindLayer::Select( const kernel::Agent_ABC& element )
 {
-    element_ = &element;
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        element_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +143,8 @@ void PathfindLayer::Select( const kernel::Agent_ABC& element )
 // -----------------------------------------------------------------------------
 void PathfindLayer::Select( const kernel::Population_ABC& element )
 {
-    element_ = &element;
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        element_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -234,7 +236,8 @@ void PathfindLayer::SendRequest()
 // -----------------------------------------------------------------------------
 void PathfindLayer::BeforeSelection()
 {
-    element_ = 0;
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        element_ = 0;
 }
 
 // -----------------------------------------------------------------------------
