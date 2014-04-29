@@ -118,9 +118,9 @@ unsigned int UnitStateTableEquipment::BreakdownComboIndexToId( const QStringList
 // Name: UnitStateTableEquipment::NotifyUpdated
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
-void UnitStateTableEquipment::NotifyUpdated( const Equipments& equipments )
+void UnitStateTableEquipment::NotifyUpdated( const kernel::Equipments_ABC& equipments )
 {
-    if( selected_ && selected_->Retrieve< Equipments >() == &equipments )
+    if( selected_ && selected_->Retrieve< kernel::Equipments_ABC >() == &equipments )
     {
         Purge();
         RecursiveLoad( *selected_.ConstCast(), true );
@@ -139,7 +139,7 @@ bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
     assert( selected_ == &selected );
 
     rowsChanged_.clear();
-    for( auto it = selected.Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
+    for( auto it = static_cast< const Equipments& >( selected.Get< kernel::Equipments_ABC >() ).CreateIterator(); it.HasMoreElements(); )
     {
         const Equipment& equipment = it.NextElement();
         const QString name = QString::fromStdString( equipment.type_.GetName() );
@@ -207,7 +207,7 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
 {
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     const bool isUnknown = !profile_.CanDoMagic( selected ) && controllers_.GetCurrentMode() != eModes_Replay;
-    for( auto it = selected.Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
+    for( auto it = static_cast< const Equipments& >( selected.Get< kernel::Equipments_ABC >() ).CreateIterator(); it.HasMoreElements(); )
     {
         const Equipment& equipment = it.NextElement();
         const QString name = equipment.type_.GetName().c_str();

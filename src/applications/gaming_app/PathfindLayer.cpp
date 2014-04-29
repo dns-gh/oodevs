@@ -216,10 +216,11 @@ void PathfindLayer::SendRequest()
         sword::ClientToSim msg;
         auto request = msg.mutable_message()->mutable_compute_pathfind()->mutable_request();
         request->mutable_unit()->set_id( element_->GetId() );
-        auto* positions = request->mutable_positions();
+        auto positions = request->mutable_positions();
         for( auto it = positions_.begin(); it != positions_.end(); ++it )
             coordinateConverter_.ConvertToGeo( *it, *positions->Add() );
-        for( auto it = element_->Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
+        auto& equipments = static_cast< const Equipments& >( element_->Get< kernel::Equipments_ABC >() );
+        for( auto it = equipments.CreateIterator(); it.HasMoreElements(); )
             request->add_equipment_types()->set_id( it.NextElement().type_.GetId() );
         request->set_ignore_dynamic_objects( true );
         publisher_.Send( msg );

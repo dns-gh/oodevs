@@ -233,7 +233,7 @@ void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
     for( unsigned int i = 0; i < tabs_.size(); ++i )
         tabs_[ i ]->SetReadOnly( readOnly );
     bool enabled = element &&
-                   element->Retrieve< Equipments >() != 0 &&
+                   element->Retrieve< kernel::Equipments_ABC >() != 0 &&
                    element->Retrieve< kernel::Dotations_ABC >() != 0 &&
                    element->Retrieve< Troops >() != 0;
     emit Disabled( !enabled );

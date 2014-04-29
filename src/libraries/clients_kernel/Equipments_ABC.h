@@ -12,6 +12,12 @@
 
 #include "Extension_ABC.h"
 
+namespace sword
+{
+    class LogMaintenanceHandlingCreation;
+    class LogMaintenanceHandlingUpdate;
+}
+
 namespace kernel
 {
     class EquipmentType;
@@ -34,6 +40,11 @@ public:
     //! @name Operations
     //@{
     virtual bool HasEquipment( const kernel::EquipmentType& type ) const = 0;
+    virtual float GetTotalWeight() const = 0;
+
+    virtual void CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message ) = 0;
+    virtual void DeleteMaintenanceConsign( int id ) = 0;
+    virtual void Update( const sword::LogMaintenanceHandlingUpdate& message ) = 0;
     //@}
 };
 

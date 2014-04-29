@@ -200,14 +200,12 @@ void EquipmentTransferDialog::NotifyContextMenu( const kernel::Agent_ABC& agent,
 // -----------------------------------------------------------------------------
 void EquipmentTransferDialog::InitializeEquipments()
 {
-    const Equipments* equipments = selectedFrom_->Retrieve< Equipments >();
-    if( !equipments )
-        throw MASA_EXCEPTION( "Cannot find Equipments extension.");
+    auto& equipments = static_cast< const Equipments& >( selectedFrom_->Get< kernel::Equipments_ABC >() );
     delegate_->Purge();
     equipmentTable_->clearContents();
     equipmentTable_->setRowCount( 0 );
     equipmentIdMap_.clear();
-    tools::Iterator< const Equipment& > it = equipments->CreateIterator();
+    tools::Iterator< const Equipment& > it = equipments.CreateIterator();
     int row = 0;
     while( it.HasMoreElements() )
     {

@@ -158,8 +158,8 @@ void Equipments::Update( const std::vector< Equipment >& differences )
             }
         }
     }
-    if( const kernel::Entity_ABC* superior = GetSuperior() )
-        if( Equipments* equipments = const_cast< Equipments* >( superior->Retrieve< Equipments >() ) )
+    if( kernel::Entity_ABC* superior = GetSuperior() )
+        if( Equipments* equipments = static_cast< Equipments* >( superior->Retrieve< Equipments_ABC >() ) )
             equipments->Update( differences );
     UpdateController();
 }
@@ -174,11 +174,10 @@ void Equipments::SetSuperior( const kernel::Entity_ABC& automat )
     differences.reserve( elements_.size() );
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         differences.push_back( *it->second );
-    if( Equipments* equipments = const_cast< Equipments* >( automat.Retrieve< Equipments >() ) )
+    if( Equipments* equipments = static_cast< Equipments* >( const_cast< kernel::Entity_ABC& >( automat ).Retrieve< Equipments_ABC >() ) )
         equipments->Update( differences );
-
-    if( const kernel::Entity_ABC* previous = GetSuperior() )
-        if( Equipments* equipments = const_cast< Equipments* >( previous->Retrieve< Equipments >() ) )
+    if( kernel::Entity_ABC* previous = GetSuperior() )
+        if( Equipments* equipments = static_cast< Equipments* >( previous->Retrieve< Equipments_ABC >() ) )
         {
             std::transform( differences.begin(), differences.end(), differences.begin(), std::negate< Equipment >() );
             equipments->Update( differences );
@@ -207,4 +206,12 @@ void Equipments::AddToDictionary( const Equipment& equipment )
     dico_.Register( entity_, baseName + tools::translate( "Equipments", "On site fixable" ), equipment.onSiteFixable_ );
     dico_.Register( entity_, baseName + tools::translate( "Equipments", "In maintenance" ), equipment.inMaintenance_ );
     dico_.Register( entity_, baseName + tools::translate( "Equipments", "Prisoner" ), equipment.prisonners_ );
+}
+
+bool Equipments::HasEquipment( const kernel::EquipmentType& type ) const
+{
+    for( auto it = CreateIterator(); it.HasMoreElements(); )
+        if( it.NextElement().GetType().GetId() == type.GetId() )
+            return true;
+    return false;
 }

@@ -14,6 +14,7 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
+#include "clients_kernel/Equipments_ABC.h"
 #include "protocol/Protocol.h"
 #include <tools/Iterator.h>
 #include <tools/Resolver.h>
@@ -88,7 +89,8 @@ void ParamEquipmentType::SetEntity( const kernel::Entity_ABC* entity )
     while( it.HasMoreElements() )
     {
         const kernel::EquipmentType& type = it.NextElement();
-        AddItem( type.GetName().c_str(), type.GetId() );
+        if( !parameter_.OwnedEquipmentsOnly() || entity->Get< kernel::Equipments_ABC >().HasEquipment( type ) )
+            AddItem( type.GetName().c_str(), type.GetId() );
     }
     for( auto it = values_.begin(); it != values_.end(); ++it )
         comboBox_->AddItem( it->first, it->second );

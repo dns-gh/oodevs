@@ -57,7 +57,7 @@ public:
     //! @name Operations
     //@{
     const kernel::Entity_ABC* GetSuperior() const;
-    virtual void SetSuperior( const kernel::Entity_ABC& superior ) = 0;
+    kernel::Entity_ABC* GetSuperior();
     //@}
 
 private:
@@ -76,7 +76,9 @@ private:
     virtual void DoUpdate( const sword::AutomatChangeSuperior& message );
     virtual void DoUpdate( const sword::FormationChangeSuperior& message );
 
-    void UpdateSuperior( const kernel::Entity_ABC& superior );
+    virtual void SetSuperior( const kernel::Entity_ABC& superior ) = 0;
+
+    void UpdateSuperior( kernel::Entity_ABC& superior );
     //@}
 
 private:
@@ -85,7 +87,7 @@ private:
     const tools::Resolver_ABC< kernel::Automat_ABC >&   automatResolver_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
     const tools::Resolver_ABC< kernel::Team_ABC >&      teamResolver_;
-    const kernel::Entity_ABC* superior_;
+    kernel::Entity_ABC* superior_;
     //@}
 };
 

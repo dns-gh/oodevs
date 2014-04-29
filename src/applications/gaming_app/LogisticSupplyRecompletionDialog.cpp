@@ -193,7 +193,7 @@ void LogisticSupplyRecompletionDialog::InitializeEquipments()
     equipmentsList_.clear();
     equipmentsList_.append( "" );
     equipmentsMax_.clear();
-    if( const Equipments* equipments = selected_->Retrieve< Equipments >() )
+    if( auto equipments = static_cast< const Equipments* >( selected_->Retrieve< Equipments_ABC >() ) )
     {
         tools::Iterator< const Equipment& > it = equipments->CreateIterator();
         QStringList equipmentList;

@@ -96,7 +96,7 @@ void HierarchicExtension_ABC::DoUpdate( const sword::AutomatChangeSuperior& mess
 // Name: HierarchicExtension_ABC::UpdateSuperior
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::UpdateSuperior( const kernel::Entity_ABC& superior )
+void HierarchicExtension_ABC::UpdateSuperior( kernel::Entity_ABC& superior )
 {
     SetSuperior( superior );
     superior_ = &superior;
@@ -107,6 +107,11 @@ void HierarchicExtension_ABC::UpdateSuperior( const kernel::Entity_ABC& superior
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
 const kernel::Entity_ABC* HierarchicExtension_ABC::GetSuperior() const
+{
+    return superior_;
+}
+
+kernel::Entity_ABC* HierarchicExtension_ABC::GetSuperior()
 {
     return superior_;
 }

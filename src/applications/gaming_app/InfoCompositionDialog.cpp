@@ -45,5 +45,5 @@ InfoCompositionDialog::~InfoCompositionDialog()
 // -----------------------------------------------------------------------------
 bool InfoCompositionDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
-    return element.Retrieve< Lendings >() || element.Retrieve< Equipments >();
+    return element.Retrieve< Lendings >() || element.Retrieve< kernel::Equipments_ABC >();
 }
