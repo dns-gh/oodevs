@@ -82,11 +82,9 @@ BOOST_FIXTURE_TEST_CASE( agregate_entity_serializes_all_its_attributes, Register
                                                                         ( "Formation" )
                                                                         ( "NumberOfSilentEntities" )
                                                                         ( "SilentEntities" )
-                                                                        ( "SilentAggregates" )
                                                                         ( "SubAggregateIdentifiers" )
                                                                         ( "EntityIdentifiers" )
-                                                                        ( "NumberOfVariableDatums" )
-                                                                        ( "IsPartOf" );
+                                                                        ( "NumberOfVariableDatums" );
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
@@ -167,14 +165,6 @@ BOOST_FIXTURE_TEST_CASE( agent_has_no_entity_identifiers, RegisteredFixture )
 {
     const uint32_t numberOfEntityIdentifiers = 0u;
     MOCK_EXPECT( functor.Visit ).once().with( "EntityIdentifiers", boost::bind( &CheckSerialization< uint32_t >, _1, numberOfEntityIdentifiers ) );
-    MOCK_EXPECT( functor.Visit );
-    entity.Serialize( functor, true );
-}
-
-BOOST_FIXTURE_TEST_CASE( agent_has_no_silent_aggregate, RegisteredFixture )
-{
-    const uint32_t numberOfSilentAggregates = 0u;
-    MOCK_EXPECT( functor.Visit ).once().with( "SilentAggregates", boost::bind( &CheckSerialization< uint32_t >, _1, numberOfSilentAggregates ) );
     MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }

@@ -19,13 +19,19 @@
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Logger_ABC.h"
-
+#include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
 
 namespace
 {
+    bool HasSpatialAttributes( const T_AttributeIdentifiers& attributes )
+    {
+        static const ::hla::AttributeIdentifier spatial("Spatial");
+        return std::find( attributes.begin(), attributes.end(), spatial ) != attributes.end();
+    }
+    
     std::string GetName( xml::xisubstream xis, const std::string& category, const std::string& mission )
     {
         std::string name;
@@ -256,7 +262,7 @@ void UnitTeleporter::LocalDestroyed( const std::string& /*identifier*/ )
 // Name: UnitTeleporter::Divested
 // Created: AHC 2010-03-02
 // -----------------------------------------------------------------------------
-void UnitTeleporter::Divested( const std::string& identifier )
+void UnitTeleporter::Divested( const std::string& identifier, const T_AttributeIdentifiers& attributes )
 {
     T_Identifiers::const_iterator automatIt = automatIds_.find( identifier );
     if( automatIt != automatIds_.end() )
@@ -277,19 +283,21 @@ void UnitTeleporter::Divested( const std::string& identifier )
     T_Objects::iterator it( objects_.find( identifier ) );
     if( objects_.end() == it)
         return;
-    it->second->Register( *this );
+    if( HasSpatialAttributes( attributes ) )
+        it->second->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UnitTeleporter::Acquired
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void UnitTeleporter::Acquired( const std::string& identifier )
+void UnitTeleporter::Acquired( const std::string& identifier, const T_AttributeIdentifiers& attributes )
 {
     T_Objects::iterator it( objects_.find( identifier ) );
     if( objects_.end() == it)
         return;
-    it->second->Unregister( *this );
+    if( HasSpatialAttributes( attributes ) )
+        it->second->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

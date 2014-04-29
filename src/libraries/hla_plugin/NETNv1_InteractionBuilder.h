@@ -61,6 +61,14 @@ public:
     virtual bool Build( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ) const;
     virtual bool Build( ::hla::Interaction< interactions::TMR_CancelRequest >& interaction ) const;
     virtual bool Build( ::hla::Interaction< interactions::TMR_TransferResult >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_DisaggregationRequest >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_DisaggregationResponse >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_AggregationRequest >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_AggregationResponse >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_CancelRequest >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_ActionComplete >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_Trigger >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_TriggerResponse >& interaction ) const;
     //@}
 
 private:

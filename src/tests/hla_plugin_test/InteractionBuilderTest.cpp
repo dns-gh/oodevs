@@ -478,7 +478,6 @@ BOOST_FIXTURE_TEST_CASE( build_tmr_cancel_request, FixtureV2 )
     CheckBuild< interactions::TMR_CancelRequest >( name, parameters );
 }
 
-/*
 BOOST_FIXTURE_TEST_CASE( build_tmr_transfer_result, FixtureV2 )
 {
     const std::string name = "TMR.TMR_TransferResult";
@@ -487,7 +486,89 @@ BOOST_FIXTURE_TEST_CASE( build_tmr_transfer_result, FixtureV2 )
                                                                         ( "ResponseFederate" )
                                                                         ( "TransferOk" );
     CheckBuild< interactions::TMR_TransferResult >( name, parameters );
-}*/
+}
+
+BOOST_FIXTURE_TEST_CASE( build_mrm_disaggregationrequest, FixtureV2 )
+{
+    const std::string name = "MRM_Object.MRM_DisaggregationRequest";
+    const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
+                                                                        ( "AggregateFederate" )
+                                                                        ( "HigherResolutionFederate" )
+                                                                        ( "AggregateUUID" )
+                                                                        ( "AggregationState" )
+                                                                        ( "UuidList" );
+    CheckBuild< interactions::MRM_DisaggregationRequest >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( build_mrm_disaggregationresponse, FixtureV2 )
+{
+    const std::string name = "MRM_Object.MRM_DisaggregationResponse";
+    const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
+                                                                        ( "AggregateFederate" )
+                                                                        ( "HigherResolutionFederate" )
+                                                                        ( "Acknowledge" )
+                                                                        ( "NonComplianceReason" );
+    CheckBuild< interactions::MRM_DisaggregationResponse >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( build_mrm_aggregationrequest, FixtureV2 )
+{
+    const std::string name = "MRM_Object.MRM_AggregationRequest";
+    const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
+                                                                        ( "AggregateFederate" )
+                                                                        ( "HigherResolutionFederate" )
+                                                                        ( "UuidList" )
+                                                                        ( "AggregateUuid" );
+    CheckBuild< interactions::MRM_AggregationRequest >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( build_mrm_aggregationresponse, FixtureV2 )
+{
+    const std::string name = "MRM_Object.MRM_AggregationResponse";
+    const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
+                                                                        ( "AggregateFederate" )
+                                                                        ( "HigherResolutionFederate" )
+                                                                        ( "Acknowledge" )
+                                                                        ( "NonComplianceReason" );
+    CheckBuild< interactions::MRM_AggregationResponse >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( build_mrm_cancelrequest, FixtureV2 )
+{
+    const std::string name = "MRM_Object.MRM_CancelRequest";
+    const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
+                                                                        ( "AggregateFederate" )
+                                                                        ( "HigherResolutionFederate" )
+                                                                        ( "Reason" );
+    CheckBuild< interactions::MRM_CancelRequest >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( build_mrm_actioncomplete, FixtureV2 )
+{
+    const std::string name = "MRM_Object.MRM_ActionComplete";
+    const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
+                                                                        ( "AggregateFederate" )
+                                                                        ( "HigherResolutionFederate" )
+                                                                        ( "CompletionResult" );
+    CheckBuild< interactions::MRM_ActionComplete >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( build_mrm_trigger, FixtureV2 )
+{
+    const std::string name = "MRM_Trigger";
+    const std::vector< std::string > parameters = boost::assign::list_of( "Instance" )
+                                                                        ( "AggregationState" )
+                                                                        ( "UuidList" );
+    CheckBuild< interactions::MRM_Trigger >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( build_mrm_triggerresponse, FixtureV2 )
+{
+    const std::string name = "MRM_TriggerResponse";
+    const std::vector< std::string > parameters = boost::assign::list_of( "Instance" )
+                                                                        ( "TransactionID" );
+    CheckBuild< interactions::MRM_TriggerResponse >( name, parameters );
+}
 
 BOOST_FIXTURE_TEST_CASE( interaction_builder_registers_name_and_attributes_for_weapon_fire, Fixture )
 {

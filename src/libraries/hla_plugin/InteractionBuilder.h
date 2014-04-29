@@ -55,6 +55,14 @@ namespace interactions
     struct TMR_RequestTransferModellingResponsibility;
     struct TMR_CancelRequest;
     struct TMR_TransferResult;
+    struct MRM_DisaggregationRequest;
+    struct MRM_DisaggregationResponse;
+    struct MRM_AggregationRequest;
+    struct MRM_AggregationResponse;
+    struct MRM_CancelRequest;
+    struct MRM_ActionComplete;
+    struct MRM_Trigger;
+    struct MRM_TriggerResponse;
 }
     class Federate_ABC;
     class NETN_InteractionBuilder_ABC;
@@ -108,6 +116,15 @@ public:
     bool Build( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::TMR_CancelRequest >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::TMR_TransferResult >& interaction ) const;
+
+    bool Build( ::hla::Interaction< interactions::MRM_DisaggregationRequest >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::MRM_DisaggregationResponse >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::MRM_AggregationRequest >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::MRM_AggregationResponse >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::MRM_CancelRequest >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::MRM_ActionComplete >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::MRM_Trigger >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::MRM_TriggerResponse >& interaction ) const;
     //@}
     //@}
 

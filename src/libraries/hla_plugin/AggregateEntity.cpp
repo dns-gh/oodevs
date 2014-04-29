@@ -236,11 +236,9 @@ void AggregateEntity::RegisterAttributes( )
     attributesUpdater_->Register( "Formation", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Formation( false ) );
     attributesUpdater_->Register( "NumberOfSilentEntities", boost::bind( &FOM_Serializer_ABC::ReadNumberOfSilentEntities, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ), Wrapper< unsigned short >( 0 ) );
     attributesUpdater_->Register( "SilentEntities", boost::bind( &FOM_Serializer_ABC::ReadSilentEntities, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ), Wrapper< std::vector< SilentEntity > >( std::vector< SilentEntity >() ) );
-    attributesUpdater_->Register( "SilentAggregates", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Wrapper< uint32_t >( 0 ) ); // no aggregates
     attributesUpdater_->Register( "SubAggregateIdentifiers", boost::bind( &ReadSubIdentifiers, _1, _2, _3, &ObjectListener_ABC::SubAgregatesChanged, boost::ref( subAggregates_ ) ), subAggregates_ ); // no sub aggregates identifiers
     attributesUpdater_->Register( "EntityIdentifiers", boost::bind( &ReadSubIdentifiers, _1, _2, _3, &ObjectListener_ABC::SubEntitiesChanged, boost::ref( entities_ ) ), entities_ ); // no entity identifiers
     attributesUpdater_->Register( "NumberOfVariableDatums", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Wrapper< uint32_t >( 0 ) ); // no variable datums
-    attributesUpdater_->Register( "IsPartOf", boost::bind( &FOM_Serializer_ABC::ReadIsPartOf, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( isPartOf_ ) ), isPartOf_ );
 }
 
 // -----------------------------------------------------------------------------

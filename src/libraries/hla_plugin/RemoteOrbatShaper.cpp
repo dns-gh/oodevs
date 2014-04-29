@@ -472,7 +472,7 @@ void RemoteOrbatShaper::LocalDestroyed( const std::string& /*identifier*/ )
 // Name: RemoteOrbatShaper::Divested
 // Created: AHC 2012-10-04
 // -----------------------------------------------------------------------------
-void RemoteOrbatShaper::Divested( const std::string& /*identifier*/ )
+void RemoteOrbatShaper::Divested( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }
@@ -481,7 +481,7 @@ void RemoteOrbatShaper::Divested( const std::string& /*identifier*/ )
 // Name: RemoteOrbatShaper::Acquired
 // Created: AHC 2012-10-04
 // -----------------------------------------------------------------------------
-void RemoteOrbatShaper::Acquired( const std::string& /*identifier*/ )
+void RemoteOrbatShaper::Acquired( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }

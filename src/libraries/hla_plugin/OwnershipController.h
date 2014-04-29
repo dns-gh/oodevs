@@ -62,8 +62,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void PerformDivestiture( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes  );
-    virtual void PerformAcquisition( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes  );
+    virtual void PerformDivestiture( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes, const ::hla::VariableLengthData& tag );
+    virtual void PerformAcquisition( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes, const ::hla::VariableLengthData& tag );
     //@}
 
 private:
@@ -73,8 +73,8 @@ private:
     virtual void RemoteDestroyed( const std::string& identifier );
     virtual void LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
     virtual void LocalDestroyed( const std::string& identifier );
-    virtual void Divested( const std::string& identifier );
-    virtual void Acquired( const std::string& identifier );
+    virtual void Divested( const std::string& identifier, const T_AttributeIdentifiers& attributes );
+    virtual void Acquired( const std::string& identifier, const T_AttributeIdentifiers& attributes );
     //@}
 
 private:

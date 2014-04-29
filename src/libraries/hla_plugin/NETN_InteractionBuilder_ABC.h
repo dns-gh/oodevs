@@ -40,6 +40,14 @@ namespace interactions
     struct TMR_RequestTransferModellingResponsibility;
     struct TMR_CancelRequest;
     struct TMR_TransferResult;
+    struct MRM_DisaggregationRequest;
+    struct MRM_DisaggregationResponse;
+    struct MRM_AggregationRequest;
+    struct MRM_AggregationResponse;
+    struct MRM_CancelRequest;
+    struct MRM_ActionComplete;
+    struct MRM_Trigger;
+    struct MRM_TriggerResponse;
 }
 
 // =============================================================================
@@ -75,6 +83,14 @@ public:
     virtual bool Build( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ) const = 0;
     virtual bool Build( ::hla::Interaction< interactions::TMR_CancelRequest >& interaction ) const = 0;
     virtual bool Build( ::hla::Interaction< interactions::TMR_TransferResult >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_DisaggregationRequest >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_DisaggregationResponse >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_AggregationRequest >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_AggregationResponse >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_CancelRequest >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_ActionComplete >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_Trigger >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::MRM_TriggerResponse >& interaction ) const = 0;
     //@}
 };
 

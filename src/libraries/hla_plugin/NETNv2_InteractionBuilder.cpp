@@ -39,13 +39,24 @@ namespace
         REGISTER_TEMPLATE( "Consumer"   , &T::consumer, T );
         REGISTER_TEMPLATE( "Provider"   , &T::provider, T );
         REGISTER_TEMPLATE( "ServiceType", &T::serviceType, T );
-    }template< typename T >
+    }
+
+    template< typename T >
     void RegisterTMR( ::hla::Interaction< T >& interaction, const std::string& name, dispatcher::Logger_ABC& logger_ )
     {
         REGISTER_TEMPLATE( "TransactionID", &T::transactionID, T );
         REGISTER_TEMPLATE( "RequestFederate", &T::requestFederate, T );
         REGISTER_TEMPLATE( "ResponseFederate", &T::responseFederate, T );
     }
+
+    template< typename T >
+    void RegisterMRM( ::hla::Interaction< T >& interaction, const std::string& name, dispatcher::Logger_ABC& logger_ )
+    {
+        REGISTER_TEMPLATE( "TransactionID", &T::transactionID, T );
+        REGISTER_TEMPLATE( "AggregateFederate", &T::aggregateFederate, T );
+        REGISTER_TEMPLATE( "HigherResolutionFederate", &T::higherResolutionFederate, T );
+    }
+
     NETN_UUID objectDef2uuid( const NetnObjectDefinitionStruct& v )
     {
         return NETN_UUID( v.uniqueId ) ;
@@ -372,5 +383,75 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_Tra
     const std::string name = "TMR.TMR_TransferResult";
     RegisterTMR( interaction, name, logger_ );
     REGISTER( "TransferOk", &interactions::TMR_TransferResult::transferOk );
+    return DoRegister( name, interaction, true, true );
+}
+
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_DisaggregationRequest >& interaction ) const
+{
+    const std::string name = "MRM_Object.MRM_DisaggregationRequest";
+    RegisterMRM( interaction, name, logger_ );
+    REGISTER( "AggregateUUID", &interactions::MRM_DisaggregationRequest::aggregateUUID );
+    REGISTER( "AggregationState", &interactions::MRM_DisaggregationRequest::aggregationState );
+    REGISTER( "UuidList", &interactions::MRM_DisaggregationRequest::uuidsList );
+    return DoRegister( name, interaction, true, true );
+}
+
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_DisaggregationResponse >& interaction ) const
+{
+    const std::string name = "MRM_Object.MRM_DisaggregationResponse";
+    RegisterMRM( interaction, name, logger_ );
+    REGISTER( "Acknowledge", &interactions::MRM_DisaggregationResponse::acknowledge );
+    REGISTER( "NonComplianceReason", &interactions::MRM_DisaggregationResponse::nonComplianceReason );
+    return DoRegister( name, interaction, true, true );
+}
+
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_AggregationRequest >& interaction ) const
+{
+    const std::string name = "MRM_Object.MRM_AggregationRequest";
+    RegisterMRM( interaction, name, logger_ );
+    REGISTER( "UuidList", &interactions::MRM_AggregationRequest::uuidsList );
+    REGISTER( "AggregateUuid", &interactions::MRM_AggregationRequest::aggregateUUID );
+    return DoRegister( name, interaction, true, true );
+}
+
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_AggregationResponse >& interaction ) const
+{
+    const std::string name = "MRM_Object.MRM_AggregationResponse";
+    RegisterMRM( interaction, name, logger_ );
+    REGISTER( "Acknowledge", &interactions::MRM_AggregationResponse::acknowledge );
+    REGISTER( "NonComplianceReason", &interactions::MRM_AggregationResponse::nonComplianceReason );
+    return DoRegister( name, interaction, true, true );
+}
+
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_CancelRequest >& interaction ) const
+{
+    const std::string name = "MRM_Object.MRM_CancelRequest";
+    RegisterMRM( interaction, name, logger_ );
+    REGISTER( "Reason", &interactions::MRM_CancelRequest::reason );
+    return DoRegister( name, interaction, true, true );
+}
+
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_ActionComplete >& interaction ) const
+{
+    const std::string name = "MRM_Object.MRM_ActionComplete";
+    RegisterMRM( interaction, name, logger_ );
+    REGISTER( "CompletionResult", &interactions::MRM_ActionComplete::result );
+    return DoRegister( name, interaction, true, true );
+}
+
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_Trigger >& interaction ) const
+{
+    const std::string name = "MRM_Trigger";
+    REGISTER( "Instance", &interactions::MRM_Trigger::instance );
+    REGISTER( "AggregationState", &interactions::MRM_Trigger::aggregationState );
+    REGISTER( "UuidList", &interactions::MRM_Trigger::uuidList );
+    return DoRegister( name, interaction, true, true );
+}
+
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_TriggerResponse >& interaction ) const
+{
+    const std::string name = "MRM_TriggerResponse";
+    REGISTER( "Instance", &interactions::MRM_TriggerResponse::instance );
+    REGISTER( "TransactionID", &interactions::MRM_TriggerResponse::transactionID );
     return DoRegister( name, interaction, true, true );
 }

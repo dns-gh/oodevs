@@ -77,12 +77,12 @@ private:
     virtual HlaObject_ABC& Create( const ::hla::ObjectIdentifier& objectID, const std::string& objectName );
     virtual void Destroy( HlaObject_ABC& object );
     virtual void Reflected( HlaObject_ABC& object );
-    virtual bool RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes );
-    virtual void OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual bool RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual void RequestOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual void Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes );
-    virtual void Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes );
+    virtual bool RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes );
+    virtual void OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual bool RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual void RequestOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual void Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual void Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
     virtual const T_AttributeIdentifiers& GetAttributes() const;
     //@}
 

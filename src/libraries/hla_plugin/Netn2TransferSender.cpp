@@ -18,6 +18,10 @@
 #include "InteractionSender.h"
 #include <hla/Interaction.h>
 #include <hla/AttributeIdentifier.h>
+#include <hla/VariableLengthData.h>
+#include <hla/Serializer.h>
+#include <hla/Deserializer.h>
+
 #include <cassert>
 #include <algorithm>
 
@@ -29,11 +33,6 @@ namespace
     {
         unsigned long simId = agentResolver.Resolve( agentID );
         return callsignResolver.ResolveUniqueId( simId );
-    }
-    std::string GetAgentId( const std::vector< char >& uniqueID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
-    {
-        unsigned long simId = callsignResolver.ResolveSimulationIdentifier( uniqueID );
-        return agentResolver.Resolve( simId );
     }
 }
 
@@ -74,19 +73,38 @@ Netn2TransferSender::~Netn2TransferSender()
     // NOTHING
 }
 
+namespace
+{
+    unsigned int CreateTransactionID( ::hla::VariableLengthData& tag, interactions::TransactionId& transactionID, const ::hla::FederateIdentifier federateHandle,
+           const ContextFactory_ABC& ctxtFactory )
+    {
+        unsigned int retval = 0;
+        if( tag.Size() == 0 )
+        {
+            retval = ctxtFactory.Create();
+            transactionID.federateHandle = federateHandle;
+            transactionID.transactionCounter = retval;
+        }
+        else
+        {
+            ::hla::Deserializer deser( tag.Buffer(), tag.Size() );
+            transactionID.Deserialize( deser );
+            retval = transactionID.transactionCounter;
+        }
+        return retval;
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: Netn2TransferSender::RequestTransfer
 // Created: AHC 2012-10-25
 // -----------------------------------------------------------------------------
-void Netn2TransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes )
+void Netn2TransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes, ::hla::VariableLengthData& tag, uint32_t capability )
 {
-    unsigned int reqId = ctxtFactory_.Create();
     interactions::TMR_RequestTransferModellingResponsibility transfer;
-    transfer.transactionID.federateHandle = federateHandle_;
-    transfer.transactionID.transactionCounter = reqId;
     transfer.requestFederate = UnicodeString( federateName_ );
+    const unsigned int reqId = CreateTransactionID( tag, transfer.transactionID, federateHandle_, ctxtFactory_ );
     std::vector< char > uniqueId( GetUniqueId( agentID, agentResolver_, callsignResolver_ ) );
-    if( uniqueId.size() == 0 )
+    if( uniqueId.empty() )
     {
         logger_.LogError( std::string( "Trying to transfer unknown entity " ) + agentID );
         return;
@@ -97,11 +115,11 @@ void Netn2TransferSender::RequestTransfer(const std::string& agentID, const Tran
         const ::hla::AttributeIdentifier& attr = *it;
         transfer.attributes.list.push_back( UnicodeString( attr.ToString() ) );
     }
-    transfer.capabilityType = static_cast< uint32_t >( interactions::TMR::TotalTransfer );
+    transfer.capabilityType = capability;
     transfer.transferType = type == E_EntityPush ? static_cast< uint32_t >( interactions::TMR::Divest )
                                                  : static_cast< uint32_t >( interactions::TMR::Acquire );
     pRequestSender_->Send( transfer );
-    callbacks_.insert( std::make_pair( reqId, std::make_pair( agentID, callback ) ) );
+    callbacks_.insert( std::make_pair( reqId, callback ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +136,7 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
     reply.requestFederate = request.requestFederate;
     reply.responseFederate = UnicodeString( federateName_ );
 
-    if( request.instances.list.size() == 0 )
+    if( request.instances.list.empty() )
     {
         reply.isOffering = false;
         reply.reason = static_cast< uint32_t >( interactions::TMR::CapabilityDoesNotMatch );
@@ -132,8 +150,8 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
     for( auto it = request.instances.list.begin(); it!=request.instances.list.end(); ++it )
     {
         const NETN_UUID& uniqueId = *it;
-        std::string agentId( GetAgentId( uniqueId.data(), agentResolver_, callsignResolver_ ) );
-        if( agentId.size() == 0 )
+        std::string agentId( UniqueIdSerializer::GetAgentId( uniqueId, agentResolver_, callsignResolver_ ) );
+        if( agentId.empty() )
         {
             logger_.LogError( std::string( "Trying to transfer unknown entity " ) + uniqueId.str() );
             resp = false;
@@ -159,11 +177,16 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
         for( auto it = request.instances.list.begin(); it!=request.instances.list.end(); ++it )
         {
             const NETN_UUID& uniqueId = *it;
-            std::string agentId( GetAgentId( uniqueId.data(), agentResolver_, callsignResolver_ ) );
+            std::string agentId( UniqueIdSerializer::GetAgentId( uniqueId, agentResolver_, callsignResolver_ ) );
+            ::hla::Serializer ser;
+            request.transactionID.Serialize( ser );
+            std::vector< uint8_t > buff( ser.GetSize(), 0 );
+            ser.CopyTo( buff.data() );
+            ::hla::VariableLengthData tag( buff.data(), ser.GetSize() );
             if( transferType == interactions::TMR::Acquire )
-                ownershipController_.PerformDivestiture( agentId, attributes );
+                ownershipController_.PerformDivestiture( agentId, attributes, tag );
             else if( transferType == interactions::TMR::Divest )
-                ownershipController_.PerformAcquisition( agentId, attributes );
+                ownershipController_.PerformAcquisition( agentId, attributes, tag );
         }
     }
 }
@@ -178,8 +201,37 @@ void Netn2TransferSender::Receive( interactions::TMR_OfferTransferModellingRespo
     if( offer.requestFederate.str() == federateName_ &&
         ( it=callbacks_.find( offer.transactionID.transactionCounter ) ) != callbacks_.end() )
     {
-        (it->second.second)( offer.isOffering );
+        (it->second)( offer.isOffering );
         callbacks_.erase( offer.transactionID.transactionCounter );
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: Netn2TransferSender::RequestTransfer
+// Created: AHC 2013-07-03
+// -----------------------------------------------------------------------------
+void Netn2TransferSender::RequestTransfer( const std::vector< std::string >& agentIDs, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes, ::hla::VariableLengthData& tag, uint32_t capability )
+{
+    interactions::TMR_RequestTransferModellingResponsibility transfer;
+    transfer.requestFederate = UnicodeString( federateName_ );
+    const unsigned int reqId = CreateTransactionID( tag, transfer.transactionID, federateHandle_, ctxtFactory_ );
+    for( auto it = agentIDs.begin(); agentIDs.end() != it ; ++it )
+    {
+        const std::string& agentID = *it;
+        std::vector< char > uniqueId( GetUniqueId( agentID, agentResolver_, callsignResolver_ ) );
+        if( uniqueId.empty() )
+        {
+            logger_.LogError( "Trying to transfer unknown entity " + agentID );
+            return;
+        }
+        transfer.instances.list.push_back( NETN_UUID( uniqueId ) );
+    }
+    for( auto it=attributes.begin(); attributes.end()!=it; ++it )
+        transfer.attributes.list.push_back( UnicodeString( it->ToString() ) );
+
+    transfer.capabilityType = capability;
+    transfer.transferType = static_cast< uint32_t >( type == E_EntityPush ?  interactions::TMR::Divest
+                                                 : interactions::TMR::Acquire );
+    pRequestSender_->Send( transfer );
+    callbacks_.insert( std::make_pair( reqId, callback ) );
+}

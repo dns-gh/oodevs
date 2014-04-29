@@ -140,7 +140,6 @@ private:
     T_Equipments equipments_;
     Omt13StringArray entities_;    
     Omt13StringArray subAggregates_;
-    IsPartOfStruct isPartOf_;
     unsigned short numberOfSilentEntities_;
     rpr::ForceIdentifier force_;
     rpr::EntityType type_;

@@ -365,3 +365,43 @@ bool InteractionBuilder::Build( ::hla::Interaction< interactions::WeaponFire >& 
     REGISTER( "WarheadType"       , &interactions::WeaponFire::warheadType );
     return DoRegister( name, interaction, true, true );
 }
+
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_DisaggregationRequest >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}
+
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_DisaggregationResponse >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}
+
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_AggregationRequest >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}
+
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_AggregationResponse >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}
+
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_CancelRequest >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}
+
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_ActionComplete >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}
+
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_Trigger >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}
+
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_TriggerResponse >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}

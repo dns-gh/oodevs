@@ -150,7 +150,7 @@ void TacticalObjectUpdater::LocalDestroyed( const std::string& /*identifier*/ )
 // Name: TacticalObjectUpdater::Divested
 // Created: AHC 2010-03-02
 // -----------------------------------------------------------------------------
-void TacticalObjectUpdater::Divested( const std::string& /*identifier*/ )
+void TacticalObjectUpdater::Divested( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }
@@ -159,7 +159,7 @@ void TacticalObjectUpdater::Divested( const std::string& /*identifier*/ )
 // Name: TacticalObjectUpdater::Acquired
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void TacticalObjectUpdater::Acquired( const std::string& /*identifier*/ )
+void TacticalObjectUpdater::Acquired( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }

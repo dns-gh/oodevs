@@ -193,7 +193,7 @@ void RemoteAgentResolver::LocalDestroyed( const std::string& /*identifier*/ )
 // Name: RemoteAgentResolver::Divested
 // Created: AHC 2010-03-02
 // -----------------------------------------------------------------------------
-void RemoteAgentResolver::Divested( const std::string& /*identifier*/ )
+void RemoteAgentResolver::Divested( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }
@@ -202,7 +202,7 @@ void RemoteAgentResolver::Divested( const std::string& /*identifier*/ )
 // Name: RemoteAgentResolver::Acquired
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void RemoteAgentResolver::Acquired( const std::string& /*identifier*/ )
+void RemoteAgentResolver::Acquired( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }

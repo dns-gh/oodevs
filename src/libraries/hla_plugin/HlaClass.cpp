@@ -161,7 +161,7 @@ void HlaClass::Reflected( HlaObject_ABC& /*object*/ )
 // Name: HlaClass::RequestConfirmDivestiture
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-bool HlaClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+bool HlaClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes )
 {
     T_IdentifierSet::iterator it = divesting_.find( objectID.ToLong() );
     const std::string& objectName( object.GetIdentifier() );
@@ -174,7 +174,7 @@ bool HlaClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectI
         remoteEntities_[ objectName ] = locIt->second;
         localEntities_.erase( locIt );
         divesting_.erase( it );
-        pListeners_->Divested( objectName );
+        pListeners_->Divested( objectName, attributes );
     }
     return retval;
 }
@@ -183,7 +183,7 @@ bool HlaClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectI
 // Name: HlaClass::OwnershipAcquisitionNotification
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-void HlaClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& /*attributes*/, const ::hla::VariableLengthData& /*tag*/ )
+void HlaClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& /*tag*/ )
 {
     T_IdentifierSet::iterator it = acquiring_.find( objectID.ToLong() );
     assert( acquiring_.end() != it );
@@ -194,14 +194,14 @@ void HlaClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& 
     localEntities_[ objectName ] = remIt->second;
     remoteEntities_.erase( remIt );
     acquiring_.erase( it );
-    pListeners_->Acquired( objectName );
+    pListeners_->Acquired( objectName, attributes );
 }
 
 // -----------------------------------------------------------------------------
 // Name: HlaClass::RequestOwnershipAssumption
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-bool HlaClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& /*attributes*/, const ::hla::VariableLengthData& /*tag*/ )
+bool HlaClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& /*attributes*/, const ::hla::VariableLengthData& /*tag*/ )
 {
     T_IdentifierSet::iterator it = acquiring_.find( objectID.ToLong() );
     if( acquiring_.end() != it )
@@ -214,7 +214,7 @@ bool HlaClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& object
 // Name: HlaClass::Divest
 // Created: AHC 2012-03-01
 // -----------------------------------------------------------------------------
-void HlaClass::Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes )
+void HlaClass::Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag )
 {
     T_Entities::iterator it = localEntities_.find( objectID );
     if( localEntities_.end() == it )
@@ -225,7 +225,6 @@ void HlaClass::Divest(const std::string& objectID, const T_AttributeIdentifiers&
     if( ownershipStrategy_.PerformAttributeOwnershipNegotiation() )
     {
         divesting_.insert( hlaIdentifiers_[objectID] );
-        ::hla::VariableLengthData tag; // FIXME
 
         federate_.DivestRequest( hlaIdentifiers_[objectID], attributes.size() != 0 ? attributes : attributes_, tag );
     }
@@ -234,7 +233,7 @@ void HlaClass::Divest(const std::string& objectID, const T_AttributeIdentifiers&
         federate_.UnconditionalDivest( hlaIdentifiers_[objectID], attributes.size() != 0 ? attributes : attributes_ );
         remoteEntities_[ objectID ] = it->second;
         localEntities_.erase( it );
-        pListeners_->Divested( objectID );
+        pListeners_->Divested( objectID, attributes );
     }
 }
 
@@ -242,7 +241,7 @@ void HlaClass::Divest(const std::string& objectID, const T_AttributeIdentifiers&
 // Name: HlaClass::Acquire
 // Created: AHC 2012-03-02
 // -----------------------------------------------------------------------------
-void HlaClass::Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes )
+void HlaClass::Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag )
 {
     T_Entities::iterator it = remoteEntities_.find( objectID );
     if( remoteEntities_.end() == it )
@@ -256,7 +255,6 @@ void HlaClass::Acquire(const std::string& objectID, const T_AttributeIdentifiers
     else
     {
         acquiring_.insert( hlaIdentifiers_[objectID] );
-        ::hla::VariableLengthData tag; // FIXME
         federate_.UnconditionalAcquisition( hlaIdentifiers_[objectID], attributes, tag );
     }
 }
@@ -265,7 +263,7 @@ void HlaClass::Acquire(const std::string& objectID, const T_AttributeIdentifiers
 // Name: HlaClass::RequestOwnershipRelease
 // Created: AHC 2012-10-26
 // -----------------------------------------------------------------------------
-void HlaClass::RequestOwnershipRelease( const ::hla::ObjectIdentifier&, const HlaObject_ABC&, const ::hla::T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
+void HlaClass::RequestOwnershipRelease( const ::hla::ObjectIdentifier&, const HlaObject_ABC&, const T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
 {
     // NOTHING
 }
@@ -274,7 +272,7 @@ void HlaClass::RequestOwnershipRelease( const ::hla::ObjectIdentifier&, const Hl
 // Name: HlaClass::GetAttributes
 // Created: AHC 2012-10-29
 // -----------------------------------------------------------------------------
-const HlaClass_ABC::T_AttributeIdentifiers& HlaClass::GetAttributes() const
+const T_AttributeIdentifiers& HlaClass::GetAttributes() const
 {
     return attributes_;
 }

@@ -16,6 +16,7 @@
 #include "OwnershipController_ABC.h"
 #include "TransferSender_ABC.h"
 #include "protocol/Protocol.h"
+#include <hla/VariableLengthData.h>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 
@@ -97,6 +98,7 @@ private:
     State state_;
     const bool localObject_;
     double latitude_, longitude_;
+    ::hla::VariableLengthData tag_;
 };
 
 // -----------------------------------------------------------------------------
@@ -140,7 +142,7 @@ void LocationOwnershipPolicy::OwnershipState::DoCheck()
         case S_Local:
             state_ = S_DivestSent;
             transferSender_.RequestTransfer( agentID_, boost::bind( &LocationOwnershipPolicy::OwnershipState::TransferCallback, this, _1 ),
-                    TransferSender_ABC::E_EntityPush, hlaClass_.GetAttributes() );
+                    TransferSender_ABC::E_EntityPush, hlaClass_.GetAttributes(), tag_ );
             break;
         case S_AcquisitionPending:
         case S_AcquisitionSent:
@@ -161,7 +163,7 @@ void LocationOwnershipPolicy::OwnershipState::DoCheck()
             case S_Remote:
                     state_ = S_AcquisitionSent;
                     transferSender_.RequestTransfer( agentID_, boost::bind( &LocationOwnershipPolicy::OwnershipState::TransferCallback, this, _1 ),
-                            TransferSender_ABC::E_EntityPull, hlaClass_.GetAttributes() );
+                            TransferSender_ABC::E_EntityPull, hlaClass_.GetAttributes(), tag_ );
                 break;
             case S_DivestPending:
             case S_DivestSent:
@@ -207,7 +209,7 @@ void LocationOwnershipPolicy::OwnershipState::TransferCallback( bool accept )
         if( accept )
         {
             state_ = S_DivestPending;
-            ownershipController_.PerformDivestiture( agentID_, hlaClass_.GetAttributes() );
+            ownershipController_.PerformDivestiture( agentID_, hlaClass_.GetAttributes(), tag_ );
         }
         else
         {
@@ -218,7 +220,7 @@ void LocationOwnershipPolicy::OwnershipState::TransferCallback( bool accept )
         if( accept )
         {
             state_ = S_AcquisitionPending;
-            ownershipController_.PerformAcquisition( agentID_, hlaClass_.GetAttributes() );
+            ownershipController_.PerformAcquisition( agentID_, hlaClass_.GetAttributes(), tag_ );
         }
         else
             state_ = S_AcquisitionRefused;
@@ -471,7 +473,7 @@ void LocationOwnershipPolicy::LocalDestroyed( const std::string& identifier )
 // Name: LocationOwnershipPolicy::Divested
 // Created: AHC 2012-03-12
 // -----------------------------------------------------------------------------
-void LocationOwnershipPolicy::Divested( const std::string& identifier )
+void LocationOwnershipPolicy::Divested( const std::string& identifier, const T_AttributeIdentifiers& /*attributes*/ )
 {
     T_OwnershipStates::iterator it = states_.find( identifier );
     if( states_.end() == it )
@@ -483,7 +485,7 @@ void LocationOwnershipPolicy::Divested( const std::string& identifier )
 // Name: LocationOwnershipPolicy::Acquired
 // Created: AHC 2012-03-12
 // -----------------------------------------------------------------------------
-void LocationOwnershipPolicy::Acquired( const std::string& identifier )
+void LocationOwnershipPolicy::Acquired( const std::string& identifier, const T_AttributeIdentifiers& /*attributes*/ )
 {
     T_OwnershipStates::iterator it = states_.find( identifier );
     if( states_.end() == it )

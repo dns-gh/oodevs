@@ -47,6 +47,8 @@
 #include "FOM_Serializer.h"
 #include "SideResolver.h"
 #include "SimulationTimeManager.h"
+#include "ExternalOwnershipPolicy.h"
+#include "MRMController.h"
 #include "tools/FileWrapper.h"
 #include "tools/MessageController.h"
 #include "tools/XmlStreamOperators.h"
@@ -170,7 +172,7 @@ namespace
             }
             catch( const ::hla::HLAException& e )
             {
-                logger.LogError( "Unable to create RPR transfer sender with error: " + tools::GetExceptionMsg( e ) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );
+                logger.LogError( "Unable to create NETN transfer sender with error: " + tools::GetExceptionMsg( e ) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );
             }
         }
 
@@ -293,6 +295,10 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             transferSender_.reset( CreateTransferSender( *pXis_, federateID, pXis_->attribute< std::string >( "name", "SWORD" ), pFederate_->GetFederateHandle(),
                     *pContextFactory_, *pInteractionBuilder_, *pOwnershipStrategy_, *pOwnershipController_, logger_, *pLocalAgentResolver_, *pCallsignResolver_ ) );
             pOwnershipPolicy_.reset( new LocationOwnershipPolicy( *pMessengerMessageController_, *pOwnershipController_, *pFederate_, *transferSender_, ReadDivestitureZone( *pXisConfiguration_ ) ) );
+            pExternalOwnershipPolicy_.reset( new ExternalOwnershipPolicy( pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_, *pOwnershipController_,
+                    logger_, *pFederate_, *pLocalAgentResolver_, *pCallsignResolver_, *transferSender_ ));
+            pMrmController.reset( new MRMController( pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_,  *pFederate_, logger_,
+                    *pLocalAgentResolver_, *pCallsignResolver_ ) );
             // must be last action
             pSubject_->Visit( dynamicModel_ );
             pTacticalObjectSubject_->Visit( dynamicModel_ );

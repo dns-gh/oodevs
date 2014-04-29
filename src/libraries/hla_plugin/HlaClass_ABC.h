@@ -15,10 +15,18 @@
 
 #include <hla/AttributeIdentifier.h>
 
+namespace hla
+{
+    class VariableLengthData;
+}
+
 namespace plugins
 {
 namespace hla
 {
+
+typedef std::vector< ::hla::AttributeIdentifier > T_AttributeIdentifiers;
+
 // =============================================================================
 /** @class  HlaClass_ABC
     @brief  HlaClass_ABC
@@ -28,11 +36,6 @@ namespace hla
 class HlaClass_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< ::hla::AttributeIdentifier > T_AttributeIdentifiers;
-    //@}
-
     //! @name Constructors/Destructor
     //@{
     virtual ~HlaClass_ABC() {}
@@ -41,8 +44,8 @@ public:
     //! @name Operations
     //@{
     virtual const T_AttributeIdentifiers& GetAttributes() const = 0;
-    virtual void Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes ) = 0;
-    virtual void Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes ) = 0;
+    virtual void Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag ) = 0;
+    virtual void Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag ) = 0;
     //@}
 };
 
