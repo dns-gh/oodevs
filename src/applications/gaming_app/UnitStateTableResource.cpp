@@ -82,8 +82,8 @@ namespace
 
     std::pair< unsigned int, double > GetCapacityAndConsumption( const std::string& name, const kernel::AgentType& type, const kernel::Entity_ABC& entity )
     {
-        tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator = type.CreateResourcesIterator();
-        tools::Iterator< const Equipment& > equipmentsIterator = static_cast< const Equipments& >( entity.Get< kernel::Equipments_ABC >() ).CreateIterator();
+        auto agentResourceIterator = type.CreateResourcesIterator();
+        auto equipmentsIterator = static_cast< const Equipments& >( entity.Get< kernel::Equipments_ABC >() ).CreateIterator();
         unsigned int capacity = 0;
         double consumption = 0;
         ComputeCapacityAndConsumption( name, capacity, consumption, agentResourceIterator );

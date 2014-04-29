@@ -85,8 +85,7 @@ void ParamEquipmentType::SetEntity( const kernel::Entity_ABC* entity )
     Clear();
     if( entity == 0 || comboBox_ == 0 )
         return;
-    tools::Iterator< const kernel::EquipmentType& > it = resolver_.CreateIterator();
-    while( it.HasMoreElements() )
+    for( auto it = resolver_.CreateIterator(); it.HasMoreElements(); )
     {
         const kernel::EquipmentType& type = it.NextElement();
         if( !parameter_.OwnedEquipmentsOnly() || entity->Get< kernel::Equipments_ABC >().HasEquipment( type ) )
