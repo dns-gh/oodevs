@@ -413,7 +413,6 @@ bool DEC_OrdersFunctions::DEC_Mission_IsPath( boost::shared_ptr< MIL_Mission_ABC
         return false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::IsAutomateMissionAvailable
 // Created: LMT 2011-12-15
@@ -424,4 +423,13 @@ bool DEC_OrdersFunctions::IsAutomateMissionAvailable( DEC_Decision_ABC* agent, s
     if( agent && pMissionType )
         return agent->GetAutomate().GetOrderManager().IsMissionAvailable( *pMissionType );
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetFuseau
+// Created: NLD 2007-04-11
+// -----------------------------------------------------------------------------
+const MIL_Fuseau& DEC_OrdersFunctions::GetFuseau( const DEC_Decision_ABC& caller )
+{
+    return caller.GetOrderManager().GetFuseau();
 }

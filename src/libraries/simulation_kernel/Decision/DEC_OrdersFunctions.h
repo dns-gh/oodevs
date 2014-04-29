@@ -40,7 +40,7 @@ public:
     template< typename T > static unsigned int GetLima                   ( const T& caller, unsigned int limaId );
     template< typename T > static std::vector< unsigned int > GetLimasFromType ( const T& caller, unsigned int limaId );
     template< typename T > static MIL_LimaOrder* GetNextScheduledLima    ( const T& caller );
-    template< typename T > static const MIL_Fuseau& GetFuseau            ( const T& caller );
+                           static const MIL_Fuseau& GetFuseau            ( const DEC_Decision_ABC& caller );
     template< typename T > static bool GetMissionLimaFlag                ( const T& caller, unsigned int limaId );
                            static void PionSetMissionLimaFlag            ( MIL_AgentPion& caller, unsigned int limaId, bool flag );
                            static void PionSetMissionLimaScheduleFlag    ( MIL_AgentPion& caller, unsigned int limaId, bool flag  );
@@ -136,16 +136,6 @@ template< typename T >
 MIL_LimaOrder* DEC_OrdersFunctions::GetNextScheduledLima( const T& caller )
 {
     return caller.GetOrderManager().FindNextScheduledLima();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_OrdersFunctions::GetFuseau
-// Created: NLD 2007-04-11
-// -----------------------------------------------------------------------------
-template< typename T >
-static const MIL_Fuseau& DEC_OrdersFunctions::GetFuseau( const T& caller )
-{
-    return caller.GetOrderManager().GetFuseau();
 }
 
 // -----------------------------------------------------------------------------
