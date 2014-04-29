@@ -19,6 +19,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"swapi"
 	"sword"
@@ -92,18 +93,20 @@ func postRawPacket(ctx *TcpContext, dst chan<- *Packet, data []byte) {
 }
 
 type TcpContext struct {
-	errors chan error
-	client chan *Packet
-	server chan *Packet
-	done   uint32
-	quit   chan struct{}
+	errors   chan error
+	client   chan *Packet
+	server   chan *Packet
+	done     uint32
+	profiles map[string]struct{}
+	quit     chan struct{}
 }
 
 func NewTcpContext() *TcpContext {
 	return &TcpContext{
-		errors: make(chan error),
-		client: make(chan *Packet),
-		quit:   make(chan struct{}),
+		errors:   make(chan error),
+		client:   make(chan *Packet),
+		profiles: map[string]struct{}{},
+		quit:     make(chan struct{}),
 	}
 }
 
@@ -204,8 +207,39 @@ func (t *TcpProxy) clientToAuthentication(ctx *TcpContext, msg *sword.ClientToAu
 	return nil
 }
 
-type Session struct {
-	Port int `json:",string"`
+type JsonRestrictedUser struct {
+	Name     string
+	Profiles []string
+}
+
+type JsonRestricted struct {
+	Enabled string
+	List    map[string]JsonRestrictedUser
+}
+
+type JsonSession struct {
+	Port        int `json:",string"`
+	CurrentUser int `json:"current_user,string"`
+	Restricted  JsonRestricted
+}
+
+func (c *TcpContext) readFilters(s *JsonSession) error {
+	ok, err := strconv.ParseBool(s.Restricted.Enabled)
+	if err != nil {
+		return err
+	}
+	if !ok {
+		return nil
+	}
+	user := strconv.FormatInt(int64(s.CurrentUser), 10)
+	filter, ok := s.Restricted.List[user]
+	if !ok {
+		return nil
+	}
+	for _, v := range filter.Profiles {
+		c.profiles[v] = struct{}{}
+	}
+	return nil
 }
 
 func (t *TcpProxy) fixAuthentication(ctx *TcpContext, context int32, auth *sword.AuthenticationRequest) error {
@@ -216,6 +250,7 @@ func (t *TcpProxy) fixAuthentication(ctx *TcpContext, context int32, auth *sword
 	values := url.Values{}
 	values.Add("sid", parts[0])
 	values.Add("id", parts[1])
+	values.Add("current_user", "true")
 	url := url.URL{}
 	url.Scheme = t.scheme
 	url.Host = fmt.Sprintf("localhost:%d", t.http)
@@ -230,8 +265,12 @@ func (t *TcpProxy) fixAuthentication(ctx *TcpContext, context int32, auth *sword
 	if err != nil {
 		return err
 	}
-	session := Session{}
+	session := JsonSession{}
 	err = json.Unmarshal(body, &session)
+	if err != nil {
+		return err
+	}
+	err = ctx.readFilters(&session)
 	if err != nil {
 		return err
 	}
@@ -376,14 +415,48 @@ func (t *TcpProxy) openServer(ctx *TcpContext, port int) error {
 	return nil
 }
 
+func (t *TcpProxy) filterAuthentication(ctx *TcpContext, msg *swapi.SwordMessage) {
+	m := msg.AuthenticationToClient
+	if m == nil {
+		return
+	}
+	profiles := m.GetMessage().GetAuthenticationResponse().GetProfiles().GetElem()
+	if profiles == nil {
+		return
+	}
+	filtered := []*sword.ProfileDescription{}
+	for _, p := range profiles {
+		if _, ok := ctx.profiles[p.GetLogin()]; ok {
+			filtered = append(filtered, p)
+		}
+	}
+	m.Message.AuthenticationResponse.Profiles.Elem = filtered
+}
+
 func (t *TcpProxy) handleServer(ctx *TcpContext, link net.Conn) {
 	log.Println("+ server", link.RemoteAddr())
 	defer log.Println("- server", link.RemoteAddr())
 	defer link.Close()
-	go t.readPackets(ctx, link, func(tag uint32, data []byte) bool {
+	filter := len(ctx.profiles) > 0
+	filterPayload := func(tag uint32, data []byte) bool {
+		if filter && tag == swapi.AuthenticationToClientTag {
+			return false
+		}
 		postPacket(ctx, ctx.client, tag, data)
 		return true
-	}, nil)
+	}
+	readMessage := func(msg *swapi.SwordMessage) error {
+		t.filterAuthentication(ctx, msg)
+		buffer := bytes.Buffer{}
+		writer := swapi.NewWriter(&buffer)
+		_, err := writer.EncodeMessage(msg)
+		if err != nil {
+			return err
+		}
+		postRawPacket(ctx, ctx.client, buffer.Bytes())
+		return nil
+	}
+	go t.readPackets(ctx, link, filterPayload, readMessage)
 	t.writePackets(ctx, link, ctx.server)
 }
 

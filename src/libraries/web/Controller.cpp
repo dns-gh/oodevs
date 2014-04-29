@@ -646,7 +646,10 @@ void Controller::CountSessions( Reply_ABC& rpy, const Request_ABC& request )
 void Controller::GetSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const auto user = AuthenticateUser( request, USER_TYPE_PLAYER, "node" );
-    WriteHttpReply( rpy, agent_.GetSession( user, GetId( request ) ) );
+    auto data = agent_.GetSession( user, GetId( request ) );
+    if( request.GetParameter( "current_user" ) )
+        data.put( "current_user", user.id );
+    WriteHttpReply( rpy, data );
 }
 
 // -----------------------------------------------------------------------------
