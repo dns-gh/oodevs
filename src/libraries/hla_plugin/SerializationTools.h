@@ -126,7 +126,7 @@ namespace hla
             if( size == 0 )
                 return;
             readPadding( archive, 4 );
-            for( std::size_t i = 0; i < size; ++i)
+            for( int32_t i = 0; i < size; ++i)
             {
                 T tmp;
                 std::size_t st = archive.GetSize();
