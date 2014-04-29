@@ -41,34 +41,31 @@ namespace
     {
         try
         {
-        unsigned long simId = callsignResolver.ResolveSimulationIdentifier( uniqueID );
-        return agentResolver.Resolve( simId );
+            unsigned long simId = callsignResolver.ResolveSimulationIdentifier( uniqueID );
+            return agentResolver.Resolve( simId );
         }
         catch( const std::exception& )
         {
             // NOTHING
         }
-        return std::string("");
+        return "";
     }
     template< typename C >
     bool GetAgents( const std::vector< NETN_UUID >& instances, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver,
             C& agents, dispatcher::Logger_ABC& logger )
     {
-        bool retval = true;
-        for( auto it = instances.begin(); it!=instances.end(); ++it )
+        for( auto it = instances.begin(); it != instances.end(); ++it )
         {
             const NETN_UUID& uniqueId = *it;
-            std::string agentId( GetAgentId( uniqueId.data(), agentResolver, callsignResolver ) );
-            if( agentId.size() == 0 )
+            const std::string agentId( GetAgentId( uniqueId.data(), agentResolver, callsignResolver ) );
+            if( agentId.empty() )
             {
                 logger.LogError( std::string( "Trying to transfer unknown entity " ) + uniqueId.str() );
-                retval = false;
-                break;
+                return false;
             }
-            else
-                agents.insert( agents.end(), agentId );
+            agents.insert( agents.end(), agentId );
         }
-        return retval;
+        return true;
     }
 }
 
@@ -110,6 +107,7 @@ struct ExternalOwnershipPolicy::PendingRequest : boost::noncopyable
             policy_.TransferCompleted( false, transactionID_, requestFederate_, responseFederate_);
         }
     }
+
     void Divested( const std::string& identifier )
     {
         if( transfer_ == TransferSender_ABC::E_EntityPush )
@@ -122,6 +120,7 @@ struct ExternalOwnershipPolicy::PendingRequest : boost::noncopyable
             }
         }
     }
+
     void Acquired( const std::string& identifier )
     {
         if( transfer_ == TransferSender_ABC::E_EntityPull )
@@ -134,7 +133,9 @@ struct ExternalOwnershipPolicy::PendingRequest : boost::noncopyable
             }
         }
     }
+
     bool Completed() const { return completed_; }
+
 private:
     ExternalOwnershipPolicy& policy_;
     OwnershipController_ABC& ownershipController_;
@@ -148,6 +149,7 @@ private:
     bool completed_;
     ::hla::VariableLengthData tag_;
 };
+
 ExternalOwnershipPolicy::ExternalOwnershipPolicy(const std::string& federateName, const InteractionBuilder& builder,
         OwnershipController_ABC& controller, dispatcher::Logger_ABC& logger, RemoteAgentSubject_ABC& subject,
         const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver, TransferSender_ABC& transferSender)
@@ -183,7 +185,7 @@ void ExternalOwnershipPolicy::Receive( interactions::TMR_InitiateTransferModelli
     reply.transactionID = interaction.transactionID;
     reply.respondent = UnicodeString( federateName_ );
     const interactions::TMR::TransferTypeEnum32 type = static_cast< interactions::TMR::TransferTypeEnum32 >( interaction.transferType );
-    if( interaction.instances.list.size() == 0 )
+    if( interaction.instances.list.empty() )
     {
         logger_.LogWarning("External ownership request with no instances ");
         reply.isOffering = false;
@@ -319,11 +321,7 @@ void ExternalOwnershipPolicy::CleanupRequests()
     while( it != requests_.end() )
     {
         if( it->second->Completed() )
-        {
-            T_Requests::iterator toDel = it;
-            ++it;
-            requests_.erase( toDel );
-        }
+            it = requests_.erase( it );
         else
             ++it;
     }

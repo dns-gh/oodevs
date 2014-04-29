@@ -104,4 +104,5 @@ private:
 
 } // namespace hla
 } // namespace plugins
+
 #endif // plugins_hla_MRMController_h

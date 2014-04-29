@@ -81,7 +81,7 @@ void RprTransferSender::RequestTransfer(const std::string& agentID, const Transf
                                                  : static_cast<uint8_t>( interactions::TransferControl::E_EntityPull );
     pTransferSender_->Send( transfer );
     callbacks_.insert( std::make_pair( reqId, T_RequestInfo( agentID, callback ) ) );
-    tag=::hla::VariableLengthData(reqId);
+    tag = ::hla::VariableLengthData(reqId);
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ void RprTransferSender::Receive( interactions::TransferControl& interaction )
                         interactions::Acknowledge::E_UnableToComply );
         pAcknowledgeSender_->Send( reply );
         std::vector< ::hla::AttributeIdentifier > attributes;
-        ::hla::VariableLengthData tag( interaction.requestIdentifier );
+        const ::hla::VariableLengthData tag( interaction.requestIdentifier );
         if( resp && transferType == interactions::TransferControl::E_EntityPull )
             ownershipController_.PerformDivestiture( interaction.transferEntity.str(), attributes, tag );
         else if( resp && transferType == interactions::TransferControl::E_EntityPush )
@@ -137,6 +137,6 @@ void RprTransferSender::Receive( interactions::Acknowledge& interaction )
 // -----------------------------------------------------------------------------
 void RprTransferSender::RequestTransfer( const std::vector< std::string >& , const TransferRequestCallback& , TransferType , const std::vector< ::hla::AttributeIdentifier >&, ::hla::VariableLengthData& tag, uint32_t )
 {
-    tag=::hla::VariableLengthData( ctxtFactory_.Create() );
-    logger_.LogWarning("Attempting to perform multiple ownership transfers using RPR.");
+    tag = ::hla::VariableLengthData( ctxtFactory_.Create() );
+    logger_.LogWarning( "Attempting to perform multiple ownership transfers using RPR." );
 }

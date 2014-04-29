@@ -94,7 +94,6 @@ private:
     typedef boost::shared_ptr< PendingRequest > T_PendingRequestPtr;
     typedef std::map< uint32_t, T_PendingRequestPtr > T_Requests;
     //@}
-
     friend struct PendingRequest;
 
 private:

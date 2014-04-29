@@ -85,9 +85,6 @@ namespace
             transactionId.federateHandle=::hla::FederateIdentifier(std::string("federateHandle"));
             transactionId.transactionCounter = 42;
         }
-        ~StrategyFixture()
-        {
-        }
         void FillTMR( std::list< std::vector<uint8_t> >& bufVect,::hla::Interaction_ABC::T_Parameters& params, uint32_t counter,
             const std::string& requestFederate)
         {

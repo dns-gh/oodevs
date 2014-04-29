@@ -110,7 +110,7 @@ void Netn2TransferSender::RequestTransfer(const std::string& agentID, const Tran
     transfer.requestFederate = UnicodeString( federateName_ );
     const unsigned int reqId = CreateTransactionID( tag, transfer.transactionID, federateHandle_, ctxtFactory_ );
     std::vector< char > uniqueId( GetUniqueId( agentID, agentResolver_, callsignResolver_ ) );
-    if( uniqueId.size() == 0 )
+    if( uniqueId.empty() )
     {
         logger_.LogError( std::string( "Trying to transfer unknown entity " ) + agentID );
         return;
@@ -142,7 +142,7 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
     reply.requestFederate = request.requestFederate;
     reply.responseFederate = UnicodeString( federateName_ );
 
-    if( request.instances.list.size() == 0 )
+    if( request.instances.list.empty() )
     {
         reply.isOffering = false;
         reply.reason = static_cast< uint32_t >( interactions::TMR::CapabilityDoesNotMatch );
@@ -157,7 +157,7 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
     {
         const NETN_UUID& uniqueId = *it;
         std::string agentId( GetAgentId( uniqueId.data(), agentResolver_, callsignResolver_ ) );
-        if( agentId.size() == 0 )
+        if( agentId.empty() )
         {
             logger_.LogError( std::string( "Trying to transfer unknown entity " ) + uniqueId.str() );
             resp = false;
@@ -225,21 +225,19 @@ void Netn2TransferSender::RequestTransfer( const std::vector< std::string >& age
     {
         const std::string& agentID = *it;
         std::vector< char > uniqueId( GetUniqueId( agentID, agentResolver_, callsignResolver_ ) );
-        if( uniqueId.size() == 0 )
+        if( uniqueId.empty() )
         {
-            logger_.LogError( std::string( "Trying to transfer unknown entity " ) + agentID );
+            logger_.LogError( "Trying to transfer unknown entity " + agentID );
             return;
         }
         transfer.instances.list.push_back( NETN_UUID( uniqueId ) );
     }
     for( auto it=attributes.begin(); attributes.end()!=it; ++it )
-    {
-        const ::hla::AttributeIdentifier& attr = *it;
-        transfer.attributes.list.push_back( UnicodeString( attr.ToString() ) );
-    }
+        transfer.attributes.list.push_back( UnicodeString( it->ToString() ) );
+
     transfer.capabilityType = capability;
-    transfer.transferType = type == E_EntityPush ? static_cast< uint32_t >( interactions::TMR::Divest )
-                                                 : static_cast< uint32_t >( interactions::TMR::Acquire );
+    transfer.transferType = static_cast< uint32_t >( type == E_EntityPush ?  interactions::TMR::Divest
+                                                 : interactions::TMR::Acquire );
     pRequestSender_->Send( transfer );
     callbacks_.insert( std::make_pair( reqId, callback ) );
 }

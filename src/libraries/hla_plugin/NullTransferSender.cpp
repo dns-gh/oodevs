@@ -55,7 +55,7 @@ NullTransferSender::~NullTransferSender()
 // -----------------------------------------------------------------------------
 void NullTransferSender::RequestTransfer(const std::string& /*agentID*/, const TransferRequestCallback& callback, TransferType /*type*/, const std::vector< ::hla::AttributeIdentifier >& /*attributes*/, ::hla::VariableLengthData& tag, uint32_t )
 {
-    tag=::hla::VariableLengthData( ctxtFactory_.Create() );
+    tag = ::hla::VariableLengthData( ctxtFactory_.Create() );
     callback( true );
     return;
 }
@@ -84,7 +84,7 @@ void NullTransferSender::Receive( interactions::TransferControl& interaction )
                         interactions::Acknowledge::E_UnableToComply );
         pAcknowledgeSender_->Send( reply );
         std::vector< ::hla::AttributeIdentifier > attributes;
-        ::hla::VariableLengthData tag( interaction.requestIdentifier );
+        const ::hla::VariableLengthData tag( interaction.requestIdentifier );
         if( resp && transferType == interactions::TransferControl::E_EntityPull )
             ownershipController_.PerformDivestiture( interaction.transferEntity.str(), attributes, tag );
         else if( resp && transferType == interactions::TransferControl::E_EntityPush )
@@ -107,7 +107,6 @@ void NullTransferSender::Receive( interactions::Acknowledge& /*interaction*/ )
 // -----------------------------------------------------------------------------
 void NullTransferSender::RequestTransfer( const std::vector< std::string >& , const TransferRequestCallback& callback, TransferType , const std::vector< ::hla::AttributeIdentifier >&, ::hla::VariableLengthData& tag, uint32_t )
 {
-    tag=::hla::VariableLengthData( ctxtFactory_.Create() );
+    tag = ::hla::VariableLengthData( ctxtFactory_.Create() );
     callback( true );
-    return;
 }

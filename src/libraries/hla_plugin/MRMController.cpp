@@ -43,9 +43,9 @@ MRMController::Info::Info()
     // NOTHING
 }
 
-MRMController::Info::Info( const std::string& e, bool a )
-    : entity( e )
-    , aggregate( a )
+MRMController::Info::Info( const std::string& entity_val, bool is_aggregate )
+    : entity( entity_val )
+    , aggregate( is_aggregate )
 {
     // NOTHING
 }
@@ -83,7 +83,7 @@ void MRMController::Receive( interactions::MRM_DisaggregationRequest& interactio
     reply.higherResolutionFederate = interaction.higherResolutionFederate;
     reply.transactionID = interaction.transactionID;
 
-    std::string agentID = GetAgentId( interaction.aggregateUUID, agentResolver_, callsignResolver_);
+    const std::string agentID = GetAgentId( interaction.aggregateUUID, agentResolver_, callsignResolver_);
     if( agentID.empty() )
     {
         logger_.LogError( std::string( "MRM Trying to transfer unknown entity " ) + interaction.aggregateUUID.str() );

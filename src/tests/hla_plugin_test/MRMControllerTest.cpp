@@ -131,7 +131,7 @@ namespace
             FillParameter( bufVect, params, "TransactionID", transactionId );
             FillParameter( bufVect, params, "AggregateFederate", UnicodeString( fed ) );
             FillParameter( bufVect, params, "HigherResolutionFederate", UnicodeString( "high_res" ) );
-            FillParameter( bufVect, params, "CompletionResult", result ? (uint32_t)1 : (uint32_t)0 );
+            FillParameter< uint32_t >( bufVect, params, "CompletionResult", result ? 1 : 0 );
             actionComplete->Create( params );
             actionComplete->Flush();
         }

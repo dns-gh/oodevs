@@ -127,7 +127,7 @@ struct TransactionId
     {
         return transactionCounter < rhs.transactionCounter ||
                 ( rhs.transactionCounter == rhs.transactionCounter &&
-                  static_cast<std::string>(federateHandle) < static_cast<std::string>(rhs.federateHandle) );
+                  std::string(federateHandle) < std::string(rhs.federateHandle) );
     }
     uint32_t transactionCounter;
     ::hla::FederateIdentifier federateHandle;
