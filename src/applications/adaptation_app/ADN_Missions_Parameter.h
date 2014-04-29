@@ -67,6 +67,7 @@ public:
     ADN_Type_LocalizedString                                          description_;
     E_MissionType                                                     missionType_;
     ADN_Type_Bool                                                     indirectFire_;
+    ADN_Type_Bool                                                     ownedEquipments_;
 };
 
 #endif // ADAPTATIONS_ADN_MISSIONS_PARAMETER_H

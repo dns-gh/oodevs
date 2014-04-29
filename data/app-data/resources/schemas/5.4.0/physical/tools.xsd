@@ -127,6 +127,7 @@
 			<xs:enumeration value="UrbanKnowledge"/>
 			<xs:enumeration value="PlannedWork"/>
 			<xs:enumeration value="ResourceType"/>
+			<xs:enumeration value="EquipmentType"/>
 			<xs:enumeration value="NatureAtlas"/>
 			<xs:enumeration value="MaintenancePriorities"/>
 			<xs:enumeration value="MedicalPriorities"/>

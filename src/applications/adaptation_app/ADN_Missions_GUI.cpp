@@ -187,10 +187,13 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pKnowledgeObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
     }
 
-    ADN_MissionParameter_GroupBox* pFilter = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Filter" ), eMissionParameterTypeDotationType );
-    QWidget* pFilterHolder = builder.AddFieldHolder( pFilter );
-    builder.AddField< ADN_CheckBox >( pFilterHolder, "dotation-filter", tr( "Indirect fire ammunition only" ), vInfosConnectors[ eDotations ] );
-    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pFilter, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+    ADN_MissionParameter_GroupBox* pDotationFilter = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Filter" ), eMissionParameterTypeDotationType );
+    builder.AddField< ADN_CheckBox >( builder.AddFieldHolder( pDotationFilter ), "dotation-filter", tr( "Indirect fire ammunition only" ), vInfosConnectors[ eDotations ] );
+    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pDotationFilter, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+
+    ADN_MissionParameter_GroupBox* pEquipmentFilter = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Filter" ), eMissionParameterTypeEquipmentType );
+    builder.AddField< ADN_CheckBox >( builder.AddFieldHolder( pEquipmentFilter ), "equipment-filter", tr( "Owned equipments only" ), vInfosConnectors[ eEquipments ] );
+    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pEquipmentFilter, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     builder.PopSubName(); //! parameters
     builder.PopSubName(); //! definition-tab
@@ -291,7 +294,8 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     parameterLayout->addWidget( pChoice );
     parameterLayout->addWidget( pGenObject );
     parameterLayout->addWidget( pKnowledgeObject );
-    parameterLayout->addWidget( pFilter );
+    parameterLayout->addWidget( pDotationFilter );
+    parameterLayout->addWidget( pEquipmentFilter );
 
     // Definition tab layout
     QWidget* pDefinition = new QWidget();
