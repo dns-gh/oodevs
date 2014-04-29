@@ -9,6 +9,8 @@
 
 #include "hla_plugin_pch.h"
 #include "UniqueId.h"
+#include "LocalAgentResolver_ABC.h"
+#include "CallsignResolver_ABC.h"
 
 using namespace plugins::hla;
 
@@ -29,4 +31,18 @@ UniqueIdSerializer::UniqueIdSerializer( int netnVersion )
 UniqueIdSerializer::~UniqueIdSerializer()
 {
     // NOTHING
+}
+
+std::string UniqueIdSerializer::GetAgentId( const NETN_UUID& uniqueID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
+{
+    try
+    {
+        unsigned long simId = callsignResolver.ResolveSimulationIdentifier( uniqueID.data() );
+        return agentResolver.Resolve( simId );
+    }
+    catch( const std::exception& )
+    {
+        // NOTHING
+    }
+    return std::string("");
 }

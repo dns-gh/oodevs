@@ -36,19 +36,7 @@ namespace
         unsigned long simId = agentResolver.Resolve( agentID );
         return callsignResolver.ResolveUniqueId( simId );
     }
-    std::string GetAgentId( const std::vector< char >& uniqueID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
-    {
-        try
-        {
-            unsigned long simId = callsignResolver.ResolveSimulationIdentifier( uniqueID );
-            return agentResolver.Resolve( simId );
-        }
-        catch( const std::exception& )
-        {
-            // NOTHING
-        }
-        return "";
-    }
+
     template< typename C >
     bool GetAgents( const std::vector< NETN_UUID >& instances, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver,
             C& agents, dispatcher::Logger_ABC& logger )
@@ -56,7 +44,7 @@ namespace
         for( auto it = instances.begin(); it != instances.end(); ++it )
         {
             const NETN_UUID& uniqueId = *it;
-            const std::string agentId( GetAgentId( uniqueId.data(), agentResolver, callsignResolver ) );
+            const std::string agentId( UniqueIdSerializer::GetAgentId( uniqueId, agentResolver, callsignResolver ) );
             if( agentId.empty() )
             {
                 logger.LogError( std::string( "Trying to transfer unknown entity " ) + uniqueId.str() );

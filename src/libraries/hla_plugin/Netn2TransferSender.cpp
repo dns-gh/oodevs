@@ -34,11 +34,6 @@ namespace
         unsigned long simId = agentResolver.Resolve( agentID );
         return callsignResolver.ResolveUniqueId( simId );
     }
-    std::string GetAgentId( const std::vector< char >& uniqueID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
-    {
-        unsigned long simId = callsignResolver.ResolveSimulationIdentifier( uniqueID );
-        return agentResolver.Resolve( simId );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +150,7 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
     for( auto it = request.instances.list.begin(); it!=request.instances.list.end(); ++it )
     {
         const NETN_UUID& uniqueId = *it;
-        std::string agentId( GetAgentId( uniqueId.data(), agentResolver_, callsignResolver_ ) );
+        std::string agentId( UniqueIdSerializer::GetAgentId( uniqueId, agentResolver_, callsignResolver_ ) );
         if( agentId.empty() )
         {
             logger_.LogError( std::string( "Trying to transfer unknown entity " ) + uniqueId.str() );
@@ -182,7 +177,7 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
         for( auto it = request.instances.list.begin(); it!=request.instances.list.end(); ++it )
         {
             const NETN_UUID& uniqueId = *it;
-            std::string agentId( GetAgentId( uniqueId.data(), agentResolver_, callsignResolver_ ) );
+            std::string agentId( UniqueIdSerializer::GetAgentId( uniqueId, agentResolver_, callsignResolver_ ) );
             ::hla::Serializer ser;
             request.transactionID.Serialize( ser );
             std::vector< uint8_t > buff( ser.GetSize(), 0 );

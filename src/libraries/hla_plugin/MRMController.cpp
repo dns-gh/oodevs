@@ -21,23 +21,6 @@
 
 using namespace plugins::hla;
 
-namespace
-{
-    std::string GetAgentId( const NETN_UUID& uniqueID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
-    {
-        try
-        {
-            unsigned long simId = callsignResolver.ResolveSimulationIdentifier( uniqueID.data() );
-            return agentResolver.Resolve( simId );
-        }
-        catch( const std::exception& )
-        {
-            // NOTHING
-        }
-        return std::string("");
-    }
-}
-
 MRMController::Info::Info()
 {
     // NOTHING
@@ -83,7 +66,7 @@ void MRMController::Receive( interactions::MRM_DisaggregationRequest& interactio
     reply.higherResolutionFederate = interaction.higherResolutionFederate;
     reply.transactionID = interaction.transactionID;
 
-    const std::string agentID = GetAgentId( interaction.aggregateUUID, agentResolver_, callsignResolver_);
+    const std::string agentID = UniqueIdSerializer::GetAgentId( interaction.aggregateUUID, agentResolver_, callsignResolver_);
     if( agentID.empty() )
     {
         logger_.LogError( std::string( "MRM Trying to transfer unknown entity " ) + interaction.aggregateUUID.str() );
@@ -184,7 +167,7 @@ void MRMController::Receive( interactions::MRM_AggregationRequest& interaction )
     reply.higherResolutionFederate = interaction.higherResolutionFederate;
     reply.transactionID = interaction.transactionID;
 
-    std::string agentID = GetAgentId( interaction.aggregateUUID, agentResolver_, callsignResolver_);
+    std::string agentID = UniqueIdSerializer::GetAgentId( interaction.aggregateUUID, agentResolver_, callsignResolver_);
     if( agentID.empty() )
     {
         logger_.LogError( std::string( "MRM Trying to transfer unknown entity " ) + interaction.aggregateUUID.str() );

@@ -20,6 +20,9 @@ namespace plugins
 namespace hla
 {
 
+class LocalAgentResolver_ABC;
+class CallsignResolver_ABC;
+
 // =============================================================================
 /** @class  UniqueId
     @brief  Unique id
@@ -97,6 +100,9 @@ typedef UniqueIdBase< 16 > NETN_UUID;
 // =============================================================================
 struct UniqueIdSerializer
 {
+public:
+    static std::string GetAgentId( const NETN_UUID& uniqueID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver );
+
 public:
     UniqueIdSerializer( int netnVersion );
     ~UniqueIdSerializer();
