@@ -47,7 +47,6 @@ private:
     DEC_PathFind_Manager& manager_;
     boost::weak_ptr< DEC_Path_ABC > path_;
     const bool ignoreDynamicObjects_;
-    MT_Profiler profiler_;
     //@}
 };
 
