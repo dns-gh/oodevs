@@ -22,7 +22,6 @@
 #include <hla/Serializer.h>
 #include <hla/Deserializer.h>
 
-#include <boost/scoped_array.hpp>
 #include <cassert>
 #include <algorithm>
 
@@ -186,9 +185,9 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
             std::string agentId( GetAgentId( uniqueId.data(), agentResolver_, callsignResolver_ ) );
             ::hla::Serializer ser;
             request.transactionID.Serialize( ser );
-            boost::scoped_array< uint8_t > buff( new uint8_t[ ser.GetSize() ] );
-            ser.CopyTo( buff.get() );
-            ::hla::VariableLengthData tag( buff.get(), ser.GetSize() );
+            std::vector< uint8_t > buff( ser.GetSize(), 0 );
+            ser.CopyTo( buff.data() );
+            ::hla::VariableLengthData tag( buff.data(), ser.GetSize() );
             if( transferType == interactions::TMR::Acquire )
                 ownershipController_.PerformDivestiture( agentId, attributes, tag );
             else if( transferType == interactions::TMR::Divest )

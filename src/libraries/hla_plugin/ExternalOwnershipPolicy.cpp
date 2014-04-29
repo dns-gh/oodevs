@@ -25,7 +25,6 @@
 #include <hla/Serializer.h>
 #include <boost/noncopyable.hpp>
 #include <boost/bind.hpp>
-#include <boost/scoped_array.hpp>
 #include <algorithm>
 
 using namespace plugins::hla;
@@ -252,9 +251,9 @@ void ExternalOwnershipPolicy::Receive( interactions::TMR_InitiateTransferModelli
     {
         ::hla::Serializer ser;
         interaction.transactionID.Serialize( ser );
-        boost::scoped_array< uint8_t > buff( new uint8_t[ ser.GetSize() ] );
-        ser.CopyTo( buff.get() );
-        ::hla::VariableLengthData tag( buff.get(), ser.GetSize() );
+        std::vector< uint8_t > buff( ser.GetSize(), 0 );
+        ser.CopyTo( buff.data() );
+        ::hla::VariableLengthData tag( buff.data(), ser.GetSize() );
 
         std::vector< std::string > candidates;
         GetAgents( interaction.instances.list, agentResolver_, callsignResolver_, candidates, logger_);
