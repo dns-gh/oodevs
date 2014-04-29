@@ -392,6 +392,7 @@ void RegisterFuseauFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_Fuseau_Width", &DEC_GeometryFunctions::GetWidth );
     brain.RegisterFunction( "DEC_Fuseau_IsNull", &DEC_GeometryFunctions::IsNull );
     brain.RegisterFunction( "DEC_Fuseau_ComputeMiddlePointsInAOR", &DEC_GeometryFunctions::ComputeMiddlePointsInAOR );
+    brain.RegisterFunction( "DEC_GetFuseau", &DEC_OrdersFunctions::GetFuseau );
 }
 
 // -----------------------------------------------------------------------------
@@ -772,11 +773,11 @@ void RegisterCommonUserFunctions( sword::Brain& brain, bool isMasalife )
     RegisterLogisticFunctions( brain );
     RegisterEngineerObjectsFunctions( brain );
     RegisterObjectsFunctions( brain );
+    RegisterObjectFunctions( brain );
     RegisterObjectivesFunctions( brain );
     RegisterSpecificPointsFunctions( brain );
     RegisterTypeFunctions( brain );
     RegisterMissionParametersFunctions( brain, isMasalife );
-    RegisterObjectFunctions( brain );
     RegisterReportFunctions( brain );
     RegisterTelepathyFunctions( brain );
     RegisterItineraryFunctions( brain );

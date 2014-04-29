@@ -451,6 +451,13 @@ integration.getAORFromPlatoon = function()
     return DEC_Fuseau()
 end
 
+--- Returns the area of responsibility of entity
+-- @param entity Simulation agent or automat
+-- @return simulation area of responsibility, the element AOR
+integration.getAOR = function( entity )
+    return DEC_GetFuseau( entity )
+end
+
 --- Returns true if the given AOR is not set
 -- @param AOR Simulation area of responsibility
 -- @return true if the given area of responsibility is null, false otherwise
