@@ -44,8 +44,6 @@ public:
     virtual void CleanAfterComputation() = 0;
     virtual bool IsPathForUnit( MIL_Agent_ABC* pion ) const = 0;
     virtual double GetLength() const = 0;
-    void AddRef();
-    void DecRef();
     virtual void Destroy() = 0;
     //@}
 
@@ -70,7 +68,6 @@ protected:
 
 private:
     const unsigned int nID_;
-    unsigned int nNbrRefs_;              // nb of references on path
 
 private:
     static unsigned int nIDIdx_;

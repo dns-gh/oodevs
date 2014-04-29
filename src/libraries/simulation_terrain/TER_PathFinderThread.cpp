@@ -204,11 +204,10 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
     try
     {
         ProcessDynamicData();
-        if( pRequest.get() )
+        if( pRequest )
         {
             PathfinderProxy proxy( dump_, filter_, *pPathfinder_ );
             pRequest->FindPath( proxy );
-            pRequest->CleanAfterComputation();
         }
     }
     catch( const std::exception& e )

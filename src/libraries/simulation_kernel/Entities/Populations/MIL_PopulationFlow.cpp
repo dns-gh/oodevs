@@ -217,14 +217,11 @@ void MIL_PopulationFlow::ComputePathAlong( const std::vector< boost::shared_ptr<
     if( pTailPath_ )
     {
         pTailPath_->Cancel();
-        pTailPath_->DecRef();
         pTailPath_.reset();
     }
     pHeadPath_.reset( new DEC_Population_Path( GetPopulation(), CreatePositions( GetHeadPosition(), headDestination ) ) );
-    pHeadPath_->AddRef();
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pHeadPath_ );
     pTailPath_.reset( new DEC_Population_Path( GetPopulation(), CreatePositions( GetTailPosition(), tailDestination ) ) );
-    pTailPath_->AddRef();
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pTailPath_ );
 }
 
@@ -252,7 +249,6 @@ void MIL_PopulationFlow::MoveToAlternateDestination( const MT_Vector2D& destinat
         alternateDestination_ = destination;
         ComputePath( alternateDestination_ );
         pTailPath_->Cancel();
-        pTailPath_->DecRef();
         pTailPath_.reset();
     }
 }
@@ -1366,7 +1362,6 @@ void MIL_PopulationFlow::CancelMove()
     if( pHeadPath_ )
     {
         pHeadPath_->Cancel();
-        pHeadPath_->DecRef();
         pHeadPath_.reset();
     }
 }

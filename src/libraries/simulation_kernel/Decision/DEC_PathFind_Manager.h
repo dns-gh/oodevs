@@ -49,7 +49,6 @@ public:
     double Update();
     void UpdateInSimulationThread();
     void StartCompute( const boost::shared_ptr< DEC_Path_ABC >& pPath );
-    void CancelJob( DEC_Path_ABC* pPath );
     void CancelJobForUnit( MIL_Agent_ABC* pion );
     void CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC >& pPath, double duration );
     //@}
@@ -66,11 +65,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< TER_PathFinderThread* >        T_PathFindThreadPtrVector;
-    typedef T_PathFindThreadPtrVector::iterator        IT_PathFindThreadPtrVector;
-    typedef T_PathFindThreadPtrVector::const_iterator CIT_PathFindThreadPtrVector;
+    typedef std::vector< TER_PathFinderThread* > T_PathFindThreads;
     typedef std::deque< std::pair< boost::shared_ptr< DEC_Path_ABC >, double > > T_Cleanups;
-
     typedef std::deque< boost::shared_ptr< DEC_PathFindRequest > > T_Requests;
     //@}
 
@@ -95,7 +91,7 @@ private:
     unsigned int nMaxComputationDuration_;
     unsigned int nMaxEndConnections_;
     unsigned int treatedRequests_;
-    T_PathFindThreadPtrVector pathFindThreads_;
+    T_PathFindThreads pathFindThreads_;
     boost::mutex cleanAndDestroyMutex_;
     T_Cleanups toCleanup_;
     bool bUseInSameThread_;

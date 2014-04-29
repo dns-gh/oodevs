@@ -10,10 +10,10 @@
 #ifndef DEC_PATHFINDREQUEST_H
 #define DEC_PATHFINDREQUEST_H
 
-#include "MT_Tools/MT_Profiler.h"
 #include "simulation_terrain/TER_PathFindRequest_ABC.h"
-#include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 class DEC_Path_ABC;
 class DEC_PathFind_Manager;
@@ -30,24 +30,21 @@ class DEC_PathFindRequest: public TER_PathFindRequest_ABC,
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC > p );
+             DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC >& p );
     virtual ~DEC_PathFindRequest();
     //@}
 
     //! @name Operations
     //@{
     virtual void FindPath( TER_Pathfinder_ABC& pathfind );
-    virtual void CleanAfterComputation();
-    const boost::shared_ptr< DEC_Path_ABC >& GetPath() const;
-    bool IsPathForUnit( MIL_Agent_ABC* pion ) const;
+    boost::shared_ptr< DEC_Path_ABC > GetPathForUnit( MIL_Agent_ABC* pion ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     DEC_PathFind_Manager* const manager_;
-    const boost::shared_ptr< DEC_Path_ABC > path_;
-    MT_Profiler profiler_;
+    boost::weak_ptr< DEC_Path_ABC > path_;
     //@}
 };
 

@@ -26,7 +26,6 @@ PathRequest::PathRequest( const boost::shared_ptr< DEC_PathResult >& path, const
     , clientId_( clientId )
     , stored_( stored )
 {
-    path_->AddRef();
     auto& msg = (*ack_)();
     msg.mutable_unit()->set_id( request.unit().id() );
     if( stored_ )
@@ -63,7 +62,6 @@ bool PathRequest::Update()
         msg.set_error_code( sword::ComputePathfindAck::no_error );
         path_->Serialize( *msg.mutable_path() );
     }
-    path_->DecRef();
     ack_->Send( NET_Publisher_ABC::Publisher(), nCtx_, clientId_ );
     ack_.reset();
     return !stored_;

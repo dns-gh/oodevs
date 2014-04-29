@@ -11,9 +11,10 @@
 #include "DEC_PathFindRequest.h"
 #include "DEC_PathFind_Manager.h"
 #include "DEC_Path_ABC.h"
+#include "MT_Tools/MT_Profiler.h"
 #include "simulation_terrain/TER_PathFinder_ABC.h"
 
-DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC > p )
+DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC >& p )
     : manager_( m )
     , path_( p )
 {
@@ -27,25 +28,19 @@ DEC_PathFindRequest::~DEC_PathFindRequest()
 
 void DEC_PathFindRequest::FindPath( TER_Pathfinder_ABC& pathfind )
 {
-    profiler_.Start();
-    path_->Execute( pathfind );
+    auto path = path_.lock(); // thread-safe
+    if( !path )
+        return;
+    MT_Profiler profiler;
+    profiler.Start();
+    path->Execute( pathfind );
+    manager_->CleanPathAfterComputation( path, profiler.Stop() );
 }
 
-void DEC_PathFindRequest::CleanAfterComputation()
+boost::shared_ptr< DEC_Path_ABC > DEC_PathFindRequest::GetPathForUnit( MIL_Agent_ABC* pion ) const
 {
-    manager_->CleanPathAfterComputation( path_, profiler_.Stop() );
-}
-
-const boost::shared_ptr< DEC_Path_ABC >& DEC_PathFindRequest::GetPath() const
-{
-    return path_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathFindRequest::IsPathForUnit
-// Created: JSR 2013-03-11
-// -----------------------------------------------------------------------------
-bool DEC_PathFindRequest::IsPathForUnit( MIL_Agent_ABC* pion ) const
-{
-    return path_.get() && path_->IsPathForUnit( pion );
+    auto path = path_.lock(); // thread-safe
+    if( path && path->IsPathForUnit( pion ) )
+        return path;
+    return 0;
 }

@@ -35,7 +35,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config, double maxAvoida
                                             const std::vector< unsigned int >& dangerousObjects )
     : nMaxComputationDuration_( std::numeric_limits< unsigned int >::max() )
     , nMaxEndConnections_     ( 8 )
-    , rDistanceThreshold_     ( 0. )
+    , rDistanceThreshold_     ( 0 )
     , treatedRequests_        ( 0 )
     , pathfindTime_           ( 0 )
 {
@@ -101,60 +101,37 @@ void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_Path_ABC >
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::CancelJob
-// Created: LDC 2012-05-15
-// -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::CancelJob( DEC_Path_ABC* pPath )
-{
-    boost::mutex::scoped_lock locker( mutex_ );
-    T_Requests& requests = ( pPath->GetLength() > rDistanceThreshold_ ) ? longRequests_ : shortRequests_;
-    for( T_Requests::iterator it = requests.begin(); it != requests.end(); ++it )
-    {
-        if( (*it)->GetPath().get() == pPath )
-        {
-            requests.erase( it );
-            break;
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager::CancelJobForUnit
 // Created: JSR 2013-03-11
 // -----------------------------------------------------------------------------
 void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* pion )
 {
     std::vector< boost::shared_ptr< DEC_Path_ABC > > paths;
+    const auto f =
+        [&]( const boost::shared_ptr< DEC_PathFindRequest >& request ) -> bool
+        {
+            const auto path = request->GetPathForUnit( pion );
+            if( !path )
+                return false;
+            paths.push_back( path );
+            path->Destroy();
+            return true;
+        };
     {
         boost::mutex::scoped_lock locker( mutex_ );
-        for( auto it = longRequests_.begin(); it != longRequests_.end(); )
-            if( ( *it )->IsPathForUnit( pion ) )
-            {
-                paths.push_back( ( *it )->GetPath() );
-                ( *it )->GetPath()->Destroy();
-                it = longRequests_.erase( it );
-            }
-            else
-                ++it;
-        for( auto it = shortRequests_.begin(); it != shortRequests_.end(); )
-            if( ( *it )->IsPathForUnit( pion ) )
-            {
-                paths.push_back(  ( *it )->GetPath() );
-                ( *it )->GetPath()->Destroy();
-                it = shortRequests_.erase( it );
-            }
-            else
-                ++it;
+        boost::remove_erase_if( longRequests_, f );
+        boost::remove_erase_if( shortRequests_, f );
     }
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     for( auto it = paths.begin(); it != paths.end(); ++it )
-        boost::remove_erase_if( toCleanup_, [&]( const T_Cleanups::value_type& v ) -> bool
-        {
-            if( v.first != *it )
-                return false;
-            pathfindTime_ += v.second;
-            return true;
-        } );
+        boost::remove_erase_if( toCleanup_,
+            [&]( const T_Cleanups::value_type& v ) -> bool
+            {
+                if( v.first != *it )
+                    return false;
+                pathfindTime_ += v.second;
+                return true;
+            } );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,6 +160,7 @@ unsigned int DEC_PathFind_Manager::GetNbrLongRequests() const
 // -----------------------------------------------------------------------------
 unsigned int DEC_PathFind_Manager::GetNbrTreatedRequests() const
 {
+    boost::mutex::scoped_lock locker( mutex_ );
     return treatedRequests_;
 }
 
@@ -216,32 +194,6 @@ boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage()
 
 namespace
 {
-    template< typename T >
-    struct IsNotEmpty_
-    {
-        IsNotEmpty_( const T& cont ) : cont_( cont ) {};
-        bool operator()() { return ! cont_.empty(); };
-    private:
-        const T& cont_;
-        IsNotEmpty_& operator=( const IsNotEmpty_& );
-    };
-    template< typename T >
-    IsNotEmpty_< T > IsNotEmpty( const T& cont ) { return IsNotEmpty_< T >( cont ); };
-
-    template< typename T >
-    struct AreNotEmpty_
-    {
-        AreNotEmpty_( const T& cont, const T& cont2 ) : cont_( cont ), cont2_( cont2 ) {};
-        bool operator()() { return ! cont_.empty() || ! cont2_.empty(); };
-    private:
-        const T& cont_;
-        const T& cont2_;
-        AreNotEmpty_& operator=( const AreNotEmpty_& );
-    };
-
-    template< typename T >
-    AreNotEmpty_< T > AreNotEmpty( const T& cont, const T& cont2 ) { return AreNotEmpty_< T >( cont, cont2 ); };
-
     static const unsigned maximumShortRequest = 5;
 }
 
@@ -269,13 +221,13 @@ boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage( u
     boost::mutex::scoped_lock locker( mutex_ );
     if( ( nThread % 2 ) )
     {
-        condition_.wait( locker, IsNotEmpty( shortRequests_ ) );
+        condition_.wait( locker, [&]() { return !shortRequests_.empty(); } );
         pRequest = shortRequests_.front();
         shortRequests_.pop_front();
     }
     else
     {
-        condition_.wait( locker, AreNotEmpty( shortRequests_, longRequests_ ) );
+        condition_.wait( locker, [&]() { return !shortRequests_.empty() || !longRequests_.empty(); } );
         T_Requests& requests = GetRequests();
         pRequest = requests.front();
         requests.pop_front();
@@ -290,8 +242,7 @@ boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage( u
 // -----------------------------------------------------------------------------
 int DEC_PathFind_Manager::GetCurrentThread() const
 {
-    unsigned int nIndex = 0;
-    for( ; nIndex < pathFindThreads_.size(); ++nIndex )
+    for( unsigned int nIndex = 0; nIndex < pathFindThreads_.size(); ++nIndex )
         if( pathFindThreads_[ nIndex ]->IsCurrent() )
             return nIndex;
     return -1;
@@ -301,7 +252,7 @@ int DEC_PathFind_Manager::GetCurrentThread() const
 // Name: DEC_PathFind_Manager::CleanPathAfterComputation
 // Created: NLD 2006-01-23
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC>& pPath, double duration )
+void DEC_PathFind_Manager::CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC >& pPath, double duration )
 {
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     toCleanup_.push_back( std::make_pair( pPath, duration ) );
