@@ -107,7 +107,7 @@ uint32_t PathfindComputer::Compute( boost::shared_ptr< DEC_PathResult > path, co
 {
     uint32_t id = ++ids_;
     results_[ id ] = boost::make_shared< PathRequest >( path, request, ctx, clientId, id, store );
-    pathfindManager_.StartCompute( path );
+    pathfindManager_.StartCompute( path, request.ignore_dynamic_objects() );
     return id;
 }
 

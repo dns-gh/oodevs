@@ -56,10 +56,10 @@ TER_PathFindManager::~TER_PathFindManager()
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
 TER_PathFinderThread& TER_PathFindManager::CreatePathFinderThread( tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
-                                                                   unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread,
+                                                                   unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool useSameThread,
                                                                    const tools::Path& dump, const std::string& filter )
 {
-    threads_.push_back( new TER_PathFinderThread( staticData_, queue, nMaxEndConnections, rMinEndConnectionLength, bUseSameThread, dump, filter ) );
+    threads_.push_back( new TER_PathFinderThread( staticData_, queue, nMaxEndConnections, rMinEndConnectionLength, useSameThread, dump, filter ) );
     return *threads_.back();
 }
 

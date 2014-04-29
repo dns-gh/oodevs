@@ -43,9 +43,8 @@ public:
     //@{
              TER_PathFinderThread( const TER_StaticData& staticData,
                                    tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
-                                   unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread,
-                                   const tools::Path& dump,
-                                   const std::string& filter );
+                                   unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool useSameThread,
+                                   const tools::Path& dump, const std::string& filter );
     virtual ~TER_PathFinderThread();
     //@}
 
@@ -66,16 +65,16 @@ private:
     virtual void Process           ( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest );
             void ProcessDynamicData();
     //@}
-    //
+
 private:
     //! @name Member data
     //@{
+    const bool                         useSameThread_;
     const tools::Path                  dump_; // empty if dump is disabled
     const std::set< size_t >           filter_; // empty if no id filters
-    std::auto_ptr< TerrainPathfinder > pPathfinder_;
-    bool                               bUseSameThread_;
+    std::unique_ptr< TerrainPathfinder > pathfinder_;
+    std::unique_ptr< TerrainPathfinder > staticPathfinder_;
     std::map< DynamicDataPtr, RetractationPtr > handlers_;
-
     boost::mutex                       dynamicDataMutex_;
     std::vector< DynamicDataPtr >      dynamicDataToRegister_;
     std::vector< DynamicDataPtr >      dynamicDataToUnregister_;

@@ -43,19 +43,21 @@ namespace
 // -----------------------------------------------------------------------------
 TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData,
                                             tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
-                                            unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread,
+                                            unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool useSameThread,
                                             const tools::Path& dump,
                                             const std::string& filter )
     : tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >( queue )
-    , pPathfinder_   ( 0 )
-    , bUseSameThread_( bUseSameThread )
+    , useSameThread_( useSameThread )
     , dump_          ( dump )
     , filter_        ( ParseFilter( filter ) )
+    , pathfinder_    ( new TerrainPathfinder( staticData ) )
+    , staticPathfinder_( new TerrainPathfinder( staticData ) )
 {
-    pPathfinder_.reset( new TerrainPathfinder( staticData ) );
-    pPathfinder_->SetPickingDistances( 1000.f, 10000.f ); // minpicking, maxpicking
-    pPathfinder_->SetEndConnectionSetup( nMaxEndConnections, static_cast< float >( rMinEndConnectionLength * 1.1 ) ); // applying factor of 10%
-    if( !bUseSameThread )
+    pathfinder_->SetPickingDistances( 1000.f, 10000.f ); // minpicking, maxpicking
+    pathfinder_->SetEndConnectionSetup( nMaxEndConnections, static_cast< float >( rMinEndConnectionLength * 1.1 ) ); // applying factor of 10%
+    staticPathfinder_->SetPickingDistances( 1000.f, 10000.f ); // minpicking, maxpicking
+    staticPathfinder_->SetEndConnectionSetup( nMaxEndConnections, static_cast< float >( rMinEndConnectionLength * 1.1 ) ); // applying factor of 10%
+    if( !useSameThread )
         Start();
 }
 
@@ -76,7 +78,7 @@ namespace
 geometry::Point2f MakePoint( const MT_Vector2D& v )
 {
     return geometry::Point2f( static_cast< float >( v.rX_ ), static_cast< float >( v.rY_ ) );
-};
+}
 
 RetractationPtr CreateDynamicData( TerrainPathfinder& pathfinder, const TER_DynamicData& data )
 {
@@ -113,7 +115,7 @@ void TER_PathFinderThread::ProcessDynamicData()
 
         for( auto it = toRegister.begin(); it != toRegister.end(); ++it )
         {
-            RetractationPtr h = CreateDynamicData( *pPathfinder_, **it );
+            RetractationPtr h = CreateDynamicData( *pathfinder_, **it );
             handlers_[*it] = h;
         }
         MT_LOG_INFO_MSG( MT_FormatString( "Register %d dynamic data - %.2f ms",
@@ -206,7 +208,8 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
         ProcessDynamicData();
         if( pRequest )
         {
-            PathfinderProxy proxy( dump_, filter_, *pPathfinder_ );
+            PathfinderProxy proxy( dump_, filter_,
+                pRequest->IgnoreDynamicObjects() ? *staticPathfinder_ : *pathfinder_ );
             pRequest->FindPath( proxy );
         }
     }
@@ -228,7 +231,7 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
 // -----------------------------------------------------------------------------
 void TER_PathFinderThread::ProcessInSimulationThread( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest )
 {
-    if( !bUseSameThread_ )
+    if( !useSameThread_ )
         throw MASA_EXCEPTION( "Pathfind : Process in same thread than simulation not expected." );
     Process( pRequest );
 }

@@ -2062,6 +2062,7 @@ void MIL_EntityManager::OnReceivePathfindCreation( const sword::MagicAction& mes
     const auto& value = message.parameters().elem( 0 ).value( 0 );
     protocol::Check( value.has_pathfind_request(), "invalid parameters" );
     const auto& request = value.pathfind_request();
+    protocol::Check( request.ignore_dynamic_objects(), "invalid ignore dynamic objects not set" );
     const auto& positions = request.positions();
     protocol::Check( positions.size() > 1, "must have at least two points" );
     const unsigned int id = request.unit().id();
