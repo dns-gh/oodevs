@@ -100,9 +100,9 @@ private:
     //! @name Member data
     //@{
     const std::string federateName_;
-    std::auto_ptr< T_OfferSender > pOfferSender_;
-    std::auto_ptr< T_InitiateSender > pInitiateSender_;
-    std::auto_ptr< T_ResultSender > pResultSender_;
+    std::unique_ptr< T_OfferSender > pOfferSender_;
+    std::unique_ptr< T_InitiateSender > pInitiateSender_;
+    std::unique_ptr< T_ResultSender > pResultSender_;
     OwnershipController_ABC& ownershipController_;
     dispatcher::Logger_ABC& logger_;
     RemoteAgentSubject_ABC& subject_;

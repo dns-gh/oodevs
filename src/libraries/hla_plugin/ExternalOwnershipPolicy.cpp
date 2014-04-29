@@ -199,6 +199,7 @@ void ExternalOwnershipPolicy::Receive( interactions::TMR_InitiateTransferModelli
             reply.reason = static_cast< uint32_t >( interactions::TMR::Reason_Other );
             break;
         case interactions::TMR::Acquire:
+        case interactions::TMR::AcquireWithoutNegotiating:
             {
                 std::set< std::string > candidates;
                 const bool resp = GetAgents( interaction.instances.list, agentResolver_, callsignResolver_, candidates, logger_);
@@ -226,18 +227,6 @@ void ExternalOwnershipPolicy::Receive( interactions::TMR_InitiateTransferModelli
                     logger_.LogWarning("External ownership divest with invalid units");
                     reply.reason = static_cast< uint32_t >( interactions::TMR::Reason_Other );
                 }
-            }
-            break;
-        case interactions::TMR::AcquireWithoutNegotiating:
-            {
-                std::set< std::string > candidates;
-                const bool resp = GetAgents( interaction.instances.list, agentResolver_, callsignResolver_, candidates, logger_);
-                if( resp )
-                    reply.isOffering = std::includes( remoteObjects_.begin(), remoteObjects_.end(), candidates.begin(), candidates.end() );
-                else
-                    reply.isOffering = false;
-                if( !reply.isOffering )
-                    reply.reason = static_cast< uint32_t >( interactions::TMR::Reason_Other );
             }
             break;
         default:

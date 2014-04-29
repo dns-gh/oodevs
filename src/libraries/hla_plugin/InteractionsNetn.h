@@ -236,6 +236,12 @@ struct MRM_Object
         noncompliancereasonenum_UnitAlreadyAggregated = 3,
         noncompliancereasonenum_UnitNotOwned = 4
     };
+    enum ResponseFlagEnum16
+    {
+        responseflagenum16_Other = 0,
+        responseflagenum16_AbleToComply = 1,
+        responseflagenum16_UnableToComply = 2
+    };
     TransactionId transactionID;
     UnicodeString aggregateFederate;
     UnicodeString higherResolutionFederate;

@@ -87,7 +87,7 @@ void MRMController::Receive( interactions::MRM_DisaggregationRequest& interactio
     if( agentID.empty() )
     {
         logger_.LogError( std::string( "MRM Trying to transfer unknown entity " ) + interaction.aggregateUUID.str() );
-        reply.acknowledge = 2 ; // unable to comply
+        reply.acknowledge = uint16_t( interactions::MRM_Object::responseflagenum16_UnableToComply ) ;
         reply.nonComplianceReason = interactions::MRM_Object::noncompliancereasonenum_UnitUnknown;
         disaggregationResponseSender_->Send( reply );
         return;
@@ -95,7 +95,7 @@ void MRMController::Receive( interactions::MRM_DisaggregationRequest& interactio
     if( localObjects_.find( agentID ) == localObjects_.end() )
     {
         logger_.LogError( std::string( "MRM Trying to transfer not owned entity " ) + interaction.aggregateUUID.str() );
-        reply.acknowledge = 2 ; // unable to comply
+        reply.acknowledge = uint16_t( interactions::MRM_Object::responseflagenum16_UnableToComply ) ;
         reply.nonComplianceReason = interactions::MRM_Object::noncompliancereasonenum_UnitNotOwned;
         disaggregationResponseSender_->Send( reply );
         return;
@@ -103,12 +103,12 @@ void MRMController::Receive( interactions::MRM_DisaggregationRequest& interactio
     if( disaggregatedObjects_.find( agentID ) != disaggregatedObjects_.end() )
     {
         logger_.LogError( std::string( "MRM Trying to transfer already disaggregated entity " ) + interaction.aggregateUUID.str() );
-        reply.acknowledge = 2 ; // unable to comply
+        reply.acknowledge = uint16_t( interactions::MRM_Object::responseflagenum16_UnableToComply ) ;
         reply.nonComplianceReason = interactions::MRM_Object::noncompliancereasonenum_UnitAlreadyDisaggregated;
         disaggregationResponseSender_->Send( reply );
         return;
     }
-    reply.acknowledge = 1; // able to comply
+    reply.acknowledge = uint16_t( interactions::MRM_Object::responseflagenum16_AbleToComply );
     reply.nonComplianceReason = 0;
     disaggregationResponseSender_->Send( reply );
     pendingRequests_[ interaction.transactionID ] = Info( agentID, false );
@@ -135,10 +135,9 @@ void MRMController::Receive( interactions::MRM_ActionComplete& interaction )
     pendingRequests_.erase( interaction.transactionID );
 }
 
-void MRMController::Receive( interactions::MRM_DisaggregationResponse& interaction )
+void MRMController::Receive( interactions::MRM_DisaggregationResponse& )
 {
-    if( interaction.aggregateFederate.str() != federateName_ )
-        return;
+    // NOTHING
 }
 
 void MRMController::RemoteCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& /*object*/ )
@@ -189,7 +188,7 @@ void MRMController::Receive( interactions::MRM_AggregationRequest& interaction )
     if( agentID.empty() )
     {
         logger_.LogError( std::string( "MRM Trying to transfer unknown entity " ) + interaction.aggregateUUID.str() );
-        reply.acknowledge = 2 ; // unable to comply
+        reply.acknowledge = uint16_t( interactions::MRM_Object::responseflagenum16_UnableToComply ) ;
         reply.nonComplianceReason = interactions::MRM_Object::noncompliancereasonenum_UnitUnknown;
         aggregationResponseSender_->Send( reply );
         return;
@@ -197,7 +196,7 @@ void MRMController::Receive( interactions::MRM_AggregationRequest& interaction )
     if( remoteObjects_.find( agentID ) == remoteObjects_.end() )
     {
         logger_.LogError( std::string( "MRM Trying to transfer owned entity " ) + interaction.aggregateUUID.str() );
-        reply.acknowledge = 2 ; // unable to comply
+        reply.acknowledge = uint16_t( interactions::MRM_Object::responseflagenum16_UnableToComply ) ;
         reply.nonComplianceReason = interactions::MRM_Object::noncompliancereasonenum_UnitNotOwned;
         aggregationResponseSender_->Send( reply );
         return;
@@ -205,19 +204,18 @@ void MRMController::Receive( interactions::MRM_AggregationRequest& interaction )
     if( disaggregatedObjects_.find( agentID ) == disaggregatedObjects_.end() )
     {
         logger_.LogError( std::string( "MRM Trying to transfer not disaggregated entity " ) + interaction.aggregateUUID.str() );
-        reply.acknowledge = 2 ; // unable to comply
+        reply.acknowledge = uint16_t( interactions::MRM_Object::responseflagenum16_UnableToComply ) ;
         reply.nonComplianceReason = interactions::MRM_Object::noncompliancereasonenum_UnitAlreadyAggregated;
         aggregationResponseSender_->Send( reply );
         return;
     }
-    reply.acknowledge = 1; // able to comply
+    reply.acknowledge = uint16_t( interactions::MRM_Object::responseflagenum16_AbleToComply ) ;
     reply.nonComplianceReason = 0;
     aggregationResponseSender_->Send( reply );
     pendingRequests_[ interaction.transactionID ] = Info( agentID, true );
 }
 
-void MRMController::Receive( interactions::MRM_AggregationResponse& interaction )
+void MRMController::Receive( interactions::MRM_AggregationResponse& )
 {
-    if( interaction.aggregateFederate.str() != federateName_ )
-        return;
+    // NOTHING
 }
