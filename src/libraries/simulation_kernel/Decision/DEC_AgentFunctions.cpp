@@ -1806,7 +1806,7 @@ void DEC_AgentFunctions::StopImmunizeAgent( MIL_Agent_ABC& callerAgent )
 double DEC_AgentFunctions::GetMaxSpeed( const DEC_Decision_ABC& agent )
 {
     const moving::PHY_RoleAction_InterfaceMoving& roleMoving = agent.GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >();
-    return MIL_Tools::ConvertSecondsToSim( roleMoving.GetMaxSpeed() );
+    return MIL_Tools::ConvertSecondsToSim( roleMoving.GetTheoricMaxSpeed() );
 }
 
 // -----------------------------------------------------------------------------
