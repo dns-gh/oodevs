@@ -78,8 +78,8 @@ private:
     virtual void RemoteDestroyed( const std::string& identifier );
     virtual void LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
     virtual void LocalDestroyed( const std::string& identifier );
-    virtual void Divested( const std::string& identifier, const ::hla::T_AttributeIdentifiers& attributes );
-    virtual void Acquired( const std::string& identifier, const ::hla::T_AttributeIdentifiers& attributes );
+    virtual void Divested( const std::string& identifier, const T_AttributeIdentifiers& attributes );
+    virtual void Acquired( const std::string& identifier, const T_AttributeIdentifiers& attributes );
     void TransferCompleted( bool isOk, const interactions::TransactionId& id, const UnicodeString& requestFederate, const UnicodeString& responseFederate );
     void CleanupRequests();
     //@}

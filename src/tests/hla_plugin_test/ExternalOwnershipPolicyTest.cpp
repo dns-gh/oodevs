@@ -315,7 +315,7 @@ BOOST_FIXTURE_TEST_CASE( external_ownership_policy_divest_positive_answer, Entit
     callback( true );
 
     CheckResult( true, transactionId );
-    classListener->Divested( localIdentifier, ::hla::T_AttributeIdentifiers() );
+    classListener->Divested( localIdentifier, T_AttributeIdentifiers() );
 }
 
 BOOST_FIXTURE_TEST_CASE( external_ownership_policy_acquire_negative_answer, EntitiesFixture )
@@ -336,5 +336,5 @@ BOOST_FIXTURE_TEST_CASE( external_ownership_policy_acquire_positive_answer, Enti
     callback( true );
 
     CheckResult( true, transactionId );
-    classListener->Acquired( remoteIdentifier, ::hla::T_AttributeIdentifiers() );
+    classListener->Acquired( remoteIdentifier, T_AttributeIdentifiers() );
 }

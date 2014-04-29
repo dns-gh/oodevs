@@ -26,7 +26,7 @@ using namespace plugins::hla;
 
 namespace
 {
-    bool HasSpatialAttributes( const ::hla::T_AttributeIdentifiers& attributes )
+    bool HasSpatialAttributes( const T_AttributeIdentifiers& attributes )
     {
         static const ::hla::AttributeIdentifier spatial("Spatial");
         return std::find( attributes.begin(), attributes.end(), spatial ) != attributes.end();
@@ -262,7 +262,7 @@ void UnitTeleporter::LocalDestroyed( const std::string& /*identifier*/ )
 // Name: UnitTeleporter::Divested
 // Created: AHC 2010-03-02
 // -----------------------------------------------------------------------------
-void UnitTeleporter::Divested( const std::string& identifier, const ::hla::T_AttributeIdentifiers& attributes )
+void UnitTeleporter::Divested( const std::string& identifier, const T_AttributeIdentifiers& attributes )
 {
     T_Identifiers::const_iterator automatIt = automatIds_.find( identifier );
     if( automatIt != automatIds_.end() )
@@ -291,7 +291,7 @@ void UnitTeleporter::Divested( const std::string& identifier, const ::hla::T_Att
 // Name: UnitTeleporter::Acquired
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void UnitTeleporter::Acquired( const std::string& identifier, const ::hla::T_AttributeIdentifiers& attributes )
+void UnitTeleporter::Acquired( const std::string& identifier, const T_AttributeIdentifiers& attributes )
 {
     T_Objects::iterator it( objects_.find( identifier ) );
     if( objects_.end() == it)

@@ -117,7 +117,7 @@ void RemoteTacticalObjectController::LocalDestroyed( const std::string& /*identi
 // Name: RemoteTacticalObjectController::Divested
 // Created: AHC 2012-09-06
 // -----------------------------------------------------------------------------
-void RemoteTacticalObjectController::Divested( const std::string& /*identifier*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void RemoteTacticalObjectController::Divested( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }
@@ -126,7 +126,7 @@ void RemoteTacticalObjectController::Divested( const std::string& /*identifier*/
 // Name: RemoteTacticalObjectController::Acquired
 // Created: AHC 2012-09-06
 // -----------------------------------------------------------------------------
-void RemoteTacticalObjectController::Acquired( const std::string& /*identifier*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void RemoteTacticalObjectController::Acquired( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }

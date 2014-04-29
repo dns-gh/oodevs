@@ -67,8 +67,8 @@ private:
     virtual void RemoteDestroyed( const std::string& identifier );
     virtual void LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
     virtual void LocalDestroyed( const std::string& identifier );
-    virtual void Divested( const std::string& identifier, const ::hla::T_AttributeIdentifiers& attributes );
-    virtual void Acquired( const std::string& identifier, const ::hla::T_AttributeIdentifiers& attributes );
+    virtual void Divested( const std::string& identifier, const T_AttributeIdentifiers& attributes );
+    virtual void Acquired( const std::string& identifier, const T_AttributeIdentifiers& attributes );
     //@}
 
 private:

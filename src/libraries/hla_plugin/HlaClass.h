@@ -77,13 +77,13 @@ private:
     virtual HlaObject_ABC& Create( const ::hla::ObjectIdentifier& objectID, const std::string& objectName );
     virtual void Destroy( HlaObject_ABC& object );
     virtual void Reflected( HlaObject_ABC& object );
-    virtual bool RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes );
-    virtual void OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual bool RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual void RequestOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual void Divest(const std::string& objectID, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual void Acquire(const std::string& objectID, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual const ::hla::T_AttributeIdentifiers& GetAttributes() const;
+    virtual bool RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes );
+    virtual void OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual bool RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual void RequestOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual void Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual void Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual const T_AttributeIdentifiers& GetAttributes() const;
     //@}
 
 private:
@@ -110,7 +110,7 @@ private:
     T_EntitySet garbageRemotes_;
     std::auto_ptr< ClassListenerComposite > pListeners_;
     std::auto_ptr< ::hla::Class< HlaObject_ABC > > hlaClass_;
-    ::hla::T_AttributeIdentifiers attributes_;
+    T_AttributeIdentifiers attributes_;
     T_HlaIdentifiers hlaIdentifiers_;
     T_IdentifierSet divesting_;
     T_IdentifierSet acquiring_;

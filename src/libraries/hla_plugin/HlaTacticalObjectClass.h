@@ -67,9 +67,9 @@ public:
     virtual void Register( ClassListener_ABC& listener );
     virtual void Unregister( ClassListener_ABC& listener );
     void Created( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
-    virtual void Divest(const std::string& objectID, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual void Acquire(const std::string& objectID, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual const ::hla::T_AttributeIdentifiers& GetAttributes() const;
+    virtual void Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual void Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual const T_AttributeIdentifiers& GetAttributes() const;
     //@}
 
 private:
@@ -88,10 +88,10 @@ private:
     virtual void Reflected( HlaObject_ABC& object );
 
     // When returned value is true, object is assumed remote
-    virtual bool RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes );
-    virtual void OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual bool RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual void RequestOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual bool RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes );
+    virtual void OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual bool RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual void RequestOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
     //@}
 
     //! @name Member data
@@ -100,7 +100,7 @@ private:
     std::auto_ptr< HlaTacticalObjectFactory_ABC > factory_;
     std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory_;
     std::auto_ptr< ::hla::Class< HlaObject_ABC > > hlaClass_;
-    ::hla::T_AttributeIdentifiers attributes_;
+    T_AttributeIdentifiers attributes_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;
     std::auto_ptr< ClassListenerComposite > pListeners_;

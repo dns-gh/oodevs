@@ -91,7 +91,7 @@ void HlaTacticalObjectClass::Reflected( HlaObject_ABC& /*object*/ )
 // Name: HlaTacticalObjectClass::RequestConfirmDivestiture
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-bool HlaTacticalObjectClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+bool HlaTacticalObjectClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     return false;
 }
@@ -100,7 +100,7 @@ bool HlaTacticalObjectClass::RequestConfirmDivestiture( const ::hla::ObjectIdent
 // Name: HlaTacticalObjectClass::OwnershipAcquisitionNotification
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-void HlaTacticalObjectClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/, const ::hla::VariableLengthData& /*tag*/ )
+void HlaTacticalObjectClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const T_AttributeIdentifiers& /*attributes*/, const ::hla::VariableLengthData& /*tag*/ )
 {
     // NOTHING
 }
@@ -109,7 +109,7 @@ void HlaTacticalObjectClass::OwnershipAcquisitionNotification( const ::hla::Obje
 // Name: HlaTacticalObjectClass::RequestOwnershipAssumption
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-bool HlaTacticalObjectClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/, const ::hla::VariableLengthData& /*tag*/ )
+bool HlaTacticalObjectClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const T_AttributeIdentifiers& /*attributes*/, const ::hla::VariableLengthData& /*tag*/ )
 {
     return false;
 }
@@ -134,7 +134,7 @@ void HlaTacticalObjectClass::Created( TacticalObject_ABC& object, unsigned int i
 // Name: HlaTacticalObjectClass::Divest
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-void HlaTacticalObjectClass::Divest(const std::string& /*objectID*/, const ::hla::T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
+void HlaTacticalObjectClass::Divest(const std::string& /*objectID*/, const T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
 {
     // NOTHING
 }
@@ -143,7 +143,7 @@ void HlaTacticalObjectClass::Divest(const std::string& /*objectID*/, const ::hla
 // Name: HlaTacticalObjectClass::Acquire
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-void HlaTacticalObjectClass::Acquire(const std::string& /*objectID*/, const ::hla::T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
+void HlaTacticalObjectClass::Acquire(const std::string& /*objectID*/, const T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
 {
     // NOTHING
 }
@@ -178,7 +178,7 @@ void HlaTacticalObjectClass::Unregister( ClassListener_ABC& listener )
 // Name: HlaTacticalObjectClass::RequestAttributeOwnershipRelease
 // Created: AHC 2012-10-26
 // -----------------------------------------------------------------------------
-void HlaTacticalObjectClass::RequestOwnershipRelease( const ::hla::ObjectIdentifier&, const HlaObject_ABC&, const ::hla::T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
+void HlaTacticalObjectClass::RequestOwnershipRelease( const ::hla::ObjectIdentifier&, const HlaObject_ABC&, const T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
 {
     // NOTHING
 }
@@ -187,7 +187,7 @@ void HlaTacticalObjectClass::RequestOwnershipRelease( const ::hla::ObjectIdentif
 // Name: HlaTacticalObjectClass::GetAttributes
 // Created: AHC 2012-10-29
 // -----------------------------------------------------------------------------
-const ::hla::T_AttributeIdentifiers& HlaTacticalObjectClass::GetAttributes() const
+const T_AttributeIdentifiers& HlaTacticalObjectClass::GetAttributes() const
 {
     return attributes_;
 }

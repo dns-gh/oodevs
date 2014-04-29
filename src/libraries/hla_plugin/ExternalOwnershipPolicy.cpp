@@ -326,7 +326,7 @@ void ExternalOwnershipPolicy::CleanupRequests()
             ++it;
     }
 }
-void ExternalOwnershipPolicy::Divested( const std::string& identifier, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void ExternalOwnershipPolicy::Divested( const std::string& identifier, const T_AttributeIdentifiers& /*attributes*/ )
 {
     localObjects_.erase( identifier );
     remoteObjects_.insert( identifier );
@@ -337,7 +337,7 @@ void ExternalOwnershipPolicy::Divested( const std::string& identifier, const ::h
     CleanupRequests();
 }
 
-void ExternalOwnershipPolicy::Acquired( const std::string& identifier, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void ExternalOwnershipPolicy::Acquired( const std::string& identifier, const T_AttributeIdentifiers& /*attributes*/ )
 {
     remoteObjects_.erase( identifier );
     localObjects_.insert( identifier );

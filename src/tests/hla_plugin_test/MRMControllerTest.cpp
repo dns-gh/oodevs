@@ -281,7 +281,7 @@ namespace
             CheckDisaggregationResponse( 1, 0, transactionId );
             ReceiveDisaggregationRequest( "federate", MakeNetnUid("aggr_uuid"), 42 );
 
-            classListener->Divested( "identifierLocal", ::hla::T_AttributeIdentifiers() );
+            classListener->Divested( "identifierLocal", T_AttributeIdentifiers() );
 
             MOCK_EXPECT( actionCompleteHandler->Flush ).once();
             ReceiveActionComplete( "federate", 42, true);

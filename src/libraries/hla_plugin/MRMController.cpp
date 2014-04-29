@@ -161,13 +161,13 @@ void MRMController::LocalDestroyed( const std::string& identifier )
     localObjects_.erase( identifier );
 }
 
-void MRMController::Divested( const std::string& identifier, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void MRMController::Divested( const std::string& identifier, const T_AttributeIdentifiers& /*attributes*/ )
 {
     localObjects_.erase( identifier );
     remoteObjects_.insert( identifier );
 }
 
-void MRMController::Acquired( const std::string& identifier, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void MRMController::Acquired( const std::string& identifier, const T_AttributeIdentifiers& /*attributes*/ )
 {
     localObjects_.insert( identifier );
     remoteObjects_.erase( identifier );

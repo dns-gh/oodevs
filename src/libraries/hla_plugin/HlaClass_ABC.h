@@ -18,13 +18,15 @@
 namespace hla
 {
     class VariableLengthData;
-    typedef std::vector< ::hla::AttributeIdentifier > T_AttributeIdentifiers;
 }
 
 namespace plugins
 {
 namespace hla
 {
+
+typedef std::vector< ::hla::AttributeIdentifier > T_AttributeIdentifiers;
+
 // =============================================================================
 /** @class  HlaClass_ABC
     @brief  HlaClass_ABC
@@ -41,9 +43,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual const ::hla::T_AttributeIdentifiers& GetAttributes() const = 0;
-    virtual void Divest(const std::string& objectID, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag ) = 0;
-    virtual void Acquire(const std::string& objectID, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag ) = 0;
+    virtual const T_AttributeIdentifiers& GetAttributes() const = 0;
+    virtual void Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag ) = 0;
+    virtual void Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag ) = 0;
     //@}
 };
 

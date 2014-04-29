@@ -313,7 +313,7 @@ void RemoteAgentController::LocalDestroyed( const std::string& /*identifier*/ )
 // Name: RemoteAgentController::Divested
 // Created: AHC 2010-03-02
 // -----------------------------------------------------------------------------
-void RemoteAgentController::Divested( const std::string& /*identifier*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void RemoteAgentController::Divested( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }
@@ -322,7 +322,7 @@ void RemoteAgentController::Divested( const std::string& /*identifier*/, const :
 // Name: RemoteAgentController::Acquired
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void RemoteAgentController::Acquired( const std::string& /*identifier*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void RemoteAgentController::Acquired( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }

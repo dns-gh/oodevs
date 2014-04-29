@@ -196,7 +196,7 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_disengage_automaton_when_divested, Fixt
     MOCK_EXPECT( contextFactory.Create ).once().returns( 18 );
     MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message1 ) );
     MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message2 ) );
-    ::hla::T_AttributeIdentifiers attributes; attributes.push_back( ::hla::AttributeIdentifier("Spatial"));
+    T_AttributeIdentifiers attributes; attributes.push_back( ::hla::AttributeIdentifier("Spatial"));
     remoteClassListener->Divested(  "identifier", attributes );
     BOOST_REQUIRE( remoteAgentListener );
 

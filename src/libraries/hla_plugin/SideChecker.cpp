@@ -197,7 +197,7 @@ void SideChecker::LocalDestroyed( const std::string& /*identifier*/ )
 // Name: SideChecker::Divested
 // Created: AHC 2010-03-02
 // -----------------------------------------------------------------------------
-void SideChecker::Divested( const std::string& /*identifier*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void SideChecker::Divested( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }
@@ -206,7 +206,7 @@ void SideChecker::Divested( const std::string& /*identifier*/, const ::hla::T_At
 // Name: SideChecker::Acquired
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void SideChecker::Acquired( const std::string& /*identifier*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void SideChecker::Acquired( const std::string& /*identifier*/, const T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }
