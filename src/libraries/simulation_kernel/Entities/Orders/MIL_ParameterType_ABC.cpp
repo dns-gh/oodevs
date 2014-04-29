@@ -33,44 +33,44 @@ void MIL_ParameterType_ABC::RegisterParameterType( std::string name, E_Type type
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_ABC::Initialize()
 {
-    RegisterParameterType( "bool", eBool );
-    RegisterParameterType( "Boolean", eBool );
-    RegisterParameterType( "Enumeration", eEnumeration );
-    RegisterParameterType( "Point", ePoint );
-    RegisterParameterType( "Polygon", ePolygon );
-    RegisterParameterType( "Location" , eLocation );
-    RegisterParameterType( "Path", ePath );
-    RegisterParameterType( "Direction", eDirection );
-    RegisterParameterType( "DirectionBM", eDirection );
-    RegisterParameterType( "Heading", eDirection );
-    RegisterParameterType( "NatureAtlas", eNatureAtlas );
-    RegisterParameterType( "Automate", eAutomat );
-    RegisterParameterType( "Automat", eAutomat );
     RegisterParameterType( "Agent", eAgent );
     RegisterParameterType( "AgentKnowledge", eAgentKnowledge );
-    RegisterParameterType( "ObjectKnowledge", eObjectKnowledge );
-    RegisterParameterType( "PopulationKnowledge", eCrowdKnowledge );
+    RegisterParameterType( "Automat", eAutomat );
+    RegisterParameterType( "Automate", eAutomat );
+    RegisterParameterType( "bool", eBool );
+    RegisterParameterType( "Boolean", eBool );
     RegisterParameterType( "CrowdKnowledge", eCrowdKnowledge );
-    RegisterParameterType( "DotationType", eResourceType );
-    RegisterParameterType( "ResourceType", eResourceType );
-    RegisterParameterType( "EquipmentType", eEquipmentType );
     RegisterParameterType( "DateTime", eDateTime );
-    RegisterParameterType( "Integer", eInteger );
-    RegisterParameterType( "Numeric", eNumeric );
+    RegisterParameterType( "Direction", eDirection );
+    RegisterParameterType( "DirectionBM", eDirection );
+    RegisterParameterType( "DotationType", eResourceType );
+    RegisterParameterType( "Enumeration", eEnumeration );
+    RegisterParameterType( "EquipmentType", eEquipmentType );
     RegisterParameterType( "GenObject", ePlannedWork );
-    RegisterParameterType( "PlannedWork", ePlannedWork );
+    RegisterParameterType( "Heading", eDirection );
+    RegisterParameterType( "IndirectFire", eIndirectFire );
+    RegisterParameterType( "Integer", eInteger );
+    RegisterParameterType( "LimaFunction", eLimaFunction );
+    RegisterParameterType( "Location" , eLocation );
+    RegisterParameterType( "LocationComposite", eLocationComposite );
     RegisterParameterType( "MaintenancePriorities", eMaintenancePriorities );
     RegisterParameterType( "MedicalPriorities", eMedicalPriorities );
-    RegisterParameterType( "IndirectFire", eIndirectFire );
+    RegisterParameterType( "NatureAtlas", eNatureAtlas );
+    RegisterParameterType( "Numeric", eNumeric );
+    RegisterParameterType( "ObjectKnowledge", eObjectKnowledge );
+    RegisterParameterType( "Path", ePath );
+    RegisterParameterType( "PhaseLine", ePhaseLine );
+    RegisterParameterType( "PlannedWork", ePlannedWork );
+    RegisterParameterType( "Point", ePoint );
+    RegisterParameterType( "Polygon", ePolygon );
+    RegisterParameterType( "PopulationKnowledge", eCrowdKnowledge );
+    RegisterParameterType( "ResourceNetworkNode", eResourceNetworkNode );
+    RegisterParameterType( "ResourceNetworkType", eResourceNetworkType );
+    RegisterParameterType( "ResourceType", eResourceType );
+    RegisterParameterType( "Stage", eStage );
     RegisterParameterType( "String", eString );;
     RegisterParameterType( "UrbanBlock", eUrbanKnowledge );
     RegisterParameterType( "UrbanKnowledge", eUrbanKnowledge );
-    RegisterParameterType( "LocationComposite", eLocationComposite );
-    RegisterParameterType( "PhaseLine", ePhaseLine );
-    RegisterParameterType( "ResourceNetworkNode", eResourceNetworkNode );
-    RegisterParameterType( "ResourceNetworkType", eResourceNetworkType );
-    RegisterParameterType( "Stage", eStage );
-    RegisterParameterType( "LimaFunction", eLimaFunction );
 }
 
 // -----------------------------------------------------------------------------
