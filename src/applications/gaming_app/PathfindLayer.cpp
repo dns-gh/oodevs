@@ -378,3 +378,12 @@ void PathfindLayer::OpenEditingMode()
     element->MultipleSelect( controllers_.actions_, boost::assign::list_of( element ) );
     ClearPositions();
 }
+
+bool PathfindLayer::HandleKeyPress( QKeyEvent* key )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary
+        || key->key() != Qt::Key_Escape )
+        return false;
+    controllers_.ChangeMode( eModes_Gaming );
+    return true;
+}
