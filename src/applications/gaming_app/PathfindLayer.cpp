@@ -395,12 +395,11 @@ bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::
     return true;
 }
 
-bool PathfindLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
+bool PathfindLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& /*point*/ )
 {
-    if( !dnd::HasData< PathfindLayer >( event ) || !hovered_ )
+    if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
-    hovered_ = boost::none;
-    positions_.insert( positions_.begin() + hovered_->lastWaypoint_, point );
+    positions_.insert( positions_.begin() + hovered_->lastWaypoint_, hovered_->coordinate_ );
     SendRequest();
     return true;
 }
