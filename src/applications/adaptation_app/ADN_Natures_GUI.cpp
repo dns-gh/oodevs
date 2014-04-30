@@ -49,7 +49,7 @@ void ADN_Natures_GUI::Build()
     builder.PushSubName( "natures" );
     T_ConnectorVector vInfosConnectors( eNbrDotationNatureGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    Q3VGroupBox* pGroup = new Q3VGroupBox( tr( "Resource natures" ) );
+    Q3VGroupBox* pGroup = new Q3VGroupBox( tr( "Natures of supply" ) );
     // dotation natures list
     pListView_ = builder.AddWidget< ADN_ListView_Categories_DotationNature >( "list", pGroup );
     connect( pListView_, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );

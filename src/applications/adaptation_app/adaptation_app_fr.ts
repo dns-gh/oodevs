@@ -4032,8 +4032,8 @@ PNG (*.png)
     <name>ADN_Natures_GUI</name>
     <message>
         <location filename="ADN_Natures_GUI.cpp" line="52"/>
-        <source>Resource natures</source>
-        <translation>Nature de ressource</translation>
+        <source>Natures of supply</source>
+        <translation type="unfinished">Nature de ressource</translation>
     </message>
     <message>
         <location filename="ADN_Natures_GUI.cpp" line="63"/>

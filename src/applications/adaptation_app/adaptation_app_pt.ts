@@ -4009,7 +4009,7 @@ PNG (*.png)
     <name>ADN_Natures_GUI</name>
     <message>
         <location filename="ADN_Natures_GUI.cpp" line="52"/>
-        <source>Resource natures</source>
+        <source>Natures of supply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
