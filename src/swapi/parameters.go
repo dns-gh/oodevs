@@ -362,7 +362,7 @@ func MakePlannedWork(objectType string, point Point) *sword.MissionParameter {
 		})
 }
 
-func MakePathfindRequest(unitId uint32, points ...Point) *sword.MissionParameter {
+func MakePathfindRequest(unitId uint32, ignoreDynamicObjects bool, points ...Point) *sword.MissionParameter {
 	positions := make([]*sword.CoordLatLong, len(points))
 	for i, p := range points {
 		positions[i] = MakeCoordLatLong(p)
@@ -370,8 +370,9 @@ func MakePathfindRequest(unitId uint32, points ...Point) *sword.MissionParameter
 	return MakeParameter(
 		&sword.MissionParameter_Value{
 			PathfindRequest: &sword.PathfindRequest{
-				Unit:      MakeId(unitId),
-				Positions: positions,
+				Unit:                 MakeId(unitId),
+				Positions:            positions,
+				IgnoreDynamicObjects: proto.Bool(ignoreDynamicObjects),
 			},
 		})
 }

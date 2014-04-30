@@ -1874,8 +1874,8 @@ func (c *Client) PathfindTest(params *sword.MissionParameters, action sword.Magi
 	return id, err
 }
 
-func (c *Client) CreatePathfind(unitId uint32, points ...Point) (*Pathfind, error) {
-	id, err := c.PathfindTest(MakeParameters(MakePathfindRequest(unitId, points...)),
+func (c *Client) CreatePathfindTest(unitId uint32, ignoreDynamicObjects bool, points ...Point) (*Pathfind, error) {
+	id, err := c.PathfindTest(MakeParameters(MakePathfindRequest(unitId, ignoreDynamicObjects, points...)),
 		sword.MagicAction_pathfind_creation)
 	if err != nil {
 		return nil, err
@@ -1893,6 +1893,10 @@ func (c *Client) CreatePathfind(unitId uint32, points ...Point) (*Pathfind, erro
 		return nil, ErrNotFound
 	}
 	return result, err
+}
+
+func (c *Client) CreatePathfind(unitId uint32, points ...Point) (*Pathfind, error) {
+	return c.CreatePathfindTest(unitId, true, points...)
 }
 
 func (c *Client) DestroyPathfind(pathfindId uint32) error {
