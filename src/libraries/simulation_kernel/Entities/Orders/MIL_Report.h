@@ -80,6 +80,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const PHY_DotationCategory& parameter, const MIL_AgentPion& pion );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, double nParam1, double nParam2 );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, int nParam );
+    template< typename T > static void PostEventInteger( const T& receiver, const MIL_DecisionalReport& nReport, int nParam );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const std::string& nParam );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, int nParam1, int nParam2, int nParam3 );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_Effect_IndirectFire& flyingShell );
@@ -237,6 +238,19 @@ void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nRepo
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::Create( nParam ) );
+    parameters.push_back( pParameter );
+    PostEvent( receiver, nReport, parameters );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::PostEventInteger
+// Created: LGY 2013-08-23
+// -----------------------------------------------------------------------------
+template< typename T >
+void MIL_Report::PostEventInteger( const T& receiver, const MIL_DecisionalReport& nReport, int nParam )
+{
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateInteger( nParam ) );
     parameters.push_back( pParameter );
     PostEvent( receiver, nReport, parameters );
 }

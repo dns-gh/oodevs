@@ -131,10 +131,16 @@ bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boo
     for( std::size_t i = 0; i < expectedSize; ++i )
     {
         if( !params[ i ]->IsOfType( parameters_[i]->GetType() ) )
+        {
+            MT_LOG_INFO_MSG( "Report '" << strMessage_ << "' parameter " << i << " does not match report type" );
             return false;
+        }
         sword::MissionParameter& paramProtobuff = *message().mutable_parameters()->add_elem();
         if( !params[ i ]->ToElement( *paramProtobuff.add_value() ) )
+        {
+            MT_LOG_INFO_MSG( "Report '" << strMessage_ << "' parameter " << i << " could not be converted to protobuf" );
             return false;
+        }
     }
     return true;
 }
