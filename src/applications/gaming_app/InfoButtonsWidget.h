@@ -60,6 +60,7 @@ class SimulationController;
 class InfoButtonsWidget : public Q3GroupBox
                         , public tools::Observer_ABC
                         , public tools::SelectionObserver< kernel::Entity_ABC >
+                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                         , public tools::ElementObserver_ABC< LogMedicalConsigns >
                         , public tools::ElementObserver_ABC< LogSupplyConsigns >
                         , public tools::ElementObserver_ABC< LogFuneralConsigns >
@@ -89,6 +90,7 @@ public:
 private:
     //! @name Operations
     //@{
+    virtual void NotifyDeleted( const kernel::Entity_ABC& element );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
 
     virtual void NotifyUpdated( const LogMedicalConsigns& consigns );
