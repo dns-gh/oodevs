@@ -15,6 +15,7 @@
 #include "Wgs84DmsParser.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "ENT/ENT_Enums.h"
+#include "MT_Tools/MT_Logger.h"
 
 using namespace gui;
 
@@ -53,9 +54,10 @@ LocationParsers::~LocationParsers()
 const std::shared_ptr< const LocationParser_ABC >& LocationParsers::GetParser( int parserId ) const
 {
     auto it = parsers_.find( parserId );
-    if( it == parsers_.end() )
-        throw MASA_EXCEPTION( "Invalid parser id." );
-    return it->second;
+    if( it != parsers_.end() )
+        return it->second;
+    MT_LOG_ERROR_MSG( "Invalid parser id " << parserId << " defaulting to MGRS" );
+    return parsers_.begin()->second;
 }
 
 // -----------------------------------------------------------------------------
