@@ -25,6 +25,7 @@
 
 #include <boost/assign/list_of.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 #include <QCoreApplication>
 #include <QSettings>
@@ -579,6 +580,12 @@ namespace
         data << "invalid";
         return data.join( "$" ).toStdString();
     }
+
+    std::string GetTimestamp()
+    {
+        namespace bpt = boost::posix_time;
+        return bpt::to_iso_string( bpt::second_clock::local_time() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -594,12 +601,14 @@ void Context::StartClient()
     if( client.empty() || model.empty() || terrain.empty() || exercise.empty() )
         return;
     const Path name = Utf8( Get< std::string >( session_, "exercise.name" ) );
+    const Path debug = exercise / "exercises" / name / "sessions" / GetTimestamp();
     WriteConfiguration( fs_, exercise / "exercises" / name, QUtf8( url_.host() ), url_.queryItemValue( "tcp" ).toInt(),
         Get< int >( session_, "timeline.port" ), Get< bool >( session_, "mapnik.enabled" ) );
     std::vector< std::string > args = boost::assign::list_of
         ( MakeOption( "models-dir", Utf8( model / "data/models" ) ) )
         ( MakeOption( "terrains-dir", Utf8( terrain / "data/terrains" ) ) )
         ( MakeOption( "exercises-dir", Utf8( exercise / "exercises" ) ) )
+        ( MakeOption( "debug-dir", Utf8( debug ) ) )
         ( MakeOption( "exercise", Utf8( name ) ) )
         ( MakeOption( "password", GetPassword( url_ ) ) );
     try
