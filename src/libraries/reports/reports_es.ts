@@ -4,6 +4,7 @@
 <context>
     <name>ReportFactory</name>
     <message>
+        <location filename="ReportFactory.cpp" line="203"/>
         <source>Unhandled report parameter type: &apos;%1&apos;.</source>
         <translation>Tipo de parámetro de reporte no válido: &apos;%1&apos;.</translation>
     </message>
