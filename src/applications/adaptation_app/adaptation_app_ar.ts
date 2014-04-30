@@ -686,29 +686,6 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Categories_GUI</name>
-    <message>
-        <location filename="ADN_Categories_GUI.cpp" line="30"/>
-        <source>Armor classes</source>
-        <translation type="unfinished">فئات الدروع</translation>
-    </message>
-    <message>
-        <location filename="ADN_Categories_GUI.cpp" line="31"/>
-        <source>Sizes</source>
-        <translation type="unfinished">أحجام</translation>
-    </message>
-    <message>
-        <location filename="ADN_Categories_GUI.cpp" line="32"/>
-        <source>Resource natures</source>
-        <translation type="unfinished">الموارد الطبيعة</translation>
-    </message>
-    <message>
-        <location filename="ADN_Categories_GUI.cpp" line="33"/>
-        <source>Logistic resource categories</source>
-        <translation type="unfinished">فئات الموارد اللوجستية</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ColorNameSelector</name>
     <message>
         <location filename="ADN_ColorNameSelector.cpp" line="66"/>

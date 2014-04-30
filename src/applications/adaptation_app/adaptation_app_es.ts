@@ -699,29 +699,6 @@ Estacionado y motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Categories_GUI</name>
-    <message>
-        <location filename="ADN_Categories_GUI.cpp" line="31"/>
-        <source>Sizes</source>
-        <translation>Tamaños</translation>
-    </message>
-    <message>
-        <location filename="ADN_Categories_GUI.cpp" line="30"/>
-        <source>Armor classes</source>
-        <translation>Tipos de blindaje</translation>
-    </message>
-    <message>
-        <location filename="ADN_Categories_GUI.cpp" line="32"/>
-        <source>Resource natures</source>
-        <translation>Naturaleza de recursos</translation>
-    </message>
-    <message>
-        <location filename="ADN_Categories_GUI.cpp" line="33"/>
-        <source>Logistic resource categories</source>
-        <translation>Categorías de recursos logísticos</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ColorNameSelector</name>
     <message>
         <location filename="ADN_ColorNameSelector.cpp" line="66"/>

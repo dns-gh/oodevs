@@ -27,10 +27,10 @@
 ADN_Categories_GUI::ADN_Categories_GUI( ADN_Categories_Data& data )
     : ADN_Grid_Container( eCategories, data )
 {
-    AddElement< ADN_Armors_GUI, ADN_Armors_Data >( eArmors, tr( "Armor classes" ), 0, 0, 3, 1 );
-    AddElement< ADN_Volumes_GUI, ADN_Volumes_Data>( eVolumes, tr( "Sizes" ), 0, 1 );
-    AddElement< ADN_Natures_GUI, ADN_Natures_Data>( eNatures, tr( "Resource natures" ), 1, 1 );
-    AddElement< ADN_LogisticSupplyClasses_GUI, ADN_LogisticSupplyClasses_Data>( eLogisticSupplyClasses, tr( "Logistic resource categories" ), 2, 1 );
+    AddElement< ADN_Armors_GUI, ADN_Armors_Data >( eArmors, "", 0, 0, 3, 1 );
+    AddElement< ADN_Volumes_GUI, ADN_Volumes_Data>( eVolumes, "", 0, 1 );
+    AddElement< ADN_Natures_GUI, ADN_Natures_Data>( eNatures, "", 1, 1 );
+    AddElement< ADN_LogisticSupplyClasses_GUI, ADN_LogisticSupplyClasses_Data>( eLogisticSupplyClasses, "", 2, 1 );
 }
 
 //-----------------------------------------------------------------------------
