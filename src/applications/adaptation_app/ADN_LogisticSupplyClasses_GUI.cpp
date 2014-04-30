@@ -48,7 +48,7 @@ void ADN_LogisticSupplyClasses_GUI::Build()
     builder.PushSubName( "logistic-categories" );
     T_ConnectorVector vInfosConnectors( eNbrLogisticSupplyClassGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    Q3GroupBox* pGroup = new Q3VGroupBox( tr( "Logistic resource categories" ) );
+    Q3GroupBox* pGroup = new Q3VGroupBox( tr( "Classes of supply" ) );
     // Logistic resource categories list
     pListView_ = builder.AddWidget< ADN_ListView_Categories_LogisticSupplyClass >( "list", pGroup );
     connect( pListView_, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );

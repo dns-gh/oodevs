@@ -3229,8 +3229,8 @@ PNG (*.png)
     <name>ADN_LogisticSupplyClasses_GUI</name>
     <message>
         <location filename="ADN_LogisticSupplyClasses_GUI.cpp" line="51"/>
-        <source>Logistic resource categories</source>
-        <translation>Catégories de ressource logistique</translation>
+        <source>Classes of supply</source>
+        <translation type="unfinished">Catégories de ressource logistique</translation>
     </message>
     <message>
         <location filename="ADN_LogisticSupplyClasses_GUI.cpp" line="62"/>
