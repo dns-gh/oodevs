@@ -20,8 +20,10 @@ using namespace gui;
 // Name: UnitStateTableCrew constructor
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
-UnitStateTableCrew::UnitStateTableCrew( QWidget* parent, kernel::Controllers& controllers )
-    : UnitStateTable_ABC( "UnitStateTableCrew", parent, controllers,
+UnitStateTableCrew::UnitStateTableCrew( const QString& objectName,
+                                        QWidget* parent,
+                                        kernel::Controllers& controllers )
+    : UnitStateTable_ABC( objectName, parent, controllers,
                           QStringList() << tr( "Rank" )
                                         << tr( "State" )
                                         << tr( "Injury seriousness" )

@@ -31,6 +31,7 @@ namespace tools
 class Model;
 class Simulation;
 class SimulationController;
+class UnitStateDialog;
 
 // =============================================================================
 /** @class  InfoWidget
@@ -47,14 +48,14 @@ public:
     //@{
              InfoWidget( QWidget* parent,
                          kernel::Controllers& controllers,
-                         const tools::ExerciseConfig& config,
                          const kernel::Profile_ABC& profile,
                          const gui::EntitySymbols& icons,
                          gui::ItemFactory_ABC& itemFactory,
                          gui::DisplayExtractor& extractor,
                          Model& model,
                          const Simulation& simulation,
-                         SimulationController& simulationController );
+                         SimulationController& simulationController,
+                         UnitStateDialog& unitStateDialog );
     virtual ~InfoWidget();
     //@}
 };

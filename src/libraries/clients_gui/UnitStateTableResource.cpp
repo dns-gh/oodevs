@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "UnitStateTableResource.h"
 #include "moc_UnitStateTableResource.cpp"
+#include "RichView_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace gui;
 
@@ -17,8 +19,11 @@ using namespace gui;
 // Name: UnitStateTableResource constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel, kernel::Controllers& controllers )
-    : UnitStateTable_ABC( "UnitStateTableResource", parent, controllers,
+UnitStateTableResource::UnitStateTableResource( const QString& objectName,
+                                                QWidget* parent,
+                                                const QString maximalCapacityLabel,
+                                                kernel::Controllers& controllers )
+    : UnitStateTable_ABC( objectName, parent, controllers,
                           QStringList() << tr( "Supplies" )
                                         << tr( "Category" )
                                         << tr( "Quantity" )
@@ -174,4 +179,38 @@ void UnitStateTableResource::UpdateNormalizedQuantity( int row, int quantity )
     const QString strNormalizedQuantity = consumption == 0 ?
         tr( "N/A" ) : locale().toString( quantity / consumption );
     SetData( row, eConsumption, strNormalizedQuantity, consumption );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::NeedClearFilterButton
+// Created: ABR 2014-04-29
+// -----------------------------------------------------------------------------
+bool UnitStateTableResource::NeedClearButton() const
+{
+    return true;
+}
+
+namespace
+{
+    std::string ContentExtractor( const QStandardItem& item, bool& valid, bool& empty )
+    {
+        valid = true;
+        empty = false;
+        return item.text().toStdString();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::CreateFilters
+// Created: ABR 2014-04-25
+// -----------------------------------------------------------------------------
+void UnitStateTableResource::CreateFilters( gui::RichView_ABC& richView )
+{
+    richView.AddCheckComboBoxFilter( eCategory,
+                                     RichView_ABC::eFilterAreas_Menu,
+                                     "",
+                                     false,
+                                     true,
+                                     &ContentExtractor,
+                                     boost::bind( &CheckComboBox::FillFromEnum< sword::DotationType >, _1, sword::DotationType_ARRAYSIZE, &ENT_Tr::ConvertFromDotationType ) );
 }

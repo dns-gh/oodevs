@@ -48,8 +48,12 @@ class UnitStateTableResource : public gui::UnitStateTableResource
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTableResource( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                     const kernel::Time_ABC& simulation, QWidget* parent );
+             UnitStateTableResource( const QString& objectName,
+                                     kernel::Controllers& controllers,
+                                     const StaticModel& staticModel,
+                                     actions::ActionsModel& actionsModel,
+                                     const kernel::Time_ABC& simulation,
+                                     QWidget* parent );
     virtual ~UnitStateTableResource();
     //@}
 

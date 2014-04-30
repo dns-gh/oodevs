@@ -29,9 +29,13 @@
 // Name: UnitStateTableCrew constructor
 // Created: ABR 2011-07-07
 // -----------------------------------------------------------------------------
-UnitStateTableCrew::UnitStateTableCrew( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                       const kernel::Time_ABC& simulation, QWidget* parent )
-    : gui::UnitStateTableCrew( parent, controllers )
+UnitStateTableCrew::UnitStateTableCrew( const QString& objectName,
+                                        kernel::Controllers& controllers,
+                                        const StaticModel& staticModel,
+                                        actions::ActionsModel& actionsModel,
+                                        const kernel::Time_ABC& simulation,
+                                        QWidget* parent )
+    : gui::UnitStateTableCrew( objectName, parent, controllers )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )

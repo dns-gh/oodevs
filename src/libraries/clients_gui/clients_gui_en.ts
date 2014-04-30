@@ -2061,6 +2061,10 @@ Do you want to remove it?</translation>
         <source>State</source>
         <translation type="unfinished">State</translation>
     </message>
+    <message>
+        <source>Clear filters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitStateTableCrew</name>

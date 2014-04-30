@@ -45,12 +45,12 @@ class AfterAction;
 class AutomatsLayer;
 class Config;
 class CreationPanels;
+class DrawingsBuilder;
 class EventDockWidget;
 class FormationLayer;
 class IndicatorExportDialog;
 class IndicatorPlotFactory;
 class ItineraryEditionDockWidget;
-class LinkInterpreter;
 class Model;
 class Network;
 class OrbatDockWidget;
@@ -59,9 +59,9 @@ class ProfileFilter;
 class Simulation;
 class StaticModel;
 class TimelineDockWidget;
-class WeatherLayer;
 class SimulationController;
-class DrawingsBuilder;
+class UnitStateDialog;
+class WeatherLayer;
 
 // =============================================================================
 /** @class  DockContainer
@@ -75,12 +75,29 @@ class DockContainer : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    DockContainer( QMainWindow* parent, kernel::Controllers& controllers, const StaticModel& staticModel, Model& model, Network& network,
-                   const Simulation& simulation, const Config& config, ProfileFilter& profile,
-                   gui::ParametersLayer& paramLayer, gui::TerrainProfilerLayer& profilerLayer, AutomatsLayer& automatsLayer, FormationLayer& formationLayer, ::WeatherLayer& weatherLayer,
-                   gui::GlProxy& proxy, gui::RichItemFactory& factory, LinkInterpreter& interpreter,
-                   gui::ColorStrategy_ABC& colorStrategy, gui::SymbolIcons& symbolIcons, const gui::EntitySymbols& entitySymbols,
-                   IndicatorExportDialog& indicatorExportDialog, SimulationController& simulationController, DrawingsBuilder& drawingsBuilder );
+    DockContainer( QMainWindow* parent,
+                   kernel::Controllers& controllers,
+                   const StaticModel& staticModel,
+                   Model& model,
+                   Network& network,
+                   const Simulation& simulation,
+                   const Config& config,
+                   ProfileFilter& profile,
+                   gui::ParametersLayer& paramLayer,
+                   gui::TerrainProfilerLayer& profilerLayer,
+                   AutomatsLayer& automatsLayer,
+                   FormationLayer& formationLayer,
+                   ::WeatherLayer& weatherLayer,
+                   gui::GlProxy& proxy,
+                   gui::RichItemFactory& factory,
+                   gui::ColorStrategy_ABC& colorStrategy,
+                   gui::SymbolIcons& symbolIcons,
+                   const gui::EntitySymbols& entitySymbols,
+                   IndicatorExportDialog& indicatorExportDialog,
+                   SimulationController& simulationController,
+                   DrawingsBuilder& drawingsBuilder,
+                   gui::DisplayExtractor& extractor,
+                   UnitStateDialog& unitStateDialog );
     virtual ~DockContainer();
     //@}
 
@@ -120,7 +137,6 @@ private:
     //@{
     std::auto_ptr< actions::gui::InterfaceBuilder > interfaceBuilder_;
     std::auto_ptr< ActionsScheduler > scheduler_;
-    std::auto_ptr< gui::DisplayExtractor > displayExtractor_;
     std::auto_ptr< IndicatorPlotFactory > plotFactory_;
     //@}
 };

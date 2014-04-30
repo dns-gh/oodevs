@@ -45,12 +45,12 @@ public:
     virtual void Load( kernel::Entity_ABC& selected ) = 0;
     virtual void Commit( kernel::Entity_ABC& selected ) const = 0;
     virtual bool HasChanged( kernel::Entity_ABC& selected ) const = 0;
+    virtual bool IsReadOnlyForType( const std::string& typeName ) const = 0;
     //@}
 
     //! @name Operations
     //@{
     virtual void Purge();
-    virtual bool IsReadOnlyForType( const std::string& typeName ) const = 0;
     void RecursiveLoad( kernel::Entity_ABC& entity, bool isSelectedEntity );
     void SetReadOnly( bool readOnly );
     bool IsReadOnly() const;

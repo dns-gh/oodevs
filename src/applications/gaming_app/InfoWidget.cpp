@@ -28,14 +28,14 @@
 // -----------------------------------------------------------------------------
 InfoWidget::InfoWidget( QWidget* parent,
                         kernel::Controllers& controllers,
-                        const tools::ExerciseConfig& config,
                         const kernel::Profile_ABC& profile,
                         const gui::EntitySymbols& icons,
                         gui::ItemFactory_ABC& itemFactory,
                         gui::DisplayExtractor& extractor,
                         Model& model,
                         const Simulation& simulation,
-                        SimulationController& simulationController )
+                        SimulationController& simulationController,
+                        UnitStateDialog& unitStateDialog )
     : Q3HBox( parent, "InfoWidget" )
 {
     layout()->setSpacing( 10 );
@@ -49,7 +49,7 @@ InfoWidget::InfoWidget( QWidget* parent,
     box->layout()->setAlignment( Qt::AlignTop | Qt::AlignLeft );
     new InfoSummariesWidget( box, controllers );
     new InfoStancesWidget( box, controllers );
-    new InfoButtonsWidget( this, controllers, config, itemFactory, extractor, model, simulation, profile, simulationController );
+    new InfoButtonsWidget( this, controllers, itemFactory, extractor, model, simulation, profile, simulationController, unitStateDialog );
 
     QTabWidget* tabs = new QTabWidget( this );
     tabs->setTabShape( QTabWidget::Triangular );

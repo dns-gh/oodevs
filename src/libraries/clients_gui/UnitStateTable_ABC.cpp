@@ -35,6 +35,9 @@ UnitStateTable_ABC::UnitStateTable_ABC( const QString& objectName,
     dataModel_.setColumnCount( horizontalHeaders.size() );
     proxyModel_.setSourceModel( &dataModel_ );
     proxyModel_.setSortRole( Qt::UserRole );
+    proxyModel_.setFilterRole( Roles::FilterRole );
+    proxyModel_.setFilterRegExp( StandardModel::showValue_ );
+
     setModel( &proxyModel_ );
     setItemDelegate( &delegate_ );
 

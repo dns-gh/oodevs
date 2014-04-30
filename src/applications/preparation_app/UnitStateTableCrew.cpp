@@ -19,8 +19,10 @@
 // Name: UnitStateTableCrew constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableCrew::UnitStateTableCrew( QWidget* parent, kernel::Controllers& controllers )
-    : gui::UnitStateTableCrew( parent, controllers )
+UnitStateTableCrew::UnitStateTableCrew( const QString& objectName,
+                                        kernel::Controllers& controllers,
+                                        QWidget* parent )
+    : gui::UnitStateTableCrew( objectName, parent, controllers )
 {
     // NOTHING
 }

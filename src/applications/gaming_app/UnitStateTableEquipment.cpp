@@ -34,10 +34,15 @@
 // Name: UnitStateTableEquipment constructor
 // Created: ABR 2011-07-07
 // -----------------------------------------------------------------------------
-UnitStateTableEquipment::UnitStateTableEquipment( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                                  const kernel::Time_ABC& simulation, QWidget* parent, const kernel::Profile_ABC& profile,
-                                                  gui::DisplayExtractor& extractor )
-    : gui::UnitStateTableEquipment( parent, extractor, controllers )
+UnitStateTableEquipment::UnitStateTableEquipment( const QString& objectName,
+                                                  kernel::Controllers& controllers,
+                                                  const StaticModel& staticModel,
+                                                  actions::ActionsModel& actionsModel,
+                                                  const kernel::Time_ABC& simulation,
+                                                  const kernel::Profile_ABC& profile,
+                                                  gui::DisplayExtractor& extractor,
+                                                  QWidget* parent )
+    : gui::UnitStateTableEquipment( objectName, parent, extractor, controllers )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )

@@ -14,6 +14,7 @@
 #include "RichWidget.h"
 #include "SubObjectName.h"
 #include "UnitStateTable_ABC.h"
+#include "clients_gui/RichView_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -47,7 +48,9 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     // Tabs
     tabWidget_ = new RichWidget< QTabWidget >( "tabs", this );
     // Buttons
+    clearButton_ = new RichPushButton( "clear_filters", tr( "Clear filters" ) );
     resetButton_ = new RichPushButton( "reset", tr( "Reset" ) );
+    clearButton_->setVisible( false );
     validateButton_ = new RichPushButton( "validate", tr( "Validate" ) );
     validateButton_->setDefault( true );
     RichPushButton* closeButton = new RichPushButton( "close", tr( "Close" ) );
@@ -58,6 +61,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     headerLayout_->addWidget( targetBox, 1 );
 
     QHBoxLayout* buttonsLayout = new QHBoxLayout();
+    buttonsLayout->addWidget( clearButton_ );
     buttonsLayout->addStretch( 1 );
     buttonsLayout->addWidget( validateButton_ );
     buttonsLayout->addWidget( resetButton_ );
@@ -70,6 +74,8 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     mainLayout->addLayout( buttonsLayout );
 
     // Connections
+    connect( tabWidget_,      SIGNAL( currentChanged( int ) ), SLOT( CurrentTabChanged( int ) ) );
+    connect( clearButton_   , SIGNAL( clicked() ), SLOT( Clear() ) );
     connect( resetButton_   , SIGNAL( clicked() ), SLOT( Reset() ) );
     connect( validateButton_, SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( closeButton    , SIGNAL( clicked() ), SLOT( hide() ) );
@@ -95,7 +101,7 @@ UnitStateDialog::~UnitStateDialog()
 bool UnitStateDialog::IsReadOnly() const
 {
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        if( !tabs_[ i ]->IsReadOnly() )
+        if( !tabs_[ i ].second->IsReadOnly() )
             return false;
     return true;
 }
@@ -110,7 +116,7 @@ void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
         return;
     if( !IsReadOnly() && selected_ && isShown() )
         for( unsigned int i = 0; i < tabs_.size(); ++i )
-            if( tabs_[ i ]->HasChanged( *selected_.ConstCast() ) )
+            if( tabs_[ i ].second->HasChanged( *selected_.ConstCast() ) )
             {
                 int nResult = QMessageBox::information( this, tr( "Sword" ), tr( "You have unsaved modifications on unit %1 on the %2 tab, do you want to validate ?" ).arg( selected_->GetName() ).arg( tabWidget_->tabText( i ) ), QMessageBox::Yes, QMessageBox::No );
                 if( nResult == QMessageBox::Yes )
@@ -144,8 +150,8 @@ void UnitStateDialog::Validate() const
     if( !selected_ )
         return;
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        if( tabs_[ i ]->HasChanged( *selected_.ConstCast() ) )
-            tabs_[ i ]->Commit( *selected_.ConstCast() );
+        if( tabs_[ i ].second->HasChanged( *selected_.ConstCast() ) )
+            tabs_[ i ].second->Commit( *selected_.ConstCast() );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,14 +162,14 @@ void UnitStateDialog::Reset()
 {
     // Purge content
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        tabs_[ i ]->Purge();
+        tabs_[ i ].second->Purge();
     // Disable if needed
     bool readOnly = IsReadOnly();
     bool activate = !readOnly;
     for( unsigned int i = 0; i < tabs_.size(); ++i )
     {
-        bool tabReadOnly = selected_? tabs_[ i ]->IsReadOnlyForType( selected_->GetTypeName() ) : true;
-        tabs_[ i ]->SetReadOnly( readOnly | tabReadOnly );
+        bool tabReadOnly = selected_? tabs_[ i ].second->IsReadOnlyForType( selected_->GetTypeName() ) : true;
+        tabs_[ i ].second->SetReadOnly( readOnly | tabReadOnly );
         activate |= !tabReadOnly;
     }
     resetButton_->setEnabled( activate );
@@ -176,5 +182,50 @@ void UnitStateDialog::Reset()
     if( typeName == kernel::Agent_ABC::typeName_ || typeName == kernel::Automat_ABC::typeName_ ||
         typeName == kernel::Formation_ABC::typeName_ || typeName == kernel::Team_ABC::typeName_ )
         for( unsigned int i = 0; i < tabs_.size(); ++i )
-            tabs_[ i ]->RecursiveLoad( *selected_.ConstCast(), true );
+            tabs_[ i ].second->RecursiveLoad( *selected_.ConstCast(), true );
+    // Refresh rich views to update filters
+    for( auto it = tabs_.begin(); it != tabs_.end(); ++it )
+        it->first->Refresh();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateDialog::Load
+// Created: ABR 2014-04-28
+// -----------------------------------------------------------------------------
+void UnitStateDialog::Load()
+{
+    for( auto it = tabs_.begin(); it != tabs_.end(); ++it )
+        it->first->Load();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateDialog::Purge
+// Created: ABR 2014-04-28
+// -----------------------------------------------------------------------------
+void UnitStateDialog::Purge()
+{
+    for( auto it = tabs_.begin(); it != tabs_.end(); ++it )
+        it->first->Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateDialog::Clear
+// Created: ABR 2014-04-29
+// -----------------------------------------------------------------------------
+void UnitStateDialog::Clear()
+{
+    tabs_.at( tabWidget_->currentIndex() ).first->OnClearFilters();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateDialog::CurrentTabChanged
+// Created: ABR 2014-04-29
+// -----------------------------------------------------------------------------
+void UnitStateDialog::CurrentTabChanged( int tab )
+{
+    auto view = tabs_.at( tab ).first;
+    auto visible = view->HasOption( gui::RichView_ABC::eOptions_ClearButton );
+    clearButton_->setVisible( visible );
+    if( visible )
+        clearButton_->setEnabled( view->IsFiltered() );
 }

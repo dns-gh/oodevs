@@ -50,6 +50,7 @@ class LogSupplyConsign;
 class LogisticsConsign_ABC;
 class LogisticsModel;
 class SimulationController;
+class UnitStateDialog;
 
 // =============================================================================
 /** @class  InfoButtonsWidget
@@ -77,13 +78,13 @@ public:
     //@{
              InfoButtonsWidget( QWidget* widget,
                                 kernel::Controllers& controllers,
-                                const tools::ExerciseConfig& config,
                                 gui::ItemFactory_ABC& factory,
                                 gui::DisplayExtractor& extractor,
                                 Model& model,
                                 const Simulation& simulation,
                                 const kernel::Profile_ABC& profile,
-                                SimulationController& simulationController );
+                                SimulationController& simulationController,
+                                UnitStateDialog& unitStateDialog );
     virtual ~InfoButtonsWidget();
     //@}
 

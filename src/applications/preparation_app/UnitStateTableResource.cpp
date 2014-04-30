@@ -67,8 +67,11 @@ namespace
 // Name: UnitStateTableResource constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableResource::UnitStateTableResource( QWidget* parent, const StaticModel& staticModel, kernel::Controllers& controllers )
-    : gui::UnitStateTableResource( parent, tools::translate( "UnitStateTableResource", "Default capacity" ), controllers )
+UnitStateTableResource::UnitStateTableResource( const QString& objectName,
+                                                const StaticModel& staticModel,
+                                                kernel::Controllers& controllers,
+                                                QWidget* parent )
+    : gui::UnitStateTableResource( objectName, parent, tools::translate( "UnitStateTableResource", "Default capacity" ), controllers )
     , staticModel_( staticModel )
     , typeId_     ( 0 )
 {
