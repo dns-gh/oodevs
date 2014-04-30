@@ -68,6 +68,7 @@ namespace
 // -----------------------------------------------------------------------------
 RichTreeView::RichTreeView( const QString& objectName, QWidget* parent /*= 0*/, kernel::Controllers* controllers /*= 0*/ )
     : QTreeView( parent )
+    , Filterable_ABC()
     , proxyModel_( new CustomSortFilterProxyModel( *this ) )
     , dataModel_( controllers, *proxyModel_, this )
     , dropAction_( Qt::MoveAction )
@@ -98,12 +99,40 @@ RichTreeView::~RichTreeView()
 }
 
 // -----------------------------------------------------------------------------
+// Name: RichTreeView::ApplyFilter
+// Created: ABR 2014-04-28
+// -----------------------------------------------------------------------------
+void RichTreeView::ApplyFilters( const std::map< int, std::vector< Filter_ABC* > >& filters )
+{
+    dataModel_.ApplyFilters( filters );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichTreeView::CreateFilters
+// Created: ABR 2012-08-14
+// -----------------------------------------------------------------------------
+void RichTreeView::CreateFilters( RichView_ABC& /* richView */ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: RichTreeView::Purge
 // Created: ABR 2012-08-14
 // -----------------------------------------------------------------------------
 void RichTreeView::Purge()
 {
     dataModel_.Purge();
+    //model_.removeRows( 0, dataModel_.rowCount() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichTreeView::GetHeader
+// Created: ABR 2014-04-25
+// -----------------------------------------------------------------------------
+QHeaderView* RichTreeView::GetHeader() const
+{
+    return header();
 }
 
 // -----------------------------------------------------------------------------
@@ -121,66 +150,49 @@ void RichTreeView::EnableDragAndDrop( bool enable )
 }
 
 // -----------------------------------------------------------------------------
-// Name: RichTreeView::SetCreationBlocked
-// Created: ABR 2012-08-14
-// -----------------------------------------------------------------------------
-void RichTreeView::SetCreationBlocked( bool creationBlocked )
-{
-    creationBlocked_ = creationBlocked;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichTreeView::IsCreationBlocked
-// Created: ABR 2012-08-14
-// -----------------------------------------------------------------------------
-bool RichTreeView::IsCreationBlocked() const
-{
-    return creationBlocked_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichTreeView::SetContextMenuBlocked
-// Created: ABR 2012-08-14
-// -----------------------------------------------------------------------------
-void RichTreeView::SetContextMenuBlocked( bool contextMenuBlocked )
-{
-    contextMenuBlocked_ = contextMenuBlocked;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichTreeView::IsContextMenuBlocked
-// Created: ABR 2012-08-14
-// -----------------------------------------------------------------------------
-bool RichTreeView::IsContextMenuBlocked() const
-{
-    return contextMenuBlocked_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichTreeView::CreateFilters
-// Created: ABR 2012-08-14
-// -----------------------------------------------------------------------------
-void RichTreeView::CreateFilters( SearchTreeView_ABC& /*searchTreeView*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichTreeView::ApplyFilter
-// Created: JSR 2012-09-18
-// -----------------------------------------------------------------------------
-void RichTreeView::ApplyFilter( StandardModel::T_FilterFunction func )
-{
-    dataModel_.ApplyFilter( func );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RichTreeView::LockDragAndDrop
 // Created: JSR 2012-09-10
 // -----------------------------------------------------------------------------
 void RichTreeView::LockDragAndDrop( bool lock )
 {
     dataModel_.LockDragAndDrop( lock );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichTreeView::startDrag
+// Created: ABR 2012-11-22
+// -----------------------------------------------------------------------------
+void RichTreeView::startDrag( Qt::DropActions supportedActions )
+{
+    QModelIndexList indexes = selectedIndexes();
+    if( indexes.empty() )
+        return;
+
+    QModelIndexList dragableObjects;
+    for( int i = 0; i < indexes.size(); ++i )
+    {
+        QStandardItem* item = dataModel_.GetItemFromIndex( indexes[ i ] );
+        if( item && item->flags() & Qt::ItemIsDragEnabled )
+            dragableObjects.push_back( indexes[ i ] );
+    }
+
+    QMimeData* data = dataModel_.mimeData( dragableObjects );
+    if( !data )
+        return;
+
+    QDrag* drag = new QDrag( this );
+    drag->setMimeData( data );
+    if( supportedActions & dropAction_ )
+        drag->exec( dropAction_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichTreeView::SetLessThanFunctor
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+void RichTreeView::SetLessThanFunctor( const T_LessThanFunctor& functor )
+{
+    static_cast< CustomSortFilterProxyModel* >( proxyModel_ )->SetFunctor( functor );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,41 +290,4 @@ void RichTreeView::SearchAndSelectNext( Qt::MatchFlags compareFlag /* = Qt::Matc
             return;
         }
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichTreeView::startDrag
-// Created: ABR 2012-11-22
-// -----------------------------------------------------------------------------
-void RichTreeView::startDrag( Qt::DropActions supportedActions )
-{
-    QModelIndexList indexes = selectedIndexes();
-    if( indexes.empty() )
-        return;
-
-    QModelIndexList dragableObjects;
-    for( int i = 0; i < indexes.size(); ++i )
-    {
-        QStandardItem* item = dataModel_.GetItemFromIndex( indexes[ i ] );
-        if( item && item->flags() & Qt::ItemIsDragEnabled )
-            dragableObjects.push_back( indexes[ i ] );
-    }
-
-    QMimeData* data = dataModel_.mimeData( dragableObjects );
-    if( !data )
-        return;
-
-    QDrag* drag = new QDrag( this );
-    drag->setMimeData( data );
-    if( supportedActions & dropAction_ )
-        drag->exec( dropAction_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichTreeView::SetLessThanFunctor
-// Created: ABR 2013-10-15
-// -----------------------------------------------------------------------------
-void RichTreeView::SetLessThanFunctor( const T_LessThanFunctor& functor )
-{
-    static_cast< CustomSortFilterProxyModel* >( proxyModel_ )->SetFunctor( functor );
 }

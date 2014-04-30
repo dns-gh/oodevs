@@ -72,7 +72,6 @@ public:
     //@{
     void Purge();
     void Load();
-    void BlockCreationOnListViews( bool enable );
     //@}
 
     //! @name Getters

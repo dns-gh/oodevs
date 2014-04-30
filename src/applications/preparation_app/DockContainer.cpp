@@ -129,17 +129,6 @@ void DockContainer::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DockContainer::BlockCreationOnListViews
-// Created: ABR 2012-03-29
-// -----------------------------------------------------------------------------
-void DockContainer::BlockCreationOnListViews( bool enable )
-{
-    for( std::vector< gui::SearchTreeView_ABC* >::iterator it = treeViews_.begin(); it != treeViews_.end(); ++it )
-        if( *it && ( *it )->GetRichTreeView() )
-            ( *it )->GetRichTreeView()->SetCreationBlocked( enable );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DockContainer::Load
 // Created: LGY 2012-01-04
 // -----------------------------------------------------------------------------

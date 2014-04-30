@@ -538,9 +538,7 @@ bool MainWindow::Close()
 void MainWindow::DoClose()
 {
     dockContainer_->Purge();
-    dockContainer_->BlockCreationOnListViews( true );
     model_.Purge();
-    dockContainer_->BlockCreationOnListViews( false );
     staticModel_.Purge();
     selector_->Close();
     dialogContainer_->Purge();
