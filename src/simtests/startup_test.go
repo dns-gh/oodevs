@@ -60,9 +60,9 @@ func (s *TestSuite) TestDispatcherMisconfiguration(c *C) {
 	defer sim.Stop()
 	CheckSimFailed(c, err, sim)
 
-	// Sim.log should say something about the dispatcher and dispatcher.log
+	// Sim.log should say something about the dispatcher
 	simLog := ReadTextFile(c, opts.GetSimLogPath())
-	expected := "(?s).*<(fatalERR|functERR)> dispatcher: failed to create dispatcher.*"
+	expected := "(?s).*<(fatalERR|functERR)> dispatcher:.*failed to create dispatcher.*"
 	c.Assert(simLog, Matches, expected)
 
 	// Dispatcher.log should mention the missing XML element
