@@ -247,7 +247,7 @@ void PathfindLayer::SetEndPosition()
     if( positions_.size() > 1 )
         positions_.back() = point_;
     else
-    positions_.push_back( point_ );
+        positions_.push_back( point_ );
     SendRequest();
 }
 
