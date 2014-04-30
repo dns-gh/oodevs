@@ -1509,3 +1509,26 @@ func (model *ModelData) handlePathfindCreation(m *sword.SimToClient_Content) err
 	}
 	return nil
 }
+
+func (model *ModelData) handleSupplyRequestCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetLogSupplyRequestCreation()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	model.SupplyRequests[mm.GetRequest().GetId()] = &SupplyRequest{}
+	return nil
+}
+
+func (model *ModelData) handleSupplyRequestDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetLogSupplyRequestDestruction()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	size := len(model.SupplyRequests)
+	delete(model.SupplyRequests, id)
+	if size == len(model.SupplyRequests) {
+		return fmt.Errorf("cannot destroy supply request %d", id)
+	}
+	return nil
+}

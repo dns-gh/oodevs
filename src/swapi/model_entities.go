@@ -528,6 +528,9 @@ type ReplayInfo struct {
 	TickCount int32
 }
 
+type SupplyRequest struct {
+}
+
 type ModelData struct {
 	Parties              map[uint32]*Party
 	Formations           map[uint32]*Formation
@@ -551,6 +554,7 @@ type ModelData struct {
 	FireDetections       map[uint32]*FireDetection
 	LocalWeathers        map[uint32]*LocalWeather
 	Pathfinds            map[uint32]*Pathfind
+	SupplyRequests       map[uint32]*SupplyRequest
 	GlobalWeather        Weather
 	// Available scores definitions
 	KnownScores map[string]struct{}
@@ -592,6 +596,7 @@ func NewModelData() *ModelData {
 		FireDetections:       map[uint32]*FireDetection{},
 		KnownScores:          map[string]struct{}{},
 		Scores:               map[string]float32{},
+		SupplyRequests:       map[uint32]*SupplyRequest{},
 	}
 }
 
@@ -1049,6 +1054,8 @@ var (
 		(*ModelData).handleUrbanCreation,
 		(*ModelData).handleUrbanUpdate,
 		(*ModelData).handlePathfindCreation,
+		(*ModelData).handleSupplyRequestCreation,
+		(*ModelData).handleSupplyRequestDestruction,
 	}
 	authToClientHandlers = []func(model *ModelData, m *sword.AuthenticationToClient_Content) error{
 		(*ModelData).handleProfileCreation,
