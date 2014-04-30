@@ -574,6 +574,21 @@
     </message>
 </context>
 <context>
+    <name>gui::CheckComboBox</name>
+    <message>
+        <source>All</source>
+        <translation>Tous</translation>
+    </message>
+    <message>
+        <source>(None)</source>
+        <translation>(Aucun)</translation>
+    </message>
+    <message>
+        <source>(Select all)</source>
+        <translation>(Sélectionner tout)</translation>
+    </message>
+</context>
+<context>
     <name>gui::ClearButton</name>
     <message>
         <source>Clear</source>

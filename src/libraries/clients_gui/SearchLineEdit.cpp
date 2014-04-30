@@ -50,3 +50,31 @@ SearchLineEdit::~SearchLineEdit()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: SearchLineEdit::Apply
+// Created: ABR 2014-04-28
+// -----------------------------------------------------------------------------
+bool SearchLineEdit::Apply( QStandardItem& item ) const
+{
+    auto filter = text().lower();
+    //if( filter .size() > 0 && filter [ 0 ] == '<' && filter [ filterLine.size() - 1 ] == '>' )
+    //    return;
+    if( filter.isEmpty() )
+        return true;
+    QStringList list = filter.split( ' ' );
+    bool result = true;
+    QString text = item.text().lower();
+    for( QStringList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it )
+        result = result && text.find( *it ) != -1;
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SearchLineEdit::Clear
+// Created: ABR 2014-04-28
+// -----------------------------------------------------------------------------
+void SearchLineEdit::Clear()
+{
+    clear();
+}

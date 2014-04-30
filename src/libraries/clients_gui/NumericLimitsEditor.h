@@ -10,7 +10,7 @@
 #ifndef __gui_NumericLimitsEditor_h_
 #define __gui_NumericLimitsEditor_h_
 
-#include <boost/function.hpp>
+#include "Filter_ABC.h"
 #include "RichSpinBox.h"
 
 namespace kernel
@@ -29,6 +29,7 @@ namespace gui
 // Created: ABR 2012-06-20
 // =============================================================================
 class NumericLimitsEditor_ABC : public QWidget
+                              , public Filter_ABC
 {
     Q_OBJECT
 
@@ -37,17 +38,6 @@ public:
     //@{
              NumericLimitsEditor_ABC( QWidget* parent );
     virtual ~NumericLimitsEditor_ABC();
-    //@}
-
-    //! @name Abstract operations
-    //@{
-    virtual bool ApplyFilter( QStandardItem& item, StandardModel& model ) const = 0;
-    virtual void Clear() = 0;
-    //@}
-
-    //! @name Operations
-    //@{
-
     //@}
 
 protected slots:
@@ -64,16 +54,6 @@ signals:
     //@{
     void ValueChanged();
     //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 // =============================================================================
@@ -88,28 +68,32 @@ class NumericLimitsEditor : public NumericLimitsEditor_ABC
 public:
     //! @name Types
     //@{
-    typedef boost::function< NumericType ( const kernel::Entity_ABC&, bool& valid ) > T_Extractor;
+    typedef std::function< NumericType ( const QStandardItem& item,
+                                         bool& valid ) > T_Extractor;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             NumericLimitsEditor( QWidget* parent = 0 );
+             NumericLimitsEditor( QWidget* parent,
+                                  const T_Extractor& extractor,
+                                  NumericType min,
+                                  NumericType max );
     virtual ~NumericLimitsEditor();
+    //@}
+
+    //! @name Filter_ABC operations
+    //@{
+    virtual bool Apply( QStandardItem& item ) const;
+    virtual void Clear();
+    virtual QWidget* GetWidget();
+    virtual QWidget* GetMenuContent();
     //@}
 
     //! @name NumericLimitsEditor_ABC operations
     //@{
-    virtual bool ApplyFilter( QStandardItem& item, StandardModel& model ) const;
-    virtual void Clear();
     virtual void OnMinValueChanged( NumericType value );
     virtual void OnMaxValueChanged( NumericType value );
-    //@}
-
-    //! @name Operations
-    //@{
-    void SetExtractor( T_Extractor extractor );
-    void SetMinMax( NumericType min, NumericType max );
     //@}
 
 private:
@@ -121,9 +105,9 @@ private:
 private:
     //! @name Member data
     //@{
+    const T_Extractor extractor_;
     NumericType minValue_;
     NumericType maxValue_;
-    T_Extractor extractor_;
     SpinBox*    minSpin_;
     SpinBox*    maxSpin_;
     //@}

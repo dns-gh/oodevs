@@ -10,6 +10,7 @@
 #ifndef __SearchLineEdit_h_
 #define __SearchLineEdit_h_
 
+#include "Filter_ABC.h"
 #include "RichLineEdit.h"
 
 namespace gui
@@ -22,12 +23,19 @@ namespace gui
 // Created: ABR 2012-03-27
 // =============================================================================
 class SearchLineEdit : public RichLineEdit
+                     , public Filter_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    SearchLineEdit( const QString& objectName, QWidget* parent = 0 );
+    explicit SearchLineEdit( const QString& objectName, QWidget* parent = 0 );
     virtual ~SearchLineEdit();
+    //@}
+
+    //! @name Filter_ABC implementation
+    //@{
+    virtual bool Apply( QStandardItem& item ) const;
+    virtual void Clear();
     //@}
 };
 

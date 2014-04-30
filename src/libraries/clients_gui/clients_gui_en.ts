@@ -578,6 +578,21 @@
     </message>
 </context>
 <context>
+    <name>gui::CheckComboBox</name>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(None)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Select all)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ClearButton</name>
     <message>
         <source>Clear</source>

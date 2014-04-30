@@ -11,6 +11,7 @@
 #define __gui_CheckComboBox_h_
 
 #include "ENT/ENT_Tr.h"
+#include "Filter_ABC.h"
 #include "RichLineEdit.h"
 #include "RichWidget.h"
 #include <tools/Resolver_ABC.h>
@@ -53,7 +54,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void checkStateChanged();
+    void checkStateChanged( bool checkAll );
     //@}
 };
 
@@ -64,67 +65,54 @@ signals:
 // Created: ABR 2012-06-18
 // =============================================================================
 class CheckComboBox : public RichWidget< QComboBox >
+                    , public Filter_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Types
     //@{
-    typedef boost::function< std::string ( const kernel::Entity_ABC&, bool& valid, bool& empty ) > T_Extractor;
+    typedef std::function< std::string ( const QStandardItem& item,
+                                         bool& valid,
+                                         bool& empty ) > T_Extractor;
+    typedef std::function< void ( CheckComboBox& ) > T_Filler;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CheckComboBox( const QString& objectName, QWidget* parent = 0 );
+    explicit CheckComboBox( const QString& objectName,
+                            QWidget* parent,
+                            bool useNone,
+                            bool useCheckAll,
+                            const T_Extractor& extractor,
+                            const T_Filler& filler );
     virtual ~CheckComboBox();
     //@}
 
-    //! @name Accessors
+    //! @name Filter_ABC implementation
     //@{
-    QString AllText() const;
-    void SetAllText( const QString& text );
-
-    QString NoneText() const;
-    void SetNoneText( const QString& noneText );
-
-    QString Separator() const;
-    void SetSeparator( const QString& separator );
-
-    Qt::CheckState ItemCheckState( int index ) const;
-    void SetItemCheckState( int index, Qt::CheckState state );
-
-    QStringList CheckedItems() const;
+    virtual bool Apply( QStandardItem& item ) const;
+    virtual void Refresh( const std::function< bool( const QString& ) >& filter );
+    virtual void Clear();
     //@}
 
     //! @name Operations
     //@{
-    void mousePressEvent( QMouseEvent* event );
-    //@}
+    QWidget* CreateListView( QWidget* parent );
 
-    //! @name Filling operations
-    //@{
     template< typename EnumType >
-    void FillFromEnum( EnumType nbrMax, const std::string& (*converter)( EnumType, ENT_Tr::E_Conversion ) );
+    void FillFromEnum( int nbrMax, const std::function< const std::string& ( EnumType, ENT_Tr::E_Conversion ) >& converter );
     template< typename KernelType, typename Identifier >
     void FillFromResolver( const tools::Resolver_ABC< KernelType, Identifier >& resolver, const std::string& (KernelType::* converter )() const );
     void FillFromStringList( const std::vector< std::string >& vector );
     void FillFromQStringList( const QStringList& stringList );
     //@}
 
-    //! @name Filters
-    //@{
-    bool ApplyFilter( QStandardItem& item, StandardModel& model ) const;
-    void SetItemsCheckState( Qt::CheckState state );
-    void SetExtractor( T_Extractor extractor );
-    //@}
-
 public slots:
     //! @name Slots
     //@{
-    void SetCheckedItems( const QStringList& items );
-    void ToggleCheckState( int index );
-    void UpdateCheckedItems();
+    void UpdateCheckedItems( bool checkAll = false );
     //@}
 
 signals:
@@ -136,7 +124,12 @@ signals:
 private:
     //! @name Helpers
     //@{
+    virtual void mousePressEvent( QMouseEvent* event );
     void AddItem( int& row, const QString text );
+    Qt::CheckState ItemCheckState( int index ) const;
+    void SetItemCheckState( int index, Qt::CheckState state );
+    QStringList CheckedItems() const;
+    void SetItemsCheckState( Qt::CheckState state );
     //@}
 
     //! @name Types
@@ -166,12 +159,14 @@ private:
 public:
     //! @name Member data
     //@{
-    RichLineEdit*  lineEdit_;
-    QString     allText_;
-    QString     noneText_;
-    QString     separator_;
-    bool        showing_;
-    T_Extractor extractor_;
+    QStandardItemModel* dataModel_;
+    QSortFilterProxyModel proxyModel_;
+    RichLineEdit* lineEdit_;
+    const QString checkAllText_;
+    const QString allText_;
+    const QString noneText_;
+    const QString separator_;
+    const T_Extractor extractor_;
     //@}
 };
 
@@ -180,12 +175,12 @@ public:
 // Created: ABR 2012-06-19
 // -----------------------------------------------------------------------------
 template< typename EnumType >
-void CheckComboBox::FillFromEnum( EnumType nbrMax, const std::string& (*converter)( EnumType, ENT_Tr::E_Conversion ) )
+void CheckComboBox::FillFromEnum( int nbrMax, const std::function< const std::string& ( EnumType, ENT_Tr::E_Conversion ) >& converter )
 {
     int row = 0;
-    //AddItem( row, allText_ );
+    AddItem( row, checkAllText_ );
     AddItem( row, noneText_ );
-    for( int i = 0; i < static_cast< int >( nbrMax ); ++i )
+    for( int i = 0; i < nbrMax; ++i )
         AddItem( row, converter( static_cast< EnumType >( i ), ENT_Tr::eToTr ).c_str() );
 }
 
@@ -197,7 +192,7 @@ template< typename KernelType, typename Identifier >
 void CheckComboBox::FillFromResolver( const tools::Resolver_ABC< KernelType, Identifier >& resolver, const std::string& (KernelType::* converter )() const )
 {
     int row = 0;
-    //AddItem( row, allText_ );
+    AddItem( row, checkAllText_ );
     AddItem( row, noneText_ );
     tools::Iterator< const KernelType& > it = resolver.CreateIterator();
     while( it.HasMoreElements() )

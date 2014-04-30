@@ -71,7 +71,7 @@ bool CheckComboModel::setData( const QModelIndex& index, const QVariant& value, 
     if( ok && role == Qt::CheckStateRole )
     {
         emit dataChanged( index, index );
-        emit checkStateChanged();
+        emit checkStateChanged( data( index, Roles::OtherRole ).toBool() );
     }
     return ok;
 }
@@ -118,17 +118,31 @@ void CheckComboBox::CheckComboLineEdit::mousePressEvent( QMouseEvent* event )
 // Name: CheckComboBox constructor
 // Created: ABR 2012-06-18
 // -----------------------------------------------------------------------------
-CheckComboBox::CheckComboBox( const QString& objectName, QWidget* parent /* = 0 */ )
+CheckComboBox::CheckComboBox( const QString& objectName,
+                              QWidget* parent,
+                              bool useNone,
+                              bool useCheckAll,
+                              const T_Extractor& extractor,
+                              const T_Filler& filler )
     : RichWidget< QComboBox >( objectName, parent )
+    , dataModel_( new CheckComboModel( this ) )
+    , proxyModel_( this )
+    , extractor_( extractor )
     , lineEdit_ ( 0 )
     , separator_( ";" )
-    , allText_  ( "" )
-    , noneText_ ( "" )
+    , allText_  ( tr( "All" ) )
+    , noneText_ ( useNone ? tr( "(None)" ) : "" )
+    , checkAllText_ ( useCheckAll ? tr( "(Select all)" ) : "" )
 {
-    setModel( new CheckComboModel( this ) );
-    connect( model(), SIGNAL( checkStateChanged() ), this, SLOT( UpdateCheckedItems() ) );
-    connect( model(), SIGNAL( rowsInserted( const QModelIndex &, int, int ) ), this, SLOT( UpdateCheckedItems() ) );
-    connect( model(), SIGNAL( rowsRemoved( const QModelIndex &, int, int ) ), this, SLOT( UpdateCheckedItems() ) );
+    setModel( &proxyModel_ );
+    proxyModel_.setSourceModel( dataModel_ );
+    proxyModel_.setFilterRole( Roles::FilterRole );
+    proxyModel_.setFilterRegExp( StandardModel::showValue_ );
+    proxyModel_.setDynamicSortFilter( true );
+
+    connect( dataModel_, SIGNAL( checkStateChanged( bool ) ), this, SLOT( UpdateCheckedItems( bool ) ) );
+    connect( dataModel_, SIGNAL( rowsInserted( const QModelIndex &, int, int ) ), this, SLOT( UpdateCheckedItems() ) );
+    connect( dataModel_, SIGNAL( rowsRemoved( const QModelIndex &, int, int ) ), this, SLOT( UpdateCheckedItems() ) );
 
     lineEdit_ = new CheckComboLineEdit( "lineEditComboBox", this );
     lineEdit_->setReadOnly( true );
@@ -139,6 +153,7 @@ CheckComboBox::CheckComboBox( const QString& objectName, QWidget* parent /* = 0 
     view()->window()->installEventFilter( this );
     view()->viewport()->installEventFilter( this );
     installEventFilter( this );
+    filler( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,28 +163,6 @@ CheckComboBox::CheckComboBox( const QString& objectName, QWidget* parent /* = 0 
 CheckComboBox::~CheckComboBox()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: CheckComboBox::allText
-// Created: ABR 2012-06-18
-// -----------------------------------------------------------------------------
-QString CheckComboBox::AllText() const
-{
-    return allText_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CheckComboBox::setAllText
-// Created: ABR 2012-06-18
-// -----------------------------------------------------------------------------
-void CheckComboBox::SetAllText( const QString& text )
-{
-    if( allText_ != text )
-    {
-        allText_ = text;
-        UpdateCheckedItems();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -191,96 +184,45 @@ void CheckComboBox::SetItemCheckState( int index, Qt::CheckState state )
 }
 
 // -----------------------------------------------------------------------------
-// Name: CheckComboBox::separator
-// Created: ABR 2012-06-18
-// -----------------------------------------------------------------------------
-QString CheckComboBox::Separator() const
-{
-    return separator_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CheckComboBox::setSeparator
-// Created: ABR 2012-06-18
-// -----------------------------------------------------------------------------
-void CheckComboBox::SetSeparator( const QString& separator )
-{
-    if( separator_ != separator )
-    {
-        separator_ = separator;
-        UpdateCheckedItems();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: CheckComboBox::noneText
-// Created: ABR 2012-06-19
-// -----------------------------------------------------------------------------
-QString CheckComboBox::NoneText() const
-{
-    return noneText_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CheckComboBox::setNoneText
-// Created: ABR 2012-06-19
-// -----------------------------------------------------------------------------
-void CheckComboBox::SetNoneText( const QString& noneText )
-{
-    noneText_ = noneText;
-}
-
-// -----------------------------------------------------------------------------
 // Name: CheckComboBox::checkedItems
 // Created: ABR 2012-06-18
 // -----------------------------------------------------------------------------
 QStringList CheckComboBox::CheckedItems() const
 {
     QStringList items;
-    if( model() )
+    if( dataModel_ )
     {
-        QModelIndex index = model()->index( 0, modelColumn(), rootModelIndex() );
-        QModelIndexList indexes = model()->match( index, Qt::CheckStateRole, Qt::Checked, -1, Qt::MatchExactly );
-        for( QModelIndexList::const_iterator it = indexes.constBegin(); it != indexes.constEnd(); ++it )
-            items += it->data().toString();
+        const QModelIndex index = dataModel_->index( 0, modelColumn(), rootModelIndex() );
+        const QModelIndexList indexes = dataModel_->match( index, Qt::CheckStateRole, Qt::Checked, -1, Qt::MatchExactly );
+        for( auto it = indexes.constBegin(); it != indexes.constEnd(); ++it )
+        {
+            auto text = it->data().toString();
+            if( text != checkAllText_)
+                items += text;
+        }
     }
     return items;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CheckComboBox::setCheckedItems
-// Created: ABR 2012-06-18
-// -----------------------------------------------------------------------------
-void CheckComboBox::SetCheckedItems( const QStringList& items )
-{
-    for( QStringList::const_iterator it = items.constBegin(); it != items.constEnd(); ++it )
-    {
-        const int index = findText( *it );
-        SetItemCheckState(index, index != -1 ? Qt::Checked : Qt::Unchecked);
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: CheckComboBox::toggleCheckState
-// Created: ABR 2012-06-18
-// -----------------------------------------------------------------------------
-void CheckComboBox::ToggleCheckState( int index )
-{
-    QVariant value = itemData( index, Qt::CheckStateRole );
-    if( value.isValid() )
-    {
-        Qt::CheckState state = static_cast< Qt::CheckState >( value.toInt() );
-        setItemData( index, state == Qt::Unchecked ? Qt::Checked : Qt::Unchecked, Qt::CheckStateRole );
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: CheckComboBox::updateCheckedItems
 // Created: ABR 2012-06-18
 // -----------------------------------------------------------------------------
-void CheckComboBox::UpdateCheckedItems()
+void CheckComboBox::UpdateCheckedItems( bool checkAll /* = false */ )
 {
     QStringList items = CheckedItems();
+    if( !checkAllText_.isEmpty() )
+    {
+        dataModel_->blockSignals( true );
+        if( checkAll )
+            SetItemsCheckState( ItemCheckState( 0 ) == Qt::Checked ? Qt::Checked : Qt::Unchecked );
+        else
+            SetItemCheckState( 0, ( items.size() == proxyModel_.rowCount() - 1 ) ? Qt::Checked :
+                                  ( items.size() == 0 ) ? Qt::Unchecked :
+                                  Qt::PartiallyChecked );
+        dataModel_->blockSignals( false );
+    }
+
     if( items.isEmpty() || items.size() == count() )
         setEditText( allText_ );
     else
@@ -299,49 +241,51 @@ void CheckComboBox::mousePressEvent( QMouseEvent* )
 }
 
 // -----------------------------------------------------------------------------
-// Name: CheckComboBox::ApplyFilter
+// Name: CheckComboBox::Apply
 // Created: JSR 2012-09-18
 // -----------------------------------------------------------------------------
-bool CheckComboBox::ApplyFilter( QStandardItem& item, StandardModel& model ) const
+bool CheckComboBox::Apply( QStandardItem& item ) const
 {
+    bool valid = true;
+    bool empty = false;
+    auto value = extractor_( item, valid, empty );
+    if( !valid )
+        return false;
     QStringList items = CheckedItems();
     if( items.empty() )
         return true;
+    // $$$$ ABR 2012-06-19: TODO Make allText_ check action check and uncheck every item ( if( *it == allText_ ) )
     bool result = false;
-    const kernel::Entity_ABC* entity = model.GetDataFromItem< kernel::Entity_ABC >( item );
-    if( entity )
-    {
-        bool valid = true;
-        bool empty = false;
-        std::string extractedText = extractor_( *entity, valid, empty );
-        if( !valid )
-            return false;
+    std::vector< std::string > values;
+    boost::split( values, value, boost::algorithm::is_any_of( ";" ) );
+    for( auto it = items.constBegin(); !result && it != items.constEnd(); ++it )
+        for( auto extractedIt = values.begin(); !result && extractedIt != values.end(); ++extractedIt )
+            result = result || ( *it == noneText_ ) ? empty : *extractedIt == it->toUtf8().constData();
 
-        // $$$$ ABR 2012-06-19: TODO Make allText_ check action check and uncheck every item ( if( *it == allText_ ) )
-
-        if( extractedText.find( ';' ) != std::string::npos )    // Multiple result
-        {
-            std::vector< std::string > extractedVector;
-            boost::split( extractedVector, extractedText, boost::algorithm::is_any_of( ";" ) );
-
-            for( QStringList::const_iterator it = items.constBegin(); !result && it != items.constEnd(); ++it )
-                for( std::vector< std::string >::const_iterator extractedIt = extractedVector.begin(); !result && extractedIt != extractedVector.end(); ++extractedIt )
-                    result = result || ( *it == noneText_ ) ? empty : *extractedIt == it->toUtf8().constData();
-        }
-        else                                                    // Single result
-            for( QStringList::const_iterator it = items.constBegin(); !result && it != items.constEnd(); ++it )
-                result = result || ( *it == noneText_ ) ? empty : extractedText == it->toUtf8().constData();
-    }
     return result;
 }
 
 // -----------------------------------------------------------------------------
-// Name: CheckComboBox::SetExtractor
-// Created: ABR 2012-06-19
+// Name: CheckComboBox::Refresh
+// Created: ABR 2014-04-29
 // -----------------------------------------------------------------------------
-void CheckComboBox::SetExtractor( T_Extractor extractor )
+void CheckComboBox::Refresh( const std::function< bool( const QString& ) >& filter )
 {
-    extractor_ = extractor;
+    for( int row = 0; row < dataModel_->rowCount(); ++row )
+        if( QStandardItem* item = dataModel_->item( row, 0 ) )
+        {
+            auto text = item->text();
+            item->setData( StandardModel::GetShowValue( text == checkAllText_ || filter( text ) ), Roles::FilterRole );
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CheckComboBox::Clear
+// Created: ABR 2014-04-25
+// -----------------------------------------------------------------------------
+void CheckComboBox::Clear()
+{
+    SetItemsCheckState( Qt::Unchecked );
 }
 
 // -----------------------------------------------------------------------------
@@ -350,9 +294,9 @@ void CheckComboBox::SetExtractor( T_Extractor extractor )
 // -----------------------------------------------------------------------------
 void CheckComboBox::SetItemsCheckState( Qt::CheckState state )
 {
-    if( !model() )
+    if( !dataModel_ )
         return;
-    for( int index = 0; index < model()->rowCount(); ++index )
+    for( int index = 0; index < dataModel_->rowCount(); ++index )
         SetItemCheckState( index, state );
 }
 
@@ -363,7 +307,7 @@ void CheckComboBox::SetItemsCheckState( Qt::CheckState state )
 void CheckComboBox::FillFromStringList( const std::vector< std::string >& vector )
 {
     int row = 0;
-    //AddItem( row, allText_ );
+    AddItem( row, checkAllText_ );
     AddItem( row, noneText_ );
     for( std::vector< std::string >::const_iterator it = vector.begin(); it != vector.end(); ++it )
         AddItem( row, it->c_str() );
@@ -376,7 +320,7 @@ void CheckComboBox::FillFromStringList( const std::vector< std::string >& vector
 void CheckComboBox::FillFromQStringList( const QStringList& stringList )
 {
     int row = 0;
-    //AddItem( row, allText_ );
+    AddItem( row, checkAllText_ );
     AddItem( row, noneText_ );
     for( QStringList::const_iterator it = stringList.begin(); it != stringList.end(); ++it )
         AddItem( row, *it );
@@ -391,7 +335,23 @@ void CheckComboBox::AddItem( int& row, const QString text )
     if( text.isEmpty() )
         return;
     QStandardItem* item = new QStandardItem( text );
-    item->setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled );
+    auto flags = text == checkAllText_
+        ? Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsTristate
+        : Qt::ItemIsUserCheckable | Qt::ItemIsEnabled;
+    item->setFlags( flags );
     item->setData( Qt::Unchecked, Qt::CheckStateRole );
-    static_cast< CheckComboModel* >( model() )->setItem( row++, 0, item );
+    item->setData( QVariant( gui::StandardModel::showValue_ ), Roles::FilterRole );
+    item->setData( text == checkAllText_, Roles::OtherRole );
+    dataModel_->setItem( row++, 0, item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CheckComboBox::CreateListView
+// Created: ABR 2014-04-29
+// -----------------------------------------------------------------------------
+QWidget* CheckComboBox::CreateListView( QWidget* parent )
+{
+    QListView* list = new RichWidget< QListView >( "checkcombobox-listview", parent );
+    list->setModel( &proxyModel_ );
+    return list;
 }
