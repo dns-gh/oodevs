@@ -229,7 +229,7 @@ void ADN_Weapons_GUI::Build()
         builder.SetEnabled( false );
     }
     {
-        ADN_GoToButton* goToButton = builder.AddWidget< ADN_GoToButton >( "goto-ammo", ::eResources, 0 );
+        ADN_GoToButton* goToButton = builder.AddWidget< ADN_GoToButton >( "goto-ammo", ::eSupplies, 0 );
         ADN_ComboBox_Vector* combo = builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "ammo", tr( "Ammo" ), vInfosConnectors[eAmmo], 0, eNone, goToButton );
         goToButton->SetLinkedCombo( combo );
         builder.SetEnabled( false );

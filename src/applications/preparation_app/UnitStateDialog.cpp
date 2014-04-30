@@ -38,7 +38,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     tabs_.push_back( boost::make_shared< UnitStateTableResource > ( tabWidget_, staticModel, controllers ) );
     tabWidget_->addTab( tabs_[ eCrew      ].get(), tools::translate( "UnitStateDialog", "Crew" ) );
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tools::translate( "UnitStateDialog", "Equipments" ) );
-    tabWidget_->addTab( tabs_[ eResources ].get(), tools::translate( "UnitStateDialog", "Resources" ) );
+    tabWidget_->addTab( tabs_[ eSupplies ].get(), tools::translate( "UnitStateDialog", "Resources" ) );
 }
 
 // -----------------------------------------------------------------------------

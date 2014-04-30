@@ -6825,11 +6825,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">قاذفات</translation>
     </message>
     <message>
-        <location filename="ADN_Tr.cpp" line="310"/>
-        <source>Resources</source>
-        <translation type="unfinished">الموارد</translation>
-    </message>
-    <message>
         <location filename="ADN_Tr.cpp" line="311"/>
         <source>Fires</source>
         <translation type="unfinished">حرائق</translation>
@@ -6947,6 +6942,11 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <location filename="ADN_Tr.cpp" line="222"/>
         <source>Human</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ADN_Tr.cpp" line="310"/>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8016,42 +8016,42 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ADN_Workspace</name>
     <message>
-        <location filename="ADN_Workspace.cpp" line="499"/>
+        <location filename="ADN_Workspace.cpp" line="498"/>
         <source>Sword Adaptation Tool - Saving Errors</source>
         <translation type="unfinished">السيف أداة التكيف--إنقاذ أخطاء</translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="500"/>
+        <location filename="ADN_Workspace.cpp" line="499"/>
         <source>Error(s) have been encountered during saving of project </source>
         <translation type="unfinished">قد تم مصادفة خطأ (أخطاء) أثناء الحفظ للمشروع</translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="501"/>
+        <location filename="ADN_Workspace.cpp" line="500"/>
         <source>&lt;p&gt;- Unable to save %s : file is write protected&lt;/p&gt;</source>
         <translation type="unfinished">&lt;p&gt;-غير قادر على حفظ % s: هو ملف محمي ضد الكتابة&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="595"/>
+        <location filename="ADN_Workspace.cpp" line="594"/>
         <source>ADN - Data export</source>
         <translation type="unfinished">ADN-تصدير البيانات</translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="320"/>
+        <location filename="ADN_Workspace.cpp" line="319"/>
         <source>Building GUI: %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="261"/>
+        <location filename="ADN_Workspace.cpp" line="260"/>
         <source>Closing: %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="414"/>
+        <location filename="ADN_Workspace.cpp" line="413"/>
         <source>Loading: %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="553"/>
+        <location filename="ADN_Workspace.cpp" line="552"/>
         <source>Saving: %1...</source>
         <translation type="unfinished"></translation>
     </message>

@@ -54,7 +54,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent,
     tabs_.push_back( boost::make_shared< UnitStateTableResource > ( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
     tabWidget_->addTab( tabs_[ eCrew      ].get(), tr( "Crew" ) );
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tr( "Equipments" ) );
-    tabWidget_->addTab( tabs_[ eResources ].get(), tr( "Resources" ) );
+    tabWidget_->addTab( tabs_[ eSupplies ].get(), tr( "Resources" ) );
     connect( tabWidget_, SIGNAL( currentChanged( QWidget* ) ), SLOT( OnTabChanged( QWidget* ) ) );
 
     exportButton_ = new gui::RichWidget< QToolButton >( "export_button", 0 );
@@ -101,8 +101,8 @@ bool UnitStateDialog::CheckCurrent( E_Tabs tab ) const
     E_Tabs current = static_cast< E_Tabs >( tabWidget_->currentPageIndex() );
     if( current == eCrew || current == eEquipment )
         return tab == eEquipment;
-    else if( current == eResources )
-        return tab == eResources;
+    else if( current == eSupplies )
+        return tab == eSupplies;
     else
         assert( false );
     return false;
@@ -114,7 +114,7 @@ bool UnitStateDialog::CheckCurrent( E_Tabs tab ) const
 // -----------------------------------------------------------------------------
 void UnitStateDialog::EmitSignal( bool state, E_Tabs tab )
 {
-    emit ( tab == eResources ) ? OnToggleResource( state ) : OnToggleEquipment( state );
+    emit ( tab == eSupplies ) ? OnToggleResource( state ) : OnToggleEquipment( state );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ void UnitStateDialog::EmitSignal( bool state, E_Tabs tab )
 // -----------------------------------------------------------------------------
 void UnitStateDialog::EmitSignals()
 {
-    EmitSignal( CheckCurrent( eResources ), eResources );
+    EmitSignal( CheckCurrent( eSupplies ), eSupplies );
     EmitSignal( CheckCurrent( eEquipment ), eEquipment );
 }
 
@@ -175,7 +175,7 @@ void UnitStateDialog::Toggle( E_Tabs tab )
 // -----------------------------------------------------------------------------
 void UnitStateDialog::ToggleResource( bool )
 {
-    Toggle( eResources );
+    Toggle( eSupplies );
 }
 
 // -----------------------------------------------------------------------------

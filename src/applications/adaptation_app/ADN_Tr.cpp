@@ -307,7 +307,7 @@ T_ConverterWorkspaceElements WorkspaceElementsConverter_[] =
     T_ConverterWorkspaceElements( "urban",            QT_TRANSLATE_NOOP("ADN_Tr", "Urban" ),                eUrban ),
     T_ConverterWorkspaceElements( "nbc",              QT_TRANSLATE_NOOP("ADN_Tr", "NBC" ),                  eNBC ),
     T_ConverterWorkspaceElements( "launcher",         QT_TRANSLATE_NOOP("ADN_Tr", "Launchers" ),            eLaunchers ),
-    T_ConverterWorkspaceElements( "resources",        QT_TRANSLATE_NOOP("ADN_Tr", "Resources" ),            eResources ),
+    T_ConverterWorkspaceElements( "resources",        QT_TRANSLATE_NOOP("ADN_Tr", "Supplies" ),             eSupplies ),
     T_ConverterWorkspaceElements( "fireclasses",      QT_TRANSLATE_NOOP("ADN_Tr", "Fires" ),                eFires ),
     T_ConverterWorkspaceElements( "drawings",         QT_TRANSLATE_NOOP("ADN_Tr", "Drawings" ),             eDrawings ),
     T_ConverterWorkspaceElements( "objects",          QT_TRANSLATE_NOOP("ADN_Tr", "Objects" ),              eObjects ),

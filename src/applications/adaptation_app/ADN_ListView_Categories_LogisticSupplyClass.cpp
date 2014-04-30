@@ -89,7 +89,7 @@ std::string ADN_ListView_Categories_LogisticSupplyClass::GetToolTipFor( const QM
     std::string result;
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(),
                         ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ), result );
-    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eSupplies ).c_str(),
                         ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), result );
 
     if( result.empty() )

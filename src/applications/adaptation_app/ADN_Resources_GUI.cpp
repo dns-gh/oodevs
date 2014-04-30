@@ -88,7 +88,7 @@ public:
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
 ADN_Resources_GUI::ADN_Resources_GUI( ADN_Resources_Data& data )
-    : ADN_Tabbed_GUI_ABC( eResources )
+    : ADN_Tabbed_GUI_ABC( eSupplies )
     , data_           ( data )
     , buttonGroup_( 0 )
     , pExplosiveParametersGroup_( 0 )

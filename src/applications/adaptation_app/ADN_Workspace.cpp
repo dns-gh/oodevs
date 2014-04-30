@@ -90,25 +90,24 @@
 
 ADN_Workspace* ADN_Workspace::pWorkspace_ = 0;
 
-#define INITIALIZE_ADN_ENUMTYPE( TypeName )                                                                                 \
-    ADN_Type_Enum< E_##TypeName, eNbr##TypeName >::SetConverter( &ADN_Tr::ConvertFrom##TypeName );                          \
+#define INITIALIZE_ADN_ENUMTYPE( TypeName )\
+    ADN_Type_Enum< E_##TypeName, eNbr##TypeName >::SetConverter( &ADN_Tr::ConvertFrom##TypeName );
 
-#define INITIALIZE_ENT_ENUMTYPE( TypeName )                                                                                 \
-    ADN_Type_Enum< E_##TypeName, eNbr##TypeName >::SetConverter( &ENT_Tr::ConvertFrom##TypeName );                          \
+#define INITIALIZE_ENT_ENUMTYPE( TypeName )\
+    ADN_Type_Enum< E_##TypeName, eNbr##TypeName >::SetConverter( &ENT_Tr::ConvertFrom##TypeName );
 
-#define CREATE_WORKSPACE_ELEMENT( ELEMENT )                                                                                 \
-elements_[ e##ELEMENT## ].reset( new ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >( e##ELEMENT## ) );   \
+#define CREATE_WORKSPACE_ELEMENT_WITH( NAME, ELEMENT )\
+elements_[ e##NAME## ].reset( new ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >( e##NAME## ) );
 
-#define IMPLEMENT_WORKSPACE_ELEMENT_GETTER( ELEMENT )                                                                       \
-ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& ADN_Workspace::Get##ELEMENT##()                          \
-{                                                                                                                           \
-    return static_cast< ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& >( *elements_[ e##ELEMENT ] );   \
-}                                                                                                                           \
-                                                                                                                            \
-const ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& ADN_Workspace::Get##ELEMENT##() const              \
-{                                                                                                                           \
-    return static_cast< ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& >( *elements_[ e##ELEMENT ] );   \
-}                                                                                                                           \
+#define CREATE_WORKSPACE_ELEMENT( ELEMENT ) CREATE_WORKSPACE_ELEMENT_WITH( ELEMENT, ELEMENT )
+
+#define IMPLEMENT_WORKSPACE_ELEMENT_GETTER_WITH( NAME, ELEMENT )\
+ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& ADN_Workspace::Get##ELEMENT##()\
+{\
+    return static_cast< ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& >( *elements_[ e##NAME ] );\
+}
+
+#define IMPLEMENT_WORKSPACE_ELEMENT_GETTER( ELEMENT ) IMPLEMENT_WORKSPACE_ELEMENT_GETTER_WITH( ELEMENT, ELEMENT )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::CreateWorkspace
@@ -222,7 +221,7 @@ void ADN_Workspace::Initialize()
     CREATE_WORKSPACE_ELEMENT( Urban );
     CREATE_WORKSPACE_ELEMENT( NBC );
     CREATE_WORKSPACE_ELEMENT( Launchers );
-    CREATE_WORKSPACE_ELEMENT( Resources );
+    CREATE_WORKSPACE_ELEMENT_WITH( Supplies, Resources );
     CREATE_WORKSPACE_ELEMENT( ActiveProtections );
     CREATE_WORKSPACE_ELEMENT( Objects );
     CREATE_WORKSPACE_ELEMENT( Weapons );
@@ -270,7 +269,7 @@ IMPLEMENT_WORKSPACE_ELEMENT_GETTER( Symbols )
 IMPLEMENT_WORKSPACE_ELEMENT_GETTER( Urban )
 IMPLEMENT_WORKSPACE_ELEMENT_GETTER( NBC )
 IMPLEMENT_WORKSPACE_ELEMENT_GETTER( Launchers )
-IMPLEMENT_WORKSPACE_ELEMENT_GETTER( Resources )
+IMPLEMENT_WORKSPACE_ELEMENT_GETTER_WITH( Supplies, Resources )
 IMPLEMENT_WORKSPACE_ELEMENT_GETTER( Fires )
 IMPLEMENT_WORKSPACE_ELEMENT_GETTER( Drawings )
 IMPLEMENT_WORKSPACE_ELEMENT_GETTER( Disasters )
@@ -325,7 +324,7 @@ void ADN_Workspace::BuildGUI()
     // Tab order
     AddPage( eCategories );
     AddPage( eUrban );
-    AddPage( eResources );
+    AddPage( eSupplies );
     AddPage( eResourceNetworks );
     AddPage( eLaunchers );
     AddPage( eWeapons );
@@ -678,9 +677,9 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatWillBeDeleted( ADN_R
 
     // Resources to delete when object or nature deleted
     if( ADN_Objects_Data_ObjectInfos* infos = dynamic_cast< ADN_Objects_Data_ObjectInfos* >( data ) )
-        return FillUsingElements( eResources, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
+        return FillUsingElements( eSupplies, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
     if( ADN_Natures_Data::NatureInfos* infos = dynamic_cast< ADN_Natures_Data::NatureInfos* >( data ) )
-        return FillUsingElements( eResources, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
+        return FillUsingElements( eSupplies, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
 
     // Weapons to delete when launcher or ammo deleted
     if( ADN_Launchers_Data::LauncherInfos* infos = dynamic_cast< ADN_Launchers_Data::LauncherInfos* >( data ) )
@@ -787,7 +786,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     if( ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* infos = dynamic_cast< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* >( data ) )
     {
         FillUsingElements( eUnits, *infos, GetUnits().GetData(), &ADN_Units_Data::GetUnitsThatUse, result );
-        FillUsingElements( eResources, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
+        FillUsingElements( eSupplies, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
         return result;
     }
 
@@ -797,7 +796,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
         result[ eFires ]; // Empty list means all resources
         result[ eSensors ];
         result[ eObjects ] = GetObjects().GetData().GetObjectsWithCapacity( ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::TAG );
-        result[ eResources ] = GetResources().GetData().GetResourcesWithDirectFire();
+        result[ eSupplies ] = GetResources().GetData().GetResourcesWithDirectFire();
         FillUsingElements( eUrban, *infos, GetUrban().GetData(), &ADN_Urban_Data::GetUrbanTemplateThatUse, result );
         return result;
     }
@@ -806,7 +805,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     {
         result[ eUrban ];
         result[ eCrowds ];
-        result[ eResources ] = GetResources().GetData().GetResourcesWithDirectFire();
+        result[ eSupplies ] = GetResources().GetData().GetResourcesWithDirectFire();
         return result;
     }
     // All crowds and sensors use volume

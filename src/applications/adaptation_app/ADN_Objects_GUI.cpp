@@ -177,14 +177,14 @@ void ADN_Objects_GUI::Build()
         // Buildable
         ADN_GroupBox* buildable = CreateCapacityGroupBox( 3, builder, "buildable", tr( "Buildable" ), vInfosConnectors[ eBuildableCapacityPresent], constructor );
         ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( builder.GetChildName( "dotations-table" ), vInfosConnectors[ eBuildableCapacity_Dotation ], buildable, ADN_Equipments_Dotations_GUI::eColumn_Category | ADN_Equipments_Dotations_GUI::eColumn_Quantity );
-        pDotations->SetGoToOnDoubleClick( ::eResources );
+        pDotations->SetGoToOnDoubleClick( ::eSupplies );
         builder.PopSubName(); //! buildable
 
         // Improvable
         ADN_GroupBox* improvable = CreateCapacityGroupBox( 3, builder, "improvable", tr( "Improvable" ), vInfosConnectors[ eImprovableCapacityPresent ], constructor );
         {
             ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( builder.GetChildName( "dotations-table" ), vInfosConnectors[ eImprovableCapacity_Dotation ], improvable, ADN_Equipments_Dotations_GUI::eColumn_Category | ADN_Equipments_Dotations_GUI::eColumn_Quantity );
-            pDotations->SetGoToOnDoubleClick( ::eResources );
+            pDotations->SetGoToOnDoubleClick( ::eSupplies );
         }
         builder.PopSubName(); // !improvable
         builder.PopSubName(); // !consumption

@@ -56,7 +56,7 @@ void ADN_ActiveProtections_GUI::Build()
     Q3GroupBox* pDotationGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Resource" ) );
     QWidget* pHolder = new QWidget( pDotationGroup );
     new Q3GridLayout( pHolder, 0, 3, 5, 5 );
-    ADN_GoToButton* goToButton = new ADN_GoToButton( ::eResources );
+    ADN_GoToButton* goToButton = new ADN_GoToButton( ::eSupplies );
     goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pHolder, "resource", tr( "Resource" ), vConnectors[eActiveProtectionDotation], 0, eNone, goToButton ) );
     builder.SetEnabled( true );
     builder.AddField< ADN_EditLine_Double >( pHolder, "usage", tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterEqualZero );
@@ -64,7 +64,7 @@ void ADN_ActiveProtections_GUI::Build()
     // Weapons
     Q3GroupBox* pWeaponsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Ammunitions" ) );
     ADN_ActiveProtections_WeaponsTable* pWeapons = new ADN_ActiveProtections_WeaponsTable( tr( "Ammunitions" ), builder.GetChildName( "ammunitions-table" ), vConnectors[ eActiveProtectionWeapons ], pWeaponsGroup_ );
-    pWeapons->SetGoToOnDoubleClick( ::eResources );
+    pWeapons->SetGoToOnDoubleClick( ::eSupplies );
 
     // -------------------------------------------------------------------------
     // Layouts

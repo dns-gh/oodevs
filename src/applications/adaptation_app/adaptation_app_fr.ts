@@ -6596,6 +6596,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Limite</translation>
     </message>
     <message>
+        <location filename="ADN_Tr.cpp" line="310"/>
+        <source>Supplies</source>
+        <translation type="unfinished">Ressources</translation>
+    </message>
+    <message>
         <location filename="ADN_Tr.cpp" line="186"/>
         <source>Urban block speed</source>
         <translation>Vitesse bloc urbain</translation>
@@ -6884,11 +6889,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <location filename="ADN_Tr.cpp" line="309"/>
         <source>Launchers</source>
         <translation>Lanceurs</translation>
-    </message>
-    <message>
-        <location filename="ADN_Tr.cpp" line="310"/>
-        <source>Resources</source>
-        <translation>Ressources</translation>
     </message>
     <message>
         <location filename="ADN_Tr.cpp" line="311"/>
@@ -8049,42 +8049,42 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>ADN_Workspace</name>
     <message>
-        <location filename="ADN_Workspace.cpp" line="499"/>
+        <location filename="ADN_Workspace.cpp" line="498"/>
         <source>Sword Adaptation Tool - Saving Errors</source>
         <translation>Sword outil d&apos;adaptation - Erreurs d&apos;enregistrement</translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="500"/>
+        <location filename="ADN_Workspace.cpp" line="499"/>
         <source>Error(s) have been encountered during saving of project </source>
         <translation>Des erreurs ont été rencontrés lors de l&apos;enregistrement du projet </translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="501"/>
+        <location filename="ADN_Workspace.cpp" line="500"/>
         <source>&lt;p&gt;- Unable to save %s : file is write protected&lt;/p&gt;</source>
         <translation>&lt;p&gt;- Impossible de sauvegarder %s : le fichier est en lecture seule&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="595"/>
+        <location filename="ADN_Workspace.cpp" line="594"/>
         <source>ADN - Data export</source>
         <translation>Adaptation - Export des données</translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="320"/>
+        <location filename="ADN_Workspace.cpp" line="319"/>
         <source>Building GUI: %1...</source>
         <translation>Construction de l&apos;interface : %1...</translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="261"/>
+        <location filename="ADN_Workspace.cpp" line="260"/>
         <source>Closing: %1...</source>
         <translation>Fermeture : %1...</translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="414"/>
+        <location filename="ADN_Workspace.cpp" line="413"/>
         <source>Loading: %1...</source>
         <translation>Chargement : %1...</translation>
     </message>
     <message>
-        <location filename="ADN_Workspace.cpp" line="553"/>
+        <location filename="ADN_Workspace.cpp" line="552"/>
         <source>Saving: %1...</source>
         <translation>Sauvegarde : %1...</translation>
     </message>

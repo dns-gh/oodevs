@@ -73,7 +73,7 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
             auto value = static_cast< sword::DotationType >( n );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                           ENT_Tr::ConvertFromDotationType( value, ENT_Tr::eToSim ).c_str(),
-                                          ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData, value ), eResources, value );
+                                          ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData, value ), eSupplies, value );
         }
     }
     popupMenu.exec( pt );
