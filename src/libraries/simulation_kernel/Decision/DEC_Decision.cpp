@@ -115,6 +115,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite", &DEC_AutomateFunctions::PionTimeToMoveDistance );
     brain.RegisterFunction( "DEC_GetRawMission", &DEC_AutomateFunctions::GetMission );
     brain.RegisterFunction( "DEC_SetMission", &DEC_AutomateFunctions::SetMission );
+    brain.RegisterFunction( "DEC_GetDirectionDanger", &DEC_AgentFunctions::GetDirectionDanger );
     brain.RegisterFunction( "DEC_IsMissionPionAvailable", &DEC_OrdersFunctions::IsPionMissionAvailable );
     brain.RegisterFunction( "DEC_IsAutomateMissionPionAvailable", &DEC_OrdersFunctions::IsAutomateMissionAvailable );
     brain.RegisterFunction( "DEC_Pion_GetMilPionType", &DEC_AgentFunctions::GetMilPionType );

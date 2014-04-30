@@ -100,7 +100,6 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions( sword::Brain& brain 
     //limas / Missions
     brain.RegisterFunction( "DEC_GetRawMission", &DEC_AgentFunctions::GetMission );
     brain.RegisterFunction( "DEC_Connaissance_GetRawMission", &DEC_KnowledgeAgentFunctions::GetMission );
-    brain.RegisterFunction( "DEC_GetDirectionDanger", &DEC_AgentFunctions::GetDirectionDanger );
     brain.RegisterFunction( "DEC_GetDirectionEnnemi", &DEC_AgentFunctions::GetDirectionDanger );
 
     //Calculs de positions
