@@ -31,9 +31,8 @@ namespace
         }
         catch( const std::exception& e )
         {
-            const std::string err = tools::GetExceptionMsg( e );
-            MT_LOG_FATAL_ERROR_MSG( err );
-            QMessageBox::critical( 0, tools::translate( "Application", "Error" ), err.c_str() );
+            MT_LOG_FATAL_ERROR_MSG( tools::GetStackTraceAndMessage( e ) );
+            QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::GetExceptionMsg( e ).c_str() );
         }
         return EXIT_FAILURE;
     }

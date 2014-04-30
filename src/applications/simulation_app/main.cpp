@@ -55,10 +55,6 @@ namespace
         {
             MT_LOG_FATAL_ERROR_MSG( e.CreateLoggerMsg() );
         }
-        catch( const xml::exception& e )
-        {
-            MT_LOG_FATAL_ERROR_MSG( tools::GetExceptionMsg( e ) );
-        }
         catch( const tools::Exception& e )
         {
             MT_LOG_FATAL_ERROR_MSG( tools::GetStackTraceAndMessage( e ) );

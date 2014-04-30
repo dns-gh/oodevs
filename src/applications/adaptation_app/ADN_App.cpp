@@ -62,7 +62,7 @@ namespace
                 result += prefix;
             result += line;
         }
-        return result;
+        return result + '\n';
     }
 }
 
@@ -177,11 +177,7 @@ int ADN_App::Run()
         if( outputFile.IsEmpty() && newFile.IsEmpty() )
             QMessageBox::critical( mainWindow_.get(), tools::translate( "ADN_App", "Error" ), tools::GetExceptionMsg( e ).c_str() );
         else
-        {
-            std::stringstream ss;
-            ss << tools::GetExceptionMsg( e ).c_str() << std::endl;
-            MT_LOG_FATAL_ERROR_MSG( Wrap( ss.str(), "ERROR: " ) );
-        }
+            MT_LOG_FATAL_ERROR_MSG( Wrap( tools::GetStackTraceAndMessage( e ), "ERROR: " ) );
         return EXIT_FAILURE;
     }
     mainWindow_->showMaximized();
