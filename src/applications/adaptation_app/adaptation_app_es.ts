@@ -2976,8 +2976,8 @@ tirador</translation>
     <message>
         <location filename="ADN_ListView_Categories_LogisticSupplyClass.cpp" line="26"/>
         <location filename="ADN_ListView_Categories_LogisticSupplyClass.cpp" line="63"/>
-        <source>Logistic categories</source>
-        <translation>Categorías logísticas</translation>
+        <source>Classes</source>
+        <translation type="unfinished">Categorías logísticas</translation>
     </message>
     <message>
         <location filename="ADN_ListView_Categories_LogisticSupplyClass.cpp" line="96"/>

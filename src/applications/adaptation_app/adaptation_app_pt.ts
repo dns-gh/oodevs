@@ -2957,7 +2957,7 @@ stance</source>
     <message>
         <location filename="ADN_ListView_Categories_LogisticSupplyClass.cpp" line="26"/>
         <location filename="ADN_ListView_Categories_LogisticSupplyClass.cpp" line="63"/>
-        <source>Logistic categories</source>
+        <source>Classes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

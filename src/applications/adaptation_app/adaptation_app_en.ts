@@ -2971,8 +2971,8 @@ posture</translation>
     <message>
         <location filename="ADN_ListView_Categories_LogisticSupplyClass.cpp" line="26"/>
         <location filename="ADN_ListView_Categories_LogisticSupplyClass.cpp" line="63"/>
-        <source>Logistic categories</source>
-        <translation>Logistic categories</translation>
+        <source>Classes</source>
+        <translation>Classes</translation>
     </message>
     <message>
         <location filename="ADN_ListView_Categories_LogisticSupplyClass.cpp" line="96"/>
