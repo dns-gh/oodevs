@@ -1747,6 +1747,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
         return false;
     }
     if( isMasalife )
+    {
         pArchetypeBrain.reset( new sword::Brain(
             "plugins={"
             + PLUGIN( "masalife_brain" )
@@ -1755,6 +1756,11 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN46( "errorhandler" )
             + PLUGIN46( "devtools" )
             + "} cwd='" + includePath.ToUTF8() + "'", logger ) );
+        // Activate mission (task) parameter type checking
+        directia::tools::binders::ScriptRef debugOptions = pArchetypeBrain->GetScriptRef();
+        debugOptions["checkTaskParameters"] = true;
+        pArchetypeBrain->GetScriptRef( "masalife.brain.core.setDebugMode" )( debugOptions );
+    }
     else
         pArchetypeBrain.reset( new sword::Brain(
             "plugins={"
