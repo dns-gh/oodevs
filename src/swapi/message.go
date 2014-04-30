@@ -157,6 +157,10 @@ func (w *Writer) Encode(tag uint32, msg proto.Message) (int, error) {
 	return EncodePayload(w.io, tag, data)
 }
 
+func (w *Writer) EncodeMessage(msg *SwordMessage) (int, error) {
+	return w.Encode(msg.tag, msg.GetMessage())
+}
+
 type RawMessageHandler func(size, tag uint32, data []byte)
 
 type Reader struct {

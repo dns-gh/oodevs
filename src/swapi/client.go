@@ -341,7 +341,7 @@ func (c *Client) write() {
 
 	writer := NewWriter(c.link)
 	for post := range c.posts {
-		written, err := writer.Encode(post.message.tag, post.message.GetMessage())
+		written, err := writer.EncodeMessage(&post.message)
 		if err != nil {
 			c.errors <- HandlerError{post.Context, ConnectionError{err}}
 		} else {
