@@ -2943,10 +2943,6 @@ stance</source>
     <name>ADN_ListView_Categories_DotationNature</name>
     <message>
         <location filename="ADN_ListView_Categories_DotationNature.cpp" line="28"/>
-        <source>Resource Natures</source>
-        <translation type="unfinished">الموارد الطبيعة</translation>
-    </message>
-    <message>
         <location filename="ADN_ListView_Categories_DotationNature.cpp" line="65"/>
         <source>Natures</source>
         <translation type="unfinished">طبائع</translation>

@@ -25,7 +25,7 @@
 // Created: SBO 2006-03-23
 // -----------------------------------------------------------------------------
 ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( QWidget* parent )
-    : ADN_ListView( parent, "ADN_ListView_Categories_DotationNature", tools::translate( "ADN_ListView_Categories_DotationNature", "Resource Natures" ) )
+    : ADN_ListView( parent, "ADN_ListView_Categories_DotationNature", tools::translate( "ADN_ListView_Categories_DotationNature", "Natures" ) )
 {
     pConnector_.reset( new ADN_Connector_ListView< ADN_Natures_Data::NatureInfos >( *this ) );
     SetDeletionEnabled( true );
