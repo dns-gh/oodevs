@@ -292,13 +292,13 @@ integration.setPace = function( urgency ) -- urgence TRUE/FALSE
 end
 
 -- Modify the max speed by the given modulation (between 0 and 1)
--- @param modulation, the max speed modulation (between 0 and 1)
+-- @param modulation Real the max speed modulation (between 0 and 1)
 integration.speedMaxModulation = function( modulation )
     DEC_ModulationVitesseMax( modulation )
 end
 
 -- Modify the current speed by the given modulation (between 0 and 1))
--- @param modulation, the current speed modulation (between 0 and 1)
+-- @param modulation Real the current speed modulation (between 0 and 1)
 integration.speedCurrentModulation = function( modulation )
     DEC_ModulationVitesseCourante( modulation )
 end
