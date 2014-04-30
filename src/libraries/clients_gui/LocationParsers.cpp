@@ -44,7 +44,7 @@ LocationParsers::LocationParsers( kernel::Controllers& controllers, const kernel
 // -----------------------------------------------------------------------------
 LocationParsers::~LocationParsers()
 {
-    parsers_.clear();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
