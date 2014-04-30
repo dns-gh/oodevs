@@ -577,6 +577,17 @@ void DEC_AutomateFunctions::SetMission( DEC_Decision_ABC* object, boost::shared_
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetDirectionDanger
+// Created: GGE 2014-04-29
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetDirectionDanger( const boost::shared_ptr< MIL_Mission_ABC > mission )
+{
+    if( !mission.get() )
+        return boost::shared_ptr< MT_Vector2D >();
+    return mission->GetDirDanger();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged
 // Created: LDC 2011-08-05
 // -----------------------------------------------------------------------------
