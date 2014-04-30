@@ -51,6 +51,7 @@ public:
     //@{
     virtual const MT_Vector2D&   GetPosition          () const = 0;
     virtual const MIL_AgentPion* GetPC                () const = 0; //$$$ Bullshit
+    virtual       unsigned int   GetRecipientId       () const = 0;
     virtual       bool           BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const = 0;
     //@}
 

@@ -859,6 +859,15 @@ unsigned int MIL_AutomateLOG::GetLogisticId() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetSupplierId
+// Created: LGY 2014-04-30
+// -----------------------------------------------------------------------------
+unsigned int MIL_AutomateLOG::GetSupplierId() const
+{
+    return GetLogisticId();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::GetArmy
 // Created: AHC 2010-09-27
 // -----------------------------------------------------------------------------

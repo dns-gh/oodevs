@@ -67,6 +67,7 @@ public:
     //! @name Accessors
     //@{
     virtual       SupplySupplier_ABC*   GetSupplier         () const = 0;
+    virtual       unsigned int          GetId               () const = 0;
     virtual const PHY_DotationCategory& GetDotationCategory () const = 0;
     virtual       double                GetGrantedQuantity  () const = 0;
     virtual       double                GetRequestedQuantity() const = 0;
@@ -75,6 +76,12 @@ public:
 
     //! @name Network
     //@{
+    virtual void SendCreation    () const = 0;
+    virtual void SendDestruction () const = 0;
+    virtual void SendChangedState() const = 0;
+    virtual void SendFullState   () const = 0;
+    virtual void Clean           () = 0;
+
     virtual void Serialize( sword::SupplyResourceRequest& msg ) const = 0;
     template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}

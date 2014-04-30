@@ -21,6 +21,7 @@
 #include "KnowledgeGroup.h"
 #include "LogConsignMaintenance.h"
 #include "LogConsignSupply.h"
+#include "LogRequestSupply.h"
 #include "LogConsignMedical.h"
 #include "LogConsignFuneral.h"
 #include "MagicOrder.h"
@@ -109,6 +110,7 @@ void Model::Reset()
     populationKnowledges_  .DeleteAll();
     logConsignsMaintenance_.DeleteAll();
     logConsignsSupply_     .DeleteAll();
+    logRequestsSupply_     .DeleteAll();
     logConsignsMedical_    .DeleteAll();
     objects_               .DeleteAll();
     inhabitants_           .DeleteAll();
@@ -403,6 +405,15 @@ void Model::Update( const sword::SimToClient& wrapper )
         if( LogConsignSupply* consign = logConsignsSupply_.Find( message.log_supply_handling_update().request().id() ) )
             consign->Update( message.log_supply_handling_update() );
     }
+    else if( message.has_log_supply_request_creation() )
+        CreateUpdate< LogRequestSupply >( logRequestsSupply_, message.log_supply_request_creation().request().id(), message.log_supply_request_creation() );
+    else if( message.has_log_supply_request_destruction() )
+        Destroy( logRequestsSupply_, message.log_supply_request_destruction().request().id(), message.log_supply_request_destruction() );
+    else if( message.has_log_supply_request_update() )
+    {
+        if( LogRequestSupply* request = logRequestsSupply_.Find( message.log_supply_request_update().request().id() ) )
+            request->Update( message.log_supply_request_update() );
+    }
     else if( message.has_log_supply_state() )
         agents_.Get( message.log_supply_state().unit().id() ).Update( message.log_supply_state() );
     else if( message.has_log_supply_quotas() )
@@ -658,6 +669,7 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
     populationKnowledges_  .Apply( boost::bind( &PopulationKnowledge::Accept, _1, boost::ref( visitor ) ) );
     logConsignsMaintenance_.Apply( boost::bind( &LogConsignMaintenance::Accept, _1, boost::ref( visitor ) ) );
     logConsignsSupply_     .Apply( boost::bind( &LogConsignSupply::Accept, _1, boost::ref( visitor ) ) );
+    logRequestsSupply_     .Apply( boost::bind( &LogRequestSupply::Accept, _1, boost::ref( visitor ) ) );
     logConsignsMedical_    .Apply( boost::bind( &LogConsignMedical::Accept, _1, boost::ref( visitor ) ) );
     logConsignsFuneral_    .Apply( boost::bind( &LogConsignFuneral::Accept, _1, boost::ref( visitor ) ) );
     fires_                 .Apply( boost::bind( &Fire::Accept, _1, boost::ref( visitor ) ) );

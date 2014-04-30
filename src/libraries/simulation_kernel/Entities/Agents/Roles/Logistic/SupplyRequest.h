@@ -16,6 +16,11 @@
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 
+namespace sword
+{
+    class LogSupplyHandlingUpdate_EnumLogSupplyRequestStatus;
+}
+
 namespace logistic
 {
     class SupplySupplier_ABC;
@@ -31,7 +36,7 @@ class SupplyRequest : public SupplyRequest_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyRequest( const PHY_DotationCategory& dotationCategory );
+             SupplyRequest( const PHY_DotationCategory& dotationCategory, unsigned int recipientId );
              SupplyRequest();
     virtual ~SupplyRequest();
     //@}
@@ -58,6 +63,7 @@ public:
     //! @name Accessors
     //@{
     virtual       SupplySupplier_ABC*   GetSupplier         () const;
+    virtual       unsigned int          GetId               () const;
     virtual const PHY_DotationCategory& GetDotationCategory () const;
     virtual       double                GetGrantedQuantity  () const;
     virtual       double                GetRequestedQuantity() const;
@@ -67,6 +73,12 @@ public:
 
     //! @name Network
     //@{
+    virtual void SendCreation   () const;
+    virtual void SendDestruction() const;
+    virtual void SendChangedState() const;
+    virtual void SendFullState   () const;
+    virtual void Clean           ();
+
     virtual void Serialize( sword::SupplyResourceRequest& msg ) const;
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
@@ -89,7 +101,10 @@ private:
 private:
     //! @name Member data
     //@{
+    unsigned long id_;
+    unsigned int recipientId_;
     const PHY_DotationCategory* dotationCategory_;
+    sword::LogSupplyRequestUpdate_EnumLogSupplyRequestStatus state_;
     T_Resources resources_;
     T_Requesters requesters_;
     SupplySupplier_ABC* supplier_;
@@ -100,6 +115,7 @@ private:
     bool complementarySupply_;
     boost::shared_ptr< LogisticLink_ABC > supplierQuotas_;
     const MIL_Agent_ABC* provider_;
+    bool needNetworkUpdate_;
     //@}
 };
 

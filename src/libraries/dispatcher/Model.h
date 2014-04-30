@@ -33,6 +33,7 @@ namespace dispatcher
     class LogConsignMaintenance;
     class LogConsignMedical;
     class LogConsignSupply;
+    class LogRequestSupply;
     class MagicOrder;
     class MeteoModel;
     class PopulationFire;
@@ -171,6 +172,7 @@ private:
     tools::Resolver< PopulationKnowledge >   populationKnowledges_;
     tools::Resolver< LogConsignMaintenance > logConsignsMaintenance_;
     tools::Resolver< LogConsignSupply >      logConsignsSupply_;
+    tools::Resolver< LogRequestSupply >      logRequestsSupply_;
     tools::Resolver< LogConsignMedical >     logConsignsMedical_;
     tools::Resolver< LogConsignFuneral >     logConsignsFuneral_;
     tools::Resolver< Fire >                  fires_;

@@ -288,6 +288,15 @@ bool MIL_DotationSupplyManager::BelongsToLogisticBase( const MIL_AutomateLOG& lo
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::GetRecipientId
+// Created: LGY 2014-04-30
+// -----------------------------------------------------------------------------
+unsigned int MIL_DotationSupplyManager::GetRecipientId() const
+{
+    return pAutomate_->GetID();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::SendChangedState
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------

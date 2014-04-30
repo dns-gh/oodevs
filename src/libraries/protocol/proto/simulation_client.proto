@@ -3504,6 +3504,9 @@ message SimToClient {
         optional StartUnitFireDetection start_unit_fire_detection = 155;
         optional StopUnitFireDetection stop_unit_fire_detection = 156;
         optional SegmentRequestAck segment_request_ack = 157;
+        optional LogSupplyRequestCreation log_supply_request_creation = 158;
+        optional LogSupplyRequestUpdate log_supply_request_update = 159;
+        optional LogSupplyRequestDestruction log_supply_request_destruction = 160;
     }
     /** @property context
         @brief Identifies the request matching the response

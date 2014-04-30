@@ -2489,9 +2489,7 @@ message LogMedicalHandlingDestruction {
     required Id               unit    = 2;
 }
 
-/** @struct SupplyResourceRequest
-    @brief Queries a dotation
-*/
+//! DEPRECATED
 message SupplyResourceRequest {
     //! The type of the resource
     required Id           resource  = 1;
@@ -2503,10 +2501,7 @@ message SupplyResourceRequest {
     required int32        convoyed  = 4;
 }
 
-/** @struct SupplyFlowRecipient
-    @brief The recipient(receiver) of a supply flow
-    @todo What's this ?
-*/
+//! DEPRECATED
 message SupplyRecipientResourcesRequest {
     //! The recipient of the supply flow
     required Id                    recipient = 1;
@@ -2565,8 +2560,10 @@ message LogSupplyHandlingUpdate {
     //! When set, the tick when the current state will be finished
     //! If unset, the end state time is unknown
     optional int32                           current_state_end_tick = 4;
-    //! The resources requested
+    //! DEPRECATED
     optional SupplyRecipientResourceRequests requests               = 5;
+    //! The list of request identifiers
+    repeated Id                              supply_requests        = 6;
 }
 
 /** @struct LogSupplyHandlingDestruction
@@ -2575,6 +2572,60 @@ message LogSupplyHandlingUpdate {
 message LogSupplyHandlingDestruction {
     //! The request identifier
     required Id              request  = 1;
+}
+
+/** @struct LogSupplyRequestCreation
+    @brief Notifies of the creation of a supply request
+*/
+message LogSupplyRequestCreation {
+    //! The request identifier
+    required Id request   = 1;
+    //! The requester identifier
+    required Id requester = 2;
+    //! The resource
+    required Id resource  = 3;
+}
+
+/** @struct LogSupplyRequestUpdate
+    @brief Notifies of the update of a supply request
+*/
+message LogSupplyRequestUpdate {
+    enum EnumLogSupplyRequestStatus {
+        //! Request is outstanding
+        request_outstanding = 0;
+        //! Request is granted
+        request_granted     = 1;
+        //! Request is conveyed
+        request_conveyed   = 2;
+        //! Request is delivered
+        request_delivered   = 3;
+        //! Request is rejected
+        request_rejected    = 4;
+    }
+    //! The request identifier
+    required Id                        request   = 1;
+    //! The current state of the request
+    required EnumLogSupplyRequestStatus state    = 2;
+    //! The recipient identifier
+    required Id                        recipient = 3;
+    //! The supplier identifier
+    required Id                        supplier  = 4;
+    //! The amount requested
+    required int32                     requested = 5;
+    //! The amount granted
+    required int32                     granted   = 6;
+    //! The amount being convoyed
+    required int32                     convoyed  = 7;
+    //! The amount delivered
+    required int32                     delivered = 8;
+}
+
+/** @struct LogSupplyRequestDestruction
+    @brief Notifies of the destruction of a supply request
+*/
+message LogSupplyRequestDestruction {
+    //! The request identifier
+    required Id request = 1;
 }
 
 //! LogHistoryEntry is a snapshot of a logistic request.
