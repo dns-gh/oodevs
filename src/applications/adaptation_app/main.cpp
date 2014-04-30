@@ -31,7 +31,7 @@ namespace
         }
         catch( const std::exception& e )
         {
-            MT_LOG_FATAL_ERROR_MSG( tools::GetExceptionMsg( e ) );
+            MT_LOG_FATAL_ERROR_MSG( tools::GetStackTraceAndMessage( e ) );
             if( !silent )
                 QMessageBox::critical( 0, "Critical", tools::GetExceptionMsg( e ).c_str() );
         }

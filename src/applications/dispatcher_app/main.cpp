@@ -40,7 +40,7 @@ namespace
         }
         catch( const std::exception& e )
         {
-            MT_LOG_FATAL_ERROR_MSG( tools::GetExceptionMsg( e ) );
+            MT_LOG_FATAL_ERROR_MSG( tools::GetStackTraceAndMessage( e ) );
             return EXIT_FAILURE;
         }
         return EXIT_SUCCESS;
