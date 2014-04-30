@@ -271,7 +271,10 @@ class AccessView extends Backbone.View
             @view.model.add usr.clone()
 
 pop_settings = (ui, session, users) ->
-    all_users = (id: d.id, name: d.get "name" for d in users.models)
+    all_users = []
+    for d in users.models
+        if d.get("type") != "manager"
+            all_users.push id: d.id, name: d.get "name"
     data = _.extend session, users: all_users
     if !data.owner
         data.owner = name: user.name
