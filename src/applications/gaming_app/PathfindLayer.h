@@ -58,6 +58,7 @@ public:
     //@}
 
 private:
+    virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( gui::Viewport_ABC& viewport );
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
 
@@ -107,6 +108,7 @@ private:
     gui::GlTools_ABC& tools_;
     Publisher_ABC& publisher_;
     const kernel::CoordinateConverter_ABC& converter_;
+    geometry::Rectangle2f world_;
     sword::ClientToSim message_;
     kernel::SafePointer< kernel::Entity_ABC > element_;
     std::deque< geometry::Point2f > positions_;

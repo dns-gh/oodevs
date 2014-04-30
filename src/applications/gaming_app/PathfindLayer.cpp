@@ -110,6 +110,11 @@ PathfindLayer::~PathfindLayer()
     controllers_.Unregister( *this );
 }
 
+void PathfindLayer::Initialize( const geometry::Rectangle2f& extent )
+{
+    world_ = extent;
+}
+
 namespace
 {
     void SetColor( QColor color )
@@ -340,6 +345,16 @@ void PathfindLayer::PickSegment( geometry::Point2f point )
     }
 }
 
+namespace
+{
+    geometry::Point2f Snap( const geometry::Point2f& p, const geometry::Rectangle2f& r )
+    {
+        return geometry::Point2f(
+            std::min( r.Right(), std::max( r.Left(), p.X() ) ),
+            std::min( r.Top(), std::max( r.Bottom(), p.Y() ) ) );
+    }
+}
+
 bool PathfindLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Point2f& point )
 {
     hovered_ = boost::none;
@@ -382,14 +397,15 @@ bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::
 {
     if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
+    const geometry::Point2f snapped = Snap( point, world_ );
     if( event->keyboardModifiers() == Qt::ControlModifier )
-        hovered_->coordinate_ = point;
+        hovered_->coordinate_ = snapped;
     else
     {
         auto request = message_.mutable_message()->mutable_segment_request();
-        converter_.ConvertToGeo( point, *request->mutable_position() );
+        converter_.ConvertToGeo( snapped, *request->mutable_position() );
         publisher_.Send( message_ );
-        point_ = point;
+        point_ = snapped;
     }
     lock_ = true;
     return true;
