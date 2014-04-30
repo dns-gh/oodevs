@@ -199,10 +199,13 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
     point_ = point;
     if( controllers_.GetCurrentMode() == eModes_Itinerary )
     {
-        menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Itinerary from here" ), this, SLOT( SetStartPosition() ) );
-        menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Itinerary to here" ), this, SLOT( SetEndPosition() ) );
+        if( world_.IsInside( point ) )
+        {
+            menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Itinerary from here" ), this, SLOT( SetStartPosition() ) );
+            menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Itinerary to here" ), this, SLOT( SetEndPosition() ) );
+        }
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Clear waypoints" ), this, SLOT( ClearPositions() ) );
-}
+    }
     else
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Create itinerary" ), this, SLOT( OpenEditingMode() ) );
 }
