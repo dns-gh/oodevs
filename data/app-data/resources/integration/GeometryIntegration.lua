@@ -227,7 +227,7 @@ end
 -- @param areaOfResponsibility Masalife knowledge of an area of responsibility
 -- @return Simulation area
 integration.convertAORtoLocalisation = function ( areaOfResponsibility ) 
-    return DEC_Geometrie_ConvertirFuseauEnLocalisation( areaOfResponsibility.source )
+    return integration.getAreaFromAOR( areaOfResponsibility.source )
 end
 
 --- Returns the convex hull of a list of locations.
@@ -371,6 +371,13 @@ end
 
 DEC_Geometrie_PositionAdvanceAlongFuseauAutomat = function( position )
     return DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
+end
+
+--- Returns the corresponding area of the given AOR
+-- @param AOR Sim AOR
+-- @return Sim area
+integration.getAreaFromAOR = function ( AOR )
+    return DEC_Geometrie_ConvertirFuseauEnLocalisation( AOR )
 end
 
 integration.postionAdvanceAlongAOR = integration.positionAdvanceAlongAOR
