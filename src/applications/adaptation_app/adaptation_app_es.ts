@@ -2062,8 +2062,8 @@ Estacionado y motor encendido</translation>
     <name>ADN_Equipments_Resources_Table</name>
     <message>
         <location filename="ADN_Equipments_Resources_Table.cpp" line="29"/>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Resources_Table.cpp" line="95"/>

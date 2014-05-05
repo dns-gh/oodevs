@@ -26,7 +26,7 @@ ADN_Equipments_Resources_Table::ADN_Equipments_Resources_Table( const QString& o
     dataModel_.setColumnCount( 1 );
 
     QStringList horizontalHeaders;
-    horizontalHeaders << tools::translate( "ADN_Equipments_Resources_Table", "Resources" );
+    horizontalHeaders << tools::translate( "ADN_Equipments_Resources_Table", "Supplies" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );

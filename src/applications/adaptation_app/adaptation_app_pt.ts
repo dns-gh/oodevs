@@ -2045,7 +2045,7 @@ Parked engine running</source>
     <name>ADN_Equipments_Resources_Table</name>
     <message>
         <location filename="ADN_Equipments_Resources_Table.cpp" line="29"/>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
