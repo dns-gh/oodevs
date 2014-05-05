@@ -1362,8 +1362,8 @@ Estacionado y motor encendido</translation>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
         <location filename="ADN_Equipments_Dotations_GUI.cpp" line="32"/>
-        <source>Category</source>
-        <translation>Categoría</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Dotations_GUI.cpp" line="33"/>

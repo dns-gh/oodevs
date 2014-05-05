@@ -29,7 +29,7 @@ ADN_Equipments_Dotations_GUI::ADN_Equipments_Dotations_GUI( const QString& objec
     dataModel_.setColumnCount( 4 );
 
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Category" )
+    horizontalHeaders << tr( "Supplies" )
                       << tr( "Qty" )
                       << tr( "Log threshold (%)" )
                       << tr( "Normalized consumption" );

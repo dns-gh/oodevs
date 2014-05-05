@@ -1361,8 +1361,8 @@ Arrêt moteur allumé</translation>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
         <location filename="ADN_Equipments_Dotations_GUI.cpp" line="32"/>
-        <source>Category</source>
-        <translation>Catégorie</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Catégorie</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Dotations_GUI.cpp" line="33"/>

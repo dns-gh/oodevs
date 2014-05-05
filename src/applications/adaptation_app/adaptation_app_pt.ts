@@ -1349,7 +1349,7 @@ Parked engine running</source>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
         <location filename="ADN_Equipments_Dotations_GUI.cpp" line="32"/>
-        <source>Category</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
