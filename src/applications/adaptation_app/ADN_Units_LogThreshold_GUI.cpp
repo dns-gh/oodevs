@@ -24,7 +24,7 @@ ADN_Units_LogThreshold_GUI::ADN_Units_LogThreshold_GUI( const QString& objectNam
 {
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;
-    horizontalHeaders << tools::translate( "ADN_Units_LogThreshold_GUI", "Logistic supply class" )
+    horizontalHeaders << tools::translate( "ADN_Units_LogThreshold_GUI", "Class of supply" )
                       << tools::translate( "ADN_Units_LogThreshold_GUI", "Log threshold (%)" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( 0, QHeaderView::Fixed );

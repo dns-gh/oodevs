@@ -7452,8 +7452,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <location filename="ADN_Units_LogThreshold_GUI.cpp" line="27"/>
-        <source>Logistic supply class</source>
-        <translation>Tranche logistique</translation>
+        <source>Class of supply</source>
+        <translation type="unfinished">Tranche logistique</translation>
     </message>
     <message>
         <location filename="ADN_Units_LogThreshold_GUI.cpp" line="92"/>

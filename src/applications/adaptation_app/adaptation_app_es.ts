@@ -7445,8 +7445,8 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
     </message>
     <message>
         <location filename="ADN_Units_LogThreshold_GUI.cpp" line="27"/>
-        <source>Logistic supply class</source>
-        <translation>Clase logística de material</translation>
+        <source>Class of supply</source>
+        <translation type="unfinished">Clase logística de material</translation>
     </message>
     <message>
         <location filename="ADN_Units_LogThreshold_GUI.cpp" line="92"/>

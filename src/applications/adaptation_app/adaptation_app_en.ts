@@ -7427,8 +7427,8 @@ Click &quot;Ok&quot; to delete it.</translation>
     <name>ADN_Units_LogThreshold_GUI</name>
     <message>
         <location filename="ADN_Units_LogThreshold_GUI.cpp" line="27"/>
-        <source>Logistic supply class</source>
-        <translation>Logistic supply class</translation>
+        <source>Class of supply</source>
+        <translation>Class of supply</translation>
     </message>
     <message>
         <location filename="ADN_Units_LogThreshold_GUI.cpp" line="28"/>

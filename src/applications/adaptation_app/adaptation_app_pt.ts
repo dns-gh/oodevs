@@ -7413,7 +7413,7 @@ Click &quot;Ok&quot; to delete it.</source>
     <name>ADN_Units_LogThreshold_GUI</name>
     <message>
         <location filename="ADN_Units_LogThreshold_GUI.cpp" line="27"/>
-        <source>Logistic supply class</source>
+        <source>Class of supply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
