@@ -21,7 +21,7 @@
     <message>
         <location filename="ADN_ActiveProtections_GUI.cpp" line="56"/>
         <location filename="ADN_ActiveProtections_GUI.cpp" line="60"/>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8095,7 +8095,7 @@ Click &quot;Ok&quot; to delete it.</source>
     <name>ActiveProtections_Data</name>
     <message>
         <location filename="ADN_ActiveProtections_Data.cpp" line="263"/>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
