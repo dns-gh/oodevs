@@ -2072,6 +2072,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::
         return;
     else if( wrapper.message().has_compute_pathfind_ack() )
         return;
+    else if( wrapper.message().has_segment_request_ack() )
+        return;
     else
         UnhandledMessage( &wrapper.message() );
 }

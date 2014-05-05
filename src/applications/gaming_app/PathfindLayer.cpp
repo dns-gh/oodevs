@@ -25,21 +25,42 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include <boost/assign.hpp>
 
+namespace
+{
+    sword::ClientToSim MakeMessage()
+    {
+        sword::ClientToSim msg;
+        auto request = msg.mutable_message()->mutable_segment_request();
+        request->add_terrains( sword::highway );
+        request->add_terrains( sword::large_road );
+        request->add_terrains( sword::medium_road );
+        request->add_terrains( sword::small_road );
+        request->add_terrains( sword::crossroad );
+        request->add_terrains( sword::street );
+        request->add_terrains( sword::avenue );
+        request->add_terrains( sword::underpass );
+        request->set_radius( 500 );
+        request->set_count( 1 );
+        return msg;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer constructor
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
 PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
-                              Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& coordinateConverter )
+                              Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
     : controllers_( controllers )
     , tools_( tools )
     , element_( controllers )
     , publisher_( publisher )
-    , coordinateConverter_( coordinateConverter )
+    , converter_( converter )
+    , message_( MakeMessage() )
     , lock_( false )
 {
     controllers_.Register( *this );
-    std::function< void( const sword::SimToClient& ) > fun =
+    const std::function< void( const sword::SimToClient& ) > fun =
         [&]( const sword::SimToClient& message )
         {
             if( !message.message().has_compute_pathfind_ack() )
@@ -49,18 +70,35 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
             if( request.error_code() != sword::ComputePathfindAck_ErrorCode_no_error )
                 return;
             path_.clear();
-            const auto& path = request.path();
-            const auto& points = path.points();
+            const auto& points = request.path().points();
             for( auto it = points.begin(); it != points.end(); ++it )
             {
                 boost::optional< uint32_t > waypoint;
                 if( it->has_waypoint() )
                     waypoint = it->waypoint();
-                const Point p = { coordinateConverter_.ConvertToXY( it->coordinate() ), waypoint };
+                const Point p = { converter_.ConvertToXY( it->coordinate() ), waypoint };
                 path_.push_back( p );
             }
         };
     publisher_.Register( fun );
+    const std::function< void( const sword::SimToClient& ) > fun2 =
+        [&]( const sword::SimToClient& message )
+        {
+            if( !message.message().has_segment_request_ack() )
+                return;
+            lock_ = false;
+            if( !hovered_ )
+                return;
+            const auto& request = message.message().segment_request_ack();
+            if( request.error_code() != sword::SegmentRequestAck_ErrorCode_no_error )
+                return;
+            const auto& segments = request.segments();
+            for( auto it = segments.begin(); it != segments.end(); ++it )
+                hovered_->coordinate_ = geometry::Segment2f(
+                    converter_.ConvertToXY( it->from() ),
+                    converter_.ConvertToXY( it->to() ) ).Project( point_ );
+        };
+    publisher_.Register( fun2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +108,11 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
 PathfindLayer::~PathfindLayer()
 {
     controllers_.Unregister( *this );
+}
+
+void PathfindLayer::Initialize( const geometry::Rectangle2f& extent )
+{
+    world_ = extent;
 }
 
 namespace
@@ -156,10 +199,13 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
     point_ = point;
     if( controllers_.GetCurrentMode() == eModes_Itinerary )
     {
-        menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Itinerary from here" ), this, SLOT( SetStartPosition() ) );
-        menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Itinerary to here" ), this, SLOT( SetEndPosition() ) );
+        if( world_.IsInside( point ) )
+        {
+            menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Itinerary from here" ), this, SLOT( SetStartPosition() ) );
+            menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Itinerary to here" ), this, SLOT( SetEndPosition() ) );
+        }
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Clear waypoints" ), this, SLOT( ClearPositions() ) );
-}
+    }
     else
         menu.InsertItem( "Itinerary", tools::translate( "LocationEditorToolbar", "Create itinerary" ), this, SLOT( OpenEditingMode() ) );
 }
@@ -201,7 +247,7 @@ void PathfindLayer::SetEndPosition()
     if( positions_.size() > 1 )
         positions_.back() = point_;
     else
-    positions_.push_back( point_ );
+        positions_.push_back( point_ );
     SendRequest();
 }
 
@@ -216,9 +262,8 @@ void PathfindLayer::SendRequest()
         sword::ClientToSim msg;
         auto request = msg.mutable_message()->mutable_compute_pathfind()->mutable_request();
         request->mutable_unit()->set_id( element_->GetId() );
-        auto* positions = request->mutable_positions();
         for( auto it = positions_.begin(); it != positions_.end(); ++it )
-            coordinateConverter_.ConvertToGeo( *it, *positions->Add() );
+            converter_.ConvertToGeo( *it, *request->add_positions() );
         for( auto it = element_->Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
             request->add_equipment_types()->set_id( it.NextElement().type_.GetId() );
         request->set_ignore_dynamic_objects( true );
@@ -303,6 +348,16 @@ void PathfindLayer::PickSegment( geometry::Point2f point )
     }
 }
 
+namespace
+{
+    geometry::Point2f Snap( const geometry::Point2f& p, const geometry::Rectangle2f& r )
+    {
+        return geometry::Point2f(
+            std::min( r.Right(), std::max( r.Left(), p.X() ) ),
+            std::min( r.Top(), std::max( r.Bottom(), p.Y() ) ) );
+    }
+}
+
 bool PathfindLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Point2f& point )
 {
     hovered_ = boost::none;
@@ -345,24 +400,26 @@ bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::
 {
     if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
-    hovered_->coordinate_ = point;
+    const geometry::Point2f snapped = Snap( point, world_ );
+    if( event->keyboardModifiers() == Qt::ControlModifier )
+        hovered_->coordinate_ = snapped;
+    else
+    {
+        auto request = message_.mutable_message()->mutable_segment_request();
+        converter_.ConvertToGeo( snapped, *request->mutable_position() );
+        publisher_.Send( message_ );
+        point_ = snapped;
+    }
+    lock_ = true;
     return true;
 }
 
-bool PathfindLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
+bool PathfindLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& /*point*/ )
 {
     if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
-    positions_.insert( positions_.begin() + hovered_->lastWaypoint_, point );
+    positions_.insert( positions_.begin() + hovered_->lastWaypoint_, hovered_->coordinate_ );
     SendRequest();
-    return true;
-}
-
-bool PathfindLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
-{
-    if( !hovered_ )
-        return false;
-    hovered_ = boost::none;
     return true;
 }
 
