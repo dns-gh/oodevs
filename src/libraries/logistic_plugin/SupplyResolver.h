@@ -85,7 +85,7 @@ public:
     std::string transportProvider_;
     std::string conveyor_;
     std::string state_;
-    std::map< int, Resource > resources_;
+    std::map< std::pair< int, int >, Resource > resources_;
     //@}
 };
 

@@ -52,7 +52,7 @@ void SupplyConsignData::WriteConsign( ConsignWriter& output ) const
                 << state_
                 << stateEndTick_;
 
-            for( std::map< int, Resource >::const_iterator itRes = resources_.begin(); itRes != resources_.end(); ++itRes )
+            for( auto itRes = resources_.begin(); itRes != resources_.end(); ++itRes )
             {
                 const Resource& resource = itRes->second;
                 if( resource.recipientAutomatId_ == recipientAutomatId )
@@ -161,7 +161,7 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& m
                     resource.requested_     = boost::lexical_cast< std::string >( resourceMsg.requested() );
                     resource.granted_       = boost::lexical_cast< std::string >( resourceMsg.granted() );
                     resource.conveyed_      = boost::lexical_cast< std::string >( resourceMsg.convoyed() );
-                    resources_[ resourceId ] = resource;
+                    resources_[ std::pair< int, int >( resourceId, recipientId ) ] = resource;
                 }
             }
         }
@@ -215,7 +215,7 @@ std::string plugins::logistic::GetSupplyHeader()
         resource.requested_ = tools::translate( "logistic", "requested" ).toStdString();
         resource.granted_   = tools::translate( "logistic", "granted" ).toStdString();
         resource.conveyed_  = tools::translate( "logistic", "conveyed" ).toStdString();
-        consign.resources_[ i ] = resource;
+        consign.resources_[ std::pair< int, int >( i, 0 ) ] = resource;
     }
     return consign.ToString();
 }
