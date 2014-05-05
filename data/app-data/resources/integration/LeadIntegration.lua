@@ -549,7 +549,7 @@ integration.manageEndMission = function( self )
             self.Feedback( self.feedbacks.done )
             return
         else
-           reportFunction(eRC_FinMission )
+            reportOnceFunction( eRC_FinMission )
         end
         local integration = integration
         for i = 1, #self.parameters.commandingEntities do
