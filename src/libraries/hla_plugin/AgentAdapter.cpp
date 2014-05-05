@@ -34,7 +34,7 @@ AgentAdapter::AgentAdapter( tic::PlatformDelegateFactory_ABC& factory, const ker
     , agent_( agent )
     , callback_( cb )
     , childIndex_( 0 )
-    , platforms_( factory.Create( agent ) )
+    , platforms_( std::move( factory.Create( agent ) ) )
 {
     // NOTHING
 }

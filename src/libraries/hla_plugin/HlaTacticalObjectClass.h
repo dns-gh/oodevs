@@ -57,8 +57,8 @@ class HlaTacticalObjectClass : public HlaClass_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    HlaTacticalObjectClass( Federate_ABC& federate, const HlaObjectNameFactory_ABC& nameFactory, std::auto_ptr< HlaTacticalObjectFactory_ABC > factory
-            , std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory, std::auto_ptr< ClassBuilder_ABC > builder );
+    HlaTacticalObjectClass( Federate_ABC& federate, const HlaObjectNameFactory_ABC& nameFactory, std::unique_ptr< HlaTacticalObjectFactory_ABC > factory
+            , std::unique_ptr< RemoteHlaObjectFactory_ABC > remoteFactory, std::unique_ptr< ClassBuilder_ABC > builder );
     virtual ~HlaTacticalObjectClass();
     //@}
 
@@ -97,13 +97,13 @@ private:
     //! @name Member data
     //@{
     const HlaObjectNameFactory_ABC& nameFactory_;
-    std::auto_ptr< HlaTacticalObjectFactory_ABC > factory_;
-    std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory_;
-    std::auto_ptr< ::hla::Class< HlaObject_ABC > > hlaClass_;
+    std::unique_ptr< HlaTacticalObjectFactory_ABC > factory_;
+    std::unique_ptr< RemoteHlaObjectFactory_ABC > remoteFactory_;
+    std::unique_ptr< ::hla::Class< HlaObject_ABC > > hlaClass_;
     T_AttributeIdentifiers attributes_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;
-    std::auto_ptr< ClassListenerComposite > pListeners_;
+    std::unique_ptr< ClassListenerComposite > pListeners_;
     //@}
 };
 

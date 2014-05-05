@@ -49,22 +49,22 @@ public:
 
     //! @name Operations
     //@{
-    std::auto_ptr< HlaClass > CreateAggregateClass();
-    std::auto_ptr< HlaClass > CreateSurfaceVesselClass();
-    std::auto_ptr< HlaClass > CreateAircraftClass();
-    std::auto_ptr< HlaClass > CreateGroundVehicleClass();
-    std::auto_ptr< HlaClass > CreateHumanClass();
-    std::auto_ptr< HlaClass > CreateRprAggregateClass();
-    std::auto_ptr< HlaClass > CreateRprSurfaceVesselClass();
-    std::auto_ptr< HlaClass > CreateRprAircraftClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateMinefieldClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateCulturalFeatureClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateBreachablePointObjectClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateBreachableLinearObjectClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateOtherPointObjectClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateOtherArealObjectClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateATP45HazardAreaClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateRawDataHazardContourGroupClass();
+    std::unique_ptr< HlaClass > CreateAggregateClass();
+    std::unique_ptr< HlaClass > CreateSurfaceVesselClass();
+    std::unique_ptr< HlaClass > CreateAircraftClass();
+    std::unique_ptr< HlaClass > CreateGroundVehicleClass();
+    std::unique_ptr< HlaClass > CreateHumanClass();
+    std::unique_ptr< HlaClass > CreateRprAggregateClass();
+    std::unique_ptr< HlaClass > CreateRprSurfaceVesselClass();
+    std::unique_ptr< HlaClass > CreateRprAircraftClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateMinefieldClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateCulturalFeatureClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateBreachablePointObjectClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateBreachableLinearObjectClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateOtherPointObjectClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateOtherArealObjectClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateATP45HazardAreaClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateRawDataHazardContourGroupClass();
     //@}
 
 private:

@@ -79,9 +79,9 @@ namespace hla
     class NetnClassBuilder : public ClassBuilder
     {
     protected:
-                 NetnClassBuilder( const std::string& name, bool publish, bool subscribe, const std::vector< std::string >& attributes, std::auto_ptr< ClassBuilder_ABC > builder )
+                 NetnClassBuilder( const std::string& name, bool publish, bool subscribe, const std::vector< std::string >& attributes, std::unique_ptr< ClassBuilder_ABC > builder )
                      : ClassBuilder( name, publish, subscribe, attributes )
-                     , builder_( builder )
+                     , builder_( std::move( builder ) )
                  {}
         virtual ~NetnClassBuilder() {}
     public:
@@ -97,7 +97,7 @@ namespace hla
             ClassBuilder::GetAttributes( attributes );
         }
     private:
-        std::auto_ptr< ClassBuilder_ABC > builder_;
+        std::unique_ptr< ClassBuilder_ABC > builder_;
     };
     namespace details
     {
@@ -144,7 +144,7 @@ namespace hla
                                     ( "Status" )
                                     ( "Symbol" )
                                     ( "EmbeddedUnitList" )
-            , std::auto_ptr< ClassBuilder_ABC >( new AggregateEntityBuilder( isHla13 ) ) )
+            , std::unique_ptr< ClassBuilder_ABC >( new AggregateEntityBuilder( isHla13 ) ) )
         {}
     };
     class SurfaceVesselBuilder : public ClassBuilder
@@ -170,7 +170,7 @@ namespace hla
                     , boost::assign::list_of( "UniqueID" )
                                             ( "Callsign" )
                                             ( "EmbeddedUnitList" )
-            , std::auto_ptr< ClassBuilder_ABC >( new SurfaceVesselBuilder( isHla13 ) ) )
+            , std::unique_ptr< ClassBuilder_ABC >( new SurfaceVesselBuilder( isHla13 ) ) )
         {}
     };
     class AircraftBuilder : public ClassBuilder
@@ -196,7 +196,7 @@ namespace hla
             , boost::assign::list_of( "UniqueID" )
                                     ( "Callsign" )
                                     ( "EmbeddedUnitList" )
-            , std::auto_ptr< ClassBuilder_ABC >( new AircraftBuilder( isHla13 ) ) )
+            , std::unique_ptr< ClassBuilder_ABC >( new AircraftBuilder( isHla13 ) ) )
         {}
     };
 
@@ -223,7 +223,7 @@ namespace hla
                     , boost::assign::list_of( "UniqueID" )
                                             ( "Callsign" )
                                             ( "EmbeddedUnitList" )
-            , std::auto_ptr< ClassBuilder_ABC >( new GroundVehicleBuilder( isHla13 ) ) )
+            , std::unique_ptr< ClassBuilder_ABC >( new GroundVehicleBuilder( isHla13 ) ) )
         {}
     };
 
@@ -249,7 +249,7 @@ namespace hla
             : NetnClassBuilder( "BaseEntity.PhysicalEntity.Lifeform.Human.NETN_Human", true, false
                     , boost::assign::list_of( "UniqueID" )
                                     ( "Callsign" )
-            , std::auto_ptr< ClassBuilder_ABC >( new HumanBuilder( isHla13 ) ) )
+            , std::unique_ptr< ClassBuilder_ABC >( new HumanBuilder( isHla13 ) ) )
         {}
     };
 

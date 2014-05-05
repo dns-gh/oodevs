@@ -35,7 +35,7 @@ class NetnHuman : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-        NetnHuman( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign,
+        NetnHuman( std::unique_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign,
                  const std::vector< char >& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer, const std::string& rtiId );
     virtual ~NetnHuman( );
     //@}
@@ -54,10 +54,10 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ObjectListenerComposite > listeners_;
-    std::auto_ptr< HlaObject_ABC > aggregate_;
+    std::unique_ptr< ObjectListenerComposite > listeners_;
+    std::unique_ptr< HlaObject_ABC > aggregate_;
     FOM_Serializer_ABC& fomSerializer_;
-    std::auto_ptr< AttributesSerializer > attributes_;
+    std::unique_ptr< AttributesSerializer > attributes_;
     //@}
 };
 

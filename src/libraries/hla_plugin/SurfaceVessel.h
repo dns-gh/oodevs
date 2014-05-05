@@ -99,11 +99,11 @@ private:
     //! @name Member data
     //@{
     std::string identifier_;
-    std::auto_ptr< ObjectListenerComposite > listeners_;
+    std::unique_ptr< ObjectListenerComposite > listeners_;
     Agent_ABC* agent_;
     EntityIdentifierResolver_ABC& entityIdentifierResolver_;
     FOM_Serializer_ABC& fomSerializer_;
-    std::auto_ptr< AttributesUpdater > attributesUpdater_;
+    std::unique_ptr< AttributesUpdater > attributesUpdater_;
     rpr::ForceIdentifier force_;
     rpr::EntityType type_;
     Marking marking_;

@@ -63,7 +63,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::Interaction< T > > interaction_;
+    std::unique_ptr< ::hla::Interaction< T > > interaction_;
     //@}
 };
 

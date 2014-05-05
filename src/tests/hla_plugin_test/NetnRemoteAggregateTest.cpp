@@ -28,9 +28,8 @@ namespace
     public:
         Fixture()
             : rprRemote ( new MockHlaObject() )
-            , pRemote   ( static_cast< HlaObject_ABC* >( rprRemote ) )
             , fomSerialization( 1 )
-            , netnRemote( pRemote, "identifier", fomSerialization )
+            , netnRemote( std::unique_ptr< HlaObject_ABC >( rprRemote ), "identifier", fomSerialization )
         {
             MOCK_EXPECT( rprRemote->Register );
             netnRemote.Register( listener );
@@ -42,7 +41,6 @@ namespace
             return ::hla::Deserializer( &buffer[0], buffer.size() );
         }
         MockHlaObject* rprRemote;
-        std::auto_ptr< HlaObject_ABC > pRemote;
         MockObjectListener listener;
         FOM_Serializer fomSerialization;
         NetnAggregate netnRemote;

@@ -34,13 +34,13 @@ using namespace plugins::hla;
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
 HlaClass::HlaClass( Federate_ABC& federate, LocalAgentResolver_ABC& resolver, const HlaObjectNameFactory_ABC& nameFactory,
-                    std::auto_ptr< HlaObjectFactory_ABC > factory, std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory,
-                    std::auto_ptr< ClassBuilder_ABC > builder, OwnershipStrategy_ABC& ownershipStrategy )
+                    std::unique_ptr< HlaObjectFactory_ABC > factory, std::unique_ptr< RemoteHlaObjectFactory_ABC > remoteFactory,
+                    std::unique_ptr< ClassBuilder_ABC > builder, OwnershipStrategy_ABC& ownershipStrategy )
     : federate_         ( federate )
     , resolver_         ( resolver )
     , nameFactory_      ( nameFactory )
-    , factory_          ( factory )
-    , remoteFactory_    ( remoteFactory )
+    , factory_          ( std::move( factory ) )
+    , remoteFactory_    ( std::move( remoteFactory ) )
     , ownershipStrategy_( ownershipStrategy )
     , pListeners_       ( new ClassListenerComposite() )
     , hlaClass_         ( new ::hla::Class< HlaObject_ABC >( *this, true ) )

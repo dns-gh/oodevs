@@ -88,8 +88,8 @@ private:
     const ContextFactory_ABC& ctxtFactory_;
     const std::string federateName_;
     const ::hla::FederateIdentifier federateHandle_;
-    std::auto_ptr< T_OfferSender > pOfferSender_;
-    std::auto_ptr< T_RequestSender > pRequestSender_;
+    std::unique_ptr< T_OfferSender > pOfferSender_;
+    std::unique_ptr< T_RequestSender > pRequestSender_;
     OwnershipStrategy_ABC& ownershipStrategy_;
     OwnershipController_ABC& ownershipController_;
     dispatcher::Logger_ABC& logger_;

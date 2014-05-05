@@ -38,9 +38,9 @@ DebugFederateAmbassadorFactory::~DebugFederateAmbassadorFactory()
 // Name: DebugFederateAmbassadorFactory::Create
 // Created: SLI 2011-05-27
 // -----------------------------------------------------------------------------
-std::auto_ptr< plugins::hla::Federate_ABC > DebugFederateAmbassadorFactory::Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const
+std::unique_ptr< plugins::hla::Federate_ABC > DebugFederateAmbassadorFactory::Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const
 {
-    std::auto_ptr< plugins::hla::Federate_ABC > result = factory_.Create( ambassador, name, lookAhead );
+    std::unique_ptr< plugins::hla::Federate_ABC > result = factory_.Create( ambassador, name, lookAhead );
     result->Register( *ambassador_ );
     return result;
 }

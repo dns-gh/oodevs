@@ -49,6 +49,10 @@ namespace
         MockEntityIdentifierResolver entityIdResolver;
         MockFOM_Serialization fomSerialization;
     };
+    std::unique_ptr< Federate_ABC > returnFederate( ::hla::RtiAmbassador_ABC&, const std::string&, int, Federate_ABC* ptr )
+    {
+        return std::unique_ptr< Federate_ABC >( ptr );
+    }
 }
 // TODO leaks
 BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_netn_by_default, Fixture )
@@ -57,7 +61,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
     xis >> xml::start( "root" );
     ::hla::MockRtiAmbassador ambassador;
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().in( s ).with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "" ).returns( &ambassador );
-    MOCK_EXPECT( federateFactory.Create ).once().in( s ).with( mock::any, "SWORD", -1 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
+    MOCK_EXPECT( federateFactory.Create ).once().in( s ).with( mock::any, "SWORD", -1 ).calls( boost::bind( &returnFederate, _1, _2, _3, federate ) );
     MOCK_EXPECT( federate->Connect ).once().in( s ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).with( "Federation", true, true ).returns( true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity.NETN_Aggregate", mock::any, true, true );
@@ -92,7 +96,7 @@ BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
     xis >> xml::start( "root" );
     ::hla::MockRtiAmbassador ambassador;
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( &ambassador );
-    MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
+    MOCK_EXPECT( federateFactory.Create ).once().calls( boost::bind( &returnFederate, _1, _2, _3, federate ) );
     MOCK_EXPECT( federate->Connect ).once().returns( true );
     MOCK_EXPECT( federate->Join ).once().returns( true );
     MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.AggregateEntity", mock::any, true, true );
@@ -143,7 +147,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_xml_options_overrides_default_values, BuildF
     xis >> xml::start( "root" );
     ::hla::MockRtiAmbassador ambassador;
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "crcHost=localhost;crcPort=8989" ).returns( &ambassador );
-    MOCK_EXPECT( federateFactory.Create ).once().with( mock::any, "name", 3 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
+    MOCK_EXPECT( federateFactory.Create ).once().with( mock::any, "name", 3 ).calls( boost::bind( &returnFederate, _1, _2, _3, federate ) );
     MOCK_EXPECT( federate->Join ).once().with( "federation", false, false ).returns( true );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver,
                            tacticalObjectSubject, ownershipStrategy, entityIdResolver, fomSerialization );
@@ -156,7 +160,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation, BuildFixture )
     xis >> xml::start( "root" );
     ::hla::MockRtiAmbassador ambassador;
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( &ambassador );
-    MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
+    MOCK_EXPECT( federateFactory.Create ).once().calls( boost::bind( &returnFederate, _1, _2, _3, federate ) );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
     MOCK_EXPECT( federate->Create1 ).once().in( s ).with( "Federation", "directory/fom" ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
@@ -171,7 +175,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation_with_absolute_fom, Bui
     xis >> xml::start( "root" );
     ::hla::MockRtiAmbassador ambassador;
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( &ambassador );
-    MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
+    MOCK_EXPECT( federateFactory.Create ).once().calls( boost::bind( &returnFederate, _1, _2, _3, federate ) );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
     MOCK_EXPECT( federate->Create1 ).once().in( s ).with( "Federation", "c:/fom" ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
@@ -190,7 +194,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation_with_fom_modules, Buil
     xis >> xml::start( "root" );
     ::hla::MockRtiAmbassador ambassador;
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( &ambassador );
-    MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
+    MOCK_EXPECT( federateFactory.Create ).once().calls( boost::bind( &returnFederate, _1, _2, _3, federate ) );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
     MOCK_EXPECT( federate->CreateV ).once().in( s ).with( "Federation", FOM_FILES ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
@@ -205,7 +209,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_destroy_federation, BuildFixture )
     xis >> xml::start( "root" );
     ::hla::MockRtiAmbassador ambassador;
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( &ambassador );
-    MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
+    MOCK_EXPECT( federateFactory.Create ).once().calls( boost::bind( &returnFederate, _1, _2, _3, federate ) );
     MOCK_EXPECT( federate->Join ).once().returns( true );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver,
                            tacticalObjectSubject, ownershipStrategy, entityIdResolver, fomSerialization );
@@ -219,7 +223,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_steps, BuildFixture )
     xis >> xml::start( "root" );
     ::hla::MockRtiAmbassador ambassador;
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( &ambassador );
-    MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
+    MOCK_EXPECT( federateFactory.Create ).once().calls( boost::bind( &returnFederate, _1, _2, _3, federate ) );
     MOCK_EXPECT( federate->Join ).once().returns( true );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver,
                            tacticalObjectSubject, ownershipStrategy, entityIdResolver, fomSerialization );

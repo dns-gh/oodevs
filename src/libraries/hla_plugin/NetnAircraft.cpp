@@ -27,10 +27,10 @@ using namespace plugins::hla;
 // Name: NetnAircraft constructor
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-NetnAircraft::NetnAircraft( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& /*agent*/, const std::string& callsign,
+NetnAircraft::NetnAircraft( std::unique_ptr< HlaObject_ABC > aircraft, Agent_ABC& /*agent*/, const std::string& callsign,
         const std::vector< char >& uniqueIdentifier, const std::string& /*symbol*/, FOM_Serializer_ABC& fomSerializer, const std::string& rtiId )
     : listeners_ ( new ObjectListenerComposite() )
-    , aggregate_ ( aggregate )
+    , aggregate_ ( std::move( aircraft ) )
     , fomSerializer_( fomSerializer )
     , attributesUpdater_( new AttributesUpdater( rtiId, *listeners_) )
     , callsign_( callsign )
@@ -43,9 +43,9 @@ NetnAircraft::NetnAircraft( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC&
 // Name: NetnAircraft constructor
 // Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
-NetnAircraft::NetnAircraft( std::auto_ptr< HlaObject_ABC > vessel, const std::string& identifier, FOM_Serializer_ABC& fomSerializer )
+NetnAircraft::NetnAircraft( std::unique_ptr< HlaObject_ABC > aircraft, const std::string& identifier, FOM_Serializer_ABC& fomSerializer )
     : listeners_ ( new ObjectListenerComposite() )
-    , aggregate_    ( vessel )
+    , aggregate_    ( std::move( aircraft ) )
     , fomSerializer_( fomSerializer )
     , attributesUpdater_( new AttributesUpdater(identifier, *listeners_) )
 {

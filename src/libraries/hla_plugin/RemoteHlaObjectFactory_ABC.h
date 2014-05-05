@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name ) const = 0;
+    virtual std::unique_ptr< HlaObject_ABC > Create( const std::string& name ) const = 0;
     //@}
 };
 

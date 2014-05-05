@@ -72,7 +72,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::Federate > federate_;
+    std::unique_ptr< ::hla::Federate > federate_;
     //@}
 };
 

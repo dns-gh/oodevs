@@ -89,8 +89,8 @@ private:
     //@{
     const ContextFactory_ABC& ctxtFactory_;
     const rpr::EntityIdentifier federateID_;
-    std::auto_ptr< T_AcknowledgeSender > pAcknowledgeSender_;
-    std::auto_ptr< T_TransferSender > pTransferSender_;
+    std::unique_ptr< T_AcknowledgeSender > pAcknowledgeSender_;
+    std::unique_ptr< T_TransferSender > pTransferSender_;
     OwnershipStrategy_ABC& ownershipStrategy_;
     OwnershipController_ABC& ownershipController_;
     dispatcher::Logger_ABC& logger_;

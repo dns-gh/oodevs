@@ -23,10 +23,10 @@ using namespace plugins::hla;
 // Name: NetnHuman constructor
 // Created: AHC 2012-11-12
 // -----------------------------------------------------------------------------
-NetnHuman::NetnHuman( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& /*agent*/, const std::string& callsign,
+NetnHuman::NetnHuman( std::unique_ptr< HlaObject_ABC > aggregate, Agent_ABC& /*agent*/, const std::string& callsign,
     const std::vector< char >& uniqueIdentifier, const std::string& /*symbol*/, FOM_Serializer_ABC& fomSerializer, const std::string& /*rtiId*/ )
     : listeners_ ( new ObjectListenerComposite() )
-    , aggregate_ ( aggregate )
+    , aggregate_ ( std::move( aggregate ) )
     , fomSerializer_( fomSerializer )
     , attributes_( new AttributesSerializer() )
 {
