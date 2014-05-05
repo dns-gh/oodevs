@@ -368,8 +368,8 @@ Estacionado con motor encendido</translation>
     <name>ADN_AutomatLog_ListView</name>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="82"/>
-        <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
-        <translation>Autómata &gt; Agente &gt; Comp &gt; Item</translation>
+        <source>Automat &gt; Unit &gt; Comp &gt; Supplies</source>
+        <translation type="unfinished">Autómata &gt; Agente &gt; Comp &gt; Item</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="83"/>
@@ -383,8 +383,8 @@ Estacionado con motor encendido</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="85"/>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="86"/>
@@ -522,8 +522,8 @@ Estacionado y motor encendido</translation>
     </message>
     <message>
         <location filename="ADN_Automata_GUI.cpp" line="241"/>
-        <source>Logistic per automat</source>
-        <translation>Logística por autómata</translation>
+        <source>Supplies per automaton</source>
+        <translation type="unfinished">Logística por autómata</translation>
     </message>
     <message>
         <location filename="ADN_Automata_GUI.cpp" line="242"/>

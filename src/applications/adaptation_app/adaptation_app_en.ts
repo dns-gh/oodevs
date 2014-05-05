@@ -367,8 +367,8 @@ Parked engine running</translation>
     <name>ADN_AutomatLog_ListView</name>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="82"/>
-        <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
-        <translation>Automaton &gt; Unit &gt; Comp &gt; Item</translation>
+        <source>Automat &gt; Unit &gt; Comp &gt; Supplies</source>
+        <translation>Automaton &gt; Unit &gt; Comp &gt; Supplies</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="83"/>
@@ -382,8 +382,8 @@ Parked engine running</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="85"/>
-        <source>Resources</source>
-        <translation>Resources</translation>
+        <source>Supplies</source>
+        <translation>Supplies</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="86"/>
@@ -536,8 +536,8 @@ Parked engine running</translation>
     </message>
     <message>
         <location filename="ADN_Automata_GUI.cpp" line="241"/>
-        <source>Logistic per automat</source>
-        <translation>Logistic per automaton</translation>
+        <source>Supplies per automaton</source>
+        <translation>Supplies per automaton</translation>
     </message>
     <message>
         <location filename="ADN_Automata_GUI.cpp" line="242"/>

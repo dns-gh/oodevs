@@ -361,7 +361,7 @@ Parked engine running</source>
     <name>ADN_AutomatLog_ListView</name>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="82"/>
-        <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
+        <source>Automat &gt; Unit &gt; Comp &gt; Supplies</source>
         <translation type="unfinished">[اوتومت] &gt; وحدة &gt; شركات &gt; البند</translation>
     </message>
     <message>
@@ -376,7 +376,7 @@ Parked engine running</source>
     </message>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="85"/>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
@@ -524,7 +524,7 @@ Parked engine running</source>
     </message>
     <message>
         <location filename="ADN_Automata_GUI.cpp" line="241"/>
-        <source>Logistic per automat</source>
+        <source>Supplies per automaton</source>
         <translation type="unfinished">اللوجستية الواحدة [اوتومت]</translation>
     </message>
     <message>

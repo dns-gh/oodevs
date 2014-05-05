@@ -367,8 +367,8 @@ Arrêt moteur allumé</translation>
     <name>ADN_AutomatLog_ListView</name>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="82"/>
-        <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
-        <translation>Automate &gt; Pion &gt; Comp &gt; Objet</translation>
+        <source>Automat &gt; Unit &gt; Comp &gt; Supplies</source>
+        <translation type="unfinished">Automate &gt; Pion &gt; Comp &gt; Objet</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="83"/>
@@ -388,7 +388,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLog_ListView.cpp" line="85"/>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation>Ressources</translation>
     </message>
     <message>
@@ -521,8 +521,8 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <location filename="ADN_Automata_GUI.cpp" line="241"/>
-        <source>Logistic per automat</source>
-        <translation>Logistique par automate</translation>
+        <source>Supplies per automaton</source>
+        <translation type="unfinished">Logistique par automate</translation>
     </message>
     <message>
         <location filename="ADN_Automata_GUI.cpp" line="242"/>

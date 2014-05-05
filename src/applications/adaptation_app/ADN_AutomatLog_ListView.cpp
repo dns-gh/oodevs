@@ -79,10 +79,10 @@ ADN_AutomatLog_ListView::~ADN_AutomatLog_ListView()
 void ADN_AutomatLog_ListView::BuildHeaders()
 {
     QStringList list;
-    list << tools::translate( "ADN_AutomatLog_ListView", "Automat > Unit > Comp > Item" )
+    list << tools::translate( "ADN_AutomatLog_ListView", "Automat > Unit > Comp > Supplies" )
          << tools::translate( "ADN_AutomatLog_ListView", "Units" )
          << tools::translate( "ADN_AutomatLog_ListView", "Equipments" )
-         << tools::translate( "ADN_AutomatLog_ListView", "Resources" )
+         << tools::translate( "ADN_AutomatLog_ListView", "Supplies" )
          << tools::translate( "ADN_AutomatLog_ListView", "Norm. Consumption" )
          << tools::translate( "ADN_AutomatLog_ListView", "Consumption\nMoving" )
          << tools::translate( "ADN_AutomatLog_ListView", "Autonomy\nMoving" )
