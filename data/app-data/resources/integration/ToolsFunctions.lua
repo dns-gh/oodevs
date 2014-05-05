@@ -113,13 +113,6 @@ utilities.getEtatAction = function( idAction )
     return DEC_EtatAction( idAction )
 end
 
--- Returns the corresponding area of the given AOR
--- @param AOR Sim AOR
--- @return Sim area
-getAreaFromAOR = function( AOR )
-    return DEC_Geometrie_ConvertirFuseauEnLocalisation( AOR )
-end
-
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
