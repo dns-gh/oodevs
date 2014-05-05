@@ -770,3 +770,44 @@ integration.unitBuildSameObstacleAtSameTime = function( object, removeIt )
     end
     return false
 end
+
+--- To create an object upon issued localisation
+-- @see 'Types.lua' file, e.g values 'eTypeObjectMines', 'eTypeObjectLinearMinedArea' etc.
+-- @param localisation, the simulation localisation onto which the object must be built.
+-- @param objectType, String, the type of object as defined in authoring tool.
+-- @param instantaneously Boolean, defines if the object has to be built instantaneously or not.
+integration.startBuildObjectOntoLocalisation = function( localisation, type, instantaneously )
+    myself.actionBuildState = myself.actionBuildState or {}
+    local genObject = DEC_CreateDynamicGenObject( type, localisation, true )
+    if not instantaneously then
+        myself.actionBuild = DEC_StartCreateObject( genObject )
+    else
+        myself.actionBuild = DEC_StartCreateObjectInstantaneously( genObject )
+    end
+    actionCallbacks[ myself.actionBuild ] = function( arg ) 
+       myself.actionBuildState = arg
+    end
+    actionKnowledgeCallbacks[ myself.actionBuild ] = function( arg )
+        if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
+            myself.builtObject = CreateKnowledge( integration.ontology.types.object, arg )
+        end
+    end
+    reportFunction( eRC_DebutTravaux )
+end
+
+--- Update the construction of an object upon issued localisation
+-- @see integration.startBuildObjectOntoLocalisation method
+-- @return Boolean, returns 'true' upon action termination, 'false' otherwise
+integration.updateBuildObjectOntoObject = function()
+    if myself.actionBuildState == eActionObjetTerminee then -- maneuver obstacle is finished but does not return feedback done without having activated it
+        if( myself.builtObject == nil ) then
+            reportFunction(eRC_FinTravauxObjet )
+        else
+            reportFunction( eRC_FinTravauxObjet, myself.builtObject.source )
+        end
+        myself.actionBuild = DEC__StopAction( myself.actionBuild )
+        myself.actionBuildState = nil
+        return true
+    end
+    return false
+end
