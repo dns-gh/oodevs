@@ -679,7 +679,7 @@ T_ConverterDotationType DotationTypeConverter_[] =
     T_ConverterDotationType( "piece",            QT_TRANSLATE_NOOP( "ENT_Tr", "Parts" ),              sword::dotation_type_parts ),
     T_ConverterDotationType( "ration",           QT_TRANSLATE_NOOP( "ENT_Tr", "Food/water" ),         sword::dotation_type_food_and_water ),
     T_ConverterDotationType( "agent extincteur", QT_TRANSLATE_NOOP( "ENT_Tr", "Extinguisher agent" ), sword::dotation_type_extinguisher_agent ),
-    T_ConverterDotationType( "energie",          QT_TRANSLATE_NOOP( "ENT_Tr", "Energy" ),             sword::dotation_type_energy ),
+    T_ConverterDotationType( "energie",          QT_TRANSLATE_NOOP( "ENT_Tr", "Resources" ),          sword::dotation_type_energy ),
     T_ConverterDotationType( "funeraire",        QT_TRANSLATE_NOOP( "ENT_Tr", "Funeral" ),            sword::dotation_type_funeral ),
     T_ConverterDotationType( "", "", sword::DotationType_MAX )
 };

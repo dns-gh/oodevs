@@ -506,7 +506,7 @@
     </message>
     <message>
         <location filename="ENT_Tr.cpp" line="682"/>
-        <source>Energy</source>
+        <source>Resources</source>
         <translation>Energía</translation>
     </message>
     <message>

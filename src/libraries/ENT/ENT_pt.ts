@@ -108,7 +108,7 @@
     </message>
     <message>
         <location filename="ENT_Tr.cpp" line="682"/>
-        <source>Energy</source>
+        <source>Resources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
