@@ -26,9 +26,11 @@
 #include "Entities/Agents/Roles/Logistic/SupplyConsign_ABC.h"
 #include "Entities/Agents/Roles/Logistic/SupplyDotationManualRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRequest.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestManualDispatcher.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestContainer.h"
 #include "Entities/Agents/Roles/Logistic/SupplyConvoysObserver_ABC.h"
+#include "Entities/Agents/Roles/Logistic/SupplyResourceDotation.h"
 #include "Entities/Agents/Roles/Logistic/FuneralPackagingResource.h"
 #include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -47,6 +49,7 @@
 #include <boost/foreach.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )
 
@@ -153,7 +156,8 @@ void MIL_AutomateLOG::serialize( Archive& ar, const unsigned int )
        & supplyRequests_
        & supplyConsigns_
        & maintenanceManual_
-       & supplyManual_;
+       & supplyManual_
+       & magicSupplyRequests_;
 }
 
 // -----------------------------------------------------------------------------
@@ -685,6 +689,29 @@ bool MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameter
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::CreateDotationRequest
+// Created: LGY 2014-05-05
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::CreateDotationRequest( const PHY_DotationCategory& dotation, double quantity, const MIL_Automate& automat,
+                                             unsigned int requester )
+{
+    T_PionDotationVector pionDotations;
+    DotationVisitor visitor( pionDotations, &dotation );
+    automat.Apply2( ( boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) > )
+        boost::bind( &DotationVisitor::VisitDotation, &visitor, _1, _2 ) );
+    auto request = boost::make_shared< logistic::SupplyRequest >( dotation, automat.GetID(), *this, requester );
+    for( auto it = pionDotations.begin(); it != pionDotations.end(); ++it )
+    {
+        auto& dotation = *it->dotation_;
+        if( dotation.NeedSupply() )
+            request->AddResource( boost::make_shared< logistic::SupplyResourceDotation >( dotation ),
+                *it->pion_, std::min( quantity, dotation.GetCapacity() ) );
+    }
+    if( request->GetRequestedQuantity() > 0 )
+        magicSupplyRequests_.push_back( request );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::ResetConsignsForConvoyPion
 // Created: JSR 2013-02-06
 // -----------------------------------------------------------------------------
@@ -825,6 +852,8 @@ void MIL_AutomateLOG::SendFullState() const
     pLogisticHierarchy_->SendFullState();
     BOOST_FOREACH( const auto& data, supplyRequests_ )
         data->SendFullState();
+    BOOST_FOREACH( const auto& data, magicSupplyRequests_ )
+        data->SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -836,7 +865,9 @@ void MIL_AutomateLOG::SendChangedState() const
     try
     {
         pLogisticHierarchy_->SendChangedState();
-        BOOST_FOREACH( const T_SupplyRequests::value_type& data, supplyRequests_ )
+        BOOST_FOREACH( const auto& data, supplyRequests_ )
+            data->SendChangedState();
+        BOOST_FOREACH( const auto& data, magicSupplyRequests_ )
             data->SendChangedState();
     }
     catch( const std::exception& e )

@@ -31,6 +31,7 @@ const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "change_human_state",                 sword::UnitMagicAction::change_human_state },
     { "change_knowledge_group",             sword::UnitMagicAction::change_knowledge_group },
     { "change_logistic_links",              sword::UnitMagicAction::change_logistic_links },
+    { "create_basic_load_supply_request",   sword::UnitMagicAction::create_basic_load_supply_request },
     { "create_breakdowns",                  sword::UnitMagicAction::create_breakdowns },
     { "create_direct_fire_order",           sword::UnitMagicAction::create_direct_fire_order },
     { "create_wound",                       sword::UnitMagicAction::create_wound },

@@ -1389,5 +1389,9 @@
         <source>Switch Log Supply Mode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Create basic load supply request</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

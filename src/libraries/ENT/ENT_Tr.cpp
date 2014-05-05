@@ -523,6 +523,7 @@ T_ConverterUnitMagicActionType UnitMagicActionTypeConverter_[] =
     T_ConverterUnitMagicActionType( "change_knowledge_group",           QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Change superior" ), sword::UnitMagicAction::change_knowledge_group ),
     T_ConverterUnitMagicActionType( "change_logistic_links",            QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Change Logistic Links" ), sword::UnitMagicAction::change_logistic_links ),
     T_ConverterUnitMagicActionType( "change_posture",                   QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Change posture" ), sword::UnitMagicAction::change_posture ),
+    T_ConverterUnitMagicActionType( "create_basic_load_supply_request", QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Create basic load supply request" ), sword::UnitMagicAction::create_basic_load_supply_request ),
     T_ConverterUnitMagicActionType( "create_breakdowns",                "" /* deprecated */, sword::UnitMagicAction::create_breakdowns ),
     T_ConverterUnitMagicActionType( "create_direct_fire_order",         QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Direct strike order" ) /* hla */, sword::UnitMagicAction::create_direct_fire_order ),
     T_ConverterUnitMagicActionType( "create_wound",                     "" /* deprecated */, sword::UnitMagicAction::create_wound ),

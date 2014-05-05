@@ -37,6 +37,7 @@ namespace logistic
     class LogisticHierarchy_ABC;
     class SupplyRequestContainer;
     class SupplyConsign_ABC;
+    class SupplyRequest_ABC;
 }
 
 class AutomateFactory_ABC;
@@ -152,6 +153,8 @@ public:
     virtual       bool         BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
 
     bool OnReceiveLogSupplyPushFlow( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver );
+    void CreateDotationRequest( const PHY_DotationCategory& dotation, double quantity, const MIL_Automate& automat,
+                                unsigned int requester );
 
     void ResetConsignsForConvoyPion( const MIL_Agent_ABC& pion );
     void ResetConsignsForProvider( const MIL_Agent_ABC& pion );
@@ -208,8 +211,9 @@ protected:
 private:
     //! @name Types
     //@{
-    typedef std::list< boost::shared_ptr < logistic::SupplyConsign_ABC > >      T_SupplyConsigns;
-    typedef std::list< boost::shared_ptr < logistic::SupplyRequestContainer > > T_SupplyRequests;
+    typedef std::list< boost::shared_ptr< logistic::SupplyConsign_ABC > >      T_SupplyConsigns;
+    typedef std::list< boost::shared_ptr< logistic::SupplyRequestContainer > > T_SupplyRequests;
+    typedef std::list< boost::shared_ptr< logistic::SupplyRequest_ABC > >      T_MagicSupplyRequests;
     //@}
 
 public:
@@ -230,6 +234,7 @@ private:
     // Supply
     T_SupplyConsigns supplyConsigns_;
     T_SupplyRequests supplyRequests_; // Pushed flows
+    T_MagicSupplyRequests magicSupplyRequests_;
     std::vector< logistic::SupplyConvoysObserver_ABC* > supplyConvoysObserver_;
 
     bool maintenanceManual_;
