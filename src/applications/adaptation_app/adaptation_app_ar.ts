@@ -307,7 +307,7 @@
     </message>
     <message>
         <location filename="ADN_AutomatLogCategory_ListView.cpp" line="60"/>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
@@ -353,7 +353,7 @@ Parked engine running</source>
     </message>
     <message>
         <location filename="ADN_AutomatLogCategory_ListView.cpp" line="57"/>
-        <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
+        <source>Category &gt; Supplies &gt; Automaton &gt; Unit &gt; Equipment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -529,7 +529,7 @@ Parked engine running</source>
     </message>
     <message>
         <location filename="ADN_Automata_GUI.cpp" line="242"/>
-        <source>Logistic per resource</source>
+        <source>Supplies per type</source>
         <translation type="unfinished">السوقي كل مورد</translation>
     </message>
     <message>

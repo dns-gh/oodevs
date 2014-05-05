@@ -54,10 +54,10 @@ ADN_AutomatLogCategory_ListView::~ADN_AutomatLogCategory_ListView()
 void ADN_AutomatLogCategory_ListView::BuildHeaders()
 {
     QStringList list;
-    list << tools::translate( "ADN_AutomatLogCategory_ListView", "Resource type > Resource > Automaton > Unit > Equipment" )
+    list << tools::translate( "ADN_AutomatLogCategory_ListView", "Category > Supplies > Automaton > Unit > Equipment" )
          << tools::translate( "ADN_AutomatLogCategory_ListView", "Units" )
          << tools::translate( "ADN_AutomatLogCategory_ListView", "Equipments" )
-         << tools::translate( "ADN_AutomatLogCategory_ListView", "Resources" )
+         << tools::translate( "ADN_AutomatLogCategory_ListView", "Supplies" )
          << tools::translate( "ADN_AutomatLogCategory_ListView", "Norm. Consumption" )
          << tools::translate( "ADN_AutomatLogCategory_ListView", "Consumption\nMoving" )
          << tools::translate( "ADN_AutomatLogCategory_ListView", "Autonomy\nMoving" )

@@ -308,8 +308,8 @@
     </message>
     <message>
         <location filename="ADN_AutomatLogCategory_ListView.cpp" line="60"/>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLogCategory_ListView.cpp" line="61"/>
@@ -360,8 +360,8 @@ Estacionado con motor encendido</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLogCategory_ListView.cpp" line="57"/>
-        <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
-        <translation>Tipo de recurso &gt; Recurso &gt; Autómata &gt; Unidad &gt; Equipo</translation>
+        <source>Category &gt; Supplies &gt; Automaton &gt; Unit &gt; Equipment</source>
+        <translation type="unfinished">Tipo de recurso &gt; Recurso &gt; Autómata &gt; Unidad &gt; Equipo</translation>
     </message>
 </context>
 <context>
@@ -527,7 +527,7 @@ Estacionado y motor encendido</translation>
     </message>
     <message>
         <location filename="ADN_Automata_GUI.cpp" line="242"/>
-        <source>Logistic per resource</source>
+        <source>Supplies per type</source>
         <translation>Logística por recurso</translation>
     </message>
     <message>

@@ -297,8 +297,8 @@
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
         <location filename="ADN_AutomatLogCategory_ListView.cpp" line="57"/>
-        <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
-        <translation>Type de ressource &gt; Ressource &gt; Automate &gt; Pion &gt; Equipement</translation>
+        <source>Category &gt; Supplies &gt; Automaton &gt; Unit &gt; Equipment</source>
+        <translation type="unfinished">Type de ressource &gt; Ressource &gt; Automate &gt; Pion &gt; Equipement</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLogCategory_ListView.cpp" line="58"/>
@@ -312,8 +312,8 @@
     </message>
     <message>
         <location filename="ADN_AutomatLogCategory_ListView.cpp" line="60"/>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Ressources</translation>
     </message>
     <message>
         <location filename="ADN_AutomatLogCategory_ListView.cpp" line="61"/>
@@ -526,7 +526,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <location filename="ADN_Automata_GUI.cpp" line="242"/>
-        <source>Logistic per resource</source>
+        <source>Supplies per type</source>
         <translation>Logistique par dotation</translation>
     </message>
     <message>
