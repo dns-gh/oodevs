@@ -4256,8 +4256,8 @@ PNG (*.png)</translation>
     </message>
     <message>
         <location filename="ADN_Objects_GUI.cpp" line="232"/>
-        <source>Resource</source>
-        <translation>Dotación</translation>
+        <source>Ammunition</source>
+        <translation type="unfinished">Dotación</translation>
     </message>
     <message>
         <location filename="ADN_Objects_GUI.cpp" line="265"/>

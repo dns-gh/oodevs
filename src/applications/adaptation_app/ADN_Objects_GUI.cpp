@@ -229,7 +229,7 @@ void ADN_Objects_GUI::Build()
         // Attrition
         attrition_ = CreateCapacityGroupBox( 1, builder, "attrition", tr( "Attrition" ), vInfosConnectors[ eAttritionCapacityPresent ] );
         attritionDotation_ = CreateCapacityGroupBox( 2, builder, "ammunition", tr( "Use ammunition" ), vInfosConnectors[ eAttritionCapacity_UseDotation ], attrition_ );
-        attritionDotationVector_ = builder.AddField< ADN_ComboBox_Vector >( attritionDotation_, "resource", tr( "Resource" ), vInfosConnectors[ eAttritionCapacity_Dotation ] );
+        attritionDotationVector_ = builder.AddField< ADN_ComboBox_Vector >( attritionDotation_, "resource", tr( "Ammunition" ), vInfosConnectors[ eAttritionCapacity_Dotation ] );
         builder.PopSubName(); // !ammunition
         attritionMine_ = CreateCapacityGroupBox( 2, builder, "mine", tr( "Use mine" ), vInfosConnectors[ eAttritionCapacity_UseMine ], attrition_ );
         attritionMineVector_ = builder.AddField< ADN_ComboBox_Vector >( attritionMine_, "resource", tr( "Mine" ), vInfosConnectors[ eAttritionCapacity_Mine ] );

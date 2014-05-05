@@ -4361,8 +4361,8 @@ PNG (*.png)
     </message>
     <message>
         <location filename="ADN_Objects_GUI.cpp" line="232"/>
-        <source>Resource</source>
-        <translation>Resource</translation>
+        <source>Ammunition</source>
+        <translation>Ammunition</translation>
     </message>
     <message>
         <location filename="ADN_Objects_GUI.cpp" line="252"/>
