@@ -1913,3 +1913,9 @@ func (c *Client) DestroyPathfind(pathfindId uint32) error {
 	}
 	return nil
 }
+
+func (c *Client) CreateBasicLoadSupplyRequests(taskerId, supplierId, recipentId uint32, resources []Quantity) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(taskerId),
+		MakeParameters(MakeIdentifier(supplierId), MakeIdentifier(recipentId), MakeQuantities(resources)),
+		sword.UnitMagicAction_create_basic_load_supply_request)
+}

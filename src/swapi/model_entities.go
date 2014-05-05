@@ -529,6 +529,11 @@ type ReplayInfo struct {
 }
 
 type SupplyRequest struct {
+	ResourceId  uint32
+	RequesterId uint32
+	SupplierId  uint32
+	RecipientId uint32
+	Requested   int32
 }
 
 type ModelData struct {
@@ -1056,6 +1061,7 @@ var (
 		(*ModelData).handlePopulationUpdate,
 		(*ModelData).handleSupplyRequestCreation,
 		(*ModelData).handleSupplyRequestDestruction,
+		(*ModelData).handleSupplyRequestUpdate,
 		(*ModelData).handleUnitAttributes,
 		(*ModelData).handleUnitChangeSuperior,
 		(*ModelData).handleUnitCreation,

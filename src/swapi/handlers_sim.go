@@ -1515,11 +1515,26 @@ func (model *ModelData) handleSupplyRequestCreation(m *sword.SimToClient_Content
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	id := mm.GetRequest().GetId()
-	if !model.addSupplyRequest(id) {
-		return fmt.Errorf("cannot insert supply request %d", id)
+	model.SupplyRequests[mm.GetRequest().GetId()] = &SupplyRequest{
+		ResourceId:  mm.GetResource().GetId(),
+		RequesterId: mm.GetRequester().GetId(),
 	}
 	return nil
+}
+
+func (model *ModelData) handleSupplyRequestUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetLogSupplyRequestUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if request, ok := model.SupplyRequests[id]; ok {
+		request.SupplierId = mm.GetSupplier().GetId()
+		request.RecipientId = mm.GetRecipient().GetId()
+		request.Requested = mm.GetRequested()
+		return nil
+	}
+	return fmt.Errorf("cannot update supply request %d", id)
 }
 
 func (model *ModelData) handleSupplyRequestDestruction(m *sword.SimToClient_Content) error {

@@ -186,3 +186,103 @@ func (s *TestSuite) TestSupplyRequests(c *C) {
 	}
 	checkRequestUpdates(c, client, unit.AutomatId, supplierId, uint32(electrogen_1), removeElectrogen_1)
 }
+
+func (s *TestSuite) TestSupplyRequestsDotations(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	invalidId := uint32(12345)
+	resources := []swapi.Quantity{}
+
+	// Invalid tasker identifier
+	err := client.CreateBasicLoadSupplyRequests(invalidId, invalidId, invalidId, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Tasker should be an automaton or a logistics base
+	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
+	err = client.CreateBasicLoadSupplyRequests(unit.Id, invalidId, invalidId, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Invalid supplier identifier
+	automatId := getSomeAutomatByName(c, d, "Supply Mobile Infantry Platoon").Id
+	err = client.CreateBasicLoadSupplyRequests(automatId, invalidId, invalidId, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Invalid recipent identifier
+	supplierId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
+	SetManualSupply(c, client, supplierId, true)
+	err = client.CreateBasicLoadSupplyRequests(automatId, supplierId, invalidId, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// No request is created if no resources are below the low threshold
+	err = client.CreateBasicLoadSupplyRequests(automatId, supplierId, automatId, resources)
+	c.Assert(err, IsNil)
+	client.Model.WaitTicks(2)
+	d = client.Model.GetData()
+	c.Assert(d.SupplyRequests, HasLen, 0)
+
+	// Create two supply requests
+	units := getUnitsFromAutomat(automatId, client.Model.GetData())
+	c.Assert(len(units), Greater, 2)
+	err = client.ChangeResource(units[0].Id, map[uint32]*swapi.Resource{
+		uint32(electrogen_1): &swapi.Resource{
+			Quantity:  0,
+			Threshold: 50,
+		}})
+	c.Assert(err, IsNil)
+	err = client.ChangeResource(units[1].Id, map[uint32]*swapi.Resource{
+		uint32(electrogen_1): &swapi.Resource{
+			Quantity:  0,
+			Threshold: 50,
+		},
+		uint32(electrogen_2): &swapi.Resource{
+			Quantity:  0,
+			Threshold: 50,
+		}})
+	c.Assert(err, IsNil)
+	err = client.ChangeResource(units[2].Id, map[uint32]*swapi.Resource{
+		uint32(electrogen_3): &swapi.Resource{
+			Quantity:  0,
+			Threshold: 50,
+		}})
+	c.Assert(err, IsNil)
+
+	resources = []swapi.Quantity{{Id: uint32(electrogen_1), Quantity: 10},
+		{Id: uint32(electrogen_2), Quantity: 2500000}}
+	err = client.CreateBasicLoadSupplyRequests(automatId, supplierId, automatId, resources)
+	c.Assert(err, IsNil)
+
+	// electrogen_1 : unit1 : 10, unit2 : 10 => tolal: 20
+	// electrogen_2 : unit2 : 10  => tolal: 10
+	request1 := swapi.SupplyRequest{
+		ResourceId:  uint32(electrogen_1),
+		RequesterId: automatId,
+		SupplierId:  supplierId,
+		RecipientId: automatId,
+		Requested:   20,
+	}
+	request2 := swapi.SupplyRequest{
+		ResourceId:  uint32(electrogen_2),
+		RequesterId: automatId,
+		SupplierId:  supplierId,
+		RecipientId: automatId,
+		Requested:   10,
+	}
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		electrogen_1_request := false
+		electrogen_2_request := false
+		for _, request := range data.SupplyRequests {
+			if *request == request1 {
+				electrogen_1_request = true
+			} else if *request == request2 {
+				electrogen_2_request = true
+			}
+		}
+		return electrogen_1_request && electrogen_2_request
+	})
+
+	// Only two requests is created(no one for electrogen_3).
+	d = client.Model.GetData()
+	c.Assert(d.SupplyRequests, HasLen, 2)
+}

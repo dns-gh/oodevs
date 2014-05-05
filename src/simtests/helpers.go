@@ -179,3 +179,13 @@ func getUnitTypeFromName(c *C, phydb *phy.PhysicalFile, typeName string) uint32 
 	c.Assert(unitType, Greater, uint32(0))
 	return unitType
 }
+
+func getUnitsFromAutomat(automatId uint32, model *swapi.ModelData) []*swapi.Unit {
+	units := []*swapi.Unit{}
+	for _, unit := range model.Units {
+		if unit.AutomatId == automatId {
+			units = append(units, unit)
+		}
+	}
+	return units
+}
