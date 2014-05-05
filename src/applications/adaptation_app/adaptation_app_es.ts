@@ -2008,8 +2008,8 @@ Estacionado y motor encendido</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="207"/>
-        <source>Enforce resource quotas for aviation equipments</source>
-        <translation>Aplicar las cuotas de recursos para los equipos de aviación</translation>
+        <source>Enforce supply quotas for aviation equipments</source>
+        <translation type="unfinished">Aplicar las cuotas de recursos para los equipos de aviación</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="97"/>

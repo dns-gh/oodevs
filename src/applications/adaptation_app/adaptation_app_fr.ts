@@ -2007,8 +2007,8 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="207"/>
-        <source>Enforce resource quotas for aviation equipments</source>
-        <translation>Appliquer les quotas de dotations pour les équipements aériens</translation>
+        <source>Enforce supply quotas for aviation equipments</source>
+        <translation type="unfinished">Appliquer les quotas de dotations pour les équipements aériens</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="97"/>

@@ -2003,8 +2003,8 @@ Parked engine running</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="207"/>
-        <source>Enforce resource quotas for aviation equipments</source>
-        <translation>Enforce resource quotas for aviation equipments</translation>
+        <source>Enforce supply quotas for aviation equipments</source>
+        <translation>Enforce supply quotas for aviation equipments</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="97"/>

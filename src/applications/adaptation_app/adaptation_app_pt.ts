@@ -1991,7 +1991,7 @@ Parked engine running</source>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="207"/>
-        <source>Enforce resource quotas for aviation equipments</source>
+        <source>Enforce supply quotas for aviation equipments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
