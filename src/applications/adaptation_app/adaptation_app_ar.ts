@@ -7277,7 +7277,7 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <location filename="ADN_Units_GUI.cpp" line="220"/>
-        <source>Stock</source>
+        <source>Stocks</source>
         <translation type="unfinished">الأوراق المالية</translation>
     </message>
     <message>

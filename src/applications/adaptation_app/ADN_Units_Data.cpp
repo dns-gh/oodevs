@@ -813,7 +813,7 @@ void ADN_Units_Data::UnitInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& c
 {
     if( ptrModel_.GetData() == 0 )
         checker.AddError( eMissingDecisionalModel, strName_.GetData(), eUnits );
-    
+
     if( !bIsAutonomous_.GetData() )
     for( auto itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
     {

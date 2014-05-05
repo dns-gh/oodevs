@@ -217,7 +217,7 @@ void ADN_Units_GUI::Build()
     pDotations->SetGoToOnDoubleClick( ::eSupplies );
 
     // Stock
-    pStockGroup_ = builder.AddGroupBox( 0, "stock", tr( "Stock" ), vInfosConnectors[ eHasStock ], 1 );
+    pStockGroup_ = builder.AddGroupBox( 0, "stock", tr( "Stocks" ), vInfosConnectors[ eHasStock ], 1 );
     pStockLogThreshold_ = new ADN_Units_LogThreshold_GUI( builder.GetChildName( "stock-threshold-table" ), vInfosConnectors[ eStock ], pStockGroup_ );
 
     // Aptitudes

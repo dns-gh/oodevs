@@ -7290,8 +7290,8 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <location filename="ADN_Units_GUI.cpp" line="220"/>
-        <source>Stock</source>
-        <translation>Stock</translation>
+        <source>Stocks</source>
+        <translation>Stocks</translation>
     </message>
     <message>
         <location filename="ADN_Units_GUI.cpp" line="224"/>
