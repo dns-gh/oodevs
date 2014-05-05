@@ -1381,13 +1381,13 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Dotations_GUI.cpp" line="106"/>
-        <source>Add resource</source>
-        <translation>Ajouter une dotation</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Ajouter une dotation</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Dotations_GUI.cpp" line="108"/>
-        <source>Remove resource</source>
-        <translation>Enlever cette dotation</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Enlever cette dotation</translation>
     </message>
 </context>
 <context>

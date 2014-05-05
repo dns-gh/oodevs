@@ -1382,13 +1382,13 @@ Estacionado y motor encendido</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Dotations_GUI.cpp" line="106"/>
-        <source>Add resource</source>
-        <translation>Agregar recurso</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Agregar recurso</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Dotations_GUI.cpp" line="108"/>
-        <source>Remove resource</source>
-        <translation>Quitar recurso</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Quitar recurso</translation>
     </message>
 </context>
 <context>

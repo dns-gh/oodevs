@@ -1381,13 +1381,13 @@ Parked engine running</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Dotations_GUI.cpp" line="106"/>
-        <source>Add resource</source>
-        <translation>Add resource</translation>
+        <source>Add supplies</source>
+        <translation>Add supplies</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Dotations_GUI.cpp" line="108"/>
-        <source>Remove resource</source>
-        <translation>Remove resource</translation>
+        <source>Remove supplies</source>
+        <translation>Remove supplies</translation>
     </message>
 </context>
 <context>

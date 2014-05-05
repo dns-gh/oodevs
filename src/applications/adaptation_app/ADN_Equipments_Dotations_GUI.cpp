@@ -103,9 +103,9 @@ void ADN_Equipments_Dotations_GUI::OnContextMenu( const QPoint& pt )
         targetMenu.insertItem( ENT_Tr::ConvertFromDotationType( (*it)->nType_, ENT_Tr::eToTr ).c_str(), pSubMenu );
     }
 
-    menu.insertItem( tr( "Add resource"), &targetMenu ,0 );
+    menu.insertItem( tr( "Add supplies"), &targetMenu ,0 );
     if( GetSelectedData() != 0 )
-        menu.insertItem( tr( "Remove resource" ), 1 );
+        menu.insertItem( tr( "Remove supplies" ), 1 );
 
     int nMenuResult = menu.exec(pt);
     if( nMenuResult == 1 )
