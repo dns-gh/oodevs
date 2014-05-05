@@ -373,7 +373,7 @@ DEC_Geometrie_PositionAdvanceAlongFuseauAutomat = function( position )
     return DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
 end
 
--- Returns the corresponding area of the given AOR
+--- Returns the corresponding area of the given AOR
 -- @param AOR Sim AOR
 -- @return Sim area
 integration.getAreaFromAOR = function ( AOR )
