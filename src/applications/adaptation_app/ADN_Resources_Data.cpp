@@ -766,7 +766,7 @@ void ADN_Resources_Data::ResourceInfos::CheckDatabaseValidity( ADN_ConsistencyCh
     for( auto it = categories_.begin(); it != categories_.end(); ++it )
     {
         ( *it )->ptrResourceNature_.CheckValidity( checker, strName_.GetData(), eSupplies, -1, tools::translate( "ADN_Resources_Data", "Nature" ).toStdString() );
-        ( *it )->ptrLogisticSupplyClass_.CheckValidity( checker, strName_.GetData(), eSupplies, -1, tools::translate( "ADN_Resources_Data", "Logistic supply class" ).toStdString() );
+        ( *it )->ptrLogisticSupplyClass_.CheckValidity( checker, strName_.GetData(), eSupplies, -1, tools::translate( "ADN_Resources_Data", "Class" ).toStdString() );
         if( AmmoCategoryInfo* ammoCategory = dynamic_cast< AmmoCategoryInfo* >( *it ) )
             if( ammoCategory->bIndirect_.GetData() && ammoCategory->indirectAmmoInfos_.bEffect_.GetData() )
                 ammoCategory->indirectAmmoInfos_.objectType_.CheckValidity( checker, strName_.GetData(), eSupplies, -1, tools::translate( "ADN_Resources_Data", "Created object" ).toStdString() );

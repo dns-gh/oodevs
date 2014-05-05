@@ -4847,11 +4847,6 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ADN_Resources_Data.cpp" line="769"/>
-        <source>Logistic supply class</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="ADN_Resources_Data.cpp" line="772"/>
         <source>Created object</source>
         <translation type="unfinished"></translation>
@@ -4860,6 +4855,11 @@ PNG (*.png)
         <location filename="ADN_Resources_Data.cpp" line="580"/>
         <location filename="ADN_Resources_Data.cpp" line="848"/>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ADN_Resources_Data.cpp" line="769"/>
+        <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4960,7 +4960,7 @@ PNG (*.png)
     <message>
         <location filename="ADN_Resources_GUI.cpp" line="162"/>
         <location filename="ADN_Resources_GUI.cpp" line="258"/>
-        <source>Logistic supply class</source>
+        <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

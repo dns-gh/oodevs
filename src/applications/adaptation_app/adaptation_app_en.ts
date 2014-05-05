@@ -4862,6 +4862,11 @@ PNG (*.png)
         <translation>Equipment - Invalid resource type &apos;%1&apos;</translation>
     </message>
     <message>
+        <location filename="ADN_Resources_Data.cpp" line="769"/>
+        <source>Class</source>
+        <translation>Class</translation>
+    </message>
+    <message>
         <location filename="ADN_Resources_Data.cpp" line="888"/>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</translation>
@@ -4870,11 +4875,6 @@ PNG (*.png)
         <location filename="ADN_Resources_Data.cpp" line="768"/>
         <source>Nature</source>
         <translation>Nature</translation>
-    </message>
-    <message>
-        <location filename="ADN_Resources_Data.cpp" line="769"/>
-        <source>Logistic supply class</source>
-        <translation>Logistic supply class</translation>
     </message>
     <message>
         <location filename="ADN_Resources_Data.cpp" line="772"/>
@@ -4974,8 +4974,8 @@ PNG (*.png)
     <message>
         <location filename="ADN_Resources_GUI.cpp" line="162"/>
         <location filename="ADN_Resources_GUI.cpp" line="258"/>
-        <source>Logistic supply class</source>
-        <translation>Logistic supply class</translation>
+        <source>Class</source>
+        <translation>Class</translation>
     </message>
     <message>
         <location filename="ADN_Resources_GUI.cpp" line="163"/>

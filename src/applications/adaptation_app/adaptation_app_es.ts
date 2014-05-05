@@ -4882,8 +4882,8 @@ PNG (*.png)</translation>
     </message>
     <message>
         <location filename="ADN_Resources_Data.cpp" line="769"/>
-        <source>Logistic supply class</source>
-        <translation>Clase logística de material</translation>
+        <source>Class</source>
+        <translation type="unfinished">Clase logística de material</translation>
     </message>
     <message>
         <location filename="ADN_Resources_Data.cpp" line="772"/>
@@ -4983,8 +4983,8 @@ PNG (*.png)</translation>
     <message>
         <location filename="ADN_Resources_GUI.cpp" line="162"/>
         <location filename="ADN_Resources_GUI.cpp" line="258"/>
-        <source>Logistic supply class</source>
-        <translation>Clase logística de material</translation>
+        <source>Class</source>
+        <translation type="unfinished">Clase logística de material</translation>
     </message>
     <message>
         <location filename="ADN_Resources_GUI.cpp" line="163"/>

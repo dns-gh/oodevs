@@ -4849,6 +4849,11 @@ PNG (*.png)
         <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
     </message>
     <message>
+        <location filename="ADN_Resources_Data.cpp" line="769"/>
+        <source>Class</source>
+        <translation type="unfinished">فئة الإمداد اللوجستي</translation>
+    </message>
+    <message>
         <location filename="ADN_Resources_Data.cpp" line="888"/>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
@@ -4857,11 +4862,6 @@ PNG (*.png)
         <location filename="ADN_Resources_Data.cpp" line="768"/>
         <source>Nature</source>
         <translation type="unfinished">طبيعة</translation>
-    </message>
-    <message>
-        <location filename="ADN_Resources_Data.cpp" line="769"/>
-        <source>Logistic supply class</source>
-        <translation type="unfinished">فئة الإمداد اللوجستي</translation>
     </message>
     <message>
         <location filename="ADN_Resources_Data.cpp" line="772"/>
@@ -4961,7 +4961,7 @@ PNG (*.png)
     <message>
         <location filename="ADN_Resources_GUI.cpp" line="162"/>
         <location filename="ADN_Resources_GUI.cpp" line="258"/>
-        <source>Logistic supply class</source>
+        <source>Class</source>
         <translation type="unfinished">فئة الإمداد اللوجستي</translation>
     </message>
     <message>
