@@ -199,7 +199,7 @@ void ADN_Equipments_GUI::Build()
     vInfosConnectors[ eActiveProtections ] = &pActiveProtections_->GetConnector();
 
     // Resources allocation & consumptions
-    QGroupBox* pResourcesGroup = new QGroupBox( tools::translate( "ADN_Equipments_GUI", "Resources" ) );
+    QGroupBox* pResourcesGroup = new QGroupBox( tools::translate( "ADN_Equipments_GUI", "Basic load" ) );
     QVBoxLayout* pResourceLayout = new QVBoxLayout;
     pResourcesGroup->setLayout( pResourceLayout );
     pResourceLayout->setMargin( 5 );

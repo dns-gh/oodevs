@@ -1593,8 +1593,8 @@ Parked engine running</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="202"/>
-        <source>Resources</source>
-        <translation>Resources</translation>
+        <source>Basic load</source>
+        <translation>Basic load</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="594"/>

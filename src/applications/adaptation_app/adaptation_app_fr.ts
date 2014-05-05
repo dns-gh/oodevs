@@ -1688,8 +1688,8 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="202"/>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Basic load</source>
+        <translation type="unfinished">Ressources</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="315"/>

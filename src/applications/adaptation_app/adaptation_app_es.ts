@@ -1689,8 +1689,8 @@ Estacionado y motor encendido</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="202"/>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Basic load</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_GUI.cpp" line="315"/>
