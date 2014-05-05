@@ -1023,3 +1023,11 @@ removeListElementWithSameLocation = function( position, list )
     end
     return result
 end
+
+-- Returns a boolean, true if the position is inside the AOR, false otherwise
+-- @param position Sim position
+-- @param aor Sim AOR
+-- @return Boolean true if the position is inside the AOR, false otherwise
+integration.estPointDansFuseauAvecParamFuseau = function( position, aor )
+    return DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau( position, aor )
+end

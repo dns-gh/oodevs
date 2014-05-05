@@ -643,3 +643,10 @@ integration.query.getPositionsToFollow = function( elementToFollow, distanceMin,
     return { CreateProxyKnowledge( military.world.ReachingArea, elementToFollow, 
                               { distanceMin = distanceMin, distanceMax = distanceMax } ) }
 end
+
+-- Returns enemies alive in the given area
+-- @param area Sim area
+-- @return List of sim platoons
+integration.livingEnemiesInArea = function( area )
+    return DEC_Connaissances_UnitesEnnemiesVivantesDansZone( area )
+end
