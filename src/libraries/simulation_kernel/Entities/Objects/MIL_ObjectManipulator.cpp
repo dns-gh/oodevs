@@ -17,7 +17,6 @@
 #include "BuildableCapacity.h"
 #include "BypassAttribute.h"
 #include "BypassableCapacity.h"
-#include "ChildObjectAttribute.h"
 #include "ConstructionAttribute.h"
 #include "CrowdCapacity.h"
 #include "DetectionCapacity.h"
@@ -28,25 +27,18 @@
 #include "MobilityCapacity.h"
 #include "ObstacleAttribute.h"
 #include "OccupantAttribute.h"
-#include "UniversalCapacity.h"
 #include "ResourceNetworkCapacity.h"
 #include "SpawnCapacity.h"
 #include "StructuralCapacity.h"
 #include "TrafficabilityAttribute.h"
 #include "WorkableCapacity.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Objects/BridgingCapacity.h"
 #include "Entities/Objects/ConstructionAttribute.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
-#include "resource_network/ResourceNetworkModel.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include <tools/Iterator.h>
@@ -121,38 +113,8 @@ void MIL_ObjectManipulator::Destroy( double rDeltaPercentage )
 // -----------------------------------------------------------------------------
 void MIL_ObjectManipulator::Destroy()
 {
-    BuildableCapacity* buildableCapacity = object_.Retrieve< BuildableCapacity >();
-    if( buildableCapacity )
-        buildableCapacity->Destroy( object_ );
-    ChildObjectAttribute* child = object_.RetrieveAttribute< ChildObjectAttribute >();
-    if( child )
-    {
-        MIL_Object_ABC* childObject = child->GetChildObject();
-        if( childObject )
-            ( *childObject )().Destroy();
+    object_.MarkForDestructionNextUpdate();
     }
-    if( ResourceNetworkCapacity* resourceNetwork = object_.Retrieve< ResourceNetworkCapacity >() )
-        MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().UnregisterNode( object_.GetID() );
-    object_.MarkForDestruction();
-
-    if( object_.Retrieve< UniversalCapacity >() )
-    {
-        // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
-        const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
-        auto it = armies.CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const MIL_Army_ABC& army = it.NextElement();
-            auto kgs = army.GetKnowledgeGroups();
-            for( auto kgIt = kgs.begin(); kgIt != kgs.end(); ++kgIt )
-            {
-                auto bbKg = const_cast< DEC_KnowledgeBlackBoard_KnowledgeGroup* >( kgIt->second->GetKnowledge() );
-                if( bbKg )
-                    bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( object_ );
-            }
-        }
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManipulator::Mine
