@@ -131,16 +131,16 @@ namespace
 // Name: StandardModel::HasAnyChildVisible
 // Created: JSR 2012-09-18
 // -----------------------------------------------------------------------------
-bool StandardModel::HasAnyChildVisible( QStandardItem& root, T_FilterFunction func )
+bool StandardModel::HasAnyChildVisible( QStandardItem& root, const T_Filter& filter, int col ) const
 {
-    bool isVisible = func( root, *this );
+    bool isVisible = filter( root );
     for( int row = 0; row < root.rowCount(); ++row )
     {
-        QStandardItem* childItem = root.child( row, 0 );
+        QStandardItem* childItem = root.child( row, col );
         assert( childItem );
-        bool isChildVisible = HasAnyChildVisible( *childItem, func );
+        bool isChildVisible = HasAnyChildVisible( *childItem, filter, col );
         SetRowVisible( root, row, isChildVisible );
-        isVisible = isVisible || isChildVisible;
+        isVisible |= isChildVisible;
     }
     return isVisible;
 }
@@ -149,14 +149,60 @@ bool StandardModel::HasAnyChildVisible( QStandardItem& root, T_FilterFunction fu
 // Name: StandardModel::ApplyFilter
 // Created: ABR 2012-08-17
 // -----------------------------------------------------------------------------
-void StandardModel::ApplyFilter( T_FilterFunction func )
+void StandardModel::ApplyFilter( const T_Filter& filter, int col /* = 0 */ ) const
 {
     for( int row = 0; row < rowCount(); ++row )
     {
-        QStandardItem* childItem = item( row, 0 );
+        QStandardItem* childItem = item( row, col );
         assert( childItem );
         if( invisibleRootItem() )
-            SetRowVisible( *invisibleRootItem(), row, HasAnyChildVisible( *childItem, func ) );
+            SetRowVisible( *invisibleRootItem(), row, HasAnyChildVisible( *childItem, filter, col ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::InternalApplyFilters
+// Created: ABR 2014-04-28
+// -----------------------------------------------------------------------------
+void StandardModel::InternalApplyFilters( int row, int col, const std::vector< Filter_ABC* >& filters, bool& result ) const
+{
+    QStandardItem* childItem = item( row, col );
+    assert( childItem );
+    for( auto filter = filters.begin(); filter != filters.end(); ++filter )
+        result &= HasAnyChildVisible( *childItem, [&]( QStandardItem& item ){ return ( *filter )->Apply( item ); }, col );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::HasAnyColumnVisible
+// Created: ABR 2014-04-28
+// -----------------------------------------------------------------------------
+bool StandardModel::HasAnyColumnVisible( int row, const std::vector< Filter_ABC* >& filters ) const
+{
+    bool result = false;
+    for( int col = 0; col < columnCount(); ++col )
+    {
+        bool filtersResult = true;
+        InternalApplyFilters( row, col, filters, filtersResult );
+        result |= filtersResult;
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::ApplyFilters
+// Created: ABR 2014-04-28
+// -----------------------------------------------------------------------------
+void StandardModel::ApplyFilters( const std::map< int, std::vector< Filter_ABC* > >& filters ) const
+{
+    for( int row = 0; row < rowCount(); ++row )
+    {
+        bool result = true;
+        for( auto it = filters.begin(); it != filters.end(); ++it )
+            if( it->first == -1 )
+                result &= HasAnyColumnVisible( row, it->second );
+            else
+                InternalApplyFilters( row, it->first, it->second, result );
+        SetRowVisible( *invisibleRootItem(), row, result );
     }
 }
 

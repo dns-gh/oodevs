@@ -49,10 +49,18 @@ class OrbatDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-    OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
-                     ProfileFilter& filter, gui::AutomatsLayer& automats, gui::FormationLayer& formations,
-                     actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
-                     const gui::EntitySymbols& icons, DrawingsBuilder& drawingsBuilder, gui::ParametersLayer& paramLayer );
+    OrbatDockWidget( kernel::Controllers& controllers,
+                     QWidget* parent,
+                     const QString& objectName,
+                     ProfileFilter& filter,
+                     gui::AutomatsLayer& automats,
+                     gui::FormationLayer& formations,
+                     actions::ActionsModel& actionsModel,
+                     const StaticModel& staticModel,
+                     const kernel::Time_ABC& simulation,
+                     const gui::EntitySymbols& icons,
+                     DrawingsBuilder& drawingsBuilder,
+                     gui::ParametersLayer& paramLayer );
     virtual ~OrbatDockWidget();
     //@}
 

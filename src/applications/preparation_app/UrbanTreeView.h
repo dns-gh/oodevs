@@ -58,7 +58,7 @@ protected slots:
 private:
     //! @name Helpers
     //@{
-    virtual void CreateFilters( gui::SearchTreeView_ABC& searchTreeView );
+    virtual void CreateFilters( gui::RichView_ABC& richView );
     virtual void ContextMenuRequested( const QPoint& where );
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );

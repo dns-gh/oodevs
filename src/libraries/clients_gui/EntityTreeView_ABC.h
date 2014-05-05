@@ -95,7 +95,7 @@ protected:
     virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
     virtual void ContextMenuRequested( const QPoint& /*where*/ ) {}
     virtual void ApplyProfileFilter();
-    virtual bool ApplyProfileFilter( QStandardItem& item, StandardModel& model ) const;
+    virtual bool ApplyProfileFilter( QStandardItem& item ) const;
     virtual void SetLessThanEntityFunctor( const T_LessThanEntityFunctor& functor );
     //@}
 

@@ -2838,10 +2838,6 @@ Este dato no puede ser proyectado.</translation>
         <translation>Infraestructura</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Ninguna</translation>
-    </message>
-    <message>
         <source>Usages</source>
         <translation>Usos</translation>
     </message>

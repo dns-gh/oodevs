@@ -23,7 +23,7 @@ namespace gui
     class EntitySymbols;
     class HierarchyTreeView_ABC;
     class ParametersLayer;
-    class SearchTreeView_ABC;
+    class RichView_ABC;
     class SymbolIcons;
 }
 
@@ -44,9 +44,14 @@ class TreeViewsPanel : public gui::RichWidget< QTabWidget >
 public:
     //! @name Constructors/Destructor
     //@{
-             TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
-                             Model& model, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols,
-                             StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar,
+             TreeViewsPanel( kernel::Controllers& controllers,
+                             gui::EntitySymbols& icons,
+                             ModelBuilder& modelBuilder,
+                             Model& model,
+                             std::vector< gui::RichView_ABC* >& treeViews,
+                             gui::SymbolIcons& symbols,
+                             StaticModel& staticModel,
+                             const gui::AggregateToolbar& aggregateToolbar,
                              gui::ParametersLayer& paramLayer );
     virtual ~TreeViewsPanel();
     //@}
@@ -63,11 +68,16 @@ public slots:
 private:
     //! @name Helpers
     //@{
-    void CreateUnitTabWidget( gui::RichWidget< QTabWidget >* parent, gui::RichWidget< QTabWidget >* tabWidget, kernel::Controllers& controllers,
-                              gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model, StaticModel& staticModel,
-                              std::vector< gui::SearchTreeView_ABC* >& treeViews, const gui::AggregateToolbar& aggregateToolbar, bool first );
-    void Configure( gui::SearchTreeView_ABC* searchTreeView, std::vector< gui::SearchTreeView_ABC* >& treeViews,
-                    const gui::AggregateToolbar& aggregateToolbar, int readOnlyMode = -1 );
+    void CreateUnitTabWidget( gui::RichWidget< QTabWidget >* parent,
+                              gui::RichWidget< QTabWidget >* tabWidget,
+                              kernel::Controllers& controllers,
+                              gui::EntitySymbols& icons,
+                              ModelBuilder& modelBuilder,
+                              Model& model,
+                              StaticModel& staticModel,
+                              std::vector< gui::RichView_ABC* >& treeViews,
+                              const gui::AggregateToolbar& aggregateToolbar,
+                              bool first );
     //@}
 
 private:

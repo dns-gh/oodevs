@@ -24,7 +24,7 @@
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/RichDockWidget.h"
 #include "clients_gui/RichTreeView.h"
-#include "clients_gui/SearchTreeView.h"
+#include "clients_gui/RichView.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_kernel/Tools.h"
 #include "tools/ExerciseConfig.h"
@@ -46,7 +46,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Agent list panel
     {
         gui::RichDockWidget* pListDockWnd = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),
-                                                                 automats, formation, icons, modelBuilder, model, staticModel, treeViews_, symbols,
+                                                                 automats, formation, icons, modelBuilder, model, staticModel, views_, symbols,
                                                                  paramLayer );
         pListDockWnd->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd );
@@ -122,9 +122,8 @@ DockContainer::~DockContainer()
 // -----------------------------------------------------------------------------
 void DockContainer::Purge()
 {
-    for( std::vector< gui::SearchTreeView_ABC* >::iterator it = treeViews_.begin(); it != treeViews_.end(); ++it )
-        if( *it )
-            ( *it )->Purge();
+    for( auto it = views_.begin(); it != views_.end(); ++it )
+        ( *it )->Purge();
     pCreationPanel_->Purge();
 }
 
@@ -134,9 +133,8 @@ void DockContainer::Purge()
 // -----------------------------------------------------------------------------
 void DockContainer::Load()
 {
-    for( std::vector< gui::SearchTreeView_ABC* >::iterator it = treeViews_.begin(); it != treeViews_.end(); ++it )
-        if( *it )
-            ( *it )->Load();
+    for( auto it = views_.begin(); it != views_.end(); ++it )
+        ( *it )->Load();
     pCreationPanel_->Load();
     pUsagesPanel_->Initialize();
 }

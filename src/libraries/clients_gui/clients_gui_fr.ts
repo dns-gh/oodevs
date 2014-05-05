@@ -1822,14 +1822,7 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
-    <name>gui::SearchLineEdit</name>
-    <message>
-        <source>Search</source>
-        <translation>Rechercher</translation>
-    </message>
-</context>
-<context>
-    <name>gui::SearchTreeView_ABC</name>
+    <name>gui::RichView_ABC</name>
     <message>
         <source>Clear</source>
         <translation>Effacer</translation>
@@ -1837,6 +1830,17 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Filters</source>
         <translation>Filtres</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+</context>
+<context>
+    <name>gui::SearchLineEdit</name>
+    <message>
+        <source>Search</source>
+        <translation>Rechercher</translation>
     </message>
 </context>
 <context>

@@ -71,7 +71,7 @@ private:
     //! @name Helpers
     //@{
     virtual void drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const;
-    virtual bool ApplyProfileFilter( QStandardItem& item, gui::StandardModel& model ) const;
+    virtual bool ApplyProfileFilter( QStandardItem& item ) const;
     virtual void NotifyCreated( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );

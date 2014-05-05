@@ -19,18 +19,37 @@
 #include "clients_gui/DrawingsTreeView.h"
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/ObjectTreeView.h"
-#include "clients_gui/SearchTreeView.h"
+#include "clients_gui/RichView.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/ProfileFilter.h"
+
+namespace
+{
+    template< typename View >
+    View* Configure( QTabWidget* tabWidget, const QObject* toolbar, const QString& tabName, View* view )
+    {
+        QObject::connect( toolbar, SIGNAL( LockDragAndDrop( bool ) ), view->GetView(), SLOT( LockDragAndDrop( bool ) ) );
+        tabWidget->addTab( view, tabName );
+        return view;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: OrbatDockWidget constructor
 // Created: JSR 2012-09-26
 // -----------------------------------------------------------------------------
-OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
-                                  ProfileFilter& filter, gui::AutomatsLayer& automats, gui::FormationLayer& formations,
-                                  actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
-                                  const gui::EntitySymbols& icons, DrawingsBuilder& drawingsBuilder, gui::ParametersLayer& paramLayer )
+OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
+                                  QWidget* parent,
+                                  const QString& objectName,
+                                  ProfileFilter& filter,
+                                  gui::AutomatsLayer& automats,
+                                  gui::FormationLayer& formations,
+                                  actions::ActionsModel& actionsModel,
+                                  const StaticModel& staticModel,
+                                  const kernel::Time_ABC& simulation,
+                                  const gui::EntitySymbols& icons,
+                                  DrawingsBuilder& drawingsBuilder,
+                                  gui::ParametersLayer& paramLayer )
     : gui::RichDockWidget( controllers, parent, objectName )
     , logisticListView_( 0 )
 {
@@ -39,51 +58,81 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
     Q3VBox* box = new Q3VBox( this );
     setWidget( box );
     OrbatToolbar* orbatToolbar = new OrbatToolbar( box, controllers, filter, automats, formations );
-    const gui::AggregateToolbar* aggregateToolbar = orbatToolbar->GetToolbar();
-
-    QTabWidget* pListsTabWidget = new QTabWidget( box );
-    gui::SearchTreeView_ABC* searchTreeView = 0;
-    {
-        QTabWidget* pUnit = new QTabWidget();
-        {
-            searchTreeView = new gui::SearchTreeView< TacticalTreeView >( "SearchTacticalTreeView", pUnit, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
-            searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
-            searchTreeView->connect( aggregateToolbar, SIGNAL( ChangeDisplay( int ) ), searchTreeView->GetRichTreeView(), SLOT( ChangeDisplay( int ) ) );
-            pUnit->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Tactical" ) );
-        }
-        {
-            searchTreeView = new gui::SearchTreeView< CommunicationTreeView >( "SearchCommunicationTreeView", pUnit, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
-            searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
-            pUnit->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Communication" ) );
-        }
-        {
-            gui::SearchTreeView< LogisticTreeView >* logisticSearchListView = new gui::SearchTreeView< LogisticTreeView >( "SearchLogisticTreeView", pListsTabWidget, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
-            logisticSearchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), logisticSearchListView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
-            logisticListView_ = logisticSearchListView->GetTreeView();
-            pUnit->addTab( logisticSearchListView, tools::translate( "OrbatDockWidget", "Logistic" ) );
-        }
-        pListsTabWidget->addTab( pUnit, tools::translate( "OrbatDockWidget", "Units" ) );
-    }
-    {
-        searchTreeView = new gui::SearchTreeView< gui::ObjectTreeView >( "ObjectTreeView", pListsTabWidget, controllers, filter, observer_ );
-        searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Objects" ) );
-    }
-    {
-        searchTreeView = new gui::SearchTreeView< PopulationTreeView >( "PopulationTreeView", pListsTabWidget, controllers, filter, observer_ );
-        searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Crowds" ) );
-    }
-    {
-        searchTreeView = new gui::SearchTreeView< gui::InhabitantTreeView >( "InhabitantTreeView", pListsTabWidget, controllers, filter, observer_ );
-        searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Populations" ) );
-    }
-    {
-        searchTreeView = new gui::SearchTreeView< gui::DrawingsTreeView >( "DrawingsTreeView", pListsTabWidget, controllers, filter, drawingsBuilder, paramLayer );
-        searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchTreeView, tools::translate( "DockContainer","Drawings" ) );
-    }
+    const gui::AggregateToolbar* toolbar = orbatToolbar->GetToolbar();
+    QTabWidget* mainTab = new QTabWidget( box );
+    QTabWidget* unitTab = new QTabWidget();
+    mainTab->addTab( unitTab, tools::translate( "OrbatDockWidget", "Units" ) );
+    // Tactical
+    auto tactical = Configure( unitTab, toolbar, tools::translate( "OrbatDockWidget", "Tactical" ),
+                               new gui::RichView< TacticalTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                                      "SearchTacticalTreeView",
+                                                                      unitTab,
+                                                                      controllers,
+                                                                      filter,
+                                                                      observer_,
+                                                                      icons,
+                                                                      staticModel,
+                                                                      simulation,
+                                                                      actionsModel ) );
+    connect( toolbar, SIGNAL( ChangeDisplay( int ) ), tactical->GetView(), SLOT( ChangeDisplay( int ) ) );
+    // Communication
+    Configure( unitTab, toolbar, tools::translate( "OrbatDockWidget", "Communication" ),
+                new gui::RichView< CommunicationTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                            "SearchCommunicationTreeView",
+                                                            unitTab,
+                                                            controllers,
+                                                            filter,
+                                                            observer_,
+                                                            icons,
+                                                            staticModel,
+                                                            simulation,
+                                                            actionsModel ) );
+    // Logistic
+    auto logistic = Configure( unitTab, toolbar, tools::translate( "OrbatDockWidget", "Logistic" ),
+                               new gui::RichView< LogisticTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                                      "SearchLogisticTreeView",
+                                                                      mainTab,
+                                                                      controllers,
+                                                                      filter,
+                                                                      observer_,
+                                                                      icons,
+                                                                      staticModel,
+                                                                      simulation,
+                                                                      actionsModel ) );
+    logisticListView_ = logistic->GetView();
+    // Object
+    Configure( mainTab, toolbar, tools::translate( "OrbatDockWidget", "Objects" ),
+               new gui::RichView< gui::ObjectTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                         "ObjectTreeView",
+                                                         mainTab,
+                                                         controllers,
+                                                         filter,
+                                                         observer_ ) );
+    // Crowds
+    Configure( mainTab, toolbar, tools::translate( "OrbatDockWidget", "Crowds" ),
+               new gui::RichView< PopulationTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                        "PopulationTreeView",
+                                                        mainTab,
+                                                        controllers,
+                                                        filter,
+                                                        observer_ ) );
+    // Populations
+    Configure( mainTab, toolbar, tools::translate( "OrbatDockWidget", "Populations" ),
+               new gui::RichView< gui::InhabitantTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                             "InhabitantTreeView",
+                                                             mainTab,
+                                                             controllers,
+                                                             filter,
+                                                             observer_ ) );
+    // Populations
+    Configure( mainTab, toolbar, tools::translate( "OrbatDockWidget", "Drawings" ),
+               new gui::RichView< gui::InhabitantTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                             "DrawingsTreeView",
+                                                             mainTab,
+                                                             controllers,
+                                                             filter,
+                                                             drawingsBuilder,
+                                                             paramLayer ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,6 +150,5 @@ OrbatDockWidget::~OrbatDockWidget()
 // -----------------------------------------------------------------------------
 void OrbatDockWidget::Purge()
 {
-    if( logisticListView_ )
-        logisticListView_->Purge();
+    logisticListView_->Purge();
 }

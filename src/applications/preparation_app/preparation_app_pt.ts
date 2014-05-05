@@ -2831,10 +2831,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Usages</source>
         <translation type="unfinished"></translation>
     </message>

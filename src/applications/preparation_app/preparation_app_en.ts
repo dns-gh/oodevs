@@ -2839,10 +2839,6 @@ This data can&apos;t be projected.</translation>
         <translation>Infrastructure</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>None</translation>
-    </message>
-    <message>
         <source>Usages</source>
         <translation>Usages</translation>
     </message>
