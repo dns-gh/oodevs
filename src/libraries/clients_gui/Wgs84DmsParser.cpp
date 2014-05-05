@@ -72,10 +72,13 @@ bool Wgs84DmsParser::Parse( const QStringList& content, geometry::Point2f& resul
 bool Wgs84DmsParser::FormatDmsCoordinate( const QString& content, bool longitude, QString& hint ) const
 {
     QString coordValue = content.stripWhiteSpace().upper();
+    const bool negative = coordValue.find( "S" ) >= 0
+        || coordValue.find( "W" ) >= 0
+        || coordValue.startsWith( "-" );
+
     coordValue.replace( L'°', ' ' );
     coordValue.replace( L'\'', ' ' );
-    if( coordValue.find( "S" ) >= 0 || coordValue.find( "W" ) >= 0 )
-        coordValue = "-" + coordValue;
+    coordValue.replace( '-', ' ' );
     coordValue.replace( 'N', ' ' );
     coordValue.replace( 'S', ' ' );
     coordValue.replace( 'E', ' ' );
@@ -89,7 +92,7 @@ bool Wgs84DmsParser::FormatDmsCoordinate( const QString& content, bool longitude
     const int value = longitude ? 180 : 90;
 
     int deg_lat = listParameters[ 0 ].toInt( &ok );
-    if( !ok || deg_lat < -value || deg_lat > value )
+    if( !ok || deg_lat < 0 || deg_lat > value )
         return false;
     int min_lat = listParameters[1].toInt( &ok );
     if( !ok || min_lat < 0 || min_lat >= 60 )
@@ -100,11 +103,14 @@ bool Wgs84DmsParser::FormatDmsCoordinate( const QString& content, bool longitude
 
     QChar finalParameter;
     if( longitude )
-        finalParameter = ( deg_lat < 0 ) ? 'W' : 'E';
+        finalParameter = negative ? 'W' : 'E';
     else
-        finalParameter = ( deg_lat < 0 ) ? 'S' : 'N';
+        finalParameter = negative ? 'S' : 'N';
 
     static const QChar padding( '0' );
+    // $$$ The default string is not valid UTF-8 as expected by tools::translate
+    // but I prefer not to fix the problem right now as we have to check for
+    // all "degree" character occurence in source code for consistency.
     hint = tools::translate( "Wgs84DmsParser", "%1° %2' %3.%4 %5" )
                        .arg( std::abs( deg_lat ), 2, 10, padding )
                        .arg( min_lat, 2, 10, padding )
