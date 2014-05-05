@@ -2067,13 +2067,13 @@ Estacionado y motor encendido</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Resources_Table.cpp" line="95"/>
-        <source>Add resource</source>
-        <translation>Agregar recurso</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Agregar recurso</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Resources_Table.cpp" line="100"/>
-        <source>Remove resource</source>
-        <translation>Eliminar recurso</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Eliminar recurso</translation>
     </message>
 </context>
 <context>

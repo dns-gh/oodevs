@@ -2062,13 +2062,13 @@ Parked engine running</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Resources_Table.cpp" line="95"/>
-        <source>Add resource</source>
-        <translation type="unfinished">Add resource</translation>
+        <source>Add supplies</source>
+        <translation>Add supplies</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Resources_Table.cpp" line="100"/>
-        <source>Remove resource</source>
-        <translation type="unfinished">Remove resource</translation>
+        <source>Remove supplies</source>
+        <translation>Remove supplies</translation>
     </message>
 </context>
 <context>

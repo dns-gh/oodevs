@@ -2066,13 +2066,13 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Resources_Table.cpp" line="95"/>
-        <source>Add resource</source>
-        <translation>Ajouter une ressource</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Ajouter une ressource</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Resources_Table.cpp" line="100"/>
-        <source>Remove resource</source>
-        <translation>Supprimer la ressource</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Supprimer la ressource</translation>
     </message>
 </context>
 <context>
