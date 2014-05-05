@@ -7285,8 +7285,8 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <location filename="ADN_Units_GUI.cpp" line="215"/>
-        <source>Complementary resources</source>
-        <translation>Complementary resources</translation>
+        <source>Complementary load</source>
+        <translation>Complementary load</translation>
     </message>
     <message>
         <location filename="ADN_Units_GUI.cpp" line="220"/>

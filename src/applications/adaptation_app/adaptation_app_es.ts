@@ -7263,8 +7263,8 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
     </message>
     <message>
         <location filename="ADN_Units_GUI.cpp" line="215"/>
-        <source>Complementary resources</source>
-        <translation>Recursos complementarios</translation>
+        <source>Complementary load</source>
+        <translation type="unfinished">Recursos complementarios</translation>
     </message>
     <message>
         <location filename="ADN_Units_GUI.cpp" line="220"/>

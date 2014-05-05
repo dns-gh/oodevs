@@ -7280,8 +7280,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <location filename="ADN_Units_GUI.cpp" line="215"/>
-        <source>Complementary resources</source>
-        <translation>Ressources complémentaires</translation>
+        <source>Complementary load</source>
+        <translation type="unfinished">Ressources complémentaires</translation>
     </message>
     <message>
         <location filename="ADN_Units_GUI.cpp" line="220"/>
