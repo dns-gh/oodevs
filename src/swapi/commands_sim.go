@@ -1919,3 +1919,9 @@ func (c *Client) CreateBasicLoadSupplyRequests(taskerId, supplierId, recipentId 
 		MakeParameters(MakeIdentifier(supplierId), MakeIdentifier(recipentId), MakeQuantities(resources)),
 		sword.UnitMagicAction_create_basic_load_supply_request)
 }
+
+func (c *Client) CreateStockSupplyRequests(taskerId, supplierId, recipentId uint32, resources []Quantity) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(taskerId),
+		MakeParameters(MakeIdentifier(supplierId), MakeIdentifier(recipentId), MakeQuantities(resources)),
+		sword.UnitMagicAction_create_stock_supply_request)
+}
