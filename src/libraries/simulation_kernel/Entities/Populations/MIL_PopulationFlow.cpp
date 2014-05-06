@@ -77,7 +77,7 @@ MIL_PopulationFlow::MIL_PopulationFlow()
     , pFirstSplittingObject_( 0 )
     , personsPassedThroughObject_( 0 )
     , armedIndividualsBeforeSplit_( 0 )
-    , objectDensity_( 1. )
+    , objectDensity_( -1. )
     , canCollideWithFlow_( false )
     , hasDoneMagicMove_( false )
     , speedLimit_( std::numeric_limits< double >::max() )
@@ -108,7 +108,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , pFirstSplittingObject_      ( sourceConcentration.GetSplittingObject() )
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
-    , objectDensity_              ( 1. )
+    , objectDensity_              ( -1. )
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
     , hasDoneMagicMove_( false )
     , speedLimit_( std::numeric_limits< double >::max() )
@@ -145,7 +145,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , pFirstSplittingObject_      ( 0 )
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
-    , objectDensity_              ( 1. )
+    , objectDensity_              ( -1. )
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
     , hasDoneMagicMove_( false )
     , speedLimit_( source.speedLimit_ )
@@ -305,7 +305,7 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
         pFirstSplittingObject_ = &object;
     if( pFirstSplittingObject_ )
         return;
-    objectDensity_ = 1.;
+    objectDensity_ = -1.;
     const PopulationAttribute* attr = object.RetrieveAttribute< PopulationAttribute >();
     if( !attr )
         return;
@@ -513,7 +513,7 @@ bool MIL_PopulationFlow::ManageObjectSplit()
     if( pDestConcentration_ || !pSplittingObject_ || pFirstSplittingObject_ )
         return false;
     MIL_PopulationConcentration* target = &GetPopulation().GetConcentration( GetHeadPosition() );
-    if( objectDensity_ == 1 )
+    if( objectDensity_ == -1 )
         return false;
     if( target == pSourceConcentration_ )
         return true;
