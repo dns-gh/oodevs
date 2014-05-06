@@ -296,7 +296,7 @@ void TimelineToolBar::OnAddShowOnlyFilter()
     if( contextMenuEvent_ )
     {
         showOnlyFilter_ = contextMenuEvent_->GetEvent().uuid;
-        emit ShowOnlyFilterChanged( contextMenuEvent_->GetEvent().uuid );
+        emit ShowOnlyFilterChanged( contextMenuEvent_->GetEvent().uuid, contextMenuEvent_->GetEvent().name );
         showOnlyFilter_.clear();
     }
     contextMenuEvent_ = 0;

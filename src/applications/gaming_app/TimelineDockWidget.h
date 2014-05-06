@@ -64,13 +64,13 @@ public:
 public slots:
     //! @name Slots
     //@{
-    QWidget* AddView( bool main = false );
+    QWidget* AddView( bool main = false, const std::string& name = "" );
     void RemoveCurrentView();
     void OnCurrentChanged( int index );
     void OnTabContextMenu();
     void OnRenameTab();
     void OnLoadRequested();
-    void OnShowOnlyFilterChanged( const std::string& uuid );
+    void OnShowOnlyFilterChanged( const std::string& uuid, const std::string& name );
     //@}
 
 private:
@@ -81,6 +81,8 @@ private:
     QMenu* contextMenu_;
     QWidget* mainView_;
     boost::shared_ptr< TimelineWebView > webView_;
+    // map of < event's uuid, tab's widget >, so we can retrieve the right tab even if the event's name has changed.
+    std::map< std::string, QWidget* > showOnlyViews_;
     //@}
 
 private:
