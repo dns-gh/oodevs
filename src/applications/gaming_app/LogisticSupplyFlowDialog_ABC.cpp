@@ -303,7 +303,7 @@ void LogisticSupplyFlowDialog_ABC::MoveDownWaypoint()
 // -----------------------------------------------------------------------------
 void LogisticSupplyFlowDialog_ABC::AddCarryingEquipment( const Entity_ABC& entity )
 {
-    if( const Equipments* equipments = entity.Retrieve< Equipments >() )
+    if( auto equipments = static_cast< const Equipments* >( entity.Retrieve< Equipments_ABC >() ) )
     {
         tools::Iterator< const Equipment& > it = equipments->CreateIterator();
         QStringList equipmentList;

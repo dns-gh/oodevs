@@ -25,6 +25,7 @@ namespace kernel
     enum E_EquipmentState;
     class Profile_ABC;
     class Time_ABC;
+    class Equipments_ABC;
 }
 
 namespace gui
@@ -32,7 +33,6 @@ namespace gui
     class DisplayExtractor;
 }
 
-class Equipments;
 class StaticModel;
 
 // =============================================================================
@@ -43,9 +43,8 @@ class StaticModel;
 // =============================================================================
 class UnitStateTableEquipment : public gui::UnitStateTableEquipment
                               , public tools::Observer_ABC
-                              , public tools::ElementObserver_ABC< Equipments >
+                              , public tools::ElementObserver_ABC< kernel::Equipments_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -65,7 +64,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const Equipments& dotations );
+    virtual void NotifyUpdated( const kernel::Equipments_ABC& dotations );
     bool LineChanged( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int >& currentBreakdowns = std::vector< unsigned int >() ) const;
     std::vector< unsigned int > BreakdownIDToComboIndex( const QStringList* breakdowns, const std::vector< int >& breakdownIDs ) const;
     int CountLines( const QString& name, int firstRow, E_EquipmentState state ) const;

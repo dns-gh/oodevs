@@ -271,6 +271,8 @@ void ADN_MissionParameters_Table::Reconnect( const QModelIndex& index )
             itemConnectors_[ADN_Missions_GUI::eKnowledgeObjects]->Connect( &param->knowledgeObjects_ );
         else if( current == eMissionParameterTypeDotationType )
             itemConnectors_[ADN_Missions_GUI::eDotations]->Connect( &param->indirectFire_ );
+        else if( current == eMissionParameterTypeEquipmentType )
+            itemConnectors_[ADN_Missions_GUI::eEquipments]->Connect( &param->ownedEquipments_ );
     }
     emit TypeChanged( current );
 }
@@ -290,6 +292,7 @@ void ADN_MissionParameters_Table::Disconnect( ADN_Missions_Parameter* param )
         itemConnectors_[ ADN_Missions_GUI::eGenObjects ]->Disconnect( &param->genObjects_ );
         itemConnectors_[ ADN_Missions_GUI::eKnowledgeObjects ]->Disconnect( &param->knowledgeObjects_ );
         itemConnectors_[ ADN_Missions_GUI::eDotations ]->Disconnect( &param->indirectFire_ );
+        itemConnectors_[ ADN_Missions_GUI::eEquipments ]->Disconnect( &param->ownedEquipments_ );
     }
 }
 

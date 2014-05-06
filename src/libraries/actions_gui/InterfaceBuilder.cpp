@@ -23,6 +23,7 @@
 #include "ParamDirection.h"
 #include "ParamDotationType.h"
 #include "ParamDotationTypeList.h"
+#include "ParamEquipmentType.h"
 #include "ParamEquipmentList.h"
 #include "ParamHumanWoundList.h"
 #include "ParamInhabitant.h"
@@ -111,6 +112,7 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers,
     AddFunctor< actions::gui::ParamPopulationKnowledge >( "crowdknowledge" );
     // Misc
     AddFunctor< actions::gui::ParamAtlasNature >        ( "natureatlas" );
+    AddFunctor< actions::gui::ParamEquipmentType >      ( "equipmenttype" );
     AddFunctor< actions::gui::ParamEquipmentList >      ( "maintenancepriorities" );
     AddFunctor< actions::gui::ParamHumanWoundList >     ( "medicalpriorities" );
     AddFunctor< actions::gui::ParamResourceNetworkNode >( "resourcenetworknode" );

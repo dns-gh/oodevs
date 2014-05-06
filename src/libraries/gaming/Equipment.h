@@ -48,6 +48,7 @@ public:
     void UpdateMaintenanceConsign( const sword::LogMaintenanceHandlingUpdate& message );
     const std::vector< int >& GetBreakdowns() const;
     std::vector< int > GetBreakdownsInTreatment( bool isDiagnosed ) const;
+    const kernel::EquipmentType& GetType() const;
     //@}
 
     //! @name Operators

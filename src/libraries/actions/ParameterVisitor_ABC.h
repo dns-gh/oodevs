@@ -14,43 +14,45 @@ namespace actions
 {
     class Parameter_ABC;
 
-    namespace parameters {
-        class Agent;
-        class AtlasNature;
-        class Army;
-        class Automat;
-        class Bool;
-        class Crowd;
-        class DateTime;
-        class Direction;
-        class DotationType;
-        class EngineerConstruction;
-        class Enumeration;
-        class ExtensionList;
-        class FireClass;
-        class Identifier;
-        class Inhabitant;
-        class KnowledgeGroup;
-        class Lima;
-        class Limit;
-        class Location;
-        class MaintenancePriorities;
-        class MedicalPriorities;
-        class Numeric;
-        class ObjectKnowledge;
-        class ObstacleType;
-        class Path;
-        class PathPoint;
-        class Point;
-        class Polygon;
-        class PopulationKnowledge;
-        class Quantity;
-        class Resource;
-        class ResourceNetworkNode;
-        class ResourceNetworkType;
-        class String;
-        class UrbanBlock;
-    }
+namespace parameters
+{
+    class Agent;
+    class AtlasNature;
+    class Army;
+    class Automat;
+    class Bool;
+    class Crowd;
+    class DateTime;
+    class Direction;
+    class DotationType;
+    class EngineerConstruction;
+    class Enumeration;
+    class EquipmentType;
+    class ExtensionList;
+    class FireClass;
+    class Identifier;
+    class Inhabitant;
+    class KnowledgeGroup;
+    class Lima;
+    class Limit;
+    class Location;
+    class MaintenancePriorities;
+    class MedicalPriorities;
+    class Numeric;
+    class ObjectKnowledge;
+    class ObstacleType;
+    class Path;
+    class PathPoint;
+    class Point;
+    class Polygon;
+    class PopulationKnowledge;
+    class Quantity;
+    class Resource;
+    class ResourceNetworkNode;
+    class ResourceNetworkType;
+    class String;
+    class UrbanBlock;
+}
 
 // =============================================================================
 /** @class  ParameterVisitor_ABC
@@ -99,6 +101,7 @@ public:
     virtual void Visit( const parameters::DotationType&          ) {}
     virtual void Visit( const parameters::EngineerConstruction&  ) {}
     virtual void Visit( const parameters::Enumeration&           ) {}
+    virtual void Visit( const parameters::EquipmentType&         ) {}
     virtual void Visit( const parameters::ExtensionList&         ) {}
     virtual void Visit( const parameters::FireClass&             ) {}
     virtual void Visit( const parameters::Identifier&            ) {}

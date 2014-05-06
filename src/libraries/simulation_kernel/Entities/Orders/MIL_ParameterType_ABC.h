@@ -10,8 +10,6 @@
 #ifndef __MIL_ParameterType_ABC_h_
 #define __MIL_ParameterType_ABC_h_
 
-#include "MT_Tools/MT_String.h"
-
 namespace sword
 {
     class MissionParameter;
@@ -63,10 +61,13 @@ public:
         eLimaFunction               = 29
     };
 
+public:
+    ~MIL_ParameterType_ABC();
+
     //! @name Factory
     //@{
     static void Initialize();
-    static const MIL_ParameterType_ABC* Find ( const std::string& strName );
+    static const MIL_ParameterType_ABC* Find( const std::string& strName );
     //@}
 
     //! @name Accessors
@@ -79,20 +80,12 @@ private:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_ParameterType_ABC( const std::string& strName, E_Type type );
-    virtual ~MIL_ParameterType_ABC();
     //@}
 
 private:
     //! @name Initialization
     //@{
-    static void RegisterParameterType( const std::string& name, E_Type type );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, const MIL_ParameterType_ABC*, sCaseInsensitiveLess > T_ParameterMap;
-    typedef T_ParameterMap::const_iterator                                            CIT_ParameterMap;
+    static void RegisterParameterType( std::string name, E_Type type );
     //@}
 
 private:
@@ -100,12 +93,6 @@ private:
     //@{
     const std::string strName_;
     const E_Type type_;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    static T_ParameterMap parameters_;
     //@}
 };
 

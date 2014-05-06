@@ -13,13 +13,12 @@
 #include "InfoDialog.h"
 #include "LogisticDialog_ABC.h"
 #include "clients_kernel/MaintenanceStates_ABC.h"
-#include "gaming/Equipments.h"
-#include <boost/optional.hpp>
 
 namespace kernel
 {
     class Controllers;
     class Profile_ABC;
+    class Equipments_ABC;
 }
 
 namespace gui
@@ -40,7 +39,7 @@ class Model;
 // Created: SBO 2007-02-20
 // =============================================================================
 class InfoMaintenanceDialog : public InfoDialog< kernel::MaintenanceStates_ABC >
-                            , public tools::ElementObserver_ABC< Equipments >
+                            , public tools::ElementObserver_ABC< kernel::Equipments_ABC >
                             , public LogisticDialog_ABC
 {
 public:
@@ -65,7 +64,7 @@ private:
     //! @name Helpers
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
-    virtual void NotifyUpdated( const Equipments& entity );
+    virtual void NotifyUpdated( const kernel::Equipments_ABC& equipments );
     //@}
 
 private:

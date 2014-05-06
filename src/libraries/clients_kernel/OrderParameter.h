@@ -74,7 +74,8 @@ public:
     unsigned int MaxOccurs() const;
     double MinValue() const;
     double MaxValue() const;
-    double IndirectFireOnly() const;
+    bool IndirectFireOnly() const;
+    bool OwnedEquipmentsOnly() const;
     // a repeated is a dynamic list of "this" parameter.
     bool IsRepeated() const;
     // a list is a dynamic list of a certain type of parameter.
@@ -125,6 +126,7 @@ private:
     double minValue_;
     double maxValue_;
     bool indirectFire_;
+    bool ownedEquipments_;
     T_OrderParameterValues values_;
     T_Aliases aliases_;
     T_Aliases genObjects_;

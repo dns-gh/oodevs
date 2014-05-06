@@ -181,9 +181,9 @@ void Agent::CreateDictionary()
 // Name: Agent::NotifyUpdated
 // Created: NPT 2012-11-16
 // -----------------------------------------------------------------------------
-void Agent::NotifyUpdated( const Equipments& equipments )
+void Agent::NotifyUpdated( const Equipments_ABC& equipments )
 {
-    if( Retrieve< Equipments >() == &equipments )
+    if( Retrieve< Equipments_ABC >() == &equipments )
     {
         weight_ = equipments.GetTotalWeight();
         controller_.Update( gui::DictionaryUpdated( *( Entity_ABC* )this, tools::translate( "Agent", "Info" ) ) );

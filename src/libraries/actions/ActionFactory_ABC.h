@@ -45,7 +45,6 @@ namespace kernel
     class AutomatType;
     class Automat_ABC;
     class Entity_ABC;
-    class EquipmentType;
     class FragOrderType;
     class Location_ABC;
     class MagicActionType;

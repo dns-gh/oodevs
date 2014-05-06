@@ -80,18 +80,19 @@ namespace
         }
     }
 
-    std::pair< unsigned int, double > GetCapacityAndConsumption( const std::string& name, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, tools::Iterator< const Equipment& > equipmentsIterator )
+    std::pair< unsigned int, double > GetCapacityAndConsumption( const std::string& name, const kernel::AgentType& type, const kernel::Entity_ABC& entity )
     {
+        auto agentResourceIterator = type.CreateResourcesIterator();
+        auto equipmentsIterator = static_cast< const Equipments& >( entity.Get< kernel::Equipments_ABC >() ).CreateIterator();
         unsigned int capacity = 0;
         double consumption = 0;
-
         ComputeCapacityAndConsumption( name, capacity, consumption, agentResourceIterator );
         while( equipmentsIterator.HasMoreElements() )
         {
             const Equipment& equipment = equipmentsIterator.NextElement();
             ComputeCapacityAndConsumption( name, capacity, consumption, equipment.type_.CreateResourcesIterator(), equipment.Total() );
         }
-        return std::make_pair< unsigned int, double >( capacity, consumption );
+        return std::make_pair( capacity, consumption );
     }
 
     template< class T >
@@ -145,7 +146,7 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
 // Name: UnitStateTableResource::NotifyUpdated
 // Created: JSR 2014-02-24
 // -----------------------------------------------------------------------------
-void UnitStateTableResource::NotifyUpdated( const Equipments& equipments )
+void UnitStateTableResource::NotifyUpdated( const kernel::Equipments_ABC& equipments )
 {
     if( selected_ && HasSubordinateWithExtension( *selected_, equipments ) )
     {
@@ -250,7 +251,7 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
     {
         const Dotation& dotation = dotationIterator.NextElement();
         const std::string& name = dotation.type_->GetName();
-        std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name, agent.CreateResourcesIterator(), selected.Get< Equipments >().CreateIterator() );
+        const auto capacityAndConsumption = GetCapacityAndConsumption( name, agent, selected );
         MergeLine( name.c_str(), dotation.type_->GetCategoryDisplay().c_str(), dotation.quantity_, capacityAndConsumption.first, dotation.thresholdPercentage_, capacityAndConsumption.second );
     }
 }
@@ -270,10 +271,8 @@ void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, c
             if( dotation.type_ && dotation.type_->GetName().c_str() == name )
             {
                 last = &entity;
-
                 kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( static_cast< kernel::Agent_ABC& >( entity ).GetType().GetId() );
-                std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name.toStdString(), agent.CreateResourcesIterator(), entity.Get< Equipments >().CreateIterator() );
-
+                const auto capacityAndConsumption = GetCapacityAndConsumption( name.toStdString(), agent, entity );
                 unsigned int newQuantity = std::min( quantity, static_cast< unsigned int >( capacityAndConsumption.first * percentage ) );
                 quantity -= newQuantity;
 
@@ -367,7 +366,7 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
                     if( dotation.type_ && dotation.type_->GetName().c_str() == name )
                     {
                         kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( static_cast< kernel::Agent_ABC& >( *last ).GetType().GetId() );
-                        std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name.toStdString(), agent.CreateResourcesIterator(), last->Get< Equipments >().CreateIterator() );
+                        const auto capacityAndConsumption = GetCapacityAndConsumption( name.toStdString(), agent, *last );
                         unsigned int newQuantity = static_cast< unsigned int >( capacityAndConsumption.first * percentage );
                         CreateMagicAction( newQuantity + quantity, dotation, last );
                         break;

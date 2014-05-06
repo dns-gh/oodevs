@@ -56,6 +56,7 @@ public:
         eBehavior,
         eSymbol,
         eDotations,
+        eEquipments,
         eNbrGuiElements
     };
 

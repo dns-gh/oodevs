@@ -3038,6 +3038,10 @@ PNG (*.png)
         <source>Indirect fire ammunition only</source>
         <translation>Uniquement munition pour tir indirect</translation>
     </message>
+    <message>
+        <source>Owned equipments only</source>
+        <translation>Uniquement les équipements possédés</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Models_Data</name>
