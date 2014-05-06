@@ -2274,8 +2274,8 @@ This data can&apos;t be projected.</source>
     <name>QuotasResourcesTable</name>
     <message>
         <location filename="QuotasResourcesTable.cpp" line="21"/>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
+        <source>Supplies</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
         <location filename="QuotasResourcesTable.cpp" line="22"/>
@@ -2364,7 +2364,7 @@ This data can&apos;t be projected.</source>
     <name>ResourcesEditorTable_ABC</name>
     <message>
         <location filename="ResourcesEditorTable_ABC.cpp" line="94"/>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished">إزالة مورد</translation>
     </message>
     <message>
@@ -2374,7 +2374,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <location filename="ResourcesEditorTable_ABC.cpp" line="90"/>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished">إضافة مورد</translation>
     </message>
 </context>
@@ -2997,8 +2997,8 @@ This data can&apos;t be projected.</source>
     <name>StockResourcesTable</name>
     <message>
         <location filename="StockResourcesTable.cpp" line="32"/>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
+        <source>Supplies</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
         <location filename="StockResourcesTable.cpp" line="33"/>

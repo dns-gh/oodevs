@@ -2277,8 +2277,8 @@ This data can&apos;t be projected.</translation>
     <name>QuotasResourcesTable</name>
     <message>
         <location filename="QuotasResourcesTable.cpp" line="21"/>
-        <source>Resource</source>
-        <translation>Resource</translation>
+        <source>Supplies</source>
+        <translation>Supplies</translation>
     </message>
     <message>
         <location filename="QuotasResourcesTable.cpp" line="22"/>
@@ -2367,8 +2367,8 @@ This data can&apos;t be projected.</translation>
     <name>ResourcesEditorTable_ABC</name>
     <message>
         <location filename="ResourcesEditorTable_ABC.cpp" line="94"/>
-        <source>Remove resource</source>
-        <translation>Remove resource</translation>
+        <source>Remove supplies</source>
+        <translation>Remove supplies</translation>
     </message>
     <message>
         <location filename="ResourcesEditorTable_ABC.cpp" line="97"/>
@@ -2377,8 +2377,8 @@ This data can&apos;t be projected.</translation>
     </message>
     <message>
         <location filename="ResourcesEditorTable_ABC.cpp" line="90"/>
-        <source>Add resource</source>
-        <translation>Add resource</translation>
+        <source>Add supplies</source>
+        <translation>Add supplies</translation>
     </message>
 </context>
 <context>
@@ -3000,8 +3000,8 @@ This data can&apos;t be projected.</translation>
     <name>StockResourcesTable</name>
     <message>
         <location filename="StockResourcesTable.cpp" line="32"/>
-        <source>Resource</source>
-        <translation>Resource</translation>
+        <source>Supplies</source>
+        <translation>Supplies</translation>
     </message>
     <message>
         <location filename="StockResourcesTable.cpp" line="33"/>

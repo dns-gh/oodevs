@@ -2275,8 +2275,8 @@ Este dato no puede ser proyectado.</translation>
     <name>QuotasResourcesTable</name>
     <message>
         <location filename="QuotasResourcesTable.cpp" line="21"/>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <location filename="QuotasResourcesTable.cpp" line="22"/>
@@ -2366,7 +2366,7 @@ Este dato no puede ser proyectado.</translation>
     <name>ResourcesEditorTable_ABC</name>
     <message>
         <location filename="ResourcesEditorTable_ABC.cpp" line="94"/>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished">Borrar recurso</translation>
     </message>
     <message>
@@ -2376,7 +2376,7 @@ Este dato no puede ser proyectado.</translation>
     </message>
     <message>
         <location filename="ResourcesEditorTable_ABC.cpp" line="90"/>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished">Agregar recurso</translation>
     </message>
 </context>
@@ -2999,8 +2999,8 @@ Este dato no puede ser proyectado.</translation>
     <name>StockResourcesTable</name>
     <message>
         <location filename="StockResourcesTable.cpp" line="32"/>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <location filename="StockResourcesTable.cpp" line="33"/>

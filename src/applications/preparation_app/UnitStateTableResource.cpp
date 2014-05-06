@@ -188,7 +188,7 @@ bool UnitStateTableResource::IsDotationAlreadyPresent( const QString& name ) con
     return false;
 }
 
-namespace 
+namespace
 {
     unsigned int RecursiveQuantity( const kernel::Entity_ABC& entity, const QString& name, const QString& category )
     {
