@@ -122,7 +122,7 @@ public:
     float GetTerrainLongitude() const;
     float GetTerrainLatitude() const;
 
-    const std::vector< unsigned char >& GetUtmZones() const;
+    std::string GetUtmZone() const;
 
     bool IsTerrainSamePhysicalRef() const;
     //@}

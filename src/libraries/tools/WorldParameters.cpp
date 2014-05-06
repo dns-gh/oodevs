@@ -186,3 +186,10 @@ void WorldParameters::InitExtent()
     for( unsigned char i = min; i <= max; ++i )
         utmZones_.push_back( i );
 }
+
+std::string WorldParameters::GetUtmZone() const
+{
+    if( utmZones_.empty() )
+        return "";
+    return boost::lexical_cast< std::string >( utmZones_.front() );
+}
