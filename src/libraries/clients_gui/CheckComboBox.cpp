@@ -266,20 +266,6 @@ bool CheckComboBox::Apply( QStandardItem& item ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: CheckComboBox::Refresh
-// Created: ABR 2014-04-29
-// -----------------------------------------------------------------------------
-void CheckComboBox::Refresh( const std::function< bool( const QString& ) >& filter )
-{
-    for( int row = 0; row < dataModel_->rowCount(); ++row )
-        if( QStandardItem* item = dataModel_->item( row, 0 ) )
-        {
-            auto text = item->text();
-            item->setData( StandardModel::GetShowValue( text == checkAllText_ || filter( text ) ), Roles::FilterRole );
-        }
-}
-
-// -----------------------------------------------------------------------------
 // Name: CheckComboBox::Clear
 // Created: ABR 2014-04-25
 // -----------------------------------------------------------------------------

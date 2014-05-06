@@ -183,9 +183,9 @@ void UnitStateDialog::Reset()
         typeName == kernel::Formation_ABC::typeName_ || typeName == kernel::Team_ABC::typeName_ )
         for( unsigned int i = 0; i < tabs_.size(); ++i )
             tabs_[ i ].second->RecursiveLoad( *selected_.ConstCast(), true );
-    // Refresh rich views to update filters
+    // Apply filters
     for( auto it = tabs_.begin(); it != tabs_.end(); ++it )
-        it->first->Refresh();
+        it->first->OnFiltersChanged();
 }
 
 // -----------------------------------------------------------------------------

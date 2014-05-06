@@ -62,7 +62,6 @@ public:
     //! @name Operations
     //@{
     void Load();
-    void Refresh();
     void Purge();
     bool HasOption( int option ) const;
     bool IsFiltered() const;
@@ -90,6 +89,7 @@ public slots:
     //! @name Slots
     //@{
     void OnClearFilters();
+    void OnFiltersChanged( QWidget* widget = 0 );
     //@}
 
 signals:
@@ -130,7 +130,6 @@ private slots:
     //! @name Slots
     //@{
     void OnHeaderContextMenuRequested( const QPoint& pos );
-    void OnFiltersChanged( QWidget* );
     //@}
 
 protected:

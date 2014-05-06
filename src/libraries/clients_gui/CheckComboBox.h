@@ -93,7 +93,6 @@ public:
     //! @name Filter_ABC implementation
     //@{
     virtual bool Apply( QStandardItem& item ) const;
-    virtual void Refresh( const std::function< bool( const QString& ) >& filter );
     virtual void Clear();
     //@}
 

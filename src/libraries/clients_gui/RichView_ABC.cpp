@@ -311,30 +311,6 @@ void RichView_ABC::AddCheckComboBoxFilter( int col,
 }
 
 // -----------------------------------------------------------------------------
-// Name: RichView_ABC::Refresh
-// Created: ABR 2014-04-29
-// -----------------------------------------------------------------------------
-void RichView_ABC::Refresh()
-{
-    if( !model_ )
-        throw MASA_EXCEPTION( "Model not set" );
-    for( auto it = filters_.begin(); it != filters_.end(); ++it )
-        if( it->first == -1 )
-            for( auto filter = it->second.begin(); filter != it->second.end(); ++filter )
-                ( *filter )->Refresh( [&]( const QString& text ) -> bool {
-                    bool result = false;
-                    for( int col = 0; !result && col < model_->columnCount(); ++col )
-                        result |= model_->findItems( text, Qt::MatchExactly, col ).size() > 0;
-                    return result;
-            } );
-        else
-            for( auto filter = it->second.begin(); filter != it->second.end(); ++filter )
-                ( *filter )->Refresh( [&]( const QString& text ) {
-                    return model_->findItems( text, Qt::MatchExactly, it->first ).size() > 0;
-            } );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RichView_ABC::HasOption
 // Created: ABR 2014-04-29
 // -----------------------------------------------------------------------------

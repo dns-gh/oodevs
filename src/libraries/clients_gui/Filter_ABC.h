@@ -37,14 +37,6 @@ public:
     virtual bool Apply( QStandardItem& item ) const = 0;
     virtual void Clear() = 0;
     //@}
-
-    //! @name Operations
-    //@{
-    virtual void Refresh( const std::function< bool( const QString& ) >& /* filter */ )
-    {
-        // NOTHING
-    }
-    //@}
 };
  
 } //! namespace gui
