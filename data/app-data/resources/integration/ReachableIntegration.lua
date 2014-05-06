@@ -996,8 +996,36 @@ integration.getSimPointFromPathPoint = function( pathPoint )
     return DEC_GetRepPoint( pathPoint )
 end
 
+--- Returns a list of safety positions defined as :
+-- <ul> <li> crossroads at the given radius of this entity </li>
+-- <li> positions along roads at the given safety distance of the previously found crossroads </li> </ul>
+-- This method can only be called by an agent.
+-- @see integration.findSafetyPositions
+-- @param radius Float, the radius around the entity (in meters)
+-- @param safetyDistance Float, the safety distance around the crossroads (in meters)
+-- @return List of simulation point
 integration.findSafetyPositions = function( radius, safetyDistance )
     return DEC_FindSafetyPositions( radius, safetyDistance )
+end
+
+--- Returns a list of safety positions defined as :
+-- <ul> <li> crossroads at the given radius of this entity </li>
+-- <li> positions along roads at the given safety distance of the previously found crossroads </li> </ul>
+-- This method can only be called by an agent.
+-- @see integration.findSafetyPositions
+-- @param radius Float, the radius around the entity (in meters)
+-- @param safetyDistance Float, the safety distance around the crossroads (in meters)
+-- @return List of point knowledges
+function integration.getSafetyPositions( radius, safetyDistance )
+    -- Warning: If this method is called with different parameters, the simulation cache will be invalidated so
+    -- it's good practice not to call it with different parameters for the same brain.
+    local points = integration.findSafetyPositions( radius, safetyDistance )
+    local result = {}
+    local CreateKnowledge = CreateKnowledge
+    for i = 1, #points do
+        result[ i ] = CreateKnowledge( integration.ontology.types.point, points[ i ] )
+    end
+    return result
 end
 
 -- Returns the time (minutes) needed to move towards the

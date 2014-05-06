@@ -203,6 +203,14 @@ integration.getName = function( agent )
     return DEC_GetSzName( agent.source )
 end
 
+--- Returns a list of all detected agent knowledges in
+-- this entity's current area of responsibility.
+-- This method can only be called by an agent.
+-- @return List of agent knowledges
+integration.unitesDetecteesDansFuseau = function()
+    return DEC_Connaissances_UnitesDetecteesDansFuseau()
+end
+
 --- Returns all the known wounded or dead units inside the circle defined by
 --- the provided center and distance.
 -- @param position Simulation position, the center of the circle
@@ -224,6 +232,19 @@ end
 -- @return List of all the known wounded simulation units in the area
 integration.getWoundedInArea = function( area )
     return DEC_Connaissances_UnitesBlesseesDansZone( area.source )
+end
+
+--- Returns a list of all terrorist agent knowledges at the given distance of this entity.
+-- This method can only be called by an agent.
+-- @param distance Float, the distance (in meters, 600 by default).
+-- @return List of agent knowledges
+integration.getNearbyTerrorists = function( distance )
+    local terrorists = DEC_Connaissances_TerroristsAProximite( distance or 600 )    
+    local newResult = {}
+    for i = 1, #terrorists do
+        newResult[ i ] = CreateKnowledge( integration.ontology.types.agentKnowledge, terrorists[ i ] )
+    end
+    return newResult
 end
 
 --- Returns the firing distance necessary for the provided platoon to be
