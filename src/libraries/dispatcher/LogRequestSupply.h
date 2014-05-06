@@ -11,8 +11,13 @@
 #define __LogRequestSupply_h_
 
 #include "SimpleEntity.h"
-#include "protocol/ClientSenders.h"
 #include <tools/Resolver.h>
+
+namespace sword
+{
+    class LogSupplyRequestCreation;
+    class LogSupplyRequestUpdate;
+}
 
 namespace kernel
 {

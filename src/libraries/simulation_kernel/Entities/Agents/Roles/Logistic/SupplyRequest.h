@@ -16,11 +16,6 @@
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 
-namespace sword
-{
-    class LogSupplyHandlingUpdate_EnumLogSupplyRequestStatus;
-}
-
 namespace logistic
 {
     class SupplySupplier_ABC;

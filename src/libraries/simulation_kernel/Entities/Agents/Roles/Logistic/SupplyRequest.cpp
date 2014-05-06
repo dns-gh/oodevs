@@ -443,6 +443,7 @@ void SupplyRequest::SendFullState() const
     SendCreation();
     client::LogSupplyRequestUpdate msg;
     msg().mutable_request()->set_id( id_ );
+    msg().set_state( state_ );
     msg().mutable_recipient()->set_id( recipientId_ );
     if( supplier_ )
         msg().mutable_supplier()->set_id( supplier_->GetSupplierId() );

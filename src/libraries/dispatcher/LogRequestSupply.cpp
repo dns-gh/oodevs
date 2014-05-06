@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "LogRequestSupply.h"
+#include "protocol/ClientSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 
