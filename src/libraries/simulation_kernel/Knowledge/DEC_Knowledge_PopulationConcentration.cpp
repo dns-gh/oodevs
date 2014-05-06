@@ -245,7 +245,7 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
     {
         unsigned int armedIndividuals = static_cast< unsigned int >( pPopulationKnowledge_->GetPopulationKnown().GetArmedIndividuals() * 100u );
         if( armedIndividuals > 0u )
-            MIL_Report::PostEvent( perception.GetAgentPerceiving(), report::eRC_ArmedCiviliansDetected, armedIndividuals );
+            MIL_Report::PostEventInteger( perception.GetAgentPerceiving(), report::eRC_ArmedCiviliansDetected, armedIndividuals );
     }
     if( pPopulationKnowledge_->IsRecon() )
     {
