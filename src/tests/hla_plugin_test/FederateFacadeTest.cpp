@@ -61,7 +61,7 @@ namespace
 // TODO leaks
 BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_netn_by_default, Fixture )
 {
-    xml::xistringstream xis( "<root disaggregate='1'/>" );
+    xml::xistringstream xis( "<root disaggregate='true' netn-subscribe-rpr='true'/>" );
     xis >> xml::start( "root" );
     ::hla::MockRtiAmbassador ambassador;
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().in( s ).with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "" ).returns( &ambassador );
@@ -96,7 +96,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
 
 BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
 {
-    xml::xistringstream xis( "<root netn='false' disaggregate='1'/>" );
+    xml::xistringstream xis( "<root netn='false' disaggregate='true'/>" );
     xis >> xml::start( "root" );
     ::hla::MockRtiAmbassador ambassador;
 
@@ -134,7 +134,7 @@ namespace
         MissingClassFixture()
             : agentListener( 0 )
             , tacticalAgentListener( 0 )
-            , xis( "<root disaggregate='1'/>" )
+            , xis( "<root disaggregate='true' netn-subscribe-rpr='true' netn='true'/>" )
         {
             MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().in( s ).returns( &ambassador );
             MOCK_EXPECT( federateFactory.Create ).once().in( s ).calls( boost::bind( &returnFederate, _1, _2, _3, federate ) );
@@ -352,7 +352,7 @@ namespace
             MOCK_EXPECT( tacticalObjectSubject.Unregister ).once();
             MOCK_EXPECT( controller.Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( controller.Unregister ).once();
-            MOCK_EXPECT( federate->RegisterClass ).exactly( 12 );
+            MOCK_EXPECT( federate->RegisterClass ).exactly( 9 );
             MOCK_EXPECT( federate->Connect ).once().returns( true );
         }
     };
@@ -361,7 +361,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( hla_plugin_xml_options_overrides_default_values, BuildFixture )
 {
     xml::xistringstream xis( "<root name='name' federation='federation' lrcSettings='crcHost=localhost;crcPort=8989'"
-                             "      time-constrained='false' time-regulating='false' lookahead='3' />" );
+                             "      time-constrained='false' time-regulating='false' lookahead='3'/>" );
     xis >> xml::start( "root" );
     ::hla::MockRtiAmbassador ambassador;
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "crcHost=localhost;crcPort=8989" ).returns( &ambassador );
