@@ -975,6 +975,18 @@ func (model *ModelData) removeFireDetection(id uint32, units []uint32) bool {
 	return size != len(model.FireDetections)
 }
 
+func (model *ModelData) addSupplyRequest(id uint32) bool {
+	size := len(model.SupplyRequests)
+	model.SupplyRequests[id] = &SupplyRequest{}
+	return size != len(model.SupplyRequests)
+}
+
+func (model *ModelData) removeSupplyRequest(id uint32) bool {
+	size := len(model.SupplyRequests)
+	delete(model.SupplyRequests, id)
+	return size != len(model.SupplyRequests)
+}
+
 var (
 	simToClientHandlers = []func(model *ModelData, m *sword.SimToClient_Content) error{
 		(*ModelData).handleAutomatAttributes,
@@ -1039,8 +1051,11 @@ var (
 		(*ModelData).handleObjectKnowledgeDestruction,
 		(*ModelData).handleObjectUpdate,
 		(*ModelData).handlePartyCreation,
+		(*ModelData).handlePathfindCreation,
 		(*ModelData).handlePopulationCreation,
 		(*ModelData).handlePopulationUpdate,
+		(*ModelData).handleSupplyRequestCreation,
+		(*ModelData).handleSupplyRequestDestruction,
 		(*ModelData).handleUnitAttributes,
 		(*ModelData).handleUnitChangeSuperior,
 		(*ModelData).handleUnitCreation,
@@ -1053,9 +1068,6 @@ var (
 		(*ModelData).handleUnitVisionCones,
 		(*ModelData).handleUrbanCreation,
 		(*ModelData).handleUrbanUpdate,
-		(*ModelData).handlePathfindCreation,
-		(*ModelData).handleSupplyRequestCreation,
-		(*ModelData).handleSupplyRequestDestruction,
 	}
 	authToClientHandlers = []func(model *ModelData, m *sword.AuthenticationToClient_Content) error{
 		(*ModelData).handleProfileCreation,

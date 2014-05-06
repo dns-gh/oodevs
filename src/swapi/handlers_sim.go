@@ -1515,7 +1515,10 @@ func (model *ModelData) handleSupplyRequestCreation(m *sword.SimToClient_Content
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	model.SupplyRequests[mm.GetRequest().GetId()] = &SupplyRequest{}
+	id := mm.GetRequest().GetId()
+	if !model.addSupplyRequest(id) {
+		return fmt.Errorf("cannot insert supply request %d", id)
+	}
 	return nil
 }
 
@@ -1525,9 +1528,7 @@ func (model *ModelData) handleSupplyRequestDestruction(m *sword.SimToClient_Cont
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	size := len(model.SupplyRequests)
-	delete(model.SupplyRequests, id)
-	if size == len(model.SupplyRequests) {
+	if !model.removeSupplyRequest(id) {
 		return fmt.Errorf("cannot destroy supply request %d", id)
 	}
 	return nil
