@@ -161,7 +161,7 @@ void LogisticSupplyPullFlowDialog::Validate()
     {
         if( carriersTable_->IsIncomplete() )
         {
-            QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry all types of resources" ) );
+            QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry all types of supplies" ) );
             return;
         }
         if( carriersTable_->IsOverloaded() )

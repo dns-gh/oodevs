@@ -464,7 +464,7 @@
     </message>
     <message>
         <location filename="ExerciseDialog.cpp" line="124"/>
-        <source>Infinite resources</source>
+        <source>Infinite supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

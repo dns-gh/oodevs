@@ -93,7 +93,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     mainLayout->addWidget( equiPersoGroupBox );
 
     // Dotations && !munition
-    Q3GroupBox* dotationsGroupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Supplies" ), this );
+    Q3GroupBox* dotationsGroupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Basic load" ), this );
     dotationsGroupBox->setFlat( true );
 
     dotationsTable_ = new QTableWidget( 0, 2, dotationsGroupBox );

@@ -2327,6 +2327,11 @@ Do you want to replace it?</translation>
         <translation>Error</translation>
     </message>
     <message>
+        <location filename="LogisticSupplyPullFlowDialog.cpp" line="164"/>
+        <source>The convoy is unable to carry all types of supplies</source>
+        <translation>The convoy is unable to carry all types of supplies</translation>
+    </message>
+    <message>
         <location filename="LogisticSupplyPullFlowDialog.cpp" line="169"/>
         <source>The convoy is unable to carry that much weight and/or volume</source>
         <translation>The convoy is unable to carry that much weight and/or volume</translation>
@@ -2335,11 +2340,6 @@ Do you want to replace it?</translation>
         <location filename="LogisticSupplyPullFlowDialog.cpp" line="174"/>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
         <translation>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyPullFlowDialog.cpp" line="164"/>
-        <source>The convoy is unable to carry all types of resources</source>
-        <translation>The convoy is unable to carry all types of resources</translation>
     </message>
 </context>
 <context>
@@ -2372,6 +2372,11 @@ Do you want to replace it?</translation>
         <translation>Error</translation>
     </message>
     <message>
+        <location filename="LogisticSupplyPushFlowDialog.cpp" line="143"/>
+        <source>The convoy is unable to carry all types of supplies</source>
+        <translation>The convoy is unable to carry all types of supplies</translation>
+    </message>
+    <message>
         <location filename="LogisticSupplyPushFlowDialog.cpp" line="148"/>
         <source>The convoy is unable to carry that much weight and/or volume</source>
         <translation>The convoy is unable to carry that much weight and/or volume</translation>
@@ -2380,11 +2385,6 @@ Do you want to replace it?</translation>
         <location filename="LogisticSupplyPushFlowDialog.cpp" line="153"/>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
         <translation>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyPushFlowDialog.cpp" line="143"/>
-        <source>The convoy is unable to carry all types of resources</source>
-        <translation>The convoy is unable to carry all types of resources</translation>
     </message>
 </context>
 <context>
@@ -2424,6 +2424,10 @@ Do you want to replace it?</translation>
     </message>
     <message>
         <location filename="LogisticSupplyRecompletionDialog.cpp" line="96"/>
+        <source>Basic load</source>
+        <translation>Basic load</translation>
+    </message>
+    <message>
         <location filename="LogisticSupplyRecompletionDialog.cpp" line="103"/>
         <location filename="LogisticSupplyRecompletionDialog.cpp" line="137"/>
         <source>Supplies</source>

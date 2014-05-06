@@ -121,7 +121,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         gui::SubObjectName subObject( "parameters" );
         QVBoxLayout* vLayout = new QVBoxLayout();
         box->setLayout( vLayout );
-        infiniteDotationsCheckBox_ = new gui::RichCheckBox( "infiniteDotationsCheckBox", tr( "Infinite resources" ) );
+        infiniteDotationsCheckBox_ = new gui::RichCheckBox( "infiniteDotationsCheckBox", tr( "Infinite supplies" ) );
         vLayout->addWidget( infiniteDotationsCheckBox_ );
         humanEvolutionCheckBox_ = new gui::RichCheckBox( "humanEvolutionCheckBox", tr( "Human factors automatic evolution" ) );
         vLayout->addWidget( humanEvolutionCheckBox_ );
