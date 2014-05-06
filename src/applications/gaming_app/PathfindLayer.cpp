@@ -176,7 +176,8 @@ void PathfindLayer::DrawPoint( geometry::Point2f p, bool invert ) const
 // -----------------------------------------------------------------------------
 void PathfindLayer::Select( const kernel::Agent_ABC& element )
 {
-    element_ = &element;
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        element_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +186,8 @@ void PathfindLayer::Select( const kernel::Agent_ABC& element )
 // -----------------------------------------------------------------------------
 void PathfindLayer::Select( const kernel::Population_ABC& element )
 {
-    element_ = &element;
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        element_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -280,7 +282,8 @@ void PathfindLayer::SendRequest()
 // -----------------------------------------------------------------------------
 void PathfindLayer::BeforeSelection()
 {
-    element_ = 0;
+    if( controllers_.GetCurrentMode() != eModes_Itinerary )
+        element_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -438,4 +441,13 @@ void PathfindLayer::OpenEditingMode()
     element->Select( controllers_.actions_ );
     element->MultipleSelect( controllers_.actions_, boost::assign::list_of( element ) );
     ClearPositions();
+}
+
+bool PathfindLayer::HandleKeyPress( QKeyEvent* key )
+{
+    if( controllers_.GetCurrentMode() != eModes_Itinerary
+        || key->key() != Qt::Key_Escape )
+        return false;
+    controllers_.ChangeMode( eModes_Gaming );
+    return true;
 }
