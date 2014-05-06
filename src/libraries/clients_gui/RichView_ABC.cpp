@@ -151,12 +151,12 @@ void RichView_ABC::Purge()
         delete filtersLayout_;
         filtersLayout_ = new QGridLayout( filtersContainer_, 0, 2 );
         filtersLayout_->addWidget( clearButton_, 0, 0, 1, 2, Qt::AlignLeft );
-        for( auto it = filters_.begin(); it != filters_.end(); ++it )
-            for( auto filter = it->second.begin(); filter != it->second.end(); ++filter )
-                if( !filterLine_ || *filter != filterLine_ )
-                    delete *filter;
-        filters_.clear();
     }
+    for( auto it = filters_.begin(); it != filters_.end(); ++it )
+        for( auto filter = it->second.begin(); filter != it->second.end(); ++filter )
+            if( !filterLine_ || *filter != filterLine_ )
+                delete *filter;
+    filters_.clear();
     for( auto it = menus_.begin(); it != menus_.end(); ++it )
         delete it->second;
     menus_.clear();
