@@ -4567,8 +4567,8 @@ Los datos no pueden ser proyectados.</translation>
     </message>
     <message>
         <location filename="UnitMagicOrdersInterface.cpp" line="507"/>
-        <source>Recover - Resources</source>
-        <translation>Recuperar - Recursos</translation>
+        <source>Recover - Basic load</source>
+        <translation type="unfinished">Recuperar - Recursos</translation>
     </message>
     <message>
         <location filename="UnitMagicOrdersInterface.cpp" line="508"/>

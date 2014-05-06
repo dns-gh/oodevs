@@ -4572,8 +4572,8 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <location filename="UnitMagicOrdersInterface.cpp" line="507"/>
-        <source>Recover - Resources</source>
-        <translation>Recompléter - Ressources</translation>
+        <source>Recover - Basic load</source>
+        <translation type="unfinished">Recompléter - Ressources</translation>
     </message>
     <message>
         <location filename="UnitMagicOrdersInterface.cpp" line="508"/>

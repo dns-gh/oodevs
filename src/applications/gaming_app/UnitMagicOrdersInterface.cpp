@@ -504,7 +504,7 @@ void UnitMagicOrdersInterface::FillCommonOrders( kernel::ContextMenu* magicMenu 
     AddMagic( tr( "Recover - All" ),        sword::UnitMagicAction_Type_recover_all,      magicMenu );
     AddMagic( tr( "Recover - Troops" ),     sword::UnitMagicAction_Type_recover_troops,  magicMenu );
     AddMagic( tr( "Recover - Equipments" ), sword::UnitMagicAction_Type_recover_equipments, magicMenu );
-    AddMagic( tr( "Recover - Resources" ),  sword::UnitMagicAction_Type_recover_resources, magicMenu );
+    AddMagic( tr( "Recover - Basic load" ), sword::UnitMagicAction_Type_recover_resources, magicMenu );
     AddMagic( tr( "Destroy - All" ),        sword::UnitMagicAction_Type_destroy_all,        magicMenu );
 }
 

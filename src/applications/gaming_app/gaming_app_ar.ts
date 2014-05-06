@@ -4569,7 +4569,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <location filename="UnitMagicOrdersInterface.cpp" line="507"/>
-        <source>Recover - Resources</source>
+        <source>Recover - Basic load</source>
         <translation type="unfinished">استرداد-الموارد</translation>
     </message>
     <message>
