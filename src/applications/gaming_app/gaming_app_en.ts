@@ -2424,14 +2424,10 @@ Do you want to replace it?</translation>
     </message>
     <message>
         <location filename="LogisticSupplyRecompletionDialog.cpp" line="96"/>
-        <source>Resources</source>
-        <translation>Resources</translation>
-    </message>
-    <message>
         <location filename="LogisticSupplyRecompletionDialog.cpp" line="103"/>
         <location filename="LogisticSupplyRecompletionDialog.cpp" line="137"/>
-        <source>Resource</source>
-        <translation>Resource</translation>
+        <source>Supplies</source>
+        <translation>Supplies</translation>
     </message>
     <message>
         <location filename="LogisticSupplyRecompletionDialog.cpp" line="103"/>

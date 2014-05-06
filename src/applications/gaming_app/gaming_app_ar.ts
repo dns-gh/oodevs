@@ -2423,13 +2423,9 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="LogisticSupplyRecompletionDialog.cpp" line="96"/>
-        <source>Resources</source>
-        <translation type="unfinished">الموارد</translation>
-    </message>
-    <message>
         <location filename="LogisticSupplyRecompletionDialog.cpp" line="103"/>
         <location filename="LogisticSupplyRecompletionDialog.cpp" line="137"/>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
