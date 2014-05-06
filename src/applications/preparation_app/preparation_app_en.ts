@@ -939,8 +939,8 @@
     </message>
     <message>
         <location filename="LogisticEditor.cpp" line="110"/>
-        <source>Category</source>
-        <translation type="unfinished">Category</translation>
+        <source>Class</source>
+        <translation>Class</translation>
     </message>
     <message>
         <location filename="LogisticEditor.cpp" line="110"/>
