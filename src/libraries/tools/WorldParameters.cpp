@@ -61,6 +61,37 @@ void WorldParameters::ReadPopulation( const Path& populationFile, xml::xistream&
     populationGraph_ = BuildChildPath( populationFile, Path::FromUTF8( populationGraph ) );
 }
 
+namespace
+{
+
+std::string GetMinUtmZone( const std::string& xMin, const std::string& xMax,
+        const std::string& yMin, const std::string& yMax )
+{
+    std::vector< std::string > mgrs;
+    mgrs.push_back( xMin );
+    mgrs.push_back( xMax );
+    mgrs.push_back( yMin );
+    mgrs.push_back( yMax );
+    uint8_t min = 255;
+
+    for( unsigned i = 0; i < 4; ++i )
+    {
+        try
+        {
+            const uint8_t zone = boost::lexical_cast< uint8_t >( mgrs[i].substr( 0, 2 ) );
+            if( zone < min )
+                min = zone;
+        }
+        catch( const std::exception& )
+        {
+            continue;
+        }
+    }
+    return boost::lexical_cast< std::string >( min );
+}
+
+}  // namespace
+
 // -----------------------------------------------------------------------------
 // Name: WorldParameters::ReadTerrain
 // Created: AGE 2006-04-28
@@ -68,6 +99,7 @@ void WorldParameters::ReadPopulation( const Path& populationFile, xml::xistream&
 void WorldParameters::ReadTerrain( const Path& terrainFile, const Path& dataset,
         const Path& physical, xml::xistream& xis )
 {
+    std::string xMin, xMax, yMin, yMax;
     std::string world, pathfind, graphics, detection;
     if( xis.has_child( "terrain" ) )
     {
@@ -84,10 +116,10 @@ void WorldParameters::ReadTerrain( const Path& terrainFile, const Path& dataset,
                         >> xml::attribute( "width", width_ )
                     >> xml::end
                     >> xml::start( "extent" )
-                        >> xml::attribute( "x-min", xMin_ )
-                        >> xml::attribute( "x-max", xMax_ )
-                        >> xml::attribute( "y-min", yMin_ )
-                        >> xml::attribute( "y-max", yMax_ )
+                        >> xml::attribute( "x-min", xMin )
+                        >> xml::attribute( "x-max", xMax )
+                        >> xml::attribute( "y-min", yMin )
+                        >> xml::attribute( "y-max", yMax )
                     >> xml::end
                 >> xml::end
                 >> xml::start( "pathfind" )
@@ -119,10 +151,16 @@ void WorldParameters::ReadTerrain( const Path& terrainFile, const Path& dataset,
                 >> xml::content( "Graphics", graphics )
             >> xml::end;
         ReadWorld( BuildChildPath( terrainFile, Path::FromUTF8( world ) ) );
-        ReadExtent( BuildChildPath( terrainFile, "extent.xml" ) );
-    }
 
-    InitExtent();
+        Xifstream x( BuildChildPath( terrainFile, "extent.xml" ) );
+        x >> xml::start( "Extent" )
+                >> xml::content( "HautGauche", yMin )
+                >> xml::content( "HautDroit", yMax )
+                >> xml::content( "BasGauche", xMin )
+                >> xml::content( "BasDroit", xMax )
+            >> xml::end;
+    }
+    minUtmZone_ = GetMinUtmZone( xMin, xMax, yMin, yMax );
 
     detection_ = BuildChildPath( terrainFile, Path::FromUTF8( detection + "/detection.dat" ) );
     graphicsDirectory_ = BuildChildPath( terrainFile, Path::FromUTF8( graphics ) );
@@ -147,49 +185,7 @@ void WorldParameters::ReadWorld( const Path& world )
     >> xml::end;
 }
 
-// -----------------------------------------------------------------------------
-// Name: WorldParameters::ReadExtent
-// Created: MGD 2010-12-16
-// -----------------------------------------------------------------------------
-void WorldParameters::ReadExtent( const Path& extent )
-{
-    Xifstream xis( extent );
-    xis >> xml::start( "Extent" )
-            >> xml::content( "HautGauche", yMin_ )
-            >> xml::content( "HautDroit", yMax_ )
-            >> xml::content( "BasGauche", xMin_ )
-            >> xml::content( "BasDroit", xMax_ )
-        >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: WorldParameters::InitExtent
-// Created: MGD 2010-12-16
-// -----------------------------------------------------------------------------
-void WorldParameters::InitExtent()
-{
-    std::vector< std::string > mgrsVector;
-    mgrsVector.push_back( xMin_ );
-    mgrsVector.push_back( xMax_ );
-    mgrsVector.push_back( yMin_ );
-    mgrsVector.push_back( yMax_ );
-    unsigned char min = 255;
-    unsigned char max = 0;
-
-    for( unsigned i = 0; i < 4; ++i )
-    {
-        std::string mgrs = mgrsVector[i];
-        const unsigned char zone = (unsigned char)boost::lexical_cast< unsigned int >( mgrs.substr( 0, 2 ) );
-        min = std::min( min, zone );
-        max = std::max( max, zone );
-    }
-    for( unsigned char i = min; i <= max; ++i )
-        utmZones_.push_back( i );
-}
-
 std::string WorldParameters::GetUtmZone() const
 {
-    if( utmZones_.empty() )
-        return "";
-    return boost::lexical_cast< std::string >( utmZones_.front() );
+    return minUtmZone_;
 }

@@ -46,8 +46,6 @@ private:
             const Path& physical, xml::xistream& xis );
     void ReadPopulation( const Path& populationFile, xml::xistream& xis );
     void ReadWorld( const Path& world );
-    void ReadExtent( const Path& extent );
-    void InitExtent();
     //@}
 
 public:
@@ -66,11 +64,7 @@ public:
     //@}
 
 private:
-    std::string xMin_;
-    std::string xMax_;
-    std::string yMin_;
-    std::string yMax_;
-    std::vector< unsigned char > utmZones_;
+    std::string minUtmZone_;
 };
 
 }
