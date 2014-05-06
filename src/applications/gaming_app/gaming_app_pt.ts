@@ -692,20 +692,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>DotationsListView</name>
-    <message>
-        <location filename="DotationsListView.cpp" line="23"/>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="DotationsListView.cpp" line="24"/>
-        <location filename="SupplyQuotasWidget.cpp" line="37"/>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>EfficientRangeDialog</name>
     <message>
         <location filename="EfficientRangeDialog.cpp" line="29"/>
@@ -2309,6 +2295,11 @@ Do you want to replace it?</source>
     <message>
         <location filename="LogisticSupplyChangeQuotasDialog.cpp" line="89"/>
         <source>Target:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="SupplyQuotasWidget.cpp" line="37"/>
+        <source>Quantity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -34,7 +34,7 @@ SupplyQuotasWidget::SupplyQuotasWidget( QWidget* parent, kernel::Controllers& co
     dataModel_->setColumnCount( 2 );
     QStringList horizontalHeaders;
     horizontalHeaders << tools::translate( "LogisticSupplyChangeQuotasDialog", "Quota" )
-        << tools::translate( "DotationsListView", "Quantity" );
+        << tools::translate( "LogisticSupplyChangeQuotasDialog", "Quantity" );
     dataModel_->setHorizontalHeaderLabels( horizontalHeaders );
 
     tableView_ = new QTableView( this );

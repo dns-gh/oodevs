@@ -694,20 +694,6 @@ Raison: %3
     </message>
 </context>
 <context>
-    <name>DotationsListView</name>
-    <message>
-        <location filename="DotationsListView.cpp" line="23"/>
-        <source>Resource</source>
-        <translation>Ressource</translation>
-    </message>
-    <message>
-        <location filename="DotationsListView.cpp" line="24"/>
-        <location filename="SupplyQuotasWidget.cpp" line="37"/>
-        <source>Quantity</source>
-        <translation>Quantité</translation>
-    </message>
-</context>
-<context>
     <name>EfficientRangeDialog</name>
     <message>
         <location filename="EfficientRangeDialog.cpp" line="29"/>
@@ -2313,6 +2299,11 @@ Voulez-vous le remplacer ?</translation>
         <location filename="LogisticSupplyChangeQuotasDialog.cpp" line="86"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+    <message>
+        <location filename="SupplyQuotasWidget.cpp" line="37"/>
+        <source>Quantity</source>
+        <translation>Quantité</translation>
     </message>
 </context>
 <context>
