@@ -424,7 +424,7 @@ end
 --- Returns a list of all objects of the given type colliding with this entity.
 -- This method can only be called by an agent.
 -- @see Types.lua for the object types enumeration
--- @param objectType String, the sought object type (e.g. eTypeObjectMines, eTypeObjectLinearMinedArea...)
+-- @param objectType String, the sought object type (as defined in authoring tool)
 -- @return List of object knowledges
 integration.getCollidingObjectsFromType = function( objectType )
     local lstObjects = DEC_Connaissances_CollisionsObjetsDeType( objectType )
