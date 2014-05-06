@@ -425,5 +425,6 @@ void PHY_RolePion_Posture::Follow( const MIL_Agent_ABC& agent )
     const PHY_RolePion_Posture& posture = agent.GetRole< PHY_RolePion_Posture >();
     ChangePosture( posture.GetCurrentPosture() );
     ChangePostureCompletionPercentage( posture.GetPostureCompletionPercentage() );
-    bIsStealth_ = posture.bIsStealth_;
+    if( posture.bIsStealth_ )
+        bIsStealth_ = posture.bIsStealth_;
 }
