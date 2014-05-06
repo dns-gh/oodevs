@@ -188,6 +188,16 @@ void InfoButtonsWidget::AddButton( QDialog* dialog, const QPixmap& pixmap, const
 }
 
 // -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::NotifyDeleted
+// Created: LDC 2014-04-30
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::NotifyDeleted( const kernel::Entity_ABC& element )
+{
+    if( element_ == &element )
+        NotifySelected( 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: InfoButtonsWidget::NotifySelected
 // Created: LGY 2013-12-10
 // -----------------------------------------------------------------------------
