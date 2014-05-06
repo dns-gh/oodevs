@@ -3466,12 +3466,12 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <location filename="UnitStateTableResource.cpp" line="114"/>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="UnitStateTableResource.cpp" line="119"/>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

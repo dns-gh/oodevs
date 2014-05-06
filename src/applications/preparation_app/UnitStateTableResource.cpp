@@ -111,12 +111,12 @@ void UnitStateTableResource::contextMenuEvent( QContextMenuEvent* e )
         SortMenu( *it->second );
         targetMenu.insertItem( it->first.c_str(), it->second );
     }
-    menu.insertItem( tools::translate( "UnitStateTableResource", "Add resource"), &targetMenu, 0 );
+    menu.insertItem( tools::translate( "UnitStateTableResource", "Add supplies"), &targetMenu, 0 );
     QModelIndex index = indexAt( e->pos() );
     if( index.isValid() )
     {
         setCurrentIndex( index );
-        menu.insertItem( tools::translate( "UnitStateTableResource", "Remove resource" ), this, SLOT( OnRemoveCurrentItem() ) );
+        menu.insertItem( tools::translate( "UnitStateTableResource", "Remove supplies" ), this, SLOT( OnRemoveCurrentItem() ) );
     }
     int nMenuResult = menu.exec( e->globalPos() );
     if( nMenuResult > 0 )

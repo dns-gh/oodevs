@@ -3469,13 +3469,13 @@ Este dato no puede ser proyectado.</translation>
     </message>
     <message>
         <location filename="UnitStateTableResource.cpp" line="114"/>
-        <source>Add resource</source>
-        <translation>Agregar recurso</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Agregar recurso</translation>
     </message>
     <message>
         <location filename="UnitStateTableResource.cpp" line="119"/>
-        <source>Remove resource</source>
-        <translation>Borrar recurso</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Borrar recurso</translation>
     </message>
     <message>
         <location filename="UnitStateTableResource.cpp" line="317"/>

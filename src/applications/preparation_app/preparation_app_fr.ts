@@ -3467,13 +3467,13 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <location filename="UnitStateTableResource.cpp" line="114"/>
-        <source>Add resource</source>
-        <translation>Ajouter une ressource</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Ajouter une dotation</translation>
     </message>
     <message>
         <location filename="UnitStateTableResource.cpp" line="119"/>
-        <source>Remove resource</source>
-        <translation>Supprimer la ressource</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Supprimer la dotation</translation>
     </message>
     <message>
         <location filename="UnitStateTableResource.cpp" line="317"/>
