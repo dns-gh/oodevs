@@ -2534,8 +2534,8 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <location filename="LogisticsRequestsSupplyTable.cpp" line="67"/>
-        <source>Resource</source>
-        <translation>Dotation</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotation</translation>
     </message>
     <message>
         <location filename="LogisticsRequestsSupplyTable.cpp" line="68"/>
@@ -4127,8 +4127,8 @@ Ces données ne peuvent pas être projetées.</translation>
     <name>SupplyStocksListView</name>
     <message>
         <location filename="SupplyStocksListView.cpp" line="43"/>
-        <source>Stock</source>
-        <translation>Stock</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotation</translation>
     </message>
     <message>
         <location filename="SupplyStocksListView.cpp" line="44"/>

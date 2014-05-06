@@ -64,7 +64,7 @@ LogisticsRequestsSupplyTable::LogisticsRequestsSupplyTable( const QString& objec
     , delegate_  ( new SupplyDelegate( parent ) )
 {
     horizontalHeaders_ << tools::translate( "LogisticsRequestsSupplyTable", "Recipient" )
-        << tools::translate( "LogisticsRequestsSupplyTable", "Resource" )
+        << tools::translate( "LogisticsRequestsSupplyTable", "Supplies" )
         << tools::translate( "LogisticsRequestsSupplyTable", "Requested" )
         << tools::translate( "LogisticsRequestsSupplyTable", "Granted" )
         << tools::translate( "LogisticsRequestsSupplyTable", "Conveyed" )
@@ -108,7 +108,7 @@ LogisticsRequestsSupplyTable::~LogisticsRequestsSupplyTable()
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
 const gui::LinkItemDelegate* LogisticsRequestsSupplyTable::GetLinkItemDelegate() const
-{ 
+{
     return linkItemDelegate_;
 }
 

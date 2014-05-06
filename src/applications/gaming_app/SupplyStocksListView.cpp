@@ -40,7 +40,7 @@ SupplyStocksListView::SupplyStocksListView( QWidget* parent, Controllers& contro
     : ResourcesListView_ABC< SupplyStates >( parent, controllers )
 {
     model_.setHorizontalHeaderLabels(
-        QStringList() << tools::translate( "SupplyStocksListView", "Stock" )
+        QStringList() << tools::translate( "SupplyStocksListView", "Supplies" )
             << tools::translate( "SupplyStocksListView", "Quantity" )
             << tools::translate( "SupplyStocksListView", "Mass (T)" )
             << tools::translate( "SupplyStocksListView", "Volume (m3)" ) );

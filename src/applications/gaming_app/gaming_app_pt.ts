@@ -2531,7 +2531,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="LogisticsRequestsSupplyTable.cpp" line="67"/>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4112,7 +4112,7 @@ This data can&apos;t be projected.</source>
     <name>SupplyStocksListView</name>
     <message>
         <location filename="SupplyStocksListView.cpp" line="43"/>
-        <source>Stock</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
