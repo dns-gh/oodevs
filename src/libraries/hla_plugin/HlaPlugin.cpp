@@ -266,7 +266,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
                                                   config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_, *pTacticalObjectSubject_,
-                                                  *pOwnershipStrategy_, *pEntityIdentifierResolver_, *pFomSerializer_ ) );
+                                                  *pOwnershipStrategy_, *pEntityIdentifierResolver_, *pFomSerializer_, logger_ ) );
             pNetnInteractionBuilder_.reset( pXis_->attribute< int >( "netn-version", 1 ) == 1 ?
                     static_cast< NETN_InteractionBuilder_ABC* >( new NETNv1_InteractionBuilder( logger_, *pFederate_ ) ):
                     static_cast< NETN_InteractionBuilder_ABC* >( new NETNv2_InteractionBuilder( logger_, *pFederate_ ) ) );

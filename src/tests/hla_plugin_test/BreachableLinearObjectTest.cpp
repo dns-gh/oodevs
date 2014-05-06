@@ -41,7 +41,7 @@ namespace
             MOCK_EXPECT( object.Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( object.Unregister ).once();
         }
-        MocTacticalObject object;
+        MockTacticalObject object;
         TacticalObjectEventListener_ABC* listener;
         rpr::EntityType entityType;
         rpr::EntityIdentifier entityId;

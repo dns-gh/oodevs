@@ -22,7 +22,7 @@ namespace hla
 */
 // Created: AHC 2013-01-17
 // =============================================================================
-MOCK_BASE_CLASS( MocTacticalObject, TacticalObject_ABC )
+MOCK_BASE_CLASS( MockTacticalObject, TacticalObject_ABC )
 {
     MOCK_METHOD( Register, 1 )
     MOCK_METHOD( Unregister, 1)

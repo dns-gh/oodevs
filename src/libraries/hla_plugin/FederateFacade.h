@@ -41,6 +41,11 @@ namespace tools
     class Path;
 }
 
+namespace dispatcher
+{
+    class Logger_ABC;
+}
+
 namespace plugins
 {
 namespace hla
@@ -83,7 +88,8 @@ public:
                              AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
                              const FederateAmbassadorFactory_ABC& federateFactory, const tools::Path& pluginDirectory, CallsignResolver_ABC& callsignResolver,
                              TacticalObjectSubject_ABC& tacticalObjectSubject,
-                             OwnershipStrategy_ABC& ownershipStrategy, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
+                             OwnershipStrategy_ABC& ownershipStrategy, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer,
+                             dispatcher::Logger_ABC& logger );
     virtual ~FederateFacade();
     //@}
 

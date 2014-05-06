@@ -14,6 +14,11 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/noncopyable.hpp>
 
+namespace dispatcher
+{
+    class Logger_ABC;
+}
+
 namespace plugins
 {
 namespace hla
@@ -43,7 +48,7 @@ public:
     //@{
     FomBuilder( xml::xistream& xis, Federate_ABC& federate, LocalAgentResolver_ABC& resolver, HlaObjectNameFactory_ABC& nameFactory,
                 CallsignResolver_ABC& callsignResolver, MarkingFactory_ABC& markingFactory, EntityIdentifierResolver_ABC& entityIdentifierResolver,
-                FOM_Serializer_ABC& fomSerializer, OwnershipStrategy_ABC& ownershipStrategy );
+                FOM_Serializer_ABC& fomSerializer, OwnershipStrategy_ABC& ownershipStrategy, dispatcher::Logger_ABC& logger );
     ~FomBuilder();
     //@}
 
@@ -79,6 +84,7 @@ private:
     EntityIdentifierResolver_ABC& entityIdentifierResolver_;
     FOM_Serializer_ABC& fomSerializer_;
     OwnershipStrategy_ABC& ownershipStrategy_;
+    dispatcher::Logger_ABC& logger_;
     //@}
 
 };

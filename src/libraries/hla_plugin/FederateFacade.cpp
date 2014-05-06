@@ -78,7 +78,8 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
                                 AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
                                 const FederateAmbassadorFactory_ABC& federateFactory, const tools::Path& pluginDirectory, CallsignResolver_ABC& callsignResolver,
                                 TacticalObjectSubject_ABC& tacticalObjectSubject,
-                                OwnershipStrategy_ABC& ownershipStrategy, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer )
+                                OwnershipStrategy_ABC& ownershipStrategy, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer,
+                                dispatcher::Logger_ABC& logger )
     : subject_           ( subject )
     , tacticalObjectSubject_( tacticalObjectSubject )
     , rtiFactory_        ( rtiFactory )
@@ -90,7 +91,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , destructor_        ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
     , nameFactory_       ( new HlaObjectNameFactory( xis.attribute< std::string >( "name", "SWORD" ),
                                 boost::lexical_cast< std::string >( MT_Random::GetInstance().rand32() ) ) )
-    , fomBuilder_        ( new FomBuilder( xis, *federate_, resolver, *nameFactory_, callsignResolver, *markingFactory_, entityIdentifierResolver, fomSerializer, ownershipStrategy ) )
+    , fomBuilder_        ( new FomBuilder( xis, *federate_, resolver, *nameFactory_, callsignResolver, *markingFactory_, entityIdentifierResolver, fomSerializer, ownershipStrategy, logger ) )
     , aggregateClass_    ( fomBuilder_->CreateAggregateClass() )
     , surfaceVesselClass_( fomBuilder_->CreateSurfaceVesselClass() )
     , aircraftClass_     ( fomBuilder_->CreateAircraftClass() )
@@ -159,18 +160,21 @@ void FederateFacade::Notify( const sword::ControlEndTick& /*message*/, int /*con
 // -----------------------------------------------------------------------------
 void FederateFacade::Register( ClassListener_ABC& listener )
 {
-    aggregateClass_->Register( listener );
-    surfaceVesselClass_->Register( listener );
-    aircraftClass_->Register( listener );
-	if( groundVehicleClass_.get() )
+    if( aggregateClass_ )
+        aggregateClass_->Register( listener );
+    if( surfaceVesselClass_ )
+        surfaceVesselClass_->Register( listener );
+    if( aircraftClass_ )
+        aircraftClass_->Register( listener );
+	if( groundVehicleClass_ )
 		groundVehicleClass_->Register( listener );
-	if( humanClass_.get() )
+	if( humanClass_ )
 		humanClass_->Register( listener );
-    if( rprAggregateClass_.get() )
+    if( rprAggregateClass_ )
         rprAggregateClass_->Register( listener );
-    if( rprSurfaceVesselClass_.get() )
+    if( rprSurfaceVesselClass_ )
         rprSurfaceVesselClass_->Register( listener );
-    if( rprAircraftClass_.get() )
+    if( rprAircraftClass_ )
         rprAircraftClass_->Register( listener );
 }
 
@@ -180,9 +184,12 @@ void FederateFacade::Register( ClassListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void FederateFacade::Unregister( ClassListener_ABC& listener )
 {
-    aircraftClass_->Unregister( listener );
-    surfaceVesselClass_->Unregister( listener );
-    aggregateClass_->Unregister( listener );
+    if( aircraftClass_ )
+        aircraftClass_->Unregister( listener );
+    if( surfaceVesselClass_ )
+        surfaceVesselClass_->Unregister( listener );
+    if( aggregateClass_ )
+        aggregateClass_->Unregister( listener );
 	if( groundVehicleClass_.get() )
 		groundVehicleClass_->Unregister( listener );
 	if( humanClass_.get() )
@@ -302,7 +309,7 @@ void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned long identifie
         const rpr::EntityType& type, const std::string& symbol, bool isLocal, const std::vector< char >& uniqueId )
 {
     // TODO Handle vessels and aircrafts
-    if( isLocal )
+    if( isLocal && aggregateClass_ )
         aggregateClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
 }
 
@@ -358,23 +365,26 @@ void FederateFacade::UnconditionalAcquisition( const ::hla::ObjectIdentifier& ob
 void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force,
         const rpr::EntityType& type, const std::string& symbol, const std::vector< char >& uniqueId )
 {
-    if( humanClass_.get() && type.Kind() == static_cast< char >( rpr::EntityType::kind_LIFEFORM ) )
-    {    
-	    humanClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
+    if( type.Kind() == static_cast< char >( rpr::EntityType::kind_LIFEFORM ) )
+    {   
+        if( humanClass_ )
+	        humanClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
     }
     else
     {
         switch( type.Domain() )
         {
         case rpr::EntityType::domain_LAND:
-		    if( groundVehicleClass_.get() )
+		    if( groundVehicleClass_ )
 			    groundVehicleClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
             break;
         case rpr::EntityType::domain_AIR:
-            aircraftClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
+            if( aircraftClass_ )
+                aircraftClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
             break;
         case rpr::EntityType::domain_SURFACE:
-            surfaceVesselClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
+            if( surfaceVesselClass_ )
+                surfaceVesselClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
             break;
         }
     }
@@ -389,7 +399,7 @@ void FederateFacade::ObjectCreated( TacticalObject_ABC& object, unsigned int ide
 {
     if( isPropagation )
     {
-        if( rawDataHazardContourGroupClass_.get() )
+        if( rawDataHazardContourGroupClass_ )
         {
             rawDataHazardContourGroupClass_->Created( object, identifier, name, force, type );
         }
@@ -399,15 +409,15 @@ void FederateFacade::ObjectCreated( TacticalObject_ABC& object, unsigned int ide
         switch( geometry )
         {
             case TacticalObjectListener_ABC::eGeometryType_Point:
-                if( breachablePointObjectClass_.get() )
+                if( breachablePointObjectClass_ )
                     breachablePointObjectClass_->Created( object, identifier, name, force, type );
                 break;
             case TacticalObjectListener_ABC::eGeometryType_Line:
-                if( breachableLinearObjectClass_.get() )
+                if( breachableLinearObjectClass_ )
                     breachableLinearObjectClass_->Created( object, identifier, name, force, type );
                 break;
             case TacticalObjectListener_ABC::eGeometryType_Polygon:
-                if( minefieldClass_.get() )
+                if( minefieldClass_ )
                     minefieldClass_->Created( object, identifier, name, force, type );
                 break;
         }
@@ -417,15 +427,15 @@ void FederateFacade::ObjectCreated( TacticalObject_ABC& object, unsigned int ide
         switch( geometry )
         {
             case TacticalObjectListener_ABC::eGeometryType_Point:
-                if( otherPointObjectClass_.get() )
+                if( otherPointObjectClass_ )
                     otherPointObjectClass_->Created( object, identifier, name, force, type );
                 break;
             case TacticalObjectListener_ABC::eGeometryType_Line:
-                if( breachableLinearObjectClass_.get() ) // TODO replace when available in RPR-FOM
+                if( breachableLinearObjectClass_ ) // TODO replace when available in RPR-FOM
                     breachableLinearObjectClass_->Created( object, identifier, name, force, type );
                 break;
             case TacticalObjectListener_ABC::eGeometryType_Polygon:
-                if( otherArealObjectClass_.get() )
+                if( otherArealObjectClass_ )
                     otherArealObjectClass_->Created( object, identifier, name, force, type );
                 break;
         }
@@ -438,19 +448,19 @@ void FederateFacade::ObjectCreated( TacticalObject_ABC& object, unsigned int ide
 // -----------------------------------------------------------------------------
 void FederateFacade::RegisterTactical( ClassListener_ABC& listener )
 {
-    if( minefieldClass_.get() )
+    if( minefieldClass_ )
         minefieldClass_->Register( listener );
-    if( breachableLinearObjectClass_.get() )
+    if( breachableLinearObjectClass_ )
         breachableLinearObjectClass_->Register( listener );
-    if( breachablePointObjectClass_.get() )
+    if( breachablePointObjectClass_ )
         breachablePointObjectClass_->Register( listener );
-    if( otherPointObjectClass_.get() )
+    if( otherPointObjectClass_ )
         otherPointObjectClass_->Register( listener );
-    if( otherArealObjectClass_.get() )
+    if( otherArealObjectClass_ )
         otherArealObjectClass_->Register( listener );
-    if( rawDataHazardContourGroupClass_.get() )
+    if( rawDataHazardContourGroupClass_ )
         rawDataHazardContourGroupClass_->Register( listener );
-    if( atp45HazardAreaClass_.get() )
+    if( atp45HazardAreaClass_ )
         atp45HazardAreaClass_->Register( listener );
 }
 
@@ -460,19 +470,19 @@ void FederateFacade::RegisterTactical( ClassListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void FederateFacade::UnregisterTactical( ClassListener_ABC& listener )
 {
-    if( minefieldClass_.get() )
+    if( minefieldClass_ )
         minefieldClass_->Unregister( listener );
-    if( breachableLinearObjectClass_.get() )
+    if( breachableLinearObjectClass_ )
         breachableLinearObjectClass_->Unregister( listener );
-    if( breachablePointObjectClass_.get() )
+    if( breachablePointObjectClass_ )
         breachablePointObjectClass_->Unregister( listener );
-    if( otherPointObjectClass_.get() )
+    if( otherPointObjectClass_ )
         otherPointObjectClass_->Unregister( listener );
-    if( otherArealObjectClass_.get() )
+    if( otherArealObjectClass_ )
         otherArealObjectClass_->Unregister( listener );
-    if( rawDataHazardContourGroupClass_.get() )
+    if( rawDataHazardContourGroupClass_ )
         rawDataHazardContourGroupClass_->Unregister( listener );
-    if( atp45HazardAreaClass_.get() )
+    if( atp45HazardAreaClass_ )
         atp45HazardAreaClass_->Unregister( listener );
 }
 
