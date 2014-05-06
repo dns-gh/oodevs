@@ -263,6 +263,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 }
 
 func (s *TestSuite) TestModelInitialization(c *C) {
+	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-12373")
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	model := client.Model
