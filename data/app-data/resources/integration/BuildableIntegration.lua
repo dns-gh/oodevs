@@ -824,4 +824,5 @@ integration.stopBuildObjectOnLocalization = function( localization, objectType, 
         DEC__StopAction( localization[ myself ].actionId )
     end
     myself.buildActionsStates[ localization[ myself ].actionId ] = nil
+    localization[ myself ].actionId = nil
 end
