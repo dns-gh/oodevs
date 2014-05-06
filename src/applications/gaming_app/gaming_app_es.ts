@@ -1992,104 +1992,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>Logistic : Push supply flow</name>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="77"/>
-        <source>Resource</source>
-        <translation>Recurso</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="78"/>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="125"/>
-        <source>Available</source>
-        <translation>Disponible</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="79"/>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="126"/>
-        <source>Quantity</source>
-        <translation>Cantidad</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="121"/>
-        <source>Manual selection of transport carriers</source>
-        <translation>Selección manual de transportes</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="105"/>
-        <source>Move waypoint up</source>
-        <translation>Mover punto de paso arriba</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="106"/>
-        <source>Move waypoint down</source>
-        <translation>Mover punto de paso abajo</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="107"/>
-        <source>Delete Waypoint</source>
-        <translation>Borrar punto de paso</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="108"/>
-        <source>Add Waypoint</source>
-        <translation>Agregar punto de paso</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="124"/>
-        <source>Type</source>
-        <translation>Tipo</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="127"/>
-        <source>Capacity (T)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="128"/>
-        <source>Capacity (m3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="129"/>
-        <source>Mass</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="130"/>
-        <source>Volume</source>
-        <translation>Volumen</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="80"/>
-        <source>Mass (T)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="81"/>
-        <source>Volume (m3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Logistic : supply flow</name>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="89"/>
-        <source>Resources</source>
-        <translation>Recursos</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="90"/>
-        <source>Carriers</source>
-        <translation>Transportes</translation>
-    </message>
-    <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="91"/>
-        <source>Route</source>
-        <translation>Ruta</translation>
-    </message>
-</context>
-<context>
     <name>LogisticConsignsWidget_ABC</name>
     <message>
         <location filename="LogisticConsignsWidget_ABC.cpp" line="59"/>
@@ -2313,6 +2215,48 @@ Do you want to replace it?</source>
         <translation>Flujo de abastecimiento</translation>
     </message>
     <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="77"/>
+        <source>Resource</source>
+        <translation type="unfinished">Recurso</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="78"/>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="125"/>
+        <source>Available</source>
+        <translation type="unfinished">Disponible</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="79"/>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="126"/>
+        <source>Quantity</source>
+        <translation type="unfinished">Cantidad</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="80"/>
+        <source>Mass (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="81"/>
+        <source>Volume (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="89"/>
+        <source>Resources</source>
+        <translation type="unfinished">Recursos</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="90"/>
+        <source>Carriers</source>
+        <translation type="unfinished">Transportes</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="91"/>
+        <source>Route</source>
+        <translation type="unfinished">Ruta</translation>
+    </message>
+    <message>
         <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="92"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
@@ -2321,6 +2265,56 @@ Do you want to replace it?</source>
         <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="93"/>
         <source>Ok</source>
         <translation>Ok</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="105"/>
+        <source>Move waypoint up</source>
+        <translation type="unfinished">Mover punto de paso arriba</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="106"/>
+        <source>Move waypoint down</source>
+        <translation type="unfinished">Mover punto de paso abajo</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="107"/>
+        <source>Delete Waypoint</source>
+        <translation type="unfinished">Borrar punto de paso</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="108"/>
+        <source>Add Waypoint</source>
+        <translation type="unfinished">Agregar punto de paso</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="121"/>
+        <source>Manual selection of transport carriers</source>
+        <translation type="unfinished">Selección manual de transportes</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="124"/>
+        <source>Type</source>
+        <translation type="unfinished">Tipo</translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="127"/>
+        <source>Capacity (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="128"/>
+        <source>Capacity (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="129"/>
+        <source>Mass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="130"/>
+        <source>Volume</source>
+        <translation type="unfinished">Volumen</translation>
     </message>
 </context>
 <context>

@@ -74,11 +74,11 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
     tabLayout->addWidget( tabs_, 0, 0, 1, 3 );
 
     QStringList resourcesHeader;
-    resourcesHeader << tools::translate( "Logistic : Push supply flow", "Resource" )
-        << tools::translate( "Logistic : Push supply flow", "Available" )
-        << tools::translate( "Logistic : Push supply flow", "Quantity" )
-        << tools::translate( "Logistic : Push supply flow", "Mass (T)" )
-        << tools::translate( "Logistic : Push supply flow", "Volume (m3)" );
+    resourcesHeader << tr( "Resource" )
+        << tr( "Available" )
+        << tr( "Quantity" )
+        << tr( "Mass (T)" )
+        << tr( "Volume (m3)" );
     resourcesTable_ = new LogisticSupplyAvailabilityTableWidget( this, resourcesHeader, availableSupplies_ );
 
     resourcesTab_ = new QWidget( tabs_ );
@@ -86,9 +86,9 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
     QWidget* routeTab = new QWidget( tabs_ );
     QGroupBox* upDownGroup = new QGroupBox( routeTab );
     upDownGroup->setFlat( true );
-    tabs_->addTab( resourcesTab_, tools::translate( "Logistic : supply flow", "Resources" ) );
-    tabs_->addTab( carriersTab, tools::translate( "Logistic : supply flow", "Carriers" ) );
-    tabs_->addTab( routeTab, tools::translate( "Logistic : supply flow", "Route" ) );
+    tabs_->addTab( resourcesTab_, tr( "Resources" ) );
+    tabs_->addTab( carriersTab, tr( "Carriers" ) );
+    tabs_->addTab( routeTab, tr( "Route" ) );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), tabs_ );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), tabs_ );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
@@ -102,10 +102,10 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
     moveDownButton_->setIcon( MAKE_ICON( arrow_down ) );
     delWaypointButton_->setIcon( MAKE_ICON( trash ) );
     addWaypointButton_->setIcon( MAKE_ICON( add_point ) );
-    moveUpButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Move waypoint up" ) );
-    moveDownButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Move waypoint down" ) );
-    delWaypointButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Delete Waypoint") );
-    addWaypointButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Add Waypoint") );
+    moveUpButton_->setToolTip( tr( "Move waypoint up" ) );
+    moveDownButton_->setToolTip( tr( "Move waypoint down" ) );
+    delWaypointButton_->setToolTip( tr( "Delete Waypoint") );
+    addWaypointButton_->setToolTip( tr( "Add Waypoint") );
     connect( moveUpButton_, SIGNAL( clicked() ), SLOT( MoveUpWaypoint() ) );
     connect( moveDownButton_, SIGNAL( clicked() ), SLOT( MoveDownWaypoint() ) );
     connect( delWaypointButton_, SIGNAL( clicked() ), SLOT( DeleteWaypoint() ) );
@@ -118,16 +118,16 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
     tabLayout->setMargin( 5 );
     tabLayout->setSpacing( 5 );
 
-    carriersUseCheck_ = new QCheckBox( tools::translate( "Logistic : Push supply flow", "Manual selection of transport carriers" ), carriersTab );
+    carriersUseCheck_ = new QCheckBox( tr( "Manual selection of transport carriers" ), carriersTab );
     connect( carriersUseCheck_, SIGNAL( stateChanged( int ) ), this, SLOT( OnCarriersUseCheckStateChanged() ) );
     QStringList carriersHeader;
-    carriersHeader << tools::translate( "Logistic : Push supply flow", "Type" )
-        << tools::translate( "Logistic : Push supply flow", "Available" )
-        << tools::translate( "Logistic : Push supply flow", "Quantity" )
-        << tools::translate( "Logistic : Push supply flow", "Capacity (T)" )
-        << tools::translate( "Logistic : Push supply flow", "Capacity (m3)" )
-        << tools::translate( "Logistic : Push supply flow", "Mass" )
-        << tools::translate( "Logistic : Push supply flow", "Volume" );
+    carriersHeader << tr( "Type" )
+        << tr( "Available" )
+        << tr( "Quantity" )
+        << tr( "Capacity (T)" )
+        << tr( "Capacity (m3)" )
+        << tr( "Mass" )
+        << tr( "Volume" );
     carriersTable_ = new LogisticSupplyCarriersTableWidget( this, carriersHeader, carriersTypeNames_, *resourcesTable_, availableSupplies_ );
     carriersTable_->setEnabled( false );
     connect( resourcesTable_, SIGNAL( OnChanged( int ) ), carriersTable_, SLOT( Update() ) );
