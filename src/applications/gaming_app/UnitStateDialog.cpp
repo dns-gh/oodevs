@@ -45,7 +45,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent,
     , config_          ( config )
     , profile_         ( profile )
     , disconnected_    ( false )
-    , resourceToolTip_ ( tr( "Resources" ) )
+    , resourceToolTip_ ( tr( "Basic load" ) )
     , equipmentToolTip_( tr( "Composition" ) )
 {
     assert( tabWidget_ );
@@ -54,7 +54,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent,
     tabs_.push_back( boost::make_shared< UnitStateTableResource > ( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
     tabWidget_->addTab( tabs_[ eCrew      ].get(), tr( "Crew" ) );
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tr( "Equipments" ) );
-    tabWidget_->addTab( tabs_[ eSupplies ].get(), tr( "Resources" ) );
+    tabWidget_->addTab( tabs_[ eSupplies ].get(), tr( "Basic load" ) );
     connect( tabWidget_, SIGNAL( currentChanged( QWidget* ) ), SLOT( OnTabChanged( QWidget* ) ) );
 
     exportButton_ = new gui::RichWidget< QToolButton >( "export_button", 0 );

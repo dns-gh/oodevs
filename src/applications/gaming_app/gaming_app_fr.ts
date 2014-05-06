@@ -4673,8 +4673,8 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <location filename="UnitStateDialog.cpp" line="48"/>
         <location filename="UnitStateDialog.cpp" line="57"/>
-        <source>Resources</source>
-        <translation>Dotations</translation>
+        <source>Basic load</source>
+        <translation type="unfinished">Dotations</translation>
     </message>
     <message>
         <location filename="UnitStateDialog.cpp" line="49"/>

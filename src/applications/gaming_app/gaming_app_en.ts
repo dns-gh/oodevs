@@ -4659,8 +4659,8 @@ This data can&apos;t be projected.</source>
     <message>
         <location filename="UnitStateDialog.cpp" line="48"/>
         <location filename="UnitStateDialog.cpp" line="57"/>
-        <source>Resources</source>
-        <translation>Resources</translation>
+        <source>Basic load</source>
+        <translation>Basic load</translation>
     </message>
     <message>
         <location filename="UnitStateDialog.cpp" line="49"/>

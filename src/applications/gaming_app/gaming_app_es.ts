@@ -4668,8 +4668,8 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <location filename="UnitStateDialog.cpp" line="48"/>
         <location filename="UnitStateDialog.cpp" line="57"/>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Basic load</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <location filename="UnitStateDialog.cpp" line="49"/>
