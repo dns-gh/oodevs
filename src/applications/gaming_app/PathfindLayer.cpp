@@ -264,7 +264,8 @@ void PathfindLayer::SendRequest()
         request->mutable_unit()->set_id( element_->GetId() );
         for( auto it = positions_.begin(); it != positions_.end(); ++it )
             converter_.ConvertToGeo( *it, *request->add_positions() );
-        for( auto it = element_->Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
+        auto& equipments = static_cast< const Equipments& >( element_->Get< kernel::Equipments_ABC >() );
+        for( auto it = equipments.CreateIterator(); it.HasMoreElements(); )
             request->add_equipment_types()->set_id( it.NextElement().type_.GetId() );
         request->set_ignore_dynamic_objects( true );
         publisher_.Send( msg );

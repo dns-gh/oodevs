@@ -36,7 +36,7 @@ MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter )
 // Name: MaintenancePriorities constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const tools::Resolver_ABC< EquipmentType >& resolver, const sword::IdList& message )
+MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const sword::IdList& message )
     : Parameter< std::string >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
@@ -56,7 +56,7 @@ MaintenancePriorities::~MaintenancePriorities()
 // Name: MaintenancePriorities::AddPriority
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MaintenancePriorities::AddPriority( const EquipmentType& value )
+void MaintenancePriorities::AddPriority( const kernel::EquipmentType& value )
 {
     priorities_.push_back( &value );
     std::string current = GetValue();

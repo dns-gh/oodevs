@@ -29,9 +29,8 @@ namespace kernel
 {
     class Controller;
     class AgentType;
+    class Equipments_ABC;
 }
-
-class Equipments;
 
 // =============================================================================
 /** @class  Agent
@@ -43,7 +42,7 @@ class Agent : public gui::EntityImplementation< kernel::Agent_ABC >
             , public kernel::Extension_ABC
             , public kernel::Displayable_ABC
             , public tools::Observer_ABC
-            , public tools::ElementObserver_ABC< Equipments >
+            , public tools::ElementObserver_ABC< kernel::Equipments_ABC >
             , public gui::Drawable_ABC
             , public kernel::Updatable_ABC< sword::UnitAttributes >
 {
@@ -61,7 +60,7 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     virtual const kernel::AgentType& GetType() const;
 
-    virtual void NotifyUpdated( const Equipments& equipments );
+    virtual void NotifyUpdated( const kernel::Equipments_ABC& equipments );
     virtual void DoUpdate( const sword::UnitAttributes& attributes );
 
     bool ShouldDisplayStaticSymbol() const;

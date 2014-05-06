@@ -10,9 +10,12 @@
 #ifndef __EquipmentsListView_h_
 #define __EquipmentsListView_h_
 
-#include "gaming/Equipment.h"
-#include "gaming/Equipments.h"
 #include "ResourcesListView_ABC.h"
+
+namespace kernel
+{
+    class Equipments_ABC;
+}
 
 // =============================================================================
 /** @class  EquipmentsListView
@@ -20,7 +23,7 @@
 */
 // Created: SBO 2007-02-16
 // =============================================================================
-class EquipmentsListView : public ResourcesListView_ABC<  Equipments >
+class EquipmentsListView : public ResourcesListView_ABC< kernel::Equipments_ABC >
 {
     Q_OBJECT;
 
@@ -34,7 +37,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const Equipments& a );
+    virtual void NotifyUpdated( const kernel::Equipments_ABC& equipments );
     //@}
 };
 

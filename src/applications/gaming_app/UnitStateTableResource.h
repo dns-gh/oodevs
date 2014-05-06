@@ -25,12 +25,12 @@ namespace kernel
 {
     class Controllers;
     class Dotations_ABC;
+    class Equipments_ABC;
     class Entity_ABC;
     class Time_ABC;
 }
 
 class Dotation;
-class Equipments;
 class StaticModel;
 
 // =============================================================================
@@ -42,7 +42,7 @@ class StaticModel;
 class UnitStateTableResource : public gui::UnitStateTableResource
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< kernel::Dotations_ABC >
-                             , public tools::ElementObserver_ABC< Equipments >
+                             , public tools::ElementObserver_ABC< kernel::Equipments_ABC >
 {
 
 public:
@@ -64,7 +64,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::Dotations_ABC& dotations );
-    virtual void NotifyUpdated( const Equipments& equipments );
+    virtual void NotifyUpdated( const kernel::Equipments_ABC& equipments );
     int HasDotationChanged( const Dotation& dotation ) const;
     void RecursiveMagicAction( kernel::Entity_ABC& entity, const QString& name, double percentage, unsigned int& quantity, kernel::Entity_ABC*& last ) const;
     void CreateMagicAction( unsigned int quantity, const Dotation& dotation, kernel::Entity_ABC* entity ) const;

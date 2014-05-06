@@ -246,3 +246,8 @@ void Equipment::UpdateMaintenanceConsign( const sword::LogMaintenanceHandlingUpd
     if( it != consigns_.end() )
         it->second.diagnosed_ = message.diagnosed();
 }
+
+const kernel::EquipmentType& Equipment::GetType() const
+{
+    return type_;
+}

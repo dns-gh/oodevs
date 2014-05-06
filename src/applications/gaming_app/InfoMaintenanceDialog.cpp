@@ -87,7 +87,7 @@ bool InfoMaintenanceDialog::ShouldDisplay( const kernel::Entity_ABC& element ) c
 // Name: InfoMaintenanceDialog::NotifyUpdated
 // Created: NPT 2013-05-16
 // -----------------------------------------------------------------------------
-void InfoMaintenanceDialog::NotifyUpdated( const Equipments& /*equipement*/ )
+void InfoMaintenanceDialog::NotifyUpdated( const kernel::Equipments_ABC& /*equipements*/ )
 {
     if( selected_ )
         InfoDialog< kernel::MaintenanceStates_ABC >::NotifyUpdated( selected_ );

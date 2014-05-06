@@ -10,14 +10,17 @@
 #include "gaming_app_pch.h"
 #include "EquipmentsListView.h"
 #include "moc_EquipmentsListView.cpp"
+#include "gaming/Equipments.h"
+#include "gaming/Equipment.h"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/Equipments_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: EquipmentsListView constructor
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
 EquipmentsListView::EquipmentsListView( QWidget* parent, kernel::Controllers& controllers )
-    : ResourcesListView_ABC< Equipments >( parent, controllers )
+    : ResourcesListView_ABC< kernel::Equipments_ABC >( parent, controllers )
 {
     QStringList list;
     list.append( tr( "Equipment" ) );
@@ -43,13 +46,14 @@ EquipmentsListView::~EquipmentsListView()
 // Name: EquipmentsListView::NotifyUpdated
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
-void EquipmentsListView::NotifyUpdated( const Equipments& a )
+void EquipmentsListView::NotifyUpdated( const kernel::Equipments_ABC& equipments )
 {
-    if( ShouldUpdate( a ) )
+    if( ShouldUpdate( equipments ) )
     {
-        ResizeModelOnNewContent( a.Count() );
+        const Equipments& eq = static_cast< const Equipments& >( equipments );
+        ResizeModelOnNewContent( eq.Count() );
         int i = 0;
-        tools::Iterator< const Equipment& > iterator = a.CreateIterator();
+        tools::Iterator< const Equipment& > iterator = eq.CreateIterator();
         while( iterator.HasMoreElements() )
         {
             const Equipment& equipment = iterator.NextElement();

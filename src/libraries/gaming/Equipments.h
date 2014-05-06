@@ -12,6 +12,7 @@
 
 #include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Equipments_ABC.h"
 #include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
@@ -31,8 +32,6 @@ namespace gui
 namespace sword
 {
     class UnitAttributes;
-    class LogMaintenanceHandlingCreation;
-    class LogMaintenanceHandlingUpdate;
 }
 
 class Equipment;
@@ -43,7 +42,7 @@ class Equipment;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Equipments : public kernel::Extension_ABC
+class Equipments : public kernel::Equipments_ABC
                  , public HierarchicExtension_ABC
                  , public kernel::Updatable_ABC< sword::UnitAttributes >
                  , public tools::Resolver< Equipment >
@@ -52,29 +51,30 @@ class Equipments : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Equipments( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, gui::PropertiesDictionary& dico
-                       , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
+             Equipments( kernel::Entity_ABC& entity, kernel::Controller& controller,
+                 const tools::Resolver_ABC< kernel::EquipmentType >& resolver,
+                 gui::PropertiesDictionary& dico,
+                 const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
+                 const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
+                 const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Equipments();
     //@}
 
-    //! @name Operations
-    //@{
-    float GetTotalWeight() const;
-    void CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
-    void DeleteMaintenanceConsign( int id );
-    void Update( const sword::LogMaintenanceHandlingUpdate& message );
-    //@}
-
 private:
-    //! @name Helpers
-    //@{
+    virtual bool HasEquipment( const kernel::EquipmentType& type ) const;
+    virtual float GetTotalWeight() const;
+
+    virtual void CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
+    virtual void DeleteMaintenanceConsign( int id );
+    virtual void Update( const sword::LogMaintenanceHandlingUpdate& message );
+
     virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
+
     void Update( const std::vector< Equipment >& differences );
     void AddToDictionary( const Equipment& equipment );
     void RemoveFromDictionary( const Equipment& equipment );
     void UpdateController();
-    //@}
 
 private:
     //! @name Member data

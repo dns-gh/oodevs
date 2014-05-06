@@ -47,6 +47,7 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     , minValue_    ( std::numeric_limits< double >::min() )
     , maxValue_    ( std::numeric_limits< double >::max() )
     , indirectFire_( false )
+    , ownedEquipments_( false )
 {
     xis >> xml::list( "value", *this, &OrderParameter::ReadValue )
         >> xml::optional >> xml::start( "choice" )
@@ -58,7 +59,8 @@ OrderParameter::OrderParameter( xml::xistream& xis )
         >> xml::optional >> xml::attribute( "min-occurs", minOccurs_ )
         >> xml::optional >> xml::attribute( "min-value", minValue_ )
         >> xml::optional >> xml::attribute( "max-value", maxValue_ )
-        >> xml::optional >> xml::attribute( "indirect-fire-only", indirectFire_ );
+        >> xml::optional >> xml::attribute( "indirect-fire-only", indirectFire_ )
+        >> xml::optional >> xml::attribute( "owned-equipments-only", ownedEquipments_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +79,7 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
     , minValue_    ( std::numeric_limits< double >::min() )
     , maxValue_    ( std::numeric_limits< double >::max() )
     , indirectFire_( false )
+    , ownedEquipments_( false )
 {
     // NOTHING
 }
@@ -98,6 +101,7 @@ OrderParameter::OrderParameter( const OrderParameter& other )
     , minValue_    ( other.minValue_ )
     , maxValue_    ( other.maxValue_ )
     , indirectFire_( other.indirectFire_ )
+    , ownedEquipments_( other.ownedEquipments_ )
     , values_      ( other.values_ )
     , aliases_     ( other.aliases_ )
     , genObjects_  ( other.genObjects_ )
@@ -201,9 +205,14 @@ double OrderParameter::MaxValue() const
     return maxValue_;
 }
 
-double OrderParameter::IndirectFireOnly() const
+bool OrderParameter::IndirectFireOnly() const
 {
     return indirectFire_;
+}
+
+bool OrderParameter::OwnedEquipmentsOnly() const
+{
+    return ownedEquipments_;
 }
 
 // -----------------------------------------------------------------------------

@@ -9,24 +9,22 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ParameterType_ABC.h"
+#include "MT_Tools/MT_String.h"
+#include <boost/ptr_container/ptr_map.hpp>
 
-// =============================================================================
-// FACTORY
-// =============================================================================
-
-MIL_ParameterType_ABC::T_ParameterMap MIL_ParameterType_ABC::parameters_;
+namespace
+{
+    boost::ptr_map< std::string, MIL_ParameterType_ABC, sCaseInsensitiveLess > parameters;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_ABC::RegisterParameterType
 // Created: MGD 2010-11-17
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_ABC::RegisterParameterType( const std::string& name, E_Type type )
+void MIL_ParameterType_ABC::RegisterParameterType( std::string name, E_Type type )
 {
-    const MIL_ParameterType_ABC* pParameter = new MIL_ParameterType_ABC( name, type );
-    const MIL_ParameterType_ABC*& pTmp = parameters_[ pParameter->GetName() ];
-    if( pTmp )
-        throw MASA_EXCEPTION( "Parameter type " + pParameter->GetName() + " already defined" );
-    pTmp = pParameter;
+    if( !parameters.insert( name, new MIL_ParameterType_ABC( name, type ) ).second )
+        throw MASA_EXCEPTION( "Parameter type " + name + " already defined" );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,49 +33,45 @@ void MIL_ParameterType_ABC::RegisterParameterType( const std::string& name, E_Ty
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_ABC::Initialize()
 {
-    RegisterParameterType( std::string("bool"), eBool );
-    RegisterParameterType( std::string("Boolean"), eBool );
-    RegisterParameterType( std::string("Enumeration"), eEnumeration );
-    RegisterParameterType( std::string("Point"), ePoint );
-    RegisterParameterType( std::string("Polygon"), ePolygon );
-    RegisterParameterType( std::string("Location" ), eLocation );
-    RegisterParameterType( std::string("Path"), ePath );
-    RegisterParameterType( std::string("Direction"), eDirection );
-    RegisterParameterType( std::string("DirectionBM"), eDirection );
-    RegisterParameterType( std::string("Heading"), eDirection );
-    RegisterParameterType( std::string("NatureAtlas"), eNatureAtlas );
-    RegisterParameterType( std::string("Automate"), eAutomat );
-    RegisterParameterType( std::string("Automat"), eAutomat );
-    RegisterParameterType( std::string("Agent"), eAgent );
-    RegisterParameterType( std::string("AgentKnowledge"), eAgentKnowledge );
-    RegisterParameterType( std::string("ObjectKnowledge"), eObjectKnowledge );
-    RegisterParameterType( std::string("PopulationKnowledge"), eCrowdKnowledge );
-    RegisterParameterType( std::string("CrowdKnowledge"), eCrowdKnowledge );
-    RegisterParameterType( std::string("DotationType"), eResourceType );
-    RegisterParameterType( std::string("ResourceType"), eResourceType );
-    RegisterParameterType( std::string("EquipmentType"), eEquipmentType );
-    RegisterParameterType( std::string("DateTime"), eDateTime );
-    RegisterParameterType( std::string("Integer"), eInteger );
-    RegisterParameterType( std::string("Numeric"), eNumeric );
-    RegisterParameterType( std::string("GenObject"), ePlannedWork );
-    RegisterParameterType( std::string("PlannedWork"), ePlannedWork );
-    RegisterParameterType( std::string("MaintenancePriorities"), eMaintenancePriorities );
-    RegisterParameterType( std::string("MedicalPriorities"), eMedicalPriorities );
-    RegisterParameterType( std::string("IndirectFire"), eIndirectFire );
-    RegisterParameterType( std::string("String"), eString );;
-    RegisterParameterType( std::string("UrbanBlock"), eUrbanKnowledge );
-    RegisterParameterType( std::string("UrbanKnowledge"), eUrbanKnowledge );
-    RegisterParameterType( std::string("LocationComposite"), eLocationComposite );
-    RegisterParameterType( std::string("PhaseLine"), ePhaseLine );
-    RegisterParameterType( std::string("ResourceNetworkNode"), eResourceNetworkNode );
-    RegisterParameterType( std::string("ResourceNetworkType"), eResourceNetworkType );
-    RegisterParameterType( std::string("Stage"), eStage );
-    RegisterParameterType( std::string("LimaFunction"), eLimaFunction );
+    RegisterParameterType( "Agent", eAgent );
+    RegisterParameterType( "AgentKnowledge", eAgentKnowledge );
+    RegisterParameterType( "Automat", eAutomat );
+    RegisterParameterType( "Automate", eAutomat );
+    RegisterParameterType( "bool", eBool );
+    RegisterParameterType( "Boolean", eBool );
+    RegisterParameterType( "CrowdKnowledge", eCrowdKnowledge );
+    RegisterParameterType( "DateTime", eDateTime );
+    RegisterParameterType( "Direction", eDirection );
+    RegisterParameterType( "DirectionBM", eDirection );
+    RegisterParameterType( "DotationType", eResourceType );
+    RegisterParameterType( "Enumeration", eEnumeration );
+    RegisterParameterType( "EquipmentType", eEquipmentType );
+    RegisterParameterType( "GenObject", ePlannedWork );
+    RegisterParameterType( "Heading", eDirection );
+    RegisterParameterType( "IndirectFire", eIndirectFire );
+    RegisterParameterType( "Integer", eInteger );
+    RegisterParameterType( "LimaFunction", eLimaFunction );
+    RegisterParameterType( "Location" , eLocation );
+    RegisterParameterType( "LocationComposite", eLocationComposite );
+    RegisterParameterType( "MaintenancePriorities", eMaintenancePriorities );
+    RegisterParameterType( "MedicalPriorities", eMedicalPriorities );
+    RegisterParameterType( "NatureAtlas", eNatureAtlas );
+    RegisterParameterType( "Numeric", eNumeric );
+    RegisterParameterType( "ObjectKnowledge", eObjectKnowledge );
+    RegisterParameterType( "Path", ePath );
+    RegisterParameterType( "PhaseLine", ePhaseLine );
+    RegisterParameterType( "PlannedWork", ePlannedWork );
+    RegisterParameterType( "Point", ePoint );
+    RegisterParameterType( "Polygon", ePolygon );
+    RegisterParameterType( "PopulationKnowledge", eCrowdKnowledge );
+    RegisterParameterType( "ResourceNetworkNode", eResourceNetworkNode );
+    RegisterParameterType( "ResourceNetworkType", eResourceNetworkType );
+    RegisterParameterType( "ResourceType", eResourceType );
+    RegisterParameterType( "Stage", eStage );
+    RegisterParameterType( "String", eString );;
+    RegisterParameterType( "UrbanBlock", eUrbanKnowledge );
+    RegisterParameterType( "UrbanKnowledge", eUrbanKnowledge );
 }
-
-// =============================================================================
-// INSTANCE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_ABC constructor
@@ -105,8 +99,8 @@ MIL_ParameterType_ABC::~MIL_ParameterType_ABC()
 // -----------------------------------------------------------------------------
 const MIL_ParameterType_ABC* MIL_ParameterType_ABC::Find( const std::string& strName )
 {
-    CIT_ParameterMap it = parameters_.find( strName );
-    if( it == parameters_.end() )
+    auto it = parameters.find( strName );
+    if( it == parameters.end() )
         return 0;
     return it->second;
 }
@@ -128,4 +122,3 @@ MIL_ParameterType_ABC::E_Type MIL_ParameterType_ABC::GetType() const
 {
     return type_;
 }
-

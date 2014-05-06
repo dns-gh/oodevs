@@ -3029,6 +3029,10 @@ PNG (*.png)
         <source>Indirect fire ammunition only</source>
         <translation>Indirect fire ammunition only</translation>
     </message>
+    <message>
+        <source>Owned equipments only</source>
+        <translation>Owned equipments only</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Models_Data</name>
