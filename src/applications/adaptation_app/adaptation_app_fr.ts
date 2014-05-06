@@ -2333,8 +2333,8 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     <name>ADN_FuneralPackagingResources_GUI</name>
     <message>
         <location filename="ADN_FuneralPackagingResources_GUI.cpp" line="34"/>
-        <source>Resource</source>
-        <translation>Dotation</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotation</translation>
     </message>
     <message>
         <location filename="ADN_FuneralPackagingResources_GUI.cpp" line="35"/>
@@ -2348,13 +2348,13 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
     <message>
         <location filename="ADN_FuneralPackagingResources_GUI.cpp" line="89"/>
-        <source>Add resource</source>
-        <translation>Ajouter une dotation</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Ajouter une dotation</translation>
     </message>
     <message>
         <location filename="ADN_FuneralPackagingResources_GUI.cpp" line="91"/>
-        <source>Remove resource</source>
-        <translation>Retirer une dotation</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Retirer une dotation</translation>
     </message>
 </context>
 <context>

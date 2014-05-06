@@ -2334,8 +2334,8 @@ Click &quot;Aceptar&quot; para asignar la nueva velocidad máxima.</translation>
     <name>ADN_FuneralPackagingResources_GUI</name>
     <message>
         <location filename="ADN_FuneralPackagingResources_GUI.cpp" line="34"/>
-        <source>Resource</source>
-        <translation>Recurso</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <location filename="ADN_FuneralPackagingResources_GUI.cpp" line="35"/>
@@ -2349,13 +2349,13 @@ Click &quot;Aceptar&quot; para asignar la nueva velocidad máxima.</translation>
     </message>
     <message>
         <location filename="ADN_FuneralPackagingResources_GUI.cpp" line="89"/>
-        <source>Add resource</source>
-        <translation>Agregar recurso</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Agregar recurso</translation>
     </message>
     <message>
         <location filename="ADN_FuneralPackagingResources_GUI.cpp" line="91"/>
-        <source>Remove resource</source>
-        <translation>Quitar recurso</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Quitar recurso</translation>
     </message>
 </context>
 <context>

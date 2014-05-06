@@ -31,7 +31,7 @@ ADN_FuneralPackagingResources_GUI::ADN_FuneralPackagingResources_GUI( const QStr
     dataModel_.setColumnCount( 3 );
     setSortingEnabled( true );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Resource" )
+    horizontalHeaders << tr( "Supplies" )
                       << tr( "Packaging duration" )
                       << tr( "Is terminal" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
@@ -86,9 +86,9 @@ void ADN_FuneralPackagingResources_GUI::OnContextMenu( const QPoint& pt )
         targetMenu.insertItem( ENT_Tr::ConvertFromDotationType( (*it)->nType_, ENT_Tr::eToTr ).c_str(), pSubMenu );
     }
 
-    menu.insertItem( tr( "Add resource"), &targetMenu ,0 );
+    menu.insertItem( tr( "Add supplies"), &targetMenu ,0 );
     if( GetSelectedData() != 0 )
-        menu.insertItem( tr( "Remove resource" ), 1 );
+        menu.insertItem( tr( "Remove supplies" ), 1 );
 
     int nMenuResult = menu.exec(pt);
     if( nMenuResult == 1 )

@@ -2318,7 +2318,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     <name>ADN_FuneralPackagingResources_GUI</name>
     <message>
         <location filename="ADN_FuneralPackagingResources_GUI.cpp" line="34"/>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2333,12 +2333,12 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
     <message>
         <location filename="ADN_FuneralPackagingResources_GUI.cpp" line="89"/>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="ADN_FuneralPackagingResources_GUI.cpp" line="91"/>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
