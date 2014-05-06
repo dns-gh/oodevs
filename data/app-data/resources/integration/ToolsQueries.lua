@@ -622,6 +622,32 @@ integration.getNearestElement = function( elements )
     return nearestElement
 end
 
+--- Convert a list of elements (companies and units) into a list of valid agents :
+-- <ul> <li> Companies will be converted to the list of its valid subordinates </li>
+-- <li> Agent knowledges will be converted to agents </li> </ul>
+-- @param elements List of company knowledges and/or DirectIA agent knowledges.
+-- Agent knowledges must define a "isValid" method returning true if the knowledge is valid,
+-- false otherwise.
+-- @return List of valid DirectIA agents
+integration.getAgentFromListOfElements = function ( elements )
+    local entities = {}
+    for i = 1, #elements do
+        if masalife.brain.core.class.isOfType( elements[i], integration.ontology.types.automat ) then -- it can be a company
+            local entitiesFromAutomat = integration.getEntitiesFromAutomat( elements[i], "none", true)
+            for j = 1, #entitiesFromAutomat do
+                if entitiesFromAutomat[j]:isValid() then
+                    entities[#entities + 1] = entitiesFromAutomat[j]
+                end
+            end
+        else -- wa can support units
+            if elements[i]:isValid() then
+                entities[#entities + 1] = integration.getAgentFromKnowledge(elements[i])
+            end
+        end
+    end
+    return entities
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
@@ -642,4 +668,9 @@ end
 integration.query.getPositionsToFollow = function( elementToFollow, distanceMin, distanceMax )
     return { CreateProxyKnowledge( military.world.ReachingArea, elementToFollow, 
                               { distanceMin = distanceMin, distanceMax = distanceMax } ) }
+end
+
+--- Deprecated
+function integration.getAvoidingPositionsFor( entity )
+    return { CreateProxyKnowledge( integration.ontology.types.avoidingArea, entity ) }
 end

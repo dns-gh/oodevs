@@ -74,6 +74,26 @@ integration.getObjectsKnowledgeInZoneWithCapacity = function( capacityName, zone
     return DEC_ObjectKnowledge_GetObjectsInZone( meKnowledge.source, capacityName, zone.source )
 end
 
+--- Returns all the objects with at least one of the provided types in the given area.
+-- @see Types.lua for the object types enumeration
+-- @param localisation Simulation area
+-- @param objectTypes List of strings, the sought object types (as defined in authoring tool)
+-- @return List of object knowledges
+integration.getObjectsInArea = function( localisation, objectTypes )
+    local integration = integration
+    local lstObjects = DEC_ObjectKnowledgesInZone( localisation, objectTypes )
+    if not lstObjects then
+        return {}
+    end
+    
+    local res = {}
+    local CreateKnowledge = CreateKnowledge
+    for i = 1, #lstObjects do
+        res[ i ] = CreateKnowledge( integration.ontology.types.object, lstObjects[ i ] )
+    end
+    return res
+end
+
 --- Instantaneously finishes the construction of the object
 -- @param object Object knowledge to build instantaneously
 -- @param withoutReport Boolean if set to true don't display a report to indicate the end of the work

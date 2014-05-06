@@ -351,6 +351,96 @@ integration.obtenirObjetProcheDe = function( locRef, eTypeObject, rDistMax )
     return _returnValue
 end
 
+--- Returns a list of deployment sites close to the given area.
+-- This method can only be called by an agent.
+-- @param area Area knowledge
+-- @param nbAreas Integer, the number of area subdivisions searched
+-- during the execution of the method
+-- @return List of planned object knowledges
+integration.getImplantationObjects = function( area, nbAreas )
+    local objectKn = {}
+    local existingObject
+    local localisation
+    local barycentre
+    local nonTrafficablePosition = false
+    local positions = {}
+    local index = 0
+    local subAreas = DEC_Geometry_SplitLocalisation( area.source, nbAreas, nil )
+    local DEC_Geometrie_ConvertirPointEnLocalisation = DEC_Geometrie_ConvertirPointEnLocalisation
+    local CreateKnowledge = CreateKnowledge
+    local DEC_CreateDynamicGenObject = DEC_CreateDynamicGenObject
+    local integration = integration
+    for _, subArea in pairs( subAreas.first ) do
+        index = index + 1
+        barycentre = DEC_Geometrie_CalculerBarycentreLocalisation( subArea )
+        local platoons = integration.getAgentsWithHQ()
+        for i = 1, #platoons do -- Est ce que ce point est trafficable pour tous les pions de l'automate
+            if not integration.isPointInUrbanBlockTrafficableForPlatoon( platoons[i],barycentre ) then
+                nonTrafficablePosition = true
+                break
+            end
+        end
+        if nonTrafficablePosition then -- Ce point n'est pas trafficable pour au moins un pion de l'automate.
+            positions = integration.getPointPositions( CreateKnowledge( integration.ontology.types.point, barycentre ) )
+            local positionInLocalisation = {}
+            for j = 1, #positions do
+                if integration.isPointInLocalisation( CreateKnowledge( integration.ontology.types.point, positions[j] ), area ) then
+                    positionInLocalisation[#positionInLocalisation + 1] = positions[j]
+                end
+            end
+            local resultIndex = index % ( #positionInLocalisation + 1 )
+            if positionInLocalisation[resultIndex] then
+                localisation = DEC_Geometrie_ConvertirPointEnLocalisation( positionInLocalisation[resultIndex] )
+            elseif next(positionInLocalisation) then
+                localisation = DEC_Geometrie_ConvertirPointEnLocalisation( next(positionInLocalisation) )
+            else
+                reportFunction( eRC_TrafficablePositionFindingInZone )
+                localisation = DEC_Geometrie_ConvertirPointEnLocalisation( barycentre )
+            end
+        else 
+            localisation = DEC_Geometrie_ConvertirPointEnLocalisation( barycentre )
+        end
+        
+        local name = integration.getName( meKnowledge )
+        local eTypeObject = eTypeObjectGunArtilleryDeploymentArea
+        if string.find(name, "COBRA") ~= nil then
+            eTypeObject = eTypeObjectCOBRADeploymentArea
+        elseif string.find(name, "LRM") ~= nil then
+            eTypeObject = eTypeObjectMrlsDeploymentArea
+        elseif string.find(name, "SAM") ~= nil or string.find(name, "Mortier") ~= nil then
+            eTypeObject = eTypeObjectMortarDeploymentArea
+        end
+        
+        existingObject = integration.obtenirObjetProcheDe( localisation,  eTypeObject, 10 )
+        local object = DEC_CreateDynamicGenObject( eTypeObject, localisation, 0  )
+        local toto = CreateKnowledge( integration.ontology.types.genObject, object )
+        toto.knowledge = existingObject
+        objectKn[#objectKn+1] = toto
+        
+    end
+    return objectKn
+end
+
+--- Returns a list of all objects of the given type colliding with this entity.
+-- This method can only be called by an agent.
+-- @see Types.lua for the object types enumeration
+-- @param objectType String, the sought object type (as defined in authoring tool)
+-- @return List of object knowledges
+integration.getCollidingObjectsFromType = function( objectType )
+    local lstObjects = DEC_Connaissances_CollisionsObjetsDeType( objectType )
+    if not lstObjects then
+        return {}
+    end
+    
+    local res = {}
+    local integration = integration
+    local CreateKnowledge = CreateKnowledge
+    for i = 1, #lstObjects do
+        res[ i ] = CreateKnowledge( integration.ontology.types.object, lstObjects[ i ] )
+    end
+    return res
+end
+
 --- Return the barycenter of an object
 -- @param localisation Simulation object knowledge 
 -- @return Simulation point

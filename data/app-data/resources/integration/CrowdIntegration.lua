@@ -490,6 +490,25 @@ integration.getKnowledgesCrowdsEngaging = function()
     return DEC_Connaissances_PopulationsPrenantAPartie()
 end
 
+--- Returns all the crowds in the given area.
+-- This method can only be called by an agent or by a company.
+-- @see integration.getCrowds
+-- @param area Area knowledge
+-- @return List of crowd knowledges
+integration.getCrowdsInArea = function( area )
+    local allRes = {}
+    local crowds = integration.getCrowds()
+    local CreateKnowledge = CreateKnowledge
+    local DEC_ConnaissancePopulation_EstDansZone = DEC_ConnaissancePopulation_EstDansZone 
+    for i = 1, #crowds do
+        local crowd = crowds[ i ]
+        if DEC_ConnaissancePopulation_EstDansZone( crowd, area.source ) then
+            allRes[ #allRes + 1 ] = CreateKnowledge( integration.ontology.types.population, crowd )
+        end
+    end
+    return allRes
+end
+
 --- Returns true if the given crowd is in the provided area, false otherwise.
 -- This method can only be called by an agent or by a company.
 -- @param crowd Simulation crowd
