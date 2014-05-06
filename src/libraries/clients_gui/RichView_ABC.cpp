@@ -64,9 +64,9 @@ void RichView_ABC::CreateGUI( QAbstractItemView* view )
         next->setMaximumWidth( searchLine->height() );
         next->setMaximumHeight( searchLine->height() );
 
-        connect( searchLine,  SIGNAL( textChanged( const QString& ) ), view, SLOT( SearchAndSelect( const QString& ) ) );
-        connect( searchLine,  SIGNAL( returnPressed() ),               view, SLOT( SearchAndSelectNext() ) );
-        connect( next,        SIGNAL( pressed() ),                     view, SLOT( SearchAndSelectNext() ) );
+        connect( searchLine, SIGNAL( textChanged( const QString& ) ), view, SLOT( SearchAndSelect( const QString& ) ) );
+        connect( searchLine, SIGNAL( returnPressed() ),               view, SLOT( SearchAndSelectNext() ) );
+        connect( next,       SIGNAL( pressed() ),                     view, SLOT( SearchAndSelectNext() ) );
 
         searchLineWidget = new QWidget();
         QHBoxLayout* layout = new QHBoxLayout( searchLineWidget );
