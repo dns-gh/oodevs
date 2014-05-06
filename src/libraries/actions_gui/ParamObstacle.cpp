@@ -256,7 +256,7 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
         layout->addWidget( maxCombustionBox );
     }
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
-    OnTypeChanged();
+    OnTypeChanged( false );
     return group_;
 }
 
@@ -385,7 +385,7 @@ namespace
 // Name: ParamObstacle::OnTypeChanged
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-void ParamObstacle::OnTypeChanged()
+void ParamObstacle::OnTypeChanged( bool update /* = true */ )
 {
     HideAndRemoveFromController( *location_ );
     HideAndRemoveFromController( *density_ );
@@ -418,7 +418,8 @@ void ParamObstacle::OnTypeChanged()
     location_->RegisterIn();
     location_->SetVisible( true );
     emit ToggleReservable( type->CanBeActivated() );
-    Update();
+    if( update )
+        Update();
 }
 
 // -----------------------------------------------------------------------------

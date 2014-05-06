@@ -102,7 +102,7 @@ signals:
 private slots:
     //! @name Slots
     //@{
-    void OnTypeChanged();
+    void OnTypeChanged( bool update = true );
     //@}
 
 private:
