@@ -77,7 +77,7 @@ end
 --- Returns all the objects with at least one of the provided types in the given area.
 -- @see Types.lua for the object types enumeration
 -- @param localisation Simulation area
--- @param objectTypes List, the sought object types (e.g. eTypeObjectMines, eTypeObjectLinearMinedArea...)
+-- @param objectTypes List of strings, the sought object types (as defined in authoring tool)
 -- @return List of object knowledges
 integration.getObjectsInArea = function( localisation, objectTypes )
     local integration = integration

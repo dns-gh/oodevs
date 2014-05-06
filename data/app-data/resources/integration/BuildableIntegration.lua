@@ -351,12 +351,12 @@ integration.obtenirObjetProcheDe = function( locRef, eTypeObject, rDistMax )
     return _returnValue
 end
 
---- Returns a list of deployment areas close to the given area.
+--- Returns a list of deployment sites close to the given area.
 -- This method can only be called by an agent.
 -- @param area Area knowledge
 -- @param nbAreas Integer, the number of area subdivisions searched
 -- during the execution of the method
--- @return List of object knowledges
+-- @return List of planned object knowledges
 integration.getImplantationObjects = function( area, nbAreas )
     local objectKn = {}
     local existingObject

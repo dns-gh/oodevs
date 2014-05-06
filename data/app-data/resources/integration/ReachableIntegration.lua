@@ -997,7 +997,7 @@ integration.getSimPointFromPathPoint = function( pathPoint )
 end
 
 --- Returns a list of safety positions defined as :
--- <ul> <li> crossroads at the given radius of this entity </li>
+-- <ul> <li> all crossroads less than the given radius away from this agent </li>
 -- <li> positions along roads at the given safety distance of the previously found crossroads </li> </ul>
 -- This method can only be called by an agent.
 -- @see integration.findSafetyPositions
@@ -1009,7 +1009,7 @@ integration.findSafetyPositions = function( radius, safetyDistance )
 end
 
 --- Returns a list of safety positions defined as :
--- <ul> <li> crossroads at the given radius of this entity </li>
+-- <ul> <li> all crossroads less than the given radius away from this agent </li>
 -- <li> positions along roads at the given safety distance of the previously found crossroads </li> </ul>
 -- This method can only be called by an agent.
 -- @see integration.findSafetyPositions
