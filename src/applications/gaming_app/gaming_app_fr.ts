@@ -2281,8 +2281,8 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <location filename="LogisticSupplyChangeQuotasDialog.cpp" line="82"/>
-        <source>Resource</source>
-        <translation>Ressource</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotations</translation>
     </message>
     <message>
         <location filename="LogisticSupplyChangeQuotasDialog.cpp" line="82"/>

@@ -79,7 +79,7 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
     targetCombo_->setMinimumWidth( 150 );
 
     QStringList header;
-    header << tr( "Resource" ) << tr( "Quota" );
+    header << tr( "Supplies" ) << tr( "Quota" );
     table_ = new LogisticSupplyValuesTableWidget( this, header );
     table_->setMinimumSize( 220, 200 );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), this );
