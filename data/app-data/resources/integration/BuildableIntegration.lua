@@ -860,3 +860,59 @@ integration.unitBuildSameObstacleAtSameTime = function( object, removeIt )
     end
     return false
 end
+
+--- To create an object upon issued localization
+-- @param localization, Simulation area onto which the object must be built.
+-- @param objectType, String, the type of object as defined in authoring tool.
+-- @param instantaneously Boolean, defines if the object has to be built instantaneously or not.
+integration.startBuildObjectOnLocalization = function( localization, objectType, instantaneously )
+    myself.builtObjects = myself.builtObjects or {}
+    localization[ myself ] = localization[ myself ] or {}
+    myself.buildActionsStates = myself.buildActionsStates or {}
+    local genObject = DEC_CreateDynamicGenObject( objectType, localization, true )
+    localization[ myself ].actionId = instantaneously and DEC_StartCreateObjectInstantaneously( genObject ) or DEC_StartCreateObject( genObject )
+    actionCallbacks[ localization[ myself ].actionId ] = function( arg ) 
+       myself.buildActionsStates[ localization[ myself ].actionId ] = arg
+    end
+    actionKnowledgeCallbacks[ localization[ myself ].actionId ] = function( arg )
+        if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
+            myself.builtObjects[ localization[ myself ].actionId ] = CreateKnowledge( integration.ontology.types.object, arg )
+        end
+    end
+    if not instantaneously then 
+        reportFunction( eRC_DebutTravaux ) 
+    end
+end
+
+--- Update the construction of an object upon issued Localization
+-- @see integration.startBuildObjectOnLocalization method
+-- @param localization, Simulation area onto which the object must be built.
+-- @param objectType, String, the type of object as defined in authoring tool.
+-- @param instantaneously Boolean, defines if the object has to be built instantaneously or not.
+-- @return Object knowledge, the built object
+integration.updateBuildObjectOnLocalization = function( localization, objectType, instantaneously )
+    if myself.buildActionsStates[ localization[ myself ].actionId ] == eActionObjetTerminee then
+        if not instantaneously then
+            reportFunction( eRC_FinTravauxObjet, myself.builtObjects[ localization[ myself ].actionId ].source )
+        end
+        myself.buildActionsStates[ localization[ myself ].actionId ] = nil
+        localization[ myself ].actionId = DEC__StopAction( localization[ myself ].actionId )
+    end
+    return myself.builtObjects[ localization[ myself ].actionId ]
+end
+
+--- Stop the action construction of an object upon issued Localization
+-- @see integration.startBuildObjectOnLocalization and integration.updateBuildObjectOnLocalization methods
+-- @param localization, Simulation area onto which the object must be built.
+-- @param objectType, String, the type of object as defined in authoring tool.
+-- @param instantaneously Boolean, defines if the object has to be built instantaneously or not.
+integration.stopBuildObjectOnLocalization = function( localization, objectType, instantaneously )
+    if not instantaneously then
+        reportFunction( eRC_FinTravauxObjet, myself.builtObjects[ localization[ myself ].actionId ].source )
+    end
+    if localization[ myself ].actionId ~= nil then
+        DEC__StopAction( localization[ myself ].actionId )
+    end
+    myself.buildActionsStates[ localization[ myself ].actionId ] = nil
+    localization[ myself ].actionId = nil
+end
