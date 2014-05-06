@@ -4,7 +4,6 @@
 <context>
     <name>ReportFactory</name>
     <message>
-        <location filename="ReportFactory.cpp" line="203"/>
         <source>Unhandled report parameter type: &apos;%1&apos;.</source>
         <translation type="unfinished">لم تتم معالجته نوع المعلمة التقرير: &apos;%1&apos;.</translation>
     </message>
