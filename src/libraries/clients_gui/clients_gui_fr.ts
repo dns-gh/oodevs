@@ -2585,8 +2585,8 @@ Voulez-vous le supprimer?</translation>
     <name>gui::UnitStateTableResource</name>
     <message>
         <location filename="UnitStateTableResource.cpp" line="24"/>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Ressources</translation>
     </message>
     <message>
         <location filename="UnitStateTableResource.cpp" line="25"/>

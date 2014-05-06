@@ -2580,7 +2580,7 @@ Do you want to remove it?</source>
     <name>gui::UnitStateTableResource</name>
     <message>
         <location filename="UnitStateTableResource.cpp" line="24"/>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>

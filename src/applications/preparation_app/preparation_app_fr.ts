@@ -3442,8 +3442,8 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <location filename="UnitStateDialog.cpp" line="41"/>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Ressources</translation>
     </message>
     <message>
         <location filename="UnitStateDialog.cpp" line="119"/>

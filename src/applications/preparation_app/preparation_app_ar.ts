@@ -3442,7 +3442,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <location filename="UnitStateDialog.cpp" line="41"/>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>

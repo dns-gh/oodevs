@@ -2588,8 +2588,8 @@ Desea eliminarlo?</translation>
     <name>gui::UnitStateTableResource</name>
     <message>
         <location filename="UnitStateTableResource.cpp" line="24"/>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <location filename="UnitStateTableResource.cpp" line="25"/>

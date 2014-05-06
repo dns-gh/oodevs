@@ -3444,8 +3444,8 @@ Este dato no puede ser proyectado.</translation>
     </message>
     <message>
         <location filename="UnitStateDialog.cpp" line="41"/>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <location filename="UnitStateDialog.cpp" line="119"/>
