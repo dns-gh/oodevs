@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE( authorized_users_read_write )
         uno.profiles.insert( "admin" );
         uno.profiles.insert( "user" );
         session::User duo( 2, "duo" );
-        BOOST_CHECK_EQUAL( cfg.restricted.users.size(), 2 );
+        BOOST_CHECK_EQUAL( cfg.restricted.users.size(), 2u );
         BOOST_CHECK( uno == *cfg.restricted.users.find( uno ) );
         BOOST_CHECK( duo == *cfg.restricted.users.find( duo ) );
         return cfg;
