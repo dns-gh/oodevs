@@ -184,8 +184,8 @@
     </message>
     <message>
         <location filename="CsvExport.cpp" line="227"/>
-        <source>resources</source>
-        <translation>resources</translation>
+        <source>supplies</source>
+        <translation>supplies</translation>
     </message>
     <message>
         <location filename="CsvExport.cpp" line="229"/>
@@ -552,8 +552,8 @@
     </message>
     <message>
         <location filename="FilterCsv.cpp" line="93"/>
-        <source>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
-        <translation>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistics links as CSV files.</translation>
+        <source>Export orbat, supplies, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
+        <translation>Export orbat, supplies, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</translation>
     </message>
     <message>
         <location filename="FilterCsv.cpp" line="119"/>

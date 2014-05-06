@@ -1343,8 +1343,8 @@ Arrêt moteur allumé</translation>
     <name>ADN_Equipments_Data</name>
     <message>
         <location filename="ADN_Equipments_Data.cpp" line="1016"/>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotations</translation>
     </message>
     <message>
         <location filename="ADN_Equipments_Data.cpp" line="1903"/>
