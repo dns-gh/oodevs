@@ -74,7 +74,7 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
     tabLayout->addWidget( tabs_, 0, 0, 1, 3 );
 
     QStringList resourcesHeader;
-    resourcesHeader << tr( "Resource" )
+    resourcesHeader << tr( "Supplies" )
         << tr( "Available" )
         << tr( "Quantity" )
         << tr( "Mass (T)" )
@@ -86,7 +86,7 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
     QWidget* routeTab = new QWidget( tabs_ );
     QGroupBox* upDownGroup = new QGroupBox( routeTab );
     upDownGroup->setFlat( true );
-    tabs_->addTab( resourcesTab_, tr( "Resources" ) );
+    tabs_->addTab( resourcesTab_, tr( "Supplies" ) );
     tabs_->addTab( carriersTab, tr( "Carriers" ) );
     tabs_->addTab( routeTab, tr( "Route" ) );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), tabs_ );

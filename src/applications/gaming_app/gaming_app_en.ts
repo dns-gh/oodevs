@@ -2214,11 +2214,6 @@ Do you want to replace it?</translation>
         <translation>Supply flow</translation>
     </message>
     <message>
-        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="77"/>
-        <source>Resource</source>
-        <translation type="unfinished">Resource</translation>
-    </message>
-    <message>
         <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="78"/>
         <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="125"/>
         <source>Available</source>
@@ -2241,9 +2236,10 @@ Do you want to replace it?</translation>
         <translation type="unfinished">Volume (m3)</translation>
     </message>
     <message>
+        <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="77"/>
         <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="89"/>
-        <source>Resources</source>
-        <translation type="unfinished">Resources</translation>
+        <source>Supplies</source>
+        <translation>Supplies</translation>
     </message>
     <message>
         <location filename="LogisticSupplyFlowDialog_ABC.cpp" line="90"/>
