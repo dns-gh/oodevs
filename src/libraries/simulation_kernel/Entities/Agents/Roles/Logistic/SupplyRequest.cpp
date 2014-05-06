@@ -447,7 +447,7 @@ void SupplyRequest::SendState() const
 {
     client::LogSupplyRequestUpdate msg;
     msg().mutable_request()->set_id( id_ );
-    msg().mutable_requester()->set_id( recipientId_ );
+    msg().mutable_requester()->set_id( requesterId_ );
     msg().mutable_resource()->set_id( dotationCategory_->GetMosID() );
     msg().set_state( state_ );
     msg().mutable_recipient()->set_id( recipientId_ );

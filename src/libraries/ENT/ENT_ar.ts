@@ -1393,5 +1393,9 @@
         <source>Create basic load supply request</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Create stock supply request</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -527,4 +527,16 @@ private:
     const PHY_DotationCategory* category_;
 };
 
+struct SupplyStockQuantity
+{
+    SupplyStockQuantity( MIL_AgentPion* pion, PHY_DotationStock* stock )
+        : pion_    ( pion )
+        , stock_   ( stock )
+        , quantity_( 0 )
+    {}
+    MIL_AgentPion* pion_;
+    PHY_DotationStock* stock_;
+    double quantity_;
+};
+
 #endif // __MIL_LogisticVisitors_h_

@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h" //$$$$ A GICLER
 #include "Entities/Agents/MIL_AgentPion.h" //$$$$ A GICLER
+#include "Entities/Specialisations/LOG/MIL_LogisticVisitors.h"
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 
@@ -41,21 +42,6 @@ SupplyStockManualRequestBuilder_ABC::SupplyStockManualRequestBuilder_ABC()
 SupplyStockManualRequestBuilder_ABC::~SupplyStockManualRequestBuilder_ABC()
 {
     // NOTHING
-}
-
-namespace
-{
-    struct SupplyStockQuantity
-    {
-        SupplyStockQuantity( MIL_AgentPion* pion, PHY_DotationStock* stock )
-            : pion_    ( pion )
-            , stock_   ( stock )
-            , quantity_( 0 )
-        {}
-        MIL_AgentPion* pion_;
-        PHY_DotationStock* stock_;
-        double quantity_;
-    };
 }
 
 // -----------------------------------------------------------------------------
