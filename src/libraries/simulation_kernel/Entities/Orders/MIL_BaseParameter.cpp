@@ -265,6 +265,11 @@ bool MIL_BaseParameter::ToEquipmentType( const PHY_ComposanteTypePion*& ) const
     return false;
 }
 
+bool MIL_BaseParameter::ToEquipmentTypeList( std::vector< const PHY_ComposanteTypePion* >& ) const
+{
+    return false;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::ToGDH
 // Created: LDC 2009-05-20

@@ -1280,6 +1280,29 @@ bool EquipmentTypeFunction( const directia::tools::binders::ScriptRef& refMissio
     }
     return false;
 }
+
+bool EquipmentTypeFunctionBM( sword::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    const PHY_ComposanteTypePion* value = 0;
+    if( element.ToEquipmentType( value ) && value )
+    {
+        refMission[ name ] = value;
+        return true;
+    }
+    return false;
+}
+
+bool EquipmentTypeListFunctionBM( sword::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< const PHY_ComposanteTypePion* > value;
+    if( element.ToEquipmentTypeList( value ) )
+    {
+        refMission[ name ] = value;
+        return true;
+    }
+    return false;
+}
+
 bool GDHFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     float value = 0;
@@ -1615,6 +1638,8 @@ void InitFunctions()
         functorsBM[ "ObjectKnowledgeList" ] = ObjectKnowledgeListFunctionBM;
         functorsBM[ "PopulationKnowledge" ] = PopulationKnowledgeFunctionBM;
         functorsBM[ "CrowdKnowledge" ] = PopulationKnowledgeFunctionBM;
+        functorsBM[ "EquipmentType" ] = EquipmentTypeFunctionBM;
+        functorsBM[ "EquipmentTypeList" ] = EquipmentTypeListFunctionBM;
         functorsBM[ "PlannedWork" ] = GenObjectFunctionBM;
         functorsBM[ "MaintenancePriorities" ] = MaintenancePrioritiesFunctionBM;
         functorsBM[ "MedicalPriorities" ] = MedicalPrioritiesFunctionBM;

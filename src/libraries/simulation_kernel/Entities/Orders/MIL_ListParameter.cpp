@@ -324,6 +324,18 @@ bool MIL_ListParameter::ToResourceNetworkTypeList( std::vector< const PHY_Resour
     return true;
 }
 
+bool MIL_ListParameter::ToEquipmentTypeList( std::vector< const PHY_ComposanteTypePion* >& result ) const
+{
+    for( auto it = list_.begin(); it != list_.end(); ++it )
+    {
+        const PHY_ComposanteTypePion* param = 0;
+        if( !(*it)->ToEquipmentType( param ) )
+            return false;
+        result.push_back( param );
+    }
+    return true;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ListParameter::Append
 // Created: MGD 2010-11-12
