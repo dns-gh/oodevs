@@ -193,7 +193,7 @@ bool RichView_ABC::IsFiltered() const
 void RichView_ABC::OnFiltersChanged( QWidget* )
 {
     view_->ApplyFilters( filters_ );
-    FiltersStatusChanged( IsFiltered() );
+    emit FiltersStatusChanged( IsFiltered() );
 }
 
 // -----------------------------------------------------------------------------
