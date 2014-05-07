@@ -53,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    void Purge();
+    virtual void Purge();
     void EnableDragAndDrop( bool enable );
     virtual void Drop( const QString& /*mimeType*/, void* /*data*/, QStandardItem& /*target*/ ) {}
     virtual QMimeData* MimeData( const QModelIndexList& /*indexes*/, bool& /*overriden*/ ) const { return 0; }
