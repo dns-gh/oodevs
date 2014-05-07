@@ -414,15 +414,15 @@ void SupplyRequest::SendDestruction() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyRequest::SendChangedState
+// Name: SupplyRequest::SendState
 // Created: LGY 2014-04-30
 // -----------------------------------------------------------------------------
-void SupplyRequest::SendChangedState() const
+void SupplyRequest::SendState() const
 {
-    if( !needNetworkUpdate_ )
-        return;
     client::LogSupplyRequestUpdate msg;
     msg().mutable_request()->set_id( id_ );
+    msg().mutable_requester()->set_id( recipientId_ );
+    msg().mutable_resource()->set_id( dotationCategory_->GetMosID() );
     msg().set_state( state_ );
     msg().mutable_recipient()->set_id( recipientId_ );
     if( supplier_ )
@@ -435,23 +435,24 @@ void SupplyRequest::SendChangedState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: SupplyRequest::SendChangedState
+// Created: LGY 2014-04-30
+// -----------------------------------------------------------------------------
+void SupplyRequest::SendChangedState() const
+{
+    if( !needNetworkUpdate_ )
+        return;
+    SendState();
+}
+
+// -----------------------------------------------------------------------------
 // Name: SupplyRequest::SendFullState
 // Created: LGY 2014-04-30
 // -----------------------------------------------------------------------------
 void SupplyRequest::SendFullState() const
 {
     SendCreation();
-    client::LogSupplyRequestUpdate msg;
-    msg().mutable_request()->set_id( id_ );
-    msg().set_state( state_ );
-    msg().mutable_recipient()->set_id( recipientId_ );
-    if( supplier_ )
-        msg().mutable_supplier()->set_id( supplier_->GetSupplierId() );
-    msg().set_requested( static_cast< unsigned int >( requestedQuantity_ ) );
-    msg().set_granted( static_cast< unsigned int >( grantedQuantity_ ) );
-    msg().set_convoyed( static_cast< unsigned int >( convoyedQuantity_ ) );
-    msg().set_delivered( static_cast< unsigned int >( suppliedQuantity_ ) );
-    msg.Send( NET_Publisher_ABC::Publisher() );
+    SendState();
 }
 
 // -----------------------------------------------------------------------------

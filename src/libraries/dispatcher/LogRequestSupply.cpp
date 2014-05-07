@@ -23,7 +23,6 @@ LogRequestSupply::LogRequestSupply( const Model& /*model*/, const sword::LogSupp
     : SimpleEntity< >( msg.request().id() )
     , nDotationType_ ( msg.resource().id() )
     , requester_     ( msg.requester().id() )
-    , nState_        ( sword::LogSupplyRequestUpdate::request_outstanding )
 {
     // NOTHING
 }
@@ -43,13 +42,7 @@ LogRequestSupply::~LogRequestSupply()
 // -----------------------------------------------------------------------------
 void LogRequestSupply::Update( const sword::LogSupplyRequestUpdate& msg )
 {
-    nState_ = msg.state();
-    recipient_ = msg.recipient().id();
-    supplier_ = msg.supplier().id();
-    requested_ = msg.requested();
-    granted_ = msg.granted();
-    convoyed_ = msg.convoyed();
-    delivered_ = msg.delivered();
+    msg_ = msg;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,16 +64,12 @@ void LogRequestSupply::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogRequestSupply::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::LogSupplyRequestUpdate msg;
-    msg().mutable_request()->set_id( GetId() );
-    msg().set_state( nState_ );
-    msg().mutable_recipient()->set_id( recipient_ );
-    msg().mutable_supplier()->set_id( supplier_ );
-    msg().set_requested( requested_ );
-    msg().set_granted( granted_ );
-    msg().set_convoyed( requested_ );
-    msg().set_delivered( requested_ );
-    msg.Send( publisher );
+    if( msg_ )
+    {
+        sword::SimToClient message;
+        *message.mutable_message()->mutable_log_supply_request_update() = *msg_;
+        publisher.Send( message );
+    }
 }
 
 // -----------------------------------------------------------------------------

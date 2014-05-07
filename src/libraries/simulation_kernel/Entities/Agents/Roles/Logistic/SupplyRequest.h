@@ -91,6 +91,7 @@ private:
     //! @name Helpers
     //@{
     void UpdateRequestedQuantities( double authorizedQuantity );
+    void SendState() const;
     //@}
 
 private:

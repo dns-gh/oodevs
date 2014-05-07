@@ -12,6 +12,7 @@
 
 #include "SimpleEntity.h"
 #include <tools/Resolver.h>
+#include <boost/optional.hpp>
 
 namespace sword
 {
@@ -57,13 +58,7 @@ public:
 private:
     const unsigned int nDotationType_;
     const unsigned int requester_;
-    sword::LogSupplyRequestUpdate::EnumLogSupplyRequestStatus nState_;
-    unsigned int recipient_;
-    unsigned int supplier_;
-    unsigned int requested_;
-    unsigned int granted_;
-    unsigned int convoyed_;
-    unsigned int delivered_;
+    boost::optional< sword::LogSupplyRequestUpdate > msg_;
 };
 
 }

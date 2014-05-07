@@ -2560,7 +2560,9 @@ message LogSupplyHandlingUpdate {
     //! When set, the tick when the current state will be finished
     //! If unset, the end state time is unknown
     optional int32                           current_state_end_tick = 4;
-    //! DEPRECATED
+    //! Deprecated but always sent
+    //! Now only one type of supplies per request. The new requests are defined by
+    //!  the LogSupplyRequest structures.
     optional SupplyRecipientResourceRequests requests               = 5;
     //! The list of request identifiers
     repeated Id                              supply_requests        = 6;
@@ -2574,57 +2576,37 @@ message LogSupplyHandlingDestruction {
     required Id              request  = 1;
 }
 
-/** @struct LogSupplyRequestCreation
-    @brief Notifies of the creation of a supply request
-*/
+//! Request sent by a unit to have its basic load or its stocks resupplied, i.e.,
+//!   a type of supplies is below the low logistic threshold.
 message LogSupplyRequestCreation {
-    //! The request identifier
     required Id request   = 1;
-    //! The requester identifier
     required Id requester = 2;
-    //! The resource
     required Id resource  = 3;
 }
 
-/** @struct LogSupplyRequestUpdate
-    @brief Notifies of the update of a supply request
-*/
+//! A request is updated when the state of the request changes.
 message LogSupplyRequestUpdate {
     enum EnumLogSupplyRequestStatus {
-        //! Request is outstanding
         request_outstanding = 0;
-        //! Request is granted
         request_granted     = 1;
-        //! Request is conveyed
-        request_conveyed   = 2;
-        //! Request is delivered
+        request_conveyed    = 2;
         request_delivered   = 3;
-        //! Request is rejected
         request_rejected    = 4;
     }
-    //! The request identifier
-    required Id                        request   = 1;
-    //! The current state of the request
-    required EnumLogSupplyRequestStatus state    = 2;
-    //! The recipient identifier
-    required Id                        recipient = 3;
-    //! The supplier identifier
-    required Id                        supplier  = 4;
-    //! The amount requested
-    required int32                     requested = 5;
-    //! The amount granted
-    required int32                     granted   = 6;
-    //! The amount being convoyed
-    required int32                     convoyed  = 7;
-    //! The amount delivered
-    required int32                     delivered = 8;
+    required Id                         request   = 1;
+    required Id                         requester = 2;
+    required Id                         resource  = 3;
+    required EnumLogSupplyRequestStatus state     = 4;
+    required Id                         recipient = 5;
+    required Id                         supplier  = 6;
+    required int32                      requested = 7;
+    required int32                      granted   = 8;
+    required int32                      convoyed  = 9;
+    required int32                      delivered = 10;
 }
 
-/** @struct LogSupplyRequestDestruction
-    @brief Notifies of the destruction of a supply request
-*/
+//! A request is destroyed when the recipient is delivered.
 message LogSupplyRequestDestruction {
-    //! The request identifier
     required Id request = 1;
 }
 
