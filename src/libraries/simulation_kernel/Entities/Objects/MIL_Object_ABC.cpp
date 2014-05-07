@@ -52,7 +52,6 @@ MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& ty
     , pType_                ( &type )
     , bMarkedForDestruction_( false )
     , bReadyForDeletion_    ( false )
-    , bNeedDestructionOnNextUpdate_( false )
 {
     if( GetType().GetCapacity< SpawnCapacity >() )
         idManager_.GetId( forcedId + 1, true ); // we need to skip one ID for dynamic created object.
@@ -68,7 +67,6 @@ MIL_Object_ABC::MIL_Object_ABC()
     , pType_                ( 0 )
     , bMarkedForDestruction_( false )
     , bReadyForDeletion_    ( false )
-    , bNeedDestructionOnNextUpdate_( false )
 {
     // NOTHING
 }
@@ -173,7 +171,6 @@ void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> pArmy_
          >> bMarkedForDestruction_
          >> bReadyForDeletion_
-         >> bNeedDestructionOnNextUpdate_
          >> interaction_;
 }
 
@@ -189,7 +186,6 @@ void MIL_Object_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     file << pArmy_
          << bMarkedForDestruction_
          << bReadyForDeletion_
-         << bNeedDestructionOnNextUpdate_
          << interaction_;
 }
 
@@ -376,18 +372,8 @@ bool MIL_Object_ABC::IsOnBorder( const MT_Vector2D& vPos ) const
 void MIL_Object_ABC::MarkForDestruction()
 {
     bMarkedForDestruction_ = true;
-    bNeedDestructionOnNextUpdate_ = false;
     interaction_.ClearInteraction( *this );
     TER_Object_ABC::Terminate(); // Degueu : vire l'objet du monde
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::MarkForDestructionNextUpdate
-// Created: LDC 2014-05-05
-// -----------------------------------------------------------------------------
-void MIL_Object_ABC::MarkForDestructionNextUpdate()
-{
-    bNeedDestructionOnNextUpdate_ = true;
 }
 
 // -----------------------------------------------------------------------------

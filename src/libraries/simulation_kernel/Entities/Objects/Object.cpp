@@ -9,32 +9,16 @@
 
 #include "simulation_kernel_pch.h"
 #include "Object.h"
-#include "BuildableCapacity.h"
-#include "BurnSurfaceAttribute.h"
-#include "ChildObjectAttribute.h"
 #include "ConstructionAttribute.h"
-#include "MIL_AgentServer.h"
-#include "MIL_ObjectBuilder_ABC.h"
 #include "MIL_ObjectType_ABC.h"
-#include "ObstacleAttribute.h"
-#include "ResourceNetworkCapacity.h"
-#include "UniversalCapacity.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Color.h"
 #include "protocol/ClientSenders.h"
-#include "resource_network/ResourceNetworkModel.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 
@@ -155,48 +139,9 @@ void Object::Update( unsigned int time )
 {
     // TODO can be updated
     MIL_Object::Update( time );
-    bool destroy = false;
-    if( IsMarkedForDestructionNextUpdate() )
-        destroy = true;
-    else if( const ConstructionAttribute* attribute = RetrieveAttribute< ConstructionAttribute >() )
+    if( const ConstructionAttribute* attribute = RetrieveAttribute< ConstructionAttribute >() )
         if( attribute->NeedDestruction() )
-            destroy = true;
-    
-    if( destroy )
-    {
-        BuildableCapacity* buildableCapacity = Retrieve< BuildableCapacity >();
-        if( buildableCapacity )
-            buildableCapacity->Destroy( *this );
-        ChildObjectAttribute* child = RetrieveAttribute< ChildObjectAttribute >();
-        if( child )
-        {
-            MIL_Object_ABC* childObject = child->GetChildObject();
-            if( childObject )
-                childObject->MarkForDestructionNextUpdate();
-        }
-        if( ResourceNetworkCapacity* resourceNetwork = Retrieve< ResourceNetworkCapacity >() )
-            MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().UnregisterNode( GetID() );
-        
             MarkForDestruction();
-
-        if( Retrieve< UniversalCapacity >() )
-        {
-            // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
-            const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
-            auto it = armies.CreateIterator();
-            while( it.HasMoreElements() )
-            {
-                const MIL_Army_ABC& army = it.NextElement();
-                auto kgs = army.GetKnowledgeGroups();
-                for( auto kgIt = kgs.begin(); kgIt != kgs.end(); ++kgIt )
-                {
-                    auto bbKg = const_cast< DEC_KnowledgeBlackBoard_KnowledgeGroup* >( kgIt->second->GetKnowledge() );
-                    if( bbKg )
-                        bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *this );
-                }
-            }
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------

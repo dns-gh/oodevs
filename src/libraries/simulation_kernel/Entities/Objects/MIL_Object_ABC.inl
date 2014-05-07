@@ -20,16 +20,6 @@ bool MIL_Object_ABC::IsMarkedForDestruction() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::IsMarkedForDestructionNextUpdate
-// Created: LDC 2014-05-05
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Object_ABC::IsMarkedForDestructionNextUpdate() const
-{
-    return bNeedDestructionOnNextUpdate_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::IsReadyForDeletion
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
