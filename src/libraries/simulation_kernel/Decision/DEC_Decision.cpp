@@ -1591,7 +1591,6 @@ void InitFunctions()
         functors[ "NatureAtlas" ] = NatureAtlasFunction;
         functors[ "Numeric" ] = NumericFunction;
         functors[ "NumericList" ] = NumericListFunction;
-        functors[ "NumericList" ] = NumericListFunction;
         functors[ "ObjectiveList" ] = ObjectiveListFunction;
         functors[ "ObjectKnowledge" ] = ObjectKnowledgeFunction;
         functors[ "ObjectKnowledgeList" ] = ObjectKnowledgeListFunction;
