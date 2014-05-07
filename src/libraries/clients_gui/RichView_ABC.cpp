@@ -260,6 +260,7 @@ void RichView_ABC::AddWidgetToMenu( int col, const QString& text, Filter_ABC* fi
         menu->AddWidget( new QLabel( text ) );
     menu->AddWidget( widget );
     filters_[ col ].push_back( filter );
+    model_->setHeaderData( col, Qt::Horizontal, QPixmap( "resources/images/gui/filter_empty.png" ), Qt::DecorationRole );
 }
 
 // -----------------------------------------------------------------------------
