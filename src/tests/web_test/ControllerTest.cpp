@@ -367,6 +367,7 @@ BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture<> )
     ExpectRequest( "GET", "/get_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
     MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
+    MOCK_EXPECT( request.GetParameter ).once().with( "current_user" ).returns( boost::none );
     MOCK_EXPECT( agent.GetSession ).once().with( mock::any, defaultId ).returns( FromJson( expected ) );
     ExpectReply( reply, web::OK, expected );
     controller.DoGet( reply, request );
