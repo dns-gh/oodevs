@@ -102,6 +102,9 @@ signals:
 private slots:
     //! @name Slots
     //@{
+    // The parameter 'update' indicates if the call to OnTypeChanged needs to
+    // inform the controller that this parameter has changed (always true,
+    // except during the initialization)
     void OnTypeChanged( bool update = true );
     //@}
 
