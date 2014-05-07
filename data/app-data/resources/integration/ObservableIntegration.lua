@@ -119,7 +119,7 @@ end
 -- @param objective a Directia knowledge defining the element to observe.
 -- @param position a Directia knowledge defining the position from which to observe.
 -- @return Numeric  the estimated perception between 0 (not seen) and 100. Returns 0 if
--- the target is at the maximum perception distance.
+-- the target is at or beyond the maximum perception distance.
 -- @see integration.getPerception method
 integration.getEstimatePerception = function( objective, position )
     if not position.getEstimatePerceptionsResult then
@@ -163,7 +163,7 @@ integration.isPointVisible = function( point )
 end
 
 --- Returns the relevance of the given agent knowledge.
--- A value between 0 and 100 means that the agent knowledge is perfecly known (so it is 
+-- A value of 100 means that the agent knowledge is perfecly known (so it is 
 -- currently in sight by the agent or one of its teammates belonging to the same knowledge group). 
 -- A value strictly lower than '100' means that the knowledge is no more perceived.
 -- An agent knowledge with a revelance of '0' does not exist anymore, it disapears.
@@ -191,8 +191,10 @@ integration.isAgentPerceivesAgent = function( agent )
     return DEC_ConnaissanceAgent_PercoitUnite( agent )
 end
 
+
+--- Deprecated
 --- Returns the agent maximum identification distance (in meters) regarding physical characteristics of 
--- major components. 
+-- one of the major components.
 -- of sensors (see sensors definition in authoring tool).
 -- This method can only be called by an agent.
 -- @return Numeric the identification distance in meters
