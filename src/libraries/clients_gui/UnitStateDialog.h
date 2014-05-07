@@ -64,16 +64,10 @@ protected:
     template< typename View >
     void AddView( const QString& name, View* view )
     {
-        tabs_.push_back( std::pair< RichView_ABC*, UnitStateTable_ABC* >( view, view->GetView() ) );
+        tabs_.push_back( std::make_pair( view, view->GetView() ) );
         tabWidget_->addTab( view, name );
         connect( view, SIGNAL( FiltersStatusChanged( bool ) ), clearButton_, SLOT( setEnabled( bool ) ) );
     }
-    //@}
-
-signals:
-    //! @name Signals
-    //@{
-    void OnClearClicke();
     //@}
 
 protected slots:
