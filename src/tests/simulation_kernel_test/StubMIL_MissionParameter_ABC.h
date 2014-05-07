@@ -156,6 +156,8 @@ public:
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToEquipmentType( const PHY_ComposanteTypePion*& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual bool ToEquipmentTypeList( std::vector< const PHY_ComposanteTypePion* >& ) const
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToGDH( float& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToGenObject( boost::shared_ptr<DEC_Gen_Object >& ) const

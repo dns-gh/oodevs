@@ -54,6 +54,7 @@ public:
     virtual bool ToUrbanBlockList( std::vector< MIL_UrbanObject_ABC* >& ) const;
     virtual bool ToResourceNetworkNodeList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const;
     virtual bool ToResourceNetworkTypeList( std::vector< const PHY_ResourceNetworkType* >& ) const;
+    virtual bool ToEquipmentTypeList( std::vector< const PHY_ComposanteTypePion* >& result ) const;
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param );
     //@}
 
