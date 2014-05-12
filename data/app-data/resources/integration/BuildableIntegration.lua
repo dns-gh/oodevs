@@ -909,6 +909,7 @@ end
 integration.stopBuildObjectOnLocalization = function( localization, objectType, instantaneously )
     if localization[ myself ].actionId ~= nil then
         DEC__StopAction( localization[ myself ].actionId )
+        localization[ myself ].actionId = nil
     end
     myself.buildActionsStates[ localization[ myself ].actionId ] = nil
     localization[ myself ].actionId = nil
