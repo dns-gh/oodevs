@@ -42,6 +42,8 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     const std::function< void( const sword::SimToClient& ) > fun =
         [&]( const sword::SimToClient& message )
         {
+            if( !lock_ )
+                return;
             if( !message.message().has_compute_pathfind_ack() )
                 return;
             const auto& request = message.message().compute_pathfind_ack();
@@ -64,6 +66,8 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     const std::function< void( const sword::SimToClient& ) > fun2 =
         [&]( const sword::SimToClient& message )
         {
+            if( !lock_ )
+                return;
             if( !message.message().has_segment_request_ack() )
                 return;
             const auto& request = message.message().segment_request_ack();
@@ -197,11 +201,11 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
 // -----------------------------------------------------------------------------
 void PathfindLayer::ClearPositions()
 {
-    if( lock_ )
-        return;
     positions_.clear();
     path_.clear();
     hovered_ = boost::none;
+    events_.clear();
+    lock_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -485,6 +489,7 @@ bool PathfindLayer::HandleKeyPress( QKeyEvent* key )
     if( controllers_.GetCurrentMode() != eModes_Itinerary
         || key->key() != Qt::Key_Escape )
         return false;
+    ClearPositions();
     controllers_.ChangeMode( eModes_Gaming );
     return true;
 }
