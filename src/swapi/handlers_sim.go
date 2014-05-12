@@ -1509,3 +1509,27 @@ func (model *ModelData) handlePathfindCreation(m *sword.SimToClient_Content) err
 	}
 	return nil
 }
+
+func (model *ModelData) handleSupplyRequestCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetLogSupplyRequestCreation()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if !model.addSupplyRequest(id) {
+		return fmt.Errorf("cannot insert supply request %d", id)
+	}
+	return nil
+}
+
+func (model *ModelData) handleSupplyRequestDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetLogSupplyRequestDestruction()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if !model.removeSupplyRequest(id) {
+		return fmt.Errorf("cannot destroy supply request %d", id)
+	}
+	return nil
+}

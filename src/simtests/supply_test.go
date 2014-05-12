@@ -74,6 +74,9 @@ func (cc *SupplyUpdateChecker) Check(c *C, ctx *SupplyCheckContext, msg *sword.S
 	next := sword.LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus(value)
 	c.Check(ok, Equals, true)
 	c.Check(m.GetState(), Equals, next)
+	for _, request := range m.GetSupplyRequests() {
+		c.Check(ctx.data.SupplyRequests[request.GetId()], Not(Equals), nil)
+	}
 	ctx.last = next
 	return true
 }

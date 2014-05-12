@@ -528,6 +528,9 @@ type ReplayInfo struct {
 	TickCount int32
 }
 
+type SupplyRequest struct {
+}
+
 type ModelData struct {
 	Parties              map[uint32]*Party
 	Formations           map[uint32]*Formation
@@ -551,6 +554,7 @@ type ModelData struct {
 	FireDetections       map[uint32]*FireDetection
 	LocalWeathers        map[uint32]*LocalWeather
 	Pathfinds            map[uint32]*Pathfind
+	SupplyRequests       map[uint32]*SupplyRequest
 	GlobalWeather        Weather
 	// Available scores definitions
 	KnownScores map[string]struct{}
@@ -592,6 +596,7 @@ func NewModelData() *ModelData {
 		FireDetections:       map[uint32]*FireDetection{},
 		KnownScores:          map[string]struct{}{},
 		Scores:               map[string]float32{},
+		SupplyRequests:       map[uint32]*SupplyRequest{},
 	}
 }
 
@@ -970,6 +975,18 @@ func (model *ModelData) removeFireDetection(id uint32, units []uint32) bool {
 	return size != len(model.FireDetections)
 }
 
+func (model *ModelData) addSupplyRequest(id uint32) bool {
+	size := len(model.SupplyRequests)
+	model.SupplyRequests[id] = &SupplyRequest{}
+	return size != len(model.SupplyRequests)
+}
+
+func (model *ModelData) removeSupplyRequest(id uint32) bool {
+	size := len(model.SupplyRequests)
+	delete(model.SupplyRequests, id)
+	return size != len(model.SupplyRequests)
+}
+
 var (
 	simToClientHandlers = []func(model *ModelData, m *sword.SimToClient_Content) error{
 		(*ModelData).handleAutomatAttributes,
@@ -1034,8 +1051,11 @@ var (
 		(*ModelData).handleObjectKnowledgeDestruction,
 		(*ModelData).handleObjectUpdate,
 		(*ModelData).handlePartyCreation,
+		(*ModelData).handlePathfindCreation,
 		(*ModelData).handlePopulationCreation,
 		(*ModelData).handlePopulationUpdate,
+		(*ModelData).handleSupplyRequestCreation,
+		(*ModelData).handleSupplyRequestDestruction,
 		(*ModelData).handleUnitAttributes,
 		(*ModelData).handleUnitChangeSuperior,
 		(*ModelData).handleUnitCreation,
@@ -1048,7 +1068,6 @@ var (
 		(*ModelData).handleUnitVisionCones,
 		(*ModelData).handleUrbanCreation,
 		(*ModelData).handleUrbanUpdate,
-		(*ModelData).handlePathfindCreation,
 	}
 	authToClientHandlers = []func(model *ModelData, m *sword.AuthenticationToClient_Content) error{
 		(*ModelData).handleProfileCreation,
