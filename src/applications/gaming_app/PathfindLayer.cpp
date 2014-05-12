@@ -39,8 +39,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     , lock_( false )
 {
     controllers_.Register( *this );
-    const std::function< void( const sword::SimToClient& ) > fun =
-        [&]( const sword::SimToClient& message )
+    publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
         {
             if( !lock_ )
                 return;
@@ -61,10 +60,8 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
                 }
             }
             ProcessEvents();
-        };
-    publisher_.Register( fun );
-    const std::function< void( const sword::SimToClient& ) > fun2 =
-        [&]( const sword::SimToClient& message )
+        } ) );
+    publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
         {
             if( !lock_ )
                 return;
@@ -80,8 +77,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
                         converter_.ConvertToXY( it->to() ) ).Project( point_ );
             }
             ProcessEvents();
-        };
-    publisher_.Register( fun2 );
+        } ) );
 }
 
 // -----------------------------------------------------------------------------
