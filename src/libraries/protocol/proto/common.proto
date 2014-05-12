@@ -2489,7 +2489,7 @@ message LogMedicalHandlingDestruction {
     required Id               unit    = 2;
 }
 
-//! DEPRECATED
+//! DEPRECATED in 5.4, replaced by LogSupplyRequest
 message SupplyResourceRequest {
     //! The type of the resource
     required Id           resource  = 1;
@@ -2501,13 +2501,14 @@ message SupplyResourceRequest {
     required int32        convoyed  = 4;
 }
 
-//! DEPRECATED
+//! DEPRECATED in 5.4, replaced by LogSupplyRequest
 message SupplyRecipientResourcesRequest {
     //! The recipient of the supply flow
     required Id                    recipient = 1;
     //! The resources requested/granted/convoyed
     repeated SupplyResourceRequest resources = 2;
 }
+
 message SupplyRecipientResourceRequests {
     repeated SupplyRecipientResourcesRequest requests = 1;
 }
@@ -2560,11 +2561,10 @@ message LogSupplyHandlingUpdate {
     //! When set, the tick when the current state will be finished
     //! If unset, the end state time is unknown
     optional int32                           current_state_end_tick = 4;
-    //! Deprecated but always sent
-    //! Now only one type of supplies per request. The new requests are defined by
-    //!  the LogSupplyRequest structures.
+    //! DEPRECATED in 5.4 and replaced by "supply_requests", still filled.
+    //! Requests now have exactly one resource.
     optional SupplyRecipientResourceRequests requests               = 5;
-    //! The list of request identifiers
+    //! The list of LogSupplyRequest identifiers
     repeated Id                              supply_requests        = 6;
 }
 
@@ -2576,8 +2576,8 @@ message LogSupplyHandlingDestruction {
     required Id              request  = 1;
 }
 
-//! Request sent by a unit to have its basic load or its stocks resupplied, i.e.,
-//!   a type of supplies is below the low logistic threshold.
+//! Request sent by a unit to have its basic load or its stocks resupplied,
+//! for instance when a type of supplies is below the low logistic threshold.
 message LogSupplyRequestCreation {
     required Id request   = 1;
     required Id requester = 2;
@@ -2605,7 +2605,7 @@ message LogSupplyRequestUpdate {
     required int32                      delivered = 10;
 }
 
-//! A request is destroyed when the recipient is delivered.
+//! A request is destroyed when the resource is delivered.
 message LogSupplyRequestDestruction {
     required Id request = 1;
 }
