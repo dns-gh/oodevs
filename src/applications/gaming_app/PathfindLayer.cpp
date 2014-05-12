@@ -333,17 +333,18 @@ void PathfindLayer::PickSegment( geometry::Point2f point )
     }
 }
 
-bool PathfindLayer::HandleMouseMove( QMouseEvent* /*event*/, const geometry::Point2f& point )
+bool PathfindLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
 {
-    HandleEvent( [=]()
-        {
-            hovered_ = boost::none;
-            if( path_.empty() || !element_ )
-                return;
-            if( PickWaypoint( point ) )
-                return;
-            PickSegment( point );
-        }, true );
+    if( event->buttons() == Qt::NoButton )
+        HandleEvent( [=]()
+            {
+                hovered_ = boost::none;
+                if( path_.empty() || !element_ )
+                    return;
+                if( PickWaypoint( point ) )
+                    return;
+                PickSegment( point );
+            }, true );
     return false;
 }
 
