@@ -45,7 +45,6 @@ include "integration/ImprovableIntegration.lua"
 include "integration/RemovableIntegration.lua"
 include "integration/IdentifyingIntegration.lua"
 include "integration/LoadableIntegration.lua"
-include "integration/DamageableIntegration.lua"
 
 include "integration/PositionableIntegration.lua"
 include "integration/SafeguardableIntegration.lua"
