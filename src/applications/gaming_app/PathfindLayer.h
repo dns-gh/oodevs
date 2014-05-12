@@ -110,7 +110,6 @@ private:
     Publisher_ABC& publisher_;
     const kernel::CoordinateConverter_ABC& converter_;
     geometry::Rectangle2f world_;
-    sword::ClientToSim message_;
     kernel::SafePointer< kernel::Entity_ABC > element_;
     std::deque< geometry::Point2f > positions_;
     std::vector< Point > path_;
