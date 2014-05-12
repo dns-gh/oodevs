@@ -47,6 +47,7 @@ integration.buildLevel = function( objectKnowledge )
     return DEC_ConnaissanceObjet_NiveauConstruction( objectKnowledge.source ) * 100
 end
 
+--- Deprecated : use 'integration.getUrbanBlockState instead' instead.
 --- Returns the structural state for an urban block
 -- @param urbanBlock Urban block knowledge
 -- @return structural state between 0 and 1 (if value is 1, the urban block has no damaged) 
