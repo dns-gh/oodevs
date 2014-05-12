@@ -97,6 +97,31 @@ bool session::Profile::operator==( const Profile& other ) const
         && password == other.password;
 }
 
+session::User::User( int id )
+    : id( id )
+{
+    // NOTHING
+}
+
+session::User::User( int id, const std::string& name )
+    : id  ( id )
+    , name( name )
+{
+    // NOTHING
+}
+
+bool session::User::operator<( const User& other ) const
+{
+    return id < other.id;
+}
+
+bool session::User::operator==( const User& other ) const
+{
+    return id == other.id &&
+        name == other.name &&
+        profiles == other.profiles;
+}
+
 // -----------------------------------------------------------------------------
 // Name: Config::Config
 // Created: BAX 2012-08-02
@@ -162,6 +187,14 @@ bool TryRead( T& dst, const Request_ABC& request, const std::string& key )
     return true;
 }
 
+template< typename T, typename U >
+void Iterate( const T& src, const std::string& key, const U& read )
+{
+    if( const auto tree = src.get_child_optional( key ) )
+        for( auto it = tree->begin(); it != tree->end(); ++it )
+            read( it->first, it->second );
+}
+
 // -----------------------------------------------------------------------------
 // Name: TryRead
 // Created: BAX 2012-08-02
@@ -175,25 +208,6 @@ bool TryReadSet( T& dst, const Tree& src, const std::string& key )
     T next;
     for( auto it = sub->second.begin(); it != sub->second.end(); ++it )
         next.insert( it->second.get_value( std::string() ) );
-    if( next == dst )
-        return false;
-    dst = next;
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TryReadMap
-// Created: LGY 2014-04-04
-// -----------------------------------------------------------------------------
-template< typename T >
-bool TryReadMap( T& dst, const Tree& src, const std::string& key )
-{
-    const auto tree = src.get_child_optional( key );
-    if( !tree )
-        return false;
-    T next;
-    for( auto it = tree->begin(); it != tree->end(); ++it )
-        next[ boost::lexical_cast< int >( it->first ) ] = it->second.data();
     if( next == dst )
         return false;
     dst = next;
@@ -288,13 +302,12 @@ bool ReadSideConfig( session::Config::T_Sides& dst, const Tree& src, const std::
 // -----------------------------------------------------------------------------
 void WriteSideConfig( Tree& dst, const std::string& prefix, const session::Config::T_Sides& src )
 {
-    Tree tree;
+    auto& tree = dst.put_child( prefix, Tree() );
     for( auto it = src.begin(); it != src.end(); ++it )
     {
         tree.put( it->first + "." + "name", it->second.name );
         tree.put( it->first + "." + "created", it->second.created );
     }
-    dst.add_child( prefix, tree );
 }
 
 // -----------------------------------------------------------------------------
@@ -376,6 +389,34 @@ void WritePluginConfig( Tree& dst, const std::string& prefix, const session::Plu
     BOOST_FOREACH( const session::PluginConfig::T_Parameters::value_type& value, cfg.parameters )
         dst.put( prefix + XpathToJson( value.first ), value.second );
 }
+
+bool ReadAuthorizedUsers( session::Config::T_AuthorizedUsers& dst, const Tree& src, const std::string& prefix )
+{
+    session::Config::T_AuthorizedUsers next;
+    Iterate( src, prefix, [&]( const std::string& key, const Tree& data )
+    {
+        const int id = boost::lexical_cast< int >( key );
+        const auto& name = data.get< std::string >( "name" );
+        web::session::User user( id, name );
+        TryReadSet( user.profiles, data, "profiles" );
+        next.insert( user );
+    });
+    std::swap( dst, next );
+    return dst != next;
+}
+
+void WriteAuthorizedUsers( Tree& dst, const std::string& prefix, const session::Config::T_AuthorizedUsers& src )
+{
+    auto& root = dst.put_child( prefix, Tree() );
+    for( auto it = src.begin(); it != src.end(); ++it )
+    {
+        auto child = Tree();
+        child.put( "name", it->name );
+        if( !it->profiles.empty() )
+            PutList( child, "profiles", it->profiles );
+        root.push_back( std::make_pair( boost::lexical_cast< std::string >( it->id ), child ) );
+    }
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -410,8 +451,8 @@ bool session::ReadConfig( session::Config& dst, const Plugins& plugins, const Tr
     modified |= TryRead( dst.reports.clean_frequency, src, "reports.clean_frequency" );
     modified |= TryRead( dst.sides.no_side_objects, src, "sides.no_side_objects" );
     modified |= TryRead( dst.mapnik.enabled, src, "mapnik.enabled" );
-    modified |= TryRead( dst.restricted.enabled, src, "authorized_users.enabled" );
-    modified |= TryReadMap( dst.restricted.users, src, "authorized_users.list" );
+    modified |= TryRead( dst.restricted.enabled, src, "restricted.enabled" );
+    modified |= ReadAuthorizedUsers( dst.restricted.users, src, "restricted.list" );
     modified |= ReadSideConfig( dst.sides.list, src, "sides.list" );
     modified |= ReadProfileConfig( dst.profiles, src, "profiles" );
     modified |= ReadRngConfig( dst.rng.breakdown, src, "rng.breakdown." );
@@ -443,8 +484,8 @@ void session::WriteConfig( Tree& dst, const session::Config& cfg )
     dst.put( "reports.clean_frequency", cfg.reports.clean_frequency );
     dst.put( "sides.no_side_objects", cfg.sides.no_side_objects );
     dst.put( "mapnik.enabled", cfg.mapnik.enabled );
-    dst.put( "authorized_users.enabled", cfg.restricted.enabled );
-    PutMap( dst, "authorized_users.list", cfg.restricted.users );
+    dst.put( "restricted.enabled", cfg.restricted.enabled );
+    WriteAuthorizedUsers( dst, "restricted.list", cfg.restricted.users );
     WriteSideConfig( dst, "sides.list", cfg.sides.list );
     WriteProfileConfig( dst, "profiles.", cfg.profiles );
     WriteRngConfig( dst, "rng.breakdown.", cfg.rng.breakdown );

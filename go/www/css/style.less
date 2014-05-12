@@ -192,8 +192,16 @@ body
     margin-left: @common_padding;
 }
 
+.shadow( @value )
+{
+	-webkit-box-shadow: @value;
+	-moz-box-shadow:    @value;
+	box-shadow:         @value;
+}
+
 .read_only
 {
+    .shadow( none );
     color:              inherit !important;
     background-color:   inherit;
     cursor:             text;
@@ -555,4 +563,34 @@ body
 .user_table
 {
     margin-top: 10px;
+}
+
+.profile_label
+{
+    padding-right:  6px;
+    float:          none;
+}
+
+.profile_delete
+{
+    padding-left: 2px;
+}
+
+.user_buttons
+{
+    white-space: nowrap;
+}
+
+.btn.profile
+{
+    border-top-right-radius:    0;
+    border-bottom-right-radius: 0;
+    border-right:               0;
+}
+
+.profile_menu
+{
+    position:   fixed;
+    height:     auto;
+    overflow-x: hidden;
 }

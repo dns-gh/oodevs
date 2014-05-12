@@ -81,6 +81,17 @@ struct Profile
     std::string password;
 };
 
+struct User
+{
+    explicit User( int id );
+    User( int id, const std::string& name );
+    bool operator<( const User& other ) const;
+    bool operator==( const User& other ) const;
+    int id;
+    std::string name;
+    std::set< std::string > profiles;
+};
+
 enum LogLevel
 {
     LOG_LEVEL_ERROR = 0,
@@ -98,7 +109,7 @@ struct Config
     typedef std::map< std::string, PluginConfig > T_Plugins;
     typedef std::map< std::string, Side > T_Sides;
     typedef std::set< Profile > T_Profiles;
-    typedef std::map< int, std::string > T_AuthorizedUsers;
+    typedef std::set< User > T_AuthorizedUsers;
     std::string       name;
     T_Plugins         plugins;
     struct

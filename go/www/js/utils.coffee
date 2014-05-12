@@ -267,12 +267,6 @@ force_input_regexp = (regexp, control) ->
         return unless e.which && e.charCode
         return regexp.test String.fromCharCode e.which
 
-set_checkbox = (w, enabled) ->
-    if enabled
-        w.attr "checked", true
-    else
-        w.removeAttr "checked"
-
 parse_scalar = (ui, f, def) ->
     return def unless ui?.val()?
     val = f ui.val()
@@ -286,11 +280,11 @@ get_double = (ui) ->
     return parse_scalar ui, parseFloat, null
 
 link_checkbox_to_input = (ui, e) ->
-    set_checkbox ui, get_number($ e.target) > 0
+    ui.prop "checked", get_number($ e.target) > 0
 
 on_input_event = (widget, operand) ->
     widget.bind "input keyup", operand
-    widget.live "paste", operand
+    widget.on "paste", operand
 
 attach_checkbox_and_input = (input, cbox) ->
     wrapper = _.wrap link_checkbox_to_input, (f, e) -> f cbox, e
