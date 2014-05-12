@@ -412,7 +412,8 @@ void WriteAuthorizedUsers( Tree& dst, const std::string& prefix, const session::
     {
         auto child = Tree();
         child.put( "name", it->name );
-        PutList( child, "profiles", it->profiles );
+        if( !it->profiles.empty() )
+            PutList( child, "profiles", it->profiles );
         root.push_back( std::make_pair( boost::lexical_cast< std::string >( it->id ), child ) );
     }
 }
