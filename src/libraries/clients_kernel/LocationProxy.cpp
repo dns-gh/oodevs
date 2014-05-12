@@ -44,6 +44,7 @@ namespace
 void LocationProxy::SetLocation( Location_ABC& location )
 {
     location_ = boost::shared_ptr< Location_ABC >( &location, &DoNothing );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +54,7 @@ void LocationProxy::SetLocation( Location_ABC& location )
 void LocationProxy::SetLocation( std::auto_ptr< Location_ABC >& location )
 {
     location_.reset( location.release() );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
