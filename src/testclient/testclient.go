@@ -16,6 +16,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"swapi"
@@ -112,11 +113,17 @@ used to exercise swapi.Model update against real world scenarii.
 
 	var logWriter *bufio.Writer
 	if len(*logfile) > 0 {
-		logfp, err := os.Create(*logfile)
-		if err != nil {
-			return fmt.Errorf("cannot open log file: %s", err)
+		var logfp io.Writer
+		if *logfile == "-" {
+			logfp = os.Stdout
+		} else {
+			fp, err := os.Create(*logfile)
+			if err != nil {
+				return fmt.Errorf("cannot open log file: %s", err)
+			}
+			defer fp.Close()
+			logfp = fp
 		}
-		defer logfp.Close()
 		logWriter = bufio.NewWriterSize(logfp, 1024)
 		defer logWriter.Flush()
 	}
