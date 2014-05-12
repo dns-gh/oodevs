@@ -103,10 +103,9 @@ type TcpContext struct {
 
 func NewTcpContext() *TcpContext {
 	return &TcpContext{
-		errors:   make(chan error),
-		client:   make(chan *Packet),
-		profiles: map[string]struct{}{},
-		quit:     make(chan struct{}),
+		errors: make(chan error),
+		client: make(chan *Packet),
+		quit:   make(chan struct{}),
 	}
 }
 
@@ -223,23 +222,21 @@ type JsonSession struct {
 	Restricted  JsonRestricted
 }
 
-func (c *TcpContext) readFilters(s *JsonSession) error {
+func readFilters(s *JsonSession) (map[string]struct{}, error) {
 	ok, err := strconv.ParseBool(s.Restricted.Enabled)
-	if err != nil {
-		return err
-	}
-	if !ok {
-		return nil
+	if err != nil || !ok {
+		return nil, err
 	}
 	user := strconv.FormatInt(int64(s.CurrentUser), 10)
 	filter, ok := s.Restricted.List[user]
 	if !ok {
-		return nil
+		return nil, nil
 	}
+	profiles := map[string]struct{}{}
 	for _, v := range filter.Profiles {
-		c.profiles[v] = struct{}{}
+		profiles[v] = struct{}{}
 	}
-	return nil
+	return profiles, err
 }
 
 func (t *TcpProxy) fixAuthentication(ctx *TcpContext, context int32, auth *sword.AuthenticationRequest) error {
@@ -270,7 +267,7 @@ func (t *TcpProxy) fixAuthentication(ctx *TcpContext, context int32, auth *sword
 	if err != nil {
 		return err
 	}
-	err = ctx.readFilters(&session)
+	ctx.profiles, err = readFilters(&session)
 	if err != nil {
 		return err
 	}
