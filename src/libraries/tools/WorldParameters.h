@@ -36,6 +36,9 @@ public:
     virtual ~WorldParameters();
     //@}
 
+    // Returns the smallest UTM zone number covered by the world.
+    std::string GetUtmZone() const;
+
 private:
     //! @name Helpers
     //@{
@@ -43,8 +46,6 @@ private:
             const Path& physical, xml::xistream& xis );
     void ReadPopulation( const Path& populationFile, xml::xistream& xis );
     void ReadWorld( const Path& world );
-    void ReadExtent( const Path& extent );
-    void InitExtent();
     //@}
 
 public:
@@ -59,13 +60,11 @@ public:
     Path pathfindNodes_;
     Path detection_;
     Path populationGraph_;
-    std::string xMin_;
-    std::string xMax_;
-    std::string yMin_;
-    std::string yMax_;
-    std::vector< unsigned char > utmZones_;
     bool terrainSamePhysical_;
     //@}
+
+private:
+    std::string minUtmZone_;
 };
 
 }

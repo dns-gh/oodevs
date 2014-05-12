@@ -860,12 +860,12 @@ bool ExerciseConfig::IsTerrainSamePhysicalRef() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::GetUtmZones
+// Name: ExerciseConfig::GetUtmZone
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
-const std::vector< unsigned char >& ExerciseConfig::GetUtmZones() const
+std::string ExerciseConfig::GetUtmZone() const
 {
-    return pWorldParameters_->utmZones_;
+    return pWorldParameters_->GetUtmZone();
 }
 
 // -----------------------------------------------------------------------------

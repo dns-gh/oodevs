@@ -81,9 +81,9 @@ bool UtmParser::Parse( const QStringList& content, geometry::Point2f& result, QS
 // -----------------------------------------------------------------------------
 void UtmParser::NotifyUpdated( const kernel::ModelLoaded& model )
 {
-    const std::vector< unsigned char >& utmZones = model.config_.GetUtmZones();
-    if( ! utmZones.empty() )
-        zone_ = boost::lexical_cast< std::string, unsigned int >( utmZones.front() );
+    const auto zone = model.config_.GetUtmZone();
+    if( !zone.empty() )
+        zone_ = zone;
 }
 
 // -----------------------------------------------------------------------------
