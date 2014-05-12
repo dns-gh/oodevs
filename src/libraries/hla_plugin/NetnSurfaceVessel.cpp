@@ -24,10 +24,10 @@ using namespace plugins::hla;
 // Name: NetnSurfaceVessel constructor
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-NetnSurfaceVessel::NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& /*agent*/, const std::string& callsign, 
+NetnSurfaceVessel::NetnSurfaceVessel( std::unique_ptr< HlaObject_ABC > vessel, Agent_ABC& /*agent*/, const std::string& callsign,
     const std::vector< char >& uniqueIdentifier, const std::string& /*symbol*/, FOM_Serializer_ABC& fomSerializer, const std::string& rtiId  )
     : listeners_ ( new ObjectListenerComposite() )
-    , aggregate_ ( aggregate )
+    , aggregate_ ( std::move( vessel ) )
     , fomSerializer_( fomSerializer )
     , attributesUpdater_( new AttributesUpdater( rtiId, *listeners_) )
     , callsign_( callsign )
@@ -40,9 +40,9 @@ NetnSurfaceVessel::NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, 
 // Name: NetnSurfaceVessel constructor
 // Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
-NetnSurfaceVessel::NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > vessel, const std::string& identifier, FOM_Serializer_ABC& fomSerializer )
+NetnSurfaceVessel::NetnSurfaceVessel( std::unique_ptr< HlaObject_ABC > vessel, const std::string& identifier, FOM_Serializer_ABC& fomSerializer )
     : listeners_ ( new ObjectListenerComposite() )
-    , aggregate_    ( vessel )
+    , aggregate_    ( std::move( vessel ) )
     , fomSerializer_( fomSerializer )
     , attributesUpdater_( new AttributesUpdater(identifier, *listeners_) )
 {

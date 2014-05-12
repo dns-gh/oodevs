@@ -90,9 +90,9 @@ private:
     //@{
     std::string identifier_;
     FOM_Serializer_ABC& fomSerializer_;
-    std::auto_ptr< ObjectListenerComposite > listeners_;
+    std::unique_ptr< ObjectListenerComposite > listeners_;
     Agent_ABC& agent_;
-    std::auto_ptr< AttributesSerializer > attributes_;
+    std::unique_ptr< AttributesSerializer > attributes_;
     IsPartOfStruct isPartOf_;
     //@}
 };

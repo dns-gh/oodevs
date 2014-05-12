@@ -46,7 +46,7 @@ class FederateFactory
 public:
     //! @name Operations
     //@{
-    static std::auto_ptr< Federate_ABC > CreateFederate( xml::xisubstream xis, ::hla::RtiAmbassador_ABC& ambassador,
+    static std::unique_ptr< Federate_ABC > CreateFederate( xml::xisubstream xis, ::hla::RtiAmbassador_ABC& ambassador,
             const FederateAmbassadorFactory_ABC& factory, const tools::Path& pluginDirectory );
     //@}
 

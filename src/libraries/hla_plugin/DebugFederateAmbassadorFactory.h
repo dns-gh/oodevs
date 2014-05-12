@@ -45,14 +45,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< plugins::hla::Federate_ABC > Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const;
+    virtual std::unique_ptr< plugins::hla::Federate_ABC > Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const FederateAmbassadorFactory_ABC& factory_;
-    std::auto_ptr< ::hla::FederateAmbassador_ABC > ambassador_;
+    std::unique_ptr< ::hla::FederateAmbassador_ABC > ambassador_;
     //@}
 };
 

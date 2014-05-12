@@ -224,21 +224,9 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pAutomatChecker_            ( new AutomatChecker( dynamicModel.Agents() ) )
     , pConverter_                 ( new kernel::CoordinateConverter( config ) )
     , pExtentResolver_            ( new ExtentResolver( *pXis_, logger_, *pConverter_ ) )
-    , pSubject_                   ( 0 )
-    , pTacticalObjectSubject_     ( 0 )
-    , pFederate_                  ( 0 )
-    , pInteractionBuilder_        ( 0 )
-    , pSimulationFacade_          ( 0 )
-    , pRemoteAgentResolver_       ( 0 )
-    , pDetonationFacade_          ( 0 )
-    , pSideChecker_               ( 0 )
-    , pTransportationFacade_      ( 0 )
-    , pStepper_                   ( 0 )
     , platforms_                  ( new tic::PlatformDelegateFactory( *pConverter_, static_cast< float >( ReadTimeStep( config.GetSessionFile() ) ) ) )
-    , transferSender_             ( 0 )
     , pMessengerMessageController_( new tools::MessageController< sword::MessengerToClient_Content >() )
     , pOwnershipStrategy_         ( new OwnershipStrategy( *pXis_ ) )
-    , pOwnershipPolicy_           ( 0 )
     , pEntityIdentifierResolver_  ( new EntityIdentifierResolver( pXis_->attribute< unsigned short >( "dis-site", 1 ), pXis_->attribute< unsigned short >( "dis-application", 1 ) ) )
 {
     logger_.LogInfo( "Debug log enabled" );
@@ -278,7 +266,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
                                                   config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_, *pTacticalObjectSubject_,
-                                                  *pOwnershipStrategy_, *pEntityIdentifierResolver_, *pFomSerializer_ ) );
+                                                  *pOwnershipStrategy_, *pEntityIdentifierResolver_, *pFomSerializer_, logger_ ) );
             pNetnInteractionBuilder_.reset( pXis_->attribute< int >( "netn-version", 1 ) == 1 ?
                     static_cast< NETN_InteractionBuilder_ABC* >( new NETNv1_InteractionBuilder( logger_, *pFederate_ ) ):
                     static_cast< NETN_InteractionBuilder_ABC* >( new NETNv2_InteractionBuilder( logger_, *pFederate_ ) ) );

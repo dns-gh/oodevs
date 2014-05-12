@@ -77,10 +77,10 @@ private:
     //@}
     //! @name Attributes
     //@{
-    std::auto_ptr< ObjectListenerComposite > listeners_;
+    std::unique_ptr< ObjectListenerComposite > listeners_;
     TacticalObject_ABC* object_;
     std::string identifier_;
-    std::auto_ptr< AttributesUpdater > attributes_;
+    std::unique_ptr< AttributesUpdater > attributes_;
     uint64_t time_;
     uint16_t material_;
     uint8_t hazardType_;

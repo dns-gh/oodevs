@@ -88,12 +88,12 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< T_MunitionDetonationSender > pMunitionDetonation_;
-    std::auto_ptr< T_WeaponFireSender > pWeaponFire_;
-    std::auto_ptr< T_Notification > pDirectFireReceiver_;
-    std::auto_ptr< T_Notification > pIndirectFireReceiver_;
-    std::auto_ptr< DirectFireSender > pDirectFireSender_;
-    std::auto_ptr< IndirectFireSender > pIndirectFireSender_;
+    std::unique_ptr< T_MunitionDetonationSender > pMunitionDetonation_;
+    std::unique_ptr< T_WeaponFireSender > pWeaponFire_;
+    std::unique_ptr< T_Notification > pDirectFireReceiver_;
+    std::unique_ptr< T_Notification > pIndirectFireReceiver_;
+    std::unique_ptr< DirectFireSender > pDirectFireSender_;
+    std::unique_ptr< IndirectFireSender > pIndirectFireSender_;
     //@}
 };
 

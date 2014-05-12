@@ -14,6 +14,11 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/noncopyable.hpp>
 
+namespace dispatcher
+{
+    class Logger_ABC;
+}
+
 namespace plugins
 {
 namespace hla
@@ -43,28 +48,28 @@ public:
     //@{
     FomBuilder( xml::xistream& xis, Federate_ABC& federate, LocalAgentResolver_ABC& resolver, HlaObjectNameFactory_ABC& nameFactory,
                 CallsignResolver_ABC& callsignResolver, MarkingFactory_ABC& markingFactory, EntityIdentifierResolver_ABC& entityIdentifierResolver,
-                FOM_Serializer_ABC& fomSerializer, OwnershipStrategy_ABC& ownershipStrategy );
+                FOM_Serializer_ABC& fomSerializer, OwnershipStrategy_ABC& ownershipStrategy, dispatcher::Logger_ABC& logger );
     ~FomBuilder();
     //@}
 
     //! @name Operations
     //@{
-    std::auto_ptr< HlaClass > CreateAggregateClass();
-    std::auto_ptr< HlaClass > CreateSurfaceVesselClass();
-    std::auto_ptr< HlaClass > CreateAircraftClass();
-    std::auto_ptr< HlaClass > CreateGroundVehicleClass();
-    std::auto_ptr< HlaClass > CreateHumanClass();
-    std::auto_ptr< HlaClass > CreateRprAggregateClass();
-    std::auto_ptr< HlaClass > CreateRprSurfaceVesselClass();
-    std::auto_ptr< HlaClass > CreateRprAircraftClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateMinefieldClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateCulturalFeatureClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateBreachablePointObjectClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateBreachableLinearObjectClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateOtherPointObjectClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateOtherArealObjectClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateATP45HazardAreaClass();
-    std::auto_ptr< HlaTacticalObjectClass > CreateRawDataHazardContourGroupClass();
+    std::unique_ptr< HlaClass > CreateAggregateClass();
+    std::unique_ptr< HlaClass > CreateSurfaceVesselClass();
+    std::unique_ptr< HlaClass > CreateAircraftClass();
+    std::unique_ptr< HlaClass > CreateGroundVehicleClass();
+    std::unique_ptr< HlaClass > CreateHumanClass();
+    std::unique_ptr< HlaClass > CreateRprAggregateClass();
+    std::unique_ptr< HlaClass > CreateRprSurfaceVesselClass();
+    std::unique_ptr< HlaClass > CreateRprAircraftClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateMinefieldClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateCulturalFeatureClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateBreachablePointObjectClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateBreachableLinearObjectClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateOtherPointObjectClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateOtherArealObjectClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateATP45HazardAreaClass();
+    std::unique_ptr< HlaTacticalObjectClass > CreateRawDataHazardContourGroupClass();
     //@}
 
 private:
@@ -79,6 +84,7 @@ private:
     EntityIdentifierResolver_ABC& entityIdentifierResolver_;
     FOM_Serializer_ABC& fomSerializer_;
     OwnershipStrategy_ABC& ownershipStrategy_;
+    dispatcher::Logger_ABC& logger_;
     //@}
 
 };

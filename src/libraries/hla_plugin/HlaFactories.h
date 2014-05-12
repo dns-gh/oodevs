@@ -34,11 +34,11 @@ namespace hla
             , entityIdentifierResolver_( entityIdentifierResolver )
             , fomSerializer_( fomSerializer )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long simId, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& /*symbol*/, const std::string& rtiId, const std::vector< char >& /*uniqueId*/ ) const
+        virtual std::unique_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long simId, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& /*symbol*/, const std::string& rtiId, const std::vector< char >& /*uniqueId*/ ) const
         {
             rpr::EntityIdentifier entityId;
             entityIdentifierResolver_.Create( rtiId, entityId );
-            return std::auto_ptr< HlaObject_ABC >( new T( agent, name, force, type, markingFactory_, entityId, entityIdentifierResolver_, fomSerializer_, rtiId, simId ) );
+            return std::unique_ptr< HlaObject_ABC >( new T( agent, name, force, type, markingFactory_, entityId, entityIdentifierResolver_, fomSerializer_, rtiId, simId ) );
         }
     private:
         const MarkingFactory_ABC& markingFactory_;
@@ -49,20 +49,20 @@ namespace hla
     class NetnHlaObjectFactory : public HlaObjectFactory_ABC
     {
     public:
-        NetnHlaObjectFactory( std::auto_ptr< HlaObjectFactory_ABC > factory, CallsignResolver_ABC& resolver, FOM_Serializer_ABC& fomSerializer )
-            : factory_ ( factory )
+        NetnHlaObjectFactory( std::unique_ptr< HlaObjectFactory_ABC > factory, CallsignResolver_ABC& resolver, FOM_Serializer_ABC& fomSerializer )
+            : factory_ ( std::move( factory ) )
             , resolver_( resolver )
             , fomSerializer_( fomSerializer )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long simId, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& rtiId, const std::vector< char >& uniqueId ) const
+        virtual std::unique_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long simId, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& rtiId, const std::vector< char >& uniqueId ) const
         {
-            std::auto_ptr< HlaObject_ABC > object = factory_->Create( agent, name, simId, force, type, symbol, rtiId, uniqueId );
+            std::unique_ptr< HlaObject_ABC > object = factory_->Create( agent, name, simId, force, type, symbol, rtiId, uniqueId );
             const std::string callsign( name + boost::lexical_cast< std::string >( simId ) );
             resolver_.Add( simId, callsign, uniqueId );
-            return std::auto_ptr< HlaObject_ABC >( new T( object, agent, callsign, uniqueId, symbol, fomSerializer_, rtiId ) );
+            return std::unique_ptr< HlaObject_ABC >( new T( std::move( object ), agent, callsign, uniqueId, symbol, fomSerializer_, rtiId ) );
         }
     private:
-        std::auto_ptr< HlaObjectFactory_ABC > factory_;
+        std::unique_ptr< HlaObjectFactory_ABC > factory_;
         CallsignResolver_ABC& resolver_;
         FOM_Serializer_ABC& fomSerializer_;
     };
@@ -76,9 +76,9 @@ namespace hla
         {
             // NOTHING
         }
-        virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name ) const
+        virtual std::unique_ptr< HlaObject_ABC > Create( const std::string& name ) const
         {
-            std::auto_ptr< HlaObject_ABC > retval( new T( name, entityIdentifierResolver_, fomSerializer_ ) );
+            std::unique_ptr< HlaObject_ABC > retval( new T( name, entityIdentifierResolver_, fomSerializer_ ) );
             return retval;
         }
     private:
@@ -89,18 +89,18 @@ namespace hla
     class NetnRemoteHlaObjectFactory : public RemoteHlaObjectFactory_ABC
     {
     public:
-        explicit NetnRemoteHlaObjectFactory( std::auto_ptr< RemoteHlaObjectFactory_ABC > factory, FOM_Serializer_ABC& fomSerializer )
-            : factory_( factory )
+        explicit NetnRemoteHlaObjectFactory( std::unique_ptr< RemoteHlaObjectFactory_ABC > factory, FOM_Serializer_ABC& fomSerializer )
+            : factory_( std::move( factory ) )
             , fomSerializer_( fomSerializer )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name ) const
+        virtual std::unique_ptr< HlaObject_ABC > Create( const std::string& name ) const
         {
-            std::auto_ptr< HlaObject_ABC > remote = factory_->Create( name );
-            std::auto_ptr< HlaObject_ABC > retval( new T( remote, name, fomSerializer_ ) );
+            std::unique_ptr< HlaObject_ABC > remote = factory_->Create( name );
+            std::unique_ptr< HlaObject_ABC > retval( new T( std::move( remote ), name, fomSerializer_ ) );
             return retval;
         }
     private:
-        std::auto_ptr< RemoteHlaObjectFactory_ABC > factory_;
+        std::unique_ptr< RemoteHlaObjectFactory_ABC > factory_;
         FOM_Serializer_ABC& fomSerializer_;
     };
 
@@ -111,11 +111,11 @@ namespace hla
         TacticalObjectFactory( EntityIdentifierResolver_ABC& entityIdentifierResolver )
             : entityIdentifierResolver_( entityIdentifierResolver )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( TacticalObject_ABC& object, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& rtiId ) const
+        virtual std::unique_ptr< HlaObject_ABC > Create( TacticalObject_ABC& object, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& rtiId ) const
         {
             rpr::EntityIdentifier entityId;
             entityIdentifierResolver_.Create( rtiId, entityId );
-            return std::auto_ptr< HlaObject_ABC >( new T( object, identifier, name, force, type, entityId, rtiId ) );
+            return std::unique_ptr< HlaObject_ABC >( new T( object, identifier, name, force, type, entityId, rtiId ) );
         }
     private:
         EntityIdentifierResolver_ABC& entityIdentifierResolver_;

@@ -31,11 +31,11 @@ using namespace plugins::hla;
 // Name: HlaTacticalObjectClass constructor
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-HlaTacticalObjectClass::HlaTacticalObjectClass( Federate_ABC& federate, const HlaObjectNameFactory_ABC& nameFactory, std::auto_ptr< HlaTacticalObjectFactory_ABC > factory,
-        std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory, std::auto_ptr< ClassBuilder_ABC > builder )
+HlaTacticalObjectClass::HlaTacticalObjectClass( Federate_ABC& federate, const HlaObjectNameFactory_ABC& nameFactory, std::unique_ptr< HlaTacticalObjectFactory_ABC > factory,
+        std::unique_ptr< RemoteHlaObjectFactory_ABC > remoteFactory, std::unique_ptr< ClassBuilder_ABC > builder )
     : nameFactory_( nameFactory )
-    , factory_( factory )
-    , remoteFactory_    ( remoteFactory )
+    , factory_( std::move( factory ) )
+    , remoteFactory_    ( std::move( remoteFactory ) )
     , hlaClass_         ( new ::hla::Class< HlaObject_ABC >( *this, true ) )
     , pListeners_       ( new ClassListenerComposite() )
 {

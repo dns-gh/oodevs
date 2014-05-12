@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< plugins::hla::Federate_ABC > Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const = 0;
+    virtual std::unique_ptr< plugins::hla::Federate_ABC > Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const = 0;
     //@}
 };
 

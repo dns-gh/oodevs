@@ -121,20 +121,20 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnRequestConvoy > > pNetnRequestConvoy_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoy_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnAcceptOffer > > pNetnAcceptOffer_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnRejectOfferConvoy > > pNetnRejectOfferConvoy_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnCancelConvoy > > pNetnCancelConvoy_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnReadyToReceiveService > > pNetnReadyToReceiveService_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnServiceStarted > > pNetnServiceStarted_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus > > pNetnConvoyEmbarkmentStatus_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus > > pNetnConvoyDisembarkmentStatus_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities > > pNetnConvoyDestroyedEntities_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnServiceComplete > > pNetnServiceComplete_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnServiceReceived > > pNetnServiceReceived_;
-    std::auto_ptr< TransportationRequester > pTransportationRequester_;
-    std::auto_ptr< TransportationOfferer > pTransportationOfferer_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnRequestConvoy > > pNetnRequestConvoy_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoy_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnAcceptOffer > > pNetnAcceptOffer_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnRejectOfferConvoy > > pNetnRejectOfferConvoy_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnCancelConvoy > > pNetnCancelConvoy_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnReadyToReceiveService > > pNetnReadyToReceiveService_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnServiceStarted > > pNetnServiceStarted_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus > > pNetnConvoyEmbarkmentStatus_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus > > pNetnConvoyDisembarkmentStatus_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities > > pNetnConvoyDestroyedEntities_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnServiceComplete > > pNetnServiceComplete_;
+    std::unique_ptr< InteractionSender_ABC< interactions::NetnServiceReceived > > pNetnServiceReceived_;
+    std::unique_ptr< TransportationRequester > pTransportationRequester_;
+    std::unique_ptr< TransportationOfferer > pTransportationOfferer_;
     //@}
 };
 

@@ -22,10 +22,10 @@ using namespace plugins::hla;
 // Name: FederateFactory::CreateFederate
 // Created: AHC 2011-11-09
 // -----------------------------------------------------------------------------
-std::auto_ptr< Federate_ABC > FederateFactory::CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador,
+std::unique_ptr< Federate_ABC > FederateFactory::CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador,
         const FederateAmbassadorFactory_ABC& factory, const tools::Path& pluginDirectory )
 {
-    std::auto_ptr< Federate_ABC > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
+    std::unique_ptr< Federate_ABC > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
     if( !federate->Connect() )
         throw MASA_EXCEPTION( "Could not connect to '" + xis.attribute< std::string >( "lrcSettings", "" ) + "'" );
     const std::string name = xis.attribute< std::string >( "federation", "Federation" );

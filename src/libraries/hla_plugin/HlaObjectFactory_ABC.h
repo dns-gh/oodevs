@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& rtiId, const std::vector< char >& uniqueId ) const = 0;
+    virtual std::unique_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& rtiId, const std::vector< char >& uniqueId ) const = 0;
     //@}
 };
 
@@ -66,7 +66,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< HlaObject_ABC > Create( TacticalObject_ABC& object, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& rtiId ) const = 0;
+    virtual std::unique_ptr< HlaObject_ABC > Create( TacticalObject_ABC& object, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& rtiId ) const = 0;
     //@}
 };
 

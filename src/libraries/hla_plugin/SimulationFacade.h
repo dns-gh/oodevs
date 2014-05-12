@@ -109,21 +109,21 @@ private:
     //! @name Member data
     //@{
     const SideResolver_ABC& sideResolver_;
-    std::auto_ptr< ContextHandler_ABC< sword::FormationCreation > > pFormationHandler_;
-    std::auto_ptr< ContextHandler_ABC< sword::AutomatCreation > > pAutomatHandler_;
-    std::auto_ptr< ContextHandler_ABC< sword::UnitCreation > > pUnitHandler_;
-    std::auto_ptr< ContextHandler_ABC< sword::ObjectMagicActionAck > > pObjectHandler_;
-    std::auto_ptr< AutomatDisengager > pAutomatDisengager_;
-    std::auto_ptr< FormationCreater > pFormationCreater_;
-    std::auto_ptr< AutomatCreater > pAutomatCreater_;
-    std::auto_ptr< UnitTeleporter > pUnitTeleporter_;
-    std::auto_ptr< EquipmentUpdater > pEquipmentUpdater_;
-    std::auto_ptr< RemoteAgentController > pRemoteAgentController_;
-    std::auto_ptr< NetnRemoteCallsignListener > pNetnRemoteCallsignListener_;
-    std::auto_ptr< PropagationManager_ABC > pPropagationManager_;
-    std::auto_ptr< RemoteTacticalObjectController > pRemoteTacticalObjectController_;
-    std::auto_ptr< RemoteOrbatShaper > pRemoteOrbatShaper_;
-    std::auto_ptr< TacticalObjectUpdater > pTacticalObjectUpdater_;
+    std::unique_ptr< ContextHandler_ABC< sword::FormationCreation > > pFormationHandler_;
+    std::unique_ptr< ContextHandler_ABC< sword::AutomatCreation > > pAutomatHandler_;
+    std::unique_ptr< ContextHandler_ABC< sword::UnitCreation > > pUnitHandler_;
+    std::unique_ptr< ContextHandler_ABC< sword::ObjectMagicActionAck > > pObjectHandler_;
+    std::unique_ptr< AutomatDisengager > pAutomatDisengager_;
+    std::unique_ptr< FormationCreater > pFormationCreater_;
+    std::unique_ptr< AutomatCreater > pAutomatCreater_;
+    std::unique_ptr< UnitTeleporter > pUnitTeleporter_;
+    std::unique_ptr< EquipmentUpdater > pEquipmentUpdater_;
+    std::unique_ptr< RemoteAgentController > pRemoteAgentController_;
+    std::unique_ptr< NetnRemoteCallsignListener > pNetnRemoteCallsignListener_;
+    std::unique_ptr< PropagationManager_ABC > pPropagationManager_;
+    std::unique_ptr< RemoteTacticalObjectController > pRemoteTacticalObjectController_;
+    std::unique_ptr< RemoteOrbatShaper > pRemoteOrbatShaper_;
+    std::unique_ptr< TacticalObjectUpdater > pTacticalObjectUpdater_;
     //@}
 };
 

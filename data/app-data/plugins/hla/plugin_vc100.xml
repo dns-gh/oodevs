@@ -164,6 +164,12 @@
                         <description lang="fr" name="Publier l'ODB complet"><![CDATA[Détermine s'il faut publier l'ODB complet]]></description>
                     </descriptions>
                 </setting>
+                <setting attribute="@handle-objects" type="boolean" default="true">
+                    <descriptions>
+                        <description lang="en" name="Publish objects"><![CDATA[Specify whether objects are published]]></description>
+                        <description lang="fr" name="Publier les objets"><![CDATA[Détermine s'il faut publier les objets]]></description>
+                    </descriptions>
+                </setting>
             </settings>
         </group>
     </settings>

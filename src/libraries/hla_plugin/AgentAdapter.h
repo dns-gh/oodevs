@@ -83,7 +83,7 @@ private:
     dispatcher::Agent_ABC& agent_;
     T_NotificationCallback callback_;
     int childIndex_;
-    std::auto_ptr< tic::PlatformDelegate_ABC > platforms_;
+    std::unique_ptr< tic::PlatformDelegate_ABC > platforms_;
     T_Proxies proxies_;
     //@}
 };

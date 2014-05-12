@@ -31,7 +31,7 @@ using namespace plugins::dis;
 // Name: AgentProxy constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-AgentProxy::AgentProxy( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame, std::auto_ptr< tic::PlatformDelegate_ABC > platforms )
+AgentProxy::AgentProxy( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame, std::unique_ptr< tic::PlatformDelegate_ABC > platforms )
     : dispatcher::Observer< sword::UnitAttributes >( holder )
     , time_     ( time )
     , id_       ( id )
@@ -43,7 +43,7 @@ AgentProxy::AgentProxy( const Time_ABC& time, IdentifierFactory_ABC& id, const k
     , exercise_ ( exercise )
     , lagAFrame_( lagAFrame )
     , adapted_  ( new tic::PlatformAdapter( holder_, converter ) )
-    , platforms_( platforms )
+    , platforms_( std::move( platforms ) )
 {
     // NOTHING
 }

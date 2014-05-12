@@ -63,7 +63,7 @@ public:
     //@{
              AgentProxy( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter
                        , UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder
-                       , unsigned char exercise, bool lagAFrame, std::auto_ptr< tic::PlatformDelegate_ABC > platforms );
+                       , unsigned char exercise, bool lagAFrame, std::unique_ptr< tic::PlatformDelegate_ABC > platforms );
     virtual ~AgentProxy();
     //@}
 
@@ -92,8 +92,8 @@ private:
     const unsigned char    exercise_;
     bool                   lagAFrame_;
     T_Identifiers          ids_;
-    std::auto_ptr< tic::Platform_ABC > adapted_;
-    std::auto_ptr< tic::PlatformDelegate_ABC > platforms_;
+    std::unique_ptr< tic::Platform_ABC > adapted_;
+    std::unique_ptr< tic::PlatformDelegate_ABC > platforms_;
     //@}
 };
 

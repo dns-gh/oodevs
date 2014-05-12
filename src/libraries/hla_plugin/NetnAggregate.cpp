@@ -26,10 +26,10 @@ using namespace plugins::hla;
 // Name: NetnAggregate constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign,
+NetnAggregate::NetnAggregate( std::unique_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign,
         const std::vector< char >& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer, const std::string& rtiId  )
     : listeners_ ( new ObjectListenerComposite() )
-    , aggregate_ ( aggregate )
+    , aggregate_ ( std::move( aggregate ) )
     , agent_     ( &agent )
     , fomSerializer_( fomSerializer )
     , attributesUpdater_( new AttributesUpdater( rtiId, *listeners_) )
@@ -47,9 +47,9 @@ NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_AB
 // Name: NetnRemoteAggregate constructor
 // Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
-NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, const std::string& identifier, FOM_Serializer_ABC& fomSerializer )
+NetnAggregate::NetnAggregate( std::unique_ptr< HlaObject_ABC > aggregate, const std::string& identifier, FOM_Serializer_ABC& fomSerializer )
     : listeners_ ( new ObjectListenerComposite() )
-    , aggregate_ ( aggregate )
+    , aggregate_ ( std::move( aggregate ) )
     , agent_ ( 0 )
     , fomSerializer_( fomSerializer )
     , attributesUpdater_( new AttributesUpdater( identifier, *listeners_ ) )

@@ -56,7 +56,7 @@ public:
 
 private:
     int netnVersion_;
-    std::auto_ptr< UniqueIdSerializer > uniqueIdSerializer_;
+    std::unique_ptr< UniqueIdSerializer > uniqueIdSerializer_;
 };
 
 }

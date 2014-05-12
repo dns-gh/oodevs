@@ -38,7 +38,7 @@ FederateAmbassadorFactory::~FederateAmbassadorFactory()
 // Name: FederateAmbassadorFactory::Create
 // Created: SLI 2011-05-27
 // -----------------------------------------------------------------------------
-std::auto_ptr< plugins::hla::Federate_ABC > FederateAmbassadorFactory::Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const
+std::unique_ptr< plugins::hla::Federate_ABC > FederateAmbassadorFactory::Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const
 {
-    return std::auto_ptr< plugins::hla::Federate_ABC >( new plugins::hla::Federate( ambassador, name, ::hla::SimpleTime(), ::hla::SimpleTimeInterval( lookAhead > 0 ? lookAhead : lookAhead_ ) ) );
+    return std::unique_ptr< plugins::hla::Federate_ABC >( new plugins::hla::Federate( ambassador, name, ::hla::SimpleTime(), ::hla::SimpleTimeInterval( lookAhead > 0 ? lookAhead : lookAhead_ ) ) );
 }
