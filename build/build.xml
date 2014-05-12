@@ -1,5 +1,10 @@
 <project name="gosword" default="all">
 
+    <!-- ${test.timeout} is predefined in poney boost extension, we need to
+         override it before loading poney.
+    -->
+    <property name="test.timeout" value="40m"/>
+
     <property environment="env"/>
     <property name="env.PONEY_HOME" value="//file1/masa/common/dev/delivery/internal/poney/current"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
@@ -8,7 +13,6 @@
     <property name="sword_branch" value="trunk"/>
     <property name="test.port" value="35000"/>
     <property name="test.cpu" value="1"/>
-    <property name="test.timeout" value="40m"/>
     <property name="licensepath" value="${run.dir}/license.dat"/>
     <property name="version.version" value="1.0.0.0.${git.revision}.${git.hash}"/>
 
