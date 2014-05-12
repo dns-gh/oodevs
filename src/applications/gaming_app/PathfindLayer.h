@@ -67,7 +67,8 @@ private:
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
-    virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
+    virtual bool HandleLeaveDragEvent( QDragLeaveEvent* event );
+    virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
 
     virtual void Select( const kernel::Agent_ABC& element );
     virtual void Select( const kernel::Population_ABC& element );
@@ -97,10 +98,14 @@ private:
 
     struct Hover
     {
-        geometry::Point2f coordinate_;
+        boost::optional< geometry::Point2f > coordinate_;
+        boost::optional< geometry::Point2f > origin_;
         std::size_t lastWaypoint_;
         bool onWaypoint_;
     };
+
+private:
+    void UpdateHovered( QDropEvent* event, const geometry::Point2f& point );
 
 private:
     //! @name Member data

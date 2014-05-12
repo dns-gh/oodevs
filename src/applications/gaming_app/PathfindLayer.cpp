@@ -66,7 +66,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
             if( !message.message().has_segment_request_ack() )
                 return;
             lock_ = false;
-            if( !hovered_ )
+            if( !hovered_ || !hovered_->coordinate_ )
                 return;
             const auto& request = message.message().segment_request_ack();
             if( request.error_code() != sword::SegmentRequestAck_ErrorCode_no_error )
@@ -134,8 +134,8 @@ void PathfindLayer::DrawPoints() const
     for( std::size_t i = 0; i < positions_.size(); ++i )
         DrawPoint( positions_[i],
             hovered_ && hovered_->onWaypoint_ && hovered_->lastWaypoint_ == i );
-    if( hovered_ && !hovered_->onWaypoint_ )
-        DrawPoint( hovered_->coordinate_, false );
+    if( hovered_ && !hovered_->onWaypoint_ && hovered_->coordinate_ )
+        DrawPoint( *hovered_->coordinate_, false );
 }
 
 void PathfindLayer::DrawPoint( geometry::Point2f p, bool invert ) const
@@ -296,6 +296,7 @@ bool PathfindLayer::PickWaypoint( geometry::Point2f point )
         {
             const Hover hover = {
                 point,
+                it->coordinate_,
                 *it->waypoint_,
                 true
             };
@@ -323,6 +324,7 @@ void PathfindLayer::PickSegment( geometry::Point2f point )
             distance = d;
             const Hover hover = {
                 projection,
+                boost::none,
                 waypoint,
                 false
             };
@@ -352,16 +354,13 @@ bool PathfindLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Poi
     return false;
 }
 
-bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
+bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& /*point*/ )
 {
     if( lock_ || !hovered_ )
         return false;
     if( event->button() == Qt::LeftButton )
     {
-        hovered_->coordinate_ = point;
-        if( hovered_->onWaypoint_ )
-            positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
-        else
+        if( !hovered_->onWaypoint_ )
             ++hovered_->lastWaypoint_;
         hovered_->onWaypoint_ = false;
         QWidget w;
@@ -399,10 +398,10 @@ namespace
     }
 }
 
-bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
+void PathfindLayer::UpdateHovered( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( !dnd::HasData< PathfindLayer >( event ) )
-        return false;
+    if( lock_ )
+        return;
     const geometry::Point2f snapped = Snap( point, world_ );
     if( event->keyboardModifiers() == Qt::ControlModifier )
         hovered_->coordinate_ = snapped;
@@ -413,8 +412,15 @@ bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::
         converter_.ConvertToGeo( snapped, *request->mutable_position() );
         publisher_.Send( message );
         point_ = snapped;
+        lock_ = true;
     }
-    lock_ = true;
+}
+
+bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
+{
+    if( !dnd::HasData< PathfindLayer >( event ) )
+        return false;
+    UpdateHovered( event, point );
     return true;
 }
 
@@ -422,14 +428,31 @@ bool PathfindLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 {
     if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
-    positions_.insert( positions_.begin() + hovered_->lastWaypoint_, hovered_->coordinate_ );
+    if( !hovered_->coordinate_ )
+        return false;
+    positions_.insert( positions_.begin() + hovered_->lastWaypoint_, *hovered_->coordinate_ );
     SendRequest();
     return true;
 }
 
-bool PathfindLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*point*/ ) const
+bool PathfindLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
 {
-    return dnd::HasData< PathfindLayer >( event );
+    if( !hovered_ )
+        return false;
+    if( hovered_->origin_ )
+        positions_.insert( positions_.begin() + hovered_->lastWaypoint_, *hovered_->origin_ );
+    hovered_->coordinate_ = boost::none;
+    return true;
+}
+
+bool PathfindLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
+{
+    if( !dnd::HasData< PathfindLayer >( event ) )
+        return false;
+    if( hovered_->origin_ )
+        positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
+    UpdateHovered( event, point );
+    return true;
 }
 
 void PathfindLayer::OpenEditingMode()
