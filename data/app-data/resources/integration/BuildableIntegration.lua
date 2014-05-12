@@ -891,12 +891,12 @@ end
 -- @param instantaneously Boolean, defines if the object has to be built instantaneously or not.
 -- @return Object knowledge, the built object
 integration.updateBuildObjectOnLocalization = function( localization, objectType, instantaneously )
+    local builtObject = myself.builtObjects[ localization[ myself ].actionId ]
     if myself.buildActionsStates[ localization[ myself ].actionId ] == eActionObjetTerminee then
-        if not instantaneously then
+        if builtObject and not instantaneously and not builtObject.reportEmitted then
+            builtObject.reportEmitted = true
             reportFunction( eRC_FinTravauxObjet, myself.builtObjects[ localization[ myself ].actionId ].source )
         end
-        myself.buildActionsStates[ localization[ myself ].actionId ] = nil
-        localization[ myself ].actionId = DEC__StopAction( localization[ myself ].actionId )
     end
     return myself.builtObjects[ localization[ myself ].actionId ]
 end
@@ -907,9 +907,6 @@ end
 -- @param objectType, String, the type of object as defined in authoring tool.
 -- @param instantaneously Boolean, defines if the object has to be built instantaneously or not.
 integration.stopBuildObjectOnLocalization = function( localization, objectType, instantaneously )
-    if not instantaneously then
-        reportFunction( eRC_FinTravauxObjet, myself.builtObjects[ localization[ myself ].actionId ].source )
-    end
     if localization[ myself ].actionId ~= nil then
         DEC__StopAction( localization[ myself ].actionId )
     end
