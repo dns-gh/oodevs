@@ -80,7 +80,7 @@ type tickInfo struct {
 	Tick     int
 }
 
-func main() {
+func run() error {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, ""+
 			`testclient creates a swapi.Client, connects it to a simulation, logs in
@@ -103,7 +103,7 @@ used to exercise swapi.Model update against real world scenarii.
 	log.Printf("connecting to %s\n", addr)
 	client, err := swapi.NewClient(addr)
 	if err != nil {
-		log.Fatalf("error: could not connect client: %s", err)
+		return fmt.Errorf("could not connect client: %s", err)
 	}
 
 	// Get information about input data compression ratio
@@ -114,7 +114,7 @@ used to exercise swapi.Model update against real world scenarii.
 	if len(*logfile) > 0 {
 		logfp, err := os.Create(*logfile)
 		if err != nil {
-			log.Fatalf("error: cannot open log file: %s", err)
+			return fmt.Errorf("cannot open log file: %s", err)
 		}
 		defer logfp.Close()
 		logWriter = bufio.NewWriterSize(logfp, 1024)
@@ -203,14 +203,22 @@ used to exercise swapi.Model update against real world scenarii.
 	log.Printf("logging in as %s\n", *user)
 	err = client.Login(*user, *password)
 	if err != nil {
-		log.Fatalf("error: could not login: %s", err)
+		return fmt.Errorf("could not login: %s", err)
 	}
 	if *resume {
 		err = client.Resume(0)
 		if err != nil {
-			log.Fatalf("error: could not resume the simulation: %s", err)
+			return fmt.Errorf("could not resume the simulation: %s", err)
 		}
 	}
 	<-termination
 	client.Close()
+	return nil
+}
+
+func main() {
+	err := run()
+	if err != nil {
+		log.Fatalf("error: %s\n", err)
+	}
 }
