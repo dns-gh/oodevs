@@ -418,7 +418,7 @@ func (t *TcpProxy) filterAuthentication(ctx *TcpContext, msg *swapi.SwordMessage
 		return
 	}
 	profiles := m.GetMessage().GetAuthenticationResponse().GetProfiles().GetElem()
-	if profiles == nil {
+	if len(profiles) == 0 {
 		return
 	}
 	filtered := []*sword.ProfileDescription{}
