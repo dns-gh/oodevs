@@ -790,12 +790,8 @@
 <context>
     <name>gui::DrawerLayer</name>
     <message>
-        <source>Edit drawing...</source>
-        <translation>Editer le dessin...</translation>
-    </message>
-    <message>
-        <source>Erase drawing</source>
-        <translation>Effacer le dessin</translation>
+        <source>Edit...</source>
+        <translation>Editer...</translation>
     </message>
 </context>
 <context>

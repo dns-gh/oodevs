@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "TacticalLine_ABC.h"
+#include "ActionController.h"
 
 using namespace kernel;
 
@@ -41,3 +42,17 @@ const std::string& TacticalLine_ABC::GetTypeName() const
     return typeName_;
 }
 
+void TacticalLine_ABC::Select( ActionController& actions ) const
+{
+    actions.Select( *this, *(const kernel::Entity_ABC*)this );
+}
+
+void TacticalLine_ABC::ContextMenu( ActionController& actions, const QPoint& point ) const
+{
+    actions.ContextMenu( *this, *(const kernel::Entity_ABC*)this, point );
+}
+
+void TacticalLine_ABC::Activate( ActionController& actions ) const
+{
+    actions.Activate( *this, *(const kernel::Entity_ABC*)this );
+}

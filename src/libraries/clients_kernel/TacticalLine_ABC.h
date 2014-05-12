@@ -14,7 +14,7 @@
 
 namespace kernel
 {
-
+    class ActionController;
 // =============================================================================
 /** @class  TacticalLine_ABC
     @brief  TacticalLine_ABC
@@ -40,6 +40,9 @@ public:
     //@{
     virtual bool IsLimit() const = 0;
     virtual const std::string& GetTypeName() const;
+    virtual void Select( kernel::ActionController& actions ) const;
+    virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point ) const;
+    virtual void Activate( kernel::ActionController& controller ) const;
     //@}
 
 private:

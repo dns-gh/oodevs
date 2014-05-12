@@ -560,6 +560,13 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>DrawerLayer</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">حذف</translation>
+    </message>
+</context>
+<context>
     <name>EfficientRangeDialog</name>
     <message>
         <source>Efficient Range</source>

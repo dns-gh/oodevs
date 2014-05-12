@@ -41,10 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Select( kernel::ActionController& actions ) const;
     virtual void MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const;
-    virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point ) const;
-    virtual void Activate( kernel::ActionController& controller ) const;
     virtual bool IsLimit() const;
     //@}
 

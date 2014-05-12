@@ -788,12 +788,8 @@
 <context>
     <name>gui::DrawerLayer</name>
     <message>
-        <source>Edit drawing...</source>
-        <translation type="unfinished">تحرير الرسم...</translation>
-    </message>
-    <message>
-        <source>Erase drawing</source>
-        <translation type="unfinished">محو الرسم</translation>
+        <source>Edit...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

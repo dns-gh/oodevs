@@ -561,6 +561,13 @@ Motivo: %3</translation>
     </message>
 </context>
 <context>
+    <name>DrawerLayer</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EfficientRangeDialog</name>
     <message>
         <source>Efficient Range</source>

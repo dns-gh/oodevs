@@ -48,15 +48,6 @@ Limit::~Limit()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Limit::Select
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void Limit::Select( kernel::ActionController& actions ) const
-{
-    actions.Select( *(kernel::TacticalLine_ABC*)this, *(kernel::Entity_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Limit::MultipleSelect
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
@@ -74,25 +65,6 @@ void Limit::MultipleSelect( ActionController& controller, const std::vector< con
     controller.MultipleSelect( first, second, third );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Limit::ContextMenu
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void Limit::ContextMenu( kernel::ActionController& actions, const QPoint& point ) const
-{
-    actions.ContextMenu( *(kernel::TacticalLine_ABC*)this, point );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Limit::Activate
-// Created: AGE 2006-08-11
-// -----------------------------------------------------------------------------
-void Limit::Activate( kernel::ActionController& actions ) const
-{
-    actions.Activate( *this, *(kernel::TacticalLine_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Limit::IsLimit
 // Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------

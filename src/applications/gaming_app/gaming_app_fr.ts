@@ -562,6 +562,13 @@ Raison: %3
     </message>
 </context>
 <context>
+    <name>DrawerLayer</name>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
     <name>EfficientRangeDialog</name>
     <message>
         <source>Efficient Range</source>

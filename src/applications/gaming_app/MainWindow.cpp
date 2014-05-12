@@ -20,6 +20,7 @@
 #include "Config.h"
 #include "CreationPanels.h"
 #include "Dialogs.h"
+#include "DrawerLayer.h"
 #include "DockContainer.h"
 #include "EventDockWidget.h"
 #include "EventToolbar.h"
@@ -75,7 +76,6 @@
 #include "clients_gui/ColorStrategy.h"
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/DisplayToolbar.h"
-#include "clients_gui/DrawerLayer.h"
 #include "clients_gui/Elevation2dLayer.h"
 #include "clients_gui/Elevation3dLayer.h"
 #include "clients_gui/ElevationPainter.h"
@@ -317,7 +317,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& defaultLayer         = *new gui::DefaultLayer( controllers_ );
     gui::Layer& teamLayer            = *new TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
     gui::Layer& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
-    gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, *parameters_, *glProxy_, profile_ );
+    gui::Layer& drawerLayer          = *new DrawerLayer( controllers_, *glProxy_, *strategy_, *parameters_, *glProxy_, profile_ );
     gui::Layer& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
     gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
 

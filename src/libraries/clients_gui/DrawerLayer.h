@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __DrawerLayer_h_
-#define __DrawerLayer_h_
+#ifndef __gui_DrawerLayer_h_
+#define __gui_DrawerLayer_h_
 
 #include "EntityLayer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
@@ -54,6 +54,12 @@ private slots:
     void OnDeleteDrawing();
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    virtual void NotifyContextMenu( const kernel::Drawing_ABC& shape, kernel::ContextMenu& menu );
+    //@}
+
 private:
     //! @name Helpers
     //@{
@@ -61,7 +67,8 @@ private:
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode );
     virtual void NotifySelectionChanged( const std::vector< const kernel::Drawing_ABC* >& elements );
-    virtual void NotifyContextMenu( const kernel::Drawing_ABC& shape, kernel::ContextMenu& menu );
+    virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void FillContextMenu( const kernel::GraphicalEntity_ABC& entity, kernel::ContextMenu& menu );
     virtual bool HandleKeyPress( QKeyEvent* key );
     virtual void NotifyDeleted( const kernel::Drawing_ABC& drawing );
     //@}
@@ -78,4 +85,4 @@ private:
 
 }
 
-#endif // __DrawerLayer_h_
+#endif // __gui_DrawerLayer_h_
