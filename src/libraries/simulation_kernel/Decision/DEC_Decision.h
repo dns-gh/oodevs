@@ -149,6 +149,7 @@ public:
     virtual void SetStateVariable( const std::string& name, float value );
     virtual bool IsPC() const;
     virtual bool IsTransported() const;
+    virtual bool IsInCity() const;
     virtual bool IsFlying() const;
     virtual double GetOperationalState() const;
     virtual double GetMajorOperationalState() const;
@@ -1335,6 +1336,16 @@ bool DEC_Decision< T >::IsTransported() const
 // -----------------------------------------------------------------------------
 template< class T >
 bool DEC_Decision< T >::IsFlying() const
+{
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::IsInCity
+// Created: NMI 2014-05-12
+// -----------------------------------------------------------------------------
+template< class T >
+bool DEC_Decision< T >::IsInCity() const
 {
     throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }

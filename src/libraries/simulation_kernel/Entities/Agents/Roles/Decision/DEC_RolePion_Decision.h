@@ -201,6 +201,7 @@ private:
     virtual bool IsPC() const;
     virtual bool IsTransported() const;
     virtual bool IsFlying() const;
+    virtual bool IsInCity() const;
     virtual double GetOperationalState() const;
     virtual double GetMajorOperationalState() const;
     virtual bool IsAutomateEngaged() const;

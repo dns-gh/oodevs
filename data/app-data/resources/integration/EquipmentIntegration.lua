@@ -568,7 +568,7 @@ end
 --- Returns true if this agent is moving, false otherwise.
 -- @param agent Directia agent
 -- @return Boolean
-integration.bodyIsMoving = function( agent )
+integration.AgentIsMoving = function( agent )
     return agent.source:DEC_Agent_EstEnMouvement()
 end
 
@@ -1130,3 +1130,6 @@ integration.unitAltitude = function( entity )
     end
     return altitude
 end
+
+--- Deprecated
+integration.bodyIsMoving = integration.AgentIsMoving
