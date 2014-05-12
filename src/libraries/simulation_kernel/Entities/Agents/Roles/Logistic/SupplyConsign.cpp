@@ -96,6 +96,7 @@ void SupplyConsign::AddRequest( SupplyRecipient_ABC& recipient, boost::shared_pt
         requests = &requestsQueued_.back().second;
     }
     (*requests)[ &request->GetDotationCategory() ] = request;
+    request->SendCreation();
     requestsNeedNetworkUpdate_ = true;
 }
 
@@ -156,7 +157,11 @@ void SupplyConsign::SupplyCurrentRecipient()
     assert( currentRecipient_ == requestsQueued_.front().first );
     currentRecipient_->OnSupplyDone( shared_from_this() ); //$$$ CRADE MUST BE CALLED BEFORE convoy_->Supply() to allow recipient to reschedule supply immediately
     BOOST_FOREACH( const auto& data, requestsQueued_.front().second )
-        convoy_->Supply( *currentRecipient_, data.second->GetDotationCategory(), data.second->Supply() );
+    {
+        auto request = data.second;
+        convoy_->Supply( *currentRecipient_, request->GetDotationCategory(), request->Supply() );
+        request->SendDestruction();
+    }
     requestsQueued_.pop_front();
     requestsNeedNetworkUpdate_ = true;
 }
@@ -175,6 +180,7 @@ void SupplyConsign::UpdateRequestsIfUnitDestroyed()
         {
             if( request->second->HasRequesterDestroyed() )
             {
+                request->second->SendDestruction();
                 request = it->second.erase( request );
                 currentRecipient_ = GetCurrentSupplyRecipient();
                 hasRequesterDestroyed = true;
@@ -273,7 +279,11 @@ void SupplyConsign::ResetConsign()
         convoy_->Finish();
     }
     BOOST_FOREACH( const auto& data, requestsQueued_ )
+    {
         data.first->OnSupplyCanceled( shared_from_this() );
+        BOOST_FOREACH( auto& request, data.second )
+            request.second->SendDestruction();
+    }
     requestsQueued_.clear();
     SetState( sword::LogSupplyHandlingUpdate::convoy_finished );
 }
@@ -512,6 +522,9 @@ void SupplyConsign::Clean()
 {
     needNetworkUpdate_ = false;
     requestsNeedNetworkUpdate_ = false;
+    BOOST_FOREACH( const auto& recipient, requestsQueued_ )
+        BOOST_FOREACH( const auto& data, recipient.second )
+            data.second->Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -588,7 +601,11 @@ void SupplyConsign::SendFullState() const
         sword::SupplyRecipientResourcesRequest* req = msg().mutable_requests()->add_requests();
         recipient.first->Serialize( *req->mutable_recipient() );
         BOOST_FOREACH( const auto& data, recipient.second )
+        {
             data.second->Serialize( *req->add_resources() );
+            data.second->SendFullState();
+            msg().add_supply_requests()->set_id( data.second->GetId() );
+        }
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -619,6 +636,12 @@ void SupplyConsign::SendChangedState() const
                 data.second->Serialize( *req->add_resources() );
         }
     }
+    BOOST_FOREACH( const auto& recipient, requestsQueued_ )
+        BOOST_FOREACH( const auto& data, recipient.second )
+        {
+            data.second->SendChangedState();
+            msg().add_supply_requests()->set_id( data.second->GetId() );
+        }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 

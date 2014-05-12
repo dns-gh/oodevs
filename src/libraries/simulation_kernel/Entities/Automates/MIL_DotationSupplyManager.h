@@ -65,6 +65,8 @@ public:
     virtual const MT_Vector2D&   GetPosition() const;
     virtual const MIL_AgentPion* GetPC      () const;
     virtual bool                 BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
+    virtual       unsigned int   GetRecipientId        () const;
+
     virtual void OnSupplyScheduled     ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
     virtual void OnSupplyCanceled      ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
     virtual void OnSupplyDone          ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );

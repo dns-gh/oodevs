@@ -123,7 +123,7 @@ void SupplyRequestContainer::AddResource( SupplyRecipient_ABC& recipient, const 
 {
     boost::shared_ptr< SupplyRequest_ABC >& request = requests_[ &recipient ][ &resource->GetCategory() ];
     if( !request )
-        request.reset( new SupplyRequest( resource->GetCategory() ) );
+        request.reset( new SupplyRequest( resource->GetCategory(), recipient.GetRecipientId() ) );
     request->AddResource( resource, pion, quantity );
 }
 

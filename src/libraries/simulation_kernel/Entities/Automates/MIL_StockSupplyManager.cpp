@@ -285,6 +285,15 @@ bool MIL_StockSupplyManager::BelongsToLogisticBase( const MIL_AutomateLOG& logis
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::GetRecipientId
+// Created: LGY 2014-04-30
+// -----------------------------------------------------------------------------
+unsigned int MIL_StockSupplyManager::GetRecipientId() const
+{
+    return pAutomate_->GetID();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
