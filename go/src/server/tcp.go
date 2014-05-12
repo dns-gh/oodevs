@@ -14,7 +14,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -258,12 +257,8 @@ func (t *TcpProxy) fixAuthentication(ctx *TcpContext, context int32, auth *sword
 		return err
 	}
 	defer rpy.Body.Close()
-	body, err := ioutil.ReadAll(rpy.Body)
-	if err != nil {
-		return err
-	}
 	session := JsonSession{}
-	err = json.Unmarshal(body, &session)
+	err = json.NewDecoder(rpy.Body).Decode(&session)
 	if err != nil {
 		return err
 	}
