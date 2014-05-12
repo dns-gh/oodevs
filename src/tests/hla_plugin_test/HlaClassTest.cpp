@@ -86,22 +86,11 @@ namespace
         virtual const std::string& GetIdentifier() const { static std::string DEFVAL("DEFINT"); return DEFVAL; }
         virtual void ResetAttributes() {}
     };
-
-    // workwaround needed because turtle does not support unique_ptr returned
-    std::unique_ptr< HlaObject_ABC > createLocal(Agent_ABC&, const std::string&, unsigned long, rpr::ForceIdentifier, const rpr::EntityType&, 
-        const std::string&, const std::string&, const std::vector< char >&, HlaObject_ABC* ptr )
-    {
-        return std::unique_ptr< HlaObject_ABC >( ptr );
-    }
-    std::unique_ptr< HlaObject_ABC > createRemote( const std::string&, HlaObject_ABC* ptr )
-    {
-        return std::unique_ptr< HlaObject_ABC >( ptr );
-    }
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_class_creates_instance_when_notified, RegisteredFixture )
 {
-    MOCK_EXPECT( hlaObjectFactory->Create ).once().calls( boost::bind( &createLocal, _1, _2, _3, _4, _5, _6, _7, _8, new NUllObject() ) );
+    MOCK_EXPECT( hlaObjectFactory->Create ).once().moves( std::unique_ptr< HlaObject_ABC >( new NUllObject() ) );
     MOCK_EXPECT( objectNameFactory.CreateName ).once().returns( "123" );
     MOCK_EXPECT( factory->CreateIdentifier ).once().with( "123" ).returns( hla::ObjectIdentifier( 42u ) );
     MOCK_EXPECT( localResolver.Add ).once().with( 123u, "123" );
@@ -113,7 +102,7 @@ BOOST_FIXTURE_TEST_CASE( hla_class_creates_instance_when_notified, RegisteredFix
 BOOST_FIXTURE_TEST_CASE( hla_class_creates_remote_instances, RegisteredFixture )
 {
     hlaClass.Register( remoteListener );
-    MOCK_EXPECT( remoteFactory->Create ).once().with( "name" ).calls( boost::bind( &createRemote, _1, new MockHlaObject() ) );
+    MOCK_EXPECT( remoteFactory->Create ).once().with( "name" ).moves( std::unique_ptr< HlaObject_ABC >( new MockHlaObject() ) );
     MOCK_EXPECT( remoteListener.RemoteCreated ).once().with( "name", mock::any, mock::any );
     hlaObjectClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     mock::verify();
@@ -122,7 +111,7 @@ BOOST_FIXTURE_TEST_CASE( hla_class_creates_remote_instances, RegisteredFixture )
 
 BOOST_FIXTURE_TEST_CASE( hla_class_destroys_remote_instances, RegisteredFixture )
 {
-    MOCK_EXPECT( remoteFactory->Create ).once().calls( boost::bind( &createRemote, _1, new MockHlaObject() ) );
+    MOCK_EXPECT( remoteFactory->Create ).once().moves( std::unique_ptr< HlaObject_ABC >( new MockHlaObject() ) );
     hlaObjectClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     MOCK_EXPECT( remoteListener.RemoteCreated ).once().with( "name", mock::any, mock::any );
     hlaClass.Register( remoteListener );
@@ -134,13 +123,13 @@ BOOST_FIXTURE_TEST_CASE( hla_class_creates_duplicate_remote_instances, Registere
 {
     hlaClass.Register( remoteListener );
     HlaObject_ABC* obj1 = new NUllObject();
-    MOCK_EXPECT( remoteFactory->Create ).once().with( "name" ).calls( boost::bind( &createRemote, _1, obj1 ) );
+    MOCK_EXPECT( remoteFactory->Create ).once().with( "name" ).moves( std::unique_ptr< HlaObject_ABC >( obj1 ) );
     MOCK_EXPECT( remoteListener.RemoteCreated ).once().with( "name", mock::any, mock::any );
     hlaObjectClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     mock::verify();
 
     HlaObject_ABC* obj2 = new NUllObject();
-    MOCK_EXPECT( remoteFactory->Create ).once().with( "name" ).calls( boost::bind( &createRemote, _1, obj2 ) );
+    MOCK_EXPECT( remoteFactory->Create ).once().with( "name" ).moves( std::unique_ptr< HlaObject_ABC >( obj2 ) );
     MOCK_EXPECT( remoteListener.RemoteCreated ).once().with( "name", mock::any, mock::any );
     hlaObjectClass->Create( ::hla::ObjectIdentifier( 43u ), "name" );
     mock::verify();
