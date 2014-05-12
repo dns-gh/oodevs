@@ -289,15 +289,15 @@ bool PathfindLayer::PickWaypoint( geometry::Point2f point )
 {
     // path iterated backwards to select the waypoint on top
     // when several of them overlap
-    for( auto it = path_.rbegin(); it != path_.rend(); ++it )
+    for( auto i = positions_.size(); i > 0; --i )
     {
-        if( it->waypoint_
-            && IsNear( point.SquareDistance( it->coordinate_ ), point ) )
+        const auto& position = positions_[ i - 1 ];
+        if( IsNear( point.SquareDistance( position ), point ) )
         {
             const Hover hover = {
                 point,
-                it->coordinate_,
-                *it->waypoint_,
+                position,
+                i - 1,
                 true
             };
             hovered_ = hover;
