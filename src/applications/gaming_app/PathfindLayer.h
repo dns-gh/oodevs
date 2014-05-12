@@ -16,6 +16,7 @@
 #include "clients_kernel/ModesObserver_ABC.h"
 #include <tools/SelectionObserver_ABC.h>
 #include <boost/optional.hpp>
+#include <functional>
 #include <deque>
 
 namespace kernel
@@ -63,7 +64,7 @@ private:
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
 
     virtual bool HandleKeyPress( QKeyEvent* key );
-    virtual bool HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual bool HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
@@ -105,7 +106,9 @@ private:
     };
 
 private:
-    void UpdateHovered( QDropEvent* event, const geometry::Point2f& point );
+    void UpdateHovered( bool free, const geometry::Point2f& point );
+    bool HandleEvent( const std::function< void() >& event, bool overridable = false );
+    void ProcessEvents();
 
 private:
     //! @name Member data
@@ -120,6 +123,7 @@ private:
     std::vector< Point > path_;
     boost::optional< Hover > hovered_;
     geometry::Point2f point_;
+    std::deque< std::pair< std::function< void() >, bool > > events_;
     bool lock_;
     //@}
 };
