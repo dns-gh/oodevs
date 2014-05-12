@@ -5,29 +5,22 @@
 ---Informs whether or not the agent has the physical ability to perform the impovement action on the given 'object'.
 -- (see authoring tool, 'Equipement' tab, 'Objects' widget). 
 -- This method can only be called by an agent.
--- @param object a DirectIA object knowledg.
--- @return Boolean returns 'true' if the agent can improve the object knowledge, 'false' otherwise.
--- This implementation refers to the 'integration.startImproveIt action.
+-- This implementation refers to the 'integration.startImproveIt'.
+-- @param object a DirectIA object knowledge.
+-- @return Boolean 'true' if the agent can improve the object knowledge regarding the 'integration.startImproveIt' action.
 integration.canImproveIt = function( object )
     object[ myself ] = object[ myself ] or {} 
-    if object[ myself ] then
-        return object[ myself ].actionImprovementState ~= eActionObjetPasDeCapacite
-    else
-        return DEC_Agent_PeutValoriserObjet( object.source )
-    end
+    return object[ myself ].actionImprovementState ~= eActionObjetPasDeCapacite
 end
 
 ---Informs whether or not the agent has the necessary dotation to perform the improvement of the given 'object'.
 -- This method can only be called by an agent.
+-- This implementation refers to the 'integration.startImproveIt'.
 -- @param object a DirectIA object knowledge.
--- @return Boolean returns 'true' if the agent has enough dotation, 'false' otherwise.
+-- @return Boolean returns 'true' until the agent has enough dotation regarding the 'integration.startImproveIt' action.
 integration.hasEnoughtDotationForImprovement = function( object )
     object[ myself ] = object[ myself ] or {} 
-    if object[ myself ] then
-        return object[ myself ].actionImprovementState ~= eActionObjetManqueDotation
-    else
-        return false
-    end
+    return object[ myself ].actionImprovementState ~= eActionObjetManqueDotation
 end
 
 ---Informs whether or not the agent has the physical ability to perform the impovement action on the given 'object'.
@@ -39,7 +32,7 @@ integration.agentCanImproveObject = function( object )
 end
 
 --- Informs if the agent has dotation to improve the provided object. The implementation of this method also
--- check if reinforcing units are present and if they have the needed dotation.
+-- checks if reinforcing units are present and if they have the needed dotation.
 -- This method can only be called by an agent.
 -- @return Boolean returns 'true' if the agent has enough dotation to improve the provided object.
 -- It returns 'false' otherwise.
@@ -68,7 +61,7 @@ integration.canBeImproved = function( object )
     return DEC_ConnaissanceObjet_PeutEtreValorise( object.source )
 end
 
----Returns the improvement level of the given DirectIA object knowledge.
+--- Returns the improvement level of the given DirectIA object knowledge.
 -- This method can only be called by an agent.
 -- @param object a DirectIA object knowledge
 -- @return Numeric the level of improvement (a percentage). A value of '0' means 'not improved at all', 
@@ -77,7 +70,7 @@ integration.improvementLevel = function( object )
     return DEC_ConnaissanceObjet_NiveauValorisation( object.source ) * 100
 end
 
----To start improving the given object.
+--- Start improving the given object.
 -- This method can only be called by an agent.
 -- @param object a DirectIA object knowledge
 integration.startImproveIt = function( object )
