@@ -564,6 +564,11 @@ integration.updateMoveToIt = function( objective, pathType, waypoints )
         end
     elseif etat == eEtatActionDeplacement_CheminPartiel then
         myself.canBeBlocked = true
+    elseif etat == eEtatActionDeplacement_BloqueParObjet then
+        if not myself.canBeBlocked then
+            reportFunction( eRC_Bloquee )
+        end
+        myself.canBeBlocked = true
     elseif etat == eEtatActionDeplacement_DejaEnDeplacement then
         if etat ~= objective[ myself ].rcDone then
             DEC_Trace( "Already moving" )
