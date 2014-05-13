@@ -42,8 +42,6 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     controllers_.Register( *this );
     publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
         {
-            if( !lock_ )
-                return;
             if( !message.message().has_compute_pathfind_ack() )
                 return;
             const auto& request = message.message().compute_pathfind_ack();
@@ -64,8 +62,6 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
         } ) );
     publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
         {
-            if( !lock_ )
-                return;
             if( !message.message().has_segment_request_ack() )
                 return;
             const auto& request = message.message().segment_request_ack();
@@ -198,11 +194,14 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
 // -----------------------------------------------------------------------------
 void PathfindLayer::ClearPositions()
 {
-    positions_.clear();
-    path_.clear();
-    hovered_ = boost::none;
-    events_.clear();
-    lock_ = false;
+    HandleEvent( [&]()
+        {
+            positions_.clear();
+            path_.clear();
+            hovered_ = boost::none;
+            events_.clear();
+            lock_ = false;
+        } );
 }
 
 // -----------------------------------------------------------------------------
