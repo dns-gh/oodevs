@@ -407,6 +407,8 @@ bool ReadAuthorizedUsers( session::Config::T_AuthorizedUsers& dst, const Tree& s
 
 void WriteAuthorizedUsers( Tree& dst, const std::string& prefix, const session::Config::T_AuthorizedUsers& src )
 {
+    if( src.empty() )
+        return;
     auto& root = dst.put_child( prefix, Tree() );
     for( auto it = src.begin(); it != src.end(); ++it )
     {
