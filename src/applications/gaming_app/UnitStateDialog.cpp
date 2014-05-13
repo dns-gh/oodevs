@@ -50,15 +50,15 @@ UnitStateDialog::UnitStateDialog( QWidget* parent,
     , equipmentToolTip_( tr( "Composition" ) )
 {
     assert( tabWidget_ );
-    AddView( tr( "Crew" ), new gui::RichView< UnitStateTableCrew >( gui::RichView_ABC::eOptions_None,
+    AddView( tr( "Crew" ), new gui::RichView< UnitStateTableCrew >( gui::RichView_ABC::eOptions_FilterLineEdit,
                                                                     "UnitStateTableCrew",
                                                                     tabWidget_, controllers, staticModel, actionsModel, simulation ) );
-    AddView( tr( "Equipments" ), new gui::RichView< UnitStateTableEquipment >( gui::RichView_ABC::eOptions_None,
+    AddView( tr( "Equipments" ), new gui::RichView< UnitStateTableEquipment >( gui::RichView_ABC::eOptions_FilterLineEdit,
                                                                                "UnitStateTableEquipment",
                                                                                tabWidget_, controllers, staticModel, actionsModel, simulation, profile, extractor ) );
-    AddView( tr( "Basic load" ), new gui::RichView< UnitStateTableResource >( gui::RichView_ABC::eOptions_FilterMenu | gui::RichView_ABC::eOptions_ClearButton,
-                                                                              "UnitStateTableResource",
-                                                                              tabWidget_, controllers, staticModel, actionsModel, simulation ) );
+    AddView( tr( "Basic load" ), new gui::RichView< UnitStateTableResource >( gui::RichView_ABC::eOptions_FilterMenu | gui::RichView_ABC::eOptions_ClearButton | gui::RichView_ABC::eOptions_FilterLineEdit,
+                                                                             "UnitStateTableResource",
+                                                                             tabWidget_, controllers, staticModel, actionsModel, simulation ) );
     connect( tabWidget_, SIGNAL( currentChanged( QWidget* ) ), SLOT( OnTabChanged( QWidget* ) ) );
     exportButton_ = new gui::RichWidget< QToolButton >( "export_button", 0 );
     exportButton_->setIconSet( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gui/export.png" ) ) );

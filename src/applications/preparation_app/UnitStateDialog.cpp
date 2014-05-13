@@ -34,15 +34,15 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
 {
     gui::SubObjectName subObject( "UnitStateDialog" );
     assert( tabWidget_ );
-    AddView( tr( "Crew" ), new gui::RichView< UnitStateTableCrew >( gui::RichView_ABC::eOptions_None,
+    AddView( tr( "Crew" ), new gui::RichView< UnitStateTableCrew >( gui::RichView_ABC::eOptions_FilterLineEdit,
                                                                     "UnitStateTableCrew",
                                                                     tabWidget_, controllers ) );
-    AddView( tr( "Equipments" ), new gui::RichView< UnitStateTableEquipment >( gui::RichView_ABC::eOptions_None,
+    AddView( tr( "Equipments" ), new gui::RichView< UnitStateTableEquipment >( gui::RichView_ABC::eOptions_FilterLineEdit,
                                                                                "UnitStateTableEquipment",
                                                                                tabWidget_, extractor, controllers ) );
-    AddView( tr( "Supplies" ), new gui::RichView< UnitStateTableResource >( gui::RichView_ABC::eOptions_FilterMenu | gui::RichView_ABC::eOptions_ClearButton,
-                                                                            "UnitStateTableResource",
-                                                                            tabWidget_, staticModel, controllers ) );
+    AddView( tr( "Supplies" ), new gui::RichView< UnitStateTableResource >( gui::RichView_ABC::eOptions_FilterMenu | gui::RichView_ABC::eOptions_ClearButton | gui::RichView_ABC::eOptions_FilterLineEdit,
+                                                                             "UnitStateTableResource",
+                                                                             tabWidget_, staticModel, controllers ) );
 }
 
 // -----------------------------------------------------------------------------
