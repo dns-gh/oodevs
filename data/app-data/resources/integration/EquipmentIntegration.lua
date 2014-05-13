@@ -784,6 +784,15 @@ integration.disableResourceNode = function( resourceNode )
     DEC_ReseauRessource_DesactiverElement( resourceNode )
 end
 
+--- Returns a list of all the resource nodes known by the given agent
+-- in the provided area.
+-- @param agent Simulation agent
+-- @param area Simulation area
+-- @return List of simulation resource nodes
+integration.getResourceNetworkNodesInZone = function( agent, area )
+    return DEC_ResourceNetwork_NodesInZone( agent, area )
+end
+
 --- Returns true if the caller of this method is dead, false otherwise.
 -- This method can only be called by an agent or a crowd.
 -- @return Boolean
