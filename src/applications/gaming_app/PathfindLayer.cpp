@@ -337,7 +337,7 @@ void PathfindLayer::PickSegment( geometry::Point2f point )
 bool PathfindLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
 {
     if( event->buttons() == Qt::NoButton )
-        HandleEvent( [=]()
+        HandleEvent( [this,point]()
             {
                 hovered_ = boost::none;
                 if( path_.empty() || !element_ )
@@ -353,9 +353,10 @@ bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
 {
     if( !hovered_ )
         return false;
-    HandleEvent( [=]()
+    const auto button = event->button();
+    HandleEvent( [this,button]()
         {
-            if( event->button() == Qt::LeftButton )
+            if( button == Qt::LeftButton )
             {
                 if( !hovered_->onWaypoint_ )
                     ++hovered_->lastWaypoint_;
@@ -363,7 +364,7 @@ bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
                 QWidget w;
                 dnd::CreateDragObject( this, &w );
             }
-            else if( event->button() == Qt::RightButton )
+            else if( button == Qt::RightButton )
             {
                 if( hovered_->onWaypoint_ )
                     positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
@@ -424,7 +425,7 @@ bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::
     if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
     const bool free = event->keyboardModifiers() == Qt::ControlModifier;
-    HandleEvent( [=]()
+    HandleEvent( [this, free, point]()
         {
             UpdateHovered( free, point );
         }, true );
@@ -435,7 +436,7 @@ bool PathfindLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 {
     if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
-    HandleEvent( [=]()
+    HandleEvent( [this]()
         {
             positions_.insert( positions_.begin() + hovered_->lastWaypoint_, *hovered_->coordinate_ );
             SendRequest();
@@ -447,7 +448,7 @@ bool PathfindLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
 {
     if( !hovered_ )
         return false;
-    HandleEvent( [=]()
+    HandleEvent( [this]()
         {
             if( hovered_->origin_ )
                 positions_.insert( positions_.begin() + hovered_->lastWaypoint_, *hovered_->origin_ );
@@ -461,7 +462,7 @@ bool PathfindLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry
     if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
     const bool free = event->keyboardModifiers() == Qt::ControlModifier;
-    HandleEvent( [=]()
+    HandleEvent( [this, free, point]()
         {
             if( hovered_->origin_ )
                 positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
