@@ -36,48 +36,45 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     , element_( controllers )
     , publisher_( publisher )
     , converter_( converter )
+    , replaceable_( false )
     , lock_( false )
 {
-    controllers_.Register( *this );
-    const std::function< void( const sword::SimToClient& ) > fun =
-        [&]( const sword::SimToClient& message )
+    publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
         {
             if( !message.message().has_compute_pathfind_ack() )
                 return;
-            lock_ = false;
             const auto& request = message.message().compute_pathfind_ack();
-            if( request.error_code() != sword::ComputePathfindAck_ErrorCode_no_error )
-                return;
-            path_.clear();
-            const auto& points = request.path().points();
-            for( auto it = points.begin(); it != points.end(); ++it )
+            if( request.error_code() == sword::ComputePathfindAck_ErrorCode_no_error )
             {
-                boost::optional< uint32_t > waypoint;
-                if( it->has_waypoint() )
-                    waypoint = it->waypoint();
-                const Point p = { converter_.ConvertToXY( it->coordinate() ), waypoint };
-                path_.push_back( p );
+                path_.clear();
+                const auto& points = request.path().points();
+                for( auto it = points.begin(); it != points.end(); ++it )
+                {
+                    boost::optional< uint32_t > waypoint;
+                    if( it->has_waypoint() )
+                        waypoint = it->waypoint();
+                    const Point p = { converter_.ConvertToXY( it->coordinate() ), waypoint };
+                    path_.push_back( p );
+                }
             }
-        };
-    publisher_.Register( fun );
-    const std::function< void( const sword::SimToClient& ) > fun2 =
-        [&]( const sword::SimToClient& message )
+            ProcessEvents();
+        } ) );
+    publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
         {
             if( !message.message().has_segment_request_ack() )
                 return;
-            lock_ = false;
-            if( !hovered_ )
-                return;
             const auto& request = message.message().segment_request_ack();
-            if( request.error_code() != sword::SegmentRequestAck_ErrorCode_no_error )
-                return;
-            const auto& segments = request.segments();
-            for( auto it = segments.begin(); it != segments.end(); ++it )
-                hovered_->coordinate_ = geometry::Segment2f(
-                    converter_.ConvertToXY( it->from() ),
-                    converter_.ConvertToXY( it->to() ) ).Project( point_ );
-        };
-    publisher_.Register( fun2 );
+            if( request.error_code() == sword::SegmentRequestAck_ErrorCode_no_error )
+            {
+                const auto& segments = request.segments();
+                for( auto it = segments.begin(); it != segments.end(); ++it )
+                    hovered_->coordinate_ = geometry::Segment2f(
+                        converter_.ConvertToXY( it->from() ),
+                        converter_.ConvertToXY( it->to() ) ).Project( point_ );
+            }
+            ProcessEvents();
+        } ) );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,6 +84,12 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
 PathfindLayer::~PathfindLayer()
 {
     controllers_.Unregister( *this );
+}
+
+void PathfindLayer::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    lock_ = false;
+    ClearPositions();
 }
 
 void PathfindLayer::Initialize( const geometry::Rectangle2f& extent )
@@ -134,8 +137,8 @@ void PathfindLayer::DrawPoints() const
     for( std::size_t i = 0; i < positions_.size(); ++i )
         DrawPoint( positions_[i],
             hovered_ && hovered_->onWaypoint_ && hovered_->lastWaypoint_ == i );
-    if( hovered_ && !hovered_->onWaypoint_ )
-        DrawPoint( hovered_->coordinate_, false );
+    if( hovered_ && !hovered_->onWaypoint_ && hovered_->coordinate_ )
+        DrawPoint( *hovered_->coordinate_, false );
 }
 
 void PathfindLayer::DrawPoint( geometry::Point2f p, bool invert ) const
@@ -197,11 +200,14 @@ void PathfindLayer::NotifyContextMenu( const geometry::Point2f& point, kernel::C
 // -----------------------------------------------------------------------------
 void PathfindLayer::ClearPositions()
 {
-    if( lock_ )
-        return;
-    positions_.clear();
-    path_.clear();
-    hovered_ = boost::none;
+    HandleEvent( [&]()
+        {
+            positions_.clear();
+            path_.clear();
+            hovered_ = boost::none;
+            events_.clear();
+            lock_ = false;
+        } );
 }
 
 // -----------------------------------------------------------------------------
@@ -289,14 +295,15 @@ bool PathfindLayer::PickWaypoint( geometry::Point2f point )
 {
     // path iterated backwards to select the waypoint on top
     // when several of them overlap
-    for( auto it = path_.rbegin(); it != path_.rend(); ++it )
+    for( auto i = positions_.size(); i > 0; --i )
     {
-        if( it->waypoint_
-            && IsNear( point.SquareDistance( it->coordinate_ ), point ) )
+        const auto& position = positions_[ i - 1 ];
+        if( IsNear( point.SquareDistance( position ), point ) )
         {
             const Hover hover = {
                 point,
-                *it->waypoint_,
+                position,
+                i - 1,
                 true
             };
             hovered_ = hover;
@@ -323,12 +330,56 @@ void PathfindLayer::PickSegment( geometry::Point2f point )
             distance = d;
             const Hover hover = {
                 projection,
+                boost::none,
                 waypoint,
                 false
             };
             hovered_ = hover;
         }
     }
+}
+
+bool PathfindLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
+{
+    if( event->buttons() == Qt::NoButton )
+        HandleEvent( [this,point]()
+            {
+                hovered_ = boost::none;
+                if( path_.empty() || !element_ )
+                    return;
+                if( PickWaypoint( point ) )
+                    return;
+                PickSegment( point );
+            }, true );
+    return false;
+}
+
+bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& /*point*/ )
+{
+    if( !hovered_ )
+        return false;
+    const auto button = event->button();
+    HandleEvent( [this,button]()
+        {
+            if( button == Qt::LeftButton )
+            {
+                if( !hovered_->onWaypoint_ )
+                    ++hovered_->lastWaypoint_;
+                hovered_->onWaypoint_ = false;
+                QWidget w;
+                dnd::CreateDragObject( this, &w );
+            }
+            else if( button == Qt::RightButton )
+            {
+                if( hovered_->onWaypoint_ )
+                    positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
+                if( positions_.size() < 2 )
+                    ClearPositions();
+                else
+                    SendRequest();
+            }
+        } );
+    return true;
 }
 
 namespace
@@ -339,48 +390,7 @@ namespace
             std::min( r.Right(), std::max( r.Left(), p.X() ) ),
             std::min( r.Top(), std::max( r.Bottom(), p.Y() ) ) );
     }
-}
 
-bool PathfindLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Point2f& point )
-{
-    hovered_ = boost::none;
-    if( path_.empty() || lock_ || !element_ )
-        return false;
-    if( PickWaypoint( point ) )
-        return false;
-    PickSegment( point );
-    return false;
-}
-
-bool PathfindLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
-{
-    if( lock_ || !hovered_ )
-        return false;
-    if( event->button() == Qt::LeftButton )
-    {
-        hovered_->coordinate_ = point;
-        if( hovered_->onWaypoint_ )
-            positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
-        else
-            ++hovered_->lastWaypoint_;
-        hovered_->onWaypoint_ = false;
-        QWidget w;
-        dnd::CreateDragObject( this, &w );
-    }
-    else if( event->button() == Qt::RightButton )
-    {
-        if( hovered_->onWaypoint_ )
-            positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
-        if( positions_.size() < 2 )
-            ClearPositions();
-        else
-            SendRequest();
-    }
-    return true;
-}
-
-namespace
-{
     sword::ClientToSim MakeMessage()
     {
         sword::ClientToSim msg;
@@ -399,22 +409,31 @@ namespace
     }
 }
 
-bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
+void PathfindLayer::UpdateHovered( bool snap, const geometry::Point2f& point )
 {
-    if( !dnd::HasData< PathfindLayer >( event ) )
-        return false;
     const geometry::Point2f snapped = Snap( point, world_ );
-    if( event->keyboardModifiers() == Qt::ControlModifier )
-        hovered_->coordinate_ = snapped;
-    else
+    if( snap )
     {
         auto message = MakeMessage();
         auto request = message.mutable_message()->mutable_segment_request();
         converter_.ConvertToGeo( snapped, *request->mutable_position() );
         publisher_.Send( message );
         point_ = snapped;
+        lock_ = true;
     }
-    lock_ = true;
+    else
+        hovered_->coordinate_ = snapped;
+}
+
+bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
+{
+    if( !dnd::HasData< PathfindLayer >( event ) )
+        return false;
+    const bool snap = !event->keyboardModifiers().testFlag( Qt::ControlModifier );
+    HandleEvent( [this, snap, point]()
+        {
+            UpdateHovered( snap, point );
+        }, true );
     return true;
 }
 
@@ -422,14 +441,39 @@ bool PathfindLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 {
     if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
-    positions_.insert( positions_.begin() + hovered_->lastWaypoint_, hovered_->coordinate_ );
-    SendRequest();
+    HandleEvent( [this]()
+        {
+            positions_.insert( positions_.begin() + hovered_->lastWaypoint_, *hovered_->coordinate_ );
+            SendRequest();
+        } );
     return true;
 }
 
-bool PathfindLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*point*/ ) const
+bool PathfindLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
 {
-    return dnd::HasData< PathfindLayer >( event );
+    if( !hovered_ )
+        return false;
+    HandleEvent( [this]()
+        {
+            if( hovered_->origin_ )
+                positions_.insert( positions_.begin() + hovered_->lastWaypoint_, *hovered_->origin_ );
+            hovered_->coordinate_ = boost::none;
+        } );
+    return true;
+}
+
+bool PathfindLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
+{
+    if( !dnd::HasData< PathfindLayer >( event ) )
+        return false;
+    const bool snap = !event->keyboardModifiers().testFlag( Qt::ControlModifier );
+    HandleEvent( [this, snap, point]()
+        {
+            if( hovered_->origin_ )
+                positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
+            UpdateHovered( snap, point );
+        } );
+    return true;
 }
 
 void PathfindLayer::OpenEditingMode()
@@ -448,6 +492,33 @@ bool PathfindLayer::HandleKeyPress( QKeyEvent* key )
     if( controllers_.GetCurrentMode() != eModes_Itinerary
         || key->key() != Qt::Key_Escape )
         return false;
+    ClearPositions();
     controllers_.ChangeMode( eModes_Gaming );
     return true;
+}
+
+bool PathfindLayer::HandleEvent( const std::function< void() >& event, bool replaceable )
+{
+    if( lock_ )
+    {
+        if( events_.empty() || !replaceable_ )
+            events_.push_back( event );
+        else
+            events_.back() = event;
+        replaceable_ = replaceable;
+        return false;
+    }
+    event();
+    return true;
+}
+
+void PathfindLayer::ProcessEvents()
+{
+    lock_ = false;
+    while( !lock_ && !events_.empty() )
+    {
+        const auto event = events_.front();
+        events_.pop_front();
+        event();
+    }
 }
