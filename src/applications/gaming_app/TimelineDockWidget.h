@@ -14,6 +14,11 @@
 #include <tools/ElementObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
 
+namespace gui
+{
+    class Event;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -38,6 +43,7 @@ class TimelineToolBar;
 // =============================================================================
 class TimelineDockWidget : public gui::RichDockWidget
                          , public tools::ElementObserver_ABC< kernel::Filter_ABC >
+                         , public tools::ElementObserver_ABC< gui::Event >
 {
     Q_OBJECT
 
@@ -59,6 +65,7 @@ public:
     //@{
     virtual void NotifyCreated( const kernel::Filter_ABC& filter );
     virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
+    virtual void NotifyUpdated( const gui::Event& event );
     //@}
 
 public slots:

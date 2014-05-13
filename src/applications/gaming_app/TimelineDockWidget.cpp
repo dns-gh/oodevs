@@ -13,6 +13,7 @@
 #include "Config.h"
 #include "TimelineToolBar.h"
 #include "TimelineWebView.h"
+#include "clients_gui/Event.h"
 #include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -150,7 +151,16 @@ void TimelineDockWidget::RemoveCurrentView()
 {
     int currentIndex = tabWidget_->currentIndex();
     if( currentIndex != tabWidget_->indexOf( mainView_ ) )
+    {
+        auto widget = tabWidget_->widget( currentIndex );
+        auto it = std::find_if( showOnlyViews_.begin(), showOnlyViews_.end(),
+                                [&]( const std::pair< const std::string, QWidget* >& element ) {
+                                    return element.second == widget;
+                                } );
+        if( it != showOnlyViews_.end() )
+            showOnlyViews_.erase( it );
         tabWidget_->removeTab( currentIndex );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -269,12 +279,20 @@ void TimelineDockWidget::OnShowOnlyFilterChanged( const std::string& uuid, const
     if( it == showOnlyViews_.end() )
         showOnlyViews_[ uuid ] = AddView( false, name );
     else
+        tabWidget_->setCurrentIndex( tabWidget_->indexOf( it->second ) );
+    webView_->OnShowOnlyFilterChanged( uuid );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::NotifyUpdated
+// Created: ABR 2014-05-13
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::NotifyUpdated( const gui::Event& event )
+{
+    auto it = showOnlyViews_.find( event.GetEvent().uuid );
+    if( it != showOnlyViews_.end() )
     {
         auto index = tabWidget_->indexOf( it->second );
-        auto qName = QString::fromStdString( name );
-        if( tabWidget_->tabText( index ) != qName )
-            tabWidget_->setTabText( index, qName );
-        tabWidget_->setCurrentIndex( index );
+        tabWidget_->setTabText( index, QString::fromStdString( event.GetEvent().name ) );
     }
-    webView_->OnShowOnlyFilterChanged( uuid );
 }
