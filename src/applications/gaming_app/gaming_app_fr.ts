@@ -562,6 +562,13 @@ Raison: %3
     </message>
 </context>
 <context>
+    <name>DockContainer</name>
+    <message>
+        <source>Drawings</source>
+        <translation>Dessins</translation>
+    </message>
+</context>
+<context>
     <name>DrawerLayer</name>
     <message>
         <source>Delete</source>

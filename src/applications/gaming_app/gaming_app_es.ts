@@ -561,6 +561,13 @@ Motivo: %3</translation>
     </message>
 </context>
 <context>
+    <name>DockContainer</name>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DrawerLayer</name>
     <message>
         <source>Delete</source>
