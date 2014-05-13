@@ -90,6 +90,3 @@ masalife.brain.core.options.feedbacks.checkParamDeclaration = false
 
 -- Allow devtools plugin to output traces:
 TraceGraph = function( trace ) DEC_Trace( trace ) end
-
--- Allow masalife_brain plugin to output messages
-LogMessage = function( tag, message ) DEC_Trace( "[" .. tag .. "] " .. message ) end
