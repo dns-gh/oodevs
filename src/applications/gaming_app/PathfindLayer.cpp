@@ -36,10 +36,9 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     , element_( controllers )
     , publisher_( publisher )
     , converter_( converter )
-    , override_( false )
+    , replaceable_( false )
     , lock_( false )
 {
-    controllers_.Register( *this );
     publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
         {
             if( !message.message().has_compute_pathfind_ack() )
@@ -75,6 +74,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
             }
             ProcessEvents();
         } ) );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -497,15 +497,15 @@ bool PathfindLayer::HandleKeyPress( QKeyEvent* key )
     return true;
 }
 
-bool PathfindLayer::HandleEvent( const std::function< void() >& event, bool overridable )
+bool PathfindLayer::HandleEvent( const std::function< void() >& event, bool replaceable )
 {
     if( lock_ )
     {
-        if( events_.empty() || !override_ )
+        if( events_.empty() || !replaceable_ )
             events_.push_back( event );
         else
             events_.back() = event;
-        override_ = overridable;
+        replaceable_ = replaceable;
         return false;
     }
     event();

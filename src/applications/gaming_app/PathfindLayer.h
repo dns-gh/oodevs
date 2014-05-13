@@ -97,21 +97,28 @@ private slots:
 private:
     struct Point
     {
+        // position of the point
         geometry::Point2f coordinate_;
+        // index in the list of waypoints
         boost::optional< uint32_t > waypoint_;
     };
 
     struct Hover
     {
+        // current position of the dragged (possibly new) waypoint
         boost::optional< geometry::Point2f > coordinate_;
+        // original position of the waypoint being dragged which would
+        // only be valid when moving around an already existing one
         boost::optional< geometry::Point2f > origin_;
+        // hint describing where to insert a new waypoint
         std::size_t lastWaypoint_;
+        // whether the mouse hovers an existing waypoint or not
         bool onWaypoint_;
     };
 
 private:
     void UpdateHovered( bool snap, const geometry::Point2f& point );
-    bool HandleEvent( const std::function< void() >& event, bool overridable = false );
+    bool HandleEvent( const std::function< void() >& event, bool replaceable = false );
     void ProcessEvents();
 
 private:
@@ -123,12 +130,23 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     geometry::Rectangle2f world_;
     kernel::SafePointer< kernel::Entity_ABC > element_;
+    // the waypoints including the one being currently added or dragged
     std::deque< geometry::Point2f > positions_;
+    // the last received path
     std::vector< Point > path_;
+    // information about the objects under the mouse if not too far from the
+    // current path
     boost::optional< Hover > hovered_;
     geometry::Point2f point_;
+    // pending events stored while waiting for a reply to the previous request
+    // from the server
     std::deque< std::function< void() > > events_;
-    bool override_;
+    // whether the last event stored can be overwritten or must be preserved,
+    // typically only the last move event is being kept in order to reduce
+    // message load
+    bool replaceable_;
+    // whether a request has been sent to the server and a reply is expected
+    // before letting the user make more changes to the displayed path
     bool lock_;
     //@}
 };
