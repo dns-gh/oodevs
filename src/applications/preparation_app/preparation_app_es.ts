@@ -142,8 +142,8 @@
         <translation>orbat</translation>
     </message>
     <message>
-        <source>resources</source>
-        <translation>recursos</translation>
+        <source>supplies</source>
+        <translation type="unfinished">recursos</translation>
     </message>
     <message>
         <source>ENTITY</source>
@@ -368,8 +368,8 @@
         <translation>Parámetros</translation>
     </message>
     <message>
-        <source>Infinite resources</source>
-        <translation>Recursos infinitos</translation>
+        <source>Infinite supplies</source>
+        <translation type="unfinished">Recursos infinitos</translation>
     </message>
     <message>
         <source>Human factors automatic evolution</source>
@@ -435,8 +435,8 @@
         <translation>Exportar a CSV</translation>
     </message>
     <message>
-        <source>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
-        <translation>Exportar orbat, recursos, stocks, clima, matriz de diplomacia, perfiles y enlaces logísticos como archivos CSV.</translation>
+        <source>Export orbat, supplies, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
+        <translation type="unfinished">Exportar orbat, recursos, stocks, clima, matriz de diplomacia, perfiles y enlaces logísticos como archivos CSV.</translation>
     </message>
     <message>
         <source>Select output directory</source>
@@ -747,7 +747,7 @@
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
-        <source>Category</source>
+        <source>Class</source>
         <translation type="unfinished">Categoría</translation>
     </message>
     <message>
@@ -1818,8 +1818,8 @@ Este dato no puede ser proyectado.</translation>
 <context>
     <name>QuotasResourcesTable</name>
     <message>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Quantity</source>
@@ -1893,7 +1893,7 @@ Este dato no puede ser proyectado.</translation>
 <context>
     <name>ResourcesEditorTable_ABC</name>
     <message>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished">Borrar recurso</translation>
     </message>
     <message>
@@ -1901,7 +1901,7 @@ Este dato no puede ser proyectado.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished">Agregar recurso</translation>
     </message>
 </context>
@@ -2390,8 +2390,8 @@ Este dato no puede ser proyectado.</translation>
 <context>
     <name>StockResourcesTable</name>
     <message>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Nature</source>
@@ -2753,8 +2753,8 @@ Este dato no puede ser proyectado.</translation>
         <translation>Equipos</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Change initial state</source>
@@ -2772,12 +2772,12 @@ Este dato no puede ser proyectado.</translation>
         <translation>Capacidad por defecto</translation>
     </message>
     <message>
-        <source>Add resource</source>
-        <translation>Agregar recurso</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Agregar recurso</translation>
     </message>
     <message>
-        <source>Remove resource</source>
-        <translation>Borrar recurso</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Borrar recurso</translation>
     </message>
     <message>
         <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>

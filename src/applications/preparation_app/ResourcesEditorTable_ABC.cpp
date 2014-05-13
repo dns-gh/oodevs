@@ -26,7 +26,7 @@ Q_DECLARE_METATYPE( const kernel::DotationType* )
 // Name: ResourcesEditorTable_ABC Constructor
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-ResourcesEditorTable_ABC::ResourcesEditorTable_ABC( const QStringList& headers, const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType ) 
+ResourcesEditorTable_ABC::ResourcesEditorTable_ABC( const QStringList& headers, const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType )
     : gui::RichWidget< QTableView >( objectName, parent )
     , headers_( headers )
     , dotations_( dotationsType )
@@ -87,11 +87,11 @@ void ResourcesEditorTable_ABC::contextMenuEvent( QContextMenuEvent* event )
     kernel::ContextMenu* menu = new kernel::ContextMenu( this );
     connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
 
-    QMenu* resourcesMenu = menu->addMenu( tr( "Add resource" ) );
+    QMenu* resourcesMenu = menu->addMenu( tr( "Add supplies" ) );
     const QModelIndex indexClicked = indexAt( event->pos() );
     if( indexClicked.isValid() )
     {
-        QAction* action = menu->addAction( tr( "Remove resource" ) );
+        QAction* action = menu->addAction( tr( "Remove supplies" ) );
         gui::connect( action, SIGNAL( triggered() ), boost::bind( &ResourcesEditorTable_ABC::RemoveResource, this, indexClicked.row() ) );
     }
     menu->addAction( tr( "Clear list" ), this, SLOT( OnClearItems() ) );

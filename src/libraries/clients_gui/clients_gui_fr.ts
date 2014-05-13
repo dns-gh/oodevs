@@ -2097,8 +2097,8 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::UnitStateTableResource</name>
     <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Ressources</translation>
     </message>
     <message>
         <source>Category</source>

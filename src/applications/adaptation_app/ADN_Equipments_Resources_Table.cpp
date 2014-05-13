@@ -26,7 +26,7 @@ ADN_Equipments_Resources_Table::ADN_Equipments_Resources_Table( const QString& o
     dataModel_.setColumnCount( 1 );
 
     QStringList horizontalHeaders;
-    horizontalHeaders << tools::translate( "ADN_Equipments_Resources_Table", "Resources" );
+    horizontalHeaders << tools::translate( "ADN_Equipments_Resources_Table", "Supplies" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
@@ -92,12 +92,12 @@ void ADN_Equipments_Resources_Table::OnContextMenu( const QPoint& pt )
         targetMenu.insertItem( ENT_Tr::ConvertFromDotationType( (*it)->nType_, ENT_Tr::eToTr ).c_str(), pSubMenu );
     }
 
-    menu.insertItem( tools::translate( "ADN_Equipments_Resources_Table", "Add resource"), &targetMenu ,0 );
+    menu.insertItem( tools::translate( "ADN_Equipments_Resources_Table", "Add supplies"), &targetMenu ,0 );
 
     void* data = GetSelectedData();
 
     if( data != 0 )
-        menu.insertItem( tools::translate( "ADN_Equipments_Resources_Table", "Remove resource" ), 1 );
+        menu.insertItem( tools::translate( "ADN_Equipments_Resources_Table", "Remove supplies" ), 1 );
 
     int nMenuResult = menu.exec(pt);
 

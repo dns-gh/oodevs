@@ -107,7 +107,7 @@ void LogisticEditor::Show( const kernel::Entity_ABC& entity )
         } );
 
     dataModel_->clear();
-    dataModel_->setHorizontalHeaderLabels( QStringList() << tr( "Category" ) <<  tr( "Days" ) );
+    dataModel_->setHorizontalHeaderLabels( QStringList() << tr( "Class" ) <<  tr( "Days" ) );
     tableView_->horizontalHeader()->setResizeMode( eCategory, QHeaderView::ResizeToContents );
     tableView_->horizontalHeader()->setResizeMode( eDays, QHeaderView::Stretch );
     auto itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();

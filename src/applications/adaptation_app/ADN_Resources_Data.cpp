@@ -36,7 +36,7 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo()
     , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Natures_Data >( eNatures ).GetNaturesInfos(), 0 )
     , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_LogisticSupplyClasses_Data >( eLogisticSupplyClasses ).GetLogisticSupplyClasses(), 0 )
 {
-    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eResources, "resources" ) );
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eSupplies, "resources" ) );
     assert( 0 );
 }
 
@@ -59,7 +59,7 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
     , rPackageWeight_        ( 1. )
     , bNetworkUsable_        ( false )
 {
-    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eResources, "resources" ) );
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eSupplies, "resources" ) );
     BindExistenceTo( &ptrResourceNature_ );
 }
 
@@ -82,7 +82,7 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation, u
     , rPackageWeight_        ( 1. )
     , bNetworkUsable_        ( false )
 {
-    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eResources, "resources" ) );
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eSupplies, "resources" ) );
     BindExistenceTo( &ptrResourceNature_ );
     ADN_Resources_Data::idManager_.Lock( id );
 }
@@ -765,11 +765,11 @@ void ADN_Resources_Data::ResourceInfos::CheckDatabaseValidity( ADN_ConsistencyCh
 {
     for( auto it = categories_.begin(); it != categories_.end(); ++it )
     {
-        ( *it )->ptrResourceNature_.CheckValidity( checker, strName_.GetData(), eResources, -1, tools::translate( "ADN_Resources_Data", "Nature" ).toStdString() );
-        ( *it )->ptrLogisticSupplyClass_.CheckValidity( checker, strName_.GetData(), eResources, -1, tools::translate( "ADN_Resources_Data", "Logistic supply class" ).toStdString() );
+        ( *it )->ptrResourceNature_.CheckValidity( checker, strName_.GetData(), eSupplies, -1, tools::translate( "ADN_Resources_Data", "Nature" ).toStdString() );
+        ( *it )->ptrLogisticSupplyClass_.CheckValidity( checker, strName_.GetData(), eSupplies, -1, tools::translate( "ADN_Resources_Data", "Class" ).toStdString() );
         if( AmmoCategoryInfo* ammoCategory = dynamic_cast< AmmoCategoryInfo* >( *it ) )
             if( ammoCategory->bIndirect_.GetData() && ammoCategory->indirectAmmoInfos_.bEffect_.GetData() )
-                ammoCategory->indirectAmmoInfos_.objectType_.CheckValidity( checker, strName_.GetData(), eResources, -1, tools::translate( "ADN_Resources_Data", "Created object" ).toStdString() );
+                ammoCategory->indirectAmmoInfos_.objectType_.CheckValidity( checker, strName_.GetData(), eSupplies, -1, tools::translate( "ADN_Resources_Data", "Created object" ).toStdString() );
     }
 }
 
@@ -807,7 +807,7 @@ void ADN_Resources_Data::ResourceInfos::RemoveNetworkUsableResources()
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::ADN_Resources_Data()
-    : ADN_Data_ABC( eResources )
+    : ADN_Data_ABC( eSupplies )
     , resources_ ()
     , networkUsableResources_( true, false )
 {

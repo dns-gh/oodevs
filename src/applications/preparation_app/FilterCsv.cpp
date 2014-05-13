@@ -90,7 +90,7 @@ const std::string FilterCsv::GetName() const
 // -----------------------------------------------------------------------------
 const std::string FilterCsv::GetDescription() const
 {
-    return tools::translate( "FilterCsv", "Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files." ).toStdString();;
+    return tools::translate( "FilterCsv", "Export orbat, supplies, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files." ).toStdString();;
 }
 
 // -----------------------------------------------------------------------------

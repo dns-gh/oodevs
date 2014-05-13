@@ -88,7 +88,7 @@ public:
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
 ADN_Resources_GUI::ADN_Resources_GUI( ADN_Resources_Data& data )
-    : ADN_Tabbed_GUI_ABC( eResources )
+    : ADN_Tabbed_GUI_ABC( eSupplies )
     , data_           ( data )
     , buttonGroup_( 0 )
     , pExplosiveParametersGroup_( 0 )
@@ -159,7 +159,7 @@ void ADN_Resources_GUI::BuildGeneric( sword::DotationType nType )
     if( ADN_Resources_Data::IsMineOrExplosive( nType ) )
         builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vConnectors[ eGenType ] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "nature", tr( "Nature" ), vConnectors[ eGenNature] );
-    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "logistic-supply-class", tr( "Logistic supply class" ), vConnectors[ eGenLogisticSupplyClass] );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "logistic-supply-class", tr( "Class" ), vConnectors[ eGenLogisticSupplyClass] );
     ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, "resource-network-usable", tr( "Usable within a resource network" ), vConnectors[ eGenNetworkUsable ] );
     vNetworkUsablecheckboxes_.push_back( networkUsableCheckBox );
     connect( networkUsableCheckBox, SIGNAL( stateChanged( int ) ), SLOT( NetworkUsableActivated( int ) ) );
@@ -255,7 +255,7 @@ void ADN_Resources_GUI::BuildAmmunition()
     builder.AddOptionalField< ADN_EditLine_String >( pInfoHolder, "code-lfril", tr( "Code LFRIL" ), vConnectors[ eLFRILCode ], optionalWidgets_ );
     builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vConnectors[ eType ] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "nature", tr( "Nature" ), vConnectors[ eNature ] );
-    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "logistic-supply-class", tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "logistic-supply-class", tr( "Class" ), vConnectors[ eLogisticSupplyClass] );
     ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, "resource-network-usable", tr( "Usable within a resource network" ), vConnectors[ eNetworkUsable ] );
     vNetworkUsablecheckboxes_.push_back( networkUsableCheckBox );
     connect( networkUsableCheckBox, SIGNAL( stateChanged( int ) ), SLOT( NetworkUsableActivated( int ) ) );

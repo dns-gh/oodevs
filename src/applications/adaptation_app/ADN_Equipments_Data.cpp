@@ -1013,7 +1013,7 @@ void ADN_Equipments_Data::ResourceInfos::ReadDotation( xml::xistream& input, ADN
     if( pInfo->GetCrossedElement() )
         categories_.AddItem( pInfo.release() );
     else
-        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, parentName, eEquipments, -1, tools::translate( "ADN_Equipments_Data", "Resources" ).toStdString() );
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, parentName, eEquipments, -1, tools::translate( "ADN_Equipments_Data", "Supplies" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

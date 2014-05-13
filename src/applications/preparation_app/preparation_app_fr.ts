@@ -142,8 +142,8 @@
         <translation>odb</translation>
     </message>
     <message>
-        <source>resources</source>
-        <translation>dotations</translation>
+        <source>supplies</source>
+        <translation type="unfinished">dotations</translation>
     </message>
     <message>
         <source>ENTITY</source>
@@ -368,8 +368,8 @@
         <translation>Paramètres</translation>
     </message>
     <message>
-        <source>Infinite resources</source>
-        <translation>Dotation infinies</translation>
+        <source>Infinite supplies</source>
+        <translation type="unfinished">Dotations infinies</translation>
     </message>
     <message>
         <source>Human factors automatic evolution</source>
@@ -434,8 +434,8 @@
         <translation>Export CSV</translation>
     </message>
     <message>
-        <source>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
-        <translation>Exporter l&apos;ODB, les dotations, les stocks, la météo, la diplomatie, les profils, la liste de diffusion ainsi que les liens logistiques en fichier CSV.</translation>
+        <source>Export orbat, supplies, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
+        <translation type="unfinished">Exporter l&apos;ODB, les dotations, les stocks, la météo, la diplomatie, les profils, la liste de diffusion ainsi que les liens logistiques en fichier CSV.</translation>
     </message>
     <message>
         <source>Select output directory</source>
@@ -746,7 +746,7 @@
         <translation type="unfinished">Annuler</translation>
     </message>
     <message>
-        <source>Category</source>
+        <source>Class</source>
         <translation type="unfinished">Catégorie</translation>
     </message>
     <message>
@@ -1817,8 +1817,8 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>QuotasResourcesTable</name>
     <message>
-        <source>Resource</source>
-        <translation>Dotation</translation>
+        <source>Supplies</source>
+        <translation>Dotations</translation>
     </message>
     <message>
         <source>Quantity</source>
@@ -1891,16 +1891,16 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>ResourcesEditorTable_ABC</name>
     <message>
-        <source>Remove resource</source>
-        <translation>Supprimer la ressource</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Supprimer la dotation</translation>
     </message>
     <message>
         <source>Clear list</source>
         <translation>Vider la liste</translation>
     </message>
     <message>
-        <source>Add resource</source>
-        <translation>Ajouter une dotation</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Ajouter une dotation</translation>
     </message>
 </context>
 <context>
@@ -2388,8 +2388,8 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>StockResourcesTable</name>
     <message>
-        <source>Resource</source>
-        <translation>Dotation</translation>
+        <source>Supplies</source>
+        <translation>Dotations</translation>
     </message>
     <message>
         <source>Nature</source>
@@ -2751,8 +2751,8 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Equipements</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Ressources</translation>
     </message>
     <message>
         <source>Change initial state</source>
@@ -2770,12 +2770,12 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Capacité initiale</translation>
     </message>
     <message>
-        <source>Add resource</source>
-        <translation>Ajouter une ressource</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Ajouter une dotation</translation>
     </message>
     <message>
-        <source>Remove resource</source>
-        <translation>Supprimer la ressource</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Supprimer la dotation</translation>
     </message>
     <message>
         <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>

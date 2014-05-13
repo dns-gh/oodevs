@@ -29,7 +29,7 @@ namespace
 {
     QStringList GetHeaders()
     {
-        return QStringList() << tools::translate( "StockResourcesTable", "Resource" )
+        return QStringList() << tools::translate( "StockResourcesTable", "Supplies" )
                              << tools::translate( "StockResourcesTable", "Nature" )
                              << tools::translate( "StockResourcesTable", "Weight (T)" )
                              << tools::translate( "StockResourcesTable", "Volume (m3)" )
@@ -41,7 +41,7 @@ namespace
 // Name: StockResourcesTable Constructor
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-StockResourcesTable::StockResourcesTable( const QString& objectName, QWidget* parent, const StaticModel& staticModel ) 
+StockResourcesTable::StockResourcesTable( const QString& objectName, QWidget* parent, const StaticModel& staticModel )
     : ResourcesEditorTable_ABC( GetHeaders(), objectName, parent, staticModel.objectTypes_ )
     , staticModel_( staticModel )
 {

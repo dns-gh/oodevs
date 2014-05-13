@@ -224,7 +224,7 @@ void CsvExport::Write( tools::Ofstream& file, const std::string& separator, cons
 // -----------------------------------------------------------------------------
 void CsvExport::WriteResources( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator )
 {
-    tools::Path resourcesPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "resources" ).toStdWString() ) + ".csv" ).FileName();
+    tools::Path resourcesPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "supplies" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( resourcesPath );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;

@@ -345,8 +345,8 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
                                         ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(),
                                         ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), eSensors );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
-                                        ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
-                                        ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), eResources, sword::dotation_type_ammunition );
+                                        ADN_Tr::ConvertFromWorkspaceElement( eSupplies ).c_str(),
+                                        ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), eSupplies, sword::dotation_type_ammunition );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                         ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
                                         ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), eEquipments );
@@ -376,7 +376,7 @@ std::string ADN_ListView_Objects::GetToolTipFor( const QModelIndex& index )
     std::string result;
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(),
                         ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), result );
-    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eSupplies ).c_str(),
                         ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
                         ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), result );

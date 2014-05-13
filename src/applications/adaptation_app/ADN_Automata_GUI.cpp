@@ -238,6 +238,6 @@ QWidget* ADN_Automata_GUI::CreateAutomataLogTablePerDotation()
 void ADN_Automata_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
     mainWindow.AddTable( tools::translate( "ADN_Automata_GUI", "Automata compositions" ), boost::bind( &ADN_Automata_GUI::CreateAutomataCompositionsTable, this ) );
-    mainWindow.AddListView( tools::translate( "ADN_Automata_GUI", "Logistic per automat" ), boost::bind( &ADN_Automata_GUI::CreateAutomataLogTable, this ) );
-    mainWindow.AddListView( tools::translate( "ADN_Automata_GUI", "Logistic per resource" ), boost::bind( &ADN_Automata_GUI::CreateAutomataLogTablePerDotation, this ) );
+    mainWindow.AddListView( tools::translate( "ADN_Automata_GUI", "Supplies per automaton" ), boost::bind( &ADN_Automata_GUI::CreateAutomataLogTable, this ) );
+    mainWindow.AddListView( tools::translate( "ADN_Automata_GUI", "Supplies per type" ), boost::bind( &ADN_Automata_GUI::CreateAutomataLogTablePerDotation, this ) );
 }

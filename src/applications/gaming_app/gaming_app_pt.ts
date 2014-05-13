@@ -560,17 +560,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>DotationsListView</name>
-    <message>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>EfficientRangeDialog</name>
     <message>
         <source>Efficient Range</source>
@@ -1601,84 +1590,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>Logistic : Push supply flow</name>
-    <message>
-        <source>Move waypoint up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move waypoint down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete Waypoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Waypoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manual selection of transport carriers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Capacity (T)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Capacity (m3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mass</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mass (T)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume (m3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Logistic : supply flow</name>
-    <message>
-        <source>Resources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Carriers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Route</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LogisticConsignsWidget_ABC</name>
     <message>
         <source>Show completed requests</source>
@@ -1828,7 +1739,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1847,6 +1758,10 @@ Do you want to replace it?</source>
         <source>Target:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyFlowDialog_ABC</name>
@@ -1855,11 +1770,79 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mass (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supplies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Carriers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move waypoint up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move waypoint down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Waypoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Waypoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual selection of transport carriers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacity (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacity (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1874,15 +1857,15 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>The convoy is unable to carry all types of supplies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>The convoy is unable to carry that much weight and/or volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The convoy is unable to carry all types of resources</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1909,15 +1892,15 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>The convoy is unable to carry all types of supplies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>The convoy is unable to carry that much weight and/or volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The convoy is unable to carry all types of resources</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1948,11 +1931,11 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resources</source>
+        <source>Basic load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2018,7 +2001,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3270,7 +3253,7 @@ This data can&apos;t be projected.</source>
 <context>
     <name>SupplyStocksListView</name>
     <message>
-        <source>Stock</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3673,7 +3656,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Recover - Resources</source>
+        <source>Recover - Basic load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3708,7 +3691,7 @@ This data can&apos;t be projected.</source>
 <context>
     <name>UnitStateDialog</name>
     <message>
-        <source>Resources</source>
+        <source>Basic load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -21,7 +21,7 @@ UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString m
     : UnitStateTable_ABC( "UnitStateTableResource", parent, 7, controllers )
     , blockSlots_( false )
 {
-    horizontalHeaders_ << tr( "Resources" )
+    horizontalHeaders_ << tr( "Supplies" )
                        << tr( "Category" )
                        << tr( "Quantity" )
                        << maximalCapacityLabel

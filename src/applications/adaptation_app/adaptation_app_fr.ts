@@ -16,8 +16,8 @@
         <translation>&quot;Hard kill&quot;</translation>
     </message>
     <message>
-        <source>Resource</source>
-        <translation>Dotation</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotations</translation>
     </message>
     <message>
         <source>Usage</source>
@@ -233,8 +233,8 @@
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
-        <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
-        <translation>Type de ressource &gt; Ressource &gt; Automate &gt; Pion &gt; Equipement</translation>
+        <source>Category &gt; Supplies &gt; Automaton &gt; Unit &gt; Equipment</source>
+        <translation type="unfinished">Type de ressource &gt; Ressource &gt; Automate &gt; Pion &gt; Equipement</translation>
     </message>
     <message>
         <source>Units</source>
@@ -245,8 +245,8 @@
         <translation>Equipements</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Ressources</translation>
     </message>
     <message>
         <source>Norm. Consumption</source>
@@ -292,8 +292,8 @@ Arrêt moteur allumé</translation>
 <context>
     <name>ADN_AutomatLog_ListView</name>
     <message>
-        <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
-        <translation>Automate &gt; Pion &gt; Comp &gt; Objet</translation>
+        <source>Automat &gt; Unit &gt; Comp &gt; Supplies</source>
+        <translation type="unfinished">Automate &gt; Pion &gt; Comp &gt; Objet</translation>
     </message>
     <message>
         <source>Units</source>
@@ -308,7 +308,7 @@ Arrêt moteur allumé</translation>
         <translation>Equipements</translation>
     </message>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation>Ressources</translation>
     </message>
     <message>
@@ -418,11 +418,11 @@ Arrêt moteur allumé</translation>
         <translation>%1 [ %2/%3/%4 ]</translation>
     </message>
     <message>
-        <source>Logistic per automat</source>
-        <translation>Logistique par automate</translation>
+        <source>Supplies per automaton</source>
+        <translation type="unfinished">Logistique par automate</translation>
     </message>
     <message>
-        <source>Logistic per resource</source>
+        <source>Supplies per type</source>
         <translation>Logistique par dotation</translation>
     </message>
     <message>
@@ -561,25 +561,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Dead %</source>
         <translation>Mort %</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Categories_GUI</name>
-    <message>
-        <source>Sizes</source>
-        <translation>Volumes</translation>
-    </message>
-    <message>
-        <source>Armor classes</source>
-        <translation>Blindages</translation>
-    </message>
-    <message>
-        <source>Resource natures</source>
-        <translation>Nature de ressource</translation>
-    </message>
-    <message>
-        <source>Logistic resource categories</source>
-        <translation>Catégories de ressource logistique</translation>
     </message>
 </context>
 <context>
@@ -1097,8 +1078,8 @@ Arrêt moteur allumé</translation>
 <context>
     <name>ADN_Equipments_Data</name>
     <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotations</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -1112,8 +1093,8 @@ Arrêt moteur allumé</translation>
 <context>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
-        <source>Category</source>
-        <translation>Catégorie</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Catégorie</translation>
     </message>
     <message>
         <source>Qty</source>
@@ -1128,12 +1109,12 @@ Arrêt moteur allumé</translation>
         <translation>Consommation normalisée</translation>
     </message>
     <message>
-        <source>Add resource</source>
-        <translation>Ajouter une dotation</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Ajouter une dotation</translation>
     </message>
     <message>
-        <source>Remove resource</source>
-        <translation>Enlever cette dotation</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Enlever cette dotation</translation>
     </message>
 </context>
 <context>
@@ -1351,8 +1332,8 @@ Arrêt moteur allumé</translation>
         <translation>Systèmes d&apos;armes</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Basic load</source>
+        <translation type="unfinished">Ressources</translation>
     </message>
     <message>
         <source>Medical system</source>
@@ -1599,8 +1580,8 @@ Arrêt moteur allumé</translation>
         <translation>m</translation>
     </message>
     <message>
-        <source>Enforce resource quotas for aviation equipments</source>
-        <translation>Appliquer les quotas de dotations pour les équipements aériens</translation>
+        <source>Enforce supply quotas for aviation equipments</source>
+        <translation type="unfinished">Appliquer les quotas de dotations pour les équipements aériens</translation>
     </message>
     <message>
         <source>Slope</source>
@@ -1642,16 +1623,16 @@ Arrêt moteur allumé</translation>
 <context>
     <name>ADN_Equipments_Resources_Table</name>
     <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Ressources</translation>
     </message>
     <message>
-        <source>Add resource</source>
-        <translation>Ajouter une ressource</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Ajouter une ressource</translation>
     </message>
     <message>
-        <source>Remove resource</source>
-        <translation>Supprimer la ressource</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Supprimer la ressource</translation>
     </message>
 </context>
 <context>
@@ -1866,8 +1847,8 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
 <context>
     <name>ADN_FuneralPackagingResources_GUI</name>
     <message>
-        <source>Resource</source>
-        <translation>Dotation</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotation</translation>
     </message>
     <message>
         <source>Packaging duration</source>
@@ -1878,12 +1859,12 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <translation>Final</translation>
     </message>
     <message>
-        <source>Add resource</source>
-        <translation>Ajouter une dotation</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Ajouter une dotation</translation>
     </message>
     <message>
-        <source>Remove resource</source>
-        <translation>Retirer une dotation</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Retirer une dotation</translation>
     </message>
 </context>
 <context>
@@ -2372,10 +2353,6 @@ du tireur</translation>
 <context>
     <name>ADN_ListView_Categories_DotationNature</name>
     <message>
-        <source>Resource Natures</source>
-        <translation>Natures de ressource</translation>
-    </message>
-    <message>
         <source>Natures</source>
         <translation>Natures</translation>
     </message>
@@ -2387,8 +2364,8 @@ du tireur</translation>
 <context>
     <name>ADN_ListView_Categories_LogisticSupplyClass</name>
     <message>
-        <source>Logistic categories</source>
-        <translation>Catégories logistique</translation>
+        <source>Classes</source>
+        <translation type="unfinished">Catégories logistique</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
@@ -2595,8 +2572,8 @@ PNG (*.png)
 <context>
     <name>ADN_LogisticSupplyClasses_GUI</name>
     <message>
-        <source>Logistic resource categories</source>
-        <translation>Catégories de ressource logistique</translation>
+        <source>Classes of supply</source>
+        <translation type="unfinished">Catégories de ressource logistique</translation>
     </message>
     <message>
         <source>Name</source>
@@ -3246,8 +3223,8 @@ PNG (*.png)
 <context>
     <name>ADN_Natures_GUI</name>
     <message>
-        <source>Resource natures</source>
-        <translation>Nature de ressource</translation>
+        <source>Natures of supply</source>
+        <translation type="unfinished">Nature de ressource</translation>
     </message>
     <message>
         <source>Name</source>
@@ -3502,8 +3479,8 @@ PNG (*.png)
         <translation>Nombre d&apos;humains par pas de simulation</translation>
     </message>
     <message>
-        <source>Resource</source>
-        <translation>Dotation</translation>
+        <source>Ammunition</source>
+        <translation type="unfinished">Dotation</translation>
     </message>
     <message>
         <source>Use ammunition</source>
@@ -3904,16 +3881,16 @@ PNG (*.png)
         <translation>Equipement - Type de dotation invalide &apos;%1&apos;</translation>
     </message>
     <message>
+        <source>Class</source>
+        <translation type="unfinished">Tranche logistique</translation>
+    </message>
+    <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
     </message>
     <message>
         <source>Nature</source>
         <translation>Nature</translation>
-    </message>
-    <message>
-        <source>Logistic supply class</source>
-        <translation>Tranche logistique</translation>
     </message>
     <message>
         <source>Created object</source>
@@ -3987,8 +3964,8 @@ PNG (*.png)
         <translation>Nature</translation>
     </message>
     <message>
-        <source>Logistic supply class</source>
-        <translation>Tranche logistique</translation>
+        <source>Class</source>
+        <translation type="unfinished">Tranche logistique</translation>
     </message>
     <message>
         <source>Usable within a resource network</source>
@@ -5250,6 +5227,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Limite</translation>
     </message>
     <message>
+        <source>Supplies</source>
+        <translation type="unfinished">Ressources</translation>
+    </message>
+    <message>
         <source>Urban block speed</source>
         <translation>Vitesse bloc urbain</translation>
     </message>
@@ -5480,10 +5461,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Launchers</source>
         <translation>Lanceurs</translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
     </message>
     <message>
         <source>Fires</source>
@@ -5792,12 +5769,12 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Equipements</translation>
     </message>
     <message>
-        <source>Complementary resources</source>
-        <translation>Ressources complémentaires</translation>
+        <source>Complementary load</source>
+        <translation type="unfinished">Ressources complémentaires</translation>
     </message>
     <message>
-        <source>Stock</source>
-        <translation>Stock</translation>
+        <source>Stocks</source>
+        <translation>Stocks</translation>
     </message>
     <message>
         <source>%</source>
@@ -5923,8 +5900,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Seuil logistique (%)</translation>
     </message>
     <message>
-        <source>Logistic supply class</source>
-        <translation>Tranche logistique</translation>
+        <source>Class of supply</source>
+        <translation type="unfinished">Tranche logistique</translation>
     </message>
     <message>
         <source>Add class</source>
@@ -6459,8 +6436,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>ActiveProtections_Data</name>
     <message>
-        <source>Resource</source>
-        <translation>Dotation</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotations</translation>
     </message>
     <message>
         <source>Ammunitions</source>

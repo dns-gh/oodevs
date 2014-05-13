@@ -2097,8 +2097,8 @@ Do you want to remove it?</translation>
 <context>
     <name>gui::UnitStateTableResource</name>
     <message>
-        <source>Resources</source>
-        <translation>Resources</translation>
+        <source>Supplies</source>
+        <translation>Supplies</translation>
     </message>
     <message>
         <source>Category</source>

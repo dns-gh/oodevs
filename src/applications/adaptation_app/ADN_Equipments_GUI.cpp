@@ -199,12 +199,12 @@ void ADN_Equipments_GUI::Build()
     vInfosConnectors[ eActiveProtections ] = &pActiveProtections_->GetConnector();
 
     // Resources allocation & consumptions
-    QGroupBox* pResourcesGroup = new QGroupBox( tools::translate( "ADN_Equipments_GUI", "Resources" ) );
+    QGroupBox* pResourcesGroup = new QGroupBox( tools::translate( "ADN_Equipments_GUI", "Basic load" ) );
     QVBoxLayout* pResourceLayout = new QVBoxLayout;
     pResourcesGroup->setLayout( pResourceLayout );
     pResourceLayout->setMargin( 5 );
     pResources_ = new ADN_Equipments_Resources_Tables( builder.GetChildName( "resources-tables" ), vInfosConnectors[ eDotations ], vInfosConnectors[ eDotationsAllocation ], vInfosConnectors[ eConsumptions ], pResourcesGroup );
-    ADN_GroupBox* pAviationQuotasBox = builder.AddGroupBox( pResourcesGroup, "has-aviation-quotas", tools::translate( "ADN_Equipments_GUI", "Enforce resource quotas for aviation equipments" ), vInfosConnectors[ eHasAviationResourceQuotas ], 1 );
+    ADN_GroupBox* pAviationQuotasBox = builder.AddGroupBox( pResourcesGroup, "has-aviation-quotas", tools::translate( "ADN_Equipments_GUI", "Enforce supply quotas for aviation equipments" ), vInfosConnectors[ eHasAviationResourceQuotas ], 1 );
     pAviationResourceQuotas_ = new ADN_Equipments_AviationResourceQuotas_GUI( "aviation-quotas-tab", vInfosConnectors[ eAviationResourceQuotas ], pAviationQuotasBox );
     pResourceLayout->addWidget( pResources_ );
     pResourceLayout->addWidget( pAviationQuotasBox );

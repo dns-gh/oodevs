@@ -23,7 +23,7 @@
 // Created: SBO 2006-03-23
 // -----------------------------------------------------------------------------
 ADN_ListView_Categories_LogisticSupplyClass::ADN_ListView_Categories_LogisticSupplyClass( QWidget* parent )
-    : ADN_ListView( parent, "ADN_ListView_Categories_LogisticSupplyClass", tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "Logistic categories" ) )
+    : ADN_ListView( parent, "ADN_ListView_Categories_LogisticSupplyClass", tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "Classes" ) )
 {
     pConnector_.reset( new ADN_Connector_ListView< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass >( *this ) );
     SetDeletionEnabled( true );
@@ -60,7 +60,7 @@ void ADN_ListView_Categories_LogisticSupplyClass::ConnectItem( bool bConnect )
 void ADN_ListView_Categories_LogisticSupplyClass::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass > wizard( tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "Logistic categories" ),
+    ADN_Wizard< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass > wizard( tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "Classes" ),
                                                        ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_LogisticSupplyClasses_Data >( eLogisticSupplyClasses ).GetLogisticSupplyClasses(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
@@ -89,7 +89,7 @@ std::string ADN_ListView_Categories_LogisticSupplyClass::GetToolTipFor( const QM
     std::string result;
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(),
                         ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ), result );
-    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eSupplies ).c_str(),
                         ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), result );
 
     if( result.empty() )

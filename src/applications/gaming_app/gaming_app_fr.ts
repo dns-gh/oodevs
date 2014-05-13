@@ -562,17 +562,6 @@ Raison: %3
     </message>
 </context>
 <context>
-    <name>DotationsListView</name>
-    <message>
-        <source>Resource</source>
-        <translation>Ressource</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation>Quantité</translation>
-    </message>
-</context>
-<context>
     <name>EfficientRangeDialog</name>
     <message>
         <source>Efficient Range</source>
@@ -1604,84 +1593,6 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
-    <name>Logistic : Push supply flow</name>
-    <message>
-        <source>Resource</source>
-        <translation>Ressource</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation>Disponible</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation>Quantité</translation>
-    </message>
-    <message>
-        <source>Manual selection of transport carriers</source>
-        <translation>Sélection manuelle des vecteurs de transport</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
-        <source>Move waypoint up</source>
-        <translation>Monter le point de passage</translation>
-    </message>
-    <message>
-        <source>Move waypoint down</source>
-        <translation>Descendre le point de passage</translation>
-    </message>
-    <message>
-        <source>Delete Waypoint</source>
-        <translation>Supprimer le point de passage</translation>
-    </message>
-    <message>
-        <source>Add Waypoint</source>
-        <translation>Ajouter le point de passage</translation>
-    </message>
-    <message>
-        <source>Capacity (T)</source>
-        <translation>Capacité (T)</translation>
-    </message>
-    <message>
-        <source>Capacity (m3)</source>
-        <translation>Capacité (m3)</translation>
-    </message>
-    <message>
-        <source>Mass</source>
-        <translation>Masse</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Volume</translation>
-    </message>
-    <message>
-        <source>Mass (T)</source>
-        <translation>Masse (T)</translation>
-    </message>
-    <message>
-        <source>Volume (m3)</source>
-        <translation>Volume (m3)</translation>
-    </message>
-</context>
-<context>
-    <name>Logistic : supply flow</name>
-    <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
-    </message>
-    <message>
-        <source>Carriers</source>
-        <translation>Vecteurs</translation>
-    </message>
-    <message>
-        <source>Route</source>
-        <translation>Itinéraire</translation>
-    </message>
-</context>
-<context>
     <name>LogisticConsignsWidget_ABC</name>
     <message>
         <source>Show completed requests</source>
@@ -1835,8 +1746,8 @@ Voulez-vous le remplacer ?</translation>
         <translation>Cible:</translation>
     </message>
     <message>
-        <source>Resource</source>
-        <translation>Ressource</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotations</translation>
     </message>
     <message>
         <source>Quota</source>
@@ -1850,6 +1761,10 @@ Voulez-vous le remplacer ?</translation>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Quantity</source>
+        <translation>Quantité</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyFlowDialog_ABC</name>
@@ -1858,12 +1773,80 @@ Voulez-vous le remplacer ?</translation>
         <translation>Flux de ravitaillement</translation>
     </message>
     <message>
+        <source>Available</source>
+        <translation type="unfinished">Disponible</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished">Quantité</translation>
+    </message>
+    <message>
+        <source>Mass (T)</source>
+        <translation type="unfinished">Masse (T)</translation>
+    </message>
+    <message>
+        <source>Volume (m3)</source>
+        <translation type="unfinished">Volume (m3)</translation>
+    </message>
+    <message>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotations</translation>
+    </message>
+    <message>
+        <source>Carriers</source>
+        <translation type="unfinished">Vecteurs</translation>
+    </message>
+    <message>
+        <source>Route</source>
+        <translation type="unfinished">Itinéraire</translation>
+    </message>
+    <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Move waypoint up</source>
+        <translation type="unfinished">Monter le point de passage</translation>
+    </message>
+    <message>
+        <source>Move waypoint down</source>
+        <translation type="unfinished">Descendre le point de passage</translation>
+    </message>
+    <message>
+        <source>Delete Waypoint</source>
+        <translation type="unfinished">Supprimer le point de passage</translation>
+    </message>
+    <message>
+        <source>Add Waypoint</source>
+        <translation type="unfinished">Ajouter le point de passage</translation>
+    </message>
+    <message>
+        <source>Manual selection of transport carriers</source>
+        <translation type="unfinished">Sélection manuelle des vecteurs de transport</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
+    </message>
+    <message>
+        <source>Capacity (T)</source>
+        <translation type="unfinished">Capacité (T)</translation>
+    </message>
+    <message>
+        <source>Capacity (m3)</source>
+        <translation type="unfinished">Capacité (m3)</translation>
+    </message>
+    <message>
+        <source>Mass</source>
+        <translation type="unfinished">Masse</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Volume</translation>
     </message>
 </context>
 <context>
@@ -1877,16 +1860,16 @@ Voulez-vous le remplacer ?</translation>
         <translation>Erreur</translation>
     </message>
     <message>
+        <source>The convoy is unable to carry all types of supplies</source>
+        <translation>Le convoi ne peut pas transporter tous les types de dotations</translation>
+    </message>
+    <message>
         <source>The convoy is unable to carry that much weight and/or volume</source>
         <translation>Le convoi ne peut pas transporter la masse et/ou le volume demandé</translation>
     </message>
     <message>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
         <translation>Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
-    </message>
-    <message>
-        <source>The convoy is unable to carry all types of resources</source>
-        <translation>Le convoi ne peut pas transporter tous les types de ressources</translation>
     </message>
 </context>
 <context>
@@ -1912,16 +1895,16 @@ Voulez-vous le remplacer ?</translation>
         <translation>Erreur</translation>
     </message>
     <message>
+        <source>The convoy is unable to carry all types of supplies</source>
+        <translation>Le convoi ne peut pas transporter tous les types de dotations</translation>
+    </message>
+    <message>
         <source>The convoy is unable to carry that much weight and/or volume</source>
         <translation>Le convoi ne peut pas transporter la masse et/ou le volume demandé</translation>
     </message>
     <message>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
         <translation>Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
-    </message>
-    <message>
-        <source>The convoy is unable to carry all types of resources</source>
-        <translation>Le convoi ne peut pas transporter tous les types de ressources</translation>
     </message>
 </context>
 <context>
@@ -1951,12 +1934,12 @@ Voulez-vous le remplacer ?</translation>
         <translation>Personnel</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
+        <source>Basic load</source>
+        <translation type="unfinished">Dotations</translation>
     </message>
     <message>
-        <source>Resource</source>
-        <translation>Dotation</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotations</translation>
     </message>
     <message>
         <source>Ammo</source>
@@ -2021,8 +2004,8 @@ Voulez-vous le remplacer ?</translation>
         <translation>Destinataire</translation>
     </message>
     <message>
-        <source>Resource</source>
-        <translation>Dotation</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotation</translation>
     </message>
     <message>
         <source>Requested</source>
@@ -3285,8 +3268,8 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>SupplyStocksListView</name>
     <message>
-        <source>Stock</source>
-        <translation>Stock</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Dotation</translation>
     </message>
     <message>
         <source>Quantity</source>
@@ -3660,8 +3643,8 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Recompléter - Composantes</translation>
     </message>
     <message>
-        <source>Recover - Resources</source>
-        <translation>Recompléter - Ressources</translation>
+        <source>Recover - Basic load</source>
+        <translation type="unfinished">Recompléter - Ressources</translation>
     </message>
     <message>
         <source>Destroy - All</source>
@@ -3723,8 +3706,8 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>UnitStateDialog</name>
     <message>
-        <source>Resources</source>
-        <translation>Dotations</translation>
+        <source>Basic load</source>
+        <translation type="unfinished">Dotations</translation>
     </message>
     <message>
         <source>Composition</source>

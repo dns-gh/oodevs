@@ -46,7 +46,7 @@ public:
 protected:
     //! @name Types
     //@{
-    enum E_Tabs { eCrew = 0, eEquipment = 1, eResources = 2, eNbTabs = 3 };
+    enum E_Tabs { eCrew = 0, eEquipment = 1, eSupplies = 2, eNbTabs = 3 };
     //@}
 
     //! @name Helpers

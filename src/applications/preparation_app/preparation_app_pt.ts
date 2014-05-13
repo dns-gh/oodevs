@@ -142,7 +142,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>resources</source>
+        <source>supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -364,7 +364,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Infinite resources</source>
+        <source>Infinite supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -434,7 +434,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
+        <source>Export orbat, supplies, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -746,7 +746,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Category</source>
+        <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1816,7 +1816,7 @@ This data can&apos;t be projected.</source>
 <context>
     <name>QuotasResourcesTable</name>
     <message>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1890,7 +1890,7 @@ This data can&apos;t be projected.</source>
 <context>
     <name>ResourcesEditorTable_ABC</name>
     <message>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1898,7 +1898,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2387,7 +2387,7 @@ This data can&apos;t be projected.</source>
 <context>
     <name>StockResourcesTable</name>
     <message>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2750,7 +2750,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2769,11 +2769,11 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

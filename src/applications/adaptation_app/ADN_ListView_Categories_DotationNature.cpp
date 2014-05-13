@@ -25,7 +25,7 @@
 // Created: SBO 2006-03-23
 // -----------------------------------------------------------------------------
 ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( QWidget* parent )
-    : ADN_ListView( parent, "ADN_ListView_Categories_DotationNature", tools::translate( "ADN_ListView_Categories_DotationNature", "Resource Natures" ) )
+    : ADN_ListView( parent, "ADN_ListView_Categories_DotationNature", tools::translate( "ADN_ListView_Categories_DotationNature", "Natures" ) )
 {
     pConnector_.reset( new ADN_Connector_ListView< ADN_Natures_Data::NatureInfos >( *this ) );
     SetDeletionEnabled( true );
@@ -73,7 +73,7 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
             auto value = static_cast< sword::DotationType >( n );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                           ENT_Tr::ConvertFromDotationType( value, ENT_Tr::eToSim ).c_str(),
-                                          ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData, value ), eResources, value );
+                                          ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData, value ), eSupplies, value );
         }
     }
     popupMenu.exec( pt );

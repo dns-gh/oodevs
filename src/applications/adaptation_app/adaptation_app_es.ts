@@ -17,8 +17,8 @@
         <translation>Destruye amenaza</translation>
     </message>
     <message>
-        <source>Resource</source>
-        <translation>Recurso</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Usage</source>
@@ -242,8 +242,8 @@
         <translation>Equipos</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Norm. Consumption</source>
@@ -286,15 +286,15 @@ Parked engine running</source>
 Estacionado con motor encendido</translation>
     </message>
     <message>
-        <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
-        <translation>Tipo de recurso &gt; Recurso &gt; Autómata &gt; Unidad &gt; Equipo</translation>
+        <source>Category &gt; Supplies &gt; Automaton &gt; Unit &gt; Equipment</source>
+        <translation type="unfinished">Tipo de recurso &gt; Recurso &gt; Autómata &gt; Unidad &gt; Equipo</translation>
     </message>
 </context>
 <context>
     <name>ADN_AutomatLog_ListView</name>
     <message>
-        <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
-        <translation>Autómata &gt; Agente &gt; Comp &gt; Item</translation>
+        <source>Automat &gt; Unit &gt; Comp &gt; Supplies</source>
+        <translation type="unfinished">Autómata &gt; Agente &gt; Comp &gt; Item</translation>
     </message>
     <message>
         <source>Units</source>
@@ -305,8 +305,8 @@ Estacionado con motor encendido</translation>
         <translation>Equipos</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Norm. Consumption</source>
@@ -419,11 +419,11 @@ Estacionado y motor encendido</translation>
         <translation>%1 [ %2/%3/%4 ]</translation>
     </message>
     <message>
-        <source>Logistic per automat</source>
-        <translation>Logística por autómata</translation>
+        <source>Supplies per automaton</source>
+        <translation type="unfinished">Logística por autómata</translation>
     </message>
     <message>
-        <source>Logistic per resource</source>
+        <source>Supplies per type</source>
         <translation>Logística por recurso</translation>
     </message>
     <message>
@@ -562,25 +562,6 @@ Estacionado y motor encendido</translation>
     <message>
         <source>Dead %</source>
         <translation>Muertos %</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Categories_GUI</name>
-    <message>
-        <source>Sizes</source>
-        <translation>Tamaños</translation>
-    </message>
-    <message>
-        <source>Armor classes</source>
-        <translation>Tipos de blindaje</translation>
-    </message>
-    <message>
-        <source>Resource natures</source>
-        <translation>Naturaleza de recursos</translation>
-    </message>
-    <message>
-        <source>Logistic resource categories</source>
-        <translation>Categorías de recursos logísticos</translation>
     </message>
 </context>
 <context>
@@ -1098,8 +1079,8 @@ Estacionado y motor encendido</translation>
 <context>
     <name>ADN_Equipments_Data</name>
     <message>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -1113,8 +1094,8 @@ Estacionado y motor encendido</translation>
 <context>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
-        <source>Category</source>
-        <translation>Categoría</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Qty</source>
@@ -1129,12 +1110,12 @@ Estacionado y motor encendido</translation>
         <translation>Consumo normalizado</translation>
     </message>
     <message>
-        <source>Add resource</source>
-        <translation>Agregar recurso</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Agregar recurso</translation>
     </message>
     <message>
-        <source>Remove resource</source>
-        <translation>Quitar recurso</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Quitar recurso</translation>
     </message>
 </context>
 <context>
@@ -1352,8 +1333,8 @@ Estacionado y motor encendido</translation>
         <translation>Sistema de armas</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Basic load</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Medical system</source>
@@ -1600,8 +1581,8 @@ Estacionado y motor encendido</translation>
         <translation>m</translation>
     </message>
     <message>
-        <source>Enforce resource quotas for aviation equipments</source>
-        <translation>Aplicar las cuotas de recursos para los equipos de aviación</translation>
+        <source>Enforce supply quotas for aviation equipments</source>
+        <translation type="unfinished">Aplicar las cuotas de recursos para los equipos de aviación</translation>
     </message>
     <message>
         <source>Slope</source>
@@ -1643,16 +1624,16 @@ Estacionado y motor encendido</translation>
 <context>
     <name>ADN_Equipments_Resources_Table</name>
     <message>
-        <source>Resources</source>
-        <translation>Recursos</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
-        <source>Add resource</source>
-        <translation>Agregar recurso</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Agregar recurso</translation>
     </message>
     <message>
-        <source>Remove resource</source>
-        <translation>Eliminar recurso</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Eliminar recurso</translation>
     </message>
 </context>
 <context>
@@ -1867,8 +1848,8 @@ Click &quot;Aceptar&quot; para asignar la nueva velocidad máxima.</translation>
 <context>
     <name>ADN_FuneralPackagingResources_GUI</name>
     <message>
-        <source>Resource</source>
-        <translation>Recurso</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Packaging duration</source>
@@ -1879,12 +1860,12 @@ Click &quot;Aceptar&quot; para asignar la nueva velocidad máxima.</translation>
         <translation>Es terminal</translation>
     </message>
     <message>
-        <source>Add resource</source>
-        <translation>Agregar recurso</translation>
+        <source>Add supplies</source>
+        <translation type="unfinished">Agregar recurso</translation>
     </message>
     <message>
-        <source>Remove resource</source>
-        <translation>Quitar recurso</translation>
+        <source>Remove supplies</source>
+        <translation type="unfinished">Quitar recurso</translation>
     </message>
 </context>
 <context>
@@ -2373,10 +2354,6 @@ tirador</translation>
 <context>
     <name>ADN_ListView_Categories_DotationNature</name>
     <message>
-        <source>Resource Natures</source>
-        <translation>Naturaleza de recurso</translation>
-    </message>
-    <message>
         <source>Natures</source>
         <translation>Naturaleza</translation>
     </message>
@@ -2388,8 +2365,8 @@ tirador</translation>
 <context>
     <name>ADN_ListView_Categories_LogisticSupplyClass</name>
     <message>
-        <source>Logistic categories</source>
-        <translation>Categorías logísticas</translation>
+        <source>Classes</source>
+        <translation type="unfinished">Categorías logísticas</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
@@ -2595,8 +2572,8 @@ PNG (*.png)</translation>
 <context>
     <name>ADN_LogisticSupplyClasses_GUI</name>
     <message>
-        <source>Logistic resource categories</source>
-        <translation>Categorías de recursos logísticos</translation>
+        <source>Classes of supply</source>
+        <translation type="unfinished">Categorías de recursos logísticos</translation>
     </message>
     <message>
         <source>Name</source>
@@ -3246,8 +3223,8 @@ PNG (*.png)</translation>
 <context>
     <name>ADN_Natures_GUI</name>
     <message>
-        <source>Resource natures</source>
-        <translation>Naturaleza de los recursos</translation>
+        <source>Natures of supply</source>
+        <translation type="unfinished">Naturaleza de los recursos</translation>
     </message>
     <message>
         <source>Name</source>
@@ -3418,8 +3395,8 @@ PNG (*.png)</translation>
         <translation>Usa munición</translation>
     </message>
     <message>
-        <source>Resource</source>
-        <translation>Dotación</translation>
+        <source>Ammunition</source>
+        <translation type="unfinished">Dotación</translation>
     </message>
     <message>
         <source>NBC</source>
@@ -3912,8 +3889,8 @@ PNG (*.png)</translation>
         <translation>Naturaleza</translation>
     </message>
     <message>
-        <source>Logistic supply class</source>
-        <translation>Clase logística de material</translation>
+        <source>Class</source>
+        <translation type="unfinished">Clase logística de material</translation>
     </message>
     <message>
         <source>Created object</source>
@@ -3987,8 +3964,8 @@ PNG (*.png)</translation>
         <translation>Naturaleza</translation>
     </message>
     <message>
-        <source>Logistic supply class</source>
-        <translation>Clase logística de material</translation>
+        <source>Class</source>
+        <translation type="unfinished">Clase logística de material</translation>
     </message>
     <message>
         <source>Usable within a resource network</source>
@@ -5454,10 +5431,6 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
         <translation>Lanzadores</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation>Recursos</translation>
-    </message>
-    <message>
         <source>Fires</source>
         <translation>Incendios</translation>
     </message>
@@ -5552,6 +5525,10 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
     <message>
         <source>Human</source>
         <translation>Humano</translation>
+    </message>
+    <message>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Monday</source>
@@ -5777,12 +5754,12 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
         <translation>Equipements</translation>
     </message>
     <message>
-        <source>Complementary resources</source>
-        <translation>Recursos complementarios</translation>
+        <source>Complementary load</source>
+        <translation type="unfinished">Recursos complementarios</translation>
     </message>
     <message>
-        <source>Stock</source>
-        <translation>Stock</translation>
+        <source>Stocks</source>
+        <translation>Stocks</translation>
     </message>
     <message>
         <source>Crossing height</source>
@@ -5916,8 +5893,8 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
         <translation>Umbral logístico (%)</translation>
     </message>
     <message>
-        <source>Logistic supply class</source>
-        <translation>Clase logística de material</translation>
+        <source>Class of supply</source>
+        <translation type="unfinished">Clase logística de material</translation>
     </message>
     <message>
         <source>Add class</source>
@@ -6452,8 +6429,8 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
 <context>
     <name>ActiveProtections_Data</name>
     <message>
-        <source>Resource</source>
-        <translation>Recurso</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Ammunitions</source>

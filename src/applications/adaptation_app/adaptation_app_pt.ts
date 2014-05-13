@@ -16,7 +16,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -233,7 +233,7 @@
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
-        <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
+        <source>Category &gt; Supplies &gt; Automaton &gt; Unit &gt; Equipment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -245,7 +245,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -286,7 +286,7 @@ Parked engine running</source>
 <context>
     <name>ADN_AutomatLog_ListView</name>
     <message>
-        <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
+        <source>Automat &gt; Unit &gt; Comp &gt; Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -298,7 +298,7 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -434,11 +434,11 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic per automat</source>
+        <source>Supplies per automaton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic per resource</source>
+        <source>Supplies per type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -548,25 +548,6 @@ Parked engine running</source>
     </message>
     <message>
         <source>Dead %</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Categories_GUI</name>
-    <message>
-        <source>Armor classes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sizes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resource natures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic resource categories</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1085,7 +1066,7 @@ Parked engine running</source>
 <context>
     <name>ADN_Equipments_Data</name>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1100,7 +1081,7 @@ Parked engine running</source>
 <context>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
-        <source>Category</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1116,11 +1097,11 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1311,7 +1292,7 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resources</source>
+        <source>Basic load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1583,7 +1564,7 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enforce resource quotas for aviation equipments</source>
+        <source>Enforce supply quotas for aviation equipments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1626,15 +1607,17 @@ Parked engine running</source>
 <context>
     <name>ADN_Equipments_Resources_Table</name>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add resource</source>
+        <source>Add supplies</source>
+        <oldsource>Add resource</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
+        <oldsource>Remove resource</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1849,7 +1832,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
 <context>
     <name>ADN_FuneralPackagingResources_GUI</name>
     <message>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1861,11 +1844,11 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2354,10 +2337,6 @@ stance</source>
 <context>
     <name>ADN_ListView_Categories_DotationNature</name>
     <message>
-        <source>Resource Natures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Natures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2369,7 +2348,7 @@ stance</source>
 <context>
     <name>ADN_ListView_Categories_LogisticSupplyClass</name>
     <message>
-        <source>Logistic categories</source>
+        <source>Classes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2572,7 +2551,7 @@ PNG (*.png)
 <context>
     <name>ADN_LogisticSupplyClasses_GUI</name>
     <message>
-        <source>Logistic resource categories</source>
+        <source>Classes of supply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3223,7 +3202,7 @@ PNG (*.png)
 <context>
     <name>ADN_Natures_GUI</name>
     <message>
-        <source>Resource natures</source>
+        <source>Natures of supply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3503,7 +3482,7 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resource</source>
+        <source>Ammunition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3881,15 +3860,15 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic supply class</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Created object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3964,7 +3943,7 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic supply class</source>
+        <source>Class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5445,7 +5424,7 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5796,11 +5775,11 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Complementary resources</source>
+        <source>Complementary load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Stock</source>
+        <source>Stocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5883,7 +5862,7 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
     <message>
-        <source>Logistic supply class</source>
+        <source>Class of supply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6423,7 +6402,7 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ActiveProtections_Data</name>
     <message>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

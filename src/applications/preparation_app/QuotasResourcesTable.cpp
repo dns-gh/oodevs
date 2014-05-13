@@ -18,7 +18,7 @@ namespace
 {
     QStringList GetHeaders()
     {
-        return QStringList() << tools::translate( "QuotasResourcesTable", "Resource" )
+        return QStringList() << tools::translate( "QuotasResourcesTable", "Supplies" )
                              << tools::translate( "QuotasResourcesTable", "Quantity" );
     }
 }
@@ -27,7 +27,7 @@ namespace
 // Name: QuotasResourcesTable Constructor
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-QuotasResourcesTable::QuotasResourcesTable( const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType ) 
+QuotasResourcesTable::QuotasResourcesTable( const QString& objectName, QWidget* parent, const kernel::Resolver2< kernel::DotationType >& dotationsType )
     : ResourcesEditorTable_ABC( GetHeaders(), objectName, parent, dotationsType )
 {
     // NOTHING

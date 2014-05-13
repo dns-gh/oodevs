@@ -2092,7 +2092,7 @@ Do you want to remove it?</source>
 <context>
     <name>gui::UnitStateTableResource</name>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>

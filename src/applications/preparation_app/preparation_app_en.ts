@@ -142,8 +142,8 @@
         <translation>Inhabitant</translation>
     </message>
     <message>
-        <source>resources</source>
-        <translation>resources</translation>
+        <source>supplies</source>
+        <translation>supplies</translation>
     </message>
     <message>
         <source>ENTITY</source>
@@ -366,8 +366,8 @@
         <translation>Parameters</translation>
     </message>
     <message>
-        <source>Infinite resources</source>
-        <translation>Infinite resources</translation>
+        <source>Infinite supplies</source>
+        <translation>Infinite supplies</translation>
     </message>
     <message>
         <source>Human factors automatic evolution</source>
@@ -437,8 +437,8 @@
         <translation>CSV export</translation>
     </message>
     <message>
-        <source>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
-        <translation>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistics links as CSV files.</translation>
+        <source>Export orbat, supplies, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
+        <translation>Export orbat, supplies, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</translation>
     </message>
     <message>
         <source>Select output directory</source>
@@ -749,8 +749,8 @@
         <translation type="unfinished">Cancel</translation>
     </message>
     <message>
-        <source>Category</source>
-        <translation type="unfinished">Category</translation>
+        <source>Class</source>
+        <translation>Class</translation>
     </message>
     <message>
         <source>Days</source>
@@ -1820,8 +1820,8 @@ This data can&apos;t be projected.</translation>
 <context>
     <name>QuotasResourcesTable</name>
     <message>
-        <source>Resource</source>
-        <translation>Resource</translation>
+        <source>Supplies</source>
+        <translation>Supplies</translation>
     </message>
     <message>
         <source>Quantity</source>
@@ -1894,16 +1894,16 @@ This data can&apos;t be projected.</translation>
 <context>
     <name>ResourcesEditorTable_ABC</name>
     <message>
-        <source>Remove resource</source>
-        <translation>Remove resource</translation>
+        <source>Remove supplies</source>
+        <translation>Remove supplies</translation>
     </message>
     <message>
         <source>Clear list</source>
         <translation>Clear list</translation>
     </message>
     <message>
-        <source>Add resource</source>
-        <translation>Add resource</translation>
+        <source>Add supplies</source>
+        <translation>Add supplies</translation>
     </message>
 </context>
 <context>
@@ -2391,8 +2391,8 @@ This data can&apos;t be projected.</translation>
 <context>
     <name>StockResourcesTable</name>
     <message>
-        <source>Resource</source>
-        <translation>Resource</translation>
+        <source>Supplies</source>
+        <translation>Supplies</translation>
     </message>
     <message>
         <source>Nature</source>
@@ -2754,8 +2754,8 @@ This data can&apos;t be projected.</translation>
         <translation>Equipment</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation>Resources</translation>
+        <source>Supplies</source>
+        <translation>Supplies</translation>
     </message>
     <message>
         <source>Change initial state</source>
@@ -2773,12 +2773,12 @@ This data can&apos;t be projected.</translation>
         <translation>Default capacity</translation>
     </message>
     <message>
-        <source>Add resource</source>
-        <translation>Add resource</translation>
+        <source>Add supplies</source>
+        <translation>Add supplies</translation>
     </message>
     <message>
-        <source>Remove resource</source>
-        <translation>Remove resource</translation>
+        <source>Remove supplies</source>
+        <translation>Remove supplies</translation>
     </message>
     <message>
         <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>

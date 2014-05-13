@@ -16,7 +16,7 @@
         <translation type="unfinished">قتل الثابت</translation>
     </message>
     <message>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
@@ -241,7 +241,7 @@
         <translation type="unfinished">معدات</translation>
     </message>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
@@ -279,14 +279,14 @@ Parked engine running</source>
         <translation type="unfinished">تشغيل المحرك المتوقفة الحكم الذاتي</translation>
     </message>
     <message>
-        <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
+        <source>Category &gt; Supplies &gt; Automaton &gt; Unit &gt; Equipment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_AutomatLog_ListView</name>
     <message>
-        <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
+        <source>Automat &gt; Unit &gt; Comp &gt; Supplies</source>
         <translation type="unfinished">[اوتومت] &gt; وحدة &gt; شركات &gt; البند</translation>
     </message>
     <message>
@@ -298,7 +298,7 @@ Parked engine running</source>
         <translation type="unfinished">معدات</translation>
     </message>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
@@ -418,11 +418,11 @@ Parked engine running</source>
         <translation type="unfinished">التراكيب الباردون</translation>
     </message>
     <message>
-        <source>Logistic per automat</source>
+        <source>Supplies per automaton</source>
         <translation type="unfinished">اللوجستية الواحدة [اوتومت]</translation>
     </message>
     <message>
-        <source>Logistic per resource</source>
+        <source>Supplies per type</source>
         <translation type="unfinished">السوقي كل مورد</translation>
     </message>
     <message>
@@ -549,25 +549,6 @@ Parked engine running</source>
     <message>
         <source>Dead %</source>
         <translation type="unfinished">مقتل ٪</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Categories_GUI</name>
-    <message>
-        <source>Armor classes</source>
-        <translation type="unfinished">فئات الدروع</translation>
-    </message>
-    <message>
-        <source>Sizes</source>
-        <translation type="unfinished">أحجام</translation>
-    </message>
-    <message>
-        <source>Resource natures</source>
-        <translation type="unfinished">الموارد الطبيعة</translation>
-    </message>
-    <message>
-        <source>Logistic resource categories</source>
-        <translation type="unfinished">فئات الموارد اللوجستية</translation>
     </message>
 </context>
 <context>
@@ -1085,7 +1066,7 @@ Parked engine running</source>
 <context>
     <name>ADN_Equipments_Data</name>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
@@ -1100,8 +1081,8 @@ Parked engine running</source>
 <context>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
-        <source>Category</source>
-        <translation type="unfinished">الفئة</translation>
+        <source>Supplies</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
         <source>Qty</source>
@@ -1116,11 +1097,11 @@ Parked engine running</source>
         <translation type="unfinished">الاستهلاك تم تسويتها</translation>
     </message>
     <message>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished">إضافة مورد</translation>
     </message>
     <message>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished">إزالة مورد</translation>
     </message>
 </context>
@@ -1267,7 +1248,7 @@ Parked engine running</source>
         <translation type="unfinished">الحماية النشطة</translation>
     </message>
     <message>
-        <source>Resources</source>
+        <source>Basic load</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
@@ -1583,7 +1564,7 @@ Parked engine running</source>
         <translation type="unfinished">m</translation>
     </message>
     <message>
-        <source>Enforce resource quotas for aviation equipments</source>
+        <source>Enforce supply quotas for aviation equipments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1626,15 +1607,15 @@ Parked engine running</source>
 <context>
     <name>ADN_Equipments_Resources_Table</name>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished">إضافة مورد</translation>
     </message>
     <message>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished">إزالة مورد</translation>
     </message>
 </context>
@@ -1850,7 +1831,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
 <context>
     <name>ADN_FuneralPackagingResources_GUI</name>
     <message>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
@@ -1862,11 +1843,11 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished">إضافة مورد</translation>
     </message>
     <message>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished">إزالة مورد</translation>
     </message>
 </context>
@@ -2355,10 +2336,6 @@ stance</source>
 <context>
     <name>ADN_ListView_Categories_DotationNature</name>
     <message>
-        <source>Resource Natures</source>
-        <translation type="unfinished">الموارد الطبيعة</translation>
-    </message>
-    <message>
         <source>Natures</source>
         <translation type="unfinished">طبائع</translation>
     </message>
@@ -2370,7 +2347,7 @@ stance</source>
 <context>
     <name>ADN_ListView_Categories_LogisticSupplyClass</name>
     <message>
-        <source>Logistic categories</source>
+        <source>Classes</source>
         <translation type="unfinished">فئات السوقي</translation>
     </message>
     <message>
@@ -2573,7 +2550,7 @@ PNG (*.png)
 <context>
     <name>ADN_LogisticSupplyClasses_GUI</name>
     <message>
-        <source>Logistic resource categories</source>
+        <source>Classes of supply</source>
         <translation type="unfinished">فئات الموارد اللوجستية</translation>
     </message>
     <message>
@@ -3224,7 +3201,7 @@ PNG (*.png)
 <context>
     <name>ADN_Natures_GUI</name>
     <message>
-        <source>Resource natures</source>
+        <source>Natures of supply</source>
         <translation type="unfinished">الموارد الطبيعة</translation>
     </message>
     <message>
@@ -3488,7 +3465,7 @@ PNG (*.png)
         <translation type="unfinished">استخدام الذخيرة</translation>
     </message>
     <message>
-        <source>Resource</source>
+        <source>Ammunition</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
@@ -3882,16 +3859,16 @@ PNG (*.png)
         <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
     </message>
     <message>
+        <source>Class</source>
+        <translation type="unfinished">فئة الإمداد اللوجستي</translation>
+    </message>
+    <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Nature</source>
         <translation type="unfinished">طبيعة</translation>
-    </message>
-    <message>
-        <source>Logistic supply class</source>
-        <translation type="unfinished">فئة الإمداد اللوجستي</translation>
     </message>
     <message>
         <source>Created object</source>
@@ -3965,7 +3942,7 @@ PNG (*.png)
         <translation type="unfinished">طبيعة</translation>
     </message>
     <message>
-        <source>Logistic supply class</source>
+        <source>Class</source>
         <translation type="unfinished">فئة الإمداد اللوجستي</translation>
     </message>
     <message>
@@ -5428,10 +5405,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">قاذفات</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation type="unfinished">الموارد</translation>
-    </message>
-    <message>
         <source>Fires</source>
         <translation type="unfinished">حرائق</translation>
     </message>
@@ -5526,6 +5499,10 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Human</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supplies</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
         <source>Monday</source>
@@ -5779,11 +5756,11 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">مجموعة ملامح التضاريس الرئيسية</translation>
     </message>
     <message>
-        <source>Complementary resources</source>
+        <source>Complementary load</source>
         <translation type="unfinished">الموارد التكميلية</translation>
     </message>
     <message>
-        <source>Stock</source>
+        <source>Stocks</source>
         <translation type="unfinished">الأوراق المالية</translation>
     </message>
     <message>
@@ -5886,7 +5863,7 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
     <message>
-        <source>Logistic supply class</source>
+        <source>Class of supply</source>
         <translation type="unfinished">فئة الإمداد اللوجستي</translation>
     </message>
     <message>
@@ -6426,7 +6403,7 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ActiveProtections_Data</name>
     <message>
-        <source>Resource</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>

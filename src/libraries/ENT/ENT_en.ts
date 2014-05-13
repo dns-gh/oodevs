@@ -399,8 +399,8 @@
         <translation>Extinguisher agent</translation>
     </message>
     <message>
-        <source>Energy</source>
-        <translation>Energy</translation>
+        <source>Resources</source>
+        <translation>Resources</translation>
     </message>
     <message>
         <source>forest</source>

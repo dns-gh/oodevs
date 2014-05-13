@@ -87,7 +87,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Energy</source>
+        <source>Resources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

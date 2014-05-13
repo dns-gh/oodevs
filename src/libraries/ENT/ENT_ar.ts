@@ -87,7 +87,7 @@
         <translation type="unfinished">عامل مطفأة</translation>
     </message>
     <message>
-        <source>Energy</source>
+        <source>Resources</source>
         <translation type="unfinished">الطاقة</translation>
     </message>
     <message>

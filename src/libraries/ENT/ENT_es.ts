@@ -399,7 +399,7 @@
         <translation>Agente extintor</translation>
     </message>
     <message>
-        <source>Energy</source>
+        <source>Resources</source>
         <translation>Energía</translation>
     </message>
     <message>

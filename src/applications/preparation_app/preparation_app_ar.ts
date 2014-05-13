@@ -142,7 +142,7 @@
         <translation type="unfinished">ساكنة</translation>
     </message>
     <message>
-        <source>resources</source>
+        <source>supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
@@ -364,7 +364,7 @@
         <translation type="unfinished">المعلمات</translation>
     </message>
     <message>
-        <source>Infinite resources</source>
+        <source>Infinite supplies</source>
         <translation type="unfinished">موارد لا حصر له</translation>
     </message>
     <message>
@@ -434,7 +434,7 @@
         <translation type="unfinished">تصدير CSV</translation>
     </message>
     <message>
-        <source>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
+        <source>Export orbat, supplies, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
         <translation type="unfinished">تصدير أوربات، الموارد والأرصدة، الجدول الزمني للطقس، مصفوفة الدبلوماسية، التشكيلات الجانبية والارتباطات السوقية كملفات CSV.</translation>
     </message>
     <message>
@@ -746,7 +746,7 @@
         <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>Category</source>
+        <source>Class</source>
         <translation type="unfinished">الفئة</translation>
     </message>
     <message>
@@ -1817,8 +1817,8 @@ This data can&apos;t be projected.</source>
 <context>
     <name>QuotasResourcesTable</name>
     <message>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
+        <source>Supplies</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
         <source>Quantity</source>
@@ -1891,7 +1891,7 @@ This data can&apos;t be projected.</source>
 <context>
     <name>ResourcesEditorTable_ABC</name>
     <message>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished">إزالة مورد</translation>
     </message>
     <message>
@@ -1899,7 +1899,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished">إضافة مورد</translation>
     </message>
 </context>
@@ -2388,8 +2388,8 @@ This data can&apos;t be projected.</source>
 <context>
     <name>StockResourcesTable</name>
     <message>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
+        <source>Supplies</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
         <source>Nature</source>
@@ -2751,7 +2751,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">معدات</translation>
     </message>
     <message>
-        <source>Resources</source>
+        <source>Supplies</source>
         <translation type="unfinished">الموارد</translation>
     </message>
     <message>
@@ -2770,11 +2770,11 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">القدرات الافتراضية</translation>
     </message>
     <message>
-        <source>Add resource</source>
+        <source>Add supplies</source>
         <translation type="unfinished">إضافة مورد</translation>
     </message>
     <message>
-        <source>Remove resource</source>
+        <source>Remove supplies</source>
         <translation type="unfinished">إزالة مورد</translation>
     </message>
     <message>

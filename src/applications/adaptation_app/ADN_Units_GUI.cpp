@@ -212,12 +212,12 @@ void ADN_Units_GUI::Build()
     builder.AddField< ADN_EditLine_Double >( pTrafficGroup, "speed-reduction-modifier", tr( "Speed reduction modifier" ), vInfosConnectors[ eSpeedModifier ], 0, eZeroOne );
 
     // Dotations
-    ADN_GroupBox* pDotationsGroup = builder.AddGroupBox( 0, "complementary-resources", tr( "Complementary resources" ), vInfosConnectors[ eHasTC1 ], 1 );
+    ADN_GroupBox* pDotationsGroup = builder.AddGroupBox( 0, "complementary-resources", tr( "Complementary load" ), vInfosConnectors[ eHasTC1 ], 1 );
     ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( builder.GetChildName( "resources-table" ), vInfosConnectors[ eContenancesTC1 ], pDotationsGroup, ADN_Equipments_Dotations_GUI::eColumn_All ^ ADN_Equipments_Dotations_GUI::eColumn_Consumption, QHeaderView::ResizeToContents );
-    pDotations->SetGoToOnDoubleClick( ::eResources );
+    pDotations->SetGoToOnDoubleClick( ::eSupplies );
 
     // Stock
-    pStockGroup_ = builder.AddGroupBox( 0, "stock", tr( "Stock" ), vInfosConnectors[ eHasStock ], 1 );
+    pStockGroup_ = builder.AddGroupBox( 0, "stock", tr( "Stocks" ), vInfosConnectors[ eHasStock ], 1 );
     pStockLogThreshold_ = new ADN_Units_LogThreshold_GUI( builder.GetChildName( "stock-threshold-table" ), vInfosConnectors[ eStock ], pStockGroup_ );
 
     // Aptitudes

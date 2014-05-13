@@ -68,7 +68,7 @@ void ADN_Breakdowns_GUI::Build()
     QGroupBox* pPartsGroup = new gui::RichGroupBox( "required-parts", tr( "Required parts" ) );
     QVBoxLayout* pPartsLayout = new QVBoxLayout( pPartsGroup );
     ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable( builder.GetChildName( "parts-table" ), vInfosConnectors[ eParts ] );
-    pPartsTable->SetGoToOnDoubleClick( ::eResources );
+    pPartsTable->SetGoToOnDoubleClick( ::eSupplies );
     pPartsLayout->addWidget( pPartsTable );
 
     // -------------------------------------------------------------------------
