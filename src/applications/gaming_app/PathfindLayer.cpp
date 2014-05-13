@@ -36,6 +36,7 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC
     , element_( controllers )
     , publisher_( publisher )
     , converter_( converter )
+    , override_( false )
     , lock_( false )
 {
     controllers_.Register( *this );
@@ -494,11 +495,11 @@ bool PathfindLayer::HandleEvent( const std::function< void() >& event, bool over
 {
     if( lock_ )
     {
-        const auto data = std::make_pair( event, overridable );
-        if( events_.empty() || !events_.back().second )
-            events_.push_back( data );
+        if( events_.empty() || !override_ )
+            events_.push_back( event );
         else
-            events_.back() = data;
+            events_.back() = event;
+        override_ = overridable;
         return false;
     }
     event();
@@ -510,8 +511,8 @@ void PathfindLayer::ProcessEvents()
     lock_ = false;
     while( !lock_ && !events_.empty() )
     {
-        auto data = events_.front();
+        const auto event = events_.front();
         events_.pop_front();
-        data.first();
+        event();
     }
 }

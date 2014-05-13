@@ -123,7 +123,8 @@ private:
     std::vector< Point > path_;
     boost::optional< Hover > hovered_;
     geometry::Point2f point_;
-    std::deque< std::pair< std::function< void() >, bool > > events_;
+    std::deque< std::function< void() > > events_;
+    bool override_;
     bool lock_;
     //@}
 };
