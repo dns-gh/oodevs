@@ -164,10 +164,11 @@ void StandardModel::ApplyFilter( const T_Filter& filter, int col /* = 0 */ ) con
 // Name: StandardModel::InternalApplyFilters
 // Created: ABR 2014-04-28
 // -----------------------------------------------------------------------------
-void StandardModel::InternalApplyFilters( int row, int col, const std::vector< Filter_ABC* >& filters, bool& result ) const
+void StandardModel::InternalApplyFilters( int row, int col, const std::vector< std::shared_ptr< Filter_ABC > >& filters, bool& result ) const
 {
     QStandardItem* childItem = item( row, col );
-    assert( childItem );
+    if( !childItem )
+        return;
     for( auto filter = filters.begin(); filter != filters.end(); ++filter )
         result &= HasAnyChildVisible( *childItem, [&]( QStandardItem& item ){ return ( *filter )->Apply( item ); }, col );
 }
@@ -176,7 +177,7 @@ void StandardModel::InternalApplyFilters( int row, int col, const std::vector< F
 // Name: StandardModel::HasAnyColumnVisible
 // Created: ABR 2014-04-28
 // -----------------------------------------------------------------------------
-bool StandardModel::HasAnyColumnVisible( int row, const std::vector< Filter_ABC* >& filters ) const
+bool StandardModel::HasAnyColumnVisible( int row, const std::vector< std::shared_ptr< Filter_ABC > >& filters ) const
 {
     bool result = false;
     for( int col = 0; col < columnCount(); ++col )
@@ -192,7 +193,7 @@ bool StandardModel::HasAnyColumnVisible( int row, const std::vector< Filter_ABC*
 // Name: StandardModel::ApplyFilters
 // Created: ABR 2014-04-28
 // -----------------------------------------------------------------------------
-void StandardModel::ApplyFilters( const std::map< int, std::vector< Filter_ABC* > >& filters ) const
+void StandardModel::ApplyFilters( const std::map< int, std::vector< std::shared_ptr< Filter_ABC > > >& filters ) const
 {
     for( int row = 0; row < rowCount(); ++row )
     {

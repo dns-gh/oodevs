@@ -54,7 +54,7 @@ public:
 
     //! @name Filterable_ABC implementation
     //@{
-    virtual void ApplyFilters( const std::map< int, std::vector< Filter_ABC* > >& filters );
+    virtual void ApplyFilters( const std::map< int, std::vector< std::shared_ptr< Filter_ABC > > >& filters );
     virtual void CreateFilters( RichView_ABC& richView );
     virtual void Purge();
     virtual QHeaderView* GetHeader() const;

@@ -29,11 +29,9 @@ using namespace gui;
 RichView_ABC::RichView_ABC( int options, QWidget* parent )
     : QWidget( parent )
     , options_( options )
-    , filtersLayout_( 0 )
-    , filterLine_( 0 )
     , signalMapper_( new QSignalMapper( this ) )
 {
-    connect( signalMapper_, SIGNAL( mapped( QWidget* ) ), this, SLOT( OnFiltersChanged( QWidget* ) ) );
+    connect( signalMapper_.get(), SIGNAL( mapped( QWidget* ) ), this, SLOT( OnFiltersChanged( QWidget* ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,79 +40,78 @@ RichView_ABC::RichView_ABC( int options, QWidget* parent )
 // -----------------------------------------------------------------------------
 RichView_ABC::~RichView_ABC()
 {
-    // NOTHING
+    Purge();
 }
 
 // -----------------------------------------------------------------------------
 // Name: RichView_ABC::CreateGUI
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-void RichView_ABC::CreateGUI( QAbstractItemView* view )
+void RichView_ABC::CreateGUI()
 {
-    SubObjectName subObject( view->objectName() );
-    QWidget* searchLineWidget = 0;
-    SearchLineEdit* filterLine = 0;
-    ExpandableGroupBox* filterBox = 0;
+    assert( view_ != 0 );
+    assert( filterable_ != 0 );
+    SubObjectName subObject( view_->objectName() );
+    mainLayout_.reset( new QVBoxLayout( this ) );
+    auto margin = HasOption( eOptions_SearchLineEdit ) ||
+                  HasOption( eOptions_FilterLineEdit ) ||
+                  HasOption( eOptions_FilterBox ) ? 2 : 0;
+    mainLayout_->setMargin( margin );
+    mainLayout_->setSpacing( margin );
     if( HasOption( eOptions_SearchLineEdit ) )
     {
-        auto searchLine = new SearchLineEdit( "searchLine", this );
+        auto searchLine = new SearchLineEdit( "searchLine", 0 );
 
-        RichPushButton* next = new RichPushButton( "next", QIcon( MAKE_ICON( search ) ), "", this );
+        RichPushButton* next = new RichPushButton( "next", QIcon( MAKE_ICON( search ) ), "", 0 );
         next->setAccel( Qt::Key_F3 );
         next->setMaximumWidth( searchLine->height() );
         next->setMaximumHeight( searchLine->height() );
 
-        connect( searchLine, SIGNAL( textChanged( const QString& ) ), view, SLOT( SearchAndSelect( const QString& ) ) );
-        connect( searchLine, SIGNAL( returnPressed() ),               view, SLOT( SearchAndSelectNext() ) );
-        connect( next,       SIGNAL( pressed() ),                     view, SLOT( SearchAndSelectNext() ) );
+        connect( searchLine, SIGNAL( textChanged( const QString& ) ), view_, SLOT( SearchAndSelect( const QString& ) ) );
+        connect( searchLine, SIGNAL( returnPressed() ),               view_, SLOT( SearchAndSelectNext() ) );
+        connect( next,       SIGNAL( pressed() ),                     view_, SLOT( SearchAndSelectNext() ) );
 
-        searchLineWidget = new QWidget();
-        QHBoxLayout* layout = new QHBoxLayout( searchLineWidget );
+        searchLineWidget_.reset( new QWidget( this ) );
+        QHBoxLayout* layout = new QHBoxLayout( searchLineWidget_.get() );
         layout->setMargin( 0 );
         layout->setSpacing( 2 );
         layout->addWidget( searchLine, 1 );
         layout->addWidget( next );
+        mainLayout_->addWidget( searchLineWidget_.get() );
     }
-    if( HasOption( options_ & eOptions_FilterLineEdit ) )
+    if( HasOption( eOptions_FilterLineEdit ) )
     {
-        filterLine = new SearchLineEdit( "filterLine", this );
-        connect( filterLine, SIGNAL( textChanged( const QString& ) ), signalMapper_, SLOT( map() ) );
-        signalMapper_->setMapping( filterLine, static_cast< QWidget* >( filterLine ) );
-        filterLine_ = filterLine;
+        std::shared_ptr< SearchLineEdit > filterLine_( new SearchLineEdit( "filterLine", this ) );
+        connect( filterLine_.get(), SIGNAL( textChanged( const QString& ) ), signalMapper_.get(), SLOT( map() ) );
+        signalMapper_->setMapping( filterLine_.get(), static_cast< QWidget* >( filterLine_.get() ) );
+        filters_[ -1 ].push_back( filterLine_ );
+        mainLayout_->addWidget( filterLine_.get() );
     }
-    if( HasOption( options_ & eOptions_FilterBox ) )
+    if( HasOption( eOptions_FilterBox ) )
     {
+        QWidget* clearButton = 0;
         if( options_ & eOptions_ClearButton )
         {
-            clearButton_ = new RichPushButton( "clear", tr( "Clear" ) );
-            connect( clearButton_, SIGNAL( clicked() ), this, SLOT( OnClearFilters() ) );
+            clearButton = new RichPushButton( "clear", tr( "Clear" ) );
+            connect( clearButton, SIGNAL( clicked() ), this, SLOT( OnClearFilters() ) );
         }
-        filtersContainer_ = new QWidget();
-        filtersLayout_ = new QGridLayout( filtersContainer_, 0, 2 );
+        auto filtersContainer = new QWidget();
+        filtersLayout_.reset( new QGridLayout( filtersContainer, 0, 2 ) );
         filtersLayout_->setSpacing( 5 );
         filtersLayout_->setContentsMargins( 5, 2, 5, 2 );
-        filtersLayout_->addWidget( clearButton_, 0, 0, 1, 2, Qt::AlignLeft );
+        if( clearButton )
+            filtersLayout_->addWidget( clearButton, 0, 0, 1, 2, Qt::AlignLeft );
 
-        filterBox = new ExpandableGroupBox( "filtersWidget", 0, tr( "Filters" ) );
-        filterBox->AddComponent( filtersContainer_ );      
+        filterBox_.reset( new ExpandableGroupBox( "filtersWidget", 0, tr( "Filters" ) ) );
+        static_cast< ExpandableGroupBox& >( *filterBox_ ).AddComponent( filtersContainer );      
+        mainLayout_->addWidget( filterBox_.get() );
     }
-    if( HasOption( options_ & eOptions_FilterMenu ) )
+    if( HasOption( eOptions_FilterMenu ) )
     {
-        view_->GetHeader()->setContextMenuPolicy( Qt::CustomContextMenu );
-        connect( view_->GetHeader(), SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnHeaderContextMenuRequested( const QPoint& ) ) );
+        filterable_->GetHeader()->setContextMenuPolicy( Qt::CustomContextMenu );
+        connect( filterable_->GetHeader(), SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnHeaderContextMenuRequested( const QPoint& ) ) );
     }
-    // Layout
-    QVBoxLayout* layout = new QVBoxLayout( this );
-    auto margin = searchLineWidget || filterLine || filterBox ? 2 : 0;
-    layout->setMargin( margin );
-    layout->setSpacing( margin );
-    if( searchLineWidget )
-        layout->addWidget( searchLineWidget );
-    if( filterLine )
-        layout->addWidget( filterLine );
-    if( filterBox )
-        layout->addWidget( filterBox );
-    layout->addWidget( view, 1 );
+    mainLayout_->addWidget( view_, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,9 +120,9 @@ void RichView_ABC::CreateGUI( QAbstractItemView* view )
 // -----------------------------------------------------------------------------
 void RichView_ABC::Load()
 {
-    view_->CreateFilters( *this );
-    if( filterLine_ )
-        filters_[ -1 ].push_back( filterLine_ );
+    assert( filterable_ != 0 );
+    CreateGUI();
+    filterable_->CreateFilters( *this );
     for( auto it = menus_.begin(); it != menus_.end(); ++it )
     {
         QWidget* widget = new QWidget();
@@ -133,10 +130,11 @@ void RichView_ABC::Load()
         layout->setMargin( 0 );
         layout->setSpacing( 0 );
         QPushButton* button = new RichPushButton( "close", tr( "Close" ) );
-        connect( button, SIGNAL( clicked() ), it->second, SLOT( hide() ) );
+        connect( button, SIGNAL( clicked() ), it->second.get(), SLOT( hide() ) );
         layout->addWidget( button, 0, Qt::AlignRight );
         it->second->AddWidget( widget );
     }
+    view_->setVisible( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,21 +143,18 @@ void RichView_ABC::Load()
 // -----------------------------------------------------------------------------
 void RichView_ABC::Purge()
 {
-    view_->Purge();
-    if( HasOption( eOptions_FilterBox ) )
-    {
-        delete filtersLayout_;
-        filtersLayout_ = new QGridLayout( filtersContainer_, 0, 2 );
-        filtersLayout_->addWidget( clearButton_, 0, 0, 1, 2, Qt::AlignLeft );
-    }
-    for( auto it = filters_.begin(); it != filters_.end(); ++it )
-        for( auto filter = it->second.begin(); filter != it->second.end(); ++filter )
-            if( !filterLine_ || *filter != filterLine_ )
-                delete *filter;
+    assert( filterable_ != 0 );
+    if( HasOption( eOptions_FilterMenu ))
+        disconnect( filterable_->GetHeader(), SIGNAL( customContextMenuRequested( const QPoint& ) ),
+                    this,                     SLOT( OnHeaderContextMenuRequested( const QPoint& ) ) );
+    filterable_->Purge();
     filters_.clear();
-    for( auto it = menus_.begin(); it != menus_.end(); ++it )
-        delete it->second;
     menus_.clear();
+    filtersLayout_.reset();
+    filterBox_.reset();
+    searchLineWidget_.reset();
+    mainLayout_.reset();
+    view_->setVisible( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +187,8 @@ bool RichView_ABC::IsFiltered() const
 // -----------------------------------------------------------------------------
 void RichView_ABC::OnFiltersChanged( QWidget* )
 {
-    view_->ApplyFilters( filters_ );
+    assert( filterable_ != 0 );
+    filterable_->ApplyFilters( filters_ );
     emit FiltersStatusChanged( IsFiltered() );
 }
 
@@ -202,7 +198,8 @@ void RichView_ABC::OnFiltersChanged( QWidget* )
 // -----------------------------------------------------------------------------
 void RichView_ABC::OnHeaderContextMenuRequested( const QPoint& pos )
 {
-    auto header = view_->GetHeader();
+    assert( filterable_ != 0 );
+    auto header = filterable_->GetHeader();
     auto section = header->logicalIndexAt( pos );
     auto it = menus_.find( section );
     if( it != menus_.end() && it->second )
@@ -232,17 +229,17 @@ WidgetMenu* RichView_ABC::GetMenu( int col )
     auto it = menus_.find( col );
     if( it == menus_.end() )
     {
-        menus_[ col ] = new WidgetMenu( this );
+        menus_[ col ].reset( new WidgetMenu( this ) );
         it = menus_.find( col );
     }
-    return it->second;
+    return it->second.get();
 }
 
 // -----------------------------------------------------------------------------
 // Name: RichView_ABC::AddWidgetToFilterBox
 // Created: ABR 2014-04-29
 // -----------------------------------------------------------------------------
-void RichView_ABC::AddWidgetToFilterBox( int col, const QString& text, Filter_ABC* filter, QWidget* widget )
+void RichView_ABC::AddWidgetToFilterBox( int col, const QString& text, const std::shared_ptr< Filter_ABC >& filter, QWidget* widget )
 {
     filtersLayout_->addWidget( new QLabel( text ) );
     filtersLayout_->addWidget( widget );
@@ -253,29 +250,29 @@ void RichView_ABC::AddWidgetToFilterBox( int col, const QString& text, Filter_AB
 // Name: RichView_ABC::AddWidgetToMenu
 // Created: ABR 2014-04-29
 // -----------------------------------------------------------------------------
-void RichView_ABC::AddWidgetToMenu( int col, const QString& text, Filter_ABC* filter, QWidget* widget )
+void RichView_ABC::AddWidgetToMenu( int col, const QString& text, const std::shared_ptr< Filter_ABC >& filter, QWidget* widget )
 {
     auto menu = GetMenu( col );
     if( !text.isEmpty() )
         menu->AddWidget( new QLabel( text ) );
     menu->AddWidget( widget );
-    filters_[ col ].push_back( filter );
     model_->setHeaderData( col, Qt::Horizontal, QPixmap( "resources/images/gui/filter_empty.png" ), Qt::DecorationRole );
+    filters_[ col ].push_back( filter );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RichView_ABC::function< void
 // Created: ABR 2014-04-29
 // -----------------------------------------------------------------------------
-CheckComboBox* RichView_ABC::CreateCheckCombo( QWidget* parent,
-                                               bool useNone,
-                                               bool useCheckAll,
-                                               const CheckComboBox::T_Extractor& extractor,
-                                               const CheckComboBox::T_Filler& filler )
+std::shared_ptr< CheckComboBox > RichView_ABC::CreateCheckCombo( QWidget* parent,
+                                                                 bool useNone,
+                                                                 bool useCheckAll,
+                                                                 const CheckComboBox::T_Extractor& extractor,
+                                                                 const CheckComboBox::T_Filler& filler )
 {
-    CheckComboBox* combo = new CheckComboBox( "combo", parent, useNone, useCheckAll, extractor, filler );
-    connect( combo, SIGNAL( CheckedItemsChanged( const QStringList& ) ), signalMapper_, SLOT( map() ) );
-    signalMapper_->setMapping( combo, static_cast< QWidget* >( combo ) );
+    auto combo = std::make_shared< CheckComboBox >( "combo", parent, useNone, useCheckAll, extractor, filler );
+    connect( combo.get(), SIGNAL( CheckedItemsChanged( const QStringList& ) ), signalMapper_.get(), SLOT( map() ) );
+    signalMapper_->setMapping( combo.get(), static_cast< QWidget* >( combo.get() ) );
     return combo;
 }
 
@@ -300,7 +297,7 @@ void RichView_ABC::AddCheckComboBoxFilter( int col,
     if( areas & eFilterAreas_Box )
     {
         auto combo = CreateCheckCombo( this, useNone, useCheckAll, extractor, filler );
-        AddWidgetToFilterBox( col, text, combo, combo );
+        AddWidgetToFilterBox( col, text, combo, combo.get() );
     }
     if( areas & eFilterAreas_Menu )
     {

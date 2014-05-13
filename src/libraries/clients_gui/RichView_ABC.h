@@ -19,6 +19,7 @@ namespace gui
 {
     class RichTreeView;
     class Filterable_ABC;
+    class SearchLineEdit;
 
 // =============================================================================
 /** @class  RichView_ABC
@@ -101,7 +102,7 @@ signals:
 protected:
     //! @name Helpers
     //@{
-    void CreateGUI( QAbstractItemView* view );
+    void CreateGUI();
     //@}
 
 private:
@@ -111,19 +112,19 @@ private:
 
     bool IsValidArea( int area ) const;
     WidgetMenu* GetMenu( int col );
-    void AddWidgetToFilterBox( int col, const QString& text, Filter_ABC* filter, QWidget* widget );
-    void AddWidgetToMenu( int col, const QString& text, Filter_ABC* filter, QWidget* widget );
+    void AddWidgetToFilterBox( int col, const QString& text, const std::shared_ptr< Filter_ABC >& filter, QWidget* widget );
+    void AddWidgetToMenu( int col, const QString& text, const std::shared_ptr< Filter_ABC >& filter, QWidget* widget );
 
-    CheckComboBox* CreateCheckCombo( QWidget* parent,
-                                     bool useNone,
-                                     bool useCheckAll,
-                                     const CheckComboBox::T_Extractor& extractor,
-                                     const CheckComboBox::T_Filler& filler );
+    std::shared_ptr< CheckComboBox > CreateCheckCombo( QWidget* parent,
+                                                       bool useNone,
+                                                       bool useCheckAll,
+                                                       const CheckComboBox::T_Extractor& extractor,
+                                                       const CheckComboBox::T_Filler& filler );
     template< typename NumericType, typename SpinBox >
-    NumericLimitsEditor< NumericType, SpinBox >* CreateNumericEditor( QWidget* parent,
-                                                                      const typename NumericLimitsEditor< NumericType, SpinBox >::T_Extractor& extractor,
-                                                                      NumericType min,
-                                                                      NumericType max );
+    std::shared_ptr< NumericLimitsEditor< NumericType, SpinBox > > CreateNumericEditor( QWidget* parent,
+                                                                                        const typename NumericLimitsEditor< NumericType, SpinBox >::T_Extractor& extractor,
+                                                                                        NumericType min,
+                                                                                        NumericType max );
     //@}
 
 private slots:
@@ -135,20 +136,18 @@ private slots:
 protected:
     //! @name Member data
     //@{
-    Filterable_ABC* view_;
-    QStandardItemModel* model_;
     int options_;
-    std::map< int, std::vector< Filter_ABC* > > filters_;
-    QSignalMapper* signalMapper_;
+    QStandardItemModel* model_;
+    QAbstractItemView* view_;
+    Filterable_ABC* filterable_;
 
-    // Lines
-    Filter_ABC* filterLine_;
-    // Filters group box
-    QWidget* filtersContainer_;
-    QGridLayout* filtersLayout_;
-    QPushButton* clearButton_;
-    // Filters menu
-    std::map< int, WidgetMenu* > menus_;
+    std::map< int, std::vector< std::shared_ptr< Filter_ABC > > > filters_;
+    std::map< int, std::unique_ptr< WidgetMenu > > menus_;
+    std::unique_ptr< QWidget > searchLineWidget_;
+    std::unique_ptr< QWidget > filterBox_;
+    std::unique_ptr< QBoxLayout > mainLayout_;
+    std::unique_ptr< QGridLayout > filtersLayout_;
+    std::unique_ptr< QSignalMapper > signalMapper_;
     //@}
 };
 

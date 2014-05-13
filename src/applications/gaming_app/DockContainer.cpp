@@ -290,6 +290,7 @@ void DockContainer::Purge()
 // -----------------------------------------------------------------------------
 void DockContainer::Load()
 {
+    orbatDockWidget_->Load();
     if( timelineDockWidget_ )
         timelineDockWidget_->Connect();
 }

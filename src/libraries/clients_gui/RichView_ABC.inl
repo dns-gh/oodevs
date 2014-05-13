@@ -30,12 +30,12 @@ namespace gui
         if( areas & eFilterAreas_Box )
         {
             auto editor = CreateNumericEditor< NumericType, SpinBox >( this, extractor, min, max );
-            AddWidgetToFilterBox( col, text, editor, editor );
+            AddWidgetToFilterBox( col, text, editor, editor.get() );
         }
         if( areas & eFilterAreas_Menu )
         {
             auto editor = CreateNumericEditor< NumericType, SpinBox >( GetMenu( col ), extractor, min, max );
-            AddWidgetToMenu( col, text, editor, editor );
+            AddWidgetToMenu( col, text, editor, editor.get() );
         }
     }
 
@@ -44,14 +44,14 @@ namespace gui
     // Created: ABR 2014-04-29
     // -----------------------------------------------------------------------------
     template< typename NumericType, typename SpinBox >
-    NumericLimitsEditor< NumericType, SpinBox >* RichView_ABC::CreateNumericEditor( QWidget* parent,
-                                                                                    const typename NumericLimitsEditor< NumericType, SpinBox >::T_Extractor& extractor,
-                                                                                    NumericType min,
-                                                                                    NumericType max)
+    std::shared_ptr< NumericLimitsEditor< NumericType, SpinBox > > RichView_ABC::CreateNumericEditor( QWidget* parent,
+                                                                                                      const typename NumericLimitsEditor< NumericType, SpinBox >::T_Extractor& extractor,
+                                                                                                      NumericType min,
+                                                                                                      NumericType max)
     {
-        auto editor = new NumericLimitsEditor< NumericType, SpinBox >( parent, extractor, min, max );
-        connect( editor, SIGNAL( ValueChanged() ), signalMapper_, SLOT( map() ) );
-        signalMapper_->setMapping( editor, static_cast< QWidget* >( editor ) );
+        auto editor = std::make_shared< NumericLimitsEditor< NumericType, SpinBox > >( parent, extractor, min, max );
+        connect( editor.get(), SIGNAL( ValueChanged() ), signalMapper_.get(), SLOT( map() ) );
+        signalMapper_->setMapping( editor.get(), static_cast< QWidget* >( editor.get() ) );
         return editor;
     }
 

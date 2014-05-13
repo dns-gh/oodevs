@@ -33,7 +33,7 @@ public:
 
     //! @name Abstract Operation
     //@{
-    virtual void ApplyFilters( const std::map< int, std::vector< Filter_ABC* > >& filters ) = 0;
+    virtual void ApplyFilters( const std::map< int, std::vector< std::shared_ptr< Filter_ABC > > >& filters ) = 0;
     virtual void CreateFilters( RichView_ABC& richView ) = 0;
     virtual void Purge() = 0;
     virtual QHeaderView* GetHeader() const = 0;

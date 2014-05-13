@@ -120,7 +120,7 @@ public:
     //! @name Filters
     //@{
     void ApplyFilter( const T_Filter& filter, int col = 0 ) const;
-    void ApplyFilters( const std::map< int, std::vector< Filter_ABC* > >& filters ) const;
+    void ApplyFilters( const std::map< int, std::vector< std::shared_ptr< Filter_ABC > > >& filters ) const;
     //@}
 
     //! @name Drag and Drop
@@ -136,9 +136,9 @@ public:
 private:
     //! @name helpers
     //@{
-    void InternalApplyFilters( int row, int col, const std::vector< Filter_ABC* >& filters, bool& result ) const;
+    void InternalApplyFilters( int row, int col, const std::vector< std::shared_ptr< Filter_ABC > >& filters, bool& result ) const;
     bool HasAnyChildVisible( QStandardItem& root, const T_Filter& filter, int col ) const;
-    bool HasAnyColumnVisible( int col, const std::vector< Filter_ABC* >& filters ) const;
+    bool HasAnyColumnVisible( int col, const std::vector< std::shared_ptr< Filter_ABC > >& filters ) const;
     //@}
 
 private:

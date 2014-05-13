@@ -24,6 +24,7 @@ namespace gui
     class EntitySymbols;
     class FormationLayer;
     class ParametersLayer;
+    class RichView_ABC;
 }
 
 namespace kernel
@@ -67,6 +68,7 @@ public:
 public:
     //! @name operations
     //@{
+    void Load();
     void Purge();
     //@}
 
@@ -75,6 +77,7 @@ private:
     //@{
     LogisticTreeView* logisticListView_;
     gui::DummyModelObserver observer_;
+    std::vector< gui::RichView_ABC* > views_;
     //@}
 };
 

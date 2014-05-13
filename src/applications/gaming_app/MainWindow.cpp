@@ -443,6 +443,8 @@ void MainWindow::Load()
         workers_.Initialize();
         staticModel_.Load( config_ );
         controllers_.LoadOptions( eModes_Gaming );
+        unitStateDialog_->Load();
+        dockContainer_->Load();
     }
     catch( const xml::exception& e )
     {
@@ -520,8 +522,6 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     {
         if( !connected_ && simulation.IsInitialized() )
         {
-            unitStateDialog_->Load();
-            dockContainer_->Load();
             connected_ = true; // we update the caption until Model is totally loaded
             if( login_.isEmpty() )
                 login_ = tools::translate( "LoginDialog", "Anonymous" );

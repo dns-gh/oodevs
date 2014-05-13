@@ -102,7 +102,7 @@ RichTreeView::~RichTreeView()
 // Name: RichTreeView::ApplyFilter
 // Created: ABR 2014-04-28
 // -----------------------------------------------------------------------------
-void RichTreeView::ApplyFilters( const std::map< int, std::vector< Filter_ABC* > >& filters )
+void RichTreeView::ApplyFilters( const std::map< int, std::vector< std::shared_ptr< Filter_ABC > > >& filters )
 {
     dataModel_.ApplyFilters( filters );
 }

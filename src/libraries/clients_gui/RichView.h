@@ -94,12 +94,12 @@ private:
     void Initialize( View* view )
     {
         view_ = view;
+        filterable_ = view;
         auto model = view->model();
         if( auto proxy = dynamic_cast< QSortFilterProxyModel* >( model ) )
             model_ = static_cast< QStandardItemModel* >( proxy->sourceModel() );
         else
             model_ = static_cast< QStandardItemModel* >( model );
-        CreateGUI( view );
     }
     //@}
 };

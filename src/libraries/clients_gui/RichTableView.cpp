@@ -47,7 +47,7 @@ RichTableView::~RichTableView()
 // Name: RichTableView::ApplyFilter
 // Created: ABR 2014-04-28
 // -----------------------------------------------------------------------------
-void RichTableView::ApplyFilters( const std::map< int, std::vector< Filter_ABC* > >& filters )
+void RichTableView::ApplyFilters( const std::map< int, std::vector< std::shared_ptr< Filter_ABC > > >& filters )
 {
     dataModel_.ApplyFilters( filters );
 }
