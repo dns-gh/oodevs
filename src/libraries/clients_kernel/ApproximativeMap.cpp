@@ -107,7 +107,7 @@ namespace
         }
     };
 
-    static inline CoMatrix reunion( const CoMatrix& m, const CoMatrix& n )
+    static CoMatrix reunion( const CoMatrix& m, const CoMatrix& n )
     {
         CoMatrix p;
         for ( int i = 0; i < 50; i++ )
@@ -115,7 +115,7 @@ namespace
         return p;
     }
 
-    static inline CoMatrix intersection( const CoMatrix& m, const CoMatrix& n )
+    static CoMatrix intersection( const CoMatrix& m, const CoMatrix& n )
     {
         CoMatrix p;
         for ( int i = 0; i < 50; i++ )

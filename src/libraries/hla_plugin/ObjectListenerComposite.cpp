@@ -18,7 +18,6 @@ using namespace plugins::hla;
 namespace
 {
     template <typename T>
-    inline
     void copyAndApply(const std::set<ObjectListener_ABC*>& listeners, const T& ftor )
     {
         std::vector<ObjectListener_ABC*> tmp( listeners.begin(), listeners.end() );

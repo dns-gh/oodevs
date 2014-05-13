@@ -216,7 +216,6 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
 // Created: JVT 02-12-06
 // Last modified: JVT 03-02-04
 //-----------------------------------------------------------------------------
-inline
 bool DEC_PathWalker::GoToNextNavPoint( DEC_PathResult& path )
 {
     if( ( *itNextPathPoint_ )->GetType() == DEC_PathPoint::eTypePointPath )

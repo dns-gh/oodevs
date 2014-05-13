@@ -14,7 +14,7 @@ using namespace sword;
 using namespace extractors;
 
 #define GETTER( NAME, CONDITION ) \
-inline google::protobuf::int32 Get##NAME##( const HumanDotations_HumanDotation& humans ) \
+google::protobuf::int32 Get##NAME##( const HumanDotations_HumanDotation& humans ) \
 { \
     return ( CONDITION ) ? humans.quantity() : 0 ; \
 }
@@ -45,7 +45,7 @@ namespace
     GETTER( WoundedUE, humans.state() == sword::injured && humans.injuries_size() > 0 && humans.injuries( 0 ).seriousness() == wounded_ue  );
 
     const unsigned nHumanStates = 13;
-    typedef inline google::protobuf::int32 ( HumanHelperFn )( const HumanDotations_HumanDotation& humans );
+    typedef google::protobuf::int32 ( HumanHelperFn )( const HumanDotations_HumanDotation& humans );
     HumanHelperFn* humanData[ nHumanStates ] =
     {
         &GetTotal,

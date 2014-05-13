@@ -12,7 +12,7 @@
 
 namespace
 {
-    inline bool MT_IsSameSigns( double a, double b )
+    bool MT_IsSameSigns( double a, double b )
     {
         return a * b >= 0;
     }
@@ -143,7 +143,6 @@ bool MT_Line::IsClipped( const MT_Line& Line ) const
 #undef _Orientation
 
 
-inline
 bool  _GEN_IsZero( double rF )
 {
     return rF < 1e-4 && rF > -1e-4;

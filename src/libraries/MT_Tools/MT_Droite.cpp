@@ -13,7 +13,7 @@
 
 namespace
 {
-    inline bool MT_IsSameSigns( double a, double b )
+    bool MT_IsSameSigns( double a, double b )
     {
         return a * b >= 0;
     }

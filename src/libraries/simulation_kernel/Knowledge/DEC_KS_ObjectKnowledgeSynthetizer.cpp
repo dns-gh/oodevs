@@ -73,7 +73,6 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Prepare()
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::GetKnowledgeToUpdate
 // Created: NLD 2004-03-19
 // -----------------------------------------------------------------------------
-inline
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KS_ObjectKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_Object_ABC& objectKnown ) const
 {
     assert( pBlackBoard_ );
@@ -89,7 +88,6 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KS_ObjectKnowledgeSynthetizer::Get
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
-inline
 void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception )
 {
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = GetKnowledgeToUpdate( perception.GetObjectPerceived() );

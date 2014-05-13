@@ -31,7 +31,7 @@ using namespace kernel;
 
 namespace
 {
-    inline unsigned int ToInt( float value )
+    unsigned int ToInt( float value )
     {
         return static_cast< unsigned int >( 100 * ( value + 0.005f ) );
     }

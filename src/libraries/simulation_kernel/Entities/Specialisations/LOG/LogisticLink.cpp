@@ -272,7 +272,7 @@ namespace boost
     namespace serialization
     {
         template< typename Archive >
-        inline void serialize( Archive& file, LogisticLink::T_DotationQuotas& map, const unsigned int nVersion )
+        void serialize( Archive& file, LogisticLink::T_DotationQuotas& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion);
         }

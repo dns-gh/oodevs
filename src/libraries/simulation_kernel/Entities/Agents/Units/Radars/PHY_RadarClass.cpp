@@ -84,7 +84,6 @@ const PHY_RadarClass* PHY_RadarClass::Find( unsigned int nID )
 // Name: PHY_RadarClass::GetID
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-inline
 unsigned int PHY_RadarClass::GetID() const
 {
     return nType_;
