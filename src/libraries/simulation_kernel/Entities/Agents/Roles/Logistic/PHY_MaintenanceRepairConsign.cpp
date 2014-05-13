@@ -10,17 +10,19 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "PHY_MaintenanceRepairConsign.h"
-#include "PHY_RoleInterface_Maintenance.h"
+#include "ConsignHelper.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "PHY_MaintenanceComposanteState.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
-#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "PHY_MaintenanceComposanteState.h"
+#include "PHY_RoleInterface_Maintenance.h"
+#include "Tools/NET_AsnException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceRepairConsign )
 
@@ -304,7 +306,8 @@ void PHY_MaintenanceRepairConsign::SelectNewState()
     if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
         next_ = [&]() { EnterStateWaitingForParts(); };
     else
-        throw MASA_EXCEPTION( "repair consign not in a waiting state" );
+        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved,
+            "repair consign not in a waiting state" );
 }
 
 void PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
@@ -327,9 +330,11 @@ void PHY_MaintenanceRepairConsign::SelectDiagnosisTeam( const PHY_ComposanteType
 void PHY_MaintenanceRepairConsign::SelectRepairTeam( const PHY_ComposanteTypePion& type )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
-        throw MASA_EXCEPTION( "repair consign not in a waiting for repair team selection state" );
+        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved,
+            "repair consign not in a waiting for repair team selection state" );
     if( pRepairer_ )
-        throw MASA_EXCEPTION( "repair consign already has a repair team selected" );
+        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved,
+            "repair consign already has a repair team selected" );
     pRepairer_ = GetPionMaintenance().GetAvailableRepairer( GetComposanteBreakdown(), &type );
     if( pRepairer_ )
     {
@@ -337,7 +342,8 @@ void PHY_MaintenanceRepairConsign::SelectRepairTeam( const PHY_ComposanteTypePio
         EnterStateWaitingForParts();
     }
     else if( !FindAlternativeRepairTeam( &type ) )
-        throw MASA_EXCEPTION( "no component of specified type available for repair team selection" );
+        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::repair_team_unavailable,
+            "no component of specified type available for repair team selection" );
 }
 
 bool PHY_MaintenanceRepairConsign::FindAlternativeRepairTeam( const PHY_ComposanteTypePion* type )

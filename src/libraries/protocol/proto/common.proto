@@ -1630,18 +1630,27 @@ message MagicAction {
         //!  selected transporter.
         //! parameters[0], Identifier: log request identifier.
         //! parameters[1], Identifier: selected transporter type identifier.
+        //! result[0], Identifier: on failure, the error code:
+        //!  '0' : The request is already resolved.
+        //!  '3' : The transporter is unavailable.
         select_maintenance_transporter     = 10;
         //! When a maintenance log consign is in state "waiting for diagnosis
         //!  team selection", update the request to a new state with a manually
         //!  selected diagnoser.
         //! parameters[0], Identifier: log request identifier.
         //! parameters[1], Identifier: selected diagnoser type identifier.
+        //! result[0], Identifier: on failure, the error code:
+        //!  '0' : The request is already resolved.
+        //!  '1' : The diagnosis team is unavailable.
         select_diagnosis_team              = 11;
         //! When a maintenance log consign is in state "waiting for repair team
         //!  selection", update the request to a new state with a manually
         //!  selected repair team.
         //! parameters[0], Identifier: identifier of log request.
         //! parameters[1], Identifier: selected repair team type identifier.
+        //! result[0], Identifier: on failure, the error code:
+        //!  '0' : The request is already resolved.
+        //!  '2' : The repair team is unavailable.
         select_repair_team                 = 12;
         //! Create a pathfind
         //! parameters[0], PathfindRequest: the unit and waypoints.

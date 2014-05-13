@@ -60,6 +60,37 @@ namespace
                           parent,                 SLOT( OnSelectionChanged( const QModelIndex&, const QModelIndex& ) ) );
         return view;
     }
+
+    enum ConsignError
+    {
+        already_resolved = 0,
+        diagnosis_team_unavailable,
+        repair_team_unavailable,
+        transporter_unavailable
+    };
+
+    QString GetErrorText( const sword::MagicActionAck& ack )
+    {
+        if( ack.has_result() && ack.result().elem_size() > 0 )
+        {
+            const auto& code = ack.result().elem( 0 ).value();
+            if( code.size() > 0 && code.Get( 0 ).has_identifier() )
+            {
+                switch( code.Get( 0 ).identifier() )
+                {
+                case already_resolved:
+                    return tools::translate( "LogisticMaintenanceSelectionDialog", "The request is already resolved." );
+                case diagnosis_team_unavailable:
+                    return tools::translate( "LogisticMaintenanceSelectionDialog", "The diagnosis team is unavailable." );
+                case repair_team_unavailable:
+                    return tools::translate( "LogisticMaintenanceSelectionDialog", "The repair team is unavailable." );
+                case transporter_unavailable:
+                    return tools::translate( "LogisticMaintenanceSelectionDialog", "The tow truck is unavailable." );
+                }
+            }
+        }
+        return tools::translate( "LogisticMaintenanceSelectionDialog", "This request cannot be resolved." );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +206,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
         Purge();
         if( message.message().magic_action_ack().error_code() == sword::MagicActionAck_ErrorCode_error_invalid_parameter )
         {
-            QMessageBox::warning( this, tr( "SWORD" ), tr( "This request cannot be resolved." ) );
+            QMessageBox::warning( this, tr( "SWORD" ), GetErrorText( message.message().magic_action_ack() ) );
             reject();
         }
         else

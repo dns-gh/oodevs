@@ -178,15 +178,15 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
         else if( type == sword::MagicAction::change_diplomacy )
             manager.OnReceiveChangeDiplomacy( msg, ctx );
         else if( type == sword::MagicAction::select_new_logistic_state )
-            manager.OnReceiveSelectNewLogisticState( msg );
+            manager.OnReceiveSelectNewLogisticState( msg, ack );
         else if( type == sword::MagicAction::select_maintenance_transporter )
-            manager.OnReceiveSelectMaintenanceTransporter( msg );
+            manager.OnReceiveSelectMaintenanceTransporter( msg, ack );
         else if( type == sword::MagicAction::transfer_to_logistic_superior )
-            manager.OnReceiveTransferToLogisticSuperior( msg );
+            manager.OnReceiveTransferToLogisticSuperior( msg, ack );
         else if( type == sword::MagicAction::select_diagnosis_team )
-            manager.OnReceiveSelectDiagnosisTeam( msg );
+            manager.OnReceiveSelectDiagnosisTeam( msg, ack );
         else if( type == sword::MagicAction::select_repair_team )
-            manager.OnReceiveSelectRepairTeam( msg );
+            manager.OnReceiveSelectRepairTeam( msg, ack );
         else if( type == sword::MagicAction::global_weather ||
             type == sword::MagicAction::local_weather ||
             type == sword::MagicAction::local_weather_destruction )

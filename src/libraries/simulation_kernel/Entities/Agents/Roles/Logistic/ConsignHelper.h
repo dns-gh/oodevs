@@ -16,6 +16,14 @@ namespace logistic
 unsigned int NewConsignId();
 unsigned int RegisterConsignId( unsigned int id );
 
+enum MaintenanceConsignError
+{
+    already_resolved = 0,
+    diagnosis_team_unavailable,
+    repair_team_unavailable,
+    transporter_unavailable
+};
+
 } // namespace logistic
 
 #endif // LOGISTIC_CONSIGN_HELPER_H

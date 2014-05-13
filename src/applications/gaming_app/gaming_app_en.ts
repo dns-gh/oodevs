@@ -1752,18 +1752,6 @@ Do you want to replace it?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select tow truck</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Request #%1 - %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select diagnosis team</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SWORD</source>
         <translation type="unfinished">SWORD</translation>
     </message>
@@ -1772,19 +1760,47 @@ Do you want to replace it?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select repair team</source>
-        <translation>Select repair team</translation>
+        <source>Select diagnosis / repair unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The diagnosis team is unavailable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The repair team is unavailable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The request is already resolved.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No response received from the simulation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Estimated repair duration: %1</source>
-        <translation>Estimated repair duration: %1</translation>
+        <source>Request #%1 - %2</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select diagnosis / repair unit</source>
+        <source>Select tow truck</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select diagnosis team</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select repair team</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Estimated repair duration: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The tow truck is unavailable.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

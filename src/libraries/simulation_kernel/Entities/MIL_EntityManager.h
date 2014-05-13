@@ -207,11 +207,11 @@ public:
     void OnReceiveChangeDiplomacy             ( const sword::MagicAction&          message, unsigned int nCtx );
     void OnReceiveChangeResourceLinks         ( const sword::MagicAction&          message );
     void OnReceiveCreateFireOrderOnLocation   ( const sword::MagicAction&          message );
-    void OnReceiveSelectNewLogisticState      ( const sword::MagicAction&          message );
-    void OnReceiveSelectMaintenanceTransporter( const sword::MagicAction&          message );
-    void OnReceiveSelectDiagnosisTeam         ( const sword::MagicAction&          message );
-    void OnReceiveSelectRepairTeam            ( const sword::MagicAction&          message );
-    void OnReceiveTransferToLogisticSuperior  ( const sword::MagicAction&          message );
+    void OnReceiveSelectNewLogisticState      ( const sword::MagicAction&          message, client::MagicActionAck& ack );
+    void OnReceiveSelectMaintenanceTransporter( const sword::MagicAction&          message, client::MagicActionAck& ack );
+    void OnReceiveSelectDiagnosisTeam         ( const sword::MagicAction&          message, client::MagicActionAck& ack );
+    void OnReceiveSelectRepairTeam            ( const sword::MagicAction&          message, client::MagicActionAck& ack );
+    void OnReceiveTransferToLogisticSuperior  ( const sword::MagicAction&          message, client::MagicActionAck& ack );
     void OnReceivePathfindCreation            ( const sword::MagicAction&          message, sword::MagicActionAck& ack,
                                                 unsigned int nCtx, unsigned int clientId );
     void OnReceivePathfindDestruction         ( const sword::MagicAction&          message, sword::MagicActionAck& ack );
