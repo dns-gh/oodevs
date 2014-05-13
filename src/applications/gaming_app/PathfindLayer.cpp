@@ -86,6 +86,12 @@ PathfindLayer::~PathfindLayer()
     controllers_.Unregister( *this );
 }
 
+void PathfindLayer::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    lock_ = false;
+    ClearPositions();
+}
+
 void PathfindLayer::Initialize( const geometry::Rectangle2f& extent )
 {
     world_ = extent;

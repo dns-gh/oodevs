@@ -26,6 +26,7 @@ namespace kernel
     class Agent_ABC;
     class Population_ABC;
     class CoordinateConverter_ABC;
+    class ModelUnLoaded;
 }
 
 namespace gui
@@ -42,11 +43,12 @@ class Publisher_ABC;
 // Created: LGY 2014-02-28
 // =============================================================================
 class PathfindLayer : public gui::Layer
+                    , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                     , public tools::SelectionObserver_ABC
                     , public tools::SelectionObserver_Base< kernel::Agent_ABC >
                     , public tools::SelectionObserver_Base< kernel::Population_ABC >
                     , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
-                    , public kernel::ModesObserver_ABC
+                    , private kernel::ModesObserver_ABC
 {
     Q_OBJECT;
 
@@ -59,6 +61,8 @@ public:
     //@}
 
 private:
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
+
     virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( gui::Viewport_ABC& viewport );
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
