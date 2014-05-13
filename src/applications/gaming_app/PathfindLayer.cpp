@@ -403,12 +403,10 @@ namespace
     }
 }
 
-void PathfindLayer::UpdateHovered( bool free, const geometry::Point2f& point )
+void PathfindLayer::UpdateHovered( bool snap, const geometry::Point2f& point )
 {
     const geometry::Point2f snapped = Snap( point, world_ );
-    if( free )
-        hovered_->coordinate_ = snapped;
-    else
+    if( snap )
     {
         auto message = MakeMessage();
         auto request = message.mutable_message()->mutable_segment_request();
@@ -417,16 +415,18 @@ void PathfindLayer::UpdateHovered( bool free, const geometry::Point2f& point )
         point_ = snapped;
         lock_ = true;
     }
+    else
+        hovered_->coordinate_ = snapped;
 }
 
 bool PathfindLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
     if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
-    const bool free = event->keyboardModifiers() == Qt::ControlModifier;
-    HandleEvent( [this, free, point]()
+    const bool snap = !event->keyboardModifiers().testFlag( Qt::ControlModifier );
+    HandleEvent( [this, snap, point]()
         {
-            UpdateHovered( free, point );
+            UpdateHovered( snap, point );
         }, true );
     return true;
 }
@@ -460,12 +460,12 @@ bool PathfindLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry
 {
     if( !dnd::HasData< PathfindLayer >( event ) )
         return false;
-    const bool free = event->keyboardModifiers() == Qt::ControlModifier;
-    HandleEvent( [this, free, point]()
+    const bool snap = !event->keyboardModifiers().testFlag( Qt::ControlModifier );
+    HandleEvent( [this, snap, point]()
         {
             if( hovered_->origin_ )
                 positions_.erase( positions_.begin() + hovered_->lastWaypoint_ );
-            UpdateHovered( free, point );
+            UpdateHovered( snap, point );
         } );
     return true;
 }

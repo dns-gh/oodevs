@@ -106,7 +106,7 @@ private:
     };
 
 private:
-    void UpdateHovered( bool free, const geometry::Point2f& point );
+    void UpdateHovered( bool snap, const geometry::Point2f& point );
     bool HandleEvent( const std::function< void() >& event, bool overridable = false );
     void ProcessEvents();
 
