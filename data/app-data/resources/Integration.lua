@@ -54,7 +54,6 @@ include "integration/SupportingIntegration.lua"
 
 include "integration/DestroyingIntegration.lua"
 include "integration/ReachingIntegration.lua"
-include "integration/IlluminatingIntegration.lua"
 
 include "integration/ControlableIntegration.lua"
 include "integration/SealableIntegration.lua"

@@ -80,3 +80,10 @@ integration.canAgentIlluminate = function( agent )
     return DEC_Agent_PeutIllumine( agent )
 end
 
+--- Returns true if the given target is within illumination range of this entity, false otherwise.
+-- This method can only be called by an agent
+-- @param target DirectIA agent
+-- @return Boolean
+integration.isInIlluminateRange = function( target )
+    return integration.distance( meKnowledge, target ) < DEC_Agent_IlluminateRange() 
+end
