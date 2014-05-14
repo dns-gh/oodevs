@@ -85,6 +85,7 @@ public:
                         const std::string& hierarchies,
                         const std::string& showOnly );
     void OnShowOnlyFilterChanged( const std::string& uuid );
+    void RenameEvent( const std::string& uuid, const std::string& name );
     //@}
 
 private:

@@ -143,6 +143,19 @@ QWidget* TimelineDockWidget::AddView( bool main /* = false */,
     return tabWidget_->widget( index );
 }
 
+namespace
+{
+    std::map< std::string, QWidget* >::const_iterator FindShowOnlyWidget( const std::map< std::string, QWidget* >& showOnlyViews,
+                                                                          QWidget* widget )
+    {
+        return std::find_if( showOnlyViews.begin(),
+                             showOnlyViews.end(),
+                             [&]( const std::pair< const std::string, QWidget* >& element ) {
+                                 return element.second == widget;
+                             } );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TimelineDockWidget::RemoveCurrentFilteredView
 // Created: ABR 2013-05-28
@@ -153,10 +166,7 @@ void TimelineDockWidget::RemoveCurrentView()
     if( currentIndex != tabWidget_->indexOf( mainView_ ) )
     {
         auto widget = tabWidget_->widget( currentIndex );
-        auto it = std::find_if( showOnlyViews_.begin(), showOnlyViews_.end(),
-                                [&]( const std::pair< const std::string, QWidget* >& element ) {
-                                    return element.second == widget;
-                                } );
+        auto it = FindShowOnlyWidget( showOnlyViews_, widget );
         if( it != showOnlyViews_.end() )
             showOnlyViews_.erase( it );
         tabWidget_->removeTab( currentIndex );
@@ -257,7 +267,15 @@ void TimelineDockWidget::OnRenameTab()
     const QString text = QInputDialog::getText( this, tr( "Rename view" ), tr( "Name" ), QLineEdit::Normal,
                                                 tabWidget_->tabText( index ), &ok );
     if( ok && !text.stripWhiteSpace().isEmpty() )
-        tabWidget_->setTabText( index, text );
+    {
+        auto it = FindShowOnlyWidget( showOnlyViews_, tabWidget_->widget( index ) );
+        if( it == showOnlyViews_.end() )
+            // normal tab, just rename it
+            tabWidget_->setTabText( index, text );
+        else
+            // show only tab, rename the event (the tab will be renamed by NotifyUpdated( const gui::Event& ))
+            webView_->RenameEvent( it->first, text.toStdString() );
+    }
 }
 
 // -----------------------------------------------------------------------------
