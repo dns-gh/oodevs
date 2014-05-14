@@ -3500,9 +3500,9 @@ message SimToClient {
         optional ListLogisticRequestsAck list_logistic_requests_ack = 151;
         optional MagicOrder            magic_order = 152;
         optional MagicOrderDestruction magic_order_destruction = 153;
-        optional ComputePathfindAck compute_pathfind_ack = 154;
-        optional StartUnitFireDetection start_unit_fire_detection = 155;
-        optional StopUnitFireDetection stop_unit_fire_detection = 156;
+        optional StartUnitFireDetection start_unit_fire_detection = 154;
+        optional StopUnitFireDetection stop_unit_fire_detection = 155;
+        optional ComputePathfindAck compute_pathfind_ack = 156;
         optional SegmentRequestAck segment_request_ack = 157;
         optional LogSupplyRequestCreation log_supply_request_creation = 158;
         optional LogSupplyRequestUpdate log_supply_request_update = 159;
