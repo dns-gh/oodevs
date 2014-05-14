@@ -96,7 +96,6 @@ private:
     //@{
     MIL_Agent_ABC& queryMaker_;
     const DEC_Agent_PathClass& pathClass_;
-    bool bRefine_;
     T_PointVector initialWaypoints_;
     T_PointVector nextWaypoints_;
     MIL_Fuseau fuseau_;

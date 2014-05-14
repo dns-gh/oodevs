@@ -37,7 +37,6 @@
 DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
     : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
-    , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
     , destroyed_               ( false )
@@ -60,7 +59,6 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
 DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const std::vector< boost::shared_ptr< MT_Vector2D > >& points, const DEC_PathType& pathType )
     : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
-    , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
     , destroyed_               ( false )
@@ -84,7 +82,6 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const std::vector< bo
 DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosStart, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType )
     : DEC_PathResult            ( pathType )
     , queryMaker_               ( queryMaker )
-    , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_       ( false )
     , destroyed_                ( false )
@@ -137,8 +134,9 @@ void DEC_Agent_Path::Initialize()
         return;
     }
     path_.reset( new DEC_Agent_PathfinderPath( queryMaker_, pathClass_, initialWaypoints_ ) );
+    const bool refine = queryMaker_.GetType().GetUnitType().CanFly() && !queryMaker_.IsAutonomous();
     for( auto it = initialWaypoints_.begin(); it != initialWaypoints_.end() - 1; ++it )
-        RegisterPathSection( *new DEC_Agent_PathSection( *this, *path_, *it, *(it + 1), bRefine_, !automateFuseau_.IsNull() ) );
+        RegisterPathSection( *new DEC_Agent_PathSection( *this, *path_, *it, *(it + 1), refine, !automateFuseau_.IsNull() ) );
 }
 
 //-----------------------------------------------------------------------------
