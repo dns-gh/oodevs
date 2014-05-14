@@ -192,7 +192,7 @@ void DEC_Agent_Path::Initialize( const T_PointVector& points )
         return;
     }
     for( auto it = points.begin(); it != points.end() - 1; ++it )
-        RegisterPathSection( *new DEC_Agent_PathSection( *this, path_, *it, *(it + 1), NeedRefine(), UseStrictClosest() ) );
+        RegisterPathSection( *new DEC_Agent_PathSection( *this, path_, *it, *(it + 1), bRefine_, !automateFuseau_.IsNull() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -794,24 +794,6 @@ const DEC_Agent_Path::T_PathKnowledgeAgentVector& DEC_Agent_Path::GetPathKnowled
 const DEC_Agent_Path::T_PathKnowledgePopulationVector& DEC_Agent_Path::GetPathKnowledgePopulations() const
 {
     return pathKnowledgePopulations_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::NeedRefine
-// Created: NLD 2006-01-30
-// -----------------------------------------------------------------------------
-bool DEC_Agent_Path::NeedRefine() const
-{
-    return bRefine_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::UseStrictClosest
-// Created: AGE 2007-05-09
-// -----------------------------------------------------------------------------
-bool DEC_Agent_Path::UseStrictClosest() const
-{
-    return ! automateFuseau_.IsNull();
 }
 
 // -----------------------------------------------------------------------------

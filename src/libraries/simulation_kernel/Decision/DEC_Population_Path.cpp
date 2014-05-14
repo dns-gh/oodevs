@@ -251,21 +251,3 @@ double DEC_Population_Path::GetMaxSpeed() const
 {
     return population_.GetType().GetMaxSpeed();
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Population_Path::NeedRefine
-// Created: NLD 2006-02-22
-// -----------------------------------------------------------------------------
-bool DEC_Population_Path::NeedRefine() const
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Population_Path::UseStrictClosest
-// Created: AGE 2007-05-09
-// -----------------------------------------------------------------------------
-bool DEC_Population_Path::UseStrictClosest() const
-{
-    return false;
-}

@@ -35,8 +35,6 @@ public:
     void Cancel();
 
     virtual double GetLength() const;
-    virtual bool NeedRefine() const = 0;
-    virtual bool UseStrictClosest() const = 0;
 
     virtual void NotifyPartialSection() = 0;
     virtual void NotifyCompletedSection() = 0;
