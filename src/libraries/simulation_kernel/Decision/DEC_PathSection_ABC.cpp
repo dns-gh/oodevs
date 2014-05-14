@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathSection_ABC.h"
+#include "DEC_Path.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <ctime>
@@ -128,15 +129,6 @@ void DEC_PathSection_ABC::Cancel()
 double DEC_PathSection_ABC::GetLength() const
 {
     return startPoint_.Distance( endPoint_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathSection_ABC::GetPath
-// Created: CMA 2011-04-18
-// -----------------------------------------------------------------------------
-const DEC_Path_ABC& DEC_PathSection_ABC::GetPath() const
-{
-    return path_;
 }
 
 // -----------------------------------------------------------------------------

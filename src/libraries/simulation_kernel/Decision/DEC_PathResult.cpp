@@ -405,3 +405,10 @@ void DEC_PathResult::NotifyCompletedSection()
     if( !resultList_.empty() )
         resultList_.back()->NotifyWaypoint();
 }
+
+boost::optional< MT_Vector2D > DEC_PathResult::GetLastPosition() const
+{
+    if( resultList_.empty() )
+        return boost::none;
+    return resultList_.back()->GetPos();
+}

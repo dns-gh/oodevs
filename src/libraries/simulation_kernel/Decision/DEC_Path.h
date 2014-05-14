@@ -14,6 +14,7 @@
 
 #include "DEC_Path_ABC.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
+#include <boost/optional.hpp>
 #include <string>
 #include <vector>
 
@@ -67,6 +68,7 @@ protected:
     const T_PointVector& GetComputedWaypoints() const;
 
     virtual void NotifySectionStarted() = 0;
+    virtual boost::optional< MT_Vector2D > GetLastPosition() const = 0;
 
     void DoExecute( TER_Pathfinder_ABC& pathfind );
     void RemoveComputedWaypoint();

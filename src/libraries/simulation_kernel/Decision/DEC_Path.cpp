@@ -14,7 +14,6 @@
 #include "DEC_PathSection_ABC.h"
 #include "DEC_Pathfind_Manager.h"
 #include "DEC_PathResult.h"
-#include "DEC_PathPoint.h"
 #include "MIL_AgentServer.h"
 
 // -----------------------------------------------------------------------------
@@ -87,8 +86,6 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
 
     if( pathSections_.empty() )
         throw MASA_EXCEPTION( "List of path sections is empty" );
-    const auto& pathPoints = dynamic_cast< const DEC_PathResult* >( &pathSections_.front()->GetPath() )->GetResult( false );
-
     lastWaypoint_ = pathSections_.back()->GetPosEnd();
     computedWaypoints_.clear();
     nState_ = eComputing;
@@ -103,8 +100,8 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
         NotifySectionStarted();
         if( !pathSection.Execute( pathfind, nComputationEndTime ) )
         {
-            if( !pathPoints.empty() )
-                computedWaypoints_.push_back( pathPoints.back()->GetPos() );
+            if( auto last = GetLastPosition() )
+                computedWaypoints_.push_back( *last );
 
             if( bJobCanceled_ )
             {
@@ -126,12 +123,12 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
                     return;
                 }
                 else
-                    (*itNextPathSection)->SetPosStart( pathPoints.back()->GetPos() );
+                    (*itNextPathSection)->SetPosStart( *GetLastPosition() );
             }
         }
-        else if( !pathPoints.empty() )
+        else if( auto last = GetLastPosition() )
         {
-            computedWaypoints_.push_back( pathPoints.back()->GetPos() );
+            computedWaypoints_.push_back( *last );
             NotifyCompletedSection();
         }
     }

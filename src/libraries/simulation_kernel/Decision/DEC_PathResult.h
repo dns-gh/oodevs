@@ -78,6 +78,8 @@ private:
     MT_Vector2D InternalGetFuturePosition( const T_PathPoints::const_iterator& itCurrentPos, double rDist, bool bBoundOnPath ) const;
     //@}
 
+    virtual boost::optional< MT_Vector2D > GetLastPosition() const;
+
 protected:
     //! @name Member data
     //@{

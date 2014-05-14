@@ -12,13 +12,14 @@
 #ifndef __DEC_PathSection_ABC_h_
 #define __DEC_PathSection_ABC_h_
 
-#include "DEC_Path.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <pathfind/TerrainPathPoint.h>
 #include <pathfind/AStarManagementCallback_ABC.h>
 #include <tools/thread/Handler_ABC.h>
 
+class TER_Pathfinder_ABC;
 class TerrainRule_ABC;
+class DEC_Path;
 
 // =============================================================================
 // @class  DEC_Tools
@@ -43,7 +44,6 @@ public:
     bool                IsImpossible() const;
     const MT_Vector2D&  GetPosStart () const;
     const MT_Vector2D&  GetPosEnd   () const; // $$$$ AGE 2005-02-25: ...
-    const DEC_Path_ABC& GetPath     () const;
     void                SetPosStart ( const MT_Vector2D& point );
     //@}
 
