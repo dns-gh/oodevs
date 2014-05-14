@@ -203,7 +203,8 @@ void PHY_ActionMove::CreateNewPath()
 {
     assert( pMainPath_.get() );
     assert( pMainPath_->GetState() != DEC_Path_ABC::eComputing );
-    const T_PointVector& nextWaypoints = pMainPath_->GetNextWaypoints();
+    T_PointVector nextWaypoints = pMainPath_->GetNextWaypoints();
+    nextWaypoints.insert( nextWaypoints.begin(), pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     const DEC_PathType& pathType = pMainPath_->GetPathType();
     boost::shared_ptr< DEC_Agent_Path > pNewPath( new DEC_Agent_Path( pion_, nextWaypoints, pathType ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pNewPath );

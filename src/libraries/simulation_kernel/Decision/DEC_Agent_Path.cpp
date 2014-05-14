@@ -43,11 +43,13 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     , bDecPointsInserted_      ( false )
     , destroyed_               ( false )
 {
-    initialWaypoints_.reserve( 1 + points.size() );
-    nextWaypoints_.reserve( points.size() );
-    initialWaypoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    initialWaypoints_.reserve( points.size() );
     std::copy( points.begin(), points.end(), std::back_inserter( initialWaypoints_ ) );
-    std::copy( points.begin(), points.end(), std::back_inserter( nextWaypoints_ ) );
+    if( !points.empty() )
+    {
+        nextWaypoints_.reserve( points.size() - 1 );
+        std::copy( points.begin() + 1, points.end(), std::back_inserter( nextWaypoints_ ) );
+    }
     Initialize();
     queryMaker.RegisterPath( *this );
 }

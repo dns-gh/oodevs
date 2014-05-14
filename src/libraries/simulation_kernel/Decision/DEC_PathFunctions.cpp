@@ -60,6 +60,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
 {
     assert( pEnd );
     std::vector< MT_Vector2D > points;
+    points.push_back( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     points.push_back( *pEnd );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
