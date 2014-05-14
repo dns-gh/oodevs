@@ -75,8 +75,7 @@ protected:
 private:
     //! @name Types
     //@{
-    typedef std::vector< DEC_PathSection_ABC* >   T_PathSectionVector;
-    typedef T_PathSectionVector::const_iterator CIT_PathSectionVector;
+    typedef std::vector< DEC_PathSection_ABC* > T_PathSectionVector;
     //@}
 
 private:

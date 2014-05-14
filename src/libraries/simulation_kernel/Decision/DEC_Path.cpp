@@ -13,8 +13,8 @@
 #include "DEC_Path.h"
 #include "DEC_PathSection_ABC.h"
 #include "DEC_Pathfind_Manager.h"
-#include "DEC_PathPoint.h"
 #include "DEC_PathResult.h"
+#include "DEC_PathPoint.h"
 #include "MIL_AgentServer.h"
 
 // -----------------------------------------------------------------------------
@@ -43,8 +43,8 @@ DEC_Path::~DEC_Path()
 // -----------------------------------------------------------------------------
 void DEC_Path::CleanAfterComputation()
 {
-    for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
-        delete *itPathSection;
+    for( auto it = pathSections_.begin(); it != pathSections_.end(); ++it )
+        delete *it;
     pathSections_.clear();
 }
 
@@ -56,8 +56,8 @@ void DEC_Path::Cancel()
 {
     bJobCanceled_ = true;
     nState_ = eCanceled;
-    for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
-        ( *itPathSection )->Cancel();
+    for( auto it = pathSections_.begin(); it != pathSections_.end(); ++it )
+        ( *it )->Cancel();
 }
 
 // -----------------------------------------------------------------------------
@@ -67,8 +67,8 @@ void DEC_Path::Cancel()
 double DEC_Path::GetLength() const
 {
     double rLength = 0.;
-    for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
-        rLength += ( *itPathSection )->GetLength();
+    for( auto it = pathSections_.begin(); it != pathSections_.end(); ++it )
+        rLength += ( *it )->GetLength();
     return rLength;
 }
 
@@ -92,14 +92,14 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
     lastWaypoint_ = pathSections_.back()->GetPosEnd();
     computedWaypoints_.clear();
     nState_ = eComputing;
-    for( auto itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
+    for( auto it = pathSections_.begin(); it != pathSections_.end(); ++it )
     {
         if( bJobCanceled_ )
         {
             nState_ = eCanceled;
             return;
         }
-        DEC_PathSection_ABC& pathSection = **itPathSection;
+        DEC_PathSection_ABC& pathSection = **it;
         NotifySectionStarted();
         if( !pathSection.Execute( pathfind, nComputationEndTime ) )
         {
@@ -111,7 +111,7 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
                 nState_ = eCanceled;
                 return;
             }
-            else if( itPathSection == pathSections_.begin() && pathSection.IsImpossible() )
+            else if( it == pathSections_.begin() && pathSection.IsImpossible() )
             {
                 nState_ = eImpossible;
                 return;
@@ -119,7 +119,7 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
             else
             {
                 NotifyPartialSection();
-                T_PathSectionVector::iterator itNextPathSection = itPathSection + 1;
+                T_PathSectionVector::iterator itNextPathSection = it + 1;
                 if( itNextPathSection == pathSections_.end() )
                 {
                     nState_ = ePartial;
@@ -182,7 +182,7 @@ std::string DEC_Path::GetPathAsString() const
 {
     std::stringstream strTmp;
     strTmp << "   Path points : " << pathSections_.front()->GetPosStart();
-    for( CIT_PathSectionVector itSection = pathSections_.begin(); itSection != pathSections_.end(); ++itSection )
+    for( auto itSection = pathSections_.begin(); itSection != pathSections_.end(); ++itSection )
         strTmp << " -> " << ( *itSection )->GetPosEnd();
     return strTmp.str();
 }
