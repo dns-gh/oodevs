@@ -5,6 +5,7 @@
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
     <target name="update">
+        <update name="buildtools"/>
         <update name="python" version="2.7.3-3"/>
         <update name="sword" version="current" package="protobuf"
             todir="${data.dir}/proto-master"/>
@@ -16,7 +17,7 @@
         <element name="args" implicit="true" optional="true"/>
         <sequential>
             <python taskname="protolint" failonerror="true">
-                <arg value="${src.dir}/protolint/protolint.py"/>
+                <arg value="${bin.dir}/buildtools/protolint/protolint.py"/>
                 <arg value="compare"/>
                 <arg value="@{olddir}"/>
                 <arg value="@{newdir}"/>
@@ -24,15 +25,6 @@
             </python>
         </sequential>
     </macrodef>
-
-    <target name="unit-test">
-        <python failonerror="true">
-            <arg value="${src.dir}/protolint/protolexer.py"/>
-        </python>
-        <python failonerror="true">
-            <arg value="${src.dir}/protolint/protoparser.py"/>
-        </python>
-    </target>
 
     <target name="check-proto">
         <compare-proto olddir="${data.dir}/proto-5.0.0" newdir="${data.dir}/proto-5.0.1"/>
@@ -122,7 +114,6 @@
     <target name="package">
         <safe-move file="${out.dir}/sword-protobuf.zip">
             <zip destfile="@{file}" duplicate="fail">
-                <fileset dir="${src.dir}" includes="protolint/**/*.py"/>
                 <zipfileset dir="${data.dir}" prefix="protolint/proto/"/>
                 <!-- package branch tips to avoid client scripts to have to
                      update referenced version upon releases -->
@@ -136,7 +127,7 @@
         </safe-move>
     </target>
 
-    <target name="test" depends="unit-test,check-proto"/>
+    <target name="test" depends="check-proto"/>
 
     <target name="all" depends="update,test,package"/>
 </project>
