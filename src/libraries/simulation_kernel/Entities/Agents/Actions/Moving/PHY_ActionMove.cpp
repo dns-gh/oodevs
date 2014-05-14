@@ -37,6 +37,7 @@
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "propagation/Extractor_ABC.h"
 #include "simulation_terrain/TER_World.h"
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMove constructor
@@ -206,7 +207,7 @@ void PHY_ActionMove::CreateNewPath()
     T_PointVector nextWaypoints = pMainPath_->GetNextWaypoints();
     nextWaypoints.insert( nextWaypoints.begin(), pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     const DEC_PathType& pathType = pMainPath_->GetPathType();
-    boost::shared_ptr< DEC_Agent_Path > pNewPath( new DEC_Agent_Path( pion_, nextWaypoints, pathType ) );
+    const auto pNewPath = boost::make_shared< DEC_Agent_Path >( pion_, nextWaypoints, pathType );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pNewPath );
     role_.MoveCanceled( pMainPath_ );
     pMainPath_->Cancel();

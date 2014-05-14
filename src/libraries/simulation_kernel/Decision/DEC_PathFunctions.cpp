@@ -64,7 +64,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
     points.push_back( *pEnd );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, points, *pPathType ) );
+    const auto pPath = boost::make_shared< DEC_Agent_Path >( callerAgent, points, *pPathType );
     StartCompute( pPath );
     return pPath;
 }
@@ -78,8 +78,11 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_
     assert( !listPt.empty() );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-    listPt.insert( listPt.begin(), boost::make_shared< MT_Vector2D >( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
-    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, listPt, *pPathType ) );
+    std::vector< MT_Vector2D > points;
+    points.push_back( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    for( auto it = listPt.begin(); it != listPt.end(); ++it )
+        points.push_back( **it );
+    const auto pPath = boost::make_shared< DEC_Agent_Path >( callerAgent, points, *pPathType );
     StartCompute( pPath );
     return pPath;
 }

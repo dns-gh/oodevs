@@ -61,15 +61,15 @@ void PathfindComputer::Update()
 
 namespace
 {
-    std::vector< boost::shared_ptr< MT_Vector2D > > GetPositions( const sword::PathfindRequest& message, const TER_World& world )
+    std::vector< MT_Vector2D > GetPositions( const sword::PathfindRequest& message, const TER_World& world )
     {
         const auto& positions = message.positions();
-        std::vector< boost::shared_ptr< MT_Vector2D > > points;
+        std::vector< MT_Vector2D > points;
         for( auto i = 0; i < positions.size(); ++i )
         {
-            auto point = boost::make_shared< MT_Vector2D >();
+            MT_Vector2D point;
             const auto& position = positions.Get( i );
-            world.MosToSimMgrsCoord( position.latitude(), position.longitude(), *point );
+            world.MosToSimMgrsCoord( position.latitude(), position.longitude(), point );
             points.push_back( point );
         }
         return points;

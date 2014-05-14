@@ -38,41 +38,13 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
+    , initialWaypoints_        ( points )
+    , nextWaypoints_           ( points.empty() ? points.begin() : points.begin() + 1, points.end() )
     , fuseau_                  ( queryMaker.GetOrderManager().GetFuseau() )
     , automateFuseau_          ( queryMaker.GetAutomate().GetOrderManager().GetFuseau() )
     , bDecPointsInserted_      ( false )
     , destroyed_               ( false )
 {
-    initialWaypoints_.reserve( points.size() );
-    std::copy( points.begin(), points.end(), std::back_inserter( initialWaypoints_ ) );
-    if( !points.empty() )
-    {
-        nextWaypoints_.reserve( points.size() - 1 );
-        std::copy( points.begin() + 1, points.end(), std::back_inserter( nextWaypoints_ ) );
-    }
-    Initialize();
-    queryMaker.RegisterPath( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path constructor
-// Created: LDC 2009-06-18
-// -----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const std::vector< boost::shared_ptr< MT_Vector2D > >& points, const DEC_PathType& pathType )
-    : DEC_PathResult           ( pathType )
-    , queryMaker_              ( queryMaker )
-    , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
-    , fuseau_                  ( queryMaker.GetOrderManager().GetFuseau() )
-    , automateFuseau_          ( queryMaker.GetAutomate().GetOrderManager().GetFuseau() )
-    , bDecPointsInserted_      ( false )
-    , destroyed_               ( false )
-{
-    for( auto it = points.begin(); it != points.end(); ++it )
-    {
-        initialWaypoints_.push_back( **it );
-        if( it != points.begin() )
-            nextWaypoints_.push_back( **it );
-    }
     Initialize();
     queryMaker.RegisterPath( *this );
 }

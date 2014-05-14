@@ -29,7 +29,6 @@ class DEC_Agent_Path : public DEC_PathResult
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const std::vector< boost::shared_ptr< MT_Vector2D > >& points, const DEC_PathType& pathType );
              DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType );
     virtual ~DEC_Agent_Path();
     //@}
@@ -95,7 +94,7 @@ private:
     //@{
     MIL_Agent_ABC& queryMaker_;
     const DEC_Agent_PathClass& pathClass_;
-    T_PointVector initialWaypoints_;
+    const T_PointVector initialWaypoints_;
     T_PointVector nextWaypoints_;
     MIL_Fuseau fuseau_;
     MIL_Fuseau automateFuseau_;

@@ -199,11 +199,14 @@ void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
 
 namespace
 {
-    std::vector< boost::shared_ptr< MT_Vector2D > > CreatePositions( const MT_Vector2D& start,
-        std::vector< boost::shared_ptr< MT_Vector2D > > positions )
+    std::vector< MT_Vector2D > CreatePositions( const MT_Vector2D& start,
+        const std::vector< boost::shared_ptr< MT_Vector2D > >& positions )
     {
-        positions.insert( positions.begin(), boost::make_shared< MT_Vector2D >( start ) );
-        return positions;
+        std::vector< MT_Vector2D > result;
+        result.push_back( start );
+        for( auto it = positions.begin(); it != positions.end(); ++it )
+            result.push_back( **it );
+        return result;
     }
 }
 
@@ -219,9 +222,9 @@ void MIL_PopulationFlow::ComputePathAlong( const std::vector< boost::shared_ptr<
         pTailPath_->Cancel();
         pTailPath_.reset();
     }
-    pHeadPath_.reset( new DEC_Population_Path( GetPopulation(), CreatePositions( GetHeadPosition(), headDestination ) ) );
+    pHeadPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetHeadPosition(), headDestination ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pHeadPath_ );
-    pTailPath_.reset( new DEC_Population_Path( GetPopulation(), CreatePositions( GetTailPosition(), tailDestination ) ) );
+    pTailPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetTailPosition(), tailDestination ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pTailPath_ );
 }
 
