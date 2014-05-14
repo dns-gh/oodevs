@@ -34,11 +34,11 @@ class Model;
 // Created: JSR 2012-09-07
 // =============================================================================
 class TacticalTreeView : public gui::TacticalTreeView
-                       , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Ghost_ABC >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                        , public gui::ChangeSuperior_ABC
 {
     Q_OBJECT
@@ -61,11 +61,11 @@ private:
     virtual void Drop( const kernel::AgentType& item, kernel::Entity_ABC& target );
     virtual void Drop( const kernel::AutomatType& item, kernel::Entity_ABC& target );
 
-    virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Ghost_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
 
     virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
     virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
@@ -90,6 +90,7 @@ private:
     //! @name Helpers
     //@{
     void AddFormationMenu( kernel::ContextMenu& menu, E_NatureLevel root );
+    void AddCommunMenu( kernel::ContextMenu& menu, const kernel::Entity_ABC& entity );
     //@}
 
 private:
