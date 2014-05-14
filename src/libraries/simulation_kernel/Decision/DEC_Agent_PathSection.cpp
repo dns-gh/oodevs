@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 02-11-25 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Agent_PathSection.cpp $
-// $Author: Age $
-// $Modtime: 12/05/05 16:18 $
-// $Revision: 7 $
-// $Workfile: DEC_Agent_PathSection.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Agent_PathSection.h"
@@ -42,4 +40,3 @@ TerrainRule_ABC& DEC_Agent_PathSection::GetRule() const
 {
     return *rule_;
 }
-

@@ -78,17 +78,12 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
         channelers_.push_back( DEC_Population_Path_Channeler( pathClass_, *it ) );
     InitializePathKnowledges( points );
     if( points.empty() )
-        throw MASA_EXCEPTION( "List of points is empty" );
-    const MT_Vector2D* pLastPoint = 0;
-    for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
     {
-        if( pLastPoint )
-        {
-            DEC_Population_PathSection* pSection = new DEC_Population_PathSection( *this, *pLastPoint, *itPoint );
-            RegisterPathSection( *pSection );
-        }
-        pLastPoint = &*itPoint;
+        throw MASA_EXCEPTION( "List of points is empty" );
+        return;
     }
+    for( auto it = points.begin(); it != points.end() - 1; ++it )
+        RegisterPathSection( *new DEC_Population_PathSection( *this, *it, *(it + 1) ) );
 }
 
 // -----------------------------------------------------------------------------

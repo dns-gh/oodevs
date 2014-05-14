@@ -93,14 +93,11 @@ public:
     //@}
 
 private:
-
     //! @name Init
     //@{
     void Initialize( const T_PointVector& pathPoints );
     void InitializePathKnowledges( const T_PointVector& pathPoints );
     //@}
-
-
 
     //! @name Points insertion Tools
     //@{

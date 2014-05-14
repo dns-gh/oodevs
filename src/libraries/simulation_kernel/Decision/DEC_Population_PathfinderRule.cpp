@@ -19,9 +19,8 @@
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
 DEC_Population_PathfinderRule::DEC_Population_PathfinderRule( const DEC_Population_Path& path )
-    : TerrainRule_ABC()
-    , path_          ( path )
-    , world_         ( TER_World::GetWorld() )
+    : path_( path )
+    , world_( TER_World::GetWorld() )
 {
     // NOTHING
 }

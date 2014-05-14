@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-02-11 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Agent_PathSection.h $
-// $Author: Age $
-// $Modtime: 10/05/05 16:48 $
-// $Revision: 6 $
-// $Workfile: DEC_Agent_PathSection.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __DEC_Agent_PathSection_h_
 #define __DEC_Agent_PathSection_h_
