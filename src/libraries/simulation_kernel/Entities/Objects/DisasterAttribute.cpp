@@ -10,13 +10,16 @@
 #include "simulation_kernel_pch.h"
 #include "DisasterAttribute.h"
 #include "MIL_AgentServer.h"
+#include "MIL_Object_ABC.h"
 #include "protocol/Protocol.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
-#include "Tools/MIL_Config.h"
-#include "simulation_terrain/TER_Polygon.h"
-#include "simulation_terrain/TER_World.h"
+#include "Entities/MIL_Entity_ABC.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "propagation/PropagationManager.h"
 #include "propagation/Extractor_ABC.h"
+#include "simulation_terrain/TER_Polygon.h"
+#include "simulation_terrain/TER_World.h"
+#include "Tools/MIL_Config.h"
 #include "tools/XmlStreamOperators.h"
 #include <tools/PathSerialization.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -172,6 +175,15 @@ void DisasterAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int
 }
 
 // -----------------------------------------------------------------------------
+// Name: DisasterAttribute::GetExtractors
+// Created: JSR 2014-04-24
+// -----------------------------------------------------------------------------
+const std::vector< DisasterAttribute::T_Extractor >& DisasterAttribute::GetExtractors() const
+{
+    return values_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DisasterAttribute::GetDose
 // Created: LGY 2012-11-22
 // -----------------------------------------------------------------------------
@@ -187,6 +199,24 @@ float DisasterAttribute::GetDose( const MT_Vector2D& position ) const
             return dose;
     }
     return 0.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterAttribute::ApplySpeedPolicy
+// Created: JSR 2014-05-14
+// -----------------------------------------------------------------------------
+double DisasterAttribute::ApplySpeedPolicy( const MIL_Entity_ABC& entity, double speed ) const
+{
+    const PHY_RoleInterface_Location* location = entity.RetrieveRole< PHY_RoleInterface_Location >();
+    const PHY_RoleInterface_Composantes* composantes = entity.RetrieveRole< PHY_RoleInterface_Composantes >();
+    if( !location || !composantes )
+        return speed;
+    const double dose = GetDose( location->GetPosition() );
+    auto types = composantes->GetActualTypes();
+    double modifier = 1;
+    for( auto it = types.begin(); it != types.end(); ++it )
+        modifier = std::min( modifier, ( *it )->GetDisasterImpact( dose ) );
+    return speed * std::max( 0.1, modifier ); // limit modifier to 0.1 to avoid unit to be permanently blocked
 }
 
 // -----------------------------------------------------------------------------

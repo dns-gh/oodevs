@@ -15,6 +15,7 @@
 #include "AttritionCapacity.h"
 #include "AvoidanceCapacity.h"
 #include "ContaminationCapacity.h"
+#include "DisasterCapacity.h"
 #include "InterferenceCapacity.h"
 #include "MobilityCapacity.h"
 
@@ -97,5 +98,5 @@ bool MIL_DangerousObjectFilter::Test( const MIL_ObjectType_ABC& type ) const
 // -----------------------------------------------------------------------------
 bool MIL_PathObjectFilter::Test( const MIL_ObjectType_ABC& type ) const
 {
-    return type.GetCapacity< MobilityCapacity >() != 0 || MIL_DangerousObjectFilter::Test( type );
+    return type.GetCapacity< MobilityCapacity >() != 0 || type.GetCapacity< DisasterCapacity >() != 0 || MIL_DangerousObjectFilter::Test( type );
 }

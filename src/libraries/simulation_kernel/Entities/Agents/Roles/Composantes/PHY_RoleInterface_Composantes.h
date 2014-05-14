@@ -109,6 +109,7 @@ public:
     virtual       double              GetMajorOperationalState () const = 0;
     virtual       double              GetMaxWeight             ( bool loadedWeight = false ) const = 0;
     virtual bool CanTransportDestroyed() const = 0;
+    virtual std::set< const PHY_ComposanteTypePion* > GetActualTypes() const = 0;
     //@}
 
     //! @name Fire
