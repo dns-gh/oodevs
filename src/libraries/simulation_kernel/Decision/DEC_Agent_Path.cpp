@@ -38,12 +38,12 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
+    , fuseau_                  ( queryMaker.GetOrderManager().GetFuseau() )
+    , automateFuseau_          ( queryMaker.GetAutomate().GetOrderManager().GetFuseau() )
     , bDecPointsInserted_      ( false )
     , destroyed_               ( false )
 {
     queryMaker_.RegisterPath( *this );
-    fuseau_= queryMaker.GetOrderManager().GetFuseau();
-    automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     initialWaypoints_.reserve( 1 + points.size() );
     nextWaypoints_.reserve( points.size() );
     initialWaypoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
@@ -60,12 +60,12 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const std::vector< bo
     : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
+    , fuseau_                  ( queryMaker.GetOrderManager().GetFuseau() )
+    , automateFuseau_          ( queryMaker.GetAutomate().GetOrderManager().GetFuseau() )
     , bDecPointsInserted_      ( false )
     , destroyed_               ( false )
 {
     queryMaker_.RegisterPath( *this );
-    fuseau_ = queryMaker.GetOrderManager().GetFuseau();
-    automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     for( auto it = points.begin(); it != points.end(); ++it )
     {
         initialWaypoints_.push_back( **it );
@@ -83,12 +83,12 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vP
     : DEC_PathResult            ( pathType )
     , queryMaker_               ( queryMaker )
     , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
+    , fuseau_                   ( queryMaker.GetOrderManager().GetFuseau() )
+    , automateFuseau_           ( queryMaker.GetAutomate().GetOrderManager().GetFuseau() )
     , bDecPointsInserted_       ( false )
     , destroyed_                ( false )
 {
     queryMaker_.RegisterPath( *this );
-    fuseau_ = queryMaker.GetOrderManager().GetFuseau();
-    automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     initialWaypoints_.push_back( vPosStart );
     initialWaypoints_.push_back( vPosEnd );
     nextWaypoints_.push_back( vPosEnd );
