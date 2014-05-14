@@ -86,7 +86,7 @@ signals:
     void ServicesFilterChanged( const std::string& services );
     void KeywordFilterChanged( const std::string& keyword );
     void HideHierarchiesFilterChanged( const std::string& hierarchies );
-    void ShowOnlyFilterChanged( const std::string& uuid );
+    void ShowOnlyFilterChanged( const std::string& uuid, const std::string& name );
     //@}
 
 public slots:

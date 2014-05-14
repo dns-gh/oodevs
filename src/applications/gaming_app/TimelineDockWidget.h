@@ -14,6 +14,11 @@
 #include <tools/ElementObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
 
+namespace gui
+{
+    class Event;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -38,6 +43,7 @@ class TimelineToolBar;
 // =============================================================================
 class TimelineDockWidget : public gui::RichDockWidget
                          , public tools::ElementObserver_ABC< kernel::Filter_ABC >
+                         , public tools::ElementObserver_ABC< gui::Event >
 {
     Q_OBJECT
 
@@ -59,18 +65,19 @@ public:
     //@{
     virtual void NotifyCreated( const kernel::Filter_ABC& filter );
     virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
+    virtual void NotifyUpdated( const gui::Event& event );
     //@}
 
 public slots:
     //! @name Slots
     //@{
-    QWidget* AddView( bool main = false );
+    QWidget* AddView( bool main = false, const std::string& name = "" );
     void RemoveCurrentView();
     void OnCurrentChanged( int index );
     void OnTabContextMenu();
     void OnRenameTab();
     void OnLoadRequested();
-    void OnShowOnlyFilterChanged( const std::string& uuid );
+    void OnShowOnlyFilterChanged( const std::string& uuid, const std::string& name );
     //@}
 
 private:
@@ -81,6 +88,8 @@ private:
     QMenu* contextMenu_;
     QWidget* mainView_;
     boost::shared_ptr< TimelineWebView > webView_;
+    // map of < event's uuid, tab's widget >, so we can retrieve the right tab even if the event's name has changed.
+    std::map< std::string, QWidget* > showOnlyViews_;
     //@}
 
 private:
