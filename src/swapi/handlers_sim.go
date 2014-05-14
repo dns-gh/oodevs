@@ -228,8 +228,9 @@ func (model *ModelData) handleUnitAttributes(m *sword.SimToClient_Content) error
 	if resources := mm.GetResourceDotations(); resources != nil {
 		for _, dotation := range resources.GetElem() {
 			unit.Resources[dotation.GetType().GetId()] = Resource{
-				Quantity:  dotation.GetQuantity(),
-				Threshold: dotation.GetThreshold()}
+				Quantity:      dotation.GetQuantity(),
+				LowThreshold:  dotation.GetLowThreshold(),
+				HighThreshold: dotation.GetHighThreshold()}
 		}
 	}
 	if surrenderedTo := mm.GetSurrenderedUnit(); surrenderedTo != nil {

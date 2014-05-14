@@ -1472,20 +1472,24 @@ func (s *TestSuite) TestUnitChangeResource(c *C) {
 
 	c.Assert(firstDotation, DeepEquals,
 		swapi.Resource{
-			Quantity:  3200,
-			Threshold: 10,
+			Quantity:      3200,
+			LowThreshold:  10,
+			HighThreshold: 100,
 		})
 	c.Assert(secondDotation, DeepEquals,
 		swapi.Resource{
-			Quantity:  8000,
-			Threshold: 10,
+			Quantity:      8000,
+			LowThreshold:  10,
+			HighThreshold: 100,
 		})
 
 	// Error: Invalid parameters count
 	err := client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
 
-	resource := swapi.Resource{}
+	resource := swapi.Resource{
+		HighThreshold: 100,
+	}
 
 	// Error: Invalid dotation category
 	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{1245: &resource})
@@ -1497,15 +1501,29 @@ func (s *TestSuite) TestUnitChangeResource(c *C) {
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] must be a positive number`)
 	resource.Quantity = 1000
 
-	// Error: Threshold must be a number between 0 and 100
-	resource.Threshold = 123
+	// Error: LowThreshold must be a number between 0 and 100
+	resource.LowThreshold = 123
 	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[2\] must be a number between 0 and 100`)
-	resource.Threshold = 50
+	resource.LowThreshold = 50
+
+	// Error: HighThreshold must be a number between 0 and 100
+	resource.HighThreshold = 123
+	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[3\] must be a number between 0 and 100`)
+
+	// Error: HighThreshold must be superior than LowThreshold
+	resource.LowThreshold = 100
+	resource.HighThreshold = 50
+	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameter\[0\]\[0\]\[2\] must be lower than high threshold percentage`)
+
+	resource.HighThreshold = 100
 
 	// Change 2 dotations
 	resource2 := swapi.Resource{
-		Threshold: 100,
+		LowThreshold:  99,
+		HighThreshold: 100,
 	}
 	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource, secondDotationId: &resource2})
 	c.Assert(err, IsNil)
@@ -1516,7 +1534,7 @@ func (s *TestSuite) TestUnitChangeResource(c *C) {
 	})
 
 	// Change 1 dotation
-	resource.Threshold = 42
+	resource.LowThreshold = 42
 	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource})
 	c.Assert(err, IsNil)
 
@@ -2332,11 +2350,13 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	c.Assert(unit.Resources, NotNil)
 	c.Assert(unit.Resources[1], DeepEquals,
 		swapi.Resource{
-			Quantity:  3200,
-			Threshold: 10,
+			Quantity:      3200,
+			LowThreshold:  10,
+			HighThreshold: 100,
 		})
 	resource := swapi.Resource{
-		Threshold: 10,
+		LowThreshold:  10,
+		HighThreshold: 100,
 	}
 	err = client.ChangeResource(unitId, map[uint32]*swapi.Resource{1: &resource})
 	c.Assert(err, IsNil)
@@ -2361,8 +2381,9 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	client.Model.WaitTicks(2)
 	c.Assert(client.Model.GetUnit(unitId).Resources[1], DeepEquals,
 		swapi.Resource{
-			Quantity:  3200,
-			Threshold: 10,
+			Quantity:      3200,
+			LowThreshold:  10,
+			HighThreshold: 100,
 		})
 	c.Assert(client.Model.GetData().SupplyHandlings, HasLen, 0)
 
@@ -2696,7 +2717,7 @@ func (s *TestSuite) TestRecoverAll(c *C) {
 	}
 	for k, v := range empty.Resources {
 		v.Quantity = 0
-		v.Threshold = 0
+		v.LowThreshold = 0
 		empty.Resources[k] = v
 	}
 	for _, withLog := range []bool{true, false} {

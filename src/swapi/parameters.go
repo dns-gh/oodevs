@@ -430,7 +430,8 @@ func MakeResources(resources map[uint32]*Resource) *sword.MissionParameter {
 		list = append(list, MakeList(
 			MakeIdentifier(k),
 			MakeQuantity(v.Quantity),
-			MakeFloat(v.Threshold),
+			MakeFloat(v.LowThreshold),
+			MakeFloat(v.HighThreshold),
 		))
 	}
 	return MakeParameter(list...)

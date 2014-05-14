@@ -32,6 +32,16 @@ type SupplyChecker interface {
 	Check(c *C, ctx *SupplyCheckContext, msg *sword.SimToClient_Content) bool
 }
 
+type SupplyEmptyChecker struct {
+}
+
+func (cc *SupplyEmptyChecker) Check(c *C, ctx *SupplyCheckContext, msg *sword.SimToClient_Content) bool {
+	c.Check(msg.LogSupplyHandlingCreation, IsNil)
+	c.Check(msg.LogSupplyHandlingUpdate, IsNil)
+	c.Check(msg.LogSupplyHandlingDestruction, IsNil)
+	return true
+}
+
 type SupplyCreateChecker struct {
 	supplier *sword.Tasker
 	provider *sword.Tasker
@@ -120,6 +130,9 @@ func checkSupply(c *C, client *swapi.Client, unit *swapi.Unit, offset int, callb
 			msg.SimulationToClient == nil {
 			return false
 		}
+		if len(checkers) == 0 {
+			return true
+		}
 		m := msg.SimulationToClient.GetMessage()
 		prev := idx
 		if checkers[idx].Check(c, &check, m) {
@@ -167,6 +180,92 @@ func checkSupplyUpdates(c *C, client *swapi.Client, unit *swapi.Unit, supplier *
 	checkSupply(c, client, unit, -1, callback, checkers...)
 }
 
+func (s *TestSuite) TestSupplyHandlingsBaseLowThreshold(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
+	supplierId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
+	supplier := swapi.MakeAutomatTasker(supplierId)
+
+	// Capacity = 10, Quantity => 6 => 60%, above low threshold, nothing happens
+	removeElectrogen_1 := func() {
+		err := client.ChangeResource(unit.Id,
+			map[uint32]*swapi.Resource{
+				uint32(electrogen_1): &swapi.Resource{
+					Quantity:      6,
+					LowThreshold:  50,
+					HighThreshold: 100,
+				}})
+		c.Assert(err, IsNil)
+	}
+	checkSupply(c, client, unit, -1, removeElectrogen_1, []SupplyChecker{&SupplyEmptyChecker{}}...)
+
+	// Capacity = 10, Quantity => 4 => 40%, below low threshold, a supply request is created
+	removeElectrogen_2 := func() {
+		err := client.ChangeResource(unit.Id,
+			map[uint32]*swapi.Resource{
+				uint32(electrogen_1): &swapi.Resource{
+					Quantity:      4,
+					LowThreshold:  50,
+					HighThreshold: 100,
+				}})
+		c.Assert(err, IsNil)
+	}
+	checkSupplyUpdates(c, client, unit, supplier, supplier, removeElectrogen_2)
+}
+
+func (s *TestSuite) TestSupplyHandlingsBaseHighThreshold(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := d.Units[132]
+	unit2 := d.Units[133]
+	unit3 := d.Units[133]
+	supplierId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
+	supplier := swapi.MakeAutomatTasker(supplierId)
+
+	// Capacity = 10, Quantity => 6 => 60%, above high threshold, nothing happens
+	removeElectrogen_1 := func() {
+		err := client.ChangeResource(unit2.Id,
+			map[uint32]*swapi.Resource{
+				uint32(electrogen_1): &swapi.Resource{
+					Quantity:      6,
+					LowThreshold:  30,
+					HighThreshold: 50,
+				}})
+		c.Assert(err, IsNil)
+	}
+	checkSupply(c, client, unit2, -1, removeElectrogen_1, []SupplyChecker{&SupplyEmptyChecker{}}...)
+
+	// Capacity = 10, Quantity => 4 => 40%, between high and low threshold, should be resupplied when another unit resupplies
+	removeElectrogen_2 := func() {
+		err := client.ChangeResource(unit3.Id,
+			map[uint32]*swapi.Resource{
+				uint32(electrogen_1): &swapi.Resource{
+					Quantity:      4,
+					LowThreshold:  30,
+					HighThreshold: 50,
+				}})
+		c.Assert(err, IsNil)
+	}
+	checkSupply(c, client, unit3, -1, removeElectrogen_2, []SupplyChecker{&SupplyEmptyChecker{}}...)
+
+	// Capacity = 10, Quantity => 4 => 40%, below low threshold, a supply request is created
+	removeElectrogen_3 := func() {
+		err := client.ChangeResource(unit.Id,
+			map[uint32]*swapi.Resource{
+				uint32(electrogen_1): &swapi.Resource{
+					Quantity:      4,
+					LowThreshold:  50,
+					HighThreshold: 100,
+				}})
+		c.Assert(err, IsNil)
+	}
+	checkSupply(c, client, unit2, -1, removeElectrogen_2, []SupplyChecker{&SupplyEmptyChecker{}}...)
+	checkSupplyUpdates(c, client, unit3, supplier, supplier, removeElectrogen_3)
+}
+
 func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
@@ -178,8 +277,9 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 		err := client.ChangeResource(unit.Id,
 			map[uint32]*swapi.Resource{
 				uint32(electrogen_1): &swapi.Resource{
-					Quantity:  0,
-					Threshold: 50,
+					Quantity:      0,
+					LowThreshold:  50,
+					HighThreshold: 100,
 				}})
 		c.Assert(err, IsNil)
 	}
@@ -195,8 +295,9 @@ func (s *TestSuite) TestSupplyHandlingsBase(c *C) {
 		err := client.ChangeResource(unit.Id,
 			map[uint32]*swapi.Resource{
 				uint32(electrogen_2): &swapi.Resource{
-					Quantity:  0,
-					Threshold: 50,
+					Quantity:      0,
+					LowThreshold:  50,
+					HighThreshold: 100,
 				}})
 		c.Assert(err, IsNil)
 	}
@@ -225,8 +326,9 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
 		err := client.RecoverStocks(unit.Id,
 			map[uint32]*swapi.Resource{
 				uint32(electrogen_1): &swapi.Resource{
-					Quantity:  0,
-					Threshold: 50,
+					Quantity:      0,
+					LowThreshold:  50,
+					HighThreshold: 100,
 				}})
 		c.Assert(err, IsNil)
 	}
@@ -245,8 +347,9 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBase(c *C) {
 		err := client.RecoverStocks(unit.Id,
 			map[uint32]*swapi.Resource{
 				uint32(electrogen_3): &swapi.Resource{
-					Quantity:  0,
-					Threshold: 50,
+					Quantity:      0,
+					LowThreshold:  50,
+					HighThreshold: 100,
 				}})
 		c.Assert(err, IsNil)
 	}
@@ -281,8 +384,9 @@ func (s *TestSuite) TestSupplyHandlingsBaseManual(c *C) {
 	err := client.ChangeResource(unit.Id,
 		map[uint32]*swapi.Resource{
 			uint32(electrogen_1): &swapi.Resource{
-				Quantity:  0,
-				Threshold: 50,
+				Quantity:      0,
+				LowThreshold:  50,
+				HighThreshold: 100,
 			}})
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
@@ -313,8 +417,9 @@ func (s *TestSuite) TestSupplyHandlingsBaseToBaseManual(c *C) {
 	err = client.RecoverStocks(unit.Id,
 		map[uint32]*swapi.Resource{
 			uint32(electrogen_1): &swapi.Resource{
-				Quantity:  0,
-				Threshold: 50,
+				Quantity:      0,
+				LowThreshold:  50,
+				HighThreshold: 100,
 			}})
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)

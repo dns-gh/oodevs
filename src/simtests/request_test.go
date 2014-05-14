@@ -187,8 +187,9 @@ func (s *TestSuite) TestSupplyRequests(c *C) {
 		err := client.ChangeResource(unit.Id,
 			map[uint32]*swapi.Resource{
 				uint32(electrogen_1): &swapi.Resource{
-					Quantity:  0,
-					Threshold: 50,
+					Quantity:      0,
+					LowThreshold:  50,
+					HighThreshold: 100,
 				}})
 		c.Assert(err, IsNil)
 	}
@@ -233,8 +234,9 @@ func (s *TestSuite) TestSupplyRequestsDotations(c *C) {
 	c.Assert(d.SupplyRequests, HasLen, 0)
 
 	resource := &swapi.Resource{
-		Quantity:  0,
-		Threshold: 50,
+		Quantity:      0,
+		LowThreshold:  50,
+		HighThreshold: 100,
 	}
 
 	// Create two supply requests
@@ -334,12 +336,14 @@ func (s *TestSuite) TestSupplyAutomatRequestsStocks(c *C) {
 	err = client.RecoverStocks(unit1.Id,
 		map[uint32]*swapi.Resource{
 			uint32(electrogen_1): &swapi.Resource{
-				Quantity:  0,
-				Threshold: 50,
+				Quantity:      0,
+				LowThreshold:  50,
+				HighThreshold: 100,
 			},
 			uint32(electrogen_3): &swapi.Resource{
-				Quantity:  0,
-				Threshold: 50,
+				Quantity:      0,
+				LowThreshold:  50,
+				HighThreshold: 100,
 			}})
 	c.Assert(err, IsNil)
 
@@ -384,20 +388,23 @@ func (s *TestSuite) TestSupplyFormationRequestsStocks(c *C) {
 	err := client.RecoverStocks(tc21Id,
 		map[uint32]*swapi.Resource{
 			uint32(electrogen_2): &swapi.Resource{
-				Quantity:  0,
-				Threshold: 50,
+				Quantity:      0,
+				LowThreshold:  50,
+				HighThreshold: 100,
 			}})
 	c.Assert(err, IsNil)
 
 	err = client.RecoverStocks(tc22Id,
 		map[uint32]*swapi.Resource{
 			uint32(electrogen_1): &swapi.Resource{
-				Quantity:  0,
-				Threshold: 50,
+				Quantity:      0,
+				LowThreshold:  50,
+				HighThreshold: 100,
 			},
 			uint32(electrogen_2): &swapi.Resource{
-				Quantity:  0,
-				Threshold: 50,
+				Quantity:      0,
+				LowThreshold:  50,
+				HighThreshold: 100,
 			}})
 	c.Assert(err, IsNil)
 
