@@ -48,7 +48,7 @@ public:
 
     //! @name Accessors
     //@{
-    const T_PathPoints& GetResult( bool useCheck = true ) const;
+    const T_PathPoints& GetResult() const;
     const DEC_PathType& GetPathType() const;
     //@}
 

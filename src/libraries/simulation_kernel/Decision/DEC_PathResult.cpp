@@ -370,9 +370,9 @@ bool DEC_PathResult::IsWaypoint( const MT_Vector2D& ) const
 // Name: DEC_PathResult::GetResult
 // Created: JVT 02-12-04
 //-----------------------------------------------------------------------------
-const DEC_PathResult::T_PathPoints& DEC_PathResult::GetResult( bool useCheck ) const
+const DEC_PathResult::T_PathPoints& DEC_PathResult::GetResult() const
 {
-    if( useCheck && GetState() == eComputing )
+    if( GetState() == eComputing )
         MT_LOG_ERROR_MSG( "Path is being computed" );
     return resultList_;
 }
