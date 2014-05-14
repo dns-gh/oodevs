@@ -444,7 +444,6 @@ void MainWindow::Load()
         staticModel_.Load( config_ );
         controllers_.LoadOptions( eModes_Gaming );
         unitStateDialog_->Load();
-        dockContainer_->Load();
     }
     catch( const xml::exception& e )
     {
@@ -522,6 +521,10 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     {
         if( !connected_ && simulation.IsInitialized() )
         {
+            // Legacy timeline need both the profile and the model to be initialized before we
+            // can load the new timeline. When legacy timeline will be removed, this line could be
+            // moved into Load()
+            dockContainer_->Load();
             connected_ = true; // we update the caption until Model is totally loaded
             if( login_.isEmpty() )
                 login_ = tools::translate( "LoginDialog", "Anonymous" );
@@ -556,6 +559,8 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const Simulation::Reconnection& reconnection )
 {
+    // we need to reset connected_ here to ensure dockContainer_->Load is called when reconnecting
+    connected_ = false;
     Load();
     network_.GetMessageMgr().Reconnect( reconnection.login_, reconnection.password_ );
 }
