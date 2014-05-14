@@ -63,7 +63,7 @@ tools::Path BOOST_RESOLVE( const tools::Path& filename )
 
 namespace xml
 {
-    inline std::string& remove_prolog( std::string& in )
+    std::string& remove_prolog( std::string& in )
     {
         const std::string::size_type position = in.find( "?>" );
         if( position != std::string::npos )
@@ -71,7 +71,7 @@ namespace xml
         return in;
     }
 
-    inline std::string& remove_crlf( std::string& in )
+    std::string& remove_crlf( std::string& in )
     {
         std::string::size_type position;
         while( (position = in.find_first_of( "\r\n" )) != std::string::npos )
@@ -79,14 +79,14 @@ namespace xml
         return in;
     }
 
-    inline bool is_inside_quotes( const std::string& in, std::string::size_type position )
+    bool is_inside_quotes( const std::string& in, std::string::size_type position )
     {
         if( in[position] == '\"' )
             return false;
         return std::count( in.begin(), in.begin() + position, '\'' ) % 2 == 1;
     }
 
-    inline std::string& replace( std::string& in, const std::string& from, const std::string& to )
+    std::string& replace( std::string& in, const std::string& from, const std::string& to )
     {
         std::string::size_type position = 0;
         while( (position = in.find( from, position )) != std::string::npos )
@@ -97,7 +97,7 @@ namespace xml
         return in;
     }
 
-    inline std::string format( const std::string& in )
+    std::string format( const std::string& in )
     {
         std::string result = in;
         remove_prolog( result );

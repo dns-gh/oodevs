@@ -326,7 +326,6 @@ bool DEC_Agent_Path::IsPointAvant( const TerrainData& nObjectTypesBefore, const 
 // Name: DEC_Agent_Path::GetPreviousPathPointOnDifferentLocation
 // Created: JVT 2005-07-08
 // -----------------------------------------------------------------------------
-inline
 DEC_Agent_Path::T_PathPoints::iterator DEC_Agent_Path::GetPreviousPathPointOnDifferentLocation( T_PathPoints::iterator itCurrent )
 {
     if( itCurrent == resultList_.end() )

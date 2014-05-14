@@ -185,7 +185,6 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
 // Name: DEC_Agent_PathfinderRule::GetEnemiesCost
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
-inline
 double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
     assert( path_.GetPathClass().AvoidEnemies() || path_.GetPathKnowledgeAgents().empty() );

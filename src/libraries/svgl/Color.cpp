@@ -26,15 +26,15 @@ namespace
     };
 
     // $$$$ ZEBRE 2007-11-19: vc80 iterator debugging...
-    inline bool operator<( const std::string& lhs, const ColorDefinition& rhs )
+    bool operator<( const std::string& lhs, const ColorDefinition& rhs )
     {
         return lhs < rhs.name;
     }
-    inline bool operator<( const ColorDefinition& lhs, const std::string& rhs )
+    bool operator<( const ColorDefinition& lhs, const std::string& rhs )
     {
         return lhs.name < rhs;
     }
-    inline bool operator<( const ColorDefinition& lhs, const ColorDefinition& rhs )
+    bool operator<( const ColorDefinition& lhs, const ColorDefinition& rhs )
     {
         return lhs < std::string( rhs.name );
     }

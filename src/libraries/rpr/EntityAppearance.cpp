@@ -80,11 +80,11 @@ namespace
         land_mask_surrendered = 1u << land_shift_surrendered, // 30 - Describes the surrender state of the vehicle occupants
         land_mask_masked = 1u << land_shift_masked // 31 - 0:not masked, 1:masked
     };
-    inline uint8_t getValue( uint32_t v, uint32_t mask, uint32_t shift )
+    uint8_t getValue( uint32_t v, uint32_t mask, uint32_t shift )
     {
         return static_cast< uint8_t >( (v & mask) >> shift );
     }
-    inline void setValue( uint32_t& val, uint8_t newVal, uint32_t mask, uint32_t shift )
+    void setValue( uint32_t& val, uint8_t newVal, uint32_t mask, uint32_t shift )
     {
         uint32_t t = (newVal<<shift);
         val &= ~(mask);

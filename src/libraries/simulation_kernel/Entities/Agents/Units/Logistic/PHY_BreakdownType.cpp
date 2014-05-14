@@ -27,7 +27,6 @@ unsigned int                      PHY_BreakdownType::nDiagnosticTime_ = 0;
 // Name: PHY_BreakdownType::ConvertType
 // Created: NLD 2004-12-20
 // -----------------------------------------------------------------------------
-inline
 PHY_BreakdownType::E_Type PHY_BreakdownType::ConvertType( const std::string& strType )
 {
     if( boost::iequals( strType, "M" ) )

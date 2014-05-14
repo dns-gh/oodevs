@@ -124,7 +124,6 @@ void PHY_WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_I
 // Name: PHY_WeaponDataType_DirectFire::GetMaxDistanceForPH
 // Created: JVT 03-09-19
 //-----------------------------------------------------------------------------
-inline
 double PHY_WeaponDataType_DirectFire::GetMaxDistanceForPH( double rPH, const PHY_Volume& targetVolume ) const
 {
     return weaponType_.GetPHModificator() * phs_[ targetVolume.GetID() ].GetMaxYForX( rPH );
@@ -134,7 +133,6 @@ double PHY_WeaponDataType_DirectFire::GetMaxDistanceForPH( double rPH, const PHY
 // Name: PHY_WeaponDataType_DirectFire::GetMinDistanceForPH
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-inline
 double PHY_WeaponDataType_DirectFire::GetMinDistanceForPH( double rPH, const PHY_Volume& targetVolume ) const
 {
     return weaponType_.GetPHModificator() * phs_[ targetVolume.GetID() ].GetMinYForX( rPH );

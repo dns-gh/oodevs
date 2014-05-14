@@ -20,7 +20,7 @@
 #include "tools/SessionConfig.h"
 #include <xeumeuleu/xml.hpp>
 
-inline std::ostream& operator<<( std::ostream& os, const QString& s )
+static std::ostream& operator<<( std::ostream& os, const QString& s )
 {
     return os << s.toStdString();
 }

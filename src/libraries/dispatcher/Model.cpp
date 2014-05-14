@@ -57,16 +57,6 @@
 #include <xeumeuleu/xml.hpp>
 #pragma warning( disable : 4503 4355 )
 
-inline std::ostream& operator<<( std::ostream& os, const QString& s )
-{
-    return os << s.toStdString();
-}
-
-inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )
-{
-    return xos << s.toStdString();
-}
-
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

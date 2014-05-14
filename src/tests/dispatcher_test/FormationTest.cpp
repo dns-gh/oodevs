@@ -15,7 +15,7 @@
 #include "dispatcher/Formation.h"
 #include "protocol/ClientSenders.h"
 
-inline std::ostream& operator<<( std::ostream& os, const QString& s )
+static std::ostream& operator<<( std::ostream& os, const QString& s )
 {
     return os << s.toStdString();
 }

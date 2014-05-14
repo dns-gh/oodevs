@@ -409,7 +409,6 @@ void DEC_Knowledge_Object::UpdatePerceptionSources( const DEC_Knowledge_ObjectPe
 // Name: DEC_Knowledge_Object::UpdateCurrentPerceptionLevel
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-inline
 void DEC_Knowledge_Object::UpdateCurrentPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel )
 {
     if( perceptionLevel > *pCurrentPerceptionLevel_ )
@@ -420,7 +419,6 @@ void DEC_Knowledge_Object::UpdateCurrentPerceptionLevel( const PHY_PerceptionLev
 // Name: DEC_Knowledge_Object::UpdateMaxPerceptionLevel
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-inline
 bool DEC_Knowledge_Object::UpdateMaxPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel )
 {
     if( perceptionLevel > *pMaxPerceptionLevel_ )

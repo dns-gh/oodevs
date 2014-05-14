@@ -20,7 +20,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_UrbanPerception )
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
 template< typename Archive >
-inline void save_construct_data( Archive& archive, const DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
+void save_construct_data( Archive& archive, const DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
 {
     const MIL_Agent_ABC* const perceiver = &perception->perceiver_;
     unsigned long id = perception->nUrbanObjectId_;
@@ -33,7 +33,7 @@ inline void save_construct_data( Archive& archive, const DEC_Knowledge_UrbanPerc
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
 template< typename Archive >
-inline void load_construct_data( Archive& archive, DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
+void load_construct_data( Archive& archive, DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
 {
     MIL_Agent_ABC* perceiver;
     unsigned long id;
