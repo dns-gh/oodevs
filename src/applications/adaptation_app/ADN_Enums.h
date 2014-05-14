@@ -386,6 +386,7 @@ enum E_MissionParameterType
     eMissionParameterTypeResourceNetworkType,
     eMissionParameterTypeStage,
     eMissionParameterTypeLimaFunction,
+    eMissionParameterTypeItinerary,
 
     eNbrMissionParameterType
 };
