@@ -1,4 +1,4 @@
---- Returns true if this agent can be relieved, false otherwise.
+--- Returns true if the given agent can be relieved, false otherwise.
 -- This method can only be called by an agent.
 -- @param agent DirectIA agent
 -- @return Boolean
