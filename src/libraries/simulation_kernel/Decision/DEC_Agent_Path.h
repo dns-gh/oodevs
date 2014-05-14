@@ -94,8 +94,8 @@ public:
 private:
     //! @name Init
     //@{
-    void Initialize( const T_PointVector& pathPoints );
-    void InitializePathKnowledges( const T_PointVector& pathPoints );
+    void Initialize();
+    void InitializePathKnowledges();
     //@}
 
     //! @name Points insertion Tools
@@ -121,7 +121,6 @@ private:
     //! @name Member data
     //@{
     MIL_Agent_ABC& queryMaker_;
-    // Path calculation parameters
     const DEC_Agent_PathClass& pathClass_;
     bool bRefine_;
     T_PointVector initialWaypoints_;
@@ -129,7 +128,7 @@ private:
     MIL_Fuseau fuseau_;
     MIL_Fuseau automateFuseau_;
     MT_Vector2D vDirDanger_;
-    PHY_Speeds unitSpeeds_;
+    const PHY_Speeds unitSpeeds_;
     double rMaxSlope_;
     double rSlopeDeceleration_;
     T_PathKnowledgeAgentVector pathKnowledgeAgents_;

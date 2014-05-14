@@ -90,7 +90,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     initialWaypoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     std::copy( points.begin(), points.end(), std::back_inserter( initialWaypoints_ ) );
     std::copy( points.begin(), points.end(), std::back_inserter( nextWaypoints_ ) );
-    Initialize( initialWaypoints_ );
+    Initialize();
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const std::vector< bo
         if( it != points.begin() )
             nextWaypoints_.push_back( **it );
     }
-    Initialize( initialWaypoints_ );
+    Initialize();
 }
 
 //-----------------------------------------------------------------------------
@@ -149,7 +149,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vP
     initialWaypoints_.push_back( vPosStart );
     initialWaypoints_.push_back( vPosEnd );
     nextWaypoints_.push_back( vPosEnd );
-    Initialize( initialWaypoints_ );
+    Initialize();
 }
 
 //-----------------------------------------------------------------------------
@@ -183,15 +183,15 @@ void DEC_Agent_Path::Destroy()
 // Name: DEC_Agent_Path::Initialize
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::Initialize( const T_PointVector& points )
+void DEC_Agent_Path::Initialize()
 {
-    InitializePathKnowledges( points );
-    if( points.empty() )
+    InitializePathKnowledges();
+    if( initialWaypoints_.empty() )
     {
         MT_LOG_ERROR_MSG( "Initializing empty agent path" );
         return;
     }
-    for( auto it = points.begin(); it != points.end() - 1; ++it )
+    for( auto it = initialWaypoints_.begin(); it != initialWaypoints_.end() - 1; ++it )
         RegisterPathSection( *new DEC_Agent_PathSection( *this, path_, *it, *(it + 1), bRefine_, !automateFuseau_.IsNull() ) );
 }
 
@@ -208,17 +208,17 @@ double DEC_Agent_Path::GetUnitMajorWeight() const
 // Name: DEC_Agent_Path::InitializePathKnowledges
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
+void DEC_Agent_Path::InitializePathKnowledges()
 {
     if( pathClass_.AvoidEnemies() )
     {
         auto bbKg = queryMaker_.GetKnowledgeGroup()->GetKnowledge();
         if( bbKg )
         {
-            const T_KnowledgeAgentVector& enemies = bbKg->GetEnemies();
-            for( auto itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
+            const auto& enemies = bbKg->GetEnemies();
+            for( auto it = enemies.begin(); it != enemies.end(); ++it )
             {
-                const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
+                const DEC_Knowledge_Agent& knowledge = **it;
                 if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
                 {
                     const double factor = pathClass_.GetEnemyCostOnContact();
@@ -239,11 +239,11 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
             container->GetObjectsAtInteractionHeight( knowledgesObject, queryMaker_, filter );
 
         T_PointVector firstPointVector;
-        if( !pathPoints.empty() )
-            firstPointVector.push_back( *pathPoints.begin() );
-        for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
+        if( !initialWaypoints_.empty() )
+            firstPointVector.push_back( *initialWaypoints_.begin() );
+        for( auto it = knowledgesObject.begin(); it != knowledgesObject.end(); ++it )
         {
-            const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
+            const DEC_Knowledge_Object& knowledge = **it;
             if( knowledge.CanCollideWith( queryMaker_ ) )
             {
                 if( knowledge.IsObjectInsidePathPoint( firstPointVector, &queryMaker_ ) )
@@ -287,7 +287,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
             bbKg->GetPopulations( knowledgesPopulation );
             pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
             for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-                pathKnowledgePopulations_.push_back( boost::make_shared< DEC_Path_KnowledgePopulation >( boost::cref( **it ), boost::cref( pathClass_ ), !queryMaker_.GetType().IsTerrorist() ) );
+                pathKnowledgePopulations_.push_back( boost::make_shared< DEC_Path_KnowledgePopulation >( **it, pathClass_, !queryMaker_.GetType().IsTerrorist() ) );
         }
 
     }
