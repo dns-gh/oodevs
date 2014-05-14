@@ -100,7 +100,7 @@ integration.getSimPositionAwayFromknowledgeAgents = function( knowledgeAgents, d
     local kAgentPositions = {}
     for _, kAgent in pairs( knowledgeAgents ) do
         if kAgent:isValid() then
-            kAgentPositions[ #kAgentPositions + 1 ] = kAgentPositions:getPosition()
+            kAgentPositions[ #kAgentPositions + 1 ] = kAgent:getPosition()
         end
     end
     
