@@ -802,22 +802,9 @@
 
     <target name="checkproto" description="check protobuf definitions">
         <python>
-            <arg value="${bin.dir}/protolint/protolint.py"/>
+            <arg value="${bin.dir}/buildtools/protolint/protolint.py"/>
             <arg value="style"/>
             <arg value="${src.dir}/libraries/protocol/proto"/>
-        </python>
-        <python>
-            <arg value="${bin.dir}/protolint/protolint.py"/>
-            <arg value="compare"/>
-            <arg value="${bin.dir}/protolint/proto/proto-5.3.x"/>
-            <arg value="${src.dir}/libraries/protocol/proto"/>
-            <!-- New magic actions are fine -->
-            <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitMagicAction.Type"/>
-            <arg value="--exclude=ClientToSim.Content.UnitMagicAction.Type"/>
-            <arg value="--exclude=ClientToSim.Content.MagicAction.Type"/>
-            <!-- New logistic state introduced by manual mode -->
-            <arg value="--exclude=*LogMaintenanceHandlingUpdate.EnumLogMaintenanceHandlingStatus"/>
-            <arg value="--exclude=*EnumPrecipitationType"/>
         </python>
     </target>
 
@@ -862,7 +849,6 @@
         <update name="qt" version="4.7.0.r660"/>
         <update name="spatialite" version="3.1.0.r669"/>
         <update name="sqlite" version="3.7.13.r229"/>
-        <update name="sword-proto" package="sword-protobuf" todir="${bin.dir}"/>
         <update name="sword-doc" package="doc" todir="${root.dir}/doc"/>
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
         <update name="terrain"/>
