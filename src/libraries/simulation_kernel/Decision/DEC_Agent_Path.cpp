@@ -9,14 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Agent_Path.h"
-#include "DEC_Agent_PathSection.h"
 #include "DEC_Agent_PathClass.h"
-#include "DEC_Path_KnowledgeAgent.h"
-#include "DEC_Path_KnowledgeObject.h"
-#include "DEC_Path_KnowledgeObjectFlood.h"
-#include "DEC_Path_KnowledgeObjectBurnSurface.h"
-#include "DEC_Path_KnowledgeObjectDisaster.h"
-#include "DEC_Path_KnowledgePopulation.h"
+#include "DEC_Agent_PathSection.h"
+#include "DEC_Agent_PathfinderPath.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_PathType.h"
@@ -24,44 +19,16 @@
 #include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
-#include "Entities/MIL_Army.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
-#include "Entities/Objects/BurnSurfaceCapacity.h"
-#include "Entities/Objects/DisasterCapacity.h"
-#include "Entities/Objects/FloodCapacity.h"
-#include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Tools/MIL_Config.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
-#include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
-
-namespace
-{
-    double GetWeight( const MIL_Agent_ABC& queryMaker )
-    {
-        double weight = queryMaker.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight();
-        const auto& reinforcements = queryMaker.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-        for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
-            weight = std::max( weight, ( *it )->GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight() );
-        return weight;
-    }
-}
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path constructor
@@ -71,16 +38,9 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
-    , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
-    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
-    , rSlopeDeceleration_      ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetSlopeDeceleration() )
-    , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
     , destroyed_               ( false )
-    , unitMajorWeight_         ( GetWeight( queryMaker ) )
-    , path_( *this )
 {
     queryMaker_.RegisterPath( *this );
     fuseau_= queryMaker.GetOrderManager().GetFuseau();
@@ -101,16 +61,9 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const std::vector< bo
     : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
-    , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
-    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
-    , rSlopeDeceleration_      ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetSlopeDeceleration() )
-    , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
     , destroyed_               ( false )
-    , unitMajorWeight_         ( GetWeight( queryMaker ) )
-    , path_( *this )
 {
     queryMaker_.RegisterPath( *this );
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
@@ -132,16 +85,9 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vP
     : DEC_PathResult            ( pathType )
     , queryMaker_               ( queryMaker )
     , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
-    , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
-    , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
-    , rSlopeDeceleration_       ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetSlopeDeceleration() )
-    , rCostOutsideOfAllObjects_ ( 0. )
     , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_       ( false )
     , destroyed_                ( false )
-    , unitMajorWeight_          ( GetWeight( queryMaker ) )
-    , path_( *this )
 {
     queryMaker_.RegisterPath( *this );
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
@@ -185,112 +131,14 @@ void DEC_Agent_Path::Destroy()
 // -----------------------------------------------------------------------------
 void DEC_Agent_Path::Initialize()
 {
-    InitializePathKnowledges();
     if( initialWaypoints_.empty() )
     {
         MT_LOG_ERROR_MSG( "Initializing empty agent path" );
         return;
     }
+    path_.reset( new DEC_Agent_PathfinderPath( queryMaker_, pathClass_, initialWaypoints_ ) );
     for( auto it = initialWaypoints_.begin(); it != initialWaypoints_.end() - 1; ++it )
-        RegisterPathSection( *new DEC_Agent_PathSection( *this, path_, *it, *(it + 1), bRefine_, !automateFuseau_.IsNull() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetUnitMaxSlope
-// Created: RPD 2009-11-23
-// -----------------------------------------------------------------------------
-double DEC_Agent_Path::GetUnitMajorWeight() const
-{
-    return unitMajorWeight_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::InitializePathKnowledges
-// Created: NLD 2004-04-06
-// -----------------------------------------------------------------------------
-void DEC_Agent_Path::InitializePathKnowledges()
-{
-    if( pathClass_.AvoidEnemies() )
-    {
-        auto bbKg = queryMaker_.GetKnowledgeGroup()->GetKnowledge();
-        if( bbKg )
-        {
-            const auto& enemies = bbKg->GetEnemies();
-            for( auto it = enemies.begin(); it != enemies.end(); ++it )
-            {
-                const DEC_Knowledge_Agent& knowledge = **it;
-                if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
-                {
-                    const double factor = pathClass_.GetEnemyCostOnContact();
-                    if( factor > 0 )
-                        pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge.GetPosition(),
-                            pathClass_.GetEnemyCostAtSecurityRange(), factor, knowledge.GetMaxRangeToFireOn( queryMaker_, 0 ) ) );
-                }
-            }
-        }
-    }
-
-    // Objects
-    if( pathClass_.AvoidObjects() )
-    {
-        T_KnowledgeObjectVector knowledgesObject;
-        MIL_PathObjectFilter filter;
-        if( DEC_BlackBoard_CanContainKnowledgeObject* container = queryMaker_.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
-            container->GetObjectsAtInteractionHeight( knowledgesObject, queryMaker_, filter );
-
-        T_PointVector firstPointVector;
-        if( !initialWaypoints_.empty() )
-            firstPointVector.push_back( *initialWaypoints_.begin() );
-        for( auto it = knowledgesObject.begin(); it != knowledgesObject.end(); ++it )
-        {
-            const DEC_Knowledge_Object& knowledge = **it;
-            if( knowledge.CanCollideWith( queryMaker_ ) )
-            {
-                if( knowledge.IsObjectInsidePathPoint( firstPointVector, &queryMaker_ ) )
-                {
-                    if( const MIL_Object_ABC* pObject = knowledge.GetObjectKnown() )
-                    {
-                        TerrainData data;
-                        double rMaxSpeed = queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeed( data, *pObject );
-                        if( rMaxSpeed == 0. || rMaxSpeed == std::numeric_limits< double >::max() )
-                            continue;
-                    }
-                }
-
-                if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
-                    pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
-
-                T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
-                bool empty = pathKnowledges.empty();
-                if( knowledge.GetType().GetCapacity< FloodCapacity >() )
-                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectFlood >( queryMaker_.GetType().GetUnitType().GetCrossingHeight(), knowledge ) );
-                else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
-                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectBurnSurface >( knowledge ) );
-                else if( knowledge.GetType().GetCapacity< DisasterCapacity >() )
-                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectDisaster >( queryMaker_, knowledge ) );
-                else if( ( pathClass_.GetObjectCost( knowledge.GetType() ) != 0 && knowledge.GetLocalisation().GetType() != TER_Localisation::eNone )
-                     || knowledge.HasAgentMaxSpeedMultiplier() )
-                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObject >( knowledge, pathClass_.GetObjectCost( knowledge.GetType() ), pathClass_.GetThreshold() ) );
-                if( empty && pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
-                    rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
-            }
-        }
-    }
-
-    // Populations
-    if( pathClass_.HandlePopulations() )
-    {
-        auto bbKg = queryMaker_.GetKnowledgeGroup()->GetKnowledge();
-        if( bbKg )
-        {
-            T_KnowledgePopulationVector knowledgesPopulation;
-            bbKg->GetPopulations( knowledgesPopulation );
-            pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
-            for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-                pathKnowledgePopulations_.push_back( boost::make_shared< DEC_Path_KnowledgePopulation >( **it, pathClass_, !queryMaker_.GetType().IsTerrorist() ) );
-        }
-
-    }
+        RegisterPathSection( *new DEC_Agent_PathSection( *this, *path_, *it, *(it + 1), bRefine_, !automateFuseau_.IsNull() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -573,9 +421,7 @@ void DEC_Agent_Path::InsertDecPoints()
 void DEC_Agent_Path::CleanAfterComputation()
 {
     DEC_Path::CleanAfterComputation();
-    pathKnowledgeObjects_.clear();
-    pathKnowledgeAgents_.clear();
-    pathKnowledgePopulations_.clear();
+    path_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -615,20 +461,6 @@ void DEC_Agent_Path::Execute( TER_Pathfinder_ABC& pathfind )
         else
             queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( report::eRC_TerrainDifficile );
     }
-
-#ifndef NDEBUG
-    for( auto it = resultList_.begin(); it != resultList_.end(); )
-    {
-        DEC_PathPoint& point = **it;
-
-//        if( it != resultList_.begin() && !unitSpeeds_.IsPassable( point.GetObjectTypes() ) )
-//            throw MASA_EXCEPTION( "Unit max speed is not positive for a given object" );
-
-        ++it;
-        if( it != resultList_.end() && unitSpeeds_.GetMaxSpeed( point.GetObjectTypesToNextPoint() ) <= 0 )
-            throw MASA_EXCEPTION( "Unit max speed is not positive for a given object" );
-    }
-#endif
 
     if( MIL_AgentServer::IsInitialized() && MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
@@ -704,96 +536,6 @@ void DEC_Agent_Path::CancelPath()
 const DEC_Agent_PathClass& DEC_Agent_Path::GetPathClass() const
 {
     return pathClass_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetUnitSpeeds
-// Created: NLD 2005-02-22
-// -----------------------------------------------------------------------------
-const PHY_Speeds& DEC_Agent_Path::GetUnitSpeeds() const
-{
-    return unitSpeeds_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetUnitMaxSlope
-// Created: AGE 2005-04-13
-// -----------------------------------------------------------------------------
-double DEC_Agent_Path::GetUnitMaxSlope() const
-{
-    return rMaxSlope_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetUnitSlopeDeceleration
-// Created: JSR 2013-11-08
-// -----------------------------------------------------------------------------
-double DEC_Agent_Path::GetUnitSlopeDeceleration() const
-{
-    return rSlopeDeceleration_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetAutomataFuseau
-// Created: SBO 2005-08-17
-// -----------------------------------------------------------------------------
-const MIL_Fuseau& DEC_Agent_Path::GetAutomataFuseau() const
-{
-    return automateFuseau_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetFuseau
-// Created: NLD 2005-02-22
-// -----------------------------------------------------------------------------
-const MIL_Fuseau& DEC_Agent_Path::GetFuseau() const
-{
-    return fuseau_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetDirDanger
-// Created: NLD 2005-02-22
-// -----------------------------------------------------------------------------
-const MT_Vector2D& DEC_Agent_Path::GetDirDanger() const
-{
-    return vDirDanger_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetPathKnowledgeObjects
-// Created: NLD 2005-02-22
-// -----------------------------------------------------------------------------
-const DEC_Agent_Path::T_PathKnowledgeObjectByTypesVector& DEC_Agent_Path::GetPathKnowledgeObjects() const
-{
-    return pathKnowledgeObjects_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetCostOutsideOfAllObjects
-// Created: NLD 2007-02-09
-// -----------------------------------------------------------------------------
-double DEC_Agent_Path::GetCostOutsideOfAllObjects() const
-{
-    return rCostOutsideOfAllObjects_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetPathKnowledgeAgents
-// Created: NLD 2005-02-22
-// -----------------------------------------------------------------------------
-const DEC_Agent_Path::T_PathKnowledgeAgentVector& DEC_Agent_Path::GetPathKnowledgeAgents() const
-{
-    return pathKnowledgeAgents_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetPathKnowledgePopulations
-// Created: SBO 2006-02-23
-// -----------------------------------------------------------------------------
-const DEC_Agent_Path::T_PathKnowledgePopulationVector& DEC_Agent_Path::GetPathKnowledgePopulations() const
-{
-    return pathKnowledgePopulations_;
 }
 
 // -----------------------------------------------------------------------------

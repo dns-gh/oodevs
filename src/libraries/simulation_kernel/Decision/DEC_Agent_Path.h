@@ -10,20 +10,15 @@
 #ifndef __DEC_Agent_Path_h_
 #define __DEC_Agent_Path_h_
 
-#include "DEC_Agent_PathfinderPath.h"
 #include "Decision/DEC_PathResult.h"
-#include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "MT_Tools/MT_Profiler.h"
 #include <boost/shared_ptr.hpp>
 
-class DEC_Path_KnowledgeAgent;
-class DEC_Path_KnowledgeObject_ABC;
-class DEC_Path_KnowledgePopulation;
 class MIL_LimaOrder;
 class MIL_Agent_ABC;
-class MIL_Object_ABC;
 class DEC_Agent_PathClass;
+class DEC_Agent_PathfinderPath;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -31,15 +26,6 @@ class DEC_Agent_PathClass;
 //*****************************************************************************
 class DEC_Agent_Path : public DEC_PathResult
 {
-public:
-    //! @name Types
-    //@{
-    typedef std::vector< DEC_Path_KnowledgeAgent >T_PathKnowledgeAgentVector;
-    typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > >  T_PathKnowledgeObjectVector;
-    typedef std::vector< T_PathKnowledgeObjectVector > T_PathKnowledgeObjectByTypesVector;
-    typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgePopulation > > T_PathKnowledgePopulationVector;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -69,18 +55,7 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_Fuseau& GetFuseau() const;
-    const MIL_Fuseau& GetAutomataFuseau() const;
-    const PHY_Speeds& GetUnitSpeeds() const;
-    double GetUnitMaxSlope() const;
-    double GetUnitSlopeDeceleration() const;
-    const MT_Vector2D& GetDirDanger() const;
-    const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects() const;
-    double GetCostOutsideOfAllObjects() const;
-    const T_PathKnowledgeAgentVector& GetPathKnowledgeAgents() const;
-    const T_PathKnowledgePopulationVector& GetPathKnowledgePopulations() const;
     const DEC_Agent_PathClass& GetPathClass() const;
-    double GetUnitMajorWeight() const;
     const T_PointVector& GetNextWaypoints() const;
     //@}
 
@@ -95,7 +70,6 @@ private:
     //! @name Init
     //@{
     void Initialize();
-    void InitializePathKnowledges();
     //@}
 
     //! @name Points insertion Tools
@@ -127,19 +101,10 @@ private:
     T_PointVector nextWaypoints_;
     MIL_Fuseau fuseau_;
     MIL_Fuseau automateFuseau_;
-    MT_Vector2D vDirDanger_;
-    const PHY_Speeds unitSpeeds_;
-    double rMaxSlope_;
-    double rSlopeDeceleration_;
-    T_PathKnowledgeAgentVector pathKnowledgeAgents_;
-    T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
-    double rCostOutsideOfAllObjects_;
-    T_PathKnowledgePopulationVector pathKnowledgePopulations_;
     MT_Profiler profiler_;
     bool bDecPointsInserted_;
     bool destroyed_;
-    double unitMajorWeight_;
-    DEC_Agent_PathfinderPath path_;
+    std::unique_ptr< DEC_Agent_PathfinderPath > path_;
     //@}
 };
 

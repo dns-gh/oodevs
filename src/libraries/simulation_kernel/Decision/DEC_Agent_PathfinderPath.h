@@ -10,17 +10,19 @@
 #ifndef __DEC_Agent_PathfinderPath_h_
 #define __DEC_Agent_PathfinderPath_h_
 
+#include "DEC_Path_KnowledgeAgent.h"
+#include "Entities/Agents/Units/PHY_Speeds.h"
+#include "Entities/Orders/MIL_Fuseau.h"
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
-class MIL_Fuseau;
+class MIL_Agent_ABC;
 class PHY_Speeds;
 class DEC_Agent_PathClass;
 class DEC_Path_KnowledgeAgent;
 class DEC_Path_KnowledgeObject_ABC;
 class DEC_Path_KnowledgePopulation;
-class DEC_Agent_Path;
 
 // =============================================================================
 /** @class  DEC_Agent_PathfinderPath
@@ -37,7 +39,7 @@ private:
     typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgePopulation > > T_PathKnowledgePopulationVector;
 
 public:
-    DEC_Agent_PathfinderPath( const DEC_Agent_Path& path );
+    DEC_Agent_PathfinderPath( const MIL_Agent_ABC& agent, const DEC_Agent_PathClass& pathClass, const T_PointVector& points );
 
     const MIL_Fuseau& GetFuseau() const;
     const MIL_Fuseau& GetAutomataFuseau() const;
@@ -51,12 +53,26 @@ public:
     double GetUnitMajorWeight() const;
     double GetCostOutsideOfAllObjects() const;
 
-    const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects() const;
     const T_PathKnowledgeAgentVector& GetPathKnowledgeAgents() const;
+    const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects() const;
     const T_PathKnowledgePopulationVector& GetPathKnowledgePopulations() const;
 
 private:
-    const DEC_Agent_Path& path_;
+    void Initialize( const MIL_Agent_ABC& agent, const T_PointVector& points );
+
+private:
+    const MIL_Fuseau fuseau_;
+    const MIL_Fuseau automataFuseau_;
+    const MT_Vector2D dangerDirection_;
+    const double maxSlope_;
+    const double slopeDeceleration_;
+    const double majorWeight_;
+    double costOutsideOfAllObjects_;
+    const DEC_Agent_PathClass& class_;
+    const PHY_Speeds speeds_;
+    T_PathKnowledgeAgentVector pathKnowledgeAgents_;
+    T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
+    T_PathKnowledgePopulationVector pathKnowledgePopulations_;
 };
 
 #endif // __DEC_Agent_PathfinderPath_h_
