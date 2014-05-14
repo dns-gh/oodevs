@@ -80,6 +80,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     , bDecPointsInserted_      ( false )
     , destroyed_               ( false )
     , unitMajorWeight_         ( GetWeight( queryMaker ) )
+    , path_( *this )
 {
     queryMaker_.RegisterPath( *this );
     fuseau_= queryMaker.GetOrderManager().GetFuseau();
@@ -109,6 +110,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const std::vector< bo
     , bDecPointsInserted_      ( false )
     , destroyed_               ( false )
     , unitMajorWeight_         ( GetWeight( queryMaker ) )
+    , path_( *this )
 {
     queryMaker_.RegisterPath( *this );
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
@@ -139,6 +141,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vP
     , bDecPointsInserted_       ( false )
     , destroyed_                ( false )
     , unitMajorWeight_          ( GetWeight( queryMaker ) )
+    , path_( *this )
 {
     queryMaker_.RegisterPath( *this );
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
@@ -189,7 +192,7 @@ void DEC_Agent_Path::Initialize( const T_PointVector& points )
         return;
     }
     for( auto it = points.begin(); it != points.end() - 1; ++it )
-        RegisterPathSection( *new DEC_Agent_PathSection( *this, *it, *(it + 1) ) );
+        RegisterPathSection( *new DEC_Agent_PathSection( *this, path_, *it, *(it + 1), NeedRefine(), UseStrictClosest() ) );
 }
 
 // -----------------------------------------------------------------------------

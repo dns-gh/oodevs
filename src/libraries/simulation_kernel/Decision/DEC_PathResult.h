@@ -10,6 +10,7 @@
 #ifndef __DEC_PathResult_h_
 #define __DEC_PathResult_h_
 
+#include "DEC_PathResult_ABC.h"
 #include "Decision/DEC_Path.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
@@ -29,7 +30,7 @@ class MIL_Object_ABC;
 // Created: JDY 03-02-11
 // Last modified: JVT 03-11-26
 //*****************************************************************************
-class DEC_PathResult : public DEC_Path
+class DEC_PathResult : public DEC_Path, public DEC_PathResult_ABC
 {
 public:
     //! @name Types

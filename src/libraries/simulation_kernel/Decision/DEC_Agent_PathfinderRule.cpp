@@ -9,13 +9,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Agent_PathfinderRule.h"
-#include "DEC_Agent_Path.h"
+#include "DEC_Agent_PathfinderPath.h"
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Path_KnowledgeObject_ABC.h"
 #include "DEC_Path_KnowledgePopulation.h"
 #include "DEC_Path_KnowledgeAgent.h"
 #include "MIL_AgentServer.h"
 #include "SlopeSpeedModifier.h"
+#include "Entities/Agents/Units/PHY_Speeds.h"
+#include "Entities/Orders/MIL_Fuseau.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanCache.h"
@@ -61,9 +63,8 @@ void DEC_Agent_PathfinderRule::InitializeAutomateFuseauData( const MT_Vector2D& 
 // Name: DEC_Agent_PathfinderRule constructor
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const DEC_Agent_Path& path, const MT_Vector2D& from, const MT_Vector2D& to )
-    : TerrainRule_ABC                ()
-    , path_                          ( path )
+DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const DEC_Agent_PathfinderPath& path, const MT_Vector2D& from, const MT_Vector2D& to )
+    : path_                          ( path )
     , world_                         ( TER_World::GetWorld() )
     , altitudeData_                  ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
     , rMaxSpeed_                     ( float( path.GetUnitSpeeds().GetMaxSpeed() ) * 1.1f )
@@ -72,8 +73,8 @@ DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const DEC_Agent_Path& path, 
     , rAvoidedTerrainCost_           ( avoidedTerrain_ == TerrainData() ? 0. : path.GetPathClass().GetAvoidedTerrainCost() )
     , preferedTerrain_               ( path.GetPathClass().GetPreferedTerrain() )
     , rPreferedTerrainCost_          ( preferedTerrain_ == TerrainData() ? 0. : path.GetPathClass().GetPreferedTerrainCost() )
-    , rMinAltitude_                  ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMinAltitude() )
-    , rMaxAltitude_                  ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMaxAltitude() )
+    , rMinAltitude_                  ( altitudeData_.GetMinAltitude() )
+    , rMaxAltitude_                  ( altitudeData_.GetMaxAltitude() )
     , rAltitudeCostPerMeter_         ( path.GetPathClass().GetAltitudePreference() )
     , rMaxSlope_                     ( path.GetUnitMaxSlope() )
     , rSlopeDeceleration_            ( path.GetUnitSlopeDeceleration() )
@@ -155,11 +156,11 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
 {
     // default cost : outside all objects
     double rObjectCost = path_.GetCostOutsideOfAllObjects();
-    const DEC_Agent_Path::T_PathKnowledgeObjectByTypesVector& knowledgesByTypes = path_.GetPathKnowledgeObjects();
+    const auto& knowledgesByTypes = path_.GetPathKnowledgeObjects();
     for( auto itType = knowledgesByTypes.begin(); itType != knowledgesByTypes.end(); ++itType )
     {
         bool bInsideObjectType = false;
-        const DEC_Agent_Path::T_PathKnowledgeObjectVector& knowledges = *itType;
+        const auto& knowledges = *itType;
         for( auto itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
         {
             double rCurrentObjectCost = ( *itKnowledge )->ComputeCost( from, to, nToTerrainType, nLinkTerrainType, path_.GetUnitMajorWeight() );

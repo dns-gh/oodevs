@@ -10,6 +10,7 @@
 #ifndef __DEC_Agent_Path_h_
 #define __DEC_Agent_Path_h_
 
+#include "DEC_Agent_PathfinderPath.h"
 #include "Decision/DEC_PathResult.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Orders/MIL_Fuseau.h"
@@ -141,6 +142,7 @@ private:
     bool bDecPointsInserted_;
     bool destroyed_;
     double unitMajorWeight_;
+    DEC_Agent_PathfinderPath path_;
     //@}
 };
 

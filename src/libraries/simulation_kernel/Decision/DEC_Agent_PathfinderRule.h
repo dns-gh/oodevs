@@ -14,7 +14,7 @@
 #include "MT_Tools/MT_Vector2D.h"
 
 class MIL_Fuseau;
-class DEC_Agent_Path;
+class DEC_Agent_PathfinderPath;
 class PHY_RawVisionData;
 class TER_World;
 
@@ -29,7 +29,7 @@ class DEC_Agent_PathfinderRule : public TerrainRule_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Agent_PathfinderRule( const DEC_Agent_Path& path, const MT_Vector2D& from, const MT_Vector2D& to );
+             DEC_Agent_PathfinderRule( const DEC_Agent_PathfinderPath& path, const MT_Vector2D& from, const MT_Vector2D& to );
     virtual ~DEC_Agent_PathfinderRule();
     //@}
 
@@ -67,7 +67,7 @@ private:
     //@}
 
 private:
-    const DEC_Agent_Path& path_;
+    const DEC_Agent_PathfinderPath& path_;
     const TER_World& world_;
     const PHY_RawVisionData& altitudeData_;
     // Misc

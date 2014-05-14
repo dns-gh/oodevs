@@ -19,7 +19,6 @@
 #include <vector>
 
 class DEC_PathSection_ABC;
-class TerrainData;
 class MT_Vector2D;
 
 // =============================================================================
@@ -39,7 +38,6 @@ public:
     virtual bool NeedRefine() const = 0;
     virtual bool UseStrictClosest() const = 0;
 
-    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint ) = 0;
     virtual void NotifyPartialSection() = 0;
     virtual void NotifyCompletedSection() = 0;
 

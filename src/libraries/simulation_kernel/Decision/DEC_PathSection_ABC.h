@@ -19,7 +19,7 @@
 
 class TER_Pathfinder_ABC;
 class TerrainRule_ABC;
-class DEC_Path;
+class DEC_PathResult_ABC;
 
 // =============================================================================
 // @class  DEC_Tools
@@ -48,7 +48,8 @@ public:
     //@}
 
 protected:
-    DEC_PathSection_ABC( DEC_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint );
+    DEC_PathSection_ABC( DEC_PathResult_ABC& result,
+        const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint, bool needRefine, bool useStrictClosest );
 
     //! @name Accessors
     //@{
@@ -64,12 +65,13 @@ private:
     //@}
 
 private:
-    DEC_Path& path_;
+    DEC_PathResult_ABC& result_;
     MT_Vector2D startPoint_;
-    MT_Vector2D endPoint_;
-    unsigned int nComputationEndTime_;
-
+    const MT_Vector2D endPoint_;
+    const bool needRefine_;
+    const bool useStrictClosest_;
     bool bCanceled_;
+    unsigned int nComputationEndTime_;
     unsigned int nAddedPoints_;
 };
 

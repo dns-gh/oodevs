@@ -19,9 +19,10 @@
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
 DEC_Population_PathSection::DEC_Population_PathSection( DEC_Population_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint )
-    : DEC_PathSection_ABC( path, vStartPoint, vEndPoint )
-    , rule_              ( new DEC_Population_PathfinderRule( path ) )
+    : DEC_PathSection_ABC( path, vStartPoint, vEndPoint, false, false )
+    , rule_( new DEC_Population_PathfinderRule( path ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

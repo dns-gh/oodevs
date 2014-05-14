@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 02-11-25 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Population_Path.cpp $
-// $Author: Age $
-// $Modtime: 16/06/05 15:23 $
-// $Revision: 28 $
-// $Workfile: DEC_Population_Path.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Population_Path.h"

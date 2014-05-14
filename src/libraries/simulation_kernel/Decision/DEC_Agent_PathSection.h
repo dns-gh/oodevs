@@ -12,7 +12,8 @@
 
 #include "Decision/DEC_PathSection_ABC.h"
 
-class DEC_Agent_Path;
+class DEC_PathResult_ABC;
+class DEC_Agent_PathfinderPath;
 class TerrainRule_ABC;
 
 // =============================================================================
@@ -22,7 +23,8 @@ class TerrainRule_ABC;
 class DEC_Agent_PathSection : public DEC_PathSection_ABC
 {
 public:
-             DEC_Agent_PathSection( DEC_Agent_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint );
+             DEC_Agent_PathSection( DEC_PathResult_ABC& result, const DEC_Agent_PathfinderPath& path,
+                 const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint, bool needRefine, bool useStrictClosest );
     virtual ~DEC_Agent_PathSection();
 
 private:

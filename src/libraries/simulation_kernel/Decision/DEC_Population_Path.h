@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-02-11 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Population_Path.h $
-// $Author: Age $
-// $Modtime: 16/06/05 15:09 $
-// $Revision: 10 $
-// $Workfile: DEC_Population_Path.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __DEC_Population_Path_h_
 #define __DEC_Population_Path_h_
@@ -27,7 +25,7 @@ class MIL_Object_ABC;
 //*****************************************************************************
 class DEC_Population_Path : public DEC_PathResult
 {
-public:
+private:
     //! @name Types
     //@{
     typedef std::vector< DEC_Population_Path_Channeler >                     T_PopulationPathChannelers;

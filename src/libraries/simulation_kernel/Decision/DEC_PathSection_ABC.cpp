@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathSection_ABC.h"
-#include "DEC_Path.h"
+#include "DEC_PathResult_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <ctime>
@@ -20,13 +20,16 @@
 // Name: DEC_PathSection_ABC constructor
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-DEC_PathSection_ABC::DEC_PathSection_ABC( DEC_Path& path, const MT_Vector2D& startPoint, const MT_Vector2D& endPoint )
-    : startPoint_         ( startPoint )
+DEC_PathSection_ABC::DEC_PathSection_ABC( DEC_PathResult_ABC& result,
+    const MT_Vector2D& startPoint, const MT_Vector2D& endPoint, bool needRefine, bool useStrictClosest )
+    : result_             ( result  )
+    , startPoint_         ( startPoint )
     , endPoint_           ( endPoint )
-    , path_               ( path  )
+    , needRefine_         ( needRefine )
+    , useStrictClosest_   ( useStrictClosest )
     , bCanceled_          ( false )
-    , nAddedPoints_       ( 0 )
     , nComputationEndTime_( 0 )
+    , nAddedPoints_       ( 0 )
 {
     // NOTHING
 }
@@ -49,9 +52,9 @@ bool DEC_PathSection_ABC::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nC
     geometry::Point2f from( float( startPoint_.rX_ ), float( startPoint_.rY_ ) );
     geometry::Point2f to( float( endPoint_.rX_ ), float( endPoint_.rY_ ) );
     nComputationEndTime_ = nComputationEndTime;
-    if( path_.NeedRefine() )
+    if( needRefine_ )
         pathfind.SetConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
-    pathfind.SetChoiceRatio( path_.UseStrictClosest() ? 0.f : 0.1f );
+    pathfind.SetChoiceRatio( useStrictClosest_ ? 0.f : 0.1f );
     pathfind.SetCallback( this );
     const bool bResult = pathfind.ComputePath( from, to, GetRule(), *this );
     pathfind.SetConfiguration( 0, 0 );
@@ -66,7 +69,7 @@ bool DEC_PathSection_ABC::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nC
 void DEC_PathSection_ABC::Handle( const TerrainPathPoint& point )
 {
     const geometry::Point2f p( point );
-    path_.AddResultPoint( MT_Vector2D( p.X(), p.Y() ), point.DataAtPoint(), point.DataToNextPoint(), nAddedPoints_ == 0u );
+    result_.AddResultPoint( MT_Vector2D( p.X(), p.Y() ), point.DataAtPoint(), point.DataToNextPoint(), nAddedPoints_ == 0u );
     ++ nAddedPoints_;
 }
 
