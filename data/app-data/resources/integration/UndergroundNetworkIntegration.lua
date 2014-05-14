@@ -1,4 +1,4 @@
---- Makes this entity enter the given underground exit, if it can.
+--- Makes this entity enter the given underground network, if it can.
 -- In order for the agent to be able to enter the given object, the following conditions must be met :
 -- <ul> <li> The agent must not be underground </li>
 -- <li> The given object must be valid </li>
@@ -10,7 +10,7 @@
 -- This method may display a report.
 -- @see integration.ExitFromUndergroundNetwork
 -- @param network Object knowledge
--- @return Boolean, whether or not the agent successfully entered the exit.
+-- @return Boolean, whether or not the agent successfully entered the network.
 integration.EnterInUndergroundNetwork = function( network )
     local returnError = DEC_Agent_SeDissimulerDansReseauSouterrain( myself, network.source )
     if returnError == eUndergroundNetworkInvalid then
@@ -32,7 +32,7 @@ end
 -- This method can only be called by an agent.
 -- This method may display a report.
 -- @see integration.EnterInUndergroundNetwork
--- @return Boolean, whether or not the agent successfully entered the exit.
+-- @return Boolean, whether or not the agent successfully entered the network.
 integration.ExitFromUndergroundNetwork = function()
     local returnError = DEC_Agent_SortirDuReseauSouterrain( myself ) -- /!\ after first tick, if agent has exit, it returns "eUndergroundNetworkInvalid" 
     if returnError == eUndergroundNetworkInvalid then
@@ -73,7 +73,7 @@ end
 
 --- Starts moving through an underground network towards the given exit.
 -- The agent can only move through an underground network if the agent is underground,
--- and if the given issue is valid and has the "Underground network exit" capacity
+-- and if the given exit is valid and has the "Underground network exit" capacity
 -- set in the authoring tool.
 -- An agent moving through an underground network is stealthy.
 -- This method can only be called by an agent.
