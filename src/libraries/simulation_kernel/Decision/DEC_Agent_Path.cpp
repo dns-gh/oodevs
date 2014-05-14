@@ -76,26 +76,6 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const std::vector< bo
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Agent_Path constructor
-// Created: JVT 02-09-17
-//-----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosStart, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType )
-    : DEC_PathResult            ( pathType )
-    , queryMaker_               ( queryMaker )
-    , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
-    , fuseau_                   ( queryMaker.GetOrderManager().GetFuseau() )
-    , automateFuseau_           ( queryMaker.GetAutomate().GetOrderManager().GetFuseau() )
-    , bDecPointsInserted_       ( false )
-    , destroyed_                ( false )
-{
-    initialWaypoints_.push_back( vPosStart );
-    initialWaypoints_.push_back( vPosEnd );
-    nextWaypoints_.push_back( vPosEnd );
-    Initialize();
-    queryMaker.RegisterPath( *this );
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path destructor
 // Created: DFT 02-03-04
 // Last modified: JVT 02-09-17
@@ -463,7 +443,6 @@ void DEC_Agent_Path::Execute( TER_Pathfinder_ABC& pathfind )
     if( MIL_AgentServer::IsInitialized() && MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
         double rComputationTime = profiler_.Stop();
-
         std::stringstream stream;
         if( ! resultList_.empty() )
             stream << "[" << resultList_.front()->GetPos() << "] -> [" << resultList_.back()->GetPos() << "]";

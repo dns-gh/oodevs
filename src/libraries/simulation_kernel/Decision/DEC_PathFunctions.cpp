@@ -59,10 +59,11 @@ namespace
 boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType )
 {
     assert( pEnd );
+    std::vector< MT_Vector2D > points;
+    points.push_back( *pEnd );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(),
-        *pEnd, *pPathType ) );
+    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, points, *pPathType ) );
     StartCompute( pPath );
     return pPath;
 }
