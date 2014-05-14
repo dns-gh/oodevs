@@ -30,7 +30,7 @@ integration.connaissanceAgentEstAPorteDeCapteurDansCone = function( eni, directi
     return DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone( eni.source, direction.source, angle )
 end
 
---- Returns a list of all perceived living enemies by this agent.
+--- Returns a list of all living enemies perceived by this agent.
 -- This method can only be called by an agent.
 -- @return List of agent knowledges
 integration.knowledgePerceivedLivingEnemiesAgents = function( )
