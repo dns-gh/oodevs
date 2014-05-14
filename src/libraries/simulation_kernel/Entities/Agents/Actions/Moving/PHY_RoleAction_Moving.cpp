@@ -30,7 +30,6 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_PathPoint.h"
-#include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
