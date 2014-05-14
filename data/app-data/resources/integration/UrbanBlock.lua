@@ -199,7 +199,8 @@ integration.isAgentInsideTown = function( )
     return DEC_Agent_EnVille()
 end
 
---- Returns true if the given agent is inside an urban block, false otherwise.
+--- Returns true if the given agent is inside the convex hull of all
+-- urban blocks in the current map, false otherwise.
 -- Note that this method can only be called by an agent.
 -- @return Boolean, whether or not this entity is inside an urban block.
 integration.AgentIsInTown = function( agent )
