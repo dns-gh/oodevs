@@ -42,7 +42,6 @@ public:
     //! @name Types
     //@{
     typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< DisasterAttribute > T_KnowledgeProxyType;
-    typedef boost::shared_ptr< Extractor_ABC > T_Extractor;
     //@}
 
 public:
@@ -70,7 +69,7 @@ public:
     bool SendUpdate( sword::ObjectAttributes& asn ) const;
     void UpdateLocalisation( MIL_Object_ABC& object, unsigned int time );
     bool Update( const DisasterAttribute& rhs );
-    const std::vector< T_Extractor >& GetExtractors() const;
+    const std::vector< boost::shared_ptr< Extractor_ABC > >& GetExtractors() const;
     float GetDose( const MT_Vector2D& position ) const;
     double ApplySpeedPolicy( const MIL_Entity_ABC& entity, double speed ) const;
     DisasterAttribute& operator=( const DisasterAttribute& ); //!< Assignment operator
@@ -83,7 +82,7 @@ private:
     tools::Path model_;
     std::string date_;
     std::auto_ptr< PropagationManager > pManager_;
-    std::vector< T_Extractor > values_;
+    std::vector< boost::shared_ptr< Extractor_ABC > > values_;
     std::vector< tools::Path > files_;
     //@}
 };

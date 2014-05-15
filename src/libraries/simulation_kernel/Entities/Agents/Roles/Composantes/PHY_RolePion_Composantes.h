@@ -124,7 +124,6 @@ public:
     virtual void DestroyRandomComposante();
     virtual void DestroyAllComposantes();
     virtual void KillAllHumans();
-    virtual std::set< const PHY_ComposanteTypePion* > GetActualTypes() const;
     unsigned int GetNbrUsableHumans() const;
     bool CreateBreakdowns( const PHY_ComposanteTypePion& composanteType, unsigned int quantity, const PHY_BreakdownType* breakdown );
     void CreateWounds( unsigned int quantity, const PHY_HumanWound* pHumanWound );

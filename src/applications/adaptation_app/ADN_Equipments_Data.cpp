@@ -649,7 +649,7 @@ void ADN_Equipments_Data::BreakdownGroupInfos::ReadBreakdown( xml::xistream& inp
 {
     if( input.attribute< std::string >( "origin" ) == strName_ )
     {
-        std::auto_ptr< BreakdownInfos > spNew( new BreakdownInfos() );
+        std::unique_ptr< BreakdownInfos > spNew( new BreakdownInfos() );
         spNew->ReadArchive( input );
         if( spNew->GetCrossedElement() )
             vBreakdowns_.AddItem( spNew.release() );
@@ -1008,7 +1008,7 @@ void ADN_Equipments_Data::ResourceInfos::ReadCategory( xml::xistream& input, con
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::ResourceInfos::ReadDotation( xml::xistream& input, ADN_Resources_Data::ResourceInfos& dotation, const std::string& parentName )
 {
-    std::auto_ptr< CategoryInfos > pInfo( new CategoryInfos( dotation ) );
+    std::unique_ptr< CategoryInfos > pInfo( new CategoryInfos( dotation ) );
     pInfo->ReadArchive( input );
     if( pInfo->GetCrossedElement() )
         categories_.AddItem( pInfo.release() );
@@ -1218,7 +1218,7 @@ void ADN_Equipments_Data::DisasterImpactInfos::WriteArchive( xml::xostream& outp
     output << xml::start( "disaster-impact" )
             << xml::attribute( "threshold", threshold_.GetData() )
             << xml::attribute( "modifier", modifier_.GetData() )
-           << xml::end();
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1319,7 +1319,7 @@ void ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption( xml::xistream& inp
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input, const E_ConsumptionType& type, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName )
 {
-    std::auto_ptr<ConsumptionItem> spNew( new ConsumptionItem( type, equipmentCategories, 0 ) );
+    std::unique_ptr<ConsumptionItem> spNew( new ConsumptionItem( type, equipmentCategories, 0 ) );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vConsumptions_.AddItem( spNew.release() );
@@ -1358,7 +1358,7 @@ void ADN_Equipments_Data::ConsumptionsInfos::FillMissingConsumptions( T_Category
             }
             if( !found )
             {
-                std::auto_ptr< ConsumptionItem > spNew( new ConsumptionItem( static_cast< E_ConsumptionType >( i ), equipmentCategories, *it ) );
+                std::unique_ptr< ConsumptionItem > spNew( new ConsumptionItem( static_cast< E_ConsumptionType >( i ), equipmentCategories, *it ) );
                 vConsumptions_.AddItem( spNew.release() );
             }
         }
@@ -1738,7 +1738,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadAviationQuota( xml::xistream& inpu
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadSensor( xml::xistream& input )
 {
-    std::auto_ptr<SensorInfos> spNew( new SensorInfos() );
+    std::unique_ptr<SensorInfos> spNew( new SensorInfos() );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vSensors_.AddItem( spNew.release() );
@@ -1752,7 +1752,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadSensor( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadRadar( xml::xistream& input )
 {
-    std::auto_ptr<RadarInfos> spNew( new RadarInfos() );
+    std::unique_ptr<RadarInfos> spNew( new RadarInfos() );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vRadars_.AddItem( spNew.release() );
@@ -1766,7 +1766,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadRadar( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadWeapon( xml::xistream& input )
 {
-    std::auto_ptr<WeaponInfos> spNew( new WeaponInfos() );
+    std::unique_ptr<WeaponInfos> spNew( new WeaponInfos() );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vWeapons_.AddItem( spNew.release() );
@@ -1780,7 +1780,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadWeapon( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadActiveProtection( xml::xistream& input )
 {
-    std::auto_ptr<ActiveProtectionsInfos> spNew( new ActiveProtectionsInfos() );
+    std::unique_ptr<ActiveProtectionsInfos> spNew( new ActiveProtectionsInfos() );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vActiveProtections_.AddItem( spNew.release() );
@@ -1794,7 +1794,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadActiveProtection( xml::xistream& i
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadObject( xml::xistream& input )
 {
-    std::auto_ptr< ObjectInfos > spNew( new ObjectInfos() );
+    std::unique_ptr< ObjectInfos > spNew( new ObjectInfos() );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vObjects_.AddItem( spNew.release() );
@@ -1808,7 +1808,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadObject( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadDisasterImpact( xml::xistream& input )
 {
-    std::auto_ptr< DisasterImpactInfos > spNew( new DisasterImpactInfos() );
+    std::unique_ptr< DisasterImpactInfos > spNew( new DisasterImpactInfos() );
     spNew->ReadArchive( input );
     vDisasterImpacts_.AddItem( spNew.release() );
 }
@@ -2208,7 +2208,7 @@ void ADN_Equipments_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::ReadElement( xml::xistream& input )
 {
-    std::auto_ptr<EquipmentInfos> spNew( new EquipmentInfos( input.attribute< unsigned int >( "id" ) ) );
+    std::unique_ptr<EquipmentInfos> spNew( new EquipmentInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vEquipments_.AddItem( spNew.release() );
 }

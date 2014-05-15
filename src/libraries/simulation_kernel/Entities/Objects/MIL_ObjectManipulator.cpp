@@ -404,10 +404,10 @@ bool MIL_ObjectManipulator::IsBuilt() const
 bool MIL_ObjectManipulator::HasMobilityInfluence() const
 {
     return !object_.IsMarkedForDestruction() &&
-           ( object_.Retrieve< MobilityCapacity >() != 0 ||
-             object_.Retrieve< CrowdCapacity >() != 0 ||
-             object_.RetrieveAttribute< TrafficabilityAttribute >() != 0 ||
-             object_.RetrieveAttribute< DisasterAttribute >() != 0);
+          ( object_.Retrieve< MobilityCapacity >() ||
+            object_.Retrieve< CrowdCapacity >() ||
+            object_.RetrieveAttribute< TrafficabilityAttribute >() ||
+            object_.RetrieveAttribute< DisasterAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionMove.h"
 #include "MIL_AgentServer.h"
+#include "DisasterImpactComputer.h"
 #include "PHY_RoleAction_Moving.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -139,13 +140,12 @@ bool PHY_ActionMove::IsDisasterToAvoid( const DisasterAttribute& disaster )
     double latitude, longitude;
     TER_World::GetWorld().SimToMosMgrsCoord( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), latitude, longitude );
     float maxValue = 0;
-    auto extractors = disaster.GetExtractors();
-    for( auto itExtractor = extractors.begin(); itExtractor != extractors.end(); ++itExtractor )
-        maxValue = std::max( maxValue, ( *itExtractor )->GetValue( longitude, latitude ) );
-    double disasterImpact = 1;
-    auto types = pion_.GetRole< PHY_RoleInterface_Composantes >().GetActualTypes();
-    for( auto itType = types.begin(); itType != types.end(); ++itType )
-        disasterImpact = std::min( disasterImpact, ( *itType )->GetDisasterImpact( maxValue ) );
+    const auto& extractors = disaster.GetExtractors();
+    for( auto it = extractors.begin(); it != extractors.end(); ++it )
+        maxValue = std::max( maxValue, ( *it )->GetValue( longitude, latitude ) );
+    DisasterImpactComputer computer( maxValue );
+    pion_.Execute< OnComponentComputer_ABC >( computer );
+    const double disasterImpact = computer.GetModifier();
     bool ret = false;
     if( disasterImpact > oldDisasterImpact_ )
         blockedByDisaster_ = false;

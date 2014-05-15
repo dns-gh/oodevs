@@ -1631,22 +1631,6 @@ unsigned int PHY_RolePion_Composantes::GetNbrUsableHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetActualTypes
-// Created: JSR 2014-04-24
-// -----------------------------------------------------------------------------
-std::set< const PHY_ComposanteTypePion* > PHY_RolePion_Composantes::GetActualTypes() const
-{
-    std::set< const PHY_ComposanteTypePion* > ret;
-    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        auto composante = *it;
-        if( composante->IsUsable() )
-            ret.insert( &composante->GetType() );
-    }
-    return ret;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::Execute
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------

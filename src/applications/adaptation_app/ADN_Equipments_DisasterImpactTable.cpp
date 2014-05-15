@@ -23,7 +23,8 @@ ADN_Equipments_DisasterImpactTable::ADN_Equipments_DisasterImpactTable( const QS
     setMinimumHeight( 200 );
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;
-    horizontalHeaders << tools::translate( "ADN_Equipments_DisasterImpactTable", "Thresholds" ) << tools::translate( "ADN_Equipments_DisasterImpactTable", "Modifiers" );
+    horizontalHeaders << tools::translate( "ADN_Equipments_DisasterImpactTable", "Thresholds" )
+                      << tools::translate( "ADN_Equipments_DisasterImpactTable", "Modifiers" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     verticalHeader()->setVisible( false );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
@@ -59,9 +60,9 @@ void ADN_Equipments_DisasterImpactTable::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_DisasterImpactTable::AddRow( int row, void* data )
 {
-    ADN_Equipments_Data::DisasterImpactInfos* infos = static_cast< ADN_Equipments_Data::DisasterImpactInfos* >( data );
-    if( !infos )
+    if( !data )
         return;
+    ADN_Equipments_Data::DisasterImpactInfos* infos = static_cast< ADN_Equipments_Data::DisasterImpactInfos* >( data );
     AddItem( row, 0, data, &infos->threshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
     AddItem( row, 1, data, &infos->modifier_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

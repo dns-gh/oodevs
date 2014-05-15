@@ -9,24 +9,52 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgeObjectDisaster.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "OnComponentComputer_ABC.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Objects/DisasterAttribute.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "propagation/Extractor_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_World.h"
 
+namespace
+{
+    class ComposanteTypesComputer : public OnComponentComputer_ABC
+    {
+    public:
+        explicit ComposanteTypesComputer( std::set< const PHY_ComposanteTypePion* >& composantes )
+            : composantes_( composantes )
+        {
+            // NOTHING
+        }
+        virtual ~ComposanteTypesComputer()
+        {
+            // NOTHING
+        }
+        virtual void ApplyOnComponent( PHY_ComposantePion& composante )
+        {
+            if( composante.IsUsable() )
+                composantes_.insert( &composante.GetType() );
+        }
+
+    private:
+        std::set< const PHY_ComposanteTypePion* >& composantes_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeObjectDisaster constructor
 // Created: JSR 2014-04-23
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgeObjectDisaster::DEC_Path_KnowledgeObjectDisaster( const PHY_RoleInterface_Composantes& composantes, const DEC_Knowledge_Object& knowledge )
+DEC_Path_KnowledgeObjectDisaster::DEC_Path_KnowledgeObjectDisaster( MIL_Agent_ABC& agent, const DEC_Knowledge_Object& knowledge )
     : localisation_( new TER_Localisation( knowledge.GetLocalisation() ) )
-    , composantes_( composantes.GetActualTypes() )
     , maxTrafficability_( knowledge.GetMaxTrafficability() )
     , maxSpeedModifier_( 1 )
 {
-    localisation_->Scale( 500 );
+    ComposanteTypesComputer computer( composantes_ );
+    agent.Execute< OnComponentComputer_ABC >( computer );
+    localisation_->Scale( 500 ); // to avoid the path to be too close to the known zone border, which could result in an unit blocking
     const DisasterAttribute* attribute = knowledge.RetrieveAttribute< DisasterAttribute >();
     if( attribute )
         extractors_ = attribute->GetExtractors();

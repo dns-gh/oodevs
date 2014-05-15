@@ -269,7 +269,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                 else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
                     pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectBurnSurface >( knowledge ) );
                 else if( knowledge.GetType().GetCapacity< DisasterCapacity >() )
-                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectDisaster >( queryMaker_.GetRole< PHY_RoleInterface_Composantes >(), knowledge ) );
+                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectDisaster >( queryMaker_, knowledge ) );
                 else if( ( pathClass_.GetObjectCost( knowledge.GetType() ) != 0 && knowledge.GetLocalisation().GetType() != TER_Localisation::eNone )
                      || knowledge.HasAgentMaxSpeedMultiplier() )
                     pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObject >( knowledge, pathClass_.GetObjectCost( knowledge.GetType() ), pathClass_.GetThreshold() ) );
