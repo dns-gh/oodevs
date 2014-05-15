@@ -50,9 +50,15 @@ end
 --- Returns the structural state for an urban block
 -- @param urbanBlock Urban block knowledge
 -- @return structural state between 0 and 1 (if value is 1, the urban block has no damaged) 
-integration.buildLevelUrbanBlock = function( urbanBlock )
+integration.getUrbanBlockState = function( urbanBlock ) 
     return DEC_EtatBlocUrbain( urbanBlock.source )
 end
+
+--- Deprecated : use 'integration.getUrbanBlockState instead' instead.
+--- Returns the structural state for an urban block
+-- @param urbanBlock Urban block knowledge
+-- @return structural state between 0 and 1 (if value is 1, the urban block has no damaged)
+integration.buildLevelUrbanBlock = integration.getUrbanBlockState
 
 --- Returns the type of the urban block
 -- @param urbanBlock Urban block knowledge
