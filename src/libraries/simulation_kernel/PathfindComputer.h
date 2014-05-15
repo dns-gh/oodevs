@@ -30,7 +30,7 @@ class PathfindComputer : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PathfindComputer( DEC_PathFind_Manager& pathfindManager, const TER_World& world );
+             PathfindComputer( DEC_PathFind_Manager& manager, const TER_World& world );
     virtual ~PathfindComputer();
     //@}
 
@@ -45,24 +45,19 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< uint32_t, boost::shared_ptr< PathRequest > > T_Results;
-    //@}
-
     //! @name Helpers
     //@{
-    uint32_t Compute( boost::shared_ptr< DEC_PathResult > path, const sword::PathfindRequest& request,
+    uint32_t Compute( const boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
                       unsigned int ctx, unsigned int clientId, bool store );
     //@}
 
 private:
     //! @name Member data
     //@{
-    DEC_PathFind_Manager& pathfindManager_;
+    DEC_PathFind_Manager& manager_;
     const TER_World& world_;
     uint32_t ids_;
-    T_Results results_;
+    std::map< uint32_t, boost::shared_ptr< PathRequest > > results_;
     //@}
 };
 
