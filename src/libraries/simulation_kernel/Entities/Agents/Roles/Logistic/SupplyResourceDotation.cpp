@@ -59,9 +59,9 @@ double SupplyResourceDotation::Supply( double quantity )
 // Name: SupplyResourceDotation::SupplyResourceStock
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-bool SupplyResourceDotation::HasReachedSupplyThreshold() const
+bool SupplyResourceDotation::HasReachedLowThreshold() const
 {
-    return dotation_->HasReachedSupplyThreshold();
+    return dotation_->HasReachedLowThreshold();
 }
 
 // =============================================================================

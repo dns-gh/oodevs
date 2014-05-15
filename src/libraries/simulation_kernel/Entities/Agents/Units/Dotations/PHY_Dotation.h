@@ -60,9 +60,9 @@ public:
 
     void   ReadValue( xml::xistream& xis );
     void   Resupply ( double rFactor = 1., bool withLog = false );
-    void   ChangeDotation( unsigned int number, float threshold );
+    void   ChangeDotation( unsigned int number, float lowThreshold, float highThreshold );
 
-    bool   HasReachedSupplyThreshold() const;
+    bool   HasReachedLowThreshold() const;
     bool   NeedSupply               () const;
     double Supply                   ( double rValue );
     void   SetValueUsingTC2         ( double newValue, MIL_AutomateLOG& tc2 );
@@ -75,6 +75,7 @@ public:
     //@{
     const PHY_DotationCategory& GetCategory() const;
     double GetLowThresholdPercentage() const;
+    double GetHighThresholdPercentage() const;
     //@}
 
 private:
@@ -97,6 +98,7 @@ private:
     double rConsumptionReservation_;
     double rFireReservation_;
     double rLowThreshold_;
+    double rHighThreshold_;
     bool bNotified_;
     bool bDotationBlocked_; // Prisoner
     bool bInfiniteDotations_;

@@ -93,7 +93,7 @@ public:
     void ResupplyDotations( bool withLog );
     void ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
     void ResupplyDotations( const PHY_DotationType& type, double rFactor );
-    void ChangeDotation( const PHY_DotationCategory& category, unsigned int number, float threshold );
+    void ChangeDotation( const PHY_DotationCategory& category, unsigned int number, float lowThreshold, float highThreshold );
     void ChangeDotation( const PHY_DotationCategory& category, double fraction );
     void ChangeDotation( const PHY_DotationType& type, double fraction );
     //@}

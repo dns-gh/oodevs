@@ -980,8 +980,12 @@ message ResourceDotations {
     message ResourceDotation {
         required Id           type      = 1;
         required int32        quantity  = 2;
-        //! The low logistic threshold between 0 and 100.
+        //! DEPRECATED
         optional float        threshold = 3;
+        //! The low logistic threshold between 0 and high threshold.
+        optional float        low_threshold = 4;
+        //! The high logistic threshold between low threshold and 100.
+        optional float        high_threshold = 5;
     }
     repeated ResourceDotation elem = 1;
 }

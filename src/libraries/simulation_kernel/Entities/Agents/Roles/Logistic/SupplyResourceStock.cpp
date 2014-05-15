@@ -57,9 +57,9 @@ double SupplyResourceStock::Supply( double quantity )
 // Name: SupplyResourceStock::SupplyResourceStock
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-bool SupplyResourceStock::HasReachedSupplyThreshold() const
+bool SupplyResourceStock::HasReachedLowThreshold() const
 {
-    return stock_->HasReachedSupplyThreshold();
+    return stock_->HasReachedLowThreshold();
 }
 
 // -----------------------------------------------------------------------------

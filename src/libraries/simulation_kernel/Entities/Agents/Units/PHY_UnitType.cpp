@@ -385,6 +385,24 @@ double PHY_UnitType::GetDefaultLowThreshold( const PHY_DotationCategory& categor
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetDefaultHighThreshold
+// Created: SLI 2014-04-24
+// -----------------------------------------------------------------------------
+double PHY_UnitType::GetDefaultHighThreshold( const PHY_DotationCategory& category ) const
+{
+    double defaultThreshold = dotationCapacitiesTC1_.GetDefaultHighThreshold( category );
+    if( defaultThreshold != -1 )
+        return defaultThreshold;
+    for( auto it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
+    {
+        defaultThreshold = it->first->GetDotationCapacities().GetDefaultHighThreshold( category );
+        if( defaultThreshold != -1 )
+            return defaultThreshold;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_UnitType::InstanciateComposantes
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------

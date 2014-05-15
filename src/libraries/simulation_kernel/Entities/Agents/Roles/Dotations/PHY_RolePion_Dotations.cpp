@@ -475,10 +475,10 @@ void PHY_RolePion_Dotations::ResupplyDotations( const PHY_DotationType& type, do
 // Name: PHY_RolePion_Dotations::ChangeDotation
 // Created: ABR 2011-08-12
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::ChangeDotation( const PHY_DotationCategory& category, unsigned int number, float threshold )
+void PHY_RolePion_Dotations::ChangeDotation( const PHY_DotationCategory& category, unsigned int number, float lowThreshold, float highThreshold )
 {
     assert( pDotations_ );
-    pDotations_->ChangeDotation( category, number, threshold );
+    pDotations_->ChangeDotation( category, number, lowThreshold, highThreshold );
 }
 
 void PHY_RolePion_Dotations::ChangeDotation( const PHY_DotationCategory& category, double fraction )

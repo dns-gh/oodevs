@@ -52,8 +52,8 @@ public:
         PHY_WeaponType::Initialize( time_, xisWeapon );
         xml::xistringstream xisVolumes( "<volumes><volume name='Big'/></volumes>");
         PHY_Volume::Initialize( xisVolumes );
-        xml::xistringstream xisCapacity( "<category capacity='1' logistic-threshold='50'/>" );
-        xisCapacity >> xml::start( "category" );
+        xml::xistringstream xisCapacity( "<resource capacity='1' low-threshold='50' high-threshold='100'/>" );
+        xisCapacity >> xml::start( "resource" );
         pCapacity_.reset( new PHY_DotationCapacity( *PHY_DotationType::FindDotationCategory( "ammo" ), xisCapacity ) );
         dotationGroupContainer_.AddCapacity( *pCapacity_, 1000. );
     }

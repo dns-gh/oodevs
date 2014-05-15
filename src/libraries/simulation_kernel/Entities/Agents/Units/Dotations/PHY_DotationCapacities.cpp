@@ -117,6 +117,18 @@ double PHY_DotationCapacities::GetDefaultLowThreshold( const PHY_DotationCategor
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacities::GetDefaultHighThreshold
+// Created: SLI 2014-04-24
+// -----------------------------------------------------------------------------
+double PHY_DotationCapacities::GetDefaultHighThreshold( const PHY_DotationCategory& category ) const
+{
+    auto it = dotationCapacities_.find( &category );
+    if( it != dotationCapacities_.end() )
+        return it->second->GetDefaultHighThreshold();
+    return -1;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacities::GetCapacity
 // Created: JSR 2013-10-21
 // -----------------------------------------------------------------------------
