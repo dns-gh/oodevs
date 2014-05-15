@@ -1281,23 +1281,23 @@ bool EquipmentTypeFunction( const directia::tools::binders::ScriptRef& refMissio
     return false;
 }
 
-bool EquipmentTypeFunctionBM( sword::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool EquipmentTypeFunctionBM( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     const PHY_ComposanteTypePion* value = 0;
     if( element.ToEquipmentType( value ) && value )
     {
-        refMission[ name ] = value;
+        knowledgeCreateFunction( refMission, brain.GetScriptRef( "integration.ontology.types.equipmentType" ), name, value, false );
         return true;
     }
     return false;
 }
 
-bool EquipmentTypeListFunctionBM( sword::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool EquipmentTypeListFunctionBM( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< const PHY_ComposanteTypePion* > value;
     if( element.ToEquipmentTypeList( value ) )
     {
-        refMission[ name ] = value;
+        knowledgeCreateFunction( refMission, brain.GetScriptRef( "integration.ontology.types.equipmentType" ), name, value, true );
         return true;
     }
     return false;
