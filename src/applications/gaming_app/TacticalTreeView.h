@@ -41,7 +41,9 @@ class StaticModel;
 class TacticalTreeView  : public gui::TacticalTreeView
                         , public gui::ChangeSuperior_ABC
                         , public tools::ElementObserver_ABC< gui::Decisions_ABC >
-                        , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                        , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                        , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                         , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
 {
     Q_OBJECT
@@ -56,7 +58,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const gui::Decisions_ABC& decisions );
     virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
@@ -83,6 +87,7 @@ private:
     virtual std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
     virtual bool ApplyProfileFilter( QStandardItem& item, gui::StandardModel& model ) const;
     void CreateFormation( int level, bool isLogisticBase );
+    void AddCommunMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private:
