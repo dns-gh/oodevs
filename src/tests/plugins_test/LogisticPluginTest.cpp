@@ -343,7 +343,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         {
             sword::SimToClient m;
             sword::LogSupplyHandlingCreation* supply = m.mutable_message()->mutable_log_supply_handling_creation();
-            supply->mutable_request()->set_id( 7 );
+            supply->mutable_request()->set_id( 107 );
             supply->set_tick( 200 );
             supply->mutable_supplier()->mutable_automat()->set_id( 8 );
             supply->mutable_transporters_provider()->mutable_automat()->set_id( 9 );
@@ -354,7 +354,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         {
             sword::SimToClient m;
             sword::LogSupplyHandlingUpdate* supply = m.mutable_message()->mutable_log_supply_handling_update();
-            supply->mutable_request()->set_id( 7 );
+            supply->mutable_request()->set_id( 107 );
             supply->mutable_convoyer()->set_id( 10 );
             supply->set_state( static_cast< sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus >( 0 ) );
             supply->set_current_state_end_tick( 1000 );
@@ -382,7 +382,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
                 {
                     sword::SupplyResourceRequest* res = req->add_resources();
                     res->mutable_resource()->set_id( 3 );
-                    res->set_convoyed( 50 );
+                    res->set_convoyed( 55 );
                     res->set_granted( 75 );
                     res->set_requested( 120 );
                 }
@@ -394,7 +394,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         {
             sword::SimToClient m;
             sword::LogSupplyHandlingUpdate* supply = m.mutable_message()->mutable_log_supply_handling_update();
-            supply->mutable_request()->set_id( 8 );
+            supply->mutable_request()->set_id( 108 );
             supply->mutable_convoyer()->set_id( 10 );
             supply->set_state( static_cast< sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus >( 0 ) );
             supply->set_current_state_end_tick( 1000 );
@@ -416,7 +416,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         {
             sword::SimToClient m;
             sword::LogSupplyHandlingUpdate* supply = m.mutable_message()->mutable_log_supply_handling_update();
-            supply->mutable_request()->set_id( 7 );
+            supply->mutable_request()->set_id( 107 );
             supply->mutable_convoyer()->set_id( 10 );
             supply->set_state( static_cast< sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus >( 1 ) );
             supply->set_current_state_end_tick( 2000 );
@@ -438,7 +438,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         {
             sword::SimToClient m;
             sword::LogSupplyHandlingUpdate* supply = m.mutable_message()->mutable_log_supply_handling_update();
-            supply->mutable_request()->set_id( 8 );
+            supply->mutable_request()->set_id( 108 );
             supply->mutable_convoyer()->set_id( 10 );
             supply->set_state( static_cast< sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus >( 1 ) );
             supply->set_current_state_end_tick( 2000 );
@@ -471,7 +471,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         {
             sword::SimToClient m;
             sword::LogSupplyHandlingDestruction* supply = m.mutable_message()->mutable_log_supply_handling_destruction();
-            supply->mutable_request()->set_id( 7 );
+            supply->mutable_request()->set_id( 107 );
             plugin->Receive( m, day2 );
         }
         BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
@@ -479,7 +479,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         {
             sword::SimToClient m;
             sword::LogSupplyHandlingDestruction* supply = m.mutable_message()->mutable_log_supply_handling_destruction();
-            supply->mutable_request()->set_id( 8 );
+            supply->mutable_request()->set_id( 108 );
             plugin->Receive( m, day2 );
         }
         BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
@@ -533,34 +533,34 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
-        expectedLines.push_back( "7 ; 300 ; GDH2 ;  ; automat_8 ; automat_9 ;  ;  ; " );
-        expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_11 ; automat_8 ; automat_9 ; agent_10 ; supply_0 ; 1000 ; resource_0 ; 300 ; 200 ; 100 ; resource_1 ; 310 ; 210 ; 110" );
-        expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_12 ; automat_8 ; automat_9 ; agent_10 ; supply_0 ; 1000 ; resource_3 ; 120 ; 75 ; 50" );
+        expectedLines.push_back( "107 ; 300 ; GDH2 ;  ; automat_8 ; automat_9 ;  ;  ; " );
+        expectedLines.push_back( "107 ; 300 ; GDH2 ; automat_11 ; automat_8 ; automat_9 ; agent_10 ; supply_0 ; 1000 ; resource_0 ; 300 ; 200 ; 100 ; resource_1 ; 310 ; 210 ; 110" );
+        expectedLines.push_back( "107 ; 300 ; GDH2 ; automat_12 ; automat_8 ; automat_9 ; agent_10 ; supply_0 ; 1000 ; resource_3 ; 120 ; 75 ; 55" );
         expecteds.push_back( LogFile( L"^.*/supply\\.20080921\\.0\\.csv$", expectedLines ) );
     }
 
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
-        expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_13 ;  ;  ; agent_10 ; supply_0 ; 1000 ; resource_0 ; 300 ; 200 ; 100" );
+        expectedLines.push_back( "108 ; 300 ; GDH2 ; automat_13 ;  ;  ; agent_10 ; supply_0 ; 1000 ; resource_0 ; 300 ; 200 ; 100" );
         expecteds.push_back( LogFile( L"^.*/supply\\.20080921\\.1\\.csv$", expectedLines ) );
     }
 
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
-        expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_11 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 2000 ; resource_0 ; 300 ; 200 ; 100 ; resource_1 ; 310 ; 210 ; 110" );
-        expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_12 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 2000" );
-        expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_14 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 2000 ; resource_3 ; 120 ; 75 ; 50" );
+        expectedLines.push_back( "107 ; 300 ; GDH2 ; automat_11 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 2000 ; resource_0 ; 300 ; 200 ; 100 ; resource_1 ; 310 ; 210 ; 110" );
+        expectedLines.push_back( "107 ; 300 ; GDH2 ; automat_12 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 2000 ; resource_3 ; 120 ; 75 ; 55" );
+        expectedLines.push_back( "107 ; 300 ; GDH2 ; automat_14 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 2000 ; resource_3 ; 120 ; 75 ; 50" );
         expecteds.push_back( LogFile( L"^.*/supply\\.20080922\\.0\\.csv$", expectedLines ) );
     }
 
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
-        expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_13 ;  ;  ; agent_10 ; supply_1 ; 2000 ; resource_0 ; 300 ; 200 ; 100" );
-        expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_17 ;  ;  ; agent_10 ; supply_1 ; 2000 ; resource_3 ; 180 ; 85 ; 80" );
-        expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_18 ;  ;  ; agent_10 ; supply_1 ; 2000 ; resource_4 ; 24 ; 23 ; 21" );
+        expectedLines.push_back( "108 ; 300 ; GDH2 ; automat_13 ;  ;  ; agent_10 ; supply_1 ; 2000 ; resource_0 ; 300 ; 200 ; 100" );
+        expectedLines.push_back( "108 ; 300 ; GDH2 ; automat_17 ;  ;  ; agent_10 ; supply_1 ; 2000 ; resource_3 ; 180 ; 85 ; 80" );
+        expectedLines.push_back( "108 ; 300 ; GDH2 ; automat_18 ;  ;  ; agent_10 ; supply_1 ; 2000 ; resource_4 ; 24 ; 23 ; 21" );
         expecteds.push_back( LogFile( L"^.*/supply\\.20080922\\.1\\.csv$", expectedLines ) );
     }
 
