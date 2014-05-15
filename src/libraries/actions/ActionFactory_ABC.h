@@ -139,6 +139,8 @@ public:
     virtual Action_ABC* CreateLocalWeather( const ::gui::LocalWeatherParameters& params ) const = 0;
     virtual Action_ABC* CreateLocalDestruction( unsigned int weatherId ) const = 0;
 
+    virtual Action_ABC* CreatePathfindCreation( const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points ) const = 0;
+
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const = 0;
     //@}
 };

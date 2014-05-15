@@ -317,6 +317,12 @@ int ActionsModel::PublishSelectMaintenanceRepairTeam( unsigned int consignId, un
     return Publish( *action );
 }
 
+int ActionsModel::PublishCreatePathfind( const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreatePathfindCreation( entity, points ) );
+    return Publish( *action );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11

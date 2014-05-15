@@ -215,3 +215,10 @@ bool Equipments::HasEquipment( const kernel::EquipmentType& type ) const
             return true;
     return false;
 }
+
+void Equipments::Visit( const std::function< bool( const kernel::EquipmentType& ) >& functor ) const
+{
+    for( auto it = CreateIterator(); it.HasMoreElements(); /**/ )
+        if( !functor( it.NextElement().type_ ) )
+            return;
+}

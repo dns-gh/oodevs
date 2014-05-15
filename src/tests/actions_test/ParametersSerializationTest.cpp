@@ -398,7 +398,6 @@ namespace
     };
 }
 
-
 // =============================================================================
 // Simple types: bool, numeric, integer, string, heading, datetime, enumeration
 // =============================================================================
@@ -605,7 +604,6 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_enumeration_throw_if_wrong_value, 
     MOCK_EXPECT( target.GetId ).once().returns( 42u );
     BOOST_CHECK_THROW( actionFactory.CreateAction( xis >> xml::start( "action" ) ), tools::Exception );
 }
-
 
 // =============================================================================
 // Entity types: agent, agentknowledge, automat, crowdknowledge, objectknowledge,
@@ -816,7 +814,6 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_urbanknowledge_list, Fixture )
     CheckParameter( "UrbanKnowledge", "urbanknowledge",
                     boost::assign::list_of( "1" )( "2" )( "3" ), checker );
 }
-
 
 // =============================================================================
 // Locations types: path, point, polygon, path, location, limit, lima
@@ -1130,7 +1127,6 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_lima_list, Fixture )
     Check( input, checker );
 }
 
-
 // =============================================================================
 // Location composite
 // =============================================================================
@@ -1348,9 +1344,8 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_location_composite_list, Fixture )
     Check( input, checker );
 }
 
-
 // =============================================================================
-// Other types: ResourceType, MaintenancePriorities, MedicalPriorities, 
+// Other types: ResourceType, MaintenancePriorities, MedicalPriorities,
 // PlannedWork, ResourceNetworkNode
 // =============================================================================
 
@@ -1608,6 +1603,39 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_planned_work_list, Fixture )
     Check( input, checker );
 }
 
+BOOST_FIXTURE_TEST_CASE( serializes_parameter_itinerary, Fixture )
+{
+    auto checker = [&]( const sword::MissionParameter& msg ){
+        const auto& req = msg.value( 0 ).pathfind_request();
+        BOOST_CHECK_EQUAL( req.unit().id(), 13u );
+        sword::Location loc;
+        loc.set_type( sword::Location_Geometry_point ); // whatever
+        for( auto it = req.positions().begin(); it != req.positions().end(); ++it )
+            *loc.mutable_coordinates()->add_elem() = *it;
+        CheckLocation( sword::Location_Geometry_point, loc, boost::assign::list_of( point1 )( point2 ) );
+        BOOST_CHECK_EQUAL( req.equipment_types_size(), 2 );
+        BOOST_CHECK_EQUAL( req.equipment_types( 0 ).id(), 7u );
+        BOOST_CHECK_EQUAL( req.equipment_types( 1 ).id(), 17u );
+        BOOST_CHECK( req.ignore_dynamic_objects() );
+    };
+    auto input =
+    "<action id='1337' name='Itinerary' target='42' time='2011-04-08T10:01:36' type='mission'>"
+    "  <parameter name='Itinerary' type='itinerary'>"
+    "    <unit id='13'/>"
+    "    <positions>"
+    "      <point coordinates='" + point1 + "'/>"
+    "      <point coordinates='" + point2 + "'/>"
+    "    </positions>"
+    "    <equipments>"
+    "      <type id='7'/>"
+    "      <type id='17'/>"
+    "    </equipments>"
+    "    <ignore_dynamic_objects value='true'/>"
+    "  </parameter>"
+    "</action>";
+    RegisterMissionType( "Itinerary", "", false );
+    Check( input, checker );
+}
 
 // =============================================================================
 // Reports types: ResourceNetworkType, Stage

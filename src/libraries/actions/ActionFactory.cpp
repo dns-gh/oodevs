@@ -19,7 +19,9 @@
 #include "EntityMission.h"
 #include "Enumeration.h"
 #include "FragOrder.h"
+#include "Helpers.h"
 #include "Identifier.h"
+#include "Itinerary.h"
 #include "KnowledgeGroupMagicAction.h"
 #include "MagicAction.h"
 #include "Numeric.h"
@@ -956,6 +958,19 @@ namespace
 Action_ABC* ActionFactory::CreateInvalidAction( const kernel::OrderType& mission ) const
 {
     std::unique_ptr< Action_ABC > action( new InvalidAction( controller_, mission ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+Action_ABC* ActionFactory::CreatePathfindCreation( const kernel::Entity_ABC& entity,
+                                                   const std::vector< geometry::Point2f >& points ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "pathfind_creation" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    sword::PathfindRequest pathfind;
+    parameters::FillPathfindRequest( pathfind, coordinateConverter_, entity, points );
+    action->AddParameter( *new parameters::Itinerary( it.NextElement(), coordinateConverter_, pathfind ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     return action.release();
 }

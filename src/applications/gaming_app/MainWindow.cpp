@@ -328,7 +328,6 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
     gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
-
     // ordre de dessin
     AddLayer( defaultLayer );
     AddLayer( elevation2dLayer, "main,composition,miniviews", tr( "Elevation" ) );

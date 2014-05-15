@@ -129,6 +129,7 @@ public:
     int PublishGlobalWeather( const ::gui::WeatherParameters& params );
     int PublishLocalWeather( const ::gui::LocalWeatherParameters& params );
     int PublishLocalDestruction( unsigned int weatherId );
+    int PublishCreatePathfind( const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points );
     //@}
 
 private:

@@ -10,6 +10,8 @@
 #include "gaming_app_pch.h"
 #include "PathfindLayer.h"
 #include "moc_PathfindLayer.cpp"
+
+#include "actions/Helpers.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/RichDockWidget.h"
@@ -259,27 +261,25 @@ void PathfindLayer::SetEndPosition()
     SendRequest();
 }
 
+bool PathfindLayer::HasPathfind() const
+{
+    return element_ && positions_.size() > 1;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer::SendRequest
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
 void PathfindLayer::SendRequest()
 {
-    if( element_ && positions_.size() > 1 )
-    {
-        sword::ClientToSim msg;
-        auto request = msg.mutable_message()->mutable_compute_pathfind()->mutable_request();
-        request->mutable_unit()->set_id( element_->GetId() );
-        for( auto it = positions_.begin(); it != positions_.end(); ++it )
-            converter_.ConvertToGeo( *it, *request->add_positions() );
-        auto& equipments = static_cast< const Equipments& >( element_->Get< kernel::Equipments_ABC >() );
-        for( auto it = equipments.CreateIterator(); it.HasMoreElements(); )
-            request->add_equipment_types()->set_id( it.NextElement().type_.GetId() );
-        request->set_ignore_dynamic_objects( true );
-        publisher_.Send( msg );
-        lock_ = true;
-        hovered_ = boost::none;
-    }
+    if( !HasPathfind() )
+        return;
+    sword::ClientToSim msg;
+    actions::parameters::FillPathfindRequest( *msg.mutable_message()->mutable_compute_pathfind()->mutable_request(),
+        converter_, *element_, std::vector< geometry::Point2f >( positions_.begin(), positions_.end() ) );
+    publisher_.Send( msg );
+    lock_ = true;
+    hovered_ = boost::none;
 }
 
 // -----------------------------------------------------------------------------

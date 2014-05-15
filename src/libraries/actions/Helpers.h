@@ -17,11 +17,13 @@
 namespace sword
 {
     class PointList;
+    class PathfindRequest;
 }
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class Entity_ABC;
 }
 
 namespace actions
@@ -31,6 +33,10 @@ namespace actions
         void FillFromPointList( T_PointVector& vector,
                                 const sword::PointList& list,
                                 const kernel::CoordinateConverter_ABC& converter );
+        void FillPathfindRequest( sword::PathfindRequest& dst,
+                                  const kernel::CoordinateConverter_ABC& converter,
+                                  const kernel::Entity_ABC& entity,
+                                  const std::vector< geometry::Point2f >& points );
     }
 }
 

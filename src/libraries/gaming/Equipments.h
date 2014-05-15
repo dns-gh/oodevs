@@ -71,6 +71,8 @@ private:
     virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
 
+    virtual void Visit( const std::function< bool( const kernel::EquipmentType& ) >& functor ) const;
+
     void Update( const std::vector< Equipment >& differences );
     void AddToDictionary( const Equipment& equipment );
     void RemoveFromDictionary( const Equipment& equipment );

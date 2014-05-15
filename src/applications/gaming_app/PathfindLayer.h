@@ -120,6 +120,7 @@ private:
     void UpdateHovered( bool snap, const geometry::Point2f& point );
     bool HandleEvent( const std::function< void() >& event, bool replaceable = false );
     void ProcessEvents();
+    bool HasPathfind() const;
 
 private:
     //! @name Member data
