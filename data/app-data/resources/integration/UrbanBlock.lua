@@ -226,7 +226,7 @@ end
 -- CROWD METHODS ON URBAN BLOCK
 ------------------------------------------------------------------
 
---- Allows the agent to damage a urban block, by decreasing its structural state.
+--- Starts to damage a urban block, by decreasing its structural state.
 -- @see integration.stopDamageUrbanBlock methods
 -- This method can only be used by a crowd.
 -- @param urbanBlock a urban block knowledge
