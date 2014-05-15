@@ -253,3 +253,14 @@ end
 integration.triggerBreakdown = function( equipmentType, breakdownID )
     return DEC_CreateBreakdown( equipmentType, breakdownID )
 end
+
+--- Evacuate victims through a medical logistic chain.
+-- Displays a report
+-- @param victimsUnit DirectIA agent
+-- @param medicalUnit DirectIA agent
+-- @return Boolean, true
+integration.ensureVictimsEvacuation = function( victimsUnit, medicalUnit )
+    reportFunction( eRC_VictimsEvacuated )
+    DEC_EvacuerBlessesVersTC2( victimsUnit.source, medicalUnit.source )
+    return true
+end

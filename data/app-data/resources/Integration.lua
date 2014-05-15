@@ -77,7 +77,6 @@ include "integration/LimaIntegration.lua"
 
 -- for Security
 include "integration/UrbanBlock.lua"
-include "integration/Teammate.lua"
 include "integration/Area.lua"
 include "integration/Fire.lua"
 include "integration/Object.lua"

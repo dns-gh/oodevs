@@ -56,7 +56,7 @@ public:
     static void DeactivateBlackout( MIL_Agent_ABC& callerAgent );
     static int GetPosture( const MIL_Agent_ABC& callerAgent );
     static int GetNbcSuitLevel( const MIL_Agent_ABC& callerAgent );
-    static bool IsInCity( const MIL_Agent_ABC& callerAgent );
+    static bool IsInCity( const DEC_Decision_ABC* pAgent );
     static bool IsInCrowd( const MIL_Agent_ABC& callerAgent );
     static std::string GetMilPionType( DEC_Decision_ABC* pion );
     static std::string GetMilPionName( DEC_Decision_ABC* pion );

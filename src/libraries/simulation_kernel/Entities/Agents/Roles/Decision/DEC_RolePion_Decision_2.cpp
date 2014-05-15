@@ -292,7 +292,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_Agent_HauteurDeVol",
         boost::function< void ( double ) >( boost::bind( &DEC_AgentFunctions::SetFlyingHeight, boost::ref( GetPion() ), _1 ) ) );
 
-    RegisterFunction( "DEC_Agent_EnVille", boost::bind( &DEC_AgentFunctions::IsInCity, boost::cref( GetPion() ) ) );
+    RegisterFunction( "DEC_Agent_EnVille", boost::bind( &DEC_AgentFunctions::IsInCity, this ) );
     RegisterFunction( "DEC_Agent_EtatOps", boost::bind( &DEC_AgentFunctions::GetOperationalState, boost::cref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_EtatOpsMajeur", boost::bind( &DEC_AgentFunctions::GetMajorOperationalState, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_PeutConstruireObjet",
