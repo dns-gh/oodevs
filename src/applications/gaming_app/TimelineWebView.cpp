@@ -698,3 +698,17 @@ const std::string& TimelineWebView::GetCurrentParent() const
 {
     return parentUuid_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::RenameEvent
+// Created: ABR 2014-05-14
+// -----------------------------------------------------------------------------
+void TimelineWebView::RenameEvent( const std::string& uuid, const std::string& name )
+{
+    gui::Event* gamingEvent = model_.events_.Find( uuid );
+    if( !gamingEvent )
+        throw MASA_EXCEPTION( "Can't find event for the uuid: " + uuid );
+    auto& event = gamingEvent->GetEvent();
+    event.name = name;
+    EditEvent( event );
+}
