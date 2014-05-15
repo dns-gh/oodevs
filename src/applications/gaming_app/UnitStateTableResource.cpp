@@ -131,6 +131,7 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
             RecursiveLoad( *selected_.ConstCast(), true );
         }
         else
+        {
             while( dotationIterator.HasMoreElements() )
             {
                 const Dotation& dotation = dotationIterator.NextElement();
@@ -143,6 +144,8 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
                         break;
                     }
             }
+            emit RefreshFilters();
+        }
     }
 }
 

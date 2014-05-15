@@ -30,6 +30,8 @@ namespace gui
 // =============================================================================
 class UnitStateTable_ABC : public RichTableView
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -73,6 +75,14 @@ protected:
     template< typename T >
     T GetEnumData( int row, int col ) const;
     bool GetCheckedState( int row, int col ) const;
+
+    void InternalRecursiveLoad( kernel::Entity_ABC& entity, bool isSelectedEntity );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void RefreshFilters();
     //@}
 
 protected:

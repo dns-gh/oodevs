@@ -67,6 +67,7 @@ protected:
         tabs_.push_back( std::make_pair( view, view->GetView() ) );
         tabWidget_->addTab( view, name );
         connect( view, SIGNAL( FiltersStatusChanged( bool ) ), clearButton_, SLOT( setEnabled( bool ) ) );
+        connect( view->GetView(), SIGNAL( RefreshFilters() ), view, SLOT( OnFiltersChanged() ) );
     }
     //@}
 

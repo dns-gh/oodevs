@@ -183,9 +183,6 @@ void UnitStateDialog::Reset()
         typeName == kernel::Formation_ABC::typeName_ || typeName == kernel::Team_ABC::typeName_ )
         for( unsigned int i = 0; i < tabs_.size(); ++i )
             tabs_[ i ].second->RecursiveLoad( *selected_.ConstCast(), true );
-    // Apply filters
-    for( auto it = tabs_.begin(); it != tabs_.end(); ++it )
-        it->first->OnFiltersChanged();
 }
 
 // -----------------------------------------------------------------------------

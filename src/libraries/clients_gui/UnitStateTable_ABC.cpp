@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "UnitStateTable_ABC.h"
+#include "moc_UnitStateTable_ABC.cpp"
 
 #include "clients_gui/Roles.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -78,6 +79,16 @@ void UnitStateTable_ABC::Purge()
 // Created: ABR 2011-07-06
 // -----------------------------------------------------------------------------
 void UnitStateTable_ABC::RecursiveLoad( kernel::Entity_ABC& entity, bool isSelectedEntity )
+{
+    InternalRecursiveLoad( entity, isSelectedEntity );
+    emit RefreshFilters();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTable_ABC::InternalRecursiveLoad
+// Created: ABR 2014-05-15
+// -----------------------------------------------------------------------------
+void UnitStateTable_ABC::InternalRecursiveLoad( kernel::Entity_ABC& entity, bool isSelectedEntity )
 {
     if( isSelectedEntity )
         selected_ = &entity;
