@@ -63,12 +63,13 @@ protected:
     std::string GetPathAsString() const;
     const T_PointVector& GetComputedWaypoints() const;
 
-    virtual void NotifySectionStarted() = 0;
-    virtual boost::optional< MT_Vector2D > GetLastPosition() const = 0;
-
     void DoExecute( TER_Pathfinder_ABC& pathfind );
     void RemoveComputedWaypoint();
     //@}
+
+private:
+    virtual void NotifySectionStarted() = 0;
+    virtual boost::optional< MT_Vector2D > GetLastPosition() const = 0;
 
 private:
     //! @name Types
