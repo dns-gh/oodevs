@@ -30,13 +30,13 @@ integration.illuminationLevel = function( agent )
 end
 
 --- Starts illuminating the given agent knowledge, in order for it to become known
--- to the first agent of the allies list parameter.
+-- to the knowledge group of the first agent of the allies list parameter.
 -- This method displays a report.
 -- This method can only be called by an agent.
 -- @see integration.startedIlluminateIt
 -- @see integration.stopIlluminateIt
 -- @param target DirectIA agent knowledge, the target to illuminate
--- @param allies List of DirectIA agent knowledges (only the first element of the list
+-- @param allies List of DirectIA agent (only the first element of the list
 -- will be taken into account)
 -- @return Boolean, false
 integration.startIlluminateIt = function( target, allies )
