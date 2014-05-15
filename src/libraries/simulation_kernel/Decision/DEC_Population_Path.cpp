@@ -14,7 +14,7 @@
 #include "DEC_Path_KnowledgeObject.h"
 #include "DEC_Path_KnowledgeObjectFlood.h"
 #include "DEC_Path_KnowledgeObjectBurnSurface.h"
-#include "DEC_PathSection_ABC.h"
+#include "DEC_PathSection.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
@@ -80,7 +80,7 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Population_PathfinderRule( *this ) );
-        RegisterPathSection( *new DEC_PathSection_ABC( *this, std::move( rule ), *it, *(it + 1), false, false ) );
+        RegisterPathSection( *new DEC_PathSection( *this, std::move( rule ), *it, *(it + 1), false, false ) );
     }
 }
 

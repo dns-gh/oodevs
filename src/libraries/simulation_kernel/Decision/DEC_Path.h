@@ -18,7 +18,7 @@
 #include <string>
 #include <vector>
 
-class DEC_PathSection_ABC;
+class DEC_PathSection;
 class MT_Vector2D;
 
 // =============================================================================
@@ -57,7 +57,7 @@ protected:
 
     //! @name Tools
     //@{
-    void RegisterPathSection( DEC_PathSection_ABC& section );
+    void RegisterPathSection( DEC_PathSection& section );
 
     std::string GetStateAsString() const;
     std::string GetPathAsString() const;
@@ -74,7 +74,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< DEC_PathSection_ABC* > T_PathSectionVector;
+    typedef std::vector< DEC_PathSection* > T_PathSectionVector;
     //@}
 
 private:

@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Path.h"
-#include "DEC_PathSection_ABC.h"
+#include "DEC_PathSection.h"
 #include "DEC_Pathfind_Manager.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MIL_AgentServer.h"
@@ -96,7 +96,7 @@ void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
             nState_ = eCanceled;
             return;
         }
-        DEC_PathSection_ABC& pathSection = **it;
+        DEC_PathSection& pathSection = **it;
         NotifySectionStarted();
         if( !pathSection.Execute( pathfind, nComputationEndTime ) )
         {
@@ -225,7 +225,7 @@ const MT_Vector2D& DEC_Path::GetLastWaypoint() const
 // Name: DEC_Path_ABC::RegisterPathSection
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void DEC_Path::RegisterPathSection( DEC_PathSection_ABC& section )
+void DEC_Path::RegisterPathSection( DEC_PathSection& section )
 {
     pathSections_.push_back( &section );
 }

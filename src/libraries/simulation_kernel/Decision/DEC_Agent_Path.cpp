@@ -12,7 +12,7 @@
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Agent_PathfinderRule.h"
 #include "DEC_Agent_PathfinderPath.h"
-#include "DEC_PathSection_ABC.h"
+#include "DEC_PathSection.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_PathType.h"
@@ -50,7 +50,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     for( auto it = initialWaypoints_.begin(); it != initialWaypoints_.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( *path_, *it, *(it + 1) ) );
-        RegisterPathSection( *new DEC_PathSection_ABC( *this, std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
+        RegisterPathSection( *new DEC_PathSection( *this, std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
     }
     queryMaker.RegisterPath( *this );
 }
