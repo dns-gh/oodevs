@@ -41,6 +41,7 @@ public:
     static void                     Initialize       ( xml::xistream& xis );
     static void                     Terminate        ();
     static unsigned int             GetDiagnosticTime();
+    static bool                     GetRepairDurationInManHours();
     static const PHY_BreakdownType* Find             ( const std::string& strName );
     static const PHY_BreakdownType* Find             ( unsigned int nID );
     //@}
@@ -99,6 +100,7 @@ private:
 private:
     static T_BreakdownMap breakdowns_;
     static unsigned int   nDiagnosticTime_;
+    static bool           repairDurationInManHours_;
 };
 
 #endif // __PHY_BreakdownType_h_

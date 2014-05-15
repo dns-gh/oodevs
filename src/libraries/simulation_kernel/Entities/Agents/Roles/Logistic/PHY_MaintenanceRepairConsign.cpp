@@ -186,14 +186,27 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairer()
     SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_repairer, 0 );
 }
 
+namespace
+{
+    int CeiledDivision( double a, double b )
+    {
+        if( b == 0. )
+            return static_cast< int >( a );
+        return static_cast< int >( std::ceil( a / b ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceRepairConsign::EnterStateRepairing
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::EnterStateRepairing()
 {
+    assert( pRepairer_ );
     SetState( sword::LogMaintenanceHandlingUpdate::repairing,
-        GetComposanteBreakdown().GetRepairTime() );
+              PHY_BreakdownType::GetRepairDurationInManHours()
+                ? CeiledDivision( GetComposanteBreakdown().GetRepairTime(), pRepairer_->GetNbrUsableHumans() )
+                : GetComposanteBreakdown().GetRepairTime() );
 }
 
 // -----------------------------------------------------------------------------
