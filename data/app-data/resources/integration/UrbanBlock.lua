@@ -196,16 +196,15 @@ end
 -- Note that this method can only be called by an agent.
 -- @return Boolean, whether or not this entity is inside an urban block.
 integration.isAgentInsideTown = function( )
-    return DEC_Agent_EnVille( myself )
+    return DEC_Agent_EnVille()
 end
 
 --- Returns true if the given agent is inside the convex hull of all
 -- urban blocks in the current map, false otherwise.
 -- Note that this method can only be called by an agent.
--- @param agent DirectIA agent
 -- @return Boolean, whether or not this entity is inside an urban block.
 integration.AgentIsInTown = function( agent )
-    return DEC_Agent_EnVille( agent.source )
+    return DEC_Agent_AgentEstEnVille( agent.source )
 end
 
 --- Returns a list of all urban blocks which are totally or partly 

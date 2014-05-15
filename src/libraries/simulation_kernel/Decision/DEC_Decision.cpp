@@ -105,7 +105,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
 
     brain.RegisterFunction( "DEC_Agent_Renforts", &DEC_MiscFunctions::GetAgentReinforcements );
     brain.RegisterFunction( "DEC_Agent_NombreRenforts", &DEC_MiscFunctions::GetAgentReinforcementsNumber );
-    brain.RegisterFunction( "DEC_Agent_EnVille", &DEC_AgentFunctions::IsInCity );
+    brain.RegisterFunction( "DEC_Agent_AgentEstEnVille", &DEC_AgentFunctions::IsInCity );
     brain.RegisterFunction( "DEC_Pion_PionPCDeAutomate", &DEC_AgentFunctions::GetPionPCOfAutomate );
     brain.RegisterFunction( "DEC_Pion_PionsDeAutomateSansPC", &DEC_AgentFunctions::GetPionsWithoutPCOfAutomate );
     brain.RegisterFunction( "DEC_GetAutomate", &DEC_MiscFunctions::GetAutomate );
