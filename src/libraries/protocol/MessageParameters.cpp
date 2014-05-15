@@ -68,7 +68,6 @@ namespace
     MAKE_DESCRIPTOR2( Heading, int, heading, heading, "heading" );
     MAKE_DESCRIPTOR2( KnowledgeGroup, uint32_t, knowledgegroup, id, "knowledgegroup" );
     MAKE_DESCRIPTOR2( PartyId, uint32_t, party, id, "party id" );
-    MAKE_DESCRIPTOR2( PathfindId, uint32_t, pathfind, id, "pathfind id" );
     MAKE_DESCRIPTOR2( ResourceType, uint32_t, resourcetype, id, "resourcetype id" );
     #undef MAKE_DESCRIPTOR2
 
@@ -300,11 +299,6 @@ uint32_t protocol::GetFormationId( const sword::MissionParameters& params, int i
 boost::optional< uint32_t > protocol::TryGetFormationId( const sword::MissionParameters& params, int i, int j, int k )
 {
     return TryGetValue< FormationId >( params, i, j, k );
-}
-
-boost::optional< uint32_t > protocol::TryGetPathfindId( const sword::MissionParameters& params, int i, int j, int k )
-{
-    return TryGetValue< PathfindId >( params, i, j, k );
 }
 
 uint32_t protocol::GetPartyId( const sword::MissionParameters& params, int i, int j, int k )

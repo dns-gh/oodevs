@@ -813,8 +813,6 @@ message MissionParameter {
         optional PhaseLineOrder.Function  phase_line_function      = 53;
         //! A pathfind request
         optional PathfindRequest          pathfind_request         = 54;
-        //! A pathfind identifier
-        optional Id                       pathfind                 = 55;
     }
     //! Whether the parameter is a null value or not
     optional bool  null_value = 1;
@@ -1665,11 +1663,11 @@ message MagicAction {
         select_repair_team                 = 12;
         //! Create a pathfind
         //! parameters[0], PathfindRequest: the unit and waypoints.
-        //! result[0], PathfindId: created pathfind identifier.
+        //! result[0], Identifier: created pathfind identifier.
         //! The pathfind identifier will be sent along in a ComputePathfindAck.
         pathfind_creation                  = 13;
         //! Destroy a pathfind
-        //! parameters[0], PathfindId: the pathfind identifier.
+        //! parameters[0], Identifier: the pathfind identifier.
         pathfind_destruction               = 14;
     }
     required Type              type       = 1;

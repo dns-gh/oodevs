@@ -79,7 +79,6 @@ namespace protocol
     uint32_t                           GetAutomatId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetFormationId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     boost::optional< uint32_t >        TryGetFormationId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
-    boost::optional< uint32_t >        TryGetPathfindId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetPartyId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     boost::optional< uint32_t >        TryGetPartyId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetResourceType( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );

@@ -2184,7 +2184,7 @@ void MIL_EntityManager::OnReceivePathfindCreation( const sword::MagicAction& mes
             protocol::Check( false, "invalid crowd or unit identifier" );
     }
     if( ack.error_code() == sword::ControlAck::no_error )
-        ack.mutable_result()->add_elem()->add_value()->mutable_pathfind()->set_id( result );
+        ack.mutable_result()->add_elem()->add_value()->set_identifier( result );
 }
 
 // -----------------------------------------------------------------------------
@@ -2195,15 +2195,13 @@ void MIL_EntityManager::OnReceivePathfindDestruction( const sword::MagicAction& 
 {
     const auto& params = message.parameters();
     protocol::CheckCount( params, 1 );
-    const auto& value = message.parameters().elem( 0 ).value( 0 );
-    protocol::Check( value.has_pathfind(), "invalid parameter" );
-    const auto id = value.pathfind().id();
+    const auto id = protocol::GetIdentifier( params, 0 );
     if( !pathfindComputer_->Destroy( id ) )
     {
         ack.set_error_code( MagicActionAck::error_invalid_parameter );
         ack.set_error_msg( "invalid pathfind identifier");
     }
-    ack.mutable_result()->add_elem()->add_value()->mutable_pathfind()->set_id( id );
+    ack.mutable_result()->add_elem()->add_value()->set_identifier( id );
 }
 
 // -----------------------------------------------------------------------------
