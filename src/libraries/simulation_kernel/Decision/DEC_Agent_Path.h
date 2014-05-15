@@ -58,11 +58,6 @@ public:
     //@}
 
 private:
-    //! @name Init
-    //@{
-    void Initialize();
-    //@}
-
     //! @name Points insertion Tools
     //@{
     int IsPointAvant( DEC_PathPoint* pBefore, DEC_PathPoint& current, DEC_PathPoint* pAfter, const TerrainData& nTypeTerrain ) const;

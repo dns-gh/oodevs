@@ -42,8 +42,12 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     , nextWaypoints_     ( points.empty() ? points.begin() : points.begin() + 1, points.end() )
     , bDecPointsInserted_( false )
     , destroyed_         ( false )
+    , path_              ( new DEC_Agent_PathfinderPath( queryMaker, pathClass_, points ) )
 {
-    Initialize();
+    const bool refine = queryMaker_.GetType().GetUnitType().CanFly() && !queryMaker_.IsAutonomous();
+    const bool useStrictClosest = !queryMaker_.GetAutomate().GetOrderManager().GetFuseau().IsNull();
+    for( auto it = initialWaypoints_.begin(); it != initialWaypoints_.end() - 1; ++it )
+        RegisterPathSection( *new DEC_Agent_PathSection( *this, *path_, *it, *(it + 1), refine, useStrictClosest ) );
     queryMaker.RegisterPath( *this );
 }
 
@@ -70,24 +74,6 @@ void DEC_Agent_Path::Destroy()
             ( *it )->RemoveFromDIA( *it );
     destroyed_ = true;
     queryMaker_.UnregisterPath( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::Initialize
-// Created: NLD 2005-02-22
-// -----------------------------------------------------------------------------
-void DEC_Agent_Path::Initialize()
-{
-    if( initialWaypoints_.empty() )
-    {
-        MT_LOG_ERROR_MSG( "Initializing empty agent path" );
-        return;
-    }
-    path_.reset( new DEC_Agent_PathfinderPath( queryMaker_, pathClass_, initialWaypoints_ ) );
-    const bool refine = queryMaker_.GetType().GetUnitType().CanFly() && !queryMaker_.IsAutonomous();
-    const bool useStrictClosest = !queryMaker_.GetAutomate().GetOrderManager().GetFuseau().IsNull();
-    for( auto it = initialWaypoints_.begin(); it != initialWaypoints_.end() - 1; ++it )
-        RegisterPathSection( *new DEC_Agent_PathSection( *this, *path_, *it, *(it + 1), refine, useStrictClosest ) );
 }
 
 //-----------------------------------------------------------------------------
