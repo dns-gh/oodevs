@@ -529,6 +529,10 @@ Estacionado y motor encendido</translation>
         <source>General parameters</source>
         <translation>Parámetros generales</translation>
     </message>
+    <message>
+        <source>Repair durations expressed in man-hours</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Breakdowns_PartsTable</name>

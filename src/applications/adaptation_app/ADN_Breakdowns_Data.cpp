@@ -110,6 +110,7 @@ ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::BreakdownInfo::CreateCo
     pCopy->nNTI_  = nNTI_.GetData();
     pCopy->repairTime_ = repairTime_.GetData();
     pCopy->repairTimeVariance_ = repairTimeVariance_.GetData();
+
     for( auto it = vRepairParts_.begin(); it != vRepairParts_.end(); ++it )
         pCopy->vRepairParts_.AddItem( ( *it )->CreateCopy() );
     return pCopy;
@@ -170,6 +171,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output ) c
 ADN_Breakdowns_Data::ADN_Breakdowns_Data()
     : ADN_Data_ABC( eBreakdowns )
     , strAverageDiagnosticTime_( "0s" )
+    , repairDurationInManHours_( false )
 {
     vBreakdowns_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
@@ -220,6 +222,9 @@ ADN_Breakdowns_Data::T_BreakdownInfoVector& ADN_Breakdowns_Data::GetBreakdowns()
 void ADN_Breakdowns_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "breakdowns" )
+            >> xml::start( "repair-duration-in-man-hours" )
+                >> xml::attribute( "value", repairDurationInManHours_ )
+            >> xml::end
             >> xml::start( "diagnosis" )
                 >> xml::attribute( "time", strAverageDiagnosticTime_ )
             >> xml::end
@@ -262,9 +267,13 @@ void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output ) const
     output << xml::start( "breakdowns" );
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "Breakdowns" );
-    output   << xml::start( "diagnosis" )
-               << xml::attribute( "time", strAverageDiagnosticTime_ )
-             << xml::end;
+    output << xml::start( "repair-duration-in-man-hours" )
+             << xml::attribute( "value", repairDurationInManHours_ )
+           << xml::end
+           << xml::start( "diagnosis" )
+             << xml::attribute( "time", strAverageDiagnosticTime_ )
+           << xml::end;
+
     for( unsigned int i = 0; i < eNbrBreakdownNTI; ++i )
     {
         E_BreakdownNTI bd = static_cast< E_BreakdownNTI >( i );

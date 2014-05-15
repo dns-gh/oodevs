@@ -54,6 +54,7 @@ void ADN_Breakdowns_GUI::Build()
     // General
     Q3GroupBox* pGeneralGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "General parameters" ) );
     builder.AddField< ADN_TimeField >( pGeneralGroup, "average-diagnostic-duration", tr( "Average diagnostic duration" ), data_.strAverageDiagnosticTime_ );
+    builder.AddField< ADN_CheckBox >( pGeneralGroup, "repair-duration-in-man-hours", tr( "Repair durations expressed in man-hours" ), data_.repairDurationInManHours_ );
 
     // Specific parameter
     // Info holder
