@@ -105,7 +105,7 @@ uint32_t PathfindComputer::Compute( const MIL_Population& population, const swor
 uint32_t PathfindComputer::Compute( const boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
                                     unsigned int ctx, unsigned int clientId, bool store )
 {
-    uint32_t id = ++ids_;
+    const uint32_t id = ++ids_;
     results_[ id ] = boost::make_shared< PathRequest >( path, request, ctx, clientId, id, store );
     manager_.StartCompute( path, request.ignore_dynamic_objects() );
     return id;
@@ -115,7 +115,7 @@ uint32_t PathfindComputer::Compute( const boost::shared_ptr< DEC_PathResult >& p
 // Name: PathfindComputer::Destroy
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-bool PathfindComputer::Destroy( unsigned int pathfind )
+bool PathfindComputer::Destroy( uint32_t pathfind )
 {
     return results_.erase( pathfind ) > 0;
 }

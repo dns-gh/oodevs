@@ -40,7 +40,7 @@ public:
                       unsigned int ctx, unsigned int clientId, bool store );
     uint32_t Compute( const MIL_Population& population, const sword::PathfindRequest& message,
                       unsigned int ctx, unsigned int clientId, bool store );
-    bool Destroy( unsigned int pathfind );
+    bool Destroy( uint32_t pathfind );
     void Update();
     //@}
 
