@@ -52,6 +52,7 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     void Mine( MIL_Object_ABC& object );
+    virtual void Finalize( MIL_Object_ABC& object );
     //@}
 
 private:

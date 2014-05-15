@@ -101,3 +101,12 @@ void ImprovableCapacity::Mine( MIL_Object_ABC& object )
         return;
     object.GetAttribute< MineAttribute >().Update( rDeltaPercentage );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ImprovableCapacity::Finalize
+// Created: LGY 2012-01-25
+// -----------------------------------------------------------------------------
+void ImprovableCapacity::Finalize( MIL_Object_ABC& object )
+{
+    FinalizeAttribute< MineAttribute >( object );
+}

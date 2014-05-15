@@ -50,7 +50,7 @@ public:
     //! @name Operations
     //@{
     unsigned int GetDotationNumber( const TER_Localisation& location ) const;
-    virtual void Finalize( MIL_Object_ABC& object );
+    template <typename T> void FinalizeAttribute( MIL_Object_ABC& object );
     void SetDensity( double density );
     //@}
     
@@ -86,5 +86,21 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( SuppliableCapacity )
+
+// -----------------------------------------------------------------------------
+// Name: SuppliableCapacity::Finalize
+// Created: LGY 2012-01-25
+// -----------------------------------------------------------------------------
+template <typename T>
+void SuppliableCapacity::FinalizeAttribute( MIL_Object_ABC& object )
+{
+    if( dotation_ )
+    {
+        TER_Localisation localisation = object.GetLocalisation();
+        nFullNbrDotation_ = GetDotationNumber( localisation );
+        object.GetAttribute< T >().SetMaxDotations( *dotation_, nFullNbrDotation_ );
+    }
+    finalised_ = true; // $$$$ LDC FIXME the nFullNbrDotation_ should be in the object or attribute not the capacity
+}
 
 #endif // __SuppliableCapacity_h_

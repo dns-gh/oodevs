@@ -79,6 +79,15 @@ void BuildableCapacity::Register( MIL_Object_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
+// Name: BuildableCapacity::Finalize
+// Created: LGY 2012-01-25
+// -----------------------------------------------------------------------------
+void BuildableCapacity::Finalize( MIL_Object_ABC& object )
+{
+    FinalizeAttribute< ConstructionAttribute >( object );
+}
+
+// -----------------------------------------------------------------------------
 // Name: BuildableCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------

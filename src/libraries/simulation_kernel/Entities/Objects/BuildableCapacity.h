@@ -53,6 +53,7 @@ public:
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
+    virtual void Finalize( MIL_Object_ABC& object );
 
     void Construct( MIL_Object_ABC& object );
     void Construct( MIL_Object_ABC& object, float rDeltaPercentage );

@@ -128,21 +128,6 @@ unsigned int SuppliableCapacity::GetDotationNumber( const TER_Localisation& loca
 }
 
 // -----------------------------------------------------------------------------
-// Name: SuppliableCapacity::Finalize
-// Created: LGY 2012-01-25
-// -----------------------------------------------------------------------------
-void SuppliableCapacity::Finalize( MIL_Object_ABC& object )
-{
-    if( dotation_ )
-    {
-        TER_Localisation localisation = object.GetLocalisation();
-        nFullNbrDotation_ = GetDotationNumber( localisation );
-        object.GetAttribute< MineAttribute >().SetMaxDotations( *dotation_, nFullNbrDotation_ );
-    }
-    finalised_ = true; // $$$$ LDC FIXME the nFullNbrDotation_ should be in the object or attribute not the capacity
-}
-
-// -----------------------------------------------------------------------------
 // Name: SuppliableCapacity::SetDensity
 // Created: LDC 2012-06-25
 // -----------------------------------------------------------------------------
