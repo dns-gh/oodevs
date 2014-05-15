@@ -11,7 +11,6 @@
 #define __DEC_Agent_Path_h_
 
 #include "Decision/DEC_PathResult.h"
-#include "Entities/Orders/MIL_Fuseau.h"
 #include "MT_Tools/MT_Profiler.h"
 #include <boost/shared_ptr.hpp>
 
@@ -91,8 +90,6 @@ private:
     const DEC_Agent_PathClass& pathClass_;
     const T_PointVector initialWaypoints_;
     T_PointVector nextWaypoints_;
-    MIL_Fuseau fuseau_;
-    MIL_Fuseau automateFuseau_;
     MT_Profiler profiler_;
     bool bDecPointsInserted_;
     bool destroyed_;

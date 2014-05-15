@@ -23,6 +23,7 @@
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
+#include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Tools/MIL_Config.h"
 #include "MT_Tools/MT_Logger.h"
@@ -34,15 +35,13 @@
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
-    : DEC_PathResult           ( pathType )
-    , queryMaker_              ( queryMaker )
-    , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
-    , initialWaypoints_        ( points )
-    , nextWaypoints_           ( points.empty() ? points.begin() : points.begin() + 1, points.end() )
-    , fuseau_                  ( queryMaker.GetOrderManager().GetFuseau() )
-    , automateFuseau_          ( queryMaker.GetAutomate().GetOrderManager().GetFuseau() )
-    , bDecPointsInserted_      ( false )
-    , destroyed_               ( false )
+    : DEC_PathResult     ( pathType )
+    , queryMaker_        ( queryMaker )
+    , pathClass_         ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
+    , initialWaypoints_  ( points )
+    , nextWaypoints_     ( points.empty() ? points.begin() : points.begin() + 1, points.end() )
+    , bDecPointsInserted_( false )
+    , destroyed_         ( false )
 {
     Initialize();
     queryMaker.RegisterPath( *this );
@@ -69,8 +68,6 @@ void DEC_Agent_Path::Destroy()
     for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
         if( ( *it )->GetType() != DEC_PathPoint::eTypePointPath )
             ( *it )->RemoveFromDIA( *it );
-    fuseau_.Reset();
-    automateFuseau_.Reset();
     destroyed_ = true;
     queryMaker_.UnregisterPath( *this );
 }
@@ -88,8 +85,9 @@ void DEC_Agent_Path::Initialize()
     }
     path_.reset( new DEC_Agent_PathfinderPath( queryMaker_, pathClass_, initialWaypoints_ ) );
     const bool refine = queryMaker_.GetType().GetUnitType().CanFly() && !queryMaker_.IsAutonomous();
+    const bool useStrictClosest = !queryMaker_.GetAutomate().GetOrderManager().GetFuseau().IsNull();
     for( auto it = initialWaypoints_.begin(); it != initialWaypoints_.end() - 1; ++it )
-        RegisterPathSection( *new DEC_Agent_PathSection( *this, *path_, *it, *(it + 1), refine, !automateFuseau_.IsNull() ) );
+        RegisterPathSection( *new DEC_Agent_PathSection( *this, *path_, *it, *(it + 1), refine, useStrictClosest ) );
 }
 
 //-----------------------------------------------------------------------------
