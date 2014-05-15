@@ -11,6 +11,7 @@
 #include "PathfindLayer.h"
 #include "moc_PathfindLayer.cpp"
 
+#include "actions/ActionsModel.h"
 #include "actions/Helpers.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/DragAndDropHelpers.h"
@@ -25,19 +26,24 @@
 #include "gaming/Equipments.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
+
 #include <boost/assign.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer constructor
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
-PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
-                              Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
+                              gui::GlTools_ABC& tools,
+                              Publisher_ABC& publisher,
+                              const kernel::CoordinateConverter_ABC& converter,
+                              actions::ActionsModel& actions )
     : controllers_( controllers )
     , tools_( tools )
     , element_( controllers )
     , publisher_( publisher )
     , converter_( converter )
+    , actions_( actions )
     , replaceable_( false )
     , lock_( false )
 {
@@ -542,4 +548,18 @@ void PathfindLayer::ProcessEvents()
         events_.pop_front();
         event();
     }
+}
+
+void PathfindLayer::OnAcceptEdit()
+{
+    if( HasPathfind() )
+        actions_.PublishCreatePathfind( *element_, std::vector< geometry::Point2f >( positions_.begin(), positions_.end() ) );
+    ClearPositions();
+    controllers_.ChangeMode( eModes_Gaming );
+}
+
+void PathfindLayer::OnRejectEdit()
+{
+    ClearPositions();
+    controllers_.ChangeMode( eModes_Gaming );
 }

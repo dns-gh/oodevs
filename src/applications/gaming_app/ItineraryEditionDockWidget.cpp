@@ -11,7 +11,6 @@
 #include "ItineraryEditionDockWidget.h"
 #include "moc_ItineraryEditionDockWidget.cpp"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/SignalAdapter.h"
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
@@ -32,16 +31,8 @@ ItineraryEditionDockWidget::ItineraryEditionDockWidget( QWidget* parent, kernel:
     mainLayout->addWidget( okButton );
     mainLayout->addWidget( cancelButton );
     setWidget( mainWidget );
-    gui::connect( okButton, SIGNAL( clicked( bool ) ), [&]()
-    {
-        controllers_.ChangeMode( eModes_Gaming );
-        emit ItineraryAccepted();
-    } );
-    gui::connect( cancelButton, SIGNAL( clicked( bool ) ), [&]()
-    {
-        controllers_.ChangeMode( eModes_Gaming );
-        emit ItineraryRejected();
-    } );
+    connect( okButton, SIGNAL( clicked( bool ) ), this, SIGNAL( ItineraryAccepted() ) );
+    connect( cancelButton, SIGNAL( clicked( bool ) ), this, SIGNAL( ItineraryRejected() ) );
 }
 
 // -----------------------------------------------------------------------------
