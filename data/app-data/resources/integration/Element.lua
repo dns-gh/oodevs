@@ -36,8 +36,8 @@ integration.agentEstBrouille = function( agent )
     return DEC_Agent_EstBrouille( agent.source )
 end
 
---- Returns true if the given company's hq unit is jammed (or
--- in partial or total radio silence), false otherwise
+--- Returns true if the given company's command post unit is jammed
+-- (or in partial or total radio silence), false otherwise
 -- @param company Company knowledge
 -- @return Boolean
 integration.pcEstBrouille = function( company )
