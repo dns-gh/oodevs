@@ -43,12 +43,14 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_Ag
 
 namespace
 {
-    void StartCompute( const boost::shared_ptr< DEC_Agent_Path >& path )
+    boost::shared_ptr< DEC_Agent_Path > StartCompute( MIL_Agent_ABC& agent, const T_PointVector& points, const DEC_PathType& pathType )
     {
+        const auto path = boost::make_shared< DEC_Agent_Path >( agent, points, pathType );
         if( !path->IsDestinationTrafficable() )
             path->CancelPath();
         else
             MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( path );
+        return path;
     }
 }
 
@@ -64,9 +66,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
     points.push_back( *pEnd );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-    const auto pPath = boost::make_shared< DEC_Agent_Path >( callerAgent, points, *pPathType );
-    StartCompute( pPath );
-    return pPath;
+    return StartCompute( callerAgent, points, *pPathType );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,9 +82,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_
     points.push_back( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     for( auto it = listPt.begin(); it != listPt.end(); ++it )
         points.push_back( **it );
-    const auto pPath = boost::make_shared< DEC_Agent_Path >( callerAgent, points, *pPathType );
-    StartCompute( pPath );
-    return pPath;
+    return StartCompute( callerAgent, points, *pPathType );
 }
 
 // -----------------------------------------------------------------------------
