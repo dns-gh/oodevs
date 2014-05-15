@@ -80,16 +80,12 @@ SuppliableCapacity::~SuppliableCapacity()
 // -----------------------------------------------------------------------------
 void SuppliableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    unsigned int consumptionId;
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    ar >> consumptionId
+    ar >> default_
        >> dotation_
        >> nFullNbrDotation_
        >> unitType_
        >> finalised_;
-    default_  = PHY_ConsumptionType::FindConsumptionType( consumptionId );
-    if( !default_ )
-        throw MASA_EXCEPTION( "Unknown consumption category." );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +95,7 @@ void SuppliableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 void SuppliableCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    ar << (const unsigned int&)( default_ ? default_->GetID() : 0 )
+    ar << default_
        << dotation_
        << nFullNbrDotation_
        << unitType_
