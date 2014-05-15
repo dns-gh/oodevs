@@ -357,15 +357,6 @@ void DEC_PathResult::NotifyPointReached( const T_PathPoints::const_iterator& itC
     itCurrentPathPoint_ = itCurrentPathPoint;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_PathResult::IsWaypoint
-// Created: LDC 2012-01-18
-// -----------------------------------------------------------------------------
-bool DEC_PathResult::IsWaypoint( const MT_Vector2D& ) const
-{
-    return true;
-}
-
 //-----------------------------------------------------------------------------
 // Name: DEC_PathResult::GetResult
 // Created: JVT 02-12-04

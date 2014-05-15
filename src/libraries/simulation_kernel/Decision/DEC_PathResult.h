@@ -60,7 +60,6 @@ public:
     bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
     virtual void InsertDecPoints() = 0;
     virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
-    virtual bool IsWaypoint( const MT_Vector2D& point ) const;
     //@}
 
     //! @name Network

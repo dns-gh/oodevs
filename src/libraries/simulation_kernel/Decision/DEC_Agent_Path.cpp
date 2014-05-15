@@ -443,18 +443,6 @@ void DEC_Agent_Path::NotifyPointReached( const T_PathPoints::const_iterator& itC
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::IsWaypoint
-// Created: LDC 2012-01-18
-// -----------------------------------------------------------------------------
-bool DEC_Agent_Path::IsWaypoint( const MT_Vector2D& point ) const
-{
-    for( T_PointVector::const_iterator it = initialWaypoints_.begin(); it != initialWaypoints_.end(); ++it )
-        if( *it == point )
-            return true;
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::CancelPath
 // Created: LDC 2012-03-23
 // -----------------------------------------------------------------------------

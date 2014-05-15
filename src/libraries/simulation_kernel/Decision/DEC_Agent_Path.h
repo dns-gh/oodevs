@@ -55,7 +55,6 @@ public:
     //@{
     virtual void InsertDecPoints();
     virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
-    virtual bool IsWaypoint( const MT_Vector2D& point ) const;
     //@}
 
 private:
