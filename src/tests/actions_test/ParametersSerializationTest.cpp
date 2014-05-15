@@ -395,6 +395,34 @@ namespace
             RegisterMissionType( physicalType, physicalContent, ordValuesAsString.size() > 1 || ordContents.size() > 1 );
             Check( CreateOrd( physicalType, ordType, ordValuesAsString, ordContents ), checker );
         }
+
+        template< typename T, typename U >
+        void CheckSingleAndListParameter( const std::string& name,
+                                          const std::string& type,
+                                          const T& checker,
+                                          const U& parameter )
+        {
+            RegisterMissionType( name, "", false );
+            const auto single =
+            "<action id='1337' name='" + name + "' target='42' time='2011-04-08T10:01:36' type='mission'>"
+            + parameter( "" ) +
+            "</action>";
+            Check( single, [&]( const sword::MissionParameter& msg ){
+                BOOST_CHECK_EQUAL( msg.value_size(), 1 );
+                checker( msg.value( 0 ) );
+            });
+            const auto list =
+            "<action id='1337' name='" + name + "' target='42' time='2011-04-08T10:01:36' type='mission'>"
+            "  <parameter name='" + name + "' type='" + type + "'>"
+            + parameter( " (item 1)" ) + parameter( " (item 2)" ) +
+            "  </parameter>"
+            "</action>";
+            Check( list, [&]( const sword::MissionParameter& msg ){
+                BOOST_CHECK_EQUAL( msg.value_size(), 2 );
+                checker( msg.value( 0 ) );
+                checker( msg.value( 1 ) );
+            });
+        }
     };
 }
 
@@ -1605,8 +1633,8 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_planned_work_list, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( serializes_parameter_itinerary, Fixture )
 {
-    auto checker = [&]( const sword::MissionParameter& msg ){
-        const auto& req = msg.value( 0 ).pathfind_request();
+    const auto checker = [&]( const sword::MissionParameter_Value& value ){
+        const auto& req = value.pathfind_request();
         BOOST_CHECK_EQUAL( req.unit().id(), 13u );
         sword::Location loc;
         loc.set_type( sword::Location_Geometry_point ); // whatever
@@ -1618,23 +1646,22 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_itinerary, Fixture )
         BOOST_CHECK_EQUAL( req.equipment_types( 1 ).id(), 17u );
         BOOST_CHECK( req.ignore_dynamic_objects() );
     };
-    auto input =
-    "<action id='1337' name='Itinerary' target='42' time='2011-04-08T10:01:36' type='mission'>"
-    "  <parameter name='Itinerary' type='itinerary'>"
-    "    <unit id='13'/>"
-    "    <positions>"
-    "      <point coordinates='" + point1 + "'/>"
-    "      <point coordinates='" + point2 + "'/>"
-    "    </positions>"
-    "    <equipments>"
-    "      <type id='7'/>"
-    "      <type id='17'/>"
-    "    </equipments>"
-    "    <ignore_dynamic_objects value='true'/>"
-    "  </parameter>"
-    "</action>";
-    RegisterMissionType( "Itinerary", "", false );
-    Check( input, checker );
+    CheckSingleAndListParameter( "Itinerary", "itinerary", checker,
+        [&]( const std::string& suffix ) {
+            return
+            "<parameter name='Itinerary" + suffix + "' type='itinerary'>"
+            "  <unit id='13'/>"
+            "  <positions>"
+            "    <point coordinates='" + point1 + "'/>"
+            "    <point coordinates='" + point2 + "'/>"
+            "  </positions>"
+            "  <equipments>"
+            "    <type id='7'/>"
+            "    <type id='17'/>"
+            "  </equipments>"
+            "  <ignore_dynamic_objects value='true'/>"
+            "</parameter>";
+    });
 }
 
 // =============================================================================
