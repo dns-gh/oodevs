@@ -998,15 +998,6 @@ bool DEC_RolePion_Decision::IsFlying() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::IsInCity
-// Created: NMI 2014-05-12
-// -----------------------------------------------------------------------------
-bool DEC_RolePion_Decision::IsInCity() const
-{
-    return DEC_AgentFunctions::IsInCity( GetPion() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::GetOperationalState
 // Created: NMI 2013-06-12
 // ----------------------------------------------------------------------

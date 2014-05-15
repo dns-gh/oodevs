@@ -881,9 +881,9 @@ int DEC_AgentFunctions::GetPosture( const MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::IsInCity
 // Created: MGD 2010-05-11
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsInCity( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsInCity( const DEC_Decision_ABC* pAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity();
+    return pAgent->GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity();
 }
 
 // -----------------------------------------------------------------------------

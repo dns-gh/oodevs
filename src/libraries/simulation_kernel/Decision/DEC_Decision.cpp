@@ -73,7 +73,6 @@ namespace DEC_DecisionImpl
 // -----------------------------------------------------------------------------
 void RegisterUnitFunctions( sword::Brain& brain)
 {
-    brain.RegisterMethod( "DEC_Agent_EnVille", &DEC_Decision_ABC::IsInCity );
     brain.RegisterMethod( "DEC_Agent_EtatOps", &DEC_Decision_ABC::GetOperationalState );
     brain.RegisterMethod( "DEC_Agent_EtatOpsMajeur", &DEC_Decision_ABC::GetMajorOperationalState );
     brain.RegisterMethod( "DEC_Agent_EstPC", &DEC_Decision_ABC::IsPC );
@@ -106,6 +105,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
 
     brain.RegisterFunction( "DEC_Agent_Renforts", &DEC_MiscFunctions::GetAgentReinforcements );
     brain.RegisterFunction( "DEC_Agent_NombreRenforts", &DEC_MiscFunctions::GetAgentReinforcementsNumber );
+    brain.RegisterFunction( "DEC_Agent_EnVille", &DEC_AgentFunctions::IsInCity );
     brain.RegisterFunction( "DEC_Pion_PionPCDeAutomate", &DEC_AgentFunctions::GetPionPCOfAutomate );
     brain.RegisterFunction( "DEC_Pion_PionsDeAutomateSansPC", &DEC_AgentFunctions::GetPionsWithoutPCOfAutomate );
     brain.RegisterFunction( "DEC_GetAutomate", &DEC_MiscFunctions::GetAutomate );

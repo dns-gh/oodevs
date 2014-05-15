@@ -153,7 +153,6 @@ public:
     virtual void SetStateVariable( const std::string& name, float value ) = 0;
     virtual bool IsPC() const = 0;
     virtual bool IsTransported() const = 0;
-    virtual bool IsInCity() const = 0;
     virtual bool IsFlying() const = 0;
     virtual double GetOperationalState() const = 0;
     virtual double GetMajorOperationalState() const = 0;
