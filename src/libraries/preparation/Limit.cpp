@@ -65,6 +65,7 @@ void Limit::MultipleSelect( ActionController& controller, const std::vector< con
     controller.MultipleSelect( first, second, third );
 }
 
+// -----------------------------------------------------------------------------
 // Name: Limit::IsLimit
 // Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------

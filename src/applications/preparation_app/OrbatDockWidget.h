@@ -20,8 +20,9 @@ namespace kernel
 namespace gui
 {
     class AutomatsLayer;
-    class FormationLayer;
     class EntitySymbols;
+    class FormationLayer;
+    class ParametersLayer;
     class SearchTreeView_ABC;
     class SymbolIcons;
     template< typename T > class RichWidget;
@@ -48,7 +49,8 @@ public:
              OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
                               const QString& windowTitle, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
                               gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model, StaticModel& staticModel,
-                              std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols );
+                              std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols,
+                              gui::ParametersLayer& paramLayer );
     virtual ~OrbatDockWidget();
     //@}
 

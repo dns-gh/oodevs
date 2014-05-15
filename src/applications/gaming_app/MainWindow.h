@@ -71,6 +71,7 @@ class DockContainer;
 class IndicatorPlotFactory;
 class FirePlayer;
 class LockMapViewController;
+class DrawingsBuilder;
 
 // =============================================================================
 /** @class  MainWindow
@@ -168,6 +169,7 @@ private:
     std::auto_ptr< StatusBar > pStatus_;
     std::auto_ptr< FirePlayer > firePlayer_;
     std::auto_ptr< IndicatorPlotFactory > plotFactory_;
+    std::unique_ptr< DrawingsBuilder > drawingsBuilder_;
     gui::ParametersLayer* parameters_; // $$$$ ABR 2013-02-14: Can't make an auto_ptr of this one, because every layers are destroyed into GlProxy destructor.
     QByteArray states_;
     bool connected_;

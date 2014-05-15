@@ -569,10 +569,18 @@ Raison: %3
     </message>
 </context>
 <context>
-    <name>DrawerLayer</name>
+    <name>DrawingsBuilder</name>
+    <message>
+        <source>Confirmation</source>
+        <translation>Confirmation</translation>
+    </message>
     <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Delete &apos;%1&apos;?</source>
+        <translation>Supprimer &apos;%1&apos;?</translation>
     </message>
 </context>
 <context>

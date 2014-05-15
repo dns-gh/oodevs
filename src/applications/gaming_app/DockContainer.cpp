@@ -66,7 +66,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
                               gui::ParametersLayer& paramLayer, gui::TerrainProfilerLayer& profilerLayer, AutomatsLayer& automatsLayer, FormationLayer& formationLayer, ::WeatherLayer& weatherLayer,
                               gui::GlProxy& proxy, gui::RichItemFactory& factory, LinkInterpreter& interpreter,
                               gui::ColorStrategy_ABC& colorStrategy, gui::SymbolIcons& symbolIcons, const gui::EntitySymbols& entitySymbols,
-                              IndicatorExportDialog& indicatorExportDialog, SimulationController& simulationController )
+                              IndicatorExportDialog& indicatorExportDialog, SimulationController& simulationController, DrawingsBuilder& drawingsBuilder )
     : timelineDockWidget_( 0 )
 {
     const bool hasLegacyTimeline = config.HasTimeline();
@@ -118,7 +118,8 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Orbat panel
     {
-        orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", profile, automatsLayer, formationLayer, model.actions_, staticModel, simulation, entitySymbols );
+        orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", profile, automatsLayer, formationLayer,
+            model.actions_, staticModel, simulation, entitySymbols, drawingsBuilder, paramLayer );
         orbatDockWidget_->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
     }

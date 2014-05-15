@@ -17,6 +17,7 @@ namespace kernel
 {
     class Drawing_ABC;
     class Entity_ABC;
+    class Location_ABC;
 }
 
 namespace xml
@@ -45,8 +46,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Drawing_ABC* CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, E_Dash_style dashStyle ) const = 0;
-    virtual kernel::Drawing_ABC* CreateShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity ) const = 0;
+    virtual void CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
+                              E_Dash_style dashStyle, kernel::Location_ABC& location ) const = 0;
+    virtual void CreateShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity ) const = 0;
     //@}
 };
 

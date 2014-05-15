@@ -33,7 +33,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              LimitsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                          gui::ParametersLayer& parameters, TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile );
+                          gui::ParametersLayer& parameters, TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile,
+                          gui::ModelObserver_ABC& model );
     virtual ~LimitsLayer();
     //@}
 
@@ -42,7 +43,6 @@ private:
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     virtual bool CanCreateLine();
-    virtual void Delete( const kernel::TacticalLine_ABC& line );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void CreateLimit( const T_PointVector& points );
     virtual void CreateLima( const T_PointVector& points );

@@ -11,6 +11,7 @@
 #include "DrawerShape.h"
 
 #include "DrawingCategory.h"
+#include "DrawingHelper.h"
 #include "DrawingTemplate.h"
 #include "DrawingTypes.h"
 #include "GlTools_ABC.h"
@@ -36,49 +37,15 @@ DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, co
                           const kernel::Entity_ABC* entity, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter,
                           E_Dash_style dashStyle )
     : Drawing( controllers.controller_, id, style.GetName(), dashStyle )
-    , controller_         ( controllers.controller_ )
     , style_              ( style )
     , location_           ( location )
     , color_              ( color )
     , entity_             ( controllers, entity )
     , drawer_             ( new SvgLocationDrawer( style ) )
     , coordinateConverter_( coordinateConverter )
+    , isEditing_          ( false )
 {
     AddExtension( *this );
-}
-
-namespace
-{
-    const DrawingTemplate& ReadStyle( xml::xistream& xis, const DrawingTypes& types )
-    {
-        std::string category, style;
-        xis >> xml::attribute( "category", category )
-            >> xml::attribute( "template", style );
-        return types.Get( category.c_str() ).GetTemplate( style );
-    }
-
-    QColor ReadColor( xml::xistream& xis )
-    {
-        const std::string name = xis.attribute< std::string >( "color" );
-        return QColor( name.c_str() );
-    }
-
-    E_Dash_style Convert( const std::string& name )
-    {
-        if( name == "dashed" )
-            return eDashed;
-        if( name == "dash_dot" )
-            return eDash_dot;
-        return eSolid;
-    }
-
-    E_Dash_style ReadDashStyle( xml::xistream& xis )
-    {
-        std::string style;
-        xis >> xml::optional
-            >> xml::attribute( "style", style );
-        return Convert( style );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -87,20 +54,19 @@ namespace
 // -----------------------------------------------------------------------------
 DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis, const kernel::Entity_ABC* entity, const DrawingTypes& types,
                           kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& coordinateConverter )
-    : Drawing( controllers.controller_, id, ReadStyle( xis, types ).GetName(), ReadDashStyle( xis ) )
-    , controller_         ( controllers.controller_ )
-    , style_              ( ReadStyle( xis, types ) )
+    : Drawing( controllers.controller_, id, gui::ReadStyle( xis, types ).GetName(), gui::ReadDashStyle( xis ) )
+    , style_              ( gui::ReadStyle( xis, types ) )
     , location_           ( proxy )
-    , color_              ( ReadColor( xis ) )
+    , color_              ( gui::ReadColor( xis ) )
     , entity_             ( controllers, entity )
     , drawer_             ( new SvgLocationDrawer( style_ ) )
     , coordinateConverter_( coordinateConverter )
+    , isEditing_          ( false )
 {
     std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
-    xis >> xml::list( "point", *this, &DrawerShape::ReadPoint );
+    gui::ReadLocation( xis, location_, coordinateConverter );
     AddExtension( *this );
-    Create();
 }
 
 // -----------------------------------------------------------------------------
@@ -131,45 +97,12 @@ const kernel::Entity_ABC* DrawerShape::GetDiffusionEntity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerShape::Create
-// Created: AGE 2008-05-19
-// -----------------------------------------------------------------------------
-void DrawerShape::Create()
-{
-    controller_.Create( *static_cast< Drawing_ABC* >( this ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DrawerShape::Update
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
 void DrawerShape::Update()
 {
     Touch();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerShape::ReadPoint
-// Created: SBO 2007-03-22
-// -----------------------------------------------------------------------------
-void DrawerShape::ReadPoint( xml::xistream& xis )
-{
-    geometry::Point2f point;
-    if( xis.has_attribute( "x" ) && xis.has_attribute( "y" ) )
-    {
-        float x, y;
-        xis >> xml::attribute( "x", x )
-            >> xml::attribute( "y", y );
-        point = geometry::Point2f( x, y );
-    }
-    else
-    {
-        double latitude, longitude;
-        xis >> xml::attribute( "latitude", latitude )
-            >> xml::attribute( "longitude", longitude );
-        point = coordinateConverter_.ConvertFromGeo( geometry::Point2d( longitude, latitude ) );
-    }
-    location_.AddPoint( point );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +120,9 @@ void DrawerShape::Translate( const geometry::Point2f& from, const geometry::Vect
 // -----------------------------------------------------------------------------
 void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined ) const
 {
-    drawer_->Draw( location_, viewport, tools, tools.IsPickingMode() ? tools.GetPickingColor() : color_, overlined, dashStyle_, tools.GetAdaptiveZoomFactor() );
+    if( !isEditing_ )
+        drawer_->Draw( location_, viewport, tools, tools.IsPickingMode() ? tools.GetPickingColor() : color_,
+            overlined, dashStyle_, tools.GetAdaptiveZoomFactor() );
 }
 
 // -----------------------------------------------------------------------------
@@ -300,8 +235,18 @@ void DrawerShape::Handle( kernel::Location_ABC& location )
     {
         std::auto_ptr< kernel::Location_ABC > ptr( &location );
         location_.SetLocation( ptr );
-        Create();
+        Update();
+        isEditing_ = false;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::Reset
+// Created: LGY 2014-05-14
+// -----------------------------------------------------------------------------
+void DrawerShape::Reset()
+{
+    isEditing_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -310,8 +255,8 @@ void DrawerShape::Handle( kernel::Location_ABC& location )
 // -----------------------------------------------------------------------------
 void DrawerShape::Edit( ParametersLayer& parameters )
 {
-    controller_.Delete( *static_cast< Drawing_ABC* >( this ) );
     parameters.Start( *this, location_ );
+    isEditing_ = true;
 }
 
 // -----------------------------------------------------------------------------

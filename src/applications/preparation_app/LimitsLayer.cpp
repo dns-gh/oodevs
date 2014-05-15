@@ -25,7 +25,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 LimitsLayer::LimitsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                           ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view, const kernel::Profile_ABC& profile )
-    : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile )
+    : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile, modelBuilder )
     , modelBuilder_( modelBuilder )
     , tools_( tools )
     , dummy_( new QWidget() )
@@ -51,15 +51,6 @@ bool LimitsLayer::CanCreateLine()
     if( controllers_.GetCurrentMode() == eModes_LivingArea )
         return false;
     return modelBuilder_.CanCreateLine();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::Delete
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-void LimitsLayer::Delete( const kernel::TacticalLine_ABC& line )
-{
-    modelBuilder_.DeleteEntity( line );
 }
 
 // -----------------------------------------------------------------------------

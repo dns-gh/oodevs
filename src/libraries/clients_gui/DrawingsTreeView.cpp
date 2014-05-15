@@ -9,8 +9,10 @@
 
 #include "clients_gui_pch.h"
 #include "DrawingsTreeView.h"
-#include "clients_kernel/TacticalLine_ABC.h"
+#include "ModelObserver_ABC.h"
+#include "ParametersLayer.h"
 #include "clients_kernel/Drawing_ABC.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Tools.h"
 
 using namespace gui;
@@ -20,8 +22,9 @@ using namespace gui;
 // Created: LGY 2014-05-07
 // -----------------------------------------------------------------------------
 DrawingsTreeView::DrawingsTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
-                                    ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
+                                    ModelObserver_ABC& modelObserver, ParametersLayer& paramLayer, QWidget* parent /*= 0*/ )
     : EntityTreeView_ABC( objectName, controllers, profile, modelObserver, parent )
+    , paramLayer_( paramLayer )
 {
     drawingsItem_ = dataModel_.AddRootTextItem( dataModel_.rowCount(), 0, tools::translate( "DrawingsTreeView", "Drawings" ), "" );
     limitsItem_ = dataModel_.AddRootTextItem( dataModel_.rowCount(), 0, tools::translate( "DrawingsTreeView", "Limits" ), "" );
@@ -80,6 +83,7 @@ void DrawingsTreeView::Purge()
     dataModel_.PurgeChildren( *limitsItem_ );
     dataModel_.PurgeChildren( *phaseLinesItem_ );
 }
+
 // -----------------------------------------------------------------------------
 // Name: DrawingsTreeView::ApplyProfileFilter
 // Created: LGY 2014-05-07
@@ -91,4 +95,25 @@ bool DrawingsTreeView::ApplyProfileFilter( QStandardItem& item, StandardModel& m
         phaseLinesItem_->index() == index )
         return true;
     return EntityTreeView_ABC::ApplyProfileFilter( item, model );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingsTreeView::keyPressEvent
+// Created: LGY 2014-05-07
+// -----------------------------------------------------------------------------
+void DrawingsTreeView::keyPressEvent( QKeyEvent* event )
+{
+    const QModelIndex index = selectionModel()->currentIndex();
+    if( event && index.isValid() )
+    {
+        if( event->key() == Qt::Key_Delete )
+        {
+            if( kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
+                modelObserver_.DeleteEntity( *entity );
+        }
+        else if( event->key() == Qt::Key_Escape )
+            paramLayer_.Reset();
+    }
+    else
+        EntityTreeView_ABC::keyPressEvent( event );
 }

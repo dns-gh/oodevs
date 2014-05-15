@@ -70,3 +70,12 @@ void TacticalLine_ABC::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "name", name_.toStdString() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::NotifyDestruction
+// Created: LGY 2014-05-15
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::NotifyDestruction()
+{
+    // NOTHING
+}

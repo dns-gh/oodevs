@@ -11,6 +11,7 @@
 #include "DrawerLayer.h"
 #include "moc_DrawerLayer.cpp"
 #include "Drawing.h"
+#include "ModelObserver_ABC.h"
 #include "Tools.h"
 #include "Viewport2d.h"
 #include "clients_kernel/Controller.h"
@@ -22,10 +23,11 @@ using namespace gui;
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
 DrawerLayer::DrawerLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                          ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile )
+                          ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile, ModelObserver_ABC& model )
     : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Drawers )
     , parameters_( parameters )
     , tools_     ( tools )
+    , model_     ( model )
     , selected_  ( 0 )
 {
     controllers.Update( *this );
@@ -85,22 +87,6 @@ void DrawerLayer::OnEditDrawing()
 {
     if( selected_ )
         static_cast< Drawing* >( const_cast< kernel::Drawing_ABC* >( selected_ ) )->Edit( parameters_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::OnDeleteDrawing
-// Created: SBO 2008-06-10
-// -----------------------------------------------------------------------------
-void DrawerLayer::OnDeleteDrawing()
-{
-    if( selected_ )
-    {
-        const kernel::Drawing_ABC* selected = selected_;
-        selected_ = 0;
-        controllers_.controller_.Delete( *const_cast< kernel::Drawing_ABC* >( selected ) );
-        controllers_.actions_.DeselectAll();
-        delete selected;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +160,8 @@ bool DrawerLayer::HandleKeyPress( QKeyEvent* k )
     const int key = k->key();
     if( key == Qt::Key_Backspace || key == Qt::Key_Delete )
     {
-        OnDeleteDrawing();
+        if( selected_ )
+            model_.DeleteEntity( *selected_ );
         return true;
     }
     return EntityLayer< kernel::Drawing_ABC >::HandleKeyPress( k );

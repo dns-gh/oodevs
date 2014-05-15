@@ -284,17 +284,16 @@ void DrawerPanel::StartDrawing()
 {
     if( selectedStyle_ )
     {
-        Drawing* shape = static_cast< Drawing* >( model_.Create( *selectedStyle_, color_->GetColor(), selectedEntity_, dashStyle_ ) );
         if( selectedStyle_->GetType() == "line" )
-            layer_.StartLine( *shape );
+            layer_.StartLine( *this );
         else if( selectedStyle_->GetType() == "polygon" )
-            layer_.StartPolygon( *shape );
+            layer_.StartPolygon( *this );
         else if( selectedStyle_->GetType() == "point" )
-            layer_.StartPoint( *shape );
+            layer_.StartPoint( *this );
         else if( selectedStyle_->GetType() == "circle" )
-            layer_.StartCircle( *shape );
+            layer_.StartCircle( *this );
         else if( selectedStyle_->GetType() == "curve" )
-            layer_.StartCurve( *shape );
+            layer_.StartCurve( *this );
         else
             throw MASA_EXCEPTION( "Unhandled shape geometry." );
     }
@@ -360,4 +359,15 @@ void DrawerPanel::Clear()
 void DrawerPanel::OnLineChanged( int index )
 {
     dashStyle_ = E_Dash_style( index );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::Handle
+// Created: LGY 2014-05-14
+// -----------------------------------------------------------------------------
+void DrawerPanel::Handle( kernel::Location_ABC& location )
+{
+    if( selectedStyle_ )
+        model_.Create( *selectedStyle_, color_->GetColor(), selectedEntity_, dashStyle_, location );
 }

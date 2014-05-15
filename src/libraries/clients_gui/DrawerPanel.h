@@ -54,6 +54,7 @@ class DrawerPanel : public InfoPanel_ABC
                   , public tools::SelectionObserver_Base< kernel::Drawing_ABC >
                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
+                  , private ShapeHandler_ABC
 {
     Q_OBJECT
 
@@ -94,6 +95,8 @@ private:
     virtual void Select( const kernel::Drawing_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
+
+    virtual void Handle( kernel::Location_ABC& location );
     //@}
 
     //! @name Types

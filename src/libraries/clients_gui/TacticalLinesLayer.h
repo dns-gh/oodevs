@@ -31,6 +31,7 @@ namespace gui
 
 namespace gui
 {
+    class ModelObserver_ABC;
 // =============================================================================
 /** @class  TacticalLinesLayer
     @brief  TacticalLinesLayer
@@ -49,14 +50,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              TacticalLinesLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                                 ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile );
+                                 ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile,
+                                 ModelObserver_ABC& model );
     virtual ~TacticalLinesLayer();
     //@}
 
 protected:
     //! @name Operations
     //@{
-    virtual void Delete( const kernel::TacticalLine_ABC& line ) = 0;
     virtual void CreateLimit( const T_PointVector& points ) = 0;
     virtual void CreateLima( const T_PointVector& points ) = 0;
     virtual bool CanCreateLine();
@@ -94,6 +95,7 @@ protected:
     const GlTools_ABC& tools_;
     gui::ColorStrategy_ABC& strategy_;
     gui::ParametersLayer& parameters_;
+    ModelObserver_ABC& model_;
     bool isLimit_;
     bool isEditing_;
     kernel::SafePointer< kernel::TacticalLine_ABC > selected_;

@@ -35,7 +35,8 @@
 // -----------------------------------------------------------------------------
 TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
                                 Model& model, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols,
-                                StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar )
+                                StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar,
+                                gui::ParametersLayer& paramLayer )
     : gui::RichWidget< QTabWidget >( "TreeViewsPanel" )
 {
     gui::SubObjectName subObject( "TreeViewsPanel" );
@@ -93,7 +94,8 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySym
     }
     // Drawings
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< gui::DrawingsTreeView >( "DrawingsTreeView", this, controllers, PreparationProfile::GetProfile(), modelBuilder );
+        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< gui::DrawingsTreeView >( "DrawingsTreeView", this, controllers, PreparationProfile::GetProfile(),
+            modelBuilder, paramLayer );
         Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
         addTab( searchTreeView, tools::translate( "DockContainer","Drawings" ) );
     }

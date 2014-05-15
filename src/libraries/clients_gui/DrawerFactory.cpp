@@ -44,22 +44,26 @@ DrawerFactory::~DrawerFactory()
 // Name: DrawerFactory::CreateShape
 // Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
-kernel::Drawing_ABC* DrawerFactory::CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, E_Dash_style dashStyle ) const
+void DrawerFactory::CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
+                                                 E_Dash_style dashStyle, kernel::Location_ABC& location ) const
 {
     DrawingPositions* positions = new DrawingPositions();
-    std::auto_ptr< kernel::Drawing_ABC > shape( new DrawerShape( controllers_, ++idManager_, style, color, entity, *positions, coordinateConverter_, dashStyle ) );
+    positions->SetLocation( location );
+    std::auto_ptr< DrawerShape > shape( new DrawerShape( controllers_, ++idManager_, style, color, entity, *positions, coordinateConverter_, dashStyle ) );
     shape->Attach< kernel::Positions >( *positions );
-    return shape.release();
+    shape->Polish();
+    shape.release();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerFactory::CreateShape
 // Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
-kernel::Drawing_ABC* DrawerFactory::CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const
+void DrawerFactory::CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const
 {
     DrawingPositions* positions = new DrawingPositions();
-    std::auto_ptr< kernel::Drawing_ABC > shape( new DrawerShape( controllers_, ++idManager_, xis, entity, types_, *positions, coordinateConverter_ ) );
+    std::auto_ptr< DrawerShape > shape( new DrawerShape( controllers_, ++idManager_, xis, entity, types_, *positions, coordinateConverter_ ) );
     shape->Attach< kernel::Positions >( *positions );
-    return shape.release();
+    shape->Polish();
+    shape.release();
 }

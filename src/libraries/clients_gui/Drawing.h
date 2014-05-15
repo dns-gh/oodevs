@@ -56,7 +56,6 @@ public:
 protected:
     //! @name Helpers
     //@{
-    virtual void Create() = 0;
     virtual void Update() = 0;
     //@}
 

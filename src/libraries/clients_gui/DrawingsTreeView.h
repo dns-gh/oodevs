@@ -20,6 +20,7 @@ namespace kernel
 
 namespace gui
 {
+    class ParametersLayer;
 // =============================================================================
 /** @class  DrawingsTreeView
     @brief  DrawingsTreeView
@@ -34,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DrawingsTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
-                               ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
+                               ModelObserver_ABC& modelObserver, ParametersLayer& paramLayer, QWidget* parent = 0 );
     virtual ~DrawingsTreeView();
     //@}
 
@@ -47,11 +48,13 @@ protected:
     virtual void NotifyCreated( const kernel::Drawing_ABC& drawing );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual bool ApplyProfileFilter( QStandardItem& item, StandardModel& model ) const;
+    virtual void keyPressEvent( QKeyEvent* event );
     //@}
 
 private:
     //! @name Member data
     //@{
+    ParametersLayer& paramLayer_;
     QStandardItem* drawingsItem_;
     QStandardItem* limitsItem_;
     QStandardItem* phaseLinesItem_;

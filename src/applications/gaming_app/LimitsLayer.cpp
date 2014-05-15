@@ -27,8 +27,9 @@ using namespace gui;
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
 LimitsLayer::LimitsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters,
-                          TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile )
-    : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile )
+                          TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile,
+                          ModelObserver_ABC& model )
+    : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile, model )
     , tools_         ( tools )
     , factory_       ( factory )
     , selectedEntity_( controllers )
@@ -53,20 +54,6 @@ LimitsLayer::~LimitsLayer()
 bool LimitsLayer::CanCreateLine()
 {
     return selectedEntity_ != 0 && !lineSelected_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::Delete
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-void LimitsLayer::Delete( const kernel::TacticalLine_ABC& l )
-{
-    const kernel::Entity_ABC* superior = l.Get< kernel::TacticalHierarchies >().GetSuperior();
-    if( superior && profile_.CanBeOrdered( *superior ) )
-    {
-        kernel::TacticalLine_ABC& line = const_cast< kernel::TacticalLine_ABC& >( l );
-        static_cast< ::TacticalLine_ABC& >( line ).Delete();// $$$$ SBO 2006-11-07:
-    }
 }
 
 namespace
