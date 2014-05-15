@@ -18,17 +18,16 @@
 // Created: LGY 2014-04-16
 // -----------------------------------------------------------------------------
 PathRequest::PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& request,
-                          unsigned int nCtx, unsigned int clientId, uint32_t id, bool stored )
+                          unsigned int nCtx, unsigned int clientId, uint32_t id, bool store )
     : computer_( computer )
-    , ack_( new client::ComputePathfindAck() )
     , nCtx_( nCtx )
     , clientId_( clientId )
-    , stored_( stored )
+    , id_( id )
+    , unit_( request.unit().id() )
+    , store_( store )
+    , published_( false )
 {
-    auto& msg = (*ack_)();
-    msg.mutable_unit()->set_id( request.unit().id() );
-    if( stored_ )
-        msg.mutable_id()->set_id( id );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -46,20 +45,23 @@ PathRequest::~PathRequest()
 // -----------------------------------------------------------------------------
 bool PathRequest::Update()
 {
-    if( !ack_ )
+    if( published_ )
         return false;
     const auto state = computer_->GetState();
     if( state == DEC_Path_ABC::eComputing )
         return false;
-    auto& msg = (*ack_)();
+    client::ComputePathfindAck ack;
+    ack().mutable_unit()->set_id( unit_ );
+    if( store_ )
+        ack().mutable_id()->set_id( id_ );
     if( state == DEC_Path_ABC::eInvalid || state == DEC_Path_ABC::eImpossible )
-        msg.set_error_code( sword::ComputePathfindAck::error_path_invalid );
+        ack().set_error_code( sword::ComputePathfindAck::error_path_invalid );
     else
     {
-        msg.set_error_code( sword::ComputePathfindAck::no_error );
-        computer_->Serialize( *msg.mutable_path() );
+        ack().set_error_code( sword::ComputePathfindAck::no_error );
+        computer_->Serialize( *ack().mutable_path() );
     }
-    ack_->Send( NET_Publisher_ABC::Publisher(), nCtx_, clientId_ );
-    ack_.reset();
-    return !stored_;
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx_, clientId_ );
+    published_ = true;
+    return !store_;
 }

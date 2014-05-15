@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& request,
-                  unsigned int nCtx, unsigned int clientId, uint32_t id, bool stored );
+                  unsigned int nCtx, unsigned int clientId, uint32_t id, bool store );
     ~PathRequest();
     //@}
 
@@ -42,10 +42,12 @@ private:
     //! @name Member data
     //@{
     boost::shared_ptr< DEC_PathComputer > computer_;
-    std::unique_ptr< client::ComputePathfindAck > ack_;
     const unsigned int nCtx_;
     const unsigned int clientId_;
-    const bool stored_;
+    const uint32_t id_;
+    const uint32_t unit_;
+    const bool store_;
+    bool published_;
     //@}
 };
 
