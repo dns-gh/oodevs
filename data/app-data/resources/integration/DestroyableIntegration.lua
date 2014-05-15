@@ -130,14 +130,14 @@ end
 
 --- Informs if the agent has the authorization to open fire onto a given position.
 -- The implentation checks that the current rule of engagement is "free fire" or "retaliation fire" and that 
--- the target is not located into a fire restricted area.
+-- the position is not located into a fire restricted area.
 -- This method can only be called by an agent.
 -- @param target a DirectIA 'LocalizedElement 'knowledge.
 -- @return a boolean 'true' if the agent can open fire, 'false' otherwise.
 integration.firePermittedForPoint = function( target )
     local stateROE = integration.getROE()
-    local localisation = DEC_Geometrie_CreerLocalisationCercle( target:getPosition(), 10 )
-    local object = integration.obtenirObjetProcheDe( localisation, eTypeObjectFireForbiddenArea, 10000 )
+    local localisation = DEC_Geometrie_CreerLocalisationCercle( target:getPosition(), 10 ) -- 10 meters
+    local object = integration.obtenirObjetProcheDe( localisation, eTypeObjectFireForbiddenArea, 10000 ) -- 10 km
     if object then
         local area = DEC_GenObjectKnowledge_Localisation( object )
         if ( not integration.isPointInSimLocalisation( target, area ) ) 
@@ -151,7 +151,7 @@ integration.firePermittedForPoint = function( target )
 end
 
 --- Informs if the agent has the authorization to open fire at the given target.
--- The implentation checks if the current rule of engagement is compatible and if 
+-- The implentation checks if the current rule of engagement is "free fire" or "retaliation fire"  and if 
 -- the target is not located into a fire restricted area. 
 -- This method can only be called by an agent.
 -- @param target a DirectIA agent knowledge
@@ -257,31 +257,32 @@ integration.niTropPresNiTropLoin = function( eni, ph )
     return ( not ( bTropProche or bTropLoin ) )
 end
 
---- Forbid the use of the given type of ammunition. See dotation categories in authoring tool.
--- <ul> <li> Possible values are: </li>
+--- Forbid the use of the given types of ammunition. See dotation categories in authoring tool.
+-- <ul> Possible values are: 
 -- <li> eMunitionClasse_Obus = 0 </li>
 -- <li> eMunitionClasse_MissileSol = 1 </li>
 -- <li> eMunitionClasse_MissileAir = 2 </li>
 -- <li> eMunitionClasse_Mitraille = 3 </li> </ul>
 -- This method can only be called by an agent.
--- @param munitions numeric the type of ammunition
+-- @param munitions the liste of the type to be fordiden
 integration.forbidAmmunition = function( munitions )
     DEC_Pion_InterdireMunition( munitions )
 end
 
---- Authorize the use of the given type of ammunition. See dotation categories in authoring tool.
--- <ul> <li> Possible values are: </li>
+--- Authorize the use of the given types of ammunition. See dotation categories in authoring tool.
+-- <ul> Possible values are:
 -- <li> eMunitionClasse_Obus = 0 </li>
 -- <li> eMunitionClasse_MissileSol = 1 </li>
 -- <li> eMunitionClasse_MissileAir = 2 </li>
 -- <li> eMunitionClasse_Mitraille = 3 </li> </ul>
 -- This method can only be called by an agent.
--- @param munitions numeric the type of ammunition
+-- @param munitions the liste of the type to be fordiden
 integration.autoriseAmmunition = function( munitions )
     DEC_Pion_AutoriserMunition( munitions )
 end
 
 --- Authorize the use of all types of ammunition. See dotation categories in authoring tool.
+-- This method can only be called by an agent
 integration.autoriseAllAmmunitions = function()
     DEC_Pion_AutoriserToutesMunitions()
 end
@@ -305,7 +306,7 @@ integration.getMaxRangeToFireAgentForPH = function( agent, pH )
     return DEC_Tir_PorteeMaxPourTirer( agent, pH )
 end
 
---- Returns the list of agents knowledge that are currently firing at the agent.
+--- Returns the list of agent knowledges that are currently firing at the agent.
 -- This method can only be called by an agent.
 -- @return table containing the simulation agents knowledge engaging the agent.
 integration.getKnowledgesUnitsEngaging = function()
@@ -314,7 +315,7 @@ end
 
 --- Returns the list of agents knowledge that are currently firing at the given 'friendAgent'.
 -- This method can only be called by an agent.
--- @param friendAgent a simulation agent knowledge.
+-- @param friendAgent a siMulation agent knowledge.
 -- @return table containing the knowledge agents engaging the agent.
 integration.getKnowledgesUnitsEngagingFriend = function( friendAgent )
     return DEC_Connaissances_UnitesPrenantAPartieSurAmi( friendAgent )
@@ -323,7 +324,7 @@ end
 --- Returns the list of hostile agents knowledge that are considered as 'dangerous' for the agent.
 -- A 'dangerous' unit is a unit which PH onto the agent is striclty greater than 0. This means that 
 -- all returned agents knowledge has the capability to open fire at the agent.
--- Only enemies are returned considering the diplomatie matrix. 
+-- Only enemies are returned considering the diplomacy matrix. 
 -- This method can only be called by an agent.
 -- @return table the knowledge agents that can engage the agent.
 integration.getKnowledgesDangerousUnits = function()
@@ -331,8 +332,8 @@ integration.getKnowledgesDangerousUnits = function()
 end
 
 --- Returns the dangerosity of the given agent knowledge.
--- A 'dangerous' unit is an unit which PH onto the agent is striclty greater than 0. This means that 
--- the agent knowledge has to capability to open fire at the agent.
+-- A 'dangerous' unit is an unit which PH onto the agent is strictly greater than 0. This means that 
+-- the agent knowledge has the capability to open fire at the agent.
 -- This method can only be called by an agent.
 -- @param agent a simulation agent knowledge.
 -- @return numeric, a value between 0 and 1, the dangerosity of the given agent. A value of '0' means not dangerous at all,
@@ -344,7 +345,6 @@ end
 --- Informs whether or not the given agent knowledge is tactically destroyed.
 -- An agent is considered as not 'operational' ("tactically destroyed") if all its 
 -- major equipments are destroyed (see 'Equipements' definitions, 'Units' tab ). 
--- This method can only be called by an agent.
 -- @param agent a simulation agent knowledge.
 -- @return boolean returns 'true' tactically destroyed, 'false' otherwise.
 integration.isAgentTacticallyDestroyed = function( agent )
@@ -370,7 +370,7 @@ integration.getMaxRangeToBeFiriedByAgent = function( agent, pH )
 end
 
 --- Returns whether or not the agent can open fire with regarding the given targetUnit, ph and targetSpeed.
--- The implementation estimate the future position of the given target (using the 'targetSpeed' parameter). If 
+-- The implementation estimates the future position of the given target (using the 'targetSpeed' parameter). If 
 -- this position is in range regarding weapon systems, the method returns 'true' once the 'targetUnit' occupies the future position.
 -- This method can only be called by an agent.
 -- @param targetUnit a DirectIA agent knowledge.
