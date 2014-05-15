@@ -154,7 +154,7 @@ integration.getEstimatePerceptionForPion = function( entity, objective, position
     return position.estimatePerceptions[ objective ]
 end
 
---- Defines whether the given 'point' is perceived by the agent or not.
+--- Defines whether or not the given 'point' is perceived by the agent.
 -- This method can only be called by an agent.
 -- @param point a Directia knowledge defining the element to observe.
 -- @return Boolean 'true' if the point is in sight, 'false' otherwise.
