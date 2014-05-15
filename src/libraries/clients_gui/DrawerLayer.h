@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __DrawerLayer_h_
-#define __DrawerLayer_h_
+#ifndef __gui_DrawerLayer_h_
+#define __gui_DrawerLayer_h_
 
 #include "EntityLayer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
@@ -28,6 +28,7 @@ namespace gui
 
 namespace gui
 {
+    class ModelObserver_ABC;
 // =============================================================================
 /** @class  DrawerLayer
     @brief  DrawerLayer
@@ -43,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DrawerLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                          ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile );
+                          ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile, ModelObserver_ABC& model );
     virtual ~DrawerLayer();
     //@}
 
@@ -51,7 +52,12 @@ private slots:
     //! @name Slots
     //@{
     void OnEditDrawing();
-    void OnDeleteDrawing();
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    virtual void NotifyContextMenu( const kernel::Drawing_ABC& shape, kernel::ContextMenu& menu );
     //@}
 
 private:
@@ -61,7 +67,8 @@ private:
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode );
     virtual void NotifySelectionChanged( const std::vector< const kernel::Drawing_ABC* >& elements );
-    virtual void NotifyContextMenu( const kernel::Drawing_ABC& shape, kernel::ContextMenu& menu );
+    virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void FillContextMenu( const kernel::GraphicalEntity_ABC& entity, kernel::ContextMenu& menu );
     virtual bool HandleKeyPress( QKeyEvent* key );
     virtual void NotifyDeleted( const kernel::Drawing_ABC& drawing );
     //@}
@@ -71,6 +78,7 @@ private:
     //@{
     ParametersLayer& parameters_;
     GlTools_ABC& tools_;
+    ModelObserver_ABC& model_;
     geometry::Rectangle2f viewport_;
     const kernel::Drawing_ABC* selected_;
     //@}
@@ -78,4 +86,4 @@ private:
 
 }
 
-#endif // __DrawerLayer_h_
+#endif // __gui_DrawerLayer_h_

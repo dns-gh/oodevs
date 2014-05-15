@@ -44,6 +44,7 @@ namespace
 void LocationProxy::SetLocation( Location_ABC& location )
 {
     location_ = boost::shared_ptr< Location_ABC >( &location, &DoNothing );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +54,7 @@ void LocationProxy::SetLocation( Location_ABC& location )
 void LocationProxy::SetLocation( std::auto_ptr< Location_ABC >& location )
 {
     location_.reset( location.release() );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -140,4 +142,13 @@ bool LocationProxy::IsValid() const
 bool LocationProxy::IsDone() const
 {
     return location_ ? location_->IsDone() : false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationProxy::Update
+// Created: LGY 2014-05-14
+// -----------------------------------------------------------------------------
+void LocationProxy::Update()
+{
+    // NOTHING
 }

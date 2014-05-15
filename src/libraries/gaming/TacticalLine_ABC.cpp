@@ -48,10 +48,10 @@ void TacticalLine_ABC::Create()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::Delete
+// Name: TacticalLine_ABC::NotifyDestruction
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Delete()
+void TacticalLine_ABC::NotifyDestruction()
 {
     UpdateToSim( eStateDeleted );
 }

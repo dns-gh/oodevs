@@ -562,6 +562,28 @@ Raison: %3
     </message>
 </context>
 <context>
+    <name>DockContainer</name>
+    <message>
+        <source>Drawings</source>
+        <translation>Dessins</translation>
+    </message>
+</context>
+<context>
+    <name>DrawingsBuilder</name>
+    <message>
+        <source>Confirmation</source>
+        <translation>Confirmation</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Delete &apos;%1&apos;?</source>
+        <translation>Supprimer &apos;%1&apos;?</translation>
+    </message>
+</context>
+<context>
     <name>EfficientRangeDialog</name>
     <message>
         <source>Efficient Range</source>

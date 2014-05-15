@@ -43,35 +43,6 @@ Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& 
     , publishUpdate_( true )
 {
     SetLocation( message.shape().points() );
-    DrawerShape::Create();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Drawing constructor
-// Created: SBO 2008-06-04
-// -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controllers& controllers, const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
-                  kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
-                  gui::E_Dash_style dashStyle )
-    : gui::DrawerShape( controllers, 0, style, color, entity, proxy, converter, dashStyle )
-    , publisher_    ( publisher )
-    , converter_    ( converter )
-    , publishUpdate_( true )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Drawing constructor
-// Created: SBO 2008-06-04
-// -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controllers& controllers, xml::xistream& xis, const kernel::Entity_ABC* entity, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controllers, 0, xis, entity, types, proxy, converter )
-    , publisher_    ( publisher )
-    , converter_    ( converter )
-    , publishUpdate_( true )
-{
-    Create();
 }
 
 // -----------------------------------------------------------------------------
@@ -105,32 +76,6 @@ void Drawing::NotifyDestruction() const
     plugins::messenger::ShapeDestructionRequest message;
     message().mutable_id()->set_id( GetId() );
     message.Send( publisher_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Drawing::Create
-// Created: SBO 2008-06-05
-// -----------------------------------------------------------------------------
-void Drawing::Create()
-{
-    plugins::messenger::ShapeCreationRequest message;
-    message().mutable_shape()->set_category( style_.GetCategory().toStdString() );
-    message().mutable_shape()->mutable_color()->set_red( color_.red() );
-    message().mutable_shape()->mutable_color()->set_green( color_.green() );
-    message().mutable_shape()->mutable_color()->set_blue( color_.blue() );
-    message().mutable_shape()->set_pattern( style_.GetName().toStdString() );
-    if( dashStyle_ != gui::eSolid )
-        message().mutable_shape()->set_pen_style( sword::EnumPenStyle( dashStyle_ ) );
-    if( entity_ )
-    {
-        if( entity_->GetTypeName() == kernel::Automat_ABC::typeName_ )
-            message().mutable_shape()->mutable_diffusion()->mutable_automat()->set_id( entity_->GetId() );
-        else if( entity_->GetTypeName() == kernel::Formation_ABC::typeName_ )
-            message().mutable_shape()->mutable_diffusion()->mutable_formation()->set_id( entity_->GetId() );
-    }
-    SerializeLocation( *message().mutable_shape()->mutable_points() );
-    message.Send( publisher_ );
-    delete this;
 }
 
 // -----------------------------------------------------------------------------

@@ -189,39 +189,16 @@ void DrawerModel::NotifyCreated( const kernel::Drawing_ABC& shape )
 // -----------------------------------------------------------------------------
 void DrawerModel::NotifyDeleted( const kernel::Drawing_ABC& shape )
 {
-    InternalDelete( shape.GetId() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerModel::Delete
-// Created: MMC 2013-04-18
-// -----------------------------------------------------------------------------
-void DrawerModel::Delete( unsigned long id )
-{
-    if( kernel::Drawing_ABC* drawing = Find( id ) )
-    {
-        if( controllers_.actions_.IsSelected( drawing ) )
-            controllers_.actions_.DeselectAll();
-        delete drawing;
-    }
+    if( kernel::Drawing_ABC* drawing = Find( shape.GetId() ) )
+        Remove( shape.GetId() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel::Create
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-kernel::Drawing_ABC* DrawerModel::Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, E_Dash_style dashStyle ) const
+void DrawerModel::Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
+                          E_Dash_style dashStyle, kernel::Location_ABC& location ) const
 {
-    return factory_.CreateShape( style, color, entity, dashStyle );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerModel::InternalDelete
-// Created: SBO 2008-06-05
-// -----------------------------------------------------------------------------
-void DrawerModel::InternalDelete( unsigned long id )
-{
-    if( const kernel::Drawing_ABC* drawing = Find( id ) )
-        drawing->NotifyDestruction();
-    Remove( id );
+    factory_.CreateShape( style, color, entity, dashStyle, location );
 }

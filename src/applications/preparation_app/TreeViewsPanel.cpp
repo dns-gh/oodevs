@@ -19,10 +19,11 @@
 #include "PreparationProfile.h"
 #include "TacticalTreeView.h"
 #include "UrbanTreeView.h"
-#include "clients_gui/EntityTreeView.h"
-#include "clients_gui/SearchTreeView.h"
-#include "clients_gui/GlProxy.h"
 #include "clients_gui/AggregateToolbar.h"
+#include "clients_gui/DrawingsTreeView.h"
+#include "clients_gui/EntityTreeView.h"
+#include "clients_gui/GlProxy.h"
+#include "clients_gui/SearchTreeView.h"
 #include "clients_kernel/Tools.h"
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
@@ -34,7 +35,8 @@
 // -----------------------------------------------------------------------------
 TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
                                 Model& model, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols,
-                                StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar )
+                                StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar,
+                                gui::ParametersLayer& paramLayer )
     : gui::RichWidget< QTabWidget >( "TreeViewsPanel" )
 {
     gui::SubObjectName subObject( "TreeViewsPanel" );
@@ -89,6 +91,13 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySym
         gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< InhabitantTreeView >( "InhabitantTreeView", this, controllers, PreparationProfile::GetProfile(), modelBuilder );
         Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
         addTab( searchTreeView, tools::translate( "DockContainer","Populations" ) );
+    }
+    // Drawings
+    {
+        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< gui::DrawingsTreeView >( "DrawingsTreeView", this, controllers, PreparationProfile::GetProfile(),
+            modelBuilder, paramLayer );
+        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
+        addTab( searchTreeView, tools::translate( "DockContainer","Drawings" ) );
     }
 }
 

@@ -88,13 +88,46 @@ void SimpleLocationDrawer::VisitCircle( const geometry::Point2f& center, float r
     }
 }
 
+namespace
+{
+    unsigned int ComputeSegmentNumber( const geometry::Point2f& from, const geometry::Point2f& to )
+    {
+        unsigned int result =  static_cast< unsigned int >( from.Distance( to ) );
+        if( result < 2 )
+            result = 2;
+        if( result > 20 )
+            result = 20;
+        return result;
+    }
+    geometry::Point2f Compute( const geometry::Point2f& from, const geometry::Point2f& control, const geometry::Point2f& to,
+        unsigned int i, unsigned int segment )
+    {
+        float u =  i / static_cast< float >( segment );
+        const float nu = 1.f - u;
+        const float b0 = 1 * nu * nu;
+        const float b1 = 2 *  u * nu;
+        const float b3 = 1 *  u *  u;
+        return geometry::Point2f( from.X() * b0 + control.X() * b1 + to.X() * b3,
+            from.Y() * b0 + control.Y() * b1 + to.Y() * b3 );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: SimpleLocationDrawer::VisitCurve
 // Created: LGY 2013-04-12
 // -----------------------------------------------------------------------------
-void SimpleLocationDrawer::VisitCurve( const T_PointVector& /*points*/ )
+void SimpleLocationDrawer::VisitCurve( const T_PointVector& points )
 {
-    // NOTHING
+    if( points.size() <= 2 )
+        tools_.DrawLines( points );
+    else if( points.size() == 3 )
+    {
+        unsigned int segment = ComputeSegmentNumber( points[ 0 ], points[ 1 ] );
+        T_PointVector newPoints;
+        for( unsigned int i = 0; i <= segment; ++i )
+            newPoints.push_back( Compute( points[ 0 ], points[ 2 ], points[ 1 ], i, segment ) );
+        tools_.DrawLines( newPoints );
+    }
 }
 
 // -----------------------------------------------------------------------------

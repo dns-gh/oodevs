@@ -560,6 +560,28 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>DockContainer</name>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DrawingsBuilder</name>
+    <message>
+        <source>Confirmation</source>
+        <translation type="unfinished">Confirmation</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Delete</translation>
+    </message>
+    <message>
+        <source>Delete &apos;%1&apos;?</source>
+        <translation type="unfinished">Delete &apos;%1&apos;?</translation>
+    </message>
+</context>
+<context>
     <name>EfficientRangeDialog</name>
     <message>
         <source>Efficient Range</source>

@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    void Delete();
+    virtual void NotifyDestruction();
     void Create();
     //@}
 

@@ -70,8 +70,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined ) const;
     virtual void Handle( kernel::Location_ABC& location );
+    virtual void Reset();
+
+    virtual void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined ) const;
     virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f&, const GlTools_ABC& tools ) const;
 
     virtual void ChangeColor( const QColor& color );
@@ -79,32 +81,24 @@ public:
     virtual void Serialize( xml::xostream& xos ) const;
 
     virtual void NotifyDestruction() const {}
-
     virtual const kernel::Location_ABC& GetLocation() const;
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    virtual void Create();
     virtual void Update();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void ReadPoint( xml::xistream& xis );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     const DrawingTemplate& style_;
     kernel::LocationProxy& location_;
     QColor color_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     std::auto_ptr< SvgLocationDrawer > drawer_;
+    bool isEditing_;
     //@}
 
 private:

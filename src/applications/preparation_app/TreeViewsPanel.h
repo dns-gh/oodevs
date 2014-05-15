@@ -19,11 +19,12 @@ namespace kernel
 
 namespace gui
 {
-    class HierarchyTreeView_ABC;
-    class EntitySymbols;
-    class SymbolIcons;
-    class SearchTreeView_ABC;
     class AggregateToolbar;
+    class EntitySymbols;
+    class HierarchyTreeView_ABC;
+    class ParametersLayer;
+    class SearchTreeView_ABC;
+    class SymbolIcons;
 }
 
 class ModelBuilder;
@@ -45,7 +46,8 @@ public:
     //@{
              TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
                              Model& model, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols,
-                             StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar );
+                             StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar,
+                             gui::ParametersLayer& paramLayer );
     virtual ~TreeViewsPanel();
     //@}
 

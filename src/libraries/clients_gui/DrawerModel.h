@@ -23,9 +23,10 @@ namespace xml
 namespace kernel
 {
     class Controllers;
-    class Entity_ABC;
-    class EntityResolver_ABC;
     class Drawing_ABC;
+    class EntityResolver_ABC;
+    class Entity_ABC;
+    class Location_ABC;
 }
 
 namespace tools
@@ -63,8 +64,8 @@ public:
     void Serialize( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
-    kernel::Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, E_Dash_style dashStyle ) const;
-    void Delete( unsigned long id );
+    void Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
+                 E_Dash_style dashStyle, kernel::Location_ABC& location ) const;
     //@}
 
 private:
@@ -76,7 +77,6 @@ private:
     void ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity );
     virtual void NotifyCreated( const kernel::Drawing_ABC& );
     virtual void NotifyDeleted( const kernel::Drawing_ABC& );
-    void InternalDelete( unsigned long id );
     //@}
 
 private:

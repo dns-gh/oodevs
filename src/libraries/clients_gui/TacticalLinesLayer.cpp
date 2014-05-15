@@ -11,6 +11,7 @@
 #include "TacticalLinesLayer.h"
 #include "moc_TacticalLinesLayer.cpp"
 #include "ParametersLayer.h"
+#include "ModelObserver_ABC.h"
 
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/OptionVariant.h"
@@ -25,15 +26,18 @@ using namespace kernel;
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
 TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                                        ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile )
+                                        ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile,
+                                        ModelObserver_ABC& model )
     : EntityLayer< kernel::TacticalLine_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_TacticalLines )
     , controllers_ ( controllers )
     , tools_       ( tools )
     , strategy_    ( strategy )
     , parameters_  ( parameters )
+    , model_       ( model )
     , isLimit_     ( true )
     , isEditing_   ( false )
     , selected_    ( controllers_ )
+
 {
     controllers_.Update( *this );
 }
@@ -58,8 +62,7 @@ bool TacticalLinesLayer::HandleKeyPress( QKeyEvent* k )
     const int key = k->key();
     if( key == Qt::Key_Backspace || key == Qt::Key_Delete )
     {
-        Delete( *selected_ );
-        selected_ = 0;
+        model_.DeleteEntity( *selected_ );
         return true;
     }
     return false;

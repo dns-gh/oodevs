@@ -11,6 +11,7 @@
 #include "DrawerLayer.h"
 #include "moc_DrawerLayer.cpp"
 #include "Drawing.h"
+#include "ModelObserver_ABC.h"
 #include "Tools.h"
 #include "Viewport2d.h"
 #include "clients_kernel/Controller.h"
@@ -22,10 +23,11 @@ using namespace gui;
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
 DrawerLayer::DrawerLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                          ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile )
+                          ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile, ModelObserver_ABC& model )
     : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Drawers )
     , parameters_( parameters )
     , tools_     ( tools )
+    , model_     ( model )
     , selected_  ( 0 )
 {
     controllers.Update( *this );
@@ -42,6 +44,28 @@ DrawerLayer::~DrawerLayer()
 
 // -----------------------------------------------------------------------------
 // Name: DrawerLayer::NotifyContextMenu
+// Created: LGY 2014-05-12
+// -----------------------------------------------------------------------------
+void DrawerLayer::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
+{
+    const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( selectable );
+    const kernel::Drawing_ABC& drawing = static_cast< const kernel::Drawing_ABC& >( entity );
+    controllers_.actions_.ContextMenu( entity, drawing, point, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::FillContextMenu
+// Created: LGY 2014-05-12
+// -----------------------------------------------------------------------------
+void DrawerLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable, kernel::ContextMenu& menu )
+{
+    const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( selectable );
+    const kernel::Drawing_ABC& drawing = static_cast< const kernel::Drawing_ABC& >( entity );
+    controllers_.actions_.ContextMenu( entity, drawing, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::NotifyContextMenu
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
 void DrawerLayer::NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel::ContextMenu& menu )
@@ -52,8 +76,7 @@ void DrawerLayer::NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel:
         vector.push_back( &drawing );
         NotifySelectionChanged( vector );
     }
-    menu.InsertItem( "Creation", tools::translate( "gui::DrawerLayer", "Edit drawing..." ), this, SLOT( OnEditDrawing() ) );
-    menu.InsertItem( "Creation", tools::translate( "gui::DrawerLayer", "Erase drawing" )  , this, SLOT( OnDeleteDrawing() ) );
+    menu.InsertItem( "Creation", tools::translate( "gui::DrawerLayer", "Edit..." ), this, SLOT( OnEditDrawing() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,22 +87,6 @@ void DrawerLayer::OnEditDrawing()
 {
     if( selected_ )
         static_cast< Drawing* >( const_cast< kernel::Drawing_ABC* >( selected_ ) )->Edit( parameters_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::OnDeleteDrawing
-// Created: SBO 2008-06-10
-// -----------------------------------------------------------------------------
-void DrawerLayer::OnDeleteDrawing()
-{
-    if( selected_ )
-    {
-        const kernel::Drawing_ABC* selected = selected_;
-        selected_ = 0;
-        controllers_.controller_.Delete( *const_cast< kernel::Drawing_ABC* >( selected ) );
-        controllers_.actions_.DeselectAll();
-        delete selected;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +160,8 @@ bool DrawerLayer::HandleKeyPress( QKeyEvent* k )
     const int key = k->key();
     if( key == Qt::Key_Backspace || key == Qt::Key_Delete )
     {
-        OnDeleteDrawing();
+        if( selected_ )
+            model_.DeleteEntity( *selected_ );
         return true;
     }
     return EntityLayer< kernel::Drawing_ABC >::HandleKeyPress( k );

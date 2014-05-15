@@ -9,12 +9,14 @@
 
 #include "gaming_app_pch.h"
 #include "OrbatDockWidget.h"
-#include "OrbatToolbar.h"
 #include "CommunicationTreeView.h"
+#include "DrawingsBuilder.h"
 #include "LogisticTreeView.h"
+#include "OrbatToolbar.h"
 #include "PopulationTreeView.h"
 #include "TacticalTreeView.h"
 #include "clients_gui/AggregateToolBar.h"
+#include "clients_gui/DrawingsTreeView.h"
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/ObjectTreeView.h"
 #include "clients_gui/SearchTreeView.h"
@@ -28,7 +30,7 @@
 OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
                                   ProfileFilter& filter, gui::AutomatsLayer& automats, gui::FormationLayer& formations,
                                   actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
-                                  const gui::EntitySymbols& icons )
+                                  const gui::EntitySymbols& icons, DrawingsBuilder& drawingsBuilder, gui::ParametersLayer& paramLayer )
     : gui::RichDockWidget( controllers, parent, objectName )
     , logisticListView_( 0 )
 {
@@ -76,6 +78,11 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
         searchTreeView = new gui::SearchTreeView< gui::InhabitantTreeView >( "InhabitantTreeView", pListsTabWidget, controllers, filter, observer_ );
         searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
         pListsTabWidget->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Populations" ) );
+    }
+    {
+        searchTreeView = new gui::SearchTreeView< gui::DrawingsTreeView >( "DrawingsTreeView", pListsTabWidget, controllers, filter, drawingsBuilder, paramLayer );
+        searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
+        pListsTabWidget->addTab( searchTreeView, tools::translate( "DockContainer","Drawings" ) );
     }
 }
 

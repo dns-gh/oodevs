@@ -25,8 +25,10 @@
 // Created: LGY 2012-06-27
 // -----------------------------------------------------------------------------
 OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
-    const QString& windowTitle, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
-    gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model, StaticModel& staticModel, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols )
+                                  const QString& windowTitle, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
+                                  gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model, StaticModel& staticModel,
+                                  std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols,
+                                  gui::ParametersLayer& paramLayer )
     : gui::RichDockWidget( controllers, parent, objectName, windowTitle )
     , pTreeViewPanel_( 0 )
     , expandIcon_  ( qApp->layoutDirection() == Qt::RightToLeft ? ICON_LEFT : ICON_RIGHT )
@@ -46,7 +48,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
     expandButton_->setIcon( expandIcon_ );
     toolbarBox->addWidget( expandButton_, 0, 1, 1, 1, Qt::AlignRight );
 
-    pTreeViewPanel_ = new TreeViewsPanel( controllers, icons, modelBuilder, model, treeViews, symbols, staticModel, *aggregateToolbar );
+    pTreeViewPanel_ = new TreeViewsPanel( controllers, icons, modelBuilder, model, treeViews, symbols, staticModel, *aggregateToolbar, paramLayer );
 
     QWidget* widget = new QWidget();
     QVBoxLayout* box = new QVBoxLayout( widget );

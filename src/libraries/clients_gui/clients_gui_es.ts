@@ -196,6 +196,21 @@
     </message>
 </context>
 <context>
+    <name>DrawingsTreeView</name>
+    <message id="0">
+        <source>Drawings</source>
+        <translation type="unfinished">Dibujos</translation>
+    </message>
+    <message>
+        <source>Limits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phase lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DurationEditor</name>
     <message>
         <source>Invalid duration &apos;%1&apos;</source>
@@ -776,12 +791,8 @@
 <context>
     <name>gui::DrawerLayer</name>
     <message>
-        <source>Edit drawing...</source>
-        <translation>Editar dibujo...</translation>
-    </message>
-    <message>
-        <source>Erase drawing</source>
-        <translation>Eliminar dibujo</translation>
+        <source>Edit...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

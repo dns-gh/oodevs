@@ -263,6 +263,10 @@
         <source>Logistic</source>
         <translation type="unfinished">السوقي</translation>
     </message>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditorFactory</name>

@@ -38,6 +38,7 @@ public:
     //@{
     virtual void PopPoint();
     virtual void AddPoint( const geometry::Point2f& point );
+    virtual void Update();
     virtual void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision );
     //@}
 
@@ -60,7 +61,6 @@ private:
 
     //! @name Update
     //@{
-    void UpdateElements();
     virtual void VisitLines     ( const T_PointVector& points );
     virtual void VisitRectangle ( const T_PointVector& points );
     virtual void VisitPolygon   ( const T_PointVector& points );

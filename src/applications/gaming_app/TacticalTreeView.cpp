@@ -62,16 +62,43 @@ TacticalTreeView::~TacticalTreeView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalTreeView::NotifyContextMenu
-// Created: JSR 2012-09-27
+// Name: TacticalTreeView::AddCommunMenu
+// Created: LGY 2014-05-13
 // -----------------------------------------------------------------------------
-void TacticalTreeView::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+void TacticalTreeView::AddCommunMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     if( !isVisible() || !profile_.IsVisible( entity ) )
         return;
     if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( hierarchies->GetSuperior() != 0 && dynamic_cast< const kernel::Object_ABC* >( &entity ) == 0 && controllers_.GetCurrentMode() != eModes_Replay )
             menu.InsertItem( "Formation", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::NotifyContextMenu
+// Created: JSR 2012-09-27
+// -----------------------------------------------------------------------------
+void TacticalTreeView::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    AddCommunMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::NotifyContextMenu
+// Created: JSR 2012-09-27
+// -----------------------------------------------------------------------------
+void TacticalTreeView::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
+{
+    AddCommunMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::NotifyContextMenu
+// Created: JSR 2012-09-27
+// -----------------------------------------------------------------------------
+void TacticalTreeView::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
+{
+    AddCommunMenu( entity, menu );
 }
 
 namespace
@@ -100,7 +127,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& entity, kernel
         CreateSubMenu( this, menu, tr( "Create formation" ), SLOT( OnCreateFormation( int ) ) );
         CreateSubMenu( this, menu, tr( "Create logistic base" ), SLOT( OnCreateLogisticBase( int ) ) );
     }
-    NotifyContextMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
+    AddCommunMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
 }
 
 // -----------------------------------------------------------------------------

@@ -46,7 +46,8 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Agent list panel
     {
         gui::RichDockWidget* pListDockWnd = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),
-                                                                 automats, formation, icons, modelBuilder, model, staticModel, treeViews_, symbols );
+                                                                 automats, formation, icons, modelBuilder, model, staticModel, treeViews_, symbols,
+                                                                 paramLayer );
         pListDockWnd->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd );
     }

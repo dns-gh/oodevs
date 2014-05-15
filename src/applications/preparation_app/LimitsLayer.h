@@ -46,7 +46,6 @@ private:
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& line, kernel::ContextMenu& menu );
 
     virtual bool CanCreateLine();
-    virtual void Delete( const kernel::TacticalLine_ABC& line );
     virtual void CreateLimit( const T_PointVector& points );
     virtual void CreateLima( const T_PointVector& points );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );

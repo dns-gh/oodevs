@@ -263,6 +263,10 @@
         <source>Logistic</source>
         <translation>Logistique</translation>
     </message>
+    <message>
+        <source>Drawings</source>
+        <translation>Dessins</translation>
+    </message>
 </context>
 <context>
     <name>EditorFactory</name>

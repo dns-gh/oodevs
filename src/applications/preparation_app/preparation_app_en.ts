@@ -265,6 +265,10 @@
         <source>Logistic</source>
         <translation>Logistics</translation>
     </message>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditorFactory</name>

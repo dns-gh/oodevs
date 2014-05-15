@@ -86,15 +86,6 @@ void Lima::UpdateToSim( E_State state )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lima::Select
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void Lima::Select( kernel::ActionController& actions ) const
-{
-    actions.Select( *(kernel::Entity_ABC*)this, *(kernel::TacticalLine_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Lima::MultipleSelect
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
@@ -110,24 +101,6 @@ void Lima::MultipleSelect( kernel::ActionController& controller, const std::vect
         third.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );
     }
     controller.MultipleSelect( third, second, first );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lima::ContextMenu
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void Lima::ContextMenu( kernel::ActionController& actions, const QPoint& point ) const
-{
-    actions.ContextMenu( *(kernel::TacticalLine_ABC*)this, point );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lima::Activate
-// Created: AGE 2006-08-11
-// -----------------------------------------------------------------------------
-void Lima::Activate( kernel::ActionController& actions ) const
-{
-    actions.Activate( *this, *(kernel::TacticalLine_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

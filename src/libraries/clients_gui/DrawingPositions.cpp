@@ -39,7 +39,7 @@ DrawingPositions::~DrawingPositions()
 void DrawingPositions::PopPoint()
 {
     kernel::LocationProxy::PopPoint();
-    UpdateElements();
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void DrawingPositions::PopPoint()
 void DrawingPositions::AddPoint( const geometry::Point2f& point )
 {
     kernel::LocationProxy::AddPoint( point );
-    UpdateElements();
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void DrawingPositions::AddPoint( const geometry::Point2f& point )
 void DrawingPositions::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
 {
     kernel::LocationProxy::Translate( from, translation, precision );
-    UpdateElements();
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -110,10 +110,10 @@ void DrawingPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawingPositions::UpdateElements
+// Name: DrawingPositions::Update
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void DrawingPositions::UpdateElements()
+void DrawingPositions::Update()
 {
     boundingBox_ = geometry::Rectangle2f();
     position_ = geometry::Point2f();
@@ -126,13 +126,9 @@ void DrawingPositions::UpdateElements()
 // -----------------------------------------------------------------------------
 void DrawingPositions::VisitLines( const T_PointVector& points )
 {
-    for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
-    {
-        position_ += geometry::Vector2f( position_, *it );
+    for( auto it = points.begin(); it != points.end(); ++it )
         boundingBox_.Incorporate( *it );
-    }
-    if( points.size() > 1 )
-        position_.Set( position_.X() / points.size(), position_.Y() / points.size() );
+    position_ = boundingBox_.Center();
 }
 
 // -----------------------------------------------------------------------------
@@ -168,9 +164,11 @@ void DrawingPositions::VisitCircle( const geometry::Point2f& center, float radiu
 // Name: DrawingPositions::VisitCurve
 // Created: LGY 2013-04-12
 // -----------------------------------------------------------------------------
-void DrawingPositions::VisitCurve( const T_PointVector& /*points*/ )
+void DrawingPositions::VisitCurve( const T_PointVector& points )
 {
-    // NOTHING
+    for( auto it = points.begin(); it != points.end(); ++it )
+        boundingBox_.Incorporate( *it );
+    position_ = boundingBox_.Center();
 }
 
 // -----------------------------------------------------------------------------
