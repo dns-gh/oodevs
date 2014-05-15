@@ -7,7 +7,7 @@
 -- This method can only be called by an agent.
 -- This implementation refers to the 'integration.startImproveIt'.
 -- @param object a DirectIA object knowledge.
--- @return Boolean 'true' if the agent can improve the object knowledge regarding the 'integration.startImproveIt' action.
+-- @return Boolean 'true' if the agent can improve the object knowledge.
 integration.canImproveIt = function( object )
     object[ myself ] = object[ myself ] or {} 
     return object[ myself ].actionImprovementState ~= eActionObjetPasDeCapacite
@@ -17,7 +17,7 @@ end
 -- This method can only be called by an agent.
 -- This implementation refers to the 'integration.startImproveIt'.
 -- @param object a DirectIA object knowledge.
--- @return Boolean returns 'true' until the agent has enough dotation regarding the 'integration.startImproveIt' action.
+-- @return Boolean returns 'true' until the agent has enough dotation to perform the improvement action.
 integration.hasEnoughtDotationForImprovement = function( object )
     object[ myself ] = object[ myself ] or {} 
     return object[ myself ].actionImprovementState ~= eActionObjetManqueDotation
@@ -112,7 +112,7 @@ integration.updateImproveItWithFeedbacks = function( object )
         DEC_Trace( "not enough dotation" ) 
         return false
     elseif object[ myself ].actionImprovementState == eActionObjetPasDeCapacite then
-        DEC_Trace( "the agent has not the capacity to improve the object" )
+        DEC_Trace( "the agent does not have the capacity to improve the object" )
         return false
     elseif object[ myself ].actionImprovementState == eActionObjetTerminee then
         return true
