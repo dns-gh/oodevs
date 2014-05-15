@@ -10,13 +10,14 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Population_Path.h"
 #include "DEC_Population_PathClass.h"
+#include "DEC_Population_PathfinderRule.h"
 #include "DEC_Path_KnowledgeObject.h"
 #include "DEC_Path_KnowledgeObjectFlood.h"
 #include "DEC_Path_KnowledgeObjectBurnSurface.h"
+#include "DEC_PathSection_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
-#include "Decision/DEC_Population_PathSection.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PathFind_Manager.h"
@@ -77,7 +78,10 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
         return;
     }
     for( auto it = points.begin(); it != points.end() - 1; ++it )
-        RegisterPathSection( *new DEC_Population_PathSection( *this, *it, *(it + 1) ) );
+    {
+        std::unique_ptr< TerrainRule_ABC > rule( new DEC_Population_PathfinderRule( *this ) );
+        RegisterPathSection( *new DEC_PathSection_ABC( *this, std::move( rule ), *it, *(it + 1), false, false ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

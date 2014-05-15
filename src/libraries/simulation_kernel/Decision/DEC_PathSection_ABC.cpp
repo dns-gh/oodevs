@@ -20,9 +20,10 @@
 // Name: DEC_PathSection_ABC constructor
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-DEC_PathSection_ABC::DEC_PathSection_ABC( DEC_PathResult_ABC& result,
+DEC_PathSection_ABC::DEC_PathSection_ABC( DEC_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
     const MT_Vector2D& startPoint, const MT_Vector2D& endPoint, bool needRefine, bool useStrictClosest )
     : result_             ( result  )
+    , rule_               ( std::move( rule ) )
     , startPoint_         ( startPoint )
     , endPoint_           ( endPoint )
     , needRefine_         ( needRefine )
@@ -56,7 +57,7 @@ bool DEC_PathSection_ABC::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nC
         pathfind.SetConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
     pathfind.SetChoiceRatio( useStrictClosest_ ? 0.f : 0.1f );
     pathfind.SetCallback( this );
-    const bool bResult = pathfind.ComputePath( from, to, GetRule(), *this );
+    const bool bResult = pathfind.ComputePath( from, to, *rule_, *this );
     pathfind.SetConfiguration( 0, 0 );
     pathfind.SetCallback( 0 );
     return bResult;

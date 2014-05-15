@@ -10,8 +10,9 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Agent_Path.h"
 #include "DEC_Agent_PathClass.h"
-#include "DEC_Agent_PathSection.h"
+#include "DEC_Agent_PathfinderRule.h"
 #include "DEC_Agent_PathfinderPath.h"
+#include "DEC_PathSection_ABC.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_PathType.h"
@@ -47,7 +48,10 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     const bool refine = queryMaker_.GetType().GetUnitType().CanFly() && !queryMaker_.IsAutonomous();
     const bool useStrictClosest = !queryMaker_.GetAutomate().GetOrderManager().GetFuseau().IsNull();
     for( auto it = initialWaypoints_.begin(); it != initialWaypoints_.end() - 1; ++it )
-        RegisterPathSection( *new DEC_Agent_PathSection( *this, *path_, *it, *(it + 1), refine, useStrictClosest ) );
+    {
+        std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( *path_, *it, *(it + 1) ) );
+        RegisterPathSection( *new DEC_PathSection_ABC( *this, std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
+    }
     queryMaker.RegisterPath( *this );
 }
 

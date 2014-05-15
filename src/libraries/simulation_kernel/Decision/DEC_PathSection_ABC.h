@@ -14,11 +14,11 @@
 
 #include "MT_Tools/MT_Vector2D.h"
 #include <pathfind/TerrainPathPoint.h>
+#include <pathfind/TerrainRule_ABC.h>
 #include <pathfind/AStarManagementCallback_ABC.h>
 #include <tools/thread/Handler_ABC.h>
 
 class TER_Pathfinder_ABC;
-class TerrainRule_ABC;
 class DEC_PathResult_ABC;
 
 // =============================================================================
@@ -30,6 +30,10 @@ class DEC_PathSection_ABC : private tools::thread::Handler_ABC< TerrainPathPoint
                           , private boost::noncopyable
 {
 public:
+             DEC_PathSection_ABC(
+                    DEC_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
+                    const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint,
+                    bool needRefine, bool useStrictClosest );
     virtual ~DEC_PathSection_ABC();
 
     //! @name Operations
@@ -47,15 +51,6 @@ public:
     void                SetPosStart ( const MT_Vector2D& point );
     //@}
 
-protected:
-    DEC_PathSection_ABC( DEC_PathResult_ABC& result,
-        const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint, bool needRefine, bool useStrictClosest );
-
-    //! @name Accessors
-    //@{
-    virtual TerrainRule_ABC& GetRule() const = 0;
-    //@}
-
 private:
     //! @name Tools
     //@{
@@ -66,6 +61,7 @@ private:
 
 private:
     DEC_PathResult_ABC& result_;
+    std::unique_ptr< TerrainRule_ABC > rule_;
     MT_Vector2D startPoint_;
     const MT_Vector2D endPoint_;
     const bool needRefine_;
