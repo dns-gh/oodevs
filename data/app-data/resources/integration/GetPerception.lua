@@ -17,10 +17,22 @@ integration.getPerception = function( knowledgeA, knowledgeB )
     return DEC_GetPerception( knowledgeA:getPosition(), knowledgeB:getPosition() )
 end
 
-integration.connaissanceAgentEstAPorteDeCapteurDansCone = function( eni, direction, angleOuverture )
-    return DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone( eni.source, direction.source, angleOuverture )
+--- Returns true if the given agent knowledge is inside the cone of perception of this agent.
+-- The cone of perception is defined by the given direction and angle,
+-- and its distance is determined by this agent's sensors max range (defined in the authoring tool).
+-- This method returns false if the given agent knowledge is not valid.
+-- This method can only be called by an agent.
+-- @param eni DirectIA agent knowledge
+-- @param direction Direction knowledge
+-- @param angle Float, angle in degrees
+-- @return Boolean
+integration.connaissanceAgentEstAPorteDeCapteurDansCone = function( eni, direction, angle )
+    return DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone( eni.source, direction.source, angle )
 end
 
+--- Returns a list of all living enemies perceived by this agent.
+-- This method can only be called by an agent.
+-- @return List of agent knowledges
 integration.knowledgePerceivedLivingEnemiesAgents = function( )
     return DEC_Connaissances_UnitesEnnemiesVivantesPercues()
 end
