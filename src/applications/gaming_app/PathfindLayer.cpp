@@ -119,13 +119,18 @@ namespace
 // -----------------------------------------------------------------------------
 void PathfindLayer::Paint( gui::Viewport_ABC& )
 {
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
-    SetColor( "#2269BB" );
-    DrawLines( 5 );
-    SetColor( "#00B3FD" );
-    DrawLines( 3 );
-    DrawPoints();
-    glPopAttrib();
+    switch( controllers_.GetCurrentMode() )
+    {
+        case eModes_Itinerary:
+            glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
+            SetColor( "#2269BB" );
+            DrawLines( 5 );
+            SetColor( "#00B3FD" );
+            DrawLines( 3 );
+            DrawPoints();
+            glPopAttrib();
+            break;
+    }
 }
 
 void PathfindLayer::DrawLines( float width ) const
