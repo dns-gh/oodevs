@@ -123,7 +123,7 @@ integration.getSimPositionAwayFromknowledgeAgents = function( knowledgeAgents, d
     local simAgentsInCircle = {}
     for i = 1, #kAgentPositions do
         if DEC_Geometrie_Distance( kAgentPositions[i], myPosition ) < ( averageDistance + 100 ) then -- + 100 meters to avoid precision errors
-            simAgentsInCircle[ #simAgentsInCircle + 1 ] = kAgent.source
+            simAgentsInCircle[ #simAgentsInCircle + 1 ] = kAgentPositions[i].source
         end
     end
  
