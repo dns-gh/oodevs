@@ -76,6 +76,11 @@ public:
     void Purge();
     //@}
 
+    //! @name Accessors
+    //@{
+    bool GetRepairDurationInManHours() const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -116,6 +121,7 @@ private:
 
 private:
     static unsigned int nVolumeId;
+    bool repairDurationInManHours_;
 };
 
 }
