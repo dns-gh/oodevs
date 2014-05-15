@@ -31,8 +31,6 @@ namespace
 // -----------------------------------------------------------------------------
 DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     : movingEntity_      ( movingEntity )
-    , itNextPathPoint_   ()
-    , itCurrentPathPoint_()
     , effectMove_        ( *this )
     , vNewPos_           ( 0., 0. )
     , vNewDir_           ( 0., 0. )
@@ -62,7 +60,7 @@ DEC_PathWalker::~DEC_PathWalker()
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
 {
-    if( !pCurrentPath_.get() )
+    if( !pCurrentPath_ )
         return false;
     return pCurrentPath_->ComputeFutureObjectCollision( objectsToTest, rDistance, pObject, agent, blockedByObject, applyScale );
 }
@@ -73,7 +71,7 @@ bool DEC_PathWalker::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::IsMovingOn( const DEC_Path_ABC& path ) const
 {
-    return pCurrentPath_.get() ? path == *pCurrentPath_ : false;
+    return pCurrentPath_ && path == *pCurrentPath_;
 }
 
 //-----------------------------------------------------------------------------
@@ -82,7 +80,7 @@ bool DEC_PathWalker::IsMovingOn( const DEC_Path_ABC& path ) const
 //-----------------------------------------------------------------------------
 MT_Vector2D DEC_PathWalker::ExtrapolatePosition( const MT_Vector2D& position, const double rSpeed, const double rTime, const bool bBoundOnPath ) const
 {
-    if( !pCurrentPath_.get() )
+    if( !pCurrentPath_ )
         return movingEntity_.GetPosition();
     try
     {
@@ -162,7 +160,7 @@ namespace
 // -----------------------------------------------------------------------------
 DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
+    if( pCurrentPath_ && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
         return eRunning;
 
     pointsPassed_ = 0;
@@ -466,7 +464,7 @@ bool DEC_PathWalker::TryToMoveTo( const MT_Vector2D& vNewPosTmp, double& rTimeRe
 // Created: NLD 2004-09-22
 // Modified: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
+int DEC_PathWalker::Move( const boost::shared_ptr< DEC_PathResult >& pPath )
 {
     if( bHasMoved_ )
         return eAlreadyMoving;
@@ -559,13 +557,13 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
 // Name: DEC_PathWalker::MoveSuspended
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void DEC_PathWalker::MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath )
+void DEC_PathWalker::MoveSuspended( const boost::shared_ptr< DEC_PathResult >& pPath )
 {
     if( !pCurrentPath_ && ( pPath->GetState() == DEC_Path_ABC::eValid || pPath->GetState() == DEC_Path_ABC::ePartial ) )
         SetCurrentPath(pPath );
-    if( !pCurrentPath_.get() && !bForcePathCheck_ )
+    if( !pCurrentPath_ && !bForcePathCheck_ )
         MT_LOG_ERROR_MSG( "Move cannot be suspended" );
-    if( pCurrentPath_.get() && pCurrentPath_ == pPath )
+    if( pCurrentPath_ && pCurrentPath_ == pPath )
         bForcePathCheck_ = true;
 }
 
@@ -573,7 +571,7 @@ void DEC_PathWalker::MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath )
 // Name: DEC_PathWalker::MoveCanceled
 // Created: NLD 2005-03-16
 // -----------------------------------------------------------------------------
-void DEC_PathWalker::MoveCanceled( boost::shared_ptr< DEC_PathResult > pPath )
+void DEC_PathWalker::MoveCanceled( const boost::shared_ptr< DEC_PathResult >& pPath )
 {
     if( pCurrentPath_ == pPath )
     {
@@ -610,8 +608,8 @@ void DEC_PathWalker::SerializeEnvironmentType( sword::UnitEnvironmentType& msg )
 // -----------------------------------------------------------------------------
 void DEC_PathWalker::SerializeCurrentPath( sword::Path& asn ) const
 {
-    if( pCurrentPath_.get() )
-        pCurrentPath_->Serialize( asn, pointsPassed_, 2*pathSizeThreshold );
+    if( pCurrentPath_ )
+        pCurrentPath_->Serialize( asn, pointsPassed_, 2 * pathSizeThreshold );
 }
 
 // -----------------------------------------------------------------------------
@@ -620,7 +618,7 @@ void DEC_PathWalker::SerializeCurrentPath( sword::Path& asn ) const
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::HasCurrentPath() const
 {
-    return pCurrentPath_.get() ? true : false;
+    return pCurrentPath_;
 }
 
 // -----------------------------------------------------------------------------

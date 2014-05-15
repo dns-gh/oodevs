@@ -230,11 +230,8 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MI
     assert( pPath );
     const DEC_PathResult* path = dynamic_cast< const DEC_PathResult* > ( pPath );
     if( !path || path->GetResult().empty() || !path->GetResult().back() )
-    {
         return boost::shared_ptr< MT_Vector2D >();
-    }
-    boost::shared_ptr< MT_Vector2D > pPos ( new MT_Vector2D( path->GetResult().back()->GetPos() ) );
-    return pPos;
+    return boost::make_shared< MT_Vector2D >( path->GetResult().back()->GetPos() );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +241,7 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MI
 // -----------------------------------------------------------------------------
 bool DEC_PathFunctions::IsMovingOnPath( const MIL_AgentPion& callerAgent, const DEC_Path_ABC* pPath )
 {
-    return pPath ? callerAgent.GetRole< moving::PHY_RoleAction_Moving >().IsMovingOn( *pPath ) : false;
+    return pPath && callerAgent.GetRole< moving::PHY_RoleAction_Moving >().IsMovingOn( *pPath );
 }
 
 // -----------------------------------------------------------------------------
