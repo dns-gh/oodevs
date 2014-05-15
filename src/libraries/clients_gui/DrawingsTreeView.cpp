@@ -12,6 +12,7 @@
 #include "ModelObserver_ABC.h"
 #include "ParametersLayer.h"
 #include "clients_kernel/Drawing_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Tools.h"
 
@@ -94,6 +95,10 @@ bool DrawingsTreeView::ApplyProfileFilter( QStandardItem& item, StandardModel& m
     if( drawingsItem_->index() == index || limitsItem_->index() == index ||
         phaseLinesItem_->index() == index )
         return true;
+    if( const kernel::Entity_ABC* drawing = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
+        if( drawing->GetTypeName() == kernel::Drawing_ABC::typeName_ )
+            if( const kernel::Entity_ABC* entity = static_cast< const kernel::Drawing_ABC* >( drawing )->GetDiffusionEntity() )
+                return profile_.IsVisible( *entity );
     return EntityTreeView_ABC::ApplyProfileFilter( item, model );
 }
 
