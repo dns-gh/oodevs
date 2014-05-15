@@ -11,7 +11,7 @@
 #define __ImprovableCapacity_h_
 
 #include "MIL.h"
-#include "ObjectCapacity_ABC.h"
+#include "SuppliableCapacity.h"
 #include "ConstructionCapacity.h"
 
 namespace xml
@@ -29,7 +29,7 @@ class TER_Localisation;
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class ImprovableCapacity : public ObjectCapacity_ABC
+class ImprovableCapacity : public SuppliableCapacity
 {
 public:
     //! @name Constructors/Destructor
@@ -50,18 +50,9 @@ public:
     //! @name Operations
     //@{
     virtual void Register( MIL_Object_ABC& object );
-    virtual void Finalize( MIL_Object_ABC& object );
-    unsigned int GetDotationNumber( const TER_Localisation& location ) const;
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     void Mine( MIL_Object_ABC& object );
-    //@}
-
-    //! @name Accessors
-    //@{
-    const PHY_ConsumptionType&  GetDefaultConsumptionMode() const;
-    const PHY_DotationCategory* GetDotationCategory() const;
-    unsigned int GetMaxDotation() const;
-    ConstructionCapacity::E_UnitType GetUnit() const;
+    virtual void Finalize( MIL_Object_ABC& object );
     //@}
 
 private:
@@ -69,21 +60,6 @@ private:
     //@{
     ImprovableCapacity( const ImprovableCapacity& );            //!< Copy constructor
     ImprovableCapacity& operator=( const ImprovableCapacity& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ReadDotation( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const PHY_ConsumptionType* default_;
-    ConstructionCapacity::E_UnitType unitType_;
-    const PHY_DotationCategory* dotation_;
-    unsigned int nFullNbrDotation_;
-    bool finalised_;
     //@}
 };
 
