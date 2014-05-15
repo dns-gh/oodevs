@@ -111,9 +111,9 @@ void PHY_Dotation::ReadValue( xml::xistream& xis )
     if( rValue > rCapacity_ )
         rCapacity_ = rValue;
     if( xis.has_attribute( "low-threshold" ) )
-        rLowThreshold_ = std::min( rCapacity_ * xis.attribute< double >( "low-threshold" ) / 100.f, rCapacity_ );
+        rLowThreshold_ = std::min( rCapacity_ * xis.attribute< double >( "low-threshold" ) / 100, rCapacity_ );
     if( xis.has_attribute( "high-threshold" ) )
-        rHighThreshold_ = std::min( rCapacity_ * xis.attribute< double >( "high-threshold" ) / 100.f, rCapacity_ );
+        rHighThreshold_ = std::min( rCapacity_ * xis.attribute< double >( "high-threshold" ) / 100, rCapacity_ );
     if( rHighThreshold_ < rLowThreshold_ )
         throw MASA_EXCEPTION( xis.context() + " high threshold is not greater than low threshold." );
     SetValue( rValue );
@@ -372,8 +372,8 @@ void PHY_Dotation::ChangeDotation( unsigned int number, float lowThreshold, floa
     SetValue( number );
     rConsumptionReservation_ = 0.;
     rFireReservation_        = 0.;
-    rLowThreshold_ = std::min( rCapacity_ * lowThreshold / 100.f, rCapacity_ );
-    rHighThreshold_ = std::min( rCapacity_ * highThreshold / 100.f, rCapacity_ );
+    rLowThreshold_ = std::min( rCapacity_ * lowThreshold / 100, rCapacity_ );
+    rHighThreshold_ = std::min( rCapacity_ * highThreshold / 100, rCapacity_ );
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this ); // What's the point, c'est déja fait dans SetValue(), bordel
     rLastValueSent_ = 0;
@@ -466,7 +466,7 @@ double PHY_Dotation::GetLowThresholdPercentage() const
     assert( rLowThreshold_ <= rCapacity_ );
     if( rCapacity_ == 0 )
         return 0;
-    return rLowThreshold_ / rCapacity_ * 100.f;
+    return rLowThreshold_ / rCapacity_ * 100;
 }
 
 // -----------------------------------------------------------------------------
@@ -477,5 +477,5 @@ double PHY_Dotation::GetHighThresholdPercentage() const
 {
     if( rCapacity_ == 0 )
         return 0;
-    return rHighThreshold_ / rCapacity_ * 100.f;
+    return rHighThreshold_ / rCapacity_ * 100;
 }

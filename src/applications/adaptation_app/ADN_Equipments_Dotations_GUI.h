@@ -26,12 +26,12 @@ class ADN_Equipments_Dotations_GUI : public ADN_Table
 public:
     enum eColumn
     {
-        eColumn_Category      = 0x01,
-        eColumn_Quantity      = 0x02,
-        eColumn_LowThreshold  = 0x04,
-        eColumn_HighThreshold = 0x08,
-        eColumn_Consumption   = 0x10,
-        eColumn_All           = 0x1F
+        eColumn_Category      = 1 << 0,
+        eColumn_Quantity      = 1 << 1,
+        eColumn_LowThreshold  = 1 << 2,
+        eColumn_HighThreshold = 1 << 3,
+        eColumn_Consumption   = 1 << 4,
+        eColumn_All           = -1
     };
 
 public:

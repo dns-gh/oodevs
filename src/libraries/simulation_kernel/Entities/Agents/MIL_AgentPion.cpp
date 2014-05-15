@@ -1854,9 +1854,9 @@ void MIL_AgentPion::OnReceiveChangeDotation( const sword::MissionParameters& msg
         CHECK_PARAM( elem, i, 2, areal, "must be an Real" );
         CHECK_PARAM( elem, i, 3, areal, "must be an Real" );
 
-        int number = elem.list( 1 ).quantity();
-        float lowThresholdPercentage = elem.list( 2 ).areal();
-        float highThresholdPercentage = elem.list( 3 ).areal();
+        const int number = protocol::GetQuantity( msg, 0, i, 1 );
+        float lowThresholdPercentage = protocol::GetReal( msg, 0, i, 2 );
+        float highThresholdPercentage = protocol::GetReal( msg, 0, i, 3 );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( elem.list( 0 ).identifier() );
         CheckSubSubParameterCount( !pDotationCategory, i, 0, "must be a valid dotation category identifier" );
