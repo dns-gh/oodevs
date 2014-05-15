@@ -18,7 +18,7 @@ end
 --- Starts firing at a target unit, specifically with a 'ground- air missile' type of ammunition.
 -- This method can only be called by an agent.
 -- @param target, DirectIA agent knowledge
--- @param percentage the percentage of componants to be used to open fire.
+-- @param percentage the percentage of components to be used to open fire.
 -- @see munition class definition in 'type.lua' file.
 integration.startDestroyingItWithMissileAir = function( target, percentage )
     target[ myself ] = target[ myself ] or {}
@@ -115,7 +115,7 @@ integration.stopRespondIt = function( target )
 end
 
 --- Informs whether or not the agent has the authorization to open fire at the given target.
--- The implentation checks if the current rule of engagement is compatible and if 
+-- The implentation checks that the current rule of engagement is "free fire" and if 
 -- the target is not located into a fire restricted area. 
 -- This method can only be called by an agent.
 -- @param target a DirectIA agent knowledge
@@ -129,8 +129,8 @@ integration.firePermitted = function( target )
 end
 
 --- Informs if the agent has the authorization to open fire onto a given position.
--- The implentation checks if the current rule of engagement is compatible and if 
--- the target is not located into a fire restricted area. 
+-- The implentation checks that the current rule of engagement is "free fire" or "retaliation fire" and that 
+-- the target is not located into a fire restricted area.
 -- This method can only be called by an agent.
 -- @param target a DirectIA 'LocalizedElement 'knowledge.
 -- @return a boolean 'true' if the agent can open fire, 'false' otherwise.
@@ -158,7 +158,7 @@ end
 -- @return a boolean 'true' if the agent can open fire, 'false' otherwise.
 integration.fireNotForbbiden = function( target )
     local stateROE = integration.getROE()
-    if (not integration.isInForbiddenFireArea( target ) ) and ( stateROE ~= eRoeStateFireByOrder ) then
+    if( not integration.isInForbiddenFireArea( target ) ) and ( stateROE ~= eRoeStateFireByOrder ) then
         return true
     end
     return false
@@ -206,13 +206,12 @@ end
 --- Returns the simulation agent ID from a DirectIA agent knowledge.
 -- @param target a DirectIA agent knowledge.
 -- @return numeric the simulation agent ID
--- the target from the positgion
+-- the target from the position
 integration.getAgentIdFromKnowledge = function( agentKnowledge )
     return DEC_GetAgentIdFromKnowledge( agentKnowledge.source )
 end
 
 --- Informs whether the provided agent knowledge is moving or not.
--- This method can only be called by an agent.
 -- @param target a DirectIA agent knowledge.
 -- @return boolean returns 'true' if the target is moving, 'false' otherwise.
 integration.isMoving = function ( target )
@@ -220,7 +219,6 @@ integration.isMoving = function ( target )
 end
 
 --- Informs whether the provided agent knowledge is flying or not.
--- This method can only be called by an agent.
 -- @param target a DirectIA agent knowledge.
 -- @return boolean returns 'true' if the target is flying, 'false' otherwise.
 integration.isFlying = function ( target )
@@ -238,7 +236,7 @@ integration.porteeMaxPourTirerSurUnitePosturesReelles = function( eni, ph )
 end
 
 --- Informs if the agent is in range to engage the given target, regarding the given PH (Probability to Hit).
--- This implementation checks if the maximum and minimum range.
+-- This implementation checks if the target distance is in between maximum and minimum range.
 -- The range takes into account the current posture of the agent.
 -- This method can only be called by an agent.
 -- @param eni a DirectIA agent knowledge.
@@ -246,12 +244,12 @@ end
 -- @return boolean returns 'true' if the agent is in range, 'false' otherwise.
 integration.niTropPresNiTropLoin = function( eni, ph )
 
-    -- check if eni is not to close.
+    -- check if eni is not too close.
     local rPorteeMin = DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( eni.source, ph )
     local rDistanceAEni = integration.distance( meKnowledge, eni)
     local bTropProche = rDistanceAEni < rPorteeMin
 
-    -- check if eni is not to far.
+    -- check if eni is not too far.
     local rPorteeMax = DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( eni.source, ph )
     local rDistanceAEni = DEC_Geometrie_Distance3D( meKnowledge:getPosition(), 0, eni:getPosition(), DEC_ConnaissanceAgent_Altitude( eni.source ) )
     local bTropLoin =  rDistanceAEni > rPorteeMax
