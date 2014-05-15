@@ -18,6 +18,7 @@
 #include "protocol/Protocol.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "MT_Tools/MT_Logger.h"
 
 namespace
 {

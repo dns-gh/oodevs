@@ -21,6 +21,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Authentication.h"
 #include "simulation_terrain/TER_World.h"
+#include "MT_Tools/MT_Logger.h"
 #include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
