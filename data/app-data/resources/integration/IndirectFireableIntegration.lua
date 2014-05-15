@@ -1,5 +1,5 @@
 --- Returns true if the given target is within indirect fire range,
--- in order to be fired at by this entity with the given munition; false otherwise.
+-- in order to be fired at by this entity with the given ammunition; false otherwise.
 -- This method can only be called by an agent
 -- @param target Any DirectIA knowledge defining a "getPosition" method returning a simulation point
 -- @param munition Resource type
@@ -10,7 +10,7 @@ integration.isOnRangeFor = function( target, munition )
          and dist < DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( munition )
 end
 
---- Returns true if this entity has a launcher for the given munition, false otherwise.
+--- Returns true if this entity has a launcher for the given ammunition, false otherwise.
 -- This method can only be called by an agent
 -- @param munition Resource type
 -- @return Boolean
@@ -18,13 +18,13 @@ integration.hasLauncherFor = function( munition )
     return DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( munition ) ~= -1
 end
 
---- Starts indirectly firing on the given agent knowledge with the given munition
+--- Starts indirectly firing on the given agent knowledge with the given ammunition
 -- This method can only be called by an agent.
 -- @see integration.updateApplyFireOnPlatoon
 -- @see integration.stopApplyFireOnPlatoon
 -- @param target DirectIA agent knowledge
 -- @param munition Resource type
--- @param quantity The quantity of projectiles to use for each shot
+-- @param quantity The number of salvos
 -- @return Boolean, false
 integration.startApplyFireOnPlatoon = function( target, munition, quantity )
     target[myself] = target[myself] or {}
@@ -80,7 +80,7 @@ end
 -- @see integration.stopApplyFireOnPoint
 -- @param point Point knowledge
 -- @param munition Resource type
--- @param quantity The quantity of projectiles to use for each shot
+-- @param quantity The number of salvos
 -- @return Boolean, false
 integration.startApplyFireOnPoint = function( point, munition, interventionType )
     point[myself] = point[myself] or {}
@@ -134,7 +134,8 @@ integration.stopApplyFireOnPoint = function( point )
     point[myself].eIndirectFireState = nil
 end
 
---- Displays an appropriate report depending on the state of a current indirect fire action.
+--- Displays an appropriate report depending on the state of a current failing indirect fire action,
+-- detailing the reason of the failure (lack of ammunition, no capacity, or target not illuminated).
 -- This method should not be used if this entity has no ongoing indirect fire action.
 -- @see integration.updateApplyFireOnPlatoon
 -- @see integration.updateApplyFireOnPoint
@@ -172,8 +173,8 @@ integration.isUnderIndirectFire = function()
     return DEC_Agent_EstCibleTirIndirect()
 end
 
---- Returns a munition type appropriate to apply direct fire on the given position (i.e.
--- a munition type with the given position within range).
+--- Returns an ammunition type appropriate to apply direct fire on the given position (i.e.
+-- an ammunition type with the given position within range).
 -- If no position is provided, the range constraint will not be taken into account.
 -- This method can only be called by an agent
 -- @param position Point knowledge (optional)
@@ -191,7 +192,6 @@ end
 -- @param friend DirectIA agent
 -- @return List of simulation agents
 integration.getMortarUnitsToNeutralize = function( friend )
-    local res = {}
     local unitsAttackingFriend = integration.getKnowledgesUnitsEngagingFriend( friend.source )
     local unitsDangerous = integration.getKnowledgesDangerousUnits()
     return fusionList( unitsAttackingFriend, unitsDangerous )
