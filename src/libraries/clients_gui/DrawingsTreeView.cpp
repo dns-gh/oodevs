@@ -97,8 +97,11 @@ bool DrawingsTreeView::ApplyProfileFilter( QStandardItem& item, StandardModel& m
         return true;
     if( const kernel::Entity_ABC* drawing = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
         if( drawing->GetTypeName() == kernel::Drawing_ABC::typeName_ )
+        {
             if( const kernel::Entity_ABC* entity = static_cast< const kernel::Drawing_ABC* >( drawing )->GetDiffusionEntity() )
                 return profile_.IsVisible( *entity );
+            return true;
+        }
     return EntityTreeView_ABC::ApplyProfileFilter( item, model );
 }
 
