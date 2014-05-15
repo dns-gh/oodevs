@@ -112,7 +112,7 @@ namespace
     {
         Serializer serializer( converter );
         location.Accept( serializer );
-        for( auto i = 0; i < serializer.points_.size(); ++i )
+        for( auto i = 0u; i < serializer.points_.size(); ++i )
             *list.add_elem() = serializer.points_[i];
     }
 }
