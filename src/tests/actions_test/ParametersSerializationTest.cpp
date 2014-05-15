@@ -1556,79 +1556,42 @@ BOOST_FIXTURE_TEST_CASE( serializes_parameter_medical_priorities_list, Fixture )
                     boost::assign::list_of( "0;1" )( "2" )( "3" ), checker );
 }
 
-namespace
-{
-    std::string CreatePlannedWorkInput( const std::string& name )
-    {
-        return "<parameter name='" + name + "' type='plannedwork' value='some object'>"
-               "  <parameter identifier='location' name='Construction location' type='location'>"
-               "    <location type='polygon'>"
-               "      <point coordinates='" + point1 + "'/>"
-               "      <point coordinates='" + point2 + "'/>"
-               "      <point coordinates='" + point3 + "'/>"
-               "      <point coordinates='" + point1 + "'/>"
-               "    </location>"
-               "  </parameter>"
-               "  <parameter identifier='obstacletype' name='Activation' type='obstacletype' value='1'/>"
-               "  <parameter identifier='density' name='Density' type='numeric' value='4.2'/>"
-               "  <parameter identifier='tc2' name='Obstacle tc2' type='automat' value='1337'/>"
-               "  <parameter identifier='activitytime' name='Activity time:' type='quantity' value='42'/>"
-               "  <parameter identifier='activationtime' name='Activation time:' type='quantity' value='42'/>"
-               "  <parameter identifier='name' name='Name' type='string' value='some name'/>"
-               "  <parameter identifier='altitude_modifier' name='Altitude modifier' type='quantity' value='42'/>"
-               "  <parameter identifier='time_limit' name='Time limit' type='quantity' value='42'/>"
-               "  <parameter identifier='obstacle_mining' name='Obstacle mining' type='boolean' value='true'/>"
-               "  <parameter identifier='lodging' name='Lodging' type='quantity' value='42'/>"
-               "  <parameter identifier='fire_class' name='Fire class:' type='fireclass' value='some fire'/>"
-               "  <parameter identifier='max_combustion_energy' name='Max combustion energy:' type='quantity' value='42'/>"
-               "</parameter>";
-    }
-}
-
 BOOST_FIXTURE_TEST_CASE( serializes_parameter_planned_work, Fixture )
 {
-    auto checker = [&]( const sword::MissionParameter& msg ){
-        BOOST_REQUIRE_EQUAL( msg.value_size(), 1 );
-        BOOST_REQUIRE( msg.value( 0 ).has_plannedwork() );
-        CheckPlannedWork( msg.value( 0 ).plannedwork() );
+    const auto checker = [&]( const sword::MissionParameter_Value& value ){
+        BOOST_REQUIRE( value.has_plannedwork() );
+        CheckPlannedWork( value.plannedwork() );
     };
-    auto input = "<action id='1337' name='PlannedWork' target='42' time='2011-04-08T10:01:36' type='mission'>" +
-                 CreatePlannedWorkInput( "PlannedWork" ) +
-                 "</action>";
     MockAutomat automat;
     CheckAutomat( automat, 1337u );
     RegisterObjectType( "some object" );
     RegisterFireClass( "some fire" );
-    RegisterMissionType( "PlannedWork", "", false );
-    Check( input, checker );
-}
-
-BOOST_FIXTURE_TEST_CASE( serializes_parameter_planned_work_list, Fixture )
-{
-    auto checker = [&]( const sword::MissionParameter& msg ){
-        BOOST_REQUIRE_EQUAL( msg.value_size(), 3 );
-        BOOST_REQUIRE( msg.value( 0 ).has_plannedwork() );
-        CheckPlannedWork( msg.value( 0 ).plannedwork() );
-        BOOST_REQUIRE( msg.value( 1 ).has_plannedwork() );
-        CheckPlannedWork( msg.value( 1 ).plannedwork() );
-        BOOST_REQUIRE( msg.value( 2 ).has_plannedwork() );
-        CheckPlannedWork( msg.value( 2 ).plannedwork() );
-    };
-    auto input = "<action id='1337' name='PlannedWork' target='42' time='2011-04-08T10:01:36' type='mission'>"
-                 "  <parameter name='PlannedWork' type='plannedwork'>" +
-                        CreatePlannedWorkInput( "PlannedWork (item 1)" ) +
-                        CreatePlannedWorkInput( "PlannedWork (item 2)" ) +
-                        CreatePlannedWorkInput( "PlannedWork (item 3)" ) +
-                 "  </parameter>"
-                 "</action>";
-    MockAutomat automat;
-    CheckAutomat( automat, 1337u );
-    CheckAutomat( automat, 1337u );
-    CheckAutomat( automat, 1337u );
-    RegisterObjectType( "some object" );
-    RegisterFireClass( "some fire" );
-    RegisterMissionType( "PlannedWork", "", true );
-    Check( input, checker );
+    CheckSingleAndListParameter( "PlannedWork", "plannedwork", checker,
+        [&]( const std::string& suffix ) {
+            return
+                "<parameter name='PlannedWork" + suffix + "' type='plannedwork' value='some object'>"
+                "  <parameter identifier='location' name='Construction location' type='location'>"
+                "    <location type='polygon'>"
+                "      <point coordinates='" + point1 + "'/>"
+                "      <point coordinates='" + point2 + "'/>"
+                "      <point coordinates='" + point3 + "'/>"
+                "      <point coordinates='" + point1 + "'/>"
+                "    </location>"
+                "  </parameter>"
+                "  <parameter identifier='obstacletype' name='Activation' type='obstacletype' value='1'/>"
+                "  <parameter identifier='density' name='Density' type='numeric' value='4.2'/>"
+                "  <parameter identifier='tc2' name='Obstacle tc2' type='automat' value='1337'/>"
+                "  <parameter identifier='activitytime' name='Activity time:' type='quantity' value='42'/>"
+                "  <parameter identifier='activationtime' name='Activation time:' type='quantity' value='42'/>"
+                "  <parameter identifier='name' name='Name' type='string' value='some name'/>"
+                "  <parameter identifier='altitude_modifier' name='Altitude modifier' type='quantity' value='42'/>"
+                "  <parameter identifier='time_limit' name='Time limit' type='quantity' value='42'/>"
+                "  <parameter identifier='obstacle_mining' name='Obstacle mining' type='boolean' value='true'/>"
+                "  <parameter identifier='lodging' name='Lodging' type='quantity' value='42'/>"
+                "  <parameter identifier='fire_class' name='Fire class:' type='fireclass' value='some fire'/>"
+                "  <parameter identifier='max_combustion_energy' name='Max combustion energy:' type='quantity' value='42'/>"
+                "</parameter>";
+    });
 }
 
 BOOST_FIXTURE_TEST_CASE( serializes_parameter_itinerary, Fixture )
