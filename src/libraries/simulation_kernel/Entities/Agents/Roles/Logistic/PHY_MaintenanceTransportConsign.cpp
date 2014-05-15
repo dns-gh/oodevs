@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceTransportConsign.h"
-#include "ConsignHelper.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes//PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -326,7 +325,7 @@ void PHY_MaintenanceTransportConsign::SelectNewState()
     if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter, 0 ); };
     else
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved, "transport consign not in a waiting state" );
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved, "transport consign not in a waiting state" );
 }
 
 void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
@@ -340,10 +339,10 @@ void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
 void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, boost::optional< const MIL_Agent_ABC& > destination )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved,
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
             "transport consign not in a waiting for transporter selection state" );
     if( component_ )
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved,
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
             "transport consign already has a repair team selected" );
     component_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType(), &type );
     destination_ = destination;
@@ -353,7 +352,7 @@ void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_Co
         next_ = [&]() { EnterStateCarrierGoingTo(); };
     }
     else if( !FindAlternativeTransportUnit( &type ) )
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::transporter_unavailable,
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::transporter_unavailable,
             "no component of specified type available for maintenance transporter selection" );
 }
 

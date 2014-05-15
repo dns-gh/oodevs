@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceDiagnosisConsign.h"
-#include "ConsignHelper.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes//PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -124,7 +123,7 @@ void PHY_MaintenanceDiagnosisConsign::SelectNewState()
     if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
         next_ = [&]() { EnterStateDiagnosing(); };
     else
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved,
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
             "transport consign not in a waiting state" );
 }
 
@@ -165,10 +164,10 @@ void PHY_MaintenanceDiagnosisConsign::SelectMaintenanceTransporter( const PHY_Co
 void PHY_MaintenanceDiagnosisConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved,
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
             "diagnosis consign not in a waiting for diagnosis team selection state" );
     if( component_ )
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved,
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
             "diagnosis consign already has a diagnosis team selected" );
     component_ = GetPionMaintenance().GetAvailableDiagnoser( &type );
     if( component_ )
@@ -177,7 +176,7 @@ void PHY_MaintenanceDiagnosisConsign::SelectDiagnosisTeam( const PHY_ComposanteT
         next_ = [&]() { EnterStateDiagnosing(); };
     }
     else if( !FindAlternativeDiagnosisTeam( &type ) )
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::diagnosis_team_unavailable,
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::diagnosis_team_unavailable,
             "no component of specified type available for diagnosis team selection" );
 }
 

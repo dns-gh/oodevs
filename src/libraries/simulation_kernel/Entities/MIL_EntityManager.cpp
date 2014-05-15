@@ -2206,7 +2206,7 @@ namespace
         {
             f( *request );
         }
-        catch( const NET_AsnBadParam< logistic::MaintenanceConsignError >& e )
+        catch( const NET_AsnBadParam< sword::ManualMaintenanceError >& e )
         {
             ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
             ack().set_error_msg( tools::GetExceptionMsg( e ) );

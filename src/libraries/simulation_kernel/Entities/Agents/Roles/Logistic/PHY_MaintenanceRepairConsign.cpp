@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceRepairConsign.h"
-#include "ConsignHelper.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
@@ -306,7 +305,7 @@ void PHY_MaintenanceRepairConsign::SelectNewState()
     if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
         next_ = [&]() { EnterStateWaitingForParts(); };
     else
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved,
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
             "repair consign not in a waiting state" );
 }
 
@@ -330,10 +329,10 @@ void PHY_MaintenanceRepairConsign::SelectDiagnosisTeam( const PHY_ComposanteType
 void PHY_MaintenanceRepairConsign::SelectRepairTeam( const PHY_ComposanteTypePion& type )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved,
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
             "repair consign not in a waiting for repair team selection state" );
     if( pRepairer_ )
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::already_resolved,
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
             "repair consign already has a repair team selected" );
     pRepairer_ = GetPionMaintenance().GetAvailableRepairer( GetComposanteBreakdown(), &type );
     if( pRepairer_ )
@@ -342,7 +341,7 @@ void PHY_MaintenanceRepairConsign::SelectRepairTeam( const PHY_ComposanteTypePio
         EnterStateWaitingForParts();
     }
     else if( !FindAlternativeRepairTeam( &type ) )
-        throw MASA_BADPARAM_ASN( logistic::MaintenanceConsignError, logistic::repair_team_unavailable,
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::repair_team_unavailable,
             "no component of specified type available for repair team selection" );
 }
 

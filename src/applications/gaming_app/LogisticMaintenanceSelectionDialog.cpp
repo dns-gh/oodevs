@@ -61,14 +61,6 @@ namespace
         return view;
     }
 
-    enum ConsignError
-    {
-        already_resolved = 0,
-        diagnosis_team_unavailable,
-        repair_team_unavailable,
-        transporter_unavailable
-    };
-
     QString GetErrorText( const sword::MagicActionAck& ack )
     {
         if( ack.has_result() && ack.result().elem_size() > 0 )
@@ -78,13 +70,13 @@ namespace
             {
                 switch( code.Get( 0 ).identifier() )
                 {
-                case already_resolved:
+                case sword::consign_already_resolved:
                     return tools::translate( "LogisticMaintenanceSelectionDialog", "The request is already resolved." );
-                case diagnosis_team_unavailable:
+                case sword::diagnosis_team_unavailable:
                     return tools::translate( "LogisticMaintenanceSelectionDialog", "The diagnosis team is unavailable." );
-                case repair_team_unavailable:
+                case sword::repair_team_unavailable:
                     return tools::translate( "LogisticMaintenanceSelectionDialog", "The repair team is unavailable." );
-                case transporter_unavailable:
+                case sword::transporter_unavailable:
                     return tools::translate( "LogisticMaintenanceSelectionDialog", "The tow truck is unavailable." );
                 }
             }

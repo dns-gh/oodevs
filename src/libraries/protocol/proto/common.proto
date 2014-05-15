@@ -1549,6 +1549,18 @@ message HumanRepartition {
     required float     children  = 3;
 }
 
+//! Error code returned by the magic actions:
+//!  select_diagnosis_team
+//!  select_maintenance_transporter
+//!  select_new_logistic_state
+//!  select_repair_team
+enum ManualMaintenanceError {
+    consign_already_resolved   = 0;
+    diagnosis_team_unavailable = 1;
+    repair_team_unavailable    = 2;
+    transporter_unavailable    = 3;
+}
+
 message MagicAction {
     enum Type {
         //! Update global weather parameters. A ControlGlobalWeather
@@ -1618,6 +1630,8 @@ message MagicAction {
         //! When a log consign is in state waiting for manual intervention,
         //! update the request to a new state automatically.
         //! parameters[0], Identifier: log request identifier.
+        //! On failure, result[0], Identifier : among ManualMaintenanceError
+        //!   values.
         select_new_logistic_state          = 8;
         //! When a maintenance log consign is in "select transporter" state,
         //!  "select diagnosis team" state or "select repair team" state in
@@ -1630,27 +1644,24 @@ message MagicAction {
         //!  selected transporter.
         //! parameters[0], Identifier: log request identifier.
         //! parameters[1], Identifier: selected transporter type identifier.
-        //! result[0], Identifier: on failure, the error code:
-        //!  '0' : The request is already resolved.
-        //!  '3' : The transporter is unavailable.
+        //! On failure, result[0], Identifier : among ManualMaintenanceError
+        //!   values.
         select_maintenance_transporter     = 10;
         //! When a maintenance log consign is in state "waiting for diagnosis
         //!  team selection", update the request to a new state with a manually
         //!  selected diagnoser.
         //! parameters[0], Identifier: log request identifier.
         //! parameters[1], Identifier: selected diagnoser type identifier.
-        //! result[0], Identifier: on failure, the error code:
-        //!  '0' : The request is already resolved.
-        //!  '1' : The diagnosis team is unavailable.
+        //! On failure, result[0], Identifier : among ManualMaintenanceError
+        //!   values.
         select_diagnosis_team              = 11;
         //! When a maintenance log consign is in state "waiting for repair team
         //!  selection", update the request to a new state with a manually
         //!  selected repair team.
         //! parameters[0], Identifier: identifier of log request.
         //! parameters[1], Identifier: selected repair team type identifier.
-        //! result[0], Identifier: on failure, the error code:
-        //!  '0' : The request is already resolved.
-        //!  '2' : The repair team is unavailable.
+        //! On failure, result[0], Identifier : among ManualMaintenanceError
+        //!   values.
         select_repair_team                 = 12;
         //! Create a pathfind
         //! parameters[0], PathfindRequest: the unit and waypoints.
