@@ -164,16 +164,16 @@ float PopulationConcentration::GetHeight( bool ) const
 
 namespace
 {
-    void SelectColor( E_PopulationAttitude attitude )
+    void SelectColor( E_PopulationAttitude attitude, GLfloat alpha )
     {
         if( attitude == ePopulationAttitude_Agressive )
-            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE );
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE, alpha );
         else if( attitude == ePopulationAttitude_Excitee )
-            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED );
+            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED, alpha );
         else if( attitude == ePopulationAttitude_Agitee )
-            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED );
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED, alpha );
         else // ePopulationAttitude_Calme
-            glColor4f( COLOR_POPULATION_ATTITUDE_CALM );
+            glColor4f( COLOR_POPULATION_ATTITUDE_CALM, alpha );
     }
 }
 
@@ -193,7 +193,7 @@ QColor PopulationConcentration::GetColor( const std::string& option, const QColo
 // Name: PopulationConcentration::SelectRightPartColor
 // Created: JSR 2013-09-25
 // -----------------------------------------------------------------------------
-void PopulationConcentration::SelectRightPartColor() const
+void PopulationConcentration::SelectRightPartColor( GLfloat alpha ) const
 {
     static const QColor defaultHealthy( QColor::fromRgbF( COLOR_LIGHT_BLUE) );
     static const QColor defaultContaminated( Qt::green );
@@ -211,8 +211,7 @@ void PopulationConcentration::SelectRightPartColor() const
         c = GetColor( "Color/Wounded", defaultWounded );
     else // nHealthyHumans_ >= nContaminatedHumans_ && nHealthyHumans_ >= nWoundedHumans_
         c = GetColor( "Color/MostlyHealthy", defaultMostlyHealthy );
-
-    glColor4f( c.red() / 255.f, c.green() / 255.f, c.blue() / 255.f, 1.f );
+    glColor4f( c.red() / 255.f, c.green() / 255.f, c.blue() / 255.f, alpha );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,10 +225,12 @@ void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const gu
     else
     {
         tools.DrawHalfDisc( position_, -90, radius_ );
+        GLfloat currentColor[ 4 ];
+        glGetFloatv( GL_CURRENT_COLOR, currentColor );
         glPushAttrib( GL_CURRENT_BIT );
-        SelectRightPartColor();
+        SelectRightPartColor( currentColor[ 3 ] );
         tools.DrawHalfDisc( position_, 90, radius_ );
-        SelectColor( attitude_ );
+        SelectColor( attitude_, currentColor[ 3 ] );
         tools.DrawCircle( position_, radius_ );
         glPopAttrib();
     }

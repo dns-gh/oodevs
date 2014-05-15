@@ -115,16 +115,16 @@ void PopulationConcentrationKnowledge::DisplayInList( Displayer_ABC& displayer )
 
 namespace
 {
-    void SelectColor( E_PopulationAttitude attitude )
+    void SelectColor( E_PopulationAttitude attitude, GLfloat alpha )
     {
         if( attitude == ePopulationAttitude_Agressive )
-            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE );
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE, alpha );
         else if( attitude == ePopulationAttitude_Excitee )
-            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED );
+            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED, alpha );
         else if( attitude == ePopulationAttitude_Agitee )
-            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED );
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED, alpha );
         else // ePopulationAttitude_Calme
-            glColor4f( COLOR_POPULATION_ATTITUDE_CALM );
+            glColor4f( COLOR_POPULATION_ATTITUDE_CALM, alpha );
     }
 }
 
@@ -147,7 +147,7 @@ void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const gui
         tools.DrawDisc( position_, radius );
         glColor4f( COLOR_BLACK );
         tools.DrawDisc( position_, deadRadius_ );
-        SelectColor( eAttitude_ );
+        SelectColor( eAttitude_, currentColor[ 3 ] );
         tools.DrawCircle( position_, radius );
         glPopAttrib();
     }

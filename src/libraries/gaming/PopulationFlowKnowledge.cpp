@@ -129,16 +129,16 @@ void PopulationFlowKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 
 namespace
 {
-    void SelectColor( E_PopulationAttitude attitude )
+    void SelectColor( E_PopulationAttitude attitude, GLfloat alpha )
     {
         if( attitude == ePopulationAttitude_Agressive )
-            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE );
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE, alpha );
         else if( attitude == ePopulationAttitude_Excitee )
-            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED );
+            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED, alpha );
         else if( attitude == ePopulationAttitude_Agitee )
-            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED );
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED, alpha );
         else // ePopulationAttitude_Calme
-            glColor4f( COLOR_POPULATION_ATTITUDE_CALM );
+            glColor4f( COLOR_POPULATION_ATTITUDE_CALM, alpha );
     }
 }
 
@@ -159,7 +159,7 @@ void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const gui::Viewpor
         {
             const FlowPart& part = flowParts_[i];
             if( !tools.IsPickingMode() )
-                SelectColor( eAttitude_ );
+                SelectColor( eAttitude_, color[ 3 ] );
             glLineWidth( 10.f );
             tools.DrawLines( part.flowPart_ );
             if( !tools.IsPickingMode() )
