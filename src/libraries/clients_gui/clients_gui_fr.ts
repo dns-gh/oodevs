@@ -2183,6 +2183,10 @@ Voulez-vous le supprimer?</translation>
         <source>Logistic low threshold (%)</source>
         <translation>Seuil bas logistique (%)</translation>
     </message>
+    <message>
+        <source>Logistic high threshold (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitsPanel</name>

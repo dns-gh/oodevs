@@ -27,14 +27,15 @@ class InitialStateResource
 public:
     //! @name Constructors/Destructor
     //@{
-             InitialStateResource( const QString& name, const QString& category, unsigned int number, unsigned int maximum, double threshold, double consumption );
+             InitialStateResource( const QString& name, const QString& category, unsigned int number, unsigned int maximum,
+                                   double lowThreshold, double highThreshold, double consumption );
     explicit InitialStateResource( xml::xistream& xis );
     virtual ~InitialStateResource();
     //@}
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos, double defaultLowThreshold ) const;
+    void Serialize( xml::xostream& xos, double defaultLowThreshold, double defaultHighThreshold ) const;
     bool operator==( const InitialStateResource& object ) const;
     bool operator!=( const InitialStateResource& object ) const;
     //@}
@@ -46,7 +47,8 @@ public:
     QString      category_;
     unsigned int number_;
     unsigned int maximum_;
-    double       threshold_;
+    double       lowThreshold_;
+    double       highThreshold_;
     double       consumption_;
     //@}
 };

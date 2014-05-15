@@ -32,8 +32,8 @@ namespace
     // Name: Local Helpers
     // Created: ABR 2011-03-01
     // -----------------------------------------------------------------------------
-    typedef std::pair< QString, int >   T_MenuItem;
-    typedef std::vector< T_MenuItem >   T_MenuItemVector;
+    typedef std::pair< QString, int > T_MenuItem;
+    typedef std::vector< T_MenuItem > T_MenuItemVector;
     struct ItemSort
     {
         bool operator()( T_MenuItem& lhs, T_MenuItem& rhs )
@@ -176,7 +176,7 @@ void UnitStateTableResource::AddItem( int id )
             }
         }
     }
-    AddLine( dotation->GetName().c_str(), dotation->GetCategoryDisplay().c_str(), 0, 0, 0, consumption );
+    AddLine( dotation->GetName().c_str(), dotation->GetCategoryDisplay().c_str(), 0, 0, 0, 0, consumption );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +235,8 @@ bool UnitStateTableResource::HasChanged( kernel::Entity_ABC& selected ) const
                 {
                     if ( it->number_ != GetUserData( row, eQuantity ).toUInt() ||
                          it->maximum_ != GetUserData( row, eMaximum ).toUInt() ||
-                         it->threshold_ != GetUserData( row, eThreshold ).toDouble() )
+                         it->lowThreshold_ != GetUserData( row, eLowThreshold ).toDouble() ||
+                         it->highThreshold_ != GetUserData( row, eHighThreshold ).toDouble() )
                          return true;
                     break;
                 }
@@ -286,10 +287,14 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
     typeId_ = agent.GetType().GetId();
     InitialState& extension = selected.Get< InitialState >();
     for( auto it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+<<<<<<< HEAD
         MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->threshold_, it->consumption_ );
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( IsEntityOriginalResource( selected, GetDisplayData( row, eName ) ) )
             SetColor( row, eName, Qt::lightGray, -1 );
+=======
+        MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->lowThreshold_, it->highThreshold_, it->consumption_ );
+>>>>>>> [preparation][gaming][dispatcher] Story #68884372 "Add high supply threshold for automated requests"
 }
 
 namespace
@@ -339,7 +344,8 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
                                                                   GetDisplayData( row, eCategory ),
                                                                   GetUserData( row, eQuantity ).toUInt(),
                                                                   GetUserData( row, eMaximum ).toUInt(),
-                                                                  GetUserData( row, eThreshold ).toDouble(),
+                                                                  GetUserData( row, eLowThreshold ).toDouble(),
+                                                                  GetUserData( row, eHighThreshold ).toDouble(),
                                                                   GetUserData( row, eConsumption ).toDouble() ) );
     }
     else

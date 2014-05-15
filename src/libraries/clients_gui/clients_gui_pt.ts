@@ -2174,6 +2174,10 @@ Do you want to remove it?</source>
         <source>Logistic low threshold (%)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logistic high threshold (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitsPanel</name>

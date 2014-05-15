@@ -140,7 +140,8 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
                     if( GetUserData( row, eName ).toString() == name )
                     {
                         SetData( row, eQuantity, locale().toString( dotation.quantity_ ), dotation.quantity_ );
-                        SetData( row, eThreshold, locale().toString( dotation.thresholdPercentage_, 'f', 2 ), dotation.thresholdPercentage_ );
+                        SetData( row, eLowThreshold, locale().toString( dotation.lowThresholdPercentage_, 'f', 2 ), dotation.lowThresholdPercentage_ );
+                        SetData( row, eHighThreshold, locale().toString( dotation.highThresholdPercentage_, 'f', 2 ), dotation.highThresholdPercentage_ );
                         break;
                     }
             }
@@ -172,10 +173,12 @@ int UnitStateTableResource::HasDotationChanged( const Dotation& dotation ) const
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( GetDisplayData( row, eName ) == name )
         {
-            int quantity = GetUserData( row, eQuantity ).toInt();
-            float threshold = GetUserData( row, eThreshold ).toFloat();
+            const int quantity = GetUserData( row, eQuantity ).toInt();
+            const float lowThreshold = GetUserData( row, eLowThreshold ).toFloat();
+            const float highThreshold = GetUserData( row, eHighThreshold ).toFloat();
             if( quantity != dotation.quantity_ ||
-                abs( threshold - dotation.thresholdPercentage_ ) > EPSYLON )
+                abs( lowThreshold - dotation.lowThresholdPercentage_ ) > EPSYLON ||
+                abs( highThreshold - dotation.highThresholdPercentage_ ) > EPSYLON )
                 return row;
             break;
         }
@@ -259,7 +262,7 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
         const Dotation& dotation = dotationIterator.NextElement();
         const std::string& name = dotation.type_->GetName();
         const auto capacityAndConsumption = GetCapacityAndConsumption( name, agent, selected );
-        MergeLine( name.c_str(), dotation.type_->GetCategoryDisplay().c_str(), dotation.quantity_, capacityAndConsumption.first, dotation.thresholdPercentage_, capacityAndConsumption.second );
+        MergeLine( name.c_str(), dotation.type_->GetCategoryDisplay().c_str(), dotation.quantity_, capacityAndConsumption.first, dotation.lowThresholdPercentage_, dotation.highThresholdPercentage_, capacityAndConsumption.second );
     }
 }
 
@@ -315,7 +318,8 @@ void UnitStateTableResource::CreateMagicAction( unsigned int quantity, const Dot
     actions::parameters::ParameterList& list = parameterList->AddList( "Dotation" );
     list.AddIdentifier( "ID", dotation.type_->GetId() );
     list.AddQuantity( "Quantity", quantity );
-    list.AddNumeric( "Threshold", dotation.thresholdPercentage_ );
+    list.AddNumeric( "Low threshold", dotation.lowThresholdPercentage_ );
+    list.AddNumeric( "High threshold", dotation.highThresholdPercentage_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( controllers_.controller_, entity, false ) );
     actionsModel_.Publish( *action );
@@ -344,7 +348,8 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
             actions::parameters::ParameterList& list = parameterList->AddList( "Dotation" );
             list.AddIdentifier( "ID", it->first );
             list.AddQuantity( "Quantity", GetUserData( it->second, eQuantity ).toInt() );
-            list.AddNumeric( "Threshold", GetUserData( it->second, eThreshold ).toFloat() );
+            list.AddNumeric( "Low threshold", GetUserData( it->second, eLowThreshold ).toFloat() );
+            list.AddNumeric( "High threshold", GetUserData( it->second, eHighThreshold ).toFloat() );
         }
         rowsChanged_.clear();
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );

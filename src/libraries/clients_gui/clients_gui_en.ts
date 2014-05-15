@@ -2183,6 +2183,10 @@ Do you want to remove it?</translation>
         <source>Logistic low threshold (%)</source>
         <translation>Logistics low threshold (%)</translation>
     </message>
+    <message>
+        <source>Logistic high threshold (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitsPanel</name>

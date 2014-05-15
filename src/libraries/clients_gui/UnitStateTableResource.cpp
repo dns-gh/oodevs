@@ -30,10 +30,12 @@ UnitStateTableResource::UnitStateTableResource( const QString& objectName,
                                         << maximalCapacityLabel
                                         << tr( "Percentage (%)" )
                                         << tr( "Logistic low threshold (%)" )
+                                        << tr( "Logistic high threshold (%)" )
                                         << tr( "Normalized quantity" ) )
     , blockSlots_( false )
 {
-    delegate_.AddDoubleSpinBoxOnColumn( eThreshold, 0, 100, 0.5 );
+    delegate_.AddDoubleSpinBoxOnColumn( eLowThreshold, 0, 100, 0.5 );
+    delegate_.AddDoubleSpinBoxOnColumn( eHighThreshold, 0, 100, 0.5 );
     delegate_.AddDoubleSpinBoxOnColumn( ePercentage, 0, std::numeric_limits< double >::max(), 0.5 );
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnItemChanged( QStandardItem* ) ) );
 }
@@ -60,7 +62,8 @@ bool UnitStateTableResource::IsReadOnlyForType( const std::string& ) const
 // Name: UnitStateTableResource::MergeLine
 // Created: ABR 2011-07-06
 // -----------------------------------------------------------------------------
-void UnitStateTableResource::MergeLine( const QString& name, const QString& category, unsigned quantity, unsigned maximum, double threshold, double consumption )
+void UnitStateTableResource::MergeLine( const QString& name, const QString& category, unsigned quantity, unsigned maximum,
+                                        double lowThreshold, double highThreshold, double consumption )
 {
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( GetDisplayData( row, eName ) == name )
@@ -75,14 +78,15 @@ void UnitStateTableResource::MergeLine( const QString& name, const QString& cate
             SetData( row, eConsumption, strNormalizedQuantity, consumption );
             return;
         }
-    AddLine( name, category, quantity, maximum, threshold, consumption );
+    AddLine( name, category, quantity, maximum, lowThreshold, highThreshold, consumption );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UnitStateTableResource::AddLine
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-void UnitStateTableResource::AddLine( const QString& name, const QString& category, unsigned quantity /* = 0*/, unsigned maximum /* = 0*/, double threshold /* = 0.*/, double consumption /* = 0.*/ )
+void UnitStateTableResource::AddLine( const QString& name, const QString& category, unsigned quantity /* = 0*/, unsigned maximum /* = 0*/,
+                                      double lowThreshold /* = 0.*/, double highThreshold /* = 0.*/, double consumption /* = 0.*/ )
 {
     int row = dataModel_.rowCount();
     AddItem( row, eName, name, name );
@@ -90,7 +94,8 @@ void UnitStateTableResource::AddLine( const QString& name, const QString& catego
     AddItem( row, ePercentage, "", "", Qt::ItemIsEditable );
     AddItem( row, eMaximum, locale().toString( maximum ), maximum );
     AddItem( row, eQuantity, locale().toString( quantity ), quantity, Qt::ItemIsEditable );
-    AddItem( row, eThreshold, locale().toString( threshold, 'f', 2 ), threshold, aggregated_ ? Qt::ItemFlags( 0 ) : Qt::ItemIsEditable );
+    AddItem( row, eLowThreshold, locale().toString( lowThreshold, 'f', 2 ), lowThreshold, aggregated_ ? Qt::ItemFlags( 0 ) : Qt::ItemIsEditable );
+    AddItem( row, eHighThreshold, locale().toString( highThreshold, 'f', 2 ), highThreshold, aggregated_ ? Qt::ItemFlags( 0 ) : Qt::ItemIsEditable );
     const QString strNormalizedQuantity = consumption == 0 ?
         tr( "N/A" ) : locale().toString( quantity / consumption );
     AddItem( row, eConsumption, strNormalizedQuantity, consumption );

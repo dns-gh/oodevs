@@ -48,9 +48,9 @@ class InitialState : public kernel::Extension_ABC
 public:
     //! @name Types
     //@{
-    typedef std::vector< InitialStateEquipment >    T_Equipments;
-    typedef std::vector< InitialStateCrew >         T_Crews;
-    typedef std::vector< InitialStateResource >     T_Resources;
+    typedef std::vector< InitialStateEquipment > T_Equipments;
+    typedef std::vector< InitialStateCrew >      T_Crews;
+    typedef std::vector< InitialStateResource >  T_Resources;
     //@}
 
 public:
@@ -84,6 +84,8 @@ private:
     bool IsResourcesSaveNeeded() const;
     const QString RetrieveResourceCategory( const QString& resourceName ) const;
     double RetrieveNormalizedConsumption( const QString& resourceName ) const;
+    double RetrieveLogisticThreshold( const QString& resourceName, const std::function< double( const kernel::DotationCapacityType& ) >& thresholdGetter ) const;
+    double RetrieveHighLogisticThreshold( const QString& resourceName ) const;
     double RetrieveLowLogisticThreshold( const QString& resourceName ) const;
     void UpdateEquipmentsWithOriginal() ;
     //@}

@@ -41,6 +41,7 @@ public:
     const std::string& GetName() const;
     unsigned int GetCapacity() const;
     double GetLowThreshold() const;
+    double GetHighThreshold() const;
     double GetNormalizedConsumption() const;
     //@}
 
@@ -50,6 +51,7 @@ private:
     std::string  name_;
     unsigned int capacity_;
     double       lowThreshold_;
+    double       highThreshold_;
     double       normalizedConsumption_;
     //@}
 };
