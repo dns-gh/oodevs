@@ -152,10 +152,7 @@ integration.stopRemoveIt = function( object )
     end
 end
 
---- Returns true if this entity is in the effect area of the given object, false otherwise.
--- The effect area around an object is an area containing the object.
--- The border of the effect area is at least at the given distance of all
--- positions inside the object.
+--- Returns true if this entity is inside the object or less than distance from it, false otherwise.
 -- This method can only be called by entities defining a "getPosition" method returning a simulation point.
 -- @param object Object knowledge
 -- @param distance Float, distance in meters (optional, 100 meters by default)
