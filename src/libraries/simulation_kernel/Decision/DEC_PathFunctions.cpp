@@ -19,6 +19,7 @@
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
@@ -43,10 +44,18 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_Ag
 
 namespace
 {
+    bool IsDestinationTrafficable( const MIL_Agent_ABC& agent, const std::vector< MT_Vector2D >& points )
+    {
+        const PHY_RoleInterface_TerrainAnalysis& analysis = agent.GetRole< PHY_RoleInterface_TerrainAnalysis >();
+        return analysis.CanMoveOnUrbanBlock( points ) &&
+               analysis.CanMoveOnBurningCells( points ) &&
+               analysis.CanMoveOnKnowledgeObject( points );
+    }
+
     boost::shared_ptr< DEC_Agent_Path > StartCompute( MIL_Agent_ABC& agent, const T_PointVector& points, const DEC_PathType& pathType )
     {
         const auto path = boost::make_shared< DEC_Agent_Path >( agent, points, pathType );
-        if( !path->IsDestinationTrafficable() )
+        if( !IsDestinationTrafficable( agent, points ) )
             path->CancelPath();
         else
             MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( path );

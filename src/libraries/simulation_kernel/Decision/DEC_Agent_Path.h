@@ -46,11 +46,6 @@ public:
     void CancelPath();
     //@}
 
-    //! @name Helper to bypass lack of check of terrain in heuristics.
-    //@{
-    bool IsDestinationTrafficable() const;
-    //@}
-
     //! @name Accessors
     //@{
     const DEC_Agent_PathClass& GetPathClass() const;

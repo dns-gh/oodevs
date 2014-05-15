@@ -20,7 +20,6 @@
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
-#include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
@@ -426,19 +425,6 @@ void DEC_Agent_Path::Execute( TER_Pathfinder_ABC& pathfind )
                             ", State : " << GetStateAsString() <<
                             ", Result : " << stream.str() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::IsDestinationTrafficable
-// $$$$ LDC Should be done in the Terrain heuristics.
-// Created: LDC 2010-08-10
-// -----------------------------------------------------------------------------
-bool DEC_Agent_Path::IsDestinationTrafficable() const
-{
-    const PHY_RoleInterface_TerrainAnalysis& analysis = queryMaker_.GetRole< PHY_RoleInterface_TerrainAnalysis >();
-    return analysis.CanMoveOnUrbanBlock( nextWaypoints_ ) &&
-           analysis.CanMoveOnBurningCells( nextWaypoints_ ) &&
-           analysis.CanMoveOnKnowledgeObject( nextWaypoints_ );
 }
 
 // -----------------------------------------------------------------------------
