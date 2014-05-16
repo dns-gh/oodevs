@@ -9,11 +9,13 @@
 
 #include "clients_gui_pch.h"
 #include "DrawingsTreeView.h"
+#include "moc_DrawingsTreeView.cpp"
 #include "ModelObserver_ABC.h"
 #include "ParametersLayer.h"
 #include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalLine_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 
 using namespace gui;
@@ -26,6 +28,7 @@ DrawingsTreeView::DrawingsTreeView( const QString& objectName, kernel::Controlle
                                     ModelObserver_ABC& modelObserver, ParametersLayer& paramLayer, QWidget* parent /*= 0*/ )
     : EntityTreeView_ABC( objectName, controllers, profile, modelObserver, parent )
     , paramLayer_( paramLayer )
+    , entity_( controllers )
 {
     drawingsItem_ = dataModel_.AddRootTextItem( dataModel_.rowCount(), 0, tools::translate( "DrawingsTreeView", "Drawings" ), "" );
     limitsItem_ = dataModel_.AddRootTextItem( dataModel_.rowCount(), 0, tools::translate( "DrawingsTreeView", "Limits" ), "" );
@@ -42,15 +45,26 @@ DrawingsTreeView::~DrawingsTreeView()
     controllers_.Unregister( *this );
 }
 
+namespace
+{
+    bool CanBeOrdered( const kernel::Entity_ABC& entity, const kernel::Profile_ABC& profile )
+    {
+        const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
+        return superior && profile.CanBeOrdered( *superior );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DrawingsTreeView::NotifyCreated
 // Created: LGY 2014-05-07
 // -----------------------------------------------------------------------------
 void DrawingsTreeView::NotifyCreated( const kernel::TacticalLine_ABC& line )
 {
+    const auto flags = CanBeOrdered( line, profile_ ) ? Qt::ItemIsEditable | ItemSpecificFlags( line ) :
+        ItemSpecificFlags( line );
     QStandardItem* parent = line.IsLimit() ? limitsItem_ : phaseLinesItem_;
     dataModel_.AddChildSafeItem( parent, parent->rowCount(), 0, line.GetName(),
-            line.GetTooltip(), line, ItemSpecificFlags( line ) );
+        line.GetTooltip(), line, flags );
     EntityTreeView_ABC::ApplyProfileFilter();
 }
 
@@ -61,7 +75,7 @@ void DrawingsTreeView::NotifyCreated( const kernel::TacticalLine_ABC& line )
 void DrawingsTreeView::NotifyCreated( const kernel::Drawing_ABC& drawing )
 {
     dataModel_.AddChildSafeItem( drawingsItem_, drawingsItem_->rowCount(), 0, drawing.GetName(),
-        drawing.GetTooltip(), drawing, ItemSpecificFlags( drawing ) );
+        drawing.GetTooltip(), drawing, Qt::ItemIsEditable | ItemSpecificFlags( drawing ) );
     EntityTreeView_ABC::ApplyProfileFilter();
 }
 
@@ -124,4 +138,49 @@ void DrawingsTreeView::keyPressEvent( QKeyEvent* event )
     }
     else
         EntityTreeView_ABC::keyPressEvent( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingsTreeView::AddCommunMenu
+// Created: LGY 2014-05-07
+// -----------------------------------------------------------------------------
+void DrawingsTreeView::AddCommunMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+{
+    entity_ = &entity;
+    if( !isVisible() )
+        return;
+    menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ), false, 4 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingsTreeView::NotifyContextMenu
+// Created: LGY 2014-05-07
+// -----------------------------------------------------------------------------
+void DrawingsTreeView::NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel::ContextMenu& menu )
+{
+    AddCommunMenu( drawing, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingsTreeView::NotifyContextMenu
+// Created: LGY 2014-05-07
+// -----------------------------------------------------------------------------
+void DrawingsTreeView::NotifyContextMenu( const kernel::TacticalLine_ABC& line, kernel::ContextMenu& menu )
+{
+    if( CanBeOrdered( line, profile_ ) )
+        AddCommunMenu( line, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingsTreeView::OnRename
+// Created: LGY 2014-05-07
+// -----------------------------------------------------------------------------
+void DrawingsTreeView::OnRename()
+{
+    if( entity_ )
+    {
+        QStandardItem* item = dataModel_.FindDataItem( *entity_ );
+        if( item )
+            edit( proxyModel_->mapFromSource( item->index() ) );
+    }
 }

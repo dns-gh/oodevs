@@ -46,8 +46,9 @@ class Drawing : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter );
-             Drawing( unsigned int id, xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion, const kernel::CoordinateConverter_ABC& converter );
+             Drawing( unsigned int id, const sword::Shape& msg, const kernel::CoordinateConverter_ABC& converter );
+             Drawing( unsigned int id, xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion,
+                      const kernel::CoordinateConverter_ABC& converter );
              Drawing( unsigned int id, const Drawing& rhs );
     virtual ~Drawing();
     //@}
@@ -59,7 +60,7 @@ public:
     const kernel::CoordinateConverter_ABC& GetConverter() const;
     const boost::optional< sword::Diffusion >& GetDiffusion() const;
 
-    void Update( const sword::ShapeUpdateRequest& asn );
+    void Update( const sword::ShapeUpdateRequest& msg );
     virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;
@@ -75,12 +76,6 @@ private:
     void SerializePoint( const sword::CoordLatLong& point, xml::xostream& xos ) const;
     //@}
 
-    //! @name Helpers
-    //@{
-    typedef std::vector< sword::CoordLatLong > T_Points;
-    typedef T_Points::const_iterator         CIT_Points;
-    //@}
-
 private:
     //! @name Member data
     //@{
@@ -89,7 +84,8 @@ private:
     std::string category_;
     std::string color_;
     std::string pattern_;
-    T_Points points_;
+    std::string name_;
+    std::vector< sword::CoordLatLong > points_;
     boost::optional< sword::Diffusion > diffusion_;
     boost::optional< sword::EnumPenStyle > style_;
     //@}

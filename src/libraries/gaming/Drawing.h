@@ -54,6 +54,7 @@ public:
     //! @name Operations
     //@{
     virtual void DoUpdate( const sword::ShapeUpdate& message );
+    virtual void Rename( const QString& name );
     virtual void NotifyDestruction() const;
     //@}
 
@@ -67,6 +68,7 @@ private:
     //@{
     void SetLocation( const sword::CoordLatLongList& list );
     void SerializeLocation( sword::CoordLatLongList& list ) const;
+    void SendUpdateRequest() const;
     //@}
 
 private:
@@ -74,7 +76,7 @@ private:
     //@{
     Publisher_ABC& publisher_;
     const kernel::CoordinateConverter_ABC& converter_;
-    bool publishUpdate_;
+    kernel::Controller& controller_;
     //@}
 };
 

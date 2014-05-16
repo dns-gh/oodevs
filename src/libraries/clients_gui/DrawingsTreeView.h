@@ -11,6 +11,7 @@
 #define __gui_DrawingsTreeView_h_
 
 #include "EntityTreeView_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 
 namespace kernel
 {
@@ -30,7 +31,11 @@ namespace gui
 class DrawingsTreeView : public EntityTreeView_ABC
                        , public tools::ElementObserver_ABC< kernel::Drawing_ABC >
                        , public tools::ElementObserver_ABC< kernel::TacticalLine_ABC >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Drawing_ABC >
+                       , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -48,13 +53,29 @@ protected:
     virtual void NotifyCreated( const kernel::Drawing_ABC& drawing );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual bool ApplyProfileFilter( QStandardItem& item ) const;
+    virtual void NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& line, kernel::ContextMenu& menu );
+    virtual bool ApplyProfileFilter( QStandardItem& item, StandardModel& model ) const;
     virtual void keyPressEvent( QKeyEvent* event );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnRename();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void AddCommunMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private:
     //! @name Member data
     //@{
     ParametersLayer& paramLayer_;
+    kernel::SafePointer< kernel::Entity_ABC > entity_;
     QStandardItem* drawingsItem_;
     QStandardItem* limitsItem_;
     QStandardItem* phaseLinesItem_;

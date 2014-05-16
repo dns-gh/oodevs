@@ -35,12 +35,13 @@ namespace
 // -----------------------------------------------------------------------------
 Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& message, const kernel::Entity_ABC* entity, const gui::DrawingTypes& types,
                   kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controllers, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ),
+    : gui::DrawerShape( controllers, message.id().id(), message.shape().name().c_str(),
+                         types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ),
                          QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ),
                          entity, proxy, converter, Convert( message ) )
-    , publisher_    ( publisher )
-    , converter_    ( converter )
-    , publishUpdate_( true )
+    , publisher_ ( publisher )
+    , converter_ ( converter )
+    , controller_( controllers.controller_ )
 {
     SetLocation( message.shape().points() );
 }
@@ -84,19 +85,25 @@ void Drawing::NotifyDestruction() const
 // -----------------------------------------------------------------------------
 void Drawing::Update()
 {
-    DrawerShape::Update();
-    if( publishUpdate_ )
-    {
-        plugins::messenger::ShapeUpdateRequest message;
-        message().mutable_shape()->set_id( GetId() );
-        message().set_category( style_.GetCategory().toStdString() );
-        message().mutable_color()->set_red( color_.red() );
-        message().mutable_color()->set_green( color_.green() );
-        message().mutable_color()->set_blue( color_.blue() );
-        message().set_pattern( style_.GetName().toStdString() );
-        SerializeLocation( *message().mutable_points() );
-        message.Send( publisher_ );
-    }
+    SendUpdateRequest();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawing::SendUpdateRequest
+// Created: LGY 2014-05-16
+// -----------------------------------------------------------------------------
+void Drawing::SendUpdateRequest() const
+{
+    plugins::messenger::ShapeUpdateRequest message;
+    message().mutable_shape()->set_id( GetId() );
+    message().set_category( style_.GetCategory().toStdString() );
+    message().mutable_color()->set_red( color_.red() );
+    message().mutable_color()->set_green( color_.green() );
+    message().mutable_color()->set_blue( color_.blue() );
+    message().set_pattern( style_.GetName().toStdString() );
+    message().set_name( name_ );
+    SerializeLocation( *message().mutable_points() );
+    message.Send( publisher_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,13 +112,16 @@ void Drawing::Update()
 // -----------------------------------------------------------------------------
 void Drawing::DoUpdate( const sword::ShapeUpdate& message )
 {
-    publishUpdate_ = false;
+    const auto& shape = message.shape();
      // $$$$ SBO 2008-06-09: can only change color and shape
-    if( message.shape().has_color()  )
-        ChangeColor( QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ) );
-    if( message.shape().has_points()  )
-        SetLocation( message.shape().points() );
-    publishUpdate_ = true;
+    if( shape.has_color()  )
+        ChangeColor( QColor( shape.color().red(), shape.color().green(),shape.color().blue() ) );
+    if(shape.has_points() )
+        SetLocation( shape.points() );
+    if( shape.has_name() )
+        name_ = shape.name().c_str();
+    controller_.Update( gui::DictionaryUpdated( *this, tools::translate( "EntityImplementation", "Info" ) ) );
+    gui::DrawerShape::Update();
 }
 
 namespace
@@ -170,4 +180,14 @@ void Drawing::SerializeLocation( sword::CoordLatLongList& list ) const
     location_.Accept( serializer );
     for( unsigned int i = 0; i < serializer.points_.size(); ++i )
         *list.add_elem() = serializer.points_[i];
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawing::Rename
+// Created: LGY 2014-05-16
+// -----------------------------------------------------------------------------
+void Drawing::Rename( const QString& name )
+{
+    gui::DrawerShape::Rename( name );
+    SendUpdateRequest();
 }

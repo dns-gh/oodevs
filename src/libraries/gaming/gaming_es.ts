@@ -441,6 +441,13 @@
     </message>
 </context>
 <context>
+    <name>EntityImplementation</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Info</translation>
+    </message>
+</context>
+<context>
     <name>Equipments</name>
     <message>
         <source>Equipments</source>

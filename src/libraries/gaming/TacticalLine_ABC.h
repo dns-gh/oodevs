@@ -10,6 +10,7 @@
 #ifndef __TacticalLine_ABC_h_
 #define __TacticalLine_ABC_h_
 
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
@@ -34,7 +35,7 @@ class Publisher_ABC;
 */
 // Created: APE 2004-04-14
 // =============================================================================
-class TacticalLine_ABC : public kernel::TacticalLine_ABC
+class TacticalLine_ABC : public gui::EntityImplementation< kernel::TacticalLine_ABC >
                        , public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< sword::PhaseLineUpdate >
                        , public kernel::Updatable_ABC< sword::LimitUpdate >
@@ -42,20 +43,21 @@ class TacticalLine_ABC : public kernel::TacticalLine_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( const QString& baseName, unsigned long id, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
+             TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, unsigned long id,
+                               Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
     virtual ~TacticalLine_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual void NotifyDestruction();
+    virtual void Rename( const QString& name );
     void Create();
     //@}
 
     //! @name Accessors
     //@{
     virtual unsigned long GetId  () const;
-    virtual QString       GetName() const;
     //@}
 
 protected:
@@ -86,6 +88,12 @@ protected:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void UpdateName( const std::string& name );
+    //@}
+
+private:
     //! @name Copy/Assignment
     //@{
     TacticalLine_ABC( const TacticalLine_ABC& );
@@ -95,10 +103,10 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     Publisher_ABC& publisher_;
     unsigned long  id_;
-    QString        name_;
     //@}
 };
 

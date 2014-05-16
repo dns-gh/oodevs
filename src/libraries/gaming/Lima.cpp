@@ -23,10 +23,10 @@ using namespace sword;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( tools::translate( "Lima", "Phase line" ), 0, publisher, converter )
+    : TacticalLine_ABC( controller, tools::translate( "Lima", "Phase line" ), 0, publisher, converter )
     , controller_     ( controller )
 {
-    controller_.Create( *(kernel::TacticalLine_ABC*)this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,10 +34,10 @@ Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kern
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const sword::PhaseLineCreation& message )
-    : TacticalLine_ABC( QString( message.tactical_line().name().c_str() ) , message.id().id(), publisher, converter )
+    : TacticalLine_ABC( controller, QString( message.tactical_line().name().c_str() ) , message.id().id(), publisher, converter )
     , controller_     ( controller )
 {
-    controller_.Create( *(kernel::TacticalLine_ABC*)this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -271,6 +271,13 @@
     </message>
 </context>
 <context>
+    <name>Info</name>
+    <message>
+        <source>Info/Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticBase</name>
     <message>
         <source>SWORD</source>
@@ -858,6 +865,13 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>&apos;%1&apos; : category already defined in drawings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::DrawingsTreeView</name>
+    <message>
+        <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

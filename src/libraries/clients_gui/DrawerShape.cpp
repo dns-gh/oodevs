@@ -33,19 +33,31 @@ using namespace gui;
 // Name: DrawerShape constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, const DrawingTemplate& style, const QColor& color,
+DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, const QString& name, const DrawingTemplate& style, const QColor& color,
                           const kernel::Entity_ABC* entity, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter,
                           E_Dash_style dashStyle )
-    : Drawing( controllers.controller_, id, style.GetName(), dashStyle )
+    : Drawing( controllers.controller_, id, name, dashStyle )
     , style_              ( style )
     , location_           ( location )
     , color_              ( color )
+    , template_           ( style_.GetName() )
     , entity_             ( controllers, entity )
     , drawer_             ( new SvgLocationDrawer( style ) )
     , coordinateConverter_( coordinateConverter )
     , isEditing_          ( false )
 {
     AddExtension( *this );
+    CreateDictionary();
+}
+
+namespace
+{
+    QString ReadName( xml::xistream& xis, const DrawingTypes& types )
+    {
+        if( !xis.has_attribute( "name" ) )
+            return gui::ReadStyle( xis, types ).GetName();
+        return xis.attribute< std::string >( "name" ).c_str();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -54,10 +66,11 @@ DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, co
 // -----------------------------------------------------------------------------
 DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis, const kernel::Entity_ABC* entity, const DrawingTypes& types,
                           kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& coordinateConverter )
-    : Drawing( controllers.controller_, id, gui::ReadStyle( xis, types ).GetName(), gui::ReadDashStyle( xis ) )
+    : Drawing( controllers.controller_, id, ReadName( xis, types ), gui::ReadDashStyle( xis ) )
     , style_              ( gui::ReadStyle( xis, types ) )
     , location_           ( proxy )
     , color_              ( gui::ReadColor( xis ) )
+    , template_           ( style_.GetName() )
     , entity_             ( controllers, entity )
     , drawer_             ( new SvgLocationDrawer( style_ ) )
     , coordinateConverter_( coordinateConverter )
@@ -67,6 +80,7 @@ DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xm
     location_.SetLocation( location );
     gui::ReadLocation( xis, location_, coordinateConverter );
     AddExtension( *this );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -141,8 +155,11 @@ void DrawerShape::Draw( const kernel::Location_ABC& location, const geometry::Re
 // -----------------------------------------------------------------------------
 void DrawerShape::ChangeColor( const QColor& color )
 {
-    color_ = color;
-    Update();
+    if( color_ != color )
+    {
+        color_ = color;
+        Update();
+    }
 }
 
 namespace
@@ -215,7 +232,8 @@ void DrawerShape::Serialize( xml::xostream& xos ) const
     if( location_.IsValid() )
     {
         xos << xml::start( "shape" )
-                << xml::attribute( "color", color_.name() );
+                << xml::attribute( "color", color_.name() )
+                << xml::attribute( "name", name_ );
         if( dashStyle_ != eSolid )
             xos << xml::attribute( "style", SerializeDash( dashStyle_ ) );
         style_.Serialize( xos );
@@ -275,4 +293,15 @@ const kernel::Location_ABC& DrawerShape::GetLocation() const
 const DrawingTemplate& DrawerShape::GetDrawingTemplate() const
 {
     return style_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::CreateDictionary
+// Created: LGY 2014-05-16
+// -----------------------------------------------------------------------------
+void DrawerShape::CreateDictionary()
+{
+    PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
+    const kernel::Entity_ABC& constEntity = *static_cast< const kernel::Entity_ABC* >( this );
+    dictionary.Register( constEntity, tools::translate( "Info", "Info/Template" ), template_ );
 }

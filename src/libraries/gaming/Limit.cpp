@@ -23,10 +23,10 @@ using namespace sword;
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
 Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), 0, publisher, converter )
+    : TacticalLine_ABC( controller, tools::translate( "Limit", "Limit" ), 0, publisher, converter )
     , controller_( controller )
 {
-    controller_.Create( *(kernel::TacticalLine_ABC*)this );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -34,10 +34,10 @@ Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const ke
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
 Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const sword::LimitCreation& message )
-    : TacticalLine_ABC( QString( message.tactical_line().name().c_str() ), message.id().id(), publisher, converter )
+    : TacticalLine_ABC( controller, QString( message.tactical_line().name().c_str() ), message.id().id(), publisher, converter )
     , controller_( controller )
 {
-    controller_.Create( *(kernel::TacticalLine_ABC*)this );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

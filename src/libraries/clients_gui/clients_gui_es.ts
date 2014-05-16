@@ -272,6 +272,13 @@
     </message>
 </context>
 <context>
+    <name>Info</name>
+    <message>
+        <source>Info/Template</source>
+        <translation type="unfinished">Info/Plantilla</translation>
+    </message>
+</context>
+<context>
     <name>LogisticBase</name>
     <message>
         <source>Info/Logistic base</source>
@@ -864,6 +871,13 @@ Porfavor revisar permisos de acceso o proteccion de escritura.</translation>
     <message>
         <source>&apos;%1&apos; : category already defined in drawings file.</source>
         <translation>&apos;%1&apos; : Categoría ya definida en archivo de dibujo.</translation>
+    </message>
+</context>
+<context>
+    <name>gui::DrawingsTreeView</name>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

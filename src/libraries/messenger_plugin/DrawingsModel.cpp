@@ -203,7 +203,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
     ack().set_error_code( sword::ShapeRequestAck::no_error );
     try
     {
-        std::auto_ptr< Drawing > drawing( new Drawing( idManager_.GetNextId(), message, converter_ ) );
+        std::auto_ptr< Drawing > drawing( new Drawing( idManager_.GetNextId(), message.shape(), converter_ ) );
         Register( drawing->GetId(), *drawing );
         drawing->SendCreation( clients_ );
         drawing.release();
