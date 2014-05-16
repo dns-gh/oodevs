@@ -64,6 +64,14 @@ private:
     //@}
 };
 
-#include "PHY_DecisionCallbackAction_ABC.inl"
+// -----------------------------------------------------------------------------
+// Name: template< typename T > void PHY_DecisionCallbackAction_ABC::Callback
+// Created: LDC 2009-06-26
+// -----------------------------------------------------------------------------
+template< typename T > 
+void PHY_DecisionCallbackAction_ABC::Callback( T value )
+{
+    decision_.Callback( GetId(), value );
+}
 
 #endif // __PHY_DecisionCallbackAction_ABC_h_
