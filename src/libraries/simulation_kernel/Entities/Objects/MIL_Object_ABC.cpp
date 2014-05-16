@@ -386,3 +386,48 @@ void MIL_Object_ABC::OnUpdateResourceLinks( const google::protobuf::RepeatedPtrF
     protocol::Check( capacity, "object has no resource network capacity" );
     capacity->Update( list );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::IsMarkedForDestruction
+// Created: NLD 2003-10-10
+// -----------------------------------------------------------------------------
+bool MIL_Object_ABC::IsMarkedForDestruction() const
+{
+    return bMarkedForDestruction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::IsReadyForDeletion
+// Created: NLD 2004-09-16
+// -----------------------------------------------------------------------------
+bool MIL_Object_ABC::IsReadyForDeletion() const
+{
+    return bReadyForDeletion_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::GetArmy
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+const MIL_Army_ABC* MIL_Object_ABC::GetArmy() const
+{
+    return pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::GetArmy
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+MIL_Army_ABC* MIL_Object_ABC::GetArmy()
+{
+    return pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::GetID
+// Created: BCI 2011-01-12
+// -----------------------------------------------------------------------------
+unsigned int MIL_Object_ABC::GetID() const
+{
+    return id_;
+}
