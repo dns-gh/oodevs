@@ -554,3 +554,11 @@ integration.stopNBCObject = function( object )
     perceptionReconnaissanceCallbacks[ object.actionNBC ] = nil
     return true
 end
+
+--- Returns true if the given target is within recognition range of this entity, false otherwise.
+-- This method can only be called by an agent.
+-- @param target Knowledge defining a "getPosition" method returning a simulation position
+-- @return Boolean
+integration.isInRecoRange = function( target )
+    return integration.distance( meKnowledge, target ) < DEC_Reconnoissance_MajorComponentMinDistance()
+end
