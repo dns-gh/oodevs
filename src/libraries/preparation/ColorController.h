@@ -13,7 +13,7 @@
 #include "clients_gui/ColorEditor_ABC.h"
 #include "clients_gui/ColorController.h"
 #include <tools/ElementObserver_ABC.h>
-#include <boost/optional.hpp>
+#include <boost/optional/optional_fwd.hpp>
 
 namespace kernel
 {
@@ -47,7 +47,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void AddSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor, const boost::optional< QColor >& oldColor = boost::none );
+    void AddSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor, const boost::optional< QColor >& oldColor );
     void AddObjects( const kernel::Entity_ABC& entity, const QColor& newColor );
     void AddColor( const kernel::Entity_ABC& entity, const QColor& color );
     void ClearColor( const kernel::Entity_ABC& entity );

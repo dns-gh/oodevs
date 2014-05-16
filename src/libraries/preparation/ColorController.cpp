@@ -22,6 +22,8 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 
+#include <boost/optional.hpp>
+
 // -----------------------------------------------------------------------------
 // Name: ColorController constructor
 // Created: LGY 2011-06-23

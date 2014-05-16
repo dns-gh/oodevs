@@ -11,7 +11,6 @@
 #define __actions_ActionFactory_h_
 
 #include "ActionFactory_ABC.h"
-#include <boost/optional.hpp>
 
 namespace sword
 {
@@ -115,12 +114,12 @@ public:
 private:
     //! @name Helpers
     //@{
-    void AddParameters( Action_ABC& action, const kernel::OrderType& order, const sword::MissionParameters& message, boost::optional< const kernel::Entity_ABC& > entity = boost::none ) const;
+    void AddParameters( Action_ABC& action, const kernel::OrderType& order, const sword::MissionParameters& message, const kernel::Entity_ABC* entity = nullptr ) const;
     template< typename Message >
     void AddTiming( Action_ABC& action, const Message& message ) const;
-    boost::optional< const kernel::Entity_ABC& > AddTasker( Action_ABC& action, const sword::Tasker& tasker, bool isSimulation = true ) const;
-    boost::optional< const kernel::Entity_ABC& > AddTasker( Action_ABC& action, unsigned int id, const std::string& type, bool isSimulation = true ) const;
-    boost::optional< const kernel::Entity_ABC& > AddTasker( Action_ABC& action, const kernel::Entity_ABC* entity, bool isSimulation = true ) const;
+    const kernel::Entity_ABC* AddTasker( Action_ABC& action, const sword::Tasker& tasker, bool isSimulation = true ) const;
+    const kernel::Entity_ABC* AddTasker( Action_ABC& action, unsigned int id, const std::string& type, bool isSimulation = true ) const;
+    const kernel::Entity_ABC* AddTasker( Action_ABC& action, const kernel::Entity_ABC* entity, bool isSimulation = true ) const;
     //@}
 
 private:

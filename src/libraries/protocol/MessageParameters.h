@@ -11,15 +11,11 @@
 #define PROTOCOL_MESSAGE_PARAMETERS_H
 
 #include <tools/Exception.h>
+#include <boost/optional/optional_fwd.hpp>
 #include <stdint.h>
 #include <vector>
 
 #define STR( WHAT ) static_cast< std::stringstream& >( std::stringstream() << WHAT ).str()
-
-namespace boost
-{
-    template< typename T > class optional;
-}
 
 namespace sword
 {

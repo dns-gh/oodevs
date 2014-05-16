@@ -27,6 +27,7 @@
 #include <tools/Path.h>
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/optional.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>

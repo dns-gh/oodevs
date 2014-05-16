@@ -12,7 +12,6 @@
 #ifndef __PHY_MaintenanceConsign_ABC_h_
 #define __PHY_MaintenanceConsign_ABC_h_
 
-#include <boost/optional.hpp>
 #include <boost/weak_ptr.hpp>
 #include <boost/serialization/weak_ptr.hpp>
 
@@ -69,7 +68,7 @@ public:
 
     virtual void SelectNewState() = 0;
     virtual void TransferToLogisticSuperior() = 0;
-    virtual void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, boost::optional< const MIL_Agent_ABC& > destination ) = 0;
+    virtual void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, const MIL_Agent_ABC* destination ) = 0;
     virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type ) = 0;
     virtual bool SearchForUpperLevelNotFound() const = 0;
     virtual void SelectRepairTeam( const PHY_ComposanteTypePion& type ) = 0;

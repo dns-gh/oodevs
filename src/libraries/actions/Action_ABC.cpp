@@ -37,11 +37,11 @@ namespace
 Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType* type )
     : controller_( controller )
     , id_( ++ids )
+    , type_( type )
     , name_( type ? type->GetName().c_str() : "" )
-    , valid_( type != 0 )
+    , valid_( !!type )
 {
-    if( type )
-        type_ = *type;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ void Action_ABC::Rename( const QString& name )
 // Name: Action_ABC::GetType
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-const boost::optional< const kernel::OrderType& >& Action_ABC::GetType() const
+const kernel::OrderType* Action_ABC::GetType() const
 {
     return type_;
 }

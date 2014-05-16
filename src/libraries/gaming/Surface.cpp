@@ -25,6 +25,8 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
 
+#include <boost/optional.hpp>
+
 using namespace geometry;
 using namespace kernel;
 

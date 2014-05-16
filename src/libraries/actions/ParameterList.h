@@ -16,7 +16,6 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "Parameter.h"
 
-#include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace google
@@ -58,7 +57,7 @@ public:
              ParameterList( const kernel::OrderParameter& parameter,
                             const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list,
                             const actions::ParameterFactory_ABC& factory,
-                            const boost::optional< const kernel::Entity_ABC& >& entity );
+                            const kernel::Entity_ABC* entity );
     virtual ~ParameterList();
     //@}
 

@@ -79,7 +79,7 @@ EventOrderPresenter::~EventOrderPresenter()
 
 namespace
 {
-    E_MissionType ResolveMissionType( const kernel::Entity_ABC* entity, const boost::optional< const kernel::OrderType& >& type )
+    E_MissionType ResolveMissionType( const kernel::Entity_ABC* entity, const kernel::OrderType* type )
     {
         if( type )
             return type->GetType();

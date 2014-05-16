@@ -11,6 +11,8 @@
 #include "meteo/Meteo.h"
 #include "meteo/PHY_Precipitation.h"
 #include "meteo/PHY_Lighting.h"
+
+#include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;

@@ -97,7 +97,7 @@ ActionParameterFactory::~ActionParameterFactory()
 // -----------------------------------------------------------------------------
 Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter,
                                                         const sword::MissionParameter& message,
-                                                        boost::optional< const kernel::Entity_ABC& > entity ) const
+                                                        const kernel::Entity_ABC* entity ) const
 {
     if( !parameter.IsRepeated() && message.value_size() == 1 && parameter.GetType() != "list" )
         return CreateParameter( parameter, message.value( 0 ), entity, message.null_value() );
@@ -110,7 +110,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
 // -----------------------------------------------------------------------------
 Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter,
                                                         const sword::MissionParameter_Value& message,
-                                                        boost::optional< const kernel::Entity_ABC& > entity,
+                                                        const kernel::Entity_ABC* entity,
                                                         bool nullValue ) const
 {
     if( message.has_booleanvalue() )

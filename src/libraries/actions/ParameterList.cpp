@@ -44,7 +44,7 @@ namespace
                             const kernel::OrderParameter& parameter,
                             const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list,
                             const actions::ParameterFactory_ABC& factory,
-                            const boost::optional< const kernel::Entity_ABC& >& entity )
+                            const kernel::Entity_ABC* entity )
     {
         if( !parameter.IsStructure() )
             throw MASA_EXCEPTION( tools::translate( "ParameterList", "Parameter '%1' should be a structure" )
@@ -69,7 +69,7 @@ namespace
 ParameterList::ParameterList( const kernel::OrderParameter& parameter,
                               const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list,
                               const actions::ParameterFactory_ABC& factory,
-                              const boost::optional< const kernel::Entity_ABC& >& entity )
+                              const kernel::Entity_ABC* entity )
     : Parameter< QString >( parameter )
     , parameter_( parameter )
 {

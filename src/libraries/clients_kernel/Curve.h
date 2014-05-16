@@ -11,7 +11,6 @@
 #define __Curve_h_
 
 #include "Location_ABC.h"
-#include <boost/optional.hpp>
 
 namespace kernel
 {

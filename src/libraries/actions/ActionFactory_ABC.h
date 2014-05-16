@@ -15,7 +15,7 @@
 #include <tools/Resolver_ABC.h>
 #include <geometry/types.h>
 #include <boost/noncopyable.hpp>
-#include <boost/optional.hpp>
+#include <boost/optional/optional_fwd.hpp>
 
 namespace sword
 {

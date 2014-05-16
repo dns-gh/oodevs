@@ -11,6 +11,7 @@
 #define __PathfindComputer_h_
 
 #include <boost/noncopyable.hpp>
+#include <boost/optional/optional_fwd.hpp>
 
 class MIL_AgentPion;
 class DEC_PathFind_Manager;
@@ -18,11 +19,6 @@ class DEC_PathComputer;
 class MIL_Population;
 class PathRequest;
 class PHY_ComposanteTypePion;
-
-namespace boost
-{
-    template< typename T > class optional;
-}
 
 // =============================================================================
 /** @class  PathfindComputer

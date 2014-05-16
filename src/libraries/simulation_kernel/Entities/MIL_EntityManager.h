@@ -16,7 +16,7 @@
 #include "MIL_EntityManager_ABC.h"
 #include "propagation/ElevationGetter_ABC.h"
 #include <tools/Resolver.h>
-#include <boost/optional.hpp>
+#include <boost/optional/optional_fwd.hpp>
 #include <boost/shared_ptr.hpp>
 #include <map>
 

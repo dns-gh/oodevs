@@ -12,7 +12,7 @@
 
 #include "protocol/protocol.h"
 #include <boost/noncopyable.hpp>
-#include <boost/optional.hpp>
+#include <boost/optional/optional.hpp>
 
 namespace xml
 {

@@ -54,10 +54,10 @@ public:
     //@{
     virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter,
                                                      const sword::MissionParameter& message,
-                                                     boost::optional< const kernel::Entity_ABC& > entity ) const;
+                                                     const kernel::Entity_ABC* entity ) const;
     virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter,
                                                      const sword::MissionParameter_Value& message,
-                                                     boost::optional< const kernel::Entity_ABC& > entity,
+                                                     const kernel::Entity_ABC* entity,
                                                      bool nullValue ) const;
     //@}
 
