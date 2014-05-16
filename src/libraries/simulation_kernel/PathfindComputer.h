@@ -16,9 +16,13 @@ class MIL_AgentPion;
 class DEC_PathFind_Manager;
 class DEC_PathComputer;
 class MIL_Population;
-class MT_Vector2D;
 class PathRequest;
 class PHY_ComposanteTypePion;
+
+namespace boost
+{
+    template< typename T > class optional;
+}
 
 // =============================================================================
 /** @class  PathfindComputer
@@ -37,13 +41,13 @@ public:
 
     //! @name Operations
     //@{
-    uint32_t Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
-                      unsigned int ctx, unsigned int clientId, bool store );
-    uint32_t Compute( const MIL_Population& population, const sword::PathfindRequest& message,
-                      unsigned int ctx, unsigned int clientId, bool store );
-    uint32_t Compute( const std::vector< const PHY_ComposanteTypePion* >& equipments,
-                      const sword::PathfindRequest& message,
-                      unsigned int ctx, unsigned int clientId, bool store );
+    void Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
+                  unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
+    void Compute( const MIL_Population& population, const sword::PathfindRequest& message,
+                  unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
+    void Compute( const std::vector< const PHY_ComposanteTypePion* >& equipments,
+                  const sword::PathfindRequest& message,
+                  unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
     bool Destroy( uint32_t pathfind );
     void Update();
     //@}
@@ -51,8 +55,8 @@ public:
 private:
     //! @name Helpers
     //@{
-    uint32_t Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& message,
-                      unsigned int ctx, unsigned int clientId, bool store );
+    void Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& message,
+                  unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
     //@}
 
 private:
@@ -64,6 +68,5 @@ private:
     std::map< uint32_t, boost::shared_ptr< PathRequest > > results_;
     //@}
 };
-
 
 #endif // __PathfindComputer_h_

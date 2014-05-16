@@ -122,6 +122,11 @@ uint32_t MagicOrderManager::Register( const sword::SetAutomatMode& msg )
     return Register( MakeOrder( msg, &sword::MagicOrder::mutable_set_automat_mode ) );
 }
 
+void MagicOrderManager::Unregister( uint32_t id )
+{
+    orders_.erase( id );
+}
+
 void MagicOrderManager::SendStateToNewClient()
 {
     for( auto it = orders_.begin(); it != orders_.end(); ++it )

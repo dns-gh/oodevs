@@ -212,8 +212,8 @@ public:
     void OnReceiveSelectDiagnosisTeam         ( const sword::MagicAction&          message, client::MagicActionAck& ack );
     void OnReceiveSelectRepairTeam            ( const sword::MagicAction&          message, client::MagicActionAck& ack );
     void OnReceiveTransferToLogisticSuperior  ( const sword::MagicAction&          message, client::MagicActionAck& ack );
-    void OnReceivePathfindCreation            ( const sword::MagicAction&          message, sword::MagicActionAck& ack,
-                                                unsigned int nCtx, unsigned int clientId );
+    bool OnReceivePathfindCreation            ( const sword::MagicAction&          message,
+                                                unsigned int nCtx, unsigned int clientId, uint32_t magicId );
     void OnReceivePathfindDestruction         ( const sword::MagicAction&          message, sword::MagicActionAck& ack );
     void OnReceiveBurningCellRequest          ( const sword::BurningCellRequest&   message, unsigned int nCtx );
     void OnReceiveKnowledgeGroupCreation      ( const sword::MagicAction&          message, sword::MagicActionAck& ack );

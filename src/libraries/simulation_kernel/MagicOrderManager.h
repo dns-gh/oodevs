@@ -33,12 +33,13 @@ public:
 
     template< typename Archive > void serialize( Archive& file, const unsigned int version );
 
-    uint32_t Register( const sword::MagicAction& msg );
-    uint32_t Register( const sword::UnitMagicAction& msg );
-    uint32_t Register( const sword::ObjectMagicAction& msg );
-    uint32_t Register( const sword::KnowledgeMagicAction& msg );
-    uint32_t Register( const sword::SetAutomatMode& msg );
-    void     Send    ( uint32_t id, int32_t code, const std::string& msg );
+    uint32_t Register  ( const sword::MagicAction& msg );
+    uint32_t Register  ( const sword::UnitMagicAction& msg );
+    uint32_t Register  ( const sword::ObjectMagicAction& msg );
+    uint32_t Register  ( const sword::KnowledgeMagicAction& msg );
+    uint32_t Register  ( const sword::SetAutomatMode& msg );
+    void     Send      ( uint32_t id, int32_t code, const std::string& msg );
+    void     Unregister( uint32_t id );
 
     virtual void SendStateToNewClient();
 

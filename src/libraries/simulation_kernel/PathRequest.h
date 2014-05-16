@@ -10,6 +10,8 @@
 #ifndef __PathRequest_h_
 #define __PathRequest_h_
 
+#include <boost/optional.hpp>
+
 class DEC_PathComputer;
 
 namespace client
@@ -29,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& request,
-                  unsigned int nCtx, unsigned int clientId, uint32_t id, bool store );
+                  unsigned int ctx, unsigned int clientId, uint32_t id, const boost::optional< uint32_t >& magic );
     ~PathRequest();
     //@}
 
@@ -39,14 +41,18 @@ public:
     //@}
 
 private:
+    void SendComputePathfindAck( bool ok );
+    void SendPathfindCreation  ( bool ok );
+
+private:
     //! @name Member data
     //@{
     boost::shared_ptr< DEC_PathComputer > computer_;
-    const unsigned int nCtx_;
+    const unsigned int ctx_;
     const unsigned int clientId_;
     const uint32_t id_;
+    const boost::optional< uint32_t > magic_;
     const uint32_t unit_;
-    const bool store_;
     bool published_;
     //@}
 };

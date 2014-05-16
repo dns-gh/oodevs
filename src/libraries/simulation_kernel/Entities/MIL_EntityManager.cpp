@@ -2123,15 +2123,15 @@ void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message
                 protocol::Check( type, "invalid dotation type identifier" );
                 equipments.push_back( type );
             }
-            pathfindComputer_->Compute( equipments, message, nCtx, clientId, false );
+            pathfindComputer_->Compute( equipments, message, nCtx, clientId, boost::none );
         }
         else
         {
             const auto id = message.unit().id();
-            if( MIL_AgentPion* pPion = FindAgentPion( id ) )
-                pathfindComputer_->Compute( *pPion, message, nCtx, clientId, false );
-            else if( MIL_Population* pPopulation = FindPopulation( id ) )
-                pathfindComputer_->Compute( *pPopulation, message, nCtx, clientId, false );
+            if( auto pion = FindAgentPion( id ) )
+                pathfindComputer_->Compute( *pion, message, nCtx, clientId, boost::none );
+            else if( auto population = FindPopulation( id ) )
+                pathfindComputer_->Compute( *population, message, nCtx, clientId, boost::none );
             else
                 protocol::Check( false, "invalid crowd or unit identifier" );
         }
@@ -2149,8 +2149,8 @@ void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message
 // Name: MIL_EntityManager::OnReceivePathfindCreation
 // Created: LGY 2014-04-15
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceivePathfindCreation( const sword::MagicAction& message, sword::MagicActionAck& ack,
-                                                   unsigned int nCtx, unsigned int clientId )
+bool MIL_EntityManager::OnReceivePathfindCreation( const sword::MagicAction& message,
+                                                   unsigned int ctx, unsigned int clientId, uint32_t magicId )
 {
     const auto& params = message.parameters();
     protocol::CheckCount( params, 1 );
@@ -2161,7 +2161,6 @@ void MIL_EntityManager::OnReceivePathfindCreation( const sword::MagicAction& mes
     const auto& positions = request.positions();
     protocol::Check( positions.size() > 1, "must have at least two points" );
     protocol::Check( request.has_unit() || request.equipment_types().size() > 0, "must have either a unit or equipment types" );
-    uint32_t result = 0;
     if( request.equipment_types().size() )
     {
         std::vector< const PHY_ComposanteTypePion* > equipments;
@@ -2171,20 +2170,19 @@ void MIL_EntityManager::OnReceivePathfindCreation( const sword::MagicAction& mes
             protocol::Check( type, "invalid dotation type identifier" );
             equipments.push_back( type );
         }
-        result = pathfindComputer_->Compute( equipments, request, nCtx, clientId, true );
+        pathfindComputer_->Compute( equipments, request, ctx, clientId, magicId );
     }
     else
     {
         const unsigned int id = request.unit().id();
-        if( MIL_AgentPion* pPion = FindAgentPion( id ) )
-            result = pathfindComputer_->Compute( *pPion, request, nCtx, clientId, true );
-        else if( MIL_Population* pPopulation = FindPopulation( id ) )
-            result = pathfindComputer_->Compute( *pPopulation, request, nCtx, clientId, true );
+        if( auto pion = FindAgentPion( id ) )
+            pathfindComputer_->Compute( *pion, request, ctx, clientId, magicId );
+        else if( auto population = FindPopulation( id ) )
+            pathfindComputer_->Compute( *population, request, ctx, clientId, magicId );
         else
             protocol::Check( false, "invalid crowd or unit identifier" );
     }
-    if( ack.error_code() == sword::ControlAck::no_error )
-        ack.mutable_result()->add_elem()->add_value()->set_identifier( result );
+    return true;
 }
 
 // -----------------------------------------------------------------------------

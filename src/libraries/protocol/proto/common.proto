@@ -2762,13 +2762,23 @@ message ComputePathfindAck {
     }
     //! Reason for the failure of the magic action execution operation
     //! @see ErrorCode
-    required ErrorCode error_code     = 1;
-    //! Returns computed path
-    optional PathResult      path     = 2;
+    required ErrorCode  error_code  = 1;
     //! More detailed account of the returned error
-    optional string    error_msg      = 3;
-    //! The pathfind identifier
-    optional Id        id             = 4;
+    optional string     error_msg   = 2;
     //! The associated unit
-    optional Id        unit           = 5;
+    optional Id         unit        = 3;
+    //! Returns computed path
+    optional PathResult path        = 4;
+}
+
+/** @struct PathfindCreation
+    @brief Notifies of the creation of a pathfind
+*/
+message PathfindCreation {
+    //! The pathfind identifier
+    required Id         id          = 1;
+    //! The associated unit
+    required Id         unit        = 2;
+    //! Computed path
+    required PathResult path        = 3;
 }

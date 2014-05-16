@@ -162,46 +162,68 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
     MIL_AgentServer& server = MIL_AgentServer::GetWorkspace();
     MIL_EntityManager& manager = server.GetEntityManager();
     auto& magics = server.GetMagicOrderManager();
-    const auto type = msg.type();
     client::MagicActionAck ack;
     ack().set_error_code( sword::MagicActionAck::no_error );
     const auto magicId = magics.Register( msg );
     ack().set_id( magicId );
+    bool delayed = false;
     try
     {
-        if( type == sword::MagicAction::create_knowledge_group )
-            manager.OnReceiveKnowledgeGroupCreation( msg, ack() );
-        else if( type == sword::MagicAction::create_fire_order_on_location )
-            manager.OnReceiveCreateFireOrderOnLocation( msg );
-        else if( type == sword::MagicAction::change_resource_network_properties )
-            manager.OnReceiveChangeResourceLinks( msg );
-        else if( type == sword::MagicAction::change_diplomacy )
-            manager.OnReceiveChangeDiplomacy( msg, ctx );
-        else if( type == sword::MagicAction::select_new_logistic_state )
-            manager.OnReceiveSelectNewLogisticState( msg, ack );
-        else if( type == sword::MagicAction::select_maintenance_transporter )
-            manager.OnReceiveSelectMaintenanceTransporter( msg, ack );
-        else if( type == sword::MagicAction::transfer_to_logistic_superior )
-            manager.OnReceiveTransferToLogisticSuperior( msg, ack );
-        else if( type == sword::MagicAction::select_diagnosis_team )
-            manager.OnReceiveSelectDiagnosisTeam( msg, ack );
-        else if( type == sword::MagicAction::select_repair_team )
-            manager.OnReceiveSelectRepairTeam( msg, ack );
-        else if( type == sword::MagicAction::global_weather ||
-            type == sword::MagicAction::local_weather ||
-            type == sword::MagicAction::local_weather_destruction )
-            server.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ack(), ctx );
-        else if( enableTestCommands_ && type == sword::MagicAction::debug_internal )
-            OnReceiveDebugError( msg.parameters(), ack() );
-        else if( type == sword::MagicAction::pathfind_creation )
-            manager.OnReceivePathfindCreation( msg, ack(), ctx, clientId );
-        else if( type == sword::MagicAction::pathfind_destruction )
-            manager.OnReceivePathfindDestruction( msg, ack() );
+        switch( msg.type() )
+        {
+            case sword::MagicAction::create_knowledge_group:
+                manager.OnReceiveKnowledgeGroupCreation( msg, ack() );
+                break;
+            case sword::MagicAction::create_fire_order_on_location:
+                manager.OnReceiveCreateFireOrderOnLocation( msg );
+                break;
+            case sword::MagicAction::change_resource_network_properties:
+                manager.OnReceiveChangeResourceLinks( msg );
+                break;
+            case sword::MagicAction::change_diplomacy:
+                manager.OnReceiveChangeDiplomacy( msg, ctx );
+                break;
+            case sword::MagicAction::select_new_logistic_state:
+                manager.OnReceiveSelectNewLogisticState( msg, ack );
+                break;
+            case sword::MagicAction::select_maintenance_transporter:
+                manager.OnReceiveSelectMaintenanceTransporter( msg, ack );
+                break;
+            case sword::MagicAction::transfer_to_logistic_superior:
+                manager.OnReceiveTransferToLogisticSuperior( msg, ack );
+                break;
+            case sword::MagicAction::select_diagnosis_team:
+                manager.OnReceiveSelectDiagnosisTeam( msg, ack );
+                break;
+            case sword::MagicAction::select_repair_team:
+                manager.OnReceiveSelectRepairTeam( msg, ack );
+                break;
+            case sword::MagicAction::global_weather:
+            case sword::MagicAction::local_weather:
+            case sword::MagicAction::local_weather_destruction:
+                server.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ack(), ctx );
+                break;
+            case sword::MagicAction::debug_internal:
+                if( enableTestCommands_ )
+                    OnReceiveDebugError( msg.parameters(), ack() );
+                break;
+            case sword::MagicAction::pathfind_creation:
+                delayed = manager.OnReceivePathfindCreation( msg, ctx, clientId, magicId );
+                break;
+            case sword::MagicAction::pathfind_destruction:
+                manager.OnReceivePathfindDestruction( msg, ack() );
+                break;
+        }
     }
     catch( const std::exception& e )
     {
         ack().set_error_code(sword::MagicActionAck::error_invalid_parameter );
         ack().set_error_msg( tools::GetExceptionMsg( e ));
+    }
+    if( delayed )
+    {
+        magics.Unregister( magicId );
+        return;
     }
     ack.Send( Publisher(), ctx, clientId );
     magics.Send( magicId, ack().error_code(), ack().error_msg() );

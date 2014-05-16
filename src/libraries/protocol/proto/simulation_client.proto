@@ -216,6 +216,8 @@ message MagicActionAck {
         //! Operation failed because the provided action parameters
         //! were invalid
         error_invalid_parameter = 1;
+        //! Operation failed because the path could not be calculated
+        error_path_invalid      = 2;
     }
     //! Reason for the failure of the magic action execution operation
     //! @see ErrorCode
@@ -3508,6 +3510,8 @@ message SimToClient {
         optional LogSupplyRequestUpdate log_supply_request_update = 159;
         optional LogSupplyRequestDestruction
             log_supply_request_destruction = 160;
+        optional PathfindCreation pathfind_creation = 161;
+        optional Id               pathfind_destruction = 162;
     }
     /** @property context
         @brief Identifies the request matching the response
