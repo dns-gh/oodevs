@@ -189,8 +189,11 @@ func (MaintenanceDeleteChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *s
 	return true
 }
 
-func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, offset int, breakdown BreakdownType, checkers ...MaintenanceChecker) {
-	client.Pause()
+func checkMaintenance(c *C, admin, client *swapi.Client, unit *swapi.Unit,
+	offset int, breakdown BreakdownType, checkers ...MaintenanceChecker) {
+
+	err := admin.Pause()
+	c.Assert(err, IsNil)
 	check := MaintenanceCheckContext{
 		data:      client.Model.GetData(),
 		unitId:    unit.Id,
@@ -226,9 +229,10 @@ func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, offset int, 
 		return false
 	})
 	defer client.Unregister(ctx)
-	err := client.ChangeEquipmentState(unit.Id, makeBreakdown(c, eqid, eq, 1, breakdown))
+	err = client.ChangeEquipmentState(unit.Id, makeBreakdown(c, eqid, eq, 1, breakdown))
 	c.Assert(err, IsNil)
-	client.Resume(0)
+	err = admin.Resume(0)
+	c.Assert(err, IsNil)
 	select {
 	case <-quit:
 	case <-time.After(1 * time.Minute):
@@ -244,13 +248,15 @@ func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, offset int, 
 	c.Assert(idx, Equals, len(checkers))
 }
 
-func checkMaintenanceUpdates(c *C, client *swapi.Client, unit *swapi.Unit, breakdown BreakdownType, updates []MaintenanceUpdateChecker) {
+func checkMaintenanceUpdates(c *C, admin, client *swapi.Client, unit *swapi.Unit,
+	breakdown BreakdownType, updates []MaintenanceUpdateChecker) {
+
 	checkers := []MaintenanceChecker{MaintenanceCreateChecker{}}
 	for i := range updates {
 		checkers = append(checkers, &updates[i])
 	}
 	checkers = append(checkers, MaintenanceDeleteChecker{})
-	checkMaintenance(c, client, unit, -1, breakdown, checkers...)
+	checkMaintenance(c, admin, client, unit, -1, breakdown, checkers...)
 }
 
 func setParts(client *swapi.Client, provider *sword.Tasker, qty int32, resources ...ResourceType) error {
@@ -273,13 +279,16 @@ func setParts(client *swapi.Client, provider *sword.Tasker, qty int32, resources
 func (s *TestSuite) TestMaintenanceHandlingsBase(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "Maintenance Automat 1").Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "Maintenance BLD").Id)
 	blt := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "Maintenance BLT").Id)
 	zero := &sword.Tasker{}
-	checkMaintenanceUpdates(c, client, unit, electronic_1, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, admin, client, unit, electronic_1, []MaintenanceUpdateChecker{
 		{"moving_to_supply", tc2},
 		{"diagnosing", tc2},
 		{"waiting_for_repairer", tc2},
@@ -287,7 +296,7 @@ func (s *TestSuite) TestMaintenanceHandlingsBase(c *C) {
 		{"moving_back", tc2},
 		{"finished", zero},
 	})
-	checkMaintenanceUpdates(c, client, unit, mobility_1, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, admin, client, unit, mobility_1, []MaintenanceUpdateChecker{
 		{"transporter_moving_to_supply", tc2},
 		{"transporter_loading", tc2},
 		{"transporter_moving_back", tc2},
@@ -298,7 +307,7 @@ func (s *TestSuite) TestMaintenanceHandlingsBase(c *C) {
 		{"moving_back", tc2},
 		{"finished", zero},
 	})
-	checkMaintenanceUpdates(c, client, unit, electronic_2, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, admin, client, unit, electronic_2, []MaintenanceUpdateChecker{
 		{"moving_to_supply", tc2},
 		{"diagnosing", tc2},
 		{"searching_upper_levels", tc2},
@@ -308,7 +317,7 @@ func (s *TestSuite) TestMaintenanceHandlingsBase(c *C) {
 		{"moving_back", bld},
 		{"finished", zero},
 	})
-	checkMaintenanceUpdates(c, client, unit, mobility_2, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, admin, client, unit, mobility_2, []MaintenanceUpdateChecker{
 		{"transporter_moving_to_supply", tc2},
 		{"transporter_loading", tc2},
 		{"transporter_moving_back", tc2},
@@ -325,7 +334,7 @@ func (s *TestSuite) TestMaintenanceHandlingsBase(c *C) {
 		{"moving_back", bld},
 		{"finished", zero},
 	})
-	checkMaintenanceUpdates(c, client, unit, electronic_3, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, admin, client, unit, electronic_3, []MaintenanceUpdateChecker{
 		{"moving_to_supply", tc2},
 		{"diagnosing", tc2},
 		{"searching_upper_levels", tc2},
@@ -337,7 +346,7 @@ func (s *TestSuite) TestMaintenanceHandlingsBase(c *C) {
 		{"moving_back", blt},
 		{"finished", zero},
 	})
-	checkMaintenanceUpdates(c, client, unit, mobility_3, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, admin, client, unit, mobility_3, []MaintenanceUpdateChecker{
 		{"transporter_moving_to_supply", tc2},
 		{"transporter_loading", tc2},
 		{"transporter_moving_back", tc2},
@@ -380,13 +389,16 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "Maintenance Automat 1").Id)
 	zero := &sword.Tasker{}
 	err := setParts(client, tc2, 0, electrogen_1)
 	c.Assert(err, IsNil)
-	checkMaintenance(c, client, unit, 0, electronic_1,
+	checkMaintenance(c, admin, client, unit, 0, electronic_1,
 		MaintenanceCreateChecker{},
 		checkUpdate("moving_to_supply", tc2),
 		checkUpdate("diagnosing", tc2),
@@ -402,7 +414,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 	)
 	err = setParts(client, tc2, 0, gyroscope_1)
 	c.Assert(err, IsNil)
-	checkMaintenance(c, client, unit, 0, mobility_1,
+	checkMaintenance(c, admin, client, unit, 0, mobility_1,
 		MaintenanceCreateChecker{},
 		checkUpdate("transporter_moving_to_supply", tc2),
 		checkUpdate("transporter_loading", tc2),
@@ -436,6 +448,9 @@ func SetManualMaintenance(c *C, client *swapi.Client, id uint32) {
 func (s *TestSuite) TestMaintenanceHandlingsWithAutomaticSelection(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
@@ -447,7 +462,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithAutomaticSelection(c *C) {
 	SetManualMaintenance(c, client, tc2Id)
 	SetManualMaintenance(c, client, bldId)
 
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
@@ -489,6 +504,9 @@ func (s *TestSuite) TestMaintenanceHandlingsWithAutomaticSelection(c *C) {
 func (s *TestSuite) TestMaintenanceHandlingsWithManualSelection(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
@@ -503,7 +521,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualSelection(c *C) {
 	SetManualMaintenance(c, client, tc2Id)
 	SetManualMaintenance(c, client, bldId)
 
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
@@ -539,8 +557,11 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualSelection(c *C) {
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithManualTransporterMultipleSelection(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
@@ -548,7 +569,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualTransporterMultipleSelecti
 	const TowTruck = 4
 	SetManualMaintenance(c, client, tc2Id)
 	handlingId := uint32(0)
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
@@ -556,7 +577,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualTransporterMultipleSelecti
 				return nil
 			}),
 	)
-	err := client.Pause()
+	err := admin.Pause()
 	c.Assert(err, IsNil)
 	err = client.SelectMaintenanceTransporter(handlingId, TowTruck)
 	c.Assert(err, IsNil)
@@ -565,8 +586,11 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualTransporterMultipleSelecti
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithManualDiagnosisTeamMultipleSelection(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
@@ -575,7 +599,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualDiagnosisTeamMultipleSelec
 	const gyroscrew_1 = 6
 	SetManualMaintenance(c, client, tc2Id)
 	handlingId := uint32(0)
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
@@ -591,7 +615,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualDiagnosisTeamMultipleSelec
 				return nil
 			}),
 	)
-	err := client.Pause()
+	err := admin.Pause()
 	c.Assert(err, IsNil)
 	err = client.SelectDiagnosisTeam(handlingId, gyroscrew_1)
 	c.Assert(err, IsNil)
@@ -600,8 +624,11 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualDiagnosisTeamMultipleSelec
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithManualRepairerMultipleSelection(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
@@ -614,7 +641,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualRepairerMultipleSelection(
 	SetManualMaintenance(c, client, tc2Id)
 	SetManualMaintenance(c, client, bldId)
 	handlingId := uint32(0)
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
@@ -644,7 +671,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualRepairerMultipleSelection(
 				return nil
 			}),
 	)
-	err := client.Pause()
+	err := admin.Pause()
 	c.Assert(err, IsNil)
 	err = client.SelectRepairTeam(handlingId, gyroscrew_2)
 	c.Assert(err, IsNil)
@@ -653,8 +680,11 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualRepairerMultipleSelection(
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
@@ -680,7 +710,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 
 	SetManualMaintenance(c, client, tc2Id)
 
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
@@ -707,7 +737,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 
 	SetManualMaintenance(c, client, tc2Id)
 
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
@@ -738,7 +768,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 
 	SetManualMaintenance(c, client, bldId)
 
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdate("transporter_moving_to_supply", tc2),
 		checkUpdate("transporter_loading", tc2),
@@ -769,8 +799,11 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 }
 
 func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForTransporting(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
@@ -780,7 +813,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForTransporting(c *
 
 	SetManualMaintenance(c, client, tc2Id)
 
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
@@ -810,8 +843,11 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForTransporting(c *
 }
 
 func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForDiagnosing(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
@@ -821,7 +857,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForDiagnosing(c *C)
 
 	SetManualMaintenance(c, client, tc2Id)
 
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
@@ -852,8 +888,11 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForDiagnosing(c *C)
 }
 
 func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForRepair(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
@@ -867,7 +906,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForRepair(c *C) {
 	SetManualMaintenance(c, client, tc2Id)
 	SetManualMaintenance(c, client, bldId)
 
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
@@ -908,8 +947,11 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForRepair(c *C) {
 }
 
 func (s *TestSuite) TestMaintenanceSuperiorUnableToRepair(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
@@ -927,7 +969,7 @@ func (s *TestSuite) TestMaintenanceSuperiorUnableToRepair(c *C) {
 	reporter := newReporter(c, unit.Id, phydb, "Unable to repair")
 	reporter.Start(client.Model)
 
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
@@ -951,8 +993,11 @@ func (s *TestSuite) TestMaintenanceSuperiorUnableToRepair(c *C) {
 }
 
 func (s *TestSuite) TestMaintenanceAbortsWhenCrewDies(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
@@ -961,7 +1006,7 @@ func (s *TestSuite) TestMaintenanceAbortsWhenCrewDies(c *C) {
 
 	SetManualMaintenance(c, client, tc2Id)
 
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {

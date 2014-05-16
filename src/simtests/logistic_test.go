@@ -383,13 +383,16 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 func (s *TestSuite) TestLogisticUpdates(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	SetManualMaintenance(c, client, tc2Id)
 	handlingId := uint32(0)
-	checkMaintenance(c, client, unit, 0, mobility_2,
+	checkMaintenance(c, admin, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {

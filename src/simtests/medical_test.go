@@ -132,10 +132,11 @@ func (MedicalDeleteChecker) Check(c *C, ctx *MedicalCheckContext, msg *sword.Sim
 	return true
 }
 
-func checkMedical(c *C, client *swapi.Client, unit *swapi.Unit, offset int,
+func checkMedical(c *C, admin, client *swapi.Client, unit *swapi.Unit, offset int,
 	rank sword.EnumHumanRank, state int32, mental bool, checkers ...MedicalChecker) {
 
-	client.Pause()
+	err := admin.Pause()
+	c.Assert(err, IsNil)
 	check := MedicalCheckContext{
 		data:         client.Model.GetData(),
 		unitId:       unit.Id,
@@ -183,9 +184,10 @@ func checkMedical(c *C, client *swapi.Client, unit *swapi.Unit, offset int,
 		Psyop:        mental,
 		Contaminated: check.contaminated,
 	}
-	err := client.ChangeHumanState(unit.Id, []*swapi.Human{&human})
+	err = client.ChangeHumanState(unit.Id, []*swapi.Human{&human})
 	c.Assert(err, IsNil)
-	client.Resume(0)
+	err = admin.Resume(0)
+	c.Assert(err, IsNil)
 	select {
 	case <-quit:
 	case <-time.After(1 * time.Minute):
@@ -204,6 +206,9 @@ func checkMedical(c *C, client *swapi.Client, unit *swapi.Unit, offset int,
 func (s *TestSuite) TestMedicalHandlings(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+	defer admin.Close()
+
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Medical Mobile Infantry")
 	tc2 := swapi.MakeAutomatTasker(getSomeUnitByName(c, d, "Medical Log Unit 1").Id)
@@ -223,7 +228,7 @@ func (s *TestSuite) TestMedicalHandlings(c *C) {
 			nil))
 	c.Assert(err, IsNil)
 	// physical injury
-	checkMedical(c, client, unit, 0, sword.EnumHumanRank_trooper, eInjured, false,
+	checkMedical(c, admin, client, unit, 0, sword.EnumHumanRank_trooper, eInjured, false,
 		MedicalCreateChecker{},
 		&MedicalUpdateChecker{"waiting_for_evacuation", tc2},
 		&MedicalUpdateChecker{"evacuation_ambulance_moving_in", tc2},
@@ -245,7 +250,7 @@ func (s *TestSuite) TestMedicalHandlings(c *C) {
 		// no deleter because a physical wound never heals
 	)
 	// physical and mental injury
-	checkMedical(c, client, unit, 0, sword.EnumHumanRank_sub_officer, eInjured, true,
+	checkMedical(c, admin, client, unit, 0, sword.EnumHumanRank_sub_officer, eInjured, true,
 		MedicalCreateChecker{},
 		&MedicalUpdateChecker{"waiting_for_evacuation", tc2},
 		&MedicalUpdateChecker{"evacuation_ambulance_moving_in", tc2},
@@ -270,7 +275,7 @@ func (s *TestSuite) TestMedicalHandlings(c *C) {
 		// no deleter because a physical wound never heals
 	)
 	// mental injury
-	checkMedical(c, client, unit, 0, sword.EnumHumanRank_officer, eHealthy, true,
+	checkMedical(c, admin, client, unit, 0, sword.EnumHumanRank_officer, eHealthy, true,
 		MedicalCreateChecker{},
 		&MedicalUpdateChecker{"waiting_for_evacuation", tc2},
 		&MedicalUpdateChecker{"evacuation_ambulance_moving_in", tc2},
