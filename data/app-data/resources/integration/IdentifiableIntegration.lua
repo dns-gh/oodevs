@@ -1,7 +1,10 @@
--- getAgentIdentificationLevel
--- @param knowledge of a unit
--- @author LMT -- modif MIA
--- @release 2010-02-03
+--- Returns the identification level of the given agent knowledge by this entity's knowledge group :
+-- <ul> <li> 0 if the agent knowledge is not detected at all <li>
+-- <li> 30 if the agent knowledge is detected </li>
+-- <li> 60 if the agent knowledge is recognized </li>
+-- <li> 100 if the agent knowledge is identified </li> </ul>
+-- @param unit DirectIA agent knowledge
+-- @return Float between 0 and 100
 integration.getAgentIdentificationLevel = function( unit )
     local identificationLevel = DEC_ConnaissanceAgent_NiveauPerceptionMax( unit.source )
     if identificationLevel == 1 then return 30 -- The unit is detected
@@ -11,18 +14,21 @@ integration.getAgentIdentificationLevel = function( unit )
     end
 end
 
---- Observe a knowledge
--- @param position of a knowledge
--- @author LMT
--- @release 2010-02-04
+--- Orientates this entity's sensors towards the objective in order to identify it.
+-- This method does nothing if the objective is tactically destroyed.
+-- This method can only be called by an agent.
+-- @param objective DirectIA agent knowledge defining a "getPosition" method returning a simulation position.
 integration.identifyIt = function( objective )
-    if not DEC_ConnaissanceAgent_EstDetruitTactique(objective.source) then
-    -- reportFunction(eRC_VisionRadarVerrouilleeSur ) @TODO GGE a deplacer pour le gerer sans boucler
-        if masalife.brain.core.class.isOfType( objective, integration.ontology.types.direction ) then
-            DEC_Perception_VisionVerrouilleeSurDirection( objective.source )
-        else
-            DEC_Perception_VisionVerrouilleeSurPointPtr( objective:getPosition() )
-            DEC_Perception_ActiverRadarSurPointPtr( eRadarType_Radar, objective:getPosition() )
-        end
+    if not DEC_ConnaissanceAgent_EstDetruitTactique( objective.source ) then
+        DEC_Perception_VisionVerrouilleeSurPointPtr( objective:getPosition() )
+        DEC_Perception_ActiverRadarSurPointPtr( eRadarType_Radar, objective:getPosition() )
     end
+end
+
+--- Returns true if the given target is within identification range of this entity, false otherwise.
+-- This method can only be called by an agent.
+-- @param target Knowledge defining a "getPosition" method returning a simulation position
+-- @return Boolean
+integration.isInIdentificationRange = function( target )
+    return integration.distance( meKnowledge, target ) < ( DEC_Reconnoissance_MajorComponentMinDistance() * 0.9 )
 end
