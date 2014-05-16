@@ -46,7 +46,7 @@
         <go_build/>
     </target>
 
-    <condition property="gocheck.filter" value="-gocheck.f ${gocheck.f}" else="">
+    <condition property="gocheck.filter" value="-f=${gocheck.f}" else="">
         <isset property="gocheck.f"/>
     </condition>
     <condition property="go.race" value="-race" else="">
@@ -64,27 +64,26 @@
                 <arg value="-i"/>
                 <arg value="${go.race}"/>
             </go>
-            <go cmd="test">
+            <exec_goenv name="gotester" executable="${bin.dir}/gotester">
                 <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
-                <!-- We currently need this to avoid port collisions in tests
-                     belonging to the same module. Note that it does not prevent
-                     tests belonging to different modules to run concurrently. We
-                     need a port allocation solution instead.
-                -->
+                <arg value="${gocheck.filter}"/>
+                <arg value="-port=${test.port}"/>
+                <arg value="-j=${test.cpu}"/>
+                <arg value="${root.dir}"/>
+                <arg value="--"/>
+                <arg value="./src/..."/>
                 <arg value="${go.race}"/>
                 <arg value="-test.parallel=1"/>
                 <arg value="-test.cpu=${test.cpu}"/>
                 <arg value="-test.timeout=${test.timeout}"/>
                 <arg value="-test.v"/>
                 <arg value="-gocheck.v"/>
-                <arg line="${gocheck.filter}"/>
                 <arg value="-show-log=${showlog}"/>
                 <arg value="--application=${application}"/>
                 <arg value="--run-dir=${run.dir}"/>
                 <arg value="--root-dir=${data.dir}"/>
-                <arg value="--test-port=${test.port}"/>
                 <args/>
-            </go>
+            </exec_goenv>
         </sequential>
     </macrodef>
 

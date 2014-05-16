@@ -1,0 +1,50 @@
+2014/04/30 13:56:33 config: application D:\jenkins\workspace\gosword\label\gosword\platform\vc100_x64\master\run\vc100_x64/simulation_app.exe
+2014/04/30 13:56:33 config: root-dir D:\jenkins\workspace\gosword\label\gosword\platform\vc100_x64\master\data
+2014/04/30 13:56:33 config: run-dir D:\jenkins\workspace\gosword\label\gosword\platform\vc100_x64\master\run\vc100_x64
+2014/04/30 13:56:33 config: test-port 33300
+2014/04/30 13:56:33 config: platform vc100_x64
+2014/04/30 13:56:33 config: cpu 4
+PASS: knowledge_test.go:148: TestSuite.TestAddKnowledgeInKnowledgeGroup 8.933s
+PASS: object_test.go:322: TestSuite.TestAltitudeAttribute   5.836s
+PASS: unitmagicaction_test.go:1005: TestSuite.TestAutomatChangeSuperior 6.294s
+PASS: fragorder_test.go:21: TestSuite.TestAutomatFragOrder  5.747s
+PASS: fragorder_test.go:59: TestSuite.TestCrowdFragOrder    5.584s
+PASS: crowd_test.go:424: TestSuite.TestCrowdInCheckpoint    17.205s
+----------------------------------------------------------------------
+FAIL: startup_test.go:42: TestSuite.TestDispatcherMisconfiguration
+startup_test.go:66:
+    c.Assert(simLog, Matches, expected)
+... value string = "" +
+...     "[2014-04-30 14:03:57] <Simulation> <info> ----------------------------------------------------------------\r\n" +
+...     "[2014-04-30 14:03:57] <Simulation> <info> Sword Simulation - Version 5.4.0.25417 - Release\r\n" +
+...     "[2014-04-30 14:03:57] <Simulation> <info> Starting simulation - 2014-Apr-30 14:03:57\r\n" +
+...     "[2014-04-30 14:03:57] <Simulation> <info> ----------------------------------------------------------------\r\n" +
+...     "[2014-04-30 14:03:57] <Simulation> <info> Command line: D:\\jenkins\\workspace\\gosword\\label\\gosword\\platform\\vc100_x64\\master\\run\\vc100_x64/simulation_app.exe --root-dir=D:\\jenkins\\workspace\\gosword\\label\\gosword\\platform\\vc100_x64\\master\\data --data-dir=D:\\jenkins\\workspace\\gosword\\label\\gosword\\platform\\vc100_x64\\master\\data --exercise=crossroad-small-empty --session=20140430T140356-269553427 --verbose --dispatcher-address=localhost:33305 --simulation-address=localhost:33306 --debug-dir=D:\\jenkins\\workspace\\gosword\\label\\gosword\\platform\\vc100_x64\\master\\data\\exercises\\crossroad-small-empty\\sessions\\20140430T140356-269553427\\debug \r\n" +
+...     "[2014-04-30 14:03:57] <Simulation> <info> Session: \"D:\\jenkins\\workspace\\gosword\\label\\gosword\\platform\\vc100_x64\\master\\data\\exercises\\crossroad-small-empty\\sessions\\20140430T140356-269553427\"\r\n" +
+...     "[2014-04-30 14:03:57] <Simulation> <info> Starting simulation GUI\r\n" +
+...     "[2014-04-30 14:03:57] <Simulation> <info> Starting embedded dispatcher\r\n" +
+...     "[2014-04-30 14:03:57] <Simulation> <info> Initializing terrain\r\n" +
+... regex string = "(?s).*<(fatalERR|functERR)> dispatcher: failed to create dispatcher.*"
+----------------------------------------------------------------------
+PASS: networking_test.go:24: TestSuite.TestEcho 5.270s
+SKIP: maintenance_test.go:378: TestSuite.TestMaintenanceHandlingsWithMissingParts (unreliable, see http://jira.masagroup.net/browse/SWBUG-11961)
+PASS: maintenance_test.go:910: TestSuite.TestMaintenanceSuperiorUnableToRepair  5.972s
+PASS: movement_test.go:113: TestSuite.TestTerrainSpeedModulation    5.064s
+SKIP: object_test.go:233: TestSuite.TestTimeLimitAttribute (unreliable, see http://jira.masagroup.net/browse/SWBUG-12044)
+PASS: object_test.go:503: TestSuite.TestTrafficabilityAttribute 5.757s
+PASS: queries_test.go:38: TestSuite.TestIsSomethingInProfile    0.001s
+PASS: queries_test.go:224: TestSuite.TestIsUrbanInProfile   0.000s
+PASS: adn_test.go:42: TestSuite.TestReports 0.176s
+FAIL    swtest [build failed]
+PASS: session_test.go:43: TestSuite.TestCreateDefaultSession    0.004s
+PASS: process_test.go:69: TestSuite.TestSuccess 4.742s
+----------------------------------------------------------------------
+FAIL: process_test.go:169: TestSuite.TestTimeOptions
+process_test.go:204:
+    c.Assert(dmps, HasLen, 0)
+... obtained []string = []string{"D:\\jenkins\\workspace\\gosword\\label\\gosword\\platform\\vc100_x64\\master\\data\\exercises\\crossroad-small-empty\\sessions\\20140430T135654-466500782\\debug\\SWORD-crash-20140430-135655-614480-617172.dmp"}
+... n int = 0
+----------------------------------------------------------------------
+PASS: session_test.go:124: TestSuite.TestWriteNewSessionFile    0.010s
+PASS: session_test.go:114: TestSuite.TestWriteSessionFile   0.009s
+PASS: testproto_test.go:79: TestSuite.TestOptionalNewEnumValue  0.000s
