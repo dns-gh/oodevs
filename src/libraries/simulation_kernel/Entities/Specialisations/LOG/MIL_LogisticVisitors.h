@@ -500,33 +500,6 @@ struct SupplyDotationQuantity
     double quantity_;
 };
 
-typedef std::vector< SupplyDotationQuantity > T_PionDotationVector;
-
-class DotationVisitor : private boost::noncopyable
-{
-public:
-    DotationVisitor( T_PionDotationVector& pionDotations, const PHY_DotationCategory* category )
-        : pionDotations_( pionDotations )
-        , category_( category )
-    {
-        // NOTHING
-    }
-
-    ~DotationVisitor()
-    {
-        // NOTHING
-    }
-
-    void VisitDotation( const MIL_AgentPion& pion, PHY_Dotation& dotation ) const
-    {
-        if( &dotation.GetCategory() == category_ )
-            pionDotations_.push_back( SupplyDotationQuantity( &pion, &dotation ) );
-    }
-private:
-    T_PionDotationVector& pionDotations_;
-    const PHY_DotationCategory* category_;
-};
-
 struct SupplyStockQuantity
 {
     SupplyStockQuantity( MIL_AgentPion* pion, PHY_DotationStock* stock )

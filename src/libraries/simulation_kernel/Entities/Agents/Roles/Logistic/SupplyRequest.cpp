@@ -69,7 +69,7 @@ SupplyRequest::SupplyRequest( const PHY_DotationCategory& dotationCategory, unsi
     , provider_           ( 0 )
     , needNetworkUpdate_  ( true )
 {
-    SendCreation();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

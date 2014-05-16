@@ -694,14 +694,17 @@ bool MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameter
 // Name: MIL_AutomateLOG::CreateDotationRequest
 // Created: LGY 2014-05-05
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::CreateDotationRequest( const PHY_DotationCategory& dotation, double quantity, const MIL_Automate& recipient,
-                                             unsigned int requester )
+boost::optional< unsigned int > MIL_AutomateLOG::CreateDotationRequest( const PHY_DotationCategory& dotationCategory, double quantity, const MIL_Automate& recipient,
+                                                                        unsigned int requester )
 {
-    T_PionDotationVector pionDotations;
-    DotationVisitor visitor( pionDotations, &dotation );
-    recipient.Apply2( ( boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) > )
-        boost::bind( &DotationVisitor::VisitDotation, &visitor, _1, _2 ) );
-    auto request = boost::make_shared< logistic::SupplyRequest >( dotation, recipient.GetID(), *this, requester );
+    std::vector< SupplyDotationQuantity > pionDotations;
+    recipient.Apply2( (boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) >)
+        [&]( const MIL_AgentPion& pion, PHY_Dotation& dotation ) {
+            if( &dotation.GetCategory() == &dotationCategory )
+                pionDotations.push_back( SupplyDotationQuantity( &pion, &dotation ) );
+    } );
+
+    auto request = boost::make_shared< logistic::SupplyRequest >( dotationCategory, recipient.GetID(), *this, requester );
     for( auto it = pionDotations.begin(); it != pionDotations.end(); ++it )
     {
         auto& dotation = *it->dotation_;
@@ -710,16 +713,23 @@ void MIL_AutomateLOG::CreateDotationRequest( const PHY_DotationCategory& dotatio
                 *it->pion_, std::min( quantity, dotation.GetCapacity() ) );
     }
     if( request->GetRequestedQuantity() > 0 )
+    {
+        request->SendCreation();
         magicSupplyRequests_.push_back( request );
+        return request->GetId();
+    }
+    return boost::none;
 }
 
 namespace
 {
     struct SupplyStockRequestVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
     {
-        SupplyStockRequestVisitor( const PHY_DotationCategory& dotation, std::vector< SupplyStockQuantity >& stocks )
+        SupplyStockRequestVisitor( const PHY_DotationCategory& dotation,
+                                   logistic::SupplyRequest& request, double quantity )
             : dotation_( dotation )
-            , stocks_  ( stocks )
+            , request_ ( request )
+            , quantity_( quantity )
         {}
 
         virtual void Visit( const MIL_AgentPion& pion )
@@ -728,10 +738,12 @@ namespace
             if( PHY_RoleInterface_Supply* role = agent->RetrieveRole< PHY_RoleInterface_Supply >() )
                 if( PHY_DotationStock* stock = role->GetStock( dotation_ ) )
                     if( stock->NeedSupply() )
-                        stocks_.push_back( SupplyStockQuantity( agent, stock ) );
+                        request_.AddResource( boost::make_shared< logistic::SupplyResourceStock >( *stock ),
+                            *agent, std::min( quantity_, stock->GetCapacity() ) );
         }
         const PHY_DotationCategory& dotation_;
-        std::vector< SupplyStockQuantity >& stocks_;
+        logistic::SupplyRequest& request_;
+        double quantity_;
     };
 }
 
@@ -739,21 +751,19 @@ namespace
 // Name: MIL_AutomateLOG::CreateStockRequest
 // Created: LGY 2014-05-05
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::CreateStockRequest( const PHY_DotationCategory& dotation, double quantity, const MIL_AutomateLOG& recipient,
-                                          unsigned int requester )
+boost::optional< unsigned int > MIL_AutomateLOG::CreateStockRequest( const PHY_DotationCategory& dotation, double quantity, const MIL_AutomateLOG& recipient,
+                                                                     unsigned int requester )
 {
-    std::vector< SupplyStockQuantity > stocks;
-    SupplyStockRequestVisitor visitor( dotation, stocks );
+    auto request = boost::make_shared< logistic::SupplyRequest >( dotation, recipient.GetLogisticId(), *this, requester );
+    SupplyStockRequestVisitor visitor( dotation, *request, quantity );
     recipient.Visit( visitor );
-    if( !stocks.empty() )
+    if( request->GetRequestedQuantity() > 0 )
     {
-        auto request = boost::make_shared< logistic::SupplyRequest >( dotation, recipient.GetLogisticId(), *this, requester );
-        for( auto it = stocks.begin(); it != stocks.end(); ++it )
-            request->AddResource( boost::make_shared< logistic::SupplyResourceStock >( *it->stock_ ),
-                *it->pion_, std::min( quantity, it->stock_->GetCapacity() ) );
-        if( request->GetRequestedQuantity() > 0 )
-            magicSupplyRequests_.push_back( request );
+        request->SendCreation();
+        magicSupplyRequests_.push_back( request );
+        return request->GetId();
     }
+    return boost::none;
 }
 
 // -----------------------------------------------------------------------------

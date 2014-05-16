@@ -1109,10 +1109,10 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             ProcessLogSupplyPullFlow( message, ack() );
             break;
         case UnitMagicAction::create_basic_load_supply_request:
-            ProcessSupplyCreateBasicLoadRequest( message );
+            ProcessSupplyCreateBasicLoadRequest( message, ack() );
             break;
         case UnitMagicAction::create_stock_supply_request:
-            ProcessSupplyCreateStockRequest( message );
+            ProcessSupplyCreateStockRequest( message, ack() );
             break;
         case UnitMagicAction::log_supply_change_quotas:
             ProcessLogSupplyChangeQuotas( message );
@@ -1959,7 +1959,7 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
 // Name: MIL_EntityManager::ProcessSupplyCreateBasicLoadRequest
 // Created: LGY 2014-05-05
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessSupplyCreateBasicLoadRequest( const UnitMagicAction& message )
+void MIL_EntityManager::ProcessSupplyCreateBasicLoadRequest( const UnitMagicAction& message, sword::UnitMagicActionAck& ack )
 {
     const auto tasker = protocol::TryGetTasker( message.tasker() );
     if( !tasker )
@@ -1983,7 +1983,9 @@ void MIL_EntityManager::ProcessSupplyCreateBasicLoadRequest( const UnitMagicActi
         const auto quantity = protocol::GetQuantity( parameters, 2, i, 1 );
         const auto* dotation =  PHY_DotationType::FindDotationCategory( id );
         protocol::Check( dotation, "must be a valid dotation type identifier", 2, i, 0 );
-        supplier->CreateDotationRequest( *dotation, quantity, *recipient, *tasker );
+        const auto request = supplier->CreateDotationRequest( *dotation, quantity, *recipient, *tasker );
+        if( request )
+            ack.mutable_result()->add_elem()->add_value()->set_identifier( *request );
     }
 }
 
@@ -1991,7 +1993,7 @@ void MIL_EntityManager::ProcessSupplyCreateBasicLoadRequest( const UnitMagicActi
 // Name: MIL_EntityManager::ProcessSupplyCreateStockRequest
 // Created: LGY 2014-05-05
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessSupplyCreateStockRequest( const UnitMagicAction& message )
+void MIL_EntityManager::ProcessSupplyCreateStockRequest( const UnitMagicAction& message, sword::UnitMagicActionAck& ack )
 {
     const auto tasker = protocol::TryGetTasker( message.tasker() );
     if( !tasker )
@@ -2015,7 +2017,9 @@ void MIL_EntityManager::ProcessSupplyCreateStockRequest( const UnitMagicAction& 
         const auto quantity = protocol::GetQuantity( parameters, 2, i, 1 );
         const auto* dotation =  PHY_DotationType::FindDotationCategory( id );
         protocol::Check( dotation, "must be a valid dotation type identifier", 2, i, 0 );
-        supplier->CreateStockRequest( *dotation, quantity, *recipient, *tasker );
+        const auto request = supplier->CreateStockRequest( *dotation, quantity, *recipient, *tasker );
+        if( request )
+            ack.mutable_result()->add_elem()->add_value()->set_identifier( *request );
     }
 }
 

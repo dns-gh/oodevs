@@ -102,10 +102,12 @@ void SupplyDotationManualRequestBuilder::CreateRequest( MIL_Automate& recipient,
         return;
 
     double rTotalValue = resource.quantity();
-
-    T_PionDotationVector pionDotations;
-    DotationVisitor visitor( pionDotations, pDotationCategory );
-    recipient.Apply2( ( boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) > )boost::bind( &DotationVisitor::VisitDotation, &visitor, _1, _2 ) );
+    std::vector< SupplyDotationQuantity > pionDotations;
+    recipient.Apply2( (boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) >)
+        [&]( const MIL_AgentPion& pion, PHY_Dotation& dotation ) {
+            if( &dotation.GetCategory() == pDotationCategory )
+                pionDotations.push_back( SupplyDotationQuantity( &pion, &dotation ) );
+    } );
 
     for( auto it = pionDotations.begin(); it != pionDotations.end() && rTotalValue > 0.; ++it )
     {

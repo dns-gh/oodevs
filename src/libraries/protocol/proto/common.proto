@@ -2090,7 +2090,7 @@ message UnitMagicAction {
         //! parameters[0], BooleanValue: if true, supply is in manual mode,
         //!   otherwise supply is in automated mode.
         log_supply_set_manual             = 61;
-        //! Create basic load supply request
+        //! Create a basic load supply request
         //! The tasker is set to target logistic base or automat.
         //! parameters[0], Identifier: the supplier identifier.
         //!   The supplier should be a logistic base.
@@ -2102,19 +2102,21 @@ message UnitMagicAction {
         //!   a parameter value list.
         //! value { list { identifier: 1 }
         //!         list { quantity: 10  } }
+        //! result[0+], Identifier: created requests identifier
         create_basic_load_supply_request  = 62;
         //! Create stock supply request
         //! The tasker is set to target logistic base or automat.
         //! parameters[0], Identifier: the supplier identifier.
-        //!   The supplier should be a logistic base.
+        //! The supplier should be a logistic base.
         //! parameters[1], Identifier: the recipient identifier.
-        //!   The recipient should be a logistic base.
+        //! The recipient should be a logistic base.
         //! parameters[2], Type of supplies
-        //!   List of Identifier: DotationType, Quantity: quantity
+        //! List of Identifier: DotationType, Quantity: quantity
         //! Each parameter must be either a null_value to be omitted or
         //!   a parameter value list.
         //! value { list { identifier: 1 }
         //!         list { quantity: 10  } }
+        //! result[0+], Identifier: created requests identifier
         create_stock_supply_request       = 63;
     }
     //! The tasker @todo Explain what is a "tasker"

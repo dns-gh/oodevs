@@ -15,6 +15,7 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchyOwner_ABC.h"
 #include "Entities/Agents/Roles/Logistic/SupplySupplier_ABC.h"
 #include "Entities/Agents/Roles/Logistic/FuneralHandler_ABC.h"
+#include <boost/optional.hpp>
 #include <boost/shared_ptr.hpp>
 
 namespace xml
@@ -153,10 +154,10 @@ public:
     virtual       bool         BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
 
     bool OnReceiveLogSupplyPushFlow( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver );
-    void CreateDotationRequest( const PHY_DotationCategory& dotation, double quantity, const MIL_Automate& recipient,
-                                unsigned int requester );
-    void CreateStockRequest( const PHY_DotationCategory& dotation, double quantity, const MIL_AutomateLOG& recipient,
-                             unsigned int requester );
+    boost::optional< unsigned int > CreateDotationRequest( const PHY_DotationCategory& dotation, double quantity, const MIL_Automate& recipient,
+                                                           unsigned int requester );
+    boost::optional< unsigned int > CreateStockRequest( const PHY_DotationCategory& dotation, double quantity, const MIL_AutomateLOG& recipient,
+                                                        unsigned int requester );
 
     void ResetConsignsForConvoyPion( const MIL_Agent_ABC& pion );
     void ResetConsignsForProvider( const MIL_Agent_ABC& pion );
