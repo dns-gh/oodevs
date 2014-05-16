@@ -57,6 +57,59 @@ protected:
     //@}
 };
 
-#include "PHY_PerceptionWithLocation.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionWithLocation constructor
+// Created: LDC 2009-07-29
+// -----------------------------------------------------------------------------
+template< class T >
+PHY_PerceptionWithLocation<T>::PHY_PerceptionWithLocation( PHY_RoleInterface_Perceiver& perceiver )
+    : PHY_Perception_ABC( perceiver )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionWithLocation destructor
+// Created: LDC 2009-07-29
+// -----------------------------------------------------------------------------
+template< class T >
+PHY_PerceptionWithLocation<T>::~PHY_PerceptionWithLocation()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionWithLocation::Remove
+// Created: LDC 2009-07-29
+// -----------------------------------------------------------------------------
+template< class T >
+std::unique_ptr< T > PHY_PerceptionWithLocation<T>::Remove( int id )
+{
+    for( auto it = recos_.begin(); it != recos_.end(); ++it )
+        if ( it->Id() == id )
+            return std::unique_ptr< T >( recos_.release( it ).release() );
+    return std::unique_ptr< T >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionWithLocation::AddLocation
+// Created: LDC 2009-07-29
+// -----------------------------------------------------------------------------
+template< class T >
+int PHY_PerceptionWithLocation<T>::Add( T* pLocation )
+{
+    recos_.push_back( pLocation );
+    return pLocation->Id();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionWithLocation::FinalizePerception
+// Created: LDC 2010-05-05
+// -----------------------------------------------------------------------------
+template< class T >
+void PHY_PerceptionWithLocation<T>::FinalizePerception()
+{
+    // NOTHING
+}
 
 #endif // __PHY_PerceptionWithLocation_h_
