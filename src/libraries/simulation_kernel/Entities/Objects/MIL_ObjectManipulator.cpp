@@ -114,7 +114,7 @@ void MIL_ObjectManipulator::Destroy( double rDeltaPercentage )
 void MIL_ObjectManipulator::Destroy()
 {
     object_.MarkForDestructionNextUpdate();
-    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManipulator::Mine
