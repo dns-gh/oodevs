@@ -530,7 +530,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Repair durations expressed in man-hours</source>
-        <translation>Durée de réparation exprimé en homme-heures</translation>
+        <translation>Durée de réparation exprimée en homme-heures</translation>
     </message>
 </context>
 <context>
