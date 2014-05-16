@@ -191,27 +191,29 @@ func (s *TestSuite) TestSupplyRequestsDotations(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	invalidId := uint32(12345)
 	resources := []swapi.Quantity{}
 
 	// Invalid tasker identifier
-	err := client.CreateBasicLoadSupplyRequests(invalidId, invalidId, invalidId, resources)
+	err := client.CreateBasicLoadSupplyRequests(InvalidIdentifier, InvalidIdentifier,
+		InvalidIdentifier, resources)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Tasker should be an automaton or a logistics base
 	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
-	err = client.CreateBasicLoadSupplyRequests(unit.Id, invalidId, invalidId, resources)
+	err = client.CreateBasicLoadSupplyRequests(unit.Id, InvalidIdentifier,
+		InvalidIdentifier, resources)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid supplier identifier
 	automatId := getSomeAutomatByName(c, d, "Supply Mobile Infantry Platoon").Id
-	err = client.CreateBasicLoadSupplyRequests(automatId, invalidId, invalidId, resources)
+	err = client.CreateBasicLoadSupplyRequests(automatId, InvalidIdentifier,
+		InvalidIdentifier, resources)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid recipent identifier
 	supplierId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
 	SetManualSupply(c, client, supplierId, true)
-	err = client.CreateBasicLoadSupplyRequests(automatId, supplierId, invalidId, resources)
+	err = client.CreateBasicLoadSupplyRequests(automatId, supplierId, InvalidIdentifier, resources)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// No request is created if no resources are below the low threshold
@@ -221,30 +223,24 @@ func (s *TestSuite) TestSupplyRequestsDotations(c *C) {
 	d = client.Model.GetData()
 	c.Assert(d.SupplyRequests, HasLen, 0)
 
+	resource := &swapi.Resource{
+		Quantity:  0,
+		Threshold: 50,
+	}
+
 	// Create two supply requests
 	units := getUnitsFromAutomat(automatId, client.Model.GetData())
 	c.Assert(len(units), Greater, 2)
 	err = client.ChangeResource(units[0].Id, map[uint32]*swapi.Resource{
-		uint32(electrogen_1): &swapi.Resource{
-			Quantity:  0,
-			Threshold: 50,
-		}})
+		uint32(electrogen_1): resource})
 	c.Assert(err, IsNil)
 	err = client.ChangeResource(units[1].Id, map[uint32]*swapi.Resource{
-		uint32(electrogen_1): &swapi.Resource{
-			Quantity:  0,
-			Threshold: 50,
-		},
-		uint32(electrogen_2): &swapi.Resource{
-			Quantity:  0,
-			Threshold: 50,
-		}})
+		uint32(electrogen_1): resource,
+		uint32(electrogen_2): resource,
+	})
 	c.Assert(err, IsNil)
 	err = client.ChangeResource(units[2].Id, map[uint32]*swapi.Resource{
-		uint32(electrogen_3): &swapi.Resource{
-			Quantity:  0,
-			Threshold: 50,
-		}})
+		uint32(electrogen_3): resource})
 	c.Assert(err, IsNil)
 
 	resources = []swapi.Quantity{{Id: uint32(electrogen_1), Quantity: 10},
@@ -291,25 +287,28 @@ func (s *TestSuite) TestSupplyAutomatRequestsStocks(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
-	invalidId := uint32(12345)
 	resources := []swapi.Quantity{}
 
 	// Invalid tasker identifier
-	err := client.CreateStockSupplyRequests(invalidId, invalidId, invalidId, resources)
+	err := client.CreateStockSupplyRequests(InvalidIdentifier, InvalidIdentifier,
+		InvalidIdentifier, resources)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Tasker should be an automaton or a logistics base
 	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
-	err = client.CreateStockSupplyRequests(unit.Id, invalidId, invalidId, resources)
+	err = client.CreateStockSupplyRequests(unit.Id, InvalidIdentifier,
+		InvalidIdentifier, resources)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid supplier identifier
 	formationId := getSomeFormationByName(c, d, "Supply F3").Id
-	err = client.CreateStockSupplyRequests(formationId, invalidId, invalidId, resources)
+	err = client.CreateStockSupplyRequests(formationId, InvalidIdentifier,
+		InvalidIdentifier, resources)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid recipent identifier
-	err = client.CreateStockSupplyRequests(formationId, formationId, invalidId, resources)
+	err = client.CreateStockSupplyRequests(formationId, formationId,
+		InvalidIdentifier, resources)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	recipentId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
