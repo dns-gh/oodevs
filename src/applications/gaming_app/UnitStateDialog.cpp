@@ -16,6 +16,7 @@
 
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/ImageWrapper.h"
+#include "clients_gui/RichView.h"
 #include "clients_gui/RichWidget.h"
 #include "clients_gui/Tools.h"
 #include "clients_gui/XlsHelpers.h"
@@ -49,14 +50,16 @@ UnitStateDialog::UnitStateDialog( QWidget* parent,
     , equipmentToolTip_( tr( "Composition" ) )
 {
     assert( tabWidget_ );
-    tabs_.push_back( boost::make_shared< UnitStateTableCrew >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
-    tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_, profile, extractor ) );
-    tabs_.push_back( boost::make_shared< UnitStateTableResource > ( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
-    tabWidget_->addTab( tabs_[ eCrew      ].get(), tr( "Crew" ) );
-    tabWidget_->addTab( tabs_[ eEquipment ].get(), tr( "Equipments" ) );
-    tabWidget_->addTab( tabs_[ eSupplies ].get(), tr( "Basic load" ) );
+    AddView( tr( "Crew" ), new gui::RichView< UnitStateTableCrew >( gui::RichView_ABC::eOptions_FilterLineEdit,
+                                                                    "UnitStateTableCrew",
+                                                                    tabWidget_, controllers, staticModel, actionsModel, simulation ) );
+    AddView( tr( "Equipments" ), new gui::RichView< UnitStateTableEquipment >( gui::RichView_ABC::eOptions_FilterLineEdit,
+                                                                               "UnitStateTableEquipment",
+                                                                               tabWidget_, controllers, staticModel, actionsModel, simulation, profile, extractor ) );
+    AddView( tr( "Basic load" ), new gui::RichView< UnitStateTableResource >( gui::RichView_ABC::eOptions_FilterMenu | gui::RichView_ABC::eOptions_ClearButton | gui::RichView_ABC::eOptions_FilterLineEdit,
+                                                                             "UnitStateTableResource",
+                                                                             tabWidget_, controllers, staticModel, actionsModel, simulation ) );
     connect( tabWidget_, SIGNAL( currentChanged( QWidget* ) ), SLOT( OnTabChanged( QWidget* ) ) );
-
     exportButton_ = new gui::RichWidget< QToolButton >( "export_button", 0 );
     exportButton_->setIconSet( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gui/export.png" ) ) );
     exportButton_->setToolTip( tr( "Export" ) );
@@ -231,7 +234,7 @@ void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
         return;
     bool readOnly = ( element ) ? !profile_.CanDoMagic( *element ) : true;
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        tabs_[ i ]->SetReadOnly( readOnly );
+        tabs_[ i ].second->SetReadOnly( readOnly );
     bool enabled = element &&
                    element->Retrieve< kernel::Equipments_ABC >() != 0 &&
                    element->Retrieve< kernel::Dotations_ABC >() != 0 &&
@@ -263,7 +266,7 @@ void UnitStateDialog::OnExportClicked()
     QStringList names;
     for( int i = 0; i < static_cast< int >( tabs_.size() ) && i < tabWidget_->count(); ++i )
     {
-         views << tabs_[ i ].get();
+         views << tabs_[ i ].second;
          names << tabWidget_->tabText( i );
     }
     gui::QTablesToXls( filename,

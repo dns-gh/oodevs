@@ -574,6 +574,21 @@
     </message>
 </context>
 <context>
+    <name>gui::CheckComboBox</name>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(None)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Select all)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ClearButton</name>
     <message>
         <source>Clear</source>
@@ -1810,21 +1825,25 @@ Desea eliminarlo?</translation>
     </message>
 </context>
 <context>
+    <name>gui::RichView_ABC</name>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">Borrar</translation>
+    </message>
+    <message>
+        <source>Filters</source>
+        <translation type="unfinished">Filtros</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Cerrar</translation>
+    </message>
+</context>
+<context>
     <name>gui::SearchLineEdit</name>
     <message>
         <source>Search</source>
         <translation>Busqueda</translation>
-    </message>
-</context>
-<context>
-    <name>gui::SearchTreeView_ABC</name>
-    <message>
-        <source>Clear</source>
-        <translation>Borrar</translation>
-    </message>
-    <message>
-        <source>Filters</source>
-        <translation>Filtros</translation>
     </message>
 </context>
 <context>
@@ -2044,6 +2063,10 @@ Desea eliminarlo?</translation>
     <message>
         <source>State</source>
         <translation>Estado</translation>
+    </message>
+    <message>
+        <source>Clear filters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -65,7 +65,6 @@ void HierarchyTreeView_ABC::ActivateSelection( bool activate )
     if( activate && !activated_ )
     {
         activated_ = true;
-        SetContextMenuBlocked( false );
         setSelectionMode( QAbstractItemView::SingleSelection );
     }
     else if( !activate && activated_ )
@@ -73,7 +72,6 @@ void HierarchyTreeView_ABC::ActivateSelection( bool activate )
         activated_ = false;
         clearSelection();
         setSelectionMode( QAbstractItemView::NoSelection );
-        SetContextMenuBlocked( true );
     }
 }
 

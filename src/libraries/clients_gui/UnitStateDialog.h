@@ -22,6 +22,7 @@ namespace kernel
 
 namespace gui
 {
+    class RichView_ABC;
     class UnitStateTable_ABC;
 
 // =============================================================================
@@ -43,6 +44,13 @@ public:
     virtual ~UnitStateDialog();
     //@}
 
+public:
+    //! @name Operations
+    //@{
+    void Load();
+    void Purge();
+    //@}
+
 protected:
     //! @name Types
     //@{
@@ -53,6 +61,14 @@ protected:
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     bool IsReadOnly() const;
+    template< typename View >
+    void AddView( const QString& name, View* view )
+    {
+        tabs_.push_back( std::make_pair( view, view->GetView() ) );
+        tabWidget_->addTab( view, name );
+        connect( view, SIGNAL( FiltersStatusChanged( bool ) ), clearButton_, SLOT( setEnabled( bool ) ) );
+        connect( view->GetView(), SIGNAL( RefreshFilters() ), view, SLOT( OnFiltersChanged() ) );
+    }
     //@}
 
 protected slots:
@@ -61,19 +77,22 @@ protected slots:
     virtual void Validate() const;
     virtual void Reset();
     void Show();
+    void Clear();
+    void CurrentTabChanged( int tab );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    kernel::Controllers&                                   controllers_;
-    kernel::SafePointer< kernel::Entity_ABC >              selected_;
-    QHBoxLayout*                                           headerLayout_;
-    QTabWidget*                                            tabWidget_;
-    std::vector< boost::shared_ptr< UnitStateTable_ABC > > tabs_;
-    QPushButton*                                           resetButton_;
-    QPushButton*                                           validateButton_;
-    QLabel*                                                selectedEntityLabel_;
+    kernel::Controllers& controllers_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    QHBoxLayout* headerLayout_;
+    QTabWidget* tabWidget_;
+    std::vector< std::pair< RichView_ABC*, UnitStateTable_ABC* > > tabs_;  
+    QPushButton* clearButton_;
+    QPushButton* resetButton_;
+    QPushButton* validateButton_;
+    QLabel* selectedEntityLabel_;
     //@}
 };
 }

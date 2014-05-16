@@ -560,13 +560,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>DockContainer</name>
-    <message>
-        <source>Drawings</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DrawingsBuilder</name>
     <message>
         <source>Confirmation</source>
@@ -2858,6 +2851,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Populations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

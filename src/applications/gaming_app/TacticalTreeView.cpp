@@ -297,7 +297,7 @@ namespace
 // Name: TacticalTreeView::ApplyProfileFilter
 // Created: JSR 2013-01-18
 // -----------------------------------------------------------------------------
-bool TacticalTreeView::ApplyProfileFilter( QStandardItem& item, gui::StandardModel& model ) const
+bool TacticalTreeView::ApplyProfileFilter( QStandardItem& item ) const
 {
     QFont font = item.font();
     if( font.italic() )
@@ -307,10 +307,10 @@ bool TacticalTreeView::ApplyProfileFilter( QStandardItem& item, gui::StandardMod
         item.setForeground( QBrush( Qt::black ) );
     }
     if( displayMode_ == eObservableUnits )
-        return gui::TacticalTreeView::ApplyProfileFilter( item, model );
+        return gui::TacticalTreeView::ApplyProfileFilter( item );
     else if( displayMode_ == eControlledUnits )
     {
-        if( !gui::TacticalTreeView::ApplyProfileFilter( item, model ) )
+        if( !gui::TacticalTreeView::ApplyProfileFilter( item ) )
             return false;
         const kernel::Entity_ABC* entity = dataModel_.GetDataFromItem< kernel::Entity_ABC >( item );
         return entity && CanBeOrdered( *entity, profile_ );

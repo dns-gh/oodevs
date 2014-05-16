@@ -17,12 +17,18 @@ namespace gui
 // Created: ABR 2012-06-20
 // -----------------------------------------------------------------------------
 template< typename NumericType, typename SpinBox >
-NumericLimitsEditor< NumericType, SpinBox >::NumericLimitsEditor( QWidget* parent /*= 0*/ )
+NumericLimitsEditor< NumericType, SpinBox >::NumericLimitsEditor( QWidget* parent,
+                                                                  const T_Extractor& extractor,
+                                                                  NumericType min,
+                                                                  NumericType max )
     : NumericLimitsEditor_ABC( parent )
-    , minValue_( std::numeric_limits< NumericType >::min() )
-    , maxValue_( std::numeric_limits< NumericType >::max() )
+    , extractor_( extractor )
+    , minValue_( min != max ? min : std::numeric_limits< NumericType >::min() )
+    , maxValue_( min != max ? max : std::numeric_limits< NumericType >::max() )
 {
     CreateInterface();
+    minSpin_->setRange( minValue_, maxValue_ );
+    maxSpin_->setRange( minValue_, maxValue_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,29 +39,6 @@ template< typename NumericType, typename SpinBox >
 NumericLimitsEditor< NumericType, SpinBox >::~NumericLimitsEditor()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: NumericLimitsEditor::SetExtractor
-// Created: ABR 2012-06-20
-// -----------------------------------------------------------------------------
-template< typename NumericType, typename SpinBox >
-void NumericLimitsEditor< NumericType, SpinBox >::SetExtractor( T_Extractor extractor )
-{
-    extractor_ = extractor;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NumericLimitsEditor::SetMinMax
-// Created: ABR 2012-06-20
-// -----------------------------------------------------------------------------
-template< typename NumericType, typename SpinBox >
-void NumericLimitsEditor< NumericType, SpinBox >::SetMinMax( NumericType min, NumericType max )
-{
-    minValue_ = min;
-    maxValue_ = max;
-    minSpin_->setRange( minValue_, maxValue_ );
-    maxSpin_->setRange( minValue_, maxValue_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,19 +83,33 @@ void NumericLimitsEditor< NumericType, SpinBox >::Clear()
 // Created: JSR 2012-09-17
 // -----------------------------------------------------------------------------
 template< typename NumericType, typename SpinBox >
-bool NumericLimitsEditor< NumericType, SpinBox >::ApplyFilter( QStandardItem& item, StandardModel& model ) const
+bool NumericLimitsEditor< NumericType, SpinBox >::Apply( QStandardItem& item ) const
 {
-    const kernel::Entity_ABC* entity = model.GetDataFromItem< kernel::Entity_ABC >( item );
-    if( entity )
-    {
-        bool valid = true;
-        NumericType extractedValue = extractor_( *entity, valid );
-        if( !valid )
-            return false;
-        return extractedValue >= minSpin_->value() && extractedValue <=  maxSpin_->value();
-    }
-    return false;
+    bool valid = true;
+    auto value = extractor_( item, valid );
+    if( !valid )
+        return false;
+    return value >= minSpin_->value() && value <=  maxSpin_->value();
 }
 
+// -----------------------------------------------------------------------------
+// Name: NumericLimitsEditor::GetWidget
+// Created: ABR 2014-04-28
+// -----------------------------------------------------------------------------
+template< typename NumericType, typename SpinBox >
+QWidget* NumericLimitsEditor< NumericType, SpinBox >::GetWidget()
+{
+    return this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NumericLimitsEditor::GetMenuContent
+// Created: ABR 2014-04-28
+// -----------------------------------------------------------------------------
+template< typename NumericType, typename SpinBox >
+QWidget* NumericLimitsEditor< NumericType, SpinBox >::GetMenuContent()
+{
+    return this;
+}
 
 } //! namespace gui

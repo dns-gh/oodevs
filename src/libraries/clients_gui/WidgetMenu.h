@@ -3,42 +3,43 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2012 MASA Group
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __SearchLineEdit_h_
-#define __SearchLineEdit_h_
-
-#include "Filter_ABC.h"
-#include "RichLineEdit.h"
+#ifndef __gui_WidgetMenu_h
+#define __gui_WidgetMenu_h
 
 namespace gui
 {
 
 // =============================================================================
-/** @class  SearchLineEdit
-    @brief  SearchLineEdit
+/** @class  WidgetMenu
+    @brief  WidgetMenu
 */
-// Created: ABR 2012-03-27
+// Created: ABR 2014-04-29
 // =============================================================================
-class SearchLineEdit : public RichLineEdit
-                     , public Filter_ABC
+class WidgetMenu : public QMenu
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SearchLineEdit( const QString& objectName, QWidget* parent = 0 );
-    virtual ~SearchLineEdit();
+             WidgetMenu( QWidget* parent );
+    virtual ~WidgetMenu();
     //@}
 
-    //! @name Filter_ABC implementation
+    //! @name Operations
     //@{
-    virtual bool Apply( QStandardItem& item ) const;
-    virtual void Clear();
+    void AddWidget( QWidget* widget );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    QVBoxLayout* layout_;
     //@}
 };
 
 } //! namespace gui
 
-#endif // __SearchLineEdit_h_
+#endif // __gui_WidgetMenu_h

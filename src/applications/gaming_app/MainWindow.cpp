@@ -53,6 +53,7 @@
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
 #include "PathfindLayer.h"
+#include "UnitStateDialog.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController.h"
@@ -75,6 +76,7 @@
 #include "clients_gui/ContourLinesLayer.h"
 #include "clients_gui/ColorStrategy.h"
 #include "clients_gui/DefaultLayer.h"
+#include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/DrawerLayer.h"
 #include "clients_gui/Elevation2dLayer.h"
@@ -224,17 +226,21 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Misc
     new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, profile_, *selector_ );
     new LogisticMagicInterface( this, controllers_, model_, staticModel_, simulation, profile_, *parameters_ );
+    displayExtractor_.reset( new gui::DisplayExtractor( this ) );
+    connect( displayExtractor_.get(), SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     //Dialogs
     new Dialogs( this, controllers, staticModel, network_.GetMessageMgr(), model_.actions_, simulation, profile_, network.GetCommands(), config );
     addRasterDialog_.reset( new gui::AddRasterDialog( this ) );
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, profile_, *icons_, model_.userProfileFactory_ );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );
+    unitStateDialog_.reset( new UnitStateDialog( this, controllers, config, model.static_, model.actions_, simulation, filter, *displayExtractor_ ) );
 
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, staticModel, model, network_, simulation, config, filter,
                                              *parameters_, *profilerLayer, *automatsLayer, *formationLayer, *meteoLayer,
-                                             *glProxy_, *factory, *interpreter, *strategy_, *symbols, *icons_, *indicatorExportDialog, simulationController, *drawingsBuilder_ ) );
+                                             *glProxy_, *factory, *strategy_, *symbols, *icons_, *indicatorExportDialog,
+                                             simulationController, *drawingsBuilder_, *displayExtractor_, *unitStateDialog_ ) );
     logger.SetLogger( dockContainer_->GetLoggerPanel() );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), &dockContainer_->GetMiniView(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 
@@ -426,6 +432,7 @@ void MainWindow::Load()
     try
     {
         controllers_.SaveOptions( eModes_Gaming );
+        unitStateDialog_->Purge();
         dockContainer_->Purge();
         if( lockMapViewController_.get() )
             lockMapViewController_->Clear();
@@ -436,6 +443,7 @@ void MainWindow::Load()
         workers_.Initialize();
         staticModel_.Load( config_ );
         controllers_.LoadOptions( eModes_Gaming );
+        unitStateDialog_->Load();
     }
     catch( const xml::exception& e )
     {
@@ -454,6 +462,7 @@ void MainWindow::Close()
     network_.Disconnect();
     parameters_->Reset();
     selector_->Close();
+    unitStateDialog_->Purge();
     dockContainer_->Purge();
     if( lockMapViewController_.get() )
         lockMapViewController_->Clear();
@@ -512,6 +521,9 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     {
         if( !connected_ && simulation.IsInitialized() )
         {
+            // Legacy timeline need both the profile and the model to be initialized before we
+            // can load the new timeline. When legacy timeline will be removed, this line could be
+            // moved into Load()
             dockContainer_->Load();
             connected_ = true; // we update the caption until Model is totally loaded
             if( login_.isEmpty() )
@@ -547,6 +559,8 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const Simulation::Reconnection& reconnection )
 {
+    // we need to reset connected_ here to ensure dockContainer_->Load is called when reconnecting
+    connected_ = false;
     Load();
     network_.GetMessageMgr().Reconnect( reconnection.login_, reconnection.password_ );
 }

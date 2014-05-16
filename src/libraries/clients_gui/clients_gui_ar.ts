@@ -572,6 +572,21 @@
     </message>
 </context>
 <context>
+    <name>gui::CheckComboBox</name>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(None)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Select all)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ClearButton</name>
     <message>
         <source>Clear</source>
@@ -1806,14 +1821,7 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
-    <name>gui::SearchLineEdit</name>
-    <message>
-        <source>Search</source>
-        <translation type="unfinished">البحث</translation>
-    </message>
-</context>
-<context>
-    <name>gui::SearchTreeView_ABC</name>
+    <name>gui::RichView_ABC</name>
     <message>
         <source>Clear</source>
         <translation type="unfinished">واضحة</translation>
@@ -1821,6 +1829,17 @@ Do you want to remove it?</source>
     <message>
         <source>Filters</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">قم بإغلاق</translation>
+    </message>
+</context>
+<context>
+    <name>gui::SearchLineEdit</name>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished">البحث</translation>
     </message>
 </context>
 <context>
@@ -2036,6 +2055,10 @@ Do you want to remove it?</source>
     <message>
         <source>State</source>
         <translation type="unfinished">الدولة</translation>
+    </message>
+    <message>
+        <source>Clear filters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

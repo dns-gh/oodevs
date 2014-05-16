@@ -61,20 +61,35 @@
 // Name: DockContainer constructor
 // Created: ABR 2013-02-13
 // -----------------------------------------------------------------------------
-DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controllers, const StaticModel& staticModel, Model& model, Network& network,
-                              const Simulation& simulation, const Config& config, ProfileFilter& profile,
-                              gui::ParametersLayer& paramLayer, gui::TerrainProfilerLayer& profilerLayer, AutomatsLayer& automatsLayer, FormationLayer& formationLayer, ::WeatherLayer& weatherLayer,
-                              gui::GlProxy& proxy, gui::RichItemFactory& factory, LinkInterpreter& interpreter,
-                              gui::ColorStrategy_ABC& colorStrategy, gui::SymbolIcons& symbolIcons, const gui::EntitySymbols& entitySymbols,
-                              IndicatorExportDialog& indicatorExportDialog, SimulationController& simulationController, DrawingsBuilder& drawingsBuilder )
+DockContainer::DockContainer( QMainWindow* parent,
+                              kernel::Controllers& controllers,
+                              const StaticModel& staticModel,
+                              Model& model,
+                              Network& network,
+                              const Simulation& simulation,
+                              const Config& config,
+                              ProfileFilter& profile,
+                              gui::ParametersLayer& paramLayer,
+                              gui::TerrainProfilerLayer& profilerLayer,
+                              AutomatsLayer& automatsLayer,
+                              FormationLayer& formationLayer,
+                              ::WeatherLayer& weatherLayer,
+                              gui::GlProxy& proxy,
+                              gui::RichItemFactory& factory,
+                              gui::ColorStrategy_ABC& colorStrategy,
+                              gui::SymbolIcons& symbolIcons,
+                              const gui::EntitySymbols& entitySymbols,
+                              IndicatorExportDialog& indicatorExportDialog,
+                              SimulationController& simulationController,
+                              DrawingsBuilder& drawingsBuilder,
+                              gui::DisplayExtractor& extractor,
+                              UnitStateDialog& unitStateDialog )
     : timelineDockWidget_( 0 )
 {
     const bool hasLegacyTimeline = config.HasTimeline();
     // Tools
     interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers, config, paramLayer, staticModel, &model.agentKnowledgeConverter_, &model.objectKnowledgeConverter_, &simulation, &model.limits_ ) );
     scheduler_.reset( new ActionsScheduler( parent, controllers, simulation, model.actions_, network.GetMessageMgr(), simulationController, hasLegacyTimeline ) );
-    displayExtractor_.reset( new gui::DisplayExtractor( parent ) );
-    QObject::connect( displayExtractor_.get(), SIGNAL( LinkClicked( const QString& ) ), &interpreter, SLOT( Interprete( const QString& ) ) );
     plotFactory_.reset( new IndicatorPlotFactory( parent, controllers, network.GetMessageMgr(), indicatorExportDialog, simulation ) );
 
     // -----------------------------------------------------------------------------
@@ -158,7 +173,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Score panel
     {
-        ScorePanel* scorePanel = new ScorePanel( parent, controllers, *displayExtractor_, *plotFactory_, indicatorExportDialog, model.scores_ );
+        ScorePanel* scorePanel = new ScorePanel( parent, controllers, extractor, *plotFactory_, indicatorExportDialog, model.scores_ );
         scorePanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, scorePanel );
     }
@@ -177,7 +192,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Info panel
     {
-        InfoPanels* pInfoPanel = new InfoPanels( parent, controllers, factory, *displayExtractor_ );
+        InfoPanels* pInfoPanel = new InfoPanels( parent, controllers, factory, extractor );
         pInfoPanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, pInfoPanel );
     }
@@ -217,7 +232,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     if( hasLegacyTimeline )
     {
         // Old Timeline
-        TimelinePanel* timelinePanel = new TimelinePanel( parent, controllers, model, *scheduler_, config, profile, *displayExtractor_ );
+        TimelinePanel* timelinePanel = new TimelinePanel( parent, controllers, model, *scheduler_, config, profile, extractor );
         timelinePanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timelinePanel );
     }
@@ -239,8 +254,8 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Info
     {
-        gui::RichDockWidget* infoWnd = new InfoDock( parent, controllers, config, profile, entitySymbols, factory, *displayExtractor_,
-                                                     model, simulation, simulationController );
+        gui::RichDockWidget* infoWnd = new InfoDock( parent, controllers, profile, entitySymbols, factory, extractor,
+                                                     model, simulation, simulationController, unitStateDialog );
         infoWnd->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
     }
@@ -275,6 +290,7 @@ void DockContainer::Purge()
 // -----------------------------------------------------------------------------
 void DockContainer::Load()
 {
+    orbatDockWidget_->Load();
     if( timelineDockWidget_ )
         timelineDockWidget_->Connect();
 }

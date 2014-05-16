@@ -194,7 +194,7 @@ void CommunicationTreeView::drawRow( QPainter* painter, const QStyleOptionViewIt
 // Name: CommunicationTreeView::ApplyProfileFilter
 // Created: JSR 2013-07-11
 // -----------------------------------------------------------------------------
-bool CommunicationTreeView::ApplyProfileFilter( QStandardItem& item, gui::StandardModel& model ) const
+bool CommunicationTreeView::ApplyProfileFilter( QStandardItem& item ) const
 {
     if( item.data( gui::Roles::SafeRole ).isValid() && item.data( gui::Roles::SafeRole ).toBool() )
     {
@@ -206,7 +206,7 @@ bool CommunicationTreeView::ApplyProfileFilter( QStandardItem& item, gui::Standa
         if( population )
             return false;
     }
-    return gui::HierarchyTreeView< kernel::CommunicationHierarchies >::ApplyProfileFilter( item, model );
+    return gui::HierarchyTreeView< kernel::CommunicationHierarchies >::ApplyProfileFilter( item );
 }
 
 // -----------------------------------------------------------------------------

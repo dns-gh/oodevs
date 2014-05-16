@@ -57,7 +57,6 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void Purge();
     virtual void AddRequest( const LogisticsConsign_ABC& consign, unsigned int id,
                              const QString& requester, const QString& handler, const QString& state );
     virtual void SelectRequest( unsigned int id );
@@ -90,11 +89,7 @@ public slots:
 protected:
     //! @name Data Members
     //@{
-    QStandardItemModel         dataModel_;
-    QSortFilterProxyModel*     proxyModel_;
-    gui::CommonDelegate        delegate_;
     gui::LinkItemDelegate*     linkItemDelegate_;
-    QStringList                horizontalHeaders_;
     const kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
     //@}

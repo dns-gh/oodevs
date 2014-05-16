@@ -45,8 +45,12 @@ class UnitStateTableCrew : public gui::UnitStateTableCrew
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTableCrew( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                 const kernel::Time_ABC& simulation, QWidget* parent );
+             UnitStateTableCrew( const QString& objectName,
+                                 kernel::Controllers& controllers,
+                                 const StaticModel& staticModel,
+                                 actions::ActionsModel& actionsModel,
+                                 const kernel::Time_ABC& simulation,
+                                 QWidget* parent );
     virtual ~UnitStateTableCrew();
     //@}
 

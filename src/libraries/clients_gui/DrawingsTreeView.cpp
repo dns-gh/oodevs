@@ -89,7 +89,7 @@ void DrawingsTreeView::Purge()
 // Name: DrawingsTreeView::ApplyProfileFilter
 // Created: LGY 2014-05-07
 // -----------------------------------------------------------------------------
-bool DrawingsTreeView::ApplyProfileFilter( QStandardItem& item, StandardModel& model ) const
+bool DrawingsTreeView::ApplyProfileFilter( QStandardItem& item ) const
 {
     const auto index = item.index();
     if( drawingsItem_->index() == index || limitsItem_->index() == index ||
@@ -102,7 +102,7 @@ bool DrawingsTreeView::ApplyProfileFilter( QStandardItem& item, StandardModel& m
                 return profile_.IsVisible( *entity );
             return true;
         }
-    return EntityTreeView_ABC::ApplyProfileFilter( item, model );
+    return EntityTreeView_ABC::ApplyProfileFilter( item );
 }
 
 // -----------------------------------------------------------------------------

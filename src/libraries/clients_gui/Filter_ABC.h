@@ -3,42 +3,42 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2012 MASA Group
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __SearchLineEdit_h_
-#define __SearchLineEdit_h_
+#ifndef __gui_Filter_ABC_h
+#define __gui_Filter_ABC_h
 
-#include "Filter_ABC.h"
-#include "RichLineEdit.h"
+#include <boost/noncopyable.hpp>
 
 namespace gui
 {
+    class StandardModel;
 
 // =============================================================================
-/** @class  SearchLineEdit
-    @brief  SearchLineEdit
+/** @class  Filter_ABC
+    @brief  Filter definition
 */
-// Created: ABR 2012-03-27
+// Created: ABR 2014-04-25
 // =============================================================================
-class SearchLineEdit : public RichLineEdit
-                     , public Filter_ABC
+class Filter_ABC : private boost::noncopyable
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SearchLineEdit( const QString& objectName, QWidget* parent = 0 );
-    virtual ~SearchLineEdit();
+             Filter_ABC() {}
+    virtual ~Filter_ABC() {}
     //@}
 
-    //! @name Filter_ABC implementation
+    //! @name Abstract operations
     //@{
-    virtual bool Apply( QStandardItem& item ) const;
-    virtual void Clear();
+    virtual bool Apply( QStandardItem& item ) const = 0;
+    virtual void Clear() = 0;
     //@}
 };
-
+ 
 } //! namespace gui
 
-#endif // __SearchLineEdit_h_
+#endif // __gui_Filter_ABC_h

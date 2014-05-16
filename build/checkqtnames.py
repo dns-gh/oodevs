@@ -57,7 +57,7 @@ ignoredleaves = set([
     "gui::ObjectPrototype_ABC",
     "gui::OptionMenuBase",
     "gui::Panels",
-    "gui::SearchTreeView_ABC",
+    "gui::RichView_ABC",
     "gui::SymbolIcons",
     "gui::TerrainPicker",
     "gui::UnitPreviewIcon",

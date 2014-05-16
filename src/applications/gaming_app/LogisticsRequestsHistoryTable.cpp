@@ -34,35 +34,20 @@ namespace
 LogisticsRequestsHistoryTable::LogisticsRequestsHistoryTable( const QString& objectName, QWidget* parent )
     : gui::RichTableView( objectName, parent )
 {
-    const QStringList horizontalHeaders = QStringList()
-        << tools::translate( "LogisticsRequestsHistoryTable", "Previous state" )
-        << tools::translate( "LogisticsRequestsHistoryTable", "Started" )
-        << tools::translate( "LogisticsRequestsHistoryTable", "Ended" )
-        << tools::translate( "LogisticsRequestsHistoryTable", "Handler" );
-
-    dataModel_ = new QStandardItemModel( parent );
-    dataModel_->setHorizontalHeaderLabels( horizontalHeaders );
+    dataModel_.setHorizontalHeaderLabels( QStringList() << tr( "Previous state" )
+                                                         << tr( "Started" )
+                                                         << tr( "Ended" )
+                                                         << tr( "Handler" ) );
     horizontalHeader()->setResizeMode( QHeaderView::Interactive );
-    QSortFilterProxyModel* proxyModel = new QSortFilterProxyModel( parent );
-    gui::CommonDelegate* delegate = new gui::CommonDelegate( parent );
-    linkItemDelegate_ = new gui::LinkItemDelegate( this );
 
-    dataModel_->setColumnCount( horizontalHeaders.size() );
-    proxyModel->setSourceModel( dataModel_ );
-    proxyModel->setSortRole( Qt::UserRole );
-    setModel( proxyModel );
-    setItemDelegate( delegate );
+    linkItemDelegate_ = new gui::LinkItemDelegate( this );
     setItemDelegateForColumn( eColumnHandler, linkItemDelegate_ );
 
     setSortingEnabled( false );
-    setShowGrid( true );
-    setEnabled( true );
-    setAlternatingRowColors( true );
-    verticalHeader()->setVisible( false );
+    setFocusPolicy( Qt::NoFocus );
     setSelectionMode( SingleSelection );
     setSelectionBehavior( SelectRows );
     setEditTriggers( AllEditTriggers );
-    setFocusPolicy( Qt::NoFocus );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,21 +69,12 @@ const gui::LinkItemDelegate* LogisticsRequestsHistoryTable::GetLinkItemDelegate(
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticsRequestsHistoryTable::Purge
-// Created: MMC 2013-09-11
-// -----------------------------------------------------------------------------
-void LogisticsRequestsHistoryTable::Purge()
-{
-    dataModel_->removeRows( 0, dataModel_->rowCount() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticsRequestsHistoryTable::ItemHasText
 // Created: JSR 2014-02-25
 // -----------------------------------------------------------------------------
 bool LogisticsRequestsHistoryTable::ItemHasText( int row, int col, const QString& text ) const
 {
-     QStandardItem* item = dataModel_->item( row, col );
+     QStandardItem* item = dataModel_.item( row, col );
      return item && item->text() == text;
 }
 
@@ -108,19 +84,19 @@ bool LogisticsRequestsHistoryTable::ItemHasText( int row, int col, const QString
 // -----------------------------------------------------------------------------
 void LogisticsRequestsHistoryTable::AddRequest( const QString& state, const QString& started, const QString& ended, const QString& handler )
 {
-    const int rowIndex = dataModel_->rowCount();
+    const int rowIndex = dataModel_.rowCount();
     for( int row = 0; row < rowIndex; ++row )
     {
         if( ItemHasText( row, eColumnState, state ) && ItemHasText( row, eColumnHandler, handler ) )
         {
             if( ItemHasText( row, eColumnStarted, ended ) )
             {
-                dataModel_->item( row, eColumnStarted )->setText( started );
+                dataModel_.item( row, eColumnStarted )->setText( started );
                 return;
             }
             if( ItemHasText( row, eColumnEnded, started ) )
             {
-                dataModel_->item( row, eColumnEnded )->setText( ended );
+                dataModel_.item( row, eColumnEnded )->setText( ended );
                 return;
             }
         }
@@ -143,5 +119,5 @@ void LogisticsRequestsHistoryTable::AddItem( int row, int col, const QString& te
         item->setTextAlignment( Qt::AlignCenter );
     else
         item->setTextAlignment( Qt::AlignLeft | Qt::AlignVCenter );
-    dataModel_->setItem( row, col, item );
+    dataModel_.setItem( row, col, item );
 }

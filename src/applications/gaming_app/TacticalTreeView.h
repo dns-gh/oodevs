@@ -85,7 +85,7 @@ private:
     //@{
     virtual void drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const;
     virtual std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
-    virtual bool ApplyProfileFilter( QStandardItem& item, gui::StandardModel& model ) const;
+    virtual bool ApplyProfileFilter( QStandardItem& item ) const;
     void CreateFormation( int level, bool isLogisticBase );
     void AddCommunMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}

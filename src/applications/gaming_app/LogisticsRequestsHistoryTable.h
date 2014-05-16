@@ -37,7 +37,6 @@ public:
 public:
     //! @name Operations
     //@{
-    void Purge();
     void AddRequest( const QString& state, const QString& started, const QString& ended, const QString& handler );
     //@}
 
@@ -55,7 +54,6 @@ private:
 private:
     //! @name Data Members
     //@{
-    QStandardItemModel* dataModel_;
     gui::LinkItemDelegate* linkItemDelegate_;
     //@}
 };

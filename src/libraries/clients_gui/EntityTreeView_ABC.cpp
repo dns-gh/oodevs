@@ -122,7 +122,7 @@ void EntityTreeView_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
 // Name: EntityTreeView_ABC::ApplyProfileFilter
 // Created: ABR 2012-08-17
 // -----------------------------------------------------------------------------
-bool EntityTreeView_ABC::ApplyProfileFilter( QStandardItem& item, StandardModel& /*model*/ ) const
+bool EntityTreeView_ABC::ApplyProfileFilter( QStandardItem& item ) const
 {
     if( item.data( Roles::SafeRole ).isValid() && item.data( Roles::SafeRole ).toBool() )
     {
@@ -148,7 +148,7 @@ void EntityTreeView_ABC::NotifyUpdated( const kernel::Profile_ABC& /*profile*/ )
 // -----------------------------------------------------------------------------
 void EntityTreeView_ABC::ApplyProfileFilter()
 {
-    dataModel_.ApplyFilter( boost::bind( &EntityTreeView_ABC::ApplyProfileFilter, this, _1, _2 ) );
+    dataModel_.ApplyFilter( boost::bind( &EntityTreeView_ABC::ApplyProfileFilter, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

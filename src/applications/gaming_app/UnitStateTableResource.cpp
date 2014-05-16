@@ -42,9 +42,13 @@
 // Name: UnitStateTableResource constructor
 // Created: ABR 2011-07-07
 // -----------------------------------------------------------------------------
-UnitStateTableResource::UnitStateTableResource( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                                const kernel::Time_ABC& simulation, QWidget* parent )
-    : gui::UnitStateTableResource( parent, tools::translate( "UnitStateTableResource", "Maximal capacity" ), controllers )
+UnitStateTableResource::UnitStateTableResource( const QString& objectName,
+                                                kernel::Controllers& controllers,
+                                                const StaticModel& staticModel,
+                                                actions::ActionsModel& actionsModel,
+                                                const kernel::Time_ABC& simulation,
+                                                QWidget* parent )
+    : gui::UnitStateTableResource( objectName, parent, tools::translate( "UnitStateTableResource", "Maximal capacity" ), controllers )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
@@ -127,6 +131,7 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
             RecursiveLoad( *selected_.ConstCast(), true );
         }
         else
+        {
             while( dotationIterator.HasMoreElements() )
             {
                 const Dotation& dotation = dotationIterator.NextElement();
@@ -139,6 +144,8 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
                         break;
                     }
             }
+            emit RefreshFilters();
+        }
     }
 }
 

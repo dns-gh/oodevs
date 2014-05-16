@@ -22,15 +22,20 @@ using namespace gui;
 // Name: UnitStateTableEquipment constructor
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
-UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, DisplayExtractor& extractor, kernel::Controllers& controllers )
-    : UnitStateTable_ABC( "UnitStateTableEquipment", parent, 4, controllers )
+UnitStateTableEquipment::UnitStateTableEquipment( const QString& objectName,
+                                                  QWidget* parent,
+                                                  DisplayExtractor& extractor,
+                                                  kernel::Controllers& controllers )
+    : UnitStateTable_ABC( objectName, parent, controllers,
+                           QStringList() << tr( "Equipments" )
+                                         << tr( "Unit" )
+                                         << tr( "State" )
+                                         << tr( "Breakdown" ) )
     , linkItemDelegate_( 0 )
     , extractor_       ( extractor )
 {
-    horizontalHeaders_ << tr( "Equipments" )
-                       << tr( "Unit" )
-                       << tr( "State" )
-                       << tr( "Breakdown" );
+    horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
+
     linkItemDelegate_ = new LinkItemDelegate( this );
     setItemDelegateForColumn( eUnit, linkItemDelegate_ );
 
@@ -63,9 +68,6 @@ bool UnitStateTableEquipment::IsReadOnlyForType( const std::string& typeName ) c
 void UnitStateTableEquipment::Purge()
 {
     UnitStateTable_ABC::Purge();
-    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
-    horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
-    horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
     delegate_.Purge();
 }
 

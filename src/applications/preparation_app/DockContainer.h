@@ -21,16 +21,16 @@ namespace kernel
 namespace gui
 {
     class AutomatsLayer;
-    class FormationLayer;
-    class EntitySymbols;
-    class SearchTreeView_ABC;
-    class SymbolIcons;
     class ColorStrategy_ABC;
-    class ParametersLayer;
-    class WeatherLayer;
+    class EntitySymbols;
+    class FormationLayer;
     class GlProxy;
+    class ParametersLayer;
+    class RichView_ABC;
+    class SymbolIcons;
     class TerrainProfilerLayer;
     class TerrainProfiler;
+    class WeatherLayer;
 }
 
 namespace tools
@@ -72,7 +72,6 @@ public:
     //@{
     void Purge();
     void Load();
-    void BlockCreationOnListViews( bool enable );
     //@}
 
     //! @name Getters
@@ -86,11 +85,11 @@ public:
 private:
     //! @name Member data
     //@{
-    std::vector< gui::SearchTreeView_ABC* > treeViews_;
-    CreationPanels*                         pCreationPanel_;
-    LivingAreaPanel*                        pLivingAreaPanel_;
-    gui::TerrainProfiler*                   terrainProfiler_;
-    UsagesDockWidget*                       pUsagesPanel_;
+    std::vector< gui::RichView_ABC* > views_;
+    CreationPanels*                   pCreationPanel_;
+    LivingAreaPanel*                  pLivingAreaPanel_;
+    gui::TerrainProfiler*             terrainProfiler_;
+    UsagesDockWidget*                 pUsagesPanel_;
     //@}
 };
 

@@ -20,8 +20,11 @@
 // Name: UnitStateTableEquipment constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, gui::DisplayExtractor& extractor, kernel::Controllers& controllers )
-    : gui::UnitStateTableEquipment( parent, extractor, controllers )
+UnitStateTableEquipment::UnitStateTableEquipment( const QString& objectName,
+                                                  gui::DisplayExtractor& extractor,
+                                                  kernel::Controllers& controllers,
+                                                  QWidget* parent )
+    : gui::UnitStateTableEquipment( objectName, parent, extractor, controllers )
 {
     // NOTHING
 }

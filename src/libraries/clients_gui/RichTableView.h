@@ -10,10 +10,15 @@
 #ifndef __RichTableView_h_
 #define __RichTableView_h_
 
+#include "CommonDelegate.h"
+#include "Filterable_ABC.h"
 #include "RichWidget.h"
+#include "StandardModel.h"
 
 namespace gui
 {
+    class WidgetMenu;
+
 // =============================================================================
 /** @class  RichTableView
     @brief  RichTableView
@@ -21,6 +26,7 @@ namespace gui
 // Created: LGY 2014-01-09
 // =============================================================================
 class RichTableView : public RichWidget< QTableView >
+                    , public Filterable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -29,9 +35,20 @@ public:
     virtual ~RichTableView();
     //@}
 
-    //! @name Operations
+    //! @name Filterable_ABC implementation
     //@{
-    void ResizeColumnsToContents();
+    virtual void ApplyFilters( const std::map< int, std::vector< std::shared_ptr< Filter_ABC > > >& filters );
+    virtual void CreateFilters( RichView_ABC& richView );
+    virtual void Purge();
+    virtual QHeaderView* GetHeader() const;
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    QSortFilterProxyModel proxyModel_;
+    gui::StandardModel dataModel_;
+    gui::CommonDelegate delegate_;
     //@}
 };
 

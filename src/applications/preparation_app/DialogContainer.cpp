@@ -63,7 +63,6 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     connect( displayExtractor_.get(), SIGNAL( LinkClicked( const QString& ) ), linkInterpreter_.get(), SLOT( Interprete( const QString& ) ) );
     gui::SubObjectName subObject( "DialogContainer" );
     new ChangeDiplomacyDialog( parent, controllers, profile );
-    new UnitStateDialog( parent, controllers, staticModel, *displayExtractor_ );
     new AgentAffinitiesDialog( parent, controllers );
     new PeopleAffinitiesDialog( parent, controllers );
     new ColorEditor( parent, controllers, colorStrategy, colorEditor );
@@ -89,6 +88,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     addRasterDialog_ = new gui::AddRasterDialog( parent );
     removeBlocksDialog_ = new RemoveBlocksDialog( parent, controllers, *model.urban_ );
     terrainExportDialog_ = new TerrainExportDialog( parent, config, *model.urban_ );
+    unitStateDialog_ = new UnitStateDialog( parent, controllers, staticModel, *displayExtractor_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,6 +108,7 @@ void DialogContainer::Load()
 {
     scoreDialog_->Load();
     filtersDialog_->Load();
+    unitStateDialog_->Load();
 }
 
 // -----------------------------------------------------------------------------
@@ -117,6 +118,7 @@ void DialogContainer::Load()
 void DialogContainer::Purge()
 {
     filtersDialog_->Purge();
+    unitStateDialog_->Purge();
 }
 
 // -----------------------------------------------------------------------------

@@ -14,6 +14,7 @@
 #include "clients_kernel/VariantPointer.h"
 #include "Roles.h"
 #include <boost/function.hpp>
+#include "Filter_ABC.h"
 
 namespace gui
 {
@@ -34,7 +35,7 @@ class StandardModel : public QStandardItemModel
 public:
     //! @name Types
     //@{
-    typedef boost::function< bool ( QStandardItem&, StandardModel& ) > T_FilterFunction;
+    typedef boost::function< bool ( QStandardItem& ) > T_Filter;
     //@}
 
     //! @name Static values
@@ -118,7 +119,8 @@ public:
 
     //! @name Filters
     //@{
-    void ApplyFilter( T_FilterFunction func );
+    void ApplyFilter( const T_Filter& filter, int col = 0 ) const;
+    void ApplyFilters( const std::map< int, std::vector< std::shared_ptr< Filter_ABC > > >& filters ) const;
     //@}
 
     //! @name Drag and Drop
@@ -134,7 +136,9 @@ public:
 private:
     //! @name helpers
     //@{
-    bool HasAnyChildVisible( QStandardItem& root, T_FilterFunction func );
+    void InternalApplyFilters( int row, int col, const std::vector< std::shared_ptr< Filter_ABC > >& filters, bool& result ) const;
+    bool HasAnyChildVisible( QStandardItem& root, const T_Filter& filter, int col ) const;
+    bool HasAnyColumnVisible( int col, const std::vector< std::shared_ptr< Filter_ABC > >& filters ) const;
     //@}
 
 private:

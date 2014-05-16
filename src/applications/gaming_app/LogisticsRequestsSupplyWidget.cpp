@@ -168,5 +168,5 @@ void LogisticsRequestsSupplyWidget::FillSupplyTable( const LogSupplyConsign& con
                                             curRequest.GetConvoyed(), curRequest.IsDelivered() );
         }
     }
-    supplyTable_->ResizeColumnsToContents();
+    supplyTable_->resizeColumnsToContents();
 }

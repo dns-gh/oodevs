@@ -2836,10 +2836,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">البنية التحتية</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="unfinished">لا شيء</translation>
-    </message>
-    <message>
         <source>Usages</source>
         <translation type="unfinished">يستخدم</translation>
     </message>

@@ -76,7 +76,7 @@ public:
                 } );
             for( auto it = consigns.begin(); it != consigns.end(); ++it )
                 DisplayRequest( **it );
-            requestsTable_->ResizeColumnsToContents();
+            requestsTable_->resizeColumnsToContents();
             SendHistoryRequests();
             SelectRequest();
         }
@@ -90,7 +90,7 @@ public:
             auto it = historyModel_.tools::Resolver< Request >::CreateIterator();
             while( it.HasMoreElements() )
                 DisplayRequest( it.NextElement() );
-            requestsTable_->ResizeColumnsToContents();
+            requestsTable_->resizeColumnsToContents();
             SendHistoryRequests();
             SelectRequest();
         }

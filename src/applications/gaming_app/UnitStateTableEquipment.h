@@ -48,9 +48,14 @@ class UnitStateTableEquipment : public gui::UnitStateTableEquipment
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTableEquipment( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                      const kernel::Time_ABC& simulation, QWidget* parent, const kernel::Profile_ABC& profile,
-                                      gui::DisplayExtractor& extractor );
+             UnitStateTableEquipment( const QString& objectName,
+                                      kernel::Controllers& controllers,
+                                      const StaticModel& staticModel,
+                                      actions::ActionsModel& actionsModel,
+                                      const kernel::Time_ABC& simulation,
+                                      const kernel::Profile_ABC& profile,
+                                      gui::DisplayExtractor& extractor,
+                                      QWidget* parent );
     virtual ~UnitStateTableEquipment();
     //@}
 

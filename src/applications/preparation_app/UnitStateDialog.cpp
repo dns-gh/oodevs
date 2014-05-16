@@ -13,6 +13,7 @@
 #include "UnitStateTableCrew.h"
 #include "UnitStateTableEquipment.h"
 #include "UnitStateTableResource.h"
+#include "clients_gui/RichView.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -33,12 +34,15 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
 {
     gui::SubObjectName subObject( "UnitStateDialog" );
     assert( tabWidget_ );
-    tabs_.push_back( boost::make_shared< UnitStateTableCrew >( tabWidget_, controllers ) );
-    tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( tabWidget_, extractor, controllers ) );
-    tabs_.push_back( boost::make_shared< UnitStateTableResource > ( tabWidget_, staticModel, controllers ) );
-    tabWidget_->addTab( tabs_[ eCrew      ].get(), tools::translate( "UnitStateDialog", "Crew" ) );
-    tabWidget_->addTab( tabs_[ eEquipment ].get(), tools::translate( "UnitStateDialog", "Equipments" ) );
-    tabWidget_->addTab( tabs_[ eSupplies ].get(), tools::translate( "UnitStateDialog", "Supplies" ) );
+    AddView( tr( "Crew" ), new gui::RichView< UnitStateTableCrew >( gui::RichView_ABC::eOptions_FilterLineEdit,
+                                                                    "UnitStateTableCrew",
+                                                                    tabWidget_, controllers ) );
+    AddView( tr( "Equipments" ), new gui::RichView< UnitStateTableEquipment >( gui::RichView_ABC::eOptions_FilterLineEdit,
+                                                                               "UnitStateTableEquipment",
+                                                                               tabWidget_, extractor, controllers ) );
+    AddView( tr( "Supplies" ), new gui::RichView< UnitStateTableResource >( gui::RichView_ABC::eOptions_FilterMenu | gui::RichView_ABC::eOptions_ClearButton | gui::RichView_ABC::eOptions_FilterLineEdit,
+                                                                             "UnitStateTableResource",
+                                                                             tabWidget_, staticModel, controllers ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +109,7 @@ void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
     if( selected_ == element )
         return;
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        tabs_[ i ]->SetReadOnly( false );
+        tabs_[ i ].second->SetReadOnly( false );
     gui::UnitStateDialog::NotifySelected( element );
 }
 

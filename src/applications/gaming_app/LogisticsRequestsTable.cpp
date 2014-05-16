@@ -30,45 +30,29 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName,
                                                 const kernel::Profile_ABC& profile,
                                                 QWidget* parent )
     : gui::RichTableView( objectName, parent )
-    , dataModel_ ( parent )
-    , proxyModel_( new QSortFilterProxyModel( parent ) )
-    , delegate_  ( parent )
-    , horizontalHeaders_( horizontalHeaders )
     , controllers_( controllers )
     , profile_( profile )
 {
-    if( horizontalHeaders_.isEmpty() )
-    {
-        horizontalHeaders_ << tools::translate( "LogisticsRequestsTable", "Id" )
-            << tools::translate( "LogisticsRequestsTable", "Requester" )
-            << tools::translate( "LogisticsRequestsTable", "Handler" )
-            << tools::translate( "LogisticsRequestsTable", "State" );
-    }
-
-    dataModel_.setColumnCount( horizontalHeaders.size() );
-    dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
+    dataModel_.setHorizontalHeaderLabels( !horizontalHeaders.isEmpty() 
+        ? horizontalHeaders
+        : QStringList() << tr( "Id" )
+                        << tr( "Requester" )
+                        << tr( "Handler" )
+                        << tr( "State" ) );
     horizontalHeader()->setResizeMode( QHeaderView::Interactive );
-    proxyModel_->setSourceModel( &dataModel_ );
-    proxyModel_->setDynamicSortFilter( true );
-    setModel( proxyModel_ );
+    verticalHeader()->setDefaultSectionSize( 22 );
     sortByColumn( 0, Qt::DescendingOrder );
-    setItemDelegate( &delegate_ );
 
     linkItemDelegate_ = new gui::LinkItemDelegate( this );
     setItemDelegateForColumn( 3, linkItemDelegate_ );
-
     connect( linkItemDelegate_, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
                               , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
 
+    //setFocusPolicy( Qt::NoFocus );
     setSortingEnabled( true );
-    setShowGrid( true );
-    setAlternatingRowColors( true );
-    verticalHeader()->setVisible( false );
     setSelectionMode( SingleSelection );
     setSelectionBehavior( SelectRows );
     setEditTriggers( AllEditTriggers );
-    verticalHeader()->setDefaultSectionSize( 22 );
-    proxyModel_->setSortRole( gui::Roles::SortRole );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,15 +62,6 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName,
 LogisticsRequestsTable::~LogisticsRequestsTable()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsTable::Purge
-// Created: MMC 2013-09-11
-// -----------------------------------------------------------------------------
-void LogisticsRequestsTable::Purge()
-{
-    dataModel_.removeRows( 0, dataModel_.rowCount() );
 }
 
 // -----------------------------------------------------------------------------

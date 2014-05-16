@@ -23,7 +23,7 @@ namespace gui
     class EntitySymbols;
     class FormationLayer;
     class ParametersLayer;
-    class SearchTreeView_ABC;
+    class RichView_ABC;
     class SymbolIcons;
     template< typename T > class RichWidget;
 }
@@ -46,10 +46,18 @@ class OrbatDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
-                              const QString& windowTitle, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
-                              gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model, StaticModel& staticModel,
-                              std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols,
+             OrbatDockWidget( kernel::Controllers& controllers,
+                              QWidget* parent,
+                              const QString& objectName,
+                              const QString& windowTitle,
+                              gui::AutomatsLayer& automats,
+                              gui::FormationLayer& formation,
+                              gui::EntitySymbols& icons,
+                              ModelBuilder& modelBuilder,
+                              Model& model,
+                              StaticModel& staticModel,
+                              std::vector< gui::RichView_ABC* >& treeViews,
+                              gui::SymbolIcons& symbols,
                               gui::ParametersLayer& paramLayer );
     virtual ~OrbatDockWidget();
     //@}

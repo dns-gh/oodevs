@@ -16,7 +16,7 @@
 #include "clients_gui/ModelObserver_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_gui/StandardModelVisitor_ABC.h"
-#include "clients_gui/SearchTreeView.h"
+#include "clients_gui/RichView.h"
 #include "clients_gui/SymbolIcon.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/Tools.h"
@@ -272,20 +272,48 @@ namespace
         valid = false;
         return 0.f;
     }
+
+    std::string ModelWrapper( const gui::StandardModel& model,
+                              const std::function< std::string( const kernel::Entity_ABC&, bool&, bool& ) >& functor,
+                              const QStandardItem& item,
+                              bool& valid,
+                              bool& empty )
+    {
+        if( auto entity = model.GetDataFromItem< kernel::Entity_ABC >( item ) )
+            return functor( *entity, valid, empty );
+        valid = false;
+        return "";
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanTreeView::CreateFilters
 // Created: JSR 2012-09-17
 // -----------------------------------------------------------------------------
-void UrbanTreeView::CreateFilters( gui::SearchTreeView_ABC& searchTreeView )
+void UrbanTreeView::CreateFilters( gui::RichView_ABC& richView )
 {
-    searchTreeView.AddResolverFilter< kernel::InfrastructureType >( tr( "Infrastructure" ), staticModel_.objectTypes_, boost::bind( &::InfrastructureExtractor, _1, _2, _3 ), &kernel::InfrastructureType::GetName, tr( "None" ) );
-    searchTreeView.AddResolverFilter< kernel::AccommodationType >( tr( "Usages" ), staticModel_.accommodationTypes_, boost::bind( &::UsageExtractor, _1, _2, _3 ), &kernel::AccommodationType::GetRole );
-    searchTreeView.AddResolverFilter< kernel::ResourceNetworkType >( tr( "Resource network" ), staticModel_.objectTypes_, boost::bind( &::ResourceNetworkExtractor, _1, _2, _3 ), &kernel::ResourceNetworkType::GetName, tr( "None" ) );
-    searchTreeView.AddResolverFilter< kernel::MaterialCompositionType >( tr( "Material" ), staticModel_.objectTypes_, boost::bind( &::MaterialExtractor, _1, _2, _3 ), &kernel::MaterialCompositionType::GetName );
-    searchTreeView.AddResolverFilter< kernel::RoofShapeType >( tr( "RoofShape" ), staticModel_.objectTypes_, boost::bind( &::RoofShapeExtractor, _1, _2, _3 ), &kernel::RoofShapeType::GetName );
-    searchTreeView.AddNumericFilter< double, gui::RichDoubleSpinBox >( tr( "Area" ), boost::bind( &::AreaExtractor, _1, _2 ), 0, 10000000 ); // $$$$ ABR 2012-06-20: 10 million seems enought for urban blocs area...
+    richView.AddCheckComboBoxFilter( 0, gui::RichView_ABC::eFilterAreas_Box, tr( "Infrastructure" ), true, true,
+                                     boost::bind( &ModelWrapper, boost::cref( dataModel_ ), &InfrastructureExtractor,  _1, _2, _3 ),
+                                     boost::bind( &gui::CheckComboBox::FillFromResolver< kernel::InfrastructureType, std::string >, _1, boost::cref( staticModel_.objectTypes_ ), &kernel::InfrastructureType::GetName ) );
+    richView.AddCheckComboBoxFilter( 0, gui::RichView_ABC::eFilterAreas_Box, tr( "Usages" ), false, true,
+                                     boost::bind( &ModelWrapper, boost::cref( dataModel_ ), &UsageExtractor,  _1, _2, _3 ),
+                                     boost::bind( &gui::CheckComboBox::FillFromResolver< kernel::AccommodationType, std::string >, _1, boost::cref( staticModel_.accommodationTypes_ ), &kernel::AccommodationType::GetRole ) );
+    richView.AddCheckComboBoxFilter( 0, gui::RichView_ABC::eFilterAreas_Box, tr( "Resource network" ), true, true,
+                                     boost::bind( &ModelWrapper, boost::cref( dataModel_ ), &ResourceNetworkExtractor,  _1, _2, _3 ),
+                                     boost::bind( &gui::CheckComboBox::FillFromResolver< kernel::ResourceNetworkType, std::string >, _1, boost::cref( staticModel_.objectTypes_ ), &kernel::ResourceNetworkType::GetName ) );
+    richView.AddCheckComboBoxFilter( 0, gui::RichView_ABC::eFilterAreas_Box, tr( "Material" ), false, true,
+                                     boost::bind( &ModelWrapper, boost::cref( dataModel_ ), &MaterialExtractor,  _1, _2, _3 ),
+                                     boost::bind( &gui::CheckComboBox::FillFromResolver< kernel::MaterialCompositionType, std::string >, _1, boost::cref( staticModel_.objectTypes_ ), &kernel::MaterialCompositionType::GetName ) );
+    richView.AddCheckComboBoxFilter( 0, gui::RichView_ABC::eFilterAreas_Box, tr( "RoofShape" ), false, true,
+                                     boost::bind( &ModelWrapper, boost::cref( dataModel_ ), &RoofShapeExtractor,  _1, _2, _3 ),
+                                     boost::bind( &gui::CheckComboBox::FillFromResolver< kernel::RoofShapeType, std::string >, _1, boost::cref( staticModel_.objectTypes_ ), &kernel::RoofShapeType::GetName ) );
+    richView.AddNumericFilter< double, gui::RichDoubleSpinBox >( 0, gui::RichView_ABC::eFilterAreas_Box, tr( "Area" ), [&]( const QStandardItem& item, bool& valid ) -> double {
+                                                                     if( auto entity = dataModel_.GetDataFromItem< kernel::Entity_ABC >( item ) )
+                                                                         return AreaExtractor( *entity, valid );
+                                                                     valid = false;
+                                                                     return 0.f;
+                                                                 },
+                                                                 0, 10000000 ); // $$$$ ABR 2012-06-20: 10 million seems enought for urban blocs area...
 }
 
 // -----------------------------------------------------------------------------

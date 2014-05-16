@@ -13,7 +13,7 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Tools.h"
 #include "CommonDelegate.h"
-#include "RichWidget.h"
+#include "RichTableView.h"
 
 namespace kernel
 {
@@ -28,12 +28,17 @@ namespace gui
 */
 // Created: ABR 2011-07-05
 // =============================================================================
-class UnitStateTable_ABC : public RichWidget< QTableView >
+class UnitStateTable_ABC : public RichTableView
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTable_ABC( const QString& objectName, QWidget* parent, int numCols, kernel::Controllers& controllers );
+             UnitStateTable_ABC( const QString& objectName,
+                                 QWidget* parent,
+                                 kernel::Controllers& controllers,
+                                 const QStringList& horizontalHeaders );
     virtual ~UnitStateTable_ABC();
     //@}
 
@@ -42,12 +47,12 @@ public:
     virtual void Load( kernel::Entity_ABC& selected ) = 0;
     virtual void Commit( kernel::Entity_ABC& selected ) const = 0;
     virtual bool HasChanged( kernel::Entity_ABC& selected ) const = 0;
+    virtual bool IsReadOnlyForType( const std::string& typeName ) const = 0;
     //@}
 
     //! @name Operations
     //@{
     virtual void Purge();
-    virtual bool IsReadOnlyForType( const std::string& typeName ) const = 0;
     void RecursiveLoad( kernel::Entity_ABC& entity, bool isSelectedEntity );
     void SetReadOnly( bool readOnly );
     bool IsReadOnly() const;
@@ -70,17 +75,21 @@ protected:
     template< typename T >
     T GetEnumData( int row, int col ) const;
     bool GetCheckedState( int row, int col ) const;
+
+    void InternalRecursiveLoad( kernel::Entity_ABC& entity, bool isSelectedEntity );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void RefreshFilters();
     //@}
 
 protected:
     //! @name Data Members
     //@{
-    QStandardItemModel    dataModel_;
-    QSortFilterProxyModel proxyModel_;
-    CommonDelegate        delegate_;
-    QStringList           horizontalHeaders_;
-    bool                  aggregated_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
+    bool aggregated_;
     //@}
 };
 

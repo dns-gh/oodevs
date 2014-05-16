@@ -23,19 +23,42 @@
 #include "clients_gui/DrawingsTreeView.h"
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/GlProxy.h"
-#include "clients_gui/SearchTreeView.h"
+#include "clients_gui/RichView.h"
 #include "clients_kernel/Tools.h"
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
 #include "preparation/FormationModel.h"
 
+namespace
+{
+    template< typename View >
+    void Configure( View* richView,
+                    std::vector< gui::RichView_ABC* >& treeViews,
+                    const gui::AggregateToolbar& aggregateToolbar,
+                    int readOnlyMode = -1 )
+    {
+        auto view = richView->GetView();
+        if( !view )
+            return;
+        if( readOnlyMode != -1 )
+            view->SetReadOnlyModes( readOnlyMode );
+        QObject::connect( &aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), view, SLOT( LockDragAndDrop( bool ) ) );
+        treeViews.push_back( richView );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TreeViewsPanel constructor
 // Created: LGY 2012-06-26
 // -----------------------------------------------------------------------------
-TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
-                                Model& model, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols,
-                                StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar,
+TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
+                                gui::EntitySymbols& icons,
+                                ModelBuilder& modelBuilder,
+                                Model& model,
+                                std::vector< gui::RichView_ABC* >& treeViews,
+                                gui::SymbolIcons& symbols,
+                                StaticModel& staticModel,
+                                const gui::AggregateToolbar& aggregateToolbar,
                                 gui::ParametersLayer& paramLayer )
     : gui::RichWidget< QTabWidget >( "TreeViewsPanel" )
 {
@@ -70,34 +93,60 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySym
 
     // Objects
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< ObjectTreeView >( "ObjectTreeView", this, controllers, PreparationProfile::GetProfile(), modelBuilder );
-        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
-        addTab( searchTreeView, tools::translate( "DockContainer","Objects" ) );
+        auto richView = new gui::RichView< ObjectTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                             "ObjectTreeView",
+                                                             this,
+                                                             controllers,
+                                                             PreparationProfile::GetProfile(),
+                                                             modelBuilder );
+        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+        addTab( richView, tools::translate( "DockContainer","Objects" ) );
     }
     // Urban
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< UrbanTreeView >( "UrbanTreeView", this, controllers, PreparationProfile::GetProfile(), modelBuilder, symbols, staticModel/*, model.urban_*/ );
-        Configure( searchTreeView, treeViews, aggregateToolbar );
-        addTab( searchTreeView, tools::translate( "DockContainer","Urban" ) );
+        auto richView = new gui::RichView< UrbanTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit | gui::RichView_ABC::eOptions_FilterBox | gui::RichView_ABC::eOptions_ClearButton,
+                                                            "UrbanTreeView",
+                                                            this,
+                                                            controllers,
+                                                            PreparationProfile::GetProfile(),
+                                                            modelBuilder,
+                                                            symbols,
+                                                            staticModel );
+        Configure( richView, treeViews, aggregateToolbar );
+        addTab( richView, tools::translate( "DockContainer","Urban" ) );
     }
     // Crowds
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< PopulationTreeView >( "PopulationTreeView", this, controllers, PreparationProfile::GetProfile(), modelBuilder );
-        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
-        addTab( searchTreeView, tools::translate( "DockContainer","Crowds" ) );
+        auto richView = new gui::RichView< PopulationTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                                 "PopulationTreeView",
+                                                                 this, controllers,
+                                                                 PreparationProfile::GetProfile(),
+                                                                 modelBuilder );
+        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+        addTab( richView, tools::translate( "DockContainer","Crowds" ) );
     }
     // Populations
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< InhabitantTreeView >( "InhabitantTreeView", this, controllers, PreparationProfile::GetProfile(), modelBuilder );
-        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
-        addTab( searchTreeView, tools::translate( "DockContainer","Populations" ) );
+        auto richView = new gui::RichView< InhabitantTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                                 "InhabitantTreeView",
+                                                                 this,
+                                                                 controllers,
+                                                                 PreparationProfile::GetProfile(),
+                                                                 modelBuilder );
+        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+        addTab( richView, tools::translate( "DockContainer","Populations" ) );
     }
     // Drawings
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< gui::DrawingsTreeView >( "DrawingsTreeView", this, controllers, PreparationProfile::GetProfile(),
-            modelBuilder, paramLayer );
-        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
-        addTab( searchTreeView, tools::translate( "DockContainer","Drawings" ) );
+        auto richView = new gui::RichView< gui::DrawingsTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                                    "DrawingsTreeView",
+                                                                    this,
+                                                                    controllers,
+                                                                    PreparationProfile::GetProfile(),
+                                                                    modelBuilder,
+                                                                    paramLayer );
+        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+        addTab( richView, tools::translate( "DockContainer","Drawings" ) );
     }
 }
 
@@ -114,52 +163,64 @@ TreeViewsPanel::~TreeViewsPanel()
 // Name: TreeViewsPanel::CreateUnitTabWidget
 // Created: LGY 2012-06-27
 // -----------------------------------------------------------------------------
-void TreeViewsPanel::CreateUnitTabWidget( gui::RichWidget< QTabWidget >* parent, gui::RichWidget< QTabWidget >* tabWidget, kernel::Controllers& controllers,
-                                          gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model,
-                                          StaticModel& staticModel, std::vector< gui::SearchTreeView_ABC* >& treeViews,
-                                          const gui::AggregateToolbar& aggregateToolbar, bool first )
+void TreeViewsPanel::CreateUnitTabWidget( gui::RichWidget< QTabWidget >* parent,
+                                          gui::RichWidget< QTabWidget >* tabWidget,
+                                          kernel::Controllers& controllers,
+                                          gui::EntitySymbols& icons,
+                                          ModelBuilder& modelBuilder,
+                                          Model& model,
+                                          StaticModel& staticModel,
+                                          std::vector< gui::RichView_ABC* >& treeViews,
+                                          const gui::AggregateToolbar& aggregateToolbar,
+                                          bool first )
 {
     gui::SubObjectName subObject( "UnitTabWidget" );
     std::vector< gui::HierarchyTreeView_ABC* >& trees = first ? firstUnitViews_ : secondUnitViews_;
     // Tactical
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< TacticalTreeView >( "TacticalTreeView", tabWidget, controllers, PreparationProfile::GetProfile(), modelBuilder, icons, model, staticModel.types_ );
-        trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( searchTreeView->GetRichTreeView() ) );
+        auto richView = new gui::RichView< TacticalTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                               "TacticalTreeView",
+                                                               tabWidget,
+                                                               controllers,
+                                                               PreparationProfile::GetProfile(),
+                                                               modelBuilder,
+                                                               icons,
+                                                               model,
+                                                               staticModel.types_ );
+        trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
         connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
-        parent->addTab( searchTreeView, tools::translate( "DockContainer","Tactical" ) );
+        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+        parent->addTab( richView, tools::translate( "DockContainer","Tactical" ) );
     }
 
     // Communication
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< CommunicationTreeView >( "CommunicationTreeView", tabWidget, controllers, PreparationProfile::GetProfile(), modelBuilder, icons );
-        trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( searchTreeView->GetRichTreeView() ) );
+        auto richView = new gui::RichView< CommunicationTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                                    "CommunicationTreeView",
+                                                                    tabWidget,
+                                                                    controllers,
+                                                                    PreparationProfile::GetProfile(),
+                                                                    modelBuilder,
+                                                                    icons );
+        trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
         connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
-        parent->addTab( searchTreeView, tools::translate( "DockContainer","Communication" ) );
+        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+        parent->addTab( richView, tools::translate( "DockContainer","Communication" ) );
     }
     // Logistic
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< LogisticTreeView >( "LogisticTreeView", tabWidget, controllers, PreparationProfile::GetProfile(), modelBuilder, icons );
-        trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( searchTreeView->GetRichTreeView() ) );
+        auto richView = new gui::RichView< LogisticTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+                                                               "LogisticTreeView",
+                                                               tabWidget,
+                                                               controllers,
+                                                               PreparationProfile::GetProfile(),
+                                                               modelBuilder,
+                                                               icons );
+        trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( richView->GetView() ) );
         connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
-        parent->addTab( searchTreeView, tools::translate( "DockContainer", "Logistic" ) );
+        Configure( richView, treeViews, aggregateToolbar, eModes_Terrain );
+        parent->addTab( richView, tools::translate( "DockContainer", "Logistic" ) );
     }
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: TreeViewsPanel::Configure
-// Created: LGY 2012-06-27
-// -----------------------------------------------------------------------------
-void TreeViewsPanel::Configure( gui::SearchTreeView_ABC* searchTreeView, std::vector< gui::SearchTreeView_ABC* >& treeViews,
-                                const gui::AggregateToolbar& aggregateToolbar, int readOnlyMode )
-{
-    if( readOnlyMode != -1 )
-        searchTreeView->GetRichTreeView()->SetReadOnlyModes( readOnlyMode );
-    connect( &aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
-    treeViews.push_back( searchTreeView );
 }
 
 // -----------------------------------------------------------------------------

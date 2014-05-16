@@ -35,6 +35,7 @@ namespace gui
     class GraphicPreferences;
     class DisplayExtractor;
     class LinkInterpreter;
+    class UnitStateDialog;
 }
 
 namespace tools
@@ -111,6 +112,7 @@ private:
     TerrainExportDialog*        terrainExportDialog_;
     std::unique_ptr< gui::DisplayExtractor > displayExtractor_;
     std::unique_ptr< gui::LinkInterpreter > linkInterpreter_;
+    gui::UnitStateDialog*       unitStateDialog_;
     //@}
 };
 

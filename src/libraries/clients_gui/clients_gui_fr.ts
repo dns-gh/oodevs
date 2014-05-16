@@ -574,6 +574,21 @@
     </message>
 </context>
 <context>
+    <name>gui::CheckComboBox</name>
+    <message>
+        <source>All</source>
+        <translation>Tous</translation>
+    </message>
+    <message>
+        <source>(None)</source>
+        <translation>(Aucun)</translation>
+    </message>
+    <message>
+        <source>(Select all)</source>
+        <translation>(Sélectionner tout)</translation>
+    </message>
+</context>
+<context>
     <name>gui::ClearButton</name>
     <message>
         <source>Clear</source>
@@ -1807,14 +1822,7 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
-    <name>gui::SearchLineEdit</name>
-    <message>
-        <source>Search</source>
-        <translation>Rechercher</translation>
-    </message>
-</context>
-<context>
-    <name>gui::SearchTreeView_ABC</name>
+    <name>gui::RichView_ABC</name>
     <message>
         <source>Clear</source>
         <translation>Effacer</translation>
@@ -1822,6 +1830,17 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Filters</source>
         <translation>Filtres</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+</context>
+<context>
+    <name>gui::SearchLineEdit</name>
+    <message>
+        <source>Search</source>
+        <translation>Rechercher</translation>
     </message>
 </context>
 <context>
@@ -2041,6 +2060,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>State</source>
         <translation>État</translation>
+    </message>
+    <message>
+        <source>Clear filters</source>
+        <translation>Effacer les filtres</translation>
     </message>
 </context>
 <context>

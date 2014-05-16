@@ -10,11 +10,12 @@
 #ifndef __RichTreeView_h_
 #define __RichTreeView_h_
 
-#include <QtGui/qtreeview.h>
-#include "clients_kernel/ModesObserver_ABC.h"
-
 #include "DragAndDropObserver_ABC.h"
+#include "Filterable_ABC.h"
 #include "StandardModel.h"
+
+#include "clients_kernel/ModesObserver_ABC.h"
+#include <QtGui/qtreeview.h>
 #include <boost/function.hpp>
 
 namespace kernel
@@ -25,7 +26,6 @@ namespace kernel
 
 namespace gui
 {
-    class SearchTreeView_ABC;
 
 // =============================================================================
 /** @class  RichTreeView
@@ -36,6 +36,7 @@ namespace gui
 class RichTreeView : public QTreeView
                    , public kernel::ModesObserver_ABC
                    , public DragAndDropObserver_ABC
+                   , public Filterable_ABC
 {
    Q_OBJECT
 
@@ -51,26 +52,19 @@ public:
     virtual ~RichTreeView();
     //@}
 
+    //! @name Filterable_ABC implementation
+    //@{
+    virtual void ApplyFilters( const std::map< int, std::vector< std::shared_ptr< Filter_ABC > > >& filters );
+    virtual void CreateFilters( RichView_ABC& richView );
+    virtual void Purge();
+    virtual QHeaderView* GetHeader() const;
+    //@}
+
     //! @name Operations
     //@{
-    virtual void Purge();
     void EnableDragAndDrop( bool enable );
     virtual void Drop( const QString& /*mimeType*/, void* /*data*/, QStandardItem& /*target*/ ) {}
     virtual QMimeData* MimeData( const QModelIndexList& /*indexes*/, bool& /*overriden*/ ) const { return 0; }
-    //@}
-
-    //! @name Locks
-    //@{
-    void SetCreationBlocked( bool creationBlocked );
-    bool IsCreationBlocked() const;
-    void SetContextMenuBlocked( bool contextMenuBlocked );
-    bool IsContextMenuBlocked() const;
-    //@}
-
-    //! @name Filters/Sort
-    //@{
-    virtual void CreateFilters( SearchTreeView_ABC& searchTreeView );
-    void ApplyFilter( StandardModel::T_FilterFunction func );
     //@}
 
 public slots:
