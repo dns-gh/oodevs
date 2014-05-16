@@ -562,13 +562,6 @@ Raison: %3
     </message>
 </context>
 <context>
-    <name>DockContainer</name>
-    <message>
-        <source>Drawings</source>
-        <translation>Dessins</translation>
-    </message>
-</context>
-<context>
     <name>DrawingsBuilder</name>
     <message>
         <source>Confirmation</source>
@@ -2858,6 +2851,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Orbat</source>
         <translation>ODB</translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished">Dessins</translation>
     </message>
 </context>
 <context>

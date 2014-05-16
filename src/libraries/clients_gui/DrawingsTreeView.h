@@ -47,7 +47,7 @@ protected:
     virtual void NotifyCreated( const kernel::TacticalLine_ABC& line );
     virtual void NotifyCreated( const kernel::Drawing_ABC& drawing );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
-    virtual bool ApplyProfileFilter( QStandardItem& item, StandardModel& model ) const;
+    virtual bool ApplyProfileFilter( QStandardItem& item ) const;
     virtual void keyPressEvent( QKeyEvent* event );
     //@}
 

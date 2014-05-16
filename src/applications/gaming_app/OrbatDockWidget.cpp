@@ -126,8 +126,8 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                                              filter,
                                                              observer_ ) );
     // Populations
-    Configure( mainTab, toolbar, tools::translate( "OrbatDockWidget", "Drawings" ),
-               new gui::RichView< gui::InhabitantTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
+    Configure( views_, mainTab, toolbar, tools::translate( "OrbatDockWidget", "Drawings" ),
+               new gui::RichView< gui::DrawingsTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
                                                              "DrawingsTreeView",
                                                              mainTab,
                                                              controllers,

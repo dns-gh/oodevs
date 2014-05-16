@@ -561,13 +561,6 @@ Motivo: %3</translation>
     </message>
 </context>
 <context>
-    <name>DockContainer</name>
-    <message>
-        <source>Drawings</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DrawingsBuilder</name>
     <message>
         <source>Confirmation</source>
@@ -2853,6 +2846,10 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Orbat</source>
         <translation>Orbat</translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
