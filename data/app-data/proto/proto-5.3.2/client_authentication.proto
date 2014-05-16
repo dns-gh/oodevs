@@ -1,0 +1,166 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "authentication_client.proto";
+import "version.proto";
+
+package sword;
+
+/** @file
+ *  @brief Messages from clients to the authentication module
+ *  @addtogroup Authentication
+ *  @{
+ */
+
+//! Ask the simulation to generate an authentication key for the client.
+//! The client can then sign and resend it during login.
+message AuthenticationKeyRequest {
+}
+
+/** @struct ConnectedProfilesRequest
+    @brief A message sent to request list of connected profiles.
+*/
+message ConnectedProfilesRequest {
+}
+
+/** @struct AuthenticationRequest
+    @brief A message sent to request authentication.
+
+    @see AuthenticationResponse
+*/
+message AuthenticationRequest {
+    //! The login uniquely identifies a profile loaded from
+    //! "exercise/profiles.xml" or dynamically created during the game.
+    //! @note An error message is sent if login does not exist
+    required string          login              = 1;
+    //! The password is checked the one associated with login in the
+    //! profile loaded from "exercise/profiles.xml" or dynamically created
+    //! during the game. @note An error message is sent if password does
+    //! not match
+    required string          password           = 2;
+    //! The protocol version used by the client is compared to the
+    //! server protocol version in order to determine if protocols are
+    //! compatible. @note An error message is sent if there is a protocol
+    //! mismatch
+    required ProtocolVersion version            = 3;
+    //! The key is used to authenticate the client. An authenticated client
+    //! doesn't increment the server connections.
+    optional string          authentication_key = 4;
+}
+
+/** @struct ProfileCreationRequest
+    @brief Message sent to request profile creation.
+
+    This message is sent to request profile creation.
+    @li A ProfileCreationRequestAck message is sent only to sender to
+        acknowledge the creation.
+    @li A ProfileCreation message is sent to every client to actually
+        create the requested profile.
+
+    @warning This action is only allowed to profiles with supervisor rights.
+*/
+message ProfileCreationRequest {
+    //! Describes the profile to be created. @note An error message is
+    //! sent if login already exists
+    required Profile profile = 1;
+}
+
+/** @struct ProfileUpdateRequest
+    @brief A message sent to request profile update.
+
+    This message is sent to request profile update.
+    @li A ProfileUpdateRequestAck message is sent only to sender to
+        acknowledge the update.
+    @li A ProfileUpdate message is sent to every client to actually
+        update the requested profile.
+
+    @warning This action is only allowed to profiles with supervisor rights.
+*/
+message ProfileUpdateRequest {
+    //! Identifies the profile to be updated. @note An error message is
+    //! sent if login does not exist
+    required string  login   = 1;
+    //! Describes the profile information to be updated. @note An error
+    //! message is sent if login is changed to an existing one
+    required Profile profile = 2;
+}
+
+/** @struct ProfileDestructionRequest
+    @brief A message sent to request profile destruction
+
+    This message is sent to request profile destruction.
+    @li A ProfileDestructionRequestAck message is sent only to sender to
+        acknowledge the destruction.
+    @li A ProfileDestruction message is sent to every client to actually
+        destruction the requested profile.
+
+    @warning This action is only allowed to profiles with supervisor rights.
+*/
+message ProfileDestructionRequest {
+    //! Identifies the profile to be destroyed. @note An error message
+    //! is sent if login does not exist
+    required string login = 1;
+}
+
+/* @struct DisconnectionRequest
+   @brief Explicitely ask the server to terminate the connection
+
+   This message exists mostly for tests purpose. When connecting and
+   disconnecting clients quickly, one can easily overflow the maximum number
+   of client connections allowed, for the simulation may not notice
+   immediately the disconnection. To ensure the connection counter is
+   decreased once a client is done, send this message and wait for the
+   network link to be terminated by the server.
+*/
+message DisconnectionRequest {
+}
+
+/** @struct ClientToAuthentication
+    @brief Wraps available messages going from client to authentication
+
+    This is the actual message sent over the network.
+*/
+message ClientToAuthentication {
+    /** @struct Content
+        @brief The possible messages contained in a client to
+               authentication message
+        @warning Each Content message must contain exactly one of the
+        i        possible messages.
+    */
+    message Content {
+        //! An authentication request message
+        optional AuthenticationRequest     authentication_request      = 1;
+        //! A profile creation request message
+        optional ProfileCreationRequest    profile_creation_request    = 2;
+        //! A profile update request message
+        optional ProfileUpdateRequest      profile_update_request      = 3;
+        //! A profile destruction request message
+        optional ProfileDestructionRequest profile_destruction_request = 4;
+        //! Connected profiles request message
+        optional ConnectedProfilesRequest  connected_profiles_request  = 5;
+        //! Disconnection request message
+        optional DisconnectionRequest      disconnection_request       = 6;
+        //! Authentication key request message
+        optional AuthenticationKeyRequest  authentication_key_request  = 7;
+    }
+    /** @property context
+        @brief Identifies the request matching the response.
+
+        This field is used to fill the "context" fields in the response
+        messages. This context allows the client application to put an
+        unique identifier (based for instance on MAC address), thus
+        allowing to track response message matching a specific request
+        emitted by the client.
+    */
+    optional int32   context = 1;
+    //! A field containing one of the messages to be sent
+    required Content message = 2;
+}
+
+/** @}*/

@@ -1,0 +1,382 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+
+package sword;
+
+/** @file
+ *  @brief Messages from clients to the simulation
+ *  @addtogroup Simulation
+ *  @{
+ */
+
+/** @struct ControlDateTimeChange
+    @brief A date and/or time change request
+    @see ControlDateTimeChangeAck
+*/
+message ControlDateTimeChange {
+    //! The new date and/or time
+    required DateTime date_time = 1;
+}
+
+/** @struct ControlCheckPointSaveNow
+    @brief A checkpoint save request
+    @see ControlCheckPointSaveNowAck
+*/
+message ControlCheckPointSaveNow {
+    //! The checkpoint name
+    optional string name = 1;
+}
+
+/** @struct SetAutomatMode
+    @brief An automate mode change request.
+    @see SetAutomatModeAck
+*/
+message SetAutomatMode {
+    //! The automate identifier
+    required AutomatId       automate = 1;
+    //! The new mode
+    required EnumAutomatMode mode     = 2;
+    //! optional name
+    optional string            name   = 3;
+}
+
+/** @struct UnitCreationRequest
+    @brief An agent creation request
+    @see UnitCreationRequestAck
+    @todo rename into AgentCreationRequest
+    @todo no clue what the fields are exactly...
+*/
+message UnitCreationRequest {
+    //! The agent type
+    required UnitType     type     = 1;
+    //! The superior identifier
+    required AutomatId    superior = 2;
+    //! The position
+    required CoordLatLong position = 3;
+}
+
+/** @struct KnowledgeMagicAction
+    @brief A knowledge magic action request
+    @todo no corresponding ack message ?
+*/
+message KnowledgeMagicAction {
+    /** @enum Type
+        @brief The type of magic action.
+        @todo Explain what parameters are expected for each type
+    */
+    enum Type {
+        //! A enable knowledge magic action
+        enable              = 0;
+        //! A update party knowledge magic action
+        update_party        = 1;
+        //! A update party parent knowledge magic action
+        update_party_parent = 2;
+        //! A update type knowledge magic action
+        update_type         = 3;
+        //! An add knowledge in group magic action
+        add_knowledge       = 4;
+    }
+    //! The knowledge group identifier
+    required KnowledgeGroupId  knowledge_group = 1;
+    //! The magic action type
+    required Type              type            = 2;
+    //! The magic action parameters, depending on the magic action type
+    required MissionParameters parameters      = 3;
+    //! optional name
+    optional string            name            = 4;
+}
+
+/** @struct ObjectMagicAction
+    @brief An object magic action request
+    @see ObjectMagicActionAck
+*/
+message ObjectMagicAction {
+    /** @enum Type
+        @brief The type of magic action.
+
+        Specific parameters are expected for each type.
+
+        @todo Explain what parameters are expected for each type
+    */
+    enum Type {
+        /** @brief A create object magic action.
+        */
+        create  = 0;
+        /** @brief An update object magic action.
+        */
+        update  = 1;
+        /** @brief A destroy object magic action.
+        */
+        destroy = 2;
+    }
+    /** @enum Attribute
+        @brief The type of object.
+
+        The first parameter among the parameters actually is of type
+        MissionParameter::Value::identifier and must be reinterpreted as
+        a value of this enumeration.
+
+        @todo to be refactored
+    */
+    enum Attribute {
+        construction       = 0;
+        obstacle           = 1;
+        mine               = 2;
+        time_limit         = 3;
+        bypass             = 4;
+        logistic           = 5;
+        nbc                = 6;
+        crossing_site      = 7;
+        supply_route       = 8;
+        toxic_cloud        = 9;
+        fire               = 10;
+        medical_treatment  = 11;
+        interaction_height = 12;
+        stock              = 13;
+        nbc_agent          = 14;
+        effect_delay       = 15;
+        flood              = 16;
+        structural_state   = 18;
+        infrastructure     = 19;
+        usages             = 20;
+        lodging            = 21;
+        trafficability     = 22;
+        underground        = 23;
+        confined           = 24;
+        alerted            = 25;
+        evacuated          = 26;
+        resource_network   = 27;
+        altitude_modifier  = 28;
+        disaster           = 29;
+        density            = 30;
+    }
+    //! The object identifier
+    required ObjectId          object     = 1;
+    //! The type of magic action
+    required Type              type       = 2;
+    //! The parameters of the magic action : the first parameter must
+    //! be the object type name and the second parameter must be the
+    //! object location
+    required MissionParameters parameters = 3;
+    //! optional name
+    optional string            name       = 4;
+}
+
+/** @struct MagicAction
+    @brief A magic action request
+    @see MagicActionAck
+*/
+message MagicAction {
+    /** @enum Type
+        @brief The type of magic action.
+
+        Specific parameters are expected for each type.
+
+        @todo Explain what parameters are expected for each type
+    */
+    enum Type {
+        //! A global weather magic action
+        global_weather                     = 0;
+        //! A local weather magic action
+        local_weather                      = 1;
+        //! A local weather destruction magic action
+        local_weather_destruction          = 2;
+        //! A change diplomacy magic action
+        change_diplomacy                   = 3;
+        //! A create knowledge magic action
+        create_knowledge_group             = 4;
+        //! A change resource network properties magic action
+        change_resource_network_properties = 5;
+        //! A fire order on location magic action
+        create_fire_order_on_location      = 6;
+    }
+    //! The type of magic action
+    required Type              type       = 1;
+    //! The parameters of the magic action
+    required MissionParameters parameters = 2;
+    //! optional name
+    optional string            name       = 3;
+}
+
+/** @struct ControlCheckPointSetFrequency
+    @brief Requests a checkpoint frequency change
+    @see ControlCheckPointSetFrequencyAck
+    @todo rename to ControlCheckpointSetFrequency
+*/
+message ControlCheckPointSetFrequency {
+    //! The frequency of checkpoints in minutes
+    required int32 frequency = 1;
+}
+
+/** @struct ControlCheckPointDeleteRequest
+    @brief Request the deletion of a checkpoint
+    @see ControlCheckPointDeleteAck
+*/
+message ControlCheckPointDeleteRequest {
+    //! The checkpoint identifier
+    required string checkpoint = 1;
+}
+
+/** @struct ControlCheckPointListRequest
+    @brief Request the list of previously saved checkpoints
+    @see ControlCheckPointListAck
+    @see ControlCheckPointList
+*/
+message ControlCheckPointListRequest {
+}
+
+/** @struct ControlEnableVisionCones
+    @brief A vision cones toggle request.
+
+    This message is sent by a client to toggle the sending of vision
+    cones. Enabling vision cones will produce UnitVisionCones messages.
+
+    @see UnitVisionCones
+    @todo see how it is related to ControlInformation::send_vision_cones
+*/
+message ControlEnableVisionCones {
+    //! Whether to activate vision cones or not
+    required bool vision_cones = 1;
+}
+
+/** @struct ChangePopulationMagicAction
+    @brief A change population magic action.
+    @see UnitMagicActionAck
+*/
+message ChangePopulationMagicAction {
+    //! The population identifier @todo rename to population
+    required PopulationId   tasker     = 1;
+    //! The party adhesions
+    repeated PartyAdhesion  adhesions  = 2;
+    //! The number of healthy persons
+    optional int32          healthy    = 3;
+    //! The number of wounded persons
+    optional int32          wounded    = 4;
+    //! The number of dead persons
+    optional int32          dead       = 5;
+    //! The motivation @todo What is that ?
+    optional string         motivation = 6;
+    //! Whether the population have received an alert
+    optional bool           alerted    = 7;
+}
+
+/** @struct BurningCellRequest
+    @brief Request details of a burning cell.
+
+    This message is sent by a client to request burning cell details.
+
+    @see BurningCellRequestAck
+*/
+message BurningCellRequest {
+
+    /** @property object
+        @brief Id of the burning object
+    */
+    required ObjectId object = 1;
+
+    /** @property x
+        @brief X coordinates of the burning cell.
+    */
+    required float x = 2;
+    /** @property y
+        @brief Y coordinates of the burning cell.
+    */
+    required float y = 3;
+}
+
+/** @struct OrderStream
+*/
+message OrderStream {
+    //! The serialized order
+    required string serialized_order = 1;
+}
+
+/** @struct ClientToSim
+    @brief Wraps messages from clients to the simulation
+*/
+message ClientToSim {
+    /** @struct Content
+        @brief The possible messages contained in a client to simulation
+               message.
+        @warning Each Content message must contain exactly one of the
+                 possible messages.
+    */
+    message Content {
+        //! @copybrief ControlStop
+        optional ControlStop              control_stop                    = 1;
+        //! @copybrief ControlPause
+        optional ControlPause             control_pause                   = 2;
+        //! @copybrief ControlResume
+        optional ControlResume            control_resume                  = 3;
+        //! @copybrief ControlChangeTimeFactor
+        optional ControlChangeTimeFactor  control_change_time_factor      = 4;
+        //! @copybrief ControlDateTimeChange
+        optional ControlDateTimeChange    control_date_time_change        = 5;
+        //! @copybrief ControlCheckPointSaveNow
+        optional ControlCheckPointSaveNow control_checkpoint_save_now     = 6;
+        //! @copybrief ControlCheckPointSetFrequency
+        optional ControlCheckPointSetFrequency
+            control_checkpoint_set_frequency  = 7;
+        //! @copybrief ControlEnableVisionCones
+        optional ControlEnableVisionCones control_toggle_vision_cones     = 8;
+        //! @copybrief UnitOrder
+        optional UnitOrder                unit_order                      = 9;
+        //! @copybrief AutomatOrder
+        optional AutomatOrder             automat_order                   = 10;
+        //! @copybrief CrowdOrder
+        optional CrowdOrder               crowd_order                     = 11;
+        //! @copybrief FragOrder
+        optional FragOrder                frag_order                      = 12;
+        //! @copybrief SetAutomatMode
+        optional SetAutomatMode           set_automat_mode                = 13;
+        //! @copybrief UnitCreationRequest
+        optional UnitCreationRequest      unit_creation_request           = 14;
+        //! @copybrief UnitCreationRequest
+        optional UnitMagicAction          unit_magic_action               = 15;
+        //! @copybrief ObjectMagicAction
+        optional ObjectMagicAction        object_magic_action             = 16;
+        //! @copybrief KnowledgeMagicAction
+        optional KnowledgeMagicAction     knowledge_magic_action          = 17;
+        //! @copybrief MagicAction
+        optional MagicAction              magic_action                    = 18;
+        //! @copybrief ControlCheckPointListRequest
+        optional ControlCheckPointListRequest
+            control_checkpoint_list_request   = 19;
+        //! @copybrief ControlCheckPointDeleteRequest
+        optional ControlCheckPointDeleteRequest
+            control_checkpoint_delete_request = 20;
+        //! @copybrief ChangePopulationMagicAction
+        optional ChangePopulationMagicAction
+            change_population_magic_action = 21;
+        /** @property burning_cell_request
+            @brief @copybrief BurningCellRequest
+            @see BurningCellRequest
+        */
+        optional BurningCellRequest       burning_cell_request            = 23;
+        optional OrderStream              order_stream                    = 24;
+    }
+    /** @property context
+        @brief Identifies the request matching the response
+
+        This field is used to fill the "context" fields in the response
+        message (from SimToClient). This context allows the client
+        application to put an unique identifier (based for instance on
+        MAC address), thus allowing to track response message matching a
+        specific request emitted by the client.
+    */
+    optional int32   context = 1;
+    //! The content of the message
+    required Content message = 2;
+    //! specific messages, mostly requests acknowledgements.
+    optional int32   client_id = 3;
+}
+
+/** @}*/

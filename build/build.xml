@@ -36,7 +36,7 @@
     -->
     <target name="deploy-application-data" description="deploy application data to run directory">
         <copy todir="${run.dir}">
-            <fileset dir="${data.dir}/app-data"/>
+            <fileset dir="${data.dir}/app-data" excludes="proto/**"/>
         </copy>
         <copy todir="${run.dir}/resources/locales">
             <fileset dir="${run.dir}" includes="qt_*.qm"/>
@@ -800,12 +800,111 @@
         </python>
     </target>
 
-    <target name="checkproto" description="check protobuf definitions">
+    <macrodef name="compare-proto">
+        <attribute name="olddir"/>
+        <attribute name="newdir"/>
+        <element name="args" implicit="true" optional="true"/>
+        <sequential>
+            <python taskname="protolint" failonerror="true">
+                <arg value="${bin.dir}/buildtools/protolint/protolint.py"/>
+                <arg value="compare"/>
+                <arg value="@{olddir}"/>
+                <arg value="@{newdir}"/>
+                <args/>
+            </python>
+        </sequential>
+    </macrodef>
+
+    <target name="checkproto">
+        <property name="proto.dir" value="${data.dir}/app-data/proto"/>
         <python>
             <arg value="${bin.dir}/buildtools/protolint/protolint.py"/>
             <arg value="style"/>
             <arg value="${src.dir}/libraries/protocol/proto"/>
         </python>
+
+        <compare-proto olddir="${proto.dir}/proto-5.0.0" newdir="${proto.dir}/proto-5.0.1"/>
+        <compare-proto olddir="${proto.dir}/proto-5.0.1" newdir="${proto.dir}/proto-5.0.2"/>
+        <!-- 5.1.0 was breaking compatibility with 5.0 line and was superseded
+             by 5.1.1 which fixed the issue. Ignore it.
+        -->
+        <compare-proto olddir="${proto.dir}/proto-5.0.2" newdir="${proto.dir}/proto-5.1.1"/>
+        <compare-proto olddir="${proto.dir}/proto-5.1.1" newdir="${proto.dir}/proto-5.1.2"/>
+        <compare-proto olddir="${proto.dir}/proto-5.1.2" newdir="${proto.dir}/proto-5.1.3"/>
+        <compare-proto olddir="${proto.dir}/proto-5.1.3" newdir="${proto.dir}/proto-5.2.1">
+            <!-- The RulesOfEngagement enumeration was changed since 5.1.x,
+                 a none=0 was removed and all other values shifted. We think
+                 this change is acceptable since this feature was unlikely to
+                 be used by clients and this is only a notification, not a
+                 parameter.
+            -->
+            <arg value="--exclude=SimToClient.Content.UnitAttributes.RulesOfEngagement.Value"/>
+            <arg value="--exclude=SimToClient.Content.AutomatAttributes.RulesOfEngagement.Value"/>
+            <!-- A forbidden error code was added to several acknowledgment messages.
+                 This is probably not a big deal as the ack's were not returned at
+                 all before this change.
+            -->
+            <arg value="--exclude=SimToClient.Content.ControlResumeAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.ControlStopAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.ControlDateTimeChangeAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.ControlChangeTimeFactorAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.ControlPauseAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=ReplayToClient.Content.ControlChangeTimeFactorAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=ReplayToClient.Content.ControlResumeAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=ReplayToClient.Content.ControlPauseAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=ReplayToClient.Content.ControlSkipToTickAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=ReplayToClient.Content.ControlStopAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=AuthenticationToClient.Content.ProfileCreationRequestAck.ErrorCode"/>
+            <arg value="--exclude=AuthenticationToClient.Content.ProfileDestructionRequestAck.ErrorCode"/>
+            <arg value="--exclude=AuthenticationToClient.Content.ProfileUpdateRequestAck.ErrorCode"/>
+            <!-- New magic actions are fine, they are always sent by the client -->
+            <arg value="--exclude=ClientToSim.Content.UnitMagicAction"/>
+        </compare-proto>
+        <compare-proto olddir="${proto.dir}/proto-5.2.1" newdir="${proto.dir}/proto-5.2.2"/>
+        <compare-proto olddir="${proto.dir}/proto-5.2.2" newdir="${proto.dir}/proto-5.3.1">
+            <!-- New error codes are probably fine, the ack's were not sent most
+                 of the time anyway.
+            -->
+            <arg value="--exclude=SimToClient.Content.KnowledgeGroupUpdateAck.KnowledgeGroupAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.KnowledgeGroupCreationAck.KnowledgeGroupAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.KnowledgeGroupMagicActionAck.KnowledgeGroupAck.ErrorCode"/>
+            <!-- We change uint32 fields of UnitEquipmentFireDamage to int32 because the values sent
+                 are actually signed integers -->
+            <arg value="--exclude=SimToClient.Content.StopUnitFire.UnitsFireDamages.UnitFireDamages.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.UnitDamagedByUnitFire.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.Explosion.UnitsFireDamages.UnitFireDamages.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.StopCrowdFire.UnitsFireDamages.UnitFireDamages.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.UnitDamagedByCrowdFire.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <!-- New magic actions are fine -->
+            <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitMagicAction.Type"/>
+            <arg value="--exclude=ClientToSim.Content.UnitMagicAction.Type"/>
+            <arg value="--exclude=ClientToSim.Content.MagicAction.Type"/>
+            <!-- We took care to preserve compatibility with human location -->
+            <arg value="--exclude=SimToClient.Content.UnitAttributes.HumanDotations.HumanDotation.EnumHumanLocation"/>
+            <!-- This authentication return code is only sent upon a new message
+                 only available to new clients.
+            -->
+            <arg value="--exclude=AuthenticationToClient.Content.AuthenticationResponse.ErrorCode"/>
+        </compare-proto>
+        <compare-proto olddir="${proto.dir}/proto-5.3.1" newdir="${proto.dir}/proto-5.3.2">
+            <!-- New magic actions are fine -->
+            <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitMagicAction.Type"/>
+            <arg value="--exclude=ClientToSim.Content.UnitMagicAction.Type"/>
+            <arg value="--exclude=ClientToSim.Content.MagicAction.Type"/>
+            <!-- New logistic state introduced by manual mode -->
+            <arg value="--exclude=*LogMaintenanceHandlingUpdate.EnumLogMaintenanceHandlingStatus"/>
+        </compare-proto>
+        <compare-proto olddir="${proto.dir}/proto-5.3.2" newdir="${proto.dir}/proto-5.3.3">
+            <!-- New magic actions are fine -->
+            <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitMagicAction.Type"/>
+            <arg value="--exclude=ClientToSim.Content.UnitMagicAction.Type"/>
+            <!-- New weather enumeration -->
+            <arg value="--exclude=*EnumPrecipitationType"/>
+        </compare-proto>
+        <compare-proto olddir="${proto.dir}/proto-5.3.3" newdir="${src.dir}/libraries/protocol/proto/">
+            <!-- New magic actions are fine -->
+            <arg value="--exclude=*.MagicAction.Type"/>
+        </compare-proto>
     </target>
 
     <target name="check" depends="checkreports,checkdec,checkproto"
