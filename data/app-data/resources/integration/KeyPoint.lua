@@ -1,37 +1,37 @@
-------------------------------------------------------------------
---- OBSERVING INTERFACE IMPLEMENTATION SPECIFIC TO A KEYPOINT
-------------------------------------------------------------------
-integration.observationEfficiency = function( self, objective )
-    -- fonction des capacités de visibilité et de l'accessibilityLevel normalement
-    return ( ( masalife.brain.knowledge.me.body:computePerceptionCapability( objective, self ) * math.max( self:proximityLevel(), 1 ) ) / 100 ) / 100
+--- Returns the efficiency of the given entity to observe the given objective.
+-- This method can only be called by an entity defining a "computePerceptionCapability" method returning a float between 0 and 100
+-- @param entity Knowledge defining a "proximityLevel" method returning a float between 0 and 100
+-- @param objective Knowledge, the objective to observe
+-- @return Float between 0 and 1, 0 meaning the lowest efficiency and 1 meaning the highest efficiency
+integration.observationEfficiency = function( entity, objective )
+    return ( ( masalife.brain.knowledge.me.body:computePerceptionCapability( objective, entity ) * math.max( entity:proximityLevel(), 1 ) ) / 100 ) / 100
 end
 
--------------------------------------------------------------------
---- APPROACHING INTERFACE IMPLEMENTATION SPECIFIC TO A KEYPOINT
--------------------------------------------------------------------
-integration.approachEfficiency = function( self, objective )
-    return math.max( self:proximityLevel(), 1 ) / 100
+--- Returns the efficiency of the given entity to approach the given objective.
+-- @param entity Knowledge defining a "proximityLevel" method returning a float between 0 and 100
+-- @param objective Knowledge, the objective to approach
+-- @return Float between 0 and 1, 0 meaning the lowest efficiency and 1 meaning the highest efficiency
+integration.approachEfficiency = function( entity, objective )
+    return math.max( entity:proximityLevel(), 1 ) / 100
 end
 
-------------------------------------------------------------------
---- IDENTIFYING INTERFACE IMPLEMENTATION SPECIFIC TO A KEYPOINT
--------------------------------------------------------------------
-integration.identificationEfficiency = function( self, objective )
-    return ( self:proximityLevel() / 100 + masalife.brain.knowledge.me.body:computeIdentificationCapability( objective, self ) ) / 101
+--- Returns the efficiency of the given entity to identify the given objective.
+-- This method can only be called by an entity defining a "computeIdentificationCapability" method returning a float between 0 and 100
+-- @param entity Knowledge defining a "proximityLevel" method returning a float between 0 and 100
+-- @param objective Knowledge, the objective to identify
+-- @return Float between 0 and 1, 0 meaning the lowest efficiency and 1 meaning the highest efficiency
+integration.identificationEfficiency = function( entity, objective )
+    return ( entity:proximityLevel() / 100 + masalife.brain.knowledge.me.body:computeIdentificationCapability( objective, entity ) ) / 101
 end
 
-------------------------------------------------------------------
---- FLEEING INTERFACE IMPLEMENTATION SPECIFIC TO A KEYPOINT
--------------------------------------------------------------------
-integration.fleeEfficiency = function( self, objective )
-    return ( 100 - self:getProximity( objective ) ) / 100
+--- Returns the efficiency of the given entity to flee the given objective.
+-- @param entity Knowledge defining a "getProximity" method returning a float between 0 and 100
+-- @param objective Knowledge, the objective to flee from
+-- @return Float between 0 and 1, 0 meaning the lowest efficiency and 1 meaning the highest efficiency
+integration.fleeEfficiency = function( entity, objective )
+    return ( 100 - entity:getProximity( objective ) ) / 100
 end
 
-
--------------------------------------------------------------------
---- RECONNOITRING INTERFACE IMPLEMENTATION SPECIFIC TO A KEYPOINT
--- deprecated
-------------------------------------------------------------------
 local estimateReconnaissanceLevel = function( self, objective )
     estimateReconnaissanceLevels = estimateReconnaissanceLevels or setmetatable( {}, { __mode = "kv" } )
     if not estimateReconnaissanceLevels[ objective ] then
@@ -48,11 +48,14 @@ local estimateReconnaissanceLevel = function( self, objective )
     return estimateReconnaissanceLevels[ objective ][ self ]
 end
 
-integration.reconnaissanceEfficiency = function( self, objective )
-    return ( self:proximityLevel() / 100 + estimateReconnaissanceLevel( self, objective ) ) / 101
+--- Returns the efficiency of the given entity to reconnoiter the given objective.
+-- @param entity Knowledge defining a "proximityLevel" method returning a float between 0 and 100
+-- @param objective Knowledge, the objective to reconnoiter
+-- @return Float between 0 and 1, 0 meaning the lowest efficiency and 1 meaning the highest efficiency
+integration.reconnaissanceEfficiency = function( entity, objective )
+    return ( entity:proximityLevel() / 100 + estimateReconnaissanceLevel( entity, objective ) ) / 101
 end
 
----
 local isInNearestNeighbors = function( position, objective )
     return objective:getProximity( position ) > 0 and masalife.brain.knowledge.me.body:computeMovementCapability( position ) > 0
 end
@@ -63,6 +66,7 @@ end
 -- reach a given objective ( i.e. a close enough position ).If used, both "me" and the indexed knowledge instance must have a
 -- terrainAnalysisPosition_ attribute.
 -- @return true whether the indexed knowledge is a good position, or false otherwise.
+-- Deprecated
 integration.isReachingForPredicate = {
     dependencies = { me = { "location" }, objective = { "terrainAnalysisPosition_" },  },
     method = function( self, objective )
@@ -75,18 +79,13 @@ integration.isReachingForPredicate = {
             end
 }
 
---
--- @name reachEfficiency
--- @class function
--- @description knowledge class method that returns the efficiency of a position considering the issue
--- of reaching an given objective. The indexed knowledge and the objective must have a
--- terrainAnalysisPosition_ attribute.
--- @param source The knowledge of the source to compute efficiency from.
--- @param target The knowledge of the target to compute efficiency to.
--- @return The efficiency between the knowledges, a [0..100] value where 100 means high efficiency and 0 poor efficiency.
---
-integration.reachEfficiency = function( source, target )
-    return ( ( source:proximityLevel() / 100 + source:getProximity( target ) ) ) / 100
+--- Returns the efficiency of the given entity to reach the given objective.
+-- @param entity Knowledge defining "proximityLevel" and "getProximity" methods,
+-- both returning a float between 0 and 100
+-- @param target Knowledge, the objective to reach
+-- @return Float between 0 and 1, 0 meaning the lowest efficiency and 1 meaning the highest efficiency
+integration.reachEfficiency = function( entity, target )
+    return ( ( entity:proximityLevel() / 100 + entity:getProximity( target ) ) ) / 101
 end
 
 ------------------------------------------------------------------
@@ -97,6 +96,7 @@ end
 -- @param self the position to be used for identification
 -- @param objective the objective to observe
 -- @return true, if the position respects the previous contraints, false otherwise.
+-- Deprecated
 integration.isIdentifyingForPredicate = {
     dependencies = { me = { "terrainAnalysisPosition_" }, objective = { "terrainAnalysisPosition_" } },
     method = function( self, objective )
