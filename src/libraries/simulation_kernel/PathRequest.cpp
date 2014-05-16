@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PathRequest.h"
-#include "Decision/DEC_PathResult.h"
+#include "Decision/DEC_PathComputer.h"
 #include "protocol/ClientSenders.h"
 #include "Network/NET_Publisher_ABC.h"
 
@@ -17,9 +17,9 @@
 // Name: PathRequest constructor
 // Created: LGY 2014-04-16
 // -----------------------------------------------------------------------------
-PathRequest::PathRequest( const boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
+PathRequest::PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& request,
                           unsigned int nCtx, unsigned int clientId, uint32_t id, bool stored )
-    : path_( path )
+    : computer_( computer )
     , ack_( new client::ComputePathfindAck() )
     , nCtx_( nCtx )
     , clientId_( clientId )
@@ -48,16 +48,16 @@ bool PathRequest::Update()
 {
     if( !ack_ )
         return false;
-    DEC_PathResult::E_State nPathState = path_->GetState();
-    if( nPathState == DEC_Path_ABC::eComputing )
+    const auto state = computer_->GetState();
+    if( state == DEC_Path_ABC::eComputing )
         return false;
     auto& msg = (*ack_)();
-    if( nPathState == DEC_Path_ABC::eInvalid || nPathState == DEC_Path_ABC::eImpossible )
+    if( state == DEC_Path_ABC::eInvalid || state == DEC_Path_ABC::eImpossible )
         msg.set_error_code( sword::ComputePathfindAck::error_path_invalid );
     else
     {
         msg.set_error_code( sword::ComputePathfindAck::no_error );
-        path_->Serialize( *msg.mutable_path() );
+        computer_->Serialize( *msg.mutable_path() );
     }
     ack_->Send( NET_Publisher_ABC::Publisher(), nCtx_, clientId_ );
     ack_.reset();

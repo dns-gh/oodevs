@@ -10,10 +10,14 @@
 #include "simulation_kernel_pch.h"
 #include "PathfindComputer.h"
 #include "PathRequest.h"
-#include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathResult.h"
-#include "Decision/DEC_Population_Path.h"
+#include "Decision/DEC_PathComputer.h"
+#include "Decision/DEC_PathSection.h"
+#include "Decision/DEC_Agent_PathfinderRule.h"
+#include "Decision/DEC_AgentContext.h"
+#include "Decision/DEC_Agent_PathClass.h"
+#include "Decision/DEC_PopulationContext.h"
+#include "Decision/DEC_Population_PathfinderRule.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -81,9 +85,18 @@ namespace
 uint32_t PathfindComputer::Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
                                     unsigned int ctx, unsigned int clientId, bool store )
 {
-    return Compute(
-        boost::make_shared< DEC_Agent_Path >( pion, GetPositions( message, world_ ), DEC_PathType::movement_ ),
-        message, ctx, clientId, store );
+    const auto points = GetPositions( message, world_ );
+    if( points.empty() )
+        throw MASA_EXCEPTION( "invalid empty path point list" );
+    const auto computer = boost::make_shared< DEC_PathComputer >( pion.GetID() );
+    const auto& pathClass = DEC_Agent_PathClass::GetPathClass( DEC_PathType::movement_, pion );
+    const auto context = boost::make_shared< DEC_AgentContext >( pion, pathClass, points );
+    for( auto it = points.begin(); it != points.end() - 1; ++it )
+    {
+        std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context, *it, *(it + 1) ) );
+        computer->RegisterPathSection( *new DEC_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
+    }
+    return Compute( computer, message, ctx, clientId, store );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,21 +106,29 @@ uint32_t PathfindComputer::Compute( MIL_AgentPion& pion, const sword::PathfindRe
 uint32_t PathfindComputer::Compute( const MIL_Population& population, const sword::PathfindRequest& message,
                                     unsigned int ctx, unsigned int clientId, bool store )
 {
-    return Compute(
-        boost::make_shared< DEC_Population_Path >( population, GetPositions( message, world_ ) ),
-        message, ctx, clientId, store );
+    const auto points = GetPositions( message, world_ );
+    if( points.empty() )
+        throw MASA_EXCEPTION( "invalid empty path point list" );
+    const auto computer = boost::make_shared< DEC_PathComputer >( population.GetID() );
+    const auto context = boost::make_shared< DEC_PopulationContext >( population, points );
+    for( auto it = points.begin(); it != points.end() - 1; ++it )
+    {
+        std::unique_ptr< TerrainRule_ABC > rule( new DEC_Population_PathfinderRule( context ) );
+        computer->RegisterPathSection( *new DEC_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
+    }
+    return Compute( computer, message, ctx, clientId, store );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PathfindComputer::Compute
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-uint32_t PathfindComputer::Compute( const boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
+uint32_t PathfindComputer::Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& request,
                                     unsigned int ctx, unsigned int clientId, bool store )
 {
     const uint32_t id = ++ids_;
-    results_[ id ] = boost::make_shared< PathRequest >( path, request, ctx, clientId, id, store );
-    manager_.StartCompute( path, request.ignore_dynamic_objects() );
+    results_[ id ] = boost::make_shared< PathRequest >( computer, request, ctx, clientId, id, store );
+    manager_.StartCompute( computer, request.ignore_dynamic_objects() );
     return id;
 }
 

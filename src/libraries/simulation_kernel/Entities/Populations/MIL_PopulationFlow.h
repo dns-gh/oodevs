@@ -18,7 +18,6 @@
 #include <boost/shared_ptr.hpp>
 
 class MIL_PopulationConcentration;
-class DEC_Population_Path;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -58,6 +57,7 @@ public:
     void MoveAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination );
     void CancelMove();
     virtual bool IsReady() const;
+    virtual bool IsUnderground() const;
     MIL_PopulationFlow* Split( const MT_Vector2D& splittingPoint, std::size_t segmentIndex );
     //@}
 
@@ -175,8 +175,8 @@ private:
     MIL_PopulationConcentration* pDestConcentration_;
     MT_Vector2D primaryDestination_;
     MT_Vector2D alternateDestination_; // Used when the flow is splitted
-    boost::shared_ptr< DEC_Population_Path > pHeadPath_;
-    boost::shared_ptr< DEC_Population_Path > pTailPath_;
+    boost::shared_ptr< DEC_PathResult > pHeadPath_;
+    boost::shared_ptr< DEC_PathResult > pTailPath_;
     MT_Vector2D direction_;
     double rSpeed_;
     double rWalkedDistance_;

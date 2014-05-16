@@ -20,6 +20,7 @@
 #include "ObjectCollisionNotificationHandler_ABC.h"
 #include "SlopeDecelerationComputer.h"
 #include "SpeedComputerStrategy.h"
+#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
@@ -38,8 +39,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( moving::PHY_RoleAction_Moving )
 
-namespace moving
-{
+using namespace moving;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving constructor
@@ -549,4 +549,8 @@ void PHY_RoleAction_Moving::Execute( posture::PostureComputer_ABC& algorithm ) c
         algorithm.UnsetPostureMovement();
 }
 
-} // namespace moving
+bool PHY_RoleAction_Moving::IsUnderground() const
+{
+    const PHY_RoleAction_MovingUnderground* roleUnderground = owner_->RetrieveRole< PHY_RoleAction_MovingUnderground >();
+    return roleUnderground && roleUnderground->IsUnderground();
+}

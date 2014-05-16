@@ -20,7 +20,7 @@
 #include <deque>
 #include <vector>
 
-class DEC_Path_ABC;
+class DEC_PathComputer_ABC;
 class DEC_PathFindRequest;
 class TER_PathFinderThread;
 class TER_PathFindRequest_ABC;
@@ -48,9 +48,9 @@ public:
     // Returns computation time since last update.
     double Update();
     void UpdateInSimulationThread();
-    void StartCompute( const boost::shared_ptr< DEC_Path_ABC >& pPath, bool ignoreDynamicObjects = false );
+    void StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& pPath, bool ignoreDynamicObjects = false );
     void CancelJobForUnit( MIL_Agent_ABC* pion );
-    void CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC >& pPath, double duration );
+    void CleanPathAfterComputation( double duration );
     //@}
 
     //! @name Accessors
@@ -66,7 +66,6 @@ private:
     //! @name Types
     //@{
     typedef std::vector< TER_PathFinderThread* > T_PathFindThreads;
-    typedef std::deque< std::pair< boost::shared_ptr< DEC_Path_ABC >, double > > T_Cleanups;
     typedef std::deque< boost::shared_ptr< DEC_PathFindRequest > > T_Requests;
     //@}
 
@@ -92,7 +91,7 @@ private:
     unsigned int treatedRequests_;
     T_PathFindThreads pathFindThreads_;
     boost::mutex cleanAndDestroyMutex_;
-    T_Cleanups toCleanup_;
+    std::vector< double > toCleanup_;
     bool bUseInSameThread_;
     double pathfindTime_;
     //@}

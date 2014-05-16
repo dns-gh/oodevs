@@ -11,13 +11,13 @@
 #define __DEC_Agent_Path_h_
 
 #include "Decision/DEC_PathResult.h"
-#include "MT_Tools/MT_Profiler.h"
 #include <boost/shared_ptr.hpp>
 
 class MIL_LimaOrder;
 class MIL_Agent_ABC;
 class DEC_Agent_PathClass;
-class DEC_Agent_PathfinderPath;
+class DEC_AgentContext_ABC;
+class DEC_PathComputer_ABC;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -26,40 +26,22 @@ class DEC_Agent_PathfinderPath;
 class DEC_Agent_Path : public DEC_PathResult
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType );
+             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType,
+                 const boost::shared_ptr< DEC_PathComputer_ABC >& computer );
     virtual ~DEC_Agent_Path();
-    //@}
 
-    //! @name Destroy
-    //@{
     virtual void Destroy();
-    //@}
+    virtual void Cancel();
 
-    //! @name Path calculation
-    //@{
-    virtual void Execute( TER_Pathfinder_ABC& pathfind );
-    virtual void CleanAfterComputation();
-    virtual bool IsPathForUnit( MIL_Agent_ABC* pion ) const;
     void CancelPath();
-    //@}
 
-    //! @name Accessors
-    //@{
     const DEC_Agent_PathClass& GetPathClass() const;
     const T_PointVector& GetNextWaypoints() const;
-    //@}
 
-    //! @name Tools
-    //@{
-    virtual void InsertDecPoints();
-    virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
-    //@}
+    virtual E_State GetState() const;
+    virtual double GetLength() const;
 
 private:
-    //! @name Points insertion Tools
-    //@{
     int IsPointAvant( DEC_PathPoint* pBefore, DEC_PathPoint& current, DEC_PathPoint* pAfter, const TerrainData& nTypeTerrain ) const;
     bool IsPointAvant( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const;
     bool IsPointAvantOut( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const;
@@ -75,7 +57,10 @@ private:
     void InsertLima              ( const MIL_LimaOrder& lima );
 
     T_PathPoints::iterator GetPreviousPathPointOnDifferentLocation( T_PathPoints::iterator );
-    //@}
+
+    virtual void Finalize();
+    virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
+    virtual const MT_Vector2D& GetLastWaypoint() const;
 
 private:
     //! @name Member data
@@ -84,10 +69,9 @@ private:
     const DEC_Agent_PathClass& pathClass_;
     const T_PointVector initialWaypoints_;
     T_PointVector nextWaypoints_;
-    MT_Profiler profiler_;
-    bool bDecPointsInserted_;
     bool destroyed_;
-    std::unique_ptr< DEC_Agent_PathfinderPath > path_;
+    boost::shared_ptr< DEC_AgentContext_ABC > context_;
+    boost::shared_ptr< DEC_PathComputer_ABC > computer_;
     //@}
 };
 

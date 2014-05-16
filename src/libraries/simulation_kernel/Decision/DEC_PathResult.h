@@ -10,7 +10,6 @@
 #ifndef __DEC_PathResult_h_
 #define __DEC_PathResult_h_
 
-#include "DEC_PathResult_ABC.h"
 #include "Decision/DEC_Path.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
@@ -29,7 +28,7 @@ class MIL_Object_ABC;
 // Created: JDY 03-02-11
 // Last modified: JVT 03-11-26
 //*****************************************************************************
-class DEC_PathResult : public DEC_Path, public DEC_PathResult_ABC
+class DEC_PathResult : public DEC_Path
 {
 public:
     //! @name Types
@@ -57,27 +56,24 @@ public:
     T_PathPoints::const_iterator GetCurrentKeyOnPath() const;
     MT_Vector2D GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
     bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
-    virtual void InsertDecPoints() = 0;
+    virtual void Finalize() = 0;
     virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
+    virtual const MT_Vector2D& GetLastWaypoint() const = 0;
     //@}
 
     //! @name Network
     //@{
     void Serialize( sword::Path& asn, int firstPoint, int pathSizeThreshold ) const;
-    void Serialize( sword::PathResult& msg ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySectionStarted();
-    virtual void NotifyPartialSection();
-    virtual void NotifyCompletedSection();
-    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint );
     MT_Vector2D InternalGetFuturePosition( const T_PathPoints::const_iterator& itCurrentPos, double rDist, bool bBoundOnPath ) const;
     //@}
 
-    virtual boost::optional< MT_Vector2D > GetLastPosition() const;
+protected:
+    void SetResult( T_PathPoints points );
 
 protected:
     //! @name Member data

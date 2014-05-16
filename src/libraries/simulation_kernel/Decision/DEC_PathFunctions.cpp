@@ -16,6 +16,7 @@
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "Decision/DEC_PathComputer.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -54,11 +55,12 @@ namespace
 
     boost::shared_ptr< DEC_Agent_Path > StartCompute( MIL_Agent_ABC& agent, const T_PointVector& points, const DEC_PathType& pathType )
     {
-        const auto path = boost::make_shared< DEC_Agent_Path >( agent, points, pathType );
+        const auto computer = boost::make_shared< DEC_PathComputer >( agent.GetID() );
+        const auto path = boost::make_shared< DEC_Agent_Path >( agent, points, pathType, computer );
         if( !IsDestinationTrafficable( agent, points ) )
             path->CancelPath();
         else
-            MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( path );
+            MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer );
         return path;
     }
 }

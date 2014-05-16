@@ -15,6 +15,12 @@
 #include "DisasterImpactComputer.h"
 #include "PHY_RoleAction_Moving.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "Decision/DEC_PathComputer.h"
+#include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_Agent_Path.h"
+#include "Decision/DEC_Agent_PathClass.h"
+#include "Decision/DEC_PathPoint.h"
+#include "Decision/DEC_PathWalker.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
@@ -24,11 +30,6 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/DisasterAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Decision/DEC_PathFind_Manager.h"
-#include "Decision/DEC_Agent_Path.h"
-#include "Decision/DEC_Agent_PathClass.h"
-#include "Decision/DEC_PathPoint.h"
-#include "Decision/DEC_PathWalker.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
@@ -207,8 +208,9 @@ void PHY_ActionMove::CreateNewPath()
     T_PointVector nextWaypoints = pMainPath_->GetNextWaypoints();
     nextWaypoints.insert( nextWaypoints.begin(), pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     const DEC_PathType& pathType = pMainPath_->GetPathType();
-    const auto pNewPath = boost::make_shared< DEC_Agent_Path >( pion_, nextWaypoints, pathType );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pNewPath );
+    const auto computer = boost::make_shared< DEC_PathComputer >( pion_.GetID() );
+    const auto pNewPath = boost::make_shared< DEC_Agent_Path >( pion_, nextWaypoints, pathType, computer );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer );
     role_.MoveCanceled( pMainPath_ );
     pMainPath_->Cancel();
     pMainPath_ = pNewPath;

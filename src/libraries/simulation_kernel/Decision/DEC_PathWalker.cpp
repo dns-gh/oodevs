@@ -162,12 +162,10 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
 {
     if( pCurrentPath_ && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
         return eRunning;
-
     pointsPassed_ = 0;
     DEC_PathWalker::E_ReturnCode rc = eRunning;
     bool bCanSendTerrainReport = pPath != pCurrentPath_;
     pCurrentPath_ = pPath;
-    pPath->InsertDecPoints(); // $$$ HIDEUX
     movingEntity_.NotifyCurrentPathChanged();
     bForcePathCheck_ = false;
     if( pPath->GetResult().empty() )
@@ -470,6 +468,13 @@ int DEC_PathWalker::Move( const boost::shared_ptr< DEC_PathResult >& pPath )
         return eAlreadyMoving;
 
     DEC_PathResult::E_State nPathState = pPath->GetState();
+    if( nPathState == DEC_Path_ABC::eImpossible )
+    {
+        if( movingEntity_.IsUnderground() )
+            movingEntity_.SendRC( report::eRC_NotActivatedUndergroundNetwork );
+        else
+            movingEntity_.SendRC( report::eRC_TerrainDifficile );
+    }
     if( nPathState == DEC_Path_ABC::eInvalid || nPathState == DEC_Path_ABC::eImpossible || nPathState == DEC_Path_ABC::eCanceled )
         return eNotAllowed;
 
@@ -478,7 +483,7 @@ int DEC_PathWalker::Move( const boost::shared_ptr< DEC_PathResult >& pPath )
         bHasMoved_ = true;
         return eRunning;
     }
-
+    pPath->Finalize();
     pathSet_ = SetCurrentPath( pPath );
     if( pathSet_ == eItineraireMustBeJoined )
         return eItineraireMustBeJoined;

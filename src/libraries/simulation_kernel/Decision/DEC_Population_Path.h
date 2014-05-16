@@ -11,13 +11,13 @@
 #define __DEC_Population_Path_h_
 
 #include "Decision/DEC_PathResult.h"
-#include "Decision/DEC_Population_Path_Channeler.h"
 #include "MT_Tools/MT_Profiler.h"
 #include <boost/shared_ptr.hpp>
 
 class DEC_Path_KnowledgeObject_ABC;
 class MIL_Population;
-class MIL_Object_ABC;
+class DEC_PopulationContext_ABC;
+class DEC_PathComputer_ABC;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -25,59 +25,30 @@ class MIL_Object_ABC;
 //*****************************************************************************
 class DEC_Population_Path : public DEC_PathResult
 {
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< DEC_Population_Path_Channeler >                     T_PopulationPathChannelers;
-    typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > > T_PathKnowledgeObjects;
-    typedef std::vector< T_PathKnowledgeObjects >                            T_PathKnowledgeObjectsByTypes;
-    //@}
-
 public:
-             DEC_Population_Path( const MIL_Population& population, const T_PointVector& destination );
+             DEC_Population_Path( const MIL_Population& population, const T_PointVector& points,
+                const boost::shared_ptr< DEC_PathComputer_ABC >& computer );
     virtual ~DEC_Population_Path();
 
     //! @name Path calculation
     //@{
-    virtual void Execute( TER_Pathfinder_ABC& pathfind );
-    virtual void CleanAfterComputation();
-    virtual bool IsPathForUnit( MIL_Agent_ABC* pion ) const;
-    //@}
-
-    //! @name Accessors
-    //@{
-    const T_PopulationPathChannelers& GetChannelers() const;
-    double GetCostOutsideOfChanneling() const;
-    const T_PathKnowledgeObjectsByTypes& GetPathKnowledgeObjects() const;
-    double GetCostOutsideOfAllObjects() const;
-    double GetMaxSpeed( const TerrainData& terrainData ) const;
-    double GetMaxSpeed() const;
+    virtual void Cancel();
     //@}
 
 private:
     DEC_Population_Path( const DEC_Population_Path& rhs ); // Copy only query parameters, not the result !
 
-    //! @name Init
-    //@{
-    void Initialize( const T_PointVector& pathPoints );
-    void InitializePathKnowledges( const T_PointVector& pathPoints );
-    //@}
-
-    //! @name Tools
-    //@{
-    virtual void InsertDecPoints();
-    //@}
+    virtual void Finalize();
+    virtual E_State GetState() const;
+    virtual double GetLength() const;
+    virtual const MT_Vector2D& GetLastWaypoint() const;
 
 private:
     //! @name Member data
     //@{
-    const size_t id_;
-    const DEC_Population_PathClass& pathClass_;
-    const MIL_Population& population_;
-    T_PathKnowledgeObjectsByTypes pathKnowledgeObjects_;
-    double rCostOutsideOfAllObjects_;
     MT_Profiler profiler_;
-    T_PopulationPathChannelers channelers_;
+    boost::shared_ptr< DEC_PopulationContext_ABC > context_;
+    boost::shared_ptr< DEC_PathComputer_ABC > computer_;
     //@}
 };
 

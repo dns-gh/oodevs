@@ -11,46 +11,45 @@
 #include "DEC_Agent_Path.h"
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Agent_PathfinderRule.h"
-#include "DEC_Agent_PathfinderPath.h"
+#include "DEC_AgentContext.h"
+#include "DEC_PathComputer_ABC.h"
 #include "DEC_PathSection.h"
-#include "MIL_AgentServer.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
-#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Tools/MIL_Config.h"
 #include "MT_Tools/MT_Logger.h"
-#include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <boost/make_shared.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path constructor
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
+DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType,
+    const boost::shared_ptr< DEC_PathComputer_ABC >& computer )
     : DEC_PathResult     ( pathType )
     , queryMaker_        ( queryMaker )
     , pathClass_         ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , initialWaypoints_  ( points )
     , nextWaypoints_     ( points.empty() ? points.begin() : points.begin() + 1, points.end() )
-    , bDecPointsInserted_( false )
     , destroyed_         ( false )
-    , path_              ( new DEC_Agent_PathfinderPath( queryMaker, pathClass_, points ) )
+    , context_           ( new DEC_AgentContext( queryMaker, pathClass_, points ) )
+    , computer_          ( computer )
 {
-    const bool refine = queryMaker_.GetType().GetUnitType().CanFly() && !queryMaker_.IsAutonomous();
-    const bool useStrictClosest = !queryMaker_.GetAutomate().GetOrderManager().GetFuseau().IsNull();
-    for( auto it = initialWaypoints_.begin(); it != initialWaypoints_.end() - 1; ++it )
+    const bool refine = queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous();
+    const bool useStrictClosest = !queryMaker.GetAutomate().GetOrderManager().GetFuseau().IsNull();
+    if( points.empty() )
+        throw MASA_EXCEPTION( "List of points is empty in population path initialization" );
+    for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
-        std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( *path_, *it, *(it + 1) ) );
-        RegisterPathSection( *new DEC_PathSection( *this, std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
+        std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context_, *it, *(it + 1) ) );
+        computer_->RegisterPathSection( *new DEC_PathSection( *computer_, std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
     }
     queryMaker.RegisterPath( *this );
 }
@@ -78,6 +77,11 @@ void DEC_Agent_Path::Destroy()
             ( *it )->RemoveFromDIA( *it );
     destroyed_ = true;
     queryMaker_.UnregisterPath( *this );
+}
+
+void DEC_Agent_Path::Cancel()
+{
+    computer_->Cancel();
 }
 
 //-----------------------------------------------------------------------------
@@ -337,15 +341,12 @@ void DEC_Agent_Path::InsertLimas()
         InsertLima( *it );
 }
 
-//-----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::InsertDecPoints
-// Created: JDY 03-03-04
-//-----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertDecPoints()
+void DEC_Agent_Path::Finalize()
 {
-    if( bDecPointsInserted_ )
+    if( !context_ )
         return;
-    bDecPointsInserted_ = true;
+    SetResult( computer_->GetResult() );
+    context_.reset();
     // Points avants
     if( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetHeight() == 0 )
         InsertPointAvants();
@@ -354,80 +355,18 @@ void DEC_Agent_Path::InsertDecPoints()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::CleanAfterComputation
-// Created: NLD 2006-01-23
-// -----------------------------------------------------------------------------
-void DEC_Agent_Path::CleanAfterComputation()
-{
-    DEC_Path::CleanAfterComputation();
-    path_.reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::IsPathForUnit
-// Created: JSR 2013-03-11
-// -----------------------------------------------------------------------------
-bool DEC_Agent_Path::IsPathForUnit( MIL_Agent_ABC* pion ) const
-{
-    return &queryMaker_ == pion;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::Execute
-// Created: AGE 2005-02-25
-// -----------------------------------------------------------------------------
-void DEC_Agent_Path::Execute( TER_Pathfinder_ABC& pathfind )
-{
-    if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
-    {
-        MT_LOG_MESSAGE_MSG( "DEC_Agent_Path::Compute: " << this << " : computation begin" );
-        MT_LOG_MESSAGE_MSG( "   Thread    : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() );
-        MT_LOG_MESSAGE_MSG( "   Agent     : " << queryMaker_.GetID() );
-        MT_LOG_MESSAGE_MSG( "   Path type : " << DEC_PathResult::GetPathType().GetName().c_str() );
-        MT_LOG_MESSAGE_MSG( GetPathAsString() );
-        profiler_.Start();
-    }
-    assert( resultList_.empty() );
-
-    pathfind.SetId( queryMaker_.GetID() );
-    DEC_Path::Execute( pathfind );
-    DEC_PathResult::E_State nPathState = GetState();
-    if( nPathState == DEC_Path_ABC::eImpossible )
-    {
-        const PHY_RoleAction_MovingUnderground* roleUnderground = queryMaker_.RetrieveRole< PHY_RoleAction_MovingUnderground >();
-        if( roleUnderground && roleUnderground->IsUnderground() )
-            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( report::eRC_NotActivatedUndergroundNetwork );
-        else
-            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( report::eRC_TerrainDifficile );
-    }
-
-    if( MIL_AgentServer::IsInitialized() && MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
-    {
-        double rComputationTime = profiler_.Stop();
-        std::stringstream stream;
-        if( ! resultList_.empty() )
-            stream << "[" << resultList_.front()->GetPos() << "] -> [" << resultList_.back()->GetPos() << "]";
-        MT_LOG_MESSAGE_MSG( "DEC_Agent_Path::Compute: " << this <<
-                            ", Thread : "  << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() <<
-                            ", Time : " << rComputationTime <<
-                            ", State : " << GetStateAsString() <<
-                            ", Result : " << stream.str() );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::NotifyPointReached
 // Created: LDC 2012-01-18
 // -----------------------------------------------------------------------------
 void DEC_Agent_Path::NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint )
 {
-    const T_PointVector& computedWaypoints = GetComputedWaypoints();
+    const T_PointVector& computedWaypoints = computer_->GetComputedWaypoints();
     if( nextWaypoints_.size() > 1 && computedWaypoints.size() > 1 &&
         static_cast< float >( (*itCurrentPathPoint)->GetPos().rX_ ) == static_cast< float >( computedWaypoints.front().rX_ ) &&
         static_cast< float >( (*itCurrentPathPoint)->GetPos().rY_ ) == static_cast< float >( computedWaypoints.front().rY_ ) )
     {
         nextWaypoints_.erase( nextWaypoints_.begin() );
-        RemoveComputedWaypoint();
+        computer_->RemoveComputedWaypoint();
     }
     DEC_PathResult::NotifyPointReached( itCurrentPathPoint );
 }
@@ -439,7 +378,7 @@ void DEC_Agent_Path::NotifyPointReached( const T_PathPoints::const_iterator& itC
 void DEC_Agent_Path::CancelPath()
 {
     queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( report::eRC_TerrainDifficile );
-    Cancel();
+    computer_->Cancel();
 }
 
 // -----------------------------------------------------------------------------
@@ -458,4 +397,19 @@ const DEC_Agent_PathClass& DEC_Agent_Path::GetPathClass() const
 const T_PointVector& DEC_Agent_Path::GetNextWaypoints() const
 {
     return nextWaypoints_;
+}
+
+DEC_Path_ABC::E_State DEC_Agent_Path::GetState() const
+{
+    return computer_->GetState();
+}
+
+const MT_Vector2D& DEC_Agent_Path::GetLastWaypoint() const
+{
+    return computer_->GetLastWaypoint();
+}
+
+double DEC_Agent_Path::GetLength() const
+{
+    return computer_->GetLength();
 }

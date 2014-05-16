@@ -19,6 +19,7 @@
 #include "Decision/DEC_Population_PathClass.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PathWalker.h"
+#include "Decision/DEC_PathComputer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -222,10 +223,12 @@ void MIL_PopulationFlow::ComputePathAlong( const std::vector< boost::shared_ptr<
         pTailPath_->Cancel();
         pTailPath_.reset();
     }
-    pHeadPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetHeadPosition(), headDestination ) );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pHeadPath_ );
-    pTailPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetTailPosition(), tailDestination ) );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pTailPath_ );
+    const auto headComputer = boost::make_shared< DEC_PathComputer >( GetPopulation().GetID() );
+    pHeadPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetHeadPosition(), headDestination ), headComputer );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( headComputer );
+    const auto tailComputer = boost::make_shared< DEC_PathComputer >( GetPopulation().GetID() );
+    pTailPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetTailPosition(), tailDestination ), tailComputer );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( tailComputer );
 }
 
 // -----------------------------------------------------------------------------
@@ -1419,4 +1422,9 @@ MIL_PopulationFlow::T_FlowShape::const_iterator MIL_PopulationFlow::FindPointInS
     return std::find_if( flowShape_.begin(), flowShape_.end(),
         [ & ]( std::pair< MT_Vector2D, std::size_t > value )->bool {
             return v == value.first; } );
+}
+
+bool MIL_PopulationFlow::IsUnderground() const
+{
+    return false;
 }

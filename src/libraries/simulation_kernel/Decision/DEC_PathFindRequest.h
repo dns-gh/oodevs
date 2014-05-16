@@ -15,7 +15,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
-class DEC_Path_ABC;
+class DEC_PathComputer_ABC;
 class DEC_PathFind_Manager;
 class MIL_Agent_ABC;
 
@@ -30,7 +30,7 @@ class DEC_PathFindRequest: public TER_PathFindRequest_ABC,
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathFindRequest( DEC_PathFind_Manager& m, const boost::shared_ptr< DEC_Path_ABC >& p, bool ignoreDynamicObjects );
+             DEC_PathFindRequest( DEC_PathFind_Manager& m, const boost::shared_ptr< DEC_PathComputer_ABC >& p, bool ignoreDynamicObjects );
     virtual ~DEC_PathFindRequest();
     //@}
 
@@ -38,14 +38,13 @@ public:
     //@{
     virtual bool IgnoreDynamicObjects() const;
     virtual void FindPath( TER_Pathfinder_ABC& pathfind );
-    boost::shared_ptr< DEC_Path_ABC > GetPathForUnit( MIL_Agent_ABC* pion ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     DEC_PathFind_Manager& manager_;
-    boost::weak_ptr< DEC_Path_ABC > path_;
+    boost::weak_ptr< DEC_PathComputer_ABC > path_;
     const bool ignoreDynamicObjects_;
     //@}
 };

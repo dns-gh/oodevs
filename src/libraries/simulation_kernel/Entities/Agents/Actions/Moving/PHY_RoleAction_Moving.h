@@ -91,6 +91,7 @@ public:
     virtual bool HasResources();
     virtual bool CanMove() const;
     virtual bool IsReady() const;
+    virtual bool IsUnderground() const;
 
     virtual const MT_Vector2D& GetPosition () const;
     virtual const MT_Vector2D& GetDirection() const;

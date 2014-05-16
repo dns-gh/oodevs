@@ -11,18 +11,12 @@
 #include "DEC_PathResult.h"
 #include "DEC_PathPoint.h"
 #include "MIL_AgentServer.h"
-#include "SlopeSpeedModifier.h"
 #include "Decision/DEC_PathType.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "meteo/PHY_MeteoDataManager.h"
-#include "meteo/RawVisionData/Elevation.h"
-#include "meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Network/NET_ASN_Tools.h"
-#include "protocol/Authentication.h"
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
-#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathResult constructor
@@ -278,78 +272,6 @@ void DEC_PathResult::Serialize( sword::Path& asn, int firstPoint, int pathSizeTh
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathResult::Serialize
-// Created: LGY 2014-04-02
-// -----------------------------------------------------------------------------
-void DEC_PathResult::Serialize( sword::PathResult& msg ) const
-{
-    unsigned int index = 0;
-    for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
-    {
-        auto point = msg.add_points();
-        const MT_Vector2D& position = (*it)->GetPos();
-        const bool partial = (*it)->IsPartial();
-        if( (*it)->IsWaypoint() || partial )
-        {
-            point->set_waypoint( index++ );
-            point->set_reached( !partial );
-        }
-        NET_ASN_Tools::WritePoint( position, *point->mutable_coordinate() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathResult::AddResultPoint
-// Created: NLD 2005-02-22
-// -----------------------------------------------------------------------------
-void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint )
-{
-    if( bSectionJustStarted_ )
-    {
-        bSectionJustStarted_ = false;
-        // skip the first next point of the new section
-        if( !resultList_.empty() )
-            return;
-    }
-    if( !resultList_.empty() )
-    {
-        SlopeSpeedModifier slopeSpeedModifier;
-        const PHY_RawVisionData& elevation = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
-        auto decelerationFunc = boost::bind( &SlopeSpeedModifier::ComputeLocalSlope, &slopeSpeedModifier, boost::cref( elevation ), _1, _2 );
-        const MT_Vector2D& startPoint = resultList_.back()->GetPos();
-        SplitOnMajorGridLines( static_cast< int32_t >( elevation.GetCellSize() ),
-                startPoint, vPos, decelerationFunc );
-        const SlopeSpeedModifier::T_Slopes& slopes = slopeSpeedModifier.GetSlopes();
-        for( auto itSlope = slopes.begin(); itSlope != slopes.end(); ++itSlope )
-        {
-            auto itPoint = resultList_.rbegin();
-            while( itPoint != resultList_.rend() && !( *itPoint )->IsSlopeValid() )
-                ( *itPoint++ )->SetSlope( itSlope->second );
-            if( itSlope->second > 0 && itSlope + 1 != slopes.end() )
-            {
-                const MT_Line segment( startPoint, vPos );
-                const MT_Vector2D projected = segment.ProjectPointOnLine( ( itSlope + 1 )->first );
-                auto point = boost::make_shared< DEC_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
-                resultList_.push_back( point );
-            }
-        }
-    }
-    auto point = boost::make_shared< DEC_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
-    resultList_.push_back( point );
-    if( resultList_.size() == 1 )
-        itCurrentPathPoint_ = resultList_.begin();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathResult::NotifySectionStarted
-// Created: AGE 2005-09-01
-// -----------------------------------------------------------------------------
-void DEC_PathResult::NotifySectionStarted()
-{
-    bSectionJustStarted_ = true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathResult::NotifyPointReached
 // Created: LDC 2012-01-18
 // -----------------------------------------------------------------------------
@@ -369,6 +291,12 @@ const DEC_PathResult::T_PathPoints& DEC_PathResult::GetResult() const
     return resultList_;
 }
 
+void DEC_PathResult::SetResult( T_PathPoints points )
+{
+    resultList_ = points;
+    itCurrentPathPoint_ = resultList_.begin();
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathResult::GetPathType
 // Created: CMA 2012-03-29
@@ -376,31 +304,4 @@ const DEC_PathResult::T_PathPoints& DEC_PathResult::GetResult() const
 const DEC_PathType& DEC_PathResult::GetPathType() const
 {
     return pathType_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathResult::NotifyPartialSection
-// Created: LGY 2014-04-03
-// -----------------------------------------------------------------------------
-void DEC_PathResult::NotifyPartialSection()
-{
-    if( !resultList_.empty() )
-        resultList_.back()->NotifyPartial();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathResult::NotifyCompletedSection
-// Created: LGY 2014-04-03
-// -----------------------------------------------------------------------------
-void DEC_PathResult::NotifyCompletedSection()
-{
-    if( !resultList_.empty() )
-        resultList_.back()->NotifyWaypoint();
-}
-
-boost::optional< MT_Vector2D > DEC_PathResult::GetLastPosition() const
-{
-    if( resultList_.empty() )
-        return boost::none;
-    return resultList_.back()->GetPos();
 }

@@ -14,7 +14,7 @@
 
 class MIL_AgentPion;
 class DEC_PathFind_Manager;
-class DEC_PathResult;
+class DEC_PathComputer;
 class MIL_Population;
 class MT_Vector2D;
 class PathRequest;
@@ -47,7 +47,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    uint32_t Compute( const boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
+    uint32_t Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& request,
                       unsigned int ctx, unsigned int clientId, bool store );
     //@}
 

@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "DEC_Agent_PathfinderPath.h"
+#include "DEC_AgentContext.h"
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject.h"
@@ -49,7 +49,7 @@ namespace
     }
 }
 
-DEC_Agent_PathfinderPath::DEC_Agent_PathfinderPath( const MIL_Agent_ABC& agent, const DEC_Agent_PathClass& pathClass, const T_PointVector& points )
+DEC_AgentContext::DEC_AgentContext( const MIL_Agent_ABC& agent, const DEC_Agent_PathClass& pathClass, const T_PointVector& points )
     : fuseau_( agent.GetOrderManager().GetFuseau() )
     , automataFuseau_( agent.GetAutomate().GetOrderManager().GetFuseau() )
     , dangerDirection_( agent.GetOrderManager().GetDirDanger() )
@@ -63,7 +63,7 @@ DEC_Agent_PathfinderPath::DEC_Agent_PathfinderPath( const MIL_Agent_ABC& agent, 
     Initialize( agent, points );
 }
 
-void DEC_Agent_PathfinderPath::Initialize( const MIL_Agent_ABC& agent, const T_PointVector& points )
+void DEC_AgentContext::Initialize( const MIL_Agent_ABC& agent, const T_PointVector& points )
 {
     if( class_.AvoidEnemies() )
     {
@@ -84,6 +84,7 @@ void DEC_Agent_PathfinderPath::Initialize( const MIL_Agent_ABC& agent, const T_P
             }
         }
     }
+    assert( class_.AvoidEnemies() || pathKnowledgeAgents_.empty() );
 
     // Objects
     if( class_.AvoidObjects() )
@@ -131,6 +132,7 @@ void DEC_Agent_PathfinderPath::Initialize( const MIL_Agent_ABC& agent, const T_P
             }
         }
     }
+    assert( class_.AvoidObjects() || pathKnowledgeObjects_.empty() );
 
     // Populations
     if( class_.HandlePopulations() )
@@ -144,66 +146,69 @@ void DEC_Agent_PathfinderPath::Initialize( const MIL_Agent_ABC& agent, const T_P
             for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
                 pathKnowledgePopulations_.push_back( boost::make_shared< DEC_Path_KnowledgePopulation >( **it, class_, !agent.GetType().IsTerrorist() ) );
         }
-
     }
+    assert( class_.HandlePopulations() || pathKnowledgePopulations_.empty() );
 }
 
-const MIL_Fuseau& DEC_Agent_PathfinderPath::GetFuseau() const
+const MIL_Fuseau& DEC_AgentContext::GetFuseau() const
 {
     return fuseau_;
 }
 
-const MIL_Fuseau& DEC_Agent_PathfinderPath::GetAutomataFuseau() const
+const MIL_Fuseau& DEC_AgentContext::GetAutomataFuseau() const
 {
     return automataFuseau_;
 }
 
-const PHY_Speeds& DEC_Agent_PathfinderPath::GetUnitSpeeds() const
+const PHY_Speeds& DEC_AgentContext::GetUnitSpeeds() const
 {
     return speeds_;
 }
 
-const MT_Vector2D& DEC_Agent_PathfinderPath::GetDirDanger() const
+const MT_Vector2D& DEC_AgentContext::GetDirDanger() const
 {
     return dangerDirection_;
 }
 
-const DEC_Agent_PathClass& DEC_Agent_PathfinderPath::GetPathClass() const
+const DEC_Agent_PathClass& DEC_AgentContext::GetPathClass() const
 {
     return class_;
 }
 
-double DEC_Agent_PathfinderPath::GetUnitMaxSlope() const
+double DEC_AgentContext::GetUnitMaxSlope() const
 {
     return maxSlope_;
 }
 
-double DEC_Agent_PathfinderPath::GetUnitSlopeDeceleration() const
+double DEC_AgentContext::GetUnitSlopeDeceleration() const
 {
     return slopeDeceleration_;
 }
 
-double DEC_Agent_PathfinderPath::GetUnitMajorWeight() const
+double DEC_AgentContext::GetUnitMajorWeight() const
 {
     return majorWeight_;
 }
 
-double DEC_Agent_PathfinderPath::GetCostOutsideOfAllObjects() const
+double DEC_AgentContext::GetCostOutsideOfAllObjects() const
 {
     return costOutsideOfAllObjects_;
 }
 
-const DEC_Agent_PathfinderPath::T_PathKnowledgeAgentVector& DEC_Agent_PathfinderPath::GetPathKnowledgeAgents() const
+const DEC_AgentContext::T_PathKnowledgeAgentVector& DEC_AgentContext::GetPathKnowledgeAgents() const
 {
+    assert( class_.AvoidEnemies() || pathKnowledgeAgents_.empty() );
     return pathKnowledgeAgents_;
 }
 
-const DEC_Agent_PathfinderPath::T_PathKnowledgeObjectByTypesVector& DEC_Agent_PathfinderPath::GetPathKnowledgeObjects() const
+const DEC_AgentContext::T_PathKnowledgeObjectByTypesVector& DEC_AgentContext::GetPathKnowledgeObjects() const
 {
+    assert( class_.AvoidObjects() || pathKnowledgeObjects_.empty() );
     return pathKnowledgeObjects_;
 }
 
-const DEC_Agent_PathfinderPath::T_PathKnowledgePopulationVector& DEC_Agent_PathfinderPath::GetPathKnowledgePopulations() const
+const DEC_AgentContext::T_PathKnowledgePopulationVector& DEC_AgentContext::GetPathKnowledgePopulations() const
 {
+    assert( class_.HandlePopulations() || pathKnowledgePopulations_.empty() );
     return pathKnowledgePopulations_;
 }
