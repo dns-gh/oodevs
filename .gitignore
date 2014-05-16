@@ -1,5 +1,6 @@
 /bin/
 /build/parser.out
+/data/proto-master/
 /dist/
 /out/
 *.pyc
