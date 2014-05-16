@@ -823,6 +823,11 @@ const ActionParam pathfind_creation_params[] =
 {
     { "Itinerary", "itinerary", 0, 0, 0, 0 },
 };
+
+const ActionParam pathfind_destruction_params[] =
+{
+    { "Identifier", "identifier", 0, 0, 0, 0 },
+};
 }  // namespace
 
 const Action actions[] =
@@ -910,13 +915,13 @@ const Action actions[] =
     ACTION( local_weather ),
     ACTION( local_weather_destruction ),
     ACTION( pathfind_creation ),
+    ACTION( pathfind_destruction ),
     ACTION( select_diagnosis_team ),
     ACTION( select_maintenance_transporter ),
     ACTION( select_new_logistic_state ),
     ACTION( select_repair_team ),
     ACTION( transfer_to_logistic_superior ),
     ACTION_EMPTY( debug_internal ),
-    ACTION_EMPTY( pathfind_destruction ),
 };
 const size_t actionsCount = COUNT_OF( actions );
 BOOST_STATIC_ASSERT( actionsCount ==

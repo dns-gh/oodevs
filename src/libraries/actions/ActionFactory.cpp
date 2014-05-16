@@ -974,3 +974,13 @@ Action_ABC* ActionFactory::CreatePathfindCreation( const kernel::Entity_ABC& ent
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     return action.release();
 }
+
+Action_ABC* ActionFactory::CreatePathfindDestruction( uint32_t id ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "pathfind_destruction" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), id ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}

@@ -323,6 +323,12 @@ int ActionsModel::PublishCreatePathfind( const kernel::Entity_ABC& entity, const
     return Publish( *action );
 }
 
+int ActionsModel::PublishDestroyPathfind( uint32_t id )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreatePathfindDestruction( id ) );
+    return Publish( *action );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11

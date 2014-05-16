@@ -107,6 +107,7 @@ public:
     virtual Action_ABC* CreateLocalDestruction( unsigned int weatherId ) const;
 
     virtual Action_ABC* CreatePathfindCreation( const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points ) const;
+    virtual Action_ABC* CreatePathfindDestruction( uint32_t id ) const;
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const;
     //@}

@@ -2194,12 +2194,10 @@ void MIL_EntityManager::OnReceivePathfindDestruction( const sword::MagicAction& 
     const auto& params = message.parameters();
     protocol::CheckCount( params, 1 );
     const auto id = protocol::GetIdentifier( params, 0 );
-    if( !pathfindComputer_->Destroy( id ) )
-    {
-        ack.set_error_code( MagicActionAck::error_invalid_parameter );
-        ack.set_error_msg( "invalid pathfind identifier");
-    }
-    ack.mutable_result()->add_elem()->add_value()->set_identifier( id );
+    if( pathfindComputer_->Destroy( id ) )
+        return;
+    ack.set_error_code( MagicActionAck::error_invalid_parameter );
+    ack.set_error_msg( "invalid pathfind identifier");
 }
 
 // -----------------------------------------------------------------------------

@@ -2782,3 +2782,11 @@ message PathfindCreation {
     //! Computed path
     required PathResult path        = 3;
 }
+
+/** @struct PathfindDestruction
+    @brief Notifies of the destruction of a pathfind
+*/
+message PathfindDestruction {
+    //! The pathfind identifier
+    required Id         id          = 1;
+}

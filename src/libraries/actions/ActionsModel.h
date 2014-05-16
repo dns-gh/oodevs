@@ -130,6 +130,7 @@ public:
     int PublishLocalWeather( const ::gui::LocalWeatherParameters& params );
     int PublishLocalDestruction( unsigned int weatherId );
     int PublishCreatePathfind( const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points );
+    int PublishDestroyPathfind( uint32_t id );
     //@}
 
 private:

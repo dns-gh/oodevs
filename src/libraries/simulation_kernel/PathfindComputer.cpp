@@ -155,5 +155,10 @@ void PathfindComputer::Compute( const boost::shared_ptr< DEC_PathComputer >& com
 // -----------------------------------------------------------------------------
 bool PathfindComputer::Destroy( uint32_t pathfind )
 {
-    return results_.erase( pathfind ) > 0;
+    if( !results_.erase( pathfind ) )
+        return false;
+    client::PathfindDestruction msg;
+    msg().mutable_id()->set_id( pathfind );
+    msg.Send( NET_Publisher_ABC::Publisher() );
+    return true;
 }
