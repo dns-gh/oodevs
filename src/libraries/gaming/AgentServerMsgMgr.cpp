@@ -1850,7 +1850,7 @@ namespace
         reflect->ListFields( *message, &fields );
         BOOST_FOREACH( const T_Fields::value_type& field, fields )
             if( reflect->HasField( *message, field ) )
-                m << "Unhandled message  " << message->GetDescriptor()->full_name() << " of type: " << field->name() << std::endl;
+                m << " Unhandled message " << message->GetDescriptor()->full_name() << " of type: " << field->name() << std::endl;
         throw MASA_EXCEPTION( m.str() );
     }
 }
