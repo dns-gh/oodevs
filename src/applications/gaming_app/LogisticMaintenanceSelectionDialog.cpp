@@ -423,14 +423,13 @@ void LogisticMaintenanceSelectionDialog::UpdateDisplay()
     if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
     {
         manual &= parts_->IsValid();
-        const QString text = tr( "Estimated repair duration: %1" );
+        QString duration = tr( "N/A" );
         if( !breakdownTypes_.GetRepairDurationInManHours() )
-            duration_->setText( text.arg( tools::DurationFromSeconds( breakdownType_->GetRepairTime() ) ) );
+            duration = tools::DurationFromSeconds( breakdownType_->GetRepairTime() );
         else if( availability_ && availability_->entity_ && availability_->type_ )
-            duration_->setText( text.arg( tools::DurationFromSeconds( CeiledDivision( breakdownType_->GetRepairTime(),
-                                                                                      GetNbHumans( *availability_ ) ) ) ) );
-        else
-            duration_->setText( tr( "Select repair team" ) );
+            duration = tools::DurationFromSeconds( CeiledDivision( breakdownType_->GetRepairTime(),
+                                                                   GetNbHumans( *availability_ ) ) );
+        duration_->setText( tr( "Estimated repair duration: %1" ).arg( duration ) );
     }
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         manual &= destinationBox_->isChecked() && selectedDestination_ || !destinationBox_->isChecked();
