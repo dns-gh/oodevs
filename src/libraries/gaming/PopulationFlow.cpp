@@ -182,16 +182,16 @@ float PopulationFlow::GetHeight( bool ) const
 
 namespace
 {
-    void SelectColor( E_PopulationAttitude attitude )
+    void SelectColor( E_PopulationAttitude attitude, GLfloat alpha )
     {
         if( attitude == ePopulationAttitude_Agressive )
-            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE );
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE, alpha );
         else if( attitude == ePopulationAttitude_Excitee )
-            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED );
+            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED, alpha );
         else if( attitude == ePopulationAttitude_Agitee )
-            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED );
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED, alpha );
         else // ePopulationAttitude_Calme
-            glColor4f( COLOR_POPULATION_ATTITUDE_CALM );
+            glColor4f( COLOR_POPULATION_ATTITUDE_CALM, alpha );
     }
 }
 
@@ -201,14 +201,19 @@ namespace
 // -----------------------------------------------------------------------------
 void PopulationFlow::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& , gui::GlTools_ABC& tools ) const
 {
+    const bool drawingMode = !tools.IsPickingMode();
     glPushAttrib( GL_LINE_BIT );
         glLineWidth( 10.f );
         glPushAttrib( GL_CURRENT_BIT );
-            if( !tools.IsPickingMode() )
-                SelectColor( attitude_ );
+            if( drawingMode )
+            {
+                GLfloat currentColor[ 4 ];
+                glGetFloatv( GL_CURRENT_COLOR, currentColor );
+                SelectColor( attitude_, currentColor[ 3 ] );
+            }
             tools.DrawLines( flow_ );
         glPopAttrib();
-        if( !tools.IsPickingMode() )
+        if( drawingMode )
         {
             glLineWidth( 8.f );
             tools.DrawLines( flow_ );
@@ -219,7 +224,7 @@ void PopulationFlow::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& , 
     if( displayPath )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
-            if( !tools.IsPickingMode() )
+            if( drawingMode )
                 glColor4f( COLOR_PATH );
             glLineWidth( 3 );
             glEnable( GL_LINE_STIPPLE );

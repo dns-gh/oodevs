@@ -66,7 +66,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::CrowdConcentrationUpdate& message );
-    void SelectRightPartColor() const;
+    void SelectRightPartColor( GLfloat alpha ) const;
     QColor GetColor( const std::string& option, const QColor& defaultColor ) const;
     //@}
 
