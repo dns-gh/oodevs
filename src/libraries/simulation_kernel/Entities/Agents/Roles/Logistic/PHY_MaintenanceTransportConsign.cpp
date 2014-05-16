@@ -10,19 +10,20 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "PHY_MaintenanceTransportConsign.h"
-#include "PHY_RoleInterface_Maintenance.h"
-#include "PHY_MaintenanceComposanteState.h"
-#include "OnComponentComputer_ABC.h"
-#include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes//PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include "OnComponentComputer_ABC.h"
+#include "PHY_MaintenanceComposanteState.h"
+#include "PHY_RoleInterface_Maintenance.h"
+#include "Tools/NET_AsnException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceTransportConsign )
 
@@ -324,7 +325,7 @@ void PHY_MaintenanceTransportConsign::SelectNewState()
     if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter, 0 ); };
     else
-        throw MASA_EXCEPTION( "transport consign not in a waiting state" );
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved, "transport consign not in a waiting state" );
 }
 
 void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
@@ -338,9 +339,11 @@ void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
 void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, boost::optional< const MIL_Agent_ABC& > destination )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-        throw MASA_EXCEPTION( "transport consign not in a waiting for transporter selection state" );
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
+            "transport consign not in a waiting for transporter selection state" );
     if( component_ )
-        throw MASA_EXCEPTION( "transport consign already has a repair team selected" );
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
+            "transport consign already has a repair team selected" );
     component_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType(), &type );
     destination_ = destination;
     if( component_ )
@@ -349,7 +352,8 @@ void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_Co
         next_ = [&]() { EnterStateCarrierGoingTo(); };
     }
     else if( !FindAlternativeTransportUnit( &type ) )
-        throw MASA_EXCEPTION( "no component of specified type available for maintenance transporter selection" );
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::transporter_unavailable,
+            "no component of specified type available for maintenance transporter selection" );
 }
 
 void PHY_MaintenanceTransportConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& /*type*/ )

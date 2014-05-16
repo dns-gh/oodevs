@@ -73,6 +73,7 @@
 #include "Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Logistic/ConsignHelper.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Logistic/SupplyDotationManualRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
@@ -2190,7 +2191,7 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
 namespace
 {
     template< typename Agents, typename Func >
-    void ApplyOnRequest( const Agents& agents, uint32_t id, const Func& f )
+    void ApplyOnRequest( const Agents& agents, uint32_t id, const Func& f, client::MagicActionAck& ack )
     {
         PHY_MaintenanceComposanteState* request = 0;
         agents.Apply( [&]( const MIL_AgentPion& p )
@@ -2200,11 +2201,21 @@ namespace
         } );
         if( !request )
             throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid log request identifier" );
-        f( *request );
+
+        try
+        {
+            f( *request );
+        }
+        catch( const NET_AsnBadParam< sword::ManualMaintenanceError >& e )
+        {
+            ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
+            ack().set_error_msg( tools::GetExceptionMsg( e ) );
+            ack().mutable_result()->add_elem()->add_value()->set_identifier( e.GetErrorID() );
+        }
     }
 }
 
-void MIL_EntityManager::OnReceiveSelectNewLogisticState( const sword::MagicAction& msg )
+void MIL_EntityManager::OnReceiveSelectNewLogisticState( const sword::MagicAction& msg, client::MagicActionAck& ack )
 {
     const auto& params = msg.parameters();
     protocol::CheckCount( params, 1 );
@@ -2212,10 +2223,10 @@ void MIL_EntityManager::OnReceiveSelectNewLogisticState( const sword::MagicActio
     ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request )
     {
         request.SelectNewState();
-    } );
+    }, ack );
 }
 
-void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicAction& msg )
+void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicAction& msg, client::MagicActionAck& ack )
 {
     const auto& params = msg.parameters();
     protocol::CheckCount( params, 1 );
@@ -2223,10 +2234,10 @@ void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicA
     ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request )
     {
         request.TransferToLogisticSuperior();
-    } );
+    }, ack );
 }
 
-void MIL_EntityManager::OnReceiveSelectDiagnosisTeam( const sword::MagicAction& message )
+void MIL_EntityManager::OnReceiveSelectDiagnosisTeam( const sword::MagicAction& message, client::MagicActionAck& ack )
 {
     const auto& params = message.parameters();
     protocol::CheckCount( params, 2 );
@@ -2236,10 +2247,10 @@ void MIL_EntityManager::OnReceiveSelectDiagnosisTeam( const sword::MagicAction& 
     ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
     {
         request.SelectDiagnosisTeam( *equipment );
-    } );
+    }, ack );
 }
 
-void MIL_EntityManager::OnReceiveSelectRepairTeam( const sword::MagicAction& message )
+void MIL_EntityManager::OnReceiveSelectRepairTeam( const sword::MagicAction& message, client::MagicActionAck& ack )
 {
     const auto& params = message.parameters();
     protocol::CheckCount( params, 2 );
@@ -2249,14 +2260,14 @@ void MIL_EntityManager::OnReceiveSelectRepairTeam( const sword::MagicAction& mes
     ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
     {
         request.SelectRepairTeam( *equipment );
-    } );
+    }, ack );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveSelectMaintenanceTransporter
 // Created: SLI 2014-01-30
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::MagicAction& message )
+void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::MagicAction& message, client::MagicActionAck& ack )
 {
     const auto& params = message.parameters();
     const unsigned int count = protocol::CheckCount( params, 2, 3 );
@@ -2273,7 +2284,7 @@ void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::Magi
     ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
     {
         request.SelectMaintenanceTransporter( *equipment, destination );
-    } );
+    }, ack );
 }
 
 // -----------------------------------------------------------------------------

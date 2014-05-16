@@ -1687,18 +1687,6 @@ Voulez-vous le remplacer ?</translation>
         <translation>Demander l&apos;évacuation par le supérieur logistique</translation>
     </message>
     <message>
-        <source>Select tow truck</source>
-        <translation>Sélectionner un remorqueur</translation>
-    </message>
-    <message>
-        <source>Request #%1 - %2</source>
-        <translation>Requête #%1 - %2</translation>
-    </message>
-    <message>
-        <source>Select diagnosis team</source>
-        <translation>Sélectionner une équipe de diagnostique</translation>
-    </message>
-    <message>
         <source>SWORD</source>
         <translation>SWORD</translation>
     </message>
@@ -1707,20 +1695,48 @@ Voulez-vous le remplacer ?</translation>
         <translation>Cette requête ne peut être resolue.</translation>
     </message>
     <message>
-        <source>Select repair team</source>
-        <translation>Sélectionner une équipe de réparation</translation>
+        <source>Select diagnosis / repair unit</source>
+        <translation>Sélectionner l&apos;unité de diagnostique / réparation</translation>
+    </message>
+    <message>
+        <source>The diagnosis team is unavailable.</source>
+        <translation>L&apos;unité de diagnostique est indisponible.</translation>
+    </message>
+    <message>
+        <source>The repair team is unavailable.</source>
+        <translation>L&apos;unité de diagnostique / réparation est indisponible.</translation>
+    </message>
+    <message>
+        <source>The request is already resolved.</source>
+        <translation>Cette requête est déjà resolue.</translation>
     </message>
     <message>
         <source>No response received from the simulation.</source>
         <translation>Aucune réponse reçue de la simulation.</translation>
     </message>
     <message>
+        <source>Request #%1 - %2</source>
+        <translation>Requête #%1 - %2</translation>
+    </message>
+    <message>
+        <source>Select tow truck</source>
+        <translation>Sélectionner un remorqueur</translation>
+    </message>
+    <message>
+        <source>Select diagnosis team</source>
+        <translation>Sélectionner l&apos;unité de diagnostique / réparation</translation>
+    </message>
+    <message>
+        <source>Select repair team</source>
+        <translation>Sélectionner une équipe de réparation</translation>
+    </message>
+    <message>
         <source>Estimated repair duration: %1</source>
         <translation>Durée de réparation estimée : %1</translation>
     </message>
     <message>
-        <source>Select diagnosis / repair unit</source>
-        <translation>Sélectionner l&apos;unité de diagnostique / réparation</translation>
+        <source>The tow truck is unavailable.</source>
+        <translation>Le remorqueur est indisponible.</translation>
     </message>
 </context>
 <context>

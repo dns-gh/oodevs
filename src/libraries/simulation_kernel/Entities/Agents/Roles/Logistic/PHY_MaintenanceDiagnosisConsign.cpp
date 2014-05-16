@@ -10,17 +10,18 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceDiagnosisConsign.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "PHY_RoleInterface_Maintenance.h"
-#include "PHY_MaintenanceComposanteState.h"
-#include "OnComponentComputer_ABC.h"
-#include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes//PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include "OnComponentComputer_ABC.h"
+#include "PHY_MaintenanceComposanteState.h"
+#include "PHY_RoleInterface_Maintenance.h"
+#include "Tools/NET_AsnException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceDiagnosisConsign )
 
@@ -122,7 +123,8 @@ void PHY_MaintenanceDiagnosisConsign::SelectNewState()
     if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
         next_ = [&]() { EnterStateDiagnosing(); };
     else
-        throw MASA_EXCEPTION( "transport consign not in a waiting state" );
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
+            "transport consign not in a waiting state" );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,9 +164,11 @@ void PHY_MaintenanceDiagnosisConsign::SelectMaintenanceTransporter( const PHY_Co
 void PHY_MaintenanceDiagnosisConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
-        throw MASA_EXCEPTION( "diagnosis consign not in a waiting for diagnosis team selection state" );
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
+            "diagnosis consign not in a waiting for diagnosis team selection state" );
     if( component_ )
-        throw MASA_EXCEPTION( "diagnosis consign already has a diagnosis team selected" );
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,
+            "diagnosis consign already has a diagnosis team selected" );
     component_ = GetPionMaintenance().GetAvailableDiagnoser( &type );
     if( component_ )
     {
@@ -172,7 +176,8 @@ void PHY_MaintenanceDiagnosisConsign::SelectDiagnosisTeam( const PHY_ComposanteT
         next_ = [&]() { EnterStateDiagnosing(); };
     }
     else if( !FindAlternativeDiagnosisTeam( &type ) )
-        throw MASA_EXCEPTION( "no component of specified type available for diagnosis team selection" );
+        throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::diagnosis_team_unavailable,
+            "no component of specified type available for diagnosis team selection" );
 }
 
 // -----------------------------------------------------------------------------
