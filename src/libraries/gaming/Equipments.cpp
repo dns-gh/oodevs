@@ -71,7 +71,7 @@ float Equipments::GetTotalWeight() const
 void Equipments::UpdateController()
 {
     controller_.Update( gui::DictionaryUpdated( entity_, property_ ) );
-    controller_.Update( *this );
+    controller_.Update( static_cast< const kernel::Equipments_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
