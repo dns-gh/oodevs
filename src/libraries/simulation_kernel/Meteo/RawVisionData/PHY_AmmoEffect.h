@@ -44,6 +44,4 @@ private:
     PHY_AmmoEffect* pNextEffect_;
 };
 
-#include "PHY_AmmoEffect.inl"
-
 #endif // __PHY_AmmoEffect_h_
