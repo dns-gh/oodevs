@@ -28,6 +28,7 @@
 #include "Model.h"
 #include "NotesModel.h"
 #include "ObjectsModel.h"
+#include "PathfindModel.h"
 #include "Profile.h"
 #include "ScoreDefinitions.h"
 #include "ScoreModel.h"
@@ -1990,6 +1991,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& /*from*/, const
         { &sword::SimToClient_Content::has_object_update,                               &AgentServerMsgMgr::OnReceiveObjectUpdate },
         { &sword::SimToClient_Content::has_order_ack,                                   &AgentServerMsgMgr::OnReceiveOrderAck },
         { &sword::SimToClient_Content::has_party_creation,                              &AgentServerMsgMgr::OnReceiveMsgPartyCreation },
+        { &sword::SimToClient_Content::has_pathfind_creation,                           &AgentServerMsgMgr::OnReceivePathfindCreation },
+        { &sword::SimToClient_Content::has_pathfind_destruction,                        &AgentServerMsgMgr::OnReceivePathfindDestruction },
         { &sword::SimToClient_Content::has_population_creation,                         &AgentServerMsgMgr::OnPopulationCreation },
         { &sword::SimToClient_Content::has_population_update,                           &AgentServerMsgMgr::OnPopulationUpdate },
         { &sword::SimToClient_Content::has_report,                                      &AgentServerMsgMgr::OnReceiveMsgCR },
@@ -2378,4 +2381,14 @@ void AgentServerMsgMgr::UpdateHandlers( const sword::ReplayToClient& message )
 {
     for( auto it = replayHandlers_.begin(); it != replayHandlers_.end(); ++it )
         (*it)( message );
+}
+
+void AgentServerMsgMgr::OnReceivePathfindCreation( const sword::SimToClient& msg )
+{
+    GetModel().pathfinds_.Create( msg.message().pathfind_creation() );
+}
+
+void AgentServerMsgMgr::OnReceivePathfindDestruction( const sword::SimToClient& msg )
+{
+    GetModel().pathfinds_.Delete( msg.message().pathfind_destruction() );
 }

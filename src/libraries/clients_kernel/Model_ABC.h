@@ -20,6 +20,7 @@ namespace kernel
     class Agent_ABC;
     class KnowledgeGroup_ABC;
     class Object_ABC;
+    class Pathfind_ABC;
     class Population_ABC;
     class Inhabitant_ABC;
     class UrbanObject_ABC;

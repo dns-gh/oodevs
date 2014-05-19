@@ -341,6 +341,11 @@ private:
     void OnReceiveBurningCellRequestAck( const sword::SimToClient& msg );
     //@}
 
+    // Pathfinds
+    void OnReceivePathfindCreation   ( const sword::SimToClient& msg );
+    void OnReceivePathfindDestruction( const sword::SimToClient& msg );
+    //@}
+
     //! @name Helpers
     //@{
     Model& GetModel() const;
