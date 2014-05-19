@@ -24,7 +24,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
-#include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -59,10 +58,7 @@ namespace
         const auto computer = boost::make_shared< DEC_PathComputer >( agent.GetID() );
         const auto path = boost::make_shared< DEC_Agent_Path >( agent, points, pathType, computer );
         if( !IsDestinationTrafficable( agent, points ) )
-        {
-            agent.GetRole< moving::PHY_RoleAction_Moving >().SendRC( report::eRC_TerrainDifficile );
             path->Cancel();
-        }
         else
             MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer );
         return path;

@@ -14,6 +14,7 @@
 #include "MIL_AgentServer.h"
 #include "DisasterImpactComputer.h"
 #include "PHY_RoleAction_Moving.h"
+#include "MIL_AgentServer.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_PathComputer.h"
 #include "Decision/DEC_PathFind_Manager.h"
@@ -27,15 +28,15 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/DisasterAttribute.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
-#include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Objects/MIL_ObjectFilter.h"
 #include "propagation/Extractor_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/make_shared.hpp>
@@ -59,7 +60,10 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     if( suspended )
         Suspend();
     if( pMainPath_->GetState() == DEC_Path_ABC::eCanceled )
-       CreateNewPath();
+    {
+        pion.GetRole< moving::PHY_RoleAction_Moving >().SendRC( report::eRC_TerrainDifficile );
+        CreateNewPath();
+    }
 }
 
 // -----------------------------------------------------------------------------
