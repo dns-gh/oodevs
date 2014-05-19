@@ -1781,21 +1781,15 @@ func ReadPathPoints(pathPoints []*sword.PathPoint) []PathPoint {
 	return points
 }
 
-func (c *Client) PathfindRequest(unitId uint32, position ...Point) ([]PathPoint, error) {
-	positions := make([]*sword.CoordLatLong, len(position))
+func (c *Client) PathfindRequest(request *sword.PathfindRequest, position ...Point) ([]PathPoint, error) {
+	request.Positions = make([]*sword.CoordLatLong, len(position))
 	for i, p := range position {
-		positions[i] = MakeCoordLatLong(p)
+		request.Positions[i] = MakeCoordLatLong(p)
 	}
-
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
-				ComputePathfind: &sword.ComputePathfind{
-					Request: &sword.PathfindRequest{
-						Unit:      MakeId(unitId),
-						Positions: positions,
-					},
-				},
+				ComputePathfind: &sword.ComputePathfind{Request: request},
 			},
 		},
 	}
@@ -1814,6 +1808,22 @@ func (c *Client) PathfindRequest(unitId uint32, position ...Point) ([]PathPoint,
 	}
 	err := <-c.postSimRequest(msg, handler)
 	return points, err
+}
+
+func (c *Client) UnitPathfindRequest(unitId uint32, position ...Point) ([]PathPoint, error) {
+	return c.PathfindRequest(
+		&sword.PathfindRequest{
+			Unit: MakeId(unitId),
+		}, position...)
+}
+
+func (c *Client) EquipmentListPathfindRequest(equipment uint32, position ...Point) ([]PathPoint, error) {
+	var eq []*sword.Id
+	eq = append(eq, &sword.Id{Id: proto.Uint32(equipment)})
+	return c.PathfindRequest(
+		&sword.PathfindRequest{
+			EquipmentTypes: eq,
+		}, position...)
 }
 
 func (c *Client) SegmentRequest(position Point, terrains []sword.TerrainType, count uint32) ([]Segment, error) {

@@ -51,7 +51,7 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 	})
 }
 
-func (s *TestSuite) TestPathfindRequest(c *C) {
+func (s *TestSuite) TestUnitPathfindRequest(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	client2 := loginAndWaitModel(c, sim, NewAllUserOpts(ExCrossroadSmallOrbat))
@@ -74,22 +74,69 @@ func (s *TestSuite) TestPathfindRequest(c *C) {
 	c.Assert(err, IsNil)
 
 	// Invalid unit id
-	_, err = client.PathfindRequest(12345, from, to)
+	_, err = client.UnitPathfindRequest(12345, from, to)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid path
-	_, err = client.PathfindRequest(unit.Id)
+	_, err = client.UnitPathfindRequest(unit.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Pathfind request from -> to
-	points, err := client.PathfindRequest(unit.Id, from, to)
+	points, err := client.UnitPathfindRequest(unit.Id, from, to)
 	c.Assert(err, IsNil)
 	c.Assert(len(points), Greater, 1)
 	c.Assert(from, IsNearby, points[0].Point)
 	c.Assert(to, IsNearby, points[len(points)-1].Point)
 
 	// Pathfind request from -> from
-	points, err = client.PathfindRequest(unit.Id, from, from)
+	points, err = client.UnitPathfindRequest(unit.Id, from, from)
+	c.Assert(err, IsNil)
+	c.Assert(len(points), Equals, 2)
+	c.Assert(from, IsNearby, points[0].Point)
+	c.Assert(from, IsNearby, points[1].Point)
+
+	// No other client can receive the acknowledge
+	client2.Unregister(handlerId)
+	c.Assert(seen, Equals, false)
+}
+
+func (s *TestSuite) TestEquipmentListPathfindRequest(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer stopSimAndClient(c, sim, client)
+	client2 := loginAndWaitModel(c, sim, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer client2.Close()
+	seen := false
+	handlerId := client2.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
+		if msg.SimulationToClient == nil || msg.SimulationToClient.GetMessage() == nil {
+			return false
+		}
+		if mm := msg.SimulationToClient.GetMessage().GetComputePathfindAck(); mm != nil {
+			seen = mm.Id == nil
+		}
+		return seen
+	})
+
+	from := swapi.Point{X: -15.9219, Y: 28.3456}
+	to := swapi.Point{X: -15.8193, Y: 28.3456}
+
+	// Invalid eq id
+	_, err := client.EquipmentListPathfindRequest(12345, from, to)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	const equipment = 11
+	// Invalid path
+	_, err = client.EquipmentListPathfindRequest(equipment)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Pathfind request from -> to
+	points, err := client.EquipmentListPathfindRequest(equipment, from, to)
+	c.Assert(err, IsNil)
+	c.Assert(len(points), Greater, 1)
+	c.Assert(from, IsNearby, points[0].Point)
+	c.Assert(to, IsNearby, points[len(points)-1].Point)
+
+	// Pathfind request from -> from
+	points, err = client.EquipmentListPathfindRequest(equipment, from, from)
 	c.Assert(err, IsNil)
 	c.Assert(len(points), Equals, 2)
 	c.Assert(from, IsNearby, points[0].Point)
@@ -128,7 +175,7 @@ func (s *TestSuite) TestPointOrder(c *C) {
 	unit, err := client.CreateUnit(automat.Id, UnitType, positions[0])
 	c.Assert(err, IsNil)
 
-	points, err := client.PathfindRequest(unit.Id, positions...)
+	points, err := client.UnitPathfindRequest(unit.Id, positions...)
 	c.Assert(err, IsNil)
 	CheckWaypoints(c, positions, points, []bool{true, true, true, true})
 
@@ -139,7 +186,7 @@ func (s *TestSuite) TestPointOrder(c *C) {
 		swapi.Point{X: -15.932953364977887, Y: 28.365605325676778},
 		swapi.Point{X: -15.946757028026328, Y: 28.378285449675836}} // invalid
 
-	points, err = client.PathfindRequest(unit.Id, positions...)
+	points, err = client.UnitPathfindRequest(unit.Id, positions...)
 	c.Assert(err, IsNil)
 	CheckWaypoints(c, positions, points, []bool{true, true, false, true, false})
 }
