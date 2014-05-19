@@ -195,3 +195,244 @@ func (s *TestSuite) TestSupplyRequests(c *C) {
 	checkRequestUpdates(c, admin, client, unit.AutomatId, supplierId,
 		uint32(electrogen_1), removeElectrogen_1)
 }
+
+func (s *TestSuite) TestSupplyRequestsDotations(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	resources := []swapi.Quantity{}
+
+	// Invalid tasker identifier
+	err := client.CreateBasicLoadSupplyRequests(InvalidIdentifier, InvalidIdentifier,
+		InvalidIdentifier, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Tasker should be an automaton or a logistics base
+	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
+	err = client.CreateBasicLoadSupplyRequests(unit.Id, InvalidIdentifier,
+		InvalidIdentifier, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Invalid supplier identifier
+	automatId := getSomeAutomatByName(c, d, "Supply Mobile Infantry Platoon").Id
+	err = client.CreateBasicLoadSupplyRequests(automatId, InvalidIdentifier,
+		InvalidIdentifier, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Invalid recipent identifier
+	supplierId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
+	SetManualSupply(c, client, supplierId, true)
+	err = client.CreateBasicLoadSupplyRequests(automatId, supplierId, InvalidIdentifier, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// No request is created if no resources are below the low threshold
+	err = client.CreateBasicLoadSupplyRequests(automatId, supplierId, automatId, resources)
+	c.Assert(err, IsNil)
+	client.Model.WaitTicks(2)
+	d = client.Model.GetData()
+	c.Assert(d.SupplyRequests, HasLen, 0)
+
+	resource := &swapi.Resource{
+		Quantity:  0,
+		Threshold: 50,
+	}
+
+	// Create two supply requests
+	units := getUnitsFromAutomat(automatId, client.Model.GetData())
+	c.Assert(len(units), Greater, 2)
+	err = client.ChangeResource(units[0].Id, map[uint32]*swapi.Resource{
+		uint32(electrogen_1): resource})
+	c.Assert(err, IsNil)
+	err = client.ChangeResource(units[1].Id, map[uint32]*swapi.Resource{
+		uint32(electrogen_1): resource,
+		uint32(electrogen_2): resource,
+	})
+	c.Assert(err, IsNil)
+	err = client.ChangeResource(units[2].Id, map[uint32]*swapi.Resource{
+		uint32(electrogen_3): resource})
+	c.Assert(err, IsNil)
+
+	resources = []swapi.Quantity{{Id: uint32(electrogen_1), Quantity: 10},
+		{Id: uint32(electrogen_2), Quantity: 2500000}}
+	err = client.CreateBasicLoadSupplyRequests(automatId, supplierId, automatId, resources)
+	c.Assert(err, IsNil)
+
+	// electrogen_1 : unit1 : 10, unit2 : 10 => tolal: 20
+	// electrogen_2 : unit2 : 10  => tolal: 10
+	request1 := swapi.SupplyRequest{
+		ResourceId:  uint32(electrogen_1),
+		RequesterId: automatId,
+		SupplierId:  supplierId,
+		RecipientId: automatId,
+		Requested:   20,
+	}
+	request2 := swapi.SupplyRequest{
+		ResourceId:  uint32(electrogen_2),
+		RequesterId: automatId,
+		SupplierId:  supplierId,
+		RecipientId: automatId,
+		Requested:   10,
+	}
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		electrogen_1_request := false
+		electrogen_2_request := false
+		for _, request := range data.SupplyRequests {
+			if *request == request1 {
+				electrogen_1_request = true
+			} else if *request == request2 {
+				electrogen_2_request = true
+			}
+		}
+		return electrogen_1_request && electrogen_2_request
+	})
+
+	// Only two requests is created(no one for electrogen_3).
+	d = client.Model.GetData()
+	c.Assert(d.SupplyRequests, HasLen, 2)
+}
+
+func (s *TestSuite) TestSupplyAutomatRequestsStocks(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	resources := []swapi.Quantity{}
+
+	// Invalid tasker identifier
+	err := client.CreateStockSupplyRequests(InvalidIdentifier, InvalidIdentifier,
+		InvalidIdentifier, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Tasker should be an automaton or a logistics base
+	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
+	err = client.CreateStockSupplyRequests(unit.Id, InvalidIdentifier,
+		InvalidIdentifier, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Invalid supplier identifier
+	formationId := getSomeFormationByName(c, d, "Supply F3").Id
+	err = client.CreateStockSupplyRequests(formationId, InvalidIdentifier,
+		InvalidIdentifier, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Invalid recipent identifier
+	err = client.CreateStockSupplyRequests(formationId, formationId,
+		InvalidIdentifier, resources)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	recipentId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
+	SetManualSupply(c, client, recipentId, true)
+
+	// No request is created if no resources are below the low threshold
+	err = client.CreateStockSupplyRequests(formationId, formationId, recipentId, resources)
+	c.Assert(err, IsNil)
+	client.Model.WaitTicks(2)
+	d = client.Model.GetData()
+	c.Assert(d.SupplyRequests, HasLen, 0)
+
+	unit1 := getSomeUnitByName(c, d, "Supply Log Unit 1c")
+	err = client.RecoverStocks(unit1.Id,
+		map[uint32]*swapi.Resource{
+			uint32(electrogen_1): &swapi.Resource{
+				Quantity:  0,
+				Threshold: 50,
+			},
+			uint32(electrogen_3): &swapi.Resource{
+				Quantity:  0,
+				Threshold: 50,
+			}})
+	c.Assert(err, IsNil)
+
+	resources = []swapi.Quantity{{Id: uint32(electrogen_1), Quantity: 25000}}
+	err = client.CreateStockSupplyRequests(formationId, formationId, recipentId, resources)
+	c.Assert(err, IsNil)
+
+	request1 := swapi.SupplyRequest{
+		ResourceId:  uint32(electrogen_1),
+		RequesterId: formationId,
+		SupplierId:  formationId,
+		RecipientId: recipentId,
+		Requested:   50,
+	}
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, request := range data.SupplyRequests {
+			if *request == request1 {
+				return true
+			}
+		}
+		return false
+	})
+
+	// Only one request is created(no one for electrogen_1).
+	d = client.Model.GetData()
+	c.Assert(d.SupplyRequests, HasLen, 1)
+}
+
+func (s *TestSuite) TestSupplyFormationRequestsStocks(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+
+	bl1Id := getSomeFormationByName(c, d, "Supply F6").Id
+	bl2Id := getSomeFormationByName(c, d, "Supply F3").Id
+	tc21Id := getSomeAutomatByName(c, d, "Supply Log Automat 1h").Id
+	tc22Id := getSomeAutomatByName(c, d, "Supply Log Automat 1g").Id
+	SetManualSupply(c, client, tc21Id, true)
+	SetManualSupply(c, client, tc22Id, true)
+
+	err := client.RecoverStocks(tc21Id,
+		map[uint32]*swapi.Resource{
+			uint32(electrogen_2): &swapi.Resource{
+				Quantity:  0,
+				Threshold: 50,
+			}})
+	c.Assert(err, IsNil)
+
+	err = client.RecoverStocks(tc22Id,
+		map[uint32]*swapi.Resource{
+			uint32(electrogen_1): &swapi.Resource{
+				Quantity:  0,
+				Threshold: 50,
+			},
+			uint32(electrogen_2): &swapi.Resource{
+				Quantity:  0,
+				Threshold: 50,
+			}})
+	c.Assert(err, IsNil)
+
+	resources := []swapi.Quantity{{Id: uint32(electrogen_1), Quantity: 250},
+		{Id: uint32(electrogen_2), Quantity: 10}}
+	err = client.CreateStockSupplyRequests(bl2Id, bl2Id, bl1Id, resources)
+	c.Assert(err, IsNil)
+
+	// electrogen_1 : tc22Id : 50 => tolal: 50
+	// electrogen_2 : tc21Id : 10,  tc22Id : 10 => tolal: 20
+	request1 := swapi.SupplyRequest{
+		ResourceId:  uint32(electrogen_1),
+		RequesterId: bl2Id,
+		SupplierId:  bl2Id,
+		RecipientId: bl1Id,
+		Requested:   50,
+	}
+	request2 := swapi.SupplyRequest{
+		ResourceId:  uint32(electrogen_2),
+		RequesterId: bl2Id,
+		SupplierId:  bl2Id,
+		RecipientId: bl1Id,
+		Requested:   20,
+	}
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		electrogen_1_request := false
+		electrogen_2_request := false
+		for _, request := range data.SupplyRequests {
+			if *request == request1 {
+				electrogen_1_request = true
+			} else if *request == request2 {
+				electrogen_2_request = true
+			}
+		}
+		return electrogen_1_request && electrogen_2_request
+	})
+}
