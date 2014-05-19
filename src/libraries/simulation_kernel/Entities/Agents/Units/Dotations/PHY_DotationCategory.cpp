@@ -516,7 +516,7 @@ double PHY_DotationCategory::FindUrbanAttritionScore( const PHY_MaterialComposit
 // -----------------------------------------------------------------------------
 bool PHY_DotationCategory::IsSignificantChange( double newValue, double oldValue, double capacity ) const
 {
-    if( &type_ != PHY_DotationType::ration_ && &type_ != PHY_DotationType::carburant_ || capacity == 0 )
+    if( &type_ != PHY_DotationType::ration_ && &type_ != PHY_DotationType::carburant_ || capacity == 0 || newValue == capacity )
         return static_cast< unsigned int >( oldValue ) != static_cast< unsigned int >( newValue );
     if( newValue == 0 )
         return true;
