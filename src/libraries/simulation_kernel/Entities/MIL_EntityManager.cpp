@@ -2182,7 +2182,7 @@ void MIL_EntityManager::OnReceivePathfindCreation( const sword::MagicAction& mes
             protocol::Check( type, "invalid dotation type identifier" );
             equipments.push_back( type );
         }
-        result = pathfindComputer_->Compute( equipments, request, nCtx, clientId, false );
+        result = pathfindComputer_->Compute( equipments, request, nCtx, clientId, true );
     }
     if( ack.error_code() == sword::ControlAck::no_error )
         ack.mutable_result()->add_elem()->add_value()->mutable_pathfind()->set_id( result );
