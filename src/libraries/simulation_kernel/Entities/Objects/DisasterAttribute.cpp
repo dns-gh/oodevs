@@ -10,13 +10,17 @@
 #include "simulation_kernel_pch.h"
 #include "DisasterAttribute.h"
 #include "MIL_AgentServer.h"
+#include "MIL_Object_ABC.h"
+#include "DisasterImpactComputer.h"
 #include "protocol/Protocol.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
-#include "Tools/MIL_Config.h"
-#include "simulation_terrain/TER_Polygon.h"
-#include "simulation_terrain/TER_World.h"
+#include "Entities/MIL_Entity_ABC.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "propagation/PropagationManager.h"
 #include "propagation/Extractor_ABC.h"
+#include "simulation_terrain/TER_Polygon.h"
+#include "simulation_terrain/TER_World.h"
+#include "Tools/MIL_Config.h"
 #include "tools/XmlStreamOperators.h"
 #include <tools/PathSerialization.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -158,7 +162,7 @@ void DisasterAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int
         std::vector< geometry::Point2d > points;
         for( std::size_t i = 0; i < files.size(); ++i )
         {
-            T_Extractor extractor = pManager_->CreateExtractor( files[ i ] );
+            auto extractor = pManager_->CreateExtractor( files[ i ] );
             extractor->Fill( points );
             values_.push_back( extractor );
         }
@@ -172,6 +176,15 @@ void DisasterAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int
 }
 
 // -----------------------------------------------------------------------------
+// Name: DisasterAttribute::GetExtractors
+// Created: JSR 2014-04-24
+// -----------------------------------------------------------------------------
+const std::vector< boost::shared_ptr< Extractor_ABC > >& DisasterAttribute::GetExtractors() const
+{
+    return values_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DisasterAttribute::GetDose
 // Created: LGY 2012-11-22
 // -----------------------------------------------------------------------------
@@ -180,13 +193,28 @@ float DisasterAttribute::GetDose( const MT_Vector2D& position ) const
     double latitude, longitude;
     TER_World::GetWorld().SimToMosMgrsCoord( position, latitude, longitude );
 
-    BOOST_FOREACH( T_Extractor value, values_ )
+    BOOST_FOREACH( auto value, values_ )
     {
         float dose = value->GetValue( longitude, latitude );
         if( dose > 0.f )
             return dose;
     }
     return 0.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterAttribute::ApplySpeedPolicy
+// Created: JSR 2014-05-14
+// -----------------------------------------------------------------------------
+double DisasterAttribute::ApplySpeedPolicy( const MIL_Entity_ABC& entity, double speed ) const
+{
+    const PHY_RoleInterface_Location* location = entity.RetrieveRole< PHY_RoleInterface_Location >();
+    if( !location )
+        return speed;
+    const double dose = GetDose( location->GetPosition() );
+    DisasterImpactComputer computer( dose );
+    const_cast< MIL_Entity_ABC& >( entity ).Execute< OnComponentComputer_ABC >( computer );
+    return speed * std::max( 0.1, computer.GetModifier() ); // limit modifier to 0.1 to avoid unit to be permanently blocked
 }
 
 // -----------------------------------------------------------------------------

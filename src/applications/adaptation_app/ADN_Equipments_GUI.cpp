@@ -11,28 +11,29 @@
 #include "ADN_Equipments_GUI.h"
 #include "moc_ADN_Equipments_GUI.cpp"
 #include "ADN_Armors_Data.h"
-#include "ADN_Equipments_Data.h"
+#include "ADN_ComboBox_Vector.h"
 #include "ADN_ComboBoxItem.h"
 #include "ADN_CommonGfx.h"
-#include "ADN_ListView_Equipments.h"
-#include "ADN_Equipments_WeaponsListView.h"
+#include "ADN_DateEdit.h"
+#include "ADN_GroupBox.h"
+#include "ADN_GuiBuilder.h"
+#include "ADN_HtmlBuilder.h"
 #include "ADN_Equipments_ActiveProtectionsListView.h"
-#include "ADN_ListView_Equipments_Objects.h"
 #include "ADN_Equipments_AviationResourceQuotas_GUI.h"
 #include "ADN_Equipments_BreakdownsTable.h"
 #include "ADN_Equipments_ConsumptionsTable.h"
+#include "ADN_Equipments_Data.h"
+#include "ADN_Equipments_DisasterImpactTable.h"
 #include "ADN_Equipments_Dotations_GUI.h"
 #include "ADN_Equipments_Resources_Tables.h"
 #include "ADN_Equipments_Sensors_GUI.h"
 #include "ADN_Equipments_Speeds_GUI.h"
-#include "ADN_ComboBox_Vector.h"
-#include "ADN_DateEdit.h"
-#include "ADN_GroupBox.h"
-#include "ADN_GuiBuilder.h"
-#include "ADN_Tr.h"
+#include "ADN_Equipments_WeaponsListView.h"
+#include "ADN_ListView_Equipments.h"
+#include "ADN_ListView_Equipments_Objects.h"
 #include "ADN_MainWindow.h"
-#include "ADN_HtmlBuilder.h"
 #include "ADN_TimeField.h"
+#include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
 //-----------------------------------------------------------------------------
@@ -258,6 +259,9 @@ void ADN_Equipments_GUI::Build()
     pPowerIndicatorsPage->setSpacing( 10 );
     BuildPowerIndicators( pPowerIndicatorsPage, vInfosConnectors, builder );
 
+    Q3HGroupBox* pDisasterImpactGroup = new Q3HGroupBox( tools::translate( "ADN_Equipments_GUI", "Disaster impact on mobility" ) );
+    new ADN_Equipments_DisasterImpactTable( builder.GetChildName( "disaster-impact-table" ), vInfosConnectors[ eDisasterImpacts ], pDisasterImpactGroup );
+
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
@@ -285,6 +289,7 @@ void ADN_Equipments_GUI::Build()
 
     pDataPageLayout->addWidget( pResourcesGroup     , 6, 0, 1, 3 );
     pDataPageLayout->addWidget( pObjectsGroup       , 7, 0, 1, 3 );
+    pDataPageLayout->addWidget( pDisasterImpactGroup, 8, 0 );
 
     // List view
     QWidget* pSearchListView = builder.AddSearchListView< ADN_ListView_Equipments >( this, data_.GetEquipments(), vInfosConnectors );
@@ -301,6 +306,8 @@ void ADN_Equipments_GUI::Build()
     optionalTabs_[ pTabWidget->tabText( tabIndex ) ] = OptionalTab( pTabWidget, tabIndex, widget );
     // Main widget
     pMainWidget_ = CreateScrollArea( builder.GetName(), *pTabWidget, pSearchListView, true, true, false );
+
+    pDisasterImpactGroup->setVisible( ADN_Workspace::GetWorkspace().GetDisasters().GetDataABC().IsActivated() );
 }
 
 // -----------------------------------------------------------------------------

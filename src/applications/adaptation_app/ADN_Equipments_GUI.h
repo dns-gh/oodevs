@@ -88,6 +88,7 @@ public:
         eHasAviationResourceQuotas,
         eAviationResourceQuotas,
         eObjects,
+        eDisasterImpacts,
         eAttritionBreakdowns,
         eRandomBreakdowns,
         eHasHealthLog,

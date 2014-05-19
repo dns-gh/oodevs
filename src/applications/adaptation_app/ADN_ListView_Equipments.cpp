@@ -18,7 +18,7 @@
 #include "ADN_WorkspaceElement.h"
 #include <Qt3Support/q3popupmenu.h>
 
-typedef ADN_Equipments_Data::EquipmentInfos ComposanteInfos;
+typedef ADN_Equipments_Data::EquipmentInfos EquipmentInfos;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Equipments constructor
@@ -27,7 +27,7 @@ typedef ADN_Equipments_Data::EquipmentInfos ComposanteInfos;
 ADN_ListView_Equipments::ADN_ListView_Equipments( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_ListView_Equipments", ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str() )
 {
-    pConnector_.reset( new ADN_Connector_ListView<ComposanteInfos>( *this ) );
+    pConnector_.reset( new ADN_Connector_ListView< EquipmentInfos >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -49,7 +49,7 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
 
-    ComposanteInfos* pInfos = (ComposanteInfos*)pCurData_;
+    EquipmentInfos* pInfos = static_cast< EquipmentInfos* >( pCurData_ );
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Equipments_GUI::eNbrGuiElements );
 
     vItemConnectors_[ADN_Equipments_GUI::eName]->Connect( &pInfos->strName_, bConnect );
@@ -89,6 +89,7 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipments_GUI::eDotations]->Connect( &pInfos->resources_.categories_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eConsumptions]->Connect( &pInfos->consumptions_.vConsumptions_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eObjects]->Connect( &pInfos->vObjects_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eDisasterImpacts]->Connect( &pInfos->vDisasterImpacts_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eAttritionBreakdowns]->Connect( &pInfos->attritionBreakdowns_.vBreakdowns_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eRandomBreakdowns]->Connect( &pInfos->randomBreakdowns_.vBreakdowns_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eAviationResourceQuotas]->Connect( &pInfos->vAviationResourceQuotas_, bConnect );
@@ -175,11 +176,11 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
 void ADN_ListView_Equipments::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< ComposanteInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(), ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments(), this );
+    ADN_Wizard< EquipmentInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(), ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
-        ComposanteInfos* pCastData = static_cast< ComposanteInfos* >( pCurData_ );
+        EquipmentInfos* pCastData = static_cast< EquipmentInfos* >( pCurData_ );
         assert( pCastData != 0 );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                       ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(),
@@ -197,7 +198,7 @@ std::string ADN_ListView_Equipments::GetToolTipFor( const QModelIndex& index )
     if( !index.isValid() )
         return "";
     void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
-    ComposanteInfos* pCastData = static_cast< ComposanteInfos* >( pData );
+    EquipmentInfos* pCastData = static_cast< EquipmentInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(),
                             ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ) );

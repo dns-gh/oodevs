@@ -11,14 +11,18 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionMove.h"
+#include "MIL_AgentServer.h"
+#include "DisasterImpactComputer.h"
 #include "PHY_RoleAction_Moving.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/DisasterAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
@@ -29,9 +33,10 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
-#include "MIL_AgentServer.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
+#include "propagation/Extractor_ABC.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMove constructor
@@ -46,6 +51,8 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     , isBlockedByObject_( false )
     , blockedTickCounter_( 0 )
     , obstacleId_( 0 )
+    , blockedByDisaster_( false )
+    , oldDisasterImpact_( 1 )
 {
     if( suspended )
         Suspend();
@@ -73,11 +80,28 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
     MIL_PathObjectFilter filter;
     if( DEC_BlackBoard_CanContainKnowledgeObject* container = pion_.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
         container->GetObjectsAtInteractionHeight( knowledges, pion_, filter );
+    bool disasterFound = false;
     for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
     {
-        double cost = pMainPath_->GetPathClass().GetObjectCost( (*it)->GetType() );
-        if( 0. != cost )
-            newKnowledges.push_back( *it );
+        const MIL_Object_ABC* obj = ( *it )->GetObjectKnown();
+        const DisasterAttribute* disaster = obj ? obj->RetrieveAttribute< DisasterAttribute >() : 0;
+        if( disaster )
+        {
+            disasterFound = true;
+            if( IsDisasterToAvoid( *disaster ) )
+                newKnowledges.push_back( *it );
+        }
+        else
+        {
+            double cost = pMainPath_->GetPathClass().GetObjectCost( (*it)->GetType() );
+            if( 0. != cost )
+                newKnowledges.push_back( *it );
+        }
+    }
+    if( !disasterFound )
+    {
+        oldDisasterImpact_ = 1;
+        blockedByDisaster_ = false;
     }
     if( newKnowledges != objectsToAvoid_ )
     {
@@ -108,6 +132,33 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ActionMove::IsDisasterToAvoid
+// Created: JSR 2014-05-14
+// -----------------------------------------------------------------------------
+bool PHY_ActionMove::IsDisasterToAvoid( const DisasterAttribute& disaster )
+{
+    double latitude, longitude;
+    TER_World::GetWorld().SimToMosMgrsCoord( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), latitude, longitude );
+    float maxValue = 0;
+    const auto& extractors = disaster.GetExtractors();
+    for( auto it = extractors.begin(); it != extractors.end(); ++it )
+        maxValue = std::max( maxValue, ( *it )->GetValue( longitude, latitude ) );
+    DisasterImpactComputer computer( maxValue );
+    pion_.Execute< OnComponentComputer_ABC >( computer );
+    const double disasterImpact = computer.GetModifier();
+    bool ret = false;
+    if( disasterImpact > oldDisasterImpact_ )
+        blockedByDisaster_ = false;
+    else if( disasterImpact <= 0.1 && !blockedByDisaster_ )
+    {
+        ret = true;
+        blockedByDisaster_ = true;
+    }
+    oldDisasterImpact_ = disasterImpact;
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ActionMove::AvoidObstacles
 // Created: NLD 2005-06-30
 // -----------------------------------------------------------------------------
@@ -126,8 +177,14 @@ bool PHY_ActionMove::AvoidObstacles()
     blockedTickCounter_ = 0;
 
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
+    for( auto it = objectsToAvoid_.begin(); it != objectsToAvoid_.end() && !pObjectColliding; ++it )
+    {
+        const MIL_Object_ABC* obj = ( *it )->GetObjectKnown();
+        if( obj && obj->RetrieveAttribute< DisasterAttribute>() )
+            pObjectColliding = *it;
+    }
     double rDistanceCollision = 0.;
-    if( !role_.ComputeFutureObjectCollision( objectsToAvoid_, rDistanceCollision, pObjectColliding, pion_, isBlockedByObject_, true ) )
+    if( !pObjectColliding && !role_.ComputeFutureObjectCollision( objectsToAvoid_, rDistanceCollision, pObjectColliding, pion_, isBlockedByObject_, true ) )
         return false;
 
     assert( pObjectColliding && pObjectColliding->IsValid() );

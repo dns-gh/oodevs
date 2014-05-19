@@ -1079,6 +1079,17 @@ Parked engine running</source>
     </message>
 </context>
 <context>
+    <name>ADN_Equipments_DisasterImpactTable</name>
+    <message>
+        <source>Thresholds</source>
+        <translation type="unfinished">عتبات</translation>
+    </message>
+    <message>
+        <source>Modifiers</source>
+        <translation type="unfinished">المعدلات</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
         <source>Supplies</source>
@@ -1601,6 +1612,10 @@ Parked engine running</source>
     </message>
     <message>
         <source>Can transport destroyed equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disaster impact on mobility</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

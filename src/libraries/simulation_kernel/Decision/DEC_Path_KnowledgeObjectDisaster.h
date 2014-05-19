@@ -3,32 +3,34 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __DEC_Path_KnowledgeObjectFlood_h_
-#define __DEC_Path_KnowledgeObjectFlood_h_
+#ifndef __DEC_Path_KnowledgeObjectDisaster_h_
+#define __DEC_Path_KnowledgeObjectDisaster_h_
 
 #include "DEC_Path_KnowledgeObject_ABC.h"
-#include "simulation_terrain/TER_Localisation.h"
 
 class DEC_Knowledge_Object;
-enum E_CrossingHeight;
+class Extractor_ABC;
+class MIL_Agent_ABC;
+class PHY_ComposanteTypePion;
+class TER_Localisation;
 
 // =============================================================================
-/** @class  DEC_Path_KnowledgeObjectFlood
-    @brief  DEC_Path_KnowledgeObjectFlood
+/** @class  DEC_Path_KnowledgeObjectDisaster
+    @brief  DEC_Path_KnowledgeObjectDisaster
 */
-// Created: JSR 2010-12-20
+// Created: JSR 2014-04-23
 // =============================================================================
-class DEC_Path_KnowledgeObjectFlood : public DEC_Path_KnowledgeObject_ABC
+class DEC_Path_KnowledgeObjectDisaster : public DEC_Path_KnowledgeObject_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Path_KnowledgeObjectFlood( E_CrossingHeight crossingHeight, const DEC_Knowledge_Object& knowledge );
-    virtual ~DEC_Path_KnowledgeObjectFlood();
+             DEC_Path_KnowledgeObjectDisaster( MIL_Agent_ABC& agent, const DEC_Knowledge_Object& knowledge );
+    virtual ~DEC_Path_KnowledgeObjectDisaster();
     //@}
 
     //! @name Operations
@@ -41,14 +43,20 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    float GetMaxValueOnPath( const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    //@}
+
+private:
     //! @name Member data
     //@{
-    E_CrossingHeight crossingHeight_;
-    std::vector< TER_Polygon > deepAreas_;
-    std::vector< TER_Polygon > lowAreas_;
-    TER_Localisation localisation_;
+    std::unique_ptr< TER_Localisation > localisation_;
+    std::set< const PHY_ComposanteTypePion* > composantes_;
     double maxTrafficability_;
+    mutable double maxSpeedModifier_;
+    std::vector< boost::shared_ptr< Extractor_ABC > > extractors_;
     //@}
 };
 
-#endif // __DEC_Path_KnowledgeObjectFlood_h_
+#endif // __DEC_Path_KnowledgeObjectDisaster_h_

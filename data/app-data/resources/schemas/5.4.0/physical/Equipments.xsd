@@ -50,6 +50,7 @@
 					<xs:attribute name="information-origin" type="xs:string"/>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="disaster-impacts" type="T_DisasterImpacts" minOccurs="0"/>
 		</xs:all>
 		<xs:attribute name="comment" type="xs:string" use="required"/>
 		<xs:attribute name="name" type="xs:string" use="required"/>
@@ -201,6 +202,16 @@
 					<xs:attribute name="bypassed-speed" type="xs:integer" use="optional"/>
 					<xs:attribute name="non-bypassed-speed" type="xs:integer" use="optional"/>
 					<xs:attribute name="consumption-mode" type="xs:string" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_DisasterImpacts">
+		<xs:sequence>
+			<xs:element name="disaster-impact" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="threshold" type="xs:double" use="required"/>
+					<xs:attribute name="modifier" type="xs:double" use="required"/>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>

@@ -23,9 +23,12 @@ namespace xml
     class xistream;
 }
 
+class Human_ABC;
 class MIL_ObjectType_ABC;
 class MIL_Object_ABC;
 class MIL_Time_ABC;
+class MT_InterpolatedFunction;
+class ObjectTypeResolver_ABC;
 class PHY_ActiveProtection;
 class PHY_AmmoDotationClass;
 class PHY_Breakdown;
@@ -35,16 +38,14 @@ class PHY_ComposanteTypeObjectData;
 class PHY_ConsumptionType;
 class PHY_DotationConsumptions;
 class PHY_DotationNature;
-class Human_ABC;
 class PHY_MaintenanceLevel;
+class PHY_MaterialCompositionType;
 class PHY_RadarType;
 class PHY_RolePion_Composantes;
 class PHY_Sensor;
 class PHY_SensorType;
 class PHY_Weapon;
 class PHY_WeaponType;
-class PHY_MaterialCompositionType;
-class ObjectTypeResolver_ABC;
 
 // =============================================================================
 // @class  PHY_ComposanteTypePion
@@ -214,6 +215,11 @@ public:
     bool   DestroyIndirectFire( const PHY_DotationCategory&, MIL_Agent_ABC& pion ) const;
     //@}
 
+    //! @name Disasters
+    //@{
+    double GetDisasterImpact( double value ) const;
+    //@}
+
     //! @name Operators
     //@{
     bool operator==( const PHY_ComposanteTypePion& rhs ) const;
@@ -293,6 +299,7 @@ private:
     void InitializeSensors                ( xml::xistream& xis );
     void InitializeTransport              ( xml::xistream& xis );
     void InitializeWeapons                ( xml::xistream& xis );
+    void InitializeDisasterImpacts        ( xml::xistream& xis );
     bool ReadWoundCapabilities            ( xml::xistream& xis, T_WoundCapabilityVector& container, const std::string attributeName ) const;
     //@}
 
@@ -396,6 +403,9 @@ private:
 
     // Active Protections
     T_ActiveProtectionVector activeProtections_;
+
+    // Disasters
+    std::unique_ptr< MT_InterpolatedFunction > disasterImpacts_;
 
 private:
     static T_ComposanteTypeMap composantesTypes_;

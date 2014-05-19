@@ -17,6 +17,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include <boost/shared_ptr.hpp>
 
+class DisasterAttribute;
 class MIL_AgentPion;
 namespace moving
 {
@@ -57,6 +58,7 @@ private:
     //@{
     bool AvoidObstacles();
     bool UpdateObjectsToAvoid();
+    bool IsDisasterToAvoid( const DisasterAttribute& disaster );
     void CreateNewPath();
     //@}
 
@@ -70,6 +72,8 @@ private:
     bool isBlockedByObject_;
     unsigned int blockedTickCounter_;
     int obstacleId_;
+    bool blockedByDisaster_;
+    double oldDisasterImpact_;
 };
 
 #endif // __PHY_ActionMove_h_
