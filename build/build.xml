@@ -64,9 +64,9 @@
                 <arg value="-i"/>
                 <arg value="${go.race}"/>
             </go>
-            <exec_goenv name="gotester" executable="${bin.dir}/gotester">
+            <exec_goenv name="tests" executable="${bin.dir}/gotester">
                 <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
-                <arg value="${gocheck.filter}"/>
+                <arg line="${gocheck.filter}"/>
                 <arg value="-port=${test.port}"/>
                 <arg value="-j=${test.cpu}"/>
                 <arg value="${root.dir}"/>

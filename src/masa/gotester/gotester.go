@@ -49,8 +49,8 @@ func listFileTests(path string) ([]string, error) {
 }
 
 // Returns a list of all gocheck test names found in _test.go file in rootDir
-// sub-tree. The names unicity is enforce, which means test names have to be
-// unique over all packages in rootDir. This limitation will be lift once
+// sub-tree. The names unicity is enforced, which means test names have to be
+// unique over all packages in rootDir. This limitation will be lifted once
 // we annotate the name with their package and use fine-grained execution.
 func listTests(rootDir string) ([]string, error) {
 	allTests := []string{}
@@ -123,6 +123,9 @@ func splitTests(tests []string, jobs int) [][]string {
 			totalLength = 0
 		}
 	}
+	if len(groups[len(groups)-1]) == 0 {
+		groups = groups[:len(groups)-1]
+	}
 	return groups
 }
 
@@ -162,7 +165,7 @@ func runTestGroups(groups [][]string, baseArgs []string, runDir string,
 
 	running := &sync.WaitGroup{}
 	results := make(chan RunResult, len(groups))
-	for i := uint(0); i != jobs; i++ {
+	for i := uint(0); i < jobs; i++ {
 		running.Add(1)
 		go func(id uint) {
 			defer running.Done()
