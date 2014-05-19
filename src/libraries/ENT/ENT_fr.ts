@@ -1389,5 +1389,13 @@
         <source>Switch Log Supply Mode</source>
         <translation>Changement de mode de ravitaillement</translation>
     </message>
+    <message>
+        <source>Create basic load supply request</source>
+        <translation>Créer une requête ravitaillement de dotation</translation>
+    </message>
+    <message>
+        <source>Create stock supply request</source>
+        <translation>Créer une requête ravitaillement de stock</translation>
+    </message>
 </context>
 </TS>

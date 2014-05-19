@@ -18,6 +18,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConfig.h"
 #include "Entities/Agents/Roles/Logistic/FuneralPackagingResource.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
@@ -25,6 +26,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RolePion_Deployment.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/MIL_Formation.h"
 #include <boost/foreach.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
@@ -484,6 +486,30 @@ class FuneralPackagingResourceVisitor : public MIL_LogisticEntitiesVisitor
         MIL_AgentPion* selected_;
         const logistic::FuneralPackagingResource* nextPackagingResource_;
         std::vector< const logistic::FuneralPackagingResource* > packagingResourcesToSearchFor_;
+};
+
+struct SupplyDotationQuantity
+{
+    SupplyDotationQuantity( const MIL_AgentPion* pion, PHY_Dotation* dotation )
+        : pion_( pion )
+        , dotation_( dotation )
+        , quantity_( 0 )
+    {}
+    const MIL_AgentPion* pion_;
+    PHY_Dotation* dotation_;
+    double quantity_;
+};
+
+struct SupplyStockQuantity
+{
+    SupplyStockQuantity( MIL_AgentPion* pion, PHY_DotationStock* stock )
+        : pion_    ( pion )
+        , stock_   ( stock )
+        , quantity_( 0 )
+    {}
+    MIL_AgentPion* pion_;
+    PHY_DotationStock* stock_;
+    double quantity_;
 };
 
 #endif // __MIL_LogisticVisitors_h_

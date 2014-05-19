@@ -11,6 +11,7 @@
 #include "SupplyDotationManualRequestBuilder.h"
 #include "AutomateFactory_ABC.h"
 #include "SupplyRequestContainer_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_LogisticVisitors.h"
 #include "Entities/Agents/Roles/Logistic/SupplyConvoyConfig.h"
 #include "Entities/Agents/Roles/Logistic/SupplyResourceDotation.h"
 #include "Entities/Agents/Roles/Logistic/SupplySupplier_ABC.h"
@@ -90,48 +91,6 @@ void SupplyDotationManualRequestBuilder::Process( SupplyRequestContainer_ABC& co
     container.SetConvoyFactory( SupplyConvoyConfig::GetDotationSupplyConvoyFactory() );
 }
 
-namespace
-{
-    struct SupplyDotationQuantity
-    {
-        SupplyDotationQuantity( const MIL_AgentPion* pion, PHY_Dotation* dotation )
-            : pion_( pion )
-            , dotation_( dotation )
-            , quantity_( 0 )
-        {}
-        const MIL_AgentPion* pion_;
-        PHY_Dotation* dotation_;
-        double quantity_;
-    };
-
-    typedef std::vector< SupplyDotationQuantity > T_PionDotationVector;
-
-    class DotationVisitor : private boost::noncopyable
-    {
-    public:
-        DotationVisitor( T_PionDotationVector& pionDotations, const PHY_DotationCategory* category )
-             : pionDotations_( pionDotations )
-             , category_( category )
-        {
-            // NOTHING
-        }
-
-        ~DotationVisitor()
-        {
-            // NOTHING
-        }
-
-        void VisitDotation( const MIL_AgentPion& pion, PHY_Dotation& dotation ) const
-        {
-            if( &dotation.GetCategory() == category_ )
-                pionDotations_.push_back( SupplyDotationQuantity( &pion, &dotation ) );
-        }
-    private:
-        T_PionDotationVector& pionDotations_;
-        const PHY_DotationCategory* category_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: SupplyDotationManualRequestBuilder::CreateRequest
 // Created: JSR 2013-04-16
@@ -143,10 +102,12 @@ void SupplyDotationManualRequestBuilder::CreateRequest( MIL_Automate& recipient,
         return;
 
     double rTotalValue = resource.quantity();
-
-    T_PionDotationVector pionDotations;
-    DotationVisitor visitor( pionDotations, pDotationCategory );
-    recipient.Apply2( ( boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) > )boost::bind( &DotationVisitor::VisitDotation, &visitor, _1, _2 ) );
+    std::vector< SupplyDotationQuantity > pionDotations;
+    recipient.Apply2( (boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) >)
+        [&]( const MIL_AgentPion& pion, PHY_Dotation& dotation ) {
+            if( &dotation.GetCategory() == pDotationCategory )
+                pionDotations.push_back( SupplyDotationQuantity( &pion, &dotation ) );
+    } );
 
     for( auto it = pionDotations.begin(); it != pionDotations.end() && rTotalValue > 0.; ++it )
     {

@@ -1109,6 +1109,12 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
         case UnitMagicAction::log_supply_pull_flow:
             ProcessLogSupplyPullFlow( message, ack() );
             break;
+        case UnitMagicAction::create_basic_load_supply_request:
+            ProcessSupplyCreateBasicLoadRequest( message, ack() );
+            break;
+        case UnitMagicAction::create_stock_supply_request:
+            ProcessSupplyCreateStockRequest( message, ack() );
+            break;
         case UnitMagicAction::log_supply_change_quotas:
             ProcessLogSupplyChangeQuotas( message );
             break;
@@ -1948,6 +1954,74 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     }
     if( !pBrainLog->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ ) )
         throw MASA_EXCEPTION( "unable to create push flow request" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ProcessSupplyCreateBasicLoadRequest
+// Created: LGY 2014-05-05
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ProcessSupplyCreateBasicLoadRequest( const UnitMagicAction& message, sword::UnitMagicActionAck& ack )
+{
+    const auto tasker = protocol::TryGetTasker( message.tasker() );
+    if( !tasker )
+        throw MASA_INVALIDTASKER;
+    protocol::Check( FindBrainLogistic( *tasker ) || FindAutomate( *tasker ), "invalid requester" );
+
+    const auto& parameters = message.parameters();
+    protocol::CheckCount( parameters, 3 );
+    const auto supplierId = protocol::GetIdentifier( parameters, 0 );
+    MIL_AutomateLOG* supplier = FindBrainLogistic( supplierId );
+    protocol::Check( supplier, "invalid supplier" );
+
+    const auto recipientId = protocol::GetIdentifier( parameters, 1 );
+    const MIL_Automate* recipient = FindAutomate( recipientId );
+    protocol::Check( recipient, "invalid recipient" );
+
+    for( int i = 0; i < protocol::GetCount( parameters, 2 ); ++i )
+    {
+        protocol::CheckCount( 2, i, parameters, 2 );
+        const auto id = protocol::GetIdentifier( parameters, 2, i, 0 );
+        const auto quantity = protocol::GetQuantity( parameters, 2, i, 1 );
+        const auto* dotation =  PHY_DotationType::FindDotationCategory( id );
+        protocol::Check( dotation, "must be a valid dotation type identifier", 2, i, 0 );
+        const auto request = supplier->CreateDotationRequest( *dotation, quantity, *recipient, *tasker );
+        if( request )
+            ack.mutable_result()->add_elem()->add_value()->set_identifier( *request );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ProcessSupplyCreateStockRequest
+// Created: LGY 2014-05-05
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ProcessSupplyCreateStockRequest( const UnitMagicAction& message, sword::UnitMagicActionAck& ack )
+{
+    const auto tasker = protocol::TryGetTasker( message.tasker() );
+    if( !tasker )
+        throw MASA_INVALIDTASKER;
+    protocol::Check( FindBrainLogistic( *tasker ) || FindAutomate( *tasker ), "invalid requester" );
+
+    const auto& parameters = message.parameters();
+    protocol::CheckCount( parameters, 3 );
+    const auto supplierId = protocol::GetIdentifier( parameters, 0 );
+    MIL_AutomateLOG* supplier = FindBrainLogistic( supplierId );
+    protocol::Check( supplier, "invalid supplier" );
+
+    const auto recipientId = protocol::GetIdentifier( parameters, 1 );
+    MIL_AutomateLOG* recipient = FindBrainLogistic( recipientId );
+    protocol::Check( recipient, "invalid recipient" );
+
+    for( int i = 0; i < protocol::GetCount( parameters, 2 ); ++i )
+    {
+        protocol::CheckCount( 2, i, parameters, 2 );
+        const auto id = protocol::GetIdentifier( parameters, 2, i, 0 );
+        const auto quantity = protocol::GetQuantity( parameters, 2, i, 1 );
+        const auto* dotation =  PHY_DotationType::FindDotationCategory( id );
+        protocol::Check( dotation, "must be a valid dotation type identifier", 2, i, 0 );
+        const auto request = supplier->CreateStockRequest( *dotation, quantity, *recipient, *tasker );
+        if( request )
+            ack.mutable_result()->add_elem()->add_value()->set_identifier( *request );
+    }
 }
 
 // -----------------------------------------------------------------------------

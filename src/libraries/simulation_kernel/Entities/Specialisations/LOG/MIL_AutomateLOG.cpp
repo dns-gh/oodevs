@@ -26,14 +26,18 @@
 #include "Entities/Agents/Roles/Logistic/SupplyConsign_ABC.h"
 #include "Entities/Agents/Roles/Logistic/SupplyDotationManualRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
+#include "Entities/Agents/Roles/Logistic/SupplyRequest.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestManualDispatcher.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestContainer.h"
 #include "Entities/Agents/Roles/Logistic/SupplyConvoysObserver_ABC.h"
+#include "Entities/Agents/Roles/Logistic/SupplyResourceDotation.h"
+#include "Entities/Agents/Roles/Logistic/SupplyResourceStock.h"
 #include "Entities/Agents/Roles/Logistic/FuneralPackagingResource.h"
 #include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
@@ -47,6 +51,7 @@
 #include <boost/foreach.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )
 
@@ -153,7 +158,8 @@ void MIL_AutomateLOG::serialize( Archive& ar, const unsigned int )
        & supplyRequests_
        & supplyConsigns_
        & maintenanceManual_
-       & supplyManual_;
+       & supplyManual_
+       & magicSupplyRequests_;
 }
 
 // -----------------------------------------------------------------------------
@@ -685,6 +691,82 @@ bool MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameter
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::CreateDotationRequest
+// Created: LGY 2014-05-05
+// -----------------------------------------------------------------------------
+boost::optional< unsigned int > MIL_AutomateLOG::CreateDotationRequest( const PHY_DotationCategory& dotationCategory, double quantity, const MIL_Automate& recipient,
+                                                                        unsigned int requester )
+{
+    std::vector< SupplyDotationQuantity > pionDotations;
+    recipient.Apply2( (boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) >)
+        [&]( const MIL_AgentPion& pion, PHY_Dotation& dotation ) {
+            if( &dotation.GetCategory() == &dotationCategory )
+                pionDotations.push_back( SupplyDotationQuantity( &pion, &dotation ) );
+    } );
+
+    auto request = boost::make_shared< logistic::SupplyRequest >( dotationCategory, recipient.GetID(), *this, requester );
+    for( auto it = pionDotations.begin(); it != pionDotations.end(); ++it )
+    {
+        auto& dotation = *it->dotation_;
+        if( dotation.NeedSupply() )
+            request->AddResource( boost::make_shared< logistic::SupplyResourceDotation >( dotation ),
+                *it->pion_, std::min( quantity, dotation.GetCapacity() ) );
+    }
+    if( request->GetRequestedQuantity() > 0 )
+    {
+        request->SendCreation();
+        magicSupplyRequests_.push_back( request );
+        return request->GetId();
+    }
+    return boost::none;
+}
+
+namespace
+{
+    struct SupplyStockRequestVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+    {
+        SupplyStockRequestVisitor( const PHY_DotationCategory& dotation,
+                                   logistic::SupplyRequest& request, double quantity )
+            : dotation_( dotation )
+            , request_ ( request )
+            , quantity_( quantity )
+        {}
+
+        virtual void Visit( const MIL_AgentPion& pion )
+        {
+            MIL_AgentPion* agent = const_cast< MIL_AgentPion* >( &pion );
+            if( PHY_RoleInterface_Supply* role = agent->RetrieveRole< PHY_RoleInterface_Supply >() )
+                if( PHY_DotationStock* stock = role->GetStock( dotation_ ) )
+                    if( stock->NeedSupply() )
+                        request_.AddResource( boost::make_shared< logistic::SupplyResourceStock >( *stock ),
+                            *agent, std::min( quantity_, stock->GetCapacity() ) );
+        }
+        const PHY_DotationCategory& dotation_;
+        logistic::SupplyRequest& request_;
+        double quantity_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::CreateStockRequest
+// Created: LGY 2014-05-05
+// -----------------------------------------------------------------------------
+boost::optional< unsigned int > MIL_AutomateLOG::CreateStockRequest( const PHY_DotationCategory& dotation, double quantity, const MIL_AutomateLOG& recipient,
+                                                                     unsigned int requester )
+{
+    auto request = boost::make_shared< logistic::SupplyRequest >( dotation, recipient.GetLogisticId(), *this, requester );
+    SupplyStockRequestVisitor visitor( dotation, *request, quantity );
+    recipient.Visit( visitor );
+    if( request->GetRequestedQuantity() > 0 )
+    {
+        request->SendCreation();
+        magicSupplyRequests_.push_back( request );
+        return request->GetId();
+    }
+    return boost::none;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::ResetConsignsForConvoyPion
 // Created: JSR 2013-02-06
 // -----------------------------------------------------------------------------
@@ -812,6 +894,8 @@ void MIL_AutomateLOG::Clean()
 {
     BOOST_FOREACH( T_SupplyRequests::value_type& data, supplyRequests_ )
         data->Clean();
+    BOOST_FOREACH( const auto& data, magicSupplyRequests_ )
+        data->Clean();
     maintenanceManualModified_ = false;
     supplyManualModified_ = false;
 }
@@ -825,6 +909,8 @@ void MIL_AutomateLOG::SendFullState() const
     pLogisticHierarchy_->SendFullState();
     BOOST_FOREACH( const auto& data, supplyRequests_ )
         data->SendFullState();
+    BOOST_FOREACH( const auto& data, magicSupplyRequests_ )
+        data->SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -836,7 +922,9 @@ void MIL_AutomateLOG::SendChangedState() const
     try
     {
         pLogisticHierarchy_->SendChangedState();
-        BOOST_FOREACH( const T_SupplyRequests::value_type& data, supplyRequests_ )
+        BOOST_FOREACH( const auto& data, supplyRequests_ )
+            data->SendChangedState();
+        BOOST_FOREACH( const auto& data, magicSupplyRequests_ )
             data->SendChangedState();
     }
     catch( const std::exception& e )

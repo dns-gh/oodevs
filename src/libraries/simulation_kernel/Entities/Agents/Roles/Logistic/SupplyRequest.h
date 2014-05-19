@@ -32,6 +32,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              SupplyRequest( const PHY_DotationCategory& dotationCategory, unsigned int recipientId );
+             SupplyRequest( const PHY_DotationCategory& dotationCategory, unsigned int recipientId,
+                            SupplySupplier_ABC& supplier, unsigned int requester );
              SupplyRequest();
     virtual ~SupplyRequest();
     //@}
@@ -99,6 +101,7 @@ private:
     //@{
     unsigned long id_;
     unsigned int recipientId_;
+    unsigned int requesterId_;
     const PHY_DotationCategory* dotationCategory_;
     sword::LogSupplyRequestUpdate_EnumLogSupplyRequestStatus state_;
     T_Resources resources_;

@@ -34,9 +34,33 @@ BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyRequest )
 SupplyRequest::SupplyRequest( const PHY_DotationCategory& dotationCategory, unsigned int recipientId )
     : id_                 ( NewConsignId() )
     , recipientId_        ( recipientId )
+    , requesterId_        ( recipientId )
     , dotationCategory_   ( &dotationCategory )
     , state_              ( sword::LogSupplyRequestUpdate::request_outstanding )
     , supplier_           ( 0 )
+    , requestedQuantity_  ( 0 )
+    , grantedQuantity_    ( 0 )
+    , convoyedQuantity_   ( 0 )
+    , suppliedQuantity_   ( 0 )
+    , complementarySupply_( true )
+    , provider_           ( 0 )
+    , needNetworkUpdate_  ( true )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRequest constructor
+// Created: LGY 2014-05-05
+// -----------------------------------------------------------------------------
+SupplyRequest::SupplyRequest( const PHY_DotationCategory& dotationCategory, unsigned int recipientId,
+                              SupplySupplier_ABC& supplier, unsigned int requester )
+    : id_                 ( NewConsignId() )
+    , recipientId_        ( recipientId )
+    , requesterId_        ( requester )
+    , dotationCategory_   ( &dotationCategory )
+    , state_              ( sword::LogSupplyRequestUpdate::request_outstanding )
+    , supplier_           ( &supplier )
     , requestedQuantity_  ( 0 )
     , grantedQuantity_    ( 0 )
     , convoyedQuantity_   ( 0 )
@@ -348,6 +372,7 @@ void SupplyRequest::load( MIL_CheckPointInArchive& archive, const unsigned int )
     archive >> boost::serialization::base_object< SupplyRequest_ABC >( *this );
     archive >> id_;
     archive >> recipientId_;
+    archive >> requesterId_;
     archive >> dotationCategory_;
     archive >> state_;
     archive >> resources_;
@@ -373,6 +398,7 @@ void SupplyRequest::save( MIL_CheckPointOutArchive& archive, const unsigned int 
     archive << boost::serialization::base_object< SupplyRequest_ABC >( *this );
     archive << id_;
     archive << recipientId_;
+    archive << requesterId_;
     archive << dotationCategory_;
     archive << state_;
     archive << resources_;
@@ -396,7 +422,7 @@ void SupplyRequest::SendCreation() const
 {
     client::LogSupplyRequestCreation msg;
     msg().mutable_request()->set_id( id_ );
-    msg().mutable_requester()->set_id( recipientId_ );
+    msg().mutable_requester()->set_id( requesterId_ );
     msg().mutable_resource()->set_id( dotationCategory_->GetMosID() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -421,7 +447,7 @@ void SupplyRequest::SendState() const
 {
     client::LogSupplyRequestUpdate msg;
     msg().mutable_request()->set_id( id_ );
-    msg().mutable_requester()->set_id( recipientId_ );
+    msg().mutable_requester()->set_id( requesterId_ );
     msg().mutable_resource()->set_id( dotationCategory_->GetMosID() );
     msg().set_state( state_ );
     msg().mutable_recipient()->set_id( recipientId_ );
