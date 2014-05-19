@@ -1,4 +1,4 @@
---- Returns the identification level of the given agent knowledge by this entity's knowledge group :
+--- Returns the identification level of the given agent knowledge :
 -- <ul> <li> 0 if the agent knowledge is not detected at all <li>
 -- <li> 30 if the agent knowledge is detected </li>
 -- <li> 60 if the agent knowledge is recognized </li>
@@ -15,9 +15,9 @@ integration.getAgentIdentificationLevel = function( unit )
 end
 
 --- Orientates this entity's sensors towards the objective in order to identify it.
--- This method does nothing if the objective is tactically destroyed.
+-- This method does nothing if the objective is known to be tactically destroyed.
 -- This method can only be called by an agent.
--- @param objective DirectIA agent knowledge defining a "getPosition" method returning a simulation position.
+-- @param objective DirectIA agent knowledge
 integration.identifyIt = function( objective )
     if not DEC_ConnaissanceAgent_EstDetruitTactique( objective.source ) then
         DEC_Perception_VisionVerrouilleeSurPointPtr( objective:getPosition() )
