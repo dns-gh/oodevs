@@ -97,11 +97,13 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
                                                                         kernel::Controllers& controllers,
                                                                         actions::ActionsModel& actionsModel,
                                                                         const kernel::ObjectTypes& breakdownTypes,
-                                                                        gui::DisplayExtractor& extractor )
+                                                                        gui::DisplayExtractor& extractor,
+                                                                        const kernel::Profile_ABC& profile )
     : LogisticSelectionDialog_ABC( objectName, parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
     , breakdownTypes_( breakdownTypes )
+    , profile_( profile )
     , id_( 0 )
     , lastContext_( 0 )
     , handler_( controllers )
@@ -128,6 +130,8 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     transporters_->SetFilter( [&] ( const kernel::Availability& availability, const kernel::MaintenanceStates_ABC& states )
     {
         return componentType_ &&
+               availability.entity_ &&
+               profile.CanBeOrdered( *availability.entity_ ) &&
                availability.type_ &&
                availability.type_->GetMaintenanceFunctions() &&
                availability.type_->GetMaintenanceFunctions()->CanHaul( *componentType_ ) &&
@@ -157,7 +161,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     diagnosers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_diagnosis_team_listview", controllers, this );
     diagnosers_->SetFilter( [&] ( const kernel::Availability& /*availability*/, const kernel::MaintenanceStates_ABC& states )
     {
-        return states.IsEnabled();
+        return states.IsEnabled() && availability.entity_ && profile.CanBeOrdered( *availability.entity_ );
     } );
 
     auto* repair = new QWidget();
@@ -166,6 +170,8 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     repairers_->SetFilter( [&] ( const kernel::Availability& availability, const kernel::MaintenanceStates_ABC& states )
     {
         return breakdownType_ &&
+               availability.entity_ &&
+               profile.CanBeOrdered( *availability.entity_ ) &&
                availability.type_ &&
                availability.type_->GetMaintenanceFunctions() &&
                availability.type_->GetMaintenanceFunctions()->CanRepair( *breakdownType_ ) &&
@@ -538,7 +544,9 @@ void LogisticMaintenanceSelectionDialog::OnDestinationToggled( bool enabled )
 
 namespace
 {
-    void GetDestinations( const kernel::Entity_ABC& handler, std::vector< const kernel::Entity_ABC* >& destinations )
+    void GetDestinations( const kernel::Profile_ABC& profile,
+                          const kernel::Entity_ABC& handler,
+                          std::vector< const kernel::Entity_ABC* >& destinations )
     {
         if( auto tactical = handler.Retrieve< kernel::TacticalHierarchies >() )
         {
@@ -547,7 +555,9 @@ namespace
             {
                 const kernel::Entity_ABC& child = it.NextElement();
                 const kernel::MaintenanceStates_ABC* state = child.Retrieve< kernel::MaintenanceStates_ABC >();
-                if( child.GetTypeName() == kernel::Agent_ABC::typeName_ && state && !state->GetDispoRepairers().empty() &&
+                if( child.GetTypeName() == kernel::Agent_ABC::typeName_ &&
+                    profile.CanBeOrdered( child ) &&
+                    state && !state->GetDispoRepairers().empty() &&
                     state->IsEnabled() )
                     destinations.push_back( &child );
                 else
@@ -565,7 +575,7 @@ void LogisticMaintenanceSelectionDialog::RefeshDestinations()
 {
     const QModelIndexList indexes = destinations_->selectionModel()->selectedIndexes();
     std::vector< const kernel::Entity_ABC* > destinations;
-    GetDestinations( *handler_, destinations );
+    GetDestinations( profile_, *handler_, destinations );
     destinations_->Fill( destinations, *consumer_, availability_ ? availability_->type_ : 0 );
     if( !selectedDestination_ || !destinationBox_->isChecked() || indexes.empty() )
         return;

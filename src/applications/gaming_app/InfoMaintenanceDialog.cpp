@@ -16,6 +16,7 @@
 
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogisticHelpers.h"
@@ -37,9 +38,16 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     QWidget* pHaulersRepairersWidget = new QWidget( tabs );
     QVBoxLayout* pHaulersRepairersLayout = new QVBoxLayout();
-    pHaulersRepairersLayout->addWidget( new MaintenanceHaulersListView( tabs, controllers ) );
-    pHaulersRepairersLayout->addWidget( new MaintenanceRepairersListView( tabs, controllers ) );
+    auto haulers = new MaintenanceHaulersListView( tabs, controllers );
+    auto repairers = new MaintenanceRepairersListView( tabs, controllers );
+    pHaulersRepairersLayout->addWidget( haulers );
+    pHaulersRepairersLayout->addWidget( repairers );
     pHaulersRepairersWidget->setLayout( pHaulersRepairersLayout );
+    auto filter = [&]( const kernel::Availability& availability ) {
+        return availability.entity_ && profile.CanBeOrdered( *availability.entity_ );
+    };
+    haulers->SetFilter( filter );
+    repairers->SetFilter( filter );
 
     QWidget* statusWidget = new QWidget();
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );

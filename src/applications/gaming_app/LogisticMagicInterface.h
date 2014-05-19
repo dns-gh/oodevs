@@ -87,7 +87,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddMenuEntries( kernel::ContextMenu& menu );
+    void AddMenuEntries( kernel::ContextMenu& menu, bool hasFullRights );
     //@}
 
 private:
