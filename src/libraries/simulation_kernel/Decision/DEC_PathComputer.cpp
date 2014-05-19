@@ -57,7 +57,6 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
         MT_LOG_MESSAGE_MSG( "DEC_PathComputer::Execute: " << this << " computation begin" <<
                             ", Thread    : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() <<
                             ", Entity    : " << id_ );
-                            //", Path type : " << GetPathType().GetName().c_str() );
         MT_LOG_MESSAGE_MSG( GetPathAsString() );
         profiler_.Start();
     }

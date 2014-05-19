@@ -33,8 +33,6 @@ public:
     virtual void Destroy();
     virtual void Cancel();
 
-    void CancelPath();
-
     const DEC_Agent_PathClass& GetPathClass() const;
     const T_PointVector& GetNextWaypoints() const;
 

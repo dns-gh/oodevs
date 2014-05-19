@@ -19,11 +19,9 @@
 #include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Fuseau.h"
-#include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/make_shared.hpp>
 
@@ -369,16 +367,6 @@ void DEC_Agent_Path::NotifyPointReached( const T_PathPoints::const_iterator& itC
         computer_->RemoveComputedWaypoint();
     }
     DEC_PathResult::NotifyPointReached( itCurrentPathPoint );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::CancelPath
-// Created: LDC 2012-03-23
-// -----------------------------------------------------------------------------
-void DEC_Agent_Path::CancelPath()
-{
-    queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( report::eRC_TerrainDifficile );
-    computer_->Cancel();
 }
 
 // -----------------------------------------------------------------------------
