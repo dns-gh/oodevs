@@ -2247,6 +2247,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Unit</source>
         <translation>Unité</translation>
     </message>
+    <message>
+        <source>Capacity</source>
+        <translation>Capacité</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceRepairersListView</name>

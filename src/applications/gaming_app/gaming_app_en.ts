@@ -2244,6 +2244,10 @@ This data can&apos;t be projected.</source>
         <source>Unit</source>
         <translation type="unfinished">Unit</translation>
     </message>
+    <message>
+        <source>Capacity</source>
+        <translation>Capacity</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceRepairersListView</name>

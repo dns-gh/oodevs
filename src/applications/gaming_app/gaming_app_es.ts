@@ -2246,6 +2246,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>Unit</source>
         <translation type="unfinished">Unidades</translation>
     </message>
+    <message>
+        <source>Capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceRepairersListView</name>

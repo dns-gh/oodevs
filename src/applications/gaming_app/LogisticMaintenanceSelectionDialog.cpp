@@ -124,6 +124,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
                availability.type_->GetMaintenanceFunctions() &&
                availability.type_->GetMaintenanceFunctions()->CanHaul( *componentType_ );
     } );
+    transporters_->setColumnHidden( 7, false ); // tow truck capacity column
     destinationBox_ = new gui::RichGroupBox( "manual_selection_transporters_groupbox", tr( "Select diagnosis / repair unit" ) );
     auto* destinationLayout = new QVBoxLayout( destinationBox_ );
     destinations_ = new DiagnosisUnitView( this, extractor );

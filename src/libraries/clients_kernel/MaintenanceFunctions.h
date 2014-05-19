@@ -41,6 +41,7 @@ public:
     bool CanHaul( const EquipmentType& equipment ) const;
     bool CanHaul( const ComponentType& component ) const;
     bool CanRepair( const BreakdownType& breakdown ) const;
+    float GetCapacity() const;
     //@}
 
 private:

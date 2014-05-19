@@ -114,3 +114,12 @@ bool MaintenanceFunctions::CanRepair( const BreakdownType& breakdown ) const
     const auto maxRepairTime = it->second.maxRepairTime_;
     return !maxRepairTime || breakdown.GetRepairTime() <= *maxRepairTime;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MaintenanceFunctions::GetCapacity
+// Created: SLI 2014-05-19
+// -----------------------------------------------------------------------------
+float MaintenanceFunctions::GetCapacity() const
+{
+    return towCapacity_ ? towCapacity_->capacity_ : 0;
+}
