@@ -47,7 +47,6 @@ MIL_PopulationConcentration::MIL_PopulationConcentration()
     , pSplittingObject_( 0 )
     , waypointForNextPullingFlow_( 0 )
     , hasDoneMagicMove_( false )
-    , rPullingFlowsDensity_( 0 )
 {
     // NOTHING
 }
@@ -63,7 +62,6 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pSplittingObject_( 0 )
     , waypointForNextPullingFlow_( 0 )
     , hasDoneMagicMove_( false )
-    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pAttackController_   ( new MIL_AttackController() )
 {
     // NOTHING
@@ -79,7 +77,6 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pSplittingObject_    ( 0 )
     , waypointForNextPullingFlow_( 0 )
     , hasDoneMagicMove_( false )
-    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pAttackController_   ( new MIL_AttackController() )
 {
     // Position
@@ -102,7 +99,6 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pSplittingObject_    ( 0 )
     , waypointForNextPullingFlow_( 0 )
     , hasDoneMagicMove_( false )
-    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pAttackController_   ( new MIL_AttackController() )
 {
     PushHumans( MIL_PopulationHumans( nHumans ) );
@@ -122,7 +118,6 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pSplittingObject_    ( 0 )
     , waypointForNextPullingFlow_( 0 )
     , hasDoneMagicMove_( false )
-    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
 {
     PushHumans( humans );
     UpdateLocation();
@@ -273,7 +268,10 @@ double MIL_PopulationConcentration::GetPullingFlowsDensity() const
         if( density )
             return density;
     }
-    return rPullingFlowsDensity_;
+    double maxPushingDensity = 0;
+    for( auto it = pushingFlows_.begin(); it != pushingFlows_.end(); ++it )
+        maxPushingDensity = std::max( maxPushingDensity, ( *it )->GetDensity() );
+    return maxPushingDensity == 0 ? GetPopulation().GetDefaultFlowDensity() : maxPushingDensity;
 }
 
 // -----------------------------------------------------------------------------
@@ -381,7 +379,6 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uns
     file >> position_
          >> pPullingFlow_
          >> pushingFlows_
-         >> rPullingFlowsDensity_
          >> const_cast< MIL_Object_ABC*& >( pSplittingObject_ );
     idManager_.GetId( MIL_PopulationElement_ABC::GetID(), true );
     UpdateLocation();
@@ -398,7 +395,6 @@ void MIL_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const un
     file << position_
          << pPullingFlow_
          << pushingFlows_
-         << rPullingFlowsDensity_
          << pSplittingObject_;
 }
 
