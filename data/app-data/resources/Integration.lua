@@ -42,7 +42,6 @@ include "integration/IlluminableIntegration.lua"
 include "integration/IndirectFireableIntegration.lua"
 include "integration/ImprovableIntegration.lua"
 include "integration/RemovableIntegration.lua"
-include "integration/IdentifyingIntegration.lua"
 include "integration/LoadableIntegration.lua"
 
 include "integration/PositionableIntegration.lua"
