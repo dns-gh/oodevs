@@ -77,6 +77,10 @@ func (s *TestSuite) TestPathfindRequest(c *C) {
 	_, err = client.PathfindRequest(12345, from, to)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
+	// Invalid path
+	_, err = client.PathfindRequest(unit.Id)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
 	// Pathfind request from -> to
 	points, err := client.PathfindRequest(unit.Id, from, to)
 	c.Assert(err, IsNil)
