@@ -58,11 +58,11 @@ local estimateReconnaissanceLevel = function( self, objective )
 end
 
 --- Returns the efficiency of the given entity to reconnoiter the given objective.
--- @param entity Knowledge defining a "proximityLevel" method returning a float between 0 and 100
+-- @param observationPosition Knowledge defining a "proximityLevel" method returning a float between 0 and 100
 -- @param objective Knowledge, the objective to reconnoiter
 -- @return Float between 0 and 1, 0 meaning the lowest efficiency and 1 meaning the highest efficiency
-integration.reconnaissanceEfficiency = function( entity, objective )
-    return ( entity:proximityLevel() / 100 + estimateReconnaissanceLevel( entity, objective ) ) / 101
+integration.reconnaissanceEfficiency = function( observationPosition, objective )
+    return ( observationPosition:proximityLevel() / 100 + estimateReconnaissanceLevel( observationPosition, objective ) ) / 101
 end
 
 local isInNearestNeighbors = function( position, objective )

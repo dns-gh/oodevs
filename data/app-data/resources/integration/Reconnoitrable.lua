@@ -1,4 +1,5 @@
---- Returns the priority to reconnoiter the given knowledge.
+--- Deprecated
+-- Returns the priority to reconnoiter the given knowledge.
 -- @param target Knowledge defining a "proximityLevel" method returning a float
 -- @return Float between 0 and 1, 0 meaning the lowest priority and 1 meaning the highest priority
 integration.generic_reconnaissancePriority = function( target )
