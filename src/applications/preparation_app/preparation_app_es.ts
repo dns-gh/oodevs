@@ -2757,16 +2757,16 @@ Este dato no puede ser proyectado.</translation>
         <translation>Equipos</translation>
     </message>
     <message>
-        <source>Supplies</source>
-        <translation type="unfinished">Recursos</translation>
-    </message>
-    <message>
         <source>Change initial state</source>
         <translation>Cambiar estado inicial</translation>
     </message>
     <message>
         <source>Display initial state</source>
         <translation>Mostrar estado inicial</translation>
+    </message>
+    <message>
+        <source>Basic load</source>
+        <translation type="unfinished">Recursos</translation>
     </message>
 </context>
 <context>

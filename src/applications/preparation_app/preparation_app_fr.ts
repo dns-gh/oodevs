@@ -2755,16 +2755,16 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Equipements</translation>
     </message>
     <message>
-        <source>Supplies</source>
-        <translation type="unfinished">Ressources</translation>
-    </message>
-    <message>
         <source>Change initial state</source>
         <translation>Modifier l&apos;état initial</translation>
     </message>
     <message>
         <source>Display initial state</source>
         <translation>Afficher l&apos;état initial</translation>
+    </message>
+    <message>
+        <source>Basic load</source>
+        <translation type="unfinished">Ressources</translation>
     </message>
 </context>
 <context>
