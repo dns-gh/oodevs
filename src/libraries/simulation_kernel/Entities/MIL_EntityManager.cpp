@@ -2111,11 +2111,9 @@ void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message
 {
     try
     {
-        if( !message.has_unit() && message.equipment_types().size() == 0 )
-            throw MASA_EXCEPTION( "must have either a unit or equipment types" );
+        protocol::Check( message.has_unit() || message.equipment_types().size() > 0, "must have either a unit or equipment types" );
         const auto& positions = message.positions();
-        if( positions.size() < 2 )
-            throw MASA_EXCEPTION( "must have at least two points" );
+        protocol::Check( positions.size() > 1, "must have at least two points" );
         if( message.has_unit() )
         {
             const auto id = message.unit().id();
@@ -2124,7 +2122,7 @@ void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message
             else if( MIL_Population* pPopulation = FindPopulation( id ) )
                 pathfindComputer_->Compute( *pPopulation, message, nCtx, clientId, false );
             else
-                throw MASA_EXCEPTION( "invalid crowd or unit identifier" );
+                protocol::Check( false, "invalid crowd or unit identifier" );
         }
         else
         {
@@ -2132,8 +2130,7 @@ void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message
             for( auto it = message.equipment_types().begin(); it != message.equipment_types().end(); ++it )
             {
                 const auto type = PHY_ComposanteTypePion::Find( it->id() );
-                if( !type )
-                    throw MASA_EXCEPTION( "invalid dotation type identifier" );
+                protocol::Check( type, "invalid dotation type identifier" );
                 equipments.push_back( type );
             }
             pathfindComputer_->Compute( equipments, message, nCtx, clientId, false );
@@ -2142,7 +2139,6 @@ void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message
     catch( const tools::Exception& e )
     {
         client::ComputePathfindAck ack;
-        ack().set_error_code( ComputePathfindAck::no_error );
         ack().set_error_code( ComputePathfindAck::error_invalid_parameter );
         ack().set_error_msg( tools::GetExceptionMsg( e ) );
         ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
