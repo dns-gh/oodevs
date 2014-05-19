@@ -98,8 +98,10 @@ end
 integration.getSimPositionAwayFromknowledgeAgents = function( knowledgeAgents, distanceToGo )
     -- Compute valid agent positions once and for all
     local kAgentPositions = {}
+    local kValidAgents = {}
     for _, kAgent in pairs( knowledgeAgents ) do
         if kAgent:isValid() then
+            kValidAgents[ #kValidAgents + 1 ] = kAgent
             kAgentPositions[ #kAgentPositions + 1 ] = kAgent:getPosition()
         end
     end
@@ -121,9 +123,9 @@ integration.getSimPositionAwayFromknowledgeAgents = function( knowledgeAgents, d
 
     -- Get the agents located into the circle with a radius defined by the average distance
     local simAgentsInCircle = {}
-    for i = 1, #kAgentPositions do
+    for i = 1, #kValidAgents do
         if DEC_Geometrie_Distance( kAgentPositions[i], myPosition ) < ( averageDistance + 100 ) then -- + 100 meters to avoid precision errors
-            simAgentsInCircle[ #simAgentsInCircle + 1 ] = kAgentPositions[i].source
+            simAgentsInCircle[ #simAgentsInCircle + 1 ] = kValidAgents[i].source
         end
     end
  
