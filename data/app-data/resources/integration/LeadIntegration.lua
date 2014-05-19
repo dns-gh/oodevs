@@ -381,7 +381,7 @@ local isHQTaskUsingRelievingUnit = function( self, hqUnit, unit, param )
     return false
 end
 
-local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask, newOperationnalEntities )
+local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
     local integration = integration
     local myself = myself
     local meKnowledge = meKnowledge
@@ -397,6 +397,7 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
     self.listenFrontElementInitialized = false
     local oldEntities = self.parameters.commandingEntities
     local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
+    local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
 
     local echelons = integration.getPionsInEchelons( newEntities )
     local pionsPE = echelons[1]
@@ -932,8 +933,7 @@ integration.leadActivate = function( self, findBestsFunction, manageReinforcemen
       self:create()
     end
 
-    self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
-    if #self.operationnalEntities == 0 then
+    if #DEC_Automate_PionsDeAutomateAvecPCCommunication( myself ) == 0 then
         Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
         self.Feedback( self.feedbacks.done )
         return
@@ -947,7 +947,7 @@ integration.leadActivate = function( self, findBestsFunction, manageReinforcemen
     end
 
     if self.params.manageAddedAndDeletedUnits ~= false then
-        manageAddedAndDeletedUnits( self, findBestsFunction, nil, self.operationnalEntities )
+        manageAddedAndDeletedUnits( self, findBestsFunction )
     end
 
     local Activate = Activate
@@ -1027,14 +1027,13 @@ integration.leadDelayActivate = function( self, disengageTask )
     local meKnowledge = meKnowledge
     local Activate = Activate
 
-    self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
-    if #self.operationnalEntities == 0 then
+    if #DEC_Automate_PionsDeAutomateAvecPCCommunication( myself ) == 0 then
         Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
         self.Feedback( self.feedbacks.done )
         return
     end
 
-    manageAddedAndDeletedUnits( self, findBests, disengageTask, self.operationnalEntities )
+    manageAddedAndDeletedUnits( self, findBests, disengageTask )
     
     -- Mis à jour des echelons
     integration.setPionsEchelons( myself.leadData.pionsLima1, eEtatEchelon_First )
@@ -1151,8 +1150,8 @@ integration.leadDroneActivate = function( self, findBestsFunction )
     if myself.newTask then
       self:create()
     end
-    self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
-    if #self.operationnalEntities == 0 then
+
+    if #DEC_Automate_PionsDeAutomateAvecPCCommunication( myself ) == 0 then
         Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
         self.Feedback( self.feedbacks.done )
         return
