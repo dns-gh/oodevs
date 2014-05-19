@@ -417,10 +417,10 @@ type TestSuite struct{}
 var _ = Suite(&TestSuite{})
 
 func (t *TestSuite) SetUpSuite(c *C) {
-	log.Println("application", Cfg.Application)
-	log.Println("root-dir", Cfg.RootDir)
-	log.Println("run-dir", Cfg.RunDir)
-	log.Println("test-port", Cfg.TestPort)
-	log.Println("platform", Cfg.Platform)
-	log.Println("cpu", runtime.GOMAXPROCS(0))
+	log.Println("config: application", Cfg.Application)
+	log.Println("config: root-dir", Cfg.RootDir)
+	log.Println("config: run-dir", Cfg.RunDir)
+	log.Println("config: test-port", Cfg.TestPort)
+	log.Println("config: platform", Cfg.Platform)
+	log.Println("config: cpu", runtime.GOMAXPROCS(0))
 }

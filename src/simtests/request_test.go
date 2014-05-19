@@ -108,8 +108,11 @@ func (RequestDeleteChecker) Check(c *C, ctx *RequestCheckContext, msg *sword.Sim
 
 type RequestCallback func()
 
-func checkRequest(c *C, client *swapi.Client, offset int, requester, supplier uint32, callback RequestCallback, checkers ...RequestChecker) {
-	client.Pause()
+func checkRequest(c *C, admin, client *swapi.Client, offset int,
+	requester, supplier uint32, callback RequestCallback, checkers ...RequestChecker) {
+
+	err := admin.Pause()
+	c.Assert(err, IsNil)
 	check := RequestCheckContext{
 		requester: requester,
 		supplier:  supplier,
@@ -143,7 +146,8 @@ func checkRequest(c *C, client *swapi.Client, offset int, requester, supplier ui
 	})
 	defer client.Unregister(ctx)
 	callback()
-	client.Resume(0)
+	err = admin.Resume(0)
+	c.Assert(err, IsNil)
 	select {
 	case <-quit:
 	case <-time.After(1 * time.Minute):
@@ -159,20 +163,24 @@ func checkRequest(c *C, client *swapi.Client, offset int, requester, supplier ui
 	c.Assert(idx, Equals, len(checkers))
 }
 
-func checkRequestUpdates(c *C, client *swapi.Client, requester, supplier, resource uint32, callback RequestCallback) {
+func checkRequestUpdates(c *C, admin, client *swapi.Client, requester, supplier,
+	resource uint32, callback RequestCallback) {
+
 	checkers := []RequestChecker{&RequestCreateChecker{resource, requester},
 		&RequestUpdateChecker{"request_granted", 10, 10, 0, 0},
 		&RequestUpdateChecker{"request_conveyed", 10, 10, 10, 0},
 		&RequestUpdateChecker{"request_delivered", 10, 10, 0, 10},
 		&RequestDeleteChecker{},
 	}
-	checkRequest(c, client, -1, requester, supplier, callback, checkers...)
+	checkRequest(c, admin, client, -1, requester, supplier, callback, checkers...)
 }
 
 func (s *TestSuite) TestSupplyRequests(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadLog))
+
 	unit := getSomeUnitByName(c, d, "Supply Mobile Infantry")
 	supplierId := getSomeAutomatByName(c, d, "Supply Log Automat 1c").Id
 	removeElectrogen_1 := func() {
@@ -184,5 +192,6 @@ func (s *TestSuite) TestSupplyRequests(c *C) {
 				}})
 		c.Assert(err, IsNil)
 	}
-	checkRequestUpdates(c, client, unit.AutomatId, supplierId, uint32(electrogen_1), removeElectrogen_1)
+	checkRequestUpdates(c, admin, client, unit.AutomatId, supplierId,
+		uint32(electrogen_1), removeElectrogen_1)
 }
