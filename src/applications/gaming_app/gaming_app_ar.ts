@@ -1728,6 +1728,10 @@ Do you want to replace it?</source>
         <source>The tow truck is unavailable.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Vehicle weight: %1 (t)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticStatusWidget</name>
@@ -2245,7 +2249,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">وحدة</translation>
     </message>
     <message>
-        <source>Capacity</source>
+        <source>Capacity (t)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

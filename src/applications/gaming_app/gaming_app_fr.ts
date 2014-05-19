@@ -1731,6 +1731,10 @@ Voulez-vous le remplacer ?</translation>
         <source>The tow truck is unavailable.</source>
         <translation>Le remorqueur est indisponible.</translation>
     </message>
+    <message>
+        <source>Vehicle weight: %1 (t)</source>
+        <translation>Poids du véhicule: %1 (t)</translation>
+    </message>
 </context>
 <context>
     <name>LogisticStatusWidget</name>
@@ -2248,8 +2252,8 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Unité</translation>
     </message>
     <message>
-        <source>Capacity</source>
-        <translation>Capacité</translation>
+        <source>Capacity (t)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

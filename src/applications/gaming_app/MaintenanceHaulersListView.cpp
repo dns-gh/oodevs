@@ -32,7 +32,7 @@ MaintenanceHaulersListView::MaintenanceHaulersListView( QWidget* parent,
     list.append( tools::translate( "MaintenanceHaulersListView", "Working" ) );
     list.append( tools::translate( "MaintenanceHaulersListView", "Resting" ) );
     list.append( tools::translate( "MaintenanceHaulersListView", "Lent" ) );
-    list.append( tools::translate( "MaintenanceHaulersListView", "Capacity" ) );
+    list.append( tools::translate( "MaintenanceHaulersListView", "Capacity (t)" ) );
     model_.setHorizontalHeaderLabels( list );
     header()->setResizeMode( 0, QHeaderView::Stretch );
 }
