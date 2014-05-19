@@ -2758,16 +2758,16 @@ This data can&apos;t be projected.</translation>
         <translation>Equipment</translation>
     </message>
     <message>
-        <source>Supplies</source>
-        <translation>Supplies</translation>
-    </message>
-    <message>
         <source>Change initial state</source>
         <translation>Change initial state</translation>
     </message>
     <message>
         <source>Display initial state</source>
         <translation>Display initial state</translation>
+    </message>
+    <message>
+        <source>Basic load</source>
+        <translation>Basic load</translation>
     </message>
 </context>
 <context>

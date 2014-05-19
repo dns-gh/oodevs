@@ -2754,15 +2754,15 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Supplies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change initial state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Display initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Basic load</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
