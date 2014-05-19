@@ -10,15 +10,16 @@
 #include "simulation_kernel_pch.h"
 #include "PathfindComputer.h"
 #include "PathRequest.h"
-#include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathComputer.h"
-#include "Decision/DEC_PathSection.h"
 #include "Decision/DEC_Agent_PathfinderRule.h"
 #include "Decision/DEC_AgentContext.h"
 #include "Decision/DEC_Agent_PathClass.h"
+#include "Decision/DEC_EquipmentListContext.h"
+#include "Decision/DEC_PathComputer.h"
+#include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_PathSection.h"
+#include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PopulationContext.h"
 #include "Decision/DEC_Population_PathfinderRule.h"
-#include "Decision/DEC_PathFind_Manager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -119,16 +120,33 @@ uint32_t PathfindComputer::Compute( const MIL_Population& population, const swor
     return Compute( computer, message, ctx, clientId, store );
 }
 
+uint32_t PathfindComputer::Compute( const std::vector< const PHY_ComposanteTypePion* >& equipments,
+    const sword::PathfindRequest& message,
+    unsigned int ctx, unsigned int clientId, bool store )
+{
+    const auto points = GetPositions( message, world_ );
+    if( points.empty() )
+        throw MASA_EXCEPTION( "invalid empty path point list" );
+    const auto computer = boost::make_shared< DEC_PathComputer >( 0 );
+    const auto context = boost::make_shared< DEC_EquipmentListContext >( equipments );
+    for( auto it = points.begin(); it != points.end() - 1; ++it )
+    {
+        std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context, *it, *(it + 1) ) );
+        computer->RegisterPathSection( *new DEC_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
+    }
+    return Compute( computer, message, ctx, clientId, store );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathfindComputer::Compute
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-uint32_t PathfindComputer::Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& request,
+uint32_t PathfindComputer::Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& message,
                                     unsigned int ctx, unsigned int clientId, bool store )
 {
     const uint32_t id = ++ids_;
-    results_[ id ] = boost::make_shared< PathRequest >( computer, request, ctx, clientId, id, store );
-    manager_.StartCompute( computer, request.ignore_dynamic_objects() );
+    results_[ id ] = boost::make_shared< PathRequest >( computer, message, ctx, clientId, id, store );
+    manager_.StartCompute( computer, message.ignore_dynamic_objects() );
     return id;
 }
 

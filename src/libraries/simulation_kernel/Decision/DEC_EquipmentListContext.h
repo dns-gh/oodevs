@@ -7,31 +7,30 @@
 //
 // *****************************************************************************
 
-#ifndef __DEC_AgentContext_h_
-#define __DEC_AgentContext_h_
+#ifndef __DEC_EquipmentListContext_h_
+#define __DEC_EquipmentListContext_h_
 
 #include "DEC_AgentContext_ABC.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
-#include "Entities/Orders/MIL_Fuseau.h"
 
-class MIL_Agent_ABC;
+class PHY_ComposanteTypePion;
 
 // =============================================================================
-/** @class  DEC_AgentContext
+/** @class  DEC_EquipmentListContext
     @brief  Provides path related context for the pathfinder
 */
-// Created: MCO 2014-05-14
+// Created: MCO 2014-05-19
 // =============================================================================
-class DEC_AgentContext : public DEC_AgentContext_ABC
+class DEC_EquipmentListContext : public DEC_AgentContext_ABC
 {
 public:
-    DEC_AgentContext( const MIL_Agent_ABC& agent, const DEC_Agent_PathClass& pathClass, const T_PointVector& points );
+    explicit DEC_EquipmentListContext( const std::vector< const PHY_ComposanteTypePion* >& equipments );
+    virtual ~DEC_EquipmentListContext();
 
     virtual const MIL_Fuseau& GetFuseau() const;
     virtual const MIL_Fuseau& GetAutomataFuseau() const;
-    virtual const PHY_Speeds& GetUnitSpeeds() const;
     virtual const MT_Vector2D& GetDirDanger() const;
-
+    virtual const PHY_Speeds& GetUnitSpeeds() const;
     virtual const DEC_Agent_PathClass& GetPathClass() const;
 
     virtual double GetUnitMaxSlope() const;
@@ -44,21 +43,10 @@ public:
     virtual const T_PathKnowledgePopulationVector& GetPathKnowledgePopulations() const;
 
 private:
-    void Initialize( const MIL_Agent_ABC& agent, const T_PointVector& points );
-
-private:
-    const MIL_Fuseau fuseau_;
-    const MIL_Fuseau automataFuseau_;
-    const MT_Vector2D dangerDirection_;
-    const double maxSlope_;
-    const double slopeDeceleration_;
-    const double majorWeight_;
-    double costOutsideOfAllObjects_;
-    const DEC_Agent_PathClass& class_;
     const PHY_Speeds speeds_;
-    T_PathKnowledgeAgentVector pathKnowledgeAgents_;
-    T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
-    T_PathKnowledgePopulationVector pathKnowledgePopulations_;
+    double maxSlope_;
+    double slopeDeceleration_;
+    double maxWeight_;
 };
 
-#endif // __DEC_AgentContext_h_
+#endif // __DEC_EquipmentListContext_h_

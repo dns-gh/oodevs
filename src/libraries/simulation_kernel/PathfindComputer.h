@@ -18,6 +18,7 @@ class DEC_PathComputer;
 class MIL_Population;
 class MT_Vector2D;
 class PathRequest;
+class PHY_ComposanteTypePion;
 
 // =============================================================================
 /** @class  PathfindComputer
@@ -40,6 +41,9 @@ public:
                       unsigned int ctx, unsigned int clientId, bool store );
     uint32_t Compute( const MIL_Population& population, const sword::PathfindRequest& message,
                       unsigned int ctx, unsigned int clientId, bool store );
+    uint32_t Compute( const std::vector< const PHY_ComposanteTypePion* >& equipments,
+                      const sword::PathfindRequest& message,
+                      unsigned int ctx, unsigned int clientId, bool store );
     bool Destroy( uint32_t pathfind );
     void Update();
     //@}
@@ -47,7 +51,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    uint32_t Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& request,
+    uint32_t Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& message,
                       unsigned int ctx, unsigned int clientId, bool store );
     //@}
 

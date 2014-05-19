@@ -20,6 +20,7 @@ namespace moving
     class PHY_RoleAction_InterfaceMoving;
 }
 
+class PHY_ComposanteTypePion;
 class TerrainData;
 
 // =============================================================================
@@ -33,8 +34,9 @@ class PHY_Speeds : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_Speeds( xml::xistream& xis, double rMaxSpeed );
+             PHY_Speeds( xml::xistream& xis, double rMaxSpeed );
     explicit PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role );
+    explicit PHY_Speeds( const std::vector< const PHY_ComposanteTypePion* >& equipments );
     virtual ~PHY_Speeds();
     //@}
 

@@ -31,7 +31,7 @@ class DEC_Path_KnowledgePopulation;
 class DEC_AgentContext_ABC : boost::noncopyable
 {
 protected:
-    typedef std::vector< DEC_Path_KnowledgeAgent >T_PathKnowledgeAgentVector;
+    typedef std::vector< DEC_Path_KnowledgeAgent > T_PathKnowledgeAgentVector;
     typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > > T_PathKnowledgeObjectVector;
     typedef std::vector< T_PathKnowledgeObjectVector > T_PathKnowledgeObjectByTypesVector;
     typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgePopulation > > T_PathKnowledgePopulationVector;

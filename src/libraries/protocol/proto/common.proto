@@ -2735,7 +2735,7 @@ message ListLogisticRequestsAck {
 //! Defines a pathfind request.
 message PathfindRequest {
     //! The unit identifier.
-    required Id           unit                   = 1;
+    optional Id           unit                   = 1;
     //! The waypoints.
     repeated CoordLatLong positions              = 2;
     //! The equipment types composing the unit.
