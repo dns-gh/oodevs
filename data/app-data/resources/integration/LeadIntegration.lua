@@ -1027,7 +1027,7 @@ integration.leadDelayActivate = function( self, disengageTask )
     local meKnowledge = meKnowledge
     local Activate = Activate
 
-    if #DEC_Automate_PionsDeAutomateAvecPCCommunication( myself ) == 0 then
+    if #DEC_Automate_PionsDeAutomateAvecPC( myself ) == 0 then
         Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
         self.Feedback( self.feedbacks.done )
         return
