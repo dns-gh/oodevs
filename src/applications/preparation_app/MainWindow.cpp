@@ -656,13 +656,11 @@ void MainWindow::SaveAs()
 // -----------------------------------------------------------------------------
 void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
-    QMessageBox::StandardButton result = CheckSaving();
-    if( result == QMessageBox::Cancel || result == QMessageBox::Yes )
+    if( !Close() )
     {
         pEvent->ignore();
         return;
     }
-    controllers_.ChangeMode( eModes_Default );
     controllers_.modes_.SaveGeometry( eModes_Prepare );
     controllers_.SaveOptions( eModes_Prepare );
     QMainWindow::closeEvent( pEvent );
