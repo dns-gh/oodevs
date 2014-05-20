@@ -40,6 +40,7 @@ public:
     unsigned int GetCount() const;
     unsigned int GetCrew() const;
     bool IsMajor() const;
+    bool IsConvoyer() const;
     //@}
 
 private:
@@ -49,6 +50,7 @@ private:
     const unsigned int count_;
     const unsigned int crew_;
     const bool major_;
+    const bool convoyer_;
     //@}
 };
 

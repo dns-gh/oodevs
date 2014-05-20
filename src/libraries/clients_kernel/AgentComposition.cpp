@@ -22,6 +22,7 @@ AgentComposition::AgentComposition( xml::xistream& xis, const tools::Resolver_AB
     , count_( xis.attribute< unsigned int >( "count" ) )
     , crew_( xis.attribute< unsigned int >( "crew" ) )
     , major_( xis.attribute< bool >( "major", false ) )
+    , convoyer_( xis.attribute< bool >( "convoyer", false ) )
 {
     // NOTHING
 }
@@ -69,4 +70,13 @@ unsigned int AgentComposition::GetCrew() const
 bool AgentComposition::IsMajor() const
 {
     return major_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentComposition::IsConvoyer
+// Created: SLI 2014-05-20
+// -----------------------------------------------------------------------------
+bool AgentComposition::IsConvoyer() const
+{
+    return convoyer_;
 }
