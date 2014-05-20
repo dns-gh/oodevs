@@ -11,32 +11,10 @@
 #include "MagicOrderManager.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/Serialization.h"
 
 #include <boost/interprocess/streams/bufferstream.hpp>
 #include <boost/interprocess/streams/vectorstream.hpp>
-
-namespace bip = boost::interprocess;
-
-namespace boost {
-namespace serialization {
-template< class Archive >
-void save( Archive& ar, const sword::MagicOrder& src, const unsigned int )
-{
-    bip::basic_vectorstream< std::vector< char > > stream;
-    src.SerializeToOstream( &stream );
-    ar << stream.vector();
-}
-
-template< class Archive >
-void load( Archive& ar, sword::MagicOrder& dst, const unsigned int )
-{
-    std::vector< char > data;
-    ar >> data;
-    bip::ibufferstream stream( &data[0], data.size() );
-    dst.ParseFromIstream( &stream );
-}
-}
-}
 
 BOOST_SERIALIZATION_SPLIT_FREE( sword::MagicOrder );
 
