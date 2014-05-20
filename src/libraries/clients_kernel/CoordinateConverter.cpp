@@ -249,34 +249,26 @@ std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& pos
 // Name: CoordinateConverter::GetStringPosition
 // Created: LGY 2014-01-22
 // -----------------------------------------------------------------------------
-std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& position, int projection ) const
+std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& position, E_CoordinateSystem projection ) const
 {
-    std::string positionStr;
     switch( projection )
     {
     case eCoordinateSystem_Mgrs:
-        positionStr = ConvertToMgrs( position );
-        break;
+        return ConvertToMgrs( position );
     case eCoordinateSystem_SanC:
-        positionStr = ConvertTo( position, "SAN-C" );
-        break;
+        return ConvertTo( position, "SAN-C" );
     case eCoordinateSystem_Wgs84Dd:
         {
-            geometry::Point2d pos( ConvertToGeo( position ) );
-            positionStr = boost::str( boost::format( "%f:%f" ) % pos.Y() % pos.X() );
-            break;
+            const geometry::Point2d pos( ConvertToGeo( position ) );
+            return boost::str( boost::format( "%f:%f" ) % pos.Y() % pos.X() );
         }
     case eCoordinateSystem_Wgs84Dms:
-        positionStr = ConvertToGeoDms( position );
-        break;
+        return ConvertToGeoDms( position );
     case eCoordinateSystem_Local:
-        positionStr = boost::str( boost::format( "%f:%f" ) % position.Y() % position.X() );
-        break;
+        return boost::str( boost::format( "%f:%f" ) % position.Y() % position.X() );
     default:
-        positionStr = "----";
-        break;
+        return "----";
     }
-    return positionStr;
 }
 
 // -----------------------------------------------------------------------------

@@ -50,8 +50,9 @@ public:
     virtual std::string       ConvertToGeoDms       ( const geometry::Point2f& pos ) const = 0;
     virtual std::string       ConvertToUtm          ( const geometry::Point2f& pos ) const = 0;
     virtual geometry::Point2f ConvertFromGeoDms     ( const std::string& longitude, const std::string& latitude ) const = 0;
+
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const = 0;
-    virtual std::string GetStringPosition( const geometry::Point2f& position, int projection ) const = 0;
+    virtual std::string GetStringPosition( const geometry::Point2f& position, E_CoordinateSystem projection ) const = 0;
 
     virtual E_CoordinateSystem GetDefaultCoordinateSystem() const = 0;
     virtual void SetDefaultCoordinateSystem( E_CoordinateSystem ) = 0;
