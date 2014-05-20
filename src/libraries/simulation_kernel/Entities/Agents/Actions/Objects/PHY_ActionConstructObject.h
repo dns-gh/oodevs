@@ -40,6 +40,7 @@ public:
     //@}
 
 private:
+    void CleanObject();
     PHY_RoleAction_Objects& role_;
     MIL_Object_ABC* pObject_;
     bool instantaneous_;

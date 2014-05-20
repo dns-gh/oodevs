@@ -95,6 +95,7 @@ public:
     void Clean();
     void ProcessEvents();
     void MarkForDestruction();
+    void MarkForDestructionNextUpdate();
     //@}
 
     //! @name Interactions
@@ -169,6 +170,7 @@ public:
     //@{
     bool IsMarkedForDestruction() const;
     bool IsReadyForDeletion() const;
+    bool IsMarkedForDestructionNextUpdate() const;
     virtual bool IsUniversal() const = 0;
     //@}
 
@@ -222,6 +224,7 @@ private:
     MIL_ObjectInteraction interaction_;
     bool bMarkedForDestruction_;
     bool bReadyForDeletion_;
+    bool bNeedDestructionOnNextUpdate_;
     //@}
 };
 

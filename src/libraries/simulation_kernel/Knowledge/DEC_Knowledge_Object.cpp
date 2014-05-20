@@ -1130,7 +1130,7 @@ bool DEC_Knowledge_Object::Clean() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::CleanObjectKnown()
 {
-    if( pObjectKnown_ && pObjectKnown_->IsMarkedForDestruction() )
+    if( pObjectKnown_ && ( pObjectKnown_->IsMarkedForDestruction() || pObjectKnown_->IsMarkedForDestructionNextUpdate() ) )
     {
         if( bPerceptionDistanceHacked_ || pObjectKnown_->Retrieve< CrowdCapacity >() ) // $$$$ _RC_ LDC 2011:08:10 Should be pObjectKnown_->IsUniversal() and ADN modified accordingly.
             rRelevance_ = 0.;

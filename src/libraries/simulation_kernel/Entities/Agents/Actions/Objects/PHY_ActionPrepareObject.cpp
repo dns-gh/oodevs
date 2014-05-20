@@ -71,9 +71,7 @@ void PHY_ActionPrepareObject::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionPrepareObject::Execute()
 {
-    if( pObject_ && pObject_->IsMarkedForDestruction() )
-        pObject_ = 0;
-
+    CleanObject();
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge;
     int nReturn = role_.Construct( pObject_, pKnowledge, false );
     Callback( nReturn );
@@ -87,8 +85,16 @@ void PHY_ActionPrepareObject::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionPrepareObject::ExecuteSuspended()
 {
-    if( pObject_ && pObject_->IsMarkedForDestruction() )
-        pObject_ = 0;
-
+    CleanObject();
     role_.ConstructSuspended();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionPrepareObject::CleanObject
+// Created: LDC 2014-05-19
+// -----------------------------------------------------------------------------
+void PHY_ActionPrepareObject::CleanObject()
+{
+    if( pObject_ && ( pObject_->IsMarkedForDestruction() || pObject_->IsMarkedForDestructionNextUpdate() ) )
+        pObject_ = 0;
 }
