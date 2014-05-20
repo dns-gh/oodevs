@@ -71,9 +71,9 @@ void PathRequest::SendPathfindCreation( bool ok )
     if( !ok )
         return;
     // broadcast the newly created pathfind entity when successful
-    client::PathfindCreation msg;
-    msg().mutable_id()->set_id( id_ );
-    msg().mutable_unit()->set_id( unit_ );
+    client::Pathfind msg;
+    msg().set_id( id_ );
+    msg().set_unit( unit_ );
     computer_->Serialize( *msg().mutable_path() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }

@@ -2771,14 +2771,14 @@ message ComputePathfindAck {
     optional PathResult path        = 4;
 }
 
-/** @struct PathfindCreation
+/** @struct Pathfind
     @brief Notifies of the creation of a pathfind
 */
-message PathfindCreation {
+message Pathfind {
     //! The pathfind identifier
-    required Id         id          = 1;
+    required uint32     id          = 1;
     //! The associated unit
-    required Id         unit        = 2;
+    required uint32     unit        = 2;
     //! Computed path
     required PathResult path        = 3;
 }
@@ -2788,5 +2788,5 @@ message PathfindCreation {
 */
 message PathfindDestruction {
     //! The pathfind identifier
-    required Id         id          = 1;
+    required uint32     id          = 1;
 }

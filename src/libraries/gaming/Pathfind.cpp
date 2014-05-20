@@ -10,10 +10,10 @@
 #include "gaming_pch.h"
 #include "Pathfind.h"
 
-Pathfind::Pathfind( kernel::Controller& controller, const sword::PathfindCreation& msg )
-    : EntityImplementation< Pathfind_ABC >( controller, msg.id().id(), QString() /* no name yet */, true )
+Pathfind::Pathfind( kernel::Controller& controller, const sword::Pathfind& msg )
+    : EntityImplementation< Pathfind_ABC >( controller, msg.id(), QString() /* no name yet */, true )
     , controller_( controller )
-    , data_( new sword::PathfindCreation( msg ) )
+    , data_( new sword::Pathfind( msg ) )
 {
     AddExtension( *this );
     controller_.Create( *this );

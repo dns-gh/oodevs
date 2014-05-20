@@ -27,13 +27,13 @@ void PathfindModel::Purge()
     tools::Resolver< kernel::Pathfind_ABC >::DeleteAll();
 }
 
-void PathfindModel::Create( const sword::PathfindCreation& msg )
+void PathfindModel::Create( const sword::Pathfind& msg )
 {
-    if( !T_Resolver::Find( msg.id().id() ) )
-        Register( msg.id().id(), *new Pathfind( controller_, msg ) );
+    if( !T_Resolver::Find( msg.id() ) )
+        Register( msg.id(), *new Pathfind( controller_, msg ) );
 }
 
 void PathfindModel::Delete( const sword::PathfindDestruction& msg )
 {
-    T_Resolver::Delete( msg.id().id() );
+    T_Resolver::Delete( msg.id() );
 }

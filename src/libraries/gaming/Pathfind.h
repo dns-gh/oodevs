@@ -29,7 +29,7 @@ class Pathfind : public gui::EntityImplementation< kernel::Pathfind_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Pathfind( kernel::Controller& controller, const sword::PathfindCreation& msg );
+             Pathfind( kernel::Controller& controller, const sword::Pathfind& msg );
     virtual ~Pathfind();
     //@}
 
@@ -37,7 +37,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    std::auto_ptr< sword::PathfindCreation > data_;
+    std::auto_ptr< sword::Pathfind > data_;
     //@}
 
 };

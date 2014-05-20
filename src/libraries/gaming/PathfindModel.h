@@ -23,7 +23,7 @@ namespace kernel
 
 namespace sword
 {
-    class PathfindCreation;
+    class Pathfind;
     class PathfindDestruction;
 }
 
@@ -49,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    void Create( const sword::PathfindCreation&    msg );
+    void Create( const sword::Pathfind&            msg );
     void Delete( const sword::PathfindDestruction& msg );
     //@}
 
