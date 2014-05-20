@@ -904,6 +904,7 @@
         <compare-proto olddir="${proto.dir}/proto-5.3.3" newdir="${src.dir}/libraries/protocol/proto/">
             <!-- New magic actions are fine -->
             <arg value="--exclude=*.MagicAction.Type"/>
+            <arg value="--exclude=*.UnitMagicAction.Type"/>
         </compare-proto>
     </target>
 
