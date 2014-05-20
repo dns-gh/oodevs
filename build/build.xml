@@ -815,7 +815,7 @@
         </sequential>
     </macrodef>
 
-    <target name="checkproto">
+    <target name="checkproto" description="check protobuf definitions">
         <property name="proto.dir" value="${data.dir}/app-data/proto"/>
         <python>
             <arg value="${bin.dir}/buildtools/protolint/protolint.py"/>
