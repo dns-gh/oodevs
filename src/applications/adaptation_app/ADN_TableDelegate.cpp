@@ -439,13 +439,36 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
 // -----------------------------------------------------------------------------
 void ADN_TableDelegate::paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
 {
-    QStyleOptionViewItem tempOption = option;
-    const CommonDelegate::DelegatePosition* position = IsInPosition( index.row(), index.column() );
-    if( position )
-        if( std::find( colorEdits_.begin(), colorEdits_.end(), position->id_ ) != colorEdits_.end() )
-            tempOption.state &= ~QStyle::State_Selected;
-    gui::CommonDelegate::paint( painter, tempOption, index );
+    Qt::ItemFlags flags = index.flags();
+    if( ( flags & Qt::ItemIsUserCheckable ) )
+    {
+        // Draw background
+        painter->save();
+        drawBackground(painter, option, index);
+        painter->restore();
 
+        // Draw content
+        QStyleOptionViewItemV4 viewItemOption( option );
+        const int textMargin = QApplication::style()->pixelMetric( QStyle::PM_FocusFrameHMargin ) + 1;
+        viewItemOption.decorationAlignment = Qt::AlignCenter;
+        QRect newRect = QStyle::alignedRect( option.direction, Qt::AlignCenter,
+            QSize( option.decorationSize.width() + 5, option.decorationSize.height() ),
+            QRect( option.rect.x(), option.rect.y(), option.rect.width() - ( 2 * textMargin ), option.rect.height() ) );
+
+        // Print original
+        viewItemOption.rect = newRect;
+        QItemDelegate::paint( painter, viewItemOption, index );
+    }
+    else
+    {
+        QStyleOptionViewItem tempOption = option;
+        const CommonDelegate::DelegatePosition* position = IsInPosition( index.row(), index.column() );
+        if( position )
+            if( std::find( colorEdits_.begin(), colorEdits_.end(), position->id_ ) != colorEdits_.end() )
+                tempOption.state &= ~QStyle::State_Selected;
+        QItemDelegate::paint( painter, tempOption, index );
+    }
+ 
      // To draw a border on selected cells
      if( option.state & QStyle::State_Selected )
      {
