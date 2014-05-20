@@ -10,8 +10,6 @@
 #ifndef __PHY_Action_ABC_h_
 #define __PHY_Action_ABC_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xostream;

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_AmmoEffect.h"
+#include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
 
@@ -52,5 +53,32 @@ const weather::PHY_Precipitation& PHY_AmmoEffect::GetPrecipitation( const weathe
     return ammoClass_ == PHY_IndirectFireDotationClass::fumigene_ ? weather::PHY_Precipitation::smoke_
         : pNextEffect_ ? pNextEffect_->GetPrecipitation( mainPrecipitation )
         : mainPrecipitation;
+}
+
+//-----------------------------------------------------------------------------
+// Name: PHY_AmmoEffect::SetNextEffect
+// Created: JVT 04-03-24
+//-----------------------------------------------------------------------------
+void PHY_AmmoEffect::SetNextEffect( PHY_AmmoEffect* pNextEffect )
+{
+    pNextEffect_ = pNextEffect;
+}
+
+//-----------------------------------------------------------------------------
+// Name: PHY_AmmoEffect::HandleAmmo
+// Created: JVT 04-03-24
+//-----------------------------------------------------------------------------
+bool PHY_AmmoEffect::HandleAmmo( const PHY_IndirectFireDotationClass& ammoClass ) const
+{
+    return ammoClass_ == ammoClass;
+}
+
+//-----------------------------------------------------------------------------
+// Name: PHY_AmmoEffect::GetNextEffect
+// Created: JVT 04-03-24
+//-----------------------------------------------------------------------------
+PHY_AmmoEffect* PHY_AmmoEffect::GetNextEffect() const
+{
+    return pNextEffect_;
 }
 

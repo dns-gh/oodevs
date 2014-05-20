@@ -356,6 +356,15 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Composantes )
 
-#include "PHY_RolePion_Composantes.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ApplyOnWeapons
+// Created: NLD 2006-08-07
+// -----------------------------------------------------------------------------
+template< typename T > 
+inline void PHY_RolePion_Composantes::ApplyOnWeapons( T& t ) const
+{
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+        ( **it ).ApplyOnWeapons( t );
+}
 
 #endif // __PHY_RolePion_Composantes_h_
