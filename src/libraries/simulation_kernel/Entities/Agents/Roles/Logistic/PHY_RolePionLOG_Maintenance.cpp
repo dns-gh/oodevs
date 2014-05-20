@@ -260,6 +260,34 @@ unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableDiagnosersAllowedToWork
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::GetNbrAvailableDiagnosersAllowedToWork
+// Created: LGY 2014-05-20
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableDiagnosersAllowedToWork( const PHY_ComposanteTypePion& type ) const
+{
+    unsigned int available = 0u;
+    unsigned int used = 0u;
+    ComponentFunctor functor( [&]( const PHY_ComposantePion& component ) -> bool
+    {
+        if( component.GetType() == type )
+        {
+            ++ available;
+            if( !component.CanRepair() )
+                ++ used;
+        }
+        return false;
+    } );
+    DefaultComponentFunctorComputer computer( functor );
+    owner_.Execute< OnComponentComputer_ABC >( computer );
+
+    unsigned int availableAllowedToWork = 0u;
+    const unsigned int allowedToWork = pWorkRate_->GetNbrWorkerAllowedToWork( available );
+    if( allowedToWork > used )
+        availableAllowedToWork = allowedToWork - used;
+    return availableAllowedToWork;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------
@@ -292,6 +320,10 @@ PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableDiagnoser( const PH
     } );
     DefaultComponentFunctorComputer computer( functor );
     owner_.Execute< OnComponentComputer_ABC >( computer );
+
+    if( type && GetNbrAvailableDiagnosersAllowedToWork( *type ) == 0 )
+        return 0;
+
     return functor.component_;
 }
 
