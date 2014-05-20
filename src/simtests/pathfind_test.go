@@ -58,7 +58,9 @@ func (s *TestSuite) TestUnitPathfindRequest(c *C) {
 	defer client2.Close()
 	seen := false
 	handlerId := client2.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
-		if msg.SimulationToClient == nil || msg.SimulationToClient.GetMessage() == nil {
+		if msg == nil ||
+			msg.SimulationToClient == nil ||
+			msg.SimulationToClient.GetMessage() == nil {
 			return false
 		}
 		if mm := msg.SimulationToClient.GetMessage().GetComputePathfindAck(); mm != nil {
@@ -107,7 +109,9 @@ func (s *TestSuite) TestEquipmentListPathfindRequest(c *C) {
 	defer client2.Close()
 	seen := false
 	handlerId := client2.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
-		if msg.SimulationToClient == nil || msg.SimulationToClient.GetMessage() == nil {
+		if msg == nil ||
+			msg.SimulationToClient == nil ||
+			msg.SimulationToClient.GetMessage() == nil {
 			return false
 		}
 		if mm := msg.SimulationToClient.GetMessage().GetComputePathfindAck(); mm != nil {
