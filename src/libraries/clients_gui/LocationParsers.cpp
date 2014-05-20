@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "LocationParsers.h"
-#include "UtmParser.h"
+#include "MgrsParser.h"
 #include "XYParser.h"
 #include "Wgs84DdParser.h"
 #include "Wgs84DmsParser.h"
@@ -26,11 +26,11 @@ using namespace gui;
 LocationParsers::LocationParsers( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
 {
     parsers_[ eCoordinateSystem_Mgrs ].reset(
-        new UtmParser( controllers,
+        new MgrsParser( controllers,
                        [&]( const std::string& mgrs ) { return converter.ConvertToXY( mgrs ); },
                        [&]( const geometry::Point2f& position ) { return converter.GetStringPosition( position, eCoordinateSystem_Mgrs ); } ) );
     parsers_[ eCoordinateSystem_SanC ].reset(
-        new UtmParser( controllers,
+        new MgrsParser( controllers,
                        [&]( const std::string& s ) { return converter.ConvertFrom( s, "SAN-C" ); },
                        [&]( const geometry::Point2f& position ) { return converter.GetStringPosition( position, eCoordinateSystem_SanC ); } ) );
     parsers_[ eCoordinateSystem_Local ].reset( new XyParser( converter ) );

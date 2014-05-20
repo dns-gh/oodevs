@@ -15,7 +15,7 @@
 
 #include "clients_gui/RichWidget.h"
 #include "clients_gui/SimpleLocationDrawer.h"
-#include "clients_gui/UtmParser.h"
+#include "clients_gui/MgrsParser.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Polygon.h"
@@ -38,7 +38,7 @@ ScoreVariablesList::ScoreVariablesList( kernel::Controllers& controllers, const 
     : tools_( tools )
     , wizard_( new ScoreVariableCreationWizard( this, controllers, tools, builder ) )
     , list_( new gui::RichWidget< QTreeWidget >( "scoreList", this ) )
-    , parser_( new gui::UtmParser( controllers,
+    , parser_( new gui::MgrsParser( controllers,
                                    [&]( const std::string& mgrs ) { return staticModel.coordinateConverter_.ConvertToXY( mgrs ); },
                                    [&]( const geometry::Point2f& position ) { return staticModel.coordinateConverter_.GetStringPosition( position, eCoordinateSystem_Mgrs ); } ) )
 {

@@ -22,7 +22,7 @@ namespace gui
 {
     class GlTools_ABC;
     class ParametersLayer;
-    class UtmParser;
+    class MgrsParser;
     class Viewport_ABC;
     template< typename T > class RichWidget;
 }
@@ -99,7 +99,7 @@ private:
     ScoreVariableCreationWizard* wizard_;
     gui::RichWidget< QTreeWidget >* list_;
     std::auto_ptr< kernel::Location_ABC > location_;
-    std::auto_ptr< gui::UtmParser > parser_;
+    std::auto_ptr< gui::MgrsParser > parser_;
     //@}
 };
 

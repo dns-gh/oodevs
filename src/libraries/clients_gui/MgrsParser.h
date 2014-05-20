@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __UtmParser_h_
-#define __UtmParser_h_
+#ifndef __MgrsParser_h_
+#define __MgrsParser_h_
 
 #include "LocationParser_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
@@ -23,15 +23,15 @@ namespace kernel
 namespace gui
 {
 // =============================================================================
-/** @class  UtmParser
-    @brief  UtmParser
+/** @class  MgrsParser
+    @brief  MgrsParser
 */
 // Created: AGE 2008-05-29
 // =============================================================================
-class UtmParser : public LocationParser_ABC
-                , public tools::Observer_ABC
-                , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                , private boost::noncopyable
+class MgrsParser : public LocationParser_ABC
+                 , public tools::Observer_ABC
+                 , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                 , private boost::noncopyable
 {
     typedef std::function< geometry::Point2f( const std::string& ) > T_Converter;
     typedef std::function< std::string( const geometry::Point2f& ) > T_StringConverter;
@@ -39,9 +39,9 @@ class UtmParser : public LocationParser_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UtmParser( kernel::Controllers& controllers, const T_Converter& converter,
-                        const T_StringConverter& stringConverter );
-    virtual ~UtmParser();
+             MgrsParser( kernel::Controllers& controllers, const T_Converter& converter,
+                         const T_StringConverter& stringConverter );
+    virtual ~MgrsParser();
     //@}
 
     //! @name Operations
@@ -70,4 +70,4 @@ private:
 
 }
 
-#endif // __UtmParser_h_
+#endif // __MgrsParser_h_

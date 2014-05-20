@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "UtmParser.h"
+#include "MgrsParser.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controllers.h"
 #include "tools/ExerciseConfig.h"
@@ -22,10 +22,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: UtmParser constructor
+// Name: MgrsParser constructor
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-UtmParser::UtmParser( kernel::Controllers& controllers, const T_Converter& converter,
+MgrsParser::MgrsParser( kernel::Controllers& controllers, const T_Converter& converter,
                       const T_StringConverter& stringConverter )
     : controllers_( controllers )
     , converter_( converter )
@@ -35,19 +35,19 @@ UtmParser::UtmParser( kernel::Controllers& controllers, const T_Converter& conve
 }
 
 // -----------------------------------------------------------------------------
-// Name: UtmParser destructor
+// Name: MgrsParser destructor
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-UtmParser::~UtmParser()
+MgrsParser::~MgrsParser()
 {
     controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UtmParser::Parse
+// Name: MgrsParser::Parse
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-bool UtmParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint, bool /*small*/ ) const
+bool MgrsParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint, bool /*small*/ ) const
 {
     // "31 NEA 00000 00000"
     try
@@ -76,10 +76,10 @@ bool UtmParser::Parse( const QStringList& content, geometry::Point2f& result, QS
 }
 
 // -----------------------------------------------------------------------------
-// Name: UtmParser::NotifyUpdated
+// Name: MgrsParser::NotifyUpdated
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-void UtmParser::NotifyUpdated( const kernel::ModelLoaded& model )
+void MgrsParser::NotifyUpdated( const kernel::ModelLoaded& model )
 {
     const auto zone = model.config_.GetUtmZone();
     if( !zone.empty() )
@@ -87,10 +87,10 @@ void UtmParser::NotifyUpdated( const kernel::ModelLoaded& model )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UtmParser::GetDescriptor
+// Name: MgrsParser::GetDescriptor
 // Created: BAX 2014-01-16
 // -----------------------------------------------------------------------------
-const LocationParserDescriptor& UtmParser::GetDescriptor() const
+const LocationParserDescriptor& MgrsParser::GetDescriptor() const
 {
     static const LocationParserDescriptor desc = {
         QStringList() << QString() << QString() << QString(),
@@ -100,10 +100,10 @@ const LocationParserDescriptor& UtmParser::GetDescriptor() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UtmParser::Split
+// Name: MgrsParser::Split
 // Created: BAX 2014-01-16
 // -----------------------------------------------------------------------------
-QStringList UtmParser::Split( const QString& input ) const
+QStringList MgrsParser::Split( const QString& input ) const
 {
     int left = std::max( 0, input.size() - MaxFieldSize ) / 2;
     return QStringList()
@@ -113,10 +113,10 @@ QStringList UtmParser::Split( const QString& input ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UtmParser::GetStringPosition
+// Name: MgrsParser::GetStringPosition
 // Created: LGY 2014-01-22
 // -----------------------------------------------------------------------------
-std::string UtmParser::GetStringPosition( const geometry::Point2f& position ) const
+std::string MgrsParser::GetStringPosition( const geometry::Point2f& position ) const
 {
     return stringConverter_( position );
 }
