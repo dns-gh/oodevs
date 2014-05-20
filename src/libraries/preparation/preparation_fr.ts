@@ -411,7 +411,7 @@
     </message>
     <message>
         <source>Bypass:</source>
-        <translation>Contournement :</translation>
+        <translation>Brêchage :</translation>
     </message>
     <message>
         <source>Info/Type</source>
