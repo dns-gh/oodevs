@@ -816,22 +816,22 @@
     </macrodef>
 
     <target name="checkproto" description="check protobuf definitions">
-        <property name="proto.dir" value="${data.dir}/app-data/proto"/>
+        <property name="proto.dir" value="${data.dir}/proto"/>
         <python>
             <arg value="${bin.dir}/buildtools/protolint/protolint.py"/>
             <arg value="style"/>
             <arg value="${src.dir}/libraries/protocol/proto"/>
         </python>
 
-        <compare-proto olddir="${proto.dir}/proto-5.0.0" newdir="${proto.dir}/proto-5.0.1"/>
-        <compare-proto olddir="${proto.dir}/proto-5.0.1" newdir="${proto.dir}/proto-5.0.2"/>
+        <compare-proto olddir="${proto.dir}/5.0.0" newdir="${proto.dir}/5.0.1"/>
+        <compare-proto olddir="${proto.dir}/5.0.1" newdir="${proto.dir}/5.0.2"/>
         <!-- 5.1.0 was breaking compatibility with 5.0 line and was superseded
              by 5.1.1 which fixed the issue. Ignore it.
         -->
-        <compare-proto olddir="${proto.dir}/proto-5.0.2" newdir="${proto.dir}/proto-5.1.1"/>
-        <compare-proto olddir="${proto.dir}/proto-5.1.1" newdir="${proto.dir}/proto-5.1.2"/>
-        <compare-proto olddir="${proto.dir}/proto-5.1.2" newdir="${proto.dir}/proto-5.1.3"/>
-        <compare-proto olddir="${proto.dir}/proto-5.1.3" newdir="${proto.dir}/proto-5.2.1">
+        <compare-proto olddir="${proto.dir}/5.0.2" newdir="${proto.dir}/5.1.1"/>
+        <compare-proto olddir="${proto.dir}/5.1.1" newdir="${proto.dir}/5.1.2"/>
+        <compare-proto olddir="${proto.dir}/5.1.2" newdir="${proto.dir}/5.1.3"/>
+        <compare-proto olddir="${proto.dir}/5.1.3" newdir="${proto.dir}/5.2.1">
             <!-- The RulesOfEngagement enumeration was changed since 5.1.x,
                  a none=0 was removed and all other values shifted. We think
                  this change is acceptable since this feature was unlikely to
@@ -860,8 +860,8 @@
             <!-- New magic actions are fine, they are always sent by the client -->
             <arg value="--exclude=ClientToSim.Content.UnitMagicAction"/>
         </compare-proto>
-        <compare-proto olddir="${proto.dir}/proto-5.2.1" newdir="${proto.dir}/proto-5.2.2"/>
-        <compare-proto olddir="${proto.dir}/proto-5.2.2" newdir="${proto.dir}/proto-5.3.1">
+        <compare-proto olddir="${proto.dir}/5.2.1" newdir="${proto.dir}/5.2.2"/>
+        <compare-proto olddir="${proto.dir}/5.2.2" newdir="${proto.dir}/5.3.1">
             <!-- New error codes are probably fine, the ack's were not sent most
                  of the time anyway.
             -->
@@ -886,7 +886,7 @@
             -->
             <arg value="--exclude=AuthenticationToClient.Content.AuthenticationResponse.ErrorCode"/>
         </compare-proto>
-        <compare-proto olddir="${proto.dir}/proto-5.3.1" newdir="${proto.dir}/proto-5.3.2">
+        <compare-proto olddir="${proto.dir}/5.3.1" newdir="${proto.dir}/5.3.2">
             <!-- New magic actions are fine -->
             <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitMagicAction.Type"/>
             <arg value="--exclude=ClientToSim.Content.UnitMagicAction.Type"/>
@@ -894,14 +894,14 @@
             <!-- New logistic state introduced by manual mode -->
             <arg value="--exclude=*LogMaintenanceHandlingUpdate.EnumLogMaintenanceHandlingStatus"/>
         </compare-proto>
-        <compare-proto olddir="${proto.dir}/proto-5.3.2" newdir="${proto.dir}/proto-5.3.3">
+        <compare-proto olddir="${proto.dir}/5.3.2" newdir="${proto.dir}/5.3.3">
             <!-- New magic actions are fine -->
             <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitMagicAction.Type"/>
             <arg value="--exclude=ClientToSim.Content.UnitMagicAction.Type"/>
             <!-- New weather enumeration -->
             <arg value="--exclude=*EnumPrecipitationType"/>
         </compare-proto>
-        <compare-proto olddir="${proto.dir}/proto-5.3.3" newdir="${src.dir}/libraries/protocol/proto/">
+        <compare-proto olddir="${proto.dir}/5.3.3" newdir="${src.dir}/libraries/protocol/proto/">
             <!-- New magic actions are fine -->
             <arg value="--exclude=*.MagicAction.Type"/>
             <arg value="--exclude=*.UnitMagicAction.Type"/>
