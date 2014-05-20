@@ -111,9 +111,7 @@ void PHY_ActionConstructObject::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionConstructObject::Execute()
 {
-    if( pObject_ && pObject_->IsMarkedForDestruction() )
-        pObject_ = 0;
-
+    CleanObject();
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge;
     int nReturn = role_.Construct( pObject_, pKnowledge, instantaneous_ );
     Callback( nReturn ); // $$$$ LDC: Was DIA3 Parameter 0
@@ -127,7 +125,16 @@ void PHY_ActionConstructObject::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionConstructObject::ExecuteSuspended()
 {
-    if( pObject_ && pObject_->IsMarkedForDestruction() )
-        pObject_ = 0;
+    CleanObject();
     role_.ConstructSuspended();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionConstructObject::CleanObject
+// Created: LDC 2014-05-19
+// -----------------------------------------------------------------------------
+void PHY_ActionConstructObject::CleanObject()
+{
+    if( pObject_ && ( pObject_->IsMarkedForDestruction() || pObject_->IsMarkedForDestructionNextUpdate() ) )
+        pObject_ = 0;
 }
