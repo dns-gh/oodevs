@@ -308,7 +308,6 @@ void ScoreEditor::OnCloseDialogs()
     emit CloseDialogs();
     reject();
     hide();
-    emit Hide();
 }
 
 // -----------------------------------------------------------------------------
