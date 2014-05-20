@@ -14,7 +14,7 @@
 						<xs:attribute name="time" type="T_Time" use="required"/>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="category">
+				<xs:element name="category" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="breakdown" minOccurs="0" maxOccurs="unbounded">
