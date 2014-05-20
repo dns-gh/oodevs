@@ -40,7 +40,7 @@ ScoreVariablesList::ScoreVariablesList( kernel::Controllers& controllers, const 
     , list_( new gui::RichWidget< QTreeWidget >( "scoreList", this ) )
     , parser_( new gui::MgrsParser( controllers,
                                    [&]( const std::string& mgrs ) { return staticModel.coordinateConverter_.ConvertToXY( mgrs ); },
-                                   [&]( const geometry::Point2f& position ) { return staticModel.coordinateConverter_.GetStringPosition( position, eCoordinateSystem_Mgrs ); } ) )
+                                   [&]( const geometry::Point2f& position ) { return staticModel.coordinateConverter_.ConvertToMgrs( position ); } ) )
 {
     gui::SubObjectName subObject( "ScoreVariablesList" );
     setMargin( 5 );

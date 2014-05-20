@@ -28,7 +28,7 @@ LocationParsers::LocationParsers( kernel::Controllers& controllers, const kernel
     parsers_[ eCoordinateSystem_Mgrs ].reset(
         new MgrsParser( controllers,
                        [&]( const std::string& mgrs ) { return converter.ConvertToXY( mgrs ); },
-                       [&]( const geometry::Point2f& position ) { return converter.GetStringPosition( position, eCoordinateSystem_Mgrs ); } ) );
+                       [&]( const geometry::Point2f& position ) { return converter.ConvertToMgrs( position ); } ) );
     parsers_[ eCoordinateSystem_SanC ].reset(
         new MgrsParser( controllers,
                        [&]( const std::string& s ) { return converter.ConvertFrom( s, "SAN-C" ); },
