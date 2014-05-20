@@ -111,7 +111,8 @@ DO_UPDATE( sword::MagicOrder );
 DO_UPDATE( sword::ObjectCreation );
 DO_UPDATE( sword::ObjectKnowledgeCreation );
 DO_UPDATE( sword::ControlGlobalWeather );
-DO_UPDATE( sword::PartyCreation )
+DO_UPDATE( sword::PartyCreation );
+DO_UPDATE( sword::Pathfind );
 DO_UPDATE( sword::PhaseLineCreation );
 DO_UPDATE( sword::PopulationCreation );
 DO_UPDATE( sword::Report );
@@ -310,5 +311,11 @@ void ReplaySynchronisations::DoUpdate( const sword::UnitKnowledgeDestruction& ms
 void ReplaySynchronisations::DoUpdate( const sword::UrbanKnowledgeDestruction& msg )
 {
    if( msg.knowledge().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+void ReplaySynchronisations::DoUpdate( const sword::PathfindDestruction& msg )
+{
+    if( msg.id() == holder_.GetId() )
         DoDestroy();
 }

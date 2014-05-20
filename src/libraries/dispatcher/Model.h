@@ -36,6 +36,7 @@ namespace dispatcher
     class LogRequestSupply;
     class MagicOrder;
     class MeteoModel;
+    class Pathfind;
     class PopulationFire;
     class Report;
     class SimulationModel;
@@ -181,6 +182,7 @@ private:
     tools::Resolver< DetectionRangeEffect >  detectionRangeEffects_;
     tools::Resolver< Report >                reports_;
     tools::Resolver< MagicOrder >            magicOrders_;
+    tools::Resolver< Pathfind >              pathfinds_;
     //@}
 };
 

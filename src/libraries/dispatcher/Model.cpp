@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Model.h"
+
 #include "Agent.h"
 #include "AgentKnowledge.h"
 #include "Automat.h"
@@ -29,6 +30,7 @@
 #include "Object.h"
 #include "ObjectKnowledge.h"
 #include "Inhabitant.h"
+#include "Pathfind.h"
 #include "Population.h"
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
@@ -52,6 +54,7 @@
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/DecisionalModel.h"
 #include "MT_Tools/MT_Logger.h"
+
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -112,6 +115,7 @@ void Model::Reset()
     sides_                 .DeleteAll();
     urbanBlocks_           .DeleteAll();
     magicOrders_           .DeleteAll();
+    pathfinds_             .DeleteAll();
 }
 
 namespace
@@ -500,6 +504,10 @@ void Model::Update( const sword::SimToClient& wrapper )
         CreateUpdate< MagicOrder >( magicOrders_, message.magic_order().id(), message.magic_order() );
     else if( message.has_magic_order_destruction() )
         Destroy( magicOrders_, message.magic_order_destruction().id(), nullptr );
+    else if( message.has_pathfind_creation() )
+        CreateUpdate< Pathfind >( pathfinds_, message.pathfind_creation().id(), message.pathfind_creation() );
+    else if( message.has_pathfind_destruction() )
+        Destroy( pathfinds_, message.pathfind_destruction().id(), nullptr );
 //        default:
 //            assert( false );//@TODO restore an exception, some messages aren't linked
 //    }
@@ -669,6 +677,7 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
     reports_               .Apply( boost::bind( &Report::Accept, _1, boost::ref( visitor ) ) );
     urbanKnowledges_       .Apply( boost::bind( &dispatcher::UrbanKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );
     magicOrders_           .Apply( boost::bind( &dispatcher::MagicOrder::Accept, _1, boost::ref( visitor ) ) );
+    pathfinds_             .Apply( boost::bind( &dispatcher::Pathfind::Accept, _1, boost::ref( visitor ) ) );
     meteoModel_->Accept( visitor );
 }
 
