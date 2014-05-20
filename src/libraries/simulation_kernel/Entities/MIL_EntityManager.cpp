@@ -984,6 +984,7 @@ void MIL_EntityManager::SendStateToNewClient() const
     pObjectManager_->SendCreation();
     pObjectManager_->SendFullState();
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendKnowledge, _1 ) );
+    pathfindComputer_->SendStateToNewClient();
 }
 
 // -----------------------------------------------------------------------------

@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "PathfindComputer.h"
+
+#include "MIL_AgentServer.h"
 #include "PathRequest.h"
 #include "Decision/DEC_Agent_PathfinderRule.h"
 #include "Decision/DEC_AgentContext.h"
@@ -25,8 +27,12 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/ClientSenders.h"
+
 #include <boost/assign.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+
+BOOST_CLASS_EXPORT_IMPLEMENT( PathfindComputer )
 
 // -----------------------------------------------------------------------------
 // Name: PathfindComputer constructor
@@ -145,7 +151,7 @@ void PathfindComputer::Compute( const boost::shared_ptr< DEC_PathComputer >& com
                                 unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic )
 {
     const uint32_t id = ++ids_;
-    results_[ id ] = boost::make_shared< PathRequest >( computer, message, ctx, clientId, id, magic );
+    results_[ id ] = boost::make_shared< PathRequest >( computer, ctx, clientId, id, message.unit().id(), magic );
     manager_.StartCompute( computer, message.ignore_dynamic_objects() );
 }
 
@@ -161,4 +167,41 @@ bool PathfindComputer::Destroy( uint32_t pathfind )
     msg().set_id( pathfind );
     msg.Send( NET_Publisher_ABC::Publisher() );
     return true;
+}
+
+void PathfindComputer::SendStateToNewClient()
+{
+    for( auto it = results_.begin(); it != results_.end(); ++it )
+        it->second->SendStateToNewClient();
+}
+
+template< typename Archive >
+void PathfindComputer::load( Archive& ar, const unsigned int /*version*/ )
+{
+    ar  >> ids_
+        >> results_;
+}
+
+template< typename Archive >
+void PathfindComputer::save( Archive& ar, const unsigned int /*version*/ ) const
+{
+    T_Results entities;
+    for( auto it = results_.begin(); it != results_.end(); ++it )
+        if( it->second->IsPublished() )
+            entities.insert( *it );
+    ar  << ids_
+        << entities;
+}
+
+template< typename Archive >
+void save_construct_data( Archive&, const PathfindComputer*, const unsigned int /*version*/ )
+{
+    // NOTHING
+}
+
+template< typename Archive >
+void load_construct_data( Archive&, PathfindComputer* ptr, const unsigned int /*version*/ )
+{
+    auto& paths = MIL_AgentServer::GetWorkspace().GetPathFindManager();
+    ::new( ptr ) PathfindComputer( paths, TER_World::GetWorld() );
 }

@@ -14,11 +14,6 @@
 
 class DEC_PathComputer;
 
-namespace client
-{
-    class ComputePathfindAck;
-}
-
 // =============================================================================
 /** @class  PathRequest
     @brief  Path request
@@ -30,14 +25,29 @@ class PathRequest : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& request,
-                  unsigned int ctx, unsigned int clientId, uint32_t id, const boost::optional< uint32_t >& magic );
+     PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer,
+                  unsigned int ctx,
+                  unsigned int clientId,
+                  uint32_t id,
+                  uint32_t unit,
+                  const boost::optional< uint32_t >& magic );
     ~PathRequest();
+    //@}
+
+    //! @name Serialization
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template< typename Archive >        void load( Archive&, const unsigned int );
+    template< typename Archive >        void save( Archive&, const unsigned int ) const;
+    template< typename Archive > friend void save_construct_data( Archive&, const PathRequest*, const unsigned int /*version*/ );
+    template< typename Archive > friend void load_construct_data( Archive&, PathRequest*, const unsigned int /*version*/ );
     //@}
 
     //! @name Operations
     //@{
     bool Update();
+    void SendStateToNewClient();
+    bool IsPublished() const;
     //@}
 
 private:
@@ -51,10 +61,12 @@ private:
     const unsigned int ctx_;
     const unsigned int clientId_;
     const uint32_t id_;
-    const boost::optional< uint32_t > magic_;
     const uint32_t unit_;
-    bool published_;
+    const boost::optional< uint32_t > magic_;
+    boost::optional< sword::PathResult > path_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( PathRequest )
 
 #endif // __PathRequest_h_

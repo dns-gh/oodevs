@@ -12,27 +12,33 @@
 
 #include "MIL_AgentServer.h"
 #include "MagicOrderManager.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Decision/DEC_PathComputer.h"
 #include "protocol/ClientSenders.h"
-#include "Network/NET_Publisher_ABC.h"
+#include "protocol/Serialization.h"
+
+#include <boost/serialization/optional.hpp>
+
+BOOST_SERIALIZATION_SPLIT_FREE( sword::PathResult );
+
+BOOST_CLASS_EXPORT_IMPLEMENT( PathRequest )
 
 // -----------------------------------------------------------------------------
 // Name: PathRequest constructor
 // Created: LGY 2014-04-16
 // -----------------------------------------------------------------------------
 PathRequest::PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer,
-                          const sword::PathfindRequest& request,
                           unsigned int ctx,
                           unsigned int clientId,
                           uint32_t id,
+                          uint32_t unit,
                           const boost::optional< uint32_t >& magic )
     : computer_( computer )
     , ctx_( ctx )
     , clientId_( clientId )
     , id_( id )
+    , unit_( unit )
     , magic_( magic )
-    , unit_( request.unit().id() )
-    , published_( false )
 {
     // NOTHING
 }
@@ -52,7 +58,7 @@ void PathRequest::SendComputePathfindAck( bool ok )
     ack().mutable_unit()->set_id( unit_ );
     ack().set_error_code( ok ? sword::ComputePathfindAck::no_error : sword::ComputePathfindAck::error_path_invalid );
     if( ok )
-        computer_->Serialize( *ack().mutable_path() );
+        *ack().mutable_path() = *path_;
     ack.Send( NET_Publisher_ABC::Publisher(), ctx_, clientId_ );
 }
 
@@ -68,14 +74,9 @@ void PathRequest::SendPathfindCreation( bool ok )
     ack.Send( NET_Publisher_ABC::Publisher(), ctx_, clientId_ );
     // broadcast the magic order
     magics.Send( *magic_, ack().error_code(), ack().error_msg() );
-    if( !ok )
-        return;
     // broadcast the newly created pathfind entity when successful
-    client::Pathfind msg;
-    msg().set_id( id_ );
-    msg().set_unit( unit_ );
-    computer_->Serialize( *msg().mutable_path() );
-    msg.Send( NET_Publisher_ABC::Publisher() );
+    if( ok )
+        SendStateToNewClient();
 }
 
 // -----------------------------------------------------------------------------
@@ -84,16 +85,73 @@ void PathRequest::SendPathfindCreation( bool ok )
 // -----------------------------------------------------------------------------
 bool PathRequest::Update()
 {
-    if( published_ )
+    if( path_ )
         return false;
     const auto state = computer_->GetState();
     if( state == DEC_Path_ABC::eComputing )
         return false;
     const bool ok = state != DEC_Path_ABC::eInvalid && state != DEC_Path_ABC::eImpossible;
+    path_ = sword::PathResult();
+    if( ok )
+        computer_->Serialize( *path_ );
     if( magic_ )
         SendPathfindCreation( ok );
     else
         SendComputePathfindAck( ok );
-    published_ = true;
     return !magic_;
+}
+
+void PathRequest::SendStateToNewClient()
+{
+    if( !magic_ || !path_ )
+        return;
+    client::Pathfind msg;
+    msg().set_id( id_ );
+    msg().set_unit( unit_ );
+    *msg().mutable_path() = *path_;
+    msg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+bool PathRequest::IsPublished() const
+{
+    return path_;
+}
+
+template< typename Archive >
+void PathRequest::load( Archive& ar, const unsigned int /*version*/ )
+{
+    ar >> path_;
+}
+
+template< typename Archive >
+void PathRequest::save( Archive& ar, const unsigned int /*version*/ ) const
+{
+    ar << path_;
+}
+
+template< typename Archive >
+void save_construct_data( Archive& ar, const PathRequest* ptr, const unsigned int /*version*/ )
+{
+    ar << ptr->ctx_
+       << ptr->clientId_
+       << ptr->id_
+       << ptr->unit_
+       << ptr->magic_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& ar, PathRequest* ptr, const unsigned int /*version*/ )
+{
+    unsigned int ctx;
+    unsigned int clientId;
+    uint32_t id;
+    uint32_t unit;
+    boost::optional< uint32_t > magic;
+    ar >> ctx
+       >> clientId
+       >> id
+       >> unit
+       >> magic;
+    // we don't care anymore about the computer, our path is computed and ready to use
+    ::new( ptr ) PathRequest( boost::shared_ptr< DEC_PathComputer >(), ctx, clientId, id, unit, magic );
 }

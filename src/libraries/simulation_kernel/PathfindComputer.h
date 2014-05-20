@@ -46,9 +46,24 @@ public:
                   unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
     bool Destroy( uint32_t pathfind );
     void Update();
+    void SendStateToNewClient();
+    //@}
+
+    //! @name Serialization
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template< typename Archive >        void load( Archive&, const unsigned int );
+    template< typename Archive >        void save( Archive&, const unsigned int ) const;
+    template< typename Archive > friend void save_construct_data( Archive&, const PathfindComputer*, const unsigned int /*version*/ );
+    template< typename Archive > friend void load_construct_data( Archive&, PathfindComputer*, const unsigned int /*version*/ );
     //@}
 
 private:
+    //! @name typedef helpers
+    //@{
+    typedef std::map< uint32_t, boost::shared_ptr< PathRequest > > T_Results;
+    //@}
+
     //! @name Helpers
     //@{
     void Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& message,
@@ -61,8 +76,10 @@ private:
     DEC_PathFind_Manager& manager_;
     const TER_World& world_;
     uint32_t ids_;
-    std::map< uint32_t, boost::shared_ptr< PathRequest > > results_;
+    T_Results results_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( PathfindComputer )
 
 #endif // __PathfindComputer_h_
