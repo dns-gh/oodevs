@@ -105,7 +105,6 @@ public:
 
     virtual void Parse( int argc, char** argv );
     void LoadExercise( const Path& file ); //$$$ Rien à foutre la ...
-    void LoadTerrain( const Path& terrainName ); //$$$ Rien à foutre la non plus
 
     Path GetDataSet() const;
     Path GetPhysicalBase() const;
