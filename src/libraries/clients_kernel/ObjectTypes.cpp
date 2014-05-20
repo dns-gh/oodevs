@@ -224,7 +224,12 @@ void ObjectTypes::ReadFireClasses( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadBreakdowns( xml::xistream& xis )
 {
-    xis >> xml::start( "breakdowns" ) >> xml::list( "category", *this, &ObjectTypes::ReadBreakdownCategory );
+    xis >> xml::start( "breakdowns" )
+            >> xml::start( "repair-duration-in-man-hours" )
+                >> xml::attribute( "value", repairDurationInManHours_ )
+            >> xml::end
+            >> xml::list( "category", *this, &ObjectTypes::ReadBreakdownCategory )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -372,4 +377,13 @@ void ObjectTypes::ReadUrbanTemplateType( xml::xistream& xis )
 {
     UrbanTemplateType* urbanTemplate = new UrbanTemplateType( xis, *this );
     StringResolver< UrbanTemplateType >::Register( urbanTemplate->GetName(), *urbanTemplate );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::GetRepairDurationInManHours
+// Created: ABR 2014-05-15
+// -----------------------------------------------------------------------------
+bool ObjectTypes::GetRepairDurationInManHours() const
+{
+    return repairDurationInManHours_;
 }

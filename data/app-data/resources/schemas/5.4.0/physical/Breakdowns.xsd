@@ -4,12 +4,17 @@
 	<xs:element name="breakdowns">
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element name="repair-duration-in-man-hours">
+					<xs:complexType>
+						<xs:attribute name="value" type="xs:boolean" use="required"/>
+					</xs:complexType>
+				</xs:element>
 				<xs:element name="diagnosis">
 					<xs:complexType>
 						<xs:attribute name="time" type="T_Time" use="required"/>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="category" minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="category">
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="breakdown" minOccurs="0" maxOccurs="unbounded">

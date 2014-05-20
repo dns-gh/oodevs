@@ -1731,6 +1731,10 @@ Voulez-vous le remplacer ?</translation>
         <source>The tow truck is unavailable.</source>
         <translation>Le remorqueur est indisponible.</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished">N/A</translation>
+    </message>
 </context>
 <context>
     <name>LogisticStatusWidget</name>

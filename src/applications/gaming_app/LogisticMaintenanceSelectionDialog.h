@@ -31,6 +31,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class MaintenanceStates_ABC;
+    class ObjectTypes;
     class Profile_ABC;
 }
 
@@ -69,6 +70,7 @@ public:
                                                  QWidget* parent,
                                                  kernel::Controllers& controllers,
                                                  actions::ActionsModel& actionsModel,
+                                                 const kernel::ObjectTypes& breakdownTypes,
                                                  gui::DisplayExtractor& extractor );
     virtual ~LogisticMaintenanceSelectionDialog();
     //@}
@@ -105,6 +107,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
+    const kernel::ObjectTypes& breakdownTypes_;
     unsigned int id_;
     int lastContext_;
     kernel::SafePointer< kernel::Entity_ABC > handler_;

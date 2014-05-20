@@ -516,6 +516,10 @@ Parked engine running</source>
         <source>Required parts</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Repair durations expressed in man-hours</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Breakdowns_PartsTable</name>

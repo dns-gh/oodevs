@@ -19,11 +19,14 @@
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/Roles.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentComposition.h"
+#include "clients_kernel/AgentType.h"
 #include "clients_kernel/BreakdownType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/MaintenanceFunctions.h"
 #include "clients_kernel/MaintenanceStates_ABC.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -93,10 +96,12 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
                                                                         QWidget* parent,
                                                                         kernel::Controllers& controllers,
                                                                         actions::ActionsModel& actionsModel,
+                                                                        const kernel::ObjectTypes& breakdownTypes,
                                                                         gui::DisplayExtractor& extractor )
     : LogisticSelectionDialog_ABC( objectName, parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
+    , breakdownTypes_( breakdownTypes )
     , id_( 0 )
     , lastContext_( 0 )
     , handler_( controllers )
@@ -309,7 +314,6 @@ bool LogisticMaintenanceSelectionDialog::SetCurrentStatus( sword::LogMaintenance
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
     {
         UpdateView( repairers_, *handler_, manualButton_, tr( "Select repair team" ) );
-        duration_->setText( tr( "Estimated repair duration: %1" ).arg( tools::DurationFromSeconds( breakdownType_->GetRepairTime() ) ) );
         duration_->setVisible( true );
     }
     parts_->Fill( breakdownType_->GetParts() );
@@ -386,6 +390,29 @@ void LogisticMaintenanceSelectionDialog::Purge()
     timeout_.stop();
 }
 
+namespace
+{
+    int GetNbHumans( const kernel::Availability& availability )
+    {
+        if( availability.entity_->GetTypeName() != kernel::Agent_ABC::typeName_ || !availability.entity_ || !availability.type_ )
+            return 0;
+        auto it = static_cast< const kernel::Agent_ABC& >( *availability.entity_ ).GetType().CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            auto& composition = it.NextElement();
+            if( composition.GetType().GetName() == availability.type_->GetName() )
+                return composition.GetCrew();
+        }
+        return 0;
+    }
+    int CeiledDivision( double a, double b )
+    {
+        if( b == 0. )
+            return static_cast< int >( a );
+        return static_cast< int >( std::ceil( a / b ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticMaintenanceSelectionDialog::UpdateDisplay
 // Created: ABR 2014-01-28
@@ -394,7 +421,16 @@ void LogisticMaintenanceSelectionDialog::UpdateDisplay()
 {
     bool manual = manualButton_->isChecked() && availability_ && availability_->available_ > 0;
     if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+    {
         manual &= parts_->IsValid();
+        QString duration = tr( "N/A" );
+        if( !breakdownTypes_.GetRepairDurationInManHours() )
+            duration = tools::DurationFromSeconds( breakdownType_->GetRepairTime() );
+        else if( availability_ && availability_->entity_ && availability_->type_ )
+            duration = tools::DurationFromSeconds( CeiledDivision( breakdownType_->GetRepairTime(),
+                                                                   GetNbHumans( *availability_ ) ) );
+        duration_->setText( tr( "Estimated repair duration: %1" ).arg( duration ) );
+    }
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         manual &= destinationBox_->isChecked() && selectedDestination_ || !destinationBox_->isChecked();
     acceptButton_->setEnabled( automaticButton_->isChecked() || manual ||

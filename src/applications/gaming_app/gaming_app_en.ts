@@ -1729,6 +1729,10 @@ Do you want to replace it?</translation>
         <source>The tow truck is unavailable.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished">N/A</translation>
+    </message>
 </context>
 <context>
     <name>LogisticStatusWidget</name>

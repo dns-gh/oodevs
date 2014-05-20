@@ -528,6 +528,10 @@ Arrêt moteur allumé</translation>
         <source>General parameters</source>
         <translation>Paramètres généraux</translation>
     </message>
+    <message>
+        <source>Repair durations expressed in man-hours</source>
+        <translation>Durée de réparation exprimée en homme-heures</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Breakdowns_PartsTable</name>

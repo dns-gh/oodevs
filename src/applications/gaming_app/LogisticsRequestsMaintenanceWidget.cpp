@@ -17,6 +17,7 @@
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogisticHelpers.h"
 #include "gaming/Model.h"
+#include "gaming/StaticModel.h"
 #include "clients_kernel/BreakdownType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -32,7 +33,7 @@ LogisticsRequestsMaintenanceWidget::LogisticsRequestsMaintenanceWidget( QWidget*
                                                                         const SimulationController& simulationController, Model& model )
     : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, eMaintenance )
 {
-    selectionDialog_.reset( new LogisticMaintenanceSelectionDialog( "maintenance-selection-dialog", this, controllers, model.actions_, extractor ) );
+    selectionDialog_.reset( new LogisticMaintenanceSelectionDialog( "maintenance-selection-dialog", this, controllers, model.actions_, model.static_.objectTypes_, extractor ) );
 }
 
 // -----------------------------------------------------------------------------

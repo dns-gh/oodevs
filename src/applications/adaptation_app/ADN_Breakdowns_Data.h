@@ -94,6 +94,7 @@ private:
 
 public:
     ADN_Type_String strAverageDiagnosticTime_;
+    ADN_Type_Bool repairDurationInManHours_;
     T_BreakdownInfoVector vBreakdowns_;
 
 private:

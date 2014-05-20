@@ -22,6 +22,7 @@
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
 unsigned int                      PHY_BreakdownType::nDiagnosticTime_ = 0;
+bool                              PHY_BreakdownType::repairDurationInManHours_ = false;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_BreakdownType::ConvertType
@@ -48,6 +49,9 @@ void PHY_BreakdownType::Initialize( xml::xistream& xis )
     xis >> xml::start( "breakdowns" )
             >> xml::start( "diagnosis" )
                 >> xml::attribute( "time", timeVal )
+            >> xml::end
+            >> xml::start( "repair-duration-in-man-hours" )
+                >> xml::attribute( "value", repairDurationInManHours_ )
             >> xml::end;
     if( ! tools::DecodeTime( timeVal, rTimeVal ) || rTimeVal < 0 )
         throw MASA_EXCEPTION( xis.context() + "diagnosis: time < 0" );
@@ -170,6 +174,15 @@ PHY_BreakdownType::~PHY_BreakdownType()
 unsigned int PHY_BreakdownType::GetDiagnosticTime()
 {
     return nDiagnosticTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::GetRepairDurationInManHours
+// Created: ABR 2014-05-15
+// -----------------------------------------------------------------------------
+bool PHY_BreakdownType::GetRepairDurationInManHours()
+{
+    return repairDurationInManHours_;
 }
 
 // -----------------------------------------------------------------------------
