@@ -61,9 +61,9 @@ public:
 
     //! @name Operations
     //@{
-    int Move( boost::shared_ptr< DEC_PathResult > pPath );
-    void MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath );
-    void MoveCanceled( boost::shared_ptr< DEC_PathResult > pPath );
+    int Move( const boost::shared_ptr< DEC_PathResult >& pPath );
+    void MoveSuspended( const boost::shared_ptr< DEC_PathResult >& pPath );
+    void MoveCanceled( const boost::shared_ptr< DEC_PathResult >& pPath );
     void Apply(); // Called by MIL_Effect_Move
     void Clean();
     bool HasCurrentPath() const;

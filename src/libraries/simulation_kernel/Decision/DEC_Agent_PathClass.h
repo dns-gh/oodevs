@@ -38,6 +38,7 @@ public:
     static       void                 Initialize  ( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
     static       void                 Terminate   ();
     static const DEC_Agent_PathClass& GetPathClass( const DEC_PathType& pathType, const MIL_Agent_ABC& pion );
+    static const DEC_Agent_PathClass& GetPathClass( const DEC_PathType& pathType, bool bCanFly, bool bAutonomous );
     //@}
 
 public:

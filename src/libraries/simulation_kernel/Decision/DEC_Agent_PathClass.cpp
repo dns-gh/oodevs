@@ -308,6 +308,11 @@ const DEC_Agent_PathClass& DEC_Agent_PathClass::GetPathClass( const DEC_PathType
 {
     const bool bCanFly     = pion.GetType().GetUnitType().CanFly();
     const bool bAutonomous = pion.IsAutonomous();
+    return GetPathClass( pathType, bCanFly, bAutonomous );
+}
+
+const DEC_Agent_PathClass& DEC_Agent_PathClass::GetPathClass( const DEC_PathType& pathType, bool bCanFly, bool bAutonomous )
+{
     const DEC_Agent_PathClass* pClass = rules_[ T_RuleType( pathType.GetName(), T_BooleanPair( bCanFly, bAutonomous ) ) ];
     assert( pClass );
     return *pClass;

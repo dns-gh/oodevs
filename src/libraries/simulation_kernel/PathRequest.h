@@ -10,7 +10,7 @@
 #ifndef __PathRequest_h_
 #define __PathRequest_h_
 
-class DEC_PathResult;
+class DEC_PathComputer;
 
 namespace client
 {
@@ -28,7 +28,7 @@ class PathRequest : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     PathRequest( const boost::shared_ptr< DEC_PathResult >& path, const sword::PathfindRequest& request,
+     PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& request,
                   unsigned int nCtx, unsigned int clientId, uint32_t id, bool stored );
     ~PathRequest();
     //@}
@@ -41,7 +41,7 @@ public:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< DEC_PathResult > path_;
+    boost::shared_ptr< DEC_PathComputer > computer_;
     std::unique_ptr< client::ComputePathfindAck > ack_;
     const unsigned int nCtx_;
     const unsigned int clientId_;

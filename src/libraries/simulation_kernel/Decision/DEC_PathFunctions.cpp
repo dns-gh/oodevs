@@ -16,9 +16,11 @@
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "Decision/DEC_PathComputer.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
@@ -43,12 +45,23 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_Ag
 
 namespace
 {
-    void StartCompute( const boost::shared_ptr< DEC_Agent_Path >& path )
+    bool IsDestinationTrafficable( const MIL_Agent_ABC& agent, const std::vector< MT_Vector2D >& points )
     {
-        if( !path->IsDestinationTrafficable() )
-            path->CancelPath();
+        const PHY_RoleInterface_TerrainAnalysis& analysis = agent.GetRole< PHY_RoleInterface_TerrainAnalysis >();
+        return analysis.CanMoveOnUrbanBlock( points ) &&
+               analysis.CanMoveOnBurningCells( points ) &&
+               analysis.CanMoveOnKnowledgeObject( points );
+    }
+
+    boost::shared_ptr< DEC_Agent_Path > StartCompute( MIL_Agent_ABC& agent, const T_PointVector& points, const DEC_PathType& pathType )
+    {
+        const auto computer = boost::make_shared< DEC_PathComputer >( agent.GetID() );
+        const auto path = boost::make_shared< DEC_Agent_Path >( agent, points, pathType, computer );
+        if( !IsDestinationTrafficable( agent, points ) )
+            path->Cancel();
         else
-            MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( path );
+            MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer );
+        return path;
     }
 }
 
@@ -59,12 +72,12 @@ namespace
 boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType )
 {
     assert( pEnd );
+    std::vector< MT_Vector2D > points;
+    points.push_back( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    points.push_back( *pEnd );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(),
-        *pEnd, *pPathType ) );
-    StartCompute( pPath );
-    return pPath;
+    return StartCompute( callerAgent, points, *pPathType );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,10 +89,11 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_
     assert( !listPt.empty() );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-    listPt.insert( listPt.begin(), boost::make_shared< MT_Vector2D >( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
-    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, listPt, *pPathType ) );
-    StartCompute( pPath );
-    return pPath;
+    std::vector< MT_Vector2D > points;
+    points.push_back( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    for( auto it = listPt.begin(); it != listPt.end(); ++it )
+        points.push_back( **it );
+    return StartCompute( callerAgent, points, *pPathType );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,11 +232,8 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MI
     assert( pPath );
     const DEC_PathResult* path = dynamic_cast< const DEC_PathResult* > ( pPath );
     if( !path || path->GetResult().empty() || !path->GetResult().back() )
-    {
         return boost::shared_ptr< MT_Vector2D >();
-    }
-    boost::shared_ptr< MT_Vector2D > pPos ( new MT_Vector2D( path->GetResult().back()->GetPos() ) );
-    return pPos;
+    return boost::make_shared< MT_Vector2D >( path->GetResult().back()->GetPos() );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +243,7 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MI
 // -----------------------------------------------------------------------------
 bool DEC_PathFunctions::IsMovingOnPath( const MIL_AgentPion& callerAgent, const DEC_Path_ABC* pPath )
 {
-    return pPath ? callerAgent.GetRole< moving::PHY_RoleAction_Moving >().IsMovingOn( *pPath ) : false;
+    return pPath && callerAgent.GetRole< moving::PHY_RoleAction_Moving >().IsMovingOn( *pPath );
 }
 
 // -----------------------------------------------------------------------------

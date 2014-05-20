@@ -13,7 +13,6 @@
 #include "Decision/DEC_Path.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
-#include "MT_Tools/MT_Logger.h"
 
 namespace sword
 {
@@ -47,7 +46,7 @@ public:
 
     //! @name Accessors
     //@{
-    const T_PathPoints& GetResult( bool useCheck = true ) const;
+    const T_PathPoints& GetResult() const;
     const DEC_PathType& GetPathType() const;
     //@}
 
@@ -57,26 +56,24 @@ public:
     T_PathPoints::const_iterator GetCurrentKeyOnPath() const;
     MT_Vector2D GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
     bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
-    virtual void InsertDecPoints() = 0;
+    virtual void Finalize() = 0;
     virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
-    virtual bool IsWaypoint( const MT_Vector2D& point ) const;
+    virtual const MT_Vector2D& GetLastWaypoint() const = 0;
     //@}
 
     //! @name Network
     //@{
     void Serialize( sword::Path& asn, int firstPoint, int pathSizeThreshold ) const;
-    void Serialize( sword::PathResult& msg ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySectionStarted();
-    virtual void NotifyPartialSection();
-    virtual void NotifyCompletedSection();
-    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint );
     MT_Vector2D InternalGetFuturePosition( const T_PathPoints::const_iterator& itCurrentPos, double rDist, bool bBoundOnPath ) const;
     //@}
+
+protected:
+    void SetResult( T_PathPoints points );
 
 protected:
     //! @name Member data

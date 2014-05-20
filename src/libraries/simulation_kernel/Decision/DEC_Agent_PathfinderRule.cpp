@@ -9,13 +9,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Agent_PathfinderRule.h"
-#include "DEC_Agent_Path.h"
+#include "DEC_AgentContext_ABC.h"
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Path_KnowledgeObject_ABC.h"
 #include "DEC_Path_KnowledgePopulation.h"
 #include "DEC_Path_KnowledgeAgent.h"
 #include "MIL_AgentServer.h"
 #include "SlopeSpeedModifier.h"
+#include "Entities/Agents/Units/PHY_Speeds.h"
+#include "Entities/Orders/MIL_Fuseau.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanCache.h"
@@ -24,73 +26,38 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathfinderRule::InitializeFuseauData
-// Created: NLD 2006-01-30
-// -----------------------------------------------------------------------------
-void DEC_Agent_PathfinderRule::InitializeFuseauData( const MT_Vector2D& from, const MT_Vector2D& to )
-{
-    assert( pFuseau_ == 0 );
-    if( path_.GetFuseau().IsNull() )
-        return;
-    pFuseau_ = &path_.GetFuseau();
-    rMaximumFuseauDistance_ = path_.GetPathClass().GetMaximumFuseauDistance();
-    if( !pFuseau_->IsInside( from ) )
-        rMaximumFuseauDistance_ += pFuseau_->Distance( from ) * 1.3; // $$$$ AGE 2005-06-08:
-    if( !path_.GetAutomataFuseau().IsNull() ) // I have a higher fuseau
-        rMaximumFuseauDistance_ = std::max( rMaximumFuseauDistance_, path_.GetPathClass().GetMaximumFuseauDistanceWithAutomata() );
-    if( !pFuseau_->IsInside( to ) ) // our destination is outside
-        rMaximumFuseauDistance_ = std::numeric_limits< double >::max();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathfinderRule::InitializeAutomateFuseauData
-// Created: NLD 2006-01-30
-// -----------------------------------------------------------------------------
-void DEC_Agent_PathfinderRule::InitializeAutomateFuseauData( const MT_Vector2D& from )
-{
-    assert( pAutomateFuseau_ == 0 );
-    if( path_.GetAutomataFuseau().IsNull() )
-        return;
-    pAutomateFuseau_ = &path_.GetAutomataFuseau();
-    rMaximumAutomataFuseauDistance_ = path_.GetPathClass().GetMaximumAutomataFuseauDistance();
-    if( !pAutomateFuseau_->IsInside( from ) )
-        rMaximumAutomataFuseauDistance_ += pAutomateFuseau_->Distance( from ) * 1.3; // $$$$ AGE
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule constructor
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const DEC_Agent_Path& path, const MT_Vector2D& from, const MT_Vector2D& to )
-    : TerrainRule_ABC                ()
-    , path_                          ( path )
+DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const boost::shared_ptr< DEC_AgentContext_ABC >& context, const MT_Vector2D& from, const MT_Vector2D& to )
+    : context_                       ( context )
     , world_                         ( TER_World::GetWorld() )
     , altitudeData_                  ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
-    , rMaxSpeed_                     ( float( path.GetUnitSpeeds().GetMaxSpeed() ) * 1.1f )
-    , bShort_                        ( path.GetPathClass().IsShort() )
-    , avoidedTerrain_                ( path.GetPathClass().GetAvoidedTerrain() )
-    , rAvoidedTerrainCost_           ( avoidedTerrain_ == TerrainData() ? 0. : path.GetPathClass().GetAvoidedTerrainCost() )
-    , preferedTerrain_               ( path.GetPathClass().GetPreferedTerrain() )
-    , rPreferedTerrainCost_          ( preferedTerrain_ == TerrainData() ? 0. : path.GetPathClass().GetPreferedTerrainCost() )
-    , rMinAltitude_                  ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMinAltitude() )
-    , rMaxAltitude_                  ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMaxAltitude() )
-    , rAltitudeCostPerMeter_         ( path.GetPathClass().GetAltitudePreference() )
-    , rMaxSlope_                     ( path.GetUnitMaxSlope() )
-    , rSlopeDeceleration_            ( path.GetUnitSlopeDeceleration() )
+    , rMaxSpeed_                     ( float( context->GetUnitSpeeds().GetMaxSpeed() ) * 1.1f )
+    , bShort_                        ( context->GetPathClass().IsShort() )
+    , avoidedTerrain_                ( context->GetPathClass().GetAvoidedTerrain() )
+    , rAvoidedTerrainCost_           ( avoidedTerrain_ == TerrainData() ? 0. : context->GetPathClass().GetAvoidedTerrainCost() )
+    , preferedTerrain_               ( context->GetPathClass().GetPreferedTerrain() )
+    , rPreferedTerrainCost_          ( preferedTerrain_ == TerrainData() ? 0. : context->GetPathClass().GetPreferedTerrainCost() )
+    , rMinAltitude_                  ( altitudeData_.GetMinAltitude() )
+    , rMaxAltitude_                  ( altitudeData_.GetMaxAltitude() )
+    , rAltitudeCostPerMeter_         ( context->GetPathClass().GetAltitudePreference() )
+    , rMaxSlope_                     ( context->GetUnitMaxSlope() )
+    , rSlopeDeceleration_            ( context->GetUnitSlopeDeceleration() )
     , pFuseau_                       ( 0 )
-    , rComfortFuseauDistance_        ( path.GetPathClass().GetComfortFuseauDistance() )
-    , rFuseauCostPerMeterOut_        ( path.GetPathClass().GetFuseauCostPerMeterOut() )
-    , rFuseauCostPerMeterIn_         ( path.GetPathClass().GetFuseauCostPerMeterIn () )
+    , rComfortFuseauDistance_        ( context->GetPathClass().GetComfortFuseauDistance() )
+    , rFuseauCostPerMeterOut_        ( context->GetPathClass().GetFuseauCostPerMeterOut() )
+    , rFuseauCostPerMeterIn_         ( context->GetPathClass().GetFuseauCostPerMeterIn () )
     , rMaximumFuseauDistance_        ( 0. ) // Initialized below
     , pAutomateFuseau_               ( 0 )
-    , rAutomataFuseauCostPerMeterOut_( path.GetPathClass().GetAutomateFuseauCostPerMeterOut() )
+    , rAutomataFuseauCostPerMeterOut_( context->GetPathClass().GetAutomateFuseauCostPerMeterOut() )
     , rMaximumAutomataFuseauDistance_( 0. ) // Initialized below
-    , dangerDirection_               ( path.GetDirDanger() )
-    , rDangerDirectionBaseCost_      ( path.GetPathClass().GetDangerDirectionBaseCost  () )
-    , rDangerDirectionLinearCost_    ( path.GetPathClass().GetDangerDirectionLinearCost() )
+    , dangerDirection_               ( context->GetDirDanger() )
+    , rDangerDirectionBaseCost_      ( context->GetPathClass().GetDangerDirectionBaseCost  () )
+    , rDangerDirectionLinearCost_    ( context->GetPathClass().GetDangerDirectionLinearCost() )
     , dangerPoint_                   ( DotProduct( dangerDirection_, from ) > DotProduct( dangerDirection_, to ) ? from : to )
-    , rEnemyMaximumCost_             ( path.GetPathClass().GetEnemyMaximumCost() )
-    , rPopulationMaximumCost_        ( path.GetPathClass().GetPopulationMaximumCost() )
+    , rEnemyMaximumCost_             ( context->GetPathClass().GetEnemyMaximumCost() )
+    , rPopulationMaximumCost_        ( context->GetPathClass().GetPopulationMaximumCost() )
 {
     InitializeFuseauData( from, to );
     InitializeAutomateFuseauData( from );
@@ -103,6 +70,40 @@ DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const DEC_Agent_Path& path, 
 DEC_Agent_PathfinderRule::~DEC_Agent_PathfinderRule()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathfinderRule::InitializeFuseauData
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+void DEC_Agent_PathfinderRule::InitializeFuseauData( const MT_Vector2D& from, const MT_Vector2D& to )
+{
+    assert( pFuseau_ == 0 );
+    if( context_->GetFuseau().IsNull() )
+        return;
+    pFuseau_ = &context_->GetFuseau();
+    rMaximumFuseauDistance_ = context_->GetPathClass().GetMaximumFuseauDistance();
+    if( !pFuseau_->IsInside( from ) )
+        rMaximumFuseauDistance_ += pFuseau_->Distance( from ) * 1.3; // $$$$ AGE 2005-06-08:
+    if( !context_->GetAutomataFuseau().IsNull() ) // I have a higher fuseau
+        rMaximumFuseauDistance_ = std::max( rMaximumFuseauDistance_, context_->GetPathClass().GetMaximumFuseauDistanceWithAutomata() );
+    if( !pFuseau_->IsInside( to ) ) // our destination is outside
+        rMaximumFuseauDistance_ = std::numeric_limits< double >::max();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathfinderRule::InitializeAutomateFuseauData
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+void DEC_Agent_PathfinderRule::InitializeAutomateFuseauData( const MT_Vector2D& from )
+{
+    assert( pAutomateFuseau_ == 0 );
+    if( context_->GetAutomataFuseau().IsNull() )
+        return;
+    pAutomateFuseau_ = &context_->GetAutomataFuseau();
+    rMaximumAutomataFuseauDistance_ = context_->GetPathClass().GetMaximumAutomataFuseauDistance();
+    if( !pAutomateFuseau_->IsInside( from ) )
+        rMaximumAutomataFuseauDistance_ += pAutomateFuseau_->Distance( from ) * 1.3; // $$$$ AGE
 }
 
 // -----------------------------------------------------------------------------
@@ -142,8 +143,8 @@ double DEC_Agent_PathfinderRule::GetDangerDirectionCost( const MT_Vector2D& to )
 // -----------------------------------------------------------------------------
 double DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    if( MIL_AgentServer::IsInitialized() && !path_.GetPathClass().IsFlying() )
-        return MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlockCost( static_cast< float >( path_.GetUnitMajorWeight() ), from, to );
+    if( MIL_AgentServer::IsInitialized() && !context_->GetPathClass().IsFlying() )
+        return MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlockCost( static_cast< float >( context_->GetUnitMajorWeight() ), from, to );
     return 0.;
 }
 
@@ -154,15 +155,15 @@ double DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, con
 double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double& rSpeed ) const
 {
     // default cost : outside all objects
-    double rObjectCost = path_.GetCostOutsideOfAllObjects();
-    const DEC_Agent_Path::T_PathKnowledgeObjectByTypesVector& knowledgesByTypes = path_.GetPathKnowledgeObjects();
+    double rObjectCost = context_->GetCostOutsideOfAllObjects();
+    const auto& knowledgesByTypes = context_->GetPathKnowledgeObjects();
     for( auto itType = knowledgesByTypes.begin(); itType != knowledgesByTypes.end(); ++itType )
     {
         bool bInsideObjectType = false;
-        const DEC_Agent_Path::T_PathKnowledgeObjectVector& knowledges = *itType;
+        const auto& knowledges = *itType;
         for( auto itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
         {
-            double rCurrentObjectCost = ( *itKnowledge )->ComputeCost( from, to, nToTerrainType, nLinkTerrainType, path_.GetUnitMajorWeight() );
+            double rCurrentObjectCost = ( *itKnowledge )->ComputeCost( from, to, nToTerrainType, nLinkTerrainType, context_->GetUnitMajorWeight() );
             if( rCurrentObjectCost != std::numeric_limits< double >::min() )
             {
                 if( !bInsideObjectType )
@@ -174,7 +175,7 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
                     return rCurrentObjectCost;
                 rObjectCost += rCurrentObjectCost;
                 if( ( *itKnowledge )->HasAgentMaxSpeedMultiplier() )
-                    rSpeed = path_.GetUnitSpeeds().GetMaxSpeed() * ( *itKnowledge )->GetAgentMaxSpeedMultiplier();
+                    rSpeed = context_->GetUnitSpeeds().GetMaxSpeed() * ( *itKnowledge )->GetAgentMaxSpeedMultiplier();
             }
         }
     }
@@ -187,11 +188,10 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
 // -----------------------------------------------------------------------------
 double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    assert( path_.GetPathClass().AvoidEnemies() || path_.GetPathKnowledgeAgents().empty() );
     double rEnemyCost = 0.;
     const MT_Line lineLink( from, to );
     const DEC_Path_KnowledgeAgent::BoundingBox box( from, to );
-    for( auto it = path_.GetPathKnowledgeAgents().begin(); it != path_.GetPathKnowledgeAgents().end(); ++it )
+    for( auto it = context_->GetPathKnowledgeAgents().begin(); it != context_->GetPathKnowledgeAgents().end(); ++it )
     {
         double rCurrentEnemyCost = it->ComputeCost( lineLink, box );
         if( rCurrentEnemyCost < 0. ) // Impossible move (for example destroyed bridge)
@@ -209,9 +209,8 @@ double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const 
 // -----------------------------------------------------------------------------
 double DEC_Agent_PathfinderRule::GetPopulationsCost( const MT_Vector2D& to ) const
 {
-    assert( path_.GetPathClass().HandlePopulations() || path_.GetPathKnowledgePopulations().empty() );
     double rCost = 0.;
-    for( auto it = path_.GetPathKnowledgePopulations().begin(); it != path_.GetPathKnowledgePopulations().end(); ++it )
+    for( auto it = context_->GetPathKnowledgePopulations().begin(); it != context_->GetPathKnowledgePopulations().end(); ++it )
     {
         double rCurrentCost = (*it)->ComputeCost( to );
         if( rCurrentCost < 0. ) // Impossible move
@@ -248,22 +247,22 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
 {
     if( ! world_.IsValidPosition( to ) )
     {
-        LOG_REASON( "no path: out of world" );
+        LOG_REASON( "no context: out of world" );
         return -1;
     }
 
     // speed
-    double rSpeed = path_.GetUnitSpeeds().GetMaxSpeed( nLinkTerrainType );
+    double rSpeed = context_->GetUnitSpeeds().GetMaxSpeed( nLinkTerrainType );
     if( rSpeed <= 0 )
     {
-        LOG_REASON( "no path: speed on " << nLinkTerrainType.DumpToString()
+        LOG_REASON( "no context: speed on " << nLinkTerrainType.DumpToString()
                 << " = " << rSpeed );
         return -1;
     }
 
-    if( ! path_.GetUnitSpeeds().IsPassable( nToTerrainType ) )
+    if( ! context_->GetUnitSpeeds().IsPassable( nToTerrainType ) )
     {
-        LOG_REASON( "no path: cannot cross terrain" );
+        LOG_REASON( "no context: cannot cross terrain" );
         return -1;
     }
 
@@ -276,7 +275,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
             return delta * delta > from.SquareDistance( to ) * rMaxSlope_ * rMaxSlope_;
         } ) )
     {
-        LOG_REASON( "no path: slope is too steep" );
+        LOG_REASON( "no context: slope is too steep" );
         return -1;
     }
 
@@ -291,7 +290,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
         modifier.ModifySpeed( rSpeed, rSlopeDeceleration_, rMaxSlope_, to );
         if( rSpeed == 0 )
         {
-            LOG_REASON( "no path: speed on slope is null" );
+            LOG_REASON( "no context: speed on slope is null" );
             return -1;
         }
     }
@@ -322,7 +321,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rUrbanBlockCost = GetUrbanBlockCost( from, to );
     if( rUrbanBlockCost < 0. )
     {
-        LOG_REASON( "no path: urban block cost: " << rUrbanBlockCost );
+        LOG_REASON( "no context: urban block cost: " << rUrbanBlockCost );
         return -1;
     }
     rDynamicCost += rUrbanBlockCost;
@@ -331,7 +330,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rObjectsCost = GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType, rSpeed );
     if( rObjectsCost < 0 || rSpeed <= 0. )
     {
-        LOG_REASON( "no path: objects cost: " << rObjectsCost << ", speed: " << rSpeed );
+        LOG_REASON( "no context: objects cost: " << rObjectsCost << ", speed: " << rSpeed );
         return -1;
     }
     rDynamicCost += rObjectsCost;
@@ -340,7 +339,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rEnemiesCost = GetEnemiesCost( from, to );
     if( rEnemiesCost < 0 )
     {
-        LOG_REASON( "no path: enemies cost: " << rEnemiesCost );
+        LOG_REASON( "no context: enemies cost: " << rEnemiesCost );
         return -1;
     }
     rDynamicCost += rEnemiesCost;
@@ -349,7 +348,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     const double rPopulationsCost = GetPopulationsCost( to );
     if( rPopulationsCost < 0 )
     {
-        LOG_REASON( "no path: populations cost: " << rPopulationsCost );
+        LOG_REASON( "no context: populations cost: " << rPopulationsCost );
         return -1;
     }
     rDynamicCost += rPopulationsCost;
@@ -372,7 +371,7 @@ double DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, const 
         const double rFuseauCost = pFuseau_ ? pFuseau_->GetCost( from, to, rMaximumFuseauDistance_, rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_ ) : 0;
         if( rFuseauCost < 0 )
         {
-            LOG_REASON( "no path: unit limits" );
+            LOG_REASON( "no context: unit limits" );
             return -1;
         }
         rCost += rFuseauCost;
@@ -382,7 +381,7 @@ double DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, const 
         const double rAutomateFuseauCost = pAutomateFuseau_ ? pAutomateFuseau_->GetCost( from, to, rMaximumAutomataFuseauDistance_, rAutomataFuseauCostPerMeterOut_, 0, 0 ) : 0;
         if( rAutomateFuseauCost < 0 )
         {
-            LOG_REASON( "no path: automat limits" );
+            LOG_REASON( "no context: automat limits" );
             return -1;
         }
         rCost += rAutomateFuseauCost;

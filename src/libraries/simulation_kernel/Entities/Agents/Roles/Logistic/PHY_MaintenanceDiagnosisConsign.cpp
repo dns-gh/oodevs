@@ -9,7 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceDiagnosisConsign.h"
+#include "PHY_RoleInterface_Maintenance.h"
+#include "PHY_RoleInterface_Maintenance.h"
+#include "PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes//PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
@@ -18,9 +23,6 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "OnComponentComputer_ABC.h"
-#include "PHY_MaintenanceComposanteState.h"
-#include "PHY_RoleInterface_Maintenance.h"
 #include "Tools/NET_AsnException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceDiagnosisConsign )

@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFind_Manager.h"
-#include "DEC_Path_ABC.h"
+#include "DEC_PathComputer_ABC.h"
 #include "DEC_PathFindRequest.h"
 #include "DEC_PathType.h"
 #include "DEC_Agent_PathClass.h"
@@ -94,7 +94,7 @@ DEC_PathFind_Manager::~DEC_PathFind_Manager()
 // Name: DEC_PathFind_Manager::StartCompute
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_Path_ABC >& path, bool ignoreDynamicObjects )
+void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_PathComputer_ABC >& path, bool ignoreDynamicObjects )
 {
     MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", path.get() ) );
     auto p = boost::make_shared< DEC_PathFindRequest >( *this, path, ignoreDynamicObjects );
@@ -110,34 +110,9 @@ void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_Path_ABC >
 // Name: DEC_PathFind_Manager::CancelJobForUnit
 // Created: JSR 2013-03-11
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* pion )
+void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* /*pion*/ )
 {
-    std::vector< boost::shared_ptr< DEC_Path_ABC > > paths;
-    const auto f =
-        [&]( const boost::shared_ptr< DEC_PathFindRequest >& request ) -> bool
-        {
-            const auto path = request->GetPathForUnit( pion );
-            if( !path )
-                return false;
-            paths.push_back( path );
-            path->Destroy();
-            return true;
-        };
-    {
-        boost::mutex::scoped_lock locker( mutex_ );
-        boost::remove_erase_if( longRequests_, f );
-        boost::remove_erase_if( shortRequests_, f );
-    }
-    boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
-    for( auto it = paths.begin(); it != paths.end(); ++it )
-        boost::remove_erase_if( toCleanup_,
-            [&]( const T_Cleanups::value_type& v ) -> bool
-            {
-                if( v.first != *it )
-                    return false;
-                pathfindTime_ += v.second;
-                return true;
-            } );
+    // NOTHING TO BE REMOVED
 }
 
 // -----------------------------------------------------------------------------
@@ -243,10 +218,10 @@ int DEC_PathFind_Manager::GetCurrentThread() const
 // Name: DEC_PathFind_Manager::CleanPathAfterComputation
 // Created: NLD 2006-01-23
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC >& pPath, double duration )
+void DEC_PathFind_Manager::CleanPathAfterComputation( double duration )
 {
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
-    toCleanup_.push_back( std::make_pair( pPath, duration ) );
+    toCleanup_.push_back( duration );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,8 +237,7 @@ double DEC_PathFind_Manager::Update()
     {
         auto rq = toCleanup_.back();
         toCleanup_.pop_back();
-        rq.first->CleanAfterComputation();
-        pathfindTime += rq.second;
+        pathfindTime += rq;
     }
     return pathfindTime;
 }

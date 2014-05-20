@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Population_PathfinderRule.h"
-#include "DEC_Population_Path.h"
+#include "DEC_PopulationContext_ABC.h"
 #include "DEC_Path_KnowledgeObject_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include <spatialcontainer/TerrainData.h>
@@ -18,10 +18,9 @@
 // Name: DEC_Population_PathfinderRule constructor
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-DEC_Population_PathfinderRule::DEC_Population_PathfinderRule( const DEC_Population_Path& path )
-    : TerrainRule_ABC()
-    , path_          ( path )
-    , world_         ( TER_World::GetWorld() )
+DEC_Population_PathfinderRule::DEC_Population_PathfinderRule( const boost::shared_ptr< DEC_PopulationContext_ABC >& context )
+    : context_( context )
+    , world_( TER_World::GetWorld() )
 {
     // NOTHING
 }
@@ -50,13 +49,13 @@ float DEC_Population_PathfinderRule::EvaluateCost( const geometry::Point2f& from
 // -----------------------------------------------------------------------------
 float DEC_Population_PathfinderRule::GetChannelingCost( const MT_Vector2D& vFrom, const MT_Vector2D& vTo, const TerrainData& terrainTo, const TerrainData& terrainBetween ) const
 {
-    const auto& channelers = path_.GetChannelers();
+    const auto& channelers = context_->GetChannelers();
     if( channelers.empty() )
         return 0.f;
     for( auto it = channelers.begin(); it != channelers.end(); ++it )
         if( it->ComputeCost( vFrom, vTo, terrainTo, terrainBetween ) != std::numeric_limits< double >::min() ) // Inside channel
             return 0.f;
-    return static_cast< float >( path_.GetCostOutsideOfChanneling() );
+    return static_cast< float >( context_->GetCostOutsideOfChanneling() );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,8 +85,8 @@ float DEC_Population_PathfinderRule::GetTerrainCost( const TerrainData& nToTerra
 float DEC_Population_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
 {
     // default cost : outside all objects
-    double rObjectCost = path_.GetCostOutsideOfAllObjects();
-    const auto& knowledgesByTypes = path_.GetPathKnowledgeObjects();
+    double rObjectCost = context_->GetCostOutsideOfAllObjects();
+    const auto& knowledgesByTypes = context_->GetPathKnowledgeObjects();
     for( auto itType = knowledgesByTypes.begin(); itType != knowledgesByTypes.end(); ++itType )
     {
         bool bInsideObjectType = false;
@@ -125,7 +124,7 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
     static const unsigned short waterZone = TerrainData::Water().Area() | TerrainData::Swamp().Area();
     static const unsigned short cliff = TerrainData::Cliff().Linear();
 
-    const double rSpeed = path_.GetMaxSpeed( terrainBetween );
+    const double rSpeed = context_->GetMaxSpeed( terrainBetween );
     if( rSpeed <= 0 )
     {
         LOG_REASON( "no path: speed on " << terrainBetween.DumpToString()
@@ -173,6 +172,6 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
     }
     rDynamicCost += rObjectsCost;
     const float rDistance = from.Distance( to );
-    const double maxSpeed = path_.GetMaxSpeed();
+    const double maxSpeed = context_->GetMaxSpeed();
     return static_cast< float >( rDistance * rDynamicCost * ( maxSpeed ? maxSpeed / rSpeed : 1 ) );
 }

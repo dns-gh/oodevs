@@ -12,7 +12,7 @@
 
 #include <pathfind/TerrainRule_ABC.h>
 
-class DEC_Population_Path;
+class DEC_PopulationContext_ABC;
 class MT_Vector2D;
 class Terrain_Data;
 class TER_World;
@@ -25,7 +25,7 @@ class DEC_Population_PathfinderRule : public TerrainRule_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_Population_PathfinderRule( const DEC_Population_Path& path );
+    explicit DEC_Population_PathfinderRule( const boost::shared_ptr< DEC_PopulationContext_ABC >& context );
     virtual ~DEC_Population_PathfinderRule();
     //@}
 
@@ -52,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const DEC_Population_Path& path_;
+    const boost::shared_ptr< DEC_PopulationContext_ABC > context_;
     const TER_World& world_;
     //@}
 };

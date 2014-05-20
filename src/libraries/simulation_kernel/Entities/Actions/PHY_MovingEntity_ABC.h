@@ -86,6 +86,7 @@ public:
     virtual bool HasResources         () = 0;
     virtual void SendRC               ( const MIL_DecisionalReport& reportId ) const = 0;
     virtual void SendRC               ( const MIL_DecisionalReport& reportId, const std::string& name ) const = 0;
+    virtual bool IsUnderground() const = 0;
     //@}
 
     //! @name Tools

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Speeds.h"
+#include "Composantes/PHY_ComposanteTypePion.h"
 #include "Tools/MIL_Tools.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "MT_Tools/MT_Logger.h"
@@ -51,12 +52,58 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role )
     , nBorderImpassabilityMask_( 0 )
     , nLinearImpassabilityMask_( 0 )
 {
-    std::vector< std::string > allTypes = TerrainData::GetAllTypes();
+    const std::vector< std::string > allTypes = TerrainData::GetAllTypes();
     const unsigned int size = TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes;
     assert( allTypes.size() - 1 == size ); // without unknown
     for( unsigned int nOffset = 0; nOffset < size; ++nOffset )
     {
         const double speed = role.GetTheoricSpeed( TerrainData::FromString( allTypes[ nOffset ] ) );
+        if( nOffset < TerrainData::nAreaTypes )
+            rAreaSpeeds_.push_back( speed );
+        else if( nOffset < TerrainData::nAreaTypes + TerrainData::nBorderTypes )
+            rBorderSpeeds_.push_back( speed );
+        else
+            rLinearSpeeds_.push_back( speed );
+    }
+    GenerateMasks();
+}
+
+namespace
+{
+    template< typename F >
+    double ComputeSpeed( const std::vector< const PHY_ComposanteTypePion* >& equipments,
+        const F& f, double result = std::numeric_limits< double >::max() )
+    {
+        for( auto it = equipments.begin(); it != equipments.end(); ++it )
+            result = std::min( result, f( *it ) );
+        return result;
+    }
+}
+
+PHY_Speeds::PHY_Speeds( const std::vector< const PHY_ComposanteTypePion* >& equipments )
+    : rMaxSpeed_( ComputeSpeed( equipments, []( const PHY_ComposanteTypePion* type )
+        {
+            return type->GetMaxSpeed();
+        } ) )
+    , rBaseSpeed_( ComputeSpeed( equipments, []( const PHY_ComposanteTypePion* type )
+        {
+            return type->GetMaxSpeed( TerrainData() );
+        }, rMaxSpeed_ ) )
+    , nLinearPassabilityMask_  ( 0 )
+    , nAreaPassabilityMask_    ( 0 )
+    , nAreaImpassabilityMask_  ( 0 )
+    , nBorderImpassabilityMask_( 0 )
+    , nLinearImpassabilityMask_( 0 )
+{
+    const std::vector< std::string > allTypes = TerrainData::GetAllTypes();
+    const unsigned int size = TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes;
+    assert( allTypes.size() - 1 == size ); // without unknown
+    for( unsigned int nOffset = 0; nOffset < size; ++nOffset )
+    {
+        const double speed = ComputeSpeed( equipments, [&]( const PHY_ComposanteTypePion* type )
+        {
+            return type->GetMaxSpeed( TerrainData::FromString( allTypes[ nOffset ] ) );
+        } );
         if( nOffset < TerrainData::nAreaTypes )
             rAreaSpeeds_.push_back( speed );
         else if( nOffset < TerrainData::nAreaTypes + TerrainData::nBorderTypes )

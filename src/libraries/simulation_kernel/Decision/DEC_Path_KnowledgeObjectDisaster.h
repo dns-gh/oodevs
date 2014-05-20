@@ -29,7 +29,7 @@ class DEC_Path_KnowledgeObjectDisaster : public DEC_Path_KnowledgeObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Path_KnowledgeObjectDisaster( MIL_Agent_ABC& agent, const DEC_Knowledge_Object& knowledge );
+             DEC_Path_KnowledgeObjectDisaster( const MIL_Agent_ABC& agent, const DEC_Knowledge_Object& knowledge );
     virtual ~DEC_Path_KnowledgeObjectDisaster();
     //@}
 

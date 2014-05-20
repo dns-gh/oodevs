@@ -40,17 +40,15 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void Execute( TER_Pathfinder_ABC& pathfind ) = 0;
-    virtual void CleanAfterComputation() = 0;
-    virtual bool IsPathForUnit( MIL_Agent_ABC* pion ) const = 0;
-    virtual double GetLength() const = 0;
     virtual void Destroy() = 0;
+    virtual void Cancel() = 0;
     //@}
 
     //! @name Accessors
     //@{
     unsigned int GetID() const;
     virtual E_State GetState() const = 0;
+    virtual double GetLength() const = 0;
     //@}
 
     //! @name Operators
