@@ -653,3 +653,10 @@ target_link_libraries( model_app
     psapi
 )
 
+# casava_odb_gen_app
+add_target( casava_odb_gen_app clients "applications/casava_odb_gen_app" OPTIONS qt executable )
+target_link_libraries( casava_odb_gen_app
+    clients_gui
+    sword_tools
+    ${GEOCOORD_LIBRARIES}
+)
