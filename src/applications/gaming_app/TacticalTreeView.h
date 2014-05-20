@@ -87,7 +87,7 @@ private:
     virtual std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
     virtual bool ApplyProfileFilter( QStandardItem& item ) const;
     void CreateFormation( int level, bool isLogisticBase );
-    void AddCommunMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    void AddCommonMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private:

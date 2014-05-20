@@ -90,7 +90,7 @@ private:
     //! @name Helpers
     //@{
     void AddFormationMenu( kernel::ContextMenu& menu, E_NatureLevel root );
-    void AddCommunMenu( kernel::ContextMenu& menu, const kernel::Entity_ABC& entity );
+    void AddCommonMenu( kernel::ContextMenu& menu, const kernel::Entity_ABC& entity );
     //@}
 
 private:

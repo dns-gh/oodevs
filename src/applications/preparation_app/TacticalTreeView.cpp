@@ -246,10 +246,10 @@ void TacticalTreeView::OnCreateTeam()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalTreeView::AddCommunMenu
+// Name: TacticalTreeView::AddCommonMenu
 // Created: LGY 2014-05-13
 // -----------------------------------------------------------------------------
-void TacticalTreeView::AddCommunMenu( kernel::ContextMenu& menu, const kernel::Entity_ABC& entity )
+void TacticalTreeView::AddCommonMenu( kernel::ContextMenu& menu, const kernel::Entity_ABC& entity )
 {
     menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ), false, 4 );
     if( entity.Get< kernel::TacticalHierarchies >().GetSuperior() != 0 )
@@ -265,7 +265,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel
     contextMenuEntity_ = &agent;
     if( !isVisible() || !IsActivated() )
         return;
-    AddCommunMenu( menu, agent );
+    AddCommonMenu( menu, agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,7 +277,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& team, kernel::
     contextMenuEntity_ = &team;
     if( !isVisible() || !IsActivated() )
         return;
-    AddCommunMenu( menu, team );
+    AddCommonMenu( menu, team );
     AddFormationMenu( menu, eNatureLevel_xxxxx );
 }
 
@@ -290,7 +290,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Formation_ABC& formation
     contextMenuEntity_ = &formation;
     if( !isVisible() || !IsActivated() )
         return;
-    AddCommunMenu( menu, formation );
+    AddCommonMenu( menu, formation );
 
     if( formation.GetLevel() > eNatureLevel_c )
         AddFormationMenu( menu, static_cast< E_NatureLevel >( formation.GetLevel() ) );
@@ -309,7 +309,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Automat_ABC& automat, ke
     contextMenuEntity_ = &automat;
     if( !isVisible() || !IsActivated() )
         return;
-    AddCommunMenu( menu, automat );
+    AddCommonMenu( menu, automat );
 
     if( tools::IsEngaged( automat ) )
         menu.InsertItem( "Helpers", tr( "Disengage" ), this, SLOT( Disengage() ), false, 0 );
@@ -327,7 +327,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel
     if( ghost.GetGhostType() != eGhostType_Automat || !isVisible() || !IsActivated() )
         return;
     contextMenuEntity_ = &ghost;
-    AddCommunMenu( menu, ghost );
+    AddCommonMenu( menu, ghost );
     menu.InsertItem( "Command", tr( "Replace by a new automat" ), this, SLOT( ChangeAutomatType() ), false, 6 );
 }
 

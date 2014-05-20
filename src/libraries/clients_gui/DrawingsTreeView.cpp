@@ -141,10 +141,10 @@ void DrawingsTreeView::keyPressEvent( QKeyEvent* event )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawingsTreeView::AddCommunMenu
+// Name: DrawingsTreeView::AddCommonMenu
 // Created: LGY 2014-05-07
 // -----------------------------------------------------------------------------
-void DrawingsTreeView::AddCommunMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+void DrawingsTreeView::AddCommonMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     entity_ = &entity;
     if( !isVisible() )
@@ -158,7 +158,7 @@ void DrawingsTreeView::AddCommunMenu( const kernel::Entity_ABC& entity, kernel::
 // -----------------------------------------------------------------------------
 void DrawingsTreeView::NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel::ContextMenu& menu )
 {
-    AddCommunMenu( drawing, menu );
+    AddCommonMenu( drawing, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ void DrawingsTreeView::NotifyContextMenu( const kernel::Drawing_ABC& drawing, ke
 void DrawingsTreeView::NotifyContextMenu( const kernel::TacticalLine_ABC& line, kernel::ContextMenu& menu )
 {
     if( CanBeOrdered( line, profile_ ) )
-        AddCommunMenu( line, menu );
+        AddCommonMenu( line, menu );
 }
 
 // -----------------------------------------------------------------------------

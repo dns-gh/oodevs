@@ -55,7 +55,6 @@ protected:
     virtual bool ApplyProfileFilter( QStandardItem& item ) const;
     virtual void NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& line, kernel::ContextMenu& menu );
-    virtual bool ApplyProfileFilter( QStandardItem& item, StandardModel& model ) const;
     virtual void keyPressEvent( QKeyEvent* event );
     //@}
 
@@ -68,7 +67,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    void AddCommunMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    void AddCommonMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private:
