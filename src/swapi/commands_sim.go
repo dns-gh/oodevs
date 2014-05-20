@@ -1822,7 +1822,7 @@ func (c *Client) EquipmentListPathfindRequest(equipment uint32, position ...Poin
 	eq = append(eq, &sword.Id{Id: proto.Uint32(equipment)})
 	return c.PathfindRequest(
 		&sword.PathfindRequest{
-			Unit: MakeId(0),
+			Unit:           MakeId(0),
 			EquipmentTypes: eq,
 		}, position...)
 }
