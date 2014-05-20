@@ -94,7 +94,7 @@ namespace
         while( equipmentsIterator.HasMoreElements() )
         {
             const Equipment& equipment = equipmentsIterator.NextElement();
-            ComputeCapacityAndConsumption( name, capacity, consumption, equipment.type_.CreateResourcesIterator(), equipment.Total() );
+            ComputeCapacityAndConsumption( name, capacity, consumption, equipment.type_.CreateResourcesIterator(), equipment.available_ );
         }
         return std::make_pair( capacity, consumption );
     }
@@ -102,7 +102,7 @@ namespace
     template< class T >
     bool HasSubordinateWithExtension( const kernel::Entity_ABC& entity, const T& extension )
     {
-        if( entity.Retrieve< T >() == &extension)
+        if( entity.Retrieve< T >() == &extension )
             return true;
         const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
         tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
