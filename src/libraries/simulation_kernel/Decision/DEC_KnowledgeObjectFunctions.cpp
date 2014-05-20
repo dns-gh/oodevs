@@ -390,13 +390,13 @@ bool DEC_KnowledgeObjectFunctions::IsInAvoidanceArea( boost::shared_ptr< MT_Vect
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeObjectFunctions::IsNearEffectArea( boost::shared_ptr< MT_Vector2D > point, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, double distance )
 {
-    if( pKnowledge && pKnowledge->IsValid() )
-    {
-        TER_Localisation location = pKnowledge->GetLocalisation();
-        location.Scale( distance );
-        return location.IsInside( *point );
-    }
-    return 0;
+    if( !pKnowledge )
+        return false;
+    TER_Localisation location = pKnowledge->GetLocalisation();
+    MT_Vector2D vResult;
+    if( location.ComputeNearestPoint( *point, vResult ) )
+        return true;
+    return vResult.SquareDistance( *point ) < ( distance * distance );
 }
 
 // -----------------------------------------------------------------------------
