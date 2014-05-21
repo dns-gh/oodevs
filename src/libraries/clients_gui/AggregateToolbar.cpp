@@ -57,7 +57,7 @@ AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
 
     levelMenu_ = new kernel::ContextMenu( btn );
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
-        levelMenu_->insertItem( LEVELS[ i ].c_str(), i );
+        levelMenu_->insertItem( tools::translate( "ENT_Tr", LEVELS[ i ].c_str() ), i );
     btn->setPopup( levelMenu_ );
     connect( levelMenu_, SIGNAL( activated( int ) ), SLOT( Aggregate( int ) ) );
 
