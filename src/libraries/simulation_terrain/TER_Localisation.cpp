@@ -608,14 +608,12 @@ std::string TER_Localisation::ConvertLocalisationType( E_LocationType nType )   
 // Created: NLD 2003-07-24
 // Last modified: JVT 03-09-04
 //-----------------------------------------------------------------------------
-bool TER_Localisation::ComputeNearestPoint( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const
+void TER_Localisation::ComputeNearestPoint( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const
 {
     if( IsInside( vSrc ) )
-    {
         vResult = vSrc;
-        return true;
-    }
-    return ComputeNearestOutsidePoint( vSrc, vResult );
+    else
+        ComputeNearestOutsidePoint( vSrc, vResult );
 }
 
 //-----------------------------------------------------------------------------
@@ -623,12 +621,12 @@ bool TER_Localisation::ComputeNearestPoint( const MT_Vector2D& vSrc, MT_Vector2D
 // Calcule la position sur le périmètre de la localisation la plus proche de vSrc
 // Created: MGD 2011-01-20
 //-----------------------------------------------------------------------------
-bool TER_Localisation::ComputeNearestOutsidePoint( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const
+void TER_Localisation::ComputeNearestOutsidePoint( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const
 {
     if( pointVector_.size() == 1 )
     {
         vResult = pointVector_[ 0 ];
-        return true;
+        return;
     }
     double rShortestDist   = std::numeric_limits< double >::max();
     CIT_PointVector itPoint  = pointVector_.begin();
@@ -648,33 +646,27 @@ bool TER_Localisation::ComputeNearestOutsidePoint( const MT_Vector2D& vSrc, MT_V
         pPos1 = pPos2;
     }
     assert( rShortestDist != std::numeric_limits< double >::max() );
-    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: TER_Localisation::ComputeNearestPoint
 // Created: SBO 2005-12-13
 // -----------------------------------------------------------------------------
-bool TER_Localisation::ComputeNearestPoint( const TER_Localisation& localisation, MT_Vector2D& vResult, double& rMinDistance ) const
+void TER_Localisation::ComputeNearestPoint( const TER_Localisation& localisation, MT_Vector2D& vResult, double& rMinDistance ) const
 {
     const T_PointVector& points = localisation.GetPoints();
     rMinDistance = std::numeric_limits< double >::max();
     for( auto it = points.begin(); it != points.end(); ++it )
     {
         MT_Vector2D nearestPointTmp;
-        if( ComputeNearestPoint( *it, nearestPointTmp ) )
+        ComputeNearestPoint( *it, nearestPointTmp );
+        double rDistance = it->Distance( nearestPointTmp );
+        if( rDistance < rMinDistance )
         {
-            double rDistance = it->Distance( nearestPointTmp );
-            if( rDistance < rMinDistance )
-            {
-                rMinDistance = rDistance;
-                vResult = *it;
-            }
+            rMinDistance = rDistance;
+            vResult = *it;
         }
-        else
-            return false;
     }
-    return true;
 }
 
 // -----------------------------------------------------------------------------

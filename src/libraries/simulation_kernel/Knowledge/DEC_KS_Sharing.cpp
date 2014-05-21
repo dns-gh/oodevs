@@ -189,8 +189,7 @@ namespace
         void operator() ( DEC_Knowledge_Object& knowledge, int currentTimeStep)
         {
             MT_Vector2D point;
-            if( !knowledge.GetLocalisation().ComputeNearestPoint( shareSource_.vSharedCircleCenter_, point ) )
-                return;
+            knowledge.GetLocalisation().ComputeNearestPoint( shareSource_.vSharedCircleCenter_, point );
 
             if( point.Distance( shareSource_.vSharedCircleCenter_ ) > shareSource_.rSharedCircleRadius_ )
                 return;

@@ -123,8 +123,7 @@ double DEC_Path_KnowledgePopulation::ComputeClosestElementInRange( const MT_Vect
         if( OutOfBoundingBox( it->location_.GetBoundingBox(), position, rMaxRange ) )
             continue;
         MT_Vector2D nearestPoint;
-        if( !it->location_.ComputeNearestPoint( position, nearestPoint ) )
-            continue;
+        it->location_.ComputeNearestPoint( position, nearestPoint );
         double rDistance = position.Distance( nearestPoint );
         if( rDistance < rMaxRange && rDistance < rMinDistance )
         {

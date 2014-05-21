@@ -1205,8 +1205,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestBorder( co
 
     boost::shared_ptr< MT_Vector2D > pResult;
     MT_Vector2D vResult;
-    if( pLocalisation->ComputeNearestOutsidePoint( *position, vResult ) )
-        pResult.reset( new MT_Vector2D( vResult ) );
+    pLocalisation->ComputeNearestOutsidePoint( *position, vResult );
+    pResult.reset( new MT_Vector2D( vResult ) );
 
     return pResult;
 }
