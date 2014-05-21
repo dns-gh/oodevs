@@ -241,7 +241,8 @@ func readMagicOrder(target string, tick time.Time, order *sword.MagicOrder) *sdk
 	// Magic order are read-only because there is no GUI in gaming to plan
 	// them, you have to execute them and move them/duplicate them at the
 	// right place.
-	event := packOrder(name, target, tick, &sword.DateTime{}, &content, true, false)
+	start := &sword.DateTime{Data: proto.String(order.GetStartTime())}
+	event := packOrder(name, target, tick, start, &content, true, false)
 	event.ErrorCode = &code
 	errmsg := order.GetErrorMsg()
 	event.ErrorText = &errmsg
