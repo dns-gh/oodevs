@@ -92,7 +92,9 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
     plugins::messenger::LimitCreationRequestAck ack;
     ack().set_error_code( sword::TacticalLineAck::no_error );
     std::auto_ptr< Limit > limit( new Limit( idManager_.GetNextId(), asn ) );
-    limits_.Register( limit->GetID(), *limit );
+    const auto id = limit->GetID();
+    ack().set_id( id );
+    limits_.Register( id, *limit );
     limit->SendCreation( clients_ );
     limit.release();
     ack.Send( publisher, context );
@@ -111,6 +113,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
     {
         limit->Update( asn );
         limit->SendUpdate( clients_ );
+        ack().set_id( limit->GetID() );
     }
     else
         ack().set_error_code( sword::TacticalLineAck::error_invalid_id );
@@ -128,6 +131,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
     Limit* limit = limits_.Find( asn.id().id() );
     if( limit )
     {
+        ack().set_id( limit->GetID() );
         limit->SendDestruction( clients_ );
         delete limit;
         limits_.Remove( asn.id().id() );
@@ -146,7 +150,9 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
     plugins::messenger::PhaseLineCreationAck ack;
     ack().set_error_code( sword::TacticalLineAck::no_error );
     std::auto_ptr< Lima > lima( new Lima( idManager_.GetNextId(), asn ) );
-    limas_.Register( lima->GetID(), *lima );
+    const auto id = lima->GetID();
+    ack().set_id( id );
+    limas_.Register( id, *lima );
     lima->SendCreation( clients_ );
     lima.release();
     ack.Send( publisher, context );
@@ -165,6 +171,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
     {
         lima->Update( asn );
         lima->SendUpdate( clients_ );
+        ack().set_id( lima->GetID() );
     }
     else
         ack().set_error_code( sword::TacticalLineAck::error_invalid_id );
@@ -182,6 +189,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
     Lima* lima = limas_.Find( asn.id().id() );
     if( lima )
     {
+        ack().set_id( lima->GetID() );
         lima->SendDestruction( clients_ );
         delete lima;
         limas_.Remove( asn.id().id() );

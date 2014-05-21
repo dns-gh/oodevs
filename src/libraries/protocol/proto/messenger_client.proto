@@ -121,6 +121,8 @@ message LimitCreationRequestAck {
         @see TacticalLineAck.ErrorCode
     */
     optional TacticalLineAck.ErrorCode error_code = 1;
+    //! On success, created limit identifier.
+    optional uint32                    id         = 2;
 }
 
 /** @struct LimitUpdateRequestAck
@@ -136,6 +138,8 @@ message LimitUpdateRequestAck {
         @see TacticalLineAck.ErrorCode
     */
     optional TacticalLineAck.ErrorCode error_code = 1;
+    //! On success, updated limit identifier.
+    optional uint32                    id         = 2;
 }
 
 /** @struct LimitDestructionRequestAck
@@ -151,6 +155,8 @@ message LimitDestructionRequestAck {
         @see TacticalLineAck.ErrorCode
     */
     optional TacticalLineAck.ErrorCode error_code = 1;
+    //! On success, destroyed limit identifier.
+    optional uint32                    id         = 2;
 }
 
 /** @struct PhaseLineCreation
@@ -220,6 +226,8 @@ message PhaseLineCreationAck {
         @see TacticalLineAck.ErrorCode
     */
     optional TacticalLineAck.ErrorCode error_code = 1;
+    //! On success, created phase line identifier.
+    optional uint32                    id         = 2;
 }
 
 /** @struct PhaseLineUpdateRequestAck
@@ -235,6 +243,8 @@ message PhaseLineUpdateRequestAck {
         @see TacticalLineAck.ErrorCode
     */
     optional TacticalLineAck.ErrorCode error_code = 1;
+    //! On success, created phase line identifier.
+    optional uint32                    id         = 2;
 }
 
 /** @struct PhaseLineDestructionRequestAck
@@ -249,6 +259,8 @@ message PhaseLineDestructionRequestAck {
         @see TacticalLineAck.ErrorCode
     */
     optional TacticalLineAck.ErrorCode error_code = 1;
+    //! On success, destroyed phase line identifier.
+    optional uint32                    id         = 2;
 }
 
 /** @struct ShapeCreation
