@@ -17,6 +17,7 @@
 namespace kernel
 {
     class Controllers;
+    class CoordinateConverter_ABC;
 }
 
 namespace gui
@@ -31,14 +32,10 @@ class MgrsParser : public LocationParser_ABC
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
-    typedef std::function< geometry::Point2f( const std::string& ) > T_Converter;
-    typedef std::function< std::string( const geometry::Point2f& ) > T_StringConverter;
-
 public:
     //! @name Constructors/Destructor
     //@{
-             MgrsParser( kernel::Controllers& controllers, const T_Converter& converter,
-                         const T_StringConverter& stringConverter );
+             MgrsParser( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter );
     virtual ~MgrsParser();
     //@}
 
@@ -60,8 +57,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const T_Converter converter_;
-    const T_StringConverter stringConverter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     std::string zone_;
     //@}
 };

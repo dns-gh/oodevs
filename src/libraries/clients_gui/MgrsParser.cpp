@@ -11,25 +11,23 @@
 #include "MgrsParser.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "tools/ExerciseConfig.h"
-#include <boost/lexical_cast.hpp>
 
 using namespace gui;
 
 namespace
 {
-    static const int MaxFieldSize = 5;
+    const int maxFieldSize = 5;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MgrsParser constructor
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-MgrsParser::MgrsParser( kernel::Controllers& controllers, const T_Converter& converter,
-                      const T_StringConverter& stringConverter )
+MgrsParser::MgrsParser( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
     : controllers_( controllers )
     , converter_( converter )
-    , stringConverter_( stringConverter )
 {
     controllers_.Register( *this );
 }
@@ -62,11 +60,11 @@ bool MgrsParser::Parse( const QStringList& content, geometry::Point2f& result, Q
         bool ok = false;
         hint[0].left( 2 ).toInt( &ok );
         if( !ok )
-            hint[0] = (QString::fromStdString( zone_ ) + hint[0]).left( MaxFieldSize );
+            hint[0] = (QString::fromStdString( zone_ ) + hint[0]).left( maxFieldSize );
         const int max = std::max( hint[1].size(), hint[2].size() );
         for( int i = 1; i < hint.size(); ++i )
-            hint[i] = hint[i].append( QString( "0" ).repeated( max - hint[i].size() ) ).left( MaxFieldSize );
-        result = converter_( hint.join( "" ).toStdString() );
+            hint[i] = hint[i].append( QString( "0" ).repeated( max - hint[i].size() ) ).left( maxFieldSize );
+        result = converter_.ConvertToXY( hint.join( "" ).toStdString() );
         return true;
     }
     catch( ... )
@@ -94,7 +92,7 @@ const LocationParserDescriptor& MgrsParser::GetDescriptor() const
 {
     static const LocationParserDescriptor desc = {
         QStringList() << QString() << QString() << QString(),
-        QList< int >() << MaxFieldSize << MaxFieldSize << MaxFieldSize,
+        QList< int >() << maxFieldSize << maxFieldSize << maxFieldSize,
     };
     return desc;
 }
@@ -105,11 +103,11 @@ const LocationParserDescriptor& MgrsParser::GetDescriptor() const
 // -----------------------------------------------------------------------------
 QStringList MgrsParser::Split( const QString& input ) const
 {
-    int left = std::max( 0, input.size() - MaxFieldSize ) / 2;
+    const int left = std::max( 0, input.size() - maxFieldSize ) / 2;
     return QStringList()
-        << input.left( MaxFieldSize )
-        << input.mid( MaxFieldSize, left )
-        << input.mid( MaxFieldSize + left );
+        << input.left( maxFieldSize )
+        << input.mid( maxFieldSize, left )
+        << input.mid( maxFieldSize + left );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,5 +116,5 @@ QStringList MgrsParser::Split( const QString& input ) const
 // -----------------------------------------------------------------------------
 std::string MgrsParser::GetStringPosition( const geometry::Point2f& position ) const
 {
-    return stringConverter_( position );
+    return converter_.ConvertToMgrs( position );
 }
