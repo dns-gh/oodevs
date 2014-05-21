@@ -1093,6 +1093,7 @@ var (
 		(*ModelData).handleObjectUpdate,
 		(*ModelData).handlePartyCreation,
 		(*ModelData).handlePathfindCreation,
+		(*ModelData).handlePathfindDestruction,
 		(*ModelData).handlePopulationCreation,
 		(*ModelData).handlePopulationUpdate,
 		(*ModelData).handleSupplyRequestCreation,

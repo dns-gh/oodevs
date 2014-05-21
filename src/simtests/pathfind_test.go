@@ -63,9 +63,7 @@ func (s *TestSuite) TestUnitPathfindRequest(c *C) {
 			msg.SimulationToClient.GetMessage() == nil {
 			return false
 		}
-		if mm := msg.SimulationToClient.GetMessage().GetComputePathfindAck(); mm != nil {
-			seen = mm.Id == nil
-		}
+		seen = seen || msg.SimulationToClient.GetMessage().GetComputePathfindAck() != nil
 		return seen
 	})
 
@@ -114,9 +112,7 @@ func (s *TestSuite) TestEquipmentListPathfindRequest(c *C) {
 			msg.SimulationToClient.GetMessage() == nil {
 			return false
 		}
-		if mm := msg.SimulationToClient.GetMessage().GetComputePathfindAck(); mm != nil {
-			seen = mm.Id == nil
-		}
+		seen = seen || msg.SimulationToClient.GetMessage().GetComputePathfindAck() != nil
 		return seen
 	})
 
