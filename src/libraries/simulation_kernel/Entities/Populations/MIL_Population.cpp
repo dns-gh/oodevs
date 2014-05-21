@@ -602,8 +602,7 @@ MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
     for( auto itFlow = flows_.cbegin(); itFlow != flows_.end(); ++itFlow )
     {
         MT_Vector2D nearestPointTmp;
-        if( !( **itFlow ).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
-            continue;
+        ( **itFlow ).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp );
         double rDistance = refPos.Distance( nearestPointTmp );
         if( rDistance < rMinDistance )
         {
@@ -663,8 +662,7 @@ void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MI
         if( ( **itConcentration ).IsDead() )
             continue;
         MT_Vector2D nearestPoint;
-        if( !( **itConcentration ).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
-            continue;
+        ( **itConcentration ).GetLocation().ComputeNearestPoint( position, nearestPoint );
         const double rDistance = position.Distance( nearestPoint );
         if( rDistance < rMinDistance )
         {
@@ -677,8 +675,7 @@ void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MI
         if( ( **itFlow ).IsDead() )
             continue;
         MT_Vector2D nearestPoint;
-        if( !( **itFlow ).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
-            continue;
+        ( **itFlow ).GetLocation().ComputeNearestPoint( position, nearestPoint );
         double rDistance = position.Distance( nearestPoint );
         if( rDistance < rMinDistance )
         {
@@ -701,8 +698,7 @@ void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT
             continue;
         MT_Vector2D nearestPointTmp;
         double rDistance;
-        if( !( **itConcentration ).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
-            continue;
+        ( **itConcentration ).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance );
         if( rDistance < rMinDistance )
         {
             rMinDistance = rDistance;
@@ -716,8 +712,7 @@ void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT
             continue;
         MT_Vector2D nearestPointTmp;
         double rDistance;
-        if( !( **itFlow ).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
-            continue;
+        ( **itFlow ).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance );
         if( rDistance < rMinDistance )
         {
             rMinDistance = rDistance;

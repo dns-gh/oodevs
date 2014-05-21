@@ -376,8 +376,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetLeavingAreaPosition( 
 
     boost::shared_ptr< MT_Vector2D > pResult;
     MT_Vector2D vResult;
-    if( scale.ComputeNearestOutsidePoint( GetPosition( caller ), vResult ) )
-        pResult = boost::make_shared< MT_Vector2D >( vResult );
+    scale.ComputeNearestOutsidePoint( GetPosition( caller ), vResult );
+    pResult = boost::make_shared< MT_Vector2D >( vResult );
 
     return pResult;
 }
@@ -447,8 +447,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestLocalisati
     if( ClipLocalisationInFuseau( *pLocation, caller.GetOrderManager().GetFuseau(), clipped ) )
     {
         MT_Vector2D vResult;
-        if( clipped.ComputeNearestPoint( GetPosition( caller ), vResult ) )
-            pResult = boost::make_shared< MT_Vector2D >( vResult );
+        clipped.ComputeNearestPoint( GetPosition( caller ), vResult );
+        pResult = boost::make_shared< MT_Vector2D >( vResult );
     }
     return pResult;
 }
@@ -468,8 +468,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestUnclippedL
     TER_Localisation fuseauLocation = TER_Localisation( TER_Localisation::ePolygon, caller.GetOrderManager().GetFuseau().GetBorderPoints() );
 
     MT_Vector2D vResult;
-    if ( fuseauLocation.ComputeNearestPoint( pLocation->ComputeBarycenter(), vResult ) )
-        pResult = boost::make_shared< MT_Vector2D >( vResult );
+    fuseauLocation.ComputeNearestPoint( pLocation->ComputeBarycenter(), vResult );
+    pResult = boost::make_shared< MT_Vector2D >( vResult );
     return pResult;
 }
 

@@ -123,9 +123,9 @@ public:
     bool Intersect2D          ( const MT_Line& line, double rPrecision = rPrecision_ ) const;
     bool Contains             ( const TER_Localisation& localisation, double rPrecision = rPrecision_ ) const;
     
-    bool ComputeNearestPoint            ( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const; // Calcule la position de la localisation la plus proche de vSrc
-    bool ComputeNearestOutsidePoint     ( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const;
-    bool ComputeNearestPoint            ( const TER_Localisation& localisation, MT_Vector2D& vResult, double& rMinDistance ) const;
+    void ComputeNearestPoint            ( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const; // Calcule la position de la localisation la plus proche de vSrc
+    void ComputeNearestOutsidePoint     ( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const;
+    void ComputeNearestPoint            ( const TER_Localisation& localisation, MT_Vector2D& vResult, double& rMinDistance ) const;
     void GetPointsClippedByPolygon      ( const TER_Polygon& polygon, T_PointVector& clippedPointVector ) const;
     void GetPointsClippedByLocalisation ( const TER_Localisation& localisation, T_PointVector& clippedPointVector ) const;
     void GetPointsClippedBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, const MT_Vector2D& vDroitesIntersection, T_PointVector& clippedPointVector ) const;
