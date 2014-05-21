@@ -9,9 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "PathfindComputer.h"
-
 #include "MIL_AgentServer.h"
 #include "PathRequest.h"
+
 #include "Decision/DEC_Agent_PathfinderRule.h"
 #include "Decision/DEC_AgentContext.h"
 #include "Decision/DEC_Agent_PathClass.h"
@@ -23,10 +23,13 @@
 #include "Decision/DEC_PopulationContext.h"
 #include "Decision/DEC_Population_PathfinderRule.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
+#include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/MessageParameters.h"
 
 #include <boost/assign.hpp>
 #include <boost/make_shared.hpp>
@@ -204,4 +207,91 @@ void load_construct_data( Archive&, PathfindComputer* ptr, const unsigned int /*
 {
     auto& paths = MIL_AgentServer::GetWorkspace().GetPathFindManager();
     ::new( ptr ) PathfindComputer( paths, TER_World::GetWorld() );
+}
+
+void PathfindComputer::OnPathfindRequest( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId )
+{
+    try
+    {
+        const auto& entities = MIL_AgentServer::GetWorkspace().GetEntities();
+        protocol::Check( message.has_unit() || message.equipment_types().size() > 0, "must have either a unit or equipment types" );
+        const auto& positions = message.positions();
+        protocol::Check( positions.size() > 1, "must have at least two points" );
+        if( message.equipment_types().size() )
+        {
+            std::vector< const PHY_ComposanteTypePion* > equipments;
+            for( auto it = message.equipment_types().begin(); it != message.equipment_types().end(); ++it )
+            {
+                const auto type = PHY_ComposanteTypePion::Find( it->id() );
+                protocol::Check( type, "invalid dotation type identifier" );
+                equipments.push_back( type );
+            }
+            Compute( equipments, message, nCtx, clientId, boost::none );
+        }
+        else
+        {
+            const auto id = message.unit().id();
+            if( auto pion = entities.FindAgentPion( id ) )
+                Compute( *pion, message, nCtx, clientId, boost::none );
+            else if( auto population = entities.FindPopulation( id ) )
+                Compute( *population, message, nCtx, clientId, boost::none );
+            else
+                protocol::Check( false, "invalid crowd or unit identifier" );
+        }
+    }
+    catch( const tools::Exception& e )
+    {
+        client::ComputePathfindAck ack;
+        ack().set_error_code( sword::ComputePathfindAck::error_invalid_parameter );
+        ack().set_error_msg( tools::GetExceptionMsg( e ) );
+        ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    }
+}
+
+bool PathfindComputer::OnReceivePathfindCreation( const sword::MagicAction& message,
+                                                   unsigned int ctx, unsigned int clientId, uint32_t magicId )
+{
+    const auto& entities = MIL_AgentServer::GetWorkspace().GetEntities();
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 1 );
+    const auto& value = message.parameters().elem( 0 ).value( 0 );
+    protocol::Check( value.has_pathfind_request(), "invalid parameters" );
+    const auto& request = value.pathfind_request();
+    protocol::Check( request.ignore_dynamic_objects(), "invalid ignore dynamic objects not set" );
+    const auto& positions = request.positions();
+    protocol::Check( positions.size() > 1, "must have at least two points" );
+    protocol::Check( request.has_unit() || request.equipment_types().size() > 0, "must have either a unit or equipment types" );
+    if( request.equipment_types().size() )
+    {
+        std::vector< const PHY_ComposanteTypePion* > equipments;
+        for( auto it = request.equipment_types().begin(); it != request.equipment_types().end(); ++it )
+        {
+            const auto type = PHY_ComposanteTypePion::Find( it->id() );
+            protocol::Check( type, "invalid dotation type identifier" );
+            equipments.push_back( type );
+        }
+        Compute( equipments, request, ctx, clientId, magicId );
+    }
+    else
+    {
+        const unsigned int id = request.unit().id();
+        if( auto pion = entities.FindAgentPion( id ) )
+            Compute( *pion, request, ctx, clientId, magicId );
+        else if( auto population = entities.FindPopulation( id ) )
+            Compute( *population, request, ctx, clientId, magicId );
+        else
+            protocol::Check( false, "invalid crowd or unit identifier" );
+    }
+    return true;
+}
+
+void PathfindComputer::OnReceivePathfindDestruction( const sword::MagicAction& message, sword::MagicActionAck& ack )
+{
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 1 );
+    const auto id = protocol::GetIdentifier( params, 0 );
+    if( Destroy( id ) )
+        return;
+    ack.set_error_code( sword::MagicActionAck::error_invalid_parameter );
+    ack.set_error_msg( "invalid pathfind identifier");
 }

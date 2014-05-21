@@ -13,6 +13,7 @@
 #include "MIL_AgentServer.h"
 #include "NET_AgentServer.h"
 #include "NET_Simulation_ABC.h"
+#include "PathfindComputer.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
@@ -76,6 +77,7 @@ void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const swor
 {
     MIL_AgentServer& server = MIL_AgentServer::GetWorkspace();
     MIL_EntityManager& manager = server.GetEntityManager();
+    auto& pathfinds = server.GetPathfindComputer();
     const auto& msg = wrapper.message();
     const unsigned int nCtx = wrapper.context();
     const unsigned int clientId = wrapper.has_client_id() ? wrapper.client_id() : 0u;
@@ -121,7 +123,7 @@ void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const swor
     else if( msg.has_magic_action() )
         OnReceiveMagicAction( msg.magic_action(), nCtx, clientId );
    else if( msg.has_compute_pathfind() )
-        manager.OnPathfindRequest( msg.compute_pathfind().request(), nCtx, clientId );
+        pathfinds.OnPathfindRequest( msg.compute_pathfind().request(), nCtx, clientId );
     else if( msg.has_segment_request() )
         OnReceiveSegmentRequest( msg.segment_request(), nCtx, clientId );
 }
@@ -161,6 +163,7 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
 {
     MIL_AgentServer& server = MIL_AgentServer::GetWorkspace();
     MIL_EntityManager& manager = server.GetEntityManager();
+    auto& pathfinds = server.GetPathfindComputer();
     auto& magics = server.GetMagicOrderManager();
     client::MagicActionAck ack;
     ack().set_error_code( sword::MagicActionAck::no_error );
@@ -208,10 +211,10 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
                     OnReceiveDebugError( msg.parameters(), ack() );
                 break;
             case sword::MagicAction::pathfind_creation:
-                delayed = manager.OnReceivePathfindCreation( msg, ctx, clientId, magicId );
+                delayed = pathfinds.OnReceivePathfindCreation( msg, ctx, clientId, magicId );
                 break;
             case sword::MagicAction::pathfind_destruction:
-                manager.OnReceivePathfindDestruction( msg, ack() );
+                pathfinds.OnReceivePathfindDestruction( msg, ack() );
                 break;
         }
     }

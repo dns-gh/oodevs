@@ -13,6 +13,12 @@
 #include <boost/noncopyable.hpp>
 #include <boost/optional/optional_fwd.hpp>
 
+namespace sword
+{
+    class PathfindRequest;
+    class MagicAction;
+}
+
 class MIL_AgentPion;
 class DEC_PathFind_Manager;
 class DEC_PathComputer;
@@ -37,17 +43,14 @@ public:
 
     //! @name Operations
     //@{
-    void Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
-                  unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
-    void Compute( const MIL_Population& population, const sword::PathfindRequest& message,
-                  unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
-    void Compute( const std::vector< const PHY_ComposanteTypePion* >& equipments,
-                  const sword::PathfindRequest& message,
-                  unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
-    bool Destroy( uint32_t pathfind );
     void Update();
     void SendStateToNewClient();
     //@}
+
+    bool OnReceivePathfindCreation   ( const sword::MagicAction& message,
+                                       unsigned int nCtx, unsigned int clientId, uint32_t magicId );
+    void OnReceivePathfindDestruction( const sword::MagicAction& message, sword::MagicActionAck& ack );
+    void OnPathfindRequest           ( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId );
 
     //! @name Serialization
     //@{
@@ -66,6 +69,14 @@ private:
 
     //! @name Helpers
     //@{
+    bool Destroy( uint32_t pathfind );
+    void Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
+                  unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
+    void Compute( const MIL_Population& population, const sword::PathfindRequest& message,
+                  unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
+    void Compute( const std::vector< const PHY_ComposanteTypePion* >& equipments,
+                  const sword::PathfindRequest& message,
+                  unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
     void Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& message,
                   unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
     //@}
