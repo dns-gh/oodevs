@@ -181,6 +181,7 @@ namespace
 PARAMS_PAIR_ID_BOOL( alerted_attribute, "AttributeId", "Alerted" )
 PARAMS_PAIR_ID_BOOL( confined_attribute, "AttributeId", "Confined" )
 PARAMS_PAIR_ID_BOOL( evacuated_attribute, "AttributeId", "Evacuated" )
+PARAMS_PAIR_ID_BOOL( obstacle_update_attribute, "AttributeId", "Activation" )
 PARAMS_PAIR_ID_BOOL( underground_attribute, "AttributeId", "Underground" )
 
 PARAMS_PAIR_ID_QUANTITY( altitude_modifier_attribute, "AttributeId", "Height" )
@@ -265,7 +266,7 @@ const ActionParam nbc_attribute_params[] =
     { "State", "quantity", 0, 0, 0, 0 },
 };
 
-const ActionParam obstacle_attribute_params[] =
+const ActionParam obstacle_creation_attribute_params[] =
 {
     { "AttributeId", "identifier", 0, 0, 0, 0 },
     { "TargetType", "identifier", 0, 0, 0, 0 },
@@ -325,7 +326,7 @@ const ActionUnionType object_create_attributes_types[] =
     { sword::ObjectMagicAction::mine, "Mine", mine_creation_attribute_params, COUNT_OF( mine_creation_attribute_params ) },
     OBJECT_ATTRIBUTE( nbc, "Nbc" ),
     OBJECT_ATTRIBUTE( nbc_agent, "Nbc agent" ),
-    OBJECT_ATTRIBUTE( obstacle, "Obstacle" ),
+    { sword::ObjectMagicAction::obstacle, "Obstacle", obstacle_creation_attribute_params, COUNT_OF( obstacle_creation_attribute_params ) },
     OBJECT_ATTRIBUTE( resource_network, "Resource network" ),
     OBJECT_ATTRIBUTE( stock, "Stock" ),
     OBJECT_ATTRIBUTE( structural_state, "Structural state" ),
@@ -360,7 +361,7 @@ const ActionUnionType object_update_attributes_types[] =
     { sword::ObjectMagicAction::mine, "Mine", mine_update_attribute_params, COUNT_OF( mine_update_attribute_params ) },
     OBJECT_ATTRIBUTE( nbc, "Nbc" ),
     OBJECT_ATTRIBUTE( nbc_agent, "Nbc agent" ),
-    OBJECT_ATTRIBUTE( obstacle, "Obstacle" ),
+    { sword::ObjectMagicAction::obstacle, "Obstacle", obstacle_update_attribute_params, COUNT_OF( obstacle_update_attribute_params ) },
     OBJECT_ATTRIBUTE( resource_network, "Resource network" ),
     OBJECT_ATTRIBUTE( stock, "Stock" ),
     OBJECT_ATTRIBUTE( structural_state, "Structural state" ),
