@@ -11,7 +11,6 @@
 #define __Wgs84DdParser_h_
 
 #include "LocationParser_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -27,7 +26,6 @@ namespace gui
 // Created: AME 2010-03-04
 // =============================================================================
 class Wgs84DdParser : public LocationParser_ABC
-                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

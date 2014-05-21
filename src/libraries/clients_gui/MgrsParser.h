@@ -13,7 +13,6 @@
 #include "LocationParser_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 #include <tools/ElementObserver_ABC.h>
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -31,7 +30,6 @@ namespace gui
 class MgrsParser : public LocationParser_ABC
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                 , private boost::noncopyable
 {
     typedef std::function< geometry::Point2f( const std::string& ) > T_Converter;
     typedef std::function< std::string( const geometry::Point2f& ) > T_StringConverter;
