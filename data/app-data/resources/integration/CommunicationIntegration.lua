@@ -323,7 +323,9 @@ masalife.brain.communication.setMessageTreatment( "TaskDone",
             local myself = myself
             if myself.leadData then
                 myself.leadData.finishedSubordinates = myself.leadData.finishedSubordinates or {}
-                myself.leadData.finishedSubordinates[ #myself.leadData.finishedSubordinates + 1 ] = frontElement
+                if not exists( myself.leadData.finishedSubordinates, frontElement ) then
+                    myself.leadData.finishedSubordinates[ #myself.leadData.finishedSubordinates + 1 ] = frontElement
+                end
             end
             if myFrontElements[ frontElement ] then 
                 myFrontElements[ frontElement ] = nil
