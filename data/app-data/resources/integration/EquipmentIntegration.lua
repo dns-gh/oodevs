@@ -556,13 +556,30 @@ end
 integration.companyHasAvailableDrones = function()
     local integration = integration
     local listePions = integration.getUnitsWithoutHQCommunication()
-    for _, pion in pairs( listePions or emptyTable ) do
-        local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
-        if operationalLevel ~= 0 and not integration.isUAVDeployed( pion ) then
+    for i = 1, #( listePions or emptyTable ) do
+        local pion = listePions[i]
+        if pion:DEC_Agent_EtatOpsMajeur() ~= 0 and not integration.isUAVDeployed( pion ) then
             return true
         end
     end
     return false
+end
+
+--- Returns the number of available drones in this company.
+-- This method can only be called by a company.
+-- A drone is deemed available if it is operational and if it is not already deployed.
+-- @return Integer
+integration.numberOfAvailableDrones = function()
+    local integration = integration
+    local listePions = integration.getUnitsWithoutHQCommunication()
+    local availableDroneCount = 0
+    for i = 1, #( listePions or emptyTable ) do
+        local pion = listePions[i]
+        if pion:DEC_Agent_EtatOpsMajeur() ~= 0 and not integration.isUAVDeployed( pion ) then
+            availableDroneCount = availableDroneCount + 1
+        end
+    end
+    return availableDroneCount
 end
 
 --- Returns true if this agent is moving, false otherwise.
