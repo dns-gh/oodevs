@@ -386,3 +386,22 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 
 	checkpointCompareAndStop(c, sim, client)
 }
+
+func (s *TestSuite) TestCheckpointPathfind(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
+	defer stopSimAndClient(c, sim, client)
+	data := client.Model.GetData()
+	unit := getSomeUnit(c, data)
+	c.Assert(unit, NotNil)
+	positions := []swapi.Point{
+		swapi.Point{X: -15.9248, Y: 28.2645},
+		swapi.Point{X: -15.8429, Y: 28.3308},
+		swapi.Point{X: -15.8640, Y: 28.2507},
+		swapi.Point{X: -15.8946, Y: 28.3189},
+	}
+	_, err := client.CreatePathfind(unit.Id, positions...)
+	c.Assert(err, IsNil)
+	data = client.Model.GetData()
+	c.Assert(data.Pathfinds, HasLen, 1)
+	checkpointCompareAndStop(c, sim, client)
+}
