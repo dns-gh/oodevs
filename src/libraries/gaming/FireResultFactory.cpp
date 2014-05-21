@@ -101,13 +101,13 @@ const kernel::Entity_ABC* FireResultFactory::GetTarget( const sword::StopCrowdFi
 // Name: FireResultFactory::CreateFireResult
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-AgentFireResult* FireResultFactory::CreateFireResult( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer )
+AgentFireResult* FireResultFactory::CreateFireResult( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer, int id )
 {
     if( model_.agents_.FindAgent( message.target().id() ) == 0 )
         return 0;
     const tools::Resolver<kernel::Agent_ABC, unsigned long>& agents = model_.agents_;
     if( profile_.IsPerceived( agents.Get( message.target().id() ) ) )
-        return new AgentFireResult( message, model_.agents_, model_.static_.objectTypes_, simulation_.GetDateTime(), firer );
+        return new AgentFireResult( message, model_.agents_, model_.static_.objectTypes_, simulation_.GetDateTime(), firer, id );
     return 0;
 }
 
@@ -115,13 +115,13 @@ AgentFireResult* FireResultFactory::CreateFireResult( const sword::UnitFireDamag
 // Name: FireResultFactory::CreateFireResult
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-PopulationFireResult* FireResultFactory::CreateFireResult( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer )
+PopulationFireResult* FireResultFactory::CreateFireResult( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer, int id )
 {
     if( model_.agents_.FindPopulation( message.target().id() ) == 0 )
         return 0;
     const tools::Resolver<kernel::Population_ABC, unsigned long>& crowds = model_.agents_;
     if( profile_.IsPerceived( crowds.Get( message.target().id() ) ) )
-        return new PopulationFireResult( message, model_.agents_, simulation_.GetDateTime(), firer );
+        return new PopulationFireResult( message, model_.agents_, simulation_.GetDateTime(), firer, id );
     return 0;
 }
 
@@ -129,13 +129,13 @@ PopulationFireResult* FireResultFactory::CreateFireResult( const sword::CrowdFir
 // Name: FireResultFactory::CreateFireResult
 // Created: LDC 2013-11-29
 // -----------------------------------------------------------------------------
-AgentFireResult* FireResultFactory::CreateFireResult( const kernel::Agent_ABC* target, const kernel::Entity_ABC* firer )
+AgentFireResult* FireResultFactory::CreateFireResult( const kernel::Agent_ABC* target, const kernel::Entity_ABC* firer, int id )
 {
     if( !target || model_.agents_.FindAgent( target->GetId() ) == 0 )
         return 0;
     const tools::Resolver<kernel::Agent_ABC, unsigned long>& agents = model_.agents_;
     if( profile_.IsPerceived( agents.Get( target->GetId() ) ) )
-        return new AgentFireResult( *target, simulation_.GetDateTime(), firer );
+        return new AgentFireResult( *target, simulation_.GetDateTime(), firer, id );
     return 0;
 }
 
@@ -143,12 +143,12 @@ AgentFireResult* FireResultFactory::CreateFireResult( const kernel::Agent_ABC* t
 // Name: FireResultFactory::CreateFireResult
 // Created: LDC 2013-11-29
 // -----------------------------------------------------------------------------
-PopulationFireResult* FireResultFactory::CreateFireResult( const kernel::Population_ABC& target, const kernel::Entity_ABC* firer )
+PopulationFireResult* FireResultFactory::CreateFireResult( const kernel::Population_ABC& target, const kernel::Entity_ABC* firer, int id )
 {
     if( model_.agents_.FindPopulation( target.GetId() ) == 0 )
         return 0;
     const tools::Resolver<kernel::Population_ABC, unsigned long>& crowds = model_.agents_;
     if( profile_.IsPerceived( crowds.Get( target.GetId() ) ) )
-        return new PopulationFireResult( target, simulation_.GetDateTime(), firer );
+        return new PopulationFireResult( target, simulation_.GetDateTime(), firer, id );
     return 0;
 }

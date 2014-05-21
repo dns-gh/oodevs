@@ -34,9 +34,9 @@ class PopulationFireResult : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFireResult( const sword::CrowdFireDamages& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, const QDateTime& time, const kernel::Entity_ABC* firer );
-             PopulationFireResult( const kernel::Population_ABC& target, const QDateTime& time, const kernel::Entity_ABC* firer );
-    virtual ~PopulationFireResult();
+    PopulationFireResult( const sword::CrowdFireDamages& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, const QDateTime& time, const kernel::Entity_ABC* firer, int id );
+    PopulationFireResult( const kernel::Population_ABC& target, const QDateTime& time, const kernel::Entity_ABC* firer, int id );
+    ~PopulationFireResult();
     //@}
 
 public:
@@ -48,6 +48,7 @@ public:
     unsigned int woundedPeople_;
     unsigned int scatteredPeople_;
     QDateTime time_;
+    const int id_;
     //@}
 };
 

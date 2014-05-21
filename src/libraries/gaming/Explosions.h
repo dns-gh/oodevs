@@ -69,15 +69,13 @@ public:
 private:
     //! @name Helpers
     //@{
-    template< typename T >
-    void UpdateData( const T& message );
     virtual void DoUpdate( const sword::Explosion& message );
     virtual void DoUpdate( const sword::StopUnitFire& message );
     virtual void DoUpdate( const sword::StopCrowdFire& message );
 
-    void Update( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer );
-    void Update( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer );
-    void Update( const kernel::Entity_ABC* target, const kernel::Entity_ABC* firer );
+    void Update( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer, int id );
+    void Update( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer, int id );
+    void Update( const kernel::Entity_ABC* target, const kernel::Entity_ABC* firer, int id );
     //@}
 
 private:

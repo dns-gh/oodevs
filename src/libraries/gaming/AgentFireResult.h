@@ -43,10 +43,12 @@ public:
              AgentFireResult( const sword::UnitFireDamages& message,
                               const tools::Resolver_ABC< kernel::Agent_ABC >& resolver,
                               const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver,
-                              const QDateTime& time, const kernel::Entity_ABC* firer );
+                              const QDateTime& time, const kernel::Entity_ABC* firer,
+                              int id );
              AgentFireResult( const kernel::Agent_ABC& target,
                               const QDateTime& time,
-                              const kernel::Entity_ABC* firer );
+                              const kernel::Entity_ABC* firer,
+                              int id );
     virtual ~AgentFireResult();
     //@}
 
@@ -62,6 +64,7 @@ public:
     const kernel::Entity_ABC* firer_;
     Casualties casualties_[ eNbrHumanWound ];
     QDateTime time_;
+    const int id_;
     //@}
 };
 

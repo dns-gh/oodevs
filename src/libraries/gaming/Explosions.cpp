@@ -78,20 +78,18 @@ void Explosions::NotifyDeleted( const kernel::Agent_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Explosions::UpdateData
+// Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-template< typename T >
-void Explosions::UpdateData( const T& message )
+void Explosions::DoUpdate( const sword::Explosion& message )
 {
     const kernel::Entity_ABC* firer = factory_.GetFirer( message );
-    Update( factory_.GetTarget( message ), firer );
 
     for( int i = 0; i < message.units_damages().elem_size(); ++i )
-        Update( message.units_damages().elem( i ), firer );
+        Update( message.units_damages().elem( i ), firer, 0 );
 
     for( int i = 0; i < message.crowds_damages().elem_size(); ++i )
-        Update( message.crowds_damages().elem( i ), firer );
+        Update( message.crowds_damages().elem( i ), firer, 0 );
 
     controller_.Update( *this );
 }
@@ -100,18 +98,18 @@ void Explosions::UpdateData( const T& message )
 // Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const sword::Explosion& message )
-{
-    UpdateData( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Explosions::DoUpdate
-// Created: AGE 2006-03-10
-// -----------------------------------------------------------------------------
 void Explosions::DoUpdate( const sword::StopUnitFire& message )
 {
-    UpdateData( message );
+    const kernel::Entity_ABC* firer = factory_.GetFirer( message );
+    Update( factory_.GetTarget( message ), firer, message.fire().id() );
+
+    for( int i = 0; i < message.units_damages().elem_size(); ++i )
+        Update( message.units_damages().elem( i ), firer, message.fire().id() );
+
+    for( int i = 0; i < message.crowds_damages().elem_size(); ++i )
+        Update( message.crowds_damages().elem( i ), firer, message.fire().id() );
+
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,52 +120,70 @@ void Explosions::DoUpdate( const sword::StopCrowdFire& message )
 {
     const kernel::Entity_ABC* firer = factory_.GetFirer( message );
     for( int i = 0; i < message.units_damages().elem_size(); ++i )
-        Update( message.units_damages().elem( i ), firer );
+        Update( message.units_damages().elem( i ), firer, message.fire().id() );
     controller_.Update( *this );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Explosions::Update
-// Created: AGE 2006-03-10
-// -----------------------------------------------------------------------------
-void Explosions::Update( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer )
+namespace
 {
-    AgentFireResult* result = factory_.CreateFireResult( message, firer );
-    if( result )
-        agentExplosions_.push_back( result );
+    template <typename T>
+    void UpdateList( boost::ptr_deque< T >& list, int id, T* result )
+    {
+        if( id )
+        {
+            for( auto it = list.begin(); it != list.end(); ++it )
+                if( (*it).id_ == id && &result->target_ == &it->target_ )
+                {
+                    list.erase( it );
+                    break;
+                }
+        }
+        list.push_back( result );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Explosions::Update
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::Update( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer )
+void Explosions::Update( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer, int id )
 {
-    PopulationFireResult* result = factory_.CreateFireResult( message, firer );
+    AgentFireResult* result = factory_.CreateFireResult( message, firer, id );
     if( result )
-        populationExplosions_.push_back( result );
+        UpdateList( agentExplosions_, id, result );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Explosions::Update
+// Created: AGE 2006-03-10
+// -----------------------------------------------------------------------------
+void Explosions::Update( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer, int id )
+{
+    PopulationFireResult* result = factory_.CreateFireResult( message, firer, id );
+    if( result )
+        UpdateList( populationExplosions_, id, result );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Explosions::Update
 // Created: LDC 2013-11-29
 // -----------------------------------------------------------------------------
-void Explosions::Update( const kernel::Entity_ABC* target, const kernel::Entity_ABC* firer )
+void Explosions::Update( const kernel::Entity_ABC* target, const kernel::Entity_ABC* firer, int id )
 {
     if( const kernel::Agent_ABC* targetAgent = dynamic_cast< const kernel::Agent_ABC* >( target ) )
     {
-        AgentFireResult* result = factory_.CreateFireResult( targetAgent, firer );
+        AgentFireResult* result = factory_.CreateFireResult( targetAgent, firer, id );
         if( result )
-            agentExplosions_.push_back( result );
+            UpdateList( agentExplosions_, id, result );
     }
     else
     {
         const kernel::Population_ABC* targetCrowd = dynamic_cast< const kernel::Population_ABC* >( target );
         if( targetCrowd )
         {
-            PopulationFireResult* result = factory_.CreateFireResult( *targetCrowd, firer );
+            PopulationFireResult* result = factory_.CreateFireResult( *targetCrowd, firer, id );
             if( result )
-                populationExplosions_.push_back( result );
+                UpdateList( populationExplosions_, id, result );
         }
     }
 }
