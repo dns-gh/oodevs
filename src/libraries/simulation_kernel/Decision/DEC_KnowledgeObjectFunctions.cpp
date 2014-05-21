@@ -393,10 +393,9 @@ bool DEC_KnowledgeObjectFunctions::IsNearEffectArea( boost::shared_ptr< MT_Vecto
     if( !pKnowledge )
         return false;
     TER_Localisation location = pKnowledge->GetLocalisation();
-    MT_Vector2D vResult;
-    if( location.ComputeNearestPoint( *point, vResult ) )
-        return true;
-    return vResult.SquareDistance( *point ) < ( distance * distance );
+    MT_Vector2D result;
+    location.ComputeNearestPoint( *point, result );
+    return result.SquareDistance( *point ) < distance * distance;
 }
 
 // -----------------------------------------------------------------------------
