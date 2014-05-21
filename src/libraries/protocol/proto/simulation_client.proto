@@ -3152,6 +3152,7 @@ message MagicOrder {
     optional SetAutomatMode       set_automat_mode       = 6;
     optional int32                error_code             = 7;
     optional string               error_msg              = 8;
+    optional string               start_time             = 9;
 }
 
 message MagicOrderDestruction {
