@@ -11,7 +11,6 @@
 #include "InformationToolTip.h"
 #include "moc_InformationToolTip.cpp"
 #include "clients_kernel/Styles.h"
-#include "TooltipsLayer_ABC.h"
 #include <boost/bind.hpp>
 
 using namespace kernel;
