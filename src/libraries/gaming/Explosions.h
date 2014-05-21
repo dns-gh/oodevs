@@ -69,8 +69,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    template< typename T >
-    void UpdateData( const T& message );
     virtual void DoUpdate( const sword::Explosion& message );
     virtual void DoUpdate( const sword::StopUnitFire& message );
     virtual void DoUpdate( const sword::StopCrowdFire& message );

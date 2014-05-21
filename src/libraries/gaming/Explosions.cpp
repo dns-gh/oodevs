@@ -78,11 +78,10 @@ void Explosions::NotifyDeleted( const kernel::Agent_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Explosions::UpdateData
+// Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-template<>
-void Explosions::UpdateData( const sword::Explosion& message )
+void Explosions::DoUpdate( const sword::Explosion& message )
 {
     const kernel::Entity_ABC* firer = factory_.GetFirer( message );
 
@@ -95,8 +94,11 @@ void Explosions::UpdateData( const sword::Explosion& message )
     controller_.Update( *this );
 }
 
-template< typename T >
-void Explosions::UpdateData( const T& message )
+// -----------------------------------------------------------------------------
+// Name: Explosions::DoUpdate
+// Created: AGE 2006-03-10
+// -----------------------------------------------------------------------------
+void Explosions::DoUpdate( const sword::StopUnitFire& message )
 {
     const kernel::Entity_ABC* firer = factory_.GetFirer( message );
     Update( factory_.GetTarget( message ), firer, message.fire().id() );
@@ -114,18 +116,12 @@ void Explosions::UpdateData( const T& message )
 // Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const sword::Explosion& message )
+void Explosions::DoUpdate( const sword::StopCrowdFire& message )
 {
-    UpdateData( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Explosions::DoUpdate
-// Created: AGE 2006-03-10
-// -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const sword::StopUnitFire& message )
-{
-    UpdateData( message );
+    const kernel::Entity_ABC* firer = factory_.GetFirer( message );
+    for( int i = 0; i < message.units_damages().elem_size(); ++i )
+        Update( message.units_damages().elem( i ), firer, message.fire().id() );
+    controller_.Update( *this );
 }
 
 namespace
@@ -136,7 +132,7 @@ namespace
         if( id )
         {
             for( auto it = list.begin(); it != list.end(); ++it )
-                if( (*it).id_ == id && &(result->target_) == &(it->target_) )
+                if( (*it).id_ == id && &result->target_ == &it->target_ )
                 {
                     list.erase( it );
                     break;
@@ -144,18 +140,6 @@ namespace
         }
         list.push_back( result );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Explosions::DoUpdate
-// Created: AGE 2006-03-10
-// -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const sword::StopCrowdFire& message )
-{
-    const kernel::Entity_ABC* firer = factory_.GetFirer( message );
-    for( int i = 0; i < message.units_damages().elem_size(); ++i )
-        Update( message.units_damages().elem( i ), firer, message.fire().id() );
-    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
