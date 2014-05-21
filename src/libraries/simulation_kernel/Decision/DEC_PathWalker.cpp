@@ -166,6 +166,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
     DEC_PathWalker::E_ReturnCode rc = eRunning;
     bool bCanSendTerrainReport = pPath != pCurrentPath_;
     pCurrentPath_ = pPath;
+    pPath->Finalize();
     movingEntity_.NotifyCurrentPathChanged();
     bForcePathCheck_ = false;
     if( pPath->GetResult().empty() )
@@ -483,7 +484,6 @@ int DEC_PathWalker::Move( const boost::shared_ptr< DEC_PathResult >& pPath )
         bHasMoved_ = true;
         return eRunning;
     }
-    pPath->Finalize();
     pathSet_ = SetCurrentPath( pPath );
     if( pathSet_ == eItineraireMustBeJoined )
         return eItineraireMustBeJoined;
