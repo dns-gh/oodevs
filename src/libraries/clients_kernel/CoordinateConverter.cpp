@@ -10,14 +10,13 @@
 #include "clients_kernel_pch.h"
 #include "CoordinateConverter.h"
 #include "Tools.h"
-
 #include "tools/ExerciseConfig.h"
 #include "ENT/ENT_Enums.h"
-
 #include <geocoord/Geoid.h>
 #include <geocoord/Datums.h>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/regex.hpp>
 
 using namespace kernel;
 
@@ -157,41 +156,49 @@ std::string CoordinateConverter::ConvertToGeoDms( const geometry::Point2f& pos )
     return geodetic_.GetLatitude( strFormat ) + ":" + geodetic_.GetLongitude( strFormat );
 }
 
-// -----------------------------------------------------------------------------
-// Name: CoordinateConverter::ConvertToUtm
-// Created: AME 2010-02-23
-// -----------------------------------------------------------------------------
-std::string CoordinateConverter::ConvertToUtm( const geometry::Point2f& pos ) const
-{
-    ConvertToMgrs( pos );
-    mgrs_.GetCoordinates( utm_ );
-    return boost::str( boost::format( "%d%s %dE %dN" ) % utm_.GetZone()
-                                                       % ( utm_.GetHemisphere() == geocoord::eNorth ? "N" : "S" )
-                                                       % boost::lexical_cast< int >( utm_.GetNorthing() )
-                                                       % boost::lexical_cast< int >( utm_.GetEasting() ) );
-}
-
 namespace
 {
-    const geocoord::MGRS::Parameters MakeParameters( const std::string& code )
+    const geocoord::Datum& Find( const std::string& code )
     {
         const geocoord::Datum* datum = geocoord::Datums::Find( code );
         if( datum )
-            return geocoord::MGRS::Parameters( *datum );
+            return *datum;
         throw MASA_EXCEPTION( "unable to find coordinate datum " + code );
     }
 }
 
-std::string CoordinateConverter::ConvertTo( const geometry::Point2f& p, const std::string& code ) const
+std::string CoordinateConverter::ConvertToUtm( const geometry::Point2f& p, const std::string& code ) const
 {
     const geometry::Point2f translated = p - translation_;
     planar_.Set( translated.X(), translated.Y() );
-    return geocoord::MGRS( planar_, MakeParameters( code ) ).GetString();
+    // 31Q5000002000000
+    // the band (Q here) is actually part of MGRS and not UTM
+    // see http://en.wikipedia.org/wiki/Universal_Transverse_Mercator#Latitude_bands
+    const auto& datum = Find( code );
+    const geocoord::MGRS mgrs( planar_, geocoord::MGRS::Parameters( datum ) ) ;
+    const geocoord::UTM utm( planar_, geocoord::UTM::Parameters( datum ) );
+    return boost::str( boost::format( "%d%s%06.0f%07.0f" )
+        % utm.GetZone()
+        % mgrs.GetString().substr( 2, 1 )
+        % std::floor( utm.GetEasting() )
+        % std::floor( utm.GetNorthing() ) );
 }
 
-geometry::Point2f CoordinateConverter::ConvertFrom( const std::string& pos, const std::string& code ) const
+geometry::Point2f CoordinateConverter::ConvertFromUtm( const std::string& pos, const std::string& code ) const
 {
-    planar_.SetCoordinates( geocoord::MGRS( pos, MakeParameters( code ) ) );
+    // 31Q5000002000000
+    const boost::regex regex( "(\\d\\d)([C-X])(\\d{6})(\\d{7})" );
+    boost::smatch what;
+    if( !boost::regex_match( pos, what, regex ) )
+        throw MASA_EXCEPTION( "invalid UTM coordinate format for " + pos );
+    const int zone = boost::lexical_cast< int >( what[ 1 ] );
+    const char band = boost::lexical_cast< char >( what[ 2 ] );
+    // bands from C to M are South and N to X are North
+    // see http://en.wikipedia.org/wiki/Universal_Transverse_Mercator#Latitude_bands_2
+    const auto hemisphere = band < 'N' ? geocoord::eSouth : geocoord::eNorth;
+    const double easting = boost::lexical_cast< double >( what[ 3 ] );
+    const double northing = boost::lexical_cast< double >( what[ 4 ] );
+    planar_.SetCoordinates( geocoord::UTM( hemisphere, zone, northing, easting, geocoord::UTM::Parameters( Find( code ) ) ) );
     return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) ) + translation_;
 }
 
@@ -256,7 +263,7 @@ std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& pos
     case eCoordinateSystem_Mgrs:
         return ConvertToMgrs( position );
     case eCoordinateSystem_SanC:
-        return ConvertTo( position, "SAN-C" );
+        return ConvertToUtm( position, "SAN-C" );
     case eCoordinateSystem_Wgs84Dd:
         {
             const geometry::Point2d pos( ConvertToGeo( position ) );

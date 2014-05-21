@@ -60,10 +60,8 @@ public:
     virtual geometry::Point2f ConvertToXY       ( const std::string& mgrs ) const;
     virtual std::string       ConvertToGeoDms   ( const geometry::Point2f& pos ) const;
     virtual geometry::Point2f ConvertFromGeoDms ( const std::string& longitude, const std::string& latitude ) const;
-    virtual std::string       ConvertToUtm      ( const geometry::Point2f& pos ) const;
-
-    virtual std::string       ConvertTo  ( const geometry::Point2f& p, const std::string& code ) const;
-    virtual geometry::Point2f ConvertFrom( const std::string& pos, const std::string& code ) const;
+    virtual std::string       ConvertToUtm      ( const geometry::Point2f& p, const std::string& code ) const;
+    virtual geometry::Point2f ConvertFromUtm    ( const std::string& pos, const std::string& code ) const;
     //@}
 
 private:
