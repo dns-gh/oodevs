@@ -216,8 +216,6 @@ message MagicActionAck {
         //! Operation failed because the provided action parameters
         //! were invalid
         error_invalid_parameter = 1;
-        //! Operation failed because the path could not be calculated
-        error_path_invalid      = 2;
     }
     //! Reason for the failure of the magic action execution operation
     //! @see ErrorCode

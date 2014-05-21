@@ -66,7 +66,12 @@ void PathRequest::SendPathfindCreation( bool ok )
 {
     auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
     client::MagicActionAck ack;
-    ack().set_error_code( ok ? sword::MagicActionAck::no_error : sword::MagicActionAck::error_path_invalid );
+    ack().set_error_code( sword::MagicActionAck::no_error );
+    if( !ok )
+    {
+        ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
+        ack().set_error_msg( "invalid path" );
+    }
     ack().set_id( *magic_ );
     if( ok )
         ack().mutable_result()->add_elem()->add_value()->set_identifier( id_ );
