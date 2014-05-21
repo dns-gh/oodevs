@@ -54,6 +54,22 @@ type Segment struct {
 	To   Point
 }
 
+type TacticalLine struct {
+	Id        uint32
+	Name      string
+	Location  sword.Location
+	Diffusion sword.Diffusion
+}
+
+func NewTacticalLine(id uint32, line *sword.TacticalLine) *TacticalLine {
+	return &TacticalLine{
+		Id:        id,
+		Name:      line.GetName(),
+		Location:  *line.GetGeometry(),
+		Diffusion: *line.GetDiffusion(),
+	}
+}
+
 type Profile struct {
 	Login               string
 	Password            string
@@ -560,6 +576,7 @@ type ModelData struct {
 	LocalWeathers        map[uint32]*LocalWeather
 	Pathfinds            map[uint32]*Pathfind
 	SupplyRequests       map[uint32]*SupplyRequest
+	TacticalLines        map[uint32]*TacticalLine
 	GlobalWeather        Weather
 	// Available scores definitions
 	KnownScores map[string]struct{}
@@ -602,6 +619,7 @@ func NewModelData() *ModelData {
 		KnownScores:          map[string]struct{}{},
 		Scores:               map[string]float32{},
 		SupplyRequests:       map[uint32]*SupplyRequest{},
+		TacticalLines:        map[uint32]*TacticalLine{},
 	}
 }
 
@@ -795,6 +813,24 @@ func (model *ModelData) removeProfile(login string) bool {
 	size := len(model.Profiles)
 	delete(model.Profiles, login)
 	return size != len(model.Profiles)
+}
+
+func (model *ModelData) addTacticalLine(line *TacticalLine) bool {
+	size := len(model.TacticalLines)
+	model.TacticalLines[line.Id] = line
+	return size != len(model.TacticalLines)
+}
+
+func (model *ModelData) updateTacticalLine(line *TacticalLine) bool {
+	size := len(model.TacticalLines)
+	model.TacticalLines[line.Id] = line
+	return size == len(model.TacticalLines)
+}
+
+func (model *ModelData) removeTacticalLine(id uint32) bool {
+	size := len(model.TacticalLines)
+	delete(model.TacticalLines, id)
+	return size != len(model.TacticalLines)
 }
 
 func (model *ModelData) addKnowledgeGroup(group *KnowledgeGroup) bool {
@@ -1087,6 +1123,14 @@ var (
 	replayToClientHandlers = []func(model *ModelData, m *sword.ReplayToClient_Content) error{
 		(*ModelData).handleControlReplayInformation,
 	}
+	messengerToClientHandlers = []func(model *ModelData, m *sword.MessengerToClient_Content) error{
+		(*ModelData).handleLimitCreation,
+		(*ModelData).handleLimitUpdate,
+		(*ModelData).handleLimitDestruction,
+		(*ModelData).handlePhaseLineCreation,
+		(*ModelData).handlePhaseLineUpdate,
+		(*ModelData).handlePhaseLineDestruction,
+	}
 )
 
 func (model *ModelData) update(msg *SwordMessage) error {
@@ -1117,6 +1161,14 @@ func (model *ModelData) update(msg *SwordMessage) error {
 	} else if msg.ReplayToClient != nil {
 		m := msg.ReplayToClient.GetMessage()
 		for _, handler := range replayToClientHandlers {
+			err := handler(model, m)
+			if err != ErrSkipHandler {
+				return err
+			}
+		}
+	} else if msg.MessengerToClient != nil {
+		m := msg.MessengerToClient.GetMessage()
+		for _, handler := range messengerToClientHandlers {
 			err := handler(model, m)
 			if err != ErrSkipHandler {
 				return err
