@@ -2835,7 +2835,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Bypass:</source>
-        <translation>Contournement:</translation>
+        <translation>Brêchage:</translation>
     </message>
 </context>
 <context>

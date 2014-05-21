@@ -543,7 +543,7 @@
     <name>gui::BypassPrototype_ABC</name>
     <message>
         <source>Bypass</source>
-        <translation>Contournement</translation>
+        <translation>Brêchage</translation>
     </message>
 </context>
 <context>
