@@ -1733,6 +1733,10 @@ Do you want to replace it?</translation>
         <source>N/A</source>
         <translation type="unfinished">N/A</translation>
     </message>
+    <message>
+        <source>Vehicle weight: %1 (t)</source>
+        <translation>Vehicle weight: %1 (t)</translation>
+    </message>
 </context>
 <context>
     <name>LogisticStatusWidget</name>
@@ -2247,6 +2251,10 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Unit</source>
         <translation type="unfinished">Unit</translation>
+    </message>
+    <message>
+        <source>Capacity (t)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

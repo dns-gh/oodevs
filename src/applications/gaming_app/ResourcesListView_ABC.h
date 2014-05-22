@@ -69,7 +69,7 @@ protected:
     virtual void NotifyUpdated( const Extension& a ) = 0;
     bool HasRetrieveForLogistic( const kernel::Entity_ABC& entity );
     bool HasRetrieveForLogistic( const kernel::Entity_ABC& entity, const Extension& a );
-    void DisplayModelWithAvailabilities();
+    virtual void DisplayModelWithAvailabilities();
     void DisplaySelectionAvailabilities();
     void AddAvailability( const kernel::Entity_ABC& entity );
     virtual const std::vector< kernel::Availability >* GetAvailabilities( const Extension& ) const { return nullptr; }

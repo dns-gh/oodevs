@@ -11,6 +11,8 @@
 #define __Availability_h_
 
 #include <tools/Resolver_ABC.h>
+#include "EquipmentType.h"
+#include "MaintenanceFunctions.h"
 
 namespace kernel
 {
@@ -36,13 +38,17 @@ public:
                   const tools::Resolver_ABC< kernel::EquipmentType >& resolver,
                   const Message& message )
         : entity_   ( &entity )
-        , type_     ( & resolver.Get( message.equipment().id() ) )
+        , type_     ( &resolver.Get( message.equipment().id() ) )
         , total_    ( message.total() )
         , available_( message.available() )
         , atWork_   ( message.working() )
         , atRest_   ( message.has_resting() ? message.resting() : 0 )
         , lent_     ( message.has_lent() ? message.lent() : 0 )
-        {};
+        , capacity_ ( 0 )
+    {
+        if( auto maintenance = type_->GetMaintenanceFunctions() )
+            capacity_ = maintenance->GetCapacity();
+    }
     virtual ~Availability();
     //@}
 
@@ -62,6 +68,7 @@ public:
     unsigned int atWork_;
     unsigned int atRest_;
     unsigned int lent_;
+    float capacity_;
     //@}
 };
 }

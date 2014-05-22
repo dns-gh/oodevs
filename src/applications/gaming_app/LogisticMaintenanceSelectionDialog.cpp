@@ -121,6 +121,9 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     // Content
     auto* transport = new QWidget();
     auto* transportLayout = new QVBoxLayout( transport );
+    auto transportersWidget = new QWidget( this );
+    auto transportersLayout = new QVBoxLayout( transportersWidget );
+    transportersLayout->setMargin( 0 );
     transporters_ = AddResourceListView< MaintenanceHaulersListView >( "manual_selection_transporters_listview", controllers, this );
     transporters_->SetFilter( [&] ( const kernel::Availability& availability )
     {
@@ -129,6 +132,11 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
                availability.type_->GetMaintenanceFunctions() &&
                availability.type_->GetMaintenanceFunctions()->CanHaul( *componentType_ );
     } );
+    transporters_->setColumnHidden( 7, false ); // tow truck capacity column
+    equipmentWeight_ = new QLabel( this );
+    equipmentWeight_->setVisible( false );
+    transportersLayout->addWidget( transporters_ );
+    transportersLayout->addWidget( equipmentWeight_ );
     destinationBox_ = new gui::RichGroupBox( "manual_selection_transporters_groupbox", tr( "Select diagnosis / repair unit" ) );
     auto* destinationLayout = new QVBoxLayout( destinationBox_ );
     destinations_ = new DiagnosisUnitView( this, extractor );
@@ -136,12 +144,11 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     destinationLayout->addWidget( destinations_ );
     destinationBox_->setCheckable( true );
     destinationBox_->setChecked( false );
-    destinationBox_->setLayout( destinationLayout );
     destinationBox_->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     QSplitter* split = new QSplitter();
     split->setOrientation( Qt::Vertical );
     split->setChildrenCollapsible( false );
-    split->addWidget( transporters_ );
+    split->addWidget( transportersWidget );
     split->addWidget( destinationBox_ );
     transportLayout->addWidget( split );
 
@@ -308,6 +315,8 @@ bool LogisticMaintenanceSelectionDialog::SetCurrentStatus( sword::LogMaintenance
         GetDestinations( *handler_, destinations );
         destinations_->Fill( destinations, *consumer_, 0 );
         destinationBox_->setVisible( true );
+        equipmentWeight_->setText( tr( "Vehicle weight: %1 (t)" ).arg( componentType_->GetWeight() ) );
+        equipmentWeight_->setVisible( true );
     }
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
         UpdateView( diagnosers_, *handler_, manualButton_, tr( "Select diagnosis team" ) );

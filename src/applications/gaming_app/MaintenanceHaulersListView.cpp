@@ -32,6 +32,7 @@ MaintenanceHaulersListView::MaintenanceHaulersListView( QWidget* parent,
     list.append( tools::translate( "MaintenanceHaulersListView", "Working" ) );
     list.append( tools::translate( "MaintenanceHaulersListView", "Resting" ) );
     list.append( tools::translate( "MaintenanceHaulersListView", "Lent" ) );
+    list.append( tools::translate( "MaintenanceHaulersListView", "Capacity (t)" ) );
     model_.setHorizontalHeaderLabels( list );
     header()->setResizeMode( 0, QHeaderView::Stretch );
 }
@@ -52,4 +53,19 @@ MaintenanceHaulersListView::~MaintenanceHaulersListView()
 const std::vector< kernel::Availability >* MaintenanceHaulersListView::GetAvailabilities( const kernel::MaintenanceStates_ABC& states ) const
 {
     return &states.GetDispoHaulers();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaintenanceHaulersListView::DisplayModelWithAvailabilities
+// Created: SLI 2014-05-19
+// -----------------------------------------------------------------------------
+void MaintenanceHaulersListView::DisplayModelWithAvailabilities()
+{
+    LogisticResourcesListView_ABC< kernel::MaintenanceStates_ABC >::DisplayModelWithAvailabilities();
+    unsigned int index = 0;
+    for( auto it = availabilities_.begin(); it != availabilities_.end(); ++it )
+    {
+        AddItem( index, 7, QString::number( it->capacity_ ), *it );
+        ++index;
+    }
 }

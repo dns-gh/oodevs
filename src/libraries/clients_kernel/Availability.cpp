@@ -25,6 +25,7 @@ Availability::Availability()
     , atWork_( 0 )
     , atRest_( 0 )
     , lent_( 0 )
+    , capacity_( 0 )
 {
     // NOTHING
 }
@@ -41,6 +42,7 @@ Availability::Availability( const Availability& other )
     , atWork_( other.atWork_ )
     , atRest_( other.atRest_ )
     , lent_( other.lent_ )
+    , capacity_( other.capacity_ )
 {
     // NOTHING
 }
@@ -65,7 +67,8 @@ void Availability::Display( Displayer_ABC& displayer ) const
              .Display( 0, available_ )
              .Display( 0, atWork_ )
              .Display( 0, atRest_ )
-             .Display( 0, lent_ );
+             .Display( 0, lent_ )
+             .Display( 0, capacity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,4 +82,5 @@ void Availability::operator+=( const Availability& other )
     atWork_+= other.atWork_;
     atRest_+= other.atRest_;
     lent_+= other.lent_;
+    capacity_ += other.capacity_;
 }

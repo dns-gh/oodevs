@@ -38,6 +38,7 @@ private:
     //! @name Helpers
     //@{
     virtual const std::vector< kernel::Availability >* GetAvailabilities( const kernel::MaintenanceStates_ABC& states ) const;
+    virtual void DisplayModelWithAvailabilities();
     //@}
 };
 

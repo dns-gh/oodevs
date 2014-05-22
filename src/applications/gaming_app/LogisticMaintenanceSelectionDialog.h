@@ -124,6 +124,8 @@ private:
     QPushButton* acceptButton_;
     QStackedWidget* stack_;
     MaintenanceHaulersListView* transporters_;
+    QLabel* equipmentWeight_;
+
     QGroupBox* destinationBox_;
     boost::optional< unsigned int > selectedDestination_;
     MaintenanceRepairersListView* repairers_;
