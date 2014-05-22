@@ -328,6 +328,18 @@ func (model *Model) GetProfile(login string) *Profile {
 	return p
 }
 
+func (model *Model) GetTacticalLine(lineId uint32) *TacticalLine {
+	var p *TacticalLine
+	model.waitCommand(func(model *Model) {
+		line, ok := model.data.TacticalLines[lineId]
+		if ok {
+			p = &TacticalLine{}
+			DeepCopy(p, line)
+		}
+	})
+	return p
+}
+
 func (model *Model) GetFormation(formationId uint32) *Formation {
 	var f *Formation
 	model.waitCommand(func(model *Model) {

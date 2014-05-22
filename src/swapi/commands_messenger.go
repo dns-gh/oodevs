@@ -85,7 +85,8 @@ func (c *Client) CreateLimit(name string, unitId uint32, points ...Point) (*Tact
 		if line == nil {
 			return false
 		}
-		result = line
+		result = &TacticalLine{}
+		DeepCopy(result, line)
 		return true
 	})
 	if !ok {
@@ -133,7 +134,8 @@ func (c *Client) CreatePhaseLine(name string, unitId uint32, points ...Point) (*
 		if line == nil {
 			return false
 		}
-		result = line
+		result = &TacticalLine{}
+		DeepCopy(result, line)
 		return true
 	})
 	if !ok {
@@ -223,7 +225,7 @@ func (c *Client) DeleteLimit(limit *TacticalLine) error {
 		if reply.GetId() != limit.Id {
 			return ErrContinue
 		}
-		removed := c.Model.GetData().TacticalLines[reply.GetId()]
+		removed := c.Model.GetTacticalLine(reply.GetId())
 		if removed != nil {
 			return fmt.Errorf(
 				"Tactical line has not been destroyed: %v", removed)
@@ -256,7 +258,7 @@ func (c *Client) DeletePhaseLine(limit *TacticalLine) error {
 		if reply.GetId() != limit.Id {
 			return ErrContinue
 		}
-		removed := c.Model.GetData().TacticalLines[reply.GetId()]
+		removed := c.Model.GetTacticalLine(reply.GetId())
 		if removed != nil {
 			return fmt.Errorf(
 				"Tactical line has not been destroyed: %v", removed)
