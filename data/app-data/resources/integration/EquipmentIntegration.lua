@@ -565,17 +565,18 @@ integration.companyHasAvailableDrones = function()
     return false
 end
 
---- Returns the number of available drones in this company.
+--- Returns the number of non-deployed and operational units in this company
+-- (except the command post) who can do the given task.
 -- This method can only be called by a company.
--- A drone is deemed available if it is operational and if it is not already deployed.
+-- @param droneTask String, the name of the task
 -- @return Integer
-integration.numberOfAvailableDrones = function()
+integration.numberOfAvailableDrones = function( droneTask )
     local integration = integration
     local listePions = integration.getUnitsWithoutHQCommunication()
     local availableDroneCount = 0
     for i = 1, #( listePions or emptyTable ) do
         local pion = listePions[i]
-        if pion:DEC_Agent_EtatOpsMajeur() ~= 0 and not integration.isUAVDeployed( pion ) then
+        if pion:DEC_Agent_EtatOpsMajeur() ~= 0 and not integration.isUAVDeployed( pion ) and DEC_IsMissionAvailable( pion, droneTask ) then
             availableDroneCount = availableDroneCount + 1
         end
     end
