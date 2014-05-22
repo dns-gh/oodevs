@@ -130,6 +130,7 @@ private:
     bool HasUsableHauler( const PHY_ComposanteTypePion& composanteType ) const;
     unsigned int GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const;
     unsigned int GetNbrAvailableDiagnosersAllowedToWork() const;
+    unsigned int GetNbrAvailableDiagnosersAllowedToWork( const PHY_ComposanteTypePion& type ) const;
     double GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate = 0 ) const;
     //@}
 
