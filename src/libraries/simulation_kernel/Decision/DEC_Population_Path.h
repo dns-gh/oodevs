@@ -14,7 +14,6 @@
 #include "MT_Tools/MT_Profiler.h"
 #include <boost/shared_ptr.hpp>
 
-class DEC_Path_KnowledgeObject_ABC;
 class MIL_Population;
 class DEC_PopulationContext_ABC;
 class DEC_PathComputer_ABC;
@@ -30,14 +29,11 @@ public:
                 const boost::shared_ptr< DEC_PathComputer_ABC >& computer );
     virtual ~DEC_Population_Path();
 
-    //! @name Path calculation
-    //@{
-    virtual void Cancel();
-    //@}
-
 private:
     DEC_Population_Path( const DEC_Population_Path& rhs ); // Copy only query parameters, not the result !
 
+    virtual void Destroy();
+    virtual void Cancel();
     virtual void Finalize();
     virtual E_State GetState() const;
     virtual double GetLength() const;

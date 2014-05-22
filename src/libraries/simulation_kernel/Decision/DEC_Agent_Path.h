@@ -30,7 +30,6 @@ public:
                  const boost::shared_ptr< DEC_PathComputer_ABC >& computer );
     virtual ~DEC_Agent_Path();
 
-    virtual void Destroy();
     virtual void Cancel();
 
     const DEC_Agent_PathClass& GetPathClass() const;
@@ -56,6 +55,7 @@ private:
 
     T_PathPoints::iterator GetPreviousPathPointOnDifferentLocation( T_PathPoints::iterator );
 
+    virtual void Destroy();
     virtual void Finalize();
     virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
     virtual const MT_Vector2D& GetLastWaypoint() const;

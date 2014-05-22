@@ -10,7 +10,7 @@
 #ifndef __DEC_PathResult_h_
 #define __DEC_PathResult_h_
 
-#include "Decision/DEC_Path.h"
+#include "Decision/DEC_Path_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
 
@@ -22,19 +22,17 @@ namespace sword
 class MIL_Agent_ABC;
 class DEC_PathPoint;
 class DEC_PathType;
-class MIL_Object_ABC;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
 // Last modified: JVT 03-11-26
 //*****************************************************************************
-class DEC_PathResult : public DEC_Path
+class DEC_PathResult : public DEC_Path_ABC
 {
 public:
     //! @name Types
     //@{
-    typedef std::list< boost::shared_ptr< DEC_PathPoint > >                     T_PathPoints;
-    typedef std::list< std::pair< MT_Vector2D, T_PathPoints::const_iterator > > T_FollowingPaths;
+    typedef std::list< boost::shared_ptr< DEC_PathPoint > > T_PathPoints;
     //@}
 
 public:
@@ -79,12 +77,12 @@ protected:
     //! @name Member data
     //@{
     T_PathPoints resultList_; //$$$
-    T_PathPoints::const_iterator itCurrentPathPoint_;
     //@}
 
 private:
     //! @name Member data
     //@{
+    T_PathPoints::const_iterator itCurrentPathPoint_;
     const DEC_PathType& pathType_;
     bool bSectionJustStarted_;
     //@}
