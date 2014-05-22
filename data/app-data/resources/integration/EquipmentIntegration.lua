@@ -878,7 +878,7 @@ end
 --- Returns true if this entity is transported, false otherwise.
 -- This method can only be called by an agent.
 -- @return Boolean
-integration.meKnowledgeIsTranported = function()
+integration.meKnowledgeIsTransported = function()
     return DEC_Agent_EstTransporte()
 end
 
@@ -1133,3 +1133,6 @@ end
 
 --- Deprecated
 integration.bodyIsMoving = integration.AgentIsMoving
+
+--- Deprecated
+integration.meKnowledgeIsTranported = integration.meKnowledgeIsTransported
