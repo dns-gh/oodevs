@@ -53,10 +53,10 @@ namespace
                analysis.CanMoveOnKnowledgeObject( points );
     }
 
-    boost::shared_ptr< DEC_Path_ABC > StartCompute( MIL_Agent_ABC& agent, const T_PointVector& points, const DEC_PathType& pathType )
+    boost::shared_ptr< DEC_Agent_Path > StartCompute( MIL_Agent_ABC& agent, const T_PointVector& points, const DEC_PathType& pathType )
     {
         const auto computer = boost::make_shared< DEC_PathComputer >( agent.GetID() );
-        const boost::shared_ptr< DEC_Path_ABC > path = boost::make_shared< DEC_Agent_Path >( agent, points, pathType, computer );
+        const auto path = boost::make_shared< DEC_Agent_Path >( agent, points, pathType, computer );
         if( !IsDestinationTrafficable( agent, points ) )
             path->Cancel();
         else
