@@ -54,17 +54,6 @@
     </message>
 </context>
 <context>
-    <name>ParamBool</name>
-    <message>
-        <source>True</source>
-        <translation>Verdadero</translation>
-    </message>
-    <message>
-        <source>False</source>
-        <translation>Falso</translation>
-    </message>
-</context>
-<context>
     <name>ParamResourceNetworkNode</name>
     <message>
         <source>Object</source>
@@ -138,10 +127,6 @@
 <context>
     <name>actions::gui::ParamObstacle</name>
     <message>
-        <source>Type:</source>
-        <translation>Tipo:</translation>
-    </message>
-    <message>
         <source>TC2</source>
         <translation>TC2</translation>
     </message>
@@ -174,10 +159,6 @@
         <translation>Nombre</translation>
     </message>
     <message>
-        <source>Activate:</source>
-        <translation>Activar:</translation>
-    </message>
-    <message>
         <source>Activation</source>
         <translation>Activación</translation>
     </message>
@@ -188,6 +169,21 @@
     <message>
         <source>Max combustion energy</source>
         <translation>Máxima energía de combustión</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>actions::gui::ParamObstacleType</name>
+    <message>
+        <source>True</source>
+        <translation type="unfinished">Verdadero</translation>
+    </message>
+    <message>
+        <source>False</source>
+        <translation type="unfinished">Falso</translation>
     </message>
 </context>
 <context>

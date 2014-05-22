@@ -54,17 +54,6 @@
     </message>
 </context>
 <context>
-    <name>ParamBool</name>
-    <message>
-        <source>True</source>
-        <translation type="unfinished">Vrai</translation>
-    </message>
-    <message>
-        <source>False</source>
-        <translation type="unfinished">Faux</translation>
-    </message>
-</context>
-<context>
     <name>ParamResourceNetworkNode</name>
     <message>
         <source>Object</source>
@@ -138,10 +127,6 @@
 <context>
     <name>actions::gui::ParamObstacle</name>
     <message>
-        <source>Type:</source>
-        <translation>Type:</translation>
-    </message>
-    <message>
         <source>Density per 100 square meter</source>
         <translation>Densité par 100 mètres carrés</translation>
     </message>
@@ -155,7 +140,7 @@
     </message>
     <message>
         <source>Obstacle mining</source>
-        <translation>Valoriser</translation>
+        <translation>Valorisation</translation>
     </message>
     <message>
         <source>Time limit</source>
@@ -174,10 +159,6 @@
         <translation>Nom</translation>
     </message>
     <message>
-        <source>Activate:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Activation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -188,6 +169,21 @@
     <message>
         <source>Max combustion energy</source>
         <translation>Energie de combustion max</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Type:</translation>
+    </message>
+</context>
+<context>
+    <name>actions::gui::ParamObstacleType</name>
+    <message>
+        <source>True</source>
+        <translation>Vrai</translation>
+    </message>
+    <message>
+        <source>False</source>
+        <translation>Faux</translation>
     </message>
 </context>
 <context>
