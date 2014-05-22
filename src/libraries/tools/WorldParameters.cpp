@@ -78,7 +78,7 @@ std::string GetMinUtmZone( const std::string& xMin, const std::string& xMax,
         try
         {
             const int zone = boost::lexical_cast< int >( mgrs[i].substr( 0, 2 ) );
-            if( zone < min )
+            if( zone < min && zone >= 0 )
                 min = zone;
         }
         catch( const std::exception& )
