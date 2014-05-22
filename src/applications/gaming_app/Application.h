@@ -82,7 +82,7 @@ private:
     std::auto_ptr< LoggerProxy >                       logger_;
     std::auto_ptr< Network >                           network_;
     std::auto_ptr< QTimer >                            networkTimer_;
-    MainWindow*                                        mainWindow_;
+    std::auto_ptr< MainWindow >                        mainWindow_;
     //@}
 };
 
