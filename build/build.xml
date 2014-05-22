@@ -669,7 +669,11 @@
         <safe-move file="${out.dir}/binaries_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
-                    <fileset dir="${out.dir}/release" includes="**/*.exe" excludes="**/*_test.exe,**/client_sample_app.exe,**/svgl_app.exe"/>
+                    <fileset dir="${out.dir}/release" includes="**/*.exe"
+                        excludes="**/*_test.exe,
+                                  **/client_sample_app.exe,
+                                  **/svgl_app.exe,
+                                  **/casava_odb_gen_app.exe"/>
                     <flattenmapper/>
                 </mappedresources>
                 <fileset dir="${run.dir}">
