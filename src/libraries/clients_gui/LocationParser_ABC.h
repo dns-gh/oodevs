@@ -10,7 +10,9 @@
 #ifndef __LocationParser_ABC_h_
 #define __LocationParser_ABC_h_
 
+#include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
+#include <QtCore/QStringlist>
 #include <QtCore/QList>
 
 class QStringList;

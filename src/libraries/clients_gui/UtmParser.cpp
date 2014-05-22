@@ -70,10 +70,12 @@ const LocationParserDescriptor& UtmParser::GetDescriptor() const
 
 QStringList UtmParser::Split( const QString& input ) const
 {
+    auto cleaned = input;
+    cleaned.remove( ' ' );
     return QStringList()
-        << input.left( gridZoneSize )
-        << input.mid( gridZoneSize, eastingSize )
-        << input.right( northingSize );
+        << cleaned.left( gridZoneSize )
+        << cleaned.mid( gridZoneSize, eastingSize )
+        << cleaned.right( northingSize );
 }
 
 std::string UtmParser::GetStringPosition( const geometry::Point2f& position ) const

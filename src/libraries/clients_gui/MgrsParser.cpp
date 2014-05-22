@@ -103,11 +103,13 @@ const LocationParserDescriptor& MgrsParser::GetDescriptor() const
 // -----------------------------------------------------------------------------
 QStringList MgrsParser::Split( const QString& input ) const
 {
-    const int left = std::max( 0, input.size() - maxFieldSize ) / 2;
+    auto cleaned = input;
+    cleaned.remove( ' ' );
+    const int left = std::max( 0, cleaned.size() - maxFieldSize ) / 2;
     return QStringList()
-        << input.left( maxFieldSize )
-        << input.mid( maxFieldSize, left )
-        << input.mid( maxFieldSize + left );
+        << cleaned.left( maxFieldSize )
+        << cleaned.mid( maxFieldSize, left )
+        << cleaned.mid( maxFieldSize + left );
 }
 
 // -----------------------------------------------------------------------------

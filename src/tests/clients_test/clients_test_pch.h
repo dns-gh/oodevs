@@ -21,6 +21,8 @@
 #include <turtle/mock.hpp>
 #pragma warning( push, 0 )
 #include <QtCore/QString>
+#include <QtCore/QStringlist>
+#include <QtGui/QApplication>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
@@ -29,6 +31,17 @@
 inline std::ostream& operator<<( std::ostream& os, const QString& s )
 {
     return os << s.toStdString();
+}
+
+inline std::ostream& operator<<( std::ostream& os, const QStringList& l )
+{
+    for( auto it = l.begin(); it != l.end(); ++it )
+    {
+        os << '"' << *it << '"';
+        if( it + 1 != l.end() )
+            os << ' ';
+    }
+    return os;
 }
 
 inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )

@@ -15,7 +15,6 @@
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
 #include <geocoord/UTM.h>
-#include <boost/noncopyable.hpp>
 
 namespace tools
 {
@@ -30,7 +29,6 @@ namespace kernel
 // $$$$ AGE 2006-04-28: warning : not thread safe
 // =============================================================================
 class CoordinateConverter : public CoordinateConverter_ABC
-                          , private boost::noncopyable
 {
 public:
     //! @name Constructor / Destructor

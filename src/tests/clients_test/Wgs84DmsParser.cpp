@@ -8,11 +8,8 @@
 // *****************************************************************************
 
 #include "clients_test_pch.h"
-#pragma warning( push, 0 )
-#include <QtCore/qstringlist.h>
-#pragma warning( pop )
-#include "clients_kernel/CoordinateConverter.h"
 #include "clients_gui/Wgs84DmsParser.h"
+#include "clients_kernel/CoordinateConverter.h"
 
 namespace
 {

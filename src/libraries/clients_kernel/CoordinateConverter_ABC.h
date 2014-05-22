@@ -11,6 +11,7 @@
 #define __kernel_CoordinateConverter_ABC_h_
 
 #include <geometry/Types.h>
+#include <boost/noncopyable.hpp>
 
 enum E_CoordinateSystem;
 
@@ -28,7 +29,7 @@ namespace kernel
 */
 // Created: AGE 2006-05-17
 // =============================================================================
-class CoordinateConverter_ABC
+class CoordinateConverter_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
