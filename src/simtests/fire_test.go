@@ -329,3 +329,70 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	client.Unregister(handlerId)
 	c.Assert(damagesErrors, IsNil)
 }
+
+func (s *TestSuite) TestActiveProtection(c *C) {
+	// VW Active Protection has:
+	// - Hard kill active protection from "Shell Of Death", comsumming
+	//   2 "ammmunition"
+	// - Counter protection from "Shell of Death", consumming one "smoke1"
+	// - No protection against "Shell of Death Improved"
+
+	phydb := loadPhysical(c, "test")
+
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest))
+	defer stopSimAndClient(c, sim, client)
+	data := client.Model.GetData()
+
+	party1 := getPartyByName(c, data, "party1")
+	formation1 := CreateFormation(c, client, party1.Id)
+	kg1 := getAnyKnowledgeGroupInParty(c, data, party1.Id)
+
+	// Create target with active protection
+	automatType1 := getAutomatTypeFromName(c, phydb, "VW Combi Rally")
+	automat1, err := client.CreateAutomat(formation1.Id, automatType1, kg1.Id)
+	c.Assert(err, IsNil)
+	unitType1 := getUnitTypeFromName(c, phydb, "VW Active Protection")
+	pos := swapi.Point{X: -15.9268, Y: 28.3453}
+	target, err := client.CreateUnit(automat1.Id, unitType1, pos)
+	c.Assert(err, IsNil)
+
+	reporter, reportIds := newReporter(c, target.Id, phydb,
+		"^Hard-kill active protection successful",
+		"^Active protection successful",
+		"^neutralized$",
+	)
+	reporter.Start(client.Model)
+
+	// Test hard-kill protection
+	ShellOfDeathId := uint32(114)
+	err = client.CreateFireOnLocation(pos, ShellOfDeathId, 1)
+	c.Assert(err, IsNil)
+
+	// Deplete "ammunition" and test counter protection
+	ammunitionId := uint32(96)
+	err = client.ChangeResource(target.Id, map[uint32]*swapi.Resource{
+		ammunitionId: &swapi.Resource{
+			Quantity: 1,
+		},
+	})
+	c.Assert(err, IsNil)
+	err = client.CreateFireOnLocation(pos, ShellOfDeathId, 1)
+	c.Assert(err, IsNil)
+
+	// VW Active Protection has no protection against this
+	client.Model.WaitTicks(1)
+	reporter.AddNilReport()
+
+	ShellOfDeathImprovedId := uint32(115)
+	err = client.CreateFireOnLocation(pos, ShellOfDeathImprovedId, 1)
+	c.Assert(err, IsNil)
+
+	client.Model.WaitTicks(1)
+	reports := reporter.Stop()
+	c.Assert(swapi.PrintReports(reports, reportIds), Equals, ""+
+		`^Hard-kill active protection successful
+^Active protection successful
+
+^neutralized$
+`)
+}

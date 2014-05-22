@@ -411,14 +411,16 @@ const (
 )
 
 // Helper combining reports source and message filters.
-func newReporter(c *C, source uint32, db *phy.PhysicalFile, patterns ...string) *swapi.Reporter {
+func newReporter(c *C, source uint32, db *phy.PhysicalFile, patterns ...string) (
+	*swapi.Reporter, map[uint32]string) {
+
 	ids := swapi.ReportSources(source)
-	messages, err := swapi.ReportMessages(db, patterns...)
+	messages, matched, err := swapi.ReportMessages(db, patterns...)
 	c.Assert(err, IsNil)
 	filter := func(r *sword.Report) bool {
 		return ids(r) && messages(r)
 	}
-	return swapi.NewReporter(filter)
+	return swapi.NewReporter(filter), matched
 }
 
 func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
@@ -492,7 +494,7 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 		return false
 	})
 
-	reporter := newReporter(c, crowd.Id, phydb, "Hard to go through")
+	reporter, _ := newReporter(c, crowd.Id, phydb, "Hard to go through")
 	reporter.Start(client.Model)
 
 	// Send demonstrate mission on the crowd
