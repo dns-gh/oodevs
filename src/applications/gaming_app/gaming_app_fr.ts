@@ -1736,8 +1736,8 @@ Voulez-vous le remplacer ?</translation>
         <translation type="unfinished">N/A</translation>
     </message>
     <message>
-        <source>Vehicle weight: %1 (t)</source>
-        <translation>Poids du véhicule: %1 (t)</translation>
+        <source>Vehicle weight: %1 t</source>
+        <translation>Poids du véhicule: %1 t</translation>
     </message>
 </context>
 <context>
