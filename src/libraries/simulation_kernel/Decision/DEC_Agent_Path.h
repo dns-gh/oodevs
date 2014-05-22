@@ -55,7 +55,6 @@ private:
 
     T_PathPoints::iterator GetPreviousPathPointOnDifferentLocation( T_PathPoints::iterator );
 
-    virtual void Destroy();
     virtual void Finalize();
     virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
     virtual const MT_Vector2D& GetLastWaypoint() const;
@@ -67,7 +66,6 @@ private:
     const DEC_Agent_PathClass& pathClass_;
     const T_PointVector initialWaypoints_;
     T_PointVector nextWaypoints_;
-    bool destroyed_;
     boost::shared_ptr< DEC_AgentContext_ABC > context_;
     boost::shared_ptr< DEC_PathComputer_ABC > computer_;
     //@}

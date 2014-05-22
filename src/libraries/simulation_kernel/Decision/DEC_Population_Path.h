@@ -32,7 +32,6 @@ public:
 private:
     DEC_Population_Path( const DEC_Population_Path& rhs ); // Copy only query parameters, not the result !
 
-    virtual void Destroy();
     virtual void Cancel();
     virtual void Finalize();
     virtual E_State GetState() const;

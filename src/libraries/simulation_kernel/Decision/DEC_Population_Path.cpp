@@ -45,11 +45,6 @@ DEC_Population_Path::~DEC_Population_Path()
     // NOTHING
 }
 
-void DEC_Population_Path::Destroy()
-{
-    // NOTHING
-}
-
 void DEC_Population_Path::Cancel()
 {
     computer_->Cancel();

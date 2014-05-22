@@ -37,7 +37,6 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     , pathClass_         ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , initialWaypoints_  ( points )
     , nextWaypoints_     ( points.empty() ? points.begin() : points.begin() + 1, points.end() )
-    , destroyed_         ( false )
     , context_           ( new DEC_AgentContext( queryMaker, pathClass_, points, false ) )
     , computer_          ( computer )
 {
@@ -60,21 +59,9 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::~DEC_Agent_Path()
 {
-    Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::Destroy
-// Created: MMC 2013-05-21
-// -----------------------------------------------------------------------------
-void DEC_Agent_Path::Destroy()
-{
-    if( destroyed_ )
-        return;
     for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
         if( ( *it )->GetType() != DEC_PathPoint::eTypePointPath )
             ( *it )->RemoveFromDIA( *it );
-    destroyed_ = true;
     queryMaker_.UnregisterPath( *this );
 }
 

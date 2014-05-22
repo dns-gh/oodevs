@@ -40,7 +40,6 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void Destroy() = 0;
     virtual void Cancel() = 0;
     //@}
 
