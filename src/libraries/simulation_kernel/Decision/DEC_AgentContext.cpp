@@ -50,7 +50,8 @@ namespace
     }
 }
 
-DEC_AgentContext::DEC_AgentContext( const MIL_Agent_ABC& agent, const DEC_Agent_PathClass& pathClass, const T_PointVector& points )
+DEC_AgentContext::DEC_AgentContext( const MIL_Agent_ABC& agent, const DEC_Agent_PathClass& pathClass,
+    const T_PointVector& points, bool ignoreDynamicObjects )
     : fuseau_( agent.GetOrderManager().GetFuseau() )
     , automataFuseau_( agent.GetAutomate().GetOrderManager().GetFuseau() )
     , dangerDirection_( agent.GetOrderManager().GetDirDanger() )
@@ -61,7 +62,8 @@ DEC_AgentContext::DEC_AgentContext( const MIL_Agent_ABC& agent, const DEC_Agent_
     , class_( pathClass )
     , speeds_( agent.GetRole< moving::PHY_RoleAction_Moving >() )
 {
-    Initialize( agent, points );
+    if( !ignoreDynamicObjects )
+        Initialize( agent, points );
 }
 
 void DEC_AgentContext::Initialize( const MIL_Agent_ABC& agent, const T_PointVector& points )

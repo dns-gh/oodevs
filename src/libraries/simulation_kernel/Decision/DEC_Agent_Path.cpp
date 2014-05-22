@@ -38,7 +38,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     , initialWaypoints_  ( points )
     , nextWaypoints_     ( points.empty() ? points.begin() : points.begin() + 1, points.end() )
     , destroyed_         ( false )
-    , context_           ( new DEC_AgentContext( queryMaker, pathClass_, points ) )
+    , context_           ( new DEC_AgentContext( queryMaker, pathClass_, points, false ) )
     , computer_          ( computer )
 {
     const bool refine = queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous();

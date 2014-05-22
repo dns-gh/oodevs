@@ -25,7 +25,8 @@ class MIL_Agent_ABC;
 class DEC_AgentContext : public DEC_AgentContext_ABC
 {
 public:
-    DEC_AgentContext( const MIL_Agent_ABC& agent, const DEC_Agent_PathClass& pathClass, const T_PointVector& points );
+    DEC_AgentContext( const MIL_Agent_ABC& agent, const DEC_Agent_PathClass& pathClass,
+        const T_PointVector& points, bool ignoreDynamicObjects );
 
     virtual const MIL_Fuseau& GetFuseau() const;
     virtual const MIL_Fuseau& GetAutomataFuseau() const;

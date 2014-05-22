@@ -91,7 +91,7 @@ uint32_t PathfindComputer::Compute( MIL_AgentPion& pion, const sword::PathfindRe
         throw MASA_EXCEPTION( "invalid empty path point list" );
     const auto computer = boost::make_shared< DEC_PathComputer >( pion.GetID() );
     const auto& pathClass = DEC_Agent_PathClass::GetPathClass( DEC_PathType::movement_, pion );
-    const auto context = boost::make_shared< DEC_AgentContext >( pion, pathClass, points );
+    const auto context = boost::make_shared< DEC_AgentContext >( pion, pathClass, points, message.ignore_dynamic_objects() );
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context, *it, *(it + 1) ) );
