@@ -141,15 +141,36 @@ void PathfindLayer::DrawPoints() const
         DrawPoint( *hovered_->coordinate_, false );
 }
 
-void PathfindLayer::DrawPoint( geometry::Point2f p, bool invert ) const
+namespace
 {
-    const auto bottom = invert ? Qt::black : Qt::white;
-    SetColor( bottom );
-    tools_.DrawDisc( p, 6, gui::GlTools_ABC::pixels );
-    SetColor( invert ? Qt::white : Qt::black );
-    tools_.DrawDisc( p, 5, gui::GlTools_ABC::pixels );
-    SetColor( bottom );
-    tools_.DrawDisc( p, 3, gui::GlTools_ABC::pixels );
+    const int size = 20;
+    const float half = size / 2.f;
+
+    void DrawDisc( QPainter& p, QColor contour, QColor inside, float radius )
+    {
+        p.setPen( QPen( contour, 2 ) );
+        p.setBrush( QBrush( inside ) );
+        p.drawEllipse( QPointF( half, half ), radius, radius );
+    }
+    QImage MakeBitmap( QColor disc, QColor circle )
+    {
+        QPixmap pm( size, size );
+        pm.fill( Qt::transparent );
+        QPainter p( &pm );
+        p.setRenderHint( QPainter::Antialiasing, true );
+        DrawDisc( p, disc, disc, 5 );
+        DrawDisc( p, circle, disc, 4 );
+        return pm.convertToImage().mirror();
+    }
+}
+
+void PathfindLayer::DrawPoint( geometry::Point2f p, bool highlight ) const
+{
+    static const QImage normal = MakeBitmap( Qt::white, Qt::black );
+    static const QImage highlighted = MakeBitmap( Qt::black, Qt::white );
+    const float factor = tools_.Pixels( p );
+    tools_.DrawImage( highlight ? highlighted : normal,
+        geometry::Point2f( p.X() - half * factor, p.Y() - half * factor ) );
 }
 
 // -----------------------------------------------------------------------------

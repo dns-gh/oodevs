@@ -117,7 +117,6 @@
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_gui/TerrainProfilerLayer.h"
 #include "clients_gui/TooltipsLayer.h"
-#include "clients_gui/TooltipsLayer_ABC.h"
 #include "clients_gui/UrbanLayer.h"
 #include "clients_gui/WatershedLayer.h"
 #include "clients_kernel/Workers.h"

@@ -12,7 +12,6 @@
 #include "ADN_Project_Data.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/GlTooltip.h"
-#include "clients_gui/TooltipsLayer.h"
 #include "svgl/Color.h"
 #include "svgl/RenderingContext.h"
 #include "svgl/TextRenderer.h"
