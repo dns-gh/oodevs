@@ -276,12 +276,13 @@ private:
     T_KnowledgeGroupVector knowledgeGroups_; // LTO
     T_PopulationVector populations_;
     double timeToDiffuse_; // LTO
-    int bDiffuseToKnowledgeGroup_;
     bool isActivated_; // LTO
     bool hasBeenUpdated_;
     bool isJammed_;
     bool createdByJamming_;
     bool crowd_;
+    bool bDiffuseToKnowledgeGroup_;
+    bool hasSavedCurrentKnowledge_;
     const MIL_Agent_ABC* jammedPion_;
     static MIL_IDManager idManager_;
     std::vector< const MIL_Agent_ABC* > sharingPercetionsGroup_;
