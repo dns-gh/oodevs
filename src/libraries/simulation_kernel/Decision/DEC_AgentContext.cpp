@@ -27,6 +27,7 @@
 #include "Entities/Objects/FloodCapacity.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/TrafficabilityCapacity.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -125,7 +126,8 @@ void DEC_AgentContext::Initialize( const MIL_Agent_ABC& agent, const T_PointVect
                 else if( knowledge.GetType().GetCapacity< DisasterCapacity >() )
                     pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectDisaster >( agent, knowledge ) );
                 else if( ( class_.GetObjectCost( knowledge.GetType() ) != 0 && knowledge.GetLocalisation().GetType() != TER_Localisation::eNone )
-                     || knowledge.HasAgentMaxSpeedMultiplier() )
+                     || knowledge.HasAgentMaxSpeedMultiplier()
+                     || knowledge.GetType().GetCapacity< TrafficabilityCapacity >() )
                     pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObject >( knowledge, class_.GetObjectCost( knowledge.GetType() ), class_.GetThreshold() ) );
                 if( empty && pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
                     costOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();

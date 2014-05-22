@@ -11,14 +11,16 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionMove.h"
-#include "MIL_AgentServer.h"
 #include "DisasterImpactComputer.h"
-#include "PHY_RoleAction_Moving.h"
 #include "MIL_AgentServer.h"
+#include "PHY_RoleAction_Moving.h"
+#include "Decision/DEC_Agent_Path.h"
+#include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_PathComputer.h"
 #include "Decision/DEC_PathFind_Manager.h"
-#include "Decision/DEC_Agent_Path.h"
+#include "Decision/DEC_PathPoint.h"
+#include "Decision/DEC_PathWalker.h"
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_PathWalker.h"
@@ -32,6 +34,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
+#include "Entities/Objects/TrafficabilityCapacity.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -99,8 +102,9 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
         }
         else
         {
-            double cost = pMainPath_->GetPathClass().GetObjectCost( (*it)->GetType() );
-            if( 0. != cost )
+            const MIL_ObjectType_ABC& type = (*it)->GetType();
+            double cost = pMainPath_->GetPathClass().GetObjectCost( type );
+            if( 0. != cost || type.GetCapacity< TrafficabilityCapacity >() )
                 newKnowledges.push_back( *it );
         }
     }

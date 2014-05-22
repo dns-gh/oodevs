@@ -20,6 +20,7 @@
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Objects/TrafficabilityCapacity.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "MT_Tools/MT_Logger.h"
