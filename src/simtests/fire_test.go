@@ -355,6 +355,12 @@ func (s *TestSuite) TestActiveProtection(c *C) {
 	pos := swapi.Point{X: -15.9268, Y: 28.3453}
 	target, err := client.CreateUnit(automat1.Id, unitType1, pos)
 	c.Assert(err, IsNil)
+	ammunitionId := uint32(96)
+	smoke1Id := uint32(106)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[target.Id].Resources[ammunitionId].Quantity == 100 &&
+			data.Units[target.Id].Resources[smoke1Id].Quantity == 100
+	})
 
 	reporter, reportIds := newReporter(c, target.Id, phydb,
 		"^Hard-kill active protection successful",
@@ -367,9 +373,14 @@ func (s *TestSuite) TestActiveProtection(c *C) {
 	ShellOfDeathId := uint32(114)
 	err = client.CreateFireOnLocation(pos, ShellOfDeathId, 1)
 	c.Assert(err, IsNil)
+	// TODO: smoke1 should not be consumed by hard-kill protection
+	// http://jira.masagroup.net/browse/SWBUG-12458
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[target.Id].Resources[ammunitionId].Quantity == 98 &&
+			data.Units[target.Id].Resources[smoke1Id].Quantity == 99
+	})
 
 	// Deplete "ammunition" and test counter protection
-	ammunitionId := uint32(96)
 	err = client.ChangeResource(target.Id, map[uint32]*swapi.Resource{
 		ammunitionId: &swapi.Resource{
 			Quantity: 1,
@@ -378,6 +389,10 @@ func (s *TestSuite) TestActiveProtection(c *C) {
 	c.Assert(err, IsNil)
 	err = client.CreateFireOnLocation(pos, ShellOfDeathId, 1)
 	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[target.Id].Resources[ammunitionId].Quantity == 1 &&
+			data.Units[target.Id].Resources[smoke1Id].Quantity == 98
+	})
 
 	// VW Active Protection has no protection against this
 	client.Model.WaitTicks(1)
