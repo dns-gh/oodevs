@@ -63,95 +63,94 @@ DEC_AgentContext::DEC_AgentContext( const MIL_Agent_ABC& agent, const DEC_Agent_
     , speeds_( agent.GetRole< moving::PHY_RoleAction_Moving >() )
 {
     if( !ignoreDynamicObjects )
-        Initialize( agent, points );
+    {
+        InitializeAgentKnowledges( agent );
+        InitializeObjectKnowledges( agent, points );
+        InitializePopulationKnowledges( agent );
+    }
 }
 
-void DEC_AgentContext::Initialize( const MIL_Agent_ABC& agent, const T_PointVector& points )
+void DEC_AgentContext::InitializeAgentKnowledges( const MIL_Agent_ABC& agent )
 {
-    if( class_.AvoidEnemies() )
+    if( !class_.AvoidEnemies() )
+        return;
+    if( auto bbKg = agent.GetKnowledgeGroup()->GetKnowledge() )
     {
-        auto bbKg = agent.GetKnowledgeGroup()->GetKnowledge();
-        if( bbKg )
+        const auto& enemies = bbKg->GetEnemies();
+        for( auto it = enemies.begin(); it != enemies.end(); ++it )
         {
-            const auto& enemies = bbKg->GetEnemies();
-            for( auto it = enemies.begin(); it != enemies.end(); ++it )
+            const DEC_Knowledge_Agent& knowledge = **it;
+            if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
             {
-                const DEC_Knowledge_Agent& knowledge = **it;
-                if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
-                {
-                    const double factor = class_.GetEnemyCostOnContact();
-                    if( factor > 0 )
-                        pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge.GetPosition(),
-                            class_.GetEnemyCostAtSecurityRange(), factor, knowledge.GetMaxRangeToFireOn( agent, 0 ) ) );
-                }
+                const double factor = class_.GetEnemyCostOnContact();
+                if( factor > 0 )
+                    pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge.GetPosition(),
+                        class_.GetEnemyCostAtSecurityRange(), factor, knowledge.GetMaxRangeToFireOn( agent, 0 ) ) );
             }
         }
     }
-    assert( class_.AvoidEnemies() || pathKnowledgeAgents_.empty() );
+}
 
-    // Objects
-    if( class_.AvoidObjects() )
+void DEC_AgentContext::InitializeObjectKnowledges( const MIL_Agent_ABC& agent, const T_PointVector& points )
+{
+    if( !class_.AvoidObjects() )
+        return;
+    T_KnowledgeObjectVector knowledgesObject;
+    MIL_PathObjectFilter filter;
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = agent.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        container->GetObjectsAtInteractionHeight( knowledgesObject, agent, filter );
+    T_PointVector firstPointVector;
+    if( !points.empty() )
+        firstPointVector.push_back( *points.begin() );
+    for( auto it = knowledgesObject.begin(); it != knowledgesObject.end(); ++it )
     {
-        T_KnowledgeObjectVector knowledgesObject;
-        MIL_PathObjectFilter filter;
-        if( DEC_BlackBoard_CanContainKnowledgeObject* container = agent.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
-            container->GetObjectsAtInteractionHeight( knowledgesObject, agent, filter );
-
-        T_PointVector firstPointVector;
-        if( !points.empty() )
-            firstPointVector.push_back( *points.begin() );
-        for( auto it = knowledgesObject.begin(); it != knowledgesObject.end(); ++it )
+        const DEC_Knowledge_Object& knowledge = **it;
+        if( knowledge.CanCollideWith( agent ) )
         {
-            const DEC_Knowledge_Object& knowledge = **it;
-            if( knowledge.CanCollideWith( agent ) )
+            if( knowledge.IsObjectInsidePathPoint( firstPointVector, &agent ) )
             {
-                if( knowledge.IsObjectInsidePathPoint( firstPointVector, &agent ) )
+                if( const MIL_Object_ABC* pObject = knowledge.GetObjectKnown() )
                 {
-                    if( const MIL_Object_ABC* pObject = knowledge.GetObjectKnown() )
-                    {
-                        TerrainData data;
-                        double rMaxSpeed = agent.GetRole< moving::PHY_RoleAction_Moving >().GetSpeed( data, *pObject );
-                        if( rMaxSpeed == 0. || rMaxSpeed == std::numeric_limits< double >::max() )
-                            continue;
-                    }
+                    TerrainData data;
+                    double rMaxSpeed = agent.GetRole< moving::PHY_RoleAction_Moving >().GetSpeed( data, *pObject );
+                    if( rMaxSpeed == 0. || rMaxSpeed == std::numeric_limits< double >::max() )
+                        continue;
                 }
-
-                if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
-                    pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
-
-                T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
-                bool empty = pathKnowledges.empty();
-                if( knowledge.GetType().GetCapacity< FloodCapacity >() )
-                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectFlood >( agent.GetType().GetUnitType().GetCrossingHeight(), knowledge ) );
-                else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
-                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectBurnSurface >( knowledge ) );
-                else if( knowledge.GetType().GetCapacity< DisasterCapacity >() )
-                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectDisaster >( agent, knowledge ) );
-                else if( ( class_.GetObjectCost( knowledge.GetType() ) != 0 && knowledge.GetLocalisation().GetType() != TER_Localisation::eNone )
-                     || knowledge.HasAgentMaxSpeedMultiplier()
-                     || knowledge.GetType().GetCapacity< TrafficabilityCapacity >() )
-                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObject >( knowledge, class_.GetObjectCost( knowledge.GetType() ), class_.GetThreshold() ) );
-                if( empty && pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
-                    costOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
             }
-        }
-    }
-    assert( class_.AvoidObjects() || pathKnowledgeObjects_.empty() );
 
-    // Populations
-    if( class_.HandlePopulations() )
-    {
-        auto bbKg = agent.GetKnowledgeGroup()->GetKnowledge();
-        if( bbKg )
-        {
-            T_KnowledgePopulationVector knowledgesPopulation;
-            bbKg->GetPopulations( knowledgesPopulation );
-            pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
-            for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-                pathKnowledgePopulations_.push_back( boost::make_shared< DEC_Path_KnowledgePopulation >( **it, class_, !agent.GetType().IsTerrorist() ) );
+            if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
+                pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
+
+            T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
+            bool empty = pathKnowledges.empty();
+            if( knowledge.GetType().GetCapacity< FloodCapacity >() )
+                pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectFlood >( agent.GetType().GetUnitType().GetCrossingHeight(), knowledge ) );
+            else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
+                pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectBurnSurface >( knowledge ) );
+            else if( knowledge.GetType().GetCapacity< DisasterCapacity >() )
+                pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectDisaster >( agent, knowledge ) );
+            else if( ( class_.GetObjectCost( knowledge.GetType() ) != 0 && knowledge.GetLocalisation().GetType() != TER_Localisation::eNone )
+                    || knowledge.HasAgentMaxSpeedMultiplier()
+                    || knowledge.GetType().GetCapacity< TrafficabilityCapacity >() )
+                pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObject >( knowledge, class_.GetObjectCost( knowledge.GetType() ), class_.GetThreshold() ) );
+            if( empty && pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
+                costOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
         }
     }
-    assert( class_.HandlePopulations() || pathKnowledgePopulations_.empty() );
+}
+
+void DEC_AgentContext::InitializePopulationKnowledges( const MIL_Agent_ABC& agent )
+{
+    if( !class_.HandlePopulations() )
+        return;
+    if( auto bbKg = agent.GetKnowledgeGroup()->GetKnowledge() )
+    {
+        T_KnowledgePopulationVector knowledgesPopulation;
+        bbKg->GetPopulations( knowledgesPopulation );
+        pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
+        for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
+            pathKnowledgePopulations_.push_back( boost::make_shared< DEC_Path_KnowledgePopulation >( **it, class_, !agent.GetType().IsTerrorist() ) );
+    }
 }
 
 const MIL_Fuseau& DEC_AgentContext::GetFuseau() const

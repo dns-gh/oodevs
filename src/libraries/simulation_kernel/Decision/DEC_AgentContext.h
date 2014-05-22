@@ -45,7 +45,9 @@ public:
     virtual const T_PathKnowledgePopulationVector& GetPathKnowledgePopulations() const;
 
 private:
-    void Initialize( const MIL_Agent_ABC& agent, const T_PointVector& points );
+    void InitializeAgentKnowledges( const MIL_Agent_ABC& agent );
+    void InitializeObjectKnowledges( const MIL_Agent_ABC& agent, const T_PointVector& points );
+    void InitializePopulationKnowledges( const MIL_Agent_ABC& agent );
 
 private:
     const MIL_Fuseau fuseau_;
