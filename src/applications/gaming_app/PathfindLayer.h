@@ -82,7 +82,7 @@ private:
 
     void DrawLines( float width ) const;
     void DrawPoints() const;
-    void DrawPoint( geometry::Point2f p, bool invert ) const;
+    void DrawPoint( geometry::Point2f p, bool highlight ) const;
     bool IsNear( float squareDistance, geometry::Point2f point ) const;
     bool PickWaypoint( geometry::Point2f point );
     void PickSegment( geometry::Point2f point );
