@@ -134,6 +134,11 @@ void InitialState::ReadResource( xml::xistream& xis )
 {
     InitialStateResource resource = InitialStateResource( xis );
     resource.category_ = RetrieveResourceCategory( resource.name_ );
+    if( resource.category_.isEmpty() )
+    {
+        unknownResources_.push_back( resource.name_.toStdString() );
+        return;
+    }
     resource.consumption_ = RetrieveNormalizedConsumption( resource.name_ );
     if( resource.threshold_ == -1 )
         resource.threshold_ = RetrieveDefaultLogisticThreshold( resource.name_ );
@@ -244,6 +249,15 @@ bool InitialState::CleanUnsupportedState()
 }
 
 // -----------------------------------------------------------------------------
+// Name: InitialState::GetUnknownResources
+// Created: JSR 2014-05-22
+// -----------------------------------------------------------------------------
+const std::vector< std::string >& InitialState::GetUnknownResources() const
+{
+    return unknownResources_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: InitialState::IsOriginalResource
 // Created: JSR 2014-05-23
 // -----------------------------------------------------------------------------
@@ -318,8 +332,8 @@ void InitialState::FillResources( tools::Iterator< const kernel::DotationCapacit
 // -----------------------------------------------------------------------------
 const QString InitialState::RetrieveResourceCategory( const QString& resourceName ) const
 {
-    const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( resourceName.toStdString() );
-    return category.GetCategoryName().c_str();
+    const kernel::DotationType* category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Find( resourceName.toStdString() );
+    return category ? category->GetCategoryName().c_str() : "";
 }
 
 // -----------------------------------------------------------------------------

@@ -1471,6 +1471,10 @@ This data can&apos;t be projected.</source>
         <source>No quotas defined for &apos;%1&apos; : It will not be resupplied.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unknown resource &quot;%1&quot;. It will deleted at next save.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MultipleResolverEditor</name>

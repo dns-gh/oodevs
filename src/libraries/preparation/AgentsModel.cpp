@@ -14,6 +14,7 @@
 #include "Automat.h"
 #include "CircleFormation.h"
 #include "GhostModel.h"
+#include "InitialState.h"
 #include "LogisticBaseStates.h"
 #include "LimitsModel.h"
 #include "Model.h"
@@ -295,6 +296,9 @@ void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent, Model& m
         Agent_ABC* agent = agentFactory_.Create( xis, parent );
         if( agent )
         {
+            auto unknownResources = agent->Get< InitialState >().GetUnknownResources();
+            for( auto it = unknownResources.begin(); it != unknownResources.end(); ++it )
+                model.AppendLoadingError( eUnknownResource, *it, agent );
             tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
             xis >> xml::list( "lima"   , *model.limits_, &LimitsModel::CreateLima   , *agent )
                 >> xml::list( "limit"  , *model.limits_, &LimitsModel::CreateLimit  , *agent );

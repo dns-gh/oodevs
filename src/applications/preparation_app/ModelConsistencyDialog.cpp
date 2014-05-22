@@ -107,8 +107,8 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eGhostConverted ]                  = tools::translate( "ModelConsistencyDialog", "Unknown type '%1', a ghost unit has been created instead." );
 
     // Command Post
-    errorDescriptions_[ eNoCommandPost ]                  = tools::translate( "ModelConsistencyDialog", "Automat has no command post." );
-    errorDescriptions_[ eSeveralCommandPost ]             = tools::translate( "ModelConsistencyDialog", "Automat has more than one command post." );
+    errorDescriptions_[ eNoCommandPost ]                   = tools::translate( "ModelConsistencyDialog", "Automat has no command post." );
+    errorDescriptions_[ eSeveralCommandPost ]              = tools::translate( "ModelConsistencyDialog", "Automat has more than one command post." );
 
     // Others
     errorDescriptions_[ eLongNameSize ]                    = tools::translate( "ModelConsistencyDialog", "Long name size limit exceeded : %1." );
@@ -125,11 +125,12 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eNoOrbat ]                         = tools::translate( "ModelConsistencyDialog", "No orbat.xml found" );
     errorDescriptions_[ eSignature ]                       = "%1";
     errorDescriptions_[ eUnitOutsideMap ]                  = tools::translate( "ModelConsistencyDialog", "Entity '%1' is outside the map. It will be repositioned to the origin." );
-    errorDescriptions_[ eImpossibleObjectCreation ] = tools::translate( "ModelConsistencyDialog", "The following object is invalid and will be deleted at next save: %1" );
+    errorDescriptions_[ eImpossibleObjectCreation ]        = tools::translate( "ModelConsistencyDialog", "The following object is invalid and will be deleted at next save: %1" );
     errorDescriptions_[ eOthers ]                          = "%1";
-    errorDescriptions_[ eEquipmentState ] = tools::translate( "ModelConsistencyDialog", "Equipments in maintenance or surrendered state have been reset to on site fixable." );
-    errorDescriptions_[ eUnknownMaterial ] = tools::translate( "ModelConsistencyDialog", "Unknown material \"%1\". It will be replaced by default material at next save." );
-    errorDescriptions_[ eUnknownRoofShape ] = tools::translate( "ModelConsistencyDialog", "Unknown roof shape \"%1\". It will be replaced by default roof shape at next save." );
+    errorDescriptions_[ eEquipmentState ]                  = tools::translate( "ModelConsistencyDialog", "Equipments in maintenance or surrendered state have been reset to on site fixable." );
+    errorDescriptions_[ eUnknownMaterial ]                 = tools::translate( "ModelConsistencyDialog", "Unknown material \"%1\". It will be replaced by default material at next save." );
+    errorDescriptions_[ eUnknownRoofShape ]                = tools::translate( "ModelConsistencyDialog", "Unknown roof shape \"%1\". It will be replaced by default roof shape at next save." );
+    errorDescriptions_[ eUnknownResource ]                 = tools::translate( "ModelConsistencyDialog", "Unknown resource \"%1\". It will deleted at next save." );
 }
 
 // -----------------------------------------------------------------------------

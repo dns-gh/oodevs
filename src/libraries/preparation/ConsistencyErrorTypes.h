@@ -63,6 +63,7 @@ enum E_ConsistencyCheck
     eImpossibleObjectCreation,
     eUnknownMaterial,
     eUnknownRoofShape,
+    eUnknownResource,
     eOthersMask,
 };
 
