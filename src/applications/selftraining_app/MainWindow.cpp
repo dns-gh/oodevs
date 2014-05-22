@@ -29,7 +29,6 @@ MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_AB
     : gui::WidgetLanguageObserver_ABC< QMainWindow >()
     , sessionTray_( 0 )
 {
-    setAttribute( Qt::WA_DeleteOnClose );
     setWindowIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
     setFixedWidth( 800 );
     setFixedHeight( 600 );

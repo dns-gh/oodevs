@@ -85,7 +85,7 @@ private:
     std::auto_ptr< tools::Loader_ABC >                  fileLoader_;
     std::auto_ptr< kernel::Controllers >                controllers_;
     std::auto_ptr< ExerciseContainer>                   exercises_;
-    QMainWindow*                                        mainWindow_;
+    std::auto_ptr< QMainWindow >                        mainWindow_;
 
     std::auto_ptr< QTimer > cursorTimer_;
     bool waitCursor_;
