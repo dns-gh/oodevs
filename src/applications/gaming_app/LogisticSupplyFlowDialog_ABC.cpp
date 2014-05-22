@@ -20,12 +20,17 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/RichSpinBox.h"
 #include "clients_gui/EntityType.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentComposition.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/ComponentType.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Dotations_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
@@ -303,17 +308,37 @@ void LogisticSupplyFlowDialog_ABC::MoveDownWaypoint()
 // -----------------------------------------------------------------------------
 void LogisticSupplyFlowDialog_ABC::AddCarryingEquipment( const Entity_ABC& entity )
 {
-    if( auto equipments = static_cast< const Equipments* >( entity.Retrieve< Equipments_ABC >() ) )
+    if( entity.GetTypeName() != kernel::Agent_ABC::typeName_ )
     {
-        tools::Iterator< const Equipment& > it = equipments->CreateIterator();
-        QStringList equipmentList;
+        const kernel::TacticalHierarchies* tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( !tacticalHierarchies )
+            return;
+        auto it = tacticalHierarchies->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+            AddCarryingEquipment( it.NextElement() );
+    }
+    if( const kernel::Agent_ABC* agent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
+    {
+        auto equipments = static_cast< const Equipments* >( entity.Retrieve< Equipments_ABC >() );
+        if( !equipments )
+            return;
+        auto it = agent->GetType().CreateIterator();
         while( it.HasMoreElements() )
         {
-            const Equipment& equipment = it.NextElement();
-            if( equipment.type_.GetLogSupplyFunctionCarrying() )
+            const kernel::AgentComposition& composition = it.NextElement();
+            if( composition.IsConvoyer() )
             {
-                carriersTypes_[ equipment.GetName() ] += equipment.available_;
-                carriersTypeNames_[ equipment.GetName() ] = &equipment.type_;
+                const unsigned long id = composition.GetType().GetId();
+                tools::Iterator< const Equipment& > it = equipments->CreateIterator();
+                while( it.HasMoreElements() )
+                {
+                    const Equipment& equipment = it.NextElement();
+                    if( equipment.type_.GetId() == id )
+                    {
+                        carriersTypes_[ equipment.GetName() ] += equipment.available_;
+                        carriersTypeNames_[ equipment.GetName() ] = &equipment.type_;
+                    }
+                }
             }
         }
     }

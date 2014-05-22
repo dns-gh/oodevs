@@ -320,13 +320,7 @@ void LogisticSupplyPushFlowDialog::ComputeAvailableCarriers( QMap< QString, int 
 {
     carriersTypes_.clear();
     carriersTypeNames_.clear();
-    const kernel::TacticalHierarchies* pTacticalHierarchies = selected_->Retrieve< kernel::TacticalHierarchies >();
-    if( !pTacticalHierarchies )
-        return;
     AddCarryingEquipment( *selected_ );
-    auto itEnt = pTacticalHierarchies->CreateSubordinateIterator();
-    while( itEnt.HasMoreElements() )
-        AddCarryingEquipment( itEnt.NextElement() );
     for( auto it = carriersTypes_.begin(); it != carriersTypes_.end(); ++it )
         if( !it.key().isEmpty() && it.value() > 0 )
             availableCarriers[ it.key() ] = static_cast< int >( it.value() );
