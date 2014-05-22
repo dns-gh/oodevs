@@ -62,10 +62,10 @@ void MaintenanceStates::CreateDictionary( gui::PropertiesDictionary& dico ) cons
 // -----------------------------------------------------------------------------
 void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
 {
-    if( message.has_chain()  )
+    if( message.has_chain() )
         bChainEnabled_ = message.chain() != 0;
 
-    if( message.has_work_rate()  )
+    if( message.has_work_rate() )
         nWorkRate_ = message.work_rate() + 1; // $$$$ AGE 2006-06-27:
 
     priorities_.clear();
@@ -138,4 +138,13 @@ const std::vector< kernel::Availability >& MaintenanceStates::GetDispoRepairers(
 bool MaintenanceStates::HasPriority( const kernel::EquipmentType* type ) const
 {
     return std::find( priorities_.begin(), priorities_.end(), type ) != priorities_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaintenanceStates::IsEnabled
+// Created: SLI 2014-05-243
+// -----------------------------------------------------------------------------
+bool MaintenanceStates::IsEnabled() const
+{
+    return bChainEnabled_;
 }

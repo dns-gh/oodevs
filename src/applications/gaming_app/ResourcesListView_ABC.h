@@ -51,7 +51,7 @@ public:
     //@}
 
     // If a filter is set, only accepted Availability will be displayed
-    void SetFilter( const std::function< bool( const kernel::Availability& ) >& filter );
+    void SetFilter( const std::function< bool( const kernel::Availability&, const Extension& extension ) >& filter );
 
 protected:
     //! @name Operations
@@ -80,7 +80,7 @@ protected:
     //@{
 private:
     kernel::Controllers& controllers_;
-    std::function< bool( const kernel::Availability& ) > filter_;
+    std::function< bool( const kernel::Availability&, const Extension& extension ) > filter_;
     bool listenSelectionChanged_;
 
 protected:
@@ -270,7 +270,7 @@ void ResourcesListView_ABC< Extension >::AddAvailability( const kernel::Entity_A
         const std::vector< kernel::Availability >* curAvailabilies = GetAvailabilities( *pState );
         if( curAvailabilies )
             for( auto it = curAvailabilies->begin(); it != curAvailabilies->end(); ++it )
-                if( !filter_ || filter_( *it ) )
+                if( !filter_ || filter_( *it, *pState ) )
                 {
                     auto availability = std::find_if( availabilities_.begin(), availabilities_.end(),
                         [&]( kernel::Availability& value ) {
@@ -306,7 +306,7 @@ void ResourcesListView_ABC< Extension >::DisplaySelectionAvailabilities()
 // Created: ABR 2014-02-05
 // -----------------------------------------------------------------------------
 template< typename Extension >
-void ResourcesListView_ABC< Extension >::SetFilter( const std::function< bool( const kernel::Availability& ) >& filter )
+void ResourcesListView_ABC< Extension >::SetFilter( const std::function< bool( const kernel::Availability&, const Extension& extension ) >& filter )
 {
     filter_ = filter;
 }

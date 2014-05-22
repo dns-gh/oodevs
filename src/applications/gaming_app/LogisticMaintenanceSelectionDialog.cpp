@@ -125,12 +125,13 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     auto transportersLayout = new QVBoxLayout( transportersWidget );
     transportersLayout->setMargin( 0 );
     transporters_ = AddResourceListView< MaintenanceHaulersListView >( "manual_selection_transporters_listview", controllers, this );
-    transporters_->SetFilter( [&] ( const kernel::Availability& availability )
+    transporters_->SetFilter( [&] ( const kernel::Availability& availability, const kernel::MaintenanceStates_ABC& states )
     {
         return componentType_ &&
                availability.type_ &&
                availability.type_->GetMaintenanceFunctions() &&
-               availability.type_->GetMaintenanceFunctions()->CanHaul( *componentType_ );
+               availability.type_->GetMaintenanceFunctions()->CanHaul( *componentType_ ) &&
+               states.IsEnabled();
     } );
     transporters_->setColumnHidden( 7, false ); // tow truck capacity column
     equipmentWeight_ = new QLabel( this );
@@ -153,16 +154,21 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     transportLayout->addWidget( split );
 
     diagnosers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_diagnosis_team_listview", controllers, this );
+    diagnosers_->SetFilter( [&] ( const kernel::Availability& /*availability*/, const kernel::MaintenanceStates_ABC& states )
+    {
+        return states.IsEnabled();
+    } );
 
     auto* repair = new QWidget();
     auto* repairLayout = new QVBoxLayout( repair );
     repairers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_repair_team_listview", controllers, this );
-    repairers_->SetFilter( [&] ( const kernel::Availability& availability )
+    repairers_->SetFilter( [&] ( const kernel::Availability& availability, const kernel::MaintenanceStates_ABC& states )
     {
         return breakdownType_ &&
                availability.type_ &&
                availability.type_->GetMaintenanceFunctions() &&
-               availability.type_->GetMaintenanceFunctions()->CanRepair( *breakdownType_ );
+               availability.type_->GetMaintenanceFunctions()->CanRepair( *breakdownType_ ) &&
+               states.IsEnabled();
     } );
     duration_ = new QLabel( this );
     duration_->setVisible( false );
@@ -282,7 +288,8 @@ namespace
             {
                 const kernel::Entity_ABC& child = it.NextElement();
                 const kernel::MaintenanceStates_ABC* state = child.Retrieve< kernel::MaintenanceStates_ABC >();
-                if( child.GetTypeName() == kernel::Agent_ABC::typeName_ && state && !state->GetDispoRepairers().empty() )
+                if( child.GetTypeName() == kernel::Agent_ABC::typeName_ && state && !state->GetDispoRepairers().empty() &&
+                    state->IsEnabled() )
                     destinations.push_back( &child );
                 else
                     GetDestinations( child, destinations );

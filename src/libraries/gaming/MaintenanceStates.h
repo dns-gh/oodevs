@@ -58,6 +58,7 @@ public:
     virtual const std::vector< kernel::Availability >& GetDispoHaulers() const;
     virtual const std::vector< kernel::Availability >& GetDispoRepairers() const;
     virtual bool HasPriority( const kernel::EquipmentType* ) const;
+    virtual bool IsEnabled() const;
     //@}
 
 private:
