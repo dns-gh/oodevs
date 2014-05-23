@@ -21,7 +21,7 @@ namespace tools
 
 class QProcess;
 
-typedef boost::function<void (int, const tools::Path&)> RasterCallback;
+typedef boost::function<void (int, const tools::Path&, const std::string&)> RasterCallback;
 
 // This should be an implementation detail but cmake current Qt moc'ing
 // rules force me to put it in a header. I prefer to avoid adding another

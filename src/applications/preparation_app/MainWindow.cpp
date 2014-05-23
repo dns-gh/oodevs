@@ -863,9 +863,23 @@ void MainWindow::OnAddRaster()
         if( result == QDialog::Accepted )
         {
             auto input = tools::Path::FromUnicode( dialog.GetFiles().toStdWString() );
-            auto callback = boost::bind( &MainWindow::OnRasterProcessExited,
-                    this, _1, _2 );
-            process_ = RunRasterApp( input, dialog.GetPixelSize(), config_, callback );
+            process_ = RunRasterApp( input, dialog.GetPixelSize(), config_,
+                [&]( int exitCode, const tools::Path& output, const std::string& error )
+                {
+                    if( !exitCode )
+                    {
+                        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_,
+                                output.FileName().ToUTF8() );
+                        raster.SetPasses( "main" );
+                        selector_->AddLayer( raster );
+                        dialogContainer_->GetPrefDialog().AddLayer( tools::translate( "MainWindow", "User layer [%1]" ).arg( dialogContainer_->GetAddRasterDialog().GetName() ), raster, true );
+                        raster.NotifyUpdated( kernel::ModelLoaded( config_ ) );
+                        raster.GenerateTexture();
+                    }
+                    else
+                        QMessageBox::warning( this, tools::translate( "MainWindow", "Error loading image file" ),
+                            error.empty() ? tools::translate( "MainWindow", "Error while loading Raster source." ) : error.c_str() );
+                } );
         }
     }
     catch( const geodata::ProjectionException& )
@@ -877,24 +891,4 @@ void MainWindow::OnAddRaster()
     {
         QMessageBox::critical( this, tools::translate( "MainWindow", "Error loading image file" ), tools::translate( "MainWindow", "Fatal error adding Raster source." ), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::OnRasterProcessExited
-// Created: JSR 2012-02-10
-// -----------------------------------------------------------------------------
-void MainWindow::OnRasterProcessExited( int exitCode, const tools::Path& output )
-{
-    if( !exitCode )
-    {
-        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_,
-                output.FileName().ToUTF8() );
-        raster.SetPasses( "main" );
-        selector_->AddLayer( raster );
-        dialogContainer_->GetPrefDialog().AddLayer( tools::translate( "MainWindow", "User layer [%1]" ).arg( dialogContainer_->GetAddRasterDialog().GetName() ), raster, true );
-        raster.NotifyUpdated( kernel::ModelLoaded( config_ ) );
-        raster.GenerateTexture();
-    }
-    else
-        QMessageBox::warning( this, tools::translate( "MainWindow", "Error loading image file" ), tools::translate( "MainWindow", "Error while loading Raster source." ) );
 }

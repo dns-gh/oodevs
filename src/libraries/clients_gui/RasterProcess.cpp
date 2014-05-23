@@ -51,20 +51,29 @@ void RasterProcess::Fire( int code, const tools::Path& output )
 {
     if( fired_ )
         return;
+    std::string error;
     if( logfile_.Exists() )
     {
         tools::Ifstream fp( logfile_, std::ios::in );
         std::string line;
-        while( std::getline( fp, line ))
+        while( std::getline( fp, line ) )
         {
-            MT_LOG_INFO_MSG( line );
+            const auto message = line.substr( 7 );
+            if( line.find( "ERROR" ) == 0 )
+            {
+                error = message;
+                MT_LOG_ERROR_MSG( message );
+            }
+            else if( line.find( "WARN" ) == 0 )
+                MT_LOG_WARNING_MSG( message );
+            else
+                MT_LOG_INFO_MSG( message );
         }
         fp.close();
         logfile_.Remove();
     }
     fired_ = true;
-    callback_( code, output );
-
+    callback_( code, output, error );
     try
     {
         output.Remove();
