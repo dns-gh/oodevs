@@ -10,7 +10,6 @@ package swapi
 
 import (
 	"code.google.com/p/goprotobuf/proto"
-	"fmt"
 	"sword"
 )
 
@@ -225,11 +224,6 @@ func (c *Client) DeleteLimit(limit *TacticalLine) error {
 		if reply.GetId() != limit.Id {
 			return ErrContinue
 		}
-		removed := c.Model.GetTacticalLine(reply.GetId())
-		if removed != nil {
-			return fmt.Errorf(
-				"Tactical line has not been destroyed: %v", removed)
-		}
 		return nil
 	}
 	return <-c.postMessengerMsg(msg, handler)
@@ -257,11 +251,6 @@ func (c *Client) DeletePhaseLine(limit *TacticalLine) error {
 		}
 		if reply.GetId() != limit.Id {
 			return ErrContinue
-		}
-		removed := c.Model.GetTacticalLine(reply.GetId())
-		if removed != nil {
-			return fmt.Errorf(
-				"Tactical line has not been destroyed: %v", removed)
 		}
 		return nil
 	}
