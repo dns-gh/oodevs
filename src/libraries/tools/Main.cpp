@@ -43,28 +43,27 @@ namespace
         }
     }
 
-    MT_Logger_ABC::E_LogLevel GetLogLevel( const std::string& level )
+    struct LogLevel
     {
-        if( level == "fatal" )
-            return MT_Logger_ABC::eLogLevel_FatalError;
-        if( level == "error" )
-            return MT_Logger_ABC::eLogLevel_Error;
-        if( level == "warning" )
-            return MT_Logger_ABC::eLogLevel_Warning;
-        if( level == "message" )
-            return MT_Logger_ABC::eLogLevel_Message;
-        if( level == "info" )
-            return MT_Logger_ABC::eLogLevel_Info;
-        if( level == "verbose" )
-            return MT_Logger_ABC::eLogLevel_Verbose;
-        if( level == "debug" )
-            return MT_Logger_ABC::eLogLevel_Debug;
-        return MT_Logger_ABC::eLogLevel_None;
-    }
+        std::string name;
+        int value;
+    };
+
+    // Sorted by decreasing importance level
+    const LogLevel levels[] =
+    {
+        { "fatal", MT_Logger_ABC::eLogLevel_FatalError },
+        { "error", MT_Logger_ABC::eLogLevel_Error },
+        { "warning", MT_Logger_ABC::eLogLevel_Warning },
+        { "message", MT_Logger_ABC::eLogLevel_Message },
+        { "info", MT_Logger_ABC::eLogLevel_Info },
+        { "verbose", MT_Logger_ABC::eLogLevel_Verbose },
+        { "debug", MT_Logger_ABC::eLogLevel_Debug },
+    };
 
     std::shared_ptr< MT_Logger_ABC > CreateLogger(
         MT_Logger_ABC::E_Type type,
-        MT_Logger_ABC::E_LogLevel level,
+        int level,
         const tools::Path& debugDir )
     {
         if( level != MT_Logger_ABC::eLogLevel_None )
@@ -102,6 +101,18 @@ namespace
     }
 }
 
+int tools::GetLogLevel( const std::string& name )
+{
+    int level = 0;
+    for( size_t i = 0; i != COUNT_OF( levels ); ++i )
+    {
+        level |= levels[i].value;
+        if( levels[i].name == name )
+            return level;
+    }
+    return 0;
+}
+
 int tools::Main(
     const tools::WinArguments& winArgs,
     MT_Logger_ABC::E_Type type,
@@ -115,7 +126,7 @@ int tools::Main(
     }
     const tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
     MT_CrashHandler::SetRootDirectory( debugDir );
-    const MT_Logger_ABC::E_LogLevel level = GetLogLevel( winArgs.GetOption( "--log-level", "fatal" ) );
+    const auto level = GetLogLevel( winArgs.GetOption( "--log-level", "fatal" ) );
     const auto logger = CreateLogger( type, level, debugDir );
     if( silentCrash )
         return main( winArgs );
