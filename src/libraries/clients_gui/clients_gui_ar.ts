@@ -916,6 +916,17 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>gui::EntityTreeView_ABC</name>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ExtensionsPanel</name>
     <message>
         <source>Extensions</source>

@@ -147,8 +147,6 @@ void DrawingsTreeView::keyPressEvent( QKeyEvent* event )
 void DrawingsTreeView::AddCommonMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     entity_ = &entity;
-    if( !isVisible() )
-        return;
     menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ), false, 4 );
 }
 
@@ -178,9 +176,5 @@ void DrawingsTreeView::NotifyContextMenu( const kernel::TacticalLine_ABC& line, 
 void DrawingsTreeView::OnRename()
 {
     if( entity_ )
-    {
-        QStandardItem* item = dataModel_.FindDataItem( *entity_ );
-        if( item )
-            edit( proxyModel_->mapFromSource( item->index() ) );
-    }
+        Rename( *entity_.ConstCast() );
 }
