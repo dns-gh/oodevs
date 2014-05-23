@@ -156,6 +156,7 @@ void UnitStateTableResource::AddItem( int id )
     const kernel::DotationType* dotation = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Find( id );
     assert( dotation != 0 );
     double consumption = 0;
+    unsigned int maxCapacity = 0;
     kernel::AgentType* agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Find( typeId_ );
     if( agent )
     {
@@ -171,12 +172,13 @@ void UnitStateTableResource::AddItem( int id )
                 if( type.GetName() == dotation->GetName() )
                 {
                     consumption += agentComposition.GetCount() * type.GetNormalizedConsumption();
+                    maxCapacity += agentComposition.GetCount() * type.GetCapacity();
                     break;
                 }
             }
         }
     }
-    AddLine( dotation->GetName().c_str(), dotation->GetCategoryDisplay().c_str(), 0, 0, 0, consumption );
+    AddLine( dotation->GetName().c_str(), dotation->GetCategoryDisplay().c_str(), 0, maxCapacity, 0, consumption );
 }
 
 // -----------------------------------------------------------------------------
