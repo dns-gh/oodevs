@@ -218,13 +218,10 @@ integration.canBeDestroyedWithMissiles = function( targetUnit, ph, speed )
         return false
     end
     local distancePointInterception = DEC_Geometrie_DistanceBetweenPoints( meKnowledge:getPosition(), pointInterception )
-    local tempsInterception =  distancePointInterception / ( speed * 60 )
     if( distancePointInterception <= distanceCouverte ) then
         if targetUnit:isValid() then
-            if waitInMin( meKnowledge, tempsInterception ) then
-                if( integration.niTropPresNiTropLoin( targetUnit, ph ) ) then
-                    return true
-                end
+            if( integration.niTropPresNiTropLoin( targetUnit, ph ) ) then
+                return true
             end
         end
     end
