@@ -46,8 +46,7 @@ func (model *ModelData) handleLimitDestruction(m *sword.MessengerToClient_Conten
 	}
 	id := mm.GetId().GetId()
 	if !model.removeTacticalLine(id) {
-		return fmt.Errorf("cannot find limit to remove: %s",
-			id)
+		return fmt.Errorf("cannot find limit to remove: %d", id)
 	}
 	return nil
 }
@@ -85,8 +84,7 @@ func (model *ModelData) handlePhaseLineDestruction(m *sword.MessengerToClient_Co
 	}
 	id := mm.GetId().GetId()
 	if !model.removeTacticalLine(id) {
-		return fmt.Errorf("cannot find phase line to remove: %s",
-			id)
+		return fmt.Errorf("cannot find phase line to remove: %d", id)
 	}
 	return nil
 }
