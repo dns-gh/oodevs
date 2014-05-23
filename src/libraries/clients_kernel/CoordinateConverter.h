@@ -15,7 +15,6 @@
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
 #include <geocoord/UTM.h>
-#include <boost/noncopyable.hpp>
 
 namespace tools
 {
@@ -30,7 +29,6 @@ namespace kernel
 // $$$$ AGE 2006-04-28: warning : not thread safe
 // =============================================================================
 class CoordinateConverter : public CoordinateConverter_ABC
-                          , private boost::noncopyable
 {
 public:
     //! @name Constructor / Destructor
@@ -49,7 +47,7 @@ public:
     virtual void SetDefaultCoordinateSystem( E_CoordinateSystem );
 
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const;
-    virtual std::string GetStringPosition( const geometry::Point2f& position, int projection ) const;
+    virtual std::string GetStringPosition( const geometry::Point2f& position, E_CoordinateSystem projection ) const;
 
     virtual bool IsInBoundaries( const geometry::Point2f& point ) const;
     virtual const geometry::Rectangle2f& GetExtent() const;
@@ -60,10 +58,8 @@ public:
     virtual geometry::Point2f ConvertToXY       ( const std::string& mgrs ) const;
     virtual std::string       ConvertToGeoDms   ( const geometry::Point2f& pos ) const;
     virtual geometry::Point2f ConvertFromGeoDms ( const std::string& longitude, const std::string& latitude ) const;
-    virtual std::string       ConvertToUtm      ( const geometry::Point2f& pos ) const;
-
-    virtual std::string       ConvertTo  ( const geometry::Point2f& p, const std::string& code ) const;
-    virtual geometry::Point2f ConvertFrom( const std::string& pos, const std::string& code ) const;
+    virtual std::string       ConvertToUtm      ( const geometry::Point2f& p, const std::string& code ) const;
+    virtual geometry::Point2f ConvertFromUtm    ( const std::string& pos, const std::string& code ) const;
     //@}
 
 private:

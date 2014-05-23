@@ -11,7 +11,6 @@
 #define __XyParser_h_
 
 #include "LocationParser_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -28,7 +27,6 @@ namespace gui
 // Created: AGE 2008-05-29
 // =============================================================================
 class XyParser : public LocationParser_ABC
-               , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

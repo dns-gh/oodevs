@@ -10,14 +10,11 @@
 #include "preparation_app_pch.h"
 #include "ScoreVariablesList.h"
 #include "moc_ScoreVariablesList.cpp"
-
 #include "ScoreVariableCreationWizard.h"
-
 #include "clients_gui/RichWidget.h"
 #include "clients_gui/SimpleLocationDrawer.h"
-#include "clients_gui/UtmParser.h"
+#include "clients_gui/MgrsParser.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Circle.h"
 #include "clients_kernel/Tools.h"
@@ -26,8 +23,7 @@
 #include "indicators/Variable.h"
 #include "indicators/Variables.h"
 #include "preparation/StaticModel.h"
-
-#include <boost/smart_ptr/make_shared.hpp>
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ScoreVariablesList constructor
@@ -38,9 +34,7 @@ ScoreVariablesList::ScoreVariablesList( kernel::Controllers& controllers, const 
     : tools_( tools )
     , wizard_( new ScoreVariableCreationWizard( this, controllers, tools, builder ) )
     , list_( new gui::RichWidget< QTreeWidget >( "scoreList", this ) )
-    , parser_( new gui::UtmParser( controllers,
-                                   [&]( const std::string& mgrs ) { return staticModel.coordinateConverter_.ConvertToXY( mgrs ); },
-                                   [&]( const geometry::Point2f& position ) { return staticModel.coordinateConverter_.GetStringPosition( position, eCoordinateSystem_Mgrs ); } ) )
+    , parser_( new gui::MgrsParser( controllers, staticModel.coordinateConverter_ ) )
 {
     gui::SubObjectName subObject( "ScoreVariablesList" );
     setMargin( 5 );

@@ -11,6 +11,7 @@
 #define __kernel_CoordinateConverter_ABC_h_
 
 #include <geometry/Types.h>
+#include <boost/noncopyable.hpp>
 
 enum E_CoordinateSystem;
 
@@ -28,7 +29,7 @@ namespace kernel
 */
 // Created: AGE 2006-05-17
 // =============================================================================
-class CoordinateConverter_ABC
+class CoordinateConverter_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -48,16 +49,15 @@ public:
     virtual geometry::Point2f ConvertFromGeo        ( const geometry::Point2d& pos ) const = 0;
     virtual geometry::Point2f ConvertToXY           ( const std::string& mgrs ) const = 0;
     virtual std::string       ConvertToGeoDms       ( const geometry::Point2f& pos ) const = 0;
-    virtual std::string       ConvertToUtm          ( const geometry::Point2f& pos ) const = 0;
     virtual geometry::Point2f ConvertFromGeoDms     ( const std::string& longitude, const std::string& latitude ) const = 0;
+    virtual std::string       ConvertToUtm          ( const geometry::Point2f& p, const std::string& code ) const = 0;
+    virtual geometry::Point2f ConvertFromUtm        ( const std::string& pos, const std::string& code ) const = 0;
+
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const = 0;
-    virtual std::string GetStringPosition( const geometry::Point2f& position, int projection ) const = 0;
+    virtual std::string GetStringPosition( const geometry::Point2f& position, E_CoordinateSystem projection ) const = 0;
 
     virtual E_CoordinateSystem GetDefaultCoordinateSystem() const = 0;
     virtual void SetDefaultCoordinateSystem( E_CoordinateSystem ) = 0;
-
-    virtual std::string       ConvertTo  ( const geometry::Point2f& p, const std::string& code = "WGE" ) const = 0;
-    virtual geometry::Point2f ConvertFrom( const std::string& pos, const std::string& code = "WGE" ) const = 0;
 
     template< typename T >
     geometry::Point2f ConvertToXY( const T& latlong ) const

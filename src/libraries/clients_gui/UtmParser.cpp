@@ -3,53 +3,38 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
 #include "UtmParser.h"
-#include "clients_kernel/ModelLoaded.h"
-#include "clients_kernel/Controllers.h"
-#include "tools/ExerciseConfig.h"
-#include <boost/lexical_cast.hpp>
+#include "clients_kernel/CoordinateConverter_ABC.h"
 
 using namespace gui;
 
 namespace
 {
-    static const int MaxFieldSize = 5;
+    const int gridZoneSize = 3;
+    const int eastingSize = 6;
+    const int northingSize = 7;
 }
 
-// -----------------------------------------------------------------------------
-// Name: UtmParser constructor
-// Created: AGE 2008-05-29
-// -----------------------------------------------------------------------------
-UtmParser::UtmParser( kernel::Controllers& controllers, const T_Converter& converter,
-                      const T_StringConverter& stringConverter )
-    : controllers_( controllers )
-    , converter_( converter )
-    , stringConverter_( stringConverter )
+UtmParser::UtmParser( const kernel::CoordinateConverter_ABC& converter, const std::string& code )
+    : converter_( converter )
+    , code_( code )
 {
-    controllers_.Register( *this );
+    // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: UtmParser destructor
-// Created: AGE 2008-05-29
-// -----------------------------------------------------------------------------
 UtmParser::~UtmParser()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: UtmParser::Parse
-// Created: AGE 2008-05-29
-// -----------------------------------------------------------------------------
 bool UtmParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint, bool /*small*/ ) const
 {
-    // "31 NEA 00000 00000"
+    // "31N 000000 0000000"
     try
     {
         if( content.size() > 3 )
@@ -62,11 +47,10 @@ bool UtmParser::Parse( const QStringList& content, geometry::Point2f& result, QS
         bool ok = false;
         hint[0].left( 2 ).toInt( &ok );
         if( !ok )
-            hint[0] = (QString::fromStdString( zone_ ) + hint[0]).left( MaxFieldSize );
-        const int max = std::max( hint[1].size(), hint[2].size() );
-        for( int i = 1; i < hint.size(); ++i )
-            hint[i] = hint[i].append( QString( "0" ).repeated( max - hint[i].size() ) ).left( MaxFieldSize );
-        result = converter_( hint.join( "" ).toStdString() );
+            return false;
+        hint[1] = hint[1].append( QString( "0" ).repeated( eastingSize - hint[1].size() ) );
+        hint[2] = hint[2].append( QString( "0" ).repeated( northingSize - hint[2].size() ) );
+        result = converter_.ConvertFromUtm( hint.join( "" ).toStdString(), code_ );
         return true;
     }
     catch( ... )
@@ -75,48 +59,26 @@ bool UtmParser::Parse( const QStringList& content, geometry::Point2f& result, QS
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: UtmParser::NotifyUpdated
-// Created: AGE 2008-05-29
-// -----------------------------------------------------------------------------
-void UtmParser::NotifyUpdated( const kernel::ModelLoaded& model )
-{
-    const auto zone = model.config_.GetUtmZone();
-    if( !zone.empty() )
-        zone_ = zone;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UtmParser::GetDescriptor
-// Created: BAX 2014-01-16
-// -----------------------------------------------------------------------------
 const LocationParserDescriptor& UtmParser::GetDescriptor() const
 {
     static const LocationParserDescriptor desc = {
         QStringList() << QString() << QString() << QString(),
-        QList< int >() << MaxFieldSize << MaxFieldSize << MaxFieldSize,
+        QList< int >() << gridZoneSize << eastingSize << northingSize,
     };
     return desc;
 }
 
-// -----------------------------------------------------------------------------
-// Name: UtmParser::Split
-// Created: BAX 2014-01-16
-// -----------------------------------------------------------------------------
 QStringList UtmParser::Split( const QString& input ) const
 {
-    int left = std::max( 0, input.size() - MaxFieldSize ) / 2;
+    auto cleaned = input;
+    cleaned.remove( ' ' );
     return QStringList()
-        << input.left( MaxFieldSize )
-        << input.mid( MaxFieldSize, left )
-        << input.mid( MaxFieldSize + left );
+        << cleaned.left( gridZoneSize )
+        << cleaned.mid( gridZoneSize, eastingSize )
+        << cleaned.right( northingSize );
 }
 
-// -----------------------------------------------------------------------------
-// Name: UtmParser::GetStringPosition
-// Created: LGY 2014-01-22
-// -----------------------------------------------------------------------------
 std::string UtmParser::GetStringPosition( const geometry::Point2f& position ) const
 {
-    return stringConverter_( position );
+    return converter_.ConvertToUtm( position, code_ );
 }

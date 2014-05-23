@@ -10,7 +10,11 @@
 #ifndef __LocationParser_ABC_h_
 #define __LocationParser_ABC_h_
 
+#include <geometry/Types.h>
+#include <boost/noncopyable.hpp>
+#include <QtCore/QStringlist>
 #include <QtCore/QList>
+
 class QStringList;
 
 namespace gui
@@ -27,7 +31,7 @@ namespace gui
 */
 // Created: AGE 2008-05-29
 // =============================================================================
-class LocationParser_ABC
+class LocationParser_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

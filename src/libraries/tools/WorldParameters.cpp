@@ -72,14 +72,13 @@ std::string GetMinUtmZone( const std::string& xMin, const std::string& xMax,
     mgrs.push_back( xMax );
     mgrs.push_back( yMin );
     mgrs.push_back( yMax );
-    uint8_t min = 255;
-
+    int min = -1;
     for( unsigned i = 0; i < 4; ++i )
     {
         try
         {
-            const uint8_t zone = boost::lexical_cast< uint8_t >( mgrs[i].substr( 0, 2 ) );
-            if( zone < min )
+            const int zone = boost::lexical_cast< int >( mgrs[i].substr( 0, 2 ) );
+            if( zone < min && zone >= 0 )
                 min = zone;
         }
         catch( const std::exception& )
@@ -87,6 +86,8 @@ std::string GetMinUtmZone( const std::string& xMin, const std::string& xMax,
             continue;
         }
     }
+    if( min == -1 )
+        return "";
     return boost::lexical_cast< std::string >( min );
 }
 

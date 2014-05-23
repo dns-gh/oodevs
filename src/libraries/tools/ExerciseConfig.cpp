@@ -223,16 +223,6 @@ Path ExerciseConfig::BuildExerciseChildFile( const Path& file ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::LoadTerrain
-// Created: ABR 2012-06-11
-// -----------------------------------------------------------------------------
-void ExerciseConfig::LoadTerrain( const Path& terrainName )
-{
-    terrain_ = terrainName;
-    pWorldParameters_.reset( new WorldParameters( GetLoader(), dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetPhysicalFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
