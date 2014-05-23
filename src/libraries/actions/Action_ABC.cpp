@@ -39,7 +39,7 @@ Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType*
     , id_( ++ids )
     , type_( type )
     , name_( type ? type->GetName().c_str() : "" )
-    , valid_( !!type )
+    , valid_( type != nullptr )
 {
     // NOTHING
 }
