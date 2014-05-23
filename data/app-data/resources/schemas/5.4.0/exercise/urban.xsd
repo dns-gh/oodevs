@@ -124,7 +124,7 @@
 			<xs:element name="usages" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="usage" maxOccurs="unbounded">
+						<xs:element name="usage" minOccurs="0" maxOccurs="unbounded">
 							<xs:complexType>
 								<xs:attribute name="type" type="xs:string" use="required"/>
 								<xs:attribute name="proportion" type="T_ZeroToOneDouble" use="required"/>
