@@ -3026,8 +3026,8 @@ PNG (*.png)
         <translation>Indirect fire ammunition only</translation>
     </message>
     <message>
-        <source>Owned equipments only</source>
-        <translation>Owned equipments only</translation>
+        <source>Owned equipment only</source>
+        <translation>Owned equipment only</translation>
     </message>
 </context>
 <context>

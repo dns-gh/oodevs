@@ -192,7 +192,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pDotationFilter, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     ADN_MissionParameter_GroupBox* pEquipmentFilter = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Filter" ), eMissionParameterTypeEquipmentType );
-    builder.AddField< ADN_CheckBox >( builder.AddFieldHolder( pEquipmentFilter ), "equipment-filter", tr( "Owned equipments only" ), vInfosConnectors[ eEquipments ] );
+    builder.AddField< ADN_CheckBox >( builder.AddFieldHolder( pEquipmentFilter ), "equipment-filter", tr( "Owned equipment only" ), vInfosConnectors[ eEquipments ] );
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pEquipmentFilter, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     builder.PopSubName(); //! parameters

@@ -3035,7 +3035,7 @@ PNG (*.png)
         <translation>Uniquement munition pour tir indirect</translation>
     </message>
     <message>
-        <source>Owned equipments only</source>
+        <source>Owned equipment only</source>
         <translation>Uniquement les équipements possédés</translation>
     </message>
 </context>
