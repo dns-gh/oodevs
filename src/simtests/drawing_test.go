@@ -43,7 +43,7 @@ func (s *TestSuite) TestDrawingLimit(c *C) {
 	})
 
 	// Destruction
-	err = client.DeleteLimit(limit2)
+	err = client.DeleteLimit(limit2.Id)
 	c.Assert(err, IsNil)
 	c.Assert(client.Model.GetTacticalLine(limit2.Id), IsNil)
 
@@ -80,7 +80,7 @@ func (s *TestSuite) TestDrawingPhaseLine(c *C) {
 	})
 
 	// Destruction
-	err = client.DeletePhaseLine(phaseLine2)
+	err = client.DeletePhaseLine(phaseLine2.Id)
 	c.Assert(err, IsNil)
 	c.Assert(client.Model.GetTacticalLine(phaseLine2.Id), IsNil)
 
