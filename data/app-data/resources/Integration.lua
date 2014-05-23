@@ -10,9 +10,6 @@ utilities = {}
 
 include "integration/ToolsFunctions.lua"
 include "integration/TableIntegration.lua"
-include "integration/GetDestructionState.lua"
-include "integration/GetIdentificationState.lua"
-include "integration/GetOperationalCapacity.lua"
 include "integration/GetPerception.lua"
 include "integration/Relievableintegration.lua"
 include "integration/Element.lua"
