@@ -61,7 +61,7 @@ public:
 
     //! @name Init
     //@{
-    PHY_Dotation& ReadValues( xml::xistream& xis, const PHY_DotationCategory& category ); //$$$ A VIRER
+    void ReadValues( xml::xistream& xis, const PHY_DotationCategory& category ); //$$$ A VIRER
     //@}
 
     //! @name Operations
