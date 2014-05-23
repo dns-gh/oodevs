@@ -29,6 +29,9 @@ func (s *TestSuite) TestDrawingLimit(c *C) {
 	limit, err := client.CreateLimit("MyLimit", unitId, points...)
 	c.Assert(err, IsNil)
 	c.Assert(limit, NotNil)
+	limit2, err := client.CreateLimit("MyLimit2", unitId, points...)
+	c.Assert(err, IsNil)
+	c.Assert(limit2, NotNil)
 
 	// Update
 	limit.Name = "NewName"
@@ -40,9 +43,12 @@ func (s *TestSuite) TestDrawingLimit(c *C) {
 	})
 
 	// Destruction
-	err = client.DeleteLimit(limit)
+	err = client.DeleteLimit(limit2)
 	c.Assert(err, IsNil)
-	c.Assert(client.Model.GetTacticalLine(limit.Id), IsNil)
+	c.Assert(client.Model.GetTacticalLine(limit2.Id), IsNil)
+
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadSmallOrbat))
+	checkpointCompareAndStop(c, sim, admin)
 }
 
 func (s *TestSuite) TestDrawingPhaseLine(c *C) {
@@ -60,6 +66,9 @@ func (s *TestSuite) TestDrawingPhaseLine(c *C) {
 	phaseLine, err := client.CreatePhaseLine("MyPhaseLine", unitId, points...)
 	c.Assert(err, IsNil)
 	c.Assert(phaseLine, NotNil)
+	phaseLine2, err := client.CreatePhaseLine("MyPhaseLine2", unitId, points...)
+	c.Assert(err, IsNil)
+	c.Assert(phaseLine2, NotNil)
 
 	// Update
 	phaseLine.Name = "NewName"
@@ -71,7 +80,10 @@ func (s *TestSuite) TestDrawingPhaseLine(c *C) {
 	})
 
 	// Destruction
-	err = client.DeletePhaseLine(phaseLine)
+	err = client.DeletePhaseLine(phaseLine2)
 	c.Assert(err, IsNil)
-	c.Assert(client.Model.GetTacticalLine(phaseLine.Id), IsNil)
+	c.Assert(client.Model.GetTacticalLine(phaseLine2.Id), IsNil)
+
+	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadSmallOrbat))
+	checkpointCompareAndStop(c, sim, admin)
 }
