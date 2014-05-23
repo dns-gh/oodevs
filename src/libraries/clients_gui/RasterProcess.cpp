@@ -87,14 +87,35 @@ boost::shared_ptr< QProcess > RunRasterApp( const tools::Path& input, int pixelS
         const tools::ExerciseConfig& config, const RasterCallback& callback )
 {
     QStringList parameters;
-    tools::Path cfgPath = config.BuildTerrainChildFile( "config.xml" )
-        .SystemComplete();
+    tools::Xifstream xis( config.BuildTerrainChildFile( "config.xml" ) );
+    xis >> xml::start( "configuration" );
+    const tools::Path cfgPath = config.GetGraphicsDirectory() / "~~tmp.config.xml";
+    tools::Xofstream xos( cfgPath );
+    xos << xml::start( "configuration" )
+            << xml::start( "output" )
+                << xml::content( "directory", config.GetGraphicsDirectory().Parent().SystemComplete() )
+            << xml::end
+            << xml::content( "extent", xml::xisubstream( xis ) >> xml::start( "extent" ) )
+            << xml::start( "datasources" )
+                << xml::start( "raster" )
+                    << xml::content( "source", input )
+                << xml::end
+                << xml::start( "elevation" )
+                << xml::end
+                << xml::start( "vector" )
+                << xml::end
+            << xml::end
+            << xml::start( "process" )
+                << xml::start( "properties" )
+                    << xml::start( "property" )
+                        << xml::attribute( "name", "rasterPixelSize" )
+                        << xml::attribute( "value", pixelSize )
+                    << xml::end
+                << xml::end
+            << xml::end;
     tools::Path output = config.GetGraphicsDirectory() / "~~tmp.texture.bin";
     tools::Path logpath = output + ".log";
-    parameters << ( std::string( "--config=" ) + cfgPath.ToUTF8()).c_str();
-    parameters << ( std::string( "--raster=" ) + input.ToUTF8()).c_str();
-    parameters << ( std::string( "--pixelsize=" )
-        + boost::lexical_cast< std::string >( pixelSize ) ).c_str();
+    parameters << ( std::string( "--config=" ) + cfgPath.SystemComplete().ToUTF8()).c_str();
     parameters << ( std::string( "--file=" ) + output.SystemComplete().ToUTF8() ).c_str();
     parameters << ( std::string( "--logfile=" ) + logpath.SystemComplete().ToUTF8() ).c_str();
 
