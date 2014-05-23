@@ -71,6 +71,7 @@ public:
     //@{
     void Reset();
     bool CleanUnsupportedState();
+    bool IsOriginalResource( const QString& resourceName ) const;
     //@}
 
 private:
