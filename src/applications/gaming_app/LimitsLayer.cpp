@@ -53,7 +53,9 @@ LimitsLayer::~LimitsLayer()
 // -----------------------------------------------------------------------------
 bool LimitsLayer::CanCreateLine()
 {
-    return selectedEntity_ != 0 && !lineSelected_;
+    if( !selectedEntity_ || lineSelected_ )
+        return false;
+    return profile_.CanBeOrdered( *selectedEntity_ );
 }
 
 namespace
