@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="csword" default="all">
 
+    <!-- ${test.timeout} is predefined in poney boost extension, we need to
+         override it before loading poney.
+    -->
+    <property name="test.timeout" value="40m"/>
+
     <!-- Generate 3 months evaluation license -->
     <property name="flex.name" value="evaluation"/>
     <property name="flex.hostid" value="ANY"/>
@@ -11,6 +16,9 @@
     <property environment="env"/>
     <property name="env.PONEY_HOME" value="//file1/masa/common/dev/delivery/internal/poney/current"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
+
+    <property name="test.port" value="35000"/>
+    <property name="licensepath" value="${run.dir}/license.dat"/>
 
     <property name="version.project" value="5.4"/>
     <property name="version.major" value="5.4.0"/>
@@ -91,7 +99,7 @@
              license path defined in license_gui & co, so try our chance with
              this one first.
         -->
-        <concat destfile="${run.dir}/license.dat" overwrite="true">
+        <concat destfile="${licensepath}" overwrite="true">
             <fileset dir="${run.dir}" includes="*.lic"/>
         </concat>
     </target>
@@ -676,6 +684,7 @@
                                   **/casava_odb_gen_app.exe"/>
                     <flattenmapper/>
                 </mappedresources>
+                <fileset dir="${bin.dir}" includes="csvclient.exe"/>
                 <fileset dir="${run.dir}">
                     <exclude name="Debug/**"/>
                     <exclude name="resources/integration tests/**"/>
@@ -917,6 +926,111 @@
 
     <!--
     ============================================================================
+    go 
+    ============================================================================
+    -->
+    <!-- Merge back this macro in poney golang/go_proto. It differs only
+         by an "output" attribute and an <mkdir> call.
+    -->
+    <macrodef name="sword_go_proto">
+        <attribute name="input"/>
+        <attribute name="output" default="@{input}"/>
+        <sequential>
+            <if>
+                <not>
+                    <uptodate>
+                        <srcfiles dir="@{input}" includes="**/*.proto"/>
+                        <mapper type="glob" from="*.proto" to="@{output}/*.pb.go"/>
+                    </uptodate>
+                </not>
+                <then>
+                    <mkdir dir="@{output}"/>
+                    <fileset id="protofiles" dir="@{input}">
+                        <include name="*.proto"/>
+                    </fileset>
+                    <pathconvert property="@{input}.protofiles" refid="protofiles" pathsep=" "/>
+                    <echo taskname="proto" message="@{input}"/>
+                    <exec taskname="proto" executable="${bin.dir}/protoc" failonerror="true">
+                        <arg value="--proto_path=@{input}"/>
+                        <arg value="--go_out=@{output}"/>
+                        <arg line="${@{input}.protofiles}"/>
+                    </exec>
+                </then>
+            </if>
+        </sequential>
+    </macrodef>
+
+    <target name="go.proto">
+        <sword_go_proto input="${src.dir}/libraries/protocol/proto"
+                        output="${src.dir}/sword"/>
+        <go_proto input="${src.dir}/testproto/before"/>
+        <go_proto input="${src.dir}/testproto/after"/>
+    </target>
+
+    <target name="go.build">
+        <go_fmt/>
+        <go_build/>
+        <setversion version="${version.version}" product="Sword"
+            file="${bin.dir}/csvclient.exe"/>
+    </target>
+
+    <condition property="gocheck.filter" value="-f=${gocheck.f}" else="">
+        <isset property="gocheck.f"/>
+    </condition>
+    <condition property="go.race" value="-race" else="">
+        <equals arg1="${platform}" arg2="vc100_x64"/>
+    </condition>
+    <condition property="showlog" value="true" else="false">
+        <isset property="show-log"/>
+    </condition>
+    <property name="application" value="${out.dir}/release/simulation_app.exe"/>
+    <macrodef name="runtests">
+        <element name="args" implicit="true" optional="true"/>
+        <sequential>
+            <go cmd="vet"/>
+            <go cmd="test">
+                <arg value="-i"/>
+                <arg value="${go.race}"/>
+            </go>
+            <exec_goenv name="tests" executable="${bin.dir}/gotester">
+                <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
+                <arg line="${gocheck.filter}"/>
+                <arg value="-port=${test.port}"/>
+                <arg value="-j=${ninja.jobs}"/>
+                <arg value="${root.dir}"/>
+                <arg value="--"/>
+                <arg value="./src/..."/>
+                <arg value="${go.race}"/>
+                <arg value="-test.parallel=1"/>
+                <arg value="-test.cpu=${ninja.jobs}"/>
+                <arg value="-test.timeout=${test.timeout}"/>
+                <arg value="-test.v"/>
+                <arg value="-gocheck.v"/>
+                <arg value="-show-log=${showlog}"/>
+                <arg value="--application=${application}"/>
+                <arg value="--run-dir=${run.dir}"/>
+                <arg value="--root-dir=${data.dir}"/>
+                <args/>
+            </exec_goenv>
+        </sequential>
+    </macrodef>
+
+    <target name="go.test">
+        <runtests/>
+    </target>
+
+    <target name="go.package">
+        <go_zip subdir="lib" output="${platform}">
+            <zipfileset dir="${src.dir}/swapi" prefix="src/swapi"/>
+            <zipfileset dir="${src.dir}/sword" prefix="src/sword"/>
+            <zipfileset dir="${src.dir}/swtest" prefix="src/swtest"/>
+        </go_zip>
+    </target>
+
+    <target name="go" depends="go.proto,go.build,go.test,go.package"/>
+
+    <!--
+    ============================================================================
     main
     ============================================================================
     -->
@@ -932,6 +1046,7 @@
         <update name="geos" version="3.3.7.r662"/>
         <update name="glew" version="1.9.0"/>
         <update name="golang" version="1.2.1"/>
+        <update name="golibs"/>
         <update name="hla" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
         <update name="hla" package="federation_app" todir="${bin.dir}"/>
         <update name="hla" package="include" todir="${include.dir}"/>
@@ -974,10 +1089,12 @@
         depends="update
                 ,generate-lua-reports
                 ,deploy-application-data
-                ,generate-license"/>
+                ,generate-license
+                ,go.proto"/>
 
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
+        <go_clean/>
     </target>
 
     <target name="cmake.msvc" description="generate visual studio project files">
@@ -1007,12 +1124,6 @@
         </cmake_test>
     </target>
 
-    <target name="go.build" description="build go applications">
-        <go_fmt/>
-        <go_build/>
-        <go cmd="vet"/>
-    </target>
-
     <target name="test" depends="unit_test
         ,adaptation_test
         ,app_test
@@ -1025,7 +1136,14 @@
         ,model_generator_test
         " description="build and run all tests"/>
 
-    <target name="all" depends="configure,check,cmake.configure,build,go.build,test,documentation,package"/>
+    <target name="all" depends="configure,
+                                check,
+                                cmake.configure,
+                                build,
+                                go,
+                                test,
+                                documentation,
+                                package"/>
 
     <target name="format">
         <update name="llvm" version="r192445"/>

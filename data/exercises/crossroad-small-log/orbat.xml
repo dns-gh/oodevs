@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.0/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp 1" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="5" level="xx" name="Formation [5]" symbol="symbols/sfgpucr">
+          <automat engaged="true" id="7" knowledge-group="2" name="ARMOR.Scout platoon" symbol="symbols/sfgpucr" type="ARMOR.Scout platoon">
+            <unit command-post="false" id="8" name="ARMOR.Antitank patrol" position="28RDS2001335823" type="ARMOR.Antitank patrol">
+              <resources>
+                <resource name="5.56-mm Bullet" quantity="0"/>
+                <resource name="7.62-mm Bullet" quantity="2000"/>
+                <resource name="Antitank Missile" quantity="40"/>
+                <resource name="Diesel" quantity="204"/>
+                <resource name="Food" quantity="18"/>
+                <resource name="Water" quantity="108"/>
+              </resources>
+            </unit>
+            <unit command-post="true" id="9" name="ARMOR.Scout patrol" position="28RDS2001235724" type="ARMOR.Scout patrol"/>
+            <unit command-post="false" id="10" name="ARMOR.Scout patrol" position="28RDS2001135624" type="ARMOR.Scout patrol"/>
+          </automat>
+          <automat engaged="true" id="14" knowledge-group="2" logistic-level="logistic-base" name="LOG.Logistic combat train" symbol="symbols/sfgpuss" type="LOG.Logistic combat train">
+            <unit command-post="true" id="15" name="LOG.Logistic CT" position="28RDS1999536992" type="LOG.Logistic CT">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="3850"/>
+                <resource name="7.62-mm Bullet" quantity="2900"/>
+                <resource name="5.56-mm Bullet" quantity="4020"/>
+                <resource name="Antitank Missile" quantity="2"/>
+                <resource name="Diesel" quantity="2293"/>
+                <resource name="Standard Barbed Wire" quantity="40"/>
+                <resource name="Food" quantity="141"/>
+                <resource name="Water" quantity="846"/>
+                <resource name="UR NTI1 MOB" quantity="30"/>
+                <resource name="UR NTI1 EA" quantity="6"/>
+                <resource name="Body Bag" quantity="2"/>
+                <resource name="Coffin" quantity="9"/>
+              </stocks>
+            </unit>
+          </automat>
+        </formation>
+        <formation id="13" level="x" logistic-level="logistic-base" name="BLD" symbol="symbols/sfgpusx">
+          <automat engaged="true" id="16" knowledge-group="2" name="LOG.Maintenance logistic area (division)" symbol="symbols/sfgpusx" type="LOG.Maintenance logistic area (division)">
+            <unit command-post="true" id="17" name="LOG.Maintenance CP  (division)" position="28RDS2000738148" type="LOG.Maintenance CP  (division)"/>
+            <unit command-post="false" id="18" name="LOG.Maintenance evacuation group" position="28RDS2000738247" type="LOG.Maintenance evacuation group"/>
+            <unit command-post="false" id="19" name="LOG.Mobility repairs section (division)" position="28RDS2010738147" type="LOG.Mobility repairs section (division)"/>
+            <unit command-post="false" id="20" name="LOG.Repairs section (division)" position="28RDS2000638048" type="LOG.Repairs section (division)"/>
+            <unit command-post="false" id="21" name="LOG.Firing mobility repairs section  (division)" position="28RDS1990738148" type="LOG.Firing mobility repairs section  (division)"/>
+          </automat>
+          <automat engaged="true" id="22" knowledge-group="2" name="LOG.Medical logistic area (division)" symbol="symbols/sfgpusm" type="LOG.Medical logistic area (division)">
+            <unit command-post="true" id="23" name="LOG.Medical CP (division)" position="28RDS2003138172" type="LOG.Medical CP (division)"/>
+            <unit command-post="false" id="24" name="LOG.Medical group VAB" position="28RDS2003238271" type="LOG.Medical group VAB"/>
+            <unit command-post="false" id="25" name="LOG.Casualty evacuation group" position="28RDS2010338242" type="LOG.Casualty evacuation group"/>
+            <unit command-post="false" id="26" name="LOG.Logistic decontamination section" position="28RDS2013138171" type="LOG.Logistic decontamination section"/>
+            <unit command-post="false" id="27" name="LOG.Psychological section" position="28RDS2010238101" type="LOG.Psychological section"/>
+            <unit command-post="false" id="28" name="LOG.Medical section" position="28RDS2003138072" type="LOG.Medical section"/>
+            <unit command-post="false" id="29" name="LOG.Surgical section (modular)" position="28RDS1996038102" type="LOG.Surgical section (modular)"/>
+            <unit command-post="false" id="30" name="LOG.Surgical section HMC" position="28RDS1993138173" type="LOG.Surgical section HMC"/>
+            <unit command-post="false" id="31" name="LOG.Casualty assessment section" position="28RDS1996138243" type="LOG.Casualty assessment section"/>
+          </automat>
+          <automat engaged="true" id="32" knowledge-group="2" name="LOG.Supply logistic area  (division)" symbol="symbols/sfgpust" type="LOG.Supply logistic area  (division)">
+            <unit command-post="true" id="33" name="LOG.Supply CP (division)" position="28RDS1998738201" type="LOG.Supply CP (division)"/>
+            <unit command-post="false" id="34" name="LOG.Water supply group" position="28RDS1998738300" type="LOG.Water supply group">
+              <stocks>
+                <resource name="Food" quantity="47"/>
+                <resource name="Water" quantity="282"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="35" name="LOG.Ammo supply group" position="28RDS2005138276" type="LOG.Ammo supply group">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="3850"/>
+                <resource name="7.62-mm Bullet" quantity="2900"/>
+                <resource name="5.56-mm Bullet" quantity="4020"/>
+                <resource name="Antitank Missile" quantity="2"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="36" name="LOG.Supply Transportation platoon (PT)" position="28RDS2008538217" type="LOG.Supply Transportation platoon (PT)">
+              <stocks>
+                <resource name="Food" quantity="47"/>
+                <resource name="Water" quantity="282"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="37" name="LOG.Supply platoon (PR)" position="28RDS2007338150" type="LOG.Supply platoon (PR)"/>
+            <unit command-post="false" id="38" name="LOG.Supply group 60m3" position="28RDS2002038107" type="LOG.Supply group 60m3">
+              <stocks>
+                <resource name="Diesel" quantity="765"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="39" name="LOG.Magazin section CAP" position="28RDS1995238107" type="LOG.Magazin section CAP">
+              <stocks>
+                <resource name="UR NTI1 MOB" quantity="30"/>
+                <resource name="UR NTI1 EA" quantity="6"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="40" name="LOG.Supply Transportation platoon" position="28RDS1990038152" type="LOG.Supply Transportation platoon">
+              <stocks>
+                <resource name="Food" quantity="47"/>
+                <resource name="Water" quantity="282"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="41" name="LOG.Supply group 35m3" position="28RDS1988838219" type="LOG.Supply group 35m3">
+              <stocks>
+                <resource name="Diesel" quantity="764"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="42" name="LOG.Supply group180m3" position="28RDS1992338277" type="LOG.Supply group180m3">
+              <stocks>
+                <resource name="Diesel" quantity="764"/>
+              </stocks>
+            </unit>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="14">
+          <subordinate id="7"/>
+        </logistic-base>
+        <logistic-base id="13">
+          <subordinate id="14">
+            <quotas>
+              <resource name="12,7-mm Bullet" quantity="3850"/>
+              <resource name="7.62-mm Bullet" quantity="2900"/>
+              <resource name="5.56-mm Bullet" quantity="4020"/>
+              <resource name="Antitank Missile" quantity="2"/>
+              <resource name="Diesel" quantity="2293"/>
+              <resource name="Standard Barbed Wire" quantity="40"/>
+              <resource name="Food" quantity="141"/>
+              <resource name="Water" quantity="846"/>
+              <resource name="UR NTI1 MOB" quantity="30"/>
+              <resource name="UR NTI1 EA" quantity="6"/>
+              <resource name="Body Bag" quantity="2"/>
+              <resource name="Coffin" quantity="9"/>
+            </quotas>
+          </subordinate>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party id="3" name="Camp 3" type="friend">
+      <objects/>
+      <tactical/>
+      <communication>
+        <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="neutral" party="3"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="neutral" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<urban model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.0/exercise/urban.xsd">
+  <urban-objects>
+    <urban-object id="4" name="Ville [4]">
+      <color alpha="0.701961" blue="80" green="80" red="80"/>
+      <urban-objects>
+        <urban-object id="5" name="Quartier [5]">
+          <color alpha="0.701961" blue="80" green="80" red="80"/>
+          <urban-objects>
+            <urban-object id="6" name="Bloc urbain [6]">
+              <footprint>
+                <point location="31TCN2650334646"/>
+                <point location="31TCN2664734687"/>
+                <point location="31TCN2673834816"/>
+                <point location="31TCN2689434701"/>
+                <point location="31TCN2612133795"/>
+                <point location="31TCN2584734067"/>
+                <point location="31TCN2629334512"/>
+                <point location="31TCN2634834458"/>
+              </footprint>
+              <color alpha="0.701961" blue="80" green="80" red="80"/>
+              <physical>
+                <architecture floor-number="5" height="20" material="material" occupation="0.5" roof-shape="roofshape" trafficability="0.5"/>
+                <usages>
+                  <usage proportion="0" type="Défaut"/>
+                </usages>
+              </physical>
+            </urban-object>
+          </urban-objects>
+        </urban-object>
+      </urban-objects>
+    </urban-object>
+  </urban-objects>
+</urban>

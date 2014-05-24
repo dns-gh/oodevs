@@ -1,0 +1,124 @@
+Party[-]
+  Name: party
+    Formation[-]
+      Id: -
+      Name: formation-1
+      ParentId: -
+      PartyId: -
+      Level: xxxxx
+      LogLevel: none
+        Formation[-]
+          Id: -
+          Name: formation-1.1
+          ParentId: -
+          PartyId: -
+          Level: xxxx
+          LogLevel: none
+        Formation[-]
+          Id: -
+          Name: formation-1.2
+          ParentId: -
+          PartyId: -
+          Level: xxxx
+          LogLevel: none
+            Automat[-]
+              Id: -
+              PartyId: -
+              Name: ARMOR.MBT squadron
+                Unit[-]
+                  Id: -
+                  AutomatId: -
+                  Name: ARMOR.Armored squadron CP
+                Unit[-]
+                  Id: -
+                  AutomatId: -
+                  Name: ARMOR.MBT platoon
+                Unit[-]
+                  Id: -
+                  AutomatId: -
+                  Name: ARMOR.MBT platoon
+                Unit[-]
+                  Id: -
+                  AutomatId: -
+                  Name: ARMOR.MBT platoon
+                Unit[-]
+                  Id: -
+                  AutomatId: -
+                  Name: ARMOR.MBT platoon
+            Automat[-]
+              Id: -
+              PartyId: -
+              Name: Logistic combat train [23]
+                Unit[-]
+                  Id: -
+                  AutomatId: -
+                  Name: Logistic CT
+            Automat[-]
+              Id: -
+              PartyId: -
+              Name: Logistic combat train [31]
+                Unit[-]
+                  Id: -
+                  AutomatId: -
+                  Name: Logistic CT
+    Formation[-]
+      Id: -
+      Name: empty
+      ParentId: -
+      PartyId: -
+      Level: xxxxx
+      LogLevel: logistic_base
+    Formation[-]
+      Id: -
+      Name: BLD
+      ParentId: -
+      PartyId: -
+      Level: x
+      LogLevel: logistic_base
+        Automat[-]
+          Id: -
+          PartyId: -
+          Name: Supply logistic area  (corps) [26]
+            Unit[-]
+              Id: -
+              AutomatId: -
+              Name: Supply CP (division)
+    Crowds[-]
+      Id: -
+      PartyId: -
+      Name: Standard Crowd
+    Population[-]
+      Id: -
+      PartyId: -
+      Name: population
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group [3]
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[45]
+      IsCrowdDefaultGroup: true
+Party[-]
+  Name: empty-party
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[4]
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[48]
+      IsCrowdDefaultGroup: true
+Party[-]
+  Name: another-party
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: Groupe de connaissance [34]
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[51]
+      IsCrowdDefaultGroup: true

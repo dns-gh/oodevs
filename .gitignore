@@ -1,9 +1,11 @@
-bin/
+/bin/
 /run/
 /out/
 /dist/
 /include/
 /lib/
+/pkg/
+/src/sword/
 tags
 *.swp
 *.pyc
@@ -13,6 +15,7 @@ tags
 *.qix
 *.qm
 *.opensdf
+*.pb.go
 /build/vc100/ipch
 /build/vc100/parser.out
 /build/parser.out
@@ -21,3 +24,4 @@ tags
 /data/exercises/
 /data/tests/protocol_test/
 /doc/
+sessions/
