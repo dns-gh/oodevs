@@ -2590,10 +2590,6 @@ Este dato no puede ser proyectado.</translation>
         <translation>Crear lado</translation>
     </message>
     <message>
-        <source>Rename</source>
-        <translation>Renombrar</translation>
-    </message>
-    <message>
         <source>Change superior</source>
         <translation>Cambiar superior</translation>
     </message>
@@ -2752,6 +2748,13 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>Road width (m):</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TreeViewsPanel</name>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished">Renombrar</translation>
     </message>
 </context>
 <context>

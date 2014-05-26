@@ -355,6 +355,17 @@
     </message>
 </context>
 <context>
+    <name>RenameDialog</name>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Règle GL</name>
     <message>
         <source>2D: %L1m
@@ -919,17 +930,6 @@ Please check access permissions or write protection.</translation>
     <message>
         <source>Strength</source>
         <translation>Strength</translation>
-    </message>
-</context>
-<context>
-    <name>gui::EntityTreeView_ABC</name>
-    <message>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New name:</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
