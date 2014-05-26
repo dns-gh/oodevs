@@ -36,12 +36,13 @@ namespace actions
         class ParamLocation;
         template< typename T > class ParamNumericField;
         class ParamAutomat;
-        class ParamDateTime;
-        class ParamStringField;
         class ParamBool;
-        class ParamTime;
-        class ParamQuantity;
+        class ParamDateTime;
         class ParamFireClass;
+        class ParamObstacleType;
+        class ParamQuantity;
+        class ParamStringField;
+        class ParamTime;
 
 // =============================================================================
 /** @class  ParamObstacle
@@ -93,12 +94,6 @@ protected:
     void NotifyUpdated( const Param_ABC& param );
     //@}
 
-signals:
-    //! @name Signals
-    //@{
-    void ToggleReservable( bool );
-    //@}
-
 private slots:
     //! @name Slots
     //@{
@@ -116,7 +111,7 @@ private:
     ::gui::ParametersLayer&                             layer_;
     const kernel::CoordinateConverter_ABC&              converter_;
     ::gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;
-    QComboBox*                                          activatedCombo_;
+    ParamObstacleType*                                  activatedCombo_;
     ParamLocation*                                      location_;
     ParamNumericField< float >*                         density_;
     ParamAutomat*                                       tc2_;

@@ -18,6 +18,7 @@
 #include "ParamInterface_ABC.h"
 #include "ParamLocation.h"
 #include "ParamNumericField.h"
+#include "ParamObstacleType.h"
 #include "ParamQuantity.h"
 #include "ParamStringField.h"
 #include "ParamTime.h"
@@ -53,13 +54,14 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , converter_  ( builder.GetStaticModel().coordinateConverter_ )
     , controller_ ( builder.GetControllers().controller_ )
     , typeCombo_  ( 0 )
-    , activatedCombo_( 0 )
 {
     SetRecursive( true );
 
     location_ = static_cast< ParamLocation* >( AddElement( "location", tr( "Construction location" ).toStdString(), true ) );
     density_ = static_cast< ParamFloat* >( &builder.BuildOne( kernel::OrderParameter( tr( "Density per 100 square meter" ).toStdString(), "float", false ), false ) );
     tc2_ = static_cast< ParamAutomat* >( AddElement( "automat", tr( "TC2" ).toStdString(), true ) );
+    kernel::OrderParameter activatedParameter( tr( "Activation" ).toStdString(), "obstacletype", false );
+    activatedCombo_ = static_cast< ParamObstacleType* >( &builder.BuildOne( activatedParameter, false ) );
     kernel::OrderParameter activityTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "quantity", true );
     activityTime_ = static_cast< ParamQuantity* >( &builder.BuildOne( activityTimeParameter, false ) );
     kernel::OrderParameter activationTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "quantity", true );
@@ -78,6 +80,7 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     tc2_                ->SetKeyName( "tc2" );
     location_           ->SetKeyName( "location" );
     name_               ->SetKeyName( "name" );
+    activatedCombo_     ->SetKeyName( "obstacletype" );
     activityTime_       ->SetKeyName( "activitytime" );
     activationTime_     ->SetKeyName( "activationtime" );
     density_            ->SetKeyName( "density" );
@@ -132,6 +135,7 @@ void ParamObstacle::RemoveFromController()
     location_->RemoveFromController();
     density_->RemoveFromController();
     tc2_->RemoveFromController();
+    activatedCombo_->RemoveFromController();
     activityTime_->RemoveFromController();
     activationTime_->RemoveFromController();
     name_->RemoveFromController();
@@ -165,17 +169,6 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
         layout->addWidget( new QLabel( tr( "Type:" ), parent ) );
         layout->addWidget( typeCombo_ );
     }
-    // Target type
-    {
-        QLabel* label = new QLabel( tr( "Activate:" ), parent );
-        activatedCombo_ = new QComboBox;
-        activatedCombo_->addItem( tools::translate( "ParamBool", "True" ) );
-        activatedCombo_->addItem( tools::translate( "ParamBool", "False" ) );
-        connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setVisible( bool ) ) );
-        connect( this, SIGNAL( ToggleReservable( bool ) ), activatedCombo_, SLOT( setVisible( bool ) ) );
-        layout->addWidget( label );
-        layout->addWidget( activatedCombo_ );
-    }
     // Density
     {
         QWidget* densityBox = density_->BuildInterface( "densityBox", parent );
@@ -207,6 +200,10 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
     }
     // Activity/Activation Times
     {
+        QWidget* activatedBox = activatedCombo_->BuildInterface( "activatedBox", parent );
+        activatedBox->layout()->setMargin( 0 );
+        activatedBox->layout()->setSpacing( 0 );
+        layout->addWidget( activatedBox );
         QWidget* activityTimeBox = activityTime_->BuildInterface( "activityTimeBox", parent );
         activityTimeBox->layout()->setMargin( 0 );
         activityTimeBox->layout()->setSpacing( 0 );
@@ -324,7 +321,7 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
             CommitAndSetKeyName( *tc2_, *param );
         if( type->CanBeActivated() )
         {
-            param->AddParameter( *new actions::parameters::ObstacleType( kernel::OrderParameter( tr( "Activation" ).toStdString(), "obstacletype", false ), activatedCombo_->currentIndex() ) );
+            CommitAndSetKeyName( *activatedCombo_, *param );
             CommitAndSetKeyName( *activityTime_, *param );
             CommitAndSetKeyName( *activationTime_, *param );
         }
@@ -390,6 +387,7 @@ void ParamObstacle::OnTypeChanged( bool update /* = true */ )
     HideAndRemoveFromController( *location_ );
     HideAndRemoveFromController( *density_ );
     HideAndRemoveFromController( *tc2_ );
+    HideAndRemoveFromController( *activatedCombo_ );
     HideAndRemoveFromController( *activityTime_ );
     HideAndRemoveFromController( *activationTime_ );
     HideAndRemoveFromController( *altitudeModifier_ );
@@ -405,6 +403,7 @@ void ParamObstacle::OnTypeChanged( bool update /* = true */ )
 
     ShowAndAddToControllerIfNeeded( *density_,             *type, &kernel::ObjectType::HasBuildableDensity );
     ShowAndAddToControllerIfNeeded( *tc2_,                 *type, &kernel::ObjectType::HasLogistic );
+    ShowAndAddToControllerIfNeeded( *activatedCombo_,      *type, &kernel::ObjectType::CanBeActivated );
     ShowAndAddToControllerIfNeeded( *activityTime_,        *type, &kernel::ObjectType::CanBeActivated );
     ShowAndAddToControllerIfNeeded( *activationTime_,      *type, &kernel::ObjectType::CanBeActivated );
     ShowAndAddToControllerIfNeeded( *altitudeModifier_,    *type, &kernel::ObjectType::HasAltitudeModifierCapacity );
@@ -417,7 +416,6 @@ void ParamObstacle::OnTypeChanged( bool update /* = true */ )
     location_->SetShapeFilter( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
     location_->RegisterIn();
     location_->SetVisible( true );
-    emit ToggleReservable( type->CanBeActivated() );
     if( update )
         Update();
 }
@@ -506,7 +504,7 @@ void ParamObstacle::Visit( const actions::parameters::Numeric& param )
 void ParamObstacle::Visit( const actions::parameters::ObstacleType& param )
 {
     assert( activatedCombo_ != 0 );
-    activatedCombo_->setCurrentIndex( static_cast< unsigned int >( ENT_Tr::ConvertToObstacleActivation( param.GetValue().toStdString(), ENT_Tr::eToTr ) ) );
+    activatedCombo_->SetValue( param.GetValue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -516,7 +514,7 @@ void ParamObstacle::Visit( const actions::parameters::ObstacleType& param )
 void ParamObstacle::Visit( const actions::parameters::Quantity& param )
 {
     assert( altitudeModifier_ != 0 && lodging_ != 0 && timeLimit_ != 0 &&
-            activityTime_ != 0 && activationTime_ != 0 );
+            activatedCombo_ != 0 && activityTime_ != 0 && activationTime_ != 0 );
     if( param.GetKeyName() == altitudeModifier_->GetKeyName() )
         param.Accept( *altitudeModifier_ );
     else if( param.GetKeyName() == lodging_->GetKeyName() )
@@ -525,6 +523,8 @@ void ParamObstacle::Visit( const actions::parameters::Quantity& param )
         param.Accept( *timeLimit_ );
     else if( param.GetKeyName() == activityTime_->GetKeyName() )
         param.Accept( *activityTime_ );
+    else if( param.GetKeyName() == activatedCombo_->GetKeyName() )
+        param.Accept( *activatedCombo_ );
     else if( param.GetKeyName() == activationTime_->GetKeyName() )
         param.Accept( *activationTime_ );
     else if( param.GetKeyName() == maxCombustionEnergy_->GetKeyName() )
@@ -551,6 +551,7 @@ bool ParamObstacle::HasParameter( const Param_ABC& param ) const
         location_->HasParameter( param ) ||
         density_->HasParameter( param ) ||
         tc2_->HasParameter( param ) ||
+        activatedCombo_->HasParameter( param ) ||
         activityTime_->HasParameter( param ) ||
         activationTime_->HasParameter( param ) ||
         name_->HasParameter( param ) ||

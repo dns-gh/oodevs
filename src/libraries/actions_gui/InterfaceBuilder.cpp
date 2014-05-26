@@ -33,6 +33,7 @@
 #include "ParamNumericField.h"
 #include "ParamObjectKnowledge.h"
 #include "ParamObstacle.h"
+#include "ParamObstacleType.h"
 #include "ParamPath.h"
 #include "ParamPoint.h"
 #include "ParamPopulationKnowledge.h"
@@ -121,6 +122,7 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers,
     AddFunctor< actions::gui::ParamDotationType >       ( "resourcetype" );
     AddFunctor< actions::gui::ParamDotationTypeList >   ( "allresourcetype" );
     AddFunctor< actions::gui::ParamFireClass >          ( "fireclass" );
+    AddFunctor< actions::gui::ParamObstacleType >       ( "obstacletype" );
 }
 
 // -----------------------------------------------------------------------------

@@ -54,17 +54,6 @@
     </message>
 </context>
 <context>
-    <name>ParamBool</name>
-    <message>
-        <source>True</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>False</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ParamResourceNetworkNode</name>
     <message>
         <source>Object</source>
@@ -170,14 +159,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Activate:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Activation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -187,6 +168,21 @@
     </message>
     <message>
         <source>Max combustion energy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>actions::gui::ParamObstacleType</name>
+    <message>
+        <source>True</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>False</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

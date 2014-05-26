@@ -18,6 +18,7 @@
 #include <QtCore/qdatetime.h>
 
 #include <QtGui/qcheckbox.h>
+#include <QtGui/qcombobox.h>
 #include <QtGui/qlabel.h>
 #include <QtGui/qlayout.h>
 #include <QtGui/qlineedit.h>
