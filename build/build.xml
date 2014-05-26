@@ -676,6 +676,8 @@
     </macrodef>
 
     <target name="package.binaries" description="create a zip with all binaries">
+        <setversion version="${version.version}" product="Sword"
+            file="${bin.dir}/csvclient.exe"/>
         <safe-move file="${out.dir}/binaries_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
@@ -974,8 +976,6 @@
         <go_fmt/>
         <go_build/>
         <go cmd="vet"/>
-        <setversion version="${version.version}" product="Sword"
-            file="${bin.dir}/csvclient.exe"/>
     </target>
 
     <condition property="gocheck.filter" value="-f=${gocheck.f}" else="">
