@@ -321,7 +321,7 @@
         <xs:documentation xml:lang="en">Defines key for knowledge group.</xs:documentation>
         <xs:documentation xml:lang="fr">Définit une clé pour le groupe de connaissance.</xs:documentation>
       </xs:annotation>
-      <xs:selector xpath="communication/knowledge-group"/>
+      <xs:selector xpath=".//knowledge-group"/>
       <xs:field xpath="@id"/>
     </xs:key>
     <xs:keyref name="knowledgeGroupKeyRef" refer="knowledgeGroupKey">
