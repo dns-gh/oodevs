@@ -46,7 +46,10 @@ func MakeOpts() *SimOpts {
 	if len(Cfg.Application) > 0 {
 		opts.Executable = Cfg.Application
 	} else if len(projectRoot) > 0 {
-		opts.Executable = filepath.Join(projectRoot, "run", Cfg.Platform, "simulation_app.exe")
+		opts.Executable = filepath.Join(
+			projectRoot, "out", Cfg.Platform, "release/simulation_app.exe")
+		runDir := filepath.Join(projectRoot, "run", Cfg.Platform)
+		opts.RunDir = &runDir
 	}
 	if len(Cfg.RootDir) > 0 {
 		opts.RootDir = Cfg.RootDir
