@@ -53,12 +53,12 @@ public:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< FileLoaderObserver >  observer_;
-    std::auto_ptr< Config >              config_;
-    std::auto_ptr< kernel::Controllers > controllers_;
-    std::auto_ptr< StaticModel >         staticModel_;
-    std::auto_ptr< Model >               model_;
-    MainWindow*                          mainWindow_;
+    boost::shared_ptr< FileLoaderObserver > observer_;
+    std::unique_ptr< Config >               config_;
+    std::unique_ptr< kernel::Controllers >  controllers_;
+    std::unique_ptr< StaticModel >          staticModel_;
+    std::unique_ptr< Model >                model_;
+    std::unique_ptr< MainWindow >           mainWindow_;
     //@}
 };
 

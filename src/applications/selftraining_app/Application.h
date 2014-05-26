@@ -80,15 +80,14 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Config >                             config_;
-    std::auto_ptr< tools::RealFileLoaderObserver_ABC >  fileLoaderObserver_;
-    std::auto_ptr< tools::Loader_ABC >                  fileLoader_;
-    std::auto_ptr< kernel::Controllers >                controllers_;
-    std::auto_ptr< ExerciseContainer>                   exercises_;
-    std::auto_ptr< QMainWindow >                        mainWindow_;
-
-    std::auto_ptr< QTimer > cursorTimer_;
-    bool waitCursor_;
+    std::unique_ptr< Config >                            config_;
+    std::unique_ptr< tools::RealFileLoaderObserver_ABC > fileLoaderObserver_;
+    std::unique_ptr< tools::Loader_ABC >                 fileLoader_;
+    std::unique_ptr< kernel::Controllers >               controllers_;
+    std::unique_ptr< ExerciseContainer>                  exercises_;
+    std::unique_ptr< QMainWindow >                       mainWindow_;
+    std::unique_ptr< QTimer >                            cursorTimer_;
+    bool                                                 waitCursor_;
 
     //@}
 };

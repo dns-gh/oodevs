@@ -68,21 +68,21 @@ private slots:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Config >                            config_;
-    std::auto_ptr< kernel::Controllers >               controllers_;
-    std::auto_ptr< RcEntityResolver_ABC >              rcResolver_;
-    std::auto_ptr< StaticModel >                       staticModel_;
-    std::auto_ptr< Model >                             model_;
-    std::auto_ptr< Services >                          services_;
-    std::auto_ptr< Simulation >                        simulation_;
-    std::auto_ptr< SimulationController >              simulationController_;
-    std::auto_ptr< Profile >                           profile_;
-    std::auto_ptr< ProfileFilter >                     filter_;
-    std::auto_ptr< kernel::Workers >                   workers_;
-    std::auto_ptr< LoggerProxy >                       logger_;
-    std::auto_ptr< Network >                           network_;
-    std::auto_ptr< QTimer >                            networkTimer_;
-    std::auto_ptr< MainWindow >                        mainWindow_;
+    std::unique_ptr< Config >               config_;
+    std::unique_ptr< kernel::Controllers >  controllers_;
+    std::unique_ptr< RcEntityResolver_ABC > rcResolver_;
+    std::unique_ptr< StaticModel >          staticModel_;
+    std::unique_ptr< Model >                model_;
+    std::unique_ptr< Services >             services_;
+    std::unique_ptr< Simulation >           simulation_;
+    std::unique_ptr< SimulationController > simulationController_;
+    std::unique_ptr< Profile >              profile_;
+    std::unique_ptr< ProfileFilter >        filter_;
+    std::unique_ptr< kernel::Workers >      workers_;
+    std::unique_ptr< LoggerProxy >          logger_;
+    std::unique_ptr< Network >              network_;
+    std::unique_ptr< QTimer >               networkTimer_;
+    std::unique_ptr< MainWindow >           mainWindow_;
     //@}
 };
 
