@@ -14,10 +14,6 @@
 #include "actions/Action_ABC.h"
 #include "actions/Bool.h"
 #include "clients_kernel/OrderParameter.h"
-#pragma warning( push )
-#pragma warning( disable : 4251 )
-#include <QtGui/qcombobox.h>
-#pragma warning( pop )
 
 using namespace actions::gui;
 

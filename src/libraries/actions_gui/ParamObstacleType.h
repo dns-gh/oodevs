@@ -20,9 +20,9 @@ namespace kernel
 
 namespace actions
 {
-    namespace gui
-    {
-        class InterfaceBuilder_ABC;
+namespace gui
+{
+    class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamObstacleType
@@ -63,7 +63,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ParamObstacleType_h_

@@ -14,10 +14,6 @@
 #include "actions/Action_ABC.h"
 #include "actions/ObstacleType.h"
 #include "clients_kernel/OrderParameter.h"
-#pragma warning( push )
-#pragma warning( disable : 4251 )
-#include <QtGui/qcombobox.h>
-#pragma warning( pop )
 
 using namespace actions::gui;
 
@@ -30,7 +26,7 @@ ParamObstacleType::ParamObstacleType( const InterfaceBuilder_ABC& builder, const
     , comboBox_( 0 )
     , activation_( eObstacleActivation_Activated )
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +35,7 @@ ParamObstacleType::ParamObstacleType( const InterfaceBuilder_ABC& builder, const
 // -----------------------------------------------------------------------------
 ParamObstacleType::~ParamObstacleType()
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -66,12 +62,12 @@ QWidget* ParamObstacleType::BuildInterface( const QString& objectName, QWidget* 
 // -----------------------------------------------------------------------------
 void ParamObstacleType::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    if( IsChecked() )
-        action.AddParameter( *new actions::parameters::ObstacleType( parameter_, activation_ == eObstacleActivation_Activated ? 0 : 1 ) );
-    else
-        action.AddParameter( *new actions::parameters::ObstacleType( parameter_, 0 ) );
+    action.AddParameter(
+        *new actions::parameters::ObstacleType(
+            parameter_,
+            IsChecked() && activation_ != eObstacleActivation_Activated ? 1 : 0 ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ParamObstacleType::Visit
 // Created: LDC 2014-05-22
@@ -82,7 +78,7 @@ void ParamObstacleType::Visit( const actions::parameters::ObstacleType& param )
     if( param.IsSet() )
         SetValue( param.GetValue() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ParamObstacleType::SetValue
 // Created: LDC 2014-05-22
@@ -92,7 +88,7 @@ void ParamObstacleType::SetValue( const QString& value )
     activation_ = ENT_Tr::ConvertToObstacleActivation( value.toStdString() );
     comboBox_->setCurrentIndex( activation_ == eObstacleActivation_Activated ? 0 : 1 );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ParamObstacleType::OnCurrentIndexChanged
 // Created: LDC 2014-05-22
