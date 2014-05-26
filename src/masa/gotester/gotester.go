@@ -131,7 +131,7 @@ func splitTests(tests []string, jobs int) [][]string {
 
 // Runs a single test group, invoking "go test". Go environment is supposed to
 // be set.
-func runTests(runDir string, tests []string, args []string) (string, error) {
+func runTests(runDir string, tests []string, port uint, args []string) (string, error) {
 	escaped := []string{}
 	for _, test := range tests {
 		escaped = append(escaped, regexp.QuoteMeta(test))
@@ -142,6 +142,16 @@ func runTests(runDir string, tests []string, args []string) (string, error) {
 	args = append(args, "-gocheck.f", filter)
 	cmd := exec.Command("go", args...)
 	cmd.Dir = runDir
+	// Remove existing TEST_PORT and populate with a new one
+	env := []string{}
+	for _, v := range os.Environ() {
+		if strings.HasPrefix(v, "TEST_PORT=") {
+			continue
+		}
+		env = append(env, v)
+	}
+	env = append(env, fmt.Sprintf("TEST_PORT=%d", port))
+	cmd.Env = env
 	output, err := cmd.CombinedOutput()
 	return string(output), err
 }
@@ -173,7 +183,7 @@ func runTestGroups(groups [][]string, baseArgs []string, runDir string,
 			args := append([]string{}, baseArgs...)
 			args = append(args, fmt.Sprintf("-test-port=%d", port))
 			for group := range pending {
-				output, err := runTests(runDir, group, args)
+				output, err := runTests(runDir, group, port, args)
 				result := RunResult{
 					Tests:  group,
 					Err:    err,

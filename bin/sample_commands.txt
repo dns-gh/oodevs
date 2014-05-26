@@ -1,0 +1,108 @@
+[
+    {
+        "type": "USER_LOGIN",
+        "user": {
+            "login": {
+                "username": "john",
+                "password": "doe"
+            }
+        }
+    },
+    {
+        "type": "SESSION_CREATE",
+        "session": {
+            "create": {
+                "name": "buzz",
+                "uuid": "3E6DCB9A-222A-4606-A0FB-D5C8A28C9DBB"
+            }
+        }
+    },
+    {
+        "type": "SESSION_ATTACH",
+        "session": {
+            "attach": {
+                "uuid": "3E6DCB9A-222A-4606-A0FB-D5C8A28C9DBB",
+                "service": {
+                    "name": "timer",
+                    "clock": true,
+                    "timer": {
+                        "base": "2013-01-01T12:00:00+01:00"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "type": "SESSION_ATTACH",
+        "session": {
+            "attach": {
+                "uuid": "3E6DCB9A-222A-4606-A0FB-D5C8A28C9DBB",
+                "service": {
+                    "name": "sim",
+                    "clock": false,
+                    "sword": {
+                        "address": "localhost:50320",
+                        "username": "Supervisor",
+                        "password": ""
+                    }
+                }
+            }
+        }
+    },
+    {
+        "type": "EVENT_CREATE",
+        "event": {
+            "create": {
+                "session": "3E6DCB9A-222A-4606-A0FB-D5C8A28C9DBB",
+                "event": {
+                    "uuid": "05EDDA73-74CF-4C0A-A82A-C1D9337D0756",
+                    "name": "resume sword",
+                    "info": "this command will resume sword after 4s",
+                    "begin": "2013-01-01T12:00:04+01:00",
+                    "action": {
+                        "target": "sword://sim",
+                        "apply": true,
+                        "payload": {
+                            "message": {
+                                "control_resume": {}
+                            },
+                            "context": 0
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "type": "EVENT_CREATE",
+        "event": {
+            "create": {
+                "session": "3E6DCB9A-222A-4606-A0FB-D5C8A28C9DBB",
+                "event": {
+                    "uuid": "3EB69DEF-5B70-4907-ABE0-7169DC96540C",
+                    "name": "pause sword",
+                    "info": "this command will pause sword after 15s",
+                    "begin": "2013-01-01T12:00:15+01:00",
+                    "action": {
+                        "target": "sword://sim",
+                        "apply": true,
+                        "payload": {
+                            "message": {
+                                "control_pause": {}
+                            },
+                            "context": 0
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "type": "SESSION_START",
+        "session": {
+            "start": {
+                "uuid": "3E6DCB9A-222A-4606-A0FB-D5C8A28C9DBB"
+            }
+        }
+    }
+]

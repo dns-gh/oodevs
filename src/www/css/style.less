@@ -1,0 +1,285 @@
+/* MASA Group style */
+
+@scale:     8%;
+@green:     darken(#93C47D, @scale);
+@yellow:    darken(#FFD966, @scale);
+@blue:      darken(#6FA8DC, @scale);
+@red:       darken(#E06666, @scale);
+@grey:      darken(#999,    @scale);
+@purple:    darken(#8E7CC3, @scale);
+@blueline:  #6baed6;
+@bluefill:  #c6dbef;
+
+@white:     #FFF;
+@frame:     #DDD;
+
+.container-fluid
+{
+    padding: 0;
+}
+
+.top_bar
+{
+    margin-bottom: 0;
+}
+
+.sub_bar
+{
+    padding:    0;
+    border:     0;
+}
+
+.radius( @radius )
+{
+    -webkit-border-radius: @radius;
+    -moz-border-radius:    @radius;
+    border-radius:         @radius;
+}
+
+.color_event( @color )
+{
+    background-color: @color;
+    border: 2px solid lighten(@color, 20%);
+}
+
+.bk_waiting, .bk_waiting .vertical_separator
+{
+    .color_event( @blue  );
+}
+
+.bk_done, .bk_done .vertical_separator
+{
+    .color_event( @green );
+}
+
+.bk_cluster, .bk_cluster .vertical_separator
+{
+    .color_event( @purple );
+}
+
+.bk_stack, .bk_stack .vertical_separator
+{
+    .color_event( lighten( @purple, 20% ) );
+}
+
+.bk_readonly, .bk_readonly .vertical_separator
+{
+    .color_event( @grey );
+}
+
+.waiting { color: @blue  }
+.done    { color: @green }
+
+.selected .event, .selected .vertical_separator
+{
+    z-index: 999;
+    border:  2px solid @yellow;
+}
+
+.emulate_button
+{
+    cursor:                 pointer;
+    -webkit-user-select:    none;
+    -khtml-user-select:     none;
+    -moz-user-select:  -moz-none;
+    -o-user-select:         none;
+    user-select:            none;
+}
+
+.node
+{
+    position: absolute;
+    .emulate_button;
+}
+
+.event_box
+{
+    min-width: 4px;
+    overflow:  hidden;
+}
+
+.event
+{
+    .radius( 9px );
+    color:          @white;
+    font-size:      small;
+    line-height:    0;
+    padding:        2px 8px;
+    text-shadow:    0 -1px 0 rgba(0,0,0,0.25);
+    vertical-align: baseline;
+    white-space:    nowrap;
+}
+
+.checkbox_addon label.add-on
+{
+    margin-left:    0;
+    margin-bottom:  0;
+    width:          22px;
+}
+
+.checkbox_addon input[type=checkbox]
+{
+    position:   relative;
+    top:        -3px;
+}
+
+.checkbox_addon .field
+{
+    width:      173px;
+}
+
+.modal-body.form-horizontal
+{
+    margin-bottom:  0;
+    padding-bottom: 0;
+}
+
+.datepicker
+{
+    z-index: 9999;
+}
+
+#errors
+{
+    padding-top: 12px;
+}
+
+svg.screen
+{
+    position: absolute;
+    top: 0;
+    overflow-y: hidden;
+}
+
+.crisp_line( @color )
+{
+    stroke:          @color;
+    stroke-width:    1;
+    shape-rendering: crispEdges;
+    fill:            none;
+}
+
+#axis path, #axis line, #hsplit
+{
+    .crisp_line( black );
+}
+
+#grid text, #grid path
+{
+    display: none;
+}
+
+#grid line
+{
+    .crisp_line( @frame );
+}
+
+.grid .minor line
+{
+    stroke-opacity: 0.5;
+}
+
+path.line
+{
+    .crisp_line( black );
+}
+
+path.current
+{
+    .crisp_line( #d94444 );
+    fill:        #d94444;
+    stroke-width: 2;
+}
+
+.events circle
+{
+  fill:         transparent;
+  stroke:       @blueline;
+  stroke-width: 1.5;
+}
+
+rect.lane
+{
+    stroke-width:    1;
+    shape-rendering: crispEdges;
+}
+
+path.link
+{
+    fill:           transparent;
+    stroke:         @blueline;
+    stroke-width:   1;
+}
+
+rect.lane.selected
+{
+    stroke:       @yellow !important;
+    stroke-width: 1;
+}
+
+path.link.selected
+{
+    stroke:       @yellow !important;
+    stroke-width: 2;
+}
+
+path.link.fill
+{
+    fill: @bluefill;
+}
+
+#ticks .tick
+{
+    position:    absolute;
+    font-size:   x-small;
+    line-height: 12px;
+}
+
+#ticks .tick.vertical
+{
+    text-align: right;
+}
+
+#ticks .tick.horizontal
+{
+    text-align: center;
+}
+
+#ticks .major
+{
+    font-weight: bold;
+}
+
+.stack:before, .stack:after
+{
+  .event;
+  position: absolute;
+  padding: 0;
+  content: "";
+  width:  98%;
+  height: 81%;
+}
+
+.stack:before
+{
+    background-color: lighten(@purple, 28%);
+    border:   2px solid lighten(@purple, 28%);
+    right:   -2px;
+    bottom:  -2px;
+    z-index: -1;
+}
+
+.stack:after
+{
+    background-color: lighten(@purple, 36%);
+    border:   2px solid lighten(@purple, 36%);
+    right:   -4px;
+    bottom:  -4px;
+    z-index: -2;
+}
+
+.vertical_separator
+{
+    border-left:  1px !important;
+    margin-right: 4px;
+}

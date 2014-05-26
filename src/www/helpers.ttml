@@ -1,0 +1,48 @@
+[[ define "input_text" ]]
+<div class="control-group">
+    <label class="control-label" for="[[ .id ]]">[[ .label ]]</label>
+    <div class="controls">
+        <input type="[[ if .type ]][[ .type ]][[ else ]]text[[ end ]]" id="[[ .id ]]"[[ if .value ]] value="[[ .value ]]"[[ end ]][[ if .class ]] class="[[ .class ]]"[[ end ]]>
+    </div>
+</div>
+[[ end ]]
+
+[[ define "input_textarea" ]]
+<div class="control-group">
+    <label class="control-label" for="[[ .id ]]">[[ .label ]]</label>
+    <div class="controls">
+        <textarea id="[[ .id ]]">[[ .value ]]</textarea>
+    </div>
+</div>
+[[ end ]]
+
+[[ define "input_checkbox" ]]
+<div class="control-group">
+    <div class="controls">
+        <label class="checkbox">
+            <input type="checkbox" id="[[ .id ]]"[[ if .value ]][[ .value ]][[ end ]]>
+            [[ .label ]]
+        </label>
+    </div>
+</div>
+[[ end ]]
+
+
+[[ define "input_datetime" ]]
+<div class="control-group control_date">
+    <label class="control-label" for="[[ .id ]]">[[ .label ]]</label>
+    <div class="controls">
+        <div class="[[ if .check ]]input-prepend checkbox_addon [[ end ]]input-append">
+            [[ if .check ]]
+            <label class="add-on">
+                <input type="checkbox" id="[[ .id ]]_check" [[ .check ]]>
+            </label>
+            [[ end ]]
+            <input id="[[ .id ]]" class="field" type="text"[[ if .value ]][[ .value ]][[ end ]]>
+            <span class="add-on btn">
+                <i class="icon-calendar"></i>
+            </span>
+        </div>
+    </div>
+</div>
+[[ end ]]

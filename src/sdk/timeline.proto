@@ -1,0 +1,91 @@
+// ****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2013 MASA Group
+//
+// ****************************************************************************
+package sdk;
+
+/*
+ * UUID are specified as per RFC4122 (ex: "550e8400-e29b-41d4-a716-446655440000")
+ * Timestamps are specified as per RFC3339 (ex: "2006-01-02T15:04:05Z07:00")
+ * Time durations are in milliseconds and can be negative when used as an offset
+ * Error codes are HTTP status codes as per RFC2616 (ex: 404 Not Found)
+ */
+
+message Timer
+{
+    optional string base = 1;
+}
+
+message Sword
+{
+    required string address  = 1;
+}
+
+message Service
+{
+    required string name  = 1;
+    required bool   clock = 2; ///< true to use service's clock
+    optional Timer  timer = 3;
+    optional Sword  sword = 4;
+
+}
+
+message Session
+{
+    enum Status
+    {
+        IDLE     = 0; ///< edition mode
+        STARTING = 1; ///< transient state from idle to live
+        LIVE     = 2; ///< live mode, clock is on and events are run
+        STOPPING = 3; ///< transient state from live to idle
+    }
+    required string uuid         = 1; ///< unique uuid
+    required Status status       = 2; ///< current status
+    required string name         = 3;
+    optional string time         = 4; ///< current time
+    optional bool   locked       = 5; ///< true if time is locked
+    optional int64  offset       = 6; ///< optional time offset applied on time
+    required int32  num_services = 7;
+    required int32  num_events   = 8;
+}
+
+message Action
+{
+    required string target  = 1;
+    optional bool   apply   = 2; ///< should the action be applied ?
+    optional bytes  payload = 4;
+}
+
+message Event
+{
+    optional string uuid       = 1;
+    optional string name       = 2;
+    optional string info       = 3;
+    optional string begin      = 4;
+    optional string end        = 5;
+    optional Action action     = 6;
+    optional bool   done       = 7;
+    optional int32  error_code = 8;
+    optional string error_text = 9;
+    optional bool   read_only  = 10;
+    optional string parent     = 11;
+}
+
+enum MessageTag
+{
+    update_tick   = 1;
+    update_events = 2;
+    delete_events = 3;
+}
+
+message Message
+{
+    required MessageTag tag    = 1;
+    optional string     tick   = 2;
+    repeated Event      events = 3;
+    repeated string     uuids  = 4;
+}
