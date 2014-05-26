@@ -92,8 +92,10 @@ void tools::SetLevel( const kernel::Entity_ABC& entity, std::string& level )
 bool tools::CanOneSubordinateBeOrdered( const kernel::Profile_ABC& profile, const kernel::Entity_ABC& entity )
 {
     auto it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    if( profile.CanBeOrdered( entity ) )
+        return true;
     while( it.HasMoreElements() )
         if( CanOneSubordinateBeOrdered( profile, it.NextElement() ) )
             return true;
-    return profile.CanBeOrdered( entity );
+    return false;
 }

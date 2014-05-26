@@ -97,7 +97,7 @@ void LogisticMagicInterface::NotifyContextMenu( const kernel::Automat_ABC& autom
 void LogisticMagicInterface::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
 {
     const bool canBeOrdered = profile_.CanBeOrdered( formation );
-    if( !formation.Get< gui::LogisticBase >().IsBase() || ( !canBeOrdered && !tools::CanOneSubordinateBeOrdered( profile_, formation ) ) )
+    if( !( formation.Get< gui::LogisticBase >().IsBase() && tools::CanOneSubordinateBeOrdered( profile_, formation ) ) )
         return;
     selected_ = &formation;
     AddMenuEntries( menu, canBeOrdered );
