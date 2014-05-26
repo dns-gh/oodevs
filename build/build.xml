@@ -112,7 +112,6 @@
     ============================================================================
     -->
 
-
     <macrodef name="exec-unicode">
         <attribute name="name"/>
         <attribute name="exe"/>
@@ -369,7 +368,7 @@
             </exec>
             <test-adaptation dir="@{todir}"/>
         </sequential>
-    </macrodef>  
+    </macrodef>
 
     <macrodef name="test-adaptation-swap">
         <attribute name="dir"/>
@@ -413,7 +412,7 @@
                 <arg value="--exclude=@{excludes}"/>
             </python>
         </sequential>
-    </macrodef>  
+    </macrodef>
 
     <target name="adaptation_test" description="load, save then diff physical data">
         <test-adaptation-newbase/>
@@ -676,6 +675,8 @@
     </macrodef>
 
     <target name="package.binaries" description="create a zip with all binaries">
+        <setversion version="${version.version}" product="Sword"
+            file="${bin.dir}/csvclient.exe"/>
         <safe-move file="${out.dir}/binaries_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
@@ -931,40 +932,9 @@
     go
     ============================================================================
     -->
-    <!-- Merge back this macro in poney golang/go_proto. It differs only
-         by an "output" attribute and an <mkdir> call.
-    -->
-    <macrodef name="sword_go_proto">
-        <attribute name="input"/>
-        <attribute name="output" default="@{input}"/>
-        <sequential>
-            <if>
-                <not>
-                    <uptodate>
-                        <srcfiles dir="@{input}" includes="**/*.proto"/>
-                        <mapper type="glob" from="*.proto" to="@{output}/*.pb.go"/>
-                    </uptodate>
-                </not>
-                <then>
-                    <mkdir dir="@{output}"/>
-                    <fileset id="protofiles" dir="@{input}">
-                        <include name="*.proto"/>
-                    </fileset>
-                    <pathconvert property="@{input}.protofiles" refid="protofiles" pathsep=" "/>
-                    <echo taskname="proto" message="@{input}"/>
-                    <exec taskname="proto" executable="${bin.dir}/protoc" failonerror="true">
-                        <arg value="--proto_path=@{input}"/>
-                        <arg value="--go_out=@{output}"/>
-                        <arg line="${@{input}.protofiles}"/>
-                    </exec>
-                </then>
-            </if>
-        </sequential>
-    </macrodef>
-
     <target name="go.proto">
-        <sword_go_proto input="${src.dir}/libraries/protocol/proto"
-                        output="${src.dir}/sword"/>
+        <go_proto input="${src.dir}/libraries/protocol/proto"
+                  output="${src.dir}/sword"/>
         <go_proto input="${src.dir}/sdk"/>
         <go_proto input="${src.dir}/testproto/before"/>
         <go_proto input="${src.dir}/testproto/after"/>
@@ -974,8 +944,6 @@
         <go_fmt/>
         <go_build/>
         <go cmd="vet"/>
-        <setversion version="${version.version}" product="Sword"
-            file="${bin.dir}/csvclient.exe"/>
     </target>
 
     <condition property="gocheck.filter" value="-f=${gocheck.f}" else="">
@@ -1139,7 +1107,7 @@
             version="${version.version}" product="Timeline"/>
         <setversion file="${bin.dir}/timeline_server.exe"
             version="${version.version}" product="Timeline"/>
-        <zip destfile="${bin.dir}/timeline.pak">
+        <zip destfile="${run.dir}/timeline.pak" duplicate="fail">
             <fileset dir="${src.dir}/www" includes="
                 css/*.css,
                 font/*,
@@ -1155,11 +1123,11 @@
             <fileset dir="${bin.dir}" includes="
                 timeline_player.exe,
                 timeline_server.exe"/>
-            <fileset dir="${bin.dir}" includes="timeline.pak"/>
+            <fileset dir="${run.dir}" includes="timeline.pak"/>
         </go_zip>
         <!-- Make sure the timeline can be used by selftraining_app -->
         <copy todir="${run.dir}" overwrite="true">
-            <fileset dir="${bin.dir}" includes="timeline*.*"/>
+            <fileset dir="${bin.dir}" includes="timeline*.exe"/>
         </copy>
     </target>
 
