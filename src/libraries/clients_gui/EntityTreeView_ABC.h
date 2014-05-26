@@ -97,6 +97,9 @@ protected:
     virtual void ApplyProfileFilter();
     virtual bool ApplyProfileFilter( QStandardItem& item ) const;
     virtual void SetLessThanEntityFunctor( const T_LessThanEntityFunctor& functor );
+    virtual void Edit( const kernel::Entity_ABC& entity );
+    virtual void Rename( kernel::Entity_ABC& entity, const QString& name );
+    virtual void Rename( kernel::Entity_ABC& entity );
     //@}
 
 protected slots:

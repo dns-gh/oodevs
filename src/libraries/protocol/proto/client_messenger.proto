@@ -111,17 +111,12 @@ message ShapeCreationRequest {
     @todo rename into Drawing/Graphics
 */
 message ShapeUpdateRequest {
-    //! The identifier of the shape to update @todo
-    //! should be named "id" instead of "shape" (coherence)
     required Id               shape    = 1;
-    //! The new category of the shape
     optional string           category = 2;
-    //! The new color of the shape
     optional RgbColor         color    = 3;
-    //! The new template of the shape
     optional string           pattern  = 4;
-    //! The new points of the shape @see CoordLatLongList
     optional CoordLatLongList points   = 5;
+    optional string           name     = 6;
 }
 
 /** @struct ShapeDestructionRequest

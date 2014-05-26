@@ -18,6 +18,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/Drawing.h"
 #include "gaming/TacticalLine_ABC.h"
 
 namespace
@@ -59,9 +60,14 @@ DrawingsBuilder::~DrawingsBuilder()
     controllers_.Unregister( *this );
 }
 
-void DrawingsBuilder::OnRename( kernel::Entity_ABC& /*entity*/, const QString& /*newName*/ )
+void DrawingsBuilder::OnRename( kernel::Entity_ABC& entity, const QString& newName )
 {
-    // NOTHING
+    if( entity.GetTypeName() == kernel::Drawing_ABC::typeName_ )
+        if( Drawing* drawing = static_cast< Drawing* >( &entity ) )
+            drawing->Rename( newName );
+    if( entity.GetTypeName() == kernel::TacticalLine_ABC::typeName_ )
+        if( ::TacticalLine_ABC* line = static_cast< ::TacticalLine_ABC* >( &entity ) )
+            line->Rename( newName );
 }
 
 void DrawingsBuilder::CreateCommunication()

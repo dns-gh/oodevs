@@ -272,6 +272,13 @@
     </message>
 </context>
 <context>
+    <name>Info</name>
+    <message>
+        <source>Info/Template</source>
+        <translation>Info/Patron</translation>
+    </message>
+</context>
+<context>
     <name>LogisticBase</name>
     <message>
         <source>Info/Logistic base</source>
@@ -865,6 +872,13 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>gui::DrawingsTreeView</name>
+    <message>
+        <source>Rename</source>
+        <translation>Renommer</translation>
+    </message>
+</context>
+<context>
     <name>gui::EditorFactory</name>
     <message>
         <source>True</source>
@@ -900,6 +914,17 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Strength</source>
         <translation>Intensité</translation>
+    </message>
+</context>
+<context>
+    <name>gui::EntityTreeView_ABC</name>
+    <message>
+        <source>Rename</source>
+        <translation>Renommer</translation>
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation>Nouveau nom :</translation>
     </message>
 </context>
 <context>

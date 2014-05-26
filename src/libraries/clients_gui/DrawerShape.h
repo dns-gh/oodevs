@@ -49,8 +49,9 @@ class DrawerShape : public Drawing
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerShape( kernel::Controllers& controllers, unsigned long id, const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
-                          kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter, E_Dash_style dashStyle );
+             DrawerShape( kernel::Controllers& controllers, unsigned long id, const QString& name, const DrawingTemplate& style,
+                          const QColor& color, const kernel::Entity_ABC* entity, kernel::LocationProxy& location,
+                          const kernel::CoordinateConverter_ABC& coordinateConverter, E_Dash_style dashStyle );
              DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis, const kernel::Entity_ABC* entity, const DrawingTypes& types,
                           kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter );
     virtual ~DrawerShape();
@@ -90,12 +91,19 @@ protected:
     virtual void Update();
     //@}
 
+private:
+    //! @name Helpers
+    //@{
+    void CreateDictionary();
+    //@}
+
 protected:
     //! @name Member data
     //@{
     const DrawingTemplate& style_;
     kernel::LocationProxy& location_;
     QColor color_;
+    const QString template_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     std::auto_ptr< SvgLocationDrawer > drawer_;
     bool isEditing_;

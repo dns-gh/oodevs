@@ -24,19 +24,20 @@ using namespace plugins::messenger;
 // Name: Drawing constructor
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-Drawing::Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter )
+Drawing::Drawing( unsigned int id, const sword::Shape& msg, const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
     , id_       ( id )
-    , category_ ( asn.shape().category() )
-    , color_    ( QColor( asn.shape().color().red(), asn.shape().color().green(), asn.shape().color().blue() ).name().toStdString() )
-    , pattern_  ( asn.shape().pattern() )
+    , category_ ( msg.category() )
+    , color_    ( QColor( msg.color().red(), msg.color().green(), msg.color().blue() ).name().toStdString() )
+    , pattern_  ( msg.pattern() )
+    , name_     ( msg.has_name() ? msg.name() : pattern_ )
 {
-    if( asn.shape().has_diffusion() )
-        diffusion_ = asn.shape().diffusion();
-    for( int i = 0; i < asn.shape().points().elem_size(); ++i )
-        points_.push_back( asn.shape().points().elem( i ) );
-    if( asn.shape().has_pen_style() )
-        style_ = asn.shape().pen_style();
+    if( msg.has_diffusion() )
+        diffusion_ = msg.diffusion();
+    for( int i = 0; i < msg.points().elem_size(); ++i )
+        points_.push_back( msg.points().elem( i ) );
+    if( msg.has_pen_style() )
+        style_ = msg.pen_style();
 }
 
 namespace
@@ -54,12 +55,14 @@ namespace
 // Name: Drawing constructor
 // Created: SBO 2008-06-10
 // -----------------------------------------------------------------------------
-Drawing::Drawing( unsigned int id, xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion, const kernel::CoordinateConverter_ABC& converter )
+Drawing::Drawing( unsigned int id, xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion,
+                  const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
     , id_       ( id )
     , category_ ( xis.attribute< std::string >( "category" ) )
     , color_    ( xis.attribute< std::string >( "color" ) )
     , pattern_  ( xis.attribute< std::string >( "template" ) )
+    , name_     ( xis.attribute< std::string >( "name", pattern_ ) )
     , diffusion_( diffusion )
 {
     xis >> xml::list( "point", *this, &Drawing::ReadPoint );
@@ -80,6 +83,7 @@ Drawing::Drawing( unsigned int id, const Drawing& rhs )
     , points_   ( rhs.points_ )
     , diffusion_( rhs.diffusion_ )
     , style_    ( rhs.style_ )
+    , name_     ( rhs.name_ )
 {
     // NOTHING
 }
@@ -153,20 +157,22 @@ const boost::optional< sword::Diffusion >& Drawing::GetDiffusion() const
 // Name: Drawing::Update
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-void Drawing::Update( const sword::ShapeUpdateRequest& asn )
+void Drawing::Update( const sword::ShapeUpdateRequest& msg )
 {
-    if( asn.has_category() )
-        category_ = asn.category();
-    if( asn.has_color() )
-        color_ = QColor( asn.color().red(), asn.color().green(), asn.color().blue() ).name().toStdString();
-    if( asn.has_pattern() )
-        pattern_ = asn.pattern();
-    if( asn.has_points() )
+    if( msg.has_category() )
+        category_ = msg.category();
+    if( msg.has_color() )
+        color_ = QColor( msg.color().red(), msg.color().green(), msg.color().blue() ).name().toStdString();
+    if( msg.has_pattern() )
+        pattern_ = msg.pattern();
+    if( msg.has_points() )
     {
         points_.clear();
-        for( int i = 0; i < asn.points().elem_size(); ++i )
-            points_.push_back( asn.points().elem(i) );
+        for( auto i = 0; i < msg.points().elem_size(); ++i )
+            points_.push_back( msg.points().elem( i ) );
     }
+    if( msg.has_name() )
+        name_ = msg.name();
 }
 
 // -----------------------------------------------------------------------------
@@ -184,12 +190,13 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_shape()->mutable_color()->set_green( color.green() );
     message().mutable_shape()->mutable_color()->set_blue( color.blue() );
     message().mutable_shape()->set_pattern( pattern_ );
+    message().mutable_shape()->set_name( name_ );
     if( diffusion_ )
         *message().mutable_shape()->mutable_diffusion() = *diffusion_;
     if( style_)
         message().mutable_shape()->set_pen_style( *style_ );
     sword::CoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
-    for( CIT_Points iter = points_.begin(); iter != points_.end(); ++iter )
+    for( auto iter = points_.begin(); iter != points_.end(); ++iter )
         *points->add_elem() = *iter;        //const_cast< CoordLatLong* >( &points_.front() );
     message.Send( publisher );
 }
@@ -210,7 +217,8 @@ void Drawing::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_shape()->mutable_color()->set_green( color.green() );
     message().mutable_shape()->mutable_color()->set_blue( color.blue() );
     message().mutable_shape()->set_pattern( pattern_ );
-    for( CIT_Points iter = points_.begin(); iter != points_.end(); ++iter )
+    message().mutable_shape()->set_name( name_ );
+    for( auto iter = points_.begin(); iter != points_.end(); ++iter )
         *message().mutable_shape()->mutable_points()->add_elem() = *iter;
     message.Send( publisher );
 }
@@ -231,7 +239,6 @@ void Drawing::SendFullState( dispatcher::ClientPublisher_ABC& publisher ) const
 void Drawing::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     plugins::messenger::ShapeDestruction message;
-    //ShapeDestruction message;
     message().mutable_id()->set_id( id_ );
     message.Send( publisher );
 }
@@ -245,6 +252,7 @@ void Drawing::Serialize( xml::xostream& xos ) const
     xos << xml::start( "shape" )
             << xml::attribute( "category", category_ )
             << xml::attribute( "color", color_ )
+            << xml::attribute( "name", name_ )
             << xml::attribute( "template", pattern_ );
     std::for_each( points_.begin(), points_.end(), boost::bind( &Drawing::SerializePoint, this, _1, boost::ref( xos ) ) );
     xos << xml::end;

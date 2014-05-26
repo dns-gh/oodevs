@@ -272,6 +272,13 @@
     </message>
 </context>
 <context>
+    <name>Info</name>
+    <message>
+        <source>Info/Template</source>
+        <translation type="unfinished">Info/Plantilla</translation>
+    </message>
+</context>
+<context>
     <name>LogisticBase</name>
     <message>
         <source>Info/Logistic base</source>
@@ -867,6 +874,13 @@ Porfavor revisar permisos de acceso o proteccion de escritura.</translation>
     </message>
 </context>
 <context>
+    <name>gui::DrawingsTreeView</name>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::EditorFactory</name>
     <message>
         <source>True</source>
@@ -902,6 +916,17 @@ Porfavor revisar permisos de acceso o proteccion de escritura.</translation>
     <message>
         <source>Strength</source>
         <translation>Intensidad</translation>
+    </message>
+</context>
+<context>
+    <name>gui::EntityTreeView_ABC</name>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -62,10 +62,10 @@ TacticalTreeView::~TacticalTreeView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalTreeView::AddCommunMenu
+// Name: TacticalTreeView::AddCommonMenu
 // Created: LGY 2014-05-13
 // -----------------------------------------------------------------------------
-void TacticalTreeView::AddCommunMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+void TacticalTreeView::AddCommonMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     if( !isVisible() || !profile_.IsVisible( entity ) )
         return;
@@ -80,7 +80,7 @@ void TacticalTreeView::AddCommunMenu( const kernel::Entity_ABC& entity, kernel::
 // -----------------------------------------------------------------------------
 void TacticalTreeView::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
 {
-    AddCommunMenu( entity, menu );
+    AddCommonMenu( entity, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Agent_ABC& entity, kerne
 // -----------------------------------------------------------------------------
 void TacticalTreeView::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
 {
-    AddCommunMenu( entity, menu );
+    AddCommonMenu( entity, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Automat_ABC& entity, ker
 // -----------------------------------------------------------------------------
 void TacticalTreeView::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
 {
-    AddCommunMenu( entity, menu );
+    AddCommonMenu( entity, menu );
 }
 
 namespace
@@ -127,7 +127,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& entity, kernel
         CreateSubMenu( this, menu, tr( "Create formation" ), SLOT( OnCreateFormation( int ) ) );
         CreateSubMenu( this, menu, tr( "Create logistic base" ), SLOT( OnCreateLogisticBase( int ) ) );
     }
-    AddCommunMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
+    AddCommonMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
 }
 
 // -----------------------------------------------------------------------------

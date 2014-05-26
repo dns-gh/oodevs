@@ -989,18 +989,13 @@ enum EnumPenStyle {
     @brief Defines a shape
 */
 message Shape {
-    //! The category
     required string           category  = 1;
-    //! The color
     required RgbColor         color     = 2;
-    //! The pattern
     required string           pattern   = 3;
-    //! The coordinates
     required CoordLatLongList points    = 4;
-    //! The Diffusion
     optional Diffusion        diffusion = 5;
-    //! The pen style
     optional EnumPenStyle     pen_style = 6;
+    optional string           name      = 7;
 }
 
 /** @struct ChatTarget

@@ -272,6 +272,13 @@
     </message>
 </context>
 <context>
+    <name>Info</name>
+    <message>
+        <source>Info/Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticBase</name>
     <message>
         <source>SWORD</source>
@@ -864,6 +871,13 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>gui::DrawingsTreeView</name>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::EditorFactory</name>
     <message>
         <source>True</source>
@@ -899,6 +913,17 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Strength</source>
         <translation type="unfinished">القوام</translation>
+    </message>
+</context>
+<context>
+    <name>gui::EntityTreeView_ABC</name>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

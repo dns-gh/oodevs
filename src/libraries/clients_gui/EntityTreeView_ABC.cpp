@@ -210,14 +210,40 @@ void EntityTreeView_ABC::OnDataChanged( const QModelIndex& index, const QVariant
     {
         kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
         if( entity )
-        {
-            modelObserver_.OnRename( *entity, value.toString() );
-            if( QStandardItem* item = dataModel_.GetItemFromIndex( index ) )
-            {
-                item->setData( QVariant( entity->GetName() ), Qt::DisplayRole );
-                item->setData( QVariant( entity->GetTooltip() ), Qt::ToolTipRole );
-            }
-        }
+           Rename( *entity, value.toString() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::Rename
+// Created: LGY 2014-05-2013
+// -----------------------------------------------------------------------------
+void EntityTreeView_ABC::Rename( kernel::Entity_ABC& entity, const QString& name )
+{
+    modelObserver_.OnRename( entity, name );
+    if( QStandardItem* item = dataModel_.FindDataItem( entity ) )
+    {
+        item->setData( QVariant( entity.GetName() ), Qt::DisplayRole );
+        item->setData( QVariant( entity.GetTooltip() ), Qt::ToolTipRole );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::Rename
+// Created: LGY 2014-05-2013
+// -----------------------------------------------------------------------------
+void EntityTreeView_ABC::Rename( kernel::Entity_ABC& entity )
+{
+    if( isVisible() )
+        Edit( entity );
+    else
+    {
+        bool ok = false;
+        const auto text = QInputDialog::getText( this, tr( "Rename" ),
+            tr( "New name:" ), QLineEdit::Normal,
+            entity.GetName(), &ok );
+        if( ok )
+            Rename( entity, text );
     }
 }
 
@@ -310,4 +336,15 @@ namespace
 void EntityTreeView_ABC::SetLessThanEntityFunctor( const T_LessThanEntityFunctor& functor )
 {
     SetLessThanFunctor( boost::bind( &ModelIndexToEntityWrapper, _1, _2, _3, boost::cref( dataModel_ ), functor ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::Edit
+// Created: LGY 2014-05-22
+// -----------------------------------------------------------------------------
+void EntityTreeView_ABC::Edit( const kernel::Entity_ABC& entity )
+{
+    QStandardItem* item = dataModel_.FindDataItem( entity );
+    if( item )
+        edit( proxyModel_->mapFromSource( item->index() ) );
 }

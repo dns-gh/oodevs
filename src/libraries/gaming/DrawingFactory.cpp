@@ -130,6 +130,7 @@ void DrawingFactory::CreateShape( const gui::DrawingTemplate& style, const QColo
     message().mutable_shape()->mutable_color()->set_green( color.green() );
     message().mutable_shape()->mutable_color()->set_blue( color.blue() );
     message().mutable_shape()->set_pattern( style.GetName().toStdString() );
+    message().mutable_shape()->set_name( style.GetName() );
     if( dashStyle != gui::eSolid )
         message().mutable_shape()->set_pen_style( sword::EnumPenStyle( dashStyle ) );
     if( entity )

@@ -11,6 +11,7 @@
 #include "ModelBuilder.h"
 #include "moc_ModelBuilder.cpp"
 #include "icons.h"
+#include "clients_gui/Drawing.h"
 #include "clients_gui/UrbanObject.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
@@ -31,6 +32,7 @@
 #include "preparation/Model.h"
 #include "preparation/Object.h"
 #include "preparation/Population.h"
+#include "preparation/TacticalLine_ABC.h"
 #include "preparation/Team.h"
 #include "preparation/TeamsModel.h"
 #include "preparation/UrbanModel.h"
@@ -522,6 +524,8 @@ void ModelBuilder::OnRename( kernel::Entity_ABC& entity, const QString& newName 
     Rename< Object >( &entity, newName, controllers_, property_ );
     Rename< gui::UrbanObject >( &entity, newName, controllers_, property_ );
     Rename< Population >( &entity, newName, controllers_, property_ );
+    Rename< gui::Drawing >( &entity, newName, controllers_, property_ );
+    Rename< TacticalLine_ABC >( &entity, newName, controllers_, property_ );
 }
 
 // -----------------------------------------------------------------------------
