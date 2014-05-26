@@ -346,5 +346,9 @@ void EntityTreeView_ABC::Edit( const kernel::Entity_ABC& entity )
 {
     QStandardItem* item = dataModel_.FindDataItem( entity );
     if( item )
-        edit( proxyModel_->mapFromSource( item->index() ) );
+    {
+        const auto index = proxyModel_->mapFromSource( item->index() );
+        expand( index.parent() );
+        edit( index );
+    }
 }
