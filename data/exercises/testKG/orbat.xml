@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.4.0/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp 1" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="12" level="xxxx" name="Formation [12]" symbol="symbols/sfgpucaw">
+          <automat engaged="true" id="13" knowledge-group="31" name="Fils" symbol="symbols/sfgpucaw" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="14" name="ARMOR.Armored squadron CP" position="31UDQ9176737315" type="ARMOR.Armored squadron CP"/>
+          </automat>
+          <automat engaged="true" id="19" knowledge-group="2" name="Pere" symbol="symbols/sfgpucaw" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="20" name="ARMOR.Armored squadron CP" position="31UDQ7862848232" type="ARMOR.Armored squadron CP"/>
+          </automat>
+          <automat engaged="true" id="25" knowledge-group="32" name="Frere" symbol="symbols/sfgpucaw" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="26" name="ARMOR.Armored squadron CP" position="31UEQ0231954123" type="ARMOR.Armored squadron CP"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard">
+          <knowledge-group id="31" name="Groupe de connaissance [31]" type="Standard"/>
+          <knowledge-group id="32" name="Groupe de connaissance [32]" type="Standard"/>
+        </knowledge-group>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1"/>
+  </diplomacy>
+</orbat>

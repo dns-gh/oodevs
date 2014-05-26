@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<shapes model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.4.0/exercise/drawings.xsd">
+  <shape category="Objects" color="#000000" template="G*ZA***********" type="polygon">
+    <point latitude="49.0441" longitude="2.84978"/>
+    <point latitude="49.0303" longitude="2.81813"/>
+    <point latitude="49.0158" longitude="2.83081"/>
+    <point latitude="49.0075" longitude="2.85192"/>
+    <point latitude="49.0268" longitude="2.88673"/>
+  </shape>
+</shapes>

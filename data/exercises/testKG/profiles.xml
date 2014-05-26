@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.4.0/exercise/profiles.xsd">
+  <profile name="admin" password="" supervision="true" time-control="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu" password="" supervision="true" time-control="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Fils" password="" supervision="true" time-control="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="13"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Pere" password="" supervision="true" time-control="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="19"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Oncle" password="" supervision="true" time-control="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="25"/>
+      </readwrite>
+    </rights>
+  </profile>
+</profiles>
