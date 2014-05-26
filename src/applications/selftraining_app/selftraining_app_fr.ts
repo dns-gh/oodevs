@@ -193,6 +193,10 @@
         <source>Client log file</source>
         <translation>Fichier de log du client</translation>
     </message>
+    <message>
+        <source>Debug directory</source>
+        <translation>Répertoire de debug</translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>
