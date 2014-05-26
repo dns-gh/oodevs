@@ -635,8 +635,8 @@ namespace
 bool DEC_AgentFunctions::IsLoadable( DEC_Decision_ABC& callerAgent )
 {
     IsLoadableComputer computer;
-    MIL_AgentPion& pionT = const_cast< MIL_AgentPion& >( callerAgent.GetPion() );
-    pionT.Execute< OnComponentComputer_ABC >( computer );
+    MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( callerAgent.GetPion() );
+    pion.Execute< OnComponentComputer_ABC >( computer );
     return computer.IsLoadable();
 }
 
