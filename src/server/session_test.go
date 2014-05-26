@@ -350,7 +350,7 @@ func (t *TestSuite) TestServerSideDuplicateOrders(c *C) {
 		},
 	}
 	magic := sword.SimToClient_Content{
-		MagicOrder: &sword.MagicOrder{
+		Action: &sword.Action{
 			Id: proto.Uint32(17),
 			UnitMagicAction: &sword.UnitMagicAction{
 				Tasker:     swapi.MakeUnitTasker(17),

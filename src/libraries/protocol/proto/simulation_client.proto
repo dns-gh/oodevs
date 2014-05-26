@@ -3147,7 +3147,7 @@ message PopulationUpdate {
     optional Extension       extension    = 9;
 }
 
-message MagicOrder {
+message Action {
     required uint32               id                     = 1;
     optional MagicAction          magic_action           = 2;
     optional UnitMagicAction      unit_magic_action      = 3;
@@ -3159,7 +3159,7 @@ message MagicOrder {
     optional string               start_time             = 9;
 }
 
-message MagicOrderDestruction {
+message ActionDestruction {
     required uint32 id = 1;
 }
 
@@ -3503,8 +3503,8 @@ message SimToClient {
         optional ListEnabledVisionConesAck list_enabled_vision_cones_ack = 149;
         optional LogisticHistoryAck logistic_history_ack = 150;
         optional ListLogisticRequestsAck list_logistic_requests_ack = 151;
-        optional MagicOrder            magic_order = 152;
-        optional MagicOrderDestruction magic_order_destruction = 153;
+        optional Action            action = 152;
+        optional ActionDestruction action_destruction = 153;
         optional StartUnitFireDetection start_unit_fire_detection = 154;
         optional StopUnitFireDetection stop_unit_fire_detection = 155;
         optional ComputePathfindAck compute_pathfind_ack = 156;

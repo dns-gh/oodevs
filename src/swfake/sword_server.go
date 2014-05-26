@@ -316,7 +316,7 @@ func (s *SwordServer) replyMagicOrder(slink *SwordLink, ctx int32, order *sword.
 		},
 	})
 	s.broadcastContent(ctx, &sword.SimToClient_Content{
-		MagicOrder: &sword.MagicOrder{
+		Action: &sword.Action{
 			Id:          id,
 			MagicAction: order,
 			ErrorCode:   &code,
@@ -337,7 +337,7 @@ func (s *SwordServer) replyUnitMagicOrder(slink *SwordLink, ctx int32, order *sw
 		},
 	})
 	s.broadcastContent(ctx, &sword.SimToClient_Content{
-		MagicOrder: &sword.MagicOrder{
+		Action: &sword.Action{
 			Id:              id,
 			UnitMagicAction: order,
 			ErrorCode:       &code,
@@ -357,7 +357,7 @@ func (s *SwordServer) replyObjectMagicOrder(slink *SwordLink, ctx int32, order *
 		},
 	})
 	s.broadcastContent(ctx, &sword.SimToClient_Content{
-		MagicOrder: &sword.MagicOrder{
+		Action: &sword.Action{
 			Id:                id,
 			ObjectMagicAction: order,
 			ErrorCode:         &code,
@@ -378,7 +378,7 @@ func (s *SwordServer) replyKnowledgeMagicOrder(slink *SwordLink, ctx int32, orde
 		},
 	})
 	s.broadcastContent(ctx, &sword.SimToClient_Content{
-		MagicOrder: &sword.MagicOrder{
+		Action: &sword.Action{
 			Id:                   id,
 			KnowledgeMagicAction: order,
 			ErrorCode:            &code,
@@ -398,7 +398,7 @@ func (s *SwordServer) replyAutomatModeMagicOrder(slink *SwordLink, ctx int32, or
 		},
 	})
 	s.broadcastContent(ctx, &sword.SimToClient_Content{
-		MagicOrder: &sword.MagicOrder{
+		Action: &sword.Action{
 			Id:             id,
 			SetAutomatMode: order,
 			ErrorCode:      &code,

@@ -9,6 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "Model.h"
+
+#include "Action.h"
 #include "Agent.h"
 #include "AgentKnowledge.h"
 #include "Automat.h"
@@ -24,7 +26,6 @@
 #include "LogRequestSupply.h"
 #include "LogConsignMedical.h"
 #include "LogConsignFuneral.h"
-#include "MagicOrder.h"
 #include "MeteoModel.h"
 #include "Object.h"
 #include "ObjectKnowledge.h"
@@ -43,6 +44,7 @@
 #include "Visitors.h"
 #include "MemoryLogger_ABC.h"
 #include "EntityPublisher.h"
+
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessageParameters.h"
@@ -111,7 +113,7 @@ void Model::Reset()
     formations_            .DeleteAll();
     sides_                 .DeleteAll();
     urbanBlocks_           .DeleteAll();
-    magicOrders_           .DeleteAll();
+    actions_               .DeleteAll();
 }
 
 namespace
@@ -496,10 +498,10 @@ void Model::Update( const sword::SimToClient& wrapper )
         meteoModel_->OnReceiveMsgLocalMeteoDestruction( message.control_local_weather_destruction() );
     else if( message.has_formation_change_superior() )
         formations_.Get( message.formation_change_superior().formation().id() ).Update( message.formation_change_superior() );
-    else if( message.has_magic_order() )
-        CreateUpdate< MagicOrder >( magicOrders_, message.magic_order().id(), message.magic_order() );
-    else if( message.has_magic_order_destruction() )
-        Destroy( magicOrders_, message.magic_order_destruction().id(), nullptr );
+    else if( message.has_action() )
+        CreateUpdate< Action >( actions_, message.action().id(), message.action() );
+    else if( message.has_action_destruction() )
+        Destroy( actions_, message.action_destruction().id(), nullptr );
 //        default:
 //            assert( false );//@TODO restore an exception, some messages aren't linked
 //    }
@@ -668,7 +670,7 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
     detectionRangeEffects_ .Apply( boost::bind( &DetectionRangeEffect::Accept, _1, boost::ref( visitor ) ) );
     reports_               .Apply( boost::bind( &Report::Accept, _1, boost::ref( visitor ) ) );
     urbanKnowledges_       .Apply( boost::bind( &dispatcher::UrbanKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );
-    magicOrders_           .Apply( boost::bind( &dispatcher::MagicOrder::Accept, _1, boost::ref( visitor ) ) );
+    actions_               .Apply( boost::bind( &dispatcher::Action::Accept, _1, boost::ref( visitor ) ) );
     meteoModel_->Accept( visitor );
 }
 

@@ -8,50 +8,50 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "MagicOrder.h"
+#include "Action.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 
-MagicOrder::MagicOrder( const Model& /*model*/, const sword::MagicOrder& msg )
+Action::Action( const Model& /*model*/, const sword::Action& msg )
     : SimpleEntity<>( msg.id() )
-    , order_( new sword::MagicOrder( msg ) )
+    , action_( new sword::Action( msg ) )
 {
     // NOTHING
 }
 
-MagicOrder::~MagicOrder()
+Action::~Action()
 {
     // NOTHING
 }
 
-void MagicOrder::DoUpdate( const sword::MagicOrder& msg )
+void Action::DoUpdate( const sword::Action& msg )
 {
-    *order_ = msg;
+    *action_ = msg;
 }
 
-void MagicOrder::SendCreation( ClientPublisher_ABC& publisher ) const
+void Action::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::MagicOrder msg;
-    msg() = *order_;
+    client::Action msg;
+    msg() = *action_;
     msg.Send( publisher );
 }
 
-void MagicOrder::SendFullUpdate( ClientPublisher_ABC& /*publisher */) const
+void Action::SendFullUpdate( ClientPublisher_ABC& /*publisher */) const
 {
     // NOTHING
 }
 
-void MagicOrder::SendDestruction( ClientPublisher_ABC& publisher ) const
+void Action::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    client::MagicOrderDestruction msg;
-    msg().set_id( order_->id() );
+    client::ActionDestruction msg;
+    msg().set_id( action_->id() );
     msg.Send( publisher );
 }
 
-void MagicOrder::Accept( kernel::ModelVisitor_ABC& visitor ) const
+void Action::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

@@ -12,12 +12,12 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_EntityManager.h"
 
+#include "ActionManager.h"
 #include "ArmyFactory.h"
 #include "AutomateFactory.h"
 #include "FormationFactory.h"
 #include "InhabitantFactory.h"
 #include "KnowledgesVisitor_ABC.h"
-#include "MagicOrderManager.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Army.h"
 #include "MIL_EntityManagerStaticMethods.h"
@@ -1041,16 +1041,16 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
 void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::UnitMagicActionAck ack;
-    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
-    const auto magicId = magics.Register( message );
-    ack().set_id( magicId );
+    auto& actions = MIL_AgentServer::GetWorkspace().GetActionManager();
+    const auto actionId = actions.Register( message );
+    ack().set_id( actionId );
     const auto tasker = protocol::TryGetTasker( message.tasker() );
     if( !tasker )
     {
         ack().mutable_unit()->set_id( 0 );
         ack().set_error_code( UnitActionAck::error_invalid_unit );
         ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-        magics.Send( magicId, ack().error_code(), "missing tasker" );
+        actions.Send( actionId, ack().error_code(), "missing tasker" );
         return;
     }
     const auto id = *tasker;
@@ -1193,7 +1193,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
         ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    magics.Send( magicId, ack().error_code(), ack().error_msg() );
+    actions.Send( actionId, ack().error_code(), ack().error_msg() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1425,10 +1425,10 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
-    const auto magicId = magics.Register( message );
+    auto& actions = MIL_AgentServer::GetWorkspace().GetActionManager();
+    const auto actionId = actions.Register( message );
     client::KnowledgeGroupMagicActionAck ack;
-    ack().set_id( magicId );
+    ack().set_id( actionId );
     ack().mutable_knowledge_group()->set_id( message.knowledge_group().id() );
     ack().set_error_code( KnowledgeGroupAck::no_error );
     try
@@ -1449,7 +1449,7 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
         ack().set_error_msg( e.what() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    magics.Send( magicId, ack().error_code(), ack().error_msg() );
+    actions.Send( actionId, ack().error_code(), ack().error_msg() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1540,10 +1540,10 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message, unsigned int nCtx, unsigned int clientId )
 {
-    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
-    const auto magicId = magics.Register( message );
+    auto& actions = MIL_AgentServer::GetWorkspace().GetActionManager();
+    const auto actionId = actions.Register( message );
     client::SetAutomatModeAck ack;
-    ack().set_id( magicId );
+    ack().set_id( actionId );
     ack().mutable_automate()->set_id( message.automate().id() );
     ack().set_error_code( SetAutomatModeAck::no_error );
     try
@@ -1558,7 +1558,7 @@ void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message,
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    magics.Send( magicId, ack().error_code(), "" );
+    actions.Send( actionId, ack().error_code(), "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1589,13 +1589,13 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest&
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
-    const auto magicId = magics.Register( message );
+    auto& actions = MIL_AgentServer::GetWorkspace().GetActionManager();
+    const auto actionId = actions.Register( message );
     client::ObjectMagicActionAck ack;
-    ack().set_id( magicId );
+    ack().set_id( actionId );
     pObjectManager_->OnReceiveObjectMagicAction( message, ack(), *armyFactory_, *pFloodModel_ );
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    magics.Send( magicId, ack().error_code(), ack().error_msg() );
+    actions.Send( actionId, ack().error_code(), ack().error_msg() );
 }
 
 // -----------------------------------------------------------------------------

@@ -54,7 +54,7 @@ type SwordData struct {
 	handler int32                          // registered input handler
 	group   *sync.WaitGroup                // input wait group
 	orders  map[uint32]None                // known orders
-	magics  map[uint32]None                // known magic orders
+	actions map[uint32]None                // known actions
 	events  map[string]*swapi.SwordMessage // decoded messages
 	pending map[string]PendingAction       // pending actions
 	retry   uint                           // retry count
@@ -80,7 +80,7 @@ func NewSword(log util.Logger, root Observer, clock bool, name, address string) 
 		clock:   clock,
 		d: SwordData{
 			orders:  map[uint32]None{},
-			magics:  map[uint32]None{},
+			actions: map[uint32]None{},
 			events:  map[string]*swapi.SwordMessage{},
 			pending: map[string]PendingAction{},
 		},
@@ -210,7 +210,7 @@ func readReport(tick time.Time, report *sword.Report) *sdk.Event {
 	}
 }
 
-func readMagicOrder(target string, tick time.Time, order *sword.MagicOrder) *sdk.Event {
+func readAction(target string, tick time.Time, order *sword.Action) *sdk.Event {
 	name := ""
 	content := sword.ClientToSim_Content{}
 	code := order.GetErrorCode()
@@ -259,7 +259,7 @@ type IdGetter interface {
 	GetId() uint32
 }
 
-func (s *Sword) isUnknownAction(data map[uint32]None, id IdGetter) bool {
+func (s *Sword) isUnknown(data map[uint32]None, id IdGetter) bool {
 	value := id.GetId()
 	if value == 0 {
 		return true
@@ -276,11 +276,11 @@ func (s *Sword) isUnknownOrder(id, idType IdGetter) bool {
 	if idType.GetId() == 0 {
 		return false
 	}
-	return s.isUnknownAction(s.d.orders, id)
+	return s.isUnknown(s.d.orders, id)
 }
 
-func (s *Sword) isUnknownMagic(id IdGetter) bool {
-	return s.isUnknownAction(s.d.magics, id)
+func (s *Sword) isUnknownAction(id IdGetter) bool {
+	return s.isUnknown(s.d.actions, id)
 }
 
 func (s *Sword) saveAction(data map[uint32]None, msg *swapi.SwordMessage, clientId int32, id IdGetter) {
@@ -302,7 +302,7 @@ func (s *Sword) saveOrder(msg *swapi.SwordMessage, clientId int32, id IdGetter) 
 }
 
 func (s *Sword) saveMagic(msg *swapi.SwordMessage, clientId int32, id IdGetter) {
-	s.saveAction(s.d.magics, msg, clientId, id)
+	s.saveAction(s.d.actions, msg, clientId, id)
 }
 
 func (s *Sword) readMessage(msg *swapi.SwordMessage, clientId int32, err error, last time.Time) time.Time {
@@ -329,8 +329,8 @@ func (s *Sword) readMessage(msg *swapi.SwordMessage, clientId int32, err error, 
 	} else if order := content.FragOrder; order != nil && s.isUnknownOrder(order, order.GetType()) {
 		event := readFragOrder(s.name, last, order)
 		go s.event(event)
-	} else if order := content.MagicOrder; order != nil && s.isUnknownMagic(order) {
-		event := readMagicOrder(s.name, last, order)
+	} else if order := content.Action; order != nil && s.isUnknownAction(order) {
+		event := readAction(s.name, last, order)
 		if event != nil {
 			go s.event(event)
 		}
@@ -520,7 +520,7 @@ func (s *Sword) stop(previous *swapi.Client) bool {
 			go s.root.OnApply(uuid, ErrAborted, it.lock)
 		}
 		s.d.orders = map[uint32]None{}
-		s.d.magics = map[uint32]None{}
+		s.d.actions = map[uint32]None{}
 		s.d.pending = map[string]PendingAction{}
 	}
 	client := s.d.input

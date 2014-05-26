@@ -1419,12 +1419,12 @@ func (model *ModelData) handleFireEffectDestruction(m *sword.SimToClient_Content
 	return nil
 }
 
-func (model *ModelData) handleMagicOrderCreation(m *sword.SimToClient_Content) error {
-	mm := m.GetMagicOrder()
+func (model *ModelData) handleActionCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetAction()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	magic := MagicOrder{
+	magic := Action{
 		Id:      mm.GetId(),
 		ErrCode: mm.GetErrorCode(),
 		ErrMsg:  mm.GetErrorMsg(),
@@ -1443,18 +1443,18 @@ func (model *ModelData) handleMagicOrderCreation(m *sword.SimToClient_Content) e
 	default:
 		return fmt.Errorf("missing action on magic order %d", magic.Id)
 	}
-	if !model.addMagicOrder(&magic) {
+	if !model.addAction(&magic) {
 		return fmt.Errorf("cannot insert magic order %d", magic.Id)
 	}
 	return nil
 }
 
-func (model *ModelData) handleMagicOrderDestruction(m *sword.SimToClient_Content) error {
-	mm := m.GetMagicOrderDestruction()
+func (model *ModelData) handleActionDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetActionDestruction()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.removeMagicOrder(mm.GetId()) {
+	if !model.removeAction(mm.GetId()) {
 		return fmt.Errorf("cannot destroy magic order %d", mm.GetId())
 	}
 	return nil

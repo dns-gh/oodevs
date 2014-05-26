@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "NET_SimMsgHandler.h"
-#include "MagicOrderManager.h"
+#include "ActionManager.h"
 #include "MIL_AgentServer.h"
 #include "NET_AgentServer.h"
 #include "NET_Simulation_ABC.h"
@@ -161,12 +161,12 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
 {
     MIL_AgentServer& server = MIL_AgentServer::GetWorkspace();
     MIL_EntityManager& manager = server.GetEntityManager();
-    auto& magics = server.GetMagicOrderManager();
+    auto& actions = server.GetActionManager();
     const auto type = msg.type();
     client::MagicActionAck ack;
     ack().set_error_code( sword::MagicActionAck::no_error );
-    const auto magicId = magics.Register( msg );
-    ack().set_id( magicId );
+    const auto actionId = actions.Register( msg );
+    ack().set_id( actionId );
     try
     {
         if( type == sword::MagicAction::create_knowledge_group )
@@ -204,7 +204,7 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
         ack().set_error_msg( tools::GetExceptionMsg( e ));
     }
     ack.Send( Publisher(), ctx, clientId );
-    magics.Send( magicId, ack().error_code(), ack().error_msg() );
+    actions.Send( actionId, ack().error_code(), ack().error_msg() );
 }
 
 namespace

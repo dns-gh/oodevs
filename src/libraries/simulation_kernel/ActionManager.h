@@ -7,29 +7,30 @@
 //
 // *****************************************************************************
 
-#ifndef __MagicOrderManager_h_
-#define __MagicOrderManager_h_
+#ifndef __ActionManager_h_
+#define __ActionManager_h_
 
 #include <cstdint>
 #include <map>
 
 namespace sword
 {
+    class Action;
     class KnowledgeMagicAction;
     class MagicAction;
-    class MagicOrder;
     class ObjectMagicAction;
     class SetAutomatMode;
     class UnitMagicAction;
 }
 
-// MagicOrderManager stores all magic orders and assign to them a unique id
-// When a new client connects, it will receive all previously stored magic orders.
-class MagicOrderManager
+// ActionManager stores all orders and magic actions and assign to them a
+// unique id When a new client connects, it will receive all previously
+// stored magic orders.
+class ActionManager
 {
 public:
-             MagicOrderManager();
-    virtual ~MagicOrderManager();
+             ActionManager();
+    virtual ~ActionManager();
 
     template< typename Archive > void serialize( Archive& file, const unsigned int version );
 
@@ -43,13 +44,13 @@ public:
     virtual void SendStateToNewClient();
 
 private:
-    uint32_t Register( const sword::MagicOrder& msg );
+    uint32_t Register( const sword::Action& msg );
 
 private:
     uint32_t ids_;
-    std::map< uint32_t, sword::MagicOrder > orders_;
+    std::map< uint32_t, sword::Action > actions_;
 };
 
-BOOST_CLASS_EXPORT_KEY( MagicOrderManager )
+BOOST_CLASS_EXPORT_KEY( ActionManager )
 
-#endif // __MagicOrderManager_h_
+#endif // __ActionManager_h_

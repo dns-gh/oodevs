@@ -4,7 +4,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentServer.h"
-#include "MagicOrderManager.h"
+#include "ActionManager.h"
 
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "CheckPoints/SerializationTools.h"
@@ -145,7 +145,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pObjectFactory_       ( new MIL_ObjectFactory() )
     , pathfindTime_         ( 0 )
     , updateState_          ( false )
-    , magicOrders_          ( new MagicOrderManager() )
+    , actions_              ( new ActionManager() )
 {
     MIL_Time_ABC::RegisterTime( *this );
     loopTimer_.Start();
@@ -167,7 +167,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     MT_LOG_INFO_MSG( "Initializing terrain" );
     MT_LOG_INFO_MSG( "Terrain: " << config_.GetTerrainFile() );
     TER_World::Initialize( config_ );
-    MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", 
+    MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm",
         TER_World::GetWorld().GetWidth() / 1000.,
         TER_World::GetWorld().GetHeight()  / 1000. ) );
     const auto world = TER_World::GetWorldPtr();
@@ -362,7 +362,7 @@ void MIL_AgentServer::SendStateToNewClient() const
 {
     pEntityManager_->SendStateToNewClient();
     pMeteoDataManager_->SendStateToNewClient();
-    magicOrders_->SendStateToNewClient();
+    actions_->SendStateToNewClient();
 }
 
 // -----------------------------------------------------------------------------
@@ -385,7 +385,7 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
          << nInitialRealTime_
          << nRealTime_
          << localTime
-         << magicOrders_;
+         << actions_;
     pBurningCells_->save( file );
 }
 
@@ -408,7 +408,7 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> nInitialRealTime_
          >> nRealTime_
          >> localTime_
-         >> magicOrders_;
+         >> actions_;
     pBurningCells_->load( file );
     pBurningCells_->finalizeLoad( GetEntityManager() );
 }
@@ -816,12 +816,12 @@ resource::ResourceTools_ABC& MIL_AgentServer::GetResourceTools() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetMagicOrderManager
+// Name: MIL_AgentServer::GetActionManager
 // Created: BAX 2014-02-21
 // -----------------------------------------------------------------------------
-MagicOrderManager& MIL_AgentServer::GetMagicOrderManager() const
+ActionManager& MIL_AgentServer::GetActionManager() const
 {
-    return *magicOrders_;
+    return *actions_;
 }
 
 // -----------------------------------------------------------------------------
