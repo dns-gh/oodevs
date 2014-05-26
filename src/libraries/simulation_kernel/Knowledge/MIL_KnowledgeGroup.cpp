@@ -74,8 +74,9 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , isJammed_( false )
     , createdByJamming_( false )
     , crowd_( false )
-    , jammedPion_( 0 )
     , bDiffuseToKnowledgeGroup_( false )
+    , hasSavedCurrentKnowledge_( false )
+    , jammedPion_( 0 )
 {
     // NOTHING
 }
@@ -97,8 +98,9 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_
     , isJammed_( false )
     , createdByJamming_( false )
     , crowd_( false )
-    , jammedPion_( 0 )
     , bDiffuseToKnowledgeGroup_( false )
+    , hasSavedCurrentKnowledge_( false )
+    , jammedPion_( 0 )
 {
     SendCreation();
 }
@@ -120,8 +122,9 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_
     , isJammed_( false )
     , createdByJamming_( false )
     , crowd_( crowd )
-    , jammedPion_( 0 )
     , bDiffuseToKnowledgeGroup_( false )
+    , hasSavedCurrentKnowledge_( false )
+    , jammedPion_( 0 )
 {
     if( !crowd_)
         SendCreation();
@@ -144,8 +147,9 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , isJammed_( false )
     , createdByJamming_( false )
     , crowd_( false )
-    , jammedPion_( 0 )
     , bDiffuseToKnowledgeGroup_( false )
+    , hasSavedCurrentKnowledge_( false )
+    , jammedPion_( 0 )
 {
     if( ! type_ )
         throw MASA_EXCEPTION( "Knowledge group '" + boost::lexical_cast< std::string >( id_ )
@@ -169,8 +173,9 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
     , isJammed_( true )
     , createdByJamming_( true )
     , crowd_( false )
-    , jammedPion_( &pion )
     , bDiffuseToKnowledgeGroup_( false )
+    , hasSavedCurrentKnowledge_( false )
+    , jammedPion_( &pion )
 {
     SendCreation();
 }
@@ -294,6 +299,7 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
          >> timeToDiffuse_ // LTO
          >> isActivated_ // LTO
          >> isJammed_
+         >> hasSavedCurrentKnowledge_
          >> crowd_;
     idManager_.GetId( id_, true );
     hasBeenUpdated_ = true;
@@ -320,6 +326,7 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const unsigned in
          << timeToDiffuse_ // LTO
          << isActivated_ // LTO
          << isJammed_
+         << hasSavedCurrentKnowledge_
          << crowd_;
 }
 
@@ -1112,6 +1119,11 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPerception( int currentTimeStep )
     {
         bDiffuseToKnowledgeGroup_ = false;
         RefreshTimeToDiffuseToKnowledgeGroup();
+    }
+    if( !hasSavedCurrentKnowledge_ )
+    {
+        GetKnowledge()->GetKnowledgeAgentContainer().SaveAllCurrentKnowledgeAgent();
+        hasSavedCurrentKnowledge_ = true;
     }
 }
 
