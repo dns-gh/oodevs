@@ -63,7 +63,7 @@ void MagicOrderManager::serialize( Archive& ar, const unsigned int )
 
 namespace
 {
-    const std::string GetTimestamp()
+    const std::string MakeNow()
     {
         sword::DateTime now;
         NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), now );
@@ -75,7 +75,7 @@ namespace
     {
         sword::MagicOrder order;
         *( order.*mutator )() = src;
-        order.set_start_time( GetTimestamp() );
+        order.set_start_time( MakeNow() );
         return order;
     }
 
