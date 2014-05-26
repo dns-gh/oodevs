@@ -806,7 +806,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
     if #self.operationnalEntities == 0 then
-        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        reportOnceFunction( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
         self.Feedback( self.feedbacks.done )
         return
     end
@@ -849,7 +849,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
         for i = 1, #self.parameters.commandingEntities do
             for j = 1, #mainTasks do
                 if not integration.RetrievePionTask( self.parameters.commandingEntities[i], mainTasks[j] ) then
-                    Activate( self.skill.links.RC, 1, { RC = eRC_EveryoneMustBeAble } )
+                    reportOnceFunction( eRC_EveryoneMustBeAble )
                     myself.feedback = true
                 end
             end
@@ -894,7 +894,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     if giveMainTask then
         local bestUnits = integration.issueMission ( self, self.params.mainTasks, self.nbrFront, eEtatEchelon_First, nil, true, findBestsFunction, disengageTask )
         if not self.params.continueIfNoMainTask and #bestUnits == 0 then
-            Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
+            reportOnceFunction( eRC_NoPEInAutomat )
             myself.feedback = true
             return
         end
@@ -934,7 +934,7 @@ integration.leadActivate = function( self, findBestsFunction, manageReinforcemen
     end
 
     if #DEC_Automate_PionsDeAutomateAvecPC( myself ) == 0 then
-        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        reportOnceFunction( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
         self.Feedback( self.feedbacks.done )
         return
     end
@@ -1012,7 +1012,7 @@ integration.leadActivate = function( self, findBestsFunction, manageReinforcemen
     end
     
     if not self.params.continueIfNoMainTask and not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
-        Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
+        reportOnceFunction( eRC_NoPEInAutomat )
         myself.feedback = true -- terminating the mission if there is no operational unit in the first echelon
     end
 end
@@ -1028,7 +1028,7 @@ integration.leadDelayActivate = function( self, disengageTask )
     local Activate = Activate
 
     if #DEC_Automate_PionsDeAutomateAvecPC( myself ) == 0 then
-        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        reportOnceFunction( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
         self.Feedback( self.feedbacks.done )
         return
     end
@@ -1136,7 +1136,7 @@ integration.leadDelayActivate = function( self, disengageTask )
     integration.manageEndMission( self )
 
     if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
-        Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
+        reportOnceFunction( eRC_NoPEInAutomat )
     end
 end
 
@@ -1152,7 +1152,7 @@ integration.leadDroneActivate = function( self, findBestsFunction )
     end
 
     if #DEC_Automate_PionsDeAutomateAvecPC( myself ) == 0 then
-        Activate( self.skill.links.RC, 1, { RC = eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles } )
+        reportOnceFunction( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
         self.Feedback( self.feedbacks.done )
         return
     end
