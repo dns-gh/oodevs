@@ -116,3 +116,8 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
     }
 }
 
+template<>
+void MIL_Report::Send< MockAgent >( const MockAgent& /*sender*/, E_Type /*nType*/, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& /*diaParameters*/ ) const
+{
+    // NOTHING
+}

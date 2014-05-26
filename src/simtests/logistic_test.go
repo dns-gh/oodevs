@@ -343,7 +343,7 @@ func (s *TestSuite) TestLogisticDeployment(c *C) {
 	//startingReporter := newReporter(c, unit.Id, phydb, startingReportsTypes...)
 	//startingReporter.Start(client.Model)
 	_ = startingReportsTypes
-	endingReporter := newReporter(c, unit.Id, phydb, endingReportsTypes...)
+	endingReporter, _ := newReporter(c, unit.Id, phydb, endingReportsTypes...)
 	endingReporter.Start(client.Model)
 	client.Resume(0)
 

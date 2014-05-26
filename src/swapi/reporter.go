@@ -10,8 +10,10 @@ package swapi
 
 import (
 	"fmt"
+	"strings"
 	"swapi/phy"
 	"sword"
+	"sync"
 )
 
 // Creates a report filter matching supplied entity identifiers.
@@ -28,33 +30,51 @@ func ReportSources(sources ...uint32) func(*sword.Report) bool {
 
 // Creates a report filter matching the identifiers of reports uniquely
 // matched by supplied patterns. Fail if a pattern matches zero or more than
-// one message.
+// one message. The report identifier to pattern is also returned to help
+// generating traces from matched reports.
 func ReportMessages(db *phy.PhysicalFile, patterns ...string) (
-	func(*sword.Report) bool, error) {
+	func(*sword.Report) bool, map[uint32]string, error) {
 
 	reports, err := phy.ReadReports(*db)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	ids := map[uint32]struct{}{}
+	ids := map[uint32]string{}
 	for _, pattern := range patterns {
 		report := reports.MatchUniqueByMessage(pattern)
 		if report == nil {
-			return nil, fmt.Errorf(
+			return nil, nil, fmt.Errorf(
 				"reports matching '%s' are either missing or non-unique", pattern)
 		}
-		ids[report.Id] = struct{}{}
+		ids[report.Id] = pattern
 	}
 	filter := func(r *sword.Report) bool {
 		_, ok := ids[r.Type.GetId()]
 		return ok
 	}
-	return filter, nil
+	return filter, ids, nil
+}
+
+// Take a list of matched reports and return a string where each line is the
+// original pattern used to match the report, provided to ReportMessages.
+func PrintReports(reports []*sword.Report, patterns map[uint32]string) string {
+	lines := []string{}
+	for _, report := range reports {
+		if report == nil {
+			lines = append(lines, "\n")
+		} else if pattern, ok := patterns[*report.Type.Id]; ok {
+			lines = append(lines, pattern+"\n")
+		} else {
+			lines = append(lines, "???\n")
+		}
+	}
+	return strings.Join(lines, "")
 }
 
 // A reporter listens to all incoming reports and records those matched by
 // supplied filter. Records are obtained when stopping the recorder.
 type Reporter struct {
+	lock      *sync.Mutex // Protects reports
 	reports   []*sword.Report
 	filter    func(*sword.Report) bool
 	handlerId int32
@@ -63,6 +83,7 @@ type Reporter struct {
 
 func NewReporter(filter func(*sword.Report) bool) *Reporter {
 	return &Reporter{
+		lock:   &sync.Mutex{},
 		filter: filter,
 	}
 }
@@ -85,10 +106,20 @@ func (r *Reporter) Start(model *Model) {
 				return false
 			}
 			if r.filter(report) {
+				r.lock.Lock()
+				defer r.lock.Unlock()
 				r.reports = append(r.reports, report)
 			}
 			return false
 		})
+}
+
+// Append a nil Report entry to the lock list. Used to explicitely separate
+// sequence of reports before printing them.
+func (r *Reporter) AddNilReport() {
+	r.lock.Lock()
+	defer r.lock.Unlock()
+	r.reports = append(r.reports, nil)
 }
 
 // Stop recording reports and return the list of matched ones. The list is not
@@ -99,6 +130,8 @@ func (r *Reporter) Stop() []*sword.Report {
 		r.handlerId = 0
 	}
 	// Report slice may be used again later if caller Start() again
+	r.lock.Lock()
+	defer r.lock.Unlock()
 	copies := make([]*sword.Report, len(r.reports))
 	copy(copies, r.reports)
 	return copies
