@@ -12,7 +12,7 @@
 #include "LogisticBase.h"
 #include "LongNameHelper.h"
 #include "DragAndDropHelpers.h"
-
+#include "Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -41,6 +41,28 @@ namespace
         }
         return depth;
     }
+
+    const kernel::Entity_ABC* GetEntity( const QModelIndex& index, const StandardModel& model )
+    {
+        const QStandardItem* item = model.GetItemFromIndex( index );
+        if( item && ( !item->parent() || item->parent()->parent() ) ) // not a logistic level
+            return model.GetDataFromItem< kernel::Entity_ABC >( *item );
+        return 0;
+    }
+
+    bool ModelIndexToEntityWrapper( const QModelIndex& left,
+        const QModelIndex& right,
+        bool& valid,
+        const StandardModel& model,
+        EntityTreeView_ABC::T_LessThanEntityFunctor functor )
+    {
+        const kernel::Entity_ABC* entity1 = GetEntity( left, model );
+        const kernel::Entity_ABC* entity2 = GetEntity( right, model );
+        if( !entity1 || !entity2 )
+            return false;
+        valid = true;
+        return functor( *entity1, *entity2 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -50,6 +72,7 @@ namespace
 LogisticTreeView::LogisticTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
     : HierarchyTreeView_ABC( objectName, controllers, profile, modelObserver, symbols, parent )
 {
+    SetLessThanFunctor( boost::bind( &ModelIndexToEntityWrapper, _1, _2, _3, boost::cref( dataModel_ ), &tools::LessThanById ) );
     controllers_.Update( *this );
     EnableDragAndDrop( true );
 }
