@@ -315,7 +315,7 @@ bool LogisticMaintenanceSelectionDialog::SetCurrentStatus( sword::LogMaintenance
         GetDestinations( *handler_, destinations );
         destinations_->Fill( destinations, *consumer_, 0 );
         destinationBox_->setVisible( true );
-        equipmentWeight_->setText( tr( "Vehicle weight: %1 (t)" ).arg( componentType_->GetWeight() ) );
+        equipmentWeight_->setText( tr( "Vehicle weight: %1 t" ).arg( componentType_->GetWeight() ) );
         equipmentWeight_->setVisible( true );
     }
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )

@@ -1735,7 +1735,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vehicle weight: %1 (t)</source>
+        <source>Vehicle weight: %1 t</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
