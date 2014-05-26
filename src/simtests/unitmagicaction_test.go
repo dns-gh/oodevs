@@ -1512,12 +1512,15 @@ func (s *TestSuite) TestUnitChangeResource(c *C) {
 	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[3\] must be a number between 0 and 100`)
 
-	// Error: HighThreshold must be superior than LowThreshold
-	resource.LowThreshold = 100
+	// High threshold is capped to low one
+	resource.LowThreshold = 98
 	resource.HighThreshold = 50
 	err = client.ChangeResource(u1.Id, map[uint32]*swapi.Resource{firstDotationId: &resource})
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameter\[0\]\[0\]\[2\] must be lower than high threshold percentage`)
-
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		r := data.Units[u1.Id].Resources[firstDotationId]
+		return r.LowThreshold == 98 && r.HighThreshold == 98
+	})
+	resource.LowThreshold = 100
 	resource.HighThreshold = 100
 
 	// Change 2 dotations
@@ -2718,6 +2721,7 @@ func (s *TestSuite) TestRecoverAll(c *C) {
 	for k, v := range empty.Resources {
 		v.Quantity = 0
 		v.LowThreshold = 0
+		v.HighThreshold = 0
 		empty.Resources[k] = v
 	}
 	for _, withLog := range []bool{true, false} {
