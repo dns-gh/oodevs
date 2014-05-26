@@ -79,14 +79,10 @@ private:
     typedef std::map< std::string, std::string > T_Extensions;
     typedef std::vector< int > T_UrbanObjectId;
 
-    typedef std::map< std::string, float >              T_MotivationSatisfactions;
-    typedef T_MotivationSatisfactions::const_iterator CIT_MotivationSatisfactions;
-
-    typedef std::map< unsigned int, float >            T_ResourcesSatisfactions;
-    typedef T_ResourcesSatisfactions::const_iterator CIT_ResourcesSatisfactions;
+    typedef std::map< std::string, float >  T_MotivationSatisfactions;
+    typedef std::map< unsigned int, float > T_ResourcesSatisfactions;
 
     typedef std::map< unsigned long, float > T_Affinities;
-    typedef T_Affinities::const_iterator   CIT_Affinities;
     //@}
 
 private:

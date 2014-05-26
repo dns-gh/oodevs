@@ -39,7 +39,8 @@ PHY_Dotation::PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGr
     , rCapacity_              ( 0 )
     , rConsumptionReservation_( 0 )
     , rFireReservation_       ( 0 )
-    , rSupplyThreshold_       ( 0 )
+    , rLowThreshold_          ( 0 )
+    , rHighThreshold_         ( 0 )
     , bNotified_              ( false )
     , bDotationBlocked_       ( false )
     , bInfiniteDotations_     ( bInfiniteDotations )
@@ -60,7 +61,8 @@ PHY_Dotation::PHY_Dotation()
     , rCapacity_              ( 0 )
     , rConsumptionReservation_( 0 )
     , rFireReservation_       ( 0 )
-    , rSupplyThreshold_       ( 0 )
+    , rLowThreshold_          ( 0 )
+    , rHighThreshold_         ( 0 )
     , bNotified_              ( false )
     , bDotationBlocked_       ( false )
     , bInfiniteDotations_     ( false )
@@ -90,7 +92,8 @@ void PHY_Dotation::serialize( Archive& ar, const unsigned int )
        & rCapacity_
        & rConsumptionReservation_
        & rFireReservation_
-       & rSupplyThreshold_
+       & rLowThreshold_
+       & rHighThreshold_
        & bNotified_
        & bDotationBlocked_
        & bInfiniteDotations_;
@@ -107,8 +110,15 @@ void PHY_Dotation::ReadValue( xml::xistream& xis )
         throw MASA_EXCEPTION( xis.context() + "rValue is not greater or equal to 0." );
     if( rValue > rCapacity_ )
         rCapacity_ = rValue;
-    if( xis.has_attribute( "logistic-threshold" ) )
-        rSupplyThreshold_ = std::min( rCapacity_ * xis.attribute< double >( "logistic-threshold" ) / 100.f, rCapacity_ );
+    if( xis.has_attribute( "low-threshold" ) )
+        rLowThreshold_ = std::min( rCapacity_ * xis.attribute< double >( "low-threshold" ) / 100, rCapacity_ );
+    if( xis.has_attribute( "high-threshold" ) )
+        rHighThreshold_ = std::min( rCapacity_ * xis.attribute< double >( "high-threshold" ) / 100, rCapacity_ );
+    if( rHighThreshold_ < rLowThreshold_ )
+    {
+        MT_LOG_WARNING_MSG( xis.context() + " high threshold is not greater than low threshold." );
+        rHighThreshold_ = rLowThreshold_;
+    }
     SetValue( rValue );
 }
 
@@ -122,20 +132,20 @@ void PHY_Dotation::SetValue( double rValue )
         return;
     if( bDotationBlocked_ )
         return;
-    if( bInfiniteDotations_ && rValue < rSupplyThreshold_ )
+    if( bInfiniteDotations_ && rValue < rLowThreshold_ )
         rValue = rCapacity_;
     rValue = std::min( rValue, ::maxCapacity );
-    const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
+    const bool bSupplyThresholdAlreadyReached = HasReachedLowThreshold();
     assert( pCategory_ );
-    if( pCategory_->IsSignificantChange( rValue, rLastValueSent_, rCapacity_ ) || ( rValue < rSupplyThreshold_ ) != bSupplyThresholdAlreadyReached )
+    if( pCategory_->IsSignificantChange( rValue, rLastValueSent_, rCapacity_ ) || ( rValue < rLowThreshold_ ) != bSupplyThresholdAlreadyReached )
     {
         assert( pGroup_ );
         pGroup_->NotifyDotationChanged( *this );
         rLastValueSent_ = rValue;
     }
     rValue_ = rValue;
-    bNotified_ &= rValue_ <= rSupplyThreshold_; // reset notify flag as soon as value > threshold
-    if( HasReachedSupplyThreshold() )
+    bNotified_ &= rValue_ <= rLowThreshold_; // reset notify flag as soon as value > threshold
+    if( HasReachedLowThreshold() )
     {
         if( rRequestedValue_ == 0 )
             rRequestedValue_ = rCapacity_ - rValue_;
@@ -175,7 +185,8 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity, double qua
     }
     if( quantity )
         pGroup_->NotifyDotationChanged( *this );
-    rSupplyThreshold_ = std::min( rCapacity_, rSupplyThreshold_ + capacity.GetSupplyThreshold() );
+    rLowThreshold_ = std::min( rCapacity_, rLowThreshold_ + capacity.GetLowThreshold() );
+    rHighThreshold_ = std::min( rCapacity_, rHighThreshold_ + capacity.GetHighThreshold() );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,13 +195,14 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity, double qua
 // -----------------------------------------------------------------------------
 double PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
 {
-    double ratio = rCapacity_ ? (rValue_ / rCapacity_) : 1.;
-    double capacityToRemove = capacity.GetCapacity();
-    double quantityToRemove = capacityToRemove * ratio;
+    const double ratio = rCapacity_ ? (rValue_ / rCapacity_) : 1.;
+    const double capacityToRemove = capacity.GetCapacity();
+    const double quantityToRemove = capacityToRemove * ratio;
     double removed = rCapacity_ > quantityToRemove ? quantityToRemove : rCapacity_;
     assert( rCapacity_ >= capacityToRemove );
     rCapacity_        -= capacityToRemove;
-    rSupplyThreshold_ = std::max( std::min( rCapacity_, rSupplyThreshold_ - capacity.GetSupplyThreshold() ), 0. );
+    rLowThreshold_ = std::max( std::min( rCapacity_, rLowThreshold_ - capacity.GetLowThreshold() ), 0. );
+    rHighThreshold_ = std::max( std::min( rCapacity_, rHighThreshold_ - capacity.GetHighThreshold() ), 0. );
     if( rFireReservation_ > rCapacity_ )
     {
         rFireReservation_ = rCapacity_;
@@ -357,13 +369,14 @@ void PHY_Dotation::Resupply( double rFactor /* = 1. */, bool withLog /* = false 
 // Name: PHY_Dotation::ChangeDotation
 // Created: ABR 2011-08-10
 // -----------------------------------------------------------------------------
-void PHY_Dotation::ChangeDotation( unsigned int number, float thresholdPercentage )
+void PHY_Dotation::ChangeDotation( unsigned int number, float lowThreshold, float highThreshold )
 {
     assert( number <= rCapacity_ );
     SetValue( number );
     rConsumptionReservation_ = 0.;
     rFireReservation_        = 0.;
-    rSupplyThreshold_ = std::min( rCapacity_ * thresholdPercentage / 100.f, rCapacity_ );
+    rLowThreshold_ = std::min( rCapacity_ * lowThreshold / 100, rCapacity_ );
+    rHighThreshold_ = std::min( rCapacity_ * highThreshold / 100, rCapacity_ );
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this ); // What's the point, c'est déja fait dans SetValue(), bordel
     rLastValueSent_ = 0;
@@ -394,7 +407,7 @@ void PHY_Dotation::ConsumeConsumptionReservation()
 // -----------------------------------------------------------------------------
 void PHY_Dotation::UpdateSupplyNeeded()
 {
-    if( HasReachedSupplyThreshold() )
+    if( HasReachedLowThreshold() )
         NotifySupplyNeeded();
 }
 
@@ -415,14 +428,14 @@ bool PHY_Dotation::NeedSupply() const
 {
     if( bDotationBlocked_ )
         return false;
-    return rCapacity_ > rValue_;
+    return rValue_ < rHighThreshold_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Dotation::HasReachedSupplyThreshold
+// Name: PHY_Dotation::HasReachedLowThreshold
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
-bool PHY_Dotation::HasReachedSupplyThreshold() const
+bool PHY_Dotation::HasReachedLowThreshold() const
 {
     if( bDotationBlocked_ )
         return false;
@@ -430,7 +443,7 @@ bool PHY_Dotation::HasReachedSupplyThreshold() const
         return false;
     if( IsJammed() )
         return false;
-    return rValue_ < rSupplyThreshold_;
+    return rValue_ < rLowThreshold_;
 }
 
 // -----------------------------------------------------------------------------
@@ -448,13 +461,24 @@ double PHY_Dotation::Supply( double rSupply )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Dotation::GetSupplyThresholdPercentage
+// Name: PHY_Dotation::GetLowThresholdPercentage
 // Created: ABR 2011-07-27
 // -----------------------------------------------------------------------------
-double PHY_Dotation::GetSupplyThresholdPercentage() const
+double PHY_Dotation::GetLowThresholdPercentage() const
 {
-    assert( rSupplyThreshold_ <= rCapacity_ );
+    assert( rLowThreshold_ <= rCapacity_ );
     if( rCapacity_ == 0 )
         return 0;
-    return rSupplyThreshold_ / rCapacity_ * 100.f;
+    return ( rLowThreshold_ / rCapacity_ ) * 100;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Dotation::GetHighThresholdPercentage
+// Created: SLI 2014-04-17
+// -----------------------------------------------------------------------------
+double PHY_Dotation::GetHighThresholdPercentage() const
+{
+    if( rCapacity_ == 0 )
+        return 0;
+    return ( rHighThreshold_ / rCapacity_ ) * 100;
 }

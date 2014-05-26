@@ -750,6 +750,10 @@ Parked engine running</source>
         <source>Mission parameter %1 defines duplicate enumeration values.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -1081,6 +1085,10 @@ Parked engine running</source>
         <source>Armor-Plating</source>
         <translation type="unfinished">دروع</translation>
     </message>
+    <message>
+        <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_DisasterImpactTable</name>
@@ -1104,20 +1112,24 @@ Parked engine running</source>
         <translation type="unfinished">الكمية</translation>
     </message>
     <message>
-        <source>Log threshold (%)</source>
-        <translation type="unfinished">سجل عتبة (%)</translation>
-    </message>
-    <message>
-        <source>Normalized consumption</source>
-        <translation type="unfinished">الاستهلاك تم تسويتها</translation>
-    </message>
-    <message>
         <source>Add supplies</source>
         <translation type="unfinished">إضافة مورد</translation>
     </message>
     <message>
         <source>Remove supplies</source>
         <translation type="unfinished">إزالة مورد</translation>
+    </message>
+    <message>
+        <source>Low thld. (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High thld. (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Norm. cons.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

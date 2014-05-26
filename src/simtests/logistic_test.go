@@ -183,11 +183,13 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 	c.Assert(unit.Resources, NotNil)
 	c.Assert(unit.Resources[1], DeepEquals,
 		swapi.Resource{
-			Quantity:  3200,
-			Threshold: 10,
+			Quantity:      3200,
+			LowThreshold:  10,
+			HighThreshold: 100,
 		})
 	resource := swapi.Resource{
-		Threshold: 10,
+		LowThreshold:  10,
+		HighThreshold: 100,
 	}
 	err = client.ChangeResource(unit.Id, map[uint32]*swapi.Resource{1: &resource})
 	c.Assert(err, IsNil)

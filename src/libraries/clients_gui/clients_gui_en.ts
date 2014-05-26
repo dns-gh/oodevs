@@ -2172,16 +2172,20 @@ Do you want to remove it?</translation>
         <translation>Percentage (%)</translation>
     </message>
     <message>
-        <source>Logistic threshold (%)</source>
-        <translation>Logistics threshold (%)</translation>
-    </message>
-    <message>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
         <source>Normalized quantity</source>
         <translation>Normalized quantity</translation>
+    </message>
+    <message>
+        <source>Logistic low threshold (%)</source>
+        <translation>Logistics low threshold (%)</translation>
+    </message>
+    <message>
+        <source>Logistic high threshold (%)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Dotation();
-    explicit Dotation( const kernel::DotationType& type, unsigned int quantity = 0, float thresholdPercentage = 0.f );
+    explicit Dotation( const kernel::DotationType& type, unsigned int quantity = 0, float lowThresholdPercentage = 0.f, float highThresholdPercentage = 0.f );
     virtual ~Dotation();
     //@}
 
@@ -43,7 +43,8 @@ public:
     //@{
     const kernel::DotationType* type_;
     int                         quantity_;
-    float                       thresholdPercentage_;
+    float                       lowThresholdPercentage_;
+    float                       highThresholdPercentage_;
     //@}
 };
 

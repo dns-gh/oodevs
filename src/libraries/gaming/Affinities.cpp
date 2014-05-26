@@ -92,7 +92,7 @@ void Affinities::Update( const T& message )
             const sword::PartyAdhesion& adhesion = message.adhesions().adhesion( i );
             affinities_[ adhesion.party().id() ] = adhesion.value();
             kernel::Team_ABC& team = teams_.GetTeam( adhesion.party().id() );
-            CIT_Affinities it = affinities_.find( adhesion.party().id() );
+            auto it = affinities_.find( adhesion.party().id() );
             dico_.RegisterExtension( entity_, this, baseName_ + QString( "/%1" ).arg( team.GetName() ), it->second );
             controller_.Update( gui::DictionaryUpdated( entity_, baseName_ ) );
         }

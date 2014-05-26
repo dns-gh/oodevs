@@ -32,9 +32,8 @@ namespace
     // Name: Local Helpers
     // Created: ABR 2011-03-01
     // -----------------------------------------------------------------------------
-    typedef std::pair< QString, int >   T_MenuItem;
-    typedef std::vector< T_MenuItem >   T_MenuItemVector;
-    typedef T_MenuItemVector::iterator IT_MenuItemVector;
+    typedef std::pair< QString, int > T_MenuItem;
+    typedef std::vector< T_MenuItem > T_MenuItemVector;
     struct ItemSort
     {
         bool operator()( T_MenuItem& lhs, T_MenuItem& rhs )
@@ -58,7 +57,7 @@ namespace
             vItems.push_back( item );
         }
         std::sort( vItems.begin(), vItems.end(), ItemSort() );
-        for( IT_MenuItemVector it = vItems.begin(); it != vItems.end(); ++it )
+        for( auto it = vItems.begin(); it != vItems.end(); ++it )
             menu.insertItem( (*it).first, (*it).second );
     }
 }
@@ -98,7 +97,7 @@ void UnitStateTableResource::contextMenuEvent( QContextMenuEvent* e )
     kernel::ContextMenu menu( this );
     kernel::ContextMenu targetMenu( &menu );
     std::map< std::string, kernel::ContextMenu* > categoryMap;
-    tools::Iterator< const kernel::DotationType& > dotationIterator = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::CreateIterator();
+    auto dotationIterator = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::CreateIterator();
 
     while( dotationIterator.HasMoreElements() )
     {
@@ -161,12 +160,12 @@ void UnitStateTableResource::AddItem( int id )
     kernel::AgentType* agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Find( typeId_ );
     if( agent )
     {
-        tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agent->CreateIterator();
+        auto agentCompositionIterator = agent->CreateIterator();
         while( agentCompositionIterator.HasMoreElements() )
         {
             const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
             const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
-            tools::Iterator< const kernel::DotationCapacityType& > dotationIterator = equipmentType.CreateResourcesIterator();
+            auto dotationIterator = equipmentType.CreateResourcesIterator();
             while( dotationIterator.HasMoreElements() )
             {
                 const kernel::DotationCapacityType& type = dotationIterator.NextElement();
@@ -179,7 +178,7 @@ void UnitStateTableResource::AddItem( int id )
             }
         }
     }
-    AddLine( dotation->GetName().c_str(), dotation->GetCategoryDisplay().c_str(), 0, maxCapacity, 0, consumption );
+    AddLine( dotation->GetName().c_str(), dotation->GetCategoryDisplay().c_str(), 0, maxCapacity, 0, 0, consumption );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,14 +201,14 @@ namespace
         if( entity.GetTypeName() == kernel::Agent_ABC::typeName_)
         {
             const InitialState& extension = entity.Get< InitialState >();
-            for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+            for( auto it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
                 if( name == it->name_ && category == it->category_ )
                     quantity += it->number_;
         }
         else
         {
             const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
-            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+            auto it = hierarchy.CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 const kernel::Entity_ABC& subEntity = it.NextElement();
@@ -238,7 +237,8 @@ bool UnitStateTableResource::HasChanged( kernel::Entity_ABC& selected ) const
                 {
                     if ( it->number_ != GetUserData( row, eQuantity ).toUInt() ||
                          it->maximum_ != GetUserData( row, eMaximum ).toUInt() ||
-                         it->threshold_ != GetUserData( row, eThreshold ).toDouble() )
+                         it->lowThreshold_ != GetUserData( row, eLowThreshold ).toDouble() ||
+                         it->highThreshold_ != GetUserData( row, eHighThreshold ).toDouble() )
                          return true;
                     break;
                 }
@@ -266,7 +266,7 @@ namespace
         else
         {
             const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
-            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+            auto it = hierarchy.CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 const kernel::Entity_ABC& subEntity = it.NextElement();
@@ -288,8 +288,8 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
     kernel::Agent_ABC& agent = static_cast< kernel::Agent_ABC& >( selected );
     typeId_ = agent.GetType().GetId();
     InitialState& extension = selected.Get< InitialState >();
-    for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
-        MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->threshold_, it->consumption_ );
+    for( auto it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+        MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->lowThreshold_, it->highThreshold_, it->consumption_ );
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( IsEntityOriginalResource( selected, GetDisplayData( row, eName ) ) )
             SetColor( row, eName, Qt::lightGray, -1 );
@@ -342,7 +342,8 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
                                                                   GetDisplayData( row, eCategory ),
                                                                   GetUserData( row, eQuantity ).toUInt(),
                                                                   GetUserData( row, eMaximum ).toUInt(),
-                                                                  GetUserData( row, eThreshold ).toDouble(),
+                                                                  GetUserData( row, eLowThreshold ).toDouble(),
+                                                                  GetUserData( row, eHighThreshold ).toDouble(),
                                                                   GetUserData( row, eConsumption ).toDouble() ) );
     }
     else

@@ -120,7 +120,7 @@ void SupplyRequest::AddResource( const boost::shared_ptr< SupplyResource_ABC >& 
     requesters_.push_back( &pion );
     requestedQuantity_ += quantity;
     needNetworkUpdate_ = true;
-    if( resource->HasReachedSupplyThreshold() )
+    if( resource->HasReachedLowThreshold() )
         complementarySupply_ = false;
 }
 

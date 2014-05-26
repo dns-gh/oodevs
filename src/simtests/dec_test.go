@@ -320,8 +320,9 @@ func testDecStartConsumingResources(c *C, client *swapi.Client, unitType uint32,
 	c.Assert(err, IsNil)
 	const dotation = uint32(electrogen_1)
 	resource := swapi.Resource{
-		Quantity:  initial,
-		Threshold: 0,
+		Quantity:      initial,
+		LowThreshold:  0,
+		HighThreshold: 100,
 	}
 	if unit.Resources[dotation] != resource {
 		err = client.ChangeResource(unit.Id,

@@ -32,7 +32,7 @@ public:
     //! @name Operations
     //@{
     virtual double Supply                   ( double quantity ) = 0;
-    virtual bool   HasReachedSupplyThreshold() const = 0;
+    virtual bool   HasReachedLowThreshold() const = 0;
     //@}
 
     //! @name Accessors

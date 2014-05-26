@@ -1843,31 +1843,36 @@ void MIL_AgentPion::OnReceiveChangeHumanState( const sword::MissionParameters& m
 void MIL_AgentPion::OnReceiveChangeDotation( const sword::MissionParameters& msg )
 {
     CheckParameterCount( msg.elem_size() != 1, "invalid parameters count, 1 parameter expected" );
-    std::vector< std::tuple< const PHY_DotationCategory*, unsigned int, float > > content;
+    std::vector< std::tuple< const PHY_DotationCategory*, unsigned int, float, float > > content;
     for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
     {
         const sword::MissionParameter_Value& elem = msg.elem( 0 ).value( i );
-        CheckSubParameterCount( elem.list_size() != 3, i, "must have 3 parameters" );
+        CheckSubParameterCount( elem.list_size() != 4, i, "must have 4 parameters" );
 
         CHECK_PARAM( elem, i, 0, identifier, "must be an Identifer" );
         CHECK_PARAM( elem, i, 1, quantity, "must be a Quantity" );
         CHECK_PARAM( elem, i, 2, areal, "must be an Real" );
+        CHECK_PARAM( elem, i, 3, areal, "must be an Real" );
 
-        int number = elem.list( 1 ).quantity();
-        float thresholdPercentage = elem.list( 2 ).areal();
+        const int number = protocol::GetQuantity( msg, 0, i, 1 );
+        float lowThresholdPercentage = protocol::GetReal( msg, 0, i, 2 );
+        float highThresholdPercentage = protocol::GetReal( msg, 0, i, 3 );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( elem.list( 0 ).identifier() );
         CheckSubSubParameterCount( !pDotationCategory, i, 0, "must be a valid dotation category identifier" );
         CheckSubSubParameterCount( number < 0, i, 1, "must be a positive number" );
-        CheckSubSubParameterCount( thresholdPercentage < 0.f || thresholdPercentage > 100.f, i, 2,
+        CheckSubSubParameterCount( lowThresholdPercentage < 0.f || lowThresholdPercentage > 100.f, i, 2,
             "must be a number between 0 and 100" );
-
-        content.push_back( std::make_tuple( pDotationCategory, number, thresholdPercentage ) );
+        CheckSubSubParameterCount( highThresholdPercentage < 0.f || highThresholdPercentage > 100.f, i, 3,
+            "must be a number between 0 and 100" );
+        if( lowThresholdPercentage > highThresholdPercentage )
+            highThresholdPercentage = lowThresholdPercentage;
+        content.push_back( std::make_tuple( pDotationCategory, number, lowThresholdPercentage, highThresholdPercentage ) );
     }
 
     dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
     for( auto it = content.begin(); it != content.end(); ++it )
-        roleDotations.ChangeDotation( *std::get< 0 >( *it ), std::get< 1 >( *it ), std::get< 2 >( *it ) );
+        roleDotations.ChangeDotation( *std::get< 0 >( *it ), std::get< 1 >( *it ), std::get< 2 >( *it ), std::get< 3 >( *it ) );
 }
 
 // -----------------------------------------------------------------------------

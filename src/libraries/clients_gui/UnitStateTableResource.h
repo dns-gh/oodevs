@@ -43,13 +43,15 @@ public:
 protected:
     //! @name Types
     //@{
-    enum E_Column { eName = 0, eCategory = 1, eQuantity = 2, eMaximum = 3, ePercentage = 4, eThreshold = 5, eConsumption = 6 };
+    enum E_Column { eName = 0, eCategory = 1, eQuantity = 2, eMaximum = 3, ePercentage = 4, eLowThreshold = 5, eHighThreshold = 6, eConsumption = 7 };
     //@}
 
     //! @name Helpers
     //@{
-    void MergeLine( const QString& name, const QString& category, unsigned quantity, unsigned maximum, double threshold, double consumption );
-    void AddLine( const QString& name, const QString& category, unsigned quantity = 0, unsigned maximum = 0, double threshold = 0., double consumption = 0. );
+    void MergeLine( const QString& name, const QString& category, unsigned quantity, unsigned maximum,
+                    double lowThreshold, double highThreshold, double consumption );
+    void AddLine( const QString& name, const QString& category, unsigned quantity = 0, unsigned maximum = 0,
+                  double lowThreshold = 0., double highThreshold = 0., double consumption = 0. );
     void UpdateColor( QStandardItem* item, int quantity, int maximum );
     void UpdateNormalizedQuantity( int row, int quantity );
     virtual void CreateFilters( gui::RichView_ABC& richView );

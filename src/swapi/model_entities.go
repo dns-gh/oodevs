@@ -279,8 +279,9 @@ type Human struct {
 }
 
 type Resource struct {
-	Quantity  int32
-	Threshold float32
+	Quantity      int32
+	LowThreshold  float32
+	HighThreshold float32
 }
 
 type Posture struct {

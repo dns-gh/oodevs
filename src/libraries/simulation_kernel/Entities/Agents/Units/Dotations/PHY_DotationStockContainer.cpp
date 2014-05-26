@@ -101,9 +101,10 @@ void PHY_DotationStockContainer::ReadValues( xml::xistream& xis )
 {
     try
     {
-        xis >> xml::optional >> xml::start( "stocks" )
-                                 >> xml::list( "resource", *this, &PHY_DotationStockContainer::ReadStock )
-                             >> xml::end;
+        xis >> xml::optional
+            >> xml::start( "stocks" )
+                >> xml::list( "resource", *this, &PHY_DotationStockContainer::ReadStock )
+            >> xml::end;
     }
     catch( const std::exception& e )
     {
@@ -247,8 +248,8 @@ void PHY_DotationStockContainer::Resupply( const PHY_DotationCategory& category,
     PHY_DotationStock*& pStock = stocks_[ &category ];
     if( !pStock )
     {
-        const double rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
-        pStock = new PHY_DotationStock( *this, category, rThresholdRatio, rNbr, bInfiniteDotations_ );
+        const double rLowThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
+        pStock = new PHY_DotationStock( *this, category, rLowThresholdRatio, rNbr, bInfiniteDotations_ );
     }
     else
         pStock->Supply( rNbr - pStock->GetValue() ); // set to rNbr

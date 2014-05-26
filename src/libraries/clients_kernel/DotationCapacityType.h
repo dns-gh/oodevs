@@ -40,17 +40,19 @@ public:
     //@{
     const std::string& GetName() const;
     unsigned int GetCapacity() const;
-    double GetLogisticThreshold() const;
+    double GetLowThreshold() const;
+    double GetHighThreshold() const;
     double GetNormalizedConsumption() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string         name_;
-    unsigned int        capacity_;
-    double              logisticThreshold_;
-    double              normalizedConsumption_;
+    std::string  name_;
+    unsigned int capacity_;
+    double       lowThreshold_;
+    double       highThreshold_;
+    double       normalizedConsumption_;
     //@}
 };
 

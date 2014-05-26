@@ -111,7 +111,7 @@ void PeopleAffinities::Add( unsigned long team, float value )
 // -----------------------------------------------------------------------------
 void PeopleAffinities::InitializeAffinities()
 {
-    tools::Iterator< const kernel::Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
+    auto it = model_.GetTeamResolver().CreateIterator();
     while( it.HasMoreElements() )
         AddTeam( it.NextElement() );
 }
@@ -125,6 +125,6 @@ void PeopleAffinities::AddTeam( const kernel::Team_ABC& team )
     if( affinities_.find( team.GetId() ) == affinities_.end() )
         affinities_[ team.GetId() ] = 0.f;
     teams_[ team.GetId() ] = team.GetName();
-    CIT_Affinities it = affinities_.find( team.GetId() );
+    auto it = affinities_.find( team.GetId() );
     dictionary_.RegisterExtension( entity_, this, tools::translate( "Affinities", "Affinities/%1" ).arg( team.GetName() ), it->second, true );
 }
