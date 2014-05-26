@@ -1478,6 +1478,10 @@ This data can&apos;t be projected.</translation>
         <source>Unknown resource &quot;%1&quot;. It will deleted at next save.</source>
         <translation>Unknown resource &quot;%1&quot;. It will deleted at next save.</translation>
     </message>
+    <message>
+        <source>Unknown equipment &quot;%1&quot;. It will deleted at next save.</source>
+        <translation>Unknown equipment &quot;%1&quot;. It will deleted at next save.</translation>
+    </message>
 </context>
 <context>
     <name>MultipleResolverEditor</name>

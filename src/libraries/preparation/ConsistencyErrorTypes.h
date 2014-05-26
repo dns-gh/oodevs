@@ -64,6 +64,7 @@ enum E_ConsistencyCheck
     eUnknownMaterial,
     eUnknownRoofShape,
     eUnknownResource,
+    eUnknownEquipment,
     eOthersMask,
 };
 

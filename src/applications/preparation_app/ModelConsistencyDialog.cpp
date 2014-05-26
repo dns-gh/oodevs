@@ -131,6 +131,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eUnknownMaterial ]                 = tools::translate( "ModelConsistencyDialog", "Unknown material \"%1\". It will be replaced by default material at next save." );
     errorDescriptions_[ eUnknownRoofShape ]                = tools::translate( "ModelConsistencyDialog", "Unknown roof shape \"%1\". It will be replaced by default roof shape at next save." );
     errorDescriptions_[ eUnknownResource ]                 = tools::translate( "ModelConsistencyDialog", "Unknown resource \"%1\". It will deleted at next save." );
+    errorDescriptions_[ eUnknownEquipment ]                = tools::translate( "ModelConsistencyDialog", "Unknown equipment \"%1\". It will deleted at next save." );
 }
 
 // -----------------------------------------------------------------------------

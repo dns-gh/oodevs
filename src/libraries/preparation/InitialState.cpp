@@ -95,8 +95,14 @@ void InitialState::ReadEquipment( xml::xistream& xis )
         }
     if( !found )
     {
-        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( equipment.name_.toStdString() );
-        auto breakdownIterator = equipmentType.CreateBreakdownsIterator();
+        const std::string equipmentName = equipment.name_.toStdString();
+        const kernel::EquipmentType* equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Find( equipmentName );
+        if( !equipmentType )
+        {
+            unknownEquipments_.push_back( equipmentName );
+            return;
+        }
+        auto breakdownIterator = equipmentType->CreateBreakdownsIterator();
         QStringList breakdowns;
         while( breakdownIterator.HasMoreElements() )
         {
@@ -258,6 +264,15 @@ bool InitialState::CleanUnsupportedState()
 const std::vector< std::string >& InitialState::GetUnknownResources() const
 {
     return unknownResources_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InitialState::GetUnknownEquipments
+// Created: JSR 2014-05-26
+// -----------------------------------------------------------------------------
+const std::vector< std::string >& InitialState::GetUnknownEquipments() const
+{
+    return unknownEquipments_;
 }
 
 // -----------------------------------------------------------------------------
