@@ -1,0 +1,65 @@
+// ****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2013 MASA Group
+//
+// ****************************************************************************
+package sdk;
+
+import "timeline.proto";
+
+enum Type
+{
+    UNKNOWN         = 0x000;
+    // session messages
+    SESSION_CREATE  = 0x100;
+    SESSION_ATTACH  = 0x101;
+    SESSION_START   = 0x102;
+    // event messages
+    EVENT_CREATE    = 0x200;
+}
+
+message SessionCreate
+{
+    optional string uuid = 1; ///< auto-generated server-side if nil
+    required string name = 2;
+}
+
+message SessionAttach
+{
+    required string  uuid    = 1;
+    required Service service = 2;
+}
+
+message SessionStart
+{
+    required string uuid   = 1; ///< unique uuid
+    optional int64  offset = 2; ///< optional time offset
+}
+
+message SessionRequests
+{
+    optional SessionCreate create = 1;
+    optional SessionAttach attach = 2;
+    optional SessionStart  start  = 3;
+}
+
+message EventCreate
+{
+    required string session = 1;
+    required Event  event   = 2;
+}
+
+message EventRequests
+{
+    optional EventCreate create = 1;
+}
+
+message ClientRequest
+{
+    required Type            type    = 1; ///< request type
+    optional SessionRequests session = 2;
+    optional EventRequests   event   = 3;
+}

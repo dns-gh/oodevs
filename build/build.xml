@@ -20,6 +20,8 @@
     <property name="test.port" value="35000"/>
     <property name="licensepath" value="${run.dir}/license.dat"/>
 
+    <property name="www.dir" value="${src.dir}/www"/>
+
     <property name="version.project" value="5.4"/>
     <property name="version.major" value="5.4.0"/>
     <property name="version.version" value="${version.major}.${git.revision}.${git.hash}"/>
@@ -926,7 +928,7 @@
 
     <!--
     ============================================================================
-    go 
+    go
     ============================================================================
     -->
     <!-- Merge back this macro in poney golang/go_proto. It differs only
@@ -963,6 +965,7 @@
     <target name="go.proto">
         <sword_go_proto input="${src.dir}/libraries/protocol/proto"
                         output="${src.dir}/sword"/>
+        <go_proto input="${src.dir}/sdk"/>
         <go_proto input="${src.dir}/testproto/before"/>
         <go_proto input="${src.dir}/testproto/after"/>
     </target>
@@ -970,6 +973,7 @@
     <target name="go.build">
         <go_fmt/>
         <go_build/>
+        <go cmd="vet"/>
         <setversion version="${version.version}" product="Sword"
             file="${bin.dir}/csvclient.exe"/>
     </target>
@@ -999,7 +1003,19 @@
                 <arg value="-j=${ninja.jobs}"/>
                 <arg value="${root.dir}"/>
                 <arg value="--"/>
-                <arg value="./src/..."/>
+                <!-- Make timeline tests compatible with gotester and reset
+                     the following lines to ./src/...
+                -->
+                <arg value="./src/csvclient/..."/>
+                <arg value="./src/dumpreplay/..."/>
+                <arg value="./src/masa/..."/>
+                <arg value="./src/simtests/..."/>
+                <arg value="./src/stressclient/..."/>
+                <arg value="./src/swapi/..."/>
+                <arg value="./src/sword/..."/>
+                <arg value="./src/swtest/..."/>
+                <arg value="./src/testclient/..."/>
+                <arg value="./src/testproto/..."/>
                 <arg value="${go.race}"/>
                 <arg value="-test.parallel=1"/>
                 <arg value="-test.cpu=${ninja.jobs}"/>
@@ -1028,6 +1044,132 @@
     </target>
 
     <target name="go" depends="go.proto,go.build,go.test,go.package"/>
+
+    <!--
+    ============================================================================
+    timeline
+    ============================================================================
+    -->
+    <macrodef name="minify">
+        <attribute name="dst"/>
+        <attribute name="dir" default="${www.dir}/lib"/>
+        <sequential>
+            <uglify dir="@{dir}"
+                dst="@{dir}/@{dst}.min.js"
+                files="@{dst}.js"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="i18n">
+        <attribute name="exe" default="${bin.dir}/i18n_app.exe"/>
+        <attribute name="www" default="${www.dir}"/>
+        <sequential>
+            <exec taskname="i18n" executable="@{exe}" dir="${bin.dir}" failonerror="true" timeout="100000">
+                <arg value="-command=all"/>
+                <arg value="-www=@{www}"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <target name="web">
+        <i18n/>
+        <lessdir dir="${www.dir}/css"/>
+        <coffee  dir="${www.dir}/js" dst="core" files="segment_tree.coffee
+                                                      ,timeline.coffee
+                                                      ,event_settings.coffee
+                                                      ,core.coffee"/>
+        <minify  dst="backbone"/>
+        <minify  dst="bootstrap"/>
+        <minify  dst="core" dir="${www.dir}/js"/>
+        <minify  dst="datepicker"/>
+        <minify  dst="handlebars"/>
+        <minify  dst="i18n" dir="${www.dir}/js"/>
+        <minify  dst="jquery"/>
+        <minify  dst="json2"/>
+        <minify  dst="moment"/>
+        <minify  dst="underscore"/>
+    </target>
+
+    <target name="web.test.build">
+        <coffee dir="${www.dir}" dst="tests/content" files="js/segment_tree.coffee
+                                                          ,tests/tests.coffee"/>
+        <concat destfile="${www.dir}/tests/tests.js">
+            <filelist dir="${www.dir}" files="lib/underscore.js
+                                             ,tests/content.js"/>
+        </concat>
+    </target>
+
+    <target name="web.test" depends="web.test.build">
+        <mocha dir="${www.dir}/tests" files="tests.js"/>
+    </target>
+
+    <target name="server.test">
+        <!-- Unify these tests with gosword
+
+        Passing @module makes <go cmd> NOT generate its own list of modules
+        to test.
+        -->
+        <go cmd="test" module="i18n_app">
+            <arg value="-i"/>
+            <arg value="i18n_app/..."/>
+            <arg value="timeline_player/..."/>
+            <arg value="timeline_server/..."/>
+            <arg value="${go.race}"/>
+        </go>
+        <go cmd="test" module="client/...">
+            <env key="TEST_PORT" value="${test.port}"/>
+            <arg value="client/..."/>
+            <arg value="i18n/..."/>
+            <arg value="i18n_app/..."/>
+            <arg value="sdk/..."/>
+            <arg value="server/..."/>
+            <arg value="services/..."/>
+            <arg value="swfake/..."/>
+            <arg value="timeline_player/..."/>
+            <arg value="timeline_server/..."/>
+            <arg value="util/..."/>
+            <arg value="${go.race}"/>
+        </go>
+    </target>
+
+    <target name="timeline.test" depends="server.test,web.test"/>
+
+    <target name="timeline.package">
+        <setversion file="${bin.dir}/timeline_player.exe"
+            version="${version.version}" product="Timeline"/>
+        <setversion file="${bin.dir}/timeline_server.exe"
+            version="${version.version}" product="Timeline"/>
+        <zip destfile="${bin.dir}/timeline.pak">
+            <fileset dir="${src.dir}/www" includes="
+                css/*.css,
+                font/*,
+                img/*,
+                js/*.min.js,
+                lib/*.min.js,
+                lib/*.css,
+                *.ico,
+                *.ttml,
+                locale/*.ts"/>
+        </zip>
+        <go_zip subdir="dll" output="${platform}">
+            <fileset dir="${bin.dir}" includes="
+                timeline_player.exe,
+                timeline_server.exe"/>
+            <fileset dir="${bin.dir}" includes="timeline.pak"/>
+        </go_zip>
+        <!-- Make sure the timeline can be used by selftraining_app -->
+        <copy todir="${run.dir}" overwrite="true">
+            <fileset dir="${bin.dir}" includes="timeline*.*"/>
+        </copy>
+    </target>
+
+    <target name="timeline.deploy"
+        description="minimal build to have a working timeline for selftraining"
+        depends="go.proto,go.build,web,timeline.package">
+    </target>
+
+    <target name="timeline" description="build time applications"
+        depends="go.proto,go.build,web,timeline.test,timeline.package"/>
 
     <!--
     ============================================================================
@@ -1061,6 +1203,7 @@
         <update name="models" package="propagations-dev" todir="${data.dir}/data/propagations"/>
         <update name="models" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="mongoose" version="3.3.r351"/>
+        <update name="nodejs" version="0.10.12"/>
         <update name="openssl" version="1.0.0d"/>
         <update name="proj4" version="4.8.0"/>
         <update name="protobuf" version="2.3.0"/>
@@ -1079,7 +1222,6 @@
         <update name="zlib" version="1.2.6.r167"/>
         <!-- timeline_ui dependencies -->
         <update name="cef" version="1.1364.1123" package="dll/${platform32}" todir="${run.dir}/cef"/>
-        <update name="timeline"/>
         <update name="timeline_ui" package="dll/${platform32}" todir="${run.dir}/cef"/>
         <update name="timeline_ui" package="include"           todir="${include.dir}"/>
         <update name="timeline_ui" package="lib/${platform}"   todir="${lib.dir}"/>
@@ -1090,7 +1232,7 @@
                 ,generate-lua-reports
                 ,deploy-application-data
                 ,generate-license
-                ,go.proto"/>
+                ,timeline.deploy"/>
 
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
@@ -1141,6 +1283,7 @@
                                 cmake.configure,
                                 build,
                                 go,
+                                timeline,
                                 test,
                                 documentation,
                                 package"/>
