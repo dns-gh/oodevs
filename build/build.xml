@@ -932,40 +932,9 @@
     go
     ============================================================================
     -->
-    <!-- Merge back this macro in poney golang/go_proto. It differs only
-         by an "output" attribute and an <mkdir> call.
-    -->
-    <macrodef name="sword_go_proto">
-        <attribute name="input"/>
-        <attribute name="output" default="@{input}"/>
-        <sequential>
-            <if>
-                <not>
-                    <uptodate>
-                        <srcfiles dir="@{input}" includes="**/*.proto"/>
-                        <mapper type="glob" from="*.proto" to="@{output}/*.pb.go"/>
-                    </uptodate>
-                </not>
-                <then>
-                    <mkdir dir="@{output}"/>
-                    <fileset id="protofiles" dir="@{input}">
-                        <include name="*.proto"/>
-                    </fileset>
-                    <pathconvert property="@{input}.protofiles" refid="protofiles" pathsep=" "/>
-                    <echo taskname="proto" message="@{input}"/>
-                    <exec taskname="proto" executable="${bin.dir}/protoc" failonerror="true">
-                        <arg value="--proto_path=@{input}"/>
-                        <arg value="--go_out=@{output}"/>
-                        <arg line="${@{input}.protofiles}"/>
-                    </exec>
-                </then>
-            </if>
-        </sequential>
-    </macrodef>
-
     <target name="go.proto">
-        <sword_go_proto input="${src.dir}/libraries/protocol/proto"
-                        output="${src.dir}/sword"/>
+        <go_proto input="${src.dir}/libraries/protocol/proto"
+                  output="${src.dir}/sword"/>
         <go_proto input="${src.dir}/sdk"/>
         <go_proto input="${src.dir}/testproto/before"/>
         <go_proto input="${src.dir}/testproto/after"/>
