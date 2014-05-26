@@ -52,11 +52,11 @@ public:
     virtual QStringList GetFields() const;
     virtual void StartLoad();
     virtual bool LoadNext();
-    virtual QString GetLoadReport() const;
     virtual const kernel::Location_ABC& GetCurrentLocation() const;
     virtual QString GetCurrentFieldValueAsString( const QString& ) const;
     virtual int GetCurrentFieldValueAsInt( const QString& ) const;
     virtual bool GetCurrentFieldValueAsBool( const QString& ) const;
+    virtual bool CheckValidity( RichLabel& result ) const;
     //@}
 
 private:
@@ -81,7 +81,8 @@ private:
     OGRLayer* currentLayer_;
     OGRFeature* currentFeature_;
     std::auto_ptr< kernel::Location_ABC > currentLocation_;
-    QStringList loadReports_;
+    unsigned int unsupportedShapes_;
+    unsigned int unsupportedPoints_;
     //@}
 };
 

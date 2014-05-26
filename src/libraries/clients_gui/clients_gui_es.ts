@@ -1502,8 +1502,13 @@ Desea eliminarlo?</translation>
         <translation>Referencia espacial debe ser WGS84</translation>
     </message>
     <message>
-        <source>Cannot load SHP feature %1 : %2</source>
-        <translation>No se puede cargar características SHP %1 : %2</translation>
+        <source>Warning: %1 unsupported point(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: cannot load shapefile, 
+ %1 unsupported/unmatched shape(s)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

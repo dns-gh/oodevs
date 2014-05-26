@@ -1499,7 +1499,12 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot load SHP feature %1 : %2</source>
+        <source>Warning: %1 unsupported point(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: cannot load shapefile, 
+ %1 unsupported/unmatched shape(s)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
