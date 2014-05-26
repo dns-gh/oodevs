@@ -1865,7 +1865,8 @@ void MIL_AgentPion::OnReceiveChangeDotation( const sword::MissionParameters& msg
             "must be a number between 0 and 100" );
         CheckSubSubParameterCount( highThresholdPercentage < 0.f || highThresholdPercentage > 100.f, i, 3,
             "must be a number between 0 and 100" );
-        protocol::Check( lowThresholdPercentage < highThresholdPercentage, "must be lower than high threshold percentage", 0, i, 2 );
+        if( lowThresholdPercentage > highThresholdPercentage )
+            highThresholdPercentage = lowThresholdPercentage;
         content.push_back( std::make_tuple( pDotationCategory, number, lowThresholdPercentage, highThresholdPercentage ) );
     }
 

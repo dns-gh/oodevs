@@ -960,7 +960,7 @@ void ADN_Equipments_Data::CategoryInfos::ReadArchive( xml::xistream& input, cons
           >> xml::optional >> xml::attribute( "normalized-consumption", rNormalizedConsumption_ );
     if( rLogLowThreshold_.GetData() > rLogHighThreshold_.GetData() )
         ADN_ConsistencyChecker::AddLoadingError( eRepartitionError, parentName, eEquipments, -1,
-            tools::translate( "ADN_Equipments_Data", "Invalid thresholds, high \'%1\' must be superior than low \'%2\'." )
+            tools::translate( "ADN_Equipments_Data", "Invalid thresholds, high \'%1\' must be superior than low \'%2\' and will be set equal to low." )
                 .arg( rLogHighThreshold_.GetData() ).arg( rLogLowThreshold_.GetData() ).toStdString() );
 }
 

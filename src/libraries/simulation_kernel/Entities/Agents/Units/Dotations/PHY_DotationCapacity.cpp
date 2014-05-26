@@ -63,6 +63,8 @@ void PHY_DotationCapacity::ComputeThreshold()
     rLowThreshold_ = rCapacity_ * rLowThresholdPercentage_ / 100.;
     if( rHighThresholdPercentage_ < 0 || rHighThresholdPercentage_ > 100 )
         throw MASA_EXCEPTION( "Dotation high-threshold not in [0..100]." );
+    if( rHighThresholdPercentage_ < rLowThresholdPercentage_ )
+        rHighThresholdPercentage_ = rLowThresholdPercentage_;
     rHighThreshold_ = rCapacity_ * rHighThresholdPercentage_ / 100.;
 }
 

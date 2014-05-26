@@ -40,7 +40,7 @@ PHY_Dotation::PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGr
     , rConsumptionReservation_( 0 )
     , rFireReservation_       ( 0 )
     , rLowThreshold_          ( 0 )
-    , rHighThreshold_         ( 100 )
+    , rHighThreshold_         ( 0 )
     , bNotified_              ( false )
     , bDotationBlocked_       ( false )
     , bInfiniteDotations_     ( bInfiniteDotations )
@@ -62,7 +62,7 @@ PHY_Dotation::PHY_Dotation()
     , rConsumptionReservation_( 0 )
     , rFireReservation_       ( 0 )
     , rLowThreshold_          ( 0 )
-    , rHighThreshold_         ( 100 )
+    , rHighThreshold_         ( 0 )
     , bNotified_              ( false )
     , bDotationBlocked_       ( false )
     , bInfiniteDotations_     ( false )
@@ -115,7 +115,10 @@ void PHY_Dotation::ReadValue( xml::xistream& xis )
     if( xis.has_attribute( "high-threshold" ) )
         rHighThreshold_ = std::min( rCapacity_ * xis.attribute< double >( "high-threshold" ) / 100, rCapacity_ );
     if( rHighThreshold_ < rLowThreshold_ )
-        throw MASA_EXCEPTION( xis.context() + " high threshold is not greater than low threshold." );
+    {
+        MT_LOG_WARNING_MSG( xis.context() + " high threshold is not greater than low threshold." );
+        rHighThreshold_ = rLowThreshold_;
+    }
     SetValue( rValue );
 }
 
@@ -192,9 +195,9 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity, double qua
 // -----------------------------------------------------------------------------
 double PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
 {
-    double ratio = rCapacity_ ? (rValue_ / rCapacity_) : 1.;
-    double capacityToRemove = capacity.GetCapacity();
-    double quantityToRemove = capacityToRemove * ratio;
+    const double ratio = rCapacity_ ? (rValue_ / rCapacity_) : 1.;
+    const double capacityToRemove = capacity.GetCapacity();
+    const double quantityToRemove = capacityToRemove * ratio;
     double removed = rCapacity_ > quantityToRemove ? quantityToRemove : rCapacity_;
     assert( rCapacity_ >= capacityToRemove );
     rCapacity_        -= capacityToRemove;
@@ -466,7 +469,7 @@ double PHY_Dotation::GetLowThresholdPercentage() const
     assert( rLowThreshold_ <= rCapacity_ );
     if( rCapacity_ == 0 )
         return 0;
-    return rLowThreshold_ / rCapacity_ * 100;
+    return ( rLowThreshold_ / rCapacity_ ) * 100;
 }
 
 // -----------------------------------------------------------------------------
@@ -477,5 +480,5 @@ double PHY_Dotation::GetHighThresholdPercentage() const
 {
     if( rCapacity_ == 0 )
         return 0;
-    return rHighThreshold_ / rCapacity_ * 100;
+    return ( rHighThreshold_ / rCapacity_ ) * 100;
 }

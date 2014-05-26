@@ -287,14 +287,10 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
     typeId_ = agent.GetType().GetId();
     InitialState& extension = selected.Get< InitialState >();
     for( auto it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
-<<<<<<< HEAD
-        MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->threshold_, it->consumption_ );
+        MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->lowThreshold_, it->highThreshold_, it->consumption_ );
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( IsEntityOriginalResource( selected, GetDisplayData( row, eName ) ) )
             SetColor( row, eName, Qt::lightGray, -1 );
-=======
-        MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->lowThreshold_, it->highThreshold_, it->consumption_ );
->>>>>>> [preparation][gaming][dispatcher] Story #68884372 "Add high supply threshold for automated requests"
 }
 
 namespace
