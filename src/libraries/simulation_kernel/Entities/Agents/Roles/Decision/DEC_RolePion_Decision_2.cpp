@@ -123,6 +123,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions( sword::Brain& brain 
 
     // Mount/dismount
     brain.RegisterFunction( "DEC_CanMount", &DEC_AgentFunctions::CanMount );
+    brain.RegisterFunction( "DEC_Agent_EstCompletementEmbarquable", &DEC_AgentFunctions::IsLoadable );
 
     // Réseaux souterrains
     brain.RegisterFunction( "DEC_Agent_TempsPourTraverserReseauSouterrain", &DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime );

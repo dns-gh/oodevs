@@ -589,6 +589,57 @@ bool DEC_AgentFunctions::HasLoadable( const MIL_Agent_ABC& callerAgent )
     return computer.HasLoadable();
 }
 
+namespace
+{
+    class IsLoadableComputer : public OnComponentComputer_ABC
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        IsLoadableComputer()
+            : bIsLoadable_( true )
+        {
+            // NOTHING
+        }
+        virtual ~IsLoadableComputer()
+        {
+            // NOTHING
+        }
+        //@}
+
+        //! @name Operations
+        //@{
+        virtual void ApplyOnComponent( PHY_ComposantePion& component )
+        {
+            if( !component.IsLoadable() )
+                bIsLoadable_ = false;
+        }
+
+        bool IsLoadable()
+        {
+            return bIsLoadable_;
+        }
+        //@}
+
+    private :
+        //! @name Member data
+        //@{
+        bool bIsLoadable_;
+        //@}
+    };
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsLoadable
+// Created: GGE 2014-05-23
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsLoadable( DEC_Decision_ABC& callerAgent )
+{
+    IsLoadableComputer computer;
+    MIL_AgentPion& pionT = const_cast< MIL_AgentPion& >( callerAgent.GetPion() );
+    pionT.Execute< OnComponentComputer_ABC >( computer );
+    return computer.IsLoadable();
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetLoadingTime
 // Created: NLD 2004-10-18
