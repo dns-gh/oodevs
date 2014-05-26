@@ -320,6 +320,15 @@ integration.switchOffCoverMode = function()
     myself.coverMode = false -- ww base
 end
 
+--- Returns true if this entity can be fully loaded, false otherwise.
+-- For this method to return true, all the units' equipments must be tagged as loadable in the physical database.
+-- This method can be called by an agent or company.
+-- @param agent DirectIA agent
+-- @return Boolean
+integration.canBeFullyLoaded = function( agent )
+    return DEC_Agent_EstCompletementEmbarquable( agent.source )
+end
+
 --- Returns true if this entity can dismount, false otherwise.
 -- For this method to return true, the unit must have equipments that can load
 -- other equipments (typically vehicles carrying infantry).
