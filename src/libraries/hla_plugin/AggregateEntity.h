@@ -125,7 +125,6 @@ private:
         rpr::EntityType entityType_;
     };
     typedef std::vector< T_Equipment >  T_Equipments;
-    typedef T_Equipments::iterator     IT_Equipments;
     //@}
 
 private:

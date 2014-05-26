@@ -30,13 +30,15 @@ namespace
 // Name: PHY_DotationStock constructor
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, double rSupplyThresholdRatio, double rCapacity, bool bInfiniteDotations, bool bCreateEmpty )
-    : pStockContainer_   ( &stockContainer    )
-    , pCategory_         ( &dotationCategory  )
+PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory,
+                                      double rLowThresholdRatio, double rCapacity,
+                                      bool bInfiniteDotations, bool bCreateEmpty )
+    : pStockContainer_   ( &stockContainer )
+    , pCategory_         ( &dotationCategory )
     , rValue_            ( 0 )
     , rRequestedValue_   ( 0 )
     , rCapacity_         ( bInfiniteDotations ? ::maxCapacity : rCapacity )
-    , rSupplyThreshold_  ( rCapacity * rSupplyThresholdRatio )
+    , rLowThreshold_     ( rCapacity * rLowThresholdRatio )
     , bNotified_         ( false )
     , bInfiniteDotations_( bInfiniteDotations )
 {
@@ -54,7 +56,7 @@ PHY_DotationStock::PHY_DotationStock()
     , rValue_            ( 0 )
     , rRequestedValue_   ( 0 )
     , rCapacity_         ( 0 )
-    , rSupplyThreshold_  ( 0 )
+    , rLowThreshold_     ( 0 )
     , bNotified_         ( false )
     , bInfiniteDotations_( false)
 {
@@ -81,7 +83,7 @@ void PHY_DotationStock::serialize( Archive& ar, const unsigned int )
        & pCategory_
        & rValue_
        & rCapacity_
-       & rSupplyThreshold_
+       & rLowThreshold_
        & bNotified_
        & bInfiniteDotations_;
 }
@@ -94,7 +96,7 @@ void PHY_DotationStock::SetValue( double rValue )
 {
     assert( pStockContainer_ );
 
-    if( bInfiniteDotations_ && rValue < rSupplyThreshold_ )
+    if( bInfiniteDotations_ && rValue < rLowThreshold_ )
         rValue = rCapacity_;
 
     rValue = std::min( rValue, ::maxCapacity );
@@ -103,9 +105,9 @@ void PHY_DotationStock::SetValue( double rValue )
         pStockContainer_->NotifyDotationChanged( *this, rValue - rValue_ );
 
     rValue_ = rValue;
-    bNotified_ &= rValue_ < rSupplyThreshold_;
+    bNotified_ &= rValue_ < rLowThreshold_;
 
-    if( HasReachedSupplyThreshold() )
+    if( HasReachedLowThreshold() )
     {
         if( rRequestedValue_ == 0 )
             rRequestedValue_ = rCapacity_ - rValue_;
@@ -202,16 +204,16 @@ bool PHY_DotationStock::NeedSupply() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationStock::HasReachedSupplyThreshold
+// Name: PHY_DotationStock::HasReachedLowThreshold
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
-bool PHY_DotationStock::HasReachedSupplyThreshold() const
+bool PHY_DotationStock::HasReachedLowThreshold() const
 {
     if( bInfiniteDotations_ )
         return false;
     if( IsJammed() )
         return false;
-    return rValue_ < rSupplyThreshold_;
+    return rValue_ < rLowThreshold_;
 }
 
 // -----------------------------------------------------------------------------
@@ -243,9 +245,8 @@ void PHY_DotationStock::Resupply( bool withLog )
 {
     if( withLog )
         SetValue( std::max( rCapacity_ - rRequestedValue_, rValue_ ) );
-    else
-        if( rValue_ < rCapacity_ )
-            SetValue( rCapacity_ );
+    else if( rValue_ < rCapacity_ )
+        SetValue( rCapacity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,7 +255,7 @@ void PHY_DotationStock::Resupply( bool withLog )
 // -----------------------------------------------------------------------------
 void PHY_DotationStock::UpdateSupplyNeeded()
 {
-    if( HasReachedSupplyThreshold() )
+    if( HasReachedLowThreshold() )
         NotifySupplyNeeded();
 }
 

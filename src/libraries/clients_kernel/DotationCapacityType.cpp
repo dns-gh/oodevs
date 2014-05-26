@@ -21,7 +21,8 @@ DotationCapacityType::DotationCapacityType( xml::xistream& xis )
 {
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "capacity", capacity_ )
-        >> xml::attribute( "logistic-threshold", logisticThreshold_ )
+        >> xml::attribute( "low-threshold", lowThreshold_ )
+        >> xml::attribute( "high-threshold", highThreshold_ )
         >> xml::attribute( "normalized-consumption", normalizedConsumption_ );
 }
 
@@ -53,12 +54,21 @@ unsigned int DotationCapacityType::GetCapacity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationCapacityType::GetLogisticThreshold
+// Name: DotationCapacityType::GetLowThreshold
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-double DotationCapacityType::GetLogisticThreshold() const
+double DotationCapacityType::GetLowThreshold() const
 {
-    return logisticThreshold_;
+    return lowThreshold_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DotationCapacityType::GethighThreshold
+// Created: SLI 2014-04-17
+// -----------------------------------------------------------------------------
+double DotationCapacityType::GetHighThreshold() const
+{
+    return highThreshold_;
 }
 
 // -----------------------------------------------------------------------------

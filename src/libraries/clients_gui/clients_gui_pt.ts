@@ -2163,15 +2163,19 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic threshold (%)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Normalized quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic low threshold (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic high threshold (%)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

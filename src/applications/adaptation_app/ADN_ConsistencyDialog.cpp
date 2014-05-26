@@ -105,7 +105,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eInvalidRoof ]            = tr( "RoofShape name is empty" );
     errorDescriptions_[ eInvalidVolume ]          = tr( "Volume name is empty" );
     errorDescriptions_[ eIndirectFireRange ]      = tr( "Weapon %1 - Indirect fire - max range < min range" ) + error;
-    errorDescriptions_[ eRepartitionError ]       = tr( "%1" );
+    errorDescriptions_[ eRepartitionError ]       = tr( "%1 %2" );
     errorDescriptions_[ eDuplicateEnumeration ]   = tr( "Mission parameter %1 defines duplicate enumeration values." );
 
     // Connection

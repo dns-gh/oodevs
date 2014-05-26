@@ -48,8 +48,8 @@ public:
 private:
     const unsigned int nDotationType_; // XML reference - no resolved by dispatcher
     unsigned int       nNbr_;
-    float              rSupplyThresholdPercentage_;
-    bool               bSupplyThresholdHasChanged_;
+    float              rLowThresholdPercentage_;
+    float              rHighThresholdPercentage_;
 };
 
 }

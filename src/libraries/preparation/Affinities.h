@@ -44,7 +44,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< unsigned long, float > T_Affinities;
-    typedef T_Affinities::const_iterator            CIT_Affinities;
     //@}
 
     //! @name Operations

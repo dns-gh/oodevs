@@ -89,8 +89,9 @@
 					<xs:attribute name="normalized-consumption" type="xs:nonNegativeInteger" use="required"/>
 					<xs:attribute name="capacity" type="xs:nonNegativeInteger" use="required"/>
 					<xs:attribute name="name" type="xs:string" use="required"/>
-					<xs:attribute name="logistic-threshold" type="xs:nonNegativeInteger" use="required"/>
-				</xs:complexType>
+					<xs:attribute name="low-threshold" type="xs:nonNegativeInteger" use="required"/>
+					<xs:attribute name="high-threshold" type="xs:nonNegativeInteger" use="required"/>
+                </xs:complexType>
 			</xs:element>
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:string" use="required"/>

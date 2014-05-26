@@ -353,13 +353,15 @@ public:
         virtual ~CategoryInfos() {}
 
         CategoryInfos* CreateCopy();
-        void ReadArchive( xml::xistream& input );
+        void ReadArchive( xml::xistream& input, const std::string& parentName );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
+
         ADN_TypePtr_InVector_ABC< ADN_Resources_Data::ResourceInfos > ptrDotation_;
         ADN_Type_Int rNbr_;
-        ADN_Type_Double rLogThreshold_;
+        ADN_Type_Double rLogLowThreshold_;
+        ADN_Type_Double rLogHighThreshold_;
         ADN_Type_Double rNormalizedConsumption_;
     };
 

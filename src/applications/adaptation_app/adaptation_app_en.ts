@@ -762,6 +762,10 @@ Parked engine running</translation>
         <source>Mission parameter %1 defines duplicate enumeration values.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 %2</source>
+        <translation>%1 %2</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -1093,6 +1097,10 @@ Parked engine running</translation>
         <source>Armor-Plating</source>
         <translation>Armor-Plating</translation>
     </message>
+    <message>
+        <source>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos;.</source>
+        <translation>Invalid thresholds, high &apos;%1&apos; must be superior than low &apos;%2&apos;.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_DisasterImpactTable</name>
@@ -1116,20 +1124,24 @@ Parked engine running</translation>
         <translation>Qty</translation>
     </message>
     <message>
-        <source>Log threshold (%)</source>
-        <translation>Log threshold (%)</translation>
-    </message>
-    <message>
-        <source>Normalized consumption</source>
-        <translation>Normalized consumption</translation>
-    </message>
-    <message>
         <source>Add supplies</source>
         <translation>Add supplies</translation>
     </message>
     <message>
         <source>Remove supplies</source>
         <translation>Remove supplies</translation>
+    </message>
+    <message>
+        <source>Low thld. (%)</source>
+        <translation>Low thld. (%)</translation>
+    </message>
+    <message>
+        <source>High thld. (%)</source>
+        <translation>High thld. (%)</translation>
+    </message>
+    <message>
+        <source>Norm. cons.</source>
+        <translation>Norm. cons.</translation>
     </message>
 </context>
 <context>

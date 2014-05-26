@@ -76,7 +76,8 @@ void Dotations::DoUpdate( const sword::UnitAttributes& message )
             previous = *dotation;
         Dotation current( previous );
         current.quantity_ = value.quantity();
-        current.thresholdPercentage_ = value.threshold();
+        current.lowThresholdPercentage_ = value.low_threshold();
+        current.highThresholdPercentage_ = value.high_threshold();
         differences.push_back( current - previous );
     }
     Update( differences );

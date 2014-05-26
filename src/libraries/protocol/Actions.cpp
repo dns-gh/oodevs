@@ -418,7 +418,8 @@ const ActionParam dotations_structure_params[] =
 {
     { "ID", "identifier", 0, 0, 0, 0 },
     { "Quantity", "quantity", 0, 0, 0, 0 },
-    { "Threshold", "numeric", 0, 0, 0, 0 },
+    { "Low threshold", "numeric", 0, 0, 0, 0 },
+    { "High threshold", "numeric", 0, 0, 0, 0 },
 };
 LIST_OF_STRUCTURES( dotations, "Dotation" )
 
