@@ -29,24 +29,36 @@
 // Created: ABR 2011-11-02
 // -----------------------------------------------------------------------------
 EntitySymbolEditor::EntitySymbolEditor( QGridLayout* layout, int row, kernel::Controllers& controllers, kernel::SymbolFactory& symbolsFactory,
-                                        gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, const QString& iconPreviewToolTips )
+                                        gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, const QString& iconPreviewToolTips,
+                                        int stretch )
     : QWidget( ( layout && layout->parentWidget() ) ? layout->parentWidget() : 0 )
     , symbolsFactory_( symbolsFactory )
 {
+    QWidget* group = new QWidget( this, "group" );
+    layout->addWidget( group, row, 0, 1, 2 );
+    QVBoxLayout* boxLayout = new QVBoxLayout();
+    group->setLayout( boxLayout );
+    QGridLayout* buttonsLayout = new QGridLayout();
+    QWidget* buttonsGroup = new QWidget( this, "buttonsGroup" );
+    buttonsGroup->setLayout( buttonsLayout );
+    boxLayout->addWidget( buttonsGroup );
+    if( stretch )
+        boxLayout->addWidget( new QWidget(), stretch );
+
     // Level
-    layout->addWidget( new QLabel( tr( "Hierarchy level:" ), this ), row, 0 );
+    buttonsLayout->addWidget( new QLabel( tr( "Hierarchy level:" ), this ), 0, 0 );
     levelComboBox_ = new gui::RichWidget< QComboBox >( "levelComboBox", this );
     levelBase_ = tr( "Select a parent automat or formation" );
     connect( levelComboBox_, SIGNAL( activated( int ) ), SLOT( UpdateSymbol() ) );
-    layout->addWidget( levelComboBox_, row, 1 );
+    buttonsLayout->addWidget( levelComboBox_, 0, 1 );
 
     // Nature
-    natureWidget_ = new gui::NatureEditionWidget( layout, row + 1, 4 );
+    natureWidget_ = new gui::NatureEditionWidget( buttonsLayout, 1, 4 );
     connect( natureWidget_, SIGNAL( textChanged( const QString& ) ), SLOT( UpdateSymbol() ) );
 
     // Icon
     icon_ = new gui::UnitPreviewIcon( this, controllers, icons, colorStrategy, iconPreviewToolTips );
-    layout->addWidget( icon_, row + 5, 0, 1, 2 );
+    boxLayout->addWidget( icon_,0, Qt::AlignBottom );
     connect( icon_, SIGNAL( StartDrag() ), SIGNAL( StartDrag() ) );
     connect( icon_, SIGNAL( SelectionChanged( const kernel::Entity_ABC* ) ), SLOT( OnSelectionChanged( const kernel::Entity_ABC* ) ) );
 

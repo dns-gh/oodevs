@@ -54,7 +54,7 @@ GhostsPanel::GhostsPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controlle
     layout->addWidget( typeLineEdit_, 1, 1 );
 
     // Symbol Editor
-    symbolEditor_ = new EntitySymbolEditor( layout, 2, controllers_, symbolsFactory_, icons, colorStrategy, tr( "Drag and drop symbol to map to create a new ghost." ) );
+    symbolEditor_ = new EntitySymbolEditor( layout, 2, controllers_, symbolsFactory_, icons, colorStrategy, tr( "Drag and drop symbol to map to create a new ghost." ), 0 );
     symbolEditor_->SetDeep( 2 );
     connect( symbolEditor_, SIGNAL( LevelChanged() ), SLOT( UpdateWarning() ) );
     connect( symbolEditor_, SIGNAL( StartDrag() ), SLOT( IconDragged() ) );

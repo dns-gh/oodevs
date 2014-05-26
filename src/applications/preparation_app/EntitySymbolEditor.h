@@ -46,7 +46,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              EntitySymbolEditor( QGridLayout* layout, int row, kernel::Controllers& controllers, kernel::SymbolFactory& symbolsFactory,
-                                 gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, const QString& iconPreviewToolTips = QString() );
+                                 gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, const QString& iconPreviewToolTips,
+                                 int stretch );
     virtual ~EntitySymbolEditor();
     //@}
 
