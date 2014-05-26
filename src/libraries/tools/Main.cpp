@@ -126,7 +126,7 @@ int tools::Main(
     }
     const tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
     MT_CrashHandler::SetRootDirectory( debugDir );
-    const auto level = GetLogLevel( winArgs.GetOption( "--log-level", "fatal" ) );
+    const auto level = GetLogLevel( winArgs.GetOption( "--log-level", "warning" ) );
     const auto logger = CreateLogger( type, level, debugDir );
     if( silentCrash )
         return main( winArgs );
