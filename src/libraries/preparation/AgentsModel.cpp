@@ -296,7 +296,7 @@ void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent, Model& m
         Agent_ABC* agent = agentFactory_.Create( xis, parent );
         if( agent )
         {
-            auto unknownResources = agent->Get< InitialState >().GetUnknownResources();
+            const auto& unknownResources = agent->Get< InitialState >().GetUnknownResources();
             for( auto it = unknownResources.begin(); it != unknownResources.end(); ++it )
                 model.AppendLoadingError( eUnknownResource, *it, agent );
             tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
