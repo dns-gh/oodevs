@@ -1107,7 +1107,7 @@
             version="${version.version}" product="Timeline"/>
         <setversion file="${bin.dir}/timeline_server.exe"
             version="${version.version}" product="Timeline"/>
-        <zip destfile="${bin.dir}/timeline.pak">
+        <zip destfile="${run.dir}/timeline.pak" duplicate="fail">
             <fileset dir="${src.dir}/www" includes="
                 css/*.css,
                 font/*,
@@ -1123,11 +1123,11 @@
             <fileset dir="${bin.dir}" includes="
                 timeline_player.exe,
                 timeline_server.exe"/>
-            <fileset dir="${bin.dir}" includes="timeline.pak"/>
+            <fileset dir="${run.dir}" includes="timeline.pak"/>
         </go_zip>
         <!-- Make sure the timeline can be used by selftraining_app -->
         <copy todir="${run.dir}" overwrite="true">
-            <fileset dir="${bin.dir}" includes="timeline*.*"/>
+            <fileset dir="${bin.dir}" includes="timeline*.exe"/>
         </copy>
     </target>
 
