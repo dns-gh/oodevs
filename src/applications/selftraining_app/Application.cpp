@@ -49,7 +49,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int argc, char** arg
     connect( cursorTimer_.get(), SIGNAL( timeout() ), SLOT( OnWaitCursorTimeout() ) );
 
     // GUI
-    mainWindow_ = new MainWindow( *this, *config_, *fileLoader_, *controllers_, *exercises_ );
+    mainWindow_.reset( new MainWindow( *this, *config_, *fileLoader_, *controllers_, *exercises_ ) );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
     controllers_->languages_.Register( *this );
 }
@@ -93,7 +93,7 @@ void Application::InitializeStyle()
 int Application::Run()
 {
     mainWindow_->show();
-    QCoreApplication::sendEvent( mainWindow_, new QEvent( QEvent::LanguageChange ) );
+    QCoreApplication::sendEvent( mainWindow_.get(), new QEvent( QEvent::LanguageChange ) );
 
     if( !config_->IsTestMode() )
     {
@@ -101,7 +101,7 @@ int Application::Run()
         frontend::ProcessList processes;
         if( processes.Contains( "selftraining_app.exe" ) )
         {
-            MessageDialog message( mainWindow_, tools::translate( "Application", "Already running" ), tools::translate( "Application", "The FrontEnd is already running. Start anyway ?" ), QMessageBox::Yes, QMessageBox::No );
+            MessageDialog message( mainWindow_.get(), tools::translate( "Application", "Already running" ), tools::translate( "Application", "The FrontEnd is already running. Start anyway ?" ), QMessageBox::Yes, QMessageBox::No );
             if( message.exec() == QMessageBox::No )
                 return EXIT_SUCCESS;
         }
@@ -138,5 +138,5 @@ void Application::OnWaitCursorTimeout()
 // -----------------------------------------------------------------------------
 QWidget* Application::GetMainWindow()
 {
-    return mainWindow_;
+    return mainWindow_.get();
 }

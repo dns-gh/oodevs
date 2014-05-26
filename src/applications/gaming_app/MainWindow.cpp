@@ -267,7 +267,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Initialize
     setCentralWidget( selector_.get() );
-    setAttribute( Qt::WA_DeleteOnClose, true );
     setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
     planifName_ = tr( "SWORD" ) + tr( " - Not connected" );
     setCaption( planifName_ );
