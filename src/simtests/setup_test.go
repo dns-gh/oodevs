@@ -48,7 +48,7 @@ const (
 	ExCrossroadSmallTest      = "crossroad-small-test"
 	ExGradXYTestEmpty         = "grad-x.y-test-empty"
 	ExLandOfStripesEmpty      = "land-of-stripes-empty"
-        ExParisEstKnowledgeGroups = "Paris_Est-knowledge-groups"
+	ExParisEstKnowledgeGroups = "Paris_Est-knowledge-groups"
 )
 
 func MakeOpts() *simu.SimOpts {

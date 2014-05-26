@@ -296,4 +296,3 @@ func (s *TestSuite) TestKnowledgePropagationAmongGroups(c *C) {
 	}
 	c.Assert(knowledgeExists, Equals, true)
 }
-
