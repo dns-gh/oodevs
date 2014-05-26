@@ -29,7 +29,7 @@
 			<xs:element name="active-protections" type="T_ActiveProtection" minOccurs="0"/>
 			<xs:element name="logistic-functions" type="T_Logistics" minOccurs="0"/>
 			<xs:element name="breakdowns" type="T_Breakdowns" minOccurs="0"/>
-			<xs:element name="equipment-category" type="xs:string">
+			<xs:element name="equipment-category" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="fr">Catégorie de l'équipement</xs:documentation>
 				</xs:annotation>

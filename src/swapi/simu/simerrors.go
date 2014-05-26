@@ -120,9 +120,6 @@ var reFunctErr *regexp.Regexp = regexp.MustCompile(makePattern(
 	// Probably happens when the dispatcher waits for the simulation, attempts
 	// should not be logged as fatal errors, only when the time out is reached.
 	`<Dispatcher> <functERR> exception caught: Not connected to`,
-	// Schema validation is a joke.
-	`string_input.*attribute.*is not declared for element`,
-	`string_input.*missing elements in content model`,
 	// Invalid coordinates may be a problem but not a functERR
 	`Exception caught in TER_CoordinateManager::MosToSimMgrsCoord.*out of valid range`,
 	// Happens if client is a bit slow and simulation wants to disconnect it,
@@ -130,7 +127,12 @@ var reFunctErr *regexp.Regexp = regexp.MustCompile(makePattern(
 	`Client hasn't answered messages from last tick!`,
 ))
 
-var reError *regexp.Regexp = regexp.MustCompile(`<(fatalERR|functERR)>`)
+var reError *regexp.Regexp = regexp.MustCompile(makePattern(
+	`<fatalERR>`,
+	`<functERR>`,
+	// Extract XML validation errors
+	`Invalid XML file`,
+))
 
 // Reads reader and possibly returns a concatenation of all <functERR> lines,
 // or an empty string.
