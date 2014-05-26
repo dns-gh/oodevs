@@ -112,7 +112,6 @@
     ============================================================================
     -->
 
-
     <macrodef name="exec-unicode">
         <attribute name="name"/>
         <attribute name="exe"/>
@@ -369,7 +368,7 @@
             </exec>
             <test-adaptation dir="@{todir}"/>
         </sequential>
-    </macrodef>  
+    </macrodef>
 
     <macrodef name="test-adaptation-swap">
         <attribute name="dir"/>
@@ -413,7 +412,7 @@
                 <arg value="--exclude=@{excludes}"/>
             </python>
         </sequential>
-    </macrodef>  
+    </macrodef>
 
     <target name="adaptation_test" description="load, save then diff physical data">
         <test-adaptation-newbase/>
