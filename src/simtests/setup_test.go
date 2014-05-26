@@ -60,7 +60,10 @@ func MakeOpts() *simu.SimOpts {
 	if len(Cfg.Application) > 0 {
 		opts.Executable = Cfg.Application
 	} else if len(projectRoot) > 0 {
-		opts.Executable = filepath.Join(projectRoot, "run", Cfg.Platform, "simulation_app.exe")
+		opts.Executable = filepath.Join(
+			projectRoot, "out", Cfg.Platform, "release/simulation_app.exe")
+		runDir := filepath.Join(projectRoot, "run", Cfg.Platform)
+		opts.RunDir = &runDir
 	}
 	if len(Cfg.RootDir) > 0 {
 		opts.RootDir = Cfg.RootDir
@@ -132,7 +135,10 @@ func MakeReplayOpts() *simu.ReplayOpts {
 		// Assume replayer_app lives along with the simulation
 		opts.Executable = filepath.Join(filepath.Dir(Cfg.Application), "replayer_app.exe")
 	} else if len(projectRoot) > 0 {
-		opts.Executable = filepath.Join(projectRoot, "run", Cfg.Platform, "replayer_app.exe")
+		opts.Executable = filepath.Join(
+			projectRoot, "out", Cfg.Platform, "release/replayer_app.exe")
+		runDir := filepath.Join(projectRoot, "run", Cfg.Platform)
+		opts.RunDir = &runDir
 	}
 	if len(Cfg.RootDir) > 0 {
 		opts.RootDir = Cfg.RootDir
