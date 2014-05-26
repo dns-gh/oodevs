@@ -119,7 +119,8 @@ void UnitStateTableResource::contextMenuEvent( QContextMenuEvent* e )
     if( index.isValid() )
     {
         setCurrentIndex( index );
-        menu.insertItem( tools::translate( "UnitStateTableResource", "Remove supplies" ), this, SLOT( OnRemoveCurrentItem() ) );
+        if( !selected_->Get< InitialState >().IsOriginalResource( GetDisplayData( index.row(), eName ) ) )
+            menu.insertItem( tools::translate( "UnitStateTableResource", "Remove supplies" ), this, SLOT( OnRemoveCurrentItem() ) );
     }
     int nMenuResult = menu.exec( e->globalPos() );
     if( nMenuResult > 0 )
@@ -251,6 +252,30 @@ bool UnitStateTableResource::HasChanged( kernel::Entity_ABC& selected ) const
     return !rowChanged_.empty();
 }
 
+namespace
+{
+    bool IsEntityOriginalResource( const kernel::Entity_ABC& entity, const QString& resourceName )
+    {
+        if( entity.GetTypeName() == kernel::Agent_ABC::typeName_)
+        {
+            if( entity.Get< InitialState >().IsOriginalResource( resourceName) )
+                return true;
+        }
+        else
+        {
+            const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
+            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& subEntity = it.NextElement();
+                if( IsEntityOriginalResource( subEntity, resourceName ) )
+                    return true;
+            }
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: UnitStateTableResource::Load
 // Created: ABR 2011-07-05
@@ -263,6 +288,9 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
     InitialState& extension = selected.Get< InitialState >();
     for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
         MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->threshold_, it->consumption_ );
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
+        if( IsEntityOriginalResource( selected, GetDisplayData( row, eName ) ) )
+            SetColor( row, eName, Qt::lightGray, -1 );
 }
 
 namespace

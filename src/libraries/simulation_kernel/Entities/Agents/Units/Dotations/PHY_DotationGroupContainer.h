@@ -140,12 +140,11 @@ private:
     //@{
     PHY_DotationGroup* GetDotationGroup   ( const PHY_DotationType& dotationType ) const;
     PHY_DotationGroup& CreateDotationGroup( const PHY_DotationType& dotationType );
-    void               PurgeDotationNotOverloaded( PHY_Dotation& dotation, const T_DotationSet& overloadedDotations );
     //@}
 
     //! @name Helpers
     //@{
-    void ReadDotation ( xml::xistream& xis, const PHY_UnitType& unitType, T_DotationSet& overloadedDotations );
+    void ReadDotation ( xml::xistream& xis, const PHY_UnitType& unitType );
     //@}
 
 private:

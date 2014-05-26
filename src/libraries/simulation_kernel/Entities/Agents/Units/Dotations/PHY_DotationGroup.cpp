@@ -82,11 +82,10 @@ void PHY_DotationGroup::save( MIL_CheckPointOutArchive& file, const unsigned int
 // Name: PHY_DotationGroup::ReadValues
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-PHY_Dotation& PHY_DotationGroup::ReadValues( xml::xistream& xis, const PHY_DotationCategory& category )
+void PHY_DotationGroup::ReadValues( xml::xistream& xis, const PHY_DotationCategory& category )
 {
     PHY_Dotation& dotation = CreateDotation( category );
     dotation.ReadValue( xis );
-    return dotation;
 }
 
 // -----------------------------------------------------------------------------

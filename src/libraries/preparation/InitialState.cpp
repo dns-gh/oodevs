@@ -62,7 +62,6 @@ InitialState::InitialState( xml::xistream& xis, const StaticModel& staticModel, 
     }
     if( xis.has_child( "resources" ) )
     {
-        resources_.clear();
         xis >> xml::start( "resources" )
                 >> xml::list( "resource", *this, &InitialState::ReadResource )
             >> xml::end;
@@ -138,7 +137,15 @@ void InitialState::ReadResource( xml::xistream& xis )
     resource.consumption_ = RetrieveNormalizedConsumption( resource.name_ );
     if( resource.threshold_ == -1 )
         resource.threshold_ = RetrieveDefaultLogisticThreshold( resource.name_ );
-    resources_.push_back( resource );
+    auto it = std::find_if( resources_.begin(), resources_.end(),
+        [&]( const InitialStateResource& initial )
+        {
+            return resource.name_ == initial.name_;
+        });
+    if( it == resources_.end() )
+        resources_.push_back( resource );
+    else
+        *it = resource;
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +174,8 @@ void InitialState::SerializeAttributes( xml::xostream& xos ) const
     {
         xos << xml::start( "resources" );
         for( auto it = resources_.begin(); it != resources_.end(); ++it )
-            it->Serialize( xos, RetrieveDefaultLogisticThreshold( it->name_ ) );
+            if( std::find( originalResources_.begin(), originalResources_.end(), *it ) == originalResources_.end() )
+                it->Serialize( xos, RetrieveDefaultLogisticThreshold( it->name_ ) );
         xos << xml::end;
     }
 }
@@ -233,6 +241,18 @@ bool InitialState::CleanUnsupportedState()
     for( auto it = equipments_.begin(); it != equipments_.end(); ++it )
         result = it->CleanUnsupportedState() || result;
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InitialState::IsOriginalResource
+// Created: JSR 2014-05-23
+// -----------------------------------------------------------------------------
+bool InitialState::IsOriginalResource( const QString& resourceName ) const
+{
+    for( auto it = originalResources_.begin(); it != originalResources_.end(); ++it )
+        if( it->name_ == resourceName )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
