@@ -269,12 +269,12 @@ func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 }
 
 func (s *TestSuite) TestKnowledgePropagationAmongGroups(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExTestKG))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExParisEstKnowledgeGroups))
 	defer stopSimAndClient(c, sim, client)
 
-	// check no knowledge of Frere unit (26) in Fils kg (13) until tick 60
-	soughtUnit := uint32(26)
-	polledKnowledgeGroup := uint32(31)
+	// check no knowledge of 'Frere' unit (26) in 'Fils' knowledge group (13) until tick 60
+	const soughtUnit = 26
+	const polledKnowledgeGroup = 31
 
 	client.Model.WaitUntilTick(61)
 	var knowledge *swapi.UnitKnowledge
@@ -289,7 +289,7 @@ func (s *TestSuite) TestKnowledgePropagationAmongGroups(c *C) {
 	client.Model.WaitUntilTick(62)
 	data = client.Model.GetData()
 	for _, knowledge = range data.UnitKnowledges {
-		if(knowledge.UnitId == soughtUnit && knowledge.KnowledgeGroupId == polledKnowledgeGroup) {
+		if knowledge.UnitId == soughtUnit && knowledge.KnowledgeGroupId == polledKnowledgeGroup {
 			knowledgeExists = true
 			break
 		}

@@ -40,15 +40,15 @@ func init() {
 }
 
 const (
-	ExCrossroadLog         = "crossroad-log"
-	ExCrossroadSmallEmpty  = "crossroad-small-empty"
-	ExCrossroadSmallLog    = "crossroad-small-log"
-	ExCrossroadSmallOrbat  = "crossroad-small-orbat"
-	ExCrossroadSmallScores = "crossroad-small-scores"
-	ExCrossroadSmallTest   = "crossroad-small-test"
-	ExGradXYTestEmpty      = "grad-x.y-test-empty"
-	ExLandOfStripesEmpty   = "land-of-stripes-empty"
-        ExTestKG               = "testKG"
+	ExCrossroadLog            = "crossroad-log"
+	ExCrossroadSmallEmpty     = "crossroad-small-empty"
+	ExCrossroadSmallLog       = "crossroad-small-log"
+	ExCrossroadSmallOrbat     = "crossroad-small-orbat"
+	ExCrossroadSmallScores    = "crossroad-small-scores"
+	ExCrossroadSmallTest      = "crossroad-small-test"
+	ExGradXYTestEmpty         = "grad-x.y-test-empty"
+	ExLandOfStripesEmpty      = "land-of-stripes-empty"
+        ExParisEstKnowledgeGroups = "Paris_Est-knowledge-groups"
 )
 
 func MakeOpts() *simu.SimOpts {
