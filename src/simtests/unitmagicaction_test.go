@@ -2721,6 +2721,7 @@ func (s *TestSuite) TestRecoverAll(c *C) {
 	for k, v := range empty.Resources {
 		v.Quantity = 0
 		v.LowThreshold = 0
+		v.HighThreshold = 0
 		empty.Resources[k] = v
 	}
 	for _, withLog := range []bool{true, false} {
