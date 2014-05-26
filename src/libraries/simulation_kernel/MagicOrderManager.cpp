@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MagicOrderManager.h"
+#include "MIL_Time_ABC.h"
+#include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 
@@ -61,11 +63,19 @@ void MagicOrderManager::serialize( Archive& ar, const unsigned int )
 
 namespace
 {
+    const std::string MakeNow()
+    {
+        sword::DateTime now;
+        NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), now );
+        return now.data();
+    }
+
     template< typename T, typename U >
     sword::MagicOrder MakeOrder( const T& src, const U& mutator )
     {
         sword::MagicOrder order;
         *( order.*mutator )() = src;
+        order.set_start_time( MakeNow() );
         return order;
     }
 
