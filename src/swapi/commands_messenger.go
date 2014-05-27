@@ -10,7 +10,6 @@ package swapi
 
 import (
 	"code.google.com/p/goprotobuf/proto"
-	"fmt"
 	"sword"
 )
 
@@ -202,12 +201,12 @@ func (c *Client) UpdatePhaseLine(limit *TacticalLine) error {
 	return <-c.postMessengerMsg(msg, handler)
 }
 
-func (c *Client) DeleteLimit(limit *TacticalLine) error {
+func (c *Client) DeleteLimit(limitId uint32) error {
 	msg := SwordMessage{
 		ClientToMessenger: &sword.ClientToMessenger{
 			Message: &sword.ClientToMessenger_Content{
 				LimitDestructionRequest: &sword.LimitDestructionRequest{
-					Id: MakeId(limit.Id),
+					Id: MakeId(limitId),
 				},
 			},
 		},
@@ -222,25 +221,20 @@ func (c *Client) DeleteLimit(limit *TacticalLine) error {
 			return makeError(reply, int32(code),
 				sword.TacticalLineAck_ErrorCode_name)
 		}
-		if reply.GetId() != limit.Id {
+		if reply.GetId() != limitId {
 			return ErrContinue
-		}
-		removed := c.Model.GetTacticalLine(reply.GetId())
-		if removed != nil {
-			return fmt.Errorf(
-				"Tactical line has not been destroyed: %v", removed)
 		}
 		return nil
 	}
 	return <-c.postMessengerMsg(msg, handler)
 }
 
-func (c *Client) DeletePhaseLine(limit *TacticalLine) error {
+func (c *Client) DeletePhaseLine(limitId uint32) error {
 	msg := SwordMessage{
 		ClientToMessenger: &sword.ClientToMessenger{
 			Message: &sword.ClientToMessenger_Content{
 				PhaseLineDestructionRequest: &sword.PhaseLineDestructionRequest{
-					Id: MakeId(limit.Id),
+					Id: MakeId(limitId),
 				},
 			},
 		},
@@ -255,13 +249,8 @@ func (c *Client) DeletePhaseLine(limit *TacticalLine) error {
 			return makeError(reply, int32(code),
 				sword.TacticalLineAck_ErrorCode_name)
 		}
-		if reply.GetId() != limit.Id {
+		if reply.GetId() != limitId {
 			return ErrContinue
-		}
-		removed := c.Model.GetTacticalLine(reply.GetId())
-		if removed != nil {
-			return fmt.Errorf(
-				"Tactical line has not been destroyed: %v", removed)
 		}
 		return nil
 	}
