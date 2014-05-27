@@ -170,34 +170,6 @@ func packOrder(name, target string, tick time.Time, start *sword.DateTime,
 	}
 }
 
-func readUnitOrder(target string, tick time.Time, order *sword.UnitOrder) *sdk.Event {
-	return packOrder(order.GetName(), target, tick, order.GetStartTime(),
-		&sword.ClientToSim_Content{
-			UnitOrder: order,
-		}, true, true)
-}
-
-func readAutomatOrder(target string, tick time.Time, order *sword.AutomatOrder) *sdk.Event {
-	return packOrder(order.GetName(), target, tick, order.GetStartTime(),
-		&sword.ClientToSim_Content{
-			AutomatOrder: order,
-		}, true, true)
-}
-
-func readCrowdOrder(target string, tick time.Time, order *sword.CrowdOrder) *sdk.Event {
-	return packOrder(order.GetName(), target, tick, order.GetStartTime(),
-		&sword.ClientToSim_Content{
-			CrowdOrder: order,
-		}, true, true)
-}
-
-func readFragOrder(target string, tick time.Time, order *sword.FragOrder) *sdk.Event {
-	return packOrder(order.GetName(), target, tick, order.GetStartTime(),
-		&sword.ClientToSim_Content{
-			FragOrder: order,
-		}, true, true)
-}
-
 func readReport(tick time.Time, report *sword.Report) *sdk.Event {
 	return &sdk.Event{
 		Uuid: proto.String(gouuid.New()),
@@ -210,11 +182,13 @@ func readReport(tick time.Time, report *sword.Report) *sdk.Event {
 	}
 }
 
-func readAction(target string, tick time.Time, order *sword.Action) *sdk.Event {
+func (s *Sword) readAction(target string, tick time.Time, order *sword.Action) *sdk.Event {
 	name := ""
 	content := sword.ClientToSim_Content{}
 	code := order.GetErrorCode()
 	codemsg := ""
+	magic := true
+	predicate := func() bool { return s.isUnknownAction(order) }
 	if sub := order.MagicAction; sub != nil {
 		name = sub.GetName()
 		content = sword.ClientToSim_Content{MagicAction: sub}
@@ -235,11 +209,34 @@ func readAction(target string, tick time.Time, order *sword.Action) *sdk.Event {
 		name = sub.GetName()
 		content = sword.ClientToSim_Content{SetAutomatMode: sub}
 		codemsg = sword.SetAutomatModeAck_ErrorCode(code).String()
+	} else if sub := order.AutomatOrder; sub != nil {
+		name = sub.GetName()
+		content = sword.ClientToSim_Content{AutomatOrder: sub}
+		magic = false
+		predicate = func() bool { return s.isUnknownOrder(sub) }
+	} else if sub := order.CrowdOrder; sub != nil {
+		name = sub.GetName()
+		content = sword.ClientToSim_Content{CrowdOrder: sub}
+		magic = false
+		predicate = func() bool { return s.isUnknownOrder(sub) }
+	} else if sub := order.FragOrder; sub != nil {
+		name = sub.GetName()
+		content = sword.ClientToSim_Content{FragOrder: sub}
+		magic = false
+		predicate = func() bool { return s.isUnknownOrder(sub) }
+	} else if sub := order.UnitOrder; sub != nil {
+		name = sub.GetName()
+		content = sword.ClientToSim_Content{UnitOrder: sub}
+		magic = false
+		predicate = func() bool { return s.isUnknownOrder(sub) }
 	} else {
 		return nil
 	}
+	if !predicate() {
+		return nil
+	}
 	start := &sword.DateTime{Data: proto.String(order.GetStartTime())}
-	event := packOrder(name, target, tick, start, &content, true, false)
+	event := packOrder(name, target, tick, start, &content, true, !magic)
 	event.ErrorCode = &code
 	errmsg := order.GetErrorMsg()
 	event.ErrorText = &errmsg
@@ -272,10 +269,7 @@ func (s *Sword) isUnknown(data map[uint32]None, id IdGetter) bool {
 	return prev != next
 }
 
-func (s *Sword) isUnknownOrder(id, idType IdGetter) bool {
-	if idType.GetId() == 0 {
-		return false
-	}
+func (s *Sword) isUnknownOrder(id IdGetter) bool {
 	return s.isUnknown(s.d.orders, id)
 }
 
@@ -317,20 +311,8 @@ func (s *Sword) readMessage(msg *swapi.SwordMessage, clientId int32, err error, 
 		last = s.tick(last, info.GetDateTime().GetData())
 	} else if tick := content.ControlBeginTick; tick != nil {
 		last = s.tick(last, tick.GetDateTime().GetData())
-	} else if order := content.UnitOrder; order != nil && s.isUnknownOrder(order, order.GetType()) {
-		event := readUnitOrder(s.name, last, order)
-		go s.event(event)
-	} else if order := content.AutomatOrder; order != nil && s.isUnknownOrder(order, order.GetType()) {
-		event := readAutomatOrder(s.name, last, order)
-		go s.event(event)
-	} else if order := content.CrowdOrder; order != nil && s.isUnknownOrder(order, order.GetType()) {
-		event := readCrowdOrder(s.name, last, order)
-		go s.event(event)
-	} else if order := content.FragOrder; order != nil && s.isUnknownOrder(order, order.GetType()) {
-		event := readFragOrder(s.name, last, order)
-		go s.event(event)
-	} else if order := content.Action; order != nil && s.isUnknownAction(order) {
-		event := readAction(s.name, last, order)
+	} else if order := content.Action; order != nil {
+		event := s.readAction(s.name, last, order)
 		if event != nil {
 			go s.event(event)
 		}

@@ -288,11 +288,18 @@ func (t *TestSuite) TestMissingServerSideOrders(c *C) {
 		})
 	}
 	for slink := range detached {
+		order := &sword.UnitOrder{
+			Tasker: swapi.MakeId(17),
+			Type:   swapi.MakeId(23),
+			Id:     proto.Uint32(13),
+		}
 		f.server.WriteToClient(slink, 1, 0, &sword.SimToClient_Content{
-			UnitOrder: &sword.UnitOrder{
-				Tasker: swapi.MakeId(17),
-				Type:   swapi.MakeId(23),
-				Id:     proto.Uint32(13),
+			UnitOrder: order,
+		})
+		f.server.WriteToClient(slink, 1, 0, &sword.SimToClient_Content{
+			Action: &sword.Action{
+				Id:        proto.Uint32(order.GetId() * 1000),
+				UnitOrder: order,
 			},
 		})
 	}
@@ -309,12 +316,15 @@ func (t *TestSuite) TestMissingServerSideOrders(c *C) {
 
 // Push "order" multiple times with different context to every connected
 // client. Used to test timeline behaviour with duplicates.
-func (f *Fixture) spamOrder(c *C, order *sword.SimToClient_Content) {
+func (f *Fixture) spamOrder(c *C, orders ...*sword.SimToClient_Content) {
 	detached := f.server.GetLinks()
 	defer detached.Close()
+	count := int32(len(orders))
 	for slink := range detached {
 		for i := int32(0); i < 10; i++ {
-			f.server.WriteToClient(slink, i+1, slink.GetId(), order)
+			for j, order := range orders {
+				f.server.WriteToClient(slink, count*i+int32(j), slink.GetId(), order)
+			}
 		}
 	}
 }
@@ -349,6 +359,12 @@ func (t *TestSuite) TestServerSideDuplicateOrders(c *C) {
 			Id:     proto.Uint32(1337),
 		},
 	}
+	action := sword.SimToClient_Content{
+		Action: &sword.Action{
+			Id:        proto.Uint32(order.UnitOrder.GetId() * 1000),
+			UnitOrder: order.UnitOrder,
+		},
+	}
 	magic := sword.SimToClient_Content{
 		Action: &sword.Action{
 			Id: proto.Uint32(17),
@@ -359,7 +375,7 @@ func (t *TestSuite) TestServerSideDuplicateOrders(c *C) {
 			},
 		},
 	}
-	f.spamOrder(c, &order)
+	f.spamOrder(c, &order, &action)
 	// Two events are expected: order and the one pushed by addEventAndSync
 	f.addEventAndSync(c, 2)
 	f.spamOrder(c, &magic)
@@ -368,7 +384,7 @@ func (t *TestSuite) TestServerSideDuplicateOrders(c *C) {
 	// order is already in the model, only the event created by addEventAndSync
 	// increases the event count.
 	f.addEventAndSync(c, 5)
-	f.spamOrder(c, &order)
+	f.spamOrder(c, &order, &action)
 	f.addEventAndSync(c, 6)
 	f.spamOrder(c, &magic)
 	f.addEventAndSync(c, 7)

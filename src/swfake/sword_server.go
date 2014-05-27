@@ -247,7 +247,7 @@ func (s *SwordServer) resetLastError() (int32, *string) {
 	return err.Code, &err.Text
 }
 
-func (s *SwordServer) writeOrderAck(slink *SwordLink, ctx int32, id *uint32, tasker *sword.Tasker) {
+func (s *SwordServer) writeOrderAck(slink *SwordLink, ctx int32, id *uint32, tasker *sword.Tasker) (int32, *string) {
 	code, text := s.resetLastError()
 	s.writeContent(slink, ctx, &sword.SimToClient_Content{
 		OrderAck: &sword.TaskCreationRequestAck{
@@ -257,35 +257,60 @@ func (s *SwordServer) writeOrderAck(slink *SwordLink, ctx int32, id *uint32, tas
 			Id:        id,
 		},
 	})
+	return code, text
 }
 
 func (s *SwordServer) replyUnitOrder(slink *SwordLink, ctx int32, order *sword.UnitOrder) {
 	order.Id = proto.Uint32(s.getOrderId())
-	s.writeOrderAck(slink, ctx, order.Id, &sword.Tasker{
+	code, text := s.writeOrderAck(slink, ctx, order.Id, &sword.Tasker{
 		Unit: order.GetTasker(),
 	})
 	s.broadcastContent(ctx, &sword.SimToClient_Content{
 		UnitOrder: order,
 	})
+	s.broadcastContent(ctx, &sword.SimToClient_Content{
+		Action: &sword.Action{
+			Id:        order.Id,
+			UnitOrder: order,
+			ErrorCode: &code,
+			ErrorMsg:  text,
+		},
+	})
 }
 
 func (s *SwordServer) replyAutomatOrder(slink *SwordLink, ctx int32, order *sword.AutomatOrder) {
 	order.Id = proto.Uint32(s.getOrderId())
-	s.writeOrderAck(slink, ctx, order.Id, &sword.Tasker{
+	code, text := s.writeOrderAck(slink, ctx, order.Id, &sword.Tasker{
 		Automat: order.GetTasker(),
 	})
 	s.broadcastContent(ctx, &sword.SimToClient_Content{
 		AutomatOrder: order,
 	})
+	s.broadcastContent(ctx, &sword.SimToClient_Content{
+		Action: &sword.Action{
+			Id:           order.Id,
+			AutomatOrder: order,
+			ErrorCode:    &code,
+			ErrorMsg:     text,
+		},
+	})
 }
 
 func (s *SwordServer) replyCrowdOrder(slink *SwordLink, ctx int32, order *sword.CrowdOrder) {
 	order.Id = proto.Uint32(s.getOrderId())
-	s.writeOrderAck(slink, ctx, order.Id, &sword.Tasker{
+	code, text := s.writeOrderAck(slink, ctx, order.Id, &sword.Tasker{
 		Crowd: order.GetTasker(),
 	})
 	s.broadcastContent(ctx, &sword.SimToClient_Content{
 		CrowdOrder: order,
+	})
+	s.broadcastContent(ctx, &sword.SimToClient_Content{
+		Action: &sword.Action{
+			Id:         order.Id,
+			CrowdOrder: order,
+			ErrorCode:  &code,
+			ErrorMsg:   text,
+		},
 	})
 }
 
@@ -302,6 +327,14 @@ func (s *SwordServer) replyFragOrder(slink *SwordLink, ctx int32, order *sword.F
 	})
 	s.broadcastContent(ctx, &sword.SimToClient_Content{
 		FragOrder: order,
+	})
+	s.broadcastContent(ctx, &sword.SimToClient_Content{
+		Action: &sword.Action{
+			Id:        order.Id,
+			FragOrder: order,
+			ErrorCode: &code,
+			ErrorMsg:  text,
+		},
 	})
 }
 
