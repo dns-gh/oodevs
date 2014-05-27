@@ -3157,6 +3157,10 @@ message Action {
     optional int32                error_code             = 7;
     optional string               error_msg              = 8;
     optional string               start_time             = 9;
+    optional UnitOrder            unit_order             = 10;
+    optional AutomatOrder         automat_order          = 11;
+    optional CrowdOrder           crowd_order            = 12;
+    optional FragOrder            frag_order             = 13;
 }
 
 message ActionDestruction {

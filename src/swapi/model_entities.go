@@ -470,6 +470,10 @@ const (
 	ObjectMagicAction
 	KnowledgeMagicAction
 	SetAutomatMode
+	UnitAction
+	AutomatAction
+	CrowdAction
+	FragAction
 )
 
 type Action struct {

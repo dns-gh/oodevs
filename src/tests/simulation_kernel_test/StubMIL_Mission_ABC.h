@@ -7,6 +7,8 @@
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "StubMIL_MissionParameter_ABC.h"
 
+class ActionManager;
+
 class StubMIL_Mission_ABC : public MIL_Mission_ABC
 {
 public:
@@ -15,13 +17,13 @@ public:
         , param_( param )
     {}
 
-    virtual void Start( boost::shared_ptr< MIL_Mission_ABC > self ){};
+    virtual void Start( boost::shared_ptr< MIL_Mission_ABC > self, ActionManager& ){};
     virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > self ){};
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& /*fragOrderType*/ ) const
     {
         return false;
     }
-    virtual void Send() const {};
+    virtual void Send( ActionManager& ) const {};
     virtual void Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor ) const
     {
         const MIL_ParameterType_ABC* pType = MIL_ParameterType_ABC::Find( "string" );

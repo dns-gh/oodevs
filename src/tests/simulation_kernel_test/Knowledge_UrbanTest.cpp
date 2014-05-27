@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_test_pch.h"
 #include "MockArmy.h"
+#include "simulation_kernel/ActionManager.h"
 #include "simulation_kernel/MissionController.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
@@ -57,7 +58,8 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
             BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
         }
         MockArmy army;
-        MissionController controller;
+        ActionManager actions;
+        MissionController controller( actions );
         MIL_EffectManager effectManager;
         MockNET_Publisher_ABC publisher;
         FixturePion pion( controller, effectManager );

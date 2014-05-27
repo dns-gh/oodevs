@@ -140,18 +140,21 @@ using namespace sword;
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
 
 template< typename Archive >
-void save_construct_data( Archive& /*archive*/, const MIL_EntityManager* /*manager*/, const unsigned int /*version*/ )
+void save_construct_data( Archive& ar, const MIL_EntityManager* ptr, const unsigned int /*version*/ )
 {
-    // NOTHING
+    const ActionManager* actions = &ptr->actions_;
+    ar << actions;
 }
 
 template< typename Archive >
-void load_construct_data( Archive& archive, MIL_EntityManager* manager, const unsigned int /*version*/ )
+void load_construct_data( Archive& ar, MIL_EntityManager* manager, const unsigned int /*version*/ )
 {
-    ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(),
+    ActionManager* actions = 0;
+    ar >> actions;
+    ::new( manager ) MIL_EntityManager( MIL_Time_ABC::GetTime(),
             MIL_EffectManager::GetEffectManager(),
-            MIL_AgentServer::GetWorkspace().GetConfig(), archive.GetWorld(),
-            MIL_AgentServer::GetWorkspace().GetPathFindManager() );
+            MIL_AgentServer::GetWorkspace().GetConfig(), ar.GetWorld(),
+            MIL_AgentServer::GetWorkspace().GetPathFindManager(), *actions );
 }
 
 void TerminatePhysicalSingletons()
@@ -268,13 +271,14 @@ void MIL_EntityManager::Initialize( const tools::PhyLoader& loader, const MIL_Ti
 MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
         MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
         const MIL_Config& config, const boost::shared_ptr< const TER_World >& world,
-        DEC_PathFind_Manager& pathfindManager )
+        DEC_PathFind_Manager& pathfindManager, ActionManager& actions )
     : time_                         ( time )
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
     , effectManager_                ( effects )
     , bSendUnitVisionCones_         ( false )
     , bEnableRandomBreakdowns_      ( config.EnableRandomBreakdowns() )
+    , actions_                      ( actions )
     , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0 )
     , rKnowledgesTime_              ( 0 )
@@ -285,7 +289,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
     , rEffectsTime_                 ( 0 )
     , rStatesTime_                  ( 0 )
     , idManager_                    ( new MIL_IDManager() )
-    , missionController_            ( new MissionController() )
+    , missionController_            ( new MissionController( actions ) )
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , sink_                         ( new sword::legacy::Sink( *idManager_, *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled(), world ) )
@@ -308,13 +312,14 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
 // -----------------------------------------------------------------------------
 MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects,
         const MIL_Config& config, const boost::shared_ptr< const TER_World >& world,
-        DEC_PathFind_Manager& pathfindManager )
+        DEC_PathFind_Manager& pathfindManager, ActionManager& actions )
     : time_                         ( time )
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
     , effectManager_                ( effects )
     , bSendUnitVisionCones_         ( false )
     , bEnableRandomBreakdowns_      ( config.EnableRandomBreakdowns() )
+    , actions_                      ( actions )
     , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0 )
@@ -1041,8 +1046,7 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
 void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::UnitMagicActionAck ack;
-    auto& actions = MIL_AgentServer::GetWorkspace().GetActionManager();
-    const auto actionId = actions.Register( message );
+    const auto actionId = actions_.Register( message );
     ack().set_id( actionId );
     const auto tasker = protocol::TryGetTasker( message.tasker() );
     if( !tasker )
@@ -1050,7 +1054,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
         ack().mutable_unit()->set_id( 0 );
         ack().set_error_code( UnitActionAck::error_invalid_unit );
         ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-        actions.Send( actionId, ack().error_code(), "missing tasker" );
+        actions_.Send( actionId, ack().error_code(), "missing tasker" );
         return;
     }
     const auto id = *tasker;
@@ -1193,7 +1197,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
         ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    actions.Send( actionId, ack().error_code(), ack().error_msg() );
+    actions_.Send( actionId, ack().error_code(), ack().error_msg() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1425,8 +1429,7 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    auto& actions = MIL_AgentServer::GetWorkspace().GetActionManager();
-    const auto actionId = actions.Register( message );
+    const auto actionId = actions_.Register( message );
     client::KnowledgeGroupMagicActionAck ack;
     ack().set_id( actionId );
     ack().mutable_knowledge_group()->set_id( message.knowledge_group().id() );
@@ -1449,7 +1452,7 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
         ack().set_error_msg( e.what() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    actions.Send( actionId, ack().error_code(), ack().error_msg() );
+    actions_.Send( actionId, ack().error_code(), ack().error_msg() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1540,8 +1543,7 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message, unsigned int nCtx, unsigned int clientId )
 {
-    auto& actions = MIL_AgentServer::GetWorkspace().GetActionManager();
-    const auto actionId = actions.Register( message );
+    const auto actionId = actions_.Register( message );
     client::SetAutomatModeAck ack;
     ack().set_id( actionId );
     ack().mutable_automate()->set_id( message.automate().id() );
@@ -1558,7 +1560,7 @@ void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message,
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    actions.Send( actionId, ack().error_code(), "" );
+    actions_.Send( actionId, ack().error_code(), "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1589,13 +1591,12 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest&
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    auto& actions = MIL_AgentServer::GetWorkspace().GetActionManager();
-    const auto actionId = actions.Register( message );
+    const auto actionId = actions_.Register( message );
     client::ObjectMagicActionAck ack;
     ack().set_id( actionId );
     pObjectManager_->OnReceiveObjectMagicAction( message, ack(), *armyFactory_, *pFloodModel_ );
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    actions.Send( actionId, ack().error_code(), ack().error_msg() );
+    actions_.Send( actionId, ack().error_code(), ack().error_msg() );
 }
 
 // -----------------------------------------------------------------------------

@@ -1424,27 +1424,35 @@ func (model *ModelData) handleActionCreation(m *sword.SimToClient_Content) error
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	magic := Action{
+	action := Action{
 		Id:      mm.GetId(),
 		ErrCode: mm.GetErrorCode(),
 		ErrMsg:  mm.GetErrorMsg(),
 	}
 	switch {
 	case mm.MagicAction != nil:
-		magic.Kind = MagicAction
+		action.Kind = MagicAction
 	case mm.UnitMagicAction != nil:
-		magic.Kind = UnitMagicAction
+		action.Kind = UnitMagicAction
 	case mm.ObjectMagicAction != nil:
-		magic.Kind = ObjectMagicAction
+		action.Kind = ObjectMagicAction
 	case mm.KnowledgeMagicAction != nil:
-		magic.Kind = KnowledgeMagicAction
+		action.Kind = KnowledgeMagicAction
 	case mm.SetAutomatMode != nil:
-		magic.Kind = SetAutomatMode
+		action.Kind = SetAutomatMode
+	case mm.UnitOrder != nil:
+		action.Kind = UnitAction
+	case mm.AutomatOrder != nil:
+		action.Kind = AutomatAction
+	case mm.CrowdOrder != nil:
+		action.Kind = CrowdAction
+	case mm.FragOrder != nil:
+		action.Kind = FragAction
 	default:
-		return fmt.Errorf("missing action on magic order %d", magic.Id)
+		return fmt.Errorf("missing action element on action %d", action.Id)
 	}
-	if !model.addAction(&magic) {
-		return fmt.Errorf("cannot insert magic order %d", magic.Id)
+	if !model.addAction(&action) {
+		return fmt.Errorf("cannot insert action %d", action.Id)
 	}
 	return nil
 }
@@ -1455,7 +1463,7 @@ func (model *ModelData) handleActionDestruction(m *sword.SimToClient_Content) er
 		return ErrSkipHandler
 	}
 	if !model.removeAction(mm.GetId()) {
-		return fmt.Errorf("cannot destroy magic order %d", mm.GetId())
+		return fmt.Errorf("cannot destroy action %d", mm.GetId())
 	}
 	return nil
 }

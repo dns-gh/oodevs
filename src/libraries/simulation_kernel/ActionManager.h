@@ -16,11 +16,15 @@
 namespace sword
 {
     class Action;
+    class AutomatOrder;
+    class CrowdOrder;
+    class FragOrder;
     class KnowledgeMagicAction;
     class MagicAction;
     class ObjectMagicAction;
     class SetAutomatMode;
     class UnitMagicAction;
+    class UnitOrder;
 }
 
 // ActionManager stores all orders and magic actions and assign to them a
@@ -34,11 +38,15 @@ public:
 
     template< typename Archive > void serialize( Archive& file, const unsigned int version );
 
-    uint32_t Register( const sword::MagicAction& msg );
-    uint32_t Register( const sword::UnitMagicAction& msg );
-    uint32_t Register( const sword::ObjectMagicAction& msg );
+    uint32_t Register( const sword::AutomatOrder& msg );
+    uint32_t Register( const sword::CrowdOrder& msg );
+    uint32_t Register( const sword::FragOrder& msg );
     uint32_t Register( const sword::KnowledgeMagicAction& msg );
+    uint32_t Register( const sword::MagicAction& msg );
+    uint32_t Register( const sword::ObjectMagicAction& msg );
     uint32_t Register( const sword::SetAutomatMode& msg );
+    uint32_t Register( const sword::UnitMagicAction& msg );
+    uint32_t Register( const sword::UnitOrder& msg );
     void     Send    ( uint32_t id, int32_t code, const std::string& msg );
 
     virtual void SendStateToNewClient();

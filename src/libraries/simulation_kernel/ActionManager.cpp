@@ -132,6 +132,26 @@ uint32_t ActionManager::Register( const sword::SetAutomatMode& msg )
     return Register( MakeAction( msg, &sword::Action::mutable_set_automat_mode ) );
 }
 
+uint32_t ActionManager::Register( const sword::UnitOrder& msg )
+{
+    return Register( MakeAction( msg, &sword::Action::mutable_unit_order ) );
+}
+
+uint32_t ActionManager::Register( const sword::AutomatOrder& msg )
+{
+    return Register( MakeAction( msg, &sword::Action::mutable_automat_order ) );
+}
+
+uint32_t ActionManager::Register( const sword::CrowdOrder& msg )
+{
+    return Register( MakeAction( msg, &sword::Action::mutable_crowd_order ) );
+}
+
+uint32_t ActionManager::Register( const sword::FragOrder& msg )
+{
+    return Register( MakeAction( msg, &sword::Action::mutable_frag_order ) );
+}
+
 void ActionManager::SendStateToNewClient()
 {
     for( auto it = actions_.begin(); it != actions_.end(); ++it )

@@ -13,6 +13,7 @@
 #include "tools/ServerNetworker.h"
 #include <boost/scoped_ptr.hpp>
 
+class ActionManager;
 class MIL_Config;
 class NET_Simulation_ABC;
 class NET_SimMsgHandler;
@@ -23,7 +24,7 @@ class NET_SimMsgHandler;
 class NET_AgentServer : public tools::ServerNetworker
 {
 public:
-             NET_AgentServer( const MIL_Config& config, NET_Simulation_ABC& simulation );
+             NET_AgentServer( const MIL_Config& config, NET_Simulation_ABC& simulation, ActionManager& actions );
     virtual ~NET_AgentServer();
 
     void Update();

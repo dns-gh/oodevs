@@ -55,7 +55,6 @@ void MIL_OrderManager_ABC::Update()
 
     try
     {
-        pMission_->Start( pMission_ );
         controller_.Start( pMission_ );
         bNewMissionStarted_ = true;
     }

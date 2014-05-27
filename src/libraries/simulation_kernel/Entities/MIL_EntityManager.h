@@ -67,6 +67,7 @@ namespace propagation
     class FloodModel_ABC;
 }
 
+class ActionManager;
 class ArmyFactory_ABC;
 class AutomateFactory_ABC;
 class DEC_PathFind_Manager;
@@ -120,7 +121,8 @@ public:
                  MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
                  const MIL_Config& config,
                  const boost::shared_ptr< const TER_World >& world,
-                 DEC_PathFind_Manager& pathfindManager );
+                 DEC_PathFind_Manager& pathfindManager,
+                 ActionManager& actions );
     virtual ~MIL_EntityManager();
 
     static void Initialize( const tools::PhyLoader& loader, const MIL_Time_ABC& time,
@@ -242,7 +244,7 @@ public:
 
     MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects,
         const MIL_Config& config, const boost::shared_ptr< const TER_World >& world,
-        DEC_PathFind_Manager& pathfindManager );
+        DEC_PathFind_Manager& pathfindManager, ActionManager& actions );
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
@@ -321,6 +323,7 @@ private:
     std::vector< const MIL_UrbanObject_ABC* > cities_;
     bool bSendUnitVisionCones_;
     const bool bEnableRandomBreakdowns_;
+    ActionManager& actions_;
 
     // Profiling
     std::map< std::string, double > profilers_;

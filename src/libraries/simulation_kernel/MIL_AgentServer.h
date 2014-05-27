@@ -115,7 +115,6 @@ public:
     MIL_BurningCells& GetBurningCells() const;
     tools::ExerciseSettings& GetSettings() const;
     MIL_ObjectFactory& GetObjectFactory() const;
-    ActionManager& GetActionManager() const;
     //@}
 
     //! @name Workspace management

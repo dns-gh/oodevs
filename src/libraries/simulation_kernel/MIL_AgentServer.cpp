@@ -174,7 +174,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
 
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
-    pAgentServer_ = new NET_AgentServer( config_, *this );
+    pAgentServer_ = new NET_AgentServer( config_, *this, *actions_ );
 
     pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
     if( config_.HasCheckpoint() )
@@ -187,7 +187,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
         pMeteoDataManager_ = CreateMeteoManager( world, config, GetTickDuration() );
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_,
-                config_, world, *pPathFindManager_ );
+                config_, world, *pPathFindManager_, *actions_ );
         pCheckPointManager_ = new MIL_CheckPointManager( config_, world );
         pEntityManager_->ReadODB( config_ );
         pEntityManager_->LoadUrbanModel( config_ );
@@ -813,15 +813,6 @@ resource::ResourceTools_ABC& MIL_AgentServer::GetResourceTools() const
 {
     assert( pResourceTools_ );
     return *pResourceTools_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetActionManager
-// Created: BAX 2014-02-21
-// -----------------------------------------------------------------------------
-ActionManager& MIL_AgentServer::GetActionManager() const
-{
-    return *actions_;
 }
 
 // -----------------------------------------------------------------------------

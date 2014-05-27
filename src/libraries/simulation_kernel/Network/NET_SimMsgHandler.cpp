@@ -31,9 +31,10 @@
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 NET_SimMsgHandler::NET_SimMsgHandler( NET_AgentServer& agentServer,
-        NET_Simulation_ABC& simulation, bool enableTestCommands )
+        NET_Simulation_ABC& simulation, ActionManager& actions, bool enableTestCommands )
     : agentServer_( agentServer )
     , simulation_( simulation )
+    , actions_( actions )
     , enableTestCommands_( enableTestCommands )
 {
     agentServer.RegisterMessage( *this, &NET_SimMsgHandler::OnReceiveClient );
@@ -161,11 +162,10 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
 {
     MIL_AgentServer& server = MIL_AgentServer::GetWorkspace();
     MIL_EntityManager& manager = server.GetEntityManager();
-    auto& actions = server.GetActionManager();
     const auto type = msg.type();
     client::MagicActionAck ack;
     ack().set_error_code( sword::MagicActionAck::no_error );
-    const auto actionId = actions.Register( msg );
+    const auto actionId = actions_.Register( msg );
     ack().set_id( actionId );
     try
     {
@@ -204,7 +204,7 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
         ack().set_error_msg( tools::GetExceptionMsg( e ));
     }
     ack.Send( Publisher(), ctx, clientId );
-    actions.Send( actionId, ack().error_code(), ack().error_msg() );
+    actions_.Send( actionId, ack().error_code(), ack().error_msg() );
 }
 
 namespace

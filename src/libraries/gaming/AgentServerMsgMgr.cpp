@@ -2066,9 +2066,9 @@ void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::
         OnReceiveLogisticHistoryAck( wrapper.message().logistic_history_ack(), clientId );
     else if( wrapper.message().has_list_logistic_requests_ack() )
         OnReceiveListLogisticRequestsAck( wrapper.message().list_logistic_requests_ack(), clientId );
-    else if( wrapper.message().has_magic_order() )
+    else if( wrapper.message().has_action() )
         return;
-    else if( wrapper.message().has_magic_order_destruction() )
+    else if( wrapper.message().has_action_destruction() )
         return;
     else if( wrapper.message().has_compute_pathfind_ack() )
         return;

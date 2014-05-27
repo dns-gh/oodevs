@@ -1,5 +1,6 @@
 #include "simulation_kernel_test_pch.h"
 #include "AutomateFactory.h"
+#include "ActionManager.h"
 #include "MissionController.h"
 #include "simulation_kernel/Tools/MIL_IDManager.h"
 #include "MockObjectTypeResolver.h"
@@ -14,7 +15,8 @@ BOOST_AUTO_TEST_CASE( VerifyAutomateFactoryPtr_Serialization )
     std::stringstream s;
     {
         MIL_IDManager manager;
-        MissionController controller;
+        ActionManager actions;
+        MissionController controller( actions );
         MIL_CheckPointOutArchive out( s, world );
         AutomateFactory_ABC* factory = new AutomateFactory( manager, controller, 100, 100, false );
         out << factory;

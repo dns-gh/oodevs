@@ -32,6 +32,7 @@
 #include "MockPHY_RoleInterface_HumanFactors.h"
 #include "MockRoleLocation.h"
 #include "StubTER_World.h"
+#include "ActionManager.h"
 #include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -41,6 +42,7 @@ namespace
     {
         Fixture()
             : world( "worldwide/tests/EmptyParis-ML" )
+            , controller   ( actions )
             , firerFixture ( controller, effectManager )
             , targetFixture( controller, effectManager )
             , vertices     ( boost::assign::list_of( MT_Vector2D( 0, 0 ) )( MT_Vector2D( 0, 2 ) )
@@ -66,6 +68,7 @@ namespace
             urbanBlock->UpdateLocalisation( localisation );
         }
         FakeWorld world;
+        ActionManager actions;
         MissionController controller;
         MIL_EffectManager effectManager;
         FixturePion firerFixture;

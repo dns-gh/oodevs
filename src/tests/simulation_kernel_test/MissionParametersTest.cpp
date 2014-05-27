@@ -26,6 +26,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "StubTER_World.h"
 #include "MockAgent.h"
+#include "ActionManager.h"
 #include "MissionController.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
@@ -76,6 +77,7 @@ namespace
                    "    <population-knowledge max-lifetime='2m'/>"
                    "  </knowledge-group>"
                    "</knowledge-groups>" )
+            , controller( actions )
         {
             MIL_KnowledgeGroupType::InitializeWithTime( xis, 0.5f );
             MOCK_EXPECT( publisher.Send );
@@ -88,6 +90,7 @@ namespace
         }
         xml::xistringstream xis;
         MockNET_Publisher_ABC publisher;
+        ActionManager actions;
         MissionController controller;
         MockArmy army;
         MockDEC_KnowledgeResolver_ABC resolver;
@@ -185,7 +188,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter )
     Id in;
     in.set_id( 12 );
     MockMIL_EntityManager_ABC entityManager;
-    MissionController controller;
+    ActionManager actions;
+    MissionController controller( actions );
     MIL_EffectManager effectManager;
     FixturePion fixture( controller, effectManager );
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, 100, 100, false ) );
@@ -206,7 +210,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter )
     Id in;
     in.set_id( 0 );
     MockMIL_EntityManager_ABC entityManager;
-    MissionController controller;
+    ActionManager actions;
+    MissionController controller( actions );
     FixtureAutomate fixture( controller );
     //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
     MOCK_EXPECT( entityManager.FindAutomate ).once().returns( fixture.pAutomat_.get() );

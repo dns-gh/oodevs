@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationOrderManager.h"
+
+#include "MissionController_ABC.h"
 #include "MIL_PopulationMissionType.h"
 #include "MIL_PopulationMission.h"
 #include "MIL_FragOrder.h"
@@ -73,7 +75,7 @@ void MIL_PopulationOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn
     frag->SetParameters( population_.GetKnowledge(), asn.parameters() );
     representation.AddToOrdersCategory( frag );
     sendAck( id );
-    frag->Send( population_ );
+    frag->Send( GetController().GetActionManager(), population_ );
 }
 
 // -----------------------------------------------------------------------------

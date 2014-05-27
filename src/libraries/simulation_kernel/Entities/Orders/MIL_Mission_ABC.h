@@ -15,6 +15,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/optional/optional_fwd.hpp>
 
+class ActionManager;
 class DEC_Gen_Object;
 class DEC_KnowledgeResolver_ABC;
 class DEC_Knowledge_Object;
@@ -43,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Start               ( boost::shared_ptr< MIL_Mission_ABC > self ) = 0;
+    virtual void Start               ( boost::shared_ptr< MIL_Mission_ABC > self, ActionManager& actions ) = 0;
     virtual void Stop                ( boost::shared_ptr< MIL_Mission_ABC > self ) = 0;
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const = 0;
 
@@ -60,7 +61,7 @@ public:
     virtual MIL_Automate&  GetAutomate() const;
     virtual unsigned int GetOwnerId() const;
 
-    virtual void Send() const = 0;
+    virtual void Send( ActionManager& actions ) const = 0;
 
     const   std::string&   GetName              () const;
     boost::shared_ptr< MT_Vector2D > GetDirDanger() const;

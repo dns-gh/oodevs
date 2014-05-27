@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PionMission.h"
+
+#include "ActionManager.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
@@ -22,6 +24,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/optional/optional.hpp>
@@ -104,12 +107,12 @@ bool MIL_PionMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrderTy
 // Name: MIL_PionMission::Start
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PionMission::Start( boost::shared_ptr< MIL_Mission_ABC > self )
+void MIL_PionMission::Start( boost::shared_ptr< MIL_Mission_ABC > self, ActionManager& actions )
 {
     assert( !bDIABehaviorActivated_ );
     pion_.GetDecision().StartMissionBehavior( self );
     bDIABehaviorActivated_ = true;
-    Send();
+    Send( actions );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +150,7 @@ void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 // Name: MIL_PionMission::Send
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PionMission::Send() const
+void MIL_PionMission::Send( ActionManager& actions ) const
 {
     if( pion_.IsMarkedForDestruction() )
         return;
@@ -160,6 +163,7 @@ void MIL_PionMission::Send() const
     asn().set_id( GetId() );
     asn().set_parent( GetParentId() );
     asn.Send( NET_Publisher_ABC::Publisher() );
+    actions.Send( actions.Register( asn() ), 0, "" );
 }
 
 // -----------------------------------------------------------------------------

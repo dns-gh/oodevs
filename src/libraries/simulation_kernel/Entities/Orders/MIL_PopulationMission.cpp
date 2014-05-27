@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationMission.h"
+
+#include "ActionManager.h"
 #include "MIL_MissionType_ABC.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
@@ -22,6 +24,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+
 #include <boost/lexical_cast.hpp>
 #include <boost/optional.hpp>
 
@@ -74,13 +77,13 @@ bool MIL_PopulationMission::IsFragOrderAvailable( const MIL_FragOrderType& fragO
 // Name: MIL_PopulationMission::Start
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PopulationMission::Start( boost::shared_ptr< MIL_Mission_ABC > self )
+void MIL_PopulationMission::Start( boost::shared_ptr< MIL_Mission_ABC > self, ActionManager& actions )
 {
     assert( !bDIABehaviorActivated_ );
 
     population_.GetDecision().StartMissionBehavior( self );
     bDIABehaviorActivated_ = true;
-    Send();
+    Send( actions );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +118,7 @@ void MIL_PopulationMission::SendNoMission( const MIL_Population& population )
 // Name: MIL_PopulationMission::Send
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PopulationMission::Send() const
+void MIL_PopulationMission::Send( ActionManager& actions ) const
 {
     client::CrowdOrder asn;
     asn().mutable_tasker()->set_id( population_.GetID() );
@@ -125,6 +128,7 @@ void MIL_PopulationMission::Send() const
     asn().set_name( GetName() );
     asn().set_id( GetId() );
     asn.Send( NET_Publisher_ABC::Publisher() );
+    actions.Send( actions.Register( asn() ), 0, "" );
 }
 
 // -----------------------------------------------------------------------------

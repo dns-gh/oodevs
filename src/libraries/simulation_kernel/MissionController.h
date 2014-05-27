@@ -13,8 +13,6 @@
 #include "MissionController_ABC.h"
 #include "MIL.h"
 
-class MIL_CheckPointInArchive;
-class MIL_CheckPointOutArchive;
 class MIL_AgentPion;
 
 // =============================================================================
@@ -28,7 +26,7 @@ class MissionController : public MissionController_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionController();
+    explicit MissionController( ActionManager& actions );
     virtual ~MissionController();
     //@}
 
@@ -39,13 +37,16 @@ public:
     virtual void Start( const boost::shared_ptr< MIL_Mission_ABC >& mission );
     virtual void Stop( const boost::shared_ptr< MIL_Mission_ABC >& mission );
     virtual uint32_t AcquireId();
+    virtual ActionManager& GetActionManager() const;
     //@}
 
-    //! @name CheckPoints
+    //! @name Serialization
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive&, const unsigned int );
-    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    template< typename Archive >        void load( Archive&, const unsigned int );
+    template< typename Archive >        void save( Archive&, const unsigned int ) const;
+    template< typename Archive > friend void save_construct_data( Archive&, const MissionController*, const unsigned int /*version*/ );
+    template< typename Archive > friend void load_construct_data( Archive&, MissionController*, const unsigned int /*version*/ );
     //@}
 
 private:
@@ -58,6 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ActionManager& actions_;
     T_Missions missions_;
     bool loaded_;
     uint32_t counter_;

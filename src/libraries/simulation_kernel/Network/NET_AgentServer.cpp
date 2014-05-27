@@ -19,9 +19,10 @@ using namespace tools;
 // Name: NET_AgentServer constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-NET_AgentServer::NET_AgentServer( const MIL_Config& config, NET_Simulation_ABC& simulation )
+NET_AgentServer::NET_AgentServer( const MIL_Config& config, NET_Simulation_ABC& simulation,
+    ActionManager& actions )
     : ServerNetworker( config.GetNetworkAddress(), config.GetNetworkTimeout() )
-    , manager_( new NET_SimMsgHandler( *this, simulation, config.EnableTestCommands() ) )
+    , manager_( new NET_SimMsgHandler( *this, simulation, actions, config.EnableTestCommands() ) )
 {
     MT_LOG_INFO_MSG( "Starting simulation server on address " << config.GetNetworkAddress() );
     AllowConnections();
