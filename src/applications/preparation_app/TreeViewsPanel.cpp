@@ -265,12 +265,11 @@ void TreeViewsPanel::FocusIn( gui::HierarchyTreeView_ABC* tree )
     }
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: TreeViewsPanel::Rename
+// Name: TreeViewsPanel::AddContextMenu
 // Created: LGY 2014-05-26
 // -----------------------------------------------------------------------------
-void TreeViewsPanel::Rename( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+void TreeViewsPanel::AddContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     contextMenuEntity_ = &entity;
     menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ), false, 4 );
@@ -282,7 +281,7 @@ void TreeViewsPanel::Rename( const kernel::Entity_ABC& entity, kernel::ContextMe
 // -----------------------------------------------------------------------------
 void TreeViewsPanel::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
 {
-    Rename( agent, menu );
+    AddContextMenu( agent, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -291,7 +290,7 @@ void TreeViewsPanel::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::
 // -----------------------------------------------------------------------------
 void TreeViewsPanel::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
 {
-    Rename( automat, menu );
+    AddContextMenu( automat, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -300,7 +299,7 @@ void TreeViewsPanel::NotifyContextMenu( const kernel::Automat_ABC& automat, kern
 // -----------------------------------------------------------------------------
 void TreeViewsPanel::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
 {
-    Rename( formation, menu );
+    AddContextMenu( formation, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -309,7 +308,7 @@ void TreeViewsPanel::NotifyContextMenu( const kernel::Formation_ABC& formation, 
 // -----------------------------------------------------------------------------
 void TreeViewsPanel::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
 {
-    Rename( team, menu );
+    AddContextMenu( team, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -318,7 +317,7 @@ void TreeViewsPanel::NotifyContextMenu( const kernel::Team_ABC& team, kernel::Co
 // -----------------------------------------------------------------------------
 void TreeViewsPanel::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
 {
-    Rename( ghost, menu );
+    AddContextMenu( ghost, menu );
 }
 
 namespace
