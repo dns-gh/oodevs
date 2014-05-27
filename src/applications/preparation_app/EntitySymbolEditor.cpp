@@ -35,25 +35,25 @@ EntitySymbolEditor::EntitySymbolEditor( QGridLayout* layout, int row, kernel::Co
     , symbolsFactory_( symbolsFactory )
 {
     QWidget* group = new QWidget( this, "group" );
-    layout->addWidget( group, row, 0, 1, 2 );
+    layout->addWidget( group, 0, 0, 1, 2 );
     QVBoxLayout* boxLayout = new QVBoxLayout();
     group->setLayout( boxLayout );
-    QGridLayout* buttonsLayout = new QGridLayout();
+    buttonsLayout_ = new QGridLayout();
     QWidget* buttonsGroup = new QWidget( this, "buttonsGroup" );
-    buttonsGroup->setLayout( buttonsLayout );
+    buttonsGroup->setLayout( buttonsLayout_ );
     boxLayout->addWidget( buttonsGroup );
     if( stretch )
         boxLayout->addWidget( new QWidget(), stretch );
 
     // Level
-    buttonsLayout->addWidget( new QLabel( tr( "Hierarchy level:" ), this ), 0, 0 );
+    buttonsLayout_->addWidget( new QLabel( tr( "Hierarchy level:" ), this ), row, 0 );
     levelComboBox_ = new gui::RichWidget< QComboBox >( "levelComboBox", this );
     levelBase_ = tr( "Select a parent automat or formation" );
     connect( levelComboBox_, SIGNAL( activated( int ) ), SLOT( UpdateSymbol() ) );
-    buttonsLayout->addWidget( levelComboBox_, 0, 1 );
+    buttonsLayout_->addWidget( levelComboBox_, row, 1 );
 
     // Nature
-    natureWidget_ = new gui::NatureEditionWidget( buttonsLayout, 1, 4 );
+    natureWidget_ = new gui::NatureEditionWidget( buttonsLayout_, row + 1, 4 );
     connect( natureWidget_, SIGNAL( textChanged( const QString& ) ), SLOT( UpdateSymbol() ) );
 
     // Icon
@@ -209,6 +209,15 @@ void EntitySymbolEditor::Fill( const kernel::Entity_ABC& entity, const QString& 
     icon_->SetSelectedParent( &entity );
     UpdateSymbol();
     natureWidget_->setText( nature );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntitySymbolEditor::InsertWidget
+// Created: LDC 2014-05-27
+// -----------------------------------------------------------------------------
+void EntitySymbolEditor::InsertWidget( QWidget* widget, int row, int column, int rowSpan, int columnSpan, Qt::Alignment alignment )
+{
+    buttonsLayout_->addWidget( widget, row, column, rowSpan, columnSpan, alignment );
 }
 
 // -----------------------------------------------------------------------------

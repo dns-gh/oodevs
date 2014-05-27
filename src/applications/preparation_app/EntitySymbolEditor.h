@@ -55,6 +55,7 @@ public:
     //@{
     void Fill( const kernel::Entity_ABC& entity, const QString& nature, const QString& level );
     void Reset();
+    void InsertWidget( QWidget* widget, int row, int column, int rowSpan = 1, int columnSpan = 1, Qt::Alignment alignment = 0 );
     //@}
 
     //! @name Getters
@@ -91,6 +92,7 @@ private:
     //! @name Member data
     //@{
     kernel::SymbolFactory& symbolsFactory_;
+    QGridLayout* buttonsLayout_;
     // Level
     E_GhostType ghostType_;
     std::string level_;
