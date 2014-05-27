@@ -18,6 +18,7 @@ namespace kernel
 namespace gui
 {
     class RichLabel;
+
 // =============================================================================
 /** @class  ObjectPrototypeLoader_ABC
     @brief  ObjectPrototypeLoader_ABC

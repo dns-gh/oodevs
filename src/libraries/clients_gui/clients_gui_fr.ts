@@ -1507,7 +1507,7 @@ Voulez-vous le supprimer?</translation>
         <source>Error: cannot load shapefile, 
  %1 unsupported/unmatched shape(s)</source>
         <translation>Erreur : impossible de charger le shapefile, 
- %1 forme(s) non supporttée(s)/incompatible(s)
+ %1 forme(s) non supportée(s)/incompatible(s)
         </translation>
     </message>
 </context>

@@ -33,6 +33,8 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
     : currentFeature_     ( 0 )
     , objectType_         ( objectType )
     , coordinateConverter_( coordinateConverter )
+    , unsupportedShapes_  ( 0 )
+    , unsupportedPoints_  ( 0 )
 {
     OGRRegisterAll();
     dataSource_.reset( OGRSFDriverRegistrar::Open( filename.ToUTF8().c_str(), FALSE ), OGRDataSource::DestroyDataSource );
@@ -143,8 +145,8 @@ namespace
     bool AddPoint( const kernel::CoordinateConverter_ABC& converter, OGRPoint& point,
                    kernel::Location_ABC& location, unsigned int& unsupportedPoints )
     {
-        geometry::Point2d latlong( point.getX(), point.getY() );
-        geometry::Point2f xy = converter.ConvertFromGeo( latlong );
+        const geometry::Point2d latlong( point.getX(), point.getY() );
+        const geometry::Point2f xy = converter.ConvertFromGeo( latlong );
         if( !converter.IsInBoundaries( xy ) )
         {
             ++unsupportedPoints;
