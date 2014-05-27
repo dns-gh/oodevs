@@ -93,6 +93,7 @@ protected:
     //! @name QWidget
     //@{
     virtual void contextMenuEvent( QContextMenuEvent* event );
+    virtual void keyPressEvent( QKeyEvent* event );
     //@}
 
     //! @name Operations
