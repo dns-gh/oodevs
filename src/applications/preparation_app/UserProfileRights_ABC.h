@@ -42,6 +42,7 @@ public:
     //@{
     virtual void Display( UserProfile& profile );
     virtual void Visit( QStandardItem& item );
+    virtual QWidget* GetWidget() = 0;
     //@}
 
 protected:

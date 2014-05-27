@@ -38,8 +38,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< const UserProfile*, UserProfile* > T_ProfileEditors;
-    typedef T_ProfileEditors::iterator                  IT_ProfileEditors;
-    typedef T_ProfileEditors::const_iterator           CIT_ProfileEditors;
     //@}
 
     //! @name Operations

@@ -40,6 +40,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual QWidget* GetWidget();
     virtual void Display( UserProfile& profile );
     virtual void AdditionalUpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     //@}

@@ -19,7 +19,7 @@
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileUnitRights::UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const QString& name )
-    : HierarchyTreeView< kernel::TacticalHierarchies >( objectName, controllers, PreparationProfile::GetProfile(), observer_, icons, parent )
+    : T_Parent( objectName, controllers, PreparationProfile::GetProfile(), observer_, icons, parent )
     , UserProfileRights_ABC( *this, dataModel_, name )
 {
     connect( this, SIGNAL( clicked( const QModelIndex& ) ), SLOT( OnItemClicked( const QModelIndex& ) ) );
@@ -34,6 +34,15 @@ UserProfileUnitRights::UserProfileUnitRights( const QString& objectName, QWidget
 UserProfileUnitRights::~UserProfileUnitRights()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::GetWidget
+// Created: JSR 2014-05-27
+// -----------------------------------------------------------------------------
+QWidget* UserProfileUnitRights::GetWidget()
+{
+    return this;
 }
 
 // -----------------------------------------------------------------------------

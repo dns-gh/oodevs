@@ -32,6 +32,11 @@ public:
     virtual ~UserProfilePopulationRights();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual QWidget* GetWidget();
+    //@}
+
 private slots:
     //! @name Slots
     //@{

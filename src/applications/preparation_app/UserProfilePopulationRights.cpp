@@ -33,6 +33,15 @@ UserProfilePopulationRights::~UserProfilePopulationRights()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfilePopulationRights::GetWidget
+// Created: JSR 2014-05-27
+// -----------------------------------------------------------------------------
+QWidget* UserProfilePopulationRights::GetWidget()
+{
+    return this;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfilePopulationRights::OnItemClicked
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------

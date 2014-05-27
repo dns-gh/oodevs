@@ -15,7 +15,6 @@
 namespace kernel
 {
     class Controllers;
-    class ExtensionTypes;
 }
 
 namespace gui
@@ -41,8 +40,7 @@ class ProfileDialog : public ModalDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
-                            Model& model, const kernel::ExtensionTypes& extensions );
+             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, Model& model );
     virtual ~ProfileDialog();
     //@}
 
@@ -59,17 +57,9 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ProfileDialog( const ProfileDialog& );            //!< Copy constructor
-    ProfileDialog& operator=( const ProfileDialog& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-    std::unique_ptr< ProfilesChecker_ABC > pChecher_;
-    UserProfileList* list_;
+    std::auto_ptr< ProfilesChecker_ABC > pChecher_;    UserProfileList* list_;
     UserProfileWidget* pages_;
     //@}
 };

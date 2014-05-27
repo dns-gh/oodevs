@@ -38,7 +38,7 @@ class UserProfileList : public QWidget
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< UserProfile >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -66,12 +66,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfileList( const UserProfileList& );            //!< Copy constructor
-    UserProfileList& operator=( const UserProfileList& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual void NotifyCreated( const UserProfile& profile );
@@ -84,7 +78,6 @@ private:
     //@{
     typedef std::vector< const UserProfile* >            T_Profiles;
     typedef std::map< const UserProfile*, UserProfile* > T_ProfileEditors;
-    typedef T_ProfileEditors::const_iterator           CIT_ProfileEditors;
     //@}
 
 private:

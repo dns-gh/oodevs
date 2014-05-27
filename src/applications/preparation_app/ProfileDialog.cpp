@@ -21,10 +21,9 @@
 // Name: ProfileDialog constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
-                              Model& model, const kernel::ExtensionTypes& extensions )
+ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, Model& model )
     : ModalDialog( parent, "ProfileDialog" )
-    , pChecher_( new ProfilesChecker() )
+    , pChecker_( new ProfilesChecker() )
 {
     gui::SubObjectName subObject( "UsersProfile" );
     setCaption( tr( "User profiles" ) );
@@ -52,13 +51,13 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    pages_ = new UserProfileWidget( "UserProfileWidget", box, controllers, icons, extensions, *pChecher_, model );
+    pages_ = new UserProfileWidget( "UserProfileWidget", box, controllers, icons, *pChecker_, model );
     pages_->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    list_ = new UserProfileList( box, *pages_, controllers, *model.profiles_, *pChecher_ );
+    list_ = new UserProfileList( box, *pages_, controllers, *model.profiles_, *pChecker_ );
     connect( list_, SIGNAL( DoConsistencyCheck() ), parent, SIGNAL( CheckConsistency() ) );
     grid->addWidget( box, 1, 0 );
 
@@ -74,7 +73,6 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     connect( okBtn, SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
     hide();
-
 }
 
 // -----------------------------------------------------------------------------

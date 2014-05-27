@@ -13,15 +13,8 @@
 #include "UserProfileUnitRights.h"
 #include "UserProfilePopulationRights.h"
 #include "ProfilesChecker_ABC.h"
-#include "clients_kernel/AttributeType.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/DictionaryType.h"
-#include "clients_kernel/DictionaryEntryType.h"
-#include "clients_kernel/ExtensionType.h"
-#include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "preparation/UserProfile.h"
@@ -29,31 +22,15 @@
 #include "preparation/Model.h"
 #include "clients_gui/RichCheckBox.h"
 #include "clients_gui/RichLineEdit.h"
-#include "clients_gui/RichWidget.h"
 #include "clients_gui/RichGroupBox.h"
-
-using namespace kernel;
-
-namespace
-{
-    QHBoxLayout* CreateLinelayout( const QString& text, gui::RichLineEdit* lineEdit )
-    {
-        QHBoxLayout* layout = new QHBoxLayout();
-        layout->addWidget( new QLabel( text ) );
-        layout->addWidget( lineEdit );
-        return layout;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileWidget constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent, Controllers& controllers, const gui::EntitySymbols& icons,
-                                      const ExtensionTypes& extensions, ProfilesChecker_ABC& checker, Model& model )
+UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
+                                      ProfilesChecker_ABC& checker, Model& model )
     : gui::RichWidget< QTabWidget >( objectName, parent )
-    , controllers_( controllers )
-    , extensions_ ( extensions )
     , checker_    ( checker )
     , model_      ( model )
     , profile_    ( 0 )
@@ -64,7 +41,7 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
         //profile
         QLabel* loginLabel = new QLabel( tr( "Login:" ) );
         login_ = new gui::RichLineEdit( "login" );
-        connect( login_, SIGNAL( editingFinished() ), this, SLOT( OnLoginChanged() ) );
+        connect( login_, SIGNAL( editingFinished() ), SLOT( OnLoginChanged() ) );
 
         //password
         QLabel* passwordLabel = new QLabel( tr( "Password:" ) );
@@ -81,57 +58,62 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
         knowledgeGroups_ = new gui::RichLineEdit( "knowledgeGroups" );
         knowledgeGroups_->setReadOnly( true );
 
-        gui::RichGroupBox* profileInformationGroup = new gui::RichGroupBox( "ProfileInformation", tr( "Profile information" ) );
-        QGridLayout* profileInformationGroupLayout = new QGridLayout( profileInformationGroup );
-        profileInformationGroupLayout->addWidget( loginLabel, 0, 0 );
-        profileInformationGroupLayout->addWidget( login_, 0, 1 );
-        profileInformationGroupLayout->addWidget( passwordLabel, 1, 0 );
-        profileInformationGroupLayout->addWidget( password_, 1, 1 );
-        profileInformationGroupLayout->addWidget( automataLabel, 2, 0 );
-        profileInformationGroupLayout->addWidget( automats_, 2, 1 );
-        profileInformationGroupLayout->addWidget( knowledgeLabel, 3, 0 );
-        profileInformationGroupLayout->addWidget( knowledgeGroups_, 3, 1 );
-        profileInformationGroupLayout->setMargin( 5 );
-        profileInformationGroupLayout->setColStretch( 0, 1 );
-        profileInformationGroupLayout->setColStretch( 1, 5 );
-        profileInformationGroupLayout->setSpacing( 0 );
+        gui::RichGroupBox* group = new gui::RichGroupBox( "ProfileInformation", tr( "Profile information" ) );
+        QGridLayout* layout = new QGridLayout( group );
+        layout->addWidget( loginLabel, 0, 0 );
+        layout->addWidget( login_, 0, 1 );
+        layout->addWidget( passwordLabel, 1, 0 );
+        layout->addWidget( password_, 1, 1 );
+        layout->addWidget( automataLabel, 2, 0 );
+        layout->addWidget( automats_, 2, 1 );
+        layout->addWidget( knowledgeLabel, 3, 0 );
+        layout->addWidget( knowledgeGroups_, 3, 1 );
+        layout->setMargin( 5 );
+        layout->setColStretch( 0, 1 );
+        layout->setColStretch( 1, 5 );
+        layout->setSpacing( 0 );
 
         QWidget* box = new QWidget();
         QVBoxLayout* boxLayout = new QVBoxLayout( box );
-        boxLayout->addWidget( profileInformationGroup );
+        boxLayout->addWidget( group );
         boxLayout->addStretch( 1 );
         addTab( box, tr( "General" ) );
     }
     {
-        Q3VBox* box = new Q3VBox( this );
+        supervisor_ = new gui::RichCheckBox( "supervisorActions", tr( "Supervisor actions" ) );
+        connect( supervisor_, SIGNAL( toggled( bool ) ), SLOT( OnSupervisorChanged( bool ) ) );
 
-        Q3HBox* holder = new Q3HBox();
-        supervisor_ = new gui::RichCheckBox( "supervisorActions", tr( "Supervisor actions" ), holder );
-        timeControl_  = new gui::RichCheckBox( "timeControl", tr( "Time Control" ), holder );
+        timeControl_  = new gui::RichCheckBox( "timeControl", tr( "Time Control" ) );
+        connect( timeControl_, SIGNAL( toggled( bool ) ), SLOT( OnTimeControlChanged( bool ) ) );
+
         gui::RichWidget< QTabWidget >* tabs = new gui::RichWidget< QTabWidget >( "RichWidget< QTabWidget >" );
 
-        UserProfileUnitRights* unitRights = new UserProfileUnitRights( "unitRights", tabs, controllers, icons, tr( "Units" ) );
-        tabs->addTab( unitRights, tr( "Units" ) );
-        unitRights_ = unitRights;
+        unitRights_ = new UserProfileUnitRights( "unitRights", tabs, controllers, icons, tr( "Units" ) );
+        tabs->addTab( unitRights_->GetWidget(), tr( "Units" ) );
 
-        UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( "populationRights", tabs, controllers, tr( "Crowds" ) );
-        tabs->addTab( populationRights, tr( "Crowds" ) );
-        populationRights_ = populationRights;
+        populationRights_ = new UserProfilePopulationRights( "populationRights", tabs, controllers, tr( "Crowds" ) );
+        tabs->addTab( populationRights_->GetWidget(), tr( "Crowds" ) );
 
-        addTab( box, tr( "Permissions" ) );
-        connect( supervisor_, SIGNAL( toggled( bool ) ), SLOT( OnSupervisorChanged( bool ) ) );
-        connect( timeControl_, SIGNAL( toggled( bool ) ), SLOT( OnTimeControlChanged( bool ) ) );
         QLabel* readPermissionlabel = new QLabel( tr( "'Read' permission allows you to see a unit.\n"
                         "'Write' permission allows you to control a unit." ) );
 
-        gui::RichGroupBox* permissionsGroup = new gui::RichGroupBox( "permissionsGroup", tr( "Access permissions" ), box );
-        QVBoxLayout* permissionsGroupLayout = new QVBoxLayout( permissionsGroup );
-        permissionsGroupLayout->addWidget( holder );
-        permissionsGroupLayout->addWidget( tabs );
-        permissionsGroupLayout->addWidget( readPermissionlabel );
-        permissionsGroupLayout->setMargin( 5 );
+        gui::RichGroupBox* group = new gui::RichGroupBox( "permissionsGroup", tr( "Access permissions" ) );
+        QHBoxLayout* holder = new QHBoxLayout();
+        holder->addWidget( supervisor_ );
+        holder->addWidget( timeControl_ );
+        QVBoxLayout* layout = new QVBoxLayout( group );
+        layout->addLayout( holder );
+        layout->addWidget( tabs );
+        layout->addWidget( readPermissionlabel );
+        layout->setMargin( 5 );
+
+        QWidget* box = new QWidget();
+        QVBoxLayout* boxLayout = new QVBoxLayout( box );
+        boxLayout->addWidget( group );
+        boxLayout->addStretch( 1 );
+        addTab( box, tr( "Permissions" ) );
     }
-    SetEnabled( false );
+    setVisible( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,29 +127,29 @@ UserProfileWidget::~UserProfileWidget()
 
 namespace
 {
-    const KnowledgeGroup_ABC* GetKnowledgeGroup( const Entity_ABC& entity )
+    const kernel::KnowledgeGroup_ABC* GetKnowledgeGroup( const kernel::Entity_ABC& entity )
     {
-        const CommunicationHierarchies* commParentHirearchies = entity.Retrieve< CommunicationHierarchies >();
-        if( !commParentHirearchies )
+        const kernel::CommunicationHierarchies* hierarchies = entity.Retrieve< kernel::CommunicationHierarchies >();
+        if( !hierarchies )
             return 0;
-        const Entity_ABC* pSuperior = commParentHirearchies->GetSuperior();
+        const kernel::Entity_ABC* pSuperior = hierarchies->GetSuperior();
         if( !pSuperior )
             return 0;
-        const KnowledgeGroup_ABC* kg = dynamic_cast< const KnowledgeGroup_ABC* >( pSuperior );
+        const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( pSuperior );
         if( kg )
             return kg;
         return GetKnowledgeGroup( *pSuperior );
     }
 
-    unsigned int GetKGCount( std::set< unsigned long > automats, Model& model )
+    unsigned int GetKGCount( const std::set< unsigned long >& automats, Model& model )
     {
         std::set< unsigned long > knowledgeGroups;
-        for( std::set< unsigned long >::iterator it = automats.begin(); it != automats.end(); ++it )
+        for( auto it = automats.begin(); it != automats.end(); ++it )
         {
-            Automat_ABC* pAutomat = model.FindAutomat( *it );
+            kernel::Automat_ABC* pAutomat = model.FindAutomat( *it );
             if( pAutomat )
             {
-                const KnowledgeGroup_ABC* kg = GetKnowledgeGroup( *pAutomat );
+                const kernel::KnowledgeGroup_ABC* kg = GetKnowledgeGroup( *pAutomat );
                 if( kg )
                     knowledgeGroups.insert( kg->GetId() );
             }
@@ -193,7 +175,7 @@ void UserProfileWidget::Display( UserProfile& profile )
     timeControl_->setChecked( profile.HasTimeControl() );
     unitRights_->Display( profile );
     populationRights_->Display( profile );
-    SetEnabled( true );
+    setVisible( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,9 +190,9 @@ void UserProfileWidget::OnLoginChanged()
         {
             QString login = login_->text();
             if( profile_->GetLogin() != login && checker_.Exists( profile_->GetLogin(), login ) )
-                throw MASA_EXCEPTION( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString().c_str() );
+                throw MASA_EXCEPTION( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString() );
             if( profile_->GetLogin() != login && model_.profiles_->Exists( login ) && !checker_.Exists( login ) )
-                throw MASA_EXCEPTION( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString().c_str() );
+                throw MASA_EXCEPTION( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString() );
             profile_->SetLogin( login );
         }
     }
@@ -249,13 +231,4 @@ void UserProfileWidget::OnTimeControlChanged( bool timeControl )
 {
     if( profile_ )
         profile_->SetTimeControl( timeControl );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileWidget::SetEnabled
-// Created: SBO 2007-02-16
-// -----------------------------------------------------------------------------
-void UserProfileWidget::SetEnabled( bool enabled )
-{
-    setVisible( enabled );
 }

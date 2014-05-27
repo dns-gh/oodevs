@@ -60,7 +60,6 @@ UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, ker
     layout->addWidget( list_ );
     layout->addLayout( box );
     controllers_.Register( *this );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -173,11 +172,11 @@ void UserProfileList::NotifyCreated( const UserProfile& profile )
 void UserProfileList::NotifyUpdated( const UserProfile& profile )
 {
     const UserProfile* updated = &profile;
-    CIT_ProfileEditors editorIt = editors_.find( &profile );
+    auto editorIt = editors_.find( &profile );
     if( editorIt != editors_.end() )
         updated = editorIt->second;
 
-    T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
+    auto it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
     {
         const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
@@ -207,7 +206,7 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
             editors_.erase( editorIt );
         }
         checker_.Display( editors_ );
-        pages_.SetEnabled( !profiles_.empty() );
+        pages_.setVisible( !profiles_.empty() );
     }
 }
 
@@ -219,7 +218,7 @@ void UserProfileList::showEvent( QShowEvent* event )
 {
     QWidget::showEvent( event );
     if( dataModel_->rowCount() > 0 )
-        pages_.SetEnabled( true );
+        pages_.setVisible( true );
     list_->selectionModel()->clear();
     list_->selectionModel()->select( proxyModel_->index( 0, 0 ), QItemSelectionModel::Select );
 }

@@ -10,15 +10,11 @@
 #ifndef __UserProfileWidget_h_
 #define __UserProfileWidget_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_gui/RichWidget.h"
 
 namespace kernel
 {
     class Controllers;
-    class DictionaryType;
-    class Entity_ABC;
-    class ExtensionTypes;
 }
 
 namespace gui
@@ -45,14 +41,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
-                                const kernel::ExtensionTypes& extensions, ProfilesChecker_ABC& checker, Model& model );
+                                ProfilesChecker_ABC& checker, Model& model );
     virtual ~UserProfileWidget();
     //@}
 
     //! @name Operations
     //@{
     void Display( UserProfile& profile );
-    void SetEnabled( bool enabled );
     //@}
 
 private slots:
@@ -67,8 +62,6 @@ private slots:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    const kernel::ExtensionTypes& extensions_;
     ProfilesChecker_ABC& checker_;
     Model& model_;
     UserProfile* profile_;
