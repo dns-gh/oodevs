@@ -201,5 +201,7 @@
   <migration from="5.3.2" to="5.3.3"/>
   <migration from="5.3.3" to="5.4.0">
     <upgrade schema="schemas/5.3.3/physical/Breakdowns.xsd" apply="schemas/5.4.0/xsl/breakdowns_5.3.3-5.4.0.xsl"/>
+    <upgrade schema="schemas/5.3.3/physical/Equipments.xsd" apply="schemas/5.4.0/xsl/equipments_5.3.3-5.4.0.xsl"/>
+    <upgrade schema="schemas/5.3.3/physical/Units.xsd" apply="schemas/5.4.0/xsl/units_5.3.3-5.4.0.xsl"/>
   </migration>
 </migrations>
