@@ -277,27 +277,6 @@ namespace
     }
 }
 
-namespace
-{
-    void GetDestinations( const kernel::Entity_ABC& handler, std::vector< const kernel::Entity_ABC* >& destinations )
-    {
-        if( auto tactical = handler.Retrieve< kernel::TacticalHierarchies >() )
-        {
-            auto it = tactical->CreateSubordinateIterator();
-            while( it.HasMoreElements() )
-            {
-                const kernel::Entity_ABC& child = it.NextElement();
-                const kernel::MaintenanceStates_ABC* state = child.Retrieve< kernel::MaintenanceStates_ABC >();
-                if( child.GetTypeName() == kernel::Agent_ABC::typeName_ && state && !state->GetDispoRepairers().empty() &&
-                    state->IsEnabled() )
-                    destinations.push_back( &child );
-                else
-                    GetDestinations( child, destinations );
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogisticMaintenanceSelectionDialog::SetCurrentStatus
 // Created: ABR 2014-01-29
@@ -318,9 +297,7 @@ bool LogisticMaintenanceSelectionDialog::SetCurrentStatus( sword::LogMaintenance
     if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
     {
         UpdateView( transporters_, *handler_, manualButton_, tr( "Select tow truck" ) );
-        std::vector< const kernel::Entity_ABC* > destinations;
-        GetDestinations( *handler_, destinations );
-        destinations_->Fill( destinations, *consumer_, 0 );
+        RefeshDestinations();
         destinationBox_->setVisible( true );
         equipmentWeight_->setText( tr( "Vehicle weight: %1 t" ).arg( componentType_->GetWeight() ) );
         equipmentWeight_->setVisible( true );
@@ -475,9 +452,7 @@ void LogisticMaintenanceSelectionDialog::OnSelectionChanged( const QModelIndex& 
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection && consumer_ && handler_ )
         {
             availability_ = transporters_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
-            std::vector< const kernel::Entity_ABC* > destinations;
-            GetDestinations( *handler_, destinations );
-            destinations_->Fill( destinations, *consumer_, availability_->type_ );
+            RefeshDestinations();
         }
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
             availability_ = diagnosers_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
@@ -558,4 +533,40 @@ void LogisticMaintenanceSelectionDialog::OnDestinationToggled( bool enabled )
         destinations_->reset();
     }
     UpdateDisplay();
+}
+
+namespace
+{
+    void GetDestinations( const kernel::Entity_ABC& handler, std::vector< const kernel::Entity_ABC* >& destinations )
+    {
+        if( auto tactical = handler.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            auto it = tactical->CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& child = it.NextElement();
+                const kernel::MaintenanceStates_ABC* state = child.Retrieve< kernel::MaintenanceStates_ABC >();
+                if( child.GetTypeName() == kernel::Agent_ABC::typeName_ && state && !state->GetDispoRepairers().empty() &&
+                    state->IsEnabled() )
+                    destinations.push_back( &child );
+                else
+                    GetDestinations( child, destinations );
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticMaintenanceSelectionDialog::RefeshDestinations
+// Created: SLI 2014-05-27
+// -----------------------------------------------------------------------------
+void LogisticMaintenanceSelectionDialog::RefeshDestinations()
+{
+    const QModelIndexList indexes = destinations_->selectionModel()->selectedIndexes();
+    std::vector< const kernel::Entity_ABC* > destinations;
+    GetDestinations( *handler_, destinations );
+    destinations_->Fill( destinations, *consumer_, availability_ ? availability_->type_ : 0 );
+    if( !selectedDestination_ || !destinationBox_->isChecked() || indexes.empty() )
+        return;
+    destinations_->selectionModel()->select( indexes[0], QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows );
 }
