@@ -1156,7 +1156,7 @@
         <update name="geos" version="3.3.7.r662"/>
         <update name="glew" version="1.9.0"/>
         <update name="golang" version="1.2.1"/>
-        <update name="golibs" version="5.3"/>
+        <update name="golibs" version="5.4"/>
         <update name="hla" version="5.4" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
         <update name="hla" version="5.4" package="federation_app" todir="${bin.dir}"/>
         <update name="hla" version="5.4" package="include" todir="${include.dir}"/>
