@@ -38,25 +38,29 @@ public:
 
     template< typename Archive > void serialize( Archive& file, const unsigned int version );
 
-    uint32_t Register( const sword::AutomatOrder& msg );
-    uint32_t Register( const sword::CrowdOrder& msg );
+    struct Order { bool created; uint32_t id; };
+    Order Register( const sword::AutomatOrder& msg );
+    Order Register( const sword::CrowdOrder& msg );
+    Order Register( const sword::UnitOrder& msg );
+
     uint32_t Register( const sword::FragOrder& msg );
     uint32_t Register( const sword::KnowledgeMagicAction& msg );
     uint32_t Register( const sword::MagicAction& msg );
     uint32_t Register( const sword::ObjectMagicAction& msg );
     uint32_t Register( const sword::SetAutomatMode& msg );
     uint32_t Register( const sword::UnitMagicAction& msg );
-    uint32_t Register( const sword::UnitOrder& msg );
     void     Send    ( uint32_t id, int32_t code, const std::string& msg );
 
     virtual void SendStateToNewClient();
 
 private:
     uint32_t Register( const sword::Action& msg );
+    Order    RegisterOrder( uint32_t order, const sword::Action& msg );
 
 private:
     uint32_t ids_;
     std::map< uint32_t, sword::Action > actions_;
+    std::map< uint32_t, uint32_t > orders_; // map order ids to action ids
 };
 
 BOOST_CLASS_EXPORT_KEY( ActionManager )

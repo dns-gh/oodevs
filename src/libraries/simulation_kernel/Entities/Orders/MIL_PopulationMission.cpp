@@ -128,7 +128,9 @@ void MIL_PopulationMission::Send( ActionManager& actions ) const
     asn().set_name( GetName() );
     asn().set_id( GetId() );
     asn.Send( NET_Publisher_ABC::Publisher() );
-    actions.Send( actions.Register( asn() ), 0, "" );
+    const auto action = actions.Register( asn() );
+    if( action.created )
+        actions.Send( action.id, 0, "" );
 }
 
 // -----------------------------------------------------------------------------

@@ -58,7 +58,7 @@ ActionManager::~ActionManager()
 template< typename Archive >
 void ActionManager::serialize( Archive& ar, const unsigned int )
 {
-    ar & ids_ & actions_;
+    ar & ids_ & actions_ & orders_;
 }
 
 namespace
@@ -132,19 +132,38 @@ uint32_t ActionManager::Register( const sword::SetAutomatMode& msg )
     return Register( MakeAction( msg, &sword::Action::mutable_set_automat_mode ) );
 }
 
-uint32_t ActionManager::Register( const sword::UnitOrder& msg )
+namespace
 {
-    return Register( MakeAction( msg, &sword::Action::mutable_unit_order ) );
+    ActionManager::Order MakeOrder( bool created, uint32_t id )
+    {
+        ActionManager::Order rpy = { created, id };
+        return rpy;
+    }
 }
 
-uint32_t ActionManager::Register( const sword::AutomatOrder& msg )
+ActionManager::Order ActionManager::RegisterOrder( uint32_t order, const sword::Action& msg )
 {
-    return Register( MakeAction( msg, &sword::Action::mutable_automat_order ) );
+    auto it = orders_.find( order );
+    if( it != orders_.end() )
+        return MakeOrder( false, it->second );
+    const uint32_t id = Register( msg );
+    orders_.insert( std::make_pair( order, id ) );
+    return MakeOrder( true, id );
 }
 
-uint32_t ActionManager::Register( const sword::CrowdOrder& msg )
+ActionManager::Order ActionManager::Register( const sword::UnitOrder& msg )
 {
-    return Register( MakeAction( msg, &sword::Action::mutable_crowd_order ) );
+    return RegisterOrder( msg.id(), MakeAction( msg, &sword::Action::mutable_unit_order ) );
+}
+
+ActionManager::Order ActionManager::Register( const sword::AutomatOrder& msg )
+{
+    return RegisterOrder( msg.id(), MakeAction( msg, &sword::Action::mutable_automat_order ) );
+}
+
+ActionManager::Order ActionManager::Register( const sword::CrowdOrder& msg )
+{
+    return RegisterOrder( msg.id(), MakeAction( msg, &sword::Action::mutable_crowd_order ) );
 }
 
 uint32_t ActionManager::Register( const sword::FragOrder& msg )
