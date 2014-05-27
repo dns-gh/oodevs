@@ -45,7 +45,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     model_.reset( new Model( *controllers_, *staticModel_ ) );
 
     // GUI
-    mainWindow_.reset( new MainWindow( *controllers_, *staticModel_, *model_, *config_, GetExpiration() ) );
+    mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *config_, GetExpiration() );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
 }
 
@@ -94,7 +94,7 @@ int Application::Run()
 
     if( !config_->GetQtNamesPath().IsEmpty() )
     {
-        CheckInterfaceComponentNaming( mainWindow_.get(), config_->GetQtNamesPath() );
+        CheckInterfaceComponentNaming( mainWindow_, config_->GetQtNamesPath() );
         return EXIT_SUCCESS;
     }
 
