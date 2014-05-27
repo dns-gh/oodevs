@@ -36,6 +36,15 @@ def split_args():
             args.append(arg)
     return sub, args
 
+def display_log(status, logfile):
+    try:
+        log = file(logfile, 'rb').read()
+        sys.stderr.write(log)
+        sys.stderr.write('\n')
+        sys.stderr.write("error code 0x%X\n" % (status & 0xFFFFFFFF))
+    except (IOError, OSError):
+        pass
+
 def main(opts, args):
     if len(args) < 1:
         parser.error("missing application argument")
@@ -57,17 +66,12 @@ def main(opts, args):
         proc.wait()
         kill = False
         if proc.returncode and opts.logfile:
-            try:
-                log = file(opts.logfile, 'rb').read()
-                sys.stderr.write(log)
-                sys.stderr.write('\n')
-                sys.stderr.write("error code 0x%X\n" % (proc.returncode & 0xFFFFFFFF))
-            except (IOError, OSError):
-                pass
+            display_log(proc.returncode, opts.logfile)
         return proc.returncode
     finally:
         if kill:
             proc.kill()
+        display_log(-1, opts.logfile)
         null.close()
 
 def get_hwnds(pid):
