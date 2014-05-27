@@ -1475,6 +1475,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Unknown resource &quot;%1&quot;. It will deleted at next save.</source>
         <translation>Ressource &quot;%1&quot; inconnue. Elle sera supprimée à la prochaine sauvegarde.</translation>
     </message>
+    <message>
+        <source>Unknown equipment &quot;%1&quot;. It will deleted at next save.</source>
+        <translation>Equipement &quot;%1&quot; inconnu. Il sera supprimé à la prochaine sauvegarde.</translation>
+    </message>
 </context>
 <context>
     <name>MultipleResolverEditor</name>

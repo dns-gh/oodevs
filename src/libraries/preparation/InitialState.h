@@ -66,6 +66,7 @@ public:
     void Reset();
     bool CleanUnsupportedState();
     const std::vector< std::string >& GetUnknownResources() const;
+    const std::vector< std::string >& GetUnknownEquipments() const;
     bool IsOriginalResource( const QString& resourceName ) const;
     //@}
 
@@ -109,6 +110,7 @@ private:
     T_Resources  originalResources_;
 
     std::vector< std::string > unknownResources_;
+    std::vector< std::string > unknownEquipments_;
     //@}
 };
 

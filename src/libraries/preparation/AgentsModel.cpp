@@ -299,6 +299,9 @@ void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent, Model& m
             const auto& unknownResources = agent->Get< InitialState >().GetUnknownResources();
             for( auto it = unknownResources.begin(); it != unknownResources.end(); ++it )
                 model.AppendLoadingError( eUnknownResource, *it, agent );
+            const auto& unknownEquipements = agent->Get< InitialState >().GetUnknownEquipments();
+            for( auto it = unknownEquipements.begin(); it != unknownEquipements.end(); ++it )
+                model.AppendLoadingError( eUnknownEquipment, *it, agent );
             tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
             xis >> xml::list( "lima"   , *model.limits_, &LimitsModel::CreateLima   , *agent )
                 >> xml::list( "limit"  , *model.limits_, &LimitsModel::CreateLimit  , *agent );
