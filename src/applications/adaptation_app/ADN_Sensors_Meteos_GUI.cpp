@@ -36,10 +36,12 @@ ADN_Sensors_Meteos_GUI::~ADN_Sensors_Meteos_GUI()
 // Name: ADN_Sensors_Meteos_GUI::InternalEmit
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Meteos_GUI::InternalEmit()
+void ADN_Sensors_Meteos_GUI::InternalEmit( const QModelIndex& current )
 {
-    if( ADN_Sensors_Modificators::MeteoInfos* data = static_cast< ADN_Sensors_Modificators::MeteoInfos* >( GetSelectedData() ) )
+    if( ADN_Sensors_Modificators::MeteoInfos* data = static_cast< ADN_Sensors_Modificators::MeteoInfos* >( GetDataFromIndex( current )  ) )
         emit ContentChanged( ADN_Tr::ConvertFromSensorWeatherModifiers( data->eType_, ENT_Tr::eToTr ), data->rCoeff_.GetData() );
+    else
+        emit ContentChanged( "", 1. );
 }
 
 // -----------------------------------------------------------------------------

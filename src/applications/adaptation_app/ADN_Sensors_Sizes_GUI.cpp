@@ -35,11 +35,13 @@ ADN_Sensors_Sizes_GUI::~ADN_Sensors_Sizes_GUI()
 // Name: ADN_Sensors_Sizes_GUI::InternalEmit
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Sizes_GUI::InternalEmit()
+void ADN_Sensors_Sizes_GUI::InternalEmit( const QModelIndex& current )
 {
-    ADN_Sensors_Modificators::SizeInfos* data = static_cast< ADN_Sensors_Modificators::SizeInfos* >( GetSelectedData() );
+    ADN_Sensors_Modificators::SizeInfos* data = static_cast< ADN_Sensors_Modificators::SizeInfos* >( GetDataFromIndex( current )  );
     if( data  && data->GetCrossedElement() )
         emit ContentChanged( data->GetCrossedElement()->strName_.GetData(), data->rCoeff_.GetData() );
+    else
+        emit ContentChanged( "", 1. );
 }
 
 // -----------------------------------------------------------------------------

@@ -38,19 +38,13 @@ signals:
 protected:
     //! @name Abstract Methods
     //@{
-    virtual void InternalEmit() = 0;
+    virtual void InternalEmit( const QModelIndex& current ) = 0;
     //@}
 
 protected slots:
     //! @name Slots
     //@{
-    virtual void OnCurrentChanged( const QModelIndex& index );
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    int lastCurrentRow_;
+    void currentChanged( const QModelIndex& current, const QModelIndex& previous );
     //@}
 };
 
