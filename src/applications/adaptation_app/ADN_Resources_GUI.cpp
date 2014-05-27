@@ -501,7 +501,12 @@ QWidget* ADN_Resources_GUI::CreatePKTable()
     ADN_Table* pTable = new ADN_PK_Table( tr( "PKs" ) );
     // Fill the table.
     ADN_Resources_Data::ResourceInfos& ammo = data_.GetResource( sword::dotation_type_ammunition );
-    int nRowSize = static_cast< int >( armorInfos.size() ) - 1; // -1 to filter out crowd 'armor'
+    // to filter out crowd 'armor'
+    unsigned int nRowSize = 0;
+    for( auto it = armorInfos.begin(); it != armorInfos.end(); ++it )
+        if( (*it)->GetType() != eProtectionType_Crowd )
+            ++nRowSize;
+
     int nRow = 0;
     for( auto it = ammo.categories_.begin(); it != ammo.categories_.end(); ++it )
     {
