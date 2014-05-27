@@ -331,6 +331,7 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 }
 
 func (s *TestSuite) TestActiveProtection(c *C) {
+	c.Skip("unreliable, http://jira.masagroup.net/browse/SWBUG-12467")
 	// VW Active Protection has:
 	// - Hard kill active protection from "Shell Of Death", comsumming
 	//   2 "ammmunition"
