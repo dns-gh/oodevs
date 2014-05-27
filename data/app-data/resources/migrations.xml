@@ -204,4 +204,6 @@
     <upgrade schema="schemas/5.3.3/physical/Equipments.xsd" apply="schemas/5.4.0/xsl/equipments_5.3.3-5.4.0.xsl"/>
     <upgrade schema="schemas/5.3.3/physical/Units.xsd" apply="schemas/5.4.0/xsl/units_5.3.3-5.4.0.xsl"/>
   </migration>
+  <migration from="5.4.0" to="5.4.1"/>
+  <migration from="5.4.1" to="5.5.0"/>
 </migrations>

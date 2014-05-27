@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="launchers">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="launcher" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ph-modifiers" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ph-modifier" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="target-posture" type="T_PostureCible" use="required"/>
+												<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="posture" type="T_PostureTireur" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="indirect-fire" type="xs:boolean" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="T_PostureTireur">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Mouvement"/>
+			<xs:enumeration value="MouvementDiscret"/>
+			<xs:enumeration value="Arret"/>
+			<xs:enumeration value="PosteReflexe"/>
+			<xs:enumeration value="Poste"/>
+			<xs:enumeration value="PosteAmenage"/>
+			<xs:enumeration value="PostePrepareGenie"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_PostureCible">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Mouvement"/>
+			<xs:enumeration value="MouvementDiscret"/>
+			<xs:enumeration value="Arret"/>
+			<xs:enumeration value="PosteReflexe"/>
+			<xs:enumeration value="Poste"/>
+			<xs:enumeration value="PosteAmenage"/>
+			<xs:enumeration value="PostePrepareGenie"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
