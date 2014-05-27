@@ -87,7 +87,6 @@ public slots:
     void FocusIn( gui::HierarchyTreeView_ABC* );
     void OnRename();
 
-
 private:
     //! @name Helpers
     //@{
@@ -101,7 +100,7 @@ private:
                               std::vector< gui::RichView_ABC* >& treeViews,
                               const gui::AggregateToolbar& aggregateToolbar,
                               bool first );
-    void Rename( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    void AddContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private:
