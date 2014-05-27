@@ -47,8 +47,9 @@ func (s *TestSuite) TestDrawingLimit(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(client.Model.GetTacticalLine(limit2.Id), IsNil)
 
-	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadSmallOrbat))
-	checkpointCompareAndStop(c, sim, admin)
+	// Unreliable, see http://jira.masagroup.net/browse/SWBUG-12472
+	//admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadSmallOrbat))
+	//checkpointCompareAndStop(c, sim, admin)
 }
 
 func (s *TestSuite) TestDrawingPhaseLine(c *C) {
@@ -84,6 +85,7 @@ func (s *TestSuite) TestDrawingPhaseLine(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(client.Model.GetTacticalLine(phaseLine2.Id), IsNil)
 
-	admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadSmallOrbat))
-	checkpointCompareAndStop(c, sim, admin)
+	// Unreliable, see http://jira.masagroup.net/browse/SWBUG-12472
+	//admin := loginAndWaitModel(c, sim, NewAdminOpts(ExCrossroadSmallOrbat))
+	//checkpointCompareAndStop(c, sim, admin)
 }
