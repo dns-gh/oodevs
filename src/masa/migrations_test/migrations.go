@@ -215,7 +215,7 @@ ROOTDIR DATADIR OUTDIR RUNDIR BASEPORT JOBS [EXERCISES...] expected`)
 	var result error
 	for err := range results {
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%s", err)
+			fmt.Fprintf(os.Stderr, "%s\n", err)
 			result = fmt.Errorf("migration tests failed")
 		}
 	}
