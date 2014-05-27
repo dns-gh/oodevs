@@ -264,6 +264,22 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::keyPressEvent
+// Created: LGY 2014-05-27
+// -----------------------------------------------------------------------------
+void EntityTreeView_ABC::keyPressEvent( QKeyEvent* event )
+{
+    if( event && event->key() == Qt::Key_F2 )
+    {
+        const auto indexes = selectionModel()->selectedIndexes();
+        if( !indexes.empty() )
+            edit( indexes.front() );
+    }
+    else
+        RichTreeView::keyPressEvent( event );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityTreeView_ABC::IsTypeRejected
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
