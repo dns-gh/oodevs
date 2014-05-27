@@ -3047,7 +3047,7 @@ PNG (*.png)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Owned equipments only</source>
+        <source>Owned equipment only</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
