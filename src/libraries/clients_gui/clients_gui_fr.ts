@@ -1500,8 +1500,15 @@ Voulez-vous le supprimer?</translation>
         <translation>la référence spatiale doit être WGS84</translation>
     </message>
     <message>
-        <source>Cannot load SHP feature %1 : %2</source>
-        <translation>Impossible de charger la feature SHP %1 : %2</translation>
+        <source>Warning: %1 unsupported point(s)</source>
+        <translation>Attention : %1 point(s) non supporté(s)</translation>
+    </message>
+    <message>
+        <source>Error: cannot load shapefile, 
+ %1 unsupported/unmatched shape(s)</source>
+        <translation>Erreur : impossible de charger le shapefile, 
+ %1 forme(s) non supportée(s)/incompatible(s)
+        </translation>
     </message>
 </context>
 <context>

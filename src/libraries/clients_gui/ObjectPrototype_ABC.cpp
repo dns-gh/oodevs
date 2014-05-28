@@ -82,7 +82,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( const QString& objectName, QWidget* pa
         loadFromFileButton_->setToggleButton( true );
         connect( loadFromFileButton_, SIGNAL( toggled( bool ) ), this, SLOT( LoadFromFile( bool ) ) );
 
-        loadFromFilePathLabel_ = new QLabel();
+        loadFromFilePathLabel_ = new RichLabel( "loadFromFilePathLabel" );
 
         RichGroupBox* infoBox = new RichGroupBox( "information", tr( "Information" ) );
         QGridLayout* infoxBoxLayout = new QGridLayout( infoBox );
@@ -210,6 +210,8 @@ bool ObjectPrototype_ABC::CheckValidity() const
         position_->Warn( 3000 );
         return false;
     }
+    if( loader_.get() && !loader_->CheckValidity( *loadFromFilePathLabel_ ) )
+        return false;
     return attributes_->CheckValidity( *( teams_->GetValue() ) );
 }
 
