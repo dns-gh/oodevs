@@ -96,7 +96,7 @@ public:
     T_MaintenancePriorityVector GetOrderConduiteModifierPrioritesReparations() const;
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesBlesses() const;
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesReparations() const;
-    std::vector< const PHY_ComposanteTypePion* > GetOrderConduiteRenforcerEnEquipements() const;
+    std::vector< const PHY_ComposanteTypePion* > GetEquipmentTypeListParameter( const std::string& ) const;
     int GetOrderConduiteModifierRegimeTravailMaintenance() const;
     int GetOrderConduitePopulationChangerAttitude() const;
     const DEC_Decision_ABC* GetPionARenforcer() const;
