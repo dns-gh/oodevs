@@ -15,6 +15,7 @@
 #include <tools/Helpers.h>
 #include <tools/Path.h>
 #include <tools/StdFileWrapper.h>
+#include <tools/TemporaryDirectory.h>
 #include <boost/make_shared.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -33,6 +34,7 @@ RasterProcess::RasterProcess( const RasterCallback& callback, const tools::Path&
 
 RasterProcess::~RasterProcess()
 {
+    // NOTHING
 }
 
 void RasterProcess::OnExit( int errorCode, QProcess::ExitStatus exitStatus )
@@ -89,7 +91,8 @@ boost::shared_ptr< QProcess > RunRasterApp( const tools::Path& input, int pixelS
     QStringList parameters;
     tools::Xifstream xis( config.BuildTerrainChildFile( "config.xml" ) );
     xis >> xml::start( "configuration" );
-    const tools::Path cfgPath = config.GetGraphicsDirectory() / "~~tmp.config.xml";
+    tools::TemporaryDirectory tempDir( "raster-app", config.GetGraphicsDirectory() );
+    const tools::Path cfgPath = tempDir.Path() / "~~tmp.config.xml";
     tools::Xofstream xos( cfgPath );
     xos << xml::start( "configuration" )
             << xml::start( "output" )
@@ -113,8 +116,8 @@ boost::shared_ptr< QProcess > RunRasterApp( const tools::Path& input, int pixelS
                     << xml::end
                 << xml::end
             << xml::end;
-    tools::Path output = config.GetGraphicsDirectory() / "~~tmp.texture.bin";
-    tools::Path logpath = output + ".log";
+    const tools::Path output = tempDir.Path() / "~~tmp.texture.bin";
+    const tools::Path logpath = output + ".log";
     parameters << ( std::string( "--config=" ) + cfgPath.SystemComplete().ToUTF8()).c_str();
     parameters << ( std::string( "--file=" ) + output.SystemComplete().ToUTF8() ).c_str();
     parameters << ( std::string( "--logfile=" ) + logpath.SystemComplete().ToUTF8() ).c_str();
