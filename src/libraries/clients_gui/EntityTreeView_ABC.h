@@ -83,17 +83,10 @@ public:
     virtual void NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements );
     //@}
 
-    //! @name Operations
-    //@{
-    virtual bool Exist( const kernel::Entity_ABC& entity );
-    virtual void Rename( kernel::Entity_ABC& entity );
-    //@}
-
 protected:
     //! @name QWidget
     //@{
     virtual void contextMenuEvent( QContextMenuEvent* event );
-    virtual void keyPressEvent( QKeyEvent* event );
     //@}
 
     //! @name Operations
@@ -106,6 +99,7 @@ protected:
     virtual void SetLessThanEntityFunctor( const T_LessThanEntityFunctor& functor );
     virtual void Edit( const kernel::Entity_ABC& entity );
     virtual void Rename( kernel::Entity_ABC& entity, const QString& name );
+    virtual void Rename( kernel::Entity_ABC& entity );
     //@}
 
 protected slots:

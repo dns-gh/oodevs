@@ -9,10 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "LongNameHelper.h"
-#include "ModelObserver_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
-#include "clients_kernel/Tools.h"
 #pragma warning( push, 0 )
 #include <QtGui/qstandarditemmodel.h>
 #pragma warning( pop )
@@ -41,16 +39,6 @@ bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item )
     }
     item.setText( longName.c_str() );
     return true;
-}
-
-void ShowRenameDialog( QWidget* parent, kernel::Entity_ABC& entity, ModelObserver_ABC& modelObserver )
-{
-    bool ok = false;
-    const auto text = QInputDialog::getText( parent, tools::translate( "RenameDialog", "Rename" ),
-       tools::translate( "RenameDialog", "New name:" ), QLineEdit::Normal,
-        entity.GetName(), &ok );
-    if( ok )
-        modelObserver.OnRename( entity, text );
 }
 
 }  // namespace longname

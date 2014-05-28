@@ -79,6 +79,7 @@ private slots:
     void OnCreateTeam();
     void OnCreateFormation( int level );
     void OnChangeLevel( int levelId );
+    void OnRename();
     void OnChangeSuperior();
     void Engage();
     void Disengage();

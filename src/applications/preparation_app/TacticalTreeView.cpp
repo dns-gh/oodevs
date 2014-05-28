@@ -253,6 +253,7 @@ void TacticalTreeView::AddCommonMenu( kernel::ContextMenu& menu, const kernel::E
 {
     if( !IsActivated() )
         return;
+    menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ), false, 4 );
     if( entity.Get< kernel::TacticalHierarchies >().GetSuperior() != 0 )
         menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ), false, 1 );
 }
@@ -407,6 +408,16 @@ void TacticalTreeView::OnChangeLevel( int levelId )
             controllers_.controller_.Update( *pTactical );
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::OnRename
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::OnRename()
+{
+    if( contextMenuEntity_ )
+        Rename( *contextMenuEntity_.ConstCast() );
 }
 
 // -----------------------------------------------------------------------------
