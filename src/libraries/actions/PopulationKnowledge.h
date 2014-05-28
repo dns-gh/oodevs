@@ -10,7 +10,7 @@
 #ifndef __ActionParameterPopulationKnowledge_h_
 #define __ActionParameterPopulationKnowledge_h_
 
-#include "Knowledge_ABC.h"
+#include "Entity.h"
 #include "clients_kernel/Population_ABC.h"
 
 namespace kernel
