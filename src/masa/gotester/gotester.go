@@ -13,6 +13,7 @@ import (
 	"flag"
 	"fmt"
 	"masa/sword/swtest"
+	"math/rand"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -102,7 +103,9 @@ func splitTests(tests []string, jobs int) [][]string {
 	// size when running go test.
 	maxGroupStringLength := 15000
 	totalLength := 0
-	for _, test := range tests {
+	// cheap scheduling by shuffling tests
+	for _, idx := range rand.Perm(len(tests)) {
+		test := tests[idx]
 		i := len(groups) - 1
 		// Add new group if current one is full
 		if len(groups[i]) > testsPerGroup ||
