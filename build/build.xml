@@ -14,7 +14,7 @@
     </tstamp>
 
     <property environment="env"/>
-    <property name="env.PONEY_HOME" value="//file1/masa/common/dev/delivery/internal/poney/5.4"/>
+    <property name="env.PONEY_HOME" value="//file1/masa/common/dev/delivery/internal/poney/current"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
     <property name="test.port" value="35000"/>
@@ -22,8 +22,8 @@
 
     <property name="www.dir" value="${src.dir}/www"/>
 
-    <property name="version.project" value="5.4"/>
-    <property name="version.major" value="5.4.1"/>
+    <property name="version.project" value="5.5"/>
+    <property name="version.major" value="5.5.0"/>
     <property name="version.version" value="${version.major}.${git.revision}.${git.hash}"/>
     <property name="unicode.extension" value=" ゑ"/>
     <!-- Maximum number of concurrently running simulations in data_migrations_test -->
@@ -1148,7 +1148,7 @@
         <update name="7z" version="9.30-1"/>
         <update name="asciidoc" version="8.6.8"/>
         <update name="boost" version="1.55.r717"/>
-        <update name="buildtools" version="5.4"/>
+        <update name="buildtools"/>
         <update name="cmake" version="2.8.11.1-masa1"/>
         <update name="depends" version="2.2.6000"/>
         <update name="flexlm" version="11.8"/>
@@ -1156,20 +1156,20 @@
         <update name="geos" version="3.3.7.r662"/>
         <update name="glew" version="1.9.0"/>
         <update name="golang" version="1.2.1"/>
-        <update name="golibs" version="5.4"/>
-        <update name="hla" version="5.4" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
-        <update name="hla" version="5.4" package="federation_app" todir="${bin.dir}"/>
-        <update name="hla" version="5.4" package="include" todir="${include.dir}"/>
-        <update name="hla" version="5.4" package="lib/${platform}" todir="${lib.dir}"/>
+        <update name="golibs"/>
+        <update name="hla" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
+        <update name="hla" package="federation_app" todir="${bin.dir}"/>
+        <update name="hla" package="include" todir="${include.dir}"/>
+        <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="iconv" version="1.14.r619"/>
         <update name="icu" version="4.52.1"/>
         <update name="libpng" version="1.6.6"/>
         <update name="mapnik" version="2.2.0.r719"/>
-        <update name="DIA" version="5.4"/>
-        <update name="models" version="5.4" package="decisional-dev" todir="${data.dir}/data/models"/>
-        <update name="models" version="5.4" package="exercises-dev" todir="${data.dir}/exercises"/>
-        <update name="models" version="5.4" package="propagations-dev" todir="${data.dir}/data/propagations"/>
-        <update name="models" version="5.4" package="terrains-dev" todir="${data.dir}/data/terrains"/>
+        <update name="DIA"/>
+        <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
+        <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
+        <update name="models" package="propagations-dev" todir="${data.dir}/data/propagations"/>
+        <update name="models" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="mongoose" version="3.3.r351"/>
         <update name="nodejs" version="0.10.12"/>
         <update name="openssl" version="1.0.0d"/>
@@ -1179,10 +1179,10 @@
         <update name="qt" version="4.7.0.r660"/>
         <update name="spatialite" version="3.1.0.r669"/>
         <update name="sqlite" version="3.7.13.r229"/>
-        <update name="sword-doc" version="5.4" package="doc" todir="${root.dir}/doc"/>
-        <update name="sword/testdata" version="5.2" package="testdata" todir="${data.dir}/tests"/>
-        <update name="terrain" version="5.4"/>
-        <update name="tools" version="5.4"/>
+        <update name="sword-doc" package="doc" todir="${root.dir}/doc"/>
+        <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
+        <update name="terrain"/>
+        <update name="tools"/>
         <update name="turtle" version="1.723"/>
         <update name="xalan-c" version="svn rev 990605 + patch"/>
         <update name="xerces-c" version="3.1.1"/>
@@ -1190,9 +1190,9 @@
         <update name="zlib" version="1.2.6.r167"/>
         <!-- timeline_ui dependencies -->
         <update name="cef" version="1.1364.1123" package="dll/${platform32}" todir="${run.dir}/cef"/>
-        <update name="timeline_ui" version="5.4" package="dll/${platform32}" todir="${run.dir}/cef"/>
-        <update name="timeline_ui" version="5.4" package="include"           todir="${include.dir}"/>
-        <update name="timeline_ui" version="5.4" package="lib/${platform}"   todir="${lib.dir}"/>
+        <update name="timeline_ui" package="dll/${platform32}" todir="${run.dir}/cef"/>
+        <update name="timeline_ui" package="include"           todir="${include.dir}"/>
+        <update name="timeline_ui" package="lib/${platform}"   todir="${lib.dir}"/>
     </target>
 
     <target name="configure" description="update packages and decisional"
