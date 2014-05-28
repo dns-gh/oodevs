@@ -416,7 +416,7 @@ set( PLUGINS_DLL
     hla_plugin_dll
     timeline_plugin_dll
     web_control_plugin_dll
-    )
+)
 
 
 # dispatcher_app
@@ -432,8 +432,8 @@ add_target( dispatcher_dll server "libraries/dispatcher_dll" OPTIONS shared )
 target_link_libraries( dispatcher_dll
     dispatcher
     positions_plugin
-    ${PLUGINS_DLL}
 )
+add_dependencies( dispatcher_dll ${PLUGINS_DLL} )
 
 # dispatcher_test
 add_target( dispatcher_test tests "tests/dispatcher_test" OPTIONS protocol test )
@@ -463,7 +463,6 @@ add_target( simulation_kernel server "libraries/simulation_kernel" OPTIONS recur
 masa_add_target_include( simulation_kernel "${root_dir}/src/libraries/simulation_kernel" )
 masa_add_target_compile_flag( simulation_kernel "/bigobj" )
 target_link_libraries( simulation_kernel
-    dispatcher
     propagation
     resource_network
     simulation_terrain
