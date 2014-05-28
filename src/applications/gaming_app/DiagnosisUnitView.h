@@ -51,7 +51,10 @@ public:
     //@}
 
 signals:
+    //! @name Signals
+    //@{
     void DestinationSelected( unsigned int destination );
+    //@}
 
 private slots:
     //! @name Slots
