@@ -431,14 +431,15 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnServiceReceived >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( build_offer_transfer_modelling_responibility, FixtureV2 )
+BOOST_FIXTURE_TEST_CASE( build_offer_transfer_modelling_responsibility, FixtureV2 )
 {
     const std::string name = "TMR.TMR_OfferTransferModellingResponsibility";
     const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
                                                                         ( "RequestFederate" )
                                                                         ( "ResponseFederate" )
                                                                         ( "isOffering" )
-                                                                        ( "Reason" );
+                                                                        ( "Reason" )
+                                                                        ( "Respondent" );
     CheckBuild< interactions::TMR_OfferTransferModellingResponsibility >( name, parameters );
 }
 
@@ -497,7 +498,7 @@ BOOST_FIXTURE_TEST_CASE( build_mrm_disaggregationrequest, FixtureV2 )
     const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
                                                                         ( "AggregateFederate" )
                                                                         ( "HigherResolutionFederate" )
-                                                                        ( "AggregateUUID" )
+                                                                        ( "AggregateUuid" )
                                                                         ( "AggregationState" )
                                                                         ( "UuidList" );
     CheckBuild< interactions::MRM_DisaggregationRequest >( name, parameters );

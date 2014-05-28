@@ -119,15 +119,39 @@ struct TransactionId
     }
     bool operator==(const TransactionId& rhs) const
     {
-        return transactionCounter == rhs.transactionCounter &&
-                static_cast<std::string>(federateHandle) == static_cast<std::string>(rhs.federateHandle);
+        if( transactionCounter != rhs.transactionCounter || federateHandle.Size() != rhs.federateHandle.Size() )
+            return false;
 
+        const uint8_t* b1 = federateHandle.Buffer();
+        const uint8_t* b2 = rhs.federateHandle.Buffer();
+        for( std::size_t i=0; i < federateHandle.Size() ; ++i )
+        {
+            if( b1[i] != b2[i] )
+                return false;
+        }
+        return true;
     }
     bool operator<(const TransactionId& rhs) const
     {
-        return transactionCounter < rhs.transactionCounter ||
-                ( rhs.transactionCounter == rhs.transactionCounter &&
-                  std::string(federateHandle) < std::string(rhs.federateHandle) );
+        if( transactionCounter < rhs.transactionCounter )
+            return true;
+        if( transactionCounter > rhs.transactionCounter )
+            return false;
+        if( federateHandle.Size() < rhs.federateHandle.Size() )
+            return true;
+        if( federateHandle.Size() > rhs.federateHandle.Size() )
+            return false;
+
+        const uint8_t* b1 = federateHandle.Buffer();
+        const uint8_t* b2 = rhs.federateHandle.Buffer();
+        for( std::size_t i=0; i < federateHandle.Size() ; ++i )
+        {
+            if( b1[i] < b2[i] )
+                return true;
+            if( b1[i] > b2[i] )
+                return false;
+        }
+        return false;
     }
     uint32_t transactionCounter;
     ::hla::FederateIdentifier federateHandle;

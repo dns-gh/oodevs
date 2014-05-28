@@ -124,6 +124,7 @@ namespace
             MOCK_EXPECT( offferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "isOffering" ), mock::any )
                 .calls( boost::bind( &CheckParameter< bool >, _1, _2, isOffering ) );
             MOCK_EXPECT( offferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "Reason" ), mock::any );
+            MOCK_EXPECT( offferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "Respondent" ), mock::any );
             MOCK_EXPECT( offferHandler->End ).once();
         }
         MockOwnershipController ownershipController;

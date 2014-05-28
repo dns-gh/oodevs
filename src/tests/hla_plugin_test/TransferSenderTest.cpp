@@ -395,6 +395,7 @@ namespace
             MOCK_EXPECT( offerHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "isOffering" ), mock::any ).
                 calls( boost::bind( &NetnTransferFixture::CheckParameter< bool >, this, _1, _2, isOffering ) ); 
             MOCK_EXPECT( offerHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "Reason" ), mock::any );
+            MOCK_EXPECT( offerHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "Respondent" ), mock::any );
             MOCK_EXPECT( offerHandler->End ).once();
         }
         const std::string federateName;

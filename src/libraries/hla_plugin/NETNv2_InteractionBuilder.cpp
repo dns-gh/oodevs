@@ -378,6 +378,7 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_Off
     RegisterTMR( interaction, name, logger_ );
     REGISTER( "isOffering", &interactions::TMR_OfferTransferModellingResponsibility::isOffering );
     REGISTER( "Reason", &interactions::TMR_OfferTransferModellingResponsibility::reason );
+    REGISTER( "Respondent", &interactions::TMR_OfferTransferModellingResponsibility::respondent );
     return DoRegister( name, interaction, true, true );
 }
 
@@ -442,7 +443,7 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::MRM_Dis
 {
     const std::string name = "MRM_Object.MRM_DisaggregationRequest";
     RegisterMRM( interaction, name, logger_ );
-    REGISTER( "AggregateUUID", &interactions::MRM_DisaggregationRequest::aggregateUUID );
+    REGISTER( "AggregateUuid", &interactions::MRM_DisaggregationRequest::aggregateUUID );
     REGISTER( "AggregationState", &interactions::MRM_DisaggregationRequest::aggregationState );
     REGISTER( "UuidList", &interactions::MRM_DisaggregationRequest::uuidsList );
     return DoRegister( name, interaction, true, true );
