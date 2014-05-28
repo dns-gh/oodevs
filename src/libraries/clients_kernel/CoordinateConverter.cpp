@@ -270,9 +270,19 @@ std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& pos
     switch( projection )
     {
     case eCoordinateSystem_Mgrs:
-        return ConvertToMgrs( position );
+        {
+            auto mgrs = ConvertToMgrs( position );
+            mgrs.insert( 10, " " );
+            mgrs.insert( 5, " " );
+            return mgrs;
+        }
     case eCoordinateSystem_SanC:
-        return ConvertToUtm( position, projection );
+        {
+            auto sanc = ConvertToUtm( position, projection );
+            sanc.insert( 9, " " );
+            sanc.insert( 3, " " );
+            return sanc;
+        }
     case eCoordinateSystem_Wgs84Dd:
         {
             const geometry::Point2d pos( ConvertToGeo( position ) );
