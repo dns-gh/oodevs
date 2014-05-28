@@ -117,13 +117,12 @@ integration.getOrderConduiteModifierPrioritesReparationsParameter = function( fr
     return fragorder.source:GetorderConduiteModifierPrioritesReparations_()
 end
 
---- Returns the fragmentary order's "Equipment type list" parameter (orderConduiteRenforcerEnEquipements_)
--- See the "Pion Renforcer En Equipements", "Pion Reprendre Aux Ordres Equipements"
--- and "Pion Transferer Equipements" fragmentary orders in the authoring tool
+--- Returns the fragmentary order's "Equipment type list" parameter
 -- @param DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
 -- @return List of equipment types
-integration.getOrderConduiteRenforcerEnEquipementsParameter = function( fragorder )
-    return fragorder.source:GetorderConduiteRenforcerEnEquipements_()
+integration.getEquipmentTypeListParameter = function( fragorder, parameterName )
+    return fragorder.source:GetEquipmentTypeListParameter( parameterName )
 end
 
 integration.getOrderConduiteModifierPrioritesBlessesParameter = function( fragorder )
