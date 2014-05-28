@@ -172,8 +172,7 @@ QString StatusBar::Format( int parserId, const geometry::Point2f& position ) con
     }
     if( field.isEmpty() )
         field << tr( "invalid" );
-    const QString split = hint.size() == field.size() ? "" : " ";
-    return field.join( split );
+    return field.join( " " );
 }
 
 // -----------------------------------------------------------------------------
