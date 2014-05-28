@@ -15,7 +15,7 @@
 #include <tools/Resolver_ABC.h>
 #include <geometry/types.h>
 #include <boost/noncopyable.hpp>
-#include <boost/optional.hpp>
+#include <boost/optional/optional_fwd.hpp>
 
 namespace sword
 {
@@ -138,6 +138,9 @@ public:
     virtual Action_ABC* CreateGlobalWeather( const ::gui::WeatherParameters& params ) const = 0;
     virtual Action_ABC* CreateLocalWeather( const ::gui::LocalWeatherParameters& params ) const = 0;
     virtual Action_ABC* CreateLocalDestruction( unsigned int weatherId ) const = 0;
+
+    virtual Action_ABC* CreatePathfindCreation( const kernel::Entity_ABC& entity, const std::vector< geometry::Point2f >& points ) const = 0;
+    virtual Action_ABC* CreatePathfindDestruction( uint32_t id ) const = 0;
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const = 0;
     //@}

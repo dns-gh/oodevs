@@ -1878,7 +1878,7 @@ func (c *Client) PathfindTest(params *sword.MissionParameters, action sword.Magi
 		if value == nil {
 			return invalid("result", reply.GetResult())
 		}
-		id = value.GetPathfind().GetId()
+		id = value.GetIdentifier()
 		return nil
 	}
 	err := <-c.postSimRequest(msg, handlers)
@@ -1911,18 +1911,10 @@ func (c *Client) CreatePathfind(unitId uint32, points ...Point) (*Pathfind, erro
 }
 
 func (c *Client) DestroyPathfind(pathfindId uint32) error {
-	id, err := c.PathfindTest(MakeParameters(MakePathfind(pathfindId)),
+	msg := CreateMagicAction(MakeParameters(
+		MakeIdentifier(pathfindId)),
 		sword.MagicAction_pathfind_destruction)
-	if err != nil {
-		return err
-	}
-	if pathfindId != id {
-		return mismatch("pathfind id", pathfindId, id)
-	}
-	if !c.Model.data.removePathfind(id) {
-		return ErrNotFound
-	}
-	return nil
+	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
 func (c *Client) CreateBasicLoadSupplyRequests(taskerId, supplierId, recipentId uint32, resources []Quantity) error {

@@ -813,8 +813,6 @@ message MissionParameter {
         optional PhaseLineOrder.Function  phase_line_function      = 53;
         //! A pathfind request
         optional PathfindRequest          pathfind_request         = 54;
-        //! A pathfind identifier
-        optional Id                       pathfind                 = 55;
     }
     //! Whether the parameter is a null value or not
     optional bool  null_value = 1;
@@ -1660,11 +1658,11 @@ message MagicAction {
         select_repair_team                 = 12;
         //! Create a pathfind
         //! parameters[0], PathfindRequest: the unit and waypoints.
-        //! result[0], PathfindId: created pathfind identifier.
+        //! result[0], Identifier: created pathfind identifier.
         //! The pathfind identifier will be sent along in a ComputePathfindAck.
         pathfind_creation                  = 13;
         //! Destroy a pathfind
-        //! parameters[0], PathfindId: the pathfind identifier.
+        //! parameters[0], Identifier: the pathfind identifier.
         pathfind_destruction               = 14;
     }
     required Type              type       = 1;
@@ -2759,13 +2757,31 @@ message ComputePathfindAck {
     }
     //! Reason for the failure of the magic action execution operation
     //! @see ErrorCode
-    required ErrorCode error_code     = 1;
-    //! Returns computed path
-    optional PathResult      path     = 2;
+    required ErrorCode  error_code  = 1;
     //! More detailed account of the returned error
-    optional string    error_msg      = 3;
-    //! The pathfind identifier
-    optional Id        id             = 4;
+    optional string     error_msg   = 2;
     //! The associated unit
-    optional Id        unit           = 5;
+    optional Id         unit        = 3;
+    //! Returns computed path
+    optional PathResult path        = 4;
+}
+
+/** @struct Pathfind
+    @brief Notifies of the creation of a pathfind
+*/
+message Pathfind {
+    //! The pathfind identifier
+    required uint32     id          = 1;
+    //! The associated unit
+    required uint32     unit        = 2;
+    //! Computed path
+    required PathResult path        = 3;
+}
+
+/** @struct PathfindDestruction
+    @brief Notifies of the destruction of a pathfind
+*/
+message PathfindDestruction {
+    //! The pathfind identifier
+    required uint32     id          = 1;
 }

@@ -327,7 +327,6 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
     gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
-
     // ordre de dessin
     AddLayer( defaultLayer );
     AddLayer( elevation2dLayer, "main,composition,miniviews", tr( "Elevation" ) );
@@ -387,8 +386,9 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
 
     if( config_.IsActivated( "pathfind" ) )
     {
-        gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, model_.publisher_, staticModel_.coordinateConverter_ );
-        connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryRejected() ), &pathfindLayer, SLOT( ClearPositions() ) );
+        gui::Layer& pathfindLayer = *new PathfindLayer( controllers_, *glProxy_, model_.publisher_, staticModel_.coordinateConverter_, model_.actions_ );
+        connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryAccepted() ), &pathfindLayer, SLOT( OnAcceptEdit() ) );
+        connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryRejected() ), &pathfindLayer, SLOT( OnRejectEdit() ) );
         AddLayer( pathfindLayer, "main" );
         forward_->Register( pathfindLayer );
         pathfindLayer.SetReadOnlyModes( 0 );

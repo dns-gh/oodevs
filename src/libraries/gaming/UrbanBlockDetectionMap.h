@@ -13,7 +13,7 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 #include <boost/noncopyable.hpp>
-#include <boost/optional.hpp>
+#include <boost/optional/optional_fwd.hpp>
 
 namespace kernel
 {

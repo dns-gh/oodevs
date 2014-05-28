@@ -32,6 +32,7 @@
 #include "ObjectKnowledgeConverter.h"
 #include "ObjectKnowledgeFactory.h"
 #include "ObjectsModel.h"
+#include "PathfindModel.h"
 #include "ResourceNetworkModel.h"
 #include "ScoreDefinitions.h"
 #include "ScoreModel.h"
@@ -119,6 +120,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , eventFactory_            ( *new gui::EventFactory( actions_, controllers ) )
     , events_                  ( *new gui::EventsModel( eventFactory_, controllers.controller_ ) )
     , timelinePublisher_       ( *new gui::TimelinePublisher() )
+    , pathfinds_               ( *new PathfindModel( controllers.controller_ ) )
 {
     symbolsFactory_.Load( config );
     controllers_.Register( *this );
@@ -252,6 +254,7 @@ Model::~Model()
     delete &agentKnowledgeConverter_;
     delete &objectKnowledgeFactory_;
     delete &agentsKnowledgeFactory_;
+    delete &pathfinds_;
 }
 
 // -----------------------------------------------------------------------------
@@ -278,6 +281,7 @@ void Model::Purge()
     teams_.Purge();
     meteo_.Purge();
     events_.Purge();
+    pathfinds_.Purge();
 }
 
 // -----------------------------------------------------------------------------

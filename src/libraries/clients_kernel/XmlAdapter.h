@@ -13,6 +13,8 @@
 #include "CoordinateConverter_ABC.h"
 #include "EntityResolver_ABC.h"
 #include "protocol/XmlReaders.h"
+#include "protocol/XmlWriters.h"
+#include <tools/Exception.h>
 
 namespace kernel
 {
@@ -62,6 +64,39 @@ public:
 private:
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::EntityResolver_ABC&      resolver_;
+};
+
+// =============================================================================
+/** @class  XmlWriterAdapter
+    @brief  XmlAdapter
+*/
+// =============================================================================
+class XmlWriterAdapter : public protocol::Writer_ABC
+{
+public:
+    XmlWriterAdapter( const kernel::CoordinateConverter_ABC& converter )
+        : converter_( converter )
+    {
+        // NOTHING
+    }
+
+    virtual std::string Convert( double x, double y ) const
+    {
+        const geometry::Point2d geo( x, y );
+        const geometry::Point2f xy = converter_.ConvertFromGeo( geo );
+        return converter_.ConvertToMgrs( xy );
+    }
+
+private:
+    const kernel::CoordinateConverter_ABC& converter_;
+};
+
+struct XmlWriterEmptyAdapter : public protocol::Writer_ABC
+{
+    virtual std::string Convert( double /*x*/, double /*y*/ ) const
+    {
+        throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+    }
 };
 }
 

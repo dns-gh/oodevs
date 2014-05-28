@@ -33,7 +33,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceTransportConsign )
 // -----------------------------------------------------------------------------
 PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( MIL_Agent_ABC& maintenanceAgent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
     : PHY_MaintenanceConsign_ABC( maintenanceAgent, state )
-    , component_                ( 0 )
+    , component_                ( nullptr )
+    , destination_              ( nullptr )
     , searchForUpperLevelDone_  ( false )
 {
     if( GetComposanteBreakdown().AffectMobility() )
@@ -47,7 +48,8 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( MIL_Agent_ABC&
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign()
-    : component_              ( 0 )
+    : component_              ( nullptr )
+    , destination_            ( nullptr )
     , searchForUpperLevelDone_( false )
 {
     // NOTHING
@@ -336,7 +338,7 @@ void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
     next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels, 0 ); };
 }
 
-void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, boost::optional< const MIL_Agent_ABC& > destination )
+void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type, const MIL_Agent_ABC* destination )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         throw MASA_BADPARAM_ASN( sword::ManualMaintenanceError, sword::consign_already_resolved,

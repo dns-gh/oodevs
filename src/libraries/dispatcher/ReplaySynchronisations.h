@@ -41,6 +41,8 @@ namespace sword
     class ObjectCreation;
     class ObjectKnowledgeCreation;
     class PartyCreation;
+    class Pathfind;
+    class PathfindDestruction;
     class PhaseLineCreation;
     class PopulationCreation;
     class Report;
@@ -103,6 +105,8 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< sword::MagicOrderDestruction >
                              , public kernel::Updatable_ABC< sword::ObjectCreation >
                              , public kernel::Updatable_ABC< sword::ObjectKnowledgeCreation >
+                             , public kernel::Updatable_ABC< sword::Pathfind >
+                             , public kernel::Updatable_ABC< sword::PathfindDestruction >
                              , public kernel::Updatable_ABC< sword::PartyCreation >
                              , public kernel::Updatable_ABC< sword::PhaseLineCreation >
                              , public kernel::Updatable_ABC< sword::PopulationCreation >
@@ -164,6 +168,8 @@ public:
     virtual void DoUpdate( const sword::ObjectCreation& msg );
     virtual void DoUpdate( const sword::ObjectKnowledgeCreation& msg );
     virtual void DoUpdate( const sword::PartyCreation& msg );
+    virtual void DoUpdate( const sword::Pathfind& msg );
+    virtual void DoUpdate( const sword::PathfindDestruction& msg );
     virtual void DoUpdate( const sword::PhaseLineCreation& msg );
     virtual void DoUpdate( const sword::PopulationCreation& msg );
     virtual void DoUpdate( const sword::Report& msg );

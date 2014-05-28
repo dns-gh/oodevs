@@ -329,7 +329,7 @@ void PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
     next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels, 0 ); };
 }
 
-void PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& /*type*/, boost::optional< const MIL_Agent_ABC& > /*destination*/ )
+void PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& /*type*/, const MIL_Agent_ABC* /*destination*/ )
 {
     throw MASA_EXCEPTION( "cannot select a transporter for a repair consign" );
 }

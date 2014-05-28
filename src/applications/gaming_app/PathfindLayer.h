@@ -19,6 +19,11 @@
 #include <functional>
 #include <deque>
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -55,8 +60,11 @@ class PathfindLayer : public gui::Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
-                            Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
+             PathfindLayer( kernel::Controllers& controllers,
+                            gui::GlTools_ABC& tools,
+                            Publisher_ABC& publisher,
+                            const kernel::CoordinateConverter_ABC& converter,
+                            actions::ActionsModel& actions );
     virtual ~PathfindLayer();
     //@}
 
@@ -86,6 +94,10 @@ private:
     bool IsNear( float squareDistance, geometry::Point2f point ) const;
     bool PickWaypoint( geometry::Point2f point );
     void PickSegment( geometry::Point2f point );
+
+public slots:
+    void OnAcceptEdit();
+    void OnRejectEdit();
 
 private slots:
     void ClearPositions();
@@ -120,6 +132,7 @@ private:
     void UpdateHovered( bool snap, const geometry::Point2f& point );
     bool HandleEvent( const std::function< void() >& event, bool replaceable = false );
     void ProcessEvents();
+    bool HasPathfind() const;
 
 private:
     //! @name Member data
@@ -127,6 +140,7 @@ private:
     kernel::Controllers& controllers_;
     gui::GlTools_ABC& tools_;
     Publisher_ABC& publisher_;
+    actions::ActionsModel& actions_;
     const kernel::CoordinateConverter_ABC& converter_;
     geometry::Rectangle2f world_;
     kernel::SafePointer< kernel::Entity_ABC > element_;

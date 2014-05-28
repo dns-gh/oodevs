@@ -108,13 +108,6 @@ func MakeIdentifier(value uint32) *sword.MissionParameter {
 		})
 }
 
-func MakePathfind(value uint32) *sword.MissionParameter {
-	return MakeParameter(
-		&sword.MissionParameter_Value{
-			Pathfind: MakeId(value),
-		})
-}
-
 func MakeAgent(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{

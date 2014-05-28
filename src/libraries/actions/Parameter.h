@@ -17,6 +17,11 @@
 #include "clients_kernel/DisplayExtractor_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
+namespace protocol
+{
+    struct Writer_ABC;
+}
+
 namespace actions {
     namespace parameters {
 
@@ -37,6 +42,11 @@ public:
     virtual ~Parameter();
     //@}
 
+    //! @name Typedefs
+    //@{
+    typedef Parameter< T > T_Parameter;
+    //@}
+
     //! @name Operations
     //@{
     virtual std::string GetType() const;
@@ -51,6 +61,12 @@ public:
     const T& GetValue() const;
     bool IsInRange() const;
     const kernel::OrderParameter& GetOrderParameter() const;
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void Serialize( xml::xostream& xos, const protocol::Writer_ABC& adapter ) const;
     //@}
 
 private:

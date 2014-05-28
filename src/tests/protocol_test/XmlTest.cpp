@@ -984,6 +984,43 @@ BOOST_FIXTURE_TEST_CASE( read_locationcomposite, Fixture )
     CheckCycle( input, msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( read_itinerary, Fixture )
+{
+    const std::string input =
+    "<action>"
+    "  <parameter type='itinerary'>"
+    "    <unit id='13'/>"
+    "    <positions>"
+    "      <point coordinates='dummy'/>"
+    "      <point coordinates='dummy'/>"
+    "    </positions>"
+    "    <equipments>"
+    "      <type id='7'/>"
+    "      <type id='17'/>"
+    "    </equipments>"
+    "    <ignore_dynamic_objects value='true'/>"
+    "  </parameter>"
+    "</action>";
+    const Reader_ABC::Point points[] = { {1.0, 3.0}, {5.0, 7.0} };
+    MOCK_EXPECT( reader.Convert ).once().returns( points[0] );
+    MOCK_EXPECT( reader.Convert ).once().returns( points[1] );
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    auto& req = msg.elem( 0 ).value( 0 ).pathfind_request();
+    BOOST_CHECK_EQUAL( req.unit().id(), 13u );
+    BOOST_CHECK_EQUAL( req.positions_size(), 2 );
+    const auto check = []( const sword::CoordLatLong& a, const Reader_ABC::Point& b ){
+        return a.longitude() == b.x && a.latitude() == b.y;
+    };
+    BOOST_CHECK( check( req.positions( 0 ), points[0] ) );
+    BOOST_CHECK( check( req.positions( 1 ), points[1] ) );
+    BOOST_CHECK_EQUAL( req.equipment_types_size(), 2 );
+    BOOST_CHECK_EQUAL( req.equipment_types( 0 ).id(), 7u );
+    BOOST_CHECK_EQUAL( req.equipment_types( 1 ).id(), 17u );
+    BOOST_CHECK( req.ignore_dynamic_objects() );
+    CheckCycle( input, msg );
+}
+
 namespace
 {
     template< typename T >

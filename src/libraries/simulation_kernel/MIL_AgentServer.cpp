@@ -5,6 +5,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentServer.h"
 #include "MagicOrderManager.h"
+#include "PathfindComputer.h"
 
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "CheckPoints/SerializationTools.h"
@@ -167,7 +168,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     MT_LOG_INFO_MSG( "Initializing terrain" );
     MT_LOG_INFO_MSG( "Terrain: " << config_.GetTerrainFile() );
     TER_World::Initialize( config_ );
-    MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", 
+    MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm",
         TER_World::GetWorld().GetWidth() / 1000.,
         TER_World::GetWorld().GetHeight()  / 1000. ) );
     const auto world = TER_World::GetWorldPtr();
@@ -187,11 +188,12 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
         pMeteoDataManager_ = CreateMeteoManager( world, config, GetTickDuration() );
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_,
-                config_, world, *pPathFindManager_ );
+                config_, world );
         pCheckPointManager_ = new MIL_CheckPointManager( config_, world );
         pEntityManager_->ReadODB( config_ );
         pEntityManager_->LoadUrbanModel( config_ );
         pEntityManager_->Finalize();
+        pathfinds_.reset( new PathfindComputer( *pPathFindManager_, TER_World::GetWorld() ) );
     }
     MIL_IDManager::SetKeepIdsMode( false );
     Resume( nextPause_, 0, 0 );
@@ -254,6 +256,7 @@ void MIL_AgentServer::WaitForNextStep()
     assert( pAgentServer_ );
     pAgentServer_->Update();
     pathfindTime_ += pPathFindManager_->Update();
+    pathfinds_->Update();
     long sleepTime = 100;
     if( nSimState_ == eSimRunning )
     {
@@ -363,6 +366,7 @@ void MIL_AgentServer::SendStateToNewClient() const
     pEntityManager_->SendStateToNewClient();
     pMeteoDataManager_->SendStateToNewClient();
     magicOrders_->SendStateToNewClient();
+    pathfinds_->SendStateToNewClient();
 }
 
 // -----------------------------------------------------------------------------
@@ -385,7 +389,8 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
          << nInitialRealTime_
          << nRealTime_
          << localTime
-         << magicOrders_;
+         << magicOrders_
+         << pathfinds_;
     pBurningCells_->save( file );
 }
 
@@ -408,9 +413,10 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> nInitialRealTime_
          >> nRealTime_
          >> localTime_
-         >> magicOrders_;
+         >> magicOrders_
+         >> pathfinds_;
     pBurningCells_->load( file );
-    pBurningCells_->finalizeLoad( GetEntityManager() );
+    pBurningCells_->finalizeLoad( *pEntityManager_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -785,6 +791,12 @@ MIL_EntityManager& MIL_AgentServer::GetEntityManager() const
     return *pEntityManager_;
 }
 
+MIL_EntityManager_ABC& MIL_AgentServer::GetEntities() const
+{
+    assert( pEntityManager_ );
+    return *pEntityManager_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetUrbanCache
 // Created: LDC 2011-12-28
@@ -861,4 +873,9 @@ tools::ExerciseSettings& MIL_AgentServer::GetSettings() const
 {
     assert( settings_ != 0 );
     return *settings_;
+}
+
+PathfindComputer& MIL_AgentServer::GetPathfindComputer() const
+{
+    return *pathfinds_;
 }

@@ -9,7 +9,9 @@
 #include "Actions.h"
 #include "Simulation.h"
 #include "ENT/ENT_Enums.h"
+
 #include <tools/Helpers.h>
+#include <boost/static_assert.hpp>
 
 // Defines an enum <name>_enum and it's values <name>_values
 #define ENUM( name, ... )                                                               \
@@ -62,6 +64,8 @@ PARAMS_PAIR( name, identifier, "identifier", quantity, "quantity" )
 // Defines an action
 // <name>_params should be declared before the call to ACTION
 #define ACTION( name ) { #name, name##_params, COUNT_OF( name##_params ) }
+
+#define ACTION_EMPTY( name ) { #name, nullptr, 0 }
 
 // Defines an object attribute
 // <name>_attribute_params should be declared before the call to OBJECT_ATTRIBUTE
@@ -374,7 +378,6 @@ const ActionUnionType object_update_attributes_types[] =
 };
 LIST_OF_UNIONS( object_update_attributes, "Attribute" )
 
-
 // -----------------------------------------------------------------------------
 // Actions
 // -----------------------------------------------------------------------------
@@ -525,11 +528,6 @@ const ActionParam change_resource_links_params[] =
     { "Target", "identifier", 0, 0, 0, 0 },
     { "Urban", "boolean", 0, 0, 0, 0 },
     { "Nodes", "list", 0, &resource_nodes_list, 0, 0 },
-};
-
-const ActionParam change_trafficability_params[] =
-{
-    { "Trafficability", "numeric", 0, 0, 0, 0 },
 };
 
 const ActionParam create_breakdowns_params[] =
@@ -822,12 +820,15 @@ const ActionParam update_object_params[] =
     { "Attributes", "list", 0, &object_update_attributes_list, 0, 0 },
 };
 
-const ActionParam update_urban_params[] =
+const ActionParam pathfind_creation_params[] =
 {
-    { "Target", "identifier", 0, 0, 0, 0 },
-    { "StructuralState", "quantity", 0, 0, 0, 0 },
+    { "Itinerary", "itinerary", 0, 0, 0, 0 },
 };
 
+const ActionParam pathfind_destruction_params[] =
+{
+    { "Identifier", "identifier", 0, 0, 0, 0 },
+};
 }  // namespace
 
 const Action actions[] =
@@ -837,7 +838,6 @@ const Action actions[] =
     ACTION( change_automat_superior ),
     ACTION( change_brain_debug ),
     ACTION( change_critical_intelligence ),
-    ACTION( change_diplomacy ),
     ACTION( change_dotation ),
     ACTION( change_equipment_state ),
     ACTION( change_extension ),
@@ -846,11 +846,7 @@ const Action actions[] =
     ACTION( change_human_state ),
     ACTION( change_knowledge_group ),
     ACTION( change_logistic_links ),
-    ACTION( change_resource_links ),
-    ACTION( change_trafficability ),
     ACTION( create_breakdowns ),
-    ACTION( create_knowledge_group ),
-    ACTION( create_object ),
     ACTION( create_wounds ),
     ACTION( crowd_change_affinities ),
     ACTION( crowd_change_armed_individuals ),
@@ -858,20 +854,11 @@ const Action actions[] =
     ACTION( crowd_change_health_state ),
     ACTION( crowd_creation ),
     ACTION( fire_order ),
-    ACTION( fire_order_on_location ),
     ACTION( formation_creation ),
-    ACTION( global_weather ),
     ACTION( inhabitant_change_affinities ),
     ACTION( inhabitant_change_alerted_state ),
     ACTION( inhabitant_change_confined_state ),
     ACTION( inhabitant_change_health_state ),
-    ACTION( knowledge_group_add_knowledge ),
-    ACTION( knowledge_group_enable ),
-    ACTION( knowledge_group_update_side ),
-    ACTION( knowledge_group_update_side_parent ),
-    ACTION( knowledge_group_update_type ),
-    ACTION( local_weather ),
-    ACTION( local_weather_destruction ),
     ACTION( log_maintenance_set_manual ),
     ACTION( log_supply_change_quotas ),
     ACTION( log_supply_pull_flow ),
@@ -879,21 +866,70 @@ const Action actions[] =
     ACTION( log_supply_set_manual ),
     ACTION( partial_recovery ),
     ACTION( reload_brain ),
+    ACTION( surrender ),
+    ACTION( teleport ),
+    ACTION( transfer_equipment ),
+    ACTION( unit_change_affinities ),
+    ACTION( unit_change_superior ),
+    ACTION( unit_creation ),
+    ACTION_EMPTY( cancel_surrender ),
+    ACTION_EMPTY( change_equipment_human_size ),
+    ACTION_EMPTY( change_posture ),
+    ACTION_EMPTY( create_basic_load_supply_request ),
+    ACTION_EMPTY( create_direct_fire_order ),
+    ACTION_EMPTY( create_stock_supply_request ),
+    ACTION_EMPTY( create_wound ),
+    ACTION_EMPTY( crowd_total_destruction ),
+    ACTION_EMPTY( delete_unit ),
+    ACTION_EMPTY( destroy_all ),
+    ACTION_EMPTY( destroy_component ),
+    ACTION_EMPTY( exec_script ),
+    ACTION_EMPTY( knowledge_group_update ),
+    ACTION_EMPTY( load_unit ),
+    ACTION_EMPTY( log_finish_handlings ),
+    ACTION_EMPTY( recover_all ),
+    ACTION_EMPTY( recover_all_except_log ),
+    ACTION_EMPTY( recover_equipments ),
+    ACTION_EMPTY( recover_equipments_except_log ),
+    ACTION_EMPTY( recover_resources ),
+    ACTION_EMPTY( recover_resources_except_log ),
+    ACTION_EMPTY( recover_transporters ),
+    ACTION_EMPTY( recover_troops ),
+    ACTION_EMPTY( recover_troops_except_log ),
+    ACTION_EMPTY( unload_unit ),
+    // knowledge
+    ACTION( knowledge_group_add_knowledge ),
+    ACTION( knowledge_group_enable ),
+    ACTION( knowledge_group_update_side ),
+    ACTION( knowledge_group_update_side_parent ),
+    ACTION( knowledge_group_update_type ),
+    // object
+    ACTION( create_object ),
+    ACTION( update_object ),
+    ACTION_EMPTY( destroy_object ),
+    // magic
+    ACTION( change_diplomacy ),
+    ACTION( change_resource_links ),
+    ACTION( create_knowledge_group ),
+    ACTION( fire_order_on_location ),
+    ACTION( global_weather ),
+    ACTION( local_weather ),
+    ACTION( local_weather_destruction ),
+    ACTION( pathfind_creation ),
+    ACTION( pathfind_destruction ),
     ACTION( select_diagnosis_team ),
     ACTION( select_maintenance_transporter ),
     ACTION( select_new_logistic_state ),
     ACTION( select_repair_team ),
-    ACTION( surrender ),
-    ACTION( teleport ),
-    ACTION( transfer_equipment ),
     ACTION( transfer_to_logistic_superior ),
-    ACTION( unit_change_affinities ),
-    ACTION( unit_change_superior ),
-    ACTION( unit_creation ),
-    ACTION( update_object ),
-    ACTION( update_urban ),
+    ACTION_EMPTY( debug_internal ),
 };
 const size_t actionsCount = COUNT_OF( actions );
+BOOST_STATIC_ASSERT( actionsCount ==
+    sword::UnitMagicAction::Type_ARRAYSIZE
+  + sword::KnowledgeMagicAction::Type_ARRAYSIZE
+  + sword::ObjectMagicAction::Type_ARRAYSIZE
+  + sword::MagicAction::Type_ARRAYSIZE );
 
 }  // namespace mapping
 }  // namespace protocol

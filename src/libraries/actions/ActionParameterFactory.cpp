@@ -24,6 +24,7 @@
 #include "ExtensionList.h"
 #include "Formation.h"
 #include "Identifier.h"
+#include "Itinerary.h"
 #include "KnowledgeGroup.h"
 #include "Lima.h"
 #include "LimaList.h"
@@ -96,7 +97,7 @@ ActionParameterFactory::~ActionParameterFactory()
 // -----------------------------------------------------------------------------
 Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter,
                                                         const sword::MissionParameter& message,
-                                                        boost::optional< const kernel::Entity_ABC& > entity ) const
+                                                        const kernel::Entity_ABC* entity ) const
 {
     if( !parameter.IsRepeated() && message.value_size() == 1 && parameter.GetType() != "list" )
         return CreateParameter( parameter, message.value( 0 ), entity, message.null_value() );
@@ -109,7 +110,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
 // -----------------------------------------------------------------------------
 Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter,
                                                         const sword::MissionParameter_Value& message,
-                                                        boost::optional< const kernel::Entity_ABC& > entity,
+                                                        const kernel::Entity_ABC* entity,
                                                         bool nullValue ) const
 {
     if( message.has_booleanvalue() )
@@ -191,6 +192,8 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         return ( nullValue ) ? new parameters::PushFlowParameters( parameter, converter_, false ) : new parameters::PushFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, message.push_flow_parameters() );
     if( message.has_pull_flow_parameters() )
         return ( nullValue ) ? new parameters::PullFlowParameters( parameter, converter_ ) : new parameters::PullFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, message.pull_flow_parameters() );
+    if( message.has_pathfind_request() )
+        return ( nullValue ) ? new parameters::Itinerary( parameter, converter_ )           : new parameters::Itinerary( parameter, converter_, message.pathfind_request() );
     if( message.list_size() || parameter.IsList() )
         return new parameters::ParameterList( parameter, message.list(), *this, entity );
     return 0;

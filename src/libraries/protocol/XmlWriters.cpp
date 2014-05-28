@@ -529,6 +529,28 @@ namespace
         WritePointList( xos, "waybackpath", writer, pull.waybackpath().elem() );
     }
 
+    void WriteItinerary( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
+    {
+        const auto& req = src.pathfind_request();
+        xos << xml::attribute( "type", "itinerary" );
+        xml::xosubstream( xos )
+            << xml::start( "unit" )
+            << xml::attribute( "id", req.unit().id() );
+        PointList positions;
+        const auto& list = req.positions();
+        for( auto it = list.begin(); it != list.end(); ++it )
+            *positions.add_elem()->mutable_location()->mutable_coordinates()->add_elem() = *it;
+        WritePointList( xos, "positions", writer, positions.elem() );
+        xml::xosubstream eqs = xml::xosubstream( xos ) << xml::start( "equipments" );
+        for( auto it = req.equipment_types().begin(); it != req.equipment_types().end(); ++it )
+            xml::xosubstream( eqs )
+                << xml::start( "type" )
+                << xml::attribute( "id", it->id() );
+        xml::xosubstream( xos )
+            << xml::start( "ignore_dynamic_objects" )
+            << xml::attribute( "value", req.ignore_dynamic_objects() );
+    }
+
     typedef bool( Value::* T_Has )() const;
     typedef void( *T_Write )( xml::xostream&, const Value& );
     typedef void( *T_Convert )( xml::xostream&, const Writer_ABC&, const Value& );
@@ -575,6 +597,7 @@ namespace
         { &Value::has_locationlist,         &WriteLocationList },
         { &Value::has_objectknowledgelist,  &WriteObjectKnowledgeList },
         { &Value::has_path,                 &WritePath },
+        { &Value::has_pathfind_request,     &WriteItinerary },
         { &Value::has_pathlist,             &WritePathList },
         { &Value::has_phaseline,            &WritePhaseLine },
         { &Value::has_plannedwork,          &WritePlannedWork },

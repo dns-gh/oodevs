@@ -3513,6 +3513,8 @@ message SimToClient {
         optional LogSupplyRequestUpdate log_supply_request_update = 159;
         optional LogSupplyRequestDestruction
             log_supply_request_destruction = 160;
+        optional Pathfind pathfind_creation = 161;
+        optional PathfindDestruction pathfind_destruction = 162;
     }
     /** @property context
         @brief Identifies the request matching the response

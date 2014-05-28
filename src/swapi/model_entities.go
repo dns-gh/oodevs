@@ -554,30 +554,30 @@ type SupplyRequest struct {
 }
 
 type ModelData struct {
-	Parties              map[uint32]*Party
-	Formations           map[uint32]*Formation
 	Automats             map[uint32]*Automat
-	Units                map[uint32]*Unit
-	Crowds               map[uint32]*Crowd
-	Populations          map[uint32]*Population
-	KnowledgeGroups      map[uint32]*KnowledgeGroup
-	UnitKnowledges       map[uint32]*UnitKnowledge
-	ObjectKnowledges     map[uint32]*ObjectKnowledge
 	CrowdKnowledges      map[uint32]*CrowdKnowledge
-	Profiles             map[string]*Profile
-	Orders               map[uint32]*Order
+	Crowds               map[uint32]*Crowd
+	FireDetections       map[uint32]*FireDetection
+	FireEffects          map[uint32]*FireEffect
+	Formations           map[uint32]*Formation
+	FuneralHandlings     map[uint32]*FuneralHandling
+	KnowledgeGroups      map[uint32]*KnowledgeGroup
+	LocalWeathers        map[uint32]*LocalWeather
 	MagicOrders          map[uint32]*MagicOrder
-	Objects              map[uint32]*Object
 	MaintenanceHandlings map[uint32]*MaintenanceHandling
 	MedicalHandlings     map[uint32]*MedicalHandling
-	FuneralHandlings     map[uint32]*FuneralHandling
-	SupplyHandlings      map[uint32]*SupplyHandling
-	FireEffects          map[uint32]*FireEffect
-	FireDetections       map[uint32]*FireDetection
-	LocalWeathers        map[uint32]*LocalWeather
+	ObjectKnowledges     map[uint32]*ObjectKnowledge
+	Objects              map[uint32]*Object
+	Orders               map[uint32]*Order
+	Parties              map[uint32]*Party
 	Pathfinds            map[uint32]*Pathfind
+	Populations          map[uint32]*Population
+	Profiles             map[string]*Profile
+	SupplyHandlings      map[uint32]*SupplyHandling
 	SupplyRequests       map[uint32]*SupplyRequest
 	TacticalLines        map[uint32]*TacticalLine
+	UnitKnowledges       map[uint32]*UnitKnowledge
+	Units                map[uint32]*Unit
 	GlobalWeather        Weather
 	// Available scores definitions
 	KnownScores map[string]struct{}
@@ -595,32 +595,32 @@ type ModelData struct {
 
 func NewModelData() *ModelData {
 	return &ModelData{
-		Parties:              map[uint32]*Party{},
-		Formations:           map[uint32]*Formation{},
 		Automats:             map[uint32]*Automat{},
-		Units:                map[uint32]*Unit{},
-		Crowds:               map[uint32]*Crowd{},
-		Populations:          map[uint32]*Population{},
-		KnowledgeGroups:      map[uint32]*KnowledgeGroup{},
-		UnitKnowledges:       map[uint32]*UnitKnowledge{},
-		ObjectKnowledges:     map[uint32]*ObjectKnowledge{},
 		CrowdKnowledges:      map[uint32]*CrowdKnowledge{},
-		Profiles:             map[string]*Profile{},
+		Crowds:               map[uint32]*Crowd{},
+		FireDetections:       map[uint32]*FireDetection{},
+		FireEffects:          map[uint32]*FireEffect{},
+		Formations:           map[uint32]*Formation{},
+		FuneralHandlings:     map[uint32]*FuneralHandling{},
+		KnowledgeGroups:      map[uint32]*KnowledgeGroup{},
+		KnownScores:          map[string]struct{}{},
 		LocalWeathers:        map[uint32]*LocalWeather{},
-		Pathfinds:            map[uint32]*Pathfind{},
-		Orders:               map[uint32]*Order{},
 		MagicOrders:          map[uint32]*MagicOrder{},
-		Objects:              map[uint32]*Object{},
 		MaintenanceHandlings: map[uint32]*MaintenanceHandling{},
 		MedicalHandlings:     map[uint32]*MedicalHandling{},
-		FuneralHandlings:     map[uint32]*FuneralHandling{},
-		SupplyHandlings:      map[uint32]*SupplyHandling{},
-		FireEffects:          map[uint32]*FireEffect{},
-		FireDetections:       map[uint32]*FireDetection{},
-		KnownScores:          map[string]struct{}{},
+		ObjectKnowledges:     map[uint32]*ObjectKnowledge{},
+		Objects:              map[uint32]*Object{},
+		Orders:               map[uint32]*Order{},
+		Parties:              map[uint32]*Party{},
+		Pathfinds:            map[uint32]*Pathfind{},
+		Populations:          map[uint32]*Population{},
+		Profiles:             map[string]*Profile{},
 		Scores:               map[string]float32{},
+		SupplyHandlings:      map[uint32]*SupplyHandling{},
 		SupplyRequests:       map[uint32]*SupplyRequest{},
 		TacticalLines:        map[uint32]*TacticalLine{},
+		UnitKnowledges:       map[uint32]*UnitKnowledge{},
+		Units:                map[uint32]*Unit{},
 	}
 }
 
@@ -1094,6 +1094,7 @@ var (
 		(*ModelData).handleObjectUpdate,
 		(*ModelData).handlePartyCreation,
 		(*ModelData).handlePathfindCreation,
+		(*ModelData).handlePathfindDestruction,
 		(*ModelData).handlePopulationCreation,
 		(*ModelData).handlePopulationUpdate,
 		(*ModelData).handleSupplyRequestCreation,

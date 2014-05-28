@@ -17,6 +17,8 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 
+#include <boost/optional.hpp>
+
 // -----------------------------------------------------------------------------
 // Name: UrbanBlockDetectionMap constructor
 // Created: SLG 2010-03-12

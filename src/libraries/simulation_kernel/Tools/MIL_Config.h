@@ -13,7 +13,7 @@
 #define __MIL_Config_h_
 
 #include "tools/SessionConfig.h"
-#include <boost/optional.hpp>
+#include <boost/optional/optional.hpp>
 #include <map>
 #include <vector>
 

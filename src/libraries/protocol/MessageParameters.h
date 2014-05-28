@@ -11,15 +11,11 @@
 #define PROTOCOL_MESSAGE_PARAMETERS_H
 
 #include <tools/Exception.h>
+#include <boost/optional/optional_fwd.hpp>
 #include <stdint.h>
 #include <vector>
 
 #define STR( WHAT ) static_cast< std::stringstream& >( std::stringstream() << WHAT ).str()
-
-namespace boost
-{
-    template< typename T > class optional;
-}
 
 namespace sword
 {
@@ -79,7 +75,6 @@ namespace protocol
     uint32_t                           GetAutomatId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetFormationId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     boost::optional< uint32_t >        TryGetFormationId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
-    boost::optional< uint32_t >        TryGetPathfindId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetPartyId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     boost::optional< uint32_t >        TryGetPartyId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetResourceType( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );

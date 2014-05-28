@@ -38,6 +38,7 @@ class DEC_Workspace;
 class DEC_PathFind_Manager;
 class MIL_CheckPointManager;
 class MIL_EffectManager;
+class MIL_EntityManager_ABC;
 class MIL_EntityManager;
 class NET_AgentServer;
 class PHY_MeteoDataManager;
@@ -47,6 +48,7 @@ class MIL_Config;
 class MIL_UrbanCache;
 class MIL_ObjectFactory;
 class MagicOrderManager;
+class PathfindComputer;
 
 // If filePath exists, returns the largest identifier referenced in expressions
 // such as id="\d+". Returns 0 otherwise.
@@ -102,6 +104,7 @@ public:
 
     //! @name Accessors
     //@{
+    MIL_EntityManager_ABC& GetEntities() const;
     MIL_EntityManager& GetEntityManager() const;
     MIL_UrbanCache& GetUrbanCache() const;
     DEC_Workspace& GetWorkspaceDIA() const;
@@ -116,6 +119,7 @@ public:
     tools::ExerciseSettings& GetSettings() const;
     MIL_ObjectFactory& GetObjectFactory() const;
     MagicOrderManager& GetMagicOrderManager() const;
+    PathfindComputer& GetPathfindComputer() const;
     //@}
 
     //! @name Workspace management
@@ -210,6 +214,7 @@ private:
     bool updateState_;
     //@}
     std::unique_ptr< MagicOrderManager > magicOrders_;
+    std::unique_ptr< PathfindComputer > pathfinds_;
 
 private:
     static MIL_AgentServer* pTheAgentServer_;

@@ -65,6 +65,7 @@ class NotesModel;
 class ObjectFactory_ABC;
 class ObjectKnowledgeFactory;
 class ObjectsModel;
+class PathfindModel;
 class Publisher_ABC;
 class ResourceNetworkModel;
 class ScoreDefinitions;
@@ -177,6 +178,7 @@ public:
     const gui::EventFactory& eventFactory_;
     gui::EventsModel& events_;
     gui::TimelinePublisher& timelinePublisher_;
+    PathfindModel& pathfinds_;
     //@}
 };
 

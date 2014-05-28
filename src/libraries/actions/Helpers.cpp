@@ -11,6 +11,9 @@
 #include "Helpers.h"
 
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Equipments_ABC.h"
+#include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "protocol/Protocol.h"
 
 #include <boost/algorithm/string.hpp>
@@ -28,4 +31,20 @@ void actions::parameters::FillFromPointList( T_PointVector& vector,
             throw MASA_EXCEPTION( "Invalid location type" );
         vector.push_back( converter.ConvertToXY( location.coordinates().elem( 0 ) ) );
     }
+}
+
+void actions::parameters::FillPathfindRequest( sword::PathfindRequest& dst,
+                                               const kernel::CoordinateConverter_ABC& converter,
+                                               const kernel::Entity_ABC& entity,
+                                               const std::vector< geometry::Point2f >& points )
+{
+    dst.mutable_unit()->set_id( entity.GetId() );
+    for( auto it = points.begin(); it != points.end(); ++it )
+        converter.ConvertToGeo( *it, *dst.add_positions() );
+    auto& equipments = entity.Get< kernel::Equipments_ABC >();
+    equipments.Visit( [&]( const kernel::EquipmentType& type ) -> bool {
+        dst.add_equipment_types()->set_id( type.GetId() );
+        return true;
+    });
+    dst.set_ignore_dynamic_objects( true );
 }

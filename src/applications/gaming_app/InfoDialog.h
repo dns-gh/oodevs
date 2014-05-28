@@ -14,7 +14,7 @@
 #include "clients_kernel/SafePointer.h"
 #include <tools/SelectionObserver_ABC.h>
 #include <tools/ElementObserver_ABC.h>
-#include <boost/optional.hpp>
+#include <boost/optional/optional_fwd.hpp>
 
 namespace gui
 {
@@ -77,7 +77,7 @@ private:
     virtual QSize sizeHint() const;
     virtual void hideEvent( QHideEvent* );
     virtual void showEvent( QShowEvent* event );
-    void UpdateTitle( boost::optional< bool > manual );
+    void UpdateTitle( const boost::optional< bool >& manual );
     //@}
 
 public slots:

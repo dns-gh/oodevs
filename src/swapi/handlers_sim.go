@@ -1495,18 +1495,27 @@ func (model *ModelData) handleFireDetectionDestruction(m *sword.SimToClient_Cont
 }
 
 func (model *ModelData) handlePathfindCreation(m *sword.SimToClient_Content) error {
-	mm := m.GetComputePathfindAck()
+	mm := m.GetPathfindCreation()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if mm.Id == nil {
-		return ErrSkipHandler
-	}
-	id := mm.GetId().GetId()
+	id := mm.GetId()
 	model.Pathfinds[id] = &Pathfind{
 		Id:     id,
-		UnitId: mm.GetUnit().GetId(),
+		UnitId: mm.GetUnit(),
 		Points: ReadPathPoints(mm.GetPath().GetPoints()),
+	}
+	return nil
+}
+
+func (model *ModelData) handlePathfindDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetPathfindDestruction()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetId()
+	if !model.removePathfind(id) {
+		return fmt.Errorf("cannot destroy pathfind %d", id)
 	}
 	return nil
 }

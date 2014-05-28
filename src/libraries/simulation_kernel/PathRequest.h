@@ -10,12 +10,9 @@
 #ifndef __PathRequest_h_
 #define __PathRequest_h_
 
-class DEC_PathComputer;
+#include <boost/optional.hpp>
 
-namespace client
-{
-    class ComputePathfindAck;
-}
+class DEC_PathComputer;
 
 // =============================================================================
 /** @class  PathRequest
@@ -28,25 +25,48 @@ class PathRequest : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& request,
-                  unsigned int nCtx, unsigned int clientId, uint32_t id, bool stored );
+     PathRequest( const boost::shared_ptr< DEC_PathComputer >& computer,
+                  unsigned int ctx,
+                  unsigned int clientId,
+                  uint32_t id,
+                  uint32_t unit,
+                  const boost::optional< uint32_t >& magic );
     ~PathRequest();
+    //@}
+
+    //! @name Serialization
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template< typename Archive >        void load( Archive&, const unsigned int );
+    template< typename Archive >        void save( Archive&, const unsigned int ) const;
+    template< typename Archive > friend void save_construct_data( Archive&, const PathRequest*, const unsigned int /*version*/ );
+    template< typename Archive > friend void load_construct_data( Archive&, PathRequest*, const unsigned int /*version*/ );
     //@}
 
     //! @name Operations
     //@{
     bool Update();
+    void SendStateToNewClient();
+    bool IsPublished() const;
     //@}
+
+private:
+    void SendComputePathfindAck( bool ok );
+    void SendPathfindCreation  ( bool ok );
 
 private:
     //! @name Member data
     //@{
     boost::shared_ptr< DEC_PathComputer > computer_;
-    std::unique_ptr< client::ComputePathfindAck > ack_;
-    const unsigned int nCtx_;
+    const unsigned int ctx_;
     const unsigned int clientId_;
-    const bool stored_;
+    const uint32_t id_;
+    const uint32_t unit_;
+    const boost::optional< uint32_t > magic_;
+    boost::optional< sword::PathResult > path_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( PathRequest )
 
 #endif // __PathRequest_h_

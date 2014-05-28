@@ -5,7 +5,7 @@
 #ifndef __SensorType_h_
 #define __SensorType_h_
 
-#include <boost/optional.hpp>
+#include <boost/optional/optional_fwd.hpp>
 
 namespace xml
 {

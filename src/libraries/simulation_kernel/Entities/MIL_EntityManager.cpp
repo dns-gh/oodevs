@@ -45,7 +45,6 @@
 #include "Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Agents/Units/Categories/PHY_Volume.h"
 #include "Agents/Units/Composantes/PHY_ComposanteState.h"
-#include "Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
@@ -106,7 +105,6 @@
 #include "Objects/MIL_Object_ABC.h"
 #include "Orders/MIL_LimaFunction.h"
 #include "Orders/MIL_Report.h"
-#include "PathfindComputer.h"
 #include "Populations/MIL_Population.h"
 #include "Populations/MIL_PopulationAttitude.h"
 #include "Populations/MIL_PopulationType.h"
@@ -150,8 +148,7 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
 {
     ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(),
             MIL_EffectManager::GetEffectManager(),
-            MIL_AgentServer::GetWorkspace().GetConfig(), archive.GetWorld(),
-            MIL_AgentServer::GetWorkspace().GetPathFindManager() );
+            MIL_AgentServer::GetWorkspace().GetConfig(), archive.GetWorld() );
 }
 
 void TerminatePhysicalSingletons()
@@ -267,8 +264,7 @@ void MIL_EntityManager::Initialize( const tools::PhyLoader& loader, const MIL_Ti
 // -----------------------------------------------------------------------------
 MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
         MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
-        const MIL_Config& config, const boost::shared_ptr< const TER_World >& world,
-        DEC_PathFind_Manager& pathfindManager )
+        const MIL_Config& config, const boost::shared_ptr< const TER_World >& world )
     : time_                         ( time )
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
@@ -297,7 +293,6 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() )
     , world_                        ( world )
-    , pathfindComputer_             ( new PathfindComputer( pathfindManager, *world_ ) )
 {
     // NOTHING
 }
@@ -307,8 +302,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time,
 // Created: MCO 2012-09-12
 // -----------------------------------------------------------------------------
 MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects,
-        const MIL_Config& config, const boost::shared_ptr< const TER_World >& world,
-        DEC_PathFind_Manager& pathfindManager )
+        const MIL_Config& config, const boost::shared_ptr< const TER_World >& world )
     : time_                         ( time )
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
@@ -327,7 +321,6 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , idManager_                    ( new MIL_IDManager() )
     , flowCollisionManager_         ( new MIL_FlowCollisionManager() ) // todo : delete if saved in checkpoint
     , world_                        ( world )
-    , pathfindComputer_             ( new PathfindComputer( pathfindManager, *world_ ) )
 {
     // NOTHING
 }
@@ -947,7 +940,6 @@ void MIL_EntityManager::Update()
     UpdateEffects();
     UpdateStates();
     UpdateKnowledgeGroups(); // LTO
-    pathfindComputer_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -2104,109 +2096,6 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnPathfindRequest
-// Created: LGY 2014-02-28
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnPathfindRequest( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId )
-{
-    try
-    {
-        protocol::Check( message.has_unit() || message.equipment_types().size() > 0, "must have either a unit or equipment types" );
-        const auto& positions = message.positions();
-        protocol::Check( positions.size() > 1, "must have at least two points" );
-        if( message.equipment_types().size() )
-        {
-            std::vector< const PHY_ComposanteTypePion* > equipments;
-            for( auto it = message.equipment_types().begin(); it != message.equipment_types().end(); ++it )
-            {
-                const auto type = PHY_ComposanteTypePion::Find( it->id() );
-                protocol::Check( type, "invalid dotation type identifier" );
-                equipments.push_back( type );
-            }
-            pathfindComputer_->Compute( equipments, message, nCtx, clientId, false );
-        }
-        else
-        {
-            const auto id = message.unit().id();
-            if( MIL_AgentPion* pPion = FindAgentPion( id ) )
-                pathfindComputer_->Compute( *pPion, message, nCtx, clientId, false );
-            else if( MIL_Population* pPopulation = FindPopulation( id ) )
-                pathfindComputer_->Compute( *pPopulation, message, nCtx, clientId, false );
-            else
-                protocol::Check( false, "invalid crowd or unit identifier" );
-        }
-    }
-    catch( const tools::Exception& e )
-    {
-        client::ComputePathfindAck ack;
-        ack().set_error_code( ComputePathfindAck::error_invalid_parameter );
-        ack().set_error_msg( tools::GetExceptionMsg( e ) );
-        ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceivePathfindCreation
-// Created: LGY 2014-04-15
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceivePathfindCreation( const sword::MagicAction& message, sword::MagicActionAck& ack,
-                                                   unsigned int nCtx, unsigned int clientId )
-{
-    const auto& params = message.parameters();
-    protocol::CheckCount( params, 1 );
-    const auto& value = message.parameters().elem( 0 ).value( 0 );
-    protocol::Check( value.has_pathfind_request(), "invalid parameters" );
-    const auto& request = value.pathfind_request();
-    protocol::Check( request.ignore_dynamic_objects(), "invalid ignore dynamic objects not set" );
-    const auto& positions = request.positions();
-    protocol::Check( positions.size() > 1, "must have at least two points" );
-    protocol::Check( request.has_unit() || request.equipment_types().size() > 0, "must have either a unit or equipment types" );
-    uint32_t result = 0;
-    if( request.equipment_types().size() )
-    {
-        std::vector< const PHY_ComposanteTypePion* > equipments;
-        for( auto it = request.equipment_types().begin(); it != request.equipment_types().end(); ++it )
-        {
-            const auto type = PHY_ComposanteTypePion::Find( it->id() );
-            protocol::Check( type, "invalid dotation type identifier" );
-            equipments.push_back( type );
-        }
-        result = pathfindComputer_->Compute( equipments, request, nCtx, clientId, true );
-    }
-    else
-    {
-        const unsigned int id = request.unit().id();
-        if( MIL_AgentPion* pPion = FindAgentPion( id ) )
-            result = pathfindComputer_->Compute( *pPion, request, nCtx, clientId, true );
-        else if( MIL_Population* pPopulation = FindPopulation( id ) )
-            result = pathfindComputer_->Compute( *pPopulation, request, nCtx, clientId, true );
-        else
-            protocol::Check( false, "invalid crowd or unit identifier" );
-    }
-    if( ack.error_code() == sword::ControlAck::no_error )
-        ack.mutable_result()->add_elem()->add_value()->mutable_pathfind()->set_id( result );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceivePathfindDestruction
-// Created: LGY 2014-04-15
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceivePathfindDestruction( const sword::MagicAction& message, sword::MagicActionAck& ack )
-{
-    const auto& params = message.parameters();
-    protocol::CheckCount( params, 1 );
-    const auto& value = message.parameters().elem( 0 ).value( 0 );
-    protocol::Check( value.has_pathfind(), "invalid parameter" );
-    const auto id = value.pathfind().id();
-    if( !pathfindComputer_->Destroy( id ) )
-    {
-        ack.set_error_code( MagicActionAck::error_invalid_parameter );
-        ack.set_error_msg( "invalid pathfind identifier");
-    }
-    ack.mutable_result()->add_elem()->add_value()->mutable_pathfind()->set_id( id );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessMagicActionCreateFireOrder
 // Created: MGD 2010-02-24
 // LTO
@@ -2380,12 +2269,12 @@ void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::Magi
     const auto requestId = protocol::GetIdentifier( params, 0 );
     const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
     protocol::Check( equipment, "invalid equipment type identifier" );
-    boost::optional< const MIL_Agent_ABC& > destination;
+    const MIL_Agent_ABC* destination = nullptr;
     if( count > 2 )
     {
         const MIL_Agent_ABC* agent = FindAgentPion( protocol::GetAgentId( params, 2 ) );
         protocol::Check( agent, "invalid destination agent identifier" );
-        destination = *agent;
+        destination = agent;
     }
     ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
     {

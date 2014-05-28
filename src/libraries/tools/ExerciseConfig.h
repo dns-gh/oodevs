@@ -11,7 +11,6 @@
 #define __ExerciseConfig_h_
 
 #include "GeneralConfig.h"
-#include <boost/optional.hpp>
 #include <boost/shared_ptr.hpp>
 #include <memory>
 #include <vector>

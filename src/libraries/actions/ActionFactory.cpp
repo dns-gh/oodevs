@@ -19,7 +19,9 @@
 #include "EntityMission.h"
 #include "Enumeration.h"
 #include "FragOrder.h"
+#include "Helpers.h"
 #include "Identifier.h"
+#include "Itinerary.h"
 #include "KnowledgeGroupMagicAction.h"
 #include "MagicAction.h"
 #include "Numeric.h"
@@ -63,6 +65,8 @@
 #include "protocol/Protocol.h"
 #include "protocol/XmlReaders.h"
 
+#include <boost/optional.hpp>
+
 using namespace actions;
 using namespace kernel;
 
@@ -101,7 +105,7 @@ ActionFactory::~ActionFactory()
 // Name: ActionFactory::AddTasker
 // Created: ABR 2014-01-14
 // -----------------------------------------------------------------------------
-boost::optional< const kernel::Entity_ABC& > ActionFactory::AddTasker( Action_ABC& action, const sword::Tasker& tasker, bool isSimulation /*= true*/ ) const
+const kernel::Entity_ABC* ActionFactory::AddTasker( Action_ABC& action, const sword::Tasker& tasker, bool isSimulation /*= true*/ ) const
 {
     unsigned int id = 0;
     std::string type;
@@ -152,28 +156,26 @@ boost::optional< const kernel::Entity_ABC& > ActionFactory::AddTasker( Action_AB
 // Name: ActionFactory::AddTasker
 // Created: ABR 2014-01-13
 // -----------------------------------------------------------------------------
-boost::optional< const kernel::Entity_ABC& > ActionFactory::AddTasker( Action_ABC& action, unsigned int id, const std::string& type, bool isSimulation /*= true*/ ) const
+const kernel::Entity_ABC* ActionFactory::AddTasker( Action_ABC& action, unsigned int id, const std::string& type, bool isSimulation /*= true*/ ) const
 {
     if( const kernel::Entity_ABC* entity = entities_.FindEntity( id ) )
         return AddTasker( action, entity, isSimulation );
     action.Attach( *new ActionTasker( controller_, id, type, isSimulation ) );
     action.Invalidate();
-    return boost::none;
+    return nullptr;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::AddTasker
 // Created: ABR 2014-01-13
 // -----------------------------------------------------------------------------
-boost::optional< const kernel::Entity_ABC& > ActionFactory::AddTasker( Action_ABC& action, const kernel::Entity_ABC* entity, bool isSimulation /*= true*/ ) const
+const kernel::Entity_ABC* ActionFactory::AddTasker( Action_ABC& action, const kernel::Entity_ABC* entity, bool isSimulation /*= true*/ ) const
 {
     action.Attach( *new ActionTasker( controller_, entity, isSimulation ) );
-    if( !entity )
-    {
-        action.Invalidate();
-        return boost::none;
-    }
-    return *entity;
+    if( entity )
+        return entity;
+    action.Invalidate();
+    return nullptr;
 }
 
 // -----------------------------------------------------------------------------
@@ -491,7 +493,7 @@ Action_ABC* ActionFactory::CreateObjectDestroyMagicAction( const kernel::Entity_
 void ActionFactory::AddParameters( Action_ABC& action,
                                    const kernel::OrderType& order,
                                    const sword::MissionParameters& message,
-                                   boost::optional< const kernel::Entity_ABC& > entity /* = boost::none */ ) const
+                                   const kernel::Entity_ABC* entity /* = nullptr */ ) const
 {
     tools::Iterator< const kernel::OrderParameter& > it = order.CreateIterator();
     if( static_cast< int >( order.Count() ) != message.elem_size() )
@@ -956,6 +958,29 @@ namespace
 Action_ABC* ActionFactory::CreateInvalidAction( const kernel::OrderType& mission ) const
 {
     std::unique_ptr< Action_ABC > action( new InvalidAction( controller_, mission ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+Action_ABC* ActionFactory::CreatePathfindCreation( const kernel::Entity_ABC& entity,
+                                                   const std::vector< geometry::Point2f >& points ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "pathfind_creation" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    sword::PathfindRequest pathfind;
+    parameters::FillPathfindRequest( pathfind, coordinateConverter_, entity, points );
+    action->AddParameter( *new parameters::Itinerary( it.NextElement(), coordinateConverter_, pathfind ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+Action_ABC* ActionFactory::CreatePathfindDestruction( uint32_t id ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "pathfind_destruction" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), id ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     return action.release();
 }

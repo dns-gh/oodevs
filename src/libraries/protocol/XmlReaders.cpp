@@ -814,6 +814,27 @@ namespace
         AddPointList( reader, *pull.mutable_waybackpath(), "waybackpath", xis );
     }
 
+    void ReadItinerary( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        dst.set_null_value( false );
+        auto& req = *dst.add_value()->mutable_pathfind_request();
+        if( auto id = TestAttribute< uint32_t >( xml::xisubstream( xis ) >> xml::start( "unit" ), "id" ) )
+            req.mutable_unit()->set_id( *id );
+        PointList positions;
+        AddPointList( reader, positions, "positions", xis );
+        for( auto it = positions.elem().begin(); it != positions.elem().end(); ++it )
+            if( it->location().coordinates().elem().size() )
+                *req.add_positions() = it->location().coordinates().elem( 0 );
+        xml::xisubstream( xis )
+            >> xml::start( "equipments" )
+            >> xml::list( "type", [&]( xml::xistream& xis ){
+            if( auto id = TestAttribute< uint32_t >( xis, "id" ) )
+                req.add_equipment_types()->set_id( *id );
+        });
+        if( auto dyn = TestAttribute< bool >( xml::xisubstream( xis ) >> xml::start( "ignore_dynamic_objects" ), "value" ) )
+            req.set_ignore_dynamic_objects( *dyn );
+    }
+
     void AddListParameter( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
         MissionParameter next;
@@ -921,6 +942,7 @@ namespace
     };
 
     const struct { T_ReadConverter Read; std::string name; } services[] = {
+        { &ReadItinerary,          "itinerary" },
         { &ReadLimit,              "limit" },
         { &ReadList,               "list" },
         { &ReadLocation,           "location" },

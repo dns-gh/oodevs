@@ -144,6 +144,15 @@ void Parameter< T >::Serialize( xml::xostream& xos ) const
     xos << xml::attribute( "type", SerializeType() );
 }
 
+template< typename T >
+void Parameter< T >::Serialize( xml::xostream& xos, const protocol::Writer_ABC& writer ) const
+{
+    Parameter< T >::Serialize( xos );
+    sword::MissionParameter message;
+    CommitTo( message );
+    protocol::Write( xos, writer, message );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Parameter::GetKeyName
 // Created: MMC 2012-05-16

@@ -10,6 +10,9 @@
 #include "gaming_app_pch.h"
 #include "PathfindLayer.h"
 #include "moc_PathfindLayer.cpp"
+
+#include "actions/ActionsModel.h"
+#include "actions/Helpers.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/RichDockWidget.h"
@@ -23,19 +26,24 @@
 #include "gaming/Equipments.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
+
 #include <boost/assign.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer constructor
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
-PathfindLayer::PathfindLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
-                              Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
+                              gui::GlTools_ABC& tools,
+                              Publisher_ABC& publisher,
+                              const kernel::CoordinateConverter_ABC& converter,
+                              actions::ActionsModel& actions )
     : controllers_( controllers )
     , tools_( tools )
     , element_( controllers )
     , publisher_( publisher )
     , converter_( converter )
+    , actions_( actions )
     , replaceable_( false )
     , lock_( false )
 {
@@ -111,13 +119,18 @@ namespace
 // -----------------------------------------------------------------------------
 void PathfindLayer::Paint( gui::Viewport_ABC& )
 {
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
-    SetColor( "#2269BB" );
-    DrawLines( 5 );
-    SetColor( "#00B3FD" );
-    DrawLines( 3 );
-    DrawPoints();
-    glPopAttrib();
+    switch( controllers_.GetCurrentMode() )
+    {
+        case eModes_Itinerary:
+            glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
+            SetColor( "#2269BB" );
+            DrawLines( 5 );
+            SetColor( "#00B3FD" );
+            DrawLines( 3 );
+            DrawPoints();
+            glPopAttrib();
+            break;
+    }
 }
 
 void PathfindLayer::DrawLines( float width ) const
@@ -259,27 +272,25 @@ void PathfindLayer::SetEndPosition()
     SendRequest();
 }
 
+bool PathfindLayer::HasPathfind() const
+{
+    return element_ && positions_.size() > 1;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathfindLayer::SendRequest
 // Created: LGY 2014-02-28
 // -----------------------------------------------------------------------------
 void PathfindLayer::SendRequest()
 {
-    if( element_ && positions_.size() > 1 )
-    {
-        sword::ClientToSim msg;
-        auto request = msg.mutable_message()->mutable_compute_pathfind()->mutable_request();
-        request->mutable_unit()->set_id( element_->GetId() );
-        for( auto it = positions_.begin(); it != positions_.end(); ++it )
-            converter_.ConvertToGeo( *it, *request->add_positions() );
-        auto& equipments = static_cast< const Equipments& >( element_->Get< kernel::Equipments_ABC >() );
-        for( auto it = equipments.CreateIterator(); it.HasMoreElements(); )
-            request->add_equipment_types()->set_id( it.NextElement().type_.GetId() );
-        request->set_ignore_dynamic_objects( true );
-        publisher_.Send( msg );
-        lock_ = true;
-        hovered_ = boost::none;
-    }
+    if( !HasPathfind() )
+        return;
+    sword::ClientToSim msg;
+    actions::parameters::FillPathfindRequest( *msg.mutable_message()->mutable_compute_pathfind()->mutable_request(),
+        converter_, *element_, std::vector< geometry::Point2f >( positions_.begin(), positions_.end() ) );
+    publisher_.Send( msg );
+    lock_ = true;
+    hovered_ = boost::none;
 }
 
 // -----------------------------------------------------------------------------
@@ -542,4 +553,18 @@ void PathfindLayer::ProcessEvents()
         events_.pop_front();
         event();
     }
+}
+
+void PathfindLayer::OnAcceptEdit()
+{
+    if( HasPathfind() )
+        actions_.PublishCreatePathfind( *element_, std::vector< geometry::Point2f >( positions_.begin(), positions_.end() ) );
+    ClearPositions();
+    controllers_.ChangeMode( eModes_Gaming );
+}
+
+void PathfindLayer::OnRejectEdit()
+{
+    ClearPositions();
+    controllers_.ChangeMode( eModes_Gaming );
 }

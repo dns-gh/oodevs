@@ -48,7 +48,7 @@ const std::string& Agent_ABC::GetTypeName() const
 // -----------------------------------------------------------------------------
 void Agent_ABC::Select( ActionController& controller ) const
 {
-    controller.Select( *this, *(const Entity_ABC*)this );
+    controller.Select( *this, *static_cast< const Entity_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void Agent_ABC::MultipleSelect( ActionController& controller, const std::vector<
 // -----------------------------------------------------------------------------
 void Agent_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
+    controller.ContextMenu( *this, *static_cast< const Entity_ABC* >( this ), where );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,5 +82,5 @@ void Agent_ABC::ContextMenu( ActionController& controller, const QPoint& where )
 // -----------------------------------------------------------------------------
 void Agent_ABC::Activate( ActionController& controller ) const
 {
-    controller.Activate( *this, *(const Entity_ABC*)this );
+    controller.Activate( *this, *static_cast< const Entity_ABC* >( this ) );
 }

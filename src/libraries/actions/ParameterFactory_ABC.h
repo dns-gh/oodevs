@@ -11,7 +11,6 @@
 #define __ActionParameterFactory_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include <boost/optional.hpp>
 
 namespace sword
 {
@@ -49,10 +48,10 @@ public:
     //@{
     virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter,
                                                      const sword::MissionParameter& message,
-                                                     boost::optional< const kernel::Entity_ABC& > entity ) const = 0;
+                                                     const kernel::Entity_ABC* entity ) const = 0;
     virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter,
                                                      const sword::MissionParameter_Value& message,
-                                                     boost::optional< const kernel::Entity_ABC& > entity,
+                                                     const kernel::Entity_ABC* entity,
                                                      bool nullValue = false ) const = 0;
     //@}
 };

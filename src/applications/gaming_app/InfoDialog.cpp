@@ -14,6 +14,8 @@
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/Controllers.h"
 
+#include <boost/optional.hpp>
+
 // -----------------------------------------------------------------------------
 // Name: InfoDialog_Base constructor
 // Created: SBO 2007-02-15
@@ -152,7 +154,7 @@ void InfoDialog_Base::NotifyUpdated( const gui::LogisticBase& base )
 // Name: InfoDialog_Base::UpdateTitle
 // Created: ABR 2014-03-04
 // -----------------------------------------------------------------------------
-void InfoDialog_Base::UpdateTitle( boost::optional< bool > manual )
+void InfoDialog_Base::UpdateTitle( const boost::optional< bool >& manual )
 {
     if( manual )
         setWindowTitle( baseTitle_ + " - " + ( *manual ? tr( "Manual" )
