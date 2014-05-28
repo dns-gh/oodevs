@@ -982,8 +982,10 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
             geometry::Point2f arrowHead = where;
             geometry::Point2f symbolTail = arrowHead + directionVector * (-symbolDepth * SymbolSize_/defaultSymbolSize);
             geometry::Vector2f symbolVector( symbolTail, arrowHead );
-            geometry::Point2f symbolPosition = symbolTail + symbolVector * 0.5f;
-            DrawApp6SymbolScaledSize( moveSymbol, symbolPosition, factor, direction, 1, 1 );
+            geometry::Point2f symbolPosition = symbolTail + symbolVector * 0.5f;            
+            bool mirror = direction > 180;
+            float xFactor = mirror ? -1.f : 1.f;
+            DrawApp6SymbolScaledSize( moveSymbol, symbolPosition, factor, direction, xFactor, 1 );
             if( baseDepth && baseDepth > symbolDepth * SymbolSize_/defaultSymbolSize )
             {
                 T_PointVector points;
@@ -991,7 +993,7 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
                 points.push_back( symbolTail );
                 DrawTail( points, 3.f );
             }
-            DrawApp6SymbolScaledSize( level, symbolPosition, factor, direction, 1, 1 );
+            DrawApp6SymbolScaledSize( level, symbolPosition, factor, direction, xFactor, 1 );
         }
         else
             DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
@@ -1021,10 +1023,12 @@ void GlWidget::DrawUnitSymbolAndTail( const std::string& symbol, const std::stri
     int direction = static_cast< int >( radians * 180 / 3.14f );
     if( direction < 0 )
         direction = 360 + direction;
+    bool mirror = direction > 180;
+    float xFactor = mirror ? -1.f : 1.f;
     unsigned int udirection = 360 - static_cast< unsigned int >( direction );
     geometry::Point2f symbolTail = lastPoint + directionVector * (-symbolDepth/2);
-    DrawApp6SymbolScaledSize( symbol, lastPoint, -1.f, udirection, 1, 1 );
-    DrawApp6SymbolScaledSize( level, lastPoint, -1.f, udirection, 1, 1 );
+    DrawApp6SymbolScaledSize( symbol, lastPoint, -1.f, udirection, xFactor, 1 );
+    DrawApp6SymbolScaledSize( level, lastPoint, -1.f, udirection, xFactor, 1 );
     T_PointVector arrowPoints( points );
     arrowPoints.pop_back();
     arrowPoints.push_back( symbolTail );
