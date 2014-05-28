@@ -141,6 +141,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     destinationBox_ = new gui::RichGroupBox( "manual_selection_transporters_groupbox", tr( "Select diagnosis / repair unit" ) );
     auto* destinationLayout = new QVBoxLayout( destinationBox_ );
     destinations_ = new DiagnosisUnitView( this, extractor );
+    destinations_->setAlternatingRowColors( false );
     connect( destinations_, SIGNAL( DestinationSelected( unsigned int ) ), SLOT( OnDestinationSelected( unsigned int ) ) );
     destinationLayout->addWidget( destinations_ );
     destinationBox_->setCheckable( true );
