@@ -525,7 +525,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualSelection(c *C) {
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
-				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck)
+				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck, 0)
 			}),
 		checkUpdate("transporter_moving_to_supply", tc2),
 		checkUpdate("transporter_loading", tc2),
@@ -539,7 +539,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualSelection(c *C) {
 		checkUpdate("searching_upper_levels", tc2),
 		checkUpdateThenApply("waiting_for_transporter_selection", bld, true,
 			func(ctx *MaintenanceCheckContext) error {
-				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck)
+				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck, 0)
 			}),
 		checkUpdate("transporter_moving_to_supply", bld),
 		checkUpdate("transporter_loading", bld),
@@ -579,9 +579,9 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualTransporterMultipleSelecti
 	)
 	err := admin.Pause()
 	c.Assert(err, IsNil)
-	err = client.SelectMaintenanceTransporter(handlingId, TowTruck)
+	err = client.SelectMaintenanceTransporter(handlingId, TowTruck, 0)
 	c.Assert(err, IsNil)
-	err = client.SelectMaintenanceTransporter(handlingId, TowTruck)
+	err = client.SelectMaintenanceTransporter(handlingId, TowTruck, 0)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: transport consign already has a repair team selected")
 }
 
@@ -603,7 +603,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualDiagnosisTeamMultipleSelec
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
-				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck)
+				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck, 0)
 			}),
 		checkUpdate("transporter_moving_to_supply", tc2),
 		checkUpdate("transporter_loading", tc2),
@@ -645,7 +645,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualRepairerMultipleSelection(
 		MaintenanceCreateChecker{},
 		checkUpdateThenApply("waiting_for_transporter_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
-				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck)
+				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck, 0)
 			}),
 		checkUpdate("transporter_moving_to_supply", tc2),
 		checkUpdate("transporter_loading", tc2),
@@ -659,7 +659,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualRepairerMultipleSelection(
 		checkUpdate("searching_upper_levels", tc2),
 		checkUpdateThenApply("waiting_for_transporter_selection", bld, true,
 			func(ctx *MaintenanceCheckContext) error {
-				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck)
+				return client.SelectMaintenanceTransporter(ctx.handlingId, TowTruck, 0)
 			}),
 		checkUpdate("transporter_moving_to_supply", bld),
 		checkUpdate("transporter_loading", bld),

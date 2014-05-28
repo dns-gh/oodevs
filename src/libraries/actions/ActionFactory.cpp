@@ -761,6 +761,8 @@ namespace
         action->AddParameter( *new parameters::Identifier( it.NextElement(), equipmentTypeId ) );
         if( destination )
             action->AddParameter( *new parameters::Agent( it.NextElement(), *destination, entities, controller, false ) );
+        else
+            action->AddParameter( *new parameters::Agent( it.NextElement(), controller, false ) );
         action->Attach( *new ActionTiming( controller, simulation ) );
         return action.release();
     }

@@ -2377,12 +2377,12 @@ void MIL_EntityManager::OnReceiveSelectRepairTeam( const sword::MagicAction& mes
 void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::MagicAction& message, client::MagicActionAck& ack )
 {
     const auto& params = message.parameters();
-    const unsigned int count = protocol::CheckCount( params, 2, 3 );
+    protocol::CheckCount( params, 3 );
     const auto requestId = protocol::GetIdentifier( params, 0 );
     const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
     protocol::Check( equipment, "invalid equipment type identifier" );
-    boost::optional< const MIL_Agent_ABC& > destination;
-    if( count > 2 )
+    const MIL_Agent_ABC* destination = nullptr;
+    if( !protocol::IsNull( params, 2 ) )
     {
         const MIL_Agent_ABC* agent = FindAgentPion( protocol::GetAgentId( params, 2 ) );
         protocol::Check( agent, "invalid destination agent identifier" );

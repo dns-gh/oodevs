@@ -1735,9 +1735,13 @@ func (c *Client) SelectMaintenanceTransporterTest(params *sword.MissionParameter
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
-func (c *Client) SelectMaintenanceTransporter(handlingId, equipmentId uint32) error {
+func (c *Client) SelectMaintenanceTransporter(handlingId, equipmentId, destinationId uint32) error {
+	if( destinationId == 0){
+		return c.SelectMaintenanceTransporterTest(MakeParameters(MakeIdentifier(handlingId),
+			MakeIdentifier(equipmentId), MakeNullValue()))		
+	}
 	return c.SelectMaintenanceTransporterTest(MakeParameters(MakeIdentifier(handlingId),
-		MakeIdentifier(equipmentId)))
+		MakeIdentifier(equipmentId), MakeAgent(destinationId)))
 }
 
 func (c *Client) SelectDiagnosisTeamTest(params *sword.MissionParameters) error {

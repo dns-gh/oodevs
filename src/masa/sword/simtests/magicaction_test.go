@@ -350,18 +350,22 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 
 	// error: invalid parameters count, 2 mandatory parameters expected
 	err := client.SelectMaintenanceTransporterTest(swapi.MakeParameters())
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid number of parameters: want between 2 and 3, got 0")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid number of parameters: want 3, got 0")
 
 	// error: first parameter must be an identifier
-	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeEmpty(), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem)))
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeEmpty(), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem),swapi.MakeEmpty()))
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[0\\] is missing")
 
 	// error: second parameter must be an identifier
-	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty()))
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty(),swapi.MakeEmpty()))
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[1\\] is missing")
 
+	// error: second parameter must be an identifier
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem),swapi.MakeEmpty()))
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[2\\] is missing")
+
 	// error: first parameter must be a valid request identifier
-	err = client.SelectMaintenanceTransporter(1000, TRANSHeavyEquipmentTransporterSystem)
+	err = client.SelectMaintenanceTransporter(1000, TRANSHeavyEquipmentTransporterSystem, 0)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
 
 	SetManualMaintenance(c, client, automatLog)
@@ -371,19 +375,19 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 		sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection)
 
 	// error: second parameter is an unknown equipment type identifier
-	err = client.SelectMaintenanceTransporter(handlingId, 1000)
+	err = client.SelectMaintenanceTransporter(handlingId, 1000, 0)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
 
 	// error: second parameter is not an equipment type identifier managed by unit
-	err = client.SelectMaintenanceTransporter(handlingId, 57)
+	err = client.SelectMaintenanceTransporter(handlingId, 57, 0)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for maintenance transporter selection")
 
 	// error: second parameter is a valid equipment type identifier but cannot haul
-	err = client.SelectMaintenanceTransporter(handlingId, 26)
+	err = client.SelectMaintenanceTransporter(handlingId, 26, 0)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for maintenance transporter selection")
 
 	// trigger select maintenance transporter
-	err = client.SelectMaintenanceTransporter(handlingId, TRANSHeavyEquipmentTransporterSystem)
+	err = client.SelectMaintenanceTransporter(handlingId, TRANSHeavyEquipmentTransporterSystem, 0)
 	c.Assert(err, IsNil)
 
 	WaitStateLeft(c, client, handlingId,
@@ -420,9 +424,7 @@ func (s *TestSuite) TestSelectMaintenanceTransporterWithAgentAsDestination(c *C)
 	endTick := client.Model.GetData().MaintenanceHandlings[handlingId].Provider.EndTick
 	c.Assert(endTick, Equals, int32(0))
 
-	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(handlingId),
-		swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem),
-		swapi.MakeAgent(repairTeam)))
+	err = client.SelectMaintenanceTransporter(handlingId, TRANSHeavyEquipmentTransporterSystem, repairTeam)
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
