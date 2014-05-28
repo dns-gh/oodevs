@@ -2591,10 +2591,6 @@ This data can&apos;t be projected.</translation>
         <translation>Create side</translation>
     </message>
     <message>
-        <source>Rename</source>
-        <translation>Rename</translation>
-    </message>
-    <message>
         <source>Change superior</source>
         <translation>Change superior</translation>
     </message>
@@ -2753,6 +2749,13 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Road width (m):</source>
         <translation>Road width (m):</translation>
+    </message>
+</context>
+<context>
+    <name>TreeViewsPanel</name>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished">Rename</translation>
     </message>
 </context>
 <context>

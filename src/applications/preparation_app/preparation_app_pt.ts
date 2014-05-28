@@ -2587,10 +2587,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change superior</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2748,6 +2744,13 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Road width (m):</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TreeViewsPanel</name>
+    <message>
+        <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
