@@ -117,6 +117,14 @@ integration.getOrderConduiteModifierPrioritesReparationsParameter = function( fr
     return fragorder.source:GetorderConduiteModifierPrioritesReparations_()
 end
 
+--- Returns the fragmentary order's "Equipment type list" parameter
+-- @param DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return List of equipment types
+integration.getEquipmentTypeListParameter = function( fragorder, parameterName )
+    return fragorder.source:GetEquipmentTypeListParameter( parameterName )
+end
+
 integration.getOrderConduiteModifierPrioritesBlessesParameter = function( fragorder )
     return fragorder.source:GetorderConduiteModifierPrioritesBlesses_()
 end
