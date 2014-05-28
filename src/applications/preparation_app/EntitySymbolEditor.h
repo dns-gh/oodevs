@@ -46,7 +46,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              EntitySymbolEditor( QGridLayout* layout, int row, kernel::Controllers& controllers, kernel::SymbolFactory& symbolsFactory,
-                                 gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, const QString& iconPreviewToolTips = QString() );
+                                 gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, const QString& iconPreviewToolTips,
+                                 int stretch );
     virtual ~EntitySymbolEditor();
     //@}
 
@@ -54,6 +55,7 @@ public:
     //@{
     void Fill( const kernel::Entity_ABC& entity, const QString& nature, const QString& level );
     void Reset();
+    void InsertWidget( QWidget* widget, int row, int column, int rowSpan = 1, int columnSpan = 1, Qt::Alignment alignment = 0 );
     //@}
 
     //! @name Getters
@@ -90,6 +92,7 @@ private:
     //! @name Member data
     //@{
     kernel::SymbolFactory& symbolsFactory_;
+    QGridLayout* buttonsLayout_;
     // Level
     E_GhostType ghostType_;
     std::string level_;

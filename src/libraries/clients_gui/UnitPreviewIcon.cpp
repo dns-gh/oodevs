@@ -42,7 +42,7 @@ UnitPreviewIcon::UnitPreviewIcon( QWidget* parent, Controllers& controllers, Sym
 {
     setStyleSheet( "background-color: white" );
     setFrameStyle( QFrame::Plain | QFrame::Box );
-    setMinimumSize( 135, 135 );
+    setMinimumSize( 140, 140 );
     layout()->setAlignment( Qt::AlignCenter | Qt::AlignHCenter );
     icon_ = new QLabel( this );
     icon_->setMargin( 5 );
