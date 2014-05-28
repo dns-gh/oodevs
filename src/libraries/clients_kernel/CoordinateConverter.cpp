@@ -158,8 +158,17 @@ std::string CoordinateConverter::ConvertToGeoDms( const geometry::Point2f& pos )
 
 namespace
 {
-    const geocoord::Datum& Find( const std::string& code )
+    const char* GetCode( E_CoordinateSystem projection )
     {
+        switch( projection )
+        {
+        case eCoordinateSystem_SanC: return "SAN-C";
+        default: throw MASA_EXCEPTION( "invalid UTM coordinate system" );
+        }
+    }
+    const geocoord::Datum& Find( E_CoordinateSystem projection )
+    {
+        const std::string code = GetCode( projection );
         const geocoord::Datum* datum = geocoord::Datums::Find( code );
         if( datum )
             return *datum;
@@ -167,14 +176,14 @@ namespace
     }
 }
 
-std::string CoordinateConverter::ConvertToUtm( const geometry::Point2f& p, const std::string& code ) const
+std::string CoordinateConverter::ConvertToUtm( const geometry::Point2f& p, E_CoordinateSystem projection ) const
 {
     const geometry::Point2f translated = p - translation_;
     planar_.Set( translated.X(), translated.Y() );
     // 31Q5000002000000
     // the band (Q here) is actually part of MGRS and not UTM
     // see http://en.wikipedia.org/wiki/Universal_Transverse_Mercator#Latitude_bands
-    const auto& datum = Find( code );
+    const auto& datum = Find( projection );
     const geocoord::MGRS mgrs( planar_, geocoord::MGRS::Parameters( datum ) ) ;
     const geocoord::UTM utm( planar_, geocoord::UTM::Parameters( datum ) );
     return boost::str( boost::format( "%d%s%06.0f%07.0f" )
@@ -184,7 +193,7 @@ std::string CoordinateConverter::ConvertToUtm( const geometry::Point2f& p, const
         % std::floor( utm.GetNorthing() ) );
 }
 
-geometry::Point2f CoordinateConverter::ConvertFromUtm( const std::string& pos, const std::string& code ) const
+geometry::Point2f CoordinateConverter::ConvertFromUtm( const std::string& pos, E_CoordinateSystem projection ) const
 {
     // 31Q5000002000000
     const boost::regex regex( "(\\d\\d)([C-X])(\\d{6})(\\d{7})" );
@@ -198,7 +207,7 @@ geometry::Point2f CoordinateConverter::ConvertFromUtm( const std::string& pos, c
     const auto hemisphere = band < 'N' ? geocoord::eSouth : geocoord::eNorth;
     const double easting = boost::lexical_cast< double >( what[ 3 ] );
     const double northing = boost::lexical_cast< double >( what[ 4 ] );
-    planar_.SetCoordinates( geocoord::UTM( hemisphere, zone, northing, easting, geocoord::UTM::Parameters( Find( code ) ) ) );
+    planar_.SetCoordinates( geocoord::UTM( hemisphere, zone, northing, easting, geocoord::UTM::Parameters( Find( projection ) ) ) );
     return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) ) + translation_;
 }
 
@@ -217,10 +226,10 @@ void CoordinateConverter::SetGeodeticCoordinates( const geometry::Point2f& pos )
 // Name: CoordinateConverter::ConvertFromGeoDms
 // Created: AME 2010-03-05
 // -----------------------------------------------------------------------------
-geometry::Point2f CoordinateConverter::ConvertFromGeoDms ( const std::string& longitude, const std::string& latitude ) const
+geometry::Point2f CoordinateConverter::ConvertFromGeoDms( const std::string& longitude, const std::string& latitude ) const
 {
     const std::string strFormat = tools::translate( "CoordinateConverter", "DD° MM' SS.SS H" ).toStdString();
-    geodetic_.Set( latitude , longitude, strFormat, strFormat );
+    geodetic_.Set( latitude, longitude, strFormat, strFormat );
     planar_.SetCoordinates( geodetic_ );
     return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) ) + translation_;
 }
@@ -263,7 +272,7 @@ std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& pos
     case eCoordinateSystem_Mgrs:
         return ConvertToMgrs( position );
     case eCoordinateSystem_SanC:
-        return ConvertToUtm( position, "SAN-C" );
+        return ConvertToUtm( position, projection );
     case eCoordinateSystem_Wgs84Dd:
         {
             const geometry::Point2d pos( ConvertToGeo( position ) );

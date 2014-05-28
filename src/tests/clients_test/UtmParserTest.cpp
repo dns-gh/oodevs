@@ -28,7 +28,7 @@ namespace
 BOOST_AUTO_TEST_CASE( UtmParserTest )
 {
     const kernel::CoordinateConverter converter( eCoordinateSystem_SanC );
-    const gui::UtmParser parser( converter, "SAN-C" );
+    const gui::UtmParser parser( converter, eCoordinateSystem_SanC );
     {
         CheckParse( parser, QStringList() << "21J" << "595711" << "6625169" );
         CheckParse( parser, QStringList() << " 21J " << " 595711 " << " 6625169 " );

@@ -20,9 +20,9 @@ namespace
     const int northingSize = 7;
 }
 
-UtmParser::UtmParser( const kernel::CoordinateConverter_ABC& converter, const std::string& code )
+UtmParser::UtmParser( const kernel::CoordinateConverter_ABC& converter, E_CoordinateSystem projection )
     : converter_( converter )
-    , code_( code )
+    , projection_( projection )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ bool UtmParser::Parse( const QStringList& content, geometry::Point2f& result, QS
             return false;
         hint[1] = hint[1].append( QString( "0" ).repeated( eastingSize - hint[1].size() ) );
         hint[2] = hint[2].append( QString( "0" ).repeated( northingSize - hint[2].size() ) );
-        result = converter_.ConvertFromUtm( hint.join( "" ).toStdString(), code_ );
+        result = converter_.ConvertFromUtm( hint.join( "" ).toStdString(), projection_ );
         return true;
     }
     catch( ... )
@@ -80,5 +80,5 @@ QStringList UtmParser::Split( const QString& input ) const
 
 std::string UtmParser::GetStringPosition( const geometry::Point2f& position ) const
 {
-    return converter_.ConvertToUtm( position, code_ );
+    return converter_.GetStringPosition( position, projection_ );
 }
