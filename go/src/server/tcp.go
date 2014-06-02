@@ -15,13 +15,13 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"masa/sword/swapi"
+	"masa/sword/sword"
 	"net"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
-	"swapi"
-	"sword"
 	"sync/atomic"
 )
 
