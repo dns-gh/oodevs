@@ -37,8 +37,9 @@ namespace
                                              const Entity_ABC* owner,
                                              uint32_t id )
     {
-        if( owner && entities.FindObject( id ) )
-            return converter.Find( entities.GetObject( id ), *owner );
+        if( owner )
+           if( auto entity = entities.FindObject( id ) )
+                return converter.Find( *entity, *owner );
         return nullptr;
     }
 }
