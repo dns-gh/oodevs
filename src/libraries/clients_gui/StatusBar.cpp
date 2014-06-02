@@ -138,38 +138,41 @@ QLabel* StatusBar::AddField( QStatusBar* parent, unsigned int size, E_Coordinate
 void StatusBar::OnMouseMove( const geometry::Point2f& position )
 {
     if( !converter_.IsInBoundaries( position ) )
-        for( T_MenuFields::iterator it = menuFields_.begin(); it != menuFields_.end(); ++it )
+        for( auto it = menuFields_.begin(); it != menuFields_.end(); ++it )
             (*it)->setText( tr( "---" ) );
     else
     {
         for( size_t i = 0; i < COUNT_OF( coordinates ); ++i )
         {
             const auto coord = coordinates[i].value;
-            if( !coordinateFields_[coord]->isVisible() )
-                continue;
-            const auto& parser = parsers_->GetParser( coord );
-            const auto text = parser->GetStringPosition( position );
-            const auto list = parser->Split( QString::fromStdString( text ) );
-            geometry::Point2f dummy;
-            QStringList hint;
-            if( !parser->Parse( list, dummy, hint, true ) )
-                hint.clear();
-            const auto& labels = parser->GetDescriptor().labels;
-            QStringList field;
-            for( int i = 0; i < hint.size(); ++i )
-            {
-                if( i < labels.size() && !labels[ i ].isEmpty() )
-                    field << labels[ i ];
-                field << hint[ i ];
-            }
-            if( field.isEmpty() )
-                field << tr( "invalid" );
-            const QString split = hint.size() == field.size() ? "" : " ";
-            coordinateFields_[coord]->setText( field.join( split ) );
+            if( coordinateFields_[coord]->isVisible() )
+                coordinateFields_[coord]->setText( Format( coord, position ) );
         }
         const QString elevation = tr( "h:%L1 " ).arg( detection_.ElevationAt( position ) );
         pElevation_->setText( elevation );
     }
+}
+
+QString StatusBar::Format( int parserId, const geometry::Point2f& position ) const
+{
+    const auto& parser = parsers_->GetParser( parserId );
+    const auto text = parser->GetStringPosition( position );
+    const auto list = parser->Split( QString::fromStdString( text ) );
+    geometry::Point2f dummy;
+    QStringList hint;
+    if( !parser->Parse( list, dummy, hint, true ) )
+        hint.clear();
+    const auto& labels = parser->GetDescriptor().labels;
+    QStringList field;
+    for( int i = 0; i < hint.size(); ++i )
+    {
+        if( i < labels.size() && !labels[ i ].isEmpty() )
+            field << labels[ i ];
+        field << hint[ i ];
+    }
+    if( field.isEmpty() )
+        field << tr( "invalid" );
+    return field.join( " " );
 }
 
 // -----------------------------------------------------------------------------

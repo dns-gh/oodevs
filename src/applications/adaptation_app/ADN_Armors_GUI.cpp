@@ -55,6 +55,7 @@ void ADN_Armors_GUI::Build()
     pListView_ = builder.AddWidget< ADN_ListView_Categories_Armor >( "list", pGroup );
     connect( pListView_, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     static_cast< ADN_Connector_Vector_ABC* >( &pListView_->GetConnector() )->Connect( &data_.GetArmorsInfos() );
+    connect( pListView_, SIGNAL( ItemSelected( void* ) ), this, SLOT( OnItemSelected( void* ) ) );
 
     // Armor info
     Q3VGroupBox* pArmorInfoGroup = new Q3VGroupBox( tr( "Armor class" ), pGroup );
@@ -100,13 +101,6 @@ void ADN_Armors_GUI::Build()
 // -----------------------------------------------------------------------------
 void ADN_Armors_GUI::OnTypeChanged( int index )
 {
-    for( int i = 0; i < pComboType_->count(); ++i )
-        if( pComboType_->GetEnumIndexFromGUI( i ) == eProtectionType_Crowd )
-        {
-            pComboType_->removeItem( i );
-            break;
-        }
-
     if( pComboType_->GetEnumIndexFromGUI( index ) == eProtectionType_Human )
     {
         pArmorBreakdownGroup_->hide();
@@ -118,4 +112,11 @@ void ADN_Armors_GUI::OnTypeChanged( int index )
         pArmorBreakdownGroup_->show();
         pAttritionEffectGroup_->show();
     }
+}
+
+void ADN_Armors_GUI::OnItemSelected( void* )
+{
+    for( auto i = 0; i < pComboType_->count(); ++i )
+        if( pComboType_->GetEnumIndexFromGUI( i ) == eProtectionType_Crowd )
+            pComboType_->removeItem( i );
 }

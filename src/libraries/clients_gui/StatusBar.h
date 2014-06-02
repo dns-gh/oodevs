@@ -23,7 +23,6 @@ namespace kernel
 namespace gui
 {
     class LocationParsers;
-    class LocationParser_ABC;
     class TerrainPicker;
 }
 
@@ -78,6 +77,7 @@ private:
     QLabel* AddField( QStatusBar* parent, unsigned int size, E_CoordinateSystem coordSystem, bool checked );
     void ParameterSelected( int index, bool save );
     void SaveSettings();
+    QString Format( int parserId, const geometry::Point2f& position ) const;
     //@}
 
     //! @name Types

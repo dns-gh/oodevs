@@ -136,8 +136,7 @@ void DrawingsTreeView::keyPressEvent( QKeyEvent* event )
         else if( event->key() == Qt::Key_Escape )
             paramLayer_.Reset();
     }
-    else
-        EntityTreeView_ABC::keyPressEvent( event );
+    EntityTreeView_ABC::keyPressEvent( event );
 }
 
 // -----------------------------------------------------------------------------

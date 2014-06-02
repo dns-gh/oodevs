@@ -2588,10 +2588,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Créer un camp</translation>
     </message>
     <message>
-        <source>Rename</source>
-        <translation>Renommer</translation>
-    </message>
-    <message>
         <source>Change superior</source>
         <translation>Changer de supérieur</translation>
     </message>
@@ -2750,6 +2746,13 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Road width (m):</source>
         <translation>Largeur de route (m):</translation>
+    </message>
+</context>
+<context>
+    <name>TreeViewsPanel</name>
+    <message>
+        <source>Rename</source>
+        <translation>Renommer</translation>
     </message>
 </context>
 <context>

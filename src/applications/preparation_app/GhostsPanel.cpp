@@ -42,22 +42,23 @@ GhostsPanel::GhostsPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controlle
     layout->setMargin( 10 );
     layout->setSpacing( 10 );
     setWidget( box );
-    // Name
-    layout->addWidget( new QLabel( tr( "Name:" ), this ), 0, 0 );
-    nameLineEdit_ = new gui::RichLineEdit( "nameLineEdit", this );
-    connect( nameLineEdit_, SIGNAL( textChanged( const QString& ) ), SLOT( UpdateWarning() ) );
-    layout->addWidget( nameLineEdit_, 0, 1 );
-    // Type
-    layout->addWidget( new QLabel( tr( "Type:" ), this ), 1, 0 );
-    typeLineEdit_ = new gui::RichLineEdit( "typeLineEdit", this );
-    connect( typeLineEdit_, SIGNAL( textChanged( const QString& ) ), SLOT( UpdateWarning() ) );
-    layout->addWidget( typeLineEdit_, 1, 1 );
 
     // Symbol Editor
-    symbolEditor_ = new EntitySymbolEditor( layout, 2, controllers_, symbolsFactory_, icons, colorStrategy, tr( "Drag and drop symbol to map to create a new ghost." ) );
+    symbolEditor_ = new EntitySymbolEditor( layout, 2, controllers_, symbolsFactory_, icons, colorStrategy, tr( "Drag and drop symbol to map to create a new ghost." ), 0 );
     symbolEditor_->SetDeep( 2 );
     connect( symbolEditor_, SIGNAL( LevelChanged() ), SLOT( UpdateWarning() ) );
     connect( symbolEditor_, SIGNAL( StartDrag() ), SLOT( IconDragged() ) );
+    
+    // Name
+    symbolEditor_->InsertWidget( new QLabel( tr( "Name:" ), this ), 0, 0 );
+    nameLineEdit_ = new gui::RichLineEdit( "nameLineEdit", this );
+    connect( nameLineEdit_, SIGNAL( textChanged( const QString& ) ), SLOT( UpdateWarning() ) );
+    symbolEditor_->InsertWidget( nameLineEdit_, 0, 1 );
+    // Type
+    symbolEditor_->InsertWidget( new QLabel( tr( "Type:" ), this ), 1, 0 );
+    typeLineEdit_ = new gui::RichLineEdit( "typeLineEdit", this );
+    connect( typeLineEdit_, SIGNAL( textChanged( const QString& ) ), SLOT( UpdateWarning() ) );
+    symbolEditor_->InsertWidget( typeLineEdit_, 1, 1 );
 
     // Warning
     warningLabel_ = new QLabel( this );

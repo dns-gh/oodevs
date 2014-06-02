@@ -11,6 +11,7 @@
 #include "EntityTreeView_ABC.h"
 #include "ModelObserver_ABC.h"
 #include "moc_EntityTreeView_ABC.cpp"
+#include "LongNameHelper.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -237,14 +238,7 @@ void EntityTreeView_ABC::Rename( kernel::Entity_ABC& entity )
     if( isVisible() )
         Edit( entity );
     else
-    {
-        bool ok = false;
-        const auto text = QInputDialog::getText( this, tr( "Rename" ),
-            tr( "New name:" ), QLineEdit::Normal,
-            entity.GetName(), &ok );
-        if( ok )
-            Rename( entity, text );
-    }
+        gui::longname::ShowRenameDialog( this, entity, modelObserver_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -267,6 +261,22 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
         }
         ContextMenuRequested( event->globalPos() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::keyPressEvent
+// Created: LGY 2014-05-27
+// -----------------------------------------------------------------------------
+void EntityTreeView_ABC::keyPressEvent( QKeyEvent* event )
+{
+    if( event && event->key() == Qt::Key_F2 )
+    {
+        const auto indexes = selectionModel()->selectedIndexes();
+        if( !indexes.empty() )
+            edit( indexes.front() );
+    }
+    else
+        RichTreeView::keyPressEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,5 +356,18 @@ void EntityTreeView_ABC::Edit( const kernel::Entity_ABC& entity )
 {
     QStandardItem* item = dataModel_.FindDataItem( entity );
     if( item )
-        edit( proxyModel_->mapFromSource( item->index() ) );
+    {
+        const auto index = proxyModel_->mapFromSource( item->index() );
+        expand( index.parent() );
+        edit( index );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::Exist
+// Created: LGY 2014-05-22
+// -----------------------------------------------------------------------------
+bool EntityTreeView_ABC::Exist( const kernel::Entity_ABC& entity )
+{
+    return dataModel_.FindDataItem( entity ) ? true : false;
 }

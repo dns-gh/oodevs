@@ -191,6 +191,10 @@
         <source>Client log file</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Debug directory</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>

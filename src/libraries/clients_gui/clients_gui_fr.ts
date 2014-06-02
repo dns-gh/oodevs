@@ -351,6 +351,17 @@
     </message>
 </context>
 <context>
+    <name>RenameDialog</name>
+    <message>
+        <source>Rename</source>
+        <translation>Renommer</translation>
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation>Nouveau nom :</translation>
+    </message>
+</context>
+<context>
     <name>Règle GL</name>
     <message>
         <source>2D: %L1m
@@ -914,17 +925,6 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Strength</source>
         <translation>Intensité</translation>
-    </message>
-</context>
-<context>
-    <name>gui::EntityTreeView_ABC</name>
-    <message>
-        <source>Rename</source>
-        <translation>Renommer</translation>
-    </message>
-    <message>
-        <source>New name:</source>
-        <translation>Nouveau nom :</translation>
     </message>
 </context>
 <context>
@@ -1500,8 +1500,15 @@ Voulez-vous le supprimer?</translation>
         <translation>la référence spatiale doit être WGS84</translation>
     </message>
     <message>
-        <source>Cannot load SHP feature %1 : %2</source>
-        <translation>Impossible de charger la feature SHP %1 : %2</translation>
+        <source>Warning: %1 unsupported point(s)</source>
+        <translation>Attention : %1 point(s) non supporté(s)</translation>
+    </message>
+    <message>
+        <source>Error: cannot load shapefile, 
+ %1 unsupported/unmatched shape(s)</source>
+        <translation>Erreur : impossible de charger le shapefile, 
+ %1 forme(s) non supportée(s)/incompatible(s)
+        </translation>
     </message>
 </context>
 <context>

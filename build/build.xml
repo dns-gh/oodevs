@@ -20,7 +20,7 @@
     <property name="test.port" value="35000"/>
     <property name="licensepath" value="${run.dir}/license.dat"/>
 
-    <property name="www.dir" value="${src.dir}/www"/>
+    <property name="www.dir" value="${src.dir}/masa/timeline/www"/>
 
     <property name="version.project" value="5.5"/>
     <property name="version.major" value="5.5.0"/>
@@ -934,10 +934,10 @@
     -->
     <target name="go.proto">
         <go_proto input="${src.dir}/libraries/protocol/proto"
-                  output="${src.dir}/sword"/>
-        <go_proto input="${src.dir}/sdk"/>
-        <go_proto input="${src.dir}/testproto/before"/>
-        <go_proto input="${src.dir}/testproto/after"/>
+            output="${src.dir}/masa/sword/sword"/>
+        <go_proto input="${src.dir}/masa/timeline/sdk"/>
+        <go_proto input="${src.dir}/masa/testproto/before"/>
+        <go_proto input="${src.dir}/masa/testproto/after"/>
     </target>
 
     <target name="go.build">
@@ -974,16 +974,8 @@
                 <!-- Make timeline tests compatible with gotester and reset
                      the following lines to ./src/...
                 -->
-                <arg value="./src/csvclient/..."/>
-                <arg value="./src/dumpreplay/..."/>
-                <arg value="./src/masa/..."/>
-                <arg value="./src/simtests/..."/>
-                <arg value="./src/stressclient/..."/>
-                <arg value="./src/swapi/..."/>
-                <arg value="./src/sword/..."/>
-                <arg value="./src/swtest/..."/>
-                <arg value="./src/testclient/..."/>
-                <arg value="./src/testproto/..."/>
+                <arg value="./src/masa/sword/..."/>
+                <arg value="./src/masa/testproto/..."/>
                 <arg value="${go.race}"/>
                 <arg value="-test.parallel=1"/>
                 <arg value="-test.cpu=${ninja.jobs}"/>
@@ -1005,9 +997,12 @@
 
     <target name="go.package">
         <go_zip subdir="lib" output="${platform}">
-            <zipfileset dir="${src.dir}/swapi" prefix="src/swapi"/>
-            <zipfileset dir="${src.dir}/sword" prefix="src/sword"/>
-            <zipfileset dir="${src.dir}/swtest" prefix="src/swtest"/>
+            <zipfileset dir="${src.dir}/masa/sword/swapi"
+                prefix="src/masa/sword/swapi"/>
+            <zipfileset dir="${src.dir}/masa/sword/sword"
+                prefix="src/masa/sword/sword"/>
+            <zipfileset dir="${src.dir}/masa/sword/swtest"
+                prefix="src/masa/sword/swtest"/>
         </go_zip>
     </target>
 
@@ -1077,25 +1072,16 @@
         Passing @module makes <go cmd> NOT generate its own list of modules
         to test.
         -->
-        <go cmd="test" module="i18n_app">
+        <go cmd="test" module="masa/timeline/i18n_app">
             <arg value="-i"/>
-            <arg value="i18n_app/..."/>
-            <arg value="timeline_player/..."/>
-            <arg value="timeline_server/..."/>
+            <arg value="masa/timeline/i18n_app/..."/>
+            <arg value="masa/timeline/timeline_player/..."/>
+            <arg value="masa/timeline/timeline_server/..."/>
             <arg value="${go.race}"/>
         </go>
         <go cmd="test" module="client/...">
             <env key="TEST_PORT" value="${test.port}"/>
-            <arg value="client/..."/>
-            <arg value="i18n/..."/>
-            <arg value="i18n_app/..."/>
-            <arg value="sdk/..."/>
-            <arg value="server/..."/>
-            <arg value="services/..."/>
-            <arg value="swfake/..."/>
-            <arg value="timeline_player/..."/>
-            <arg value="timeline_server/..."/>
-            <arg value="util/..."/>
+            <arg value="masa/timeline/..."/>
             <arg value="${go.race}"/>
         </go>
     </target>
@@ -1108,7 +1094,7 @@
         <setversion file="${bin.dir}/timeline_server.exe"
             version="${version.version}" product="Timeline"/>
         <zip destfile="${run.dir}/timeline.pak" duplicate="fail">
-            <fileset dir="${src.dir}/www" includes="
+            <fileset dir="${www.dir}" includes="
                 css/*.css,
                 font/*,
                 img/*,

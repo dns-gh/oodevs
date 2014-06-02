@@ -9,12 +9,14 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectPrototypeShapeFileLoader.h"
+#include "RichLabel.h"
 
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/StaticModel.h"
+#include "clients_kernel/Lines.h"
 #include "clients_kernel/Tools.h"
 
 #pragma warning( push, 0 )
@@ -31,6 +33,8 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
     : currentFeature_     ( 0 )
     , objectType_         ( objectType )
     , coordinateConverter_( coordinateConverter )
+    , unsupportedShapes_  ( 0 )
+    , unsupportedPoints_  ( 0 )
 {
     OGRRegisterAll();
     dataSource_.reset( OGRSFDriverRegistrar::Open( filename.ToUTF8().c_str(), FALSE ), OGRDataSource::DestroyDataSource );
@@ -136,64 +140,80 @@ bool ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsBool( const QString& 
     return currentFeature_->GetFieldAsInteger( fieldName.toStdString().c_str() ) != 0;
 }
 
+namespace
+{
+    bool AddPoint( const kernel::CoordinateConverter_ABC& converter, OGRPoint& point,
+                   kernel::Location_ABC& location, unsigned int& unsupportedPoints )
+    {
+        const geometry::Point2d latlong( point.getX(), point.getY() );
+        const geometry::Point2f xy = converter.ConvertFromGeo( latlong );
+        if( !converter.IsInBoundaries( xy ) )
+        {
+            ++unsupportedPoints;
+            return false;
+        }
+        location.AddPoint( xy );
+        return true;
+    }
+
+    bool IsMatch( bool valid, unsigned int& unmatchedShapes )
+    {
+        if( !valid )
+            ++unmatchedShapes;
+        return valid;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototypeShapeFileLoader::LoadNext
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
 bool ObjectPrototypeShapeFileLoader::LoadNext()
 {
-    QString cannotLoadStr = tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot load SHP feature %1 : %2"  );
     while( ( currentFeature_ = currentLayer_->GetNextFeature() ) != 0 )
     {
         switch( currentFeature_->GetGeometryRef()->getGeometryType() )
         {
         case wkbPoint:
         case wkbPoint25D:
-            if( objectType_.CanBePoint() )
+            if( IsMatch( objectType_.CanBePoint(), unsupportedShapes_ ) )
             {
-                OGRPoint* point = static_cast< OGRPoint* >( currentFeature_->GetGeometryRef() );
-                geometry::Point2d latlong( point->getX(), point->getY() );
-                geometry::Point2f xy = coordinateConverter_.ConvertFromGeo( latlong );
-                if( coordinateConverter_.IsInBoundaries( xy ) )
-                {
-                    currentLocation_.reset( new kernel::Point() );
-                    currentLocation_->AddPoint( xy );
-                    return true;
-                }
-                else
-                    loadReports_.push_back( cannotLoadStr.arg( currentFeature_->GetFID() ).arg( "outside terrain boundaries" ) );
+                currentLocation_.reset( new kernel::Point() );
+                if( OGRPoint* point = static_cast< OGRPoint* >( currentFeature_->GetGeometryRef() ) )
+                    AddPoint( coordinateConverter_, *point, *currentLocation_, unsupportedPoints_ );
             }
-            else
-                loadReports_.push_back( cannotLoadStr.arg( currentFeature_->GetFID() ).arg( "object type cannot have point shape" ) );
             break;
         case wkbPolygon:
-            if( objectType_.CanBePolygon() )
+            if( IsMatch( objectType_.CanBePolygon(), unsupportedShapes_ ) )
             {
                 currentLocation_.reset( new kernel::Polygon() );
-                OGRPolygon* polygon = static_cast< OGRPolygon* >( currentFeature_->GetGeometryRef() );
-                bool isInBoundaries = true;
-                for( int i=0, count = polygon->getExteriorRing()->getNumPoints(); i<count; ++i )
-                {
-                    OGRPoint point;
-                    polygon->getExteriorRing()->getPoint( i, &point );
-                    geometry::Point2d latlong( point.getX(), point.getY() );
-                    geometry::Point2f xy = coordinateConverter_.ConvertFromGeo( latlong );
-                    if( coordinateConverter_.IsInBoundaries( xy ) )
-                        currentLocation_->AddPoint( xy );
-                    else
+                if( OGRPolygon* polygon = static_cast< OGRPolygon* >( currentFeature_->GetGeometryRef() ) )
+                    for( auto i = 0, count = polygon->getExteriorRing()->getNumPoints(); i < count; ++i )
                     {
-                        isInBoundaries = false;
-                        loadReports_.push_back( cannotLoadStr.arg( currentFeature_->GetFID() ).arg( "outside terrain boundaries" ) );
-                        break;
+                        OGRPoint point;
+                        polygon->getExteriorRing()->getPoint( i, &point );
+                        AddPoint( coordinateConverter_, point, *currentLocation_, unsupportedPoints_ );
+                    }
+            }
+            break;
+        case wkbLineString:
+            if( IsMatch(  objectType_.CanBeLine(), unsupportedShapes_ ) )
+                if( OGRLineString* line = static_cast< OGRLineString* >( currentFeature_->GetGeometryRef() ) )
+                {
+                    currentLocation_.reset( new kernel::Lines() );
+                    OGRPoint point;
+                    for( auto i = 0; i < line->getNumPoints(); ++i )
+                    {
+                        line->getPoint( i, &point );
+                        AddPoint( coordinateConverter_, point, *currentLocation_, unsupportedPoints_ );
                     }
                 }
-                if( isInBoundaries )
-                    return true;
-            }
-            else
-                loadReports_.push_back( cannotLoadStr.arg( currentFeature_->GetFID() ).arg( "object type cannot have polygon shape" ) );
+            break;
+        default:
+            ++unsupportedShapes_;
             break;
         }
+        return true;
     }
     return false;
 }
@@ -206,6 +226,8 @@ void ObjectPrototypeShapeFileLoader::StartLoad()
 {
     currentLayer_->ResetReading();
     currentFeature_ = 0;
+    unsupportedShapes_ = 0;
+    unsupportedPoints_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -217,11 +239,18 @@ const kernel::Location_ABC& ObjectPrototypeShapeFileLoader::GetCurrentLocation()
     return *currentLocation_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: ObjectPrototypeShapeFileLoader::GetLoadReport
-// Created: BCI 2011-05-19
-// -----------------------------------------------------------------------------
-QString ObjectPrototypeShapeFileLoader::GetLoadReport() const
+bool ObjectPrototypeShapeFileLoader::CheckValidity( RichLabel& result ) const
 {
-    return loadReports_.join( "\n" );
+    if( unsupportedShapes_ != 0 )
+    {
+        result.setText(
+            tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Error: cannot load shapefile, \n %1 unsupported/unmatched shape(s)" ).
+            arg( QString::number( unsupportedShapes_ ) ) );
+        result.Warn();
+    }
+    else if( unsupportedPoints_ != 0 )
+        result.setText(
+            tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Warning: %1 unsupported point(s)" ).
+            arg( QString::number( unsupportedPoints_ ) ) );
+    return unsupportedShapes_ == 0;
 }

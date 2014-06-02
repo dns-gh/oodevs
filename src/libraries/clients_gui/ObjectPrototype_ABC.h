@@ -135,7 +135,7 @@ private:
     kernel::Location_ABC* location_;
     std::auto_ptr< ObjectPrototypeLoader_ABC > loader_;
     RichPushButton* loadFromFileButton_;
-    QLabel* loadFromFilePathLabel_;
+    RichLabel* loadFromFilePathLabel_;
     RichGroupBox* descriptionBox_;
     QLabel* descriptionLabel_;
 };

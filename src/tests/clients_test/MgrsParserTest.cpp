@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE( MgrsParserTest )
         CheckParse( parser, QStringList() << "21JWG" << "95712" << "25175" );
         CheckParse( parser, QStringList() << " 21JWG " << " 95712 " << " 25175 " );
     }
-    BOOST_CHECK_EQUAL( "21JWG9571325175", parser.GetStringPosition( position ) );
+    BOOST_CHECK_EQUAL( "21JWG 95713 25175", parser.GetStringPosition( position ) );
     BOOST_CHECK_EQUAL( QStringList() << "21JWG" << "95660" << "25131", parser.Split( "21JWG9566025131" ) );
     BOOST_CHECK_EQUAL( QStringList() << "21JWG" << "95660" << "25131", parser.Split( "21JWG 95660 25131" ) );
 }

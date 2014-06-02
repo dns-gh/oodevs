@@ -57,6 +57,7 @@ public slots:
     //! @name Slots
     //@{
     void OnTypeChanged( int index );
+    void OnItemSelected( void* );
     //@}
 
 private:

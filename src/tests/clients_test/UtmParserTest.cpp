@@ -28,12 +28,12 @@ namespace
 BOOST_AUTO_TEST_CASE( UtmParserTest )
 {
     const kernel::CoordinateConverter converter( eCoordinateSystem_SanC );
-    const gui::UtmParser parser( converter, "SAN-C" );
+    const gui::UtmParser parser( converter, eCoordinateSystem_SanC );
     {
         CheckParse( parser, QStringList() << "21J" << "595711" << "6625169" );
         CheckParse( parser, QStringList() << " 21J " << " 595711 " << " 6625169 " );
     }
-    BOOST_CHECK_EQUAL( "21J5957116625168", parser.GetStringPosition( position ) );
+    BOOST_CHECK_EQUAL( "21J 595711 6625168", parser.GetStringPosition( position ) );
     BOOST_CHECK_EQUAL( QStringList() << "21J" << "595711" << "6625168", parser.Split( "21J5957116625168" ) );
     BOOST_CHECK_EQUAL( QStringList() << "21J" << "595711" << "6625168", parser.Split( "21J 595711 6625168" ) );
 }

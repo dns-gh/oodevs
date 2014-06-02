@@ -126,6 +126,8 @@ void DiagnosisUnitView::OnLinkClicked( const QString& url, const QModelIndex& /*
 // -----------------------------------------------------------------------------
 void DiagnosisUnitView::OnSelectionChanged( const QModelIndex& current, const QModelIndex& )
 {
+    if( !current.isValid() )
+        return;
     const unsigned int destination = model_->data( current, gui::Roles::DataRole ).value< unsigned int >();
     emit DestinationSelected( destination );
 }

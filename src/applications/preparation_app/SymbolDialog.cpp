@@ -39,7 +39,7 @@ SymbolDialog::SymbolDialog( QWidget* parent, kernel::Controllers& controllers, k
     // Initialize dialog
     gui::SubObjectName subObject( "SymbolDialog" );
     setCaption( tr( "Symbol and hierarchy level editor" ) );
-    setMinimumSize( 400, 400 );
+    setMinimumWidth( 400 );
 
     // Symbol Editor
     QGridLayout* editorLayout = new QGridLayout();
@@ -47,7 +47,7 @@ SymbolDialog::SymbolDialog( QWidget* parent, kernel::Controllers& controllers, k
     editorLayout->setMargin( 0 );
     editorLayout->setSpacing( 10 );
     editorLayout->setColStretch( 1, 1 );
-    symbolEditor_ = new EntitySymbolEditor( editorLayout, 0, controllers, symbolsFactory, icons, colorStrategy );
+    symbolEditor_ = new EntitySymbolEditor( editorLayout, 0, controllers, symbolsFactory, icons, colorStrategy, QString(), 1 );
 
     // Buttons
     gui::RichPushButton* okButton = new gui::RichPushButton( "ok", tr( "Ok" ) );
@@ -96,7 +96,7 @@ void SymbolDialog::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::Co
 void SymbolDialog::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
 {
     selected_ = &agent;
-    symbolEditor_->SetDeep( 4 );
+    symbolEditor_->SetDeep( -1 );
     menu.InsertItem( "Helpers", tr( "Symbol and hierarchy level" ), this, SLOT( Show() ), false, 10 );
 }
 

@@ -104,6 +104,15 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     timelineLogLayout->addWidget( timelineLogLabel_ );
     timelineLogLayout->addWidget( timelineLog_ );
 
+    QHBoxLayout* debugLayout = new QHBoxLayout();
+    debugLayout->setSpacing( 10 );
+    timelineDebugLabel_ = new QLabel();
+    timelineDebug_ = new QLineEdit();
+    timelineDebug_->setText( registry::ReadString( "TimelineDebugDir" ) );
+    connect( timelineDebug_, SIGNAL( textEdited( const QString& ) ), SLOT( OnTimelineDebugChanged( const QString& ) ) );
+    debugLayout->addWidget( timelineDebugLabel_ );
+    debugLayout->addWidget( timelineDebug_ );
+
     oldTimeline_ = new QCheckBox();
     oldTimeline_->setChecked( registry::ReadBool( "EnableLegacyTimeline" ) );
     QHBoxLayout* oldTimelineLayout = new QHBoxLayout();
@@ -113,6 +122,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     QVBoxLayout* timelineGroupLayout = new QVBoxLayout( timelineBox_ );
     timelineGroupLayout->addLayout( debugPortBox );
     timelineGroupLayout->addLayout( timelineLogLayout );
+    timelineGroupLayout->addLayout( debugLayout );
     timelineGroupLayout->addLayout( oldTimelineLayout );
 
     //profiling group box
@@ -247,6 +257,7 @@ void DebugConfigPanel::OnLanguageChanged()
     timelineBox_->setTitle( tools::translate( "DebugConfigPanel", "Timeline" ) );
     timelineDebugPortLabel_->setText( tools::translate( "DebugConfigPanel", "Debug port" ) );
     timelineLogLabel_->setText( tools::translate( "DebugConfigPanel", "Client log file" ) );
+    timelineDebugLabel_->setText( tools::translate( "DebugConfigPanel", "Debug directory" ) );
     oldTimeline_->setText( tools::translate( "DebugConfigPanel", "Enable legacy timeline" ) );
     integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
     profilingBox_->setTitle( tools::translate( "DebugConfigPanel", "Profiling settings" ) );
@@ -292,6 +303,9 @@ void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& s
         const auto log = xml.Parent() / tools::Path::FromUTF8( timelineLog_->text().toStdString() );
         action.SetOption( "session/config/timeline/@client-log", log.ToUTF8() );
     }
+    const auto debug = timelineDebug_->text().trimmed();
+    if( !debug.isEmpty() )
+        action.SetOption( "session/config/timeline/@debug", debug.toStdString() );
     action.SetOption( "session/config/timeline/@enabled", oldTimeline_->isChecked() );
     if( decCallsBox_->isChecked() )
         action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
@@ -343,6 +357,11 @@ void DebugConfigPanel::OnTimelineDebugPortChanged( int port )
 void DebugConfigPanel::OnTimelineLogChanged( const QString& path )
 {
     registry::WriteString( "TimelineClientLog", path );
+}
+
+void DebugConfigPanel::OnTimelineDebugChanged( const QString& path )
+{
+    registry::WriteString( "TimelineDebugDir", path );
 }
 
 // -----------------------------------------------------------------------------

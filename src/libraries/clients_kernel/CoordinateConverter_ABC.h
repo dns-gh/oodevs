@@ -10,6 +10,7 @@
 #ifndef __kernel_CoordinateConverter_ABC_h_
 #define __kernel_CoordinateConverter_ABC_h_
 
+#include "ENT/ENT_Enums.h"
 #include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
 
@@ -50,8 +51,8 @@ public:
     virtual geometry::Point2f ConvertToXY           ( const std::string& mgrs ) const = 0;
     virtual std::string       ConvertToGeoDms       ( const geometry::Point2f& pos ) const = 0;
     virtual geometry::Point2f ConvertFromGeoDms     ( const std::string& longitude, const std::string& latitude ) const = 0;
-    virtual std::string       ConvertToUtm          ( const geometry::Point2f& p, const std::string& code ) const = 0;
-    virtual geometry::Point2f ConvertFromUtm        ( const std::string& pos, const std::string& code ) const = 0;
+    virtual std::string       ConvertToUtm          ( const geometry::Point2f& p, E_CoordinateSystem projection ) const = 0;
+    virtual geometry::Point2f ConvertFromUtm        ( const std::string& pos, E_CoordinateSystem projection ) const = 0;
 
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const = 0;
     virtual std::string GetStringPosition( const geometry::Point2f& position, E_CoordinateSystem projection ) const = 0;
