@@ -960,10 +960,6 @@
         <element name="args" implicit="true" optional="true"/>
         <sequential>
             <go cmd="vet"/>
-            <go cmd="test">
-                <arg value="-i"/>
-                <arg value="${go.race}"/>
-            </go>
             <exec_goenv name="tests" executable="${bin.dir}/gotester">
                 <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
                 <arg line="${gocheck.filter}"/>
@@ -1067,21 +1063,9 @@
     </target>
 
     <target name="server.test">
-        <!-- Unify these tests with gosword
-
-        Passing @module makes <go cmd> NOT generate its own list of modules
-        to test.
-        -->
-        <go cmd="test" module="masa/timeline/i18n_app">
-            <arg value="-i"/>
-            <arg value="masa/timeline/i18n_app/..."/>
-            <arg value="masa/timeline/timeline_player/..."/>
-            <arg value="masa/timeline/timeline_server/..."/>
-            <arg value="${go.race}"/>
-        </go>
-        <go cmd="test" module="client/...">
+        <!-- Unify these tests with gosword -->
+        <go cmd="test" module="masa/timeline/...">
             <env key="TEST_PORT" value="${test.port}"/>
-            <arg value="masa/timeline/..."/>
             <arg value="${go.race}"/>
         </go>
     </target>
