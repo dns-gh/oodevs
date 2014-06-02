@@ -10,6 +10,7 @@
 #include "tools_test_pch.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "tools/FileWrapper.h"
+#include "tools/Main.h"
 #include <tools/TemporaryDirectory.h>
 #include <boost/assign.hpp>
 #include <boost/regex.hpp>
@@ -64,6 +65,17 @@ BOOST_FIXTURE_TEST_CASE( filelogger_basics, Fixture )
         ( "[DATE] <Simulation> <Unknown log level> (42) [Context: no message]" );
     const std::vector< std::string > actual = ParseLog( loggerFile );
     BOOST_CHECK_EQUAL_COLLECTIONS( expected.begin(), expected.end(), actual.begin(), actual.end() );
+}
+
+BOOST_AUTO_TEST_CASE( getloglevel )
+{
+    BOOST_CHECK_EQUAL( 0, tools::GetLogLevel( "unknown" ) );
+
+    // "warning" gives warnings and more important messages
+    const int level = MT_Logger_ABC::eLogLevel_FatalError
+        + MT_Logger_ABC::eLogLevel_Error
+        + MT_Logger_ABC::eLogLevel_Warning;
+    BOOST_CHECK_EQUAL( level, tools::GetLogLevel( "warning" ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( filelogger_does_not_truncate_content_by_default, Fixture )

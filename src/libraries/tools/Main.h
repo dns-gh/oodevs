@@ -12,10 +12,15 @@
 
 #include "MT_Tools/MT_Logger_ABC.h"
 #include <memory>
+#include <string>
 
 namespace tools
 {
     class WinArguments;
+
+    // Returns the union of all levels of same or greater importance than the
+    // one defined by "name'. Returns 0 if name does not match anything.
+    int GetLogLevel( const std::string& name );
 
     int Main(
         const tools::WinArguments& winArgs,
