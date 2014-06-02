@@ -159,7 +159,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     transportLayout->addWidget( split );
 
     diagnosers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_diagnosis_team_listview", controllers, this );
-    diagnosers_->SetFilter( [&] ( const kernel::Availability& /*availability*/, const kernel::MaintenanceStates_ABC& states )
+    diagnosers_->SetFilter( [&] ( const kernel::Availability& availability, const kernel::MaintenanceStates_ABC& states )
     {
         return states.IsEnabled() && availability.entity_ && profile.CanBeOrdered( *availability.entity_ );
     } );
@@ -561,7 +561,7 @@ namespace
                     state->IsEnabled() )
                     destinations.push_back( &child );
                 else
-                    GetDestinations( child, destinations );
+                    GetDestinations( profile, child, destinations );
             }
         }
     }
