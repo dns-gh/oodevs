@@ -118,5 +118,5 @@ QStringList MgrsParser::Split( const QString& input ) const
 // -----------------------------------------------------------------------------
 std::string MgrsParser::GetStringPosition( const geometry::Point2f& position ) const
 {
-    return converter_.ConvertToMgrs( position );
+    return converter_.GetStringPosition( position, eCoordinateSystem_Mgrs );
 }

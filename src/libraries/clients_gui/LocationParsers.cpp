@@ -26,7 +26,7 @@ using namespace gui;
 LocationParsers::LocationParsers( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
 {
     parsers_[ eCoordinateSystem_Mgrs ].reset( new MgrsParser( controllers, converter ) );
-    parsers_[ eCoordinateSystem_SanC ].reset( new UtmParser( converter, "SAN-C" ) );
+    parsers_[ eCoordinateSystem_SanC ].reset( new UtmParser( converter, eCoordinateSystem_SanC ) );
     parsers_[ eCoordinateSystem_Local ].reset( new XyParser( converter ) );
     parsers_[ eCoordinateSystem_Wgs84Dd ].reset( new Wgs84DdParser( converter ) );
     parsers_[ eCoordinateSystem_Wgs84Dms ].reset( new Wgs84DmsParser( converter ) );

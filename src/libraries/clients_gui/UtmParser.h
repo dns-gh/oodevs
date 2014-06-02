@@ -11,6 +11,7 @@
 #define __UtmParser_h_
 
 #include "LocationParser_ABC.h"
+#include "ENT/ENT_Enums.h"
 
 namespace kernel
 {
@@ -28,7 +29,7 @@ namespace gui
 class UtmParser : public LocationParser_ABC
 {
 public:
-             UtmParser( const kernel::CoordinateConverter_ABC& converter, const std::string& code );
+             UtmParser( const kernel::CoordinateConverter_ABC& converter, E_CoordinateSystem projection );
     virtual ~UtmParser();
 
     virtual const LocationParserDescriptor& GetDescriptor() const;
@@ -38,7 +39,7 @@ public:
 
 private:
     const kernel::CoordinateConverter_ABC& converter_;
-    const std::string code_;
+    const E_CoordinateSystem projection_;
 };
 
 }
