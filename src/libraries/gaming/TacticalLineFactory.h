@@ -15,6 +15,7 @@ namespace kernel
     class Controllers;
     class CoordinateConverter_ABC;
     class Entity_ABC;
+    class Profile_ABC;
 }
 
 namespace sword
@@ -38,7 +39,8 @@ class TacticalLineFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLineFactory( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, Model& model, Publisher_ABC& publisher );
+             TacticalLineFactory( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, Model& model, Publisher_ABC& publisher,
+                                  const kernel::Profile_ABC& profile );
     virtual ~TacticalLineFactory();
     //@}
 
@@ -65,6 +67,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     Model& model_;
     Publisher_ABC& publisher_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 
