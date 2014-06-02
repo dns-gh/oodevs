@@ -31,7 +31,7 @@ public:
                   uint32_t id,
                   uint32_t unit,
                   const boost::optional< uint32_t >& magic );
-    ~PathRequest();
+    virtual ~PathRequest();
     //@}
 
     //! @name Serialization
