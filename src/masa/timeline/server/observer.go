@@ -10,9 +10,9 @@ package server
 
 import (
 	"code.google.com/p/goprotobuf/proto"
-	"sdk"
+	"masa/timeline/sdk"
+	"masa/timeline/util"
 	"time"
-	"util"
 )
 
 type Observer struct {

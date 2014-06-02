@@ -9,13 +9,13 @@
 package main
 
 import (
-	"client"
 	"flag"
 	"log"
+	"masa/timeline/client"
+	"masa/timeline/server"
+	"masa/timeline/web"
 	"os"
 	"runtime"
-	"server"
-	"web"
 )
 
 func IsDirectory(name string) bool {

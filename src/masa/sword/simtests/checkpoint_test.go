@@ -12,12 +12,12 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
+	"masa/sword/swapi/simu"
+	"masa/sword/swtest"
 	"path/filepath"
 	"regexp"
 	"strings"
-	"swapi"
-	"swapi/simu"
-	"swtest"
 	"time"
 )
 

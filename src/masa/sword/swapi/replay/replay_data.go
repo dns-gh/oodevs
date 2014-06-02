@@ -38,9 +38,9 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"masa/sword/sword"
 	"os"
 	"path/filepath"
-	"sword"
 )
 
 // List replay segment directories of a session.

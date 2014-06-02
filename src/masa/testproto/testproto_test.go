@@ -12,9 +12,9 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"flag"
 	. "launchpad.net/gocheck"
+	"masa/testproto/after"
+	"masa/testproto/before"
 	"testing"
-	"testproto/after"
-	"testproto/before"
 )
 
 // Command line options are not used but left here so gosword tests can

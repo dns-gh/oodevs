@@ -12,7 +12,7 @@ import (
 	"bytes"
 	"encoding/gob"
 	"fmt"
-	"sword"
+	"masa/sword/sword"
 	"time"
 )
 

@@ -12,12 +12,12 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"masa/sword/swtest"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
-	"swtest"
 	"sync"
 	"time"
 )

@@ -10,8 +10,8 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
 	"reflect"
-	"swapi"
 )
 
 func CheckHealthState(c *C, client *swapi.Client,

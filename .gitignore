@@ -24,8 +24,8 @@ tags
 /data/exercises/
 /data/tests/protocol_test/
 /doc/
-/src/www/css/*.css
-/src/www/js/*.js
-/src/www/lib/*.min.js
-/src/www/tests/*.js
+/src/masa/timeline/www/css/*.css
+/src/masa/timeline/www/js/*.js
+/src/masa/timeline/www/lib/*.min.js
+/src/masa/timeline/www/tests/*.js
 sessions/

@@ -10,7 +10,7 @@ package swapi
 
 import (
 	"fmt"
-	"sword"
+	"masa/sword/sword"
 )
 
 func (model *ModelData) handleLimitCreation(m *sword.MessengerToClient_Content) error {

@@ -11,7 +11,7 @@ package swapi
 import (
 	"errors"
 	"fmt"
-	"sword"
+	"masa/sword/sword"
 )
 
 var (

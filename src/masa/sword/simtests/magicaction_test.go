@@ -10,12 +10,12 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
+	"masa/sword/swapi/simu"
+	"masa/sword/sword"
 	"os"
 	"reflect"
 	"regexp"
-	"swapi"
-	"swapi/simu"
-	"sword"
 )
 
 const (

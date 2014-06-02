@@ -10,7 +10,7 @@ package swapi
 
 import (
 	"fmt"
-	"sword"
+	"masa/sword/sword"
 )
 
 func (model *ModelData) handleProfileCreation(m *sword.AuthenticationToClient_Content) error {

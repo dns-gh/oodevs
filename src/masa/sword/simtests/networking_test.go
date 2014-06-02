@@ -10,9 +10,9 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
+	"masa/sword/swapi/simu"
 	"strings"
-	"swapi"
-	"swapi/simu"
 )
 
 func checkEcho(c *C, client *swapi.Client, s string) {

@@ -11,8 +11,8 @@ package services
 import (
 	"code.google.com/p/goprotobuf/proto"
 	"errors"
+	"masa/timeline/sdk"
 	"net/url"
-	"sdk"
 	"time"
 )
 

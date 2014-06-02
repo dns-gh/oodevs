@@ -11,13 +11,13 @@ package web
 import (
 	"archive/zip"
 	"bytes"
-	"i18n"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
+	"masa/timeline/i18n"
+	"masa/timeline/server"
+	"masa/timeline/util"
 	"os"
-	"server"
 	"testing"
-	"util"
 )
 
 func Test(t *testing.T) { TestingT(t) }
@@ -62,7 +62,7 @@ func (TestSuite) TestServerLoadTranslations(c *C) {
 		}},
 	}
 
-	zipFile := "../../out/test.zip"
+	zipFile := "../../../../out/test.zip"
 
 	buf := new(bytes.Buffer)
 	w := zip.NewWriter(buf)

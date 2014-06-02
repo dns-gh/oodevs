@@ -12,7 +12,7 @@ import (
 	"bytes"
 	"code.google.com/p/goprotobuf/proto"
 	. "launchpad.net/gocheck"
-	"sdk"
+	"masa/timeline/sdk"
 	"testing"
 )
 

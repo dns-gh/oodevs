@@ -14,9 +14,9 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"i18n"
 	"io/ioutil"
 	"log"
+	"masa/timeline/i18n"
 	"path/filepath"
 	"reflect"
 )

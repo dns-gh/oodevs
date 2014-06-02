@@ -10,9 +10,9 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
-	"swapi"
-	"swapi/simu"
-	"sword"
+	"masa/sword/swapi"
+	"masa/sword/swapi/simu"
+	"masa/sword/sword"
 	"time"
 )
 

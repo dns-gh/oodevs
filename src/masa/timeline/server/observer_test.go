@@ -12,7 +12,7 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"encoding/json"
 	. "launchpad.net/gocheck"
-	"sdk"
+	"masa/timeline/sdk"
 )
 
 func (TestSuite) TestExpectedJsonSpecs(c *C) {

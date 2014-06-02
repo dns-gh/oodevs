@@ -10,9 +10,9 @@ package swapi
 
 import (
 	"fmt"
+	"masa/sword/swapi/phy"
+	"masa/sword/sword"
 	"strings"
-	"swapi/phy"
-	"sword"
 	"sync"
 )
 

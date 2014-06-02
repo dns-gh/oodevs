@@ -11,8 +11,8 @@ package server
 import (
 	"code.google.com/p/goprotobuf/proto"
 	. "launchpad.net/gocheck"
+	"masa/timeline/util"
 	"time"
-	"util"
 )
 
 func checkEmptyEndDate(c *C, date *string) {

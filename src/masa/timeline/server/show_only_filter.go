@@ -9,8 +9,8 @@
 package server
 
 import (
-	"sdk"
-	"services"
+	"masa/timeline/sdk"
+	"masa/timeline/services"
 )
 
 type ShowOnlyFilter struct{}

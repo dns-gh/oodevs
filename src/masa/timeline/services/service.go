@@ -9,8 +9,8 @@
 package services
 
 import (
+	"masa/timeline/sdk"
 	"net/url"
-	"sdk"
 	"time"
 )
 

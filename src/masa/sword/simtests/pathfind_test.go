@@ -10,7 +10,7 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
-	"swapi"
+	"masa/sword/swapi"
 )
 
 func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {

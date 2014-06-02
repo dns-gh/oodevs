@@ -10,11 +10,11 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
+	"masa/sword/swapi/replay"
+	"masa/sword/swapi/simu"
+	"masa/sword/sword"
 	"math/rand"
-	"swapi"
-	"swapi/replay"
-	"swapi/simu"
-	"sword"
 )
 
 func replayAndWaitModel(c *C, simOpts *simu.SimOpts, clientOpts *ClientOpts) (

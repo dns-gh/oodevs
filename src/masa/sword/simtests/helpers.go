@@ -10,9 +10,9 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
+	"masa/sword/swapi/phy"
 	"strings"
-	"swapi"
-	"swapi/phy"
 )
 
 func getSomeUnit(c *C, data *swapi.ModelData) *swapi.Unit {

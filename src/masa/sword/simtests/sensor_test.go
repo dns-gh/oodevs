@@ -10,8 +10,8 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
-	"swapi"
-	"sword"
+	"masa/sword/swapi"
+	"masa/sword/sword"
 )
 
 func ActivateRadarOnCircle(client *swapi.Client, unitId, radarClass uint32,

@@ -11,12 +11,12 @@ package web
 import (
 	"code.google.com/p/go.net/websocket"
 	"io"
+	"masa/timeline/server"
+	"masa/timeline/util"
 	"net"
 	"regexp"
-	"server"
 	"sync/atomic"
 	"time"
-	"util"
 )
 
 func isTimeout(err error) bool {

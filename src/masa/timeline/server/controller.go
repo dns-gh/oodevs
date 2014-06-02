@@ -10,12 +10,12 @@ package server
 
 import (
 	gouuid "code.google.com/p/go-uuid/uuid"
+	"masa/timeline/sdk"
+	"masa/timeline/services"
+	"masa/timeline/util"
 	"net/http"
-	"sdk"
-	"services"
 	"sync"
 	"time"
-	"util"
 )
 
 // Controller maps Sessions to identifiers, and can be accessed concurrently.

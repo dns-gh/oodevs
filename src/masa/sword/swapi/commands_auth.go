@@ -16,7 +16,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"sword"
+	"masa/sword/sword"
 	"time"
 )
 

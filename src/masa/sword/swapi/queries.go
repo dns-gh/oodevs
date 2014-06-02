@@ -9,7 +9,7 @@
 package swapi
 
 import (
-	"sword"
+	"masa/sword/sword"
 )
 
 func (model *Model) Query(query func(d *ModelData) bool) bool {

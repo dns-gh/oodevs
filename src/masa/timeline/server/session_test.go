@@ -14,15 +14,15 @@ import (
 	"errors"
 	"fmt"
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
+	"masa/sword/sword"
+	"masa/timeline/sdk"
+	"masa/timeline/services"
+	"masa/timeline/swfake"
+	"masa/timeline/util"
 	"net/url"
-	"sdk"
-	"services"
-	"swapi"
-	"swfake"
-	"sword"
 	"sync"
 	"time"
-	"util"
 )
 
 type Fixture struct {

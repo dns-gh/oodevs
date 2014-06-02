@@ -12,16 +12,16 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"fmt"
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
+	"masa/sword/sword"
+	"masa/timeline/sdk"
+	"masa/timeline/swfake"
+	"masa/timeline/util"
 	"net/url"
 	"os"
-	"sdk"
 	"strconv"
-	"swapi"
-	"swfake"
-	"sword"
 	"testing"
 	"time"
-	"util"
 )
 
 // gocheck boilerplate

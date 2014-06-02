@@ -14,13 +14,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"masa/sword/swapi"
+	"masa/sword/sword"
+	"masa/timeline/sdk"
+	"masa/timeline/util"
 	"net/url"
-	"sdk"
-	"swapi"
-	"sword"
 	"sync"
 	"time"
-	"util"
 )
 
 var (

@@ -11,10 +11,10 @@ package main
 import (
 	"flag"
 	"fmt"
+	"masa/sword/swapi/replay"
+	"masa/sword/sword"
 	"os"
 	"path/filepath"
-	"swapi/replay"
-	"sword"
 )
 
 func fatal(err error) {

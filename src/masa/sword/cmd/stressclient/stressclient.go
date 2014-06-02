@@ -14,8 +14,8 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"masa/sword/swapi"
 	"os"
-	"swapi"
 	"sync"
 	"time"
 )

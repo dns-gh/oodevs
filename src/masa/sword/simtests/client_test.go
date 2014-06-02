@@ -11,8 +11,8 @@ package simtests
 import (
 	"code.google.com/p/goprotobuf/proto"
 	. "launchpad.net/gocheck"
-	"swapi"
-	"sword"
+	"masa/sword/swapi"
+	"masa/sword/sword"
 	"time"
 )
 

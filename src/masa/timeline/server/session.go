@@ -11,12 +11,12 @@ package server
 import (
 	"code.google.com/p/goprotobuf/proto"
 	"fmt"
+	"masa/timeline/sdk"
+	"masa/timeline/services"
+	"masa/timeline/util"
 	"net/http"
-	"sdk"
-	"services"
 	"sync"
 	"time"
-	"util"
 )
 
 type SessionObserver interface {

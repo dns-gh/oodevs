@@ -15,9 +15,9 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"masa/timeline/sdk"
+	"masa/timeline/server"
 	"os"
-	"sdk"
-	"server"
 )
 
 type Commands []sdk.ClientRequest

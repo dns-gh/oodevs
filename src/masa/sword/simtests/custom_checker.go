@@ -10,8 +10,8 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
 	"math"
-	"swapi"
 )
 
 type isSwordErrorChecker struct {

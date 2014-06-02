@@ -12,13 +12,13 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"fmt"
 	"io"
+	"masa/sword/swapi"
+	"masa/sword/sword"
+	"masa/timeline/util"
 	"net"
-	"swapi"
-	"sword"
 	"sync"
 	"sync/atomic"
 	"time"
-	"util"
 )
 
 var (

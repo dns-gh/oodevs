@@ -11,7 +11,7 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
-	"swapi"
+	"masa/sword/swapi"
 )
 
 func (s *TestSuite) TestDrawingLimit(c *C) {

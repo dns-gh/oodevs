@@ -10,10 +10,10 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
 	"os"
 	"path/filepath"
 	"regexp"
-	"swapi"
 )
 
 const (

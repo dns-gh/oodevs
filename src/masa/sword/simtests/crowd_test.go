@@ -10,11 +10,11 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
+	"masa/sword/swapi/phy"
+	"masa/sword/swapi/simu"
+	"masa/sword/sword"
 	"math"
-	"swapi"
-	"swapi/phy"
-	"swapi/simu"
-	"sword"
 )
 
 // Simulation crashes when terminating because of some race between crowd

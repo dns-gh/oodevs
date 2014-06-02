@@ -14,13 +14,13 @@ import (
 	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"log"
+	"masa/sword/swapi"
+	"masa/sword/swapi/phy"
+	"masa/sword/swapi/simu"
+	"masa/sword/swtest"
 	"os"
 	"path/filepath"
 	"runtime"
-	"swapi"
-	"swapi/phy"
-	"swapi/simu"
-	"swtest"
 	"testing"
 	"time"
 )
@@ -55,7 +55,7 @@ func MakeOpts() *simu.SimOpts {
 	opts := simu.SimOpts{}
 	projectRoot := ""
 	if cwd, err := os.Getwd(); err == nil {
-		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "..", ".."))
+		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "../../../.."))
 	}
 
 	if len(Cfg.Application) > 0 {
@@ -129,7 +129,7 @@ func MakeReplayOpts() *simu.ReplayOpts {
 	opts := simu.ReplayOpts{}
 	projectRoot := ""
 	if cwd, err := os.Getwd(); err == nil {
-		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "..", ".."))
+		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "../../../.."))
 	}
 
 	if len(Cfg.Application) > 0 {
@@ -411,7 +411,7 @@ func stopSimAndClient(c *C, sim *simu.SimProcess, client *swapi.Client) {
 func loadPhysical(c *C, name string) *phy.PhysicalFile {
 	wd, err := os.Getwd()
 	c.Assert(err, IsNil)
-	path := filepath.Join(wd, "../../data/data/models/ada/physical", name)
+	path := filepath.Join(wd, "../../../../data/data/models/ada/physical", name)
 	phydb, err := phy.ReadPhysical(path)
 	c.Assert(err, IsNil)
 	return phydb

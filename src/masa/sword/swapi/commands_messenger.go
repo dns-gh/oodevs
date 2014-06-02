@@ -10,7 +10,7 @@ package swapi
 
 import (
 	"code.google.com/p/goprotobuf/proto"
-	"sword"
+	"masa/sword/sword"
 )
 
 type messengerHandler func(msg *sword.MessengerToClient_Content) error

@@ -12,7 +12,7 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"errors"
 	"fmt"
-	"sword"
+	"masa/sword/sword"
 )
 
 type replayHandler func(msg *sword.ReplayToClient_Content) error

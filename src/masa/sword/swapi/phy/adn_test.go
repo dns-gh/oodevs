@@ -10,9 +10,9 @@ package phy
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 	"os"
 	"path/filepath"
-	"swtest"
 	"testing"
 )
 
@@ -33,7 +33,7 @@ var _ = Suite(&TestSuite{})
 func LoadWWPhysical(c *C) *PhysicalFile {
 	wd, err := os.Getwd()
 	c.Assert(err, IsNil)
-	path := filepath.Join(wd, "../../../data/data/models/ada/physical/worldwide")
+	path := filepath.Join(wd, "../../../../../data/data/models/ada/physical/worldwide")
 	phydb, err := ReadPhysical(path)
 	c.Assert(err, IsNil)
 	return phydb

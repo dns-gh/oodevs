@@ -11,9 +11,9 @@ package simtests
 import (
 	"fmt"
 	. "launchpad.net/gocheck"
-	"swapi"
-	"swapi/phy"
-	"sword"
+	"masa/sword/swapi"
+	"masa/sword/swapi/phy"
+	"masa/sword/sword"
 	"sync"
 )
 

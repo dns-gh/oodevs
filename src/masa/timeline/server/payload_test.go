@@ -12,8 +12,8 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"encoding/json"
 	. "launchpad.net/gocheck"
-	"sdk"
-	"sword"
+	"masa/sword/sword"
+	"masa/timeline/sdk"
 )
 
 const (

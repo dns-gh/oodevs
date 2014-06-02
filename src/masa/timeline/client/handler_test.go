@@ -11,10 +11,10 @@ package client
 import (
 	"code.google.com/p/goprotobuf/proto"
 	. "launchpad.net/gocheck"
-	"sdk"
-	"server"
-	"services"
-	"util"
+	"masa/timeline/sdk"
+	"masa/timeline/server"
+	"masa/timeline/services"
+	"masa/timeline/util"
 )
 
 var (

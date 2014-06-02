@@ -12,9 +12,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi/simu"
 	"regexp"
 	"strings"
-	"swapi/simu"
 	"time"
 )
 

@@ -9,8 +9,8 @@
 package simu
 
 import (
+	"masa/sword/swapi"
 	"path/filepath"
-	"swapi"
 	"time"
 )
 

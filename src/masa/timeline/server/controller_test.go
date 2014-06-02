@@ -10,11 +10,11 @@ package server
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/timeline/util"
 	"net/http"
 	"os"
 	"strconv"
 	"testing"
-	"util"
 )
 
 func Test(t *testing.T) { TestingT(t) }

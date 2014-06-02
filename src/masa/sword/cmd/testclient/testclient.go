@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"masa/sword/swapi"
 	"os"
-	"swapi"
 	"time"
 )
 

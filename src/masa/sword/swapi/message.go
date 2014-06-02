@@ -13,7 +13,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
-	"sword"
+	"masa/sword/sword"
 )
 
 const (

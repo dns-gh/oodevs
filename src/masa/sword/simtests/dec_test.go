@@ -14,15 +14,15 @@ import (
 	"fmt"
 	"io"
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
+	"masa/sword/swapi/simu"
+	"masa/sword/swtest"
 	"os"
 	"path/filepath"
 	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
-	"swapi"
-	"swapi/simu"
-	"swtest"
 	"time"
 )
 

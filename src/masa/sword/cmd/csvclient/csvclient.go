@@ -13,11 +13,11 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"masa/sword/swapi"
+	"masa/sword/swapi/phy"
 	"os"
 	"strconv"
 	"strings"
-	"swapi"
-	"swapi/phy"
 	"time"
 )
 

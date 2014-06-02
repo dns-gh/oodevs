@@ -11,10 +11,10 @@ package simtests
 import (
 	"fmt"
 	. "launchpad.net/gocheck"
+	"masa/sword/swapi"
+	"masa/sword/swtest"
 	"sort"
 	"strings"
-	"swapi"
-	"swtest"
 	"time"
 )
 

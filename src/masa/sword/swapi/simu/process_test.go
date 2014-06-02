@@ -12,10 +12,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 	"os"
 	"path/filepath"
 	"regexp"
-	"swtest"
 	"time"
 )
 
@@ -40,7 +40,7 @@ func MakeOpts() *SimOpts {
 	opts := SimOpts{}
 	projectRoot := ""
 	if cwd, err := os.Getwd(); err == nil {
-		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "..", "..", ".."))
+		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "../../../../.."))
 	}
 
 	if len(Cfg.Application) > 0 {

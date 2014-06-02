@@ -10,8 +10,8 @@ package simu
 
 import (
 	. "launchpad.net/gocheck"
+	"masa/sword/swtest"
 	"path"
-	"swtest"
 )
 
 func (s *TestSuite) TestParsingError(c *C) {

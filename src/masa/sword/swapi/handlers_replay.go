@@ -9,7 +9,7 @@
 package swapi
 
 import (
-	"sword"
+	"masa/sword/sword"
 )
 
 func (model *ModelData) handleControlReplayInformation(

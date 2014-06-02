@@ -11,7 +11,7 @@ package swapi
 import (
 	"encoding/xml"
 	"fmt"
-	"sword"
+	"masa/sword/sword"
 )
 
 func (model *ModelData) handleAarInformation(m *sword.AarToClient_Content) error {
