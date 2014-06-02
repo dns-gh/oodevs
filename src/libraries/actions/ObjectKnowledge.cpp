@@ -57,10 +57,7 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter,
     : T_Entity( parameter, GetKnowledge( entities, converter, owner, id ), controller )
     , id_( id )
 {
-    auto entity = const_cast< ObjectKnowledge_ABC* >( T_Entity::GetValue() );
-    valid_ = entity != nullptr;
-    if( entity )
-        entity->AddListener( *this );
+    Attach();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,10 +70,7 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter,
     : T_Entity( parameter, knowledge, controller )
     , id_( knowledge ? knowledge->GetEntityId() : 0 )
 {
-    auto entity = const_cast< ObjectKnowledge_ABC* >( T_Entity::GetValue() );
-    valid_ = entity != nullptr;
-    if( entity )
-        entity->AddListener( *this );
+    Attach();
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +172,15 @@ void ObjectKnowledge::SetValue( const T_Concrete& value )
 {
     T_Entity::SetValue( value );
     id_ = value ? value->GetEntityId() : 0;
-    valid_ = value != nullptr;
+    Attach();
+}
+
+void ObjectKnowledge::Attach()
+{
+    auto entity = const_cast< ObjectKnowledge_ABC* >( T_Entity::GetValue() );
+    valid_ = entity != nullptr;
+    if( entity )
+        entity->AddListener( *this );
 }
 
 // -----------------------------------------------------------------------------

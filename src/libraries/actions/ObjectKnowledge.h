@@ -72,6 +72,7 @@ private:
     //@{
     typedef Entity< kernel::ObjectKnowledge_ABC > T_Entity;
     virtual std::string SerializeType() const;
+    void Attach();
     //@}
 
     //! @name members
