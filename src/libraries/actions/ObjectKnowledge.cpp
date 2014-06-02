@@ -174,6 +174,13 @@ bool ObjectKnowledge::IsSet() const
     return id_ != 0;
 }
 
+void ObjectKnowledge::SetValue( const T_Concrete& value )
+{
+    T_Entity::SetValue( value );
+    id_ = value ? value->GetEntityId() : 0;
+    valid_ = value != nullptr;
+}
+
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::SerializeType
 // Created: LDC 2011-05-13

@@ -63,6 +63,8 @@ public:
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void NotifyDestruction();
     virtual bool IsSet() const;
+    typedef const kernel::ObjectKnowledge_ABC* T_Concrete;
+    virtual void SetValue( const T_Concrete& value );
     //@}
 
 private:
@@ -74,7 +76,7 @@ private:
 
     //! @name members
     //@{
-    const uint32_t id_;
+    uint32_t id_;
     bool valid_;
     //@}
 };
