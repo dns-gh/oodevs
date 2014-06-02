@@ -45,6 +45,14 @@ protected slots:
     //! @name Slots
     //@{
     void currentChanged( const QModelIndex& current, const QModelIndex& previous );
+    void OnMousePress( const QModelIndex& current );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    int lastCurrentRow_;
+    int lastCurrentColumn_;
     //@}
 };
 
