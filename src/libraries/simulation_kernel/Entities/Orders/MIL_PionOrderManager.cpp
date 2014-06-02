@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PionOrderManager.h"
+
 #include "MIL_FragOrder.h"
 #include "MIL_PionMissionType.h"
 #include "MIL_PionMission.h"
@@ -114,7 +115,7 @@ void MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn, cons
     frag->SetParameters( pion_.GetKnowledge(), asn.parameters() );
     representation.AddToOrdersCategory( frag );
     sendAck( id );
-    frag->Send( pion_ );
+    frag->Send( GetController().GetActionManager(), pion_ );
 }
 
 // -----------------------------------------------------------------------------

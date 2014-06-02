@@ -35,6 +35,7 @@
 #include "simulation_kernel/Entities/Populations/MIL_PopulationConcentration.h"
 #include "simulation_kernel/Entities/Populations/MIL_PopulationAttitude.h"
 #include "simulation_kernel/Tools/MIL_Color.h"
+#include "simulation_kernel/ActionManager.h"
 #include "StubTER_World.h"
 #include "StubMIL_Population.h"
 #include "StubMIL_PopulationType.h"
@@ -77,6 +78,7 @@ namespace
     {
         ObjectCapacityFixture()
             : world_( "worldwide/tests/EmptyParis-ML" )
+            , controller( actions )
         {
             MOCK_EXPECT( army.RegisterObject ).once();
             MOCK_EXPECT( army.GetColor ).once().returns( boost::cref( color ) );
@@ -87,6 +89,7 @@ namespace
         }
         FakeWorld world_;
         MIL_ObjectFactory factory;
+        ActionManager actions;
         MissionController controller;
         MockArmy army;
         MIL_Color color;

@@ -23,6 +23,7 @@
 #include "MockMIL_Object_ABC.h"
 #include "MockNET_Publisher_ABC.h"
 #include "StubTER_World.h"
+#include "ActionManager.h"
 #include "MissionController.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -370,6 +371,7 @@ namespace
             : world_( "worldwide/tests/EmptyParis-ML" )
             , blackBoardGroup1( group1->GetKnowledge()->GetKnowledgePopulationContainer() )
             , blackBoardGroup2( group2->GetKnowledge()->GetKnowledgePopulationContainer() )
+            , controller( actions )
             , xis( "<main dia-type='PionTest' file='PionTest.bms'/>" )
             , model( "test", xis >> xml::start( "main" ), testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) )
             , type( model )
@@ -381,6 +383,7 @@ namespace
         FakeWorld world_;
         DEC_BlackBoard_CanContainKnowledgePopulation& blackBoardGroup1;
         DEC_BlackBoard_CanContainKnowledgePopulation& blackBoardGroup2;
+        ActionManager actions;
         MissionController controller;
         MockAgent agent;
         xml::xistringstream xis;

@@ -24,6 +24,7 @@ namespace kernel
 
 namespace dispatcher
 {
+    class Action;
     class Config;
     class DetectionRangeEffect;
     class Fire;
@@ -34,7 +35,6 @@ namespace dispatcher
     class LogConsignMedical;
     class LogConsignSupply;
     class LogRequestSupply;
-    class MagicOrder;
     class MeteoModel;
     class PopulationFire;
     class Report;
@@ -180,7 +180,7 @@ private:
     tools::Resolver< FireEffect >            fireEffects_;
     tools::Resolver< DetectionRangeEffect >  detectionRangeEffects_;
     tools::Resolver< Report >                reports_;
-    tools::Resolver< MagicOrder >            magicOrders_;
+    tools::Resolver< Action >                actions_;
     //@}
 };
 

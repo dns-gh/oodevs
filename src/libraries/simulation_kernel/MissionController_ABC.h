@@ -10,10 +10,15 @@
 #ifndef __MissionController_ABC_h_
 #define __MissionController_ABC_h_
 
-#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#include <Tools/Resolver.h>
 
+namespace boost
+{
+    template< typename T > class shared_ptr;
+}
+
+class ActionManager;
 class MIL_Mission_ABC;
 class MIL_AgentPion;
 class PopulationFactory_ABC;
@@ -40,6 +45,7 @@ public:
     virtual void Start( const boost::shared_ptr< MIL_Mission_ABC >& mission ) = 0;
     virtual void Stop( const boost::shared_ptr< MIL_Mission_ABC >& mission ) = 0;
     virtual uint32_t AcquireId() = 0;
+    virtual ActionManager& GetActionManager() const = 0;
     //@}
 
     //! @name Serialization

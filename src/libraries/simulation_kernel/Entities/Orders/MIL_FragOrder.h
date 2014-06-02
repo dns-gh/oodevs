@@ -15,6 +15,7 @@ namespace sword
     class MissionParameters;
 }
 
+class ActionManager;
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
@@ -64,9 +65,9 @@ public:
     void SetParameters( const DEC_KnowledgeResolver_ABC& resolver, const sword::MissionParameters& parameters );
     static void Register( sword::Brain& brain );
     static boost::shared_ptr< MIL_FragOrder > CreateFragOrder( std::string );
-    void Send( MIL_AgentPion& pion ) const;
-    void Send( MIL_Automate& automat ) const;
-    void Send( MIL_Population& population ) const;
+    void Send( ActionManager& actions, MIL_AgentPion& pion ) const;
+    void Send( ActionManager& actions, MIL_Automate& automat ) const;
+    void Send( ActionManager& actions, MIL_Population& population ) const;
     //@}
 
     //! @name Types
@@ -114,7 +115,7 @@ private:
     //! @name Helpers
     //@{
     void Serialize( sword::MissionParameters& asn ) const;
-    void Send( client::FragOrder& message ) const;
+    void Send( ActionManager& actions, client::FragOrder& message ) const;
     //@}
 
     //! @name Member data

@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateMission.h"
+
+#include "ActionManager.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -21,6 +23,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+
 #include <boost/make_shared.hpp>
 #include <boost/optional/optional.hpp>
 
@@ -102,13 +105,13 @@ bool MIL_AutomateMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrd
 // Name: MIL_AutomateMission::Start
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_AutomateMission::Start( boost::shared_ptr< MIL_Mission_ABC > self )
+void MIL_AutomateMission::Start( boost::shared_ptr< MIL_Mission_ABC > self, ActionManager& actions )
 {
     assert( !bDIAMrtBehaviorActivated_ );
 
     static_cast< DEC_AutomateDecision& >( automate_.GetDecision() ).StartMissionMrtBehavior( self );
     bDIAMrtBehaviorActivated_ = true;
-    Send();
+    Send( actions );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +166,7 @@ void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 // Name: MIL_AutomateMission::Send
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_AutomateMission::Send() const
+void MIL_AutomateMission::Send( ActionManager& actions ) const
 {
     client::AutomatOrder asn;
     asn().mutable_tasker()->set_id( automate_.GetID() );
@@ -173,6 +176,9 @@ void MIL_AutomateMission::Send() const
     asn().set_name( GetName() );
     asn().set_id( GetId() );
     asn.Send( NET_Publisher_ABC::Publisher() );
+    const auto action = actions.Register( asn() );
+    if( action.created )
+        actions.Send( action.id, 0, "" );
 }
 
 // -----------------------------------------------------------------------------
