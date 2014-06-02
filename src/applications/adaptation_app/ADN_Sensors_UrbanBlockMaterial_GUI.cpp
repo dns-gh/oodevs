@@ -35,11 +35,13 @@ ADN_Sensors_UrbanBlockMaterial_GUI::~ADN_Sensors_UrbanBlockMaterial_GUI()
 // Name: ADN_Sensors_UrbanBlockMaterial_GUI::InternalEmit
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-void ADN_Sensors_UrbanBlockMaterial_GUI::InternalEmit()
+void ADN_Sensors_UrbanBlockMaterial_GUI::InternalEmit( const QModelIndex& current )
 {
-    if( ADN_Sensors_Modificators::UrbanBlockInfos* data = static_cast< ADN_Sensors_Modificators::UrbanBlockInfos* >( GetSelectedData() ) )
-        if( data  && data->GetCrossedElement() )
-            emit ContentChanged( data->GetCrossedElement()->strName_.GetData(), data->rCoeff_.GetData() );
+    ADN_Sensors_Modificators::UrbanBlockInfos* data = static_cast< ADN_Sensors_Modificators::UrbanBlockInfos* >( GetDataFromIndex( current )  );
+    if( data  && data->GetCrossedElement() )
+        emit ContentChanged( data->GetCrossedElement()->strName_.GetData(), data->rCoeff_.GetData() );
+    else
+        emit ContentChanged( "", 1. );
 }
 
 // -----------------------------------------------------------------------------

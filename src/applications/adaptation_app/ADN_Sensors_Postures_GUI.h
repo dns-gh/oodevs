@@ -30,7 +30,7 @@ public:
 private:
     //! @name ADN_Sensors_MaterialsTable implementation
     //@{
-    virtual void InternalEmit();
+    virtual void InternalEmit( const QModelIndex& current );
     virtual void AddRow( int row, void* data );
     //@}
 };
