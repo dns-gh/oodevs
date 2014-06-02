@@ -13,6 +13,7 @@
 #include "clients_gui/LinkItemDelegate.h"
 #include "clients_gui/InternalLinks.h"
 #include "clients_gui/Roles.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/LogisticHelpers.h"
@@ -138,7 +139,7 @@ void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign, un
     SetData( rowIndex, 3, 
         consign.NeedResolution()
         && base
-        && profile_.CanBeOrdered( *base )
+        && tools::CanOneSubordinateBeOrdered( profile_, *base )
         && controllers_.GetCurrentMode() != eModes_Replay 
             ? CreateLink( state, consign.GetId() ) : state,
         state, consign );

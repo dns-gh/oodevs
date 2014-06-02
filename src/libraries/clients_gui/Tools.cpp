@@ -13,9 +13,11 @@
 
 #include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 #include <tools/Path.h>
@@ -85,4 +87,15 @@ void tools::SetLevel( const kernel::Entity_ABC& entity, std::string& level )
                 level.erase( 0, 7 );
         }
     }
+}
+
+bool tools::CanOneSubordinateBeOrdered( const kernel::Profile_ABC& profile, const kernel::Entity_ABC& entity )
+{
+    auto it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    if( profile.CanBeOrdered( entity ) )
+        return true;
+    while( it.HasMoreElements() )
+        if( CanOneSubordinateBeOrdered( profile, it.NextElement() ) )
+            return true;
+    return false;
 }

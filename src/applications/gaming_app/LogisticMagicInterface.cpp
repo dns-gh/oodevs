@@ -17,9 +17,11 @@
 
 #include "actions/ActionsModel.h"
 #include "clients_gui/LogisticBase.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 #include "gaming/TeamsModel.h"
@@ -85,7 +87,7 @@ void LogisticMagicInterface::NotifyContextMenu( const kernel::Automat_ABC& autom
     if( !profile_.CanBeOrdered( automat ) || !automat.Get< gui::LogisticBase >().IsBase() )
         return;
     selected_ = &automat;
-    AddMenuEntries( menu );
+    AddMenuEntries( menu, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,27 +96,29 @@ void LogisticMagicInterface::NotifyContextMenu( const kernel::Automat_ABC& autom
 // -----------------------------------------------------------------------------
 void LogisticMagicInterface::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
 {
-    if( !profile_.CanBeOrdered( formation ) || !formation.Get< gui::LogisticBase >().IsBase() )
+    const bool canBeOrdered = profile_.CanBeOrdered( formation );
+    if( !( formation.Get< gui::LogisticBase >().IsBase() && tools::CanOneSubordinateBeOrdered( profile_, formation ) ) )
         return;
     selected_ = &formation;
-    AddMenuEntries( menu );
+    AddMenuEntries( menu, canBeOrdered );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticMagicInterface::AddMenuEntries
 // Created: ABR 2014-01-21
 // -----------------------------------------------------------------------------
-void LogisticMagicInterface::AddMenuEntries( kernel::ContextMenu& menu )
+void LogisticMagicInterface::AddMenuEntries( kernel::ContextMenu& menu, bool hasFullRights )
 {
     if( !selected_ )
         return;
     kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Logistic actions" ), false, 2 );
-    subMenu->InsertItem( "Command", tr( "Allocate supply quotas" ), this, SLOT( OnChangeQuotas() ) );
+    if( hasFullRights )
+        subMenu->InsertItem( "Command", tr( "Allocate supply quotas" ), this, SLOT( OnChangeQuotas() ) );
     subMenu->InsertItem( "Command", tr( "Push supply flow" ), this, SLOT( OnPushFlow() ) );
     subMenu->InsertItem( "Command", tr( "Resupply" ), this, SLOT( OnResupply() ) );
     if( selected_->GetTypeName() == kernel::Automat_ABC::typeName_ )
         subMenu->InsertItem( "Command", tr( "Pull supply flow" ), this, SLOT( OnPullFlow() ) );
-    if( profile_.IsSupervision() )
+    if( hasFullRights && profile_.IsSupervision() )
     {
         subMenu->InsertItem( "Command",
             selected_->Get< gui::LogisticBase >().IsMaintenanceManual()

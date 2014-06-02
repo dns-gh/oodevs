@@ -71,7 +71,8 @@ public:
                                                  kernel::Controllers& controllers,
                                                  actions::ActionsModel& actionsModel,
                                                  const kernel::ObjectTypes& breakdownTypes,
-                                                 gui::DisplayExtractor& extractor );
+                                                 gui::DisplayExtractor& extractor,
+                                                 const kernel::Profile_ABC& profile );
     virtual ~LogisticMaintenanceSelectionDialog();
     //@}
 
@@ -109,6 +110,7 @@ private:
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const kernel::ObjectTypes& breakdownTypes_;
+    const kernel::Profile_ABC& profile_;
     unsigned int id_;
     int lastContext_;
     kernel::SafePointer< kernel::Entity_ABC > handler_;
