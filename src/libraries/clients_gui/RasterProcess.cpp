@@ -12,20 +12,46 @@
 #include "moc_RasterProcess.cpp"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/ExerciseConfig.h"
+#include <terrain/PointProjector.h>
+#include <terrain/GenConfig.h>
 #include <tools/Helpers.h>
 #include <tools/Path.h>
 #include <tools/StdFileWrapper.h>
-#include <tools/TemporaryDirectory.h>
 #include <boost/make_shared.hpp>
-#include <boost/lexical_cast.hpp>
+#include <boost/assign/list_of.hpp>
 
-RasterProcess::RasterProcess( const RasterCallback& callback, const tools::Path& output,
-       const tools::Path& logfile )
-    : callback_( callback )
-    , output_( output )
-    , fired_( false )
-    , logfile_( logfile )
+namespace
 {
+    geometry::Rectangle2d MakeExtent( const tools::ExerciseConfig& config )
+    {
+        PointProjector projector( config.GetTerrainDir( config.GetTerrainName() ) );
+        double latitude, longitude;
+        projector.Unproject( geometry::Point2d( 0, 0 ), latitude, longitude );
+        const geometry::Point2d bottomLeft( longitude, latitude );
+        projector.Unproject( geometry::Point2d( config.GetTerrainWidth(), config.GetTerrainHeight() ), latitude, longitude );
+        const geometry::Point2d topRight( longitude, latitude );
+        return geometry::Rectangle2d( bottomLeft, topRight );
+    }
+}
+
+RasterProcess::RasterProcess( const tools::Path& input,
+    int pixelSize, const tools::ExerciseConfig& config,
+    const RasterCallback& callback )
+    : callback_( callback )
+    , temp_( "raster-app-", config.GetGraphicsDirectory() )
+    , config_( temp_.Path() / "config.xml" )
+    , output_( temp_.Path() / "texture.bin" )
+    , logfile_( output_ + ".log" )
+    , fired_( false )
+{
+    {
+        GenConfig conf;
+        conf.SetOutputDirectory( temp_.Path() );
+        conf.SetTerrainExtent( MakeExtent( config ) );
+        conf.SetRasterSources( boost::assign::list_of( input ) );
+        conf.AddProperty( "rasterPixelSize", pixelSize );
+        conf.Flush( config_ );
+    }
     connect( this, SIGNAL( finished( int, QProcess::ExitStatus ) ),
         SLOT( OnExit( int, QProcess::ExitStatus ) ) );
     connect( this, SIGNAL( error( QProcess::ProcessError ) ),
@@ -35,6 +61,23 @@ RasterProcess::RasterProcess( const RasterCallback& callback, const tools::Path&
 RasterProcess::~RasterProcess()
 {
     // NOTHING
+}
+
+void RasterProcess::Start()
+{
+    const auto workingDirectory = tools::Path( "../Terrain/applications/" ).SystemComplete();
+    const tools::Path exe = workingDirectory / "raster_app.exe";
+    QStringList parameters;
+    parameters << ( "--config=" + config_.SystemComplete().ToUTF8() ).c_str();
+    parameters << ( "--file=" + output_.SystemComplete().ToUTF8() ).c_str();
+    parameters << ( "--logfile=" + logfile_.SystemComplete().ToUTF8() ).c_str();
+    std::stringstream cmd;
+    cmd << exe.ToDebug() << " ";
+    for( int i = 0; i != parameters.count(); ++i )
+        cmd << tools::EscapeNonAscii( parameters.at( i ).toStdWString() ) << " ";
+    MT_LOG_INFO_MSG( "Executing: " << cmd.str() );
+    setWorkingDirectory( workingDirectory.ToUTF8().c_str() );
+    start( exe.ToUTF8().c_str(), parameters );
 }
 
 void RasterProcess::OnExit( int errorCode, QProcess::ExitStatus exitStatus )
@@ -71,68 +114,16 @@ void RasterProcess::Fire( int code, const tools::Path& output )
             else
                 MT_LOG_INFO_MSG( message );
         }
-        fp.close();
-        logfile_.Remove();
     }
     fired_ = true;
     callback_( code, output, error );
-    try
-    {
-        output.Remove();
-    }
-    catch( const std::exception& )
-    {
-    }
 }
 
-boost::shared_ptr< QProcess > RunRasterApp( const tools::Path& input, int pixelSize,
-        const tools::ExerciseConfig& config, const RasterCallback& callback )
+boost::shared_ptr< QProcess > RunRasterApp( const tools::Path& input,
+    int pixelSize, const tools::ExerciseConfig& config,
+    const RasterCallback& callback )
 {
-    QStringList parameters;
-    tools::Xifstream xis( config.BuildTerrainChildFile( "config.xml" ) );
-    xis >> xml::start( "configuration" );
-    tools::TemporaryDirectory tempDir( "raster-app", config.GetGraphicsDirectory() );
-    const tools::Path cfgPath = tempDir.Path() / "~~tmp.config.xml";
-    tools::Xofstream xos( cfgPath );
-    xos << xml::start( "configuration" )
-            << xml::start( "output" )
-                << xml::content( "directory", config.GetGraphicsDirectory().Parent().SystemComplete() )
-            << xml::end
-            << xml::content( "extent", xml::xisubstream( xis ) >> xml::start( "extent" ) )
-            << xml::start( "datasources" )
-                << xml::start( "raster" )
-                    << xml::content( "source", input )
-                << xml::end
-                << xml::start( "elevation" )
-                << xml::end
-                << xml::start( "vector" )
-                << xml::end
-            << xml::end
-            << xml::start( "process" )
-                << xml::start( "properties" )
-                    << xml::start( "property" )
-                        << xml::attribute( "name", "rasterPixelSize" )
-                        << xml::attribute( "value", pixelSize )
-                    << xml::end
-                << xml::end
-            << xml::end;
-    const tools::Path output = tempDir.Path() / "~~tmp.texture.bin";
-    const tools::Path logpath = output + ".log";
-    parameters << ( std::string( "--config=" ) + cfgPath.SystemComplete().ToUTF8()).c_str();
-    parameters << ( std::string( "--file=" ) + output.SystemComplete().ToUTF8() ).c_str();
-    parameters << ( std::string( "--logfile=" ) + logpath.SystemComplete().ToUTF8() ).c_str();
-
-    auto p = boost::make_shared< RasterProcess >( callback, output, logpath );
-    auto workingDirectory = tools::Path( "../Terrain/applications/" ).SystemComplete();
-    p->setWorkingDirectory( workingDirectory.ToUTF8().c_str() );
-    tools::Path exePath = workingDirectory / "raster_app.exe";
-
-    std::stringstream cmd;
-    cmd << exePath.ToDebug() << " ";
-    for( int i = 0; i != parameters.count(); ++i )
-        cmd << tools::EscapeNonAscii( parameters.at( i ).toStdWString() ) << " ";
-    MT_LOG_INFO_MSG( "Executing: " << cmd.str() );
-
-    p->start( exePath.ToUTF8().c_str(), parameters );
-    return p;
+    const auto process = boost::make_shared< RasterProcess >( input, pixelSize, config, callback );
+    process->Start();
+    return process;
 }

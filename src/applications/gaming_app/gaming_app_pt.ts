@@ -2168,14 +2168,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This functionality is not available with old terrain format.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error loading image file</source>
         <translation type="unfinished"></translation>
     </message>

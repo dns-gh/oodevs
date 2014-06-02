@@ -12,6 +12,7 @@
 
 #include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
+#include <tools/TemporaryDirectory.h>
 
 namespace tools
 {
@@ -31,9 +32,12 @@ class RasterProcess : public QProcess
     Q_OBJECT
 
 public:
-    RasterProcess( const RasterCallback& callback, const tools::Path& output,
-           const tools::Path& logfile );
+    RasterProcess( const tools::Path& input,
+        int pixelSize, const tools::ExerciseConfig& config,
+        const RasterCallback& callback );
     virtual ~RasterProcess();
+
+    void Start();
 
 private slots:
     void OnExit( int errorCode, QProcess::ExitStatus exitStatus );
@@ -44,8 +48,10 @@ private:
 
 private:
     RasterCallback callback_;
-    tools::Path output_;
-    tools::Path logfile_;
+    tools::TemporaryDirectory temp_;
+    const tools::Path config_;
+    const tools::Path output_;
+    const tools::Path logfile_;
     bool fired_;
 };
 
@@ -55,6 +61,7 @@ private:
 // or a non-zero exit code. Generated texture files is only valid during
 // the callback execution.
 boost::shared_ptr< QProcess > RunRasterApp( const tools::Path& input,
-    int pixelSize, const tools::ExerciseConfig& config, const RasterCallback& callback );
+    int pixelSize, const tools::ExerciseConfig& config,
+    const RasterCallback& callback );
 
 #endif  // CLIENTS_GUI_RASTER_PROCESS_H

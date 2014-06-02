@@ -987,14 +987,6 @@
         <translation>Error cargando imagen Raster.</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation>Advertencia</translation>
-    </message>
-    <message>
-        <source>This functionality is not available with old terrain format.</source>
-        <translation>Esta funcionalidad no está disponible con el antiguo formato de terreno.</translation>
-    </message>
-    <message>
         <source>Fatal error adding Raster source.</source>
         <translation>Error grave agregando imagen Raster.</translation>
     </message>

@@ -2171,14 +2171,6 @@ Voulez-vous le remplacer ?</translation>
         <translation>Erreur au chargement du Raster.</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation>Attention</translation>
-    </message>
-    <message>
-        <source>This functionality is not available with old terrain format.</source>
-        <translation>Cette fonctionnalité n&apos;est pas disponible pour les anciens formats de terrain.</translation>
-    </message>
-    <message>
         <source>Fatal error adding Raster source.</source>
         <translation>Erreur fatale en ajoutant la source de Raster.</translation>
     </message>

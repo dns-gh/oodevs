@@ -658,27 +658,19 @@ void MainWindow::OnAddRaster()
 {
     try
     {
-        if( !config_.BuildTerrainChildFile( "config.xml" ).Exists() )
-        {
-            QMessageBox::warning( 0, tr( "Warning" ), tr( "This functionality is not available with old terrain format." ) );
-            return;
-        }
-
         QDialog::DialogCode result = static_cast< QDialog::DialogCode >( addRasterDialog_->exec() );
         if( result == QDialog::Accepted )
         {
-            auto input = tools::Path::FromUnicode( addRasterDialog_->GetFiles().toStdWString() );
+            const auto input = tools::Path::FromUnicode( addRasterDialog_->GetFiles().toStdWString() );
             process_ = RunRasterApp( input, addRasterDialog_->GetPixelSize(), config_,
                 [&]( int exitCode, const tools::Path& output, const std::string& error )
                 {
                     if( !exitCode )
                     {
-                        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_, output.FileName().ToUTF8() );
+                        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_, output );
                         raster.SetPasses( "main" );
                         selector_->AddLayer( raster );
                         preferenceDialog_->AddLayer( tr( "User layer [%1]" ).arg( addRasterDialog_->GetName() ), raster, true );
-                        raster.NotifyUpdated( kernel::ModelLoaded( config_ ) );
-                        raster.GenerateTexture();
                     }
                     else
                         QMessageBox::warning( this, tr( "Error loading image file" ),

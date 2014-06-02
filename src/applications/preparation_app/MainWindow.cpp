@@ -852,29 +852,21 @@ void MainWindow::OnAddRaster()
 {
     try
     {
-        if( !config_.BuildTerrainChildFile( "config.xml" ).Exists() )
-        {
-            QMessageBox::warning( 0, tools::translate( "MainWindow", "Warning" ), tools::translate( "MainWindow", "This functionality is not available with old terrain format." ) );
-            return;
-        }
-
         gui::AddRasterDialog& dialog = dialogContainer_->GetAddRasterDialog();
         QDialog::DialogCode result = static_cast< QDialog::DialogCode >( dialog.exec() );
         if( result == QDialog::Accepted )
         {
-            auto input = tools::Path::FromUnicode( dialog.GetFiles().toStdWString() );
+            const auto input = tools::Path::FromUnicode( dialog.GetFiles().toStdWString() );
             process_ = RunRasterApp( input, dialog.GetPixelSize(), config_,
                 [&]( int exitCode, const tools::Path& output, const std::string& error )
                 {
                     if( !exitCode )
                     {
-                        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_,
-                                output.FileName().ToUTF8() );
+                        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_, output );
                         raster.SetPasses( "main" );
                         selector_->AddLayer( raster );
-                        dialogContainer_->GetPrefDialog().AddLayer( tools::translate( "MainWindow", "User layer [%1]" ).arg( dialogContainer_->GetAddRasterDialog().GetName() ), raster, true );
-                        raster.NotifyUpdated( kernel::ModelLoaded( config_ ) );
-                        raster.GenerateTexture();
+                        dialogContainer_->GetPrefDialog().AddLayer(
+                            tools::translate( "MainWindow", "User layer [%1]" ).arg( dialogContainer_->GetAddRasterDialog().GetName() ), raster, true );
                     }
                     else
                         QMessageBox::warning( this, tools::translate( "MainWindow", "Error loading image file" ),
