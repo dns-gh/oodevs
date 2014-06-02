@@ -2846,6 +2846,21 @@ PNG (*.png)
     </message>
 </context>
 <context>
+    <name>ADN_Missions_ABC</name>
+    <message>
+        <source>Expected enemy direction.</source>
+        <translation>Orientation privilégiée des capteurs.</translation>
+    </message>
+    <message>
+        <source>Lines used by units to adapt their behavior when they reach or cross them.</source>
+        <translation>Lignes de changement de comportement.</translation>
+    </message>
+    <message>
+        <source>Right or left boundaries inside which the agent performs the mission.</source>
+        <translation>Frontière de la zone de responsabilité.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Missions_Data</name>
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>

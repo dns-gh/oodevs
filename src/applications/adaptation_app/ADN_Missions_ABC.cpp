@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_ABC.h"
 #include "ADN_Missions_Data.h"
+#include "clients_gui/Application_ABC.h"
 #include "clients_gui/WikiXmlConverter.h"
 #include "ADN_Languages_Data.h"
 #include "ADN_WorkspaceElement.h"
@@ -17,6 +18,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Languages.h"
 #include <boost/algorithm/string.hpp>
+#include <boost/assign.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 #include <xeuseuleu/xsl.hpp>
@@ -411,12 +413,16 @@ void ADN_Missions_ABC::ParseImagesInImageDirectory( const tools::Path& imageDir 
 // Name: ADN_Missions_ABC::AddContextParameter
 // Created: ABR 2013-01-07
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs /* = 1 */, int maxOccurs /* = 1 */ )
+void ADN_Missions_ABC::AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType,
+                                            const std::map< std::string, std::string >& description,
+                                            bool optional, int minOccurs /* = 1 */, int maxOccurs /* = 1 */ )
 {
     std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter( type_ ) );
 
     spNew->strName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr::eToTr );
     spNew->diaName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr::eToSim );
+    for( auto it = description.begin(); it != description.end(); ++it )
+        spNew->description_.SetValue( it->first, it->second );
     spNew->type_ = parameterType;
     spNew->isOptional_ = optional;
     spNew->isContext_ = true;
@@ -456,19 +462,43 @@ void ADN_Missions_ABC::WriteArchive( xml::xostream& output ) const
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::FillContextParameters()
 {
+    std::map< std::string, std::string > heading;
+    std::map< std::string, std::string > lima;
+    std::map< std::string, std::string > limit;
+
+    QSettings settings( "MASA Group", "SWORD" );
+    const std::string& current = settings.value( "/Common/Language", "en" ).value< QString >().toStdString();
+    ADN_Workspace::GetWorkspace().GetApplication().DeleteTranslator( "adaptation_app" );
+
+    const auto& data = ADN_Workspace::GetWorkspace().GetLanguages().GetData();
+    std::set< std::string > codes = boost::assign::list_of( data.Master() );
+    const auto& languages = data.GetActiveLanguages();
+    std::for_each( languages.begin(), languages.end(),
+        [&]( const tools::Language& language ) { codes.insert( language.GetCode() ); });
+
+    for( auto it = codes.begin(); it != codes.end(); ++it )
+    {
+        QTranslator* translator = tools::AddTranslator( *qApp, *it, "adaptation_app" );
+        heading[ *it ] = tools::translate( "ADN_Missions_ABC", "Expected enemy direction." ).toStdString();
+        lima[ *it ] = tools::translate( "ADN_Missions_ABC", "Lines used by units to adapt their behavior when they reach or cross them." ).toStdString();
+        limit[ *it ] = tools::translate( "ADN_Missions_ABC", "Right or left boundaries inside which the agent performs the mission." ).toStdString();
+        qApp->removeTranslator( translator );
+    }
+    ADN_Workspace::GetWorkspace().GetApplication().AddTranslator( "adaptation_app", current );
+
     switch( type_ )
     {
     case eMissionType_Pawn:
-        AddContextParameter( eContextParameters_Heading,    eMissionParameterTypeDirection, false );
-        AddContextParameter( eContextParameters_Limas,      eMissionParameterTypePhaseLine, true, 1, std::numeric_limits< int >::max() );
-        AddContextParameter( eContextParameters_Limit1,     eMissionParameterTypeLimit,     true );
-        AddContextParameter( eContextParameters_Limit2,     eMissionParameterTypeLimit,     true );
+        AddContextParameter( eContextParameters_Heading,    eMissionParameterTypeDirection, heading, false );
+        AddContextParameter( eContextParameters_Limas,      eMissionParameterTypePhaseLine, lima,    true, 1, std::numeric_limits< int >::max() );
+        AddContextParameter( eContextParameters_Limit1,     eMissionParameterTypeLimit,     limit,   true );
+        AddContextParameter( eContextParameters_Limit2,     eMissionParameterTypeLimit,     limit,   true );
         break;
     case eMissionType_Automat:
-        AddContextParameter( eContextParameters_Heading,    eMissionParameterTypeDirection, false );
-        AddContextParameter( eContextParameters_Limas,      eMissionParameterTypePhaseLine, true, 1, std::numeric_limits< int >::max() );
-        AddContextParameter( eContextParameters_Limit1,     eMissionParameterTypeLimit,     false );
-        AddContextParameter( eContextParameters_Limit2,     eMissionParameterTypeLimit,     false );
+        AddContextParameter( eContextParameters_Heading,    eMissionParameterTypeDirection, heading, false );
+        AddContextParameter( eContextParameters_Limas,      eMissionParameterTypePhaseLine, lima,    true, 1, std::numeric_limits< int >::max() );
+        AddContextParameter( eContextParameters_Limit1,     eMissionParameterTypeLimit,     limit,   false );
+        AddContextParameter( eContextParameters_Limit2,     eMissionParameterTypeLimit,     limit,   false );
         break;
     default:
         break;

@@ -129,11 +129,20 @@ const QString& Application_ABC::GetExpiration() const
 // Name: Application_ABC::AddTranslator
 // Created: HBD 2010-06-28
 // -----------------------------------------------------------------------------
-void Application_ABC::AddTranslator( const char* t )
+void Application_ABC::AddTranslator( const std::string& t )
 {
-    QTranslator* translator = tools::AddTranslator( app_, tools::Language::Current(), t );
+    AddTranslator( t, tools::Language::Current() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application_ABC::AddTranslator
+// Created: LGY 2014-06-03
+// -----------------------------------------------------------------------------
+void Application_ABC::AddTranslator( const std::string& t, const std::string& languageCode )
+{
+    QTranslator* translator = tools::AddTranslator( app_, languageCode, t.c_str() );
     if( translator )
-        translators_.push_back( translator );
+        translators_[ t ] = translator;
 }
 
 // -----------------------------------------------------------------------------
@@ -157,9 +166,23 @@ void Application_ABC::DisplayError( const QString& text ) const
 // -----------------------------------------------------------------------------
 void Application_ABC::DeleteTranslators()
 {
-    for( std::vector< QTranslator* >::const_iterator it = translators_.begin(); it != translators_.end(); ++it )
-        app_.removeTranslator( *it );
+    for( auto it = translators_.begin(); it != translators_.end(); ++it )
+        app_.removeTranslator( it->second );
     translators_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application_ABC::DeleteTranslators
+// Created: LGY 2014-06-03
+// -----------------------------------------------------------------------------
+void Application_ABC::DeleteTranslator( const std::string& translator )
+{
+    const auto it = translators_.find( translator );
+    if( it != translators_.end() )
+    {
+        app_.removeTranslator( it->second );
+        translators_.erase( it );
+    }
 }
 
 namespace
