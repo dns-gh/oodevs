@@ -806,7 +806,6 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
     if #self.operationnalEntities == 0 then
-        reportOnceFunction( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
         self.Feedback( self.feedbacks.done )
         return
     end
@@ -933,7 +932,7 @@ integration.leadActivate = function( self, findBestsFunction, manageReinforcemen
       self:create()
     end
 
-    if #DEC_Automate_PionsDeAutomateAvecPC( myself ) == 0 then
+    if #self.operationnalEntities == 0 then
         reportOnceFunction( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
         self.Feedback( self.feedbacks.done )
         return
@@ -1027,7 +1026,7 @@ integration.leadDelayActivate = function( self, disengageTask )
     local meKnowledge = meKnowledge
     local Activate = Activate
 
-    if #DEC_Automate_PionsDeAutomateAvecPC( myself ) == 0 then
+    if #self.operationnalEntities == 0 then
         reportOnceFunction( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
         self.Feedback( self.feedbacks.done )
         return
@@ -1151,7 +1150,7 @@ integration.leadDroneActivate = function( self, findBestsFunction )
       self:create()
     end
 
-    if #DEC_Automate_PionsDeAutomateAvecPC( myself ) == 0 then
+    if #self.operationnalEntities == 0 then
         reportOnceFunction( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
         self.Feedback( self.feedbacks.done )
         return
