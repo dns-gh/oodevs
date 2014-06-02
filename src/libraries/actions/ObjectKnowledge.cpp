@@ -9,7 +9,6 @@
 
 #include "actions_pch.h"
 #include "ObjectKnowledge.h"
-
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
