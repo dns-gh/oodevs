@@ -45,8 +45,7 @@ namespace
     {
         const geometry::Point2d bottomLeft( ConvertToLatLong( rect.GetLeft(), rect.GetBottom() ) );
         const geometry::Point2d topRight( ConvertToLatLong( rect.GetRight(), rect.GetTop() ) );
-
-        return geometry::Rectangle2d( bottomLeft.X(), bottomLeft.Y(), topRight.X(), topRight.Y() );
+        return geometry::Rectangle2d( bottomLeft, topRight );
     }
 }
 

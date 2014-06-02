@@ -13,7 +13,7 @@
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/CoordinateConverter.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
