@@ -355,7 +355,7 @@ void LogisticSupplyFlowDialog_ABC::Handle( Location_ABC& location )
         location.Accept( *this );
         CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );
         QStringList waypoints = pModel->stringList();
-        QString locationName = QString( static_cast< CoordinateConverter& >( static_.coordinateConverter_ ).ConvertToMgrs( selectedPoint_ ).c_str() );
+        QString locationName = static_.coordinateConverter_.ConvertToMgrs( selectedPoint_ ).c_str();
         points_[ locationName ] = selectedPoint_;
         waypoints.append( locationName );
         pModel->setStringList( waypoints );
