@@ -65,6 +65,7 @@ public:
     virtual bool IsSet() const;
     typedef const kernel::ObjectKnowledge_ABC* T_Concrete;
     virtual void SetValue( const T_Concrete& value );
+    virtual void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
     //@}
 
 private:
