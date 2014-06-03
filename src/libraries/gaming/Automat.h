@@ -20,7 +20,6 @@
 namespace kernel
 {
     class Controller;
-    class StaticModel;
     class AutomatType;
 }
 

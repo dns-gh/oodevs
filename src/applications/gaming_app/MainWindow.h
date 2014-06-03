@@ -112,7 +112,6 @@ public slots:
     void ToggleFullScreen();
     void ToggleDocks();
     void OnAddRaster();
-    void OnRasterProcessExited( int exitCode, const tools::Path& output );
     void OnGenerateSymbols();
     void PlayPauseSoundControl( bool play );
     //@}

@@ -36,7 +36,8 @@ class RasterLayer : public Layer2D
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RasterLayer( kernel::Controller& controller, const std::string& textureName = "usrp.texture" );
+    explicit RasterLayer( kernel::Controller& controller );
+             RasterLayer( kernel::Controller& controller, const tools::Path& texture );
     virtual ~RasterLayer();
     //@}
 
@@ -45,8 +46,10 @@ public:
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
     virtual void Reset();
-    void GenerateTexture();
     //@}
+
+private:
+    void GenerateTexture( const tools::Path& texture );
 
 private:
     //! @name Member data
@@ -54,8 +57,8 @@ private:
     kernel::Controller&         controller_;
     std::auto_ptr< TextureSet > textures_;
     bool                        ignore_;
-    tools::Path                 graphicsDirectory_;
-    const tools::Path           textureName_;
+    tools::Path                 directory_;
+    const tools::Path           texture_;
     //@}
 };
 
