@@ -10,7 +10,7 @@
 #ifndef __RichTableView_h_
 #define __RichTableView_h_
 
-#include "CommonDelegate.h"
+#include "CheckBoxDelegate.h"
 #include "Filterable_ABC.h"
 #include "RichWidget.h"
 #include "StandardModel.h"
@@ -48,7 +48,7 @@ protected:
     //@{
     QSortFilterProxyModel proxyModel_;
     gui::StandardModel dataModel_;
-    gui::CommonDelegate delegate_;
+    gui::CheckBoxDelegate delegate_;
     //@}
 };
 
