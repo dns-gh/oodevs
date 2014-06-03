@@ -11,7 +11,6 @@
 #include "NewProfileDialog.h"
 #include "moc_NewProfileDialog.cpp"
 #include "ProfilesChecker_ABC.h"
-#include "preparation/ProfilesModel.h"
 #include "clients_gui/RichDialogButtonBox.h"
 #include "clients_gui/RichLineEdit.h"
 

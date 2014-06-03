@@ -59,7 +59,7 @@ void UserProfilesModel::CreateProfile( const sword::ProfileCreation& message )
 // -----------------------------------------------------------------------------
 void UserProfilesModel::DeleteProfile( const sword::ProfileDestruction& message )
 {
-    for( T_UserProfiles::iterator it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( message.login() == (*it)->GetLogin().toStdString() )
         {
             const UserProfile* element = *it;
@@ -75,7 +75,7 @@ void UserProfilesModel::DeleteProfile( const sword::ProfileDestruction& message 
 // -----------------------------------------------------------------------------
 const UserProfile* UserProfilesModel::Find( const QString& login ) const
 {
-    for( T_UserProfiles::const_iterator it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( login == (*it)->GetLogin() )
             return *it;
     return 0;
@@ -87,7 +87,7 @@ const UserProfile* UserProfilesModel::Find( const QString& login ) const
 // -----------------------------------------------------------------------------
 UserProfile& UserProfilesModel::Get( const QString& login )
 {
-    for( T_UserProfiles::const_iterator it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( login == (*it)->GetLogin() )
             return **it;
     throw MASA_EXCEPTION( tools::translate( "UserProfilesModel", "Profile '%1' does not exist." ).arg( login ).toStdString() );

@@ -10,22 +10,15 @@
 #include "gaming_pch.h"
 #include "UserProfile.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller,
-                          Publisher_ABC& publisher, const Model& model )
+UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_ ( controller )
     , publisher_  ( publisher )
-    , model_      ( model )
     , registered_ ( true )
     , login_      ( "" )
     , supervision_( false )
@@ -40,11 +33,9 @@ UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Control
 // Name: UserProfile constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher,
-                          const Model& model )
+UserProfile::UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_ ( controller )
     , publisher_  ( publisher )
-    , model_      ( model )
     , registered_ ( false )
     , login_      ( login )
     , supervision_( false )
@@ -61,7 +52,6 @@ UserProfile::UserProfile( const UserProfile& p )
     : RightsResolver( (const RightsResolver&) p )
     , controller_   ( p.controller_ )
     , publisher_    ( p.publisher_ )
-    , model_        ( p.model_ )
     , registered_   ( false )
     , login_        ( p.login_ )
     , password_     ( p.password_ )

@@ -42,7 +42,7 @@ UserProfileFactory::~UserProfileFactory()
 // -----------------------------------------------------------------------------
 UserProfile* UserProfileFactory::Create( const sword::ProfileCreation& message ) const
 {
-    return new UserProfile( message, controllers_.controller_, publisher_, model_ );
+    return new UserProfile( message, controllers_.controller_, publisher_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ UserProfile* UserProfileFactory::Create( const sword::ProfileCreation& message )
 // -----------------------------------------------------------------------------
 void UserProfileFactory::Create()
 {
-    UserProfile profile( GenerateUniqueLogin(), controllers_.controller_, publisher_, model_ );
+    UserProfile profile( GenerateUniqueLogin(), controllers_.controller_, publisher_ );
     profile.RequestCreation();
 }
 

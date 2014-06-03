@@ -13,7 +13,6 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "RightsResolver.h"
-#include "protocol/ServerPublisher_ABC.h"
 
 namespace kernel
 {
@@ -28,7 +27,6 @@ namespace sword
 }
 
 class Publisher_ABC;
-class Model;
 
 // =============================================================================
 /** @class  UserProfile
@@ -43,10 +41,8 @@ class UserProfile : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller,
-                          Publisher_ABC& publisher, const Model& model );
-             UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher,
-                          const Model& model );
+             UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher );
+             UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher );
              UserProfile( const UserProfile& );
     virtual ~UserProfile();
     //@}
@@ -82,11 +78,6 @@ private:
     UserProfile& operator=( const UserProfile& ); //!< Assignment operator
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< unsigned long > T_Ids;
-    //@}
-
     //! @name Helpers
     //@{
     void SetProfile( const sword::Profile& profile );
@@ -97,7 +88,6 @@ private:
     //@{
     kernel::Controller& controller_;
     Publisher_ABC& publisher_;
-    const Model& model_;
     bool registered_;
     QString login_;
     QString password_;

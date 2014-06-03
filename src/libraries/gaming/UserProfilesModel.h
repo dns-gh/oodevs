@@ -10,6 +10,8 @@
 #ifndef __UserProfilesModel_h_
 #define __UserProfilesModel_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace sword
 {
     class ProfileCreation;
@@ -25,7 +27,7 @@ class UserProfileFactory_ABC;
 */
 // Created: SBO 2007-01-19
 // =============================================================================
-class UserProfilesModel
+class UserProfilesModel : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,16 +46,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfilesModel( const UserProfilesModel& );            //!< Copy constructor
-    UserProfilesModel& operator=( const UserProfilesModel& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
-    typedef std::vector< UserProfile* >      T_UserProfiles;
-    typedef T_UserProfiles::const_iterator CIT_UserProfiles;
+    typedef std::vector< UserProfile* > T_UserProfiles;
     //@}
 
 private:

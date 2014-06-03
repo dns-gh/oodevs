@@ -280,7 +280,7 @@ void UserProfile::NotifyTeamDeleted( unsigned long teamId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfile::NotifyTeamDeleted
+// Name: UserProfile::NotifyFormationDeleted
 // Created: MMC 2011-06-24
 // -----------------------------------------------------------------------------
 void UserProfile::NotifyFormationDeleted( unsigned long formationId )
@@ -289,7 +289,7 @@ void UserProfile::NotifyFormationDeleted( unsigned long formationId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfile::NotifyTeamDeleted
+// Name: UserProfile::NotifyAutomatDeleted
 // Created: MMC 2011-06-24
 // -----------------------------------------------------------------------------
 void UserProfile::NotifyAutomatDeleted( unsigned long automatId )
@@ -298,7 +298,7 @@ void UserProfile::NotifyAutomatDeleted( unsigned long automatId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfile::NotifyTeamDeleted
+// Name: UserProfile::NotifyPopulationDeleted
 // Created: MMC 2011-06-24
 // -----------------------------------------------------------------------------
 void UserProfile::NotifyPopulationDeleted( unsigned long populationId )
@@ -329,7 +329,7 @@ void UserProfile::Visit( std::vector< unsigned long >& elements ) const
 
 namespace
 {
-    void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity, const Model& model )
+    void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity )
     {
         const auto hierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
         if( !hierarchies )
@@ -341,7 +341,7 @@ namespace
             if( auto pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity ) )
                 automats.insert( pAutomat->GetId() );
             else
-                InsertAutomats( automats, childEntity, model );
+                InsertAutomats( automats, childEntity );
         }
     }
 
@@ -349,14 +349,14 @@ namespace
     {
         for( auto it = teams.begin();  it != teams.end(); ++it )
             if( auto pTeam = model.FindTeam( *it ) )
-                InsertAutomats( automats, *pTeam, model );
+                InsertAutomats( automats, *pTeam );
     }
 
     void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const Model& model )
     {
         for( auto it = formations.begin();  it != formations.end(); ++it )
             if( auto pFormation = model.FindFormation( *it ) )
-                InsertAutomats( automats, *pFormation, model );
+                InsertAutomats( automats, *pFormation );
     }
 }
 
