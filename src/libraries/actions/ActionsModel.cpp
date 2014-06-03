@@ -318,6 +318,68 @@ int ActionsModel::PublishSelectMaintenanceRepairTeam( unsigned int consignId, un
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishChangeLogisticLinks
+// Created: ABR 2014-06-03
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishChangeLogisticLinks( const kernel::Entity_ABC& entity,
+                                              const kernel::Entity_ABC* nominalSuperior,
+                                              const kernel::Entity_ABC* currentSuperior )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateChangeLogisticLinks( entity, nominalSuperior, currentSuperior ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishUnitChangeSuperior
+// Created: ABR 2014-06-03
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishUnitChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Automat_ABC& superior )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateUnitChangeSuperior( entity, superior ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishChangeFormationSuperior
+// Created: ABR 2014-06-03
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishChangeFormationSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateChangeFormationSuperior( entity, superior ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishChangeKnowledgeGroup
+// Created: ABR 2014-06-03
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishChangeKnowledgeGroup( const kernel::Automat_ABC& entity, const kernel::KnowledgeGroup_ABC& superior )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateChangeKnowledgeGroup( entity, superior ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishKnowledgeGroupUpdateParty
+// Created: ABR 2014-06-03
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishKnowledgeGroupUpdateParty( const kernel::KnowledgeGroup_ABC& entity, const kernel::Team_ABC& superior )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateKnowledgeGroupUpdateParty( entity, superior ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishKnowledgeGroupUpdatePartyParent
+// Created: ABR 2014-06-03
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishKnowledgeGroupUpdatePartyParent( const kernel::KnowledgeGroup_ABC& entity, const kernel::KnowledgeGroup_ABC& superior )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateKnowledgeGroupUpdatePartyParent( entity, superior ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

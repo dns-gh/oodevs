@@ -129,6 +129,12 @@ public:
     int PublishGlobalWeather( const ::gui::WeatherParameters& params );
     int PublishLocalWeather( const ::gui::LocalWeatherParameters& params );
     int PublishLocalDestruction( unsigned int weatherId );
+    int PublishChangeLogisticLinks( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* nominalSuperior, const kernel::Entity_ABC* currentSuperior );
+    int PublishUnitChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Automat_ABC& superior );
+    int PublishChangeFormationSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior );
+    int PublishChangeKnowledgeGroup( const kernel::Automat_ABC& entity, const kernel::KnowledgeGroup_ABC& superior );
+    int PublishKnowledgeGroupUpdateParty( const kernel::KnowledgeGroup_ABC& entity, const kernel::Team_ABC& superior );
+    int PublishKnowledgeGroupUpdatePartyParent( const kernel::KnowledgeGroup_ABC& entity, const kernel::KnowledgeGroup_ABC& superior );
     //@}
 
 private:
