@@ -33,8 +33,13 @@ class LogisticTreeView : public gui::LogisticTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver,
-                               const gui::EntitySymbols& symbols, QWidget* parent /*= 0*/ );
+             LogisticTreeView( const QString& objectName,
+                               kernel::Controllers& controllers,
+                               const kernel::Profile_ABC& profile,
+                               gui::ModelObserver_ABC& modelObserver,
+                               const gui::EntitySymbols& symbols,
+                               gui::ChangeSuperiorDialog& changeSuperiorDialog,
+                               QWidget* parent /*= 0*/ );
     virtual ~LogisticTreeView();
     //@}
 

@@ -13,7 +13,6 @@
 #include "BriefingDialog.h"
 #include "ChangeDiplomacyDialog.h"
 #include "ChangeHumanFactorsDialog.h"
-#include "ChangeLogisticLinksDialog.h"
 #include "CreateFormationDialog.h"
 #include "CriticalIntelligenceDialog.h"
 #include "EquipmentTransferDialog.h"
@@ -46,7 +45,6 @@ Dialogs::Dialogs( QWidget* parent,
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, actionsModel, profile );
-    new ChangeLogisticLinksDialog( parent, controllers, actionsModel, staticModel, simulation, profile  );
     new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );

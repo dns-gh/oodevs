@@ -36,15 +36,22 @@
 // Name: TacticalTreeView constructor
 // Created: JSR 2012-09-27
 // -----------------------------------------------------------------------------
-TacticalTreeView::TacticalTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
-                                    gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel,
-                                    const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ )
-    : gui::TacticalTreeView( objectName, controllers, profile, modelObserver, symbols, parent )
+TacticalTreeView::TacticalTreeView( const QString& objectName,
+                                    kernel::Controllers& controllers,
+                                    const kernel::Profile_ABC& profile,
+                                    gui::ModelObserver_ABC& modelObserver,
+                                    const gui::EntitySymbols& symbols,
+                                    const StaticModel& staticModel,
+                                    const kernel::Time_ABC& simulation,
+                                    actions::ActionsModel& actionsModel,
+                                    gui::ChangeSuperiorDialog& changeSuperiorDialog,
+                                    QWidget* parent /*= 0*/ )
+    : gui::TacticalTreeView( objectName, controllers, profile, modelObserver, symbols, changeSuperiorDialog, parent )
     , static_              ( staticModel )
     , simulation_          ( simulation )
     , actionsModel_        ( actionsModel )
     , displayMode_         ( eObservableUnits )
-    , changeSuperiorDialog_( 0 )
+    , changeSuperiorDialog_( changeSuperiorDialog )
     , currentEntity_       ( 0 )
     , icon_user_           ( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).ToUTF8().c_str() )
 {
@@ -61,46 +68,6 @@ TacticalTreeView::~TacticalTreeView()
     controllers_.Unregister( *this );
 }
 
-// -----------------------------------------------------------------------------
-// Name: TacticalTreeView::AddCommonMenu
-// Created: LGY 2014-05-13
-// -----------------------------------------------------------------------------
-void TacticalTreeView::AddCommonMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
-{
-    if( !isVisible() || !profile_.IsVisible( entity ) )
-        return;
-    if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
-        if( hierarchies->GetSuperior() != 0 && dynamic_cast< const kernel::Object_ABC* >( &entity ) == 0 && controllers_.GetCurrentMode() != eModes_Replay )
-            menu.InsertItem( "Formation", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalTreeView::NotifyContextMenu
-// Created: JSR 2012-09-27
-// -----------------------------------------------------------------------------
-void TacticalTreeView::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
-{
-    AddCommonMenu( entity, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalTreeView::NotifyContextMenu
-// Created: JSR 2012-09-27
-// -----------------------------------------------------------------------------
-void TacticalTreeView::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
-{
-    AddCommonMenu( entity, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalTreeView::NotifyContextMenu
-// Created: JSR 2012-09-27
-// -----------------------------------------------------------------------------
-void TacticalTreeView::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
-{
-    AddCommonMenu( entity, menu );
-}
-
 namespace
 {
     void CreateSubMenu( TacticalTreeView* view, kernel::ContextMenu& menu, const QString& text, const char* slot )
@@ -115,19 +82,18 @@ namespace
 // Name: TacticalTreeView::NotifyContextMenu
 // Created: SLI 2013-07-16
 // -----------------------------------------------------------------------------
-void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
+void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
 {
-    if( !isVisible() || !profile_.IsVisible( entity ) )
+    if( !isVisible() || !profile_.IsVisible( team ) )
         return;
-    if( entity.GetId() == 0 ) // no side team
+    if( team.GetId() == 0 || !AddCommonMenu( team, menu ) ) // id = 0 -> no side team
         return;
-    if( profile_.CanDoMagic( entity ) )
+    if( profile_.CanDoMagic( team ) )
     {
-        currentEntity_ = &entity;
+        currentEntity_ = &team;
         CreateSubMenu( this, menu, tr( "Create formation" ), SLOT( OnCreateFormation( int ) ) );
         CreateSubMenu( this, menu, tr( "Create logistic base" ), SLOT( OnCreateLogisticBase( int ) ) );
     }
-    AddCommonMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,60 +176,6 @@ std::vector< const QPixmap* > TacticalTreeView::GetEntityPixmap( const kernel::E
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalTreeView::CanChangeSuperior
-// Created: JSR 2012-09-27
-// -----------------------------------------------------------------------------
-bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
-{
-    if( !profile_.IsVisible( entity ) )
-        return false;
-    const kernel::TacticalHierarchies* entityHierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
-    const kernel::TacticalHierarchies* superiorHierarchy = superior.Retrieve< kernel::TacticalHierarchies >();
-    if( !entityHierarchy || !superiorHierarchy || entityHierarchy->GetTop().GetId() != superiorHierarchy->GetTop().GetId() )
-        return false;
-    if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
-        return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0;
-    if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
-        return dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0;
-    if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
-        return ( ( dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0 && entity.GetId() != superior.GetId() ) ||
-                dynamic_cast< const kernel::Team_ABC* >( &superior ) != 0);
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalTreeView::DoChangeSuperior
-// Created: JSR 2012-09-27
-// -----------------------------------------------------------------------------
-void TacticalTreeView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior )
-{
-    if( const kernel::Agent_ABC* agent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
-        Drop( *agent, superior );
-    else if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
-        Drop( *automat, superior );
-    else if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
-        Drop( *formation, superior );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalTreeView::OnChangeSuperior
-// Created: JSR 2012-09-27
-// -----------------------------------------------------------------------------
-void TacticalTreeView::OnChangeSuperior()
-{
-    const QModelIndex index = selectionModel()->currentIndex();
-    if( index.isValid() )
-    {
-        if( kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
-        {
-            if( !changeSuperiorDialog_ )
-                changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, false );
-            changeSuperiorDialog_->Show( *entity );
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: TacticalTreeView::ChangeDisplay
 // Created: JSR 2013-01-18
 // -----------------------------------------------------------------------------
@@ -342,17 +254,8 @@ bool TacticalTreeView::ApplyProfileFilter( QStandardItem& item ) const
 void TacticalTreeView::Drop( const kernel::Agent_ABC& item, const kernel::Entity_ABC& target )
 {
     if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &target ) )
-    {
-        if( &item.Get< kernel::TacticalHierarchies >().GetUp() == automat )
-            return;
-        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "unit_change_superior" );
-        std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
-        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-        action->AddParameter( *new actions::parameters::Automat( it.NextElement(), *automat, controllers_.controller_ ) );
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
-        actionsModel_.Publish( *action );
-    }
+        if( &item.Get< kernel::TacticalHierarchies >().GetUp() != automat )
+            actionsModel_.PublishUnitChangeSuperior( item, *automat );
 }
 
 // -----------------------------------------------------------------------------
@@ -362,17 +265,8 @@ void TacticalTreeView::Drop( const kernel::Agent_ABC& item, const kernel::Entity
 void TacticalTreeView::Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target)
 {
     if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &target ) )
-    {
-        if( & item.Get< kernel::TacticalHierarchies >().GetUp() == formation )
-            return;
-        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "change_formation_superior" );
-        std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
-        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-        action->AddParameter( *new actions::parameters::Formation( it.NextElement(), *formation, controllers_.controller_ ) );
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
-        actionsModel_.Publish( *action );
-    }
+        if( &item.Get< kernel::TacticalHierarchies >().GetUp() != formation )
+            actionsModel_.PublishChangeFormationSuperior( item, *formation );
 }
 
 // -----------------------------------------------------------------------------
@@ -381,24 +275,17 @@ void TacticalTreeView::Drop( const kernel::Automat_ABC& item, const kernel::Enti
 // -----------------------------------------------------------------------------
 void TacticalTreeView::Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target)
 {
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "change_formation_superior" );
-    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
-    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-
     if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &target ) )
     {
-        if( &item.Get< kernel::TacticalHierarchies >().GetUp() == formation )
-            return;
-        action->AddParameter( *new actions::parameters::Formation( it.NextElement(), *formation, controllers_.controller_ ) );
-    } else if( const kernel::Team_ABC* team = dynamic_cast< const kernel::Team_ABC* >( &target ) )
-    {
-        if( &item.Get< kernel::TacticalHierarchies >().GetTop() != team )
-            return;
-        action->AddParameter( *new actions::parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
+        if( &item.Get< kernel::TacticalHierarchies >().GetUp() != formation )
+            actionsModel_.PublishChangeFormationSuperior( item, *formation );
     }
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
-    actionsModel_.Publish( *action );
+    else if( const kernel::Team_ABC* team = dynamic_cast< const kernel::Team_ABC* >( &target ) )
+    {
+        if( &item.Get< kernel::TacticalHierarchies >().GetUp() != team &&
+            &item.Get< kernel::TacticalHierarchies >().GetTop() == team )
+            actionsModel_.PublishChangeFormationSuperior( item, *team );
+    }
 }
 
 // -----------------------------------------------------------------------------

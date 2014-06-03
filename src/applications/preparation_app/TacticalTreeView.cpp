@@ -39,12 +39,18 @@
 // Name: TacticalTreeView constructor
 // Created: JSR 2012-09-07
 // -----------------------------------------------------------------------------
-TacticalTreeView::TacticalTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, Model& model, const kernel::AgentTypes& agentTypes, QWidget* parent /* = 0 */ )
-    : gui::TacticalTreeView( objectName, controllers, profile, modelObserver, symbols, parent )
+TacticalTreeView::TacticalTreeView( const QString& objectName,
+                                    kernel::Controllers& controllers,
+                                    const kernel::Profile_ABC& profile,
+                                    gui::ModelObserver_ABC& modelObserver,
+                                    const gui::EntitySymbols& symbols,
+                                    Model& model,
+                                    const kernel::AgentTypes& agentTypes,
+                                    gui::ChangeSuperiorDialog& changeSuperiorDialog,
+                                    QWidget* parent /* = 0 */ )
+    : gui::TacticalTreeView( objectName, controllers, profile, modelObserver, symbols, changeSuperiorDialog, parent )
     , model_( model )
     , agentTypes_( agentTypes )
-    , contextMenuEntity_( controllers )
-    , changeSuperiorDialog_( 0 )
 {
     // NOTHING
 }
@@ -104,38 +110,6 @@ namespace
             static_cast< ::TacticalHierarchies* >( hierarchies )->ChangeSuperior( const_cast< kernel::Entity_ABC& >( superior ) );
         }
     }
-}
-
-namespace
-{
-    bool IsSubordinateOf( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
-    {
-        if( const kernel::TacticalHierarchies* pTactical = superior.Retrieve< kernel::TacticalHierarchies >() )
-            return pTactical->IsSubordinateOf( entity );
-        return false;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalTreeView::CanChangeSuperior
-// Created: JSR 2012-09-07
-// -----------------------------------------------------------------------------
-bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
-{
-    if( !superior.Retrieve< kernel::TacticalHierarchies >() )
-        return false;
-    if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
-        return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0;
-    if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
-        return dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0;
-    if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
-        return ( !IsSubordinateOf( entity, superior ) && dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0 ) || dynamic_cast< const kernel::Team_ABC* >( &superior ) != 0;
-    if( const kernel::Ghost_ABC* ghost = dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
-        return ( ghost->GetGhostType() == eGhostType_Automat && dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0 ) ||
-               ( ghost->GetGhostType() == eGhostType_Agent && dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0 );
-    if( dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
-        return dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0;
-    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -246,70 +220,12 @@ void TacticalTreeView::OnCreateTeam()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalTreeView::AddCommonMenu
-// Created: LGY 2014-05-13
-// -----------------------------------------------------------------------------
-void TacticalTreeView::AddCommonMenu( kernel::ContextMenu& menu, const kernel::Entity_ABC& entity )
-{
-    if( !IsActivated() )
-        return;
-    if( entity.Get< kernel::TacticalHierarchies >().GetSuperior() != 0 )
-        menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ), false, 1 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalTreeView::NotifyContextMenu
-// Created: LGY 2014-05-13
-// -----------------------------------------------------------------------------
-void TacticalTreeView::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
-{
-    contextMenuEntity_ = &agent;
-    AddCommonMenu( menu, agent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalTreeView::NotifyContextMenu
-// Created: JSR 2012-09-11
-// -----------------------------------------------------------------------------
-void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
-{
-    contextMenuEntity_ = &team;
-    AddCommonMenu( menu, team );
-
-    if( !isVisible() || !IsActivated() )
-        return;
-    AddFormationMenu( menu, eNatureLevel_xxxxx );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalTreeView::NotifyContextMenu
-// Created: JSR 2012-09-11
-// -----------------------------------------------------------------------------
-void TacticalTreeView::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
-{
-    contextMenuEntity_ = &formation;
-    AddCommonMenu( menu, formation );
-
-    if( !isVisible() || !IsActivated() )
-        return;
-    if( formation.GetLevel() > eNatureLevel_c )
-        AddFormationMenu( menu, static_cast< E_NatureLevel >( formation.GetLevel() ) );
-
-    kernel::ContextMenu* subMenu = menu.SubMenu( "Helpers", tr( "Change hierarchy level" ), false, 4 );
-    for( int level = static_cast< int >( eNatureLevel_xxxxx ); level > 0; level-- )
-        subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ), ENT_Tr::eToTr ).c_str(), this, SLOT( OnChangeLevel( int ) ), 0, level );
-}
-
-// -----------------------------------------------------------------------------
 // Name: TacticalTreeView::NotifyContextMenu
 // Created: JSR 2012-09-11
 // -----------------------------------------------------------------------------
 void TacticalTreeView::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
 {
-    contextMenuEntity_ = &automat;
-    AddCommonMenu( menu, automat );
-
-    if( !isVisible() || !IsActivated() )
+    if( !AddCommonMenu( automat, menu ) )
         return;
     if( tools::IsEngaged( automat ) )
         menu.InsertItem( "Helpers", tr( "Disengage" ), this, SLOT( Disengage() ), false, 0 );
@@ -322,36 +238,39 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Automat_ABC& automat, ke
 // Name: TacticalTreeView::NotifyContextMenu
 // Created: JSR 2012-09-11
 // -----------------------------------------------------------------------------
-void TacticalTreeView::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
+void TacticalTreeView::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
 {
-    if( ghost.GetGhostType() != eGhostType_Automat || !isVisible() || !IsActivated() )
+    if( !AddCommonMenu( formation, menu ) )
         return;
-    contextMenuEntity_ = &ghost;
-    AddCommonMenu( menu, ghost );
-    menu.InsertItem( "Command", tr( "Replace by a new automat" ), this, SLOT( ChangeAutomatType() ), false, 6 );
+    if( formation.GetLevel() > eNatureLevel_c )
+        AddFormationMenu( menu, static_cast< E_NatureLevel >( formation.GetLevel() ) );
+    kernel::ContextMenu* subMenu = menu.SubMenu( "Helpers", tr( "Change hierarchy level" ), false, 4 );
+    for( int level = static_cast< int >( eNatureLevel_xxxxx ); level > 0; level-- )
+        subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ), ENT_Tr::eToTr ).c_str(), this, SLOT( OnChangeLevel( int ) ), 0, level );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalTreeView::DoChangeSuperior
+// Name: TacticalTreeView::NotifyContextMenu
 // Created: JSR 2012-09-11
 // -----------------------------------------------------------------------------
-void TacticalTreeView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior )
+void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
 {
-    kernel::Agent_ABC* agent = dynamic_cast< kernel::Agent_ABC* >( &entity );
-    kernel::Automat_ABC* automat = dynamic_cast< kernel::Automat_ABC* >( &entity );
-    kernel::Formation_ABC* formation = dynamic_cast< kernel::Formation_ABC* >( &entity );
-    kernel::Ghost_ABC* ghost = dynamic_cast< kernel::Ghost_ABC* >( &entity );
-    kernel::KnowledgeGroup_ABC* kg = dynamic_cast< kernel::KnowledgeGroup_ABC* >( &entity );
-    if( agent )
-        Drop( *agent, superior );
-    else if( automat )
-        Drop( *automat, superior );
-    else if( formation )
-        Drop( *formation, superior );
-    else if( ghost )
-        Drop( *ghost, superior );
-    else if( kg )
-        Drop( *kg, superior );
+    if( !AddCommonMenu( team, menu ) )
+        return;
+    AddFormationMenu( menu, eNatureLevel_xxxxx );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::NotifyContextMenu
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
+{
+    if( ghost.GetGhostType() != eGhostType_Automat || !AddCommonMenu( ghost, menu ) )
+        return;
+    AddCommonMenu( ghost, menu );
+    menu.InsertItem( "Command", tr( "Replace by a new automat" ), this, SLOT( ChangeAutomatType() ), false, 6 );
 }
 
 // -----------------------------------------------------------------------------
@@ -406,20 +325,6 @@ void TacticalTreeView::OnChangeLevel( int levelId )
             pTactical->UpdateSymbolUpward();
             controllers_.controller_.Update( *pTactical );
         }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalTreeView::OnChangeSuperior
-// Created: JSR 2012-09-11
-// -----------------------------------------------------------------------------
-void TacticalTreeView::OnChangeSuperior()
-{
-    if( contextMenuEntity_ )
-    {
-        if( !changeSuperiorDialog_ )
-            changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, false );
-        changeSuperiorDialog_->Show( *contextMenuEntity_.ConstCast() );
     }
 }
 

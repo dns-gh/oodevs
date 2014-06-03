@@ -34,13 +34,21 @@ class StaticModel;
 class LogisticTreeView : public gui::LogisticTreeView
                        , public tools::ElementObserver_ABC< LogisticLinks >
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver,
-                               const gui::EntitySymbols& symbols, const StaticModel& staticModel,
-                               const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ );
+             LogisticTreeView( const QString& objectName,
+                               kernel::Controllers& controllers,
+                               const kernel::Profile_ABC& profile,
+                               gui::ModelObserver_ABC& modelObserver,
+                               const gui::EntitySymbols& symbols,
+                               const StaticModel& staticModel,
+                               const kernel::Time_ABC& simulation,
+                               actions::ActionsModel& actionsModel,
+                               gui::ChangeSuperiorDialog& changeSuperiorDialog,
+                               QWidget* parent /*= 0*/ );
     virtual ~LogisticTreeView();
     //@}
 
