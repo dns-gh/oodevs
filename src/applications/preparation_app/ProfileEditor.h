@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ProfileEditor( const QString& login, kernel::Controller& controller, const Model& model );
-    explicit ProfileEditor( const UserProfile& profile );
+    explicit ProfileEditor( UserProfile& profile );
     virtual ~ProfileEditor();
     //@}
 
@@ -42,7 +42,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const UserProfile* originalProfile_;
+    UserProfile* originalProfile_;
     bool deleted_;
     //@}
 };

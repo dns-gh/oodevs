@@ -108,7 +108,7 @@ void ProfilesModel::LoadProfile( xml::xistream& xis )
 // Name: ProfilesModel::CreateProfile
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-const UserProfile* ProfilesModel::CreateProfile( const QString& name )
+UserProfile* ProfilesModel::CreateProfile( const QString& name )
 {
     std::unique_ptr< UserProfile > profile( factory_.Create( name ) );
     userProfiles_.push_back( profile.release() );
@@ -283,39 +283,13 @@ void ProfilesModel::NotifyDeleted( const kernel::Ghost_ABC& ghost )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfilesModel::Visit
-// Created: LGY 2011-09-16
+// Name: ProfilesModel::Apply
+// Created: JSR 2014-06-03
 // -----------------------------------------------------------------------------
-void ProfilesModel::Visit( T_Units& units ) const
+void ProfilesModel::Apply( boost::function< void( UserProfile& ) > functor )
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-    {
-        std::vector< unsigned long > ids;
-        (*it)->Visit( ids );
-        BOOST_FOREACH( unsigned long id, ids )
-            units[ id ].insert( (*it)->GetLogin().toStdString() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfilesModel::Visit
-// Created: LGY 2011-10-19
-// -----------------------------------------------------------------------------
-void ProfilesModel::Visit( T_Profiles& profiles ) const
-{
-    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        profiles.insert( (*it)->GetLogin().toStdString() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfilesModel::Visit
-// Created: JSR 2014-05-27
-// -----------------------------------------------------------------------------
-void ProfilesModel::Visit( std::vector< const UserProfile* >& profiles )
-{
-    profiles.clear();
-    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        profiles.push_back( *it );
+        functor( **it );
 }
 
 // -----------------------------------------------------------------------------

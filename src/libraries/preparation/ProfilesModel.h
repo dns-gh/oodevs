@@ -60,24 +60,16 @@ public:
     virtual ~ProfilesModel();
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::set< std::string >               T_Profiles;
-    typedef std::map< unsigned long, T_Profiles > T_Units;
-    //@}
-
     //! @name Operations
     //@{
     void Load( const tools::Loader_ABC& fileLoader, const tools::Path& file );
     void Serialize( const tools::Path& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
-    const UserProfile* CreateProfile( const QString& name );
+    UserProfile* CreateProfile( const QString& name );
     void CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
     void DeleteProfile( const UserProfile& profile );
-    void Visit( T_Units& units ) const;
-    void Visit( T_Profiles& profiles ) const;
-    void Visit( std::vector< const UserProfile* >& profiles );
+    void Apply( boost::function< void( UserProfile& ) > functor );
 
     bool Exists( const QString& login ) const;
     UserProfile* Find( const std::string& name ) const;

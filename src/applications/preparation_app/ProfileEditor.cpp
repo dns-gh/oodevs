@@ -28,7 +28,7 @@ ProfileEditor::ProfileEditor( const QString& login, kernel::Controller& controll
 // Name: ProfileEditor constructor
 // Created: SBO 2007-11-08
 // -----------------------------------------------------------------------------
-ProfileEditor::ProfileEditor( const UserProfile& profile )
+ProfileEditor::ProfileEditor( UserProfile& profile )
     : UserProfile( profile )
     , originalProfile_( &profile )
     , deleted_( false )
@@ -62,7 +62,7 @@ void ProfileEditor::Commit( ProfilesModel& model, kernel::Controller& controller
         originalProfile_ = model.CreateProfile( GetLogin() );
     if( *this != *originalProfile_ )
     {
-        *const_cast< UserProfile* >( originalProfile_ ) = *this;
+        *originalProfile_ = *this;
         controller.Update( *originalProfile_ );
     }
 }

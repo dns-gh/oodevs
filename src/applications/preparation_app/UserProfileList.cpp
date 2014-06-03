@@ -195,14 +195,12 @@ void UserProfileList::NotifyNameChanged( const UserProfile* profile ) const
 // -----------------------------------------------------------------------------
 void UserProfileList::showEvent( QShowEvent* event )
 {
-    std::vector< const UserProfile* > profiles;
-    model_.profiles_->Visit( profiles );
-    for( auto it = profiles.begin(); it != profiles.end(); ++it )
-    {
-        ProfileEditor* profileEditor = new ProfileEditor( **it );
-        localProfiles_.emplace_back( profileEditor );
-        dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( *profileEditor ) );
-    }
+    model_.profiles_->Apply( [&]( UserProfile& profile )
+        {
+            ProfileEditor* profileEditor = new ProfileEditor( profile );
+            localProfiles_.emplace_back( profileEditor );
+            dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( *profileEditor ) );
+        });
     proxyModel_->sort( 0 );
     QWidget::showEvent( event );
     pages_.setVisible( dataModel_->rowCount() > 0 );

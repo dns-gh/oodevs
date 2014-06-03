@@ -468,11 +468,20 @@ void ModelConsistencyChecker::CheckLogisticInitialization()
 // -----------------------------------------------------------------------------
 void ModelConsistencyChecker::CheckProfileUniqueness()
 {
-    ProfilesModel::T_Units units;
-    model_.profiles_->Visit( units );
+    typedef std::set< std::string > T_Profiles;
+    typedef std::map< unsigned long, T_Profiles > T_Units;
+    T_Units units;
+    model_.profiles_->Apply( [&]( UserProfile& profile )
+        {
+            std::vector< unsigned long > ids;
+            profile.Visit( ids );
+            BOOST_FOREACH( unsigned long id, ids )
+                units[ id ].insert( profile.GetLogin().toStdString() );
+        });
+
     for( auto it = units.begin(); it != units.end(); ++it )
     {
-        const ProfilesModel::T_Units::value_type& element = *it;
+        const T_Units::value_type& element = *it;
         if( element.second.size() > 1 )
         {
             const Entity_ABC* entity = model_.GetTeamResolver().Find( element.first );
