@@ -705,15 +705,6 @@ bool Session::Pause()
     return SendStatus( STATUS_PAUSED );
 }
 
-namespace
-{
-template< typename T >
-std::string MakeOption( const std::string& option, const T& value )
-{
-    return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
-}
-}
-
 Session::T_Process Session::StartSimulation( const web::session::Config& cfg,
                                              const std::string& checkpoint,
                                              bool replay,
@@ -721,23 +712,27 @@ Session::T_Process Session::StartSimulation( const web::session::Config& cfg,
                                              const Path& app ) const
 {
     deps_.fs.MakePaths( output );
-    std::vector< std::string > options = boost::assign::list_of
-        ( MakeOption( "debug-dir", Utf8( GetRoot() / "debug" ) ) )
-        ( MakeOption( "exercises-dir", Utf8( GetPath( "exercise" ) ) ) )
-        ( MakeOption( "terrains-dir", Utf8( GetPath( "terrain" ) ) ) )
-        ( MakeOption( "models-dir", Utf8( GetPath( "model" ) ) ) )
-        ( MakeOption( "exercise", Utf8( GetExercise() ) ) )
-        ( MakeOption( "session",  output.filename() ) );
+    std::vector< std::string > options = boost::assign::list_of< std::string >
+        ( "--debug-dir" )( Utf8( GetRoot() / "debug" ) )
+        ( "--exercises-dir" )( Utf8( GetPath( "exercise" ) ) )
+        ( "--terrains-dir" )( Utf8( GetPath( "terrain" ) ) )
+        ( "--models-dir" )( Utf8( GetPath( "model" ) ) )
+        ( "--exercise" )( Utf8( GetExercise() ) )
+        ( "--session" )( Utf8( output.filename() ) );
     std::string file = "session.xml";
     if( replay )
     {
         file = boost::lexical_cast< std::string >( id_ );
-        options.push_back( MakeOption( "session-file", file ) );
+        options.push_back( "--session-file" );
+        options.push_back( file );
         options.push_back( "--no-log" );
     }
     deps_.fs.WriteFile( output / file, GetConfiguration( cfg, port_->Get() ) );
     if( !checkpoint.empty() )
-        options.push_back( MakeOption( "checkpoint", checkpoint ) );
+    {
+        options.push_back( "--checkpoint" );
+        options.push_back( checkpoint );
+    }
     return deps_.runtime.Start( Utf8( app ),
         options, Utf8( Path( app ).remove_filename() ), "" );
 }
@@ -794,9 +789,9 @@ Session::T_Process StartTimeline( const SessionDependencies& deps,
 {
     const Path config = root / "timeline.run";
     WriteTimelineConfig( deps.uuids, deps.fs, config, base + DISPATCHER_PORT );
-    std::vector< std::string > options = boost::assign::list_of
-        ( MakeOption( "port",  base + TIMELINE_PORT ) )
-        ( MakeOption( "run", Utf8( config ) ) );
+    const auto options = boost::assign::list_of< std::string >
+        ( "--port" )( boost::lexical_cast< std::string >( base + TIMELINE_PORT ) )
+        ( "--run" )( Utf8( config ) );
     return deps.runtime.Start( Utf8( app ), options,
         Utf8( Path( app ).remove_filename() ), Utf8( root / "timeline.log" ) );
 }

@@ -528,16 +528,6 @@ void Context::ParsePackages()
 namespace
 {
 // -----------------------------------------------------------------------------
-// Name: MakeOption
-// Created: BAX 2012-10-02
-// -----------------------------------------------------------------------------
-template< typename T >
-std::string MakeOption( const std::string& option, const T& value )
-{
-    return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
-}
-
-// -----------------------------------------------------------------------------
 // Name: WriteConfiguration
 // Created: BAX 2012-10-02
 // -----------------------------------------------------------------------------
@@ -604,13 +594,13 @@ void Context::StartClient()
     const Path debug = exercise / "exercises" / name / "sessions" / GetTimestamp();
     WriteConfiguration( fs_, exercise / "exercises" / name, QUtf8( url_.host() ), url_.queryItemValue( "tcp" ).toInt(),
         Get< int >( session_, "timeline.port" ), Get< bool >( session_, "mapnik.enabled" ) );
-    std::vector< std::string > args = boost::assign::list_of
-        ( MakeOption( "models-dir", Utf8( model / "data/models" ) ) )
-        ( MakeOption( "terrains-dir", Utf8( terrain / "data/terrains" ) ) )
-        ( MakeOption( "exercises-dir", Utf8( exercise / "exercises" ) ) )
-        ( MakeOption( "debug-dir", Utf8( debug ) ) )
-        ( MakeOption( "exercise", Utf8( name ) ) )
-        ( MakeOption( "password", GetPassword( url_ ) ) );
+    const auto args = boost::assign::list_of< std::string >
+        ( "--models-dir" )( Utf8( model / "data/models" ) )
+        ( "--terrains-dir" )( Utf8( terrain / "data/terrains" ) )
+        ( "--exercises-dir" )( Utf8( exercise / "exercises" ) )
+        ( "--debug-dir" )( Utf8( debug ) )
+        ( "--exercise" )( Utf8( name ) )
+        ( "--password" )( GetPassword( url_ ) );
     try
     {
         runtime_.Start( Utf8( client / "gaming_app.exe" ), args, Utf8( client ), std::string() );

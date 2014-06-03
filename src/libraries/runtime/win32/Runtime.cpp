@@ -11,13 +11,14 @@
 #include "Api_ABC.h"
 #include <runtime/Utf8.h>
 #include <cpplog/cpplog.hpp>
+#include <tools/Helpers.h>
+
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/ref.hpp>
 #include <boost/algorithm/string/join.hpp>
-
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
@@ -89,12 +90,11 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
 {
     try
     {
-        std::vector< wchar_t > wcmd;
-        // force empty arg[0] which, for some reason, is not filled by win32...
-        wcmd.push_back( L' ' );
-        const std::wstring join = Utf8( boost::algorithm::join( args, " " ) );
-        std::copy( join.begin(), join.end(), std::back_inserter( wcmd ) );
-        wcmd.push_back( 0 );
+        std::vector< std::wstring > wargs;
+        wargs.push_back( Utf8( cmd ) );
+        for( auto it = args.begin(); it != args.end(); ++it )
+            wargs.push_back( Utf8( *it ) );
+        auto wcmd = tools::ArgsToCommandLine( wargs );
         return MakeProcess( api_, Utf8( cmd ), wcmd, Utf8( run ), Utf8( log ) );
     }
     catch( const std::runtime_error& err )
