@@ -463,8 +463,8 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     Configuration cfg;
     cfg.root                  = Utf8( GetTree( tree, "root", Utf8( root ) ) );
     cfg.ports.period          = GetTree( tree, "ports.period", 12 );
-    cfg.ports.min             = GetTree( tree, "ports.min", 50000 );
-    cfg.ports.max             = GetTree( tree, "ports.max", 60000 );
+    cfg.ports.min             = GetTree( tree, "ports.min", 12000 );
+    cfg.ports.max             = GetTree( tree, "ports.max", 15000 );
     cfg.ports.http            = GetTree( tree, "ports.http", 8080 );
     cfg.ports.tcp             = GetTree( tree, "ports.tcp",  cfg.ports.http+1 );
     cfg.cluster.enabled       = GetTree( tree, "cluster.enabled", true );
