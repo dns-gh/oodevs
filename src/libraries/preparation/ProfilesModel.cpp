@@ -108,10 +108,11 @@ void ProfilesModel::LoadProfile( xml::xistream& xis )
 // Name: ProfilesModel::CreateProfile
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void ProfilesModel::CreateProfile( const QString& name )
+const UserProfile* ProfilesModel::CreateProfile( const QString& name )
 {
     std::unique_ptr< UserProfile > profile( factory_.Create( name ) );
     userProfiles_.push_back( profile.release() );
+    return userProfiles_.back();
 }
 
 // -----------------------------------------------------------------------------
@@ -304,6 +305,17 @@ void ProfilesModel::Visit( T_Profiles& profiles ) const
 {
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         profiles.insert( (*it)->GetLogin().toStdString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::Visit
+// Created: JSR 2014-05-27
+// -----------------------------------------------------------------------------
+void ProfilesModel::Visit( std::vector< const UserProfile* >& profiles )
+{
+    profiles.clear();
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        profiles.push_back( *it );
 }
 
 // -----------------------------------------------------------------------------

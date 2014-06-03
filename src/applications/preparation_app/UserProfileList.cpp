@@ -13,26 +13,23 @@
 #include "UserProfileWidget.h"
 #include "ProfileEditor.h"
 #include "NewProfileDialog.h"
-#include "ProfilesChecker_ABC.h"
+#include "preparation/Model.h"
 #include "preparation/ProfilesModel.h"
-#include "preparation/UserProfile.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Controller.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichWidget.h"
+
+Q_DECLARE_METATYPE( ProfileEditor* )
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileList constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers,
-                                  ProfilesModel& model, ProfilesChecker_ABC& checker )
+UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, Model& model )
     : QWidget( parent )
-    , controllers_      ( controllers )
-    , pages_            ( pages )
-    , model_            ( model )
-    , checker_          ( checker )
-    , pNewProfileDialog_( new NewProfileDialog( this, model, checker ) )
+    , controller_( controller )
+    , pages_( pages )
+    , model_( model )
+    , pNewProfileDialog_( new NewProfileDialog( this, *this ) )
 {
     gui::SubObjectName subObject( "UserProfileList" );
     QVBoxLayout* layout = new QVBoxLayout( this );
@@ -59,7 +56,8 @@ UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, ker
 
     layout->addWidget( list_ );
     layout->addLayout( box );
-    controllers_.Register( *this );
+
+    pages_.SetChecker( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,37 +66,51 @@ UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, ker
 // -----------------------------------------------------------------------------
 UserProfileList::~UserProfileList()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileList::Save
-// Created: SBO 2007-11-08
+// Name: UserProfileList::Commit
+// Created: JSR 2014-06-03
 // -----------------------------------------------------------------------------
-void UserProfileList::Save()
+void UserProfileList::Commit()
 {
-    for( auto it = editors_.begin(); it != editors_.end(); ++it )
+    for( auto it = localProfiles_.begin(); it != localProfiles_.end(); ++it )
+        ( *it )->Commit( *model_.profiles_, controller_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileList::Exists
+// Created: JSR 2014-06-02
+// -----------------------------------------------------------------------------
+bool UserProfileList::Exists( const QString& oldLogin, const QString& newLogin ) const
+{
+    for( auto it = localProfiles_.begin(); it != localProfiles_.end(); ++it )
     {
-        *const_cast< UserProfile* >( it->first ) = *it->second;
-        controllers_.controller_.Update( it->first );
+        if( !( *it )->IsDeleted() )
+        {
+            const QString& login = ( *it )->GetLogin();
+            if( login != oldLogin && login == newLogin )
+                return true;
+        }
     }
-    checker_.Clean();
+    return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileList::Cancel
-// Created: SBO 2007-11-08
+// Name: UserProfileList::Exists
+// Created: JSR 2014-06-02
 // -----------------------------------------------------------------------------
-void UserProfileList::Cancel()
+bool UserProfileList::Exists( const QString& login ) const
 {
-    for( auto it = editors_.begin(); it != editors_.end(); ++it )
-        delete it->second;
-    editors_.clear();
-    checker_.Clean();
+    for( auto it = localProfiles_.begin(); it != localProfiles_.end(); ++it )
+        if( !( *it )->IsDeleted() && ( *it )->GetLogin() == login )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileList::OnCurrentChanged
+// Name: UserProfileList::OnSelectionChanged
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 void UserProfileList::OnSelectionChanged()
@@ -106,14 +118,28 @@ void UserProfileList::OnSelectionChanged()
     QModelIndexList indexes = list_->selectionModel()->selectedIndexes();
     if( isVisible() && !indexes.empty() )
     {
-        if( const UserProfile* profile = profiles_.at( proxyModel_->mapToSource( indexes.front() ).row() ) )
-        {
-            UserProfile*& editor = editors_[ profile ];
-            if( !editor )
-                editor = new ProfileEditor( *profile, controllers_.controller_ );
-            checker_.Display( editors_ );
-            pages_.Display( *editor );
-        }
+        const int row = proxyModel_->mapToSource( indexes.front() ).row();
+        if( ProfileEditor* profile = dataModel_->item( row )->data().value< ProfileEditor* >() )
+            pages_.Display( *profile );
+    }
+}
+
+namespace
+{
+    QStandardItem* CreateItem( ProfileEditor& profile )
+    {
+        QStandardItem* item = new QStandardItem( profile.GetLogin() );
+        item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+        item->setData( QVariant::fromValue( &profile ) );
+        return item;
+    }
+
+    int GetIndex( const QStandardItemModel* model, const UserProfile* profile )
+    {
+        for( int i = 0; i < model->rowCount(); ++i )
+            if( model->item( i )->data().value< ProfileEditor* >() == profile )
+                return i;
+        return -1;
     }
 }
 
@@ -123,7 +149,13 @@ void UserProfileList::OnSelectionChanged()
 // -----------------------------------------------------------------------------
 void UserProfileList::OnCreate()
 {
-    pNewProfileDialog_->Exec();
+    const QString& result = pNewProfileDialog_->Exec();
+    if( result.isEmpty() )
+        return;
+    ProfileEditor* profileEditor = new ProfileEditor( result, controller_, model_ );
+    localProfiles_.emplace_back( profileEditor );
+    dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( *profileEditor ) );
+    pages_.setVisible( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,79 +166,26 @@ void UserProfileList::OnDelete()
 {
     QModelIndexList indexes = list_->selectionModel()->selectedIndexes();
     if( !indexes.empty() )
-        if( const UserProfile* profile = profiles_.at( proxyModel_->mapToSource( indexes.front() ).row() ) )
-            model_.DeleteProfile( *profile );
-}
-
-namespace
-{
-    QStandardItem* CreateItem( const QString& text )
     {
-        QStandardItem* item = new QStandardItem( text );
-        item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-        return item;
+        const int index = proxyModel_->mapToSource( indexes.front() ).row();
+        dataModel_->item( index )->data().value< ProfileEditor* >()->Delete();
+        dataModel_->removeRow( index );
+        pages_.setVisible( dataModel_->rowCount() > 0 );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileList::NotifyCreated
-// Created: SBO 2007-01-16
+// Name: UserProfileList::NotifyNameChanged
+// Created: JSR 2014-06-03
 // -----------------------------------------------------------------------------
-void UserProfileList::NotifyCreated( const UserProfile& profile )
+void UserProfileList::NotifyNameChanged( const UserProfile* profile ) const
 {
-    profiles_.push_back( &profile );
-    int count = dataModel_->rowCount();
-    dataModel_->setItem( count, 0, CreateItem( profile.GetLogin() ) );
-    proxyModel_->sort( 0 );
-    if( isShown() )
+    int index = GetIndex( dataModel_, profile );
+    if( index != -1 )
     {
-        list_->selectionModel()->clear();
-        list_->selectionModel()->select( proxyModel_->mapFromSource( dataModel_->index( count, 0 ) ), QItemSelectionModel::Select );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileList::NotifyUpdated
-// Created: SBO 2007-01-16
-// -----------------------------------------------------------------------------
-void UserProfileList::NotifyUpdated( const UserProfile& profile )
-{
-    const UserProfile* updated = &profile;
-    auto editorIt = editors_.find( &profile );
-    if( editorIt != editors_.end() )
-        updated = editorIt->second;
-
-    auto it = std::find( profiles_.begin(), profiles_.end(), &profile );
-    if( it != profiles_.end() )
-    {
-        const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
         QStandardItem* item = dataModel_->item( index );
-        if( item && item->text() != updated->GetLogin() )
-            item->setText( updated->GetLogin() );
-    }
-    proxyModel_->sort( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileList::NotifyDeleted
-// Created: SBO 2007-01-16
-// -----------------------------------------------------------------------------
-void UserProfileList::NotifyDeleted( const UserProfile& profile )
-{
-    T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
-    if( it != profiles_.end() )
-    {
-        const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
-        dataModel_->takeRow( index );
-        profiles_.erase( it );
-        T_ProfileEditors::iterator editorIt = editors_.find( &profile );
-        if( editorIt != editors_.end() )
-        {
-            delete editorIt->second;
-            editors_.erase( editorIt );
-        }
-        checker_.Display( editors_ );
-        pages_.setVisible( !profiles_.empty() );
+        item->setText( profile->GetLogin() );
+        proxyModel_->sort( 0 );
     }
 }
 
@@ -216,9 +195,28 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileList::showEvent( QShowEvent* event )
 {
+    std::vector< const UserProfile* > profiles;
+    model_.profiles_->Visit( profiles );
+    for( auto it = profiles.begin(); it != profiles.end(); ++it )
+    {
+        ProfileEditor* profileEditor = new ProfileEditor( **it );
+        localProfiles_.emplace_back( profileEditor );
+        dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( *profileEditor ) );
+    }
+    proxyModel_->sort( 0 );
     QWidget::showEvent( event );
-    if( dataModel_->rowCount() > 0 )
-        pages_.setVisible( true );
+    pages_.setVisible( dataModel_->rowCount() > 0 );
     list_->selectionModel()->clear();
     list_->selectionModel()->select( proxyModel_->index( 0, 0 ), QItemSelectionModel::Select );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileList::hideEvent
+// Created: JSR 2014-06-02
+// -----------------------------------------------------------------------------
+void UserProfileList::hideEvent( QHideEvent* event )
+{
+    dataModel_->clear();
+    localProfiles_.clear();
+    QWidget::hideEvent( event );
 }

@@ -10,15 +10,7 @@
 #ifndef __ProfilesChecker_ABC_h_
 #define __ProfilesChecker_ABC_h_
 
-#include <boost/noncopyable.hpp>
-#include <map>
-
 class UserProfile;
-
-namespace kernel
-{
-    class Entity_ABC;
-}
 
 // =============================================================================
 /** @class  ProfilesChecker_ABC
@@ -26,7 +18,7 @@ namespace kernel
 */
 // Created: LGY 2011-12-07
 // =============================================================================
-class ProfilesChecker_ABC : private boost::noncopyable
+class ProfilesChecker_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -35,17 +27,11 @@ public:
     virtual ~ProfilesChecker_ABC() {}
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< const UserProfile*, UserProfile* > T_ProfileEditors;
-    //@}
-
     //! @name Operations
     //@{
-    virtual void Display( const T_ProfileEditors& editors ) = 0;
-    virtual void Clean() = 0;
     virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const = 0;
     virtual bool Exists( const QString& login ) const = 0;
+    virtual void NotifyNameChanged( const UserProfile* profile ) const = 0;
     //@}
 };
 

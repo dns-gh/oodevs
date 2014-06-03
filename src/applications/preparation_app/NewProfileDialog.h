@@ -10,7 +10,6 @@
 #ifndef __NewProfileDialog_h_
 #define __NewProfileDialog_h_
 
-class ProfilesModel;
 class ProfilesChecker_ABC;
 
 namespace gui
@@ -31,13 +30,13 @@ class NewProfileDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             NewProfileDialog( QWidget* parent, ProfilesModel& model, ProfilesChecker_ABC& checker );
+             NewProfileDialog( QWidget* parent, const ProfilesChecker_ABC& checker );
     virtual ~NewProfileDialog();
     //@}
 
     //! @name Operations
     //@{
-    void Exec();
+    const QString& Exec();
     //@}
 
 private slots:
@@ -56,8 +55,8 @@ private:
 private:
     //! @name Member Data
     //@{
-    ProfilesModel& model_;
-    ProfilesChecker_ABC& checker_;
+    const ProfilesChecker_ABC& checker_;
+    QString result_;
     gui::RichLineEdit* value_;
     QDialogButtonBox* okButton_;
     QLabel* warningLabel_;

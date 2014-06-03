@@ -19,9 +19,8 @@
 // Name: NewProfileDialog constructor
 // Created: LGY 2011-12-08
 // -----------------------------------------------------------------------------
-NewProfileDialog::NewProfileDialog( QWidget* parent, ProfilesModel& model, ProfilesChecker_ABC& checker)
+NewProfileDialog::NewProfileDialog( QWidget* parent, const ProfilesChecker_ABC& checker )
     : QDialog( parent )
-    , model_  ( model )
     , checker_( checker )
 {
     gui::SubObjectName subObject( "NewProfileDialog" );
@@ -71,7 +70,7 @@ void NewProfileDialog::UpdateText()
     }
     else
     {
-        if( model_.Exists( name ) || checker_.Exists( name ) )
+        if( checker_.Exists( name ) )
         {
             warningLabel_->setText( "<font color=\"#FF0000\">" + tr( "Profile '%1' already exists." ).arg( name ) + "</font>" );
             okButton_->setEnabled( false );
@@ -88,11 +87,13 @@ void NewProfileDialog::UpdateText()
 // Name: NewProfileDialog::Exec
 // Created: LGY 2011-12-08
 // -----------------------------------------------------------------------------
-void NewProfileDialog::Exec()
+const QString& NewProfileDialog::Exec()
 {
+    result_.clear();
     value_->setText( BuildUniqueLogin() );
     value_->selectAll();
     exec();
+    return result_;
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +105,7 @@ QString NewProfileDialog::BuildUniqueLogin() const
     static const QString defaultName = tr( "New profile" );
     QString name;
     int i = 0;
-    while( model_.Exists( name = defaultName + ( i > 0 ? " (" + locale().toString( i ) + ")" : "" ) ) )
+    while( checker_.Exists( name = defaultName + ( i > 0 ? " (" + locale().toString( i ) + ")" : "" ) ) )
         ++i;
     return name;
 }
@@ -115,6 +116,6 @@ QString NewProfileDialog::BuildUniqueLogin() const
 // -----------------------------------------------------------------------------
 void NewProfileDialog::Validate()
 {
-     model_.CreateProfile( value_->text() );
+     result_ = value_->text();
      accept();
 }

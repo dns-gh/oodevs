@@ -10,11 +10,11 @@
 #ifndef __UserProfileList_h_
 #define __UserProfileList_h_
 
-#include <tools/ElementObserver_ABC.h>
+#include "ProfilesChecker_ABC.h"
 
 namespace kernel
 {
-    class Controllers;
+    class Controller;
 }
 
 namespace gui
@@ -24,9 +24,9 @@ namespace gui
 
 class UserProfile;
 class UserProfileWidget;
-class ProfilesModel;
-class ProfilesChecker_ABC;
+class Model;
 class NewProfileDialog;
+class ProfileEditor;
 
 // =============================================================================
 /** @class  UserProfileList
@@ -35,27 +35,28 @@ class NewProfileDialog;
 // Created: SBO 2007-01-16
 // =============================================================================
 class UserProfileList : public QWidget
-                      , public tools::Observer_ABC
-                      , public tools::ElementObserver_ABC< UserProfile >
+                      , public ProfilesChecker_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers,
-                              ProfilesModel& model, ProfilesChecker_ABC& checker );
+             UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controller& controller, Model& model );
     virtual ~UserProfileList();
     //@}
 
     //! @name Operations
     //@{
-    void Save();
-    void Cancel();
+    void Commit();
     //@}
 
-signals:
-    void DoConsistencyCheck();
+    //! @name From ProfilesChecker_ABC
+    //@{
+    virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const;
+    virtual bool Exists( const QString& login ) const;
+    virtual void NotifyNameChanged( const UserProfile* profile ) const;
+    //@}
 
 private slots:
     //! @name Slots
@@ -68,32 +69,25 @@ private slots:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyCreated( const UserProfile& profile );
-    virtual void NotifyUpdated( const UserProfile& profile );
-    virtual void NotifyDeleted( const UserProfile& profile );
     virtual void showEvent( QShowEvent* event );
+    virtual void hideEvent( QHideEvent* event );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< const UserProfile* >            T_Profiles;
-    typedef std::map< const UserProfile*, UserProfile* > T_ProfileEditors;
+    typedef std::vector< std::unique_ptr< ProfileEditor > > T_LocalProfiles;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&   controllers_;
-    ProfilesModel&         model_;
-    ProfilesChecker_ABC&   checker_;
-    T_Profiles             profiles_;
-    T_ProfileEditors       editors_;
-    UserProfileWidget&     pages_;
-    gui::RichWidget< QListView >*          list_;
+    kernel::Controller& controller_;
+    Model& model_;
+    T_LocalProfiles localProfiles_;
+    UserProfileWidget& pages_;
+    gui::RichWidget< QListView >* list_;
     QSortFilterProxyModel* proxyModel_;
-    QStandardItemModel*    dataModel_;
-    std::unique_ptr< NewProfileDialog > pNewProfileDialog_;
-    //@}
+    std::auto_ptr< NewProfileDialog > pNewProfileDialog_;    //@}
 };
 
 #endif // __UserProfileList_h_

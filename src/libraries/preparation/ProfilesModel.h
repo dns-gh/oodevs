@@ -10,6 +10,7 @@
 #ifndef __ProfilesModel_h_
 #define __ProfilesModel_h_
 
+#include <boost/noncopyable.hpp>
 #include <tools/ElementObserver_ABC.h>
 
 namespace xml
@@ -50,6 +51,7 @@ class ProfilesModel : public tools::Observer_ABC
                     , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                     , public tools::ElementObserver_ABC< kernel::Population_ABC >
                     , public tools::ElementObserver_ABC< kernel::Ghost_ABC >
+                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -62,7 +64,6 @@ public:
     //@{
     typedef std::set< std::string >               T_Profiles;
     typedef std::map< unsigned long, T_Profiles > T_Units;
-    typedef T_Units::const_iterator             CIT_Units;
     //@}
 
     //! @name Operations
@@ -71,11 +72,12 @@ public:
     void Serialize( const tools::Path& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
-    void CreateProfile( const QString& name );
+    const UserProfile* CreateProfile( const QString& name );
     void CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
     void DeleteProfile( const UserProfile& profile );
     void Visit( T_Units& units ) const;
     void Visit( T_Profiles& profiles ) const;
+    void Visit( std::vector< const UserProfile* >& profiles );
 
     bool Exists( const QString& login ) const;
     UserProfile* Find( const std::string& name ) const;
@@ -97,12 +99,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ProfilesModel( const ProfilesModel& );            //!< Copy constructor
-    ProfilesModel& operator=( const ProfilesModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Read( xml::xistream& xis );
@@ -111,8 +107,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< UserProfile* >      T_UserProfiles;
-    typedef T_UserProfiles::const_iterator CIT_UserProfiles;
+    typedef std::vector< UserProfile* > T_UserProfiles;
     //@}
 
 private:

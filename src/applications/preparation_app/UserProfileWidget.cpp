@@ -28,10 +28,10 @@
 // Name: UserProfileWidget constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
-                                      ProfilesChecker_ABC& checker, Model& model )
+UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
+                                      const gui::EntitySymbols& icons, Model& model )
     : gui::RichWidget< QTabWidget >( objectName, parent )
-    , checker_    ( checker )
+    , controllers_( controllers )
     , model_      ( model )
     , profile_    ( 0 )
 {
@@ -179,27 +179,35 @@ void UserProfileWidget::Display( UserProfile& profile )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileWidget::SetChecker
+// Created: JSR 2014-06-02
+// -----------------------------------------------------------------------------
+void UserProfileWidget::SetChecker( const ProfilesChecker_ABC* pChecker )
+{
+    pChecker_ = pChecker;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileWidget::OnLoginChanged
 // Created: LGY 2011-09-26
 // -----------------------------------------------------------------------------
 void UserProfileWidget::OnLoginChanged()
 {
-    try
+    if( !profile_ || !pChecker_ )
+        return;
+    QString newLogin = login_->text();
+    const QString& oldLogin = profile_->GetLogin();
+    if( oldLogin == newLogin )
+        return;
+    if( pChecker_->Exists( oldLogin, newLogin ) )
     {
-        if( profile_ )
-        {
-            QString login = login_->text();
-            if( profile_->GetLogin() != login && checker_.Exists( profile_->GetLogin(), login ) )
-                throw MASA_EXCEPTION( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString() );
-            if( profile_->GetLogin() != login && model_.profiles_->Exists( login ) && !checker_.Exists( login ) )
-                throw MASA_EXCEPTION( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString() );
-            profile_->SetLogin( login );
-        }
+        QMessageBox::warning( this, tr( "Invalid profile information" ), tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( newLogin ), QMessageBox::Ok, Qt::NoButton );
+        login_->setText( oldLogin );
     }
-    catch( const std::exception& e )
+    else
     {
-        QMessageBox::warning( this, tr( "Invalid profile information" ), tools::GetExceptionMsg( e ).c_str(), QMessageBox::Ok, Qt::NoButton );
-        login_->setText( profile_->GetLogin() );
+        profile_->SetLogin( newLogin );
+        pChecker_->NotifyNameChanged( profile_ );
     }
 }
 

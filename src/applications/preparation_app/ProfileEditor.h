@@ -11,6 +11,9 @@
 #define __ProfileEditor_h_
 
 #include "preparation/UserProfile.h"
+#include <boost/noncopyable.hpp>
+
+class ProfilesModel;
 
 // =============================================================================
 /** @class  ProfileEditor
@@ -19,31 +22,28 @@
 // Created: SBO 2007-11-07
 // =============================================================================
 class ProfileEditor : public UserProfile
+                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileEditor( const UserProfile& profile, kernel::Controller& controller );
+             ProfileEditor( const QString& login, kernel::Controller& controller, const Model& model );
+    explicit ProfileEditor( const UserProfile& profile );
     virtual ~ProfileEditor();
     //@}
 
-    //! @name Setters
+    //! @name Operations
     //@{
-    virtual void SetLogin( const QString& value );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ProfileEditor( const ProfileEditor& );            //!< Copy constructor
-    ProfileEditor& operator=( const ProfileEditor& ); //!< Assignment operator
+    void Commit( ProfilesModel& model, kernel::Controller& controller );
+    void Delete();
+    bool IsDeleted() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    const UserProfile& profile_;
+    const UserProfile* originalProfile_;
+    bool deleted_;
     //@}
 };
 

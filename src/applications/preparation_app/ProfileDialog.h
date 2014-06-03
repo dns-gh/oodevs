@@ -25,7 +25,6 @@ namespace gui
 class UserProfileList;
 class UserProfileWidget;
 class Model;
-class ProfilesChecker_ABC;
 
 // =============================================================================
 /** @class  ProfileDialog
@@ -35,7 +34,7 @@ class ProfilesChecker_ABC;
 // =============================================================================
 class ProfileDialog : public ModalDialog
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -53,15 +52,12 @@ private slots:
     //! @name Slots
     //@{
     void OnAccept();
-    void OnReject();
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ProfilesChecker_ABC > pChecher_;    UserProfileList* list_;
-    UserProfileWidget* pages_;
-    //@}
+    UserProfileList* list_;    //@}
 };
 
 #endif // __ProfileDialog_h_

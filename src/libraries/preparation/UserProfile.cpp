@@ -122,7 +122,7 @@ void UserProfile::Serialize( xml::xostream& xos ) const
 // Name: UserProfile::GetLogin
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-QString UserProfile::GetLogin() const
+const QString& UserProfile::GetLogin() const
 {
     return login_;
 }
@@ -131,7 +131,7 @@ QString UserProfile::GetLogin() const
 // Name: UserProfile::GetPassword
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-QString UserProfile::GetPassword() const
+const QString& UserProfile::GetPassword() const
 {
     return password_;
 }
@@ -252,6 +252,25 @@ UserProfile& UserProfile::operator=( const UserProfile& p )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::operator==
+// Created: JSR 2014-06-02
+// -----------------------------------------------------------------------------
+bool UserProfile::operator==( const UserProfile& other ) const
+{
+    return login_ == other.login_ && password_ == other.password_ && supervisor_ == other.supervisor_
+        && timeControl_ == other.timeControl_ && rights_ == other.rights_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::operator!=
+// Created: JSR 2014-06-03
+// -----------------------------------------------------------------------------
+bool UserProfile::operator!=( const UserProfile& other ) const
+{
+    return !( *this == other );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::NotifyTeamDeleted
 // Created: MMC 2011-06-24
 // -----------------------------------------------------------------------------
@@ -357,4 +376,3 @@ void UserProfile::VisitAllAutomats( std::set< unsigned long >& elements ) const
     InsertAutomatsFromFormations( rights_.GetReadFormations(), elements, model_ );
     InsertAutomatsFromFormations( rights_.GetWriteFormations(), elements, model_ );
 }
-

@@ -12,7 +12,6 @@
 #include "moc_ProfileDialog.cpp"
 #include "UserProfileWidget.h"
 #include "UserProfileList.h"
-#include "ProfilesChecker.h"
 #include "icons.h"
 #include "preparation/Model.h"
 #include "clients_gui/RichPushButton.h"
@@ -23,7 +22,6 @@
 // -----------------------------------------------------------------------------
 ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, Model& model )
     : ModalDialog( parent, "ProfileDialog" )
-    , pChecker_( new ProfilesChecker() )
 {
     gui::SubObjectName subObject( "UsersProfile" );
     setCaption( tr( "User profiles" ) );
@@ -51,14 +49,13 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    pages_ = new UserProfileWidget( "UserProfileWidget", box, controllers, icons, *pChecker_, model );
-    pages_->setMargin( 5 );
+    UserProfileWidget* pages = new UserProfileWidget( "UserProfileWidget", box, controllers, icons, model );
+    pages->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    list_ = new UserProfileList( box, *pages_, controllers, *model.profiles_, *pChecker_ );
-    connect( list_, SIGNAL( DoConsistencyCheck() ), parent, SIGNAL( CheckConsistency() ) );
+    list_ = new UserProfileList( box, *pages, controllers.controller_, model );
     grid->addWidget( box, 1, 0 );
 
     box = new Q3HBox( this );
@@ -71,7 +68,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     grid->addWidget( box, 2, 1, Qt::AlignRight );
 
     connect( okBtn, SIGNAL( clicked() ), SLOT( OnAccept() ) );
-    connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
+    connect( cancelBtn, SIGNAL( clicked() ), SLOT( reject() ) );
     hide();
 }
 
@@ -99,16 +96,6 @@ QSize ProfileDialog::sizeHint() const
 // -----------------------------------------------------------------------------
 void ProfileDialog::OnAccept()
 {
-    list_->Save();
+    list_->Commit();
     accept();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfileDialog::OnReject
-// Created: SBO 2007-01-16
-// -----------------------------------------------------------------------------
-void ProfileDialog::OnReject()
-{
-    list_->Cancel();
-    reject();
 }

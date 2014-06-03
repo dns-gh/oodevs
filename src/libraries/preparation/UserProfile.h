@@ -45,8 +45,8 @@ public:
 
     //! @name Accessors
     //@{
-    QString GetLogin() const;
-    QString GetPassword() const;
+    const QString& GetLogin() const;
+    const QString& GetPassword() const;
     bool IsSupervisor() const;
     bool HasTimeControl() const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
@@ -69,6 +69,8 @@ public:
     //@{
     void Serialize( xml::xostream& xos ) const;
     UserProfile& operator=( const UserProfile& );
+    bool operator==( const UserProfile& ) const;
+    bool operator!=( const UserProfile& ) const;
     void NotifyTeamDeleted( unsigned long teamId );
     void NotifyFormationDeleted( unsigned long formationId );
     void NotifyAutomatDeleted( unsigned long automatId );

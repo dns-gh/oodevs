@@ -40,14 +40,15 @@ class UserProfileWidget : public gui::RichWidget< QTabWidget >
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
-                                ProfilesChecker_ABC& checker, Model& model );
+             UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
+                                const gui::EntitySymbols& icons, Model& model );
     virtual ~UserProfileWidget();
     //@}
 
     //! @name Operations
     //@{
     void Display( UserProfile& profile );
+    void SetChecker( const ProfilesChecker_ABC* pChecker );
     //@}
 
 private slots:
@@ -62,7 +63,8 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ProfilesChecker_ABC& checker_;
+    kernel::Controllers& controllers_;
+    const ProfilesChecker_ABC* pChecker_;
     Model& model_;
     UserProfile* profile_;
     QLineEdit* login_;

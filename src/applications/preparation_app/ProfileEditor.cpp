@@ -9,19 +9,29 @@
 
 #include "preparation_app_pch.h"
 #include "ProfileEditor.h"
-#include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Tools.h"
+
+// -----------------------------------------------------------------------------
+// Name: ProfileEditor constructor
+// Created: JSR 2014-05-27
+// -----------------------------------------------------------------------------
+ProfileEditor::ProfileEditor( const QString& login, kernel::Controller& controller, const Model& model )
+    : UserProfile( login, controller, model )
+    , originalProfile_( 0 )
+    , deleted_( false )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: ProfileEditor constructor
 // Created: SBO 2007-11-08
 // -----------------------------------------------------------------------------
-ProfileEditor::ProfileEditor( const UserProfile& profile, kernel::Controller& controller )
+ProfileEditor::ProfileEditor( const UserProfile& profile )
     : UserProfile( profile )
-    , controller_( controller )
-    , profile_   ( profile )
+    , originalProfile_( &profile )
+    , deleted_( false )
 {
     // NOTHING
 }
@@ -36,11 +46,41 @@ ProfileEditor::~ProfileEditor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileEditor::SetLogin
-// Created: SBO 2007-11-08
+// Name: ProfileEditor::Commit
+// Created: JSR 2014-05-27
 // -----------------------------------------------------------------------------
-void ProfileEditor::SetLogin( const QString& value )
+void ProfileEditor::Commit( ProfilesModel& model, kernel::Controller& controller )
 {
-    UserProfile::SetLogin( value );
-    controller_.Update( profile_ );
+    if( deleted_ )
+    {
+        if( originalProfile_ )
+            model.DeleteProfile( *originalProfile_ );
+        originalProfile_ = 0;
+        return;
+    }
+    if( originalProfile_ == 0 )
+        originalProfile_ = model.CreateProfile( GetLogin() );
+    if( *this != *originalProfile_ )
+    {
+        *const_cast< UserProfile* >( originalProfile_ ) = *this;
+        controller.Update( *originalProfile_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileEditor::Delete
+// Created: JSR 2014-06-02
+// -----------------------------------------------------------------------------
+void ProfileEditor::Delete()
+{
+    deleted_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileEditor::IsDeleted
+// Created: JSR 2014-06-02
+// -----------------------------------------------------------------------------
+bool ProfileEditor::IsDeleted() const
+{
+    return deleted_;
 }

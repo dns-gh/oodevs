@@ -470,7 +470,7 @@ void ModelConsistencyChecker::CheckProfileUniqueness()
 {
     ProfilesModel::T_Units units;
     model_.profiles_->Visit( units );
-    for( ProfilesModel::CIT_Units it = units.begin(); it != units.end(); ++it )
+    for( auto it = units.begin(); it != units.end(); ++it )
     {
         const ProfilesModel::T_Units::value_type& element = *it;
         if( element.second.size() > 1 )

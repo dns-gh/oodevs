@@ -102,6 +102,8 @@ public:
     template< typename List > void SetReadPopulations( const List& ids ) { Set( ids, readPopulations_ ); }
     template< typename List > void SetReadFormations( const List& ids ) { Set( ids, readFormations_ ); }
     template< typename List > void SetReadGhosts( const List& ids ) { Set( ids, readGhosts_ ); }
+
+    bool operator==( const UserRights& ) const;
     //@}
 
 private:
