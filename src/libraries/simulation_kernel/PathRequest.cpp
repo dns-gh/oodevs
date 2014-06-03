@@ -10,8 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "PathRequest.h"
 
+#include "ActionManager.h"
 #include "MIL_AgentServer.h"
-#include "MagicOrderManager.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Decision/DEC_PathComputer.h"
 #include "protocol/ClientSenders.h"
@@ -62,9 +62,8 @@ void PathRequest::SendComputePathfindAck( bool ok )
     ack.Send( NET_Publisher_ABC::Publisher(), ctx_, clientId_ );
 }
 
-void PathRequest::SendPathfindCreation( bool ok )
+void PathRequest::SendPathfindCreation( ActionManager& actions, bool ok )
 {
-    auto& magics = MIL_AgentServer::GetWorkspace().GetMagicOrderManager();
     client::MagicActionAck ack;
     ack().set_error_code( sword::MagicActionAck::no_error );
     if( !ok )
@@ -78,7 +77,7 @@ void PathRequest::SendPathfindCreation( bool ok )
     // acknowledge the client message
     ack.Send( NET_Publisher_ABC::Publisher(), ctx_, clientId_ );
     // broadcast the magic order
-    magics.Send( *magic_, ack().error_code(), ack().error_msg() );
+    actions.Send( *magic_, ack().error_code(), ack().error_msg() );
     // broadcast the newly created pathfind entity when successful
     if( ok )
         SendStateToNewClient();
@@ -88,7 +87,7 @@ void PathRequest::SendPathfindCreation( bool ok )
 // Name: PathRequest::Update
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-bool PathRequest::Update()
+bool PathRequest::Update( ActionManager& actions )
 {
     if( path_ )
         return false;
@@ -100,7 +99,7 @@ bool PathRequest::Update()
     if( ok )
         computer_->Serialize( *path_ );
     if( magic_ )
-        SendPathfindCreation( ok );
+        SendPathfindCreation( actions, ok );
     else
         SendComputePathfindAck( ok );
     return !magic_;

@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#ifndef __MagicOrder_h_
-#define __MagicOrder_h_
+#ifndef __Action_h_
+#define __Action_h_
 
 #include "SimpleEntity.h"
 
 namespace sword
 {
-    class MagicOrder;
+    class Action;
 }
 
 namespace dispatcher
@@ -30,14 +30,14 @@ namespace kernel
 
 namespace dispatcher
 {
-class MagicOrder : public SimpleEntity<>
-                 , public kernel::Updatable_ABC< sword::MagicOrder >
+class Action : public SimpleEntity<>
+                 , public kernel::Updatable_ABC< sword::Action >
 {
 public:
-             MagicOrder( const Model& model, const sword::MagicOrder& msg );
-    virtual ~MagicOrder();
+             Action( const Model& model, const sword::Action& msg );
+    virtual ~Action();
 
-    void DoUpdate( const sword::MagicOrder& msg );
+    void DoUpdate( const sword::Action& msg );
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -45,9 +45,9 @@ public:
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
 private:
-    std::unique_ptr< sword::MagicOrder > order_;
+    std::unique_ptr< sword::Action > action_;
 };
 
 }
 
-#endif // __MagicOrder_h_
+#endif // __Action_h_

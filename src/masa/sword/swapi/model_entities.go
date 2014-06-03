@@ -462,19 +462,23 @@ type Order struct {
 	TaskerId    uint32
 }
 
-type MagicOrderKind int
+type ActionKind int
 
 const (
-	MagicAction MagicOrderKind = iota
+	MagicAction ActionKind = iota
 	UnitMagicAction
 	ObjectMagicAction
 	KnowledgeMagicAction
 	SetAutomatMode
+	UnitAction
+	AutomatAction
+	CrowdAction
+	FragAction
 )
 
-type MagicOrder struct {
+type Action struct {
 	Id      uint32
-	Kind    MagicOrderKind
+	Kind    ActionKind
 	ErrCode int32
 	ErrMsg  string
 }
@@ -554,6 +558,7 @@ type SupplyRequest struct {
 }
 
 type ModelData struct {
+	Actions              map[uint32]*Action
 	Automats             map[uint32]*Automat
 	CrowdKnowledges      map[uint32]*CrowdKnowledge
 	Crowds               map[uint32]*Crowd
@@ -563,7 +568,6 @@ type ModelData struct {
 	FuneralHandlings     map[uint32]*FuneralHandling
 	KnowledgeGroups      map[uint32]*KnowledgeGroup
 	LocalWeathers        map[uint32]*LocalWeather
-	MagicOrders          map[uint32]*MagicOrder
 	MaintenanceHandlings map[uint32]*MaintenanceHandling
 	MedicalHandlings     map[uint32]*MedicalHandling
 	ObjectKnowledges     map[uint32]*ObjectKnowledge
@@ -595,6 +599,7 @@ type ModelData struct {
 
 func NewModelData() *ModelData {
 	return &ModelData{
+		Actions:              map[uint32]*Action{},
 		Automats:             map[uint32]*Automat{},
 		CrowdKnowledges:      map[uint32]*CrowdKnowledge{},
 		Crowds:               map[uint32]*Crowd{},
@@ -605,7 +610,6 @@ func NewModelData() *ModelData {
 		KnowledgeGroups:      map[uint32]*KnowledgeGroup{},
 		KnownScores:          map[string]struct{}{},
 		LocalWeathers:        map[uint32]*LocalWeather{},
-		MagicOrders:          map[uint32]*MagicOrder{},
 		MaintenanceHandlings: map[uint32]*MaintenanceHandling{},
 		MedicalHandlings:     map[uint32]*MedicalHandling{},
 		ObjectKnowledges:     map[uint32]*ObjectKnowledge{},
@@ -935,16 +939,16 @@ func (model *ModelData) addOrder(order *Order) bool {
 	return size != len(model.Orders)
 }
 
-func (model *ModelData) addMagicOrder(magic *MagicOrder) bool {
-	size := len(model.MagicOrders)
-	model.MagicOrders[magic.Id] = magic
-	return size != len(model.MagicOrders)
+func (model *ModelData) addAction(action *Action) bool {
+	size := len(model.Actions)
+	model.Actions[action.Id] = action
+	return size != len(model.Actions)
 }
 
-func (model *ModelData) removeMagicOrder(id uint32) bool {
-	size := len(model.MagicOrders)
-	delete(model.MagicOrders, id)
-	return size != len(model.MagicOrders)
+func (model *ModelData) removeAction(id uint32) bool {
+	size := len(model.Actions)
+	delete(model.Actions, id)
+	return size != len(model.Actions)
 }
 
 func (model *ModelData) changeAutomatLogisticsLinks(entityId uint32, superiors []uint32) bool {
@@ -1085,8 +1089,8 @@ var (
 		(*ModelData).handleLogSupplyHandlingUpdate,
 		(*ModelData).handleLogSupplyQuotas,
 		(*ModelData).handleLogSupplyState,
-		(*ModelData).handleMagicOrderCreation,
-		(*ModelData).handleMagicOrderDestruction,
+		(*ModelData).handleActionCreation,
+		(*ModelData).handleActionDestruction,
 		(*ModelData).handleObjectCreation,
 		(*ModelData).handleObjectDestruction,
 		(*ModelData).handleObjectKnowledgeCreation,

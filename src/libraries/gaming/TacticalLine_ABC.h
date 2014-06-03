@@ -44,7 +44,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, unsigned long id,
-                               Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
+                               Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
+                               bool readOnly );
     virtual ~TacticalLine_ABC();
     //@}
 

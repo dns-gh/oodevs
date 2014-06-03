@@ -36,10 +36,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Start( boost::shared_ptr< MIL_Mission_ABC > self );
+    virtual void Start( boost::shared_ptr< MIL_Mission_ABC > self, ActionManager& actions );
     virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > self );
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
-    virtual void Send() const;
+    virtual void Send( ActionManager& actions ) const;
     //@}
 
     //! @name Serialization

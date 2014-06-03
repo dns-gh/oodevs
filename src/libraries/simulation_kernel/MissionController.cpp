@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MissionController.h"
+
+#include "ActionManager.h"
 #include "PopulationFactory_ABC.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
@@ -22,8 +24,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MissionController )
 // Name: MissionController constructor
 // Created: LGY 2011-06-14
 // -----------------------------------------------------------------------------
-MissionController::MissionController()
-    : loaded_ ( false )
+MissionController::MissionController( ActionManager& actions )
+    : actions_( actions )
+    , loaded_ ( false )
     , counter_( 1 )
 {
     // NOTHING
@@ -42,7 +45,8 @@ MissionController::~MissionController()
 // Name: MissionController::load
 // Created: LGY 2011-06-14
 // -----------------------------------------------------------------------------
-void MissionController::load( MIL_CheckPointInArchive& file, const unsigned int )
+template< typename T >
+void MissionController::load( T& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MissionController_ABC >( *this )
          >> missions_
@@ -54,11 +58,27 @@ void MissionController::load( MIL_CheckPointInArchive& file, const unsigned int 
 // Name: MissionController::save
 // Created: LGY 2011-06-14
 // -----------------------------------------------------------------------------
-void MissionController::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+template< typename T >
+void MissionController::save( T& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MissionController_ABC >( *this )
          << missions_
          << counter_;
+}
+
+template< typename Archive >
+void save_construct_data( Archive& ar, const MissionController* ptr, const unsigned int /*version*/ )
+{
+    const ActionManager* actions = &ptr->actions_;
+    ar << actions;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& ar, MissionController* ptr, const unsigned int /*version*/ )
+{
+    ActionManager* actions;
+    ar >> actions;
+    ::new( ptr ) MissionController( *actions );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +87,8 @@ void MissionController::save( MIL_CheckPointOutArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void MissionController::Start( const boost::shared_ptr< MIL_Mission_ABC >& mission )
 {
-    if( !mission || mission->GetOwnerId() == 0 )
+    mission->Start( mission, actions_ );
+    if( !mission->GetOwnerId() )
         return;
     Stop( mission );
     missions_[ mission->GetOwnerId() ] = mission;
@@ -109,7 +130,7 @@ void MissionController::SendFullState()
         return;
     BOOST_FOREACH( const auto& mission, missions_ )
         if( mission.second )
-            mission.second->Send();
+            mission.second->Send( actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,4 +140,9 @@ void MissionController::SendFullState()
 uint32_t MissionController::AcquireId()
 {
     return counter_++;
+}
+
+ActionManager& MissionController::GetActionManager() const
+{
+    return actions_;
 }

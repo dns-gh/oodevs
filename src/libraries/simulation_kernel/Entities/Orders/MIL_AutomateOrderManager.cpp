@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateOrderManager.h"
+
+#include "MissionController_ABC.h"
 #include "MIL_PionMission.h"
 #include "MIL_AutomateMissionType.h"
 #include "MIL_AutomateMission.h"
@@ -100,7 +102,7 @@ void MIL_AutomateOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn, 
     frag->SetParameters( automate_.GetKnowledge(), asn.parameters() );
     representation.AddToOrdersCategory( frag );
     sendAck( id );
-    frag->Send( automate_ );
+    frag->Send( GetController().GetActionManager(), automate_ );
 }
 
 // -----------------------------------------------------------------------------

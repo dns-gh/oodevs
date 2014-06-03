@@ -12,6 +12,7 @@
 
 #include <boost/optional.hpp>
 
+class ActionManager;
 class DEC_PathComputer;
 
 // =============================================================================
@@ -45,14 +46,14 @@ public:
 
     //! @name Operations
     //@{
-    bool Update();
+    bool Update( ActionManager& actions );
     void SendStateToNewClient();
     bool IsPublished() const;
     //@}
 
 private:
     void SendComputePathfindAck( bool ok );
-    void SendPathfindCreation  ( bool ok );
+    void SendPathfindCreation  ( ActionManager& actions, bool ok );
 
 private:
     //! @name Member data

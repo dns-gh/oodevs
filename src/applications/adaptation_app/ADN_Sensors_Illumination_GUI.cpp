@@ -36,10 +36,12 @@ ADN_Sensors_Illumination_GUI::~ADN_Sensors_Illumination_GUI()
 // Name: ADN_Sensors_Illumination_GUI::InternalEmit
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Illumination_GUI::InternalEmit()
+void ADN_Sensors_Illumination_GUI::InternalEmit( const QModelIndex& current )
 {
-    if( auto data = static_cast< ADN_Sensors_Modificators::IlluminationInfos* >( GetSelectedData() ) )
+    if( auto data = static_cast< ADN_Sensors_Modificators::IlluminationInfos* >( GetDataFromIndex( current )  ) )
         emit ContentChanged( ENT_Tr::ConvertFromLightingType( data->eType_, ENT_Tr::eToTr ), data->rCoeff_.GetData() );
+    else
+        emit ContentChanged( "", 1. );
 }
 
 // -----------------------------------------------------------------------------

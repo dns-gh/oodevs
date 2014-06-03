@@ -97,7 +97,6 @@ public slots:
     void ClearLoadingErrors();
     void OnForceSaveAndAddActionPlanning( const tools::Path& filename );
     void OnAddRaster();
-    void OnRasterProcessExited( int exitCode, const tools::Path& output );
     //@}
 
 signals:

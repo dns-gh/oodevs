@@ -34,6 +34,7 @@ namespace xml
     class xostream;
 }
 
+class ActionManager;
 class DEC_Workspace;
 class DEC_PathFind_Manager;
 class MIL_CheckPointManager;
@@ -47,7 +48,6 @@ class MIL_BurningCells;
 class MIL_Config;
 class MIL_UrbanCache;
 class MIL_ObjectFactory;
-class MagicOrderManager;
 class PathfindComputer;
 
 // If filePath exists, returns the largest identifier referenced in expressions
@@ -118,7 +118,6 @@ public:
     MIL_BurningCells& GetBurningCells() const;
     tools::ExerciseSettings& GetSettings() const;
     MIL_ObjectFactory& GetObjectFactory() const;
-    MagicOrderManager& GetMagicOrderManager() const;
     PathfindComputer& GetPathfindComputer() const;
     //@}
 
@@ -213,7 +212,7 @@ private:
     // loop.
     bool updateState_;
     //@}
-    std::unique_ptr< MagicOrderManager > magicOrders_;
+    std::unique_ptr< ActionManager > actions_;
     std::unique_ptr< PathfindComputer > pathfinds_;
 
 private:

@@ -62,10 +62,10 @@ PathfindComputer::~PathfindComputer()
 // Name: PathfindComputer::Update
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-void PathfindComputer::Update()
+void PathfindComputer::Update( ActionManager& actions )
 {
     for( auto it = results_.begin(); it != results_.end(); )
-        if( it->second->Update() )
+        if( it->second->Update( actions ) )
             it = results_.erase( it );
         else
             ++it;

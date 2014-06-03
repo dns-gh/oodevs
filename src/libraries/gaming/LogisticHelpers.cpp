@@ -29,9 +29,16 @@ namespace logistic_helpers
     // -----------------------------------------------------------------------------
     void VisitBaseStocksDotations( const Entity_ABC& entity, const std::function< void( const Dotation& ) >& func )
     {
+        VisitPartialBaseStocksDotations( entity, func, []( const kernel::Entity_ABC& ) { return true; } );
+    }
+    // -----------------------------------------------------------------------------
+    void VisitPartialBaseStocksDotations( const kernel::Entity_ABC& entity,
+                                          const std::function< void( const Dotation& ) >& func,
+                                          const std::function< bool( const kernel::Entity_ABC& ) >& selector )
+    {
         VisitEntityAndSubordinatesUpToBaseLog( entity, [&]( const kernel::Entity_ABC& entity )
         {
-            if( entity.Retrieve< SupplyStates >() )
+            if( selector( entity ) && entity.Retrieve< SupplyStates >() )
             {
                 auto it = entity.Get< SupplyStates >().CreateIterator();
                 while( it.HasMoreElements() )

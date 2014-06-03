@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Entity_ABC;
+    class Profile_ABC;
 }
 
 namespace tools
@@ -27,6 +28,7 @@ namespace tools
     bool IsSuperiorEngaged( const kernel::Entity_ABC& entity );
     bool LessThanById( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
     bool LessThanByPC( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
+    bool CanOneSubordinateBeOrdered( const kernel::Profile_ABC& profile, const kernel::Entity_ABC& entity );
     tools::Path SanitizeFileName( QString text, const QString& after = "-" );
     void SetKarma( const kernel::Entity_ABC& entity, std::string& symbol );
     void SetLevel( const kernel::Entity_ABC& entity, std::string& level );

@@ -656,22 +656,31 @@ void MainWindow::ToggleDocks()
 // -----------------------------------------------------------------------------
 void MainWindow::OnAddRaster()
 {
+    if( !config_.BuildTerrainChildFile( "config.xml" ).Exists() )
+    {
+        QMessageBox::warning( 0, tr( "Warning" ), tr( "This functionality is not available with old terrain format." ) );
+        return;
+    }
     try
     {
-        if( !config_.BuildTerrainChildFile( "config.xml" ).Exists() )
-        {
-            QMessageBox::warning( 0, tr( "Warning" ), tr( "This functionality is not available with old terrain format." ) );
-            return;
-        }
-
         QDialog::DialogCode result = static_cast< QDialog::DialogCode >( addRasterDialog_->exec() );
         if( result == QDialog::Accepted )
         {
-            auto input = tools::Path::FromUnicode( addRasterDialog_->GetFiles().toStdWString() );
-            auto callback = boost::bind( &MainWindow::OnRasterProcessExited,
-                    this, _1, _2 );
-            process_ = RunRasterApp( input, addRasterDialog_->GetPixelSize(),
-                    config_, callback );
+            const auto input = tools::Path::FromUnicode( addRasterDialog_->GetFiles().toStdWString() );
+            process_ = RunRasterApp( input, addRasterDialog_->GetPixelSize(), config_,
+                [&]( int exitCode, const tools::Path& output, const std::string& error )
+                {
+                    if( !exitCode )
+                    {
+                        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_, output );
+                        raster.SetPasses( "main" );
+                        selector_->AddLayer( raster );
+                        preferenceDialog_->AddLayer( tr( "User layer [%1]" ).arg( addRasterDialog_->GetName() ), raster, true );
+                    }
+                    else
+                        QMessageBox::warning( this, tr( "Error loading image file" ),
+                            error.empty() ? tr( "Error while loading Raster source." ) : error.c_str() );
+                } );
         }
     }
     catch( const geodata::ProjectionException& )
@@ -683,26 +692,6 @@ void MainWindow::OnAddRaster()
     {
         QMessageBox::critical( this, tr( "Error loading image file" ), tr( "Fatal error adding Raster source." ), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::OnRasterProcessExited
-// Created: ABR 2012-06-12
-// -----------------------------------------------------------------------------
-void MainWindow::OnRasterProcessExited( int exitCode, const tools::Path& output )
-{
-    if( !exitCode )
-    {
-        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_,
-                output.FileName().ToUTF8() );
-        raster.SetPasses( "main" );
-        selector_->AddLayer( raster );
-        preferenceDialog_->AddLayer( tr( "User layer [%1]" ).arg( addRasterDialog_->GetName() ), raster, true );
-        raster.NotifyUpdated( kernel::ModelLoaded( config_ ) );
-        raster.GenerateTexture();
-    }
-    else
-        QMessageBox::warning( this, tr( "Error loading image file" ), tr( "Error while loading Raster source." ) );
 }
 
 // -----------------------------------------------------------------------------

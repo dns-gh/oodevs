@@ -4,7 +4,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentServer.h"
-#include "MagicOrderManager.h"
+#include "ActionManager.h"
 #include "PathfindComputer.h"
 
 #include "CheckPoints/MIL_CheckPointManager.h"
@@ -146,7 +146,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pObjectFactory_       ( new MIL_ObjectFactory() )
     , pathfindTime_         ( 0 )
     , updateState_          ( false )
-    , magicOrders_          ( new MagicOrderManager() )
+    , actions_              ( new ActionManager() )
 {
     MIL_Time_ABC::RegisterTime( *this );
     loopTimer_.Start();
@@ -175,7 +175,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
 
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
-    pAgentServer_ = new NET_AgentServer( config_, *this );
+    pAgentServer_ = new NET_AgentServer( config_, *this, *actions_ );
 
     pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
     if( config_.HasCheckpoint() )
@@ -188,7 +188,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
         pMeteoDataManager_ = CreateMeteoManager( world, config, GetTickDuration() );
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_,
-                config_, world );
+                config_, world, *actions_ );
         pCheckPointManager_ = new MIL_CheckPointManager( config_, world );
         pEntityManager_->ReadODB( config_ );
         pEntityManager_->LoadUrbanModel( config_ );
@@ -256,7 +256,7 @@ void MIL_AgentServer::WaitForNextStep()
     assert( pAgentServer_ );
     pAgentServer_->Update();
     pathfindTime_ += pPathFindManager_->Update();
-    pathfinds_->Update();
+    pathfinds_->Update( *actions_ );
     long sleepTime = 100;
     if( nSimState_ == eSimRunning )
     {
@@ -365,7 +365,7 @@ void MIL_AgentServer::SendStateToNewClient() const
 {
     pEntityManager_->SendStateToNewClient();
     pMeteoDataManager_->SendStateToNewClient();
-    magicOrders_->SendStateToNewClient();
+    actions_->SendStateToNewClient();
     pathfinds_->SendStateToNewClient();
 }
 
@@ -389,7 +389,7 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
          << nInitialRealTime_
          << nRealTime_
          << localTime
-         << magicOrders_
+         << actions_
          << pathfinds_;
     pBurningCells_->save( file );
 }
@@ -413,7 +413,7 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> nInitialRealTime_
          >> nRealTime_
          >> localTime_
-         >> magicOrders_
+         >> actions_
          >> pathfinds_;
     pBurningCells_->load( file );
     pBurningCells_->finalizeLoad( *pEntityManager_ );
@@ -825,15 +825,6 @@ resource::ResourceTools_ABC& MIL_AgentServer::GetResourceTools() const
 {
     assert( pResourceTools_ );
     return *pResourceTools_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetMagicOrderManager
-// Created: BAX 2014-02-21
-// -----------------------------------------------------------------------------
-MagicOrderManager& MIL_AgentServer::GetMagicOrderManager() const
-{
-    return *magicOrders_;
 }
 
 // -----------------------------------------------------------------------------

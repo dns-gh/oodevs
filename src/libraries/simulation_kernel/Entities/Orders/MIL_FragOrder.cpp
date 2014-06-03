@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_FragOrder.h"
+
+#include "ActionManager.h"
 #include "MIL_FragOrderType.h"
 #include "MIL_MissionParameterFactory.h"
 #include "MIL_EnumerationParameter.h"
@@ -605,43 +607,43 @@ const DEC_Decision_ABC* MIL_FragOrder::GetAgent() const
 // Name: MIL_FragOrder::Send
 // Created: MGD 2010-12-27
 // -----------------------------------------------------------------------------
-void MIL_FragOrder::Send( MIL_AgentPion& pion ) const
+void MIL_FragOrder::Send( ActionManager& actions, MIL_AgentPion& pion ) const
 {
     MIL_Report::PostEvent( pion, report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_unit()->set_id( pion.GetID() );
-    Send( message );
+    Send( actions, message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::Send
 // Created: MGD 2010-12-27
 // -----------------------------------------------------------------------------
-void MIL_FragOrder::Send( MIL_Automate& automat ) const
+void MIL_FragOrder::Send( ActionManager& actions, MIL_Automate& automat ) const
 {
     MIL_Report::PostEvent( automat, report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_automat()->set_id( automat.GetID() );
-    Send( message );
+    Send( actions, message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::Send
 // Created: MGD 2010-12-27
 // -----------------------------------------------------------------------------
-void MIL_FragOrder::Send( MIL_Population& population ) const
+void MIL_FragOrder::Send( ActionManager& actions, MIL_Population& population ) const
 {
     MIL_Report::PostEvent( population, report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_crowd()->set_id( population.GetID() );
-    Send( message );
+    Send( actions, message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::Send
 // Created: MGD 2010-12-27
 // -----------------------------------------------------------------------------
-void MIL_FragOrder::Send( client::FragOrder& message ) const
+void MIL_FragOrder::Send( ActionManager& actions, client::FragOrder& message ) const
 {
     message().mutable_type()->set_id( type_.GetID() );
     Serialize( *message().mutable_parameters() );
@@ -649,6 +651,7 @@ void MIL_FragOrder::Send( client::FragOrder& message ) const
     message().set_name( type_.GetName() );
     message().set_id( id_ );
     message.Send( NET_Publisher_ABC::Publisher() );
+    actions.Send( actions.Register( message() ), 0, "" );
 }
 
 // -----------------------------------------------------------------------------

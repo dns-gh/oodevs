@@ -16,7 +16,6 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class CoordinateConverter;
     class Controller;
 }
 

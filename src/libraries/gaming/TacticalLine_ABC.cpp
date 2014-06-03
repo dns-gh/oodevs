@@ -21,8 +21,9 @@
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, unsigned long id,
-                                    Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName )
+                                    Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
+                                    bool readOnly )
+    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName, readOnly )
     , controller_( controller )
     , converter_ ( converter )
     , publisher_ ( publisher )

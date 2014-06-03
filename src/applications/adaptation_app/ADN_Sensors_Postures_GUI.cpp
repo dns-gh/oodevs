@@ -35,10 +35,12 @@ ADN_Sensors_Postures_GUI::~ADN_Sensors_Postures_GUI()
 // Name: ADN_Sensors_Postures_GUI::InternalEmit
 // Created: ABR 2012-01-24
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Postures_GUI::InternalEmit()
+void ADN_Sensors_Postures_GUI::InternalEmit( const QModelIndex& current )
 {
-    if( ADN_Sensors_Modificators::PostureInfos* data = static_cast< ADN_Sensors_Modificators::PostureInfos* >( GetSelectedData() ) )
+    if( ADN_Sensors_Modificators::PostureInfos* data = static_cast< ADN_Sensors_Modificators::PostureInfos* >( GetDataFromIndex( current )  ) )
         emit ContentChanged(  ENT_Tr::ConvertFromUnitPosture( data->eType_, ENT_Tr::eToTr ), data->rCoeff_.GetData() );
+    else
+        emit ContentChanged( "", 1. );
 }
 
 // -----------------------------------------------------------------------------

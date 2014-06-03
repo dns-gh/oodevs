@@ -54,7 +54,7 @@ type SwordData struct {
 	handler int32                          // registered input handler
 	group   *sync.WaitGroup                // input wait group
 	orders  map[uint32]None                // known orders
-	magics  map[uint32]None                // known magic orders
+	actions map[uint32]None                // known actions
 	events  map[string]*swapi.SwordMessage // decoded messages
 	pending map[string]PendingAction       // pending actions
 	retry   uint                           // retry count
@@ -80,7 +80,7 @@ func NewSword(log util.Logger, root Observer, clock bool, name, address string) 
 		clock:   clock,
 		d: SwordData{
 			orders:  map[uint32]None{},
-			magics:  map[uint32]None{},
+			actions: map[uint32]None{},
 			events:  map[string]*swapi.SwordMessage{},
 			pending: map[string]PendingAction{},
 		},
@@ -170,34 +170,6 @@ func packOrder(name, target string, tick time.Time, start *sword.DateTime,
 	}
 }
 
-func readUnitOrder(target string, tick time.Time, order *sword.UnitOrder) *sdk.Event {
-	return packOrder(order.GetName(), target, tick, order.GetStartTime(),
-		&sword.ClientToSim_Content{
-			UnitOrder: order,
-		}, true, true)
-}
-
-func readAutomatOrder(target string, tick time.Time, order *sword.AutomatOrder) *sdk.Event {
-	return packOrder(order.GetName(), target, tick, order.GetStartTime(),
-		&sword.ClientToSim_Content{
-			AutomatOrder: order,
-		}, true, true)
-}
-
-func readCrowdOrder(target string, tick time.Time, order *sword.CrowdOrder) *sdk.Event {
-	return packOrder(order.GetName(), target, tick, order.GetStartTime(),
-		&sword.ClientToSim_Content{
-			CrowdOrder: order,
-		}, true, true)
-}
-
-func readFragOrder(target string, tick time.Time, order *sword.FragOrder) *sdk.Event {
-	return packOrder(order.GetName(), target, tick, order.GetStartTime(),
-		&sword.ClientToSim_Content{
-			FragOrder: order,
-		}, true, true)
-}
-
 func readReport(tick time.Time, report *sword.Report) *sdk.Event {
 	return &sdk.Event{
 		Uuid: proto.String(gouuid.New()),
@@ -210,11 +182,13 @@ func readReport(tick time.Time, report *sword.Report) *sdk.Event {
 	}
 }
 
-func readMagicOrder(target string, tick time.Time, order *sword.MagicOrder) *sdk.Event {
+func (s *Sword) readAction(target string, tick time.Time, order *sword.Action) *sdk.Event {
 	name := ""
 	content := sword.ClientToSim_Content{}
 	code := order.GetErrorCode()
 	codemsg := ""
+	magic := true
+	predicate := func() bool { return s.isUnknownAction(order) }
 	if sub := order.MagicAction; sub != nil {
 		name = sub.GetName()
 		content = sword.ClientToSim_Content{MagicAction: sub}
@@ -235,11 +209,34 @@ func readMagicOrder(target string, tick time.Time, order *sword.MagicOrder) *sdk
 		name = sub.GetName()
 		content = sword.ClientToSim_Content{SetAutomatMode: sub}
 		codemsg = sword.SetAutomatModeAck_ErrorCode(code).String()
+	} else if sub := order.AutomatOrder; sub != nil {
+		name = sub.GetName()
+		content = sword.ClientToSim_Content{AutomatOrder: sub}
+		magic = false
+		predicate = func() bool { return s.isUnknownOrder(sub) }
+	} else if sub := order.CrowdOrder; sub != nil {
+		name = sub.GetName()
+		content = sword.ClientToSim_Content{CrowdOrder: sub}
+		magic = false
+		predicate = func() bool { return s.isUnknownOrder(sub) }
+	} else if sub := order.FragOrder; sub != nil {
+		name = sub.GetName()
+		content = sword.ClientToSim_Content{FragOrder: sub}
+		magic = false
+		predicate = func() bool { return s.isUnknownOrder(sub) }
+	} else if sub := order.UnitOrder; sub != nil {
+		name = sub.GetName()
+		content = sword.ClientToSim_Content{UnitOrder: sub}
+		magic = false
+		predicate = func() bool { return s.isUnknownOrder(sub) }
 	} else {
 		return nil
 	}
+	if !predicate() {
+		return nil
+	}
 	start := &sword.DateTime{Data: proto.String(order.GetStartTime())}
-	event := packOrder(name, target, tick, start, &content, true, false)
+	event := packOrder(name, target, tick, start, &content, true, !magic)
 	event.ErrorCode = &code
 	errmsg := order.GetErrorMsg()
 	event.ErrorText = &errmsg
@@ -259,7 +256,7 @@ type IdGetter interface {
 	GetId() uint32
 }
 
-func (s *Sword) isUnknownAction(data map[uint32]None, id IdGetter) bool {
+func (s *Sword) isUnknown(data map[uint32]None, id IdGetter) bool {
 	value := id.GetId()
 	if value == 0 {
 		return true
@@ -272,15 +269,12 @@ func (s *Sword) isUnknownAction(data map[uint32]None, id IdGetter) bool {
 	return prev != next
 }
 
-func (s *Sword) isUnknownOrder(id, idType IdGetter) bool {
-	if idType.GetId() == 0 {
-		return false
-	}
-	return s.isUnknownAction(s.d.orders, id)
+func (s *Sword) isUnknownOrder(id IdGetter) bool {
+	return s.isUnknown(s.d.orders, id)
 }
 
-func (s *Sword) isUnknownMagic(id IdGetter) bool {
-	return s.isUnknownAction(s.d.magics, id)
+func (s *Sword) isUnknownAction(id IdGetter) bool {
+	return s.isUnknown(s.d.actions, id)
 }
 
 func (s *Sword) saveAction(data map[uint32]None, msg *swapi.SwordMessage, clientId int32, id IdGetter) {
@@ -302,7 +296,7 @@ func (s *Sword) saveOrder(msg *swapi.SwordMessage, clientId int32, id IdGetter) 
 }
 
 func (s *Sword) saveMagic(msg *swapi.SwordMessage, clientId int32, id IdGetter) {
-	s.saveAction(s.d.magics, msg, clientId, id)
+	s.saveAction(s.d.actions, msg, clientId, id)
 }
 
 func (s *Sword) readMessage(msg *swapi.SwordMessage, clientId int32, err error, last time.Time) time.Time {
@@ -317,20 +311,8 @@ func (s *Sword) readMessage(msg *swapi.SwordMessage, clientId int32, err error, 
 		last = s.tick(last, info.GetDateTime().GetData())
 	} else if tick := content.ControlBeginTick; tick != nil {
 		last = s.tick(last, tick.GetDateTime().GetData())
-	} else if order := content.UnitOrder; order != nil && s.isUnknownOrder(order, order.GetType()) {
-		event := readUnitOrder(s.name, last, order)
-		go s.event(event)
-	} else if order := content.AutomatOrder; order != nil && s.isUnknownOrder(order, order.GetType()) {
-		event := readAutomatOrder(s.name, last, order)
-		go s.event(event)
-	} else if order := content.CrowdOrder; order != nil && s.isUnknownOrder(order, order.GetType()) {
-		event := readCrowdOrder(s.name, last, order)
-		go s.event(event)
-	} else if order := content.FragOrder; order != nil && s.isUnknownOrder(order, order.GetType()) {
-		event := readFragOrder(s.name, last, order)
-		go s.event(event)
-	} else if order := content.MagicOrder; order != nil && s.isUnknownMagic(order) {
-		event := readMagicOrder(s.name, last, order)
+	} else if order := content.Action; order != nil {
+		event := s.readAction(s.name, last, order)
 		if event != nil {
 			go s.event(event)
 		}
@@ -520,7 +502,7 @@ func (s *Sword) stop(previous *swapi.Client) bool {
 			go s.root.OnApply(uuid, ErrAborted, it.lock)
 		}
 		s.d.orders = map[uint32]None{}
-		s.d.magics = map[uint32]None{}
+		s.d.actions = map[uint32]None{}
 		s.d.pending = map[string]PendingAction{}
 	}
 	client := s.d.input

@@ -7,6 +7,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
+#include "ActionManager.h"
 #include "MissionController.h"
 #include "Fixture.h"
 #include "MockMIL_MissionType_ABC.h"
@@ -27,7 +28,8 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 {
-    MissionController controller;
+    ActionManager actions;
+    MissionController controller( actions );
     MIL_EffectManager effectManager;
     FixturePion fixture( controller, effectManager );
     DEC_RolePion_Decision decision( *fixture.pPion_, 100, 100, false );
@@ -40,7 +42,8 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( InstantiateDEC_AutomateDecision )
 {
-    MissionController controller;
+    ActionManager actions;
+    MissionController controller( actions );
     FixtureAutomate fixture( controller );
     DEC_AutomateDecision decision( *fixture.pAutomat_, 100, 100, false );
 }
@@ -55,7 +58,8 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
     xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
     DEC_Model model( "test", xis, testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) );
-    MissionController controller;
+    ActionManager actions;
+    MissionController controller( actions );
     MockArmy army;
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type, controller, army );
@@ -139,6 +143,7 @@ namespace
             : xis       ( "<main dia-type='PionTest' file='PionTest.bms'/>" )
             , model     ( "test", xis >> xml::start( "main" ), testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) )
             , type      ( model )
+            , controller( actions )
             , population( type, controller, army )
             , decision  ( population, 0 )
         {
@@ -147,6 +152,7 @@ namespace
         xml::xistringstream xis;
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         DEC_Model model;
+        ActionManager actions;
         MissionController controller;
         MockArmy army;
         StubMIL_PopulationType type;
@@ -212,6 +218,7 @@ namespace
         Mission()
             : xis       ( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" )
             , model     ( "test", xis >> xml::start( "main" ), testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) )
+            , controller( actions )
             , type      ( model )
             , population( type, controller, army )
             , decision  ( population, 0 )
@@ -221,6 +228,7 @@ namespace
         xml::xistringstream xis;
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         DEC_Model model;
+        ActionManager actions;
         MissionController controller;
         MockArmy army;
         StubMIL_PopulationType type;

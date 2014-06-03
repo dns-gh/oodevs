@@ -12,6 +12,7 @@
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Urban/MIL_UrbanObject.h"
+#include "ActionManager.h"
 #include "MissionController.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
@@ -49,7 +50,8 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
                 "</objects>" );
             BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
         }
-        MissionController controller;
+        ActionManager actions;
+        MissionController controller( actions );
         MIL_EffectManager effectManager;
         FixturePion pion( controller, effectManager );
         flux >> xml::start( "urban-object" );

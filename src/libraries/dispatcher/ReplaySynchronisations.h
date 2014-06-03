@@ -16,6 +16,8 @@
 
 namespace sword
 {
+    class Action;
+    class ActionDestruction;
     class AutomatCreation;
     class ChangeDiplomacy;
     class ChangeDiplomacyAck;
@@ -36,8 +38,6 @@ namespace sword
     class LogMaintenanceHandlingCreation;
     class LogMedicalHandlingCreation;
     class LogSupplyHandlingCreation;
-    class MagicOrder;
-    class MagicOrderDestruction;
     class ObjectCreation;
     class ObjectKnowledgeCreation;
     class PartyCreation;
@@ -85,6 +85,8 @@ namespace dispatcher
 // Created: SBO 2008-02-14
 // =============================================================================
 class ReplaySynchronisations : public kernel::Extension_ABC
+                             , public kernel::Updatable_ABC< sword::Action >
+                             , public kernel::Updatable_ABC< sword::ActionDestruction >
                              , public kernel::Updatable_ABC< sword::AutomatCreation >
                              , public kernel::Updatable_ABC< sword::ChangeDiplomacy >
                              , public kernel::Updatable_ABC< sword::ChangeDiplomacyAck >
@@ -101,8 +103,6 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< sword::LogMaintenanceHandlingCreation >
                              , public kernel::Updatable_ABC< sword::LogMedicalHandlingCreation >
                              , public kernel::Updatable_ABC< sword::LogSupplyHandlingCreation >
-                             , public kernel::Updatable_ABC< sword::MagicOrder >
-                             , public kernel::Updatable_ABC< sword::MagicOrderDestruction >
                              , public kernel::Updatable_ABC< sword::ObjectCreation >
                              , public kernel::Updatable_ABC< sword::ObjectKnowledgeCreation >
                              , public kernel::Updatable_ABC< sword::Pathfind >
@@ -147,6 +147,7 @@ public:
     void StartSynchronisation( bool create );
     void EndSynchronisation  ( Synchroniser& synch ) const;
 
+    virtual void DoUpdate( const sword::Action& msg );
     virtual void DoUpdate( const sword::AutomatCreation& msg );
     virtual void DoUpdate( const sword::ChangeDiplomacy& msg );
     virtual void DoUpdate( const sword::ChangeDiplomacyAck& msg );
@@ -164,7 +165,6 @@ public:
     virtual void DoUpdate( const sword::LogMaintenanceHandlingCreation& msg );
     virtual void DoUpdate( const sword::LogMedicalHandlingCreation& msg );
     virtual void DoUpdate( const sword::LogSupplyHandlingCreation& msg );
-    virtual void DoUpdate( const sword::MagicOrder& msg );
     virtual void DoUpdate( const sword::ObjectCreation& msg );
     virtual void DoUpdate( const sword::ObjectKnowledgeCreation& msg );
     virtual void DoUpdate( const sword::PartyCreation& msg );
@@ -181,6 +181,7 @@ public:
     virtual void DoUpdate( const sword::UrbanCreation& msg );
     virtual void DoUpdate( const sword::UrbanKnowledgeCreation& msg );
 
+    virtual void DoUpdate( const sword::ActionDestruction& msg );
     virtual void DoUpdate( const sword::CrowdConcentrationKnowledgeDestruction& msg );
     virtual void DoUpdate( const sword::CrowdFlowDestruction& msg );
     virtual void DoUpdate( const sword::CrowdFlowKnowledgeDestruction& msg );
@@ -189,7 +190,6 @@ public:
     virtual void DoUpdate( const sword::LogMaintenanceHandlingDestruction& msg );
     virtual void DoUpdate( const sword::LogMedicalHandlingDestruction& msg );
     virtual void DoUpdate( const sword::LogSupplyHandlingDestruction& msg );
-    virtual void DoUpdate( const sword::MagicOrderDestruction& msg );
     virtual void DoUpdate( const sword::ObjectDestruction& msg );
     virtual void DoUpdate( const sword::ObjectKnowledgeDestruction& msg );
     virtual void DoUpdate( const sword::UnitDestruction& msg );

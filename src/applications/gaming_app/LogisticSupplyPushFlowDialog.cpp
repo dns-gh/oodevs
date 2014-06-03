@@ -39,8 +39,6 @@
 #include "gaming/LogisticHelpers.h"
 #include "gaming/StaticModel.h"
 
-#include <boost/foreach.hpp>
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
@@ -109,7 +107,9 @@ void LogisticSupplyPushFlowDialog::Show()
     controllers_.Update( *routeLocationCreator_ );
     routeLocationCreator_->StartLine();
 
-    logistic_helpers::VisitBaseStocksDotations( *selected_, boost::bind( &LogisticSupplyPushFlowDialog::AddAvailable, this, _1 ) );
+    logistic_helpers::VisitPartialBaseStocksDotations( *selected_,
+                                                       [&]( const Dotation& dotation ){ AddAvailable( dotation ); },
+                                                       [&]( const kernel::Entity_ABC& entity ){ return profile_.CanBeOrdered( entity ); } );
 
     ComputeRecipients();
     tabs_->setCurrentPage( 0 );

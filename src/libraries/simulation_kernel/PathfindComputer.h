@@ -19,6 +19,7 @@ namespace sword
     class MagicAction;
 }
 
+class ActionManager;
 class MIL_AgentPion;
 class DEC_PathFind_Manager;
 class DEC_PathComputer;
@@ -43,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update();
+    void Update( ActionManager& actions );
     void SendStateToNewClient();
     //@}
 

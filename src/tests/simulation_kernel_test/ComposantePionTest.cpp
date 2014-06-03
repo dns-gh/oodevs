@@ -12,6 +12,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "ActionManager.h"
 #include "MissionController.h"
 #include "StubMIL_AgentPion.h"
 #include "MockRoleLocation.h"
@@ -21,7 +22,8 @@
 
 BOOST_AUTO_TEST_CASE( if_a_pion_is_transported_its_composantes_can_not_perceive )
 {
-    MissionController controller;
+    ActionManager actions;
+    MissionController controller( actions );
     MIL_EffectManager effectManager;
     FixturePion fixture( controller, effectManager );
 
@@ -75,7 +77,6 @@ BOOST_AUTO_TEST_CASE( if_a_pion_is_transported_its_composantes_can_not_perceive 
 
     bool bTransportedByAnother;
     roleTransported->LoadForTransport( transporter, true, bTransportedByAnother );
-
 
     BOOST_CHECK( composanteLoadable.CanPerceive( 0 ) );
     BOOST_CHECK( !composanteUnloadable.CanPerceive( 0 ) );

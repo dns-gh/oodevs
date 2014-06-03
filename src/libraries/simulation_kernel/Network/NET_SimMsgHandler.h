@@ -22,6 +22,7 @@ namespace sword
     class MissionParameters;
 }
 
+class ActionManager;
 class NET_AgentServer;
 class NET_Simulation_ABC;
 
@@ -36,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              NET_SimMsgHandler( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation,
-                    bool enableTestCommands );
+                    ActionManager& actions, bool enableTestCommands );
     virtual ~NET_SimMsgHandler();
     //@}
 
@@ -67,6 +68,7 @@ private:
     //@{
     NET_AgentServer& agentServer_;
     NET_Simulation_ABC& simulation_;
+    ActionManager& actions_;
     T_Clients clients_;
     bool enableTestCommands_;
     //@}
