@@ -70,10 +70,14 @@ func MakeOpts() *simu.SimOpts {
 		opts.RootDir = Cfg.RootDir
 	} else if len(projectRoot) > 0 {
 		opts.RootDir = filepath.Join(projectRoot, "data")
+		opts.ExercisesDir = filepath.Join(projectRoot, "data/tests/gosword")
 	}
 	opts.DataDir = opts.RootDir
 	if len(Cfg.RunDir) > 0 {
 		opts.RunDir = &Cfg.RunDir
+	}
+	if len(Cfg.ExercisesDir) > 0 {
+		opts.ExercisesDir = Cfg.ExercisesDir
 	}
 	opts.ExerciseName = "crossroad-small-empty"
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+5)
@@ -145,9 +149,13 @@ func MakeReplayOpts() *simu.ReplayOpts {
 		opts.RootDir = Cfg.RootDir
 	} else if len(projectRoot) > 0 {
 		opts.RootDir = filepath.Join(projectRoot, "data")
+		opts.ExercisesDir = filepath.Join(projectRoot, "data/tests/gosword")
 	}
 	if len(Cfg.RunDir) > 0 {
 		opts.RunDir = &Cfg.RunDir
+	}
+	if len(Cfg.ExercisesDir) > 0 {
+		opts.ExercisesDir = Cfg.ExercisesDir
 	}
 	opts.ExerciseName = "crossroad-small-empty"
 	opts.ReplayerAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+5)

@@ -34,6 +34,10 @@ func (s *TestSuite) TestSimOpts(c *C) {
 
 	d := opts.GetExerciseDir()
 	c.Assert(filepath.ToSlash(d), Equals, "data/dir/exercises/exercisename")
+
+	opts.ExercisesDir = "custom"
+	d = opts.GetExerciseDir()
+	c.Assert(filepath.ToSlash(d), Equals, "custom/exercisename")
 }
 
 func MakeOpts() *SimOpts {
@@ -55,10 +59,14 @@ func MakeOpts() *SimOpts {
 		opts.RootDir = Cfg.RootDir
 	} else if len(projectRoot) > 0 {
 		opts.RootDir = filepath.Join(projectRoot, "data")
+		opts.ExercisesDir = filepath.Join(projectRoot, "data/tests/gosword")
 	}
 	opts.DataDir = opts.RootDir
 	if len(Cfg.RunDir) > 0 {
 		opts.RunDir = &Cfg.RunDir
+	}
+	if len(Cfg.ExercisesDir) > 0 {
+		opts.ExercisesDir = Cfg.ExercisesDir
 	}
 	opts.ExerciseName = "crossroad-small-empty"
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort)

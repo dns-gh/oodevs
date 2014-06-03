@@ -21,6 +21,7 @@ type SimOpts struct {
 	RunDir         *string
 	RootDir        string
 	DataDir        string
+	ExercisesDir   string // Ignored if empty
 	SessionName    string
 	ExerciseName   string
 	CheckpointName string
@@ -81,6 +82,9 @@ func (o *SimOpts) Check() error {
 }
 
 func (o *SimOpts) GetExerciseDir() string {
+	if len(o.ExercisesDir) > 0 {
+		return filepath.Join(o.ExercisesDir, o.ExerciseName)
+	}
 	return filepath.Join(o.RootDir, "exercises", o.ExerciseName)
 }
 
@@ -188,8 +192,7 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	if err != nil {
 		return nil, err
 	}
-	sessionDir := filepath.Join(opts.RootDir, "exercises", opts.ExerciseName,
-		"sessions", opts.SessionName)
+	sessionDir := opts.GetSessionDir()
 	session, err := ReadSessionFile(filepath.Join(sessionDir, "session.xml"))
 	if err != nil {
 		return nil, err
@@ -231,6 +234,9 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	}
 	if len(opts.PathfindFilter) > 0 {
 		args = append(args, "--filter-pathfinds="+opts.PathfindFilter)
+	}
+	if len(opts.ExercisesDir) > 0 {
+		args = append(args, "--exercises-dir="+opts.ExercisesDir)
 	}
 
 	logFiles := []string{}
