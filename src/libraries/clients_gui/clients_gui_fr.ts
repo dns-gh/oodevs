@@ -2192,7 +2192,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Logistic high threshold (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil haut logistique (%)</translation>
     </message>
 </context>
 <context>
