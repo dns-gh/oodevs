@@ -1207,8 +1207,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
 void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& msg, MIL_Entity_ABC& entity, unsigned int nCtx, sword::UnitMagicActionAck& ack )
 {
     const auto& params = msg.parameters();
-    const int count = protocol::GetCount( params );
-    protocol::Check( count > 1, "at least 2 parameters expected" );
+    protocol::CheckCount( params, 4 );
     const auto automatType = protocol::GetIdentifier( params, 0 );
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( automatType );
     if( !pType )
@@ -1224,12 +1223,12 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
         throw MASA_BADPARAM_UNIT( "knowledge group is invalid or jammed" );
 
     std::string name;
-    if( count > 2 )
+    if( !protocol::IsNull( params, 2 ) )
         name = protocol::GetString( params, 2 );
 
     MIL_DictionaryExtensions extensions;
-    if( count > 3 )
-        extensions.ReadExtensions( msg.parameters().elem( 3 ).value(0).extensionlist() );
+    if( !protocol::IsNull( params, 3 ) )
+        extensions.ReadExtensions( protocol::GetExtensionList( params, 3 ) );
 
     // auto-registration
     const MIL_Automate& a = MIL_AgentServer::GetWorkspace().GetEntityManager()
@@ -1335,16 +1334,15 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const sword::MissionPar
             throw MASA_BADUNIT_UNIT( "invalid party or formation: " << taskerId );
         army = &formation->GetArmy();
     }
-    const int count = protocol::CheckCount( params, 2, 4 );
-    const int level = static_cast< int >( protocol::GetReal( params, 0 ));
+    protocol::CheckCount( params, 4 );
+    const int level = static_cast< int >( protocol::GetReal( params, 0 ) );
     const std::string& name = protocol::GetString( params, 1 );
-    std::string logLevel = "";
-    if( count > 2 && !protocol::IsNull( params, 2 ) )
+    std::string logLevel;
+    if( !protocol::IsNull( params, 2 ) )
         logLevel = protocol::GetString( params, 2 );
     std::vector< protocol::Extension > extensions;
-    if( count > 3 )
+    if( !protocol::IsNull( params, 3 ) )
         extensions = protocol::GetExtensionList( params, 3 );
-
     auto& newFormation = formationFactory_->Create( level, name, logLevel, *army, formation );
     if( !extensions.empty() )
         newFormation.SetExtensions( extensions );
@@ -2381,7 +2379,7 @@ void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::Magi
     const auto requestId = protocol::GetIdentifier( params, 0 );
     const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
     protocol::Check( equipment, "invalid equipment type identifier" );
-    const MIL_Agent_ABC* destination = nullptr;
+    boost::optional< const MIL_Agent_ABC& > destination;
     if( !protocol::IsNull( params, 2 ) )
     {
         const MIL_Agent_ABC* agent = FindAgentPion( protocol::GetAgentId( params, 2 ) );

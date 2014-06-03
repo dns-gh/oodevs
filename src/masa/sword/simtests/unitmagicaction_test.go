@@ -137,15 +137,9 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Logistic level is optional or null
-	tests := []*sword.MissionParameters{
-		swapi.MakeParameters(float32(1), "some name"),
-		swapi.MakeParameters(float32(1), "some name", nil),
-	}
-	for _, params := range tests {
-		f, err := client.CreateFormationTest(0, f1.Id, params)
-		c.Assert(err, IsNil)
-		c.Assert(f, NotNil)
-	}
+	f, err := client.CreateFormationTest(0, f1.Id, swapi.MakeParameters(float32(1), "some name", nil, nil))
+	c.Assert(err, IsNil)
+	c.Assert(f, NotNil)
 }
 
 func (s *TestSuite) TestCreateUnit(c *C) {

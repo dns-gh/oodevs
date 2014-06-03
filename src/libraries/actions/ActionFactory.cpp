@@ -17,6 +17,7 @@
 #include "DotationType.h"
 #include "EngageMagicAction.h"
 #include "EntityMission.h"
+#include "ExtensionList.h"
 #include "Enumeration.h"
 #include "FragOrder.h"
 #include "Identifier.h"
@@ -581,6 +582,9 @@ Action_ABC* ActionFactory::CreateAgentCreationAction( const kernel::AgentType& t
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
     action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter_, location ) );
+    action->AddParameter( *new parameters::String( it.NextElement() ) );
+    action->AddParameter( *new parameters::Bool( it.NextElement() ) );
+    action->AddParameter( *new parameters::ExtensionList( it.NextElement() ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &selected, false );
     return action.release();
@@ -599,6 +603,7 @@ Action_ABC* ActionFactory::CreateFormationCreationAction( int level, const kerne
     action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
     const std::string logisticLevel = isLogisticBase ? ENT_Tr::ConvertFromLogisticLevel( sword::logistic_base, ENT_Tr::eToSim ) : std::string();
     action->AddParameter( *new parameters::String( it.NextElement(), logisticLevel ) );
+    action->AddParameter( *new parameters::ExtensionList( it.NextElement() ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &selected, false );
     return action.release();

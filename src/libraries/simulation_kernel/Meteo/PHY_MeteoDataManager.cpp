@@ -153,8 +153,8 @@ void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, sw
 {
     const auto& params = msg.parameters();
     uint32_t id = 0;
-    protocol::CheckCount( params, 10, 11 );
-    if( protocol::GetCount( params ) == 11 )
+    protocol::CheckCount( params, 11 );
+    if( !protocol::IsNull( params, 10 ) )
         id = protocol::GetIdentifier( params, 10 );
     if( id == 0 )
     {

@@ -931,21 +931,16 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition )
 // Name: MIL_AgentPion::OnReceiveMagicActionMoveTo
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn )
+void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg )
 {
-    if( asn.type() != sword::UnitMagicAction::move_to )
+    if( msg.type() != sword::UnitMagicAction::move_to || !msg.has_parameters() )
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    if( !asn.has_parameters() || asn.parameters().elem_size() != 1)
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    const sword::MissionParameter& parametre = asn.parameters().elem( 0 );
-    if( !parametre.value_size() == 1 || !parametre.value(0).has_point() )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    const sword::Point& point = parametre.value(0).point();
-    if( point.location().type() != sword::Location::point  || point.location().coordinates().elem_size() != 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
-    MagicMove( vPosTmp );
+    const sword::MissionParameters& parameters = msg.parameters();
+    protocol::CheckCount( parameters, 1 );
+    const sword::CoordLatLong point = protocol::GetPoint( parameters, 0 );
+    MT_Vector2D location;
+    MIL_Tools::ConvertCoordMosToSim( point, location );
+    MagicMove( location );
     UpdatePhysicalState();
 }
 

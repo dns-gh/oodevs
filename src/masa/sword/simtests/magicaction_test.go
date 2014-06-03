@@ -353,15 +353,15 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid number of parameters: want 3, got 0")
 
 	// error: first parameter must be an identifier
-	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeEmpty(), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem),swapi.MakeEmpty()))
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeEmpty(), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty()))
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[0\\] is missing")
 
 	// error: second parameter must be an identifier
-	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty(),swapi.MakeEmpty()))
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty(), swapi.MakeEmpty()))
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[1\\] is missing")
 
 	// error: second parameter must be an identifier
-	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem),swapi.MakeEmpty()))
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty()))
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: parameter\\[2\\] is missing")
 
 	// error: first parameter must be a valid request identifier
