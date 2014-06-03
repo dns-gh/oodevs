@@ -16,12 +16,13 @@ import (
 )
 
 type Config struct {
-	Application string
-	Platform    string
-	RootDir     string
-	RunDir      string
-	ShowLog     bool
-	TestPort    int
+	Application  string
+	Platform     string
+	RootDir      string
+	RunDir       string
+	ExercisesDir string
+	ShowLog      bool
+	TestPort     int
 }
 
 func ParseFlags() *Config {
@@ -32,6 +33,8 @@ func ParseFlags() *Config {
 		"path to simulation root directory")
 	flag.StringVar(&cfg.RunDir, "run-dir", "",
 		"path application run directory, default to application directory")
+	flag.StringVar(&cfg.ExercisesDir, "exercises-dir", "",
+		"exercises directory, default to root-dir/exercises")
 	flag.IntVar(&cfg.TestPort, "test-port", 35000,
 		"base port for spawned simulations")
 	flag.BoolVar(&cfg.ShowLog, "show-log", false, "print simulation log files")

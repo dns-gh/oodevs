@@ -22,6 +22,7 @@ type GamingOpts struct {
 	RunDir       *string
 	RootDir      string
 	DataDir      string
+	ExercisesDir string // Ignored if empty
 	SessionName  string
 	ExerciseName string
 }
@@ -36,6 +37,13 @@ func (o *GamingOpts) Check() error {
 		o.RunDir = &p
 	}
 	return IsDirectory(*o.RunDir, o.RootDir, o.DataDir)
+}
+
+func (o *GamingOpts) GetExerciseDir() string {
+	if len(o.ExercisesDir) > 0 {
+		return filepath.Join(o.ExercisesDir, o.ExerciseName)
+	}
+	return filepath.Join(o.RootDir, "exercises", o.ExerciseName)
 }
 
 type GamingProcess struct {
@@ -85,6 +93,9 @@ func StartGaming(opts *GamingOpts) (*GamingProcess, error) {
 		"--data-dir=" + opts.DataDir,
 		"--exercise=" + opts.ExerciseName,
 		"--session=" + opts.SessionName,
+	}
+	if len(opts.ExercisesDir) > 0 {
+		args = append(args, "--exercises-dir="+opts.ExercisesDir)
 	}
 	cmd := exec.Command(opts.Executable, args...)
 	cmd.Dir = *opts.RunDir
@@ -173,6 +184,7 @@ func StartGamingFromSimAndExe(executable, runDir string, simOpts *SimOpts) (
 		RunDir:       &runDir,
 		RootDir:      simOpts.RootDir,
 		DataDir:      simOpts.DataDir,
+		ExercisesDir: simOpts.ExercisesDir,
 		SessionName:  simOpts.SessionName,
 		ExerciseName: simOpts.ExerciseName,
 	}

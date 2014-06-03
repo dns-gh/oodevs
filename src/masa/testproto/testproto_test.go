@@ -21,11 +21,12 @@ import (
 // be run with the same arguments from ant. Without these, go test whines input
 // options are unsupported instead of ignoring them.
 var (
-	application string
-	rootdir     string
-	rundir      string
-	testPort    int
-	showlog     bool
+	application  string
+	rootdir      string
+	rundir       string
+	exercisesDir string
+	testPort     int
+	showlog      bool
 )
 
 func init() {
@@ -35,6 +36,8 @@ func init() {
 		"path to simulation root directory")
 	flag.StringVar(&rundir, "run-dir", "",
 		"path application run directory, default to application directory")
+	flag.StringVar(&exercisesDir, "exercises-dir", "",
+		"exercises directory, default to root-dir/exercises")
 	flag.IntVar(&testPort, "test-port", 35000,
 		"base port for spawned simulations")
 	flag.BoolVar(&showlog, "show-log", false,
