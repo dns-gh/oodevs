@@ -11,6 +11,7 @@
 
 #include "controls/controls.h"
 
+#include <tools/Helpers.h>
 #include <tools/IpcDevice.h>
 #include <tools/Path.h>
 #include <QWidget>
@@ -89,12 +90,11 @@ namespace
                 list << "--debug_port" << QString::number( cfg.debug_port );
             if( !cfg.client_log.IsEmpty() )
                 list << "--log" << QString::fromStdString( cfg.client_log.ToUTF8() );
-            const auto join = list.join( " " ).toStdWString();
-            std::vector< wchar_t > args;
-            args.push_back( L' ' );
-            std::copy( join.begin(), join.end(), std::back_inserter( args ) );
-            args.push_back( 0 );
-            return args;
+            std::vector< std::wstring > args;
+            args.push_back( cfg.binary.ToUnicode() );
+            for( auto it = list.begin(); it != list.end(); ++it )
+                args.push_back( it->toStdWString() );
+            return tools::ArgsToCommandLine( args );
         }
 
         virtual void Start( const Configuration& cfg, const std::string& uuid )
