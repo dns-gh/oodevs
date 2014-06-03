@@ -87,10 +87,11 @@ lane_move = (min_zone, max_zone, zone, d, scale, pos, offsets, children) ->
         d.min = scale(pos - offmin).valueOf()
     if zone != min_zone
         d.max = scale(pos - offmax).valueOf()
+    # make sure there's at least 1s between min & max timestamp
     if zone == min_zone
-        d.min = imin d.min, d.max
+        d.min = imin d.min, d.max - 1000
     if zone == max_zone
-        d.max = imax d.min, d.max
+        d.max = imax d.min + 1000, d.max
     return if _.isEmpty(children)
     if zone == min_zone
         d.min = imin d.min, _.min(children, (v) -> v.min).min
