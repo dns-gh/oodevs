@@ -982,6 +982,7 @@
                 <arg value="--application=${application}"/>
                 <arg value="--run-dir=${run.dir}"/>
                 <arg value="--root-dir=${data.dir}"/>
+                <arg value="--exercises-dir=${data.dir}/tests/gosword"/>
                 <args/>
             </exec_goenv>
         </sequential>
