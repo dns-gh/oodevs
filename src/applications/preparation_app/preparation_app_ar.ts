@@ -1752,6 +1752,10 @@ This data can&apos;t be projected.</source>
         <source>Cancel</source>
         <translation type="unfinished">إلغاء الأمر</translation>
     </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileWizardDialog</name>

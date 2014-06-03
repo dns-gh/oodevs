@@ -51,6 +51,7 @@ public:
 private slots:
     //! @name Slots
     //@{
+    void OnApply();
     void OnAccept();
     //@}
 

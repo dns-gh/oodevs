@@ -1755,6 +1755,10 @@ This data can&apos;t be projected.</translation>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
+    <message>
+        <source>Apply</source>
+        <translation>Apply</translation>
+    </message>
 </context>
 <context>
     <name>ProfileWizardDialog</name>

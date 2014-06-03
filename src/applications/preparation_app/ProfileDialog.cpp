@@ -65,10 +65,12 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     gui::RichPushButton* okBtn = new gui::RichPushButton( "ok", tr( "Ok" ), box );
     okBtn->setDefault( true );
     gui::RichPushButton* cancelBtn = new gui::RichPushButton( "cancel", tr( "Cancel" ), box );
+    gui::RichPushButton* applyBtn = new gui::RichPushButton( "apply", tr( "Apply" ), box );
     grid->addWidget( box, 2, 1, Qt::AlignRight );
 
     connect( okBtn, SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( reject() ) );
+    connect( applyBtn, SIGNAL( clicked() ), SLOT( OnApply() ) );
     hide();
 }
 
@@ -91,11 +93,20 @@ QSize ProfileDialog::sizeHint() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfileDialog::OnApply
+// Created: JSR 2014-06-03
+// -----------------------------------------------------------------------------
+void ProfileDialog::OnApply()
+{
+    list_->Commit();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfileDialog::OnAccept
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 void ProfileDialog::OnAccept()
 {
-    list_->Commit();
+    OnApply();
     accept();
 }
