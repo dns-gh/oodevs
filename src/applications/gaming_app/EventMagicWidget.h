@@ -26,10 +26,10 @@ namespace gui
 {
     class EntitySymbols;
     class EventMagicPresenter;
+    class TaskerWidget;
 }
 
 class Model;
-class TaskerWidget;
 
 // =============================================================================
 /** @class  EventMagicWidget
@@ -87,7 +87,7 @@ private:
     boost::shared_ptr< gui::EventMagicPresenter > magicPresenter_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     unsigned int lastTaskerId_;
-    TaskerWidget* taskerWidget_;
+    gui::TaskerWidget* taskerWidget_;
     QLabel* name_;
     //@}
 };
