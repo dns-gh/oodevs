@@ -104,3 +104,13 @@ void UserProfileUnitRights::contextMenuEvent( QContextMenuEvent* /*event*/ )
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::Commit
+// Created: JSR 2014-06-03
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::Commit()
+{
+    UserProfileRights_ABC::Commit();
+    emit NotifyRightsChanged();
+}

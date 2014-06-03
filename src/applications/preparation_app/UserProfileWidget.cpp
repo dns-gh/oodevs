@@ -89,6 +89,7 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
         gui::RichWidget< QTabWidget >* tabs = new gui::RichWidget< QTabWidget >( "RichWidget< QTabWidget >" );
 
         unitRights_ = new UserProfileUnitRights( "unitRights", tabs, controllers, icons, tr( "Units" ) );
+        connect( unitRights_->GetWidget(), SIGNAL( NotifyRightsChanged() ), SLOT( UpdateAutomatsAndKnowledgeGroups() ) );
         tabs->addTab( unitRights_->GetWidget(), tr( "Units" ) );
 
         populationRights_ = new UserProfilePopulationRights( "populationRights", tabs, controllers, tr( "Crowds" ) );
@@ -125,39 +126,6 @@ UserProfileWidget::~UserProfileWidget()
     // NOTHING
 }
 
-namespace
-{
-    const kernel::KnowledgeGroup_ABC* GetKnowledgeGroup( const kernel::Entity_ABC& entity )
-    {
-        const kernel::CommunicationHierarchies* hierarchies = entity.Retrieve< kernel::CommunicationHierarchies >();
-        if( !hierarchies )
-            return 0;
-        const kernel::Entity_ABC* pSuperior = hierarchies->GetSuperior();
-        if( !pSuperior )
-            return 0;
-        const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( pSuperior );
-        if( kg )
-            return kg;
-        return GetKnowledgeGroup( *pSuperior );
-    }
-
-    unsigned int GetKGCount( const std::set< unsigned long >& automats, Model& model )
-    {
-        std::set< unsigned long > knowledgeGroups;
-        for( auto it = automats.begin(); it != automats.end(); ++it )
-        {
-            kernel::Automat_ABC* pAutomat = model.FindAutomat( *it );
-            if( pAutomat )
-            {
-                const kernel::KnowledgeGroup_ABC* kg = GetKnowledgeGroup( *pAutomat );
-                if( kg )
-                    knowledgeGroups.insert( kg->GetId() );
-            }
-        }
-        return static_cast< unsigned int >( knowledgeGroups.size() );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: UserProfileWidget::Display
 // Created: SBO 2007-01-16
@@ -167,10 +135,7 @@ void UserProfileWidget::Display( UserProfile& profile )
     profile_ = &profile;
     login_->setText( profile.GetLogin() );
     password_->setText( profile.GetPassword() );
-    std::set< unsigned long > automats;
-    profile.VisitAllAutomats( automats );
-    automats_->setText( locale().toString( automats.size() ) );
-    knowledgeGroups_->setText( locale().toString( GetKGCount( automats, model_ ) ) );
+    UpdateAutomatsAndKnowledgeGroups();
     supervisor_->setChecked( profile.IsSupervisor() );
     timeControl_->setChecked( profile.HasTimeControl() );
     unitRights_->Display( profile );
@@ -239,4 +204,45 @@ void UserProfileWidget::OnTimeControlChanged( bool timeControl )
 {
     if( profile_ )
         profile_->SetTimeControl( timeControl );
+}
+
+namespace
+{
+    const kernel::KnowledgeGroup_ABC* GetKnowledgeGroup( const kernel::Entity_ABC& entity )
+    {
+        const kernel::CommunicationHierarchies* hierarchies = entity.Retrieve< kernel::CommunicationHierarchies >();
+        if( !hierarchies )
+            return 0;
+        const kernel::Entity_ABC* pSuperior = hierarchies->GetSuperior();
+        if( !pSuperior )
+            return 0;
+        const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( pSuperior );
+        return kg ? kg : GetKnowledgeGroup( *pSuperior );
+    }
+
+    unsigned int GetKGCount( const std::set< unsigned long >& automats, Model& model )
+    {
+        std::set< unsigned long > knowledgeGroups;
+        for( auto it = automats.begin(); it != automats.end(); ++it )
+        {
+            if( const kernel::Automat_ABC* pAutomat = model.FindAutomat( *it ) )
+                if( const kernel::KnowledgeGroup_ABC* kg = GetKnowledgeGroup( *pAutomat ) )
+                    knowledgeGroups.insert( kg->GetId() );
+        }
+        return static_cast< unsigned int >( knowledgeGroups.size() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::UpdateAutomatsAndKnowledgeGroups
+// Created: JSR 2014-06-03
+// -----------------------------------------------------------------------------
+void UserProfileWidget::UpdateAutomatsAndKnowledgeGroups()
+{
+    if( !profile_ )
+        return;
+    std::set< unsigned long > automats;
+    profile_->VisitAllAutomats( automats );
+    automats_->setText( locale().toString( automats.size() ) );
+    knowledgeGroups_->setText( locale().toString( GetKGCount( automats, model_ ) ) );
 }

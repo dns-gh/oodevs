@@ -52,11 +52,18 @@ private slots:
     virtual void OnSelect( const QItemSelection& /*selected*/, const QItemSelection& /* deselected */ );
     //@}
 
+signals:
+    //! @name Slots
+    //@{
+    void NotifyRightsChanged();
+    //@}
+
 private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void contextMenuEvent( QContextMenuEvent* event );
+    virtual void Commit();
     //@}
 
 private:

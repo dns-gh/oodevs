@@ -58,6 +58,7 @@ private slots:
     void OnPasswordChanged( const QString& text );
     void OnSupervisorChanged( bool supervisor );
     void OnTimeControlChanged( bool timeControl );
+    void UpdateAutomatsAndKnowledgeGroups();
     //@}
 
 private:

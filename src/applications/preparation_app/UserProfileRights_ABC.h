@@ -46,9 +46,10 @@ public:
     //@}
 
 protected:
-    //! @name Slots
+    //! @name Helpers
     //@{
     void OnItemClicked( const QModelIndex& index );
+    virtual void Commit();
     //@}
 
 private:
@@ -66,7 +67,6 @@ private:
 
     //! @name Helpers
     //@{
-    void Commit();
     void Clear();
     void SetStatus( QStandardItem* item, Status status );
     void SetStatus( QStandardItem* item, bool inheritsReadable, bool inheritsWriteable );
