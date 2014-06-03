@@ -12,7 +12,6 @@
 #include "moc_RasterProcess.cpp"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/ExerciseConfig.h"
-#include <terrain/PointProjector.h>
 #include <terrain/GenConfig.h>
 #include <tools/Helpers.h>
 #include <tools/Path.h>
@@ -24,13 +23,19 @@ namespace
 {
     geometry::Rectangle2d MakeExtent( const tools::ExerciseConfig& config )
     {
-        PointProjector projector( config.GetTerrainDir( config.GetTerrainName() ) );
-        double latitude, longitude;
-        projector.Unproject( geometry::Point2d( 0, 0 ), latitude, longitude );
-        const geometry::Point2d bottomLeft( longitude, latitude );
-        projector.Unproject( geometry::Point2d( config.GetTerrainWidth(), config.GetTerrainHeight() ), latitude, longitude );
-        const geometry::Point2d topRight( longitude, latitude );
-        return geometry::Rectangle2d( bottomLeft, topRight );
+        // $$$$ MCO 2014-06-03: Ideally we should recompute the extent instead
+        // of hoping the config.xml back from when the terrain was generated is
+        // still available but due to projection and rounding it doesn't give
+        // the same result.
+        tools::Xifstream xis( config.BuildTerrainChildFile( "config.xml" ) );
+        double xmax, xmin, ymax, ymin;
+        xis >> xml::start( "configuration" )
+                >> xml::start( "extent" )
+                    >> xml::attribute( "xmax", xmax )
+                    >> xml::attribute( "xmin", xmin )
+                    >> xml::attribute( "ymax", ymax )
+                    >> xml::attribute( "ymin", ymin );
+        return geometry::Rectangle2d( xmin, ymin, xmax, ymax );
     }
 }
 

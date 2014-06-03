@@ -2161,6 +2161,14 @@ Do you want to replace it?</translation>
         <translation> - Not connected</translation>
     </message>
     <message>
+        <source>Warning</source>
+        <translation>Warning</translation>
+    </message>
+    <message>
+        <source>This functionality is not available with old terrain format.</source>
+        <translation>This functionality is not available with old terrain format.</translation>
+    </message>
+    <message>
         <source>Error loading image file</source>
         <translation>Error loading image file</translation>
     </message>

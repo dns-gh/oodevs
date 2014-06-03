@@ -2160,6 +2160,14 @@ Do you want to replace it?</source>
         <translation type="unfinished">--غير متصل</translation>
     </message>
     <message>
+        <source>Warning</source>
+        <translation type="unfinished">تحذير</translation>
+    </message>
+    <message>
+        <source>This functionality is not available with old terrain format.</source>
+        <translation type="unfinished">هذه الوظيفة غير متوفرة مع تنسيق التضاريس القديمة.</translation>
+    </message>
+    <message>
         <source>Error loading image file</source>
         <translation type="unfinished">حدث خطأ أثناء تحميل ملف الصورة</translation>
     </message>

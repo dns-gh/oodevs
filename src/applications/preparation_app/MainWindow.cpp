@@ -850,6 +850,12 @@ void MainWindow::SetProgression( int value, const QString& text )
 // -----------------------------------------------------------------------------
 void MainWindow::OnAddRaster()
 {
+    if( !config_.BuildTerrainChildFile( "config.xml" ).Exists() )
+    {
+            QMessageBox::warning( 0, tools::translate( "MainWindow", "Warning" ),
+                tools::translate( "MainWindow", "This functionality is not available with old terrain format." ) );
+        return;
+    }
     try
     {
         gui::AddRasterDialog& dialog = dialogContainer_->GetAddRasterDialog();
