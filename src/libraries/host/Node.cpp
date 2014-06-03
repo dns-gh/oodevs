@@ -237,15 +237,6 @@ Tree Node::Save() const
     return tree;
 }
 
-namespace
-{
-template< typename T >
-std::string MakeOption( const std::string& option, const T& value )
-{
-    return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: Node::Start
 // Created: BAX 2012-04-17
@@ -275,13 +266,13 @@ bool Node::Start( const Path& app, const Path& web, const std::string& type,
 #ifdef _DEBUG
         ( "--debug" )
 #endif
-        ( MakeOption( "www",  Utf8( web ) ) )
-        ( MakeOption( "uuid", id_ ) )
-        ( MakeOption( "type", type ) )
-        ( MakeOption( "name", cfg_.name ) )
-        ( MakeOption( "host", host ) )
-        ( MakeOption( "tcp", tcp ) )
-        ( MakeOption( "port", port_->Get() ) );
+        ( "--www" )( Utf8( web ) )
+        ( "--uuid" )( boost::lexical_cast< std::string >( id_ ) )
+        ( "--type" )( type )
+        ( "--name" )( cfg_.name )
+        ( "--host" )( boost::lexical_cast< std::string >( host ) )
+        ( "--tcp" )( boost::lexical_cast< std::string >( tcp ) )
+        ( "--port" )( boost::lexical_cast< std::string >( port_->Get() ) );
     if( cfg_.sessions.reset )
         args.push_back( "--reset" );
     T_Process ptr = deps_.runtime.Start( Utf8( app ), args, std::string(),

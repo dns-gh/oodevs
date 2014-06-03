@@ -225,14 +225,16 @@ bool Proxy::Reload( const Path& path )
 // -----------------------------------------------------------------------------
 Proxy::T_Process Proxy::MakeProcess() const
 {
-    std::vector< std::string > args = boost::assign::list_of
-        ( "--http \"" + boost::lexical_cast< std::string >( config_.http ) + "\"" )
-        ( "--tcp \"" + boost::lexical_cast< std::string >( config_.tcp ) + "\"" );
+    std::vector< std::string > args = boost::assign::list_of< std::string >
+        ( "--http" )( boost::lexical_cast< std::string >( config_.http ) )
+        ( "--tcp" )( boost::lexical_cast< std::string >( config_.tcp ) );
     if( config_.ssl.enabled )
     {
         args.push_back( "--ssl" );
-        args.push_back( "--ssl_certificate \"" + Utf8( config_.ssl.certificate ) + "\"" );
-        args.push_back( "--ssl_key \"" + Utf8( config_.ssl.key ) + "\"" );
+        args.push_back( "--ssl_certificate" );
+        args.push_back( Utf8( config_.ssl.certificate ) );
+        args.push_back( "--ssl_key" );
+        args.push_back( Utf8( config_.ssl.key ) );
     }
     return runtime_.Start( Utf8( config_.app ), args,
             Utf8( Path( config_.app ).remove_filename() ),
