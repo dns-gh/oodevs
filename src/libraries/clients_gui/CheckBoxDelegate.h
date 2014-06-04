@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
@@ -25,7 +25,7 @@ class CheckBoxDelegate : public CommonDelegate
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CheckBoxDelegate( QObject *parent = 0 );
+    explicit CheckBoxDelegate( QObject* parent = 0 );
     virtual ~CheckBoxDelegate();
     //@}
 
