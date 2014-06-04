@@ -50,28 +50,6 @@ namespace
             return !kg->IsActivated();
         return false;
     }
-
-    //bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
-    //{
-    //    auto automat   = dynamic_cast< const kernel::Automat_ABC* >       ( &entity );
-    //    auto formation = dynamic_cast< const kernel::Formation_ABC* >     ( &entity );
-    //    auto ghost     = dynamic_cast< const kernel::Ghost_ABC* >         ( &entity );
-    //    auto group     = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &superior );
-    //    if( ghost && ghost->GetGhostType() != eGhostType_Automat )
-    //        return false;
-    //    if( ( automat || ghost || formation ) && group )
-    //        return &entity.Get< kernel::TacticalHierarchies >().GetTop() == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
-    //    else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
-    //    {
-    //        const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
-    //        const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior );
-    //        if( com && com == team )
-    //            return true;
-    //        else if( group && ( knowledgegroup != group ) )
-    //            return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
-    //    }
-    //    return false;
-    //}
     
     bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
     {
