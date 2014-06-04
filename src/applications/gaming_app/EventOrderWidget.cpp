@@ -96,7 +96,7 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
     presenter_.AddSubPresenter( orderPresenter_ );
 
     // Tasker
-    taskerWidget_ = new gui::TaskerWidget( controllers, entitySymbols, tr( "Recipient" ) );
+    taskerWidget_ = new gui::TaskerWidget( "order-tasker", controllers, entitySymbols, tr( "Recipient" ) );
 
     // Top
     missionTypeCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-type-combobox" );

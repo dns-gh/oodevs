@@ -42,7 +42,7 @@ EventMagicWidget::EventMagicWidget( gui::EventPresenter& presenter,
     presenter_.AddSubPresenter( magicPresenter_ );
 
     // Layout
-    taskerWidget_ = new gui::TaskerWidget( controllers, symbols, tr( "Recipient" ), true, false );
+    taskerWidget_ = new gui::TaskerWidget( "magic-tasker", controllers, symbols, tr( "Recipient" ), true, false );
 
     QGridLayout* layout = new QGridLayout( 0, 1, 2 );
     name_ = new QLabel();
