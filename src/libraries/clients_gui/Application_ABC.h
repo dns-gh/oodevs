@@ -49,6 +49,9 @@ public:
     //@{
     virtual int Run() = 0;
     virtual void CreateTranslators() = 0;
+
+    void DeleteTranslator( const std::string& translator );
+    void AddTranslator( const std::string& t, const std::string& languageCode );
     //@}
 
 protected:
@@ -60,7 +63,7 @@ protected:
     void InitializeLayoutDirection();
     virtual void InitializeStyle();
 
-    void AddTranslator( const char* t );
+    void AddTranslator( const std::string& t );
     void DeleteTranslators();
 
     void CheckInterfaceComponentNaming( QObject* root, const tools::Path& outpath ) const;
@@ -92,10 +95,10 @@ protected:
 private:
     //! @name Member data
     //@{
-    QString                     expiration_;
-    bool                        invalidLicense_;
-    QLocale                     locale_;
-    std::vector< QTranslator* > translators_;
+    QString                               expiration_;
+    bool                                  invalidLicense_;
+    QLocale                               locale_;
+    std::map< std::string, QTranslator* > translators_;
     //@}
 };
 } //! namespace gui

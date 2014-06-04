@@ -2837,6 +2837,21 @@ PNG (*.png)
     </message>
 </context>
 <context>
+    <name>ADN_Missions_ABC</name>
+    <message>
+        <source>Expected enemy direction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lines used by units to adapt their behavior when they reach or cross them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right or left boundaries inside which the agent performs the mission.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Missions_Data</name>
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>

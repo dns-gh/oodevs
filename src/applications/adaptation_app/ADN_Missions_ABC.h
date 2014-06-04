@@ -72,7 +72,9 @@ private:
     void WriteMissionSheetAttachments( xml::xostream& xos ) const;
     void InternalWriteMissionSheet( xml::xostream& xos, const std::string& language, bool isMergedXml = false ) const;
 
-    void AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs = 1, int maxOccurs = 1 );
+    void AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType,
+                              const std::map< std::string, std::string>& description,
+                              bool optional, int minOccurs = 1, int maxOccurs = 1 );
     void Initialize();
     void CheckFieldDataConsistency( const std::string& fieldData, ADN_ConsistencyChecker& checker );
     void ParseImagesInImageDirectory( const tools::Path& imageDir );
