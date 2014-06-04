@@ -1168,12 +1168,14 @@
         <update name="timeline_ui" version="5.4" package="lib/${platform}"   todir="${lib.dir}"/>
     </target>
 
-    <target name="configure" description="update packages and decisional"
-        depends="update
-                ,generate-lua-reports
+    <target name="deploy" description="configure without package updates"
+        depends="generate-lua-reports
                 ,deploy-application-data
                 ,generate-license
                 ,timeline.deploy"/>
+
+    <target name="configure" description="update packages and decisional"
+        depends="update,deploy"/>
 
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
