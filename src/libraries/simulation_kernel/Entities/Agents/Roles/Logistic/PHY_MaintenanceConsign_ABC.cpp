@@ -25,9 +25,9 @@
 // Name: PHY_MaintenanceConsign_ABC constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC( MIL_Agent_ABC& maintenanceAgent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
+PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC( MIL_Agent_ABC& agent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state )
     : nState_( sword::LogMaintenanceHandlingUpdate::moving_to_supply )
-    , pMaintenance_( &maintenanceAgent )
+    , pAgent_( &agent )
     , pComposanteState_( state )
     , nTimer_( 0 )
     , currentStateEndTimeStep_( std::numeric_limits< unsigned >::max() )
@@ -42,7 +42,7 @@ PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC( MIL_Agent_ABC& maintenan
 // -----------------------------------------------------------------------------
 PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC()
     : nState_( sword::LogMaintenanceHandlingUpdate::moving_to_supply )
-    , pMaintenance_( 0 )
+    , pAgent_( 0 )
     , nTimer_( 0 )
     , currentStateEndTimeStep_( std::numeric_limits< unsigned >::max() )
     , bHasChanged_( true )
@@ -113,11 +113,11 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceConsign_ABC::SendFullState( client::LogMaintenanceHandlingUpdate& asn ) const
 {
-    assert( pMaintenance_ );
+    assert( pAgent_ );
     if( IsManualMode() && IsStateManualSelection( GetState() ) )
         asn().mutable_provider()->set_id( GetPionMaintenance().FindLogisticManager()->GetLogisticId() );
     else
-        asn().mutable_provider()->set_id( pMaintenance_->GetID() );
+        asn().mutable_provider()->set_id( pAgent_->GetID() );
     asn().set_state( nState_ );
     if( currentStateEndTimeStep_ != std::numeric_limits< unsigned int >::max() )
         asn().set_current_state_end_tick( currentStateEndTimeStep_ );
@@ -228,8 +228,8 @@ bool PHY_MaintenanceConsign_ABC::HasValidComposanteState() const
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Maintenance& PHY_MaintenanceConsign_ABC::GetPionMaintenance() const
 {
-    assert( pMaintenance_ );
-    return pMaintenance_->GetRole< PHY_RoleInterface_Maintenance >();
+    assert( pAgent_ );
+    return pAgent_->GetRole< PHY_RoleInterface_Maintenance >();
 }
 
 // -----------------------------------------------------------------------------
@@ -267,5 +267,5 @@ bool PHY_MaintenanceConsign_ABC::IsManualMode() const
 
 const MT_Vector2D& PHY_MaintenanceConsign_ABC::GetPosition() const
 {
-    return pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition();
+    return pAgent_->GetRole< PHY_RoleInterface_Location>().GetPosition();
 }
