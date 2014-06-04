@@ -38,7 +38,7 @@ class PHY_Breakdown;
 class PHY_MaintenanceConsign_ABC : private boost::noncopyable
 {
 public:
-             PHY_MaintenanceConsign_ABC( MIL_Agent_ABC& maintenanceAgent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
+             PHY_MaintenanceConsign_ABC( MIL_Agent_ABC& agent, const boost::shared_ptr< PHY_MaintenanceComposanteState >& state );
              PHY_MaintenanceConsign_ABC();
     virtual ~PHY_MaintenanceConsign_ABC();
 
@@ -92,15 +92,15 @@ protected:
     bool IsManualMode() const;
 
     PHY_RoleInterface_Maintenance& GetPionMaintenance() const;
+    const MT_Vector2D& GetPosition() const;
     //@}
-
-    MIL_Agent_ABC* pMaintenance_;
 
 private:
     void ResetTimer( int timer );
 
 private:
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nState_;
+    MIL_Agent_ABC* pAgent_;
     int      nTimer_;
     unsigned currentStateEndTimeStep_; // Only used to send the information over the network
     bool     bHasChanged_;
@@ -116,7 +116,7 @@ protected:
 template< typename Archive >
 void PHY_MaintenanceConsign_ABC::serialize( Archive& file, const unsigned int )
 {
-    file & pMaintenance_
+    file & pAgent_
          & pComposanteState_
          & nState_
          & nTimer_

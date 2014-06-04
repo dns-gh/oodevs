@@ -185,9 +185,7 @@ void PHY_MaintenanceTransportConsign::EnterStateGoingFrom()
 {
     const auto state = GetComposanteState();
     SetState( sword::LogMaintenanceHandlingUpdate::moving_to_supply,
-        state->ApproximateTravelTime(
-            state->GetComposantePosition(),
-            pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() ) );
+        state->ApproximateTravelTime( state->GetComposantePosition(), GetPosition() ) );
     state->NotifyHandledByMaintenance();
 }
 
@@ -199,8 +197,8 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingTo()
 {
     const auto state = GetComposanteState();
     assert( component_ );
-    const MT_Vector2D& position = destination_ ?  destination_->GetRole< PHY_RoleInterface_Location>().GetPosition()
-                                               : pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition();
+    const MT_Vector2D& position = destination_ ? destination_->GetRole< PHY_RoleInterface_Location>().GetPosition()
+                                               : GetPosition();
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply,
               component_->ApproximateTravelTime( position, state->GetComposantePosition() ) );
 }
@@ -226,8 +224,8 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingFrom()
 {
     assert( component_ );
     const auto state = GetComposanteState();
-    const MT_Vector2D& position = destination_ ?  destination_->GetRole< PHY_RoleInterface_Location>().GetPosition()
-                                               : pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition();
+    const MT_Vector2D& position = destination_ ? destination_->GetRole< PHY_RoleInterface_Location>().GetPosition()
+                                               : GetPosition();
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_moving_back,
               component_->ApproximateTravelTime( state->GetComposantePosition(), position ) );
 }
@@ -302,7 +300,7 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterTransport()
 {
     ResetComponent();
     const auto state = GetComposanteState();
-    state->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
+    state->SetComposantePosition( GetPosition() );
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForDiagnosis( state ) )
     {
