@@ -185,7 +185,7 @@ class UserSelectedItemView extends Backbone.View
         @profiles = new ProfilesView
         @model.bind "change", @render
         @render()
-        profiles = @session.restricted?.list[@model.id]?.profiles
+        profiles = @session.restricted?.list?[@model.id]?.profiles
         if _.isArray profiles
             for k in profiles
                 @profiles.model.add new Backbone.Model id: k
