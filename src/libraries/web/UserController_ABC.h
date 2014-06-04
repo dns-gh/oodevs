@@ -59,6 +59,7 @@ struct UserController_ABC : public boost::noncopyable
     virtual Tree                GetUser        ( const Uuid& node, int id ) const = 0;
     virtual Tree                CreateUser     ( const Uuid& node, const std::string& username, const std::string& name, const std::string& password, UserType type, bool temporary ) = 0;
     virtual Tree                DeleteUser     ( const Uuid& node, const std::string& token, int id ) = 0;
+    virtual void                DeleteUsers    ( const Uuid& node ) = 0;
     virtual Tree                UpdateUser     ( const Uuid& node, const std::string& token, int id, const std::string& user, const std::string& name, bool temporary, const boost::optional< std::string >& password ) = 0;
     //@}
 };
