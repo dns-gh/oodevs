@@ -1207,7 +1207,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
 void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& msg, MIL_Entity_ABC& entity, unsigned int nCtx, sword::UnitMagicActionAck& ack )
 {
     const auto& params = msg.parameters();
-    protocol::CheckCount( params, 4 );
+    protocol::CheckCount( params, 2, 4 );
     const auto automatType = protocol::GetIdentifier( params, 0 );
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( automatType );
     if( !pType )
@@ -1334,7 +1334,7 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const sword::MissionPar
             throw MASA_BADUNIT_UNIT( "invalid party or formation: " << taskerId );
         army = &formation->GetArmy();
     }
-    protocol::CheckCount( params, 4 );
+    protocol::CheckCount( params, 2, 4 );
     const int level = static_cast< int >( protocol::GetReal( params, 0 ) );
     const std::string& name = protocol::GetString( params, 1 );
     std::string logLevel;
@@ -2375,7 +2375,7 @@ void MIL_EntityManager::OnReceiveSelectRepairTeam( const sword::MagicAction& mes
 void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::MagicAction& message, client::MagicActionAck& ack )
 {
     const auto& params = message.parameters();
-    protocol::CheckCount( params, 3 );
+    protocol::CheckCount( params, 2, 3 );
     const auto requestId = protocol::GetIdentifier( params, 0 );
     const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
     protocol::Check( equipment, "invalid equipment type identifier" );

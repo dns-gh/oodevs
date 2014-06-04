@@ -968,7 +968,7 @@ unsigned int MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicA
     if( msg.type() != sword::UnitMagicAction_Type_unit_creation || !msg.has_parameters() )
         throw MASA_BADPARAM_UNIT( "invalid message type" );
     const sword::MissionParameters& parameters = msg.parameters();
-    protocol::CheckCount( parameters, 5 );
+    protocol::CheckCount( parameters, 2, 5 );
     const uint32_t id = protocol::GetIdentifier( parameters, 0 );
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id );
     protocol::Check( pType, "invalid unit type" );

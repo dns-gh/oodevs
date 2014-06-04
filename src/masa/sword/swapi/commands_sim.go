@@ -142,7 +142,6 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 		MakeFloat(float32(level)),
 		MakeString(name),
 		MakeString(logLevel),
-		MakeNullValue(),
 	)
 	return c.CreateFormationTest(partyId, parentId, params)
 }
@@ -155,16 +154,10 @@ func (c *Client) createUnit(automatId, unitType uint32, location Point,
 	}
 	if name != nil {
 		params = append(params, MakeString(*name))
-	} else {
-		params = append(params, MakeNullValue())
 	}
 	if pc != nil {
 		params = append(params, MakeBoolean(*pc))
-	} else {
-		params = append(params, MakeNullValue())
 	}
-	// extensions
-	params = append(params, MakeNullValue())
 	tasker := MakeAutomatTasker(automatId)
 	msg := CreateUnitMagicAction(tasker, MakeParameters(params...),
 		sword.UnitMagicAction_unit_creation)
@@ -307,8 +300,6 @@ func (c *Client) CreateAutomat(formationId, automatType,
 	msg := CreateUnitMagicAction(tasker, MakeParameters(
 		MakeIdentifier(automatType),
 		MakeIdentifier(knowledgeGroupId),
-		MakeNullValue(),
-		MakeNullValue(),
 	), sword.UnitMagicAction_automat_creation)
 	var created *Automat
 	handler := func(msg *sword.SimToClient_Content) error {
@@ -1597,8 +1588,6 @@ func (c *Client) CreateObject(objectType string, partyId uint32,
 	}
 	if len(attributes) != 0 {
 		params = append(params, MakeParameter(attributes...))
-	} else {
-		params = append(params, MakeNullValue())
 	}
 	msg := CreateObjectMagicAction(0, MakeParameters(params...),
 		sword.ObjectMagicAction_create)
@@ -1746,13 +1735,9 @@ func (c *Client) SelectMaintenanceTransporterTest(params *sword.MissionParameter
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
-func (c *Client) SelectMaintenanceTransporter(handlingId, equipmentId, destinationId uint32) error {
-	if destinationId == 0 {
-		return c.SelectMaintenanceTransporterTest(MakeParameters(MakeIdentifier(handlingId),
-			MakeIdentifier(equipmentId), MakeNullValue()))
-	}
+func (c *Client) SelectMaintenanceTransporter(handlingId, equipmentId uint32) error {
 	return c.SelectMaintenanceTransporterTest(MakeParameters(MakeIdentifier(handlingId),
-		MakeIdentifier(equipmentId), MakeAgent(destinationId)))
+		MakeIdentifier(equipmentId)))
 }
 
 func (c *Client) SelectDiagnosisTeamTest(params *sword.MissionParameters) error {
