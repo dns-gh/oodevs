@@ -11,6 +11,7 @@
 #include "ChangeSuperiorDialog.h"
 #include "moc_ChangeSuperiorDialog.cpp"
 #include "ChangeLogisticLinksWidget.h"
+#include "RichGroupBox.h"
 #include "RichPushButton.h"
 #include "SubObjectName.h"
 #include "TaskerWidget.h"
@@ -35,12 +36,12 @@ ChangeSuperiorDialog::ChangeSuperiorDialog( kernel::Controllers& controllers,
     setMinimumWidth( 300 );
 
     // Content
-    currentEntity_ = new gui::TaskerWidget( controllers, symbols, tr( "Moved entity" ), true, false );
-    tacticalSuperior_ = new gui::TaskerWidget( controllers, symbols, tr( "Tactical superior" ), false, false );
+    currentEntity_ = new gui::TaskerWidget( "current-entity", controllers, symbols, tr( "Moved entity" ), true, false );
+    tacticalSuperior_ = new gui::TaskerWidget( "tactical-superior", controllers, symbols, tr( "Tactical superior" ), false, false );
     tacticalSuperior_->setVisible( false );
-    knowledgeGroup_ = new gui::TaskerWidget( controllers, symbols, tr( "Knowledge group" ), false, false );
+    knowledgeGroup_ = new gui::TaskerWidget( "knowledge-group", controllers, symbols, tr( "Knowledge group" ), false, false );
     knowledgeGroup_->setVisible( false );
-    logisticSuperior_ = new QGroupBox( tr( "Logistic links" ) );
+    logisticSuperior_ = new gui::RichGroupBox( "logistic-superior", tr( "Logistic links" ) );
     logisticSuperior_->setVisible( false );
     connect( tacticalSuperior_, SIGNAL( Clicked( bool ) ), SLOT( OnContentChanged() ) );
     connect( tacticalSuperior_, SIGNAL( TaskerChanged( const kernel::Entity_ABC* ) ), SLOT( OnContentChanged() ) );

@@ -40,7 +40,8 @@ class TaskerWidget : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TaskerWidget( kernel::Controllers& controllers,
+             TaskerWidget( const QString& objectName,
+                           kernel::Controllers& controllers,
                            const gui::EntitySymbols& symbols,
                            const QString& title,
                            bool showActivate = true,

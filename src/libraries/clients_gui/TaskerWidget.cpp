@@ -15,6 +15,7 @@
 #include "RichGroupBox.h"
 #include "RichLabel.h"
 #include "RichPushButton.h"
+#include "SubObjectName.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -28,7 +29,8 @@ using namespace gui;
 // Name: TaskerWidget constructor
 // Created: ABR 2013-12-17
 // -----------------------------------------------------------------------------
-TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
+TaskerWidget::TaskerWidget( const QString& objectName,
+                            kernel::Controllers& controllers,
                             const gui::EntitySymbols& symbols,
                             const QString& title,
                             bool showActivate /* = true */,
@@ -41,6 +43,8 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
     , activateButton_( 0 )
     , clearButton_( 0 )
 {
+    setObjectName( objectName );
+    SubObjectName subObject( objectName );
     setMinimumHeight( 64 );
     nameLabel_ = new gui::RichLabel( "event-target-label", "---" );
     symbolLabel_ = new gui::RichLabel( "event-target-symbol-label" );
