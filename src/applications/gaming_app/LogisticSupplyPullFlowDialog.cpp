@@ -349,9 +349,7 @@ void LogisticSupplyPullFlowDialog::OnSupplierSelectionChanged()
     resourcesTable_->Clear();
     if( !supplier_ )
         return;
-    logistic_helpers::VisitPartialBaseStocksDotations( *supplier_,
-                                                       [&]( const Dotation& dotation ){ AddAvailable( dotation ); },
-                                                       [&]( const kernel::Entity_ABC& entity ){ return profile_.CanBeOrdered( entity ); } );
+    logistic_helpers::VisitBaseStocksDotations( *supplier_, [&]( const Dotation& dotation ){ AddAvailable( dotation ); } );
     SetSuppliesToTable();
 }
 
