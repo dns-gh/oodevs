@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceRepairConsign.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
@@ -220,9 +219,7 @@ void PHY_MaintenanceRepairConsign::EnterStateGoingBackToWar()
     GetPionMaintenance().StopUsingForLogistic( *pRepairer_ );
     pRepairer_ = 0;
     SetState( sword::LogMaintenanceHandlingUpdate::moving_back,
-        state->ApproximateTravelTime(
-            pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(),
-            state->GetPionPosition() ) );
+        state->ApproximateTravelTime( GetPosition(), state->GetPionPosition() ) );
 }
 
 // -----------------------------------------------------------------------------

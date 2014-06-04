@@ -14,6 +14,7 @@
 #include "PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
@@ -43,7 +44,7 @@ PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC()
     : nState_( sword::LogMaintenanceHandlingUpdate::moving_to_supply )
     , pMaintenance_( 0 )
     , nTimer_( 0 )
-    , currentStateEndTimeStep_ ( std::numeric_limits< unsigned >::max() )
+    , currentStateEndTimeStep_( std::numeric_limits< unsigned >::max() )
     , bHasChanged_( true )
 {
     // NOTHING
@@ -262,4 +263,9 @@ bool PHY_MaintenanceConsign_ABC::IsManualMode() const
 {
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     return pLogisticManager && pLogisticManager->IsMaintenanceManual();
+}
+
+const MT_Vector2D& PHY_MaintenanceConsign_ABC::GetPosition() const
+{
+    return pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition();
 }

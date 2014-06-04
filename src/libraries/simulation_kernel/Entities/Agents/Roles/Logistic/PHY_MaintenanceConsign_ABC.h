@@ -92,15 +92,15 @@ protected:
     bool IsManualMode() const;
 
     PHY_RoleInterface_Maintenance& GetPionMaintenance() const;
+    const MT_Vector2D& GetPosition() const;
     //@}
-
-    MIL_Agent_ABC* pMaintenance_;
 
 private:
     void ResetTimer( int timer );
 
 private:
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nState_;
+    MIL_Agent_ABC* pMaintenance_;
     int      nTimer_;
     unsigned currentStateEndTimeStep_; // Only used to send the information over the network
     bool     bHasChanged_;
