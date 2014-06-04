@@ -500,7 +500,10 @@ void MIL_AgentPion::UpdateDecision( float duration )
     try
     {
         pOrderManager_->Update();
-        GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
+        if( !IsDead() )
+            GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
+        else
+            CancelAllActions();
     }
     catch( const std::exception& e )
     {
