@@ -91,8 +91,12 @@
         <translation>Crear subgrupo de conocimiento</translation>
     </message>
     <message>
-        <source>Change superior</source>
-        <translation>Cambiar superior</translation>
+        <source>Select new knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2588,10 +2592,6 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>Create side</source>
         <translation>Crear lado</translation>
-    </message>
-    <message>
-        <source>Change superior</source>
-        <translation>Cambiar superior</translation>
     </message>
     <message>
         <source>Change hierarchy level</source>

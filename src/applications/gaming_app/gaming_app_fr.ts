@@ -331,37 +331,6 @@
     </message>
 </context>
 <context>
-    <name>ChangeLogisticLinksDialog</name>
-    <message>
-        <source>Logistic links edition</source>
-        <translation>Edition des liens logistiques</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Aucun</translation>
-    </message>
-    <message>
-        <source>Change logistic links</source>
-        <translation>Changer les liens logistiques</translation>
-    </message>
-    <message>
-        <source>Nominal superior</source>
-        <translation>Supérieur nominal</translation>
-    </message>
-    <message>
-        <source>Current superior</source>
-        <translation>Supérieur courant</translation>
-    </message>
-</context>
-<context>
     <name>ChatDock</name>
     <message>
         <source>Chat</source>
@@ -434,12 +403,16 @@
 <context>
     <name>CommunicationTreeView</name>
     <message>
-        <source>Change superior</source>
-        <translation>Changer de supérieur</translation>
-    </message>
-    <message>
         <source>Create Knowledge Group</source>
         <translation>Créer un groupe de connaissance</translation>
+    </message>
+    <message>
+        <source>Select new knowledge group</source>
+        <translation>Selectionner un nouveau groupe de connaissance</translation>
+    </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation>Changer le groupe de connaissance</translation>
     </message>
 </context>
 <context>
@@ -721,6 +694,10 @@ Raison: %3
         <source>Supervisor action:</source>
         <translation>Action superviseur:</translation>
     </message>
+    <message>
+        <source>Recipient</source>
+        <translation>Destinataire</translation>
+    </message>
 </context>
 <context>
     <name>EventOrderWidget</name>
@@ -743,6 +720,10 @@ Raison: %3
     <message>
         <source>New order (unit)</source>
         <translation>Nouvel ordre (pion)</translation>
+    </message>
+    <message>
+        <source>Recipient</source>
+        <translation>Destinataire</translation>
     </message>
 </context>
 <context>
@@ -1733,7 +1714,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>N/A</source>
-        <translation type="unfinished">N/A</translation>
+        <translation>N/A</translation>
     </message>
     <message>
         <source>Vehicle weight: %1 t</source>
@@ -1813,31 +1794,31 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Quantity</source>
-        <translation type="unfinished">Quantité</translation>
+        <translation>Quantité</translation>
     </message>
     <message>
         <source>Mass (T)</source>
-        <translation type="unfinished">Masse (T)</translation>
+        <translation>Masse (T)</translation>
     </message>
     <message>
         <source>Volume (m3)</source>
-        <translation type="unfinished">Volume (m3)</translation>
+        <translation>Volume (m3)</translation>
     </message>
     <message>
         <source>Supplies</source>
-        <translation type="unfinished">Dotations</translation>
+        <translation>Dotations</translation>
     </message>
     <message>
         <source>Carriers</source>
-        <translation type="unfinished">Vecteurs</translation>
+        <translation>Vecteurs</translation>
     </message>
     <message>
         <source>Route</source>
-        <translation type="unfinished">Itinéraire</translation>
+        <translation>Itinéraire</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1849,43 +1830,43 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Move waypoint up</source>
-        <translation type="unfinished">Monter le point de passage</translation>
+        <translation>Monter le point de passage</translation>
     </message>
     <message>
         <source>Move waypoint down</source>
-        <translation type="unfinished">Descendre le point de passage</translation>
+        <translation>Descendre le point de passage</translation>
     </message>
     <message>
         <source>Delete Waypoint</source>
-        <translation type="unfinished">Supprimer le point de passage</translation>
+        <translation>Supprimer le point de passage</translation>
     </message>
     <message>
         <source>Add Waypoint</source>
-        <translation type="unfinished">Ajouter le point de passage</translation>
+        <translation>Ajouter le point de passage</translation>
     </message>
     <message>
         <source>Manual selection of transport carriers</source>
-        <translation type="unfinished">Sélection manuelle des vecteurs de transport</translation>
+        <translation>Sélection manuelle des vecteurs de transport</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Capacity (T)</source>
-        <translation type="unfinished">Capacité (T)</translation>
+        <translation>Capacité (T)</translation>
     </message>
     <message>
         <source>Capacity (m3)</source>
-        <translation type="unfinished">Capacité (m3)</translation>
+        <translation>Capacité (m3)</translation>
     </message>
     <message>
         <source>Mass</source>
-        <translation type="unfinished">Masse</translation>
+        <translation>Masse</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished">Volume</translation>
+        <translation>Volume</translation>
     </message>
 </context>
 <context>
@@ -2882,7 +2863,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Drawings</source>
-        <translation type="unfinished">Dessins</translation>
+        <translation>Dessins</translation>
     </message>
 </context>
 <context>
@@ -3365,31 +3346,12 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>TacticalTreeView</name>
     <message>
-        <source>Change superior</source>
-        <translation>Changer de supérieur</translation>
-    </message>
-    <message>
         <source>Create formation</source>
         <translation>Créer une formation</translation>
     </message>
     <message>
         <source>Create logistic base</source>
         <translation>Créer une base logistique</translation>
-    </message>
-</context>
-<context>
-    <name>TaskerWidget</name>
-    <message>
-        <source>Recipient</source>
-        <translation>Destinataire</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation>Selectionner</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Supprimer</translation>
     </message>
 </context>
 <context>

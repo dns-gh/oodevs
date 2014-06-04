@@ -563,19 +563,22 @@
     </message>
 </context>
 <context>
+    <name>gui::ChangeLogisticLinksWidget</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nominal superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ChangeSuperiorDialog</name>
-    <message>
-        <source>Select new group</source>
-        <translation type="unfinished">حدد مجموعة جديدة</translation>
-    </message>
-    <message>
-        <source>Select new superior</source>
-        <translation type="unfinished">حدد متفوقة جديدة</translation>
-    </message>
-    <message>
-        <source>New superior</source>
-        <translation type="unfinished">العليا الجديدة</translation>
-    </message>
     <message>
         <source>Ok</source>
         <translation type="unfinished">موافق</translation>
@@ -585,8 +588,20 @@
         <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>Entity moved: </source>
-        <translation type="unfinished">انتقل الكيان:</translation>
+        <source>Moved entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic links</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1406,6 +1421,10 @@ Do you want to remove it?</source>
         <source>Supported units</source>
         <translation type="unfinished">وحدات معتمدة</translation>
     </message>
+    <message>
+        <source>Change logistic links</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::MinePrototype_ABC</name>
@@ -1968,6 +1987,24 @@ Do you want to remove it?</source>
     <message>
         <source>Create phase line</source>
         <translation type="unfinished">إنشاء خط المرحلة</translation>
+    </message>
+</context>
+<context>
+    <name>gui::TacticalTreeView</name>
+    <message>
+        <source>Change superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::TaskerWidget</name>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

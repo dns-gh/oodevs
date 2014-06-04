@@ -9,6 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "LogisticTreeView.h"
+#include "moc_LogisticTreeView.cpp"
+#include "ChangeSuperiorDialog.h"
 #include "LogisticBase.h"
 #include "LongNameHelper.h"
 #include "DragAndDropHelpers.h"
@@ -69,12 +71,20 @@ namespace
 // Name: LogisticTreeView constructor
 // Created: ABR 2012-09-19
 // -----------------------------------------------------------------------------
-LogisticTreeView::LogisticTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
+LogisticTreeView::LogisticTreeView( const QString& objectName,
+                                    kernel::Controllers& controllers,
+                                    const kernel::Profile_ABC& profile,
+                                    ModelObserver_ABC& modelObserver,
+                                    const EntitySymbols& symbols,
+                                    gui::ChangeSuperiorDialog& changeSuperiorDialog,
+                                    QWidget* parent /*= 0*/ )
     : HierarchyTreeView_ABC( objectName, controllers, profile, modelObserver, symbols, parent )
+    , changeSuperiorDialog_( changeSuperiorDialog )
+    , contextMenuEntity_( controllers )
 {
     SetLessThanFunctor( boost::bind( &ModelIndexToEntityWrapper, _1, _2, _3, boost::cref( dataModel_ ), &tools::LessThanById ) );
-    controllers_.Update( *this );
     EnableDragAndDrop( true );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -520,4 +530,45 @@ void LogisticTreeView::contextMenuEvent( QContextMenuEvent* event )
         if( targetItem && !dnd::IsA< sword::EnumLogisticLevel >( *targetItem ) )
             HierarchyTreeView_ABC::contextMenuEvent( event );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticTreeView::AddChangeLinksToMenu
+// Created: ABR 2014-06-02
+// -----------------------------------------------------------------------------
+void LogisticTreeView::AddChangeLinksToMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+{
+    contextMenuEntity_ = &entity;
+    if( profile_.CanBeOrdered( entity ) && controllers_.GetCurrentMode() != eModes_Replay )
+        menu.InsertItem( "Command", tr( "Change logistic links" ), this, SLOT( OnChangeLogisticLinks() ), false, 2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticTreeView::NotifyContextMenu
+// Created: ABR 2014-06-02
+// -----------------------------------------------------------------------------
+void LogisticTreeView::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu )
+{
+    AddChangeLinksToMenu( agent, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticTreeView::NotifyContextMenu
+// Created: ABR 2014-06-02
+// -----------------------------------------------------------------------------
+void LogisticTreeView::NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu )
+{
+    AddChangeLinksToMenu( agent, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticTreeView::OnChangeLogisticLinks
+// Created: ABR 2014-06-02
+// -----------------------------------------------------------------------------
+void LogisticTreeView::OnChangeLogisticLinks()
+{
+    if( contextMenuEntity_ )
+        changeSuperiorDialog_.Show( *contextMenuEntity_.ConstCast(),
+                                    tr( "Change logistic links" ),
+                                    gui::ChangeSuperiorDialog::eLogisticSuperior );
 }

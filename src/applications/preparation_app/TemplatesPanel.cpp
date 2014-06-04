@@ -89,7 +89,7 @@ void TemplatesPanel::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel
         entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
     {
         menuEntity_ = &entity;
-        menu.InsertItem( "Command", tr( "Create template" ), this, SLOT( OnCreateTemplate() ), false, 2 );
+        menu.InsertItem( "Command", tr( "Create template" ), this, SLOT( OnCreateTemplate() ), false, 3 );
     }
 }
 

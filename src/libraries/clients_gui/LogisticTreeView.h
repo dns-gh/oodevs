@@ -11,15 +11,20 @@
 #define __gui_LogisticTreeView_h_
 
 #include "HierarchyTreeView_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {
+    class ContextMenu;
+    class Entity_ABC;
     class TacticalHierarchies;
 }
 
 namespace gui
 {
+    class ChangeSuperiorDialog;
 
 // =============================================================================
 /** @class  LogisticTreeView
@@ -32,12 +37,21 @@ class LogisticTreeView : public HierarchyTreeView_ABC
                        , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                        , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                        , public tools::ElementObserver_ABC< kernel::TacticalHierarchies >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ );
+             LogisticTreeView( const QString& objectName,
+                               kernel::Controllers& controllers,
+                               const kernel::Profile_ABC& profile,
+                               ModelObserver_ABC& modelObserver,
+                               const EntitySymbols& symbols,
+                               gui::ChangeSuperiorDialog& changeSuperiorDialog,
+                               QWidget* parent /*= 0*/ );
     virtual ~LogisticTreeView();
     //@}
 
@@ -51,6 +65,12 @@ protected:
     //! @name Operations
     //@{
     void CreateOrReplace( const kernel::Entity_ABC& entity );
+    //@}
+
+protected slots:
+    //! @name Slots
+    //@{
+    void OnChangeLogisticLinks();
     //@}
 
 private:
@@ -67,6 +87,7 @@ private:
     //! @name Helpers
     //@{
     virtual void contextMenuEvent( QContextMenuEvent* event );
+    void AddChangeLinksToMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
 
     void UpdateLongName( const kernel::Entity_ABC& entity );
     void NotifyDeletedInternal( const kernel::Entity_ABC& entity );
@@ -90,6 +111,9 @@ private:
     virtual void NotifyUpdated( const kernel::Ghost_ABC& ghost );
     virtual void NotifyDeleted( const kernel::Ghost_ABC& ghost );
     virtual void NotifyUpdated( const kernel::TacticalHierarchies& hierarchy );
+
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
     //@}
 
     //! @name Drag N Drop
@@ -99,6 +123,13 @@ private:
     bool CanDrop( QDragMoveEvent* pEvent ) const;
 
     virtual void Drop( const QString& mimeType, void* data, QStandardItem& target );
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    kernel::SafePointer< kernel::Entity_ABC > contextMenuEntity_;
+    gui::ChangeSuperiorDialog& changeSuperiorDialog_;
     //@}
 };
 

@@ -192,12 +192,14 @@ void EntityTreeView_ABC::OnSelect( const QItemSelection& /*selected*/, const QIt
 
     QModelIndexList indexes = selectedIndexes();
     kernel::GraphicalEntity_ABC::T_GraphicalEntities list;
+    std::vector< const kernel::Entity_ABC* > entities;
     for( QModelIndexList::const_iterator it = indexes.constBegin(); it != indexes.constEnd(); ++it )
-    {
-        const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( *it );
-        if( entity )
+        if( auto entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( *it ) )
+        {
+            entities.push_back( entity );
             list.push_back( entity );
-    }
+        }
+    emit SelectionChanged( entities );
     controllers_.actions_.SetMultipleSelection( list );
 }
 

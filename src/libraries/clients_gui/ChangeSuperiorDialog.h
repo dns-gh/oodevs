@@ -10,8 +10,10 @@
 #ifndef __ChangeSuperiorDialog_h_
 #define __ChangeSuperiorDialog_h_
 
+//#include "clients_kernel/SafePointer.h"
 #include <tools/ElementObserver_ABC.h>
 #include <tools/SelectionObserver_ABC.h>
+#include <boost/optional.hpp>
 
 namespace kernel
 {
@@ -21,8 +23,10 @@ namespace kernel
 
 namespace gui
 {
-    class ChangeSuperior_ABC;
+    class ChangeLogisticLinksWidget;
+    class EntitySymbols;
     class RichPushButton;
+    class TaskerWidget;
 
 // =============================================================================
 /** @class  ChangeSuperiorDialog
@@ -32,42 +36,120 @@ namespace gui
 // =============================================================================
 class ChangeSuperiorDialog : public QDialog
                            , public tools::Observer_ABC
-                           , public tools::SelectionObserver< kernel::Entity_ABC >
                            , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
 
 public:
+    //! @name Types
+    //@{
+    enum E_Options
+    {
+        eTacticalSuperior           = 0x01,
+        eKnowledgeGroup             = 0x02,
+        eLogisticSuperior           = 0x04,
+
+        eOptionalTacticalSuperior   = 0x01 << 4,
+        eOptionalKnowledgeGroup     = 0x02 << 4,
+        eOptionalLogisticSuperior   = 0x04 << 4
+    };
+
+    typedef std::function< bool( const kernel::Entity_ABC& /* entity */,
+                                 const kernel::Entity_ABC& /* superior */ ) > T_CanChangeFunctor;
+    typedef std::function< void( kernel::Entity_ABC& /* entity */,
+                                 const kernel::Entity_ABC& /* superior */ ) > T_DoChangeFunctor;
+    typedef std::function< const kernel::Entity_ABC* ( kernel::Entity_ABC& /* entity */ ) > T_LogisticSuperiorExtractor;
+    typedef std::function< void( kernel::Entity_ABC& /* entity */,
+                                 const kernel::Entity_ABC* /* nominal superior */,
+                                 const kernel::Entity_ABC* /* current superior */ ) > T_DoChangeLogisticFunctor;
+
+    struct ChangeSuperiorFunctors
+    {
+        ChangeSuperiorFunctors( T_CanChangeFunctor canChange,
+                                T_DoChangeFunctor doChange )
+            : canChange_( canChange )
+            , doChange_( doChange )
+        {}
+        T_CanChangeFunctor canChange_;
+        T_DoChangeFunctor doChange_;
+    };
+    typedef boost::optional< ChangeSuperiorFunctors > T_OptionalFunctors;
+
+    struct ChangeLogisticFunctors
+    {
+        ChangeLogisticFunctors( T_LogisticSuperiorExtractor extract,
+                                T_DoChangeLogisticFunctor doChange )
+            : extract_( extract )
+            , doChange_( doChange )
+        {}
+        T_LogisticSuperiorExtractor extract_;
+        T_DoChangeLogisticFunctor doChange_;
+    };
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
-             ChangeSuperiorDialog( QWidget* parent, kernel::Controllers& controllers, ChangeSuperior_ABC& changeSuperior, bool communication );
+             ChangeSuperiorDialog( kernel::Controllers& controllers,
+                                   const gui::EntitySymbols& symbols,
+                                   QWidget* parent = 0 );
     virtual ~ChangeSuperiorDialog();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
+    void Show( kernel::Entity_ABC& entity, const QString& title, int options = eTacticalSuperior );
+    void SetTacticalSuperiorFunctors( const T_CanChangeFunctor& canChange,
+                                      const T_DoChangeFunctor& doChange );
+    void SetKnowledgeGroupFunctors( const T_CanChangeFunctor& canChange,
+                                    const T_DoChangeFunctor& doChange );
+    void SetLogisticCurrentExtractor( const T_LogisticSuperiorExtractor& currentExtractor );
+    void SetLogisticNominalFunctors( const T_LogisticSuperiorExtractor& nominalExtractor,
+                                     const T_DoChangeLogisticFunctor& doChange );
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void OnTacticalSelectionChanged( const std::vector< const kernel::Entity_ABC* >& element );
+    void OnKnowledgeGroupSelectionChanged( const std::vector< const kernel::Entity_ABC* >& element );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void Clear();
+    virtual void closeEvent( QCloseEvent* e );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
-    void Show( kernel::Entity_ABC& entity );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnOk();
-    void OnCancel();
+    virtual void accept();
+    virtual void reject();
+    void OnContentChanged();
     //@}
 
 private:
     //! @name Member data
     //@{
-    ChangeSuperior_ABC& changeSuperior_;
     kernel::Controllers& controllers_;
-    QLabel* name_;
-    QLabel* superiorLabel_;
+
+    //kernel::SafePointer< kernel::Entity_ABC > entity_;
+    T_OptionalFunctors tacticalSuperiorFunctors_;
+    T_OptionalFunctors knowledgeGroupFunctors_;
+
+    boost::optional< T_LogisticSuperiorExtractor > logisticCurrentExtractor_;
+    boost::optional< ChangeLogisticFunctors > logisticNominalFunctors_;
+    
+    //QLabel* name_;
     RichPushButton* okButton_;
-    kernel::Entity_ABC* entity_;
-    kernel::Entity_ABC* selected_;
+    gui::TaskerWidget* currentEntity_;
+    gui::TaskerWidget* tacticalSuperior_;
+    gui::TaskerWidget* knowledgeGroup_;
+    QGroupBox* logisticSuperior_;
+    ChangeLogisticLinksWidget* logisticWidget_;
     //@}
 };
 

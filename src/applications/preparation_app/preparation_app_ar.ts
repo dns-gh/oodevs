@@ -91,8 +91,12 @@
         <translation type="unfinished">إنشاء المجموعة الفرعية المعرفة</translation>
     </message>
     <message>
-        <source>Change superior</source>
-        <translation type="unfinished">تغيير مجموعة المعارف</translation>
+        <source>Select new knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2586,10 +2590,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Create side</source>
         <translation type="unfinished">إنشاء الجانب</translation>
-    </message>
-    <message>
-        <source>Change superior</source>
-        <translation type="unfinished">تغير عليا</translation>
     </message>
     <message>
         <source>Change hierarchy level</source>

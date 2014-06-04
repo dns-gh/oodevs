@@ -74,6 +74,12 @@ public:
     {
         Initialize( new View( objectName, first, second, third, fourth, fifth, sixth, seventh, this ) );
     }
+    template< typename _1, typename _2, typename _3, typename _4, typename _5, typename _6, typename _7, typename _8 >
+    RichView( int options, const QString& objectName, QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth, _7& seventh, _8& eighth )
+        : RichView_ABC( options, parent )
+    {
+        Initialize( new View( objectName, first, second, third, fourth, fifth, sixth, seventh, eighth, this ) );
+    }
     virtual ~RichView()
     {
         // NOTHING

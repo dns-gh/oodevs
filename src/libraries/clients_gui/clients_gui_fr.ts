@@ -565,6 +565,21 @@
     </message>
 </context>
 <context>
+    <name>gui::ChangeLogisticLinksWidget</name>
+    <message>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <source>Nominal superior</source>
+        <translation>Supérieur nominal</translation>
+    </message>
+    <message>
+        <source>Current superior</source>
+        <translation>Supérieur courant</translation>
+    </message>
+</context>
+<context>
     <name>gui::ChangeSuperiorDialog</name>
     <message>
         <source>Ok</source>
@@ -575,20 +590,20 @@
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Select new superior</source>
-        <translation>Sélectionner le nouveau supérieur</translation>
+        <source>Moved entity</source>
+        <translation>Entité déplacée</translation>
     </message>
     <message>
-        <source>Select new group</source>
-        <translation>Sélectionner le nouveau groupe</translation>
+        <source>Tactical superior</source>
+        <translation>Supérieur tactique</translation>
     </message>
     <message>
-        <source>New superior</source>
-        <translation>Nouveau supérieur</translation>
+        <source>Knowledge group</source>
+        <translation>Groupe de connaissance</translation>
     </message>
     <message>
-        <source>Entity moved: </source>
-        <translation>Unité déplacée : </translation>
+        <source>Logistic links</source>
+        <translation>Liens logistiques</translation>
     </message>
 </context>
 <context>
@@ -846,11 +861,6 @@
         <translation>Erreur</translation>
     </message>
     <message>
-        <source>Unable to save drawings to file &apos;%1&apos;. 
-Please check access permissions or write protection.</source>
-        <translation>Impossible de sauvegarder les dessins dans le fichier &apos;%1&apos;.</translation>
-    </message>
-    <message>
         <source>Drawings</source>
         <translation>Dessins</translation>
     </message>
@@ -869,6 +879,11 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Load drawing file</source>
         <translation>Charger le fichier de dessins</translation>
+    </message>
+    <message>
+        <source>Unable to save drawings to file &apos;%1&apos;. 
+Please check access permissions or write protection.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1406,6 +1421,10 @@ Voulez-vous le supprimer?</translation>
         <source>Supported units</source>
         <translation>Unités soutenues</translation>
     </message>
+    <message>
+        <source>Change logistic links</source>
+        <translation>Changer les liens logistiques</translation>
+    </message>
 </context>
 <context>
     <name>gui::MinePrototype_ABC</name>
@@ -1506,9 +1525,7 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Error: cannot load shapefile, 
  %1 unsupported/unmatched shape(s)</source>
-        <translation>Erreur : impossible de charger le shapefile, 
- %1 forme(s) non supportée(s)/incompatible(s)
-        </translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1971,6 +1988,24 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Create phase line</source>
         <translation>Créer une lima</translation>
+    </message>
+</context>
+<context>
+    <name>gui::TacticalTreeView</name>
+    <message>
+        <source>Change superior</source>
+        <translation>Changer de supérieur</translation>
+    </message>
+</context>
+<context>
+    <name>gui::TaskerWidget</name>
+    <message>
+        <source>Select</source>
+        <translation>Selectionner</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
