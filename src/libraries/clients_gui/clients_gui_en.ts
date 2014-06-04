@@ -2190,7 +2190,7 @@ Do you want to remove it?</translation>
     </message>
     <message>
         <source>Logistic high threshold (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistics high threshold (%)</translation>
     </message>
 </context>
 <context>

@@ -18,6 +18,7 @@ type ReplayOpts struct {
 	Executable   string
 	RunDir       *string
 	RootDir      string
+	ExercisesDir string // Ignored if empty
 	SessionName  string
 	ExerciseName string
 	DebugDir     string
@@ -43,6 +44,9 @@ func (o *ReplayOpts) Check() error {
 }
 
 func (o *ReplayOpts) GetExerciseDir() string {
+	if len(o.ExercisesDir) > 0 {
+		return filepath.Join(o.ExercisesDir, o.ExerciseName)
+	}
 	return filepath.Join(o.RootDir, "exercises", o.ExerciseName)
 }
 
@@ -68,8 +72,7 @@ func StartReplay(opts *ReplayOpts) (*ReplayProcess, error) {
 	if err != nil {
 		return nil, err
 	}
-	sessionDir := filepath.Join(opts.RootDir, "exercises", opts.ExerciseName,
-		"sessions", opts.SessionName)
+	sessionDir := opts.GetSessionDir()
 	session, err := ReadSessionFile(filepath.Join(sessionDir, "session.xml"))
 	if err != nil {
 		return nil, err
@@ -88,6 +91,9 @@ func StartReplay(opts *ReplayOpts) (*ReplayProcess, error) {
 	}
 	if len(opts.DebugDir) > 0 {
 		args = append(args, "--debug-dir="+opts.DebugDir)
+	}
+	if len(opts.ExercisesDir) > 0 {
+		args = append(args, "--exercises-dir="+opts.ExercisesDir)
 	}
 	logFiles := []string{}
 	server, err := StartServer(opts.Executable, gamingServer, *opts.RunDir,

@@ -10,9 +10,8 @@
 #ifndef __ActionParameterObjectKnowledge_h_
 #define __ActionParameterObjectKnowledge_h_
 
-#include "Knowledge_ABC.h"
+#include "Entity.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
-#include <tools/Resolver_ABC.h>
 
 namespace sword
 {
@@ -22,7 +21,6 @@ namespace sword
 namespace kernel
 {
     class EntityResolver_ABC;
-    class Object_ABC;
     class ObjectKnowledgeConverter_ABC;
 }
 
@@ -37,13 +35,14 @@ namespace parameters
 */
 // Created: SBO 2007-05-24
 // =============================================================================
-class ObjectKnowledge : public Knowledge_ABC< kernel::ObjectKnowledge_ABC >
+class ObjectKnowledge : public Entity< kernel::ObjectKnowledge_ABC >
+                      , public kernel::KnowledgeListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              ObjectKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             ObjectKnowledge( const kernel::OrderParameter& parameter, unsigned long id, const kernel::ObjectKnowledgeConverter_ABC& converter,
+             ObjectKnowledge( const kernel::OrderParameter& parameter, uint32_t id, const kernel::ObjectKnowledgeConverter_ABC& converter,
                               const kernel::Entity_ABC* owner, kernel::Controller& controller, const kernel::EntityResolver_ABC& entities );
              ObjectKnowledge( const kernel::OrderParameter& parameter, const kernel::ObjectKnowledge_ABC* knowledge, kernel::Controller& controller );
     virtual ~ObjectKnowledge();
@@ -57,15 +56,34 @@ public:
     void CommitTo( sword::Id& message ) const;
     //@}
 
+    //! @name Operations
+    //@{
+    virtual QString GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void NotifyDestruction();
+    virtual bool IsSet() const;
+    typedef const kernel::ObjectKnowledge_ABC* T_Concrete;
+    virtual void SetValue( const T_Concrete& value );
+    virtual void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
+    //@}
+
 private:
     //! @name Helpers
     //@{
+    typedef Entity< kernel::ObjectKnowledge_ABC > T_Entity;
     virtual std::string SerializeType() const;
+    void Attach();
+    //@}
+
+    //! @name members
+    //@{
+    uint32_t id_;
+    bool valid_;
     //@}
 };
 
 }
-
 }
 
 #endif // __ActionParameterObjectKnowledge_h_

@@ -18,6 +18,7 @@ func init() {
 	flag.String("application", "", "")
 	flag.String("root-dir", "", "")
 	flag.String("run-dir", "", "")
+	flag.String("exercises-dir", "", "")
 	flag.Int("test-port", 0, "")
 	flag.Bool("show-log", false, "")
 }

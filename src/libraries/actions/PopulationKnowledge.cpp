@@ -9,6 +9,8 @@
 
 #include "actions_pch.h"
 #include "PopulationKnowledge.h"
+
+#include "ParameterVisitor_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
