@@ -544,6 +544,7 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_on_save_clicked_on_planned_event, Prese
 
     MOCK_EXPECT( taskPresenter->CommitTo ).once().with( taskEvent->GetEvent() );
     MOCK_EXPECT( timelineHandler->EditEvent ).once().with( taskEvent->GetEvent() );
+    MOCK_EXPECT( timelineHandler->GetCurrentParent ).once().returns( std::string() );
     CheckFillAndBuild( taskPresenter );
     presenter.OnSaveClicked();
 }
@@ -554,6 +555,7 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_on_save_clicked_on_new_event, Presenter
     CheckPurgeFillAndBuild( taskPresenter );
     presenter.StartCreation( eEventTypes_Task, first_date );
 
+    MOCK_EXPECT( timelineHandler->GetCurrentParent ).once().returns( std::string() );
     CheckPlan( taskPresenter );
     presenter.OnSaveClicked();
 }
@@ -564,6 +566,7 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_on_save_as_clicked, PresenterFixture )
     CheckPurgeFillAndBuild( taskPresenter );
     presenter.StartEdition( *taskEvent, false );
 
+    MOCK_EXPECT( timelineHandler->GetCurrentParent ).once().returns( std::string() );
     CheckPlan( taskPresenter );
     presenter.OnSaveAsClicked();
 }
@@ -616,6 +619,7 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_click_on_save_reset_error, PresenterFix
     taskEvent->GetEvent().error_text.clear();
     MOCK_EXPECT( taskPresenter->CommitTo ).once().with( taskEvent->GetEvent() );
     MOCK_EXPECT( timelineHandler->EditEvent ).once().with( taskEvent->GetEvent() );
+    MOCK_EXPECT( timelineHandler->GetCurrentParent ).once().returns( std::string() );
     CheckFillAndBuild( taskPresenter );
     presenter.OnSaveClicked();
 }
