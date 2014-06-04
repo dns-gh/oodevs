@@ -924,7 +924,13 @@
         </compare-proto>
     </target>
 
-    <target name="check" depends="checkreports,checkdec,checkproto"
+    <target name="checkmigrations" description="check migrations.xml consistency">
+        <exec executable="${bin.dir}/checkmigrations" failonerror="true">
+            <arg value="${data.dir}/app-data/resources"/>
+        </exec>
+    </target>
+
+    <target name="check" depends="checkreports,checkdec,checkproto,checkmigrations"
         description="perform various static checks on codebase"/>
 
     <!--
