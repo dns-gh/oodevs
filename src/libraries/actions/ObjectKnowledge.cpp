@@ -183,12 +183,6 @@ void ObjectKnowledge::Attach()
         entity->AddListener( *this );
 }
 
-void ObjectKnowledge::Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const
-{
-    if( GetValue() )
-        T_Entity::Draw( where, viewport, tools );
-}
-
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::SerializeType
 // Created: LDC 2011-05-13

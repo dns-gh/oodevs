@@ -16,6 +16,7 @@
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/ActionController.h"
@@ -142,7 +143,13 @@ void Action_ABC::Draw( const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tool
     BarycenterComputer computer;
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         computer.AddPoint( it->second->GetPosition() );
-    Draw( computer.Result(), viewport, tools );
+    auto where = computer.Result();
+    if( where.IsZero() )
+        if( auto tasker = Retrieve< ActionTasker >() )
+            if( auto entity = tasker->GetTasker() )
+                if( auto positions = entity->Retrieve< kernel::Positions >() )
+                    where = positions->GetPosition();
+    Draw( where, viewport, tools );
 }
 
 // -----------------------------------------------------------------------------
