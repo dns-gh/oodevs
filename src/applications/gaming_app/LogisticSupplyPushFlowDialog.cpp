@@ -51,9 +51,8 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent,
                                                             gui::ParametersLayer& layer,
                                                             const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
                                                             const kernel::Profile_ABC& profile )
-    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats )
+    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats, profile )
     , isPushFlow_( true )
-    , profile_( profile )
 {
     recipientsList_ = new LogisticSupplyExclusiveListWidget( this, tr( "Add recipient" ), tr( "Remove recipient" ) );
     connect( recipientsList_, SIGNAL( ItemAdded( const QString& ) ), SLOT( AddRecipient( const QString& ) ) );

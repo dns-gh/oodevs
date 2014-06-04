@@ -12,11 +12,6 @@
 
 #include "LogisticSupplyFlowDialog_ABC.h"
 
-namespace kernel
-{
-    class Profile_ABC;
-}
-
 // =============================================================================
 /** @class  LogisticSupplyPullFlowDialog
     @brief  LogisticSupplyPullFlowDialog
@@ -86,7 +81,6 @@ private:
     gui::ValuedComboBox< const kernel::Entity_ABC* >* supplierCombo_;
     const kernel::Entity_ABC* supplier_;
     T_SuppliersNames suppliersNames_;
-    const kernel::Profile_ABC& profile_;
     //@}
 };
 
