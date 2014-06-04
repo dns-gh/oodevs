@@ -9,8 +9,9 @@
 
 #include "actions_pch.h"
 #include "ObjectKnowledge.h"
-#include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
+#include "ParameterVisitor_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -22,30 +23,54 @@ using namespace parameters;
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, Controller& controller )
-    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, controller )
+    : T_Entity( parameter, controller )
+    , id_   ( 0 )
+    , valid_( false )
 {
     // NOTHING
+}
+
+namespace
+{
+    const ObjectKnowledge_ABC* GetKnowledge( const EntityResolver_ABC& entities,
+                                             const ObjectKnowledgeConverter_ABC& converter,
+                                             const Entity_ABC* owner,
+                                             uint32_t id )
+    {
+        if( owner )
+           if( auto entity = entities.FindObject( id ) )
+                return converter.Find( *entity, *owner );
+        return nullptr;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long id, const ObjectKnowledgeConverter_ABC& converter,
-                                  const Entity_ABC* owner, Controller& controller, const kernel::EntityResolver_ABC& entities )
-    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, entities.FindObject( id ) && owner ? converter.Find( entities.GetObject( id ), *owner ) : 0, controller )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter,
+                                  uint32_t id,
+                                  const ObjectKnowledgeConverter_ABC& converter,
+                                  const Entity_ABC* owner,
+                                  Controller& controller,
+                                  const EntityResolver_ABC& entities )
+    : T_Entity( parameter, GetKnowledge( entities, converter, owner, id ), controller )
+    , id_( id )
 {
-    // NOTHING
+    Attach();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, const ObjectKnowledge_ABC* knowledge, Controller& controller )
-    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, knowledge, controller )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter,
+                                  const ObjectKnowledge_ABC* knowledge,
+                                  Controller& controller )
+    : T_Entity( parameter, knowledge, controller )
+    , id_( knowledge ? knowledge->GetEntityId() : 0 )
 {
-    // NOTHING
+    Attach();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +79,8 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, const ObjectK
 // -----------------------------------------------------------------------------
 ObjectKnowledge::~ObjectKnowledge()
 {
-    // NOTHING
+    if( auto entity = const_cast< ObjectKnowledge_ABC* >( T_Entity::GetValue() ) )
+        entity->RemoveListener( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,18 +98,17 @@ void ObjectKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::CommitTo( sword::MissionParameter& message ) const
 {
-    message.set_null_value( !IsSet() );
-    if( IsSet() )
-        Knowledge_ABC< ObjectKnowledge_ABC >::CommitTo( *message.add_value()->mutable_objectknowledge() );
+    message.set_null_value( !id_ );
+    CommitTo( *message.add_value() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 {
-    if( IsSet() )
-        Knowledge_ABC< ObjectKnowledge_ABC >::CommitTo( *message.mutable_objectknowledge() );
+    CommitTo( *message.mutable_objectknowledge() );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +117,76 @@ void ObjectKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::CommitTo( sword::Id& message ) const
 {
-    Knowledge_ABC< ObjectKnowledge_ABC >::CommitTo( message );
+    message.set_id( id_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Knowledge_ABC::GetDisplayName
+// Created: JSR 2012-10-17
+// -----------------------------------------------------------------------------
+QString ObjectKnowledge::GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const
+{
+    if( valid_ )
+        return T_Entity::GetDisplayName( extractor );
+    return extractor.GetDisplayName( id_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Knowledge_ABC::Display
+// Created: JSR 2010-05-20
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Display( kernel::Displayer_ABC& displayer ) const
+{
+    if( valid_ )
+        T_Entity::Display( displayer );
+    else
+        displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
+                 .Item( tools::translate( "Parameter", "Value" ) ).Display( id_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Knowledge_ABC::Serialize
+// Created: JSR 2010-05-20
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Serialize( xml::xostream& xos ) const
+{
+    Parameter< const ObjectKnowledge_ABC* >::Serialize( xos );
+    xos << xml::attribute( "value", id_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Knowledge_ABC::NotifyDestruction
+// Created: JSR 2010-05-20
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::NotifyDestruction()
+{
+    valid_ = false;
+}
+
+bool ObjectKnowledge::IsSet() const
+{
+    return id_ != 0;
+}
+
+void ObjectKnowledge::SetValue( const T_Concrete& value )
+{
+    T_Entity::SetValue( value );
+    id_ = value ? value->GetEntityId() : 0;
+    Attach();
+}
+
+void ObjectKnowledge::Attach()
+{
+    auto entity = const_cast< ObjectKnowledge_ABC* >( T_Entity::GetValue() );
+    valid_ = entity != nullptr;
+    if( entity )
+        entity->AddListener( *this );
+}
+
+void ObjectKnowledge::Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const
+{
+    if( GetValue() )
+        T_Entity::Draw( where, viewport, tools );
 }
 
 // -----------------------------------------------------------------------------
