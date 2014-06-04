@@ -1639,7 +1639,7 @@ message MagicAction {
         //!  selected transporter.
         //! parameters[0], Identifier: log request identifier.
         //! parameters[1], Identifier: selected transporter type identifier.
-        //! parameters[2], AgentId, optional: : target diagnosis unit identifier.
+        //! parameters[2], AgentId, optional: : diagnosis unit identifier.
         //! On failure, result[0], Identifier : among ManualMaintenanceError
         //!   values.
         select_maintenance_transporter     = 10;
