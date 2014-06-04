@@ -984,6 +984,8 @@ Action_ABC* ActionFactory::CreateChangeFormationSuperior( const kernel::Entity_A
         action->AddParameter( *new parameters::Formation( it.NextElement(), *formation, controller_ ) );
     else if( auto team = dynamic_cast< const kernel::Team_ABC* >( &superior ) )
         action->AddParameter( *new parameters::Army( it.NextElement(), *team, controller_ ) );
+    else
+        action->Invalidate();
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &entity, false );
     return action.release();
@@ -1002,6 +1004,8 @@ Action_ABC* ActionFactory::CreateChangeKnowledgeGroup( const kernel::Automat_ABC
     action->AddParameter( *new parameters::KnowledgeGroup( it.NextElement(), superior, controller_ ) );
     if( auto team = dynamic_cast< const kernel::Team_ABC* >( &superior.Get< kernel::CommunicationHierarchies >().GetTop() ) )
         action->AddParameter( *new parameters::Army( it.NextElement(), *team, controller_ ) );
+    else
+        action->Invalidate();
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &entity, false );
     return action.release();
@@ -1019,6 +1023,8 @@ Action_ABC* ActionFactory::CreateKnowledgeGroupUpdateParty( const kernel::Knowle
     auto it = actionType.CreateIterator();
     if( auto team = dynamic_cast< const kernel::Team_ABC* >( &superior.Get< kernel::CommunicationHierarchies >().GetTop() ) )
         action->AddParameter( *new parameters::Army( it.NextElement(), superior, controller_ ) );
+    else
+        action->Invalidate();
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &entity, false );
     return action.release();
@@ -1036,6 +1042,8 @@ Action_ABC* ActionFactory::CreateKnowledgeGroupUpdatePartyParent( const kernel::
     auto it = actionType.CreateIterator();
     if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &superior.Get< kernel::CommunicationHierarchies >().GetTop() ) )
         action->AddParameter( *new parameters::Army( it.NextElement(), *team, controller_ ) );
+    else
+        action->Invalidate();
     action->AddParameter( *new parameters::KnowledgeGroup( it.NextElement(), superior, controller_ ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &entity, false );
