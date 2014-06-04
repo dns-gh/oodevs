@@ -12,6 +12,7 @@
 
 #include "Parameter.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Positions.h"
 #include <tools/ElementObserver_ABC.h>
 #ifndef Q_MOC_RUN
 #include <boost/lexical_cast.hpp>
@@ -59,6 +60,7 @@ public:
     }
     void CommitTo( T_Setter setter ) const;
     virtual bool IsSet() const;
+    virtual geometry::Point2f GetPosition() const;
     //@}
 
 private:
@@ -164,6 +166,15 @@ template< typename ConcreteEntity >
 bool Entity< ConcreteEntity >::IsSet() const
 {
     return GetValue() != 0;
+}
+
+template< typename ConcreteEntity >
+geometry::Point2f Entity< ConcreteEntity >::GetPosition() const
+{
+    if( auto entity = GetValue() )
+        if( auto positions = entity->Retrieve< kernel::Positions >() )
+            return positions->GetPosition();
+    return Parameter< const ConcreteEntity* >::GetPosition();
 }
 
     }
