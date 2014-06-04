@@ -10,7 +10,6 @@
 #include "preparation_app_pch.h"
 #include "UserProfileUnitRights.h"
 #include "moc_UserProfileUnitRights.cpp"
-#include "PreparationProfile.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_gui/Tools.h"
 
@@ -18,8 +17,9 @@
 // Name: UserProfileUnitRights constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileUnitRights::UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const QString& name )
-    : T_Parent( objectName, controllers, PreparationProfile::GetProfile(), observer_, icons, parent )
+UserProfileUnitRights::UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
+                                              const gui::EntitySymbols& icons, const QString& name, const kernel::Profile_ABC& profile )
+    : T_Parent( objectName, controllers, profile, observer_, icons, parent )
     , UserProfileRights_ABC( *this, dataModel_, name )
 {
     connect( this, SIGNAL( clicked( const QModelIndex& ) ), SLOT( OnItemClicked( const QModelIndex& ) ) );
@@ -49,7 +49,7 @@ QWidget* UserProfileUnitRights::GetWidget()
 // Name: UserProfileUnitRights::Display
 // Created: LGY 2011-12-09
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::Display( UserProfile& profile )
+void UserProfileUnitRights::Display( kernel::UserProfile_ABC& profile )
 {
     selectionModel()->clearSelection();
     UserProfileRights_ABC::Display( profile );

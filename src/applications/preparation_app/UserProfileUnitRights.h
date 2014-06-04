@@ -34,14 +34,15 @@ class UserProfileUnitRights : public ::T_Parent
 public:
     //! @name Constructors/Destructor
     //@{
-    UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const QString& name );
+    UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
+                           const gui::EntitySymbols& icons, const QString& name, const kernel::Profile_ABC& profile );
     virtual ~UserProfileUnitRights();
     //@}
 
     //! @name Operations
     //@{
     virtual QWidget* GetWidget();
-    virtual void Display( UserProfile& profile );
+    virtual void Display( kernel::UserProfile_ABC& profile );
     virtual void AdditionalUpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     //@}
 

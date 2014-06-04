@@ -16,8 +16,8 @@
 // Name: ProfileEditor constructor
 // Created: JSR 2014-05-27
 // -----------------------------------------------------------------------------
-ProfileEditor::ProfileEditor( const QString& login, kernel::Controller& controller, const Model& model )
-    : UserProfile( login, controller, model )
+ProfileEditor::ProfileEditor( const QString& login, kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver )
+    : UserProfile( login, controller, resolver )
     , originalProfile_( 0 )
     , deleted_( false )
 {
@@ -43,6 +43,15 @@ ProfileEditor::ProfileEditor( UserProfile& profile )
 ProfileEditor::~ProfileEditor()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileEditor::GetProfile
+// Created: JSR 2014-06-04
+// -----------------------------------------------------------------------------
+kernel::UserProfile_ABC& ProfileEditor::GetProfile()
+{
+    return *this;
 }
 
 // -----------------------------------------------------------------------------

@@ -9,22 +9,19 @@
 
 #include "preparation_pch.h"
 #include "UserProfile.h"
-#include "AgentsModel.h"
-#include "FormationModel.h"
-#include "GhostModel.h"
-#include "Model.h"
-#include "TacticalHierarchies.h"
-#include "TeamsModel.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Model_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/DictionaryType.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include <tools/Iterator.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -32,18 +29,18 @@
 // Name: UserProfile constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, const Model& model )
-    : controller_     ( controller )
-    , model_          ( model )
-    , supervisor_     ( false )
-    , timeControl_    ( false )
-    , isClone_        ( false )
+UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, const kernel::Model_ABC& model, const kernel::EntityResolver_ABC& resolver )
+    : controller_( controller )
+    , resolver_( resolver )
+    , supervisor_( false )
+    , timeControl_( false )
+    , isClone_( false )
 {
-    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Team_ABC > >       teamChecker( model_.GetTeamResolver() );
-    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Formation_ABC > >  formationChecker( model_.GetFormationResolver() );
-    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Automat_ABC > >    automatChecker( model_.GetAutomatResolver() );
-    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Population_ABC > > populationChecker( model_.GetPopulationResolver() );
-    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Ghost_ABC > >      ghostChecker( *model_.ghosts_ );
+    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Team_ABC > >       teamChecker( model.GetTeamResolver() );
+    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Formation_ABC > >  formationChecker( model.GetFormationResolver() );
+    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Automat_ABC > >    automatChecker( model.GetAutomatResolver() );
+    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Population_ABC > > populationChecker( model.GetPopulationResolver() );
+    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Ghost_ABC > >      ghostChecker( model.GetGhostResolver() );
 
     std::string login, pass;
     xis >> xml::attribute( "name", login )
@@ -62,14 +59,14 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
 // Name: UserProfile constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const QString& login, kernel::Controller& controller, const Model& model )
-    : controller_     ( controller )
-    , model_          ( model )
-    , login_          ( login )
-    , password_       ( "" )
-    , supervisor_     ( false )
-    , timeControl_    ( false )
-    , isClone_        ( false )
+UserProfile::UserProfile( const QString& login, kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver )
+    : controller_( controller )
+    , resolver_( resolver )
+    , login_( login )
+    , password_( "" )
+    , supervisor_( false )
+    , timeControl_( false )
+    , isClone_( false )
 {
     controller_.Create( *this );
 }
@@ -79,14 +76,14 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
 // Created: SBO 2007-03-29
 // -----------------------------------------------------------------------------
 UserProfile::UserProfile( const UserProfile& p )
-    : controller_      ( p.controller_ )
-    , model_           ( p.model_ )
-    , login_           ( p.login_ )
-    , password_        ( p.password_ )
-    , supervisor_      ( p.supervisor_ )
-    , timeControl_     ( p.timeControl_ )
-    , rights_          ( p.rights_ )
-    , isClone_         ( true )
+    : controller_( p.controller_ )
+    , resolver_( p.resolver_ )
+    , login_( p.login_ )
+    , password_( p.password_ )
+    , supervisor_( p.supervisor_ )
+    , timeControl_( p.timeControl_ )
+    , rights_( p.rights_ )
+    , isClone_( true )
 {
     // NOTHING
 }
@@ -345,17 +342,17 @@ namespace
         }
     }
 
-    void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const Model& model )
+    void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const kernel::EntityResolver_ABC& resolver )
     {
         for( auto it = teams.begin();  it != teams.end(); ++it )
-            if( auto pTeam = model.FindTeam( *it ) )
+            if( auto pTeam = resolver.FindTeam( *it ) )
                 InsertAutomats( automats, *pTeam );
     }
 
-    void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const Model& model )
+    void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const kernel::EntityResolver_ABC& resolver )
     {
         for( auto it = formations.begin();  it != formations.end(); ++it )
-            if( auto pFormation = model.FindFormation( *it ) )
+            if( auto pFormation = resolver.FindFormation( *it ) )
                 InsertAutomats( automats, *pFormation );
     }
 }
@@ -371,8 +368,8 @@ void UserProfile::VisitAllAutomats( std::set< unsigned long >& elements ) const
     elements.insert( automats.begin(), automats.end() );
     automats = rights_.GetReadAutomats();
     elements.insert( automats.begin(), automats.end() );
-    InsertAutomatsFromTeams( rights_.GetReadSides(), elements, model_ );
-    InsertAutomatsFromTeams( rights_.GetWriteSides(), elements, model_ );
-    InsertAutomatsFromFormations( rights_.GetReadFormations(), elements, model_ );
-    InsertAutomatsFromFormations( rights_.GetWriteFormations(), elements, model_ );
+    InsertAutomatsFromTeams( rights_.GetReadSides(), elements, resolver_ );
+    InsertAutomatsFromTeams( rights_.GetWriteSides(), elements, resolver_ );
+    InsertAutomatsFromFormations( rights_.GetReadFormations(), elements, resolver_ );
+    InsertAutomatsFromFormations( rights_.GetWriteFormations(), elements, resolver_ );
 }

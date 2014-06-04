@@ -38,7 +38,7 @@ ProfileFactory::~ProfileFactory()
 // -----------------------------------------------------------------------------
 UserProfile* ProfileFactory::Create( xml::xistream& xis ) const
 {
-    return new UserProfile( xis, controller_, model_ );
+    return new UserProfile( xis, controller_, model_, model_ );
 }
 
 // -----------------------------------------------------------------------------

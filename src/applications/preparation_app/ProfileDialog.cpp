@@ -20,7 +20,8 @@
 // Name: ProfileDialog constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, Model& model )
+ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
+                              const gui::EntitySymbols& icons, Model& model )
     : ModalDialog( parent, "ProfileDialog" )
 {
     gui::SubObjectName subObject( "UsersProfile" );
@@ -49,7 +50,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    UserProfileWidget* pages = new UserProfileWidget( "UserProfileWidget", box, controllers, icons, model );
+    UserProfileWidget* pages = new UserProfileWidget( "UserProfileWidget", box, controllers, profile, icons, model );
     pages->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
 

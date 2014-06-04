@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Controller;
+    class UserProfile_ABC;
 }
 
 namespace gui
@@ -22,7 +23,6 @@ namespace gui
     template< typename T > class RichWidget;
 }
 
-class UserProfile;
 class UserProfileWidget;
 class Model;
 class NewProfileDialog;
@@ -55,7 +55,7 @@ public:
     //@{
     virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const;
     virtual bool Exists( const QString& login ) const;
-    virtual void NotifyNameChanged( const UserProfile* profile ) const;
+    virtual void NotifyNameChanged( const kernel::UserProfile_ABC* profile ) const;
     //@}
 
 private slots:

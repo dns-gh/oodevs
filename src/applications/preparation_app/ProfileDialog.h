@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -39,7 +40,8 @@ class ProfileDialog : public ModalDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, Model& model );
+             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, 
+                            const gui::EntitySymbols& icons, Model& model );
     virtual ~ProfileDialog();
     //@}
 

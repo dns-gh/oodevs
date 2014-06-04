@@ -15,11 +15,10 @@
 #include "ProfilesChecker_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "preparation/UserProfile.h"
-#include "preparation/ProfilesModel.h"
-#include "preparation/Model.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "clients_gui/RichCheckBox.h"
 #include "clients_gui/RichLineEdit.h"
 #include "clients_gui/RichGroupBox.h"
@@ -29,11 +28,12 @@
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
-                                      const gui::EntitySymbols& icons, Model& model )
+                                      const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
+                                      const kernel::EntityResolver_ABC& resolver )
     : gui::RichWidget< QTabWidget >( objectName, parent )
     , controllers_( controllers )
-    , model_      ( model )
-    , profile_    ( 0 )
+    , resolver_( resolver )
+    , profile_( 0 )
 {
     gui::SubObjectName subObject( "UserProfileWidget" );
     {
@@ -88,11 +88,11 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
 
         gui::RichWidget< QTabWidget >* tabs = new gui::RichWidget< QTabWidget >( "RichWidget< QTabWidget >" );
 
-        unitRights_ = new UserProfileUnitRights( "unitRights", tabs, controllers, icons, tr( "Units" ) );
+        unitRights_ = new UserProfileUnitRights( "unitRights", tabs, controllers, icons, tr( "Units" ), profile );
         connect( unitRights_->GetWidget(), SIGNAL( NotifyRightsChanged() ), SLOT( UpdateAutomatsAndKnowledgeGroups() ) );
         tabs->addTab( unitRights_->GetWidget(), tr( "Units" ) );
 
-        populationRights_ = new UserProfilePopulationRights( "populationRights", tabs, controllers, tr( "Crowds" ) );
+        populationRights_ = new UserProfilePopulationRights( "populationRights", tabs, controllers, tr( "Crowds" ), profile );
         tabs->addTab( populationRights_->GetWidget(), tr( "Crowds" ) );
 
         QLabel* readPermissionlabel = new QLabel( tr( "'Read' permission allows you to see a unit.\n"
@@ -130,7 +130,7 @@ UserProfileWidget::~UserProfileWidget()
 // Name: UserProfileWidget::Display
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void UserProfileWidget::Display( UserProfile& profile )
+void UserProfileWidget::Display( kernel::UserProfile_ABC& profile )
 {
     profile_ = &profile;
     login_->setText( profile.GetLogin() );
@@ -220,12 +220,12 @@ namespace
         return kg ? kg : GetKnowledgeGroup( *pSuperior );
     }
 
-    unsigned int GetKGCount( const std::set< unsigned long >& automats, Model& model )
+    unsigned int GetKGCount( const std::set< unsigned long >& automats, const kernel::EntityResolver_ABC& resolver )
     {
         std::set< unsigned long > knowledgeGroups;
         for( auto it = automats.begin(); it != automats.end(); ++it )
         {
-            if( const kernel::Automat_ABC* pAutomat = model.FindAutomat( *it ) )
+            if( const kernel::Automat_ABC* pAutomat = resolver.FindAutomat( *it ) )
                 if( const kernel::KnowledgeGroup_ABC* kg = GetKnowledgeGroup( *pAutomat ) )
                     knowledgeGroups.insert( kg->GetId() );
         }
@@ -241,8 +241,9 @@ void UserProfileWidget::UpdateAutomatsAndKnowledgeGroups()
 {
     if( !profile_ )
         return;
+    // todo Move all this and namespace above to UserProfile
     std::set< unsigned long > automats;
     profile_->VisitAllAutomats( automats );
     automats_->setText( locale().toString( automats.size() ) );
-    knowledgeGroups_->setText( locale().toString( GetKGCount( automats, model_ ) ) );
+    knowledgeGroups_->setText( locale().toString( GetKGCount( automats, resolver_ ) ) );
 }

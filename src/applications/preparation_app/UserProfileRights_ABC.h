@@ -19,7 +19,10 @@ namespace gui
     class StandardModel;
 }
 
-class UserProfile;
+namespace kernel
+{
+    class UserProfile_ABC;
+}
 
 // =============================================================================
 /** @class  UserProfileRights_ABC
@@ -40,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( UserProfile& profile );
+    virtual void Display( kernel::UserProfile_ABC& profile );
     virtual void Visit( QStandardItem& item );
     virtual QWidget* GetWidget() = 0;
     //@}
@@ -80,7 +83,7 @@ private:
     //@{
     gui::RichTreeView& listView_;
     gui::StandardModel& model_;
-    UserProfile* profile_;
+    kernel::UserProfile_ABC* profile_;
     QPixmap check_;
     QPixmap check_grey_;
     //@}

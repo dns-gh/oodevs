@@ -9,11 +9,11 @@
 
 #include "preparation_app_pch.h"
 #include "UserProfileRights_ABC.h"
-#include "icons.h"
+#include "clients_gui/resources.h"
 #include "clients_gui/RichTreeView.h"
 #include "clients_gui/StandardModel.h"
 #include "clients_kernel/Tools.h"
-#include "preparation/UserProfile.h"
+#include "clients_kernel/UserProfile_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileRights_ABC constructor
@@ -85,7 +85,7 @@ void UserProfileRights_ABC::Commit()
 // Name: UserProfileRights_ABC::Display
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::Display( UserProfile& profile )
+void UserProfileRights_ABC::Display( kernel::UserProfile_ABC& profile )
 {
     Clear();
     listView_.setDisabled( false );

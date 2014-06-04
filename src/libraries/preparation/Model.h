@@ -82,6 +82,7 @@ public:
     virtual tools::Resolver_ABC< kernel::Formation_ABC      >& GetFormationResolver() const;
     virtual tools::Resolver_ABC< kernel::Automat_ABC        >& GetAutomatResolver() const;
     virtual tools::Resolver_ABC< kernel::Agent_ABC          >& GetAgentResolver() const;
+    virtual tools::Resolver_ABC< kernel::Ghost_ABC          >& GetGhostResolver() const;
     virtual tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& GetKnowledgeGroupResolver() const;
     virtual tools::Resolver_ABC< kernel::Object_ABC         >& GetObjectResolver() const;
     virtual tools::Resolver_ABC< kernel::Population_ABC     >& GetPopulationResolver() const;

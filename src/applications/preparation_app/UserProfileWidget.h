@@ -15,6 +15,9 @@
 namespace kernel
 {
     class Controllers;
+    class EntityResolver_ABC;
+    class Profile_ABC;
+    class UserProfile_ABC;
 }
 
 namespace gui
@@ -22,9 +25,7 @@ namespace gui
     class EntitySymbols;
 }
 
-class UserProfile;
 class UserProfileRights_ABC;
-class Model;
 class ProfilesChecker_ABC;
 
 // =============================================================================
@@ -41,13 +42,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
-                                const gui::EntitySymbols& icons, Model& model );
+                                const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
+                                const kernel::EntityResolver_ABC& resolver );
     virtual ~UserProfileWidget();
     //@}
 
     //! @name Operations
     //@{
-    void Display( UserProfile& profile );
+    void Display( kernel::UserProfile_ABC& profile );
     void SetChecker( const ProfilesChecker_ABC* pChecker );
     //@}
 
@@ -66,8 +68,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const ProfilesChecker_ABC* pChecker_;
-    Model& model_;
-    UserProfile* profile_;
+    const kernel::EntityResolver_ABC& resolver_;
+    kernel::UserProfile_ABC* profile_;
     QLineEdit* login_;
     QLineEdit* password_;
     QLineEdit* automats_;

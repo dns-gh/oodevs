@@ -163,6 +163,15 @@ tools::Resolver_ABC< kernel::Agent_ABC >& Model::GetAgentResolver() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::GetGhostResolver
+// Created: JSR 2014-06-04
+// -----------------------------------------------------------------------------
+tools::Resolver_ABC< kernel::Ghost_ABC >& Model::GetGhostResolver() const
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::GetKnowledgeGroupResolver
 // Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------

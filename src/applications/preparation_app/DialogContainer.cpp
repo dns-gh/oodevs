@@ -26,6 +26,7 @@
 #include "OrbatPanel.h"
 #include "PeopleAffinitiesDialog.h"
 #include "PerformanceDialog.h"
+#include "PreparationProfile.h"
 #include "ProfileDialog.h"
 #include "ProfileWizardDialog.h"
 #include "RemoveBlocksDialog.h"
@@ -77,7 +78,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     std::vector< std::string > sounds;
     prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateConverter_, painter, selector, elevation2dLayer, preferences );
     prefDialog_->AddPage( tools::translate( "DialogContainer", "Orbat" ), *new preparation::OrbatPanel( prefDialog_, controllers ) );
-    profileDialog_ = new ProfileDialog( parent, controllers, symbols, model );
+    profileDialog_ = new ProfileDialog( parent, controllers, PreparationProfile::GetProfile(), symbols, model );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );
     scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, *model.scores_, paramLayer, staticModel, config, tools );
     successFactorDialog_ = new SuccessFactorDialog( parent, controllers, *model.successFactors_, staticModel.successFactorActionTypes_, *model.scores_ );

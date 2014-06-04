@@ -21,13 +21,13 @@ class ProfilesModel;
 */
 // Created: SBO 2007-11-07
 // =============================================================================
-class ProfileEditor : public UserProfile
+class ProfileEditor : private UserProfile
                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileEditor( const QString& login, kernel::Controller& controller, const Model& model );
+             ProfileEditor( const QString& login, kernel::Controller& controller, const kernel::EntityResolver_ABC& resolver );
     explicit ProfileEditor( UserProfile& profile );
     virtual ~ProfileEditor();
     //@}
@@ -37,6 +37,8 @@ public:
     void Commit( ProfilesModel& model, kernel::Controller& controller );
     void Delete();
     bool IsDeleted() const;
+    // todo ne pas faire de getter
+    kernel::UserProfile_ABC& GetProfile();
     //@}
 
 private:

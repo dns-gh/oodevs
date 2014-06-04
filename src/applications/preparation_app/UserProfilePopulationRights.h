@@ -28,7 +28,7 @@ class UserProfilePopulationRights : public gui::PopulationTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-    UserProfilePopulationRights( const QString& objectName, QWidget* pParent, kernel::Controllers& controllers, const QString& name );
+    UserProfilePopulationRights( const QString& objectName, QWidget* pParent, kernel::Controllers& controllers, const QString& name, const kernel::Profile_ABC& profile );
     virtual ~UserProfilePopulationRights();
     //@}
 

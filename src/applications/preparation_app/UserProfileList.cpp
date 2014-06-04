@@ -89,7 +89,7 @@ bool UserProfileList::Exists( const QString& oldLogin, const QString& newLogin )
     {
         if( !( *it )->IsDeleted() )
         {
-            const QString& login = ( *it )->GetLogin();
+            const QString& login = ( *it )->GetProfile().GetLogin();
             if( login != oldLogin && login == newLogin )
                 return true;
         }
@@ -104,7 +104,7 @@ bool UserProfileList::Exists( const QString& oldLogin, const QString& newLogin )
 bool UserProfileList::Exists( const QString& login ) const
 {
     for( auto it = localProfiles_.begin(); it != localProfiles_.end(); ++it )
-        if( !( *it )->IsDeleted() && ( *it )->GetLogin() == login )
+        if( !( *it )->IsDeleted() && ( *it )->GetProfile().GetLogin() == login )
             return true;
     return false;
 }
@@ -120,7 +120,7 @@ void UserProfileList::OnSelectionChanged()
     {
         const int row = proxyModel_->mapToSource( indexes.front() ).row();
         if( ProfileEditor* profile = dataModel_->item( row )->data().value< ProfileEditor* >() )
-            pages_.Display( *profile );
+            pages_.Display( profile->GetProfile() );
     }
 }
 
@@ -128,16 +128,16 @@ namespace
 {
     QStandardItem* CreateItem( ProfileEditor& profile )
     {
-        QStandardItem* item = new QStandardItem( profile.GetLogin() );
+        QStandardItem* item = new QStandardItem( profile.GetProfile().GetLogin() );
         item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
         item->setData( QVariant::fromValue( &profile ) );
         return item;
     }
 
-    int GetIndex( const QStandardItemModel* model, const UserProfile* profile )
+    int GetIndex( const QStandardItemModel* model, const kernel::UserProfile_ABC* profile )
     {
         for( int i = 0; i < model->rowCount(); ++i )
-            if( model->item( i )->data().value< ProfileEditor* >() == profile )
+            if( &model->item( i )->data().value< ProfileEditor* >()->GetProfile() == profile )
                 return i;
         return -1;
     }
@@ -178,7 +178,7 @@ void UserProfileList::OnDelete()
 // Name: UserProfileList::NotifyNameChanged
 // Created: JSR 2014-06-03
 // -----------------------------------------------------------------------------
-void UserProfileList::NotifyNameChanged( const UserProfile* profile ) const
+void UserProfileList::NotifyNameChanged( const kernel::UserProfile_ABC* profile ) const
 {
     int index = GetIndex( dataModel_, profile );
     if( index != -1 )
