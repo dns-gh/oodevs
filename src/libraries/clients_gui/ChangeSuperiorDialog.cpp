@@ -222,22 +222,13 @@ void ChangeSuperiorDialog::reject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ChangeSuperiorDialog::closeEvent
-// Created: ABR 2014-06-03
-// -----------------------------------------------------------------------------
-void ChangeSuperiorDialog::closeEvent( QCloseEvent* e )
-{
-    Clear();
-    QDialog::closeEvent( e );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ChangeSuperiorDialog::Clear
 // Created: ABR 2014-06-03
 // -----------------------------------------------------------------------------
 void ChangeSuperiorDialog::Clear()
 {
-    logisticWidget_->AddItem( *currentEntity_->GetTasker() );
+    if( auto tasker = currentEntity_->GetTasker() )
+        logisticWidget_->AddItem( *tasker );
     currentEntity_->SetTasker( 0 );
 }
 

@@ -119,7 +119,6 @@ private:
     //! @name Helpers
     //@{
     void Clear();
-    virtual void closeEvent( QCloseEvent* e );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     //@}
 
