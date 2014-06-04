@@ -305,6 +305,7 @@ BOOST_FIXTURE_TEST_CASE( controller_delete_node, Fixture<> )
     ExpectRequest( "GET", "/delete_node", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
     MOCK_EXPECT( agent.DeleteNode ).once().with( defaultId ).returns( FromJson( expected ) );
+    MOCK_EXPECT( users.DeleteUsers ).once().with( defaultId );
     ExpectReply( reply, web::OK, expected );
     controller.DoGet( reply, request );
 }

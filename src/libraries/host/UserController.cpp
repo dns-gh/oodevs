@@ -714,6 +714,29 @@ Tree UserController::DeleteUser( const Uuid& node, const std::string& token, int
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserController::DeleteUsers
+// Created: LGY 2014-06-04
+// -----------------------------------------------------------------------------
+void UserController::DeleteUsers( const Uuid& node )
+{
+    try
+    {
+        Sql_ABC::T_Transaction tr = db_.Begin();
+        Sql_ABC::T_Statement st = db_.Prepare( *tr, "DELETE FROM users "
+            "WHERE users.node = ? " );
+        Bind( *st, node );
+        Execute( *st );
+        db_.Commit( *tr );
+    }
+    catch( const SqlException& err )
+    {
+        LOG_ERROR( log_ ) << "[sql] " << err.what();
+        LOG_ERROR( log_ ) << "[sql] Unable to delete users";
+        throw HttpException( web::INTERNAL_SERVER_ERROR );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserController::UpdateUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
