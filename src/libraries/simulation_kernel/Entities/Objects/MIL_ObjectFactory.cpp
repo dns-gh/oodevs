@@ -160,9 +160,9 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const sword::MissionParameters&
 {
     auto it = prototypes_.find( protocol::GetString( message, 0 ) );
     protocol::Check( it != prototypes_.end(), "is an invalid object type", 0 );
-
+    protocol::CheckCount( message, 4, 5 );
     TER_Localisation location;
-    double rPointSize = it->second->GetPointSize();
+    const double rPointSize = it->second->GetPointSize();
     protocol::Check( NET_ASN_Tools::ReadLocation( protocol::GetLocation( message, 1 ),
                      static_cast< TER_Localisation::E_LocationType >( protocol::GetLocationType( message, 1 ) ),
                      location, rPointSize ), "is an invalid location", 1 );
@@ -172,7 +172,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const sword::MissionParameters&
     builder.Build( *pObject );
     try
     {
-        if( message.elem_size() < 5 )
+        if( protocol::IsNull( message, 4 ) )
             attributes_->Initialize( *pObject );
         else
             attributes_->Create( *pObject, message.elem( 4 ) );

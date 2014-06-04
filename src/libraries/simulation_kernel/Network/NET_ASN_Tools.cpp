@@ -98,10 +98,10 @@ bool NET_ASN_Tools::ReadPoint( const Point& asnLocalisation, MT_Vector2D& vect )
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadLine( const Line& asn, T_PointVector& points )
 {
-    if( asn.location().type() != Location_Geometry_line || asn.location().coordinates().elem_size()< 2 )
+    if( asn.location().type() != Location_Geometry_line || asn.location().coordinates().elem_size() < 2 )
         return false;
     points.clear();
-    points.reserve( asn.location().coordinates().elem_size());
+    points.reserve( asn.location().coordinates().elem_size() );
     for( int i = 0; i < asn.location().coordinates().elem_size(); ++i )
     {
         MT_Vector2D vPosTmp;
@@ -117,7 +117,7 @@ bool NET_ASN_Tools::ReadLine( const Line& asn, T_PointVector& points )
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadLine( const Line& asn, TER_Localisation& localisation )
 {
-    if( asn.location().type() != Location_Geometry_line || asn.location().coordinates().elem_size()< 2 )
+    if( asn.location().type() != Location_Geometry_line || asn.location().coordinates().elem_size() < 2 )
         return false;
     return ReadLocation( asn.location(), localisation );
 }
@@ -128,9 +128,9 @@ bool NET_ASN_Tools::ReadLine( const Line& asn, TER_Localisation& localisation )
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadPath( const Path& asn, T_PointVector& itineraire )
 {
-    if( asn.location().type() != Location_Geometry_line || asn.location().coordinates().elem_size()< 1 )
+    if( asn.location().type() != Location_Geometry_line || asn.location().coordinates().elem_size() < 1 )
         return false;
-    itineraire.clear(); itineraire.reserve( asn.location().coordinates().elem_size());
+    itineraire.clear(); itineraire.reserve( asn.location().coordinates().elem_size() );
     for( int i = 0; i < asn.location().coordinates().elem_size(); ++i )
     {
         MT_Vector2D vPos;
