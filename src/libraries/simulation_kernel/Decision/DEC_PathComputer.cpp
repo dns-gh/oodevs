@@ -67,7 +67,7 @@ void DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind )
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "DEC_Path::Execute failed: " << e.what() );
+        MT_LOG_ERROR_MSG( "DEC_PathComputer::Execute failed: " << e.what() );
         bJobCanceled_ = true;
         nState_ = DEC_Path_ABC::eCanceled;
         return;

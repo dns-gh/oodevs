@@ -30,7 +30,6 @@ public:
                  const boost::shared_ptr< DEC_PathComputer_ABC >& computer );
     virtual ~DEC_Agent_Path();
 
-    virtual void Destroy();
     virtual void Cancel();
 
     const DEC_Agent_PathClass& GetPathClass() const;
@@ -67,7 +66,6 @@ private:
     const DEC_Agent_PathClass& pathClass_;
     const T_PointVector initialWaypoints_;
     T_PointVector nextWaypoints_;
-    bool destroyed_;
     boost::shared_ptr< DEC_AgentContext_ABC > context_;
     boost::shared_ptr< DEC_PathComputer_ABC > computer_;
     //@}

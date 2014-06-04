@@ -25,7 +25,8 @@ class MIL_Agent_ABC;
 class DEC_AgentContext : public DEC_AgentContext_ABC
 {
 public:
-    DEC_AgentContext( const MIL_Agent_ABC& agent, const DEC_Agent_PathClass& pathClass, const T_PointVector& points );
+    DEC_AgentContext( const MIL_Agent_ABC& agent, const DEC_Agent_PathClass& pathClass,
+        const T_PointVector& points, bool ignoreDynamicObjects );
 
     virtual const MIL_Fuseau& GetFuseau() const;
     virtual const MIL_Fuseau& GetAutomataFuseau() const;
@@ -44,7 +45,9 @@ public:
     virtual const T_PathKnowledgePopulationVector& GetPathKnowledgePopulations() const;
 
 private:
-    void Initialize( const MIL_Agent_ABC& agent, const T_PointVector& points );
+    void InitializeAgentKnowledges( const MIL_Agent_ABC& agent );
+    void InitializeObjectKnowledges( const MIL_Agent_ABC& agent, const T_PointVector& points );
+    void InitializePopulationKnowledges( const MIL_Agent_ABC& agent );
 
 private:
     const MIL_Fuseau fuseau_;
